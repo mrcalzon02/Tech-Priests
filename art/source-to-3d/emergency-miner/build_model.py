@@ -1,4 +1,4 @@
-"""V16: upright top-visible capacitors, carved chassis, and cast foundation anchors.
+"""V17: strict sprite-locked exterior hardware and surface connections.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -272,13 +272,24 @@ def curve(name, coords, radius, m, collection=None):
     return obj
 
 
-def cable_gland(name, x, y, z, side_entry=False):
-    """External fittings have a real physical orientation and contact surface."""
+def cable_gland(name, x, y, z, side_entry=False, occluded=False):
+    """Use a non-rendering attachment marker when the sprite hides a cable end.
+
+    Avoid making a visible fabricated brass connector merely to give a
+    visible cable curve a target. The marker stays in the editable .blend
+    but has NO geometry, and does not export as part of the game asset.
+    """
+    if occluded:
+        marker=bpy.data.objects.new(name,None)
+        marker.empty_display_type="PLAIN_AXES"
+        marker.hide_render=True
+        marker.hide_viewport=True
+        marker.location=pixel(x,y,z)
+        marker["source_support"]="OCCLUDED_INSIDE_EXISTING_CASTING"
+        VISIBLE.objects.link(marker)
+        return name
     rotation=(0,math.pi/2,0) if side_entry else None
-    cylinder(name,x,y,z,.017,.031,MATERIALS["black_steel"],24,
-             rotation=rotation)
-    torus(name+"_metal_collar",x,y,z if side_entry else z+.014,
-          .016,.004,MATERIALS["brass"],rotation=rotation)
+    cylinder(name,x,y,z,.012,.019,MATERIALS["black_steel"],24,rotation=rotation)
     return name
 
 
@@ -569,14 +580,14 @@ def build_enclosure():
     cast_contour("LAYER_1 Foundation right front diagonal anchor gusset",
         [(650,528),(614,516),(568,545),(571,587),
          (597,617),(638,614),(655,589)],.139,.188,edge,.008)
-    # Four highly visible corner bolts belong to the perimeter BASE plate;
-    # additional fasteners are physically installed on the BLUE chassis face.
-    for i,(x,y) in enumerate(((73,73),(601,73),(75,607),(604,607))):
-        bolt(f"Foundation perimeter anchor bolt {i}",x,y,.207 if y>500 else .184,1.60)
-    for i,(x,y) in enumerate(((119,452),(552,463),(127,510),(552,510))):
-        bolt(f"Chassis bolted top-lip fitting {i}",x,y,.488,1.16)
-    for i,x in enumerate((145,215,466,538)):
-        front_facing_bolt(f"Blue chassis front armor hex bolt {i}",x,557,.295)
+    # Exactly six source-located LARGE base/shoulder anchor heads and
+    # two smaller middle-front screws; no evenly spaced invented bolt row.
+    for i,(x,y) in enumerate(((75,69),(605,69),(126,455),
+                               (550,454),(116,569),(560,568))):
+        bolt(f"Foundation source anchor bolt {i}",x,y,
+             .207 if y>530 else .184,1.38)
+    for i,x in enumerate((180,497)):
+        front_facing_bolt(f"Middle front source screw {i}",x,512,.295)
 
     # Capture the lower structure so only controls and the attached rear
     # wiring are lifted, not the chassis/foundation or perimeter hoses.
@@ -632,29 +643,22 @@ def build_enclosure():
         cube(f"Physical vent cavity dark well {i}",223,y,.501,w,9,.004,crevice,.003)
         cube(f"Physical vent left inner sidewall {i}",188,y,.503,2,6,.008,dark,0)
         cube(f"Physical vent right inner sidewall {i}",256,y,.503,2,6,.008,dark,0)
-    screws("Main upper cover",[(183,236),(402,240),(402,115),(182,116),(402,283)],.507)
-    screws("Socket bank",[(442,131),(565,131),(440,290),(568,289)],.507)
+    screws("Main upper cover",[(183,236),(402,240),(404,118),(404,206)],.507)
+    screws("Socket bank",[(444,135),(565,246),(445,278),(561,279)],.507)
     screws("Lower console",[(179,312),(565,315),(181,418),(566,416)],.513)
     for x,y in [(137,104),(139,325)]:
         bolt("Left long support rail boss",x,y,.511,1.20)
 
-    # Source shows three prominent circular OPEN ENDS as seen from above.
-    # Actual seated upright cylinders with top-facing circular mouths.
+    # Three cylinder bodies lie along the machine plane with their ROUND
+    # FRONT MOUTHS exposed: no upright posts or individual boxed pedestals.
     for idx,x in enumerate((459,503,547)):
-        cast_contour(f"Capacitor {idx} bolted machine mounting saddle",
-            [(x-22,121),(x+22,121),(x+24,129),
-             (x+24,193),(x-24,193),(x-24,129)],
-            .472,.493,dark,.003)
-        cylinder(f"Capacitor {idx} upright metal shell",x,166,.525,
-                 .034,.080,edge,40)
-        torus(f"Capacitor {idx} circular top steel rim",x,166,.566,
-              .033,.005,brass)
-        cylinder(f"Capacitor {idx} circular black upper recess",x,166,.565,
-                 .026,.004,MATERIALS["crevice"],40)
-        torus(f"Capacitor {idx} concentric metal top ring",x,166,.567,
-              .019,.004,MATERIALS["edge_steel"])
-        cylinder(f"Capacitor {idx} deep central dark port",x,166,.569,
-                 .015,.005,dark,32)
+        cylinder(f"Capacitor {idx} horizontal supported shell",
+                 x,160,.527,.034,.056,edge,40,rotation=(math.pi/2,0,0))
+        torus(f"Capacitor {idx} forward round steel lip",
+              x,188,.527,.032,.004,edge,rotation=(math.pi/2,0,0))
+        cylinder(f"Capacitor {idx} recessed dark mouth",
+                 x,190,.527,.027,.006,crevice,40,
+                 rotation=(math.pi/2,0,0))
         front_details_before=set(VISIBLE.objects)
         # Green display is mounted inside the control bank, not painted on shell.
     cube("Computer bezel thick raised enclosure",243,364,.516,131,104,.033,dark,.008)
@@ -681,125 +685,105 @@ def build_enclosure():
                  MATERIALS[col],24)
         cylinder(f"Status lamp {idx} internal lens edge",x,y,.548,.008,.002,
                  MATERIALS[col],24)
-    # Three source red/amber/green circles are KNIFE SWITCH handle ends.
-    # Give each a physical pivot, moving steel blade and fixed contact.
-    for idx,(x,color) in enumerate(((430,"red"),(505,"amber"),(550,"green"))):
-        cube(f"Knife switch {idx} bolted insulated bed",x,369,.517,
-             27,96,.024,dark,.003)
-        cylinder(f"Knife switch {idx} hinge bearing",x,347,.539,
-                 .021,.035,edge,28)
-        torus(f"Knife switch {idx} metal handle collar",x,346,.560,
-              .022,.004,brass)
-        cylinder(f"Knife switch {idx} colored handle end",x,346,.568,
-                 .018,.023,MATERIALS[color],28)
-        curve(f"Knife switch {idx} forged moving blade",
-              [(x,353,.566),(x,372,.573),(x,387,.552)],
-              .008,MATERIALS["edge_steel"])
-        cylinder(f"Knife switch {idx} fixed bottom contact",x,395,.535,
-                 .018,.022,brass,24)
-        cube(f"Knife switch {idx} lower electrical bus shoe",x,404,.524,
-             17,18,.011,edge,.002)
-        screws(f"Knife switch {idx} bed fixings",[(x,318),(x,414)],.537)
-    # Distinctive central black selector remains separate from knife switches.
-    cube("Central raised selector housing",467,363,.530,23,61,.034,iron,.002)
-    cube("Black mechanical selector slot",467,363,.550,8,47,.005,crevice,.001)
-    front_controls=(set(VISIBLE.objects)-front_details_before) | front_panel_shapes
+    # Four original blade channels. 3 colored circular ends and ONE dark
+    # central hand lever, all installed flush in the existing faceplate.
+    for idx,(x,color) in enumerate(((430,"red"),(466,None),
+                                    (505,"amber"),(550,"green"))):
+        cube(f"Knife switch {idx} source recessed channel",x,367,.517,
+             23,91,.008,crevice,.002)
+        cube(f"Knife switch {idx} flush conductor blade",x,370,.532,
+             7,67,.012,edge,.002)
+        if color is None:
+            cube(f"Knife switch {idx} dark hand lever",x,357,.549,
+                 13,50,.014,dark,.003)
+        else:
+            torus(f"Knife switch {idx} colored hand rim",
+                  x,345,.553,.019,.004,MATERIALS[color])
+            cylinder(f"Knife switch {idx} black inset grip",
+                     x,345,.551,.013,.007,crevice,28)
+        cylinder(f"Knife switch {idx} bottom contact",x,409,.539,
+                 .010,.008,brass,16)
+        front_controls=(set(VISIBLE.objects)-front_details_before) | front_panel_shapes
     front_controls.update(ob for ob in VISIBLE.objects
                           if ob.name.startswith("Lower console_"))
 
-    # Physically seated power and telemetry connections along the top rear.
-    cable_gland("Rear red HV input gland",181,58,.514)
-    cable_gland("Capacitor red terminal gland",459,190,.490)
+    # Wire paths derived from the actual source, with HIDDEN ends passing
+    # under EXISTING steel coverwork, not imaginary visible brass glands.
+    cable_gland("Rear red under left clamp",181,55,.506,occluded=True)
+    cable_gland("Rear red hidden beneath steel cover",477,105,.508,occluded=True)
     routed_cable("Top red insulated cable",
-        [(181,58,.514),(207,63,.518),(306,71,.519),
-         (404,93,.521),(459,190,.490)],.010,MATERIALS["red_wire"],
-        "Rear red HV input gland","Capacitor red terminal gland",
-        "Rear HV route clamped on machine housing into capacitor terminal")
-    cable_gland("Rear green logic input gland",266,58,.514)
-    cable_gland("Capacitor green terminal gland",547,190,.490)
+        [(181,55,.506),(257,57,.510),(345,69,.513),
+         (423,82,.512),(477,105,.508)],.010,MATERIALS["red_wire"],
+        "Rear red under left clamp","Rear red hidden beneath steel cover",
+        "Red rear conductor routed under existing cable clips")
+    cable_gland("Rear green beneath center band",299,46,.507,occluded=True)
+    cable_gland("Green hidden behind right hose",588,241,.529,occluded=True)
     routed_cable("Top bright green insulated cable",
-        [(266,58,.514),(340,61,.521),(422,91,.522),
-         (505,123,.520),(547,190,.490)],.009,MATERIALS["green_wire"],
-        "Rear green logic input gland","Capacitor green terminal gland",
-        "Frequency-control feedback clamped above cover")
-    cable_gland("Rear copper service gland",164,63,.505)
-    cube("Copper rear service junction block",284,80,.502,29,24,.031,iron,.002)
-    cable_gland("Copper junction entry gland",284,80,.517)
+        [(299,46,.507),(374,51,.511),(429,79,.512),
+         (506,98,.521),(567,122,.523),(589,166,.527),
+         (588,241,.529)],.010,MATERIALS["green_wire"],
+        "Rear green beneath center band","Green hidden behind right hose",
+        "Continuous green conductor under existing top clamps and right hose")
+    cable_gland("Rear copper under left retaining band",181,57,.508,occluded=True)
+    cable_gland("Copper disappears below middle clamp",288,61,.507,occluded=True)
     routed_cable("Top copper orange secondary wire",
-        [(164,63,.505),(208,60,.514),(250,70,.519),
-         (284,80,.517)],.0065,MATERIALS["copper"],
-        "Rear copper service gland","Copper junction entry gland",
-        "Bolted rear service junction rather than floating wire")
-    for j,xx in enumerate((165,265,488)):
-        cube(f"Gold upper conduit clip {j}",xx,55,.515,20,24,.022,brass,.003)
-        screws(f"upper cable clip fixing {j}",[(xx,49)],.533)
-    # Supply enters the chassis sidewall and disappears into the raised deck.
-    # Those two junctions are explicitly modeled rather than cut-off curves.
-    cable_gland("Right upper HV sidewall gland",582,206,.536,side_entry=True)
-    cable_gland("Right lower HV bus gland",579,406,.531,side_entry=True)
+        [(181,57,.508),(222,55,.510),(262,58,.510),
+         (288,61,.507)],.007,MATERIALS["copper"],
+        "Rear copper under left retaining band",
+        "Copper disappears below middle clamp",
+        "Short warm-toned rear conductor, source-visible section only")
+    for idx,(x,metal) in enumerate(((166,brass),(266,edge),
+                                     (376,edge),(489,brass))):
+        cube(f"Original rear rectangular retaining clamp {idx}",
+             x,56,.511,21,29,.027,metal,.003)
+    cable_gland("Right red hidden under outer sleeve",616,270,.530,occluded=True)
+    cable_gland("Right red disappears at upper case edge",607,419,.530,occluded=True)
     routed_cable("Right visible red high voltage feed",
-        [(582,206,.536),(592,267,.540),(594,338,.543),
-         (590,375,.540),(579,406,.531)],.013,MATERIALS["red_wire"],
-         "Right upper HV sidewall gland","Right lower HV bus gland",
-         "Externally protected HV supply down chassis side")
-    cable_gland("Right control logic upper outlet",553,94,.473)
-    cable_gland("Right control logic lower return",581,239,.535,side_entry=True)
-    routed_cable("Right green internal control conduit",
-        [(553,94,.473),(569,123,.491),(581,177,.520),
-         (581,239,.535)],.009,MATERIALS["green_wire"],
-         "Right control logic upper outlet","Right control logic lower return",
-         "Protected control signal from capacitor area to chassis return")
-
-    # Physically curved corrugated coolant elbows: bolted rear and side
-    # bulkheads receive actual tube ends, not flat U-shaped painted outlines.
+        [(616,270,.530),(618,323,.530),(620,369,.532),
+         (615,399,.531),(607,419,.530)],.013,MATERIALS["red_wire"],
+        "Right red hidden under outer sleeve",
+        "Right red disappears at upper case edge",
+        "Visible red right-side cable goes under real existing metalwork")
     for side in (-1,1):
         prefix="L" if side<0 else "R"
-        x=74 if side<0 else 606
-        rear_x=x-44*side
-        inner_x=x-30*side
-        rear_port=f"{prefix} machinery rear elbow entry gland"
-        side_port=f"{prefix} lateral machinery coolant gland"
-        cable_gland(rear_port,rear_x,77,.574)
-        cable_gland(side_port,inner_x,389,.565,side_entry=True)
-        path=[(rear_x,77,.574),(rear_x+24*side,61,.574),
-              (x-10*side,62,.574),(x-20*side,76,.577),
-              (x-23*side,109,.580),(x-23*side,169,.578),
-              (x-23*side,244,.575),(x-17*side,312,.573),
-              (x-5*side,357,.570),(inner_x,389,.565)]
+        x=69 if side<0 else 616
+        rear_x=128 if side<0 else 550
+        end_x=104 if side<0 else 584
+        cable_gland(prefix+" black hose concealed rear",rear_x,58,.565,occluded=True)
+        cable_gland(prefix+" black hose concealed lower",end_x,404,.565,occluded=True)
+        points=[(rear_x,58,.565),((rear_x+x)/2,54,.572),
+                (x+(-8 if side<0 else 8),77,.572),
+                (x,105,.573),(x,164,.571),(x,240,.570),
+                (x,320,.569),(x+(-2 if side<0 else 2),355,.566),
+                (end_x,404,.565)]
         routed_cable(prefix+" actual perimeter ribbed hydraulic conduit",
-            path,.023,MATERIALS["black_wire"],rear_port,side_port,
-            "Continuous rounded rear coolant bend into sidewall of red upper machine")
-        for i in range(17):
-            y=111+i*15
-            xi=x-(23 if i<12 else max(5,23-3*(i-11)))*side
-            torus(prefix+f" hydraulic rib {i:02d}",xi,y,.578,
-                  .022,.0028,MATERIALS["iron"],rotation=(math.pi/2,0,0))
-        for i,(bx,by,angle) in enumerate(((rear_x+13*side,67,.46),
-                                         (x-8*side,61,1.11),
-                                         (x-21*side,80,2.32))):
-            torus(prefix+f" rear elbow compression rib {i}",
-                  bx,by,.577,.022,.003,MATERIALS["edge_steel"],
-                  rotation=(math.pi/2,0,angle*side))
-        for y in (150,284,348):
-            cube(prefix+f" forged upper-tube retaining strap {y}",x-18*side,y,.584,
-                 34,18,.027,edge,.004)
-            screws(prefix+f" tube strap fixing {y}",[(x-18*side,y)],.603)
-    # Localized real 3D surface wear is source-grounded: prominent pitting
+            points,.022,MATERIALS["black_wire"],
+            prefix+" black hose concealed rear",
+            prefix+" black hose concealed lower",
+            "One corrugated perimeter coolant tube, both ends hidden by casing")
+        for i in range(15):
+            y=110+i*18
+            torus(prefix+f" source pipe rib {i:02d}",x,y,.572,
+                  .021,.002,MATERIALS["iron"],rotation=(math.pi/2,0,0))
+        sleeve_y=185 if side<0 else 204
+        cube(prefix+" source metal hose sleeve",x,sleeve_y,.573,
+             31,29,.029,brass if side>0 else edge,.004)
+        # Localized real 3D surface wear is source-grounded: prominent pitting
     # and cut-back paint occur on the original's blank armored steel faces.
     forged_patina_marks("Dark oxidized upper cover scars",192,389,112,213,
-                        .502,210,"oxide",3101)
+                        .502,45,"oxide",3101)
     forged_patina_marks("Bright cut-metal upper cover scratches",192,389,113,213,
-                        .503,62,"edge_scar",3102)
+                        .503,12,"edge_scar",3102)
     forged_patina_marks("Rusted middle cover surface",185,399,236,287,
-                        .495,78,"oxide",3103)
+                        .495,15,"oxide",3103)
     forged_patina_marks("Rusted upper socket carrier",447,551,128,214,
-                        .499,74,"oxide",3104)
+                        .499,12,"oxide",3104)
     forged_patina_marks("Ground left vertical cover plate",121,153,129,371,
-                        .487,115,"oxide",3105)
+                        .487,15,"oxide",3105)
     forged_patina_marks("Worn forward armored rail",189,553,477,528,
-                        .477,120,"oxide",3106)
+                        .477,18,"oxide",3106)
     forged_patina_marks("Forward rail exposed metal nicks",190,546,478,528,
-                        .478,47,"edge_scar",3107)
+                        .478,8,"edge_scar",3107)
     # Preserve strong physical separation between base, chassis and upper
     # machine controls. Lifting all parts indiscriminately produces floating
     # side hoses; named sidewall routes remain anchored at chassis height.
@@ -827,7 +811,7 @@ def build_enclosure():
         obj.matrix_world=incline @ obj.matrix_world
     bpy.context.view_layer.update()
     face=bpy.data.objects.get("Left LCD and diagnostics faceplate")
-    cap=bpy.data.objects.get("Capacitor 0 upright metal shell")
+    cap=bpy.data.objects.get("Capacitor 0 horizontal supported shell")
     if face is None or cap is None:
         raise RuntimeError("V10 upper face or capacitor geometry missing")
     normal=face.matrix_world.to_3x3() @ Vector((0,0,1))
@@ -845,8 +829,8 @@ def build_enclosure():
         raise RuntimeError("LCD is geometrically submerged in upper housing")
     if face_upper_z <= housing_top+.006:
         raise RuntimeError("Inclined control face not above its 3D support")
-    if normal.y >= -.12 or normal.z <= .9 or axis.z <= .9:
-        raise RuntimeError("Inclined console or upright round-top capacitor invalid")
+    if normal.y >= -.12 or normal.z <= .9 or axis.y >= -.9:
+        raise RuntimeError("Console slope or horizontal capacitor axis invalid")
     FEATURES.extend([
       "dark and bright genuinely modeled local surface metal scars",
       "chamfered source 1x1 enclosure and thick raised edge", "six structural fasteners",
@@ -972,8 +956,22 @@ def main(out):
         raise RuntimeError("Exterior mesh is missing or incomplete")
     if len(COLLECTION.children)!=1:
         raise RuntimeError("Hidden geometry collection must not exist")
-    if len(CABLE_ROUTES)!=7:
-        raise RuntimeError("Expected exactly seven individually terminated cable/hose routes")
+    if len(CABLE_ROUTES)!=6:
+        raise RuntimeError("Expected exactly six source-traced cable/hose routes")
+    for unsupported in ("Central raised selector housing",
+                        "Black mechanical selector slot",
+                        "Capacitor 0 upright metal shell"):
+        if bpy.data.objects.get(unsupported):
+            raise RuntimeError("V16 unsupported geometry remains: "+unsupported)
+    if sum("source recessed channel" in o.name for o in VISIBLE.objects)!=4:
+        raise RuntimeError("Exactly 4 source knife switch lanes required")
+    if sum("Original rear rectangular retaining clamp" in o.name
+           for o in VISIBLE.objects)!=4:
+        raise RuntimeError("Exactly 4 actual rectangular cable clamps required")
+    if not all(bpy.data.objects.get(w["start"]).type=="EMPTY" and
+               bpy.data.objects.get(w["end"]).type=="EMPTY"
+               for w in CABLE_ROUTES):
+        raise RuntimeError("Cables must have occluded rather than fabricated ends")
     bpy.context.view_layer.update()
     for wire in CABLE_ROUTES:
         cable=bpy.data.objects.get(wire["name"])
@@ -1022,12 +1020,12 @@ def main(out):
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V16 real front channel cut, sculpted base corner lugs and three top-visible capacitor mouths"
+    scene["asset_revision"]="V17 source-locked hardware: 4 switch lanes, hidden cable ends and real horizontal capacitor mouths"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v16.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v17.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -1052,23 +1050,23 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v16.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v17.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V16 CAST BASE LUGS, TRUE CHASSIS INSET AND VERTICAL CAP MOUTHS; REVIEW PENDING",
-        "candidate_revision":"V16",
+        "state":"V17 SOURCE-LOCKED EXTERIOR HARDWARE; VISUAL REVIEW PENDING",
+        "candidate_revision":"V17",
         "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
         "middle_chassis_physical_cross_sections":reopened_casting.get("cross_sections"),
         "upper_machine_physical_cross_sections":reopened_upper.get("cross_sections"),
         "source_camera_strategy":"STEEP_NEAR_SYMMETRIC_FROM_FRONT",
         "source_camera_azimuth_elevation_degrees":{"azimuth":0,"elevation":76},
         "inspection_camera_strategy":"ACTUAL_OBLIQUE_THREE_DIMENSIONAL_DEPTH",
-        "rear_wiring":"TOP_HOUSING_MOUNTED_WITH_END_GLANDS",
-        "perimeter_hose_shape":"TWO_CURVED_REAR_ELBOWS_WITH_SIDE_ENTRIES",
+        "rear_wiring":"ORIGINAL_RECTANGULAR_CLAMPS_OCCLUDED_ENDS",
+        "perimeter_hose_shape":"TWO_SOURCE_CORRUGATED_HOSES_OCCLUDED_ENDS",
         "separate_upper_front_fascia":False,
         "foundation_plate_thickness":0.086,
         "fabricated_front_overlay_count":len(remaining),
@@ -1080,21 +1078,28 @@ def main(out):
         "layer_architecture":LAYER_ELEVATIONS,
         "view_angle_target_degrees":{"azimuth":36,"elevation":54},
         "visible_pulse_capacitors":3,
-        "physical_knife_switches":3,
+        "source_detail_counts":{"vents":3,"capacitor_ends":3,
+            "lcd":1,"lamps":4,"switch_lanes":4,
+            "colored_switch_ends":3,"rear_clamps":4,
+            "perimeter_hoses":2,"foundation_anchors":6,
+            "chassis_front_screws":2},
+        "source_cable_routes":6,
+        "visibly_fabricated_gold_terminal_rings":0,
+        "physical_knife_switches":4,
         "middle_chassis_height_evidence":shrink_evidence,
         "front_setback_evidence":front_evidence,
         "carved_front_service_channel":recess_evidence,
         "foundation_corner_cast_gussets":2,
         "capacitors_visible_circular_top_faces":3,
-        "foundation_plate_corner_bolts":4,
-        "chassis_front_armor_bolts":4,
+        "foundation_plate_corner_bolts":6,
+        "chassis_front_armor_bolts":2,
         "capacitor_ends_read_forward":True,
         "upper_wiring_seated_to_machinery":True,
         "owner_layer_map":{"uncolored":"foundation_perimeter",
                            "blue":"middle_chassis_lip_and_front",
                            "red":"raised_machinery_and_control_deck"},
         "front_control_slope_degrees":11,
-        "capacitor_axis":"UPRIGHT_CIRCULAR_TOP_FACES",
+        "capacitor_axis":"HORIZONTAL_FRONT_CIRCULAR_ENDS",
         "coolant_entries":"LATERAL_INTO_UPPER_MACHINERY",
         "perimeter_hoses_visible_on_chassis_shoulders":True,
         "control_deck_width_reference_units":486,

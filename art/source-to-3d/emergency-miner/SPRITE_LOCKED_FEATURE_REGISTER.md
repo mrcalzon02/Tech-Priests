@@ -68,3 +68,19 @@ Coordinates refer to the 680×680 uncolored original; the owner's 421×398 annot
 - No gameplay/prototype changes, source replacement, new laser internals, or unrelated asset development as part of this fidelity pass.
 
 **Review reminder:** This document intentionally makes **no V17 model edits**. It establishes the source-grounded constraints required before the next geometry revision.
+
+## 5. V17 model correction candidate — implementation trace
+
+This revision is limited to the existing source evidence. It must not be considered automatically visually approved.
+
+| Evidence group | V17 actual Blender choice | Model evidence |
+|---|---|---|
+| 4 switch lanes at x≈430, 466, 505, 550, y≈345–417 | Three colored end rings and ONE dark lever, each in a shallow channel, no added individual bed plates | `Knife switch {0..3} source recessed channel` |
+| 3 cylindrical mouths at x≈459, 503, 547, y≈168–190 | Short horizontal cylinders; front dark recessed ends, restrained rims, no upright towers | `Capacitor {0..2} horizontal supported shell` |
+| Rear conductors under bands | Red, green, warm-colored curves with source-located occlusion endpoints, four non-circular rectangular straps | `Original rear rectangular retaining clamp {0..3}` |
+| Right-side red conductor | Continuous external red segment, ends hidden at original sleeve and upper casing | `Right visible red high voltage feed` |
+| 2 major black side hoses | Two real curved tubes, each with ONE visible metal sleeve and no invented side rings | `L/R actual perimeter ribbed hydraulic conduit` |
+| Large bolts on outer/base mounting positions | 6 source-anchored heads (≈75,69; 605,69; 126,455; 550,454; 116,569; 560,568) | `Foundation source anchor bolt {0..5}` |
+| Sparse smaller bolts on main chassis front | 2 small heads near (180,512) and (497,512), no even row | `Middle front source screw {0..1}` |
+
+The model must retain editability and true physical depth. Although endpoints require no invented visible fittings, Blender EMPTY objects are acceptable as nonrendering assembly/occlusion constraints and must not be mistaken for unseen physical machinery. Re-check the eventual render: a claim that the presence of six cables proves they are visually seated is NOT sufficient. Correct actual occlusions when necessary.
