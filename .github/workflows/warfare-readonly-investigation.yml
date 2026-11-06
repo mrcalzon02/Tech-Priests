@@ -9,6 +9,7 @@ on:
       - 'warfare/probes/**'
       - 'warfare/tools/summarize_readonly_census.py'
       - 'warfare/tools/inspect_aai_interface_source.py'
+      - 'warfare/tools/inspect_runtime_control_contracts.py'
   workflow_dispatch:
 
 permissions:
@@ -32,7 +33,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 -m py_compile tools/ci_factorio_combined_modpack.py warfare/tools/summarize_readonly_census.py warfare/tools/inspect_aai_interface_source.py
+          python3 -m py_compile tools/ci_factorio_combined_modpack.py warfare/tools/summarize_readonly_census.py warfare/tools/inspect_aai_interface_source.py warfare/tools/inspect_runtime_control_contracts.py
           python3 tools/ci_factorio_combined_modpack.py --selftest
           test -f warfare/probes/native-readonly-capability/control.lua
           if grep -En 'surface\.create_entity|\.teleport\(|\.set_command\(|remote\.call\(|\.shooting_target\s*=|\.insert\(|\.remove\(|\.destroy\(' warfare/probes/native-readonly-capability/control.lua; then
@@ -81,6 +82,15 @@ jobs:
             "$RUNNER_TEMP/warfare-mods" \
             test-artifacts/warfare-readonly/aai-static-interface-inventory.json \
             | tee test-artifacts/warfare-readonly/aai-static-summary.txt
+
+      - name: Inspect AAI command-data clues and Mechanicus Reborn sprite references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 warfare/tools/inspect_runtime_control_contracts.py \
+            "$RUNNER_TEMP/warfare-mods" \
+            test-artifacts/warfare-readonly/warfare-control-and-skin-source-census.json \
+            | tee test-artifacts/warfare-readonly/warfare-control-and-skin-summary.txt
 
       - name: Stage diagnostic scenario in disposable mod copy only
         shell: bash
