@@ -798,7 +798,7 @@ def build_enclosure():
     # machine controls. Lifting all parts indiscriminately produces floating
     # side hoses; named sidewall routes remain anchored at chassis height.
     chassis_external_prefix=(
-        "L ","R ","Right visible red high voltage feed",
+        "L ","R ","Right visible red high voltage feed","Right red ",
         "Right green internal control conduit","Right upper HV sidewall gland",
         "Right lower HV bus gland","Right control logic upper outlet",
         "Right control logic lower return",
