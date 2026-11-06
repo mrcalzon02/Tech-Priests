@@ -34,6 +34,21 @@ def version_tuple(raw):
     return tuple(int(p) for p in parts)
 
 
+def stage_native_dependencies():
+    """Keep native DLC prototype load order in the disposable 2.1 test copy.
+
+    A core-only test may omit third-party mods, but MUST NOT strip optional
+    Space Age/Quality/Elevated Rails ordering: the shipped mod uses those
+    native expansion prototypes (including the vanilla thruster donor).
+    """
+    return [
+        "base >= 2.1.0",
+        "? space-age >= 2.1.0",
+        "? quality >= 2.1.0",
+        "? elevated-rails >= 2.1.0",
+    ]
+
+
 def read_json(path):
     return json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
 
@@ -49,6 +64,9 @@ def static_contract():
     assert "kj_servoskull" in data["mandatory_mod_ids"]
     assert len(data["mandatory_mod_ids"]) == len(set(data["mandatory_mod_ids"]))
     assert data["mandated_aai_fix"] == "40kvehicles-AAI-fix"
+    assert "? space-age >= 2.1.0" in stage_native_dependencies(), (
+        "Migration staging must preserve the shipped Space Age load order")
+    assert "? quality >= 2.1.0" in stage_native_dependencies()
     assert data["latest_known_factorio_21"]["mechanicus-reborn"] == "0.0.3"
     assert select_latest(
         [{"version": "0.0.1", "info_json": {"factorio_version": "2.0"}},
@@ -195,7 +213,7 @@ def native_probe(data, binary, root, profile, report):
     shutil.copytree(ROOT / "tech-priests_src", staged, dirs_exist_ok=True)
     meta = read_json(staged / "info.json")
     meta["factorio_version"] = "2.1"
-    meta["dependencies"] = ["base >= 2.1.0"]
+    meta["dependencies"] = stage_native_dependencies()
     # Temporary metadata is in a disposable runner directory; never ship it.
     installed = {}
     if profile == "mechanicus":
