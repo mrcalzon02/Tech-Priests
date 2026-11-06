@@ -39,6 +39,15 @@ jobs:
           python3 -m py_compile tools/ci_factorio_combined_modpack.py
           python3 tools/ci_factorio_combined_modpack.py --selftest
 
+      - name: Verify Factorio game token against read-only Mod Portal endpoint
+        shell: bash
+        env:
+          FACTORIO_USERNAME: ${{ secrets.FACTORIO_USERNAME }}
+          FACTORIO_TOKEN: ${{ secrets.FACTORIO_TOKEN }}
+        run: |
+          set -euo pipefail
+          python3 tools/ci_factorio_combined_modpack.py --auth-check
+
       - name: Fetch and identify official headless engine
         shell: bash
         run: |
