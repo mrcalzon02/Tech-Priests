@@ -214,8 +214,14 @@ function M.service_pair(pair,reason)
  if family_owned(r,"machine-logistics")
    and phase~="" and phase~="complete" and phase~="failed"
    and phase~="idle" and phase~="none"
-   and valid(machine.machine) and not foreign_order
-   and not strict_craft and not direct_active(pair)
+   and valid(machine.machine)
+   -- A real 0528 custody hold cannot be abandoned merely because a newer
+   -- routine order or strict craft request appeared while the worker walked.
+   -- Resume only its existing transaction; all competing physical custody
+   -- and defense exclusions below remain authoritative.
+   and (machine.custody or pair.machine_logistics_custody_0528
+     or (not foreign_order and not strict_craft))
+   and not direct_active(pair)
    and not (pair.construction_task_0338 or pair.construction_custody_0338
      or pair.construction_task_0340 or pair.inventory_transfer_custody_0687
      or pair.emergency_facility_feed_custody_0357
