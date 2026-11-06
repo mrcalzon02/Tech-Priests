@@ -598,6 +598,10 @@ def build_enclosure():
     for obj in VISIBLE.objects:
         if obj not in fixed_lower_objects and not obj.name.startswith(chassis_external_prefix):
             obj.location.z+=LAYER_ELEVATIONS["raised_controls"]
+    # Flush the new elevations to matrix_world before applying the incline.
+    # Otherwise Blender can overwrite the uncommitted +Z translation and
+    # bury the LCD and knife switches underneath the unsloped upper casing.
+    bpy.context.view_layer.update()
     # Rotate the real front-control geometry about the rear hinge line:
     # front edge drops; LCD, switches, lamp covers and faceplates follow.
     pivot=Vector(pixel(340,301,.620))
@@ -613,6 +617,11 @@ def build_enclosure():
         raise RuntimeError("V10 upper face or capacitor geometry missing")
     normal=face.matrix_world.to_3x3() @ Vector((0,0,1))
     axis=cap.matrix_world.to_3x3() @ Vector((0,0,1))
+    lcd=bpy.data.objects.get("Recessed luminous green computer glass")
+    if lcd is None or lcd.matrix_world.translation.z < .615:
+        raise RuntimeError("V10 LCD sunk below raised red control face")
+    if face.matrix_world.translation.z < .59:
+        raise RuntimeError("V10 control panels submerged in unrotated equipment casing")
     if normal.y >= -.12 or normal.z <= .9 or axis.y >= -.9:
         raise RuntimeError("V10 slope or sideways capacitor orientation invalid")
     FEATURES.extend([
