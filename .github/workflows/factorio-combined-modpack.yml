@@ -1,0 +1,137 @@
+name: Factorio combined Mod Portal integration
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/factorio-combined-modpack.yml'
+      - 'tools/ci_factorio_combined_modpack.py'
+      - 'tests/modpacks/**'
+      - 'tech-priests_src/**'
+
+# Do not cancel genuine engine verification runs in progress.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  combined-modpack:
+    name: Factorio ${{ matrix.family }} | authenticated combined modpack
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - family: '2.0'
+            engine: '2.0.77'
+          - family: '2.1'
+            engine: '2.1.24'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check resolver syntax and dependency-selection self-tests
+        run: |
+          set -euo pipefail
+          python3 -m py_compile tools/ci_factorio_combined_modpack.py
+          python3 tools/ci_factorio_combined_modpack.py --selftest
+
+      - name: Fetch and identify official headless engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/combined-engine" "test-artifacts/combined-${{ matrix.family }}"
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/combined-factorio.tar.xz" \
+            "https://factorio.com/get-download/${{ matrix.engine }}/headless/linux64"
+          tar -xJf "$RUNNER_TEMP/combined-factorio.tar.xz" -C "$RUNNER_TEMP/combined-engine"
+          bin="$RUNNER_TEMP/combined-engine/factorio/bin/x64/factorio"
+          "$bin" --version | tee "test-artifacts/combined-${{ matrix.family }}/engine-version.txt"
+          grep -Fq '${{ matrix.engine }}' "test-artifacts/combined-${{ matrix.family }}/engine-version.txt"
+
+      - name: Resolve, authenticate, download and verify required Mod Portal archives
+        shell: bash
+        env:
+          FACTORIO_USERNAME: ${{ secrets.FACTORIO_USERNAME }}
+          FACTORIO_TOKEN: ${{ secrets.FACTORIO_TOKEN }}
+        run: |
+          set -euo pipefail
+          python3 tools/ci_factorio_combined_modpack.py \
+            --install --family '${{ matrix.family }}' \
+            --mods-dir "$RUNNER_TEMP/combined-mods" \
+            --artifact-dir "test-artifacts/combined-${{ matrix.family }}"
+
+      - name: Native headless map creation using downloaded mod archives
+        shell: bash
+        run: |
+          set -euo pipefail
+          bin="$RUNNER_TEMP/combined-engine/factorio/bin/x64/factorio"
+          artifacts="test-artifacts/combined-${{ matrix.family }}"
+          timeout 600 "$bin" \
+            --mod-directory "$RUNNER_TEMP/combined-mods" \
+            --create "$artifacts/combined-smoke.zip" \
+            --map-gen-seed 907260 > "$artifacts/factorio-create.log" 2>&1 || {
+            status=$?
+            tail -n 100 "$artifacts/factorio-create.log" || true
+            exit "$status"
+          }
+
+      - name: Native headless benchmark from created combined save
+        shell: bash
+        run: |
+          set -euo pipefail
+          bin="$RUNNER_TEMP/combined-engine/factorio/bin/x64/factorio"
+          artifacts="test-artifacts/combined-${{ matrix.family }}"
+          timeout 600 "$bin" \
+            --mod-directory "$RUNNER_TEMP/combined-mods" \
+            --benchmark "$artifacts/combined-smoke.zip" \
+            --benchmark-ticks 3600 > "$artifacts/factorio-benchmark.log" 2>&1 || {
+            status=$?
+            tail -n 100 "$artifacts/factorio-benchmark.log" || true
+            exit "$status"
+          }
+
+      - name: Fail closed on missing required mods or unproven native loads
+        if: always()
+        shell: bash
+        run: |
+          python3 tools/ci_factorio_combined_modpack.py \
+            --gate --family '${{ matrix.family }}' \
+            --artifact-dir "test-artifacts/combined-${{ matrix.family }}"
+
+      - name: Show sanitized modpack evidence
+        if: always()
+        shell: bash
+        run: |
+          artifacts="test-artifacts/combined-${{ matrix.family }}"
+          {
+            echo "## Combined Mod Portal test: Factorio ${{ matrix.family }}"
+            echo ""
+            if [[ -f "$artifacts/modpack-manifest.json" ]]; then
+              python3 - "$artifacts/modpack-manifest.json" <<'PY'
+          import json, sys
+          d = json.load(open(sys.argv[1]))
+          print("Verified ZIP downloads:", len(d["installed"]))
+          print("Blockers:", len(d["blockers"]))
+          for x in d["installed"]:
+              print(f"- {x['name']} {x['version']} (SHA-1 verified)")
+          for x in d["blockers"]:
+              print("- BLOCKED:", x)
+          PY
+            else
+              echo "No modpack manifest; preparation failed before installation."
+            fi
+            echo ""
+            echo "ZIP presence and a 3600-tick headless smoke do not establish full gameplay compatibility."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Retain manifests, native logs and verdicts even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: combined-modpack-${{ matrix.family }}-evidence
+          path: test-artifacts/combined-${{ matrix.family }}/
+          retention-days: 14
+          if-no-files-found: warn
