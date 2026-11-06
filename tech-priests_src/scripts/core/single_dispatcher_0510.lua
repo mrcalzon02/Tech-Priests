@@ -246,6 +246,35 @@ function M.service_pair(pair,reason)
    record("dispatch-incumbent-machine",pair,result.detail)
    return result
  end
+ -- 2026-11-06: Retain the exact reason an incumbent physically held 0528
+ -- return was not serviced. This is diagnostic only: no ownership, movement,
+ -- item debit, or scheduling priority changes. The record survives reload.
+ if type(machine)=="table" and (machine.custody or pair.machine_logistics_custody_0528)
+   and phase=="return-custody-to-station" then
+  local exclusions={}
+  local function excluded(name,condition)
+   if condition then exclusions[#exclusions+1]=name end
+  end
+  excluded("family-disabled",not family_owned(r,"machine-logistics"))
+  excluded("machine-invalid",not valid(machine.machine))
+  excluded("direct-active",direct_active(pair))
+  excluded("construction-0338",pair.construction_task_0338 or pair.construction_custody_0338)
+  excluded("construction-0340",pair.construction_task_0340)
+  excluded("transfer-0687",pair.inventory_transfer_custody_0687)
+  excluded("facility-feed-0357",pair.emergency_facility_feed_custody_0357)
+  excluded("item-family-0702",pair.item_family_custody_0702)
+  excluded("energy-family-0707",pair.energy_family_custody_0707)
+  excluded("rocket-0710",pair.rocket_silo_custody_0710)
+  excluded("artillery-0713",pair.artillery_custody_0713)
+  excluded("roboport-0715",pair.roboport_repair_custody_0715)
+  excluded("defense-task-0259",pair.defense_task_0259)
+  pair.machine_return_dispatch_block_0510={
+   tick=now(),phase=phase,reason=#exclusions>0 and table.concat(exclusions,",")
+     or "incumbent-branch-not-entered",
+   last_machine_service_tick=machine.active_updated_tick,
+   carried_item=machine.item,
+  }
+ end
  -- The rail observer is strictly read-only toward Factorio entities.
  -- Running it before the relay-chain evaluator surfaces a distinct railroad
  -- strategy without letting one planner create another planner's buildings.
