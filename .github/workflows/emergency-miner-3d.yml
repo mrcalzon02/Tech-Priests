@@ -31,7 +31,7 @@ jobs:
         run: |
           blender --version | head -n 2
           blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
-      - name: Build V15 physically shallower sprite-proportioned 3D machine and connected hose elbows
+      - name: Build V16 true recessed middle casting and circular capacitor mouths
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
           blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
@@ -46,7 +46,11 @@ jobs:
           d=Path('art-output/emergency-miner')
           m=json.loads((d/'model_manifest.json').read_text())
           assert m['asset']=='tech-priests-emergency-miner'
-          assert m['candidate_revision']=='V15'
+          assert m['candidate_revision']=='V16'
+          assert m['carved_front_service_channel']['carved_into_existing_mesh']
+          assert m['carved_front_service_channel']['vertices_after']>m['carved_front_service_channel']['vertices_before']
+          assert m['foundation_corner_cast_gussets']==2
+          assert m['capacitors_visible_circular_top_faces']==3
           assert m['source_camera_strategy']=='STEEP_NEAR_SYMMETRIC_FROM_FRONT'
           assert m['source_camera_azimuth_elevation_degrees']=={'azimuth':0,'elevation':76}
           assert m['perimeter_hose_shape']=='TWO_CURVED_REAR_ELBOWS_WITH_SIDE_ENTRIES'
@@ -67,7 +71,7 @@ jobs:
           assert m['capacitor_ends_read_forward']
           assert m['upper_wiring_seated_to_machinery']
           assert m['front_control_slope_degrees']==11
-          assert m['capacitor_axis']=='HORIZONTAL_ALONG_DEPTH'
+          assert m['capacitor_axis']=='UPRIGHT_CIRCULAR_TOP_FACES'
           assert m['coolant_entries']=='LATERAL_INTO_UPPER_MACHINERY'
           assert m['owner_layer_map']['blue']=='middle_chassis_lip_and_front'
           assert 8<=m['source_contour_mesh_count']<=15
@@ -127,7 +131,7 @@ jobs:
               with Image.open(p) as im:
                   im.verify()
               proof.append({'name':filename,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
-          data={'asset':'emergency-miner','revision':'V15',
+          data={'asset':'emergency-miner','revision':'V16',
                 'commit':os.environ['GITHUB_SHA'],
                 'run':os.environ['GITHUB_RUN_ID'],
                 'user_visible_delivery':'MUST_EMBED_REAL_RENDER_IMAGES_IN_CHAT',

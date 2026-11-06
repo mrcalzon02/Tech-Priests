@@ -1,4 +1,4 @@
-"""V15: geometry-first shallow machine and source-visible conduit returns.
+"""V16: upright top-visible capacitors, carved chassis, and cast foundation anchors.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -448,6 +448,35 @@ def shorten_middle_chassis_preserving_connections():
     return {"middle_height_before":.310,"middle_height_after":height,
             "upper_assembly_downshift":dz,"foundation_unchanged":True}
 
+
+def carve_real_chassis_front_recess():
+    """Cut physical cavity INTO the single chassis volume, never add a slab."""
+    main=bpy.data.objects.get("LAYER_2 Raised central machine chassis")
+    if main is None: raise RuntimeError("Main solid absent")
+    before=len(main.data.vertices)
+    bpy.ops.mesh.primitive_cube_add(size=1,location=(0,-.318,.229))
+    cutter=bpy.context.object
+    cutter.name="TEMP_REAL_FRONT_INSET_CUTTER"
+    cutter.dimensions=(.59,.109,.033)
+    bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
+    bpy.context.view_layer.objects.active=main
+    main.select_set(True)
+    cutter.select_set(False)
+    m=main.modifiers.new("Machined recessed front service channel","BOOLEAN")
+    m.operation="DIFFERENCE"
+    m.solver="EXACT"
+    m.object=cutter
+    bpy.ops.object.modifier_apply(modifier=m.name)
+    bpy.data.objects.remove(cutter,do_unlink=True)
+    bpy.context.view_layer.update()
+    if len(main.data.vertices)<=before:
+        raise RuntimeError("Front cut has not altered the actual chassis mesh")
+    main["source_feature_recessed_channel"]=True
+    return {"carved_into_existing_mesh":True,"vertices_before":before,
+            "vertices_after":len(main.data.vertices),
+            "recess_width":.59,"recess_height":.033}
+
+
 def forged_patina_marks(name, left, right, top, bottom, z, count, material_name, seed):
     """Actual shallow, non-coplanar exposed-metal chips, not pasted artwork.
 
@@ -532,10 +561,18 @@ def build_enclosure():
     # Deliberately NO front full-width shoe, frontal stepped skirt, faux
     # dark structural spar or overlapping corner boots. Their source edges
     # are the projection of the real chassis bevel, lip, and base frame.
+    # Two true L-shaped cast foundation anchor feet on the visible front.
+    # Unlike earlier false slabs, these are compact local mounting gussets.
+    cast_contour("LAYER_1 Foundation left front diagonal anchor gusset",
+        [(30,528),(66,516),(112,545),(109,587),
+         (83,617),(42,614),(25,589)],.139,.188,edge,.008)
+    cast_contour("LAYER_1 Foundation right front diagonal anchor gusset",
+        [(650,528),(614,516),(568,545),(571,587),
+         (597,617),(638,614),(655,589)],.139,.188,edge,.008)
     # Four highly visible corner bolts belong to the perimeter BASE plate;
     # additional fasteners are physically installed on the BLUE chassis face.
     for i,(x,y) in enumerate(((73,73),(601,73),(75,607),(604,607))):
-        bolt(f"Foundation perimeter anchor bolt {i}",x,y,.184,1.60)
+        bolt(f"Foundation perimeter anchor bolt {i}",x,y,.207 if y>500 else .184,1.60)
     for i,(x,y) in enumerate(((119,452),(552,463),(127,510),(552,510))):
         bolt(f"Chassis bolted top-lip fitting {i}",x,y,.488,1.16)
     for i,x in enumerate((145,215,466,538)):
@@ -601,30 +638,24 @@ def build_enclosure():
     for x,y in [(137,104),(139,325)]:
         bolt("Left long support rail boss",x,y,.511,1.20)
 
-    # Compact saddles support genuinely HORIZONTAL power capacitors.
-    # The round END FACES face forward at the intended game camera and
-    # dominate visually; only a short length of cylinder wall is exposed.
+    # Source shows three prominent circular OPEN ENDS as seen from above.
+    # Actual seated upright cylinders with top-facing circular mouths.
     for idx,x in enumerate((459,503,547)):
-        cast_contour(f"Capacitor {idx} seated longitudinal support saddle",
-            [(x-24,112),(x+24,112),(x+26,124),
-             (x+26,191),(x-26,191),(x-26,124)],
-            .430,.452,dark,.003)
-        cylinder(f"Capacitor {idx} short horizontal body",
-                 x,150,.490,.036,.074,edge,32,
-                 rotation=(math.pi/2,0,0))
-        torus(f"Capacitor {idx} circular face steel bezel",
-              x,176,.490,.035,.007,brass,
-              rotation=(math.pi/2,0,0))
-        cylinder(f"Capacitor {idx} front circular insulating end",
-                 x,178,.490,.032,.018,MATERIALS["insulator"],40,
-                 rotation=(math.pi/2,0,0))
-        torus(f"Capacitor {idx} visible terminal lock ring",
-              x,185,.490,.020,.004,edge,
-              rotation=(math.pi/2,0,0))
-        cylinder(f"Capacitor {idx} circular contact center",
-                 x,188,.490,.016,.012,dark,32,
-                 rotation=(math.pi/2,0,0))
-    front_details_before=set(VISIBLE.objects)
+        cast_contour(f"Capacitor {idx} bolted machine mounting saddle",
+            [(x-22,121),(x+22,121),(x+24,129),
+             (x+24,193),(x-24,193),(x-24,129)],
+            .472,.493,dark,.003)
+        cylinder(f"Capacitor {idx} upright metal shell",x,166,.525,
+                 .034,.080,edge,40)
+        torus(f"Capacitor {idx} circular top steel rim",x,166,.566,
+              .033,.005,brass)
+        cylinder(f"Capacitor {idx} circular black upper recess",x,166,.565,
+                 .026,.004,MATERIALS["crevice"],40)
+        torus(f"Capacitor {idx} concentric metal top ring",x,166,.567,
+              .019,.004,MATERIALS["edge_steel"])
+        cylinder(f"Capacitor {idx} deep central dark port",x,166,.569,
+                 .015,.005,dark,32)
+        front_details_before=set(VISIBLE.objects)
         # Green display is mounted inside the control bank, not painted on shell.
     cube("Computer bezel thick raised enclosure",243,364,.516,131,104,.033,dark,.008)
     cube("Bezel reflective inner steel rim",243,364,.535,112,84,.009,edge,.005)
@@ -796,7 +827,7 @@ def build_enclosure():
         obj.matrix_world=incline @ obj.matrix_world
     bpy.context.view_layer.update()
     face=bpy.data.objects.get("Left LCD and diagnostics faceplate")
-    cap=bpy.data.objects.get("Capacitor 0 short horizontal body")
+    cap=bpy.data.objects.get("Capacitor 0 upright metal shell")
     if face is None or cap is None:
         raise RuntimeError("V10 upper face or capacitor geometry missing")
     normal=face.matrix_world.to_3x3() @ Vector((0,0,1))
@@ -814,8 +845,8 @@ def build_enclosure():
         raise RuntimeError("LCD is geometrically submerged in upper housing")
     if face_upper_z <= housing_top+.006:
         raise RuntimeError("Inclined control face not above its 3D support")
-    if normal.y >= -.12 or normal.z <= .9 or axis.y >= -.9:
-        raise RuntimeError("V10 slope or sideways capacitor orientation invalid")
+    if normal.y >= -.12 or normal.z <= .9 or axis.z <= .9:
+        raise RuntimeError("Inclined console or upright round-top capacitor invalid")
     FEATURES.extend([
       "dark and bright genuinely modeled local surface metal scars",
       "chamfered source 1x1 enclosure and thick raised edge", "six structural fasteners",
@@ -985,17 +1016,18 @@ def main(out):
         raise RuntimeError("Upper machine not a continuous 3D casting")
     if len(upper_cast.data.vertices)!=32 or len(upper_cast.data.polygons)!=26:
         raise RuntimeError("Upper machine is not a coherent four-section solid")
+    recess_evidence=carve_real_chassis_front_recess()
     save_render(scene,top,OUTPUT/"01_source_view_real_mesh.png")
     save_render(scene,iso,OUTPUT/"02_game_candidate_full_miner.png")
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V15 source-oriented shallow casting, curved conduits and seated upper wires"
+    scene["asset_revision"]="V16 real front channel cut, sculpted base corner lugs and three top-visible capacitor mouths"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v15.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v16.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -1020,15 +1052,15 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v15.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v16.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V15 SOURCE-ORIENTED SHALLOW REAL SOLIDS; VISUAL REVIEW PENDING",
-        "candidate_revision":"V15",
+        "state":"V16 CAST BASE LUGS, TRUE CHASSIS INSET AND VERTICAL CAP MOUTHS; REVIEW PENDING",
+        "candidate_revision":"V16",
         "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
         "middle_chassis_physical_cross_sections":reopened_casting.get("cross_sections"),
         "upper_machine_physical_cross_sections":reopened_upper.get("cross_sections"),
@@ -1051,6 +1083,9 @@ def main(out):
         "physical_knife_switches":3,
         "middle_chassis_height_evidence":shrink_evidence,
         "front_setback_evidence":front_evidence,
+        "carved_front_service_channel":recess_evidence,
+        "foundation_corner_cast_gussets":2,
+        "capacitors_visible_circular_top_faces":3,
         "foundation_plate_corner_bolts":4,
         "chassis_front_armor_bolts":4,
         "capacitor_ends_read_forward":True,
@@ -1059,7 +1094,7 @@ def main(out):
                            "blue":"middle_chassis_lip_and_front",
                            "red":"raised_machinery_and_control_deck"},
         "front_control_slope_degrees":11,
-        "capacitor_axis":"HORIZONTAL_ALONG_DEPTH",
+        "capacitor_axis":"UPRIGHT_CIRCULAR_TOP_FACES",
         "coolant_entries":"LATERAL_INTO_UPPER_MACHINERY",
         "perimeter_hoses_visible_on_chassis_shoulders":True,
         "control_deck_width_reference_units":486,
