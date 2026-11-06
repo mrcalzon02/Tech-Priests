@@ -1,4 +1,4 @@
-name: Warfare native interface investigation (branch only)
+name: Warfare interface and Skitarii experiments (branch only)
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/warfare-readonly-investigation.yml'
       - 'warfare/probes/**'
+      - 'warfare/experiments/**'
       - 'warfare/tools/summarize_readonly_census.py'
       - 'warfare/tools/inspect_aai_interface_source.py'
       - 'warfare/tools/inspect_runtime_control_contracts.py'
@@ -22,7 +23,7 @@ concurrency:
 
 jobs:
   warfare-readonly:
-    name: Factorio 2.1.24 | AAI and weapon interface census
+    name: Factorio 2.1.24 | AAI census and Skitarii test
     if: github.ref == 'refs/heads/feature/warfare-module-planning'
     runs-on: ubuntu-latest
     timeout-minutes: 35
@@ -36,6 +37,8 @@ jobs:
           python3 -m py_compile tools/ci_factorio_combined_modpack.py warfare/tools/summarize_readonly_census.py warfare/tools/inspect_aai_interface_source.py warfare/tools/inspect_runtime_control_contracts.py
           python3 tools/ci_factorio_combined_modpack.py --selftest
           test -f warfare/probes/native-readonly-capability/control.lua
+          test -f warfare/experiments/skitarii-ci-mod/data.lua
+          test -f warfare/experiments/skitarii-ci-mod/scenarios/skitarii-move-attack/control.lua
           if grep -En 'surface\.create_entity|\.teleport\(|\.set_command\(|remote\.call\(|\.shooting_target\s*=|\.insert\(|\.remove\(|\.destroy\(' warfare/probes/native-readonly-capability/control.lua; then
             echo "Read-only probe violated its no-world-write boundary."
             exit 1
@@ -125,11 +128,51 @@ jobs:
             test-artifacts/warfare-readonly/native-capabilities.json \
             | tee test-artifacts/warfare-readonly/summary.txt
 
-      - name: Publish read-only investigation evidence
+      - name: Stage separate experimental Skitarii mod in disposable runner only
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp -R warfare/experiments/skitarii-ci-mod \
+            "$RUNNER_TEMP/warfare-mods/warfare-skitarii-experiment"
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          mod_dir = Path(os.environ["RUNNER_TEMP"]) / "warfare-mods"
+          mod_list = mod_dir / "mod-list.json"
+          enabled = json.loads(mod_list.read_text(encoding="utf-8"))
+          assert not any(m["name"] == "warfare-skitarii-experiment" for m in enabled["mods"])
+          enabled["mods"].append({"name": "warfare-skitarii-experiment", "enabled": True})
+          mod_list.write_text(json.dumps(enabled, indent=2) + "\n", encoding="utf-8")
+          info = json.loads((mod_dir / "warfare-skitarii-experiment" / "info.json").read_text())
+          assert info["name"] == "warfare-skitarii-experiment" and info["factorio_version"] == "2.1"
+          print("[WAR-SKITARII] Staged separate temporary mod and scenario, not shipping source")
+          PY
+
+      - name: Test native Skitarii prototype, actual movement and attack
+        shell: bash
+        run: |
+          set -euo pipefail
+          bin="$RUNNER_TEMP/warfare-engine/factorio/bin/x64/factorio"
+          log_file="test-artifacts/warfare-readonly/factorio-skitarii-experiment.log"
+          timeout 600 "$bin" --mod-directory "$RUNNER_TEMP/warfare-mods" \
+            --test-scenario warfare-skitarii-experiment/skitarii-move-attack \
+            --test-ticks 1120 > "$log_file" 2>&1 || {
+              status=$?
+              tail -n 130 "$log_file" || true
+              exit "$status"
+            }
+          grep -Fq '[WAR-SKITARII] STATUS=PASS' "$log_file"
+          grep -Fq '[WAR-SKITARII] walk_verified=true' "$log_file"
+          grep -Fq '[WAR-SKITARII] native_attack_verified=true' "$log_file"
+          grep -F '[WAR-SKITARII]' "$log_file" \
+            | tee "test-artifacts/warfare-readonly/skitarii-summary.txt"
+
+      - name: Publish investigation and disposable experiment evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: warfare-readonly-2.1-capabilities
+          name: warfare-investigation-2.1-capabilities-and-skitarii
           path: test-artifacts/warfare-readonly/
           retention-days: 14
           if-no-files-found: warn
