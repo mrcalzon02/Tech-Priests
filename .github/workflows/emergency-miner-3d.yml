@@ -31,7 +31,7 @@ jobs:
         run: |
           blender --version | head -n 2
           blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
-      - name: Build V13 coherent 3D middle chassis without invented front slab overlays
+      - name: Build V14 integrated 3D middle and upper housings without false fascia slabs
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
           blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
@@ -46,7 +46,10 @@ jobs:
           d=Path('art-output/emergency-miner')
           m=json.loads((d/'model_manifest.json').read_text())
           assert m['asset']=='tech-priests-emergency-miner'
-          assert m['candidate_revision']=='V13'
+          assert m['candidate_revision']=='V14'
+          assert m['upper_machine_physical_cross_sections']==4
+          assert not m['separate_upper_front_fascia']
+          assert abs(m['foundation_plate_thickness']-0.086)<0.001
           assert m['construction_method']=='PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER'
           assert m['middle_chassis_physical_cross_sections']==4
           assert m['fabricated_front_overlay_count']==0
@@ -120,7 +123,7 @@ jobs:
               with Image.open(p) as im:
                   im.verify()
               proof.append({'name':filename,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
-          data={'asset':'emergency-miner','revision':'V13',
+          data={'asset':'emergency-miner','revision':'V14',
                 'commit':os.environ['GITHUB_SHA'],
                 'run':os.environ['GITHUB_RUN_ID'],
                 'user_visible_delivery':'MUST_EMBED_REAL_RENDER_IMAGES_IN_CHAT',

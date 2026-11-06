@@ -1,4 +1,4 @@
-"""V13: physically coherent 3D chassis; source image is a projection, not an assembly diagram.
+"""V14: coherent 3D chassis AND upper casing; no thick false front strips.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -500,7 +500,7 @@ def build_enclosure():
     crevice=MATERIALS["crevice"]
     # Read the source as THREE real manufacturing levels, not a top-down plate.
     # 1. Wide foundation visible around the entire perimeter.
-    octagonal_case("LAYER_1 Foundation perimeter steel slab",340,329,.025,.156,
+    octagonal_case("LAYER_1 Foundation perimeter steel slab",340,329,.070,.156,
                    638,625,45,dark)
     frame_ring("LAYER_1 Foundation exposed bolted rim",340,329,.155,.174,
                638,625,589,565,edge)
@@ -517,16 +517,18 @@ def build_enclosure():
     # true metal lip, not a separate false "front armor" band.
     frame_ring("LAYER_2 Chassis upper shoulder",340,302,.451,.482,
                552,459,514,417,dark)
-    # 3. A smaller, higher control deck supports the monitor and wiring.
-    octagonal_case("LAYER_3 Elevated control deck structural body",
-                   340,254,.470,.556,486,424,29,panel)
-    frame_ring("LAYER_3 Control deck machine-edge step",
-               340,254,.547,.567,491,432,466,408,edge)
-    cast_contour("LAYER_3 Shaped frontal equipment fascia",
-        [(117,438),(559,439),(574,453),(558,478),
-         (128,478),(107,454)],.470,.600,iron,.009)
-    cube("LAYER_3 Narrow shadow reveal",340,476,.480,
-         448,5,.014,crevice,.001)
+    # 3. ONE continuous raised housing; its front wall is actually shaped
+    # by the physical taper of a watertight machine shell. No decorative
+    # full-width control-front slab is necessary. The shallow sloped
+    # keyboard control surface sits over this real supporting casting.
+    lofted_cast_chassis("LAYER_3 Elevated control deck structural body",[
+        (.470,340,255,490,427,32),
+        (.512,340,255,487,419,33),
+        (.552,340,249,475,401,31),
+        (.565,340,247,471,393,30),
+    ],panel)
+    # Source lines along the front arise from changes in the actual
+    # enclosure depth and control-plane angle, not stacked 2D contours.
     # Deliberately NO front full-width shoe, frontal stepped skirt, faux
     # dark structural spar or overlapping corner boots. Their source edges
     # are the projection of the real chassis bevel, lip, and base frame.
@@ -963,23 +965,31 @@ def main(out):
         "Upper tapered front armor guard",
         "Inset bottom mechanical seam",
         "Heavy cast front corner boot 0","Heavy cast front corner boot 1",
-        "Purpose-shaped bolted front lug 0","Purpose-shaped bolted front lug 1")
+        "Purpose-shaped bolted front lug 0","Purpose-shaped bolted front lug 1",
+        "LAYER_3 Shaped frontal equipment fascia",
+        "LAYER_3 Narrow shadow reveal",
+        "LAYER_3 Control deck machine-edge step")
     remaining=[name for name in forbidden_front_overlays if bpy.data.objects.get(name)]
     if remaining:
         raise RuntimeError("Stacked false front armor still exists: "+str(remaining))
     if len(casting.data.vertices)!=32 or len(casting.data.polygons)!=26:
-        raise RuntimeError("Lofted chassis topology invalid")
+        raise RuntimeError("Lofted middle chassis topology invalid")
+    upper_cast=bpy.data.objects.get("LAYER_3 Elevated control deck structural body")
+    if not upper_cast or upper_cast.get("physical_design")!="LOFTED_3D_INTEGRATED_CHASSIS":
+        raise RuntimeError("Upper machine not a continuous 3D casting")
+    if len(upper_cast.data.vertices)!=32 or len(upper_cast.data.polygons)!=26:
+        raise RuntimeError("Upper machine is not a coherent four-section solid")
     save_render(scene,top,OUTPUT/"01_source_view_real_mesh.png")
     save_render(scene,iso,OUTPUT/"02_game_candidate_full_miner.png")
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V13 genuine lofted middle chassis; removed false front overlays"
+    scene["asset_revision"]="V14 integrated 3D middle and top housings; no slab stack; slim foundation"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v13.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v14.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -988,8 +998,11 @@ def main(out):
         raise RuntimeError("Saved Blender scene lost visible components")
     # Reopen invalidates Blender RNA wrappers captured before save.
     reopened_casting=bpy.data.objects.get("LAYER_2 Raised central machine chassis")
+    reopened_upper=bpy.data.objects.get("LAYER_3 Elevated control deck structural body")
     if reopened_casting is None or reopened_casting.get("physical_design")!="LOFTED_3D_INTEGRATED_CHASSIS":
-        raise RuntimeError("Lofted casting missing after Blender save/reopen")
+        raise RuntimeError("Lofted middle chassis missing after Blender save/reopen")
+    if reopened_upper is None or reopened_upper.get("physical_design")!="LOFTED_3D_INTEGRATED_CHASSIS":
+        raise RuntimeError("Lofted top machine missing after Blender save/reopen")
     # Editable curves remain in .blend; export their physical mesh form to GLB.
     for obj in list(bpy.data.objects):
         obj.select_set(False)
@@ -1001,17 +1014,20 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v13.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v14.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V13 PHYSICAL SOLID CHASSIS WITH NO FALSE FRONT SLABS; VISUAL REVIEW PENDING",
-        "candidate_revision":"V13",
+        "state":"V14 BOTH ENCLOSURES ARE TRUE 3D CASTINGS; VISUAL REVIEW PENDING",
+        "candidate_revision":"V14",
         "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
         "middle_chassis_physical_cross_sections":reopened_casting.get("cross_sections"),
+        "upper_machine_physical_cross_sections":reopened_upper.get("cross_sections"),
+        "separate_upper_front_fascia":False,
+        "foundation_plate_thickness":0.086,
         "fabricated_front_overlay_count":len(remaining),
         "original_source_sha256":SOURCE_SHA256,
         "source_sprite_replaced":False,
