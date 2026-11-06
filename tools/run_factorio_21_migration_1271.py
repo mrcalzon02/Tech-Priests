@@ -63,7 +63,8 @@ def static_contract():
     assert "tanks_for_bob_fork" in data["mandatory_mod_ids"]
     assert "kj_servoskull" in data["mandatory_mod_ids"]
     assert len(data["mandatory_mod_ids"]) == len(set(data["mandatory_mod_ids"]))
-    assert data["mandated_aai_fix"] == "40kvehicles-AAI-fix"
+    assert data["retired_aai_fix"]["mod_id"] == "40kvehicles-AAI-fix"
+    assert data["retired_aai_fix"]["smoke_gate_requirement"] is False
     assert "? space-age >= 2.1.0" in stage_native_dependencies(), (
         "Migration staging must preserve the shipped Space Age load order")
     assert "? quality >= 2.1.0" in stage_native_dependencies()
@@ -101,7 +102,8 @@ def dependency_name(declaration):
 
 
 def portal_audit(data, output):
-    names = list(dict.fromkeys(data["mandatory_mod_ids"] + [data["mandated_aai_fix"]]))
+    # Deliberately omit the retired Factorio 1.1 AAI patch from 2.1 discovery.
+    names = list(dict.fromkeys(data["mandatory_mod_ids"]))
     report = {
         "target_factorio": data["target_factorio"],
         "kind": "remote_mod_portal_metadata_only_not_runtime_proof",
