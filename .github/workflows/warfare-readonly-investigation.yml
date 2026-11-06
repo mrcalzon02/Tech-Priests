@@ -1,0 +1,115 @@
+name: Warfare native interface investigation (branch only)
+
+on:
+  push:
+    branches:
+      - feature/warfare-module-planning
+    paths:
+      - '.github/workflows/warfare-readonly-investigation.yml'
+      - 'warfare/probes/**'
+      - 'warfare/tools/summarize_readonly_census.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# This is exactly one isolated investigative job. Main remains untouched.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  warfare-readonly:
+    name: Factorio 2.1.24 | AAI and weapon interface census
+    if: github.ref == 'refs/heads/feature/warfare-module-planning'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate read-only probe and existing Mod Portal resolver
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile tools/ci_factorio_combined_modpack.py warfare/tools/summarize_readonly_census.py
+          python3 tools/ci_factorio_combined_modpack.py --selftest
+          test -f warfare/probes/native-readonly-capability/control.lua
+          if grep -En 'surface\.create_entity|\.teleport\(|\.set_command\(|remote\.call\(|\.shooting_target\s*=|\.insert\(|\.remove\(|\.destroy\(' warfare/probes/native-readonly-capability/control.lua; then
+            echo "Read-only probe violated its no-world-write boundary."
+            exit 1
+          fi
+
+      - name: Download verified Factorio 2.1.24 headless engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/warfare-engine" test-artifacts/warfare-readonly
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/warfare-factorio.tar.xz" \
+            "https://factorio.com/get-download/2.1.24/headless/linux64"
+          tar -xJf "$RUNNER_TEMP/warfare-factorio.tar.xz" -C "$RUNNER_TEMP/warfare-engine"
+          "$RUNNER_TEMP/warfare-engine/factorio/bin/x64/factorio" --version \
+            | tee test-artifacts/warfare-readonly/engine-version.txt
+          grep -Fq '2.1.24' test-artifacts/warfare-readonly/engine-version.txt
+
+      - name: Download exact required unified modpack, verify all archives
+        env:
+          FACTORIO_USERNAME: ${{ secrets.FACTORIO_USERNAME }}
+          FACTORIO_TOKEN: ${{ secrets.FACTORIO_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/ci_factorio_combined_modpack.py --install --family 2.1 \
+            --mods-dir "$RUNNER_TEMP/warfare-mods" \
+            --artifact-dir test-artifacts/warfare-readonly
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          m = json.loads(Path("test-artifacts/warfare-readonly/modpack-manifest.json").read_text())
+          assert not m["blockers"], "Modpack is not complete"
+          assert len(m["installed"]) == 13, "Versioned reference pack has changed; investigate before proceeding"
+          assert any(x["name"] == "aai-programmable-vehicles" and x["version"] == "0.9.2"
+                     for x in m["installed"])
+          print("[WAR-READONLY] SHA-1-verified reference 13-mod pack")
+          PY
+
+      - name: Stage diagnostic scenario in disposable mod copy only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/warfare-mods/tech-priests/scenarios/native-readonly-capability"
+          cp warfare/probes/native-readonly-capability/control.lua \
+            "$RUNNER_TEMP/warfare-mods/tech-priests/scenarios/native-readonly-capability/control.lua"
+          test -f "$RUNNER_TEMP/warfare-mods/tech-priests/scenarios/native-readonly-capability/control.lua"
+
+      - name: Run native read-only test-scenario (no combat activation)
+        shell: bash
+        run: |
+          set -euo pipefail
+          bin="$RUNNER_TEMP/warfare-engine/factorio/bin/x64/factorio"
+          log_file="test-artifacts/warfare-readonly/factorio-capability-census.log"
+          timeout 600 "$bin" --mod-directory "$RUNNER_TEMP/warfare-mods" \
+            --test-scenario tech-priests/native-readonly-capability \
+            --test-ticks 180 > "$log_file" 2>&1 || {
+            result=$?
+            tail -n 110 "$log_file" || true
+            exit "$result"
+          }
+          grep -Fq '[WAR-OBS] STATUS|phase|COMPLETE' "$log_file"
+
+      - name: Validate observed runtime interfaces and produce sanitized JSON
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 warfare/tools/summarize_readonly_census.py \
+            test-artifacts/warfare-readonly/factorio-capability-census.log \
+            test-artifacts/warfare-readonly/native-capabilities.json \
+            | tee test-artifacts/warfare-readonly/summary.txt
+
+      - name: Publish read-only investigation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: warfare-readonly-2.1-capabilities
+          path: test-artifacts/warfare-readonly/
+          retention-days: 14
+          if-no-files-found: warn
