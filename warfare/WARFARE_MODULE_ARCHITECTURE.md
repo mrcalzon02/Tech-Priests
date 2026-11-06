@@ -65,7 +65,7 @@ This is a **candidate policy**, not an assertion that current engine/AAI lets it
 | **W5 — combined arms** | Foundation from W0–W4 | Fire support, artillery coordination, target-intelligence fusion, anti-air / point defense if target class actually supported | Live sensor and target restrictions, safe firing arcs, no omniscience or phantom detections |
 | **W6 — multi-weapon AI investigation** | AAI makes one AI variant per weapon; original cars can carry multiple guns | Explore noninvasive role switching or separately controlled native weapon components **only if warranted** | Unit/vehicle identity and all ammo/cargo/health/quality preserved; no AAI patch or duplicate AI by assumption |
 
-**No Skitarii, cannon, bunker or other future asset is presently claimed as implemented.** Do not use references to future W2/W3 as if recipes, prototypes, animations or 3D models exist.
+**No shippable Skitarii, cannon, bunker or other future Warfare asset is presently implemented.** A disposable **branch-only** Skitarii clone has now passed [real native walking, attack and ammo-proxy tests](EXPERIMENT_III_NATIVE_SKITARII_FEASIBILITY.md), using the existing Mechanicus Reborn engineer sprite reference path. These experiment-only prototypes do **not** imply original 3D art, independent infantry squad AI, ammo delivery, control leases, recipes or player teleoperation.
 
 ## 4. Native station/base integration
 
