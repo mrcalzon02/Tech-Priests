@@ -84,3 +84,18 @@ This revision is limited to the existing source evidence. It must not be conside
 | Sparse smaller bolts on main chassis front | 2 small heads near (180,512) and (497,512), no even row | `Middle front source screw {0..1}` |
 
 The model must retain editability and true physical depth. Although endpoints require no invented visible fittings, Blender EMPTY objects are acceptable as nonrendering assembly/occlusion constraints and must not be mistaken for unseen physical machinery. Re-check the eventual render: a claim that the presence of six cables proves they are visually seated is NOT sufficient. Correct actual occlusions when necessary.
+
+## V18–V20 evidence after actual side-by-side renders (2026-11-06)
+
+**Never confuse a technically passing Blender build with a matched sprite.** The verified source/V18/V20 rendered comparison (V20 Actions run 42314537463, corresponding model `tech_priests_emergency_miner_v20.blend`) shows that the original lower machine still looks substantially different.
+
+- **V18:** correctly deletes 2 invented blank corner pads, 1 false full-width control lip and pseudo-random physical scar geometry. The exposed base is nevertheless still a generic empty rectangle, NOT the original foundation.
+- **V19:** attempts to replace these pads with 2 original source-motivated corner supports but makes them into undersized, bright, isolated octagonal pads. **Visual candidate REJECTED**.
+- **V20:** physically extends those two original source-supported structures to meet the chassis shoulder and darkens them. This remedies the disconnected pads, but the result is now **two huge smooth tapering buttresses**, equally unfaithful to the original's intricately stepped and recessed armored feet. **V20 is not approved**.
+- Source left foot: roughly x≈50–160, y≈426–640, with main visible bolt near (112,456), a shaped lower projection, another large fastener near (109,556), and a physically recessed rectangular front face. Right foot mirrors this nonidentical surface language near x≈521–644. V20 loses the separate recessed front and buries or misplaces the lower bolt.
+- Source center front: a dark, shallow armored middle-chassis face with exactly two small visible heads, and distinct joined, beveled foundation structure below. V20 still renders uniform wide bands and a featureless black inset rather than these observed features. Do not remedy by attaching another full-width slab.
+- Source top upper-right triple ends: three deep, black circular mouths facing the view, not three long silver drums. The existing V20 cylinders remain the wrong read; correct their genuine 3D orientation and end geometry before adding any decoration.
+- Source front controls are **one flush, sloped keyboard-like panel**, with closely grouped LCD and switch hardware, not a generic tall box. The current model still projects too much of the supporting upper block.
+- **Hard next-pass rule:** No additional parts beyond the documented original source geometry. Fix the actual connected existing mesh's recesses, bevel cross sections, face placements and material zoning; verify from the source-matched camera AND distinct actual side view; show both real Blender renders in the chat.
+
+These are observations, not permission to add arbitrary hardware or change any in-game sprite. The original source remains the only appearance authority; all candidate meshes remain subject to owner's approval.
