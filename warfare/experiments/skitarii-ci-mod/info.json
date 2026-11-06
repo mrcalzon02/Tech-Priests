@@ -1,0 +1,13 @@
+{
+  "name": "warfare-skitarii-experiment",
+  "version": "0.0.1",
+  "title": "Warfare Skitarii Experimental Probe (CI only)",
+  "author": "Tech-Priests isolated diagnostic",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.0",
+    "tech-priests",
+    "mechanicus-reborn"
+  ],
+  "description": "Diagnostic-only separate mod used in isolated GitHub Actions to test a unit using installed Mechanicus engineer animations. Not for distribution."
+}
