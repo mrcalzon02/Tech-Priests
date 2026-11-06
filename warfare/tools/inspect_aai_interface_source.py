@@ -25,7 +25,7 @@ def patterns(name: str) -> list[tuple[str, re.Pattern]]:
     escaped = re.escape(name)
     return [
         ("lua-function", re.compile(
-            rf"(?m)^\s*function\s+[{NAME}:.]*\b{escaped}\s*\(([^)]*)\)"
+            rf"(?m)^\s*function\s+(?:[A-Za-z_][A-Za-z0-9_]*[.:])*{escaped}\s*\(([^)]*)\)"
         )),
         ("table-lambda", re.compile(
             rf"(?m)^\s*{escaped}\s*=\s*function\s*\(([^)]*)\)"
