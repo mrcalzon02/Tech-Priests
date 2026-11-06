@@ -8,7 +8,7 @@ Follow the [canonical construction doctrine](../../../../docs/RED_TECH_PRIESTS_C
 ![v0.4 rear source-geometry inspection](v04_rear_blockout.png)
 ![v0.4 game-scale source preview](v04_256px_blockout.png)
 
-These three images are direct mesh geometry diagnostics. The source passes **20 sloped face attachment assembly** checks and **8 beveled corner/foot part** checks, and keeps the original **3×3 foundation** plus 42 rotating turret meshes. Reference: [complete rebuildable v0.4 source package](../revisions/v04/martian_bunker_v04_source.zip).
+These three images are direct mesh geometry diagnostics. The source passes **22 sloped face attachment assembly** checks and **8 beveled corner/foot part** checks, and keeps the original **3×3 foundation** plus 42 rotating turret meshes. Reference: [complete rebuildable v0.4 source package](../revisions/v04/martian_bunker_v04_source.zip).
 
 ### Native Blender views, published by the dedicated verification workflow
 
