@@ -258,7 +258,16 @@ def stage_local_mod(family, mods_dir):
         # Diagnostic-only migration shim: never change the distributed 2.0 metadata.
         info = json.loads((dest / "info.json").read_text(encoding="utf-8"))
         info["factorio_version"] = "2.1"
-        info["dependencies"] = ["base >= 2.1.0"]
+        # Keep hard and optional edges: stripping them previously caused this
+        # mod to load before space-age, leaving cloned thruster entities absent.
+        dependencies = list(info.get("dependencies", []))
+        if not dependencies:
+            raise ValueError("Missing Tech-Priests dependency declarations")
+        info["dependencies"] = [
+            dep.replace(">= 2.0.0", ">= 2.1.0") for dep in dependencies
+        ]
+        info["dependencies"].extend(["? recycler >= 2.1.0",
+                                     "? elevated-rails >= 2.1.0"])
         (dest / "info.json").write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8")
         return "temporary-2.1-metadata-shim_not-release-proof"
     return "unchanged-2.0-source-metadata"
