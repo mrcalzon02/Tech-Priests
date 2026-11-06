@@ -75,7 +75,10 @@ jobs:
           fi
           git commit -m 'art: render and publish actual visual-target hard-surface mesh v08 Blender model and PBR maps'
           git fetch origin main
-          git rebase origin/main
+          # The tested, generated outputs are authoritative for this revision.
+          # If another run published older versions during rendering, prefer
+          # these files when replaying this non-forced commit onto current main.
+          git rebase -X theirs origin/main
           git push origin HEAD:main
       - name: Preserve all generated evidence
         if: always()
