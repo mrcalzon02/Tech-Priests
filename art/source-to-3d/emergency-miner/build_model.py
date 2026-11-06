@@ -151,6 +151,7 @@ def cast_contour(name, outline, z_bottom, z_top, m, bevel=.005):
     obj=bpy.data.objects.new(name,mesh)
     VISIBLE.objects.link(obj)
     assign(obj,m)
+    obj["source_contour"] = True
     if bevel:
         mod=obj.modifiers.new("Cast contour bevel","BEVEL")
         mod.width=bevel
@@ -772,7 +773,7 @@ def main(out):
         "perimeter_hoses_visible_on_chassis_shoulders":True,
         "control_deck_width_reference_units":486,
         "source_contour_mesh_count":sum(
-            ob.type=="MESH" and "SOURCE_TRACED_CAST_SURFACE" in ob.data.name
+            ob.type=="MESH" and bool(ob.get("source_contour", False))
             for ob in bpy.data.objects),
         "separate_LCD_and_switch_faceplates":True,
         "terminated_cable_routes":CABLE_ROUTES,
