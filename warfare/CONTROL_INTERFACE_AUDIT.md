@@ -1,6 +1,6 @@
 # Warfare — native control, entity and weapon interface audit
 
-**Status:** read-only interface investigation. **No gameplay implementation authorized.**
+**Status:** read-only interface investigation. **No gameplay implementation authorized.** The first two headless probes have now passed; [see real native findings](READONLY_NATIVE_INTERFACE_FINDINGS.md).
 **Branch:** `feature/warfare-module-planning`, forked from main commit `55ce75a2aca2e65902af2c86e88da3818f6fa2d1`.
 **Native evidence:** [Passing combined Factorio 2.1.24 run #42151378921](https://github.com/mrcalzon02/Tech-Priests/actions/runs/42151378921), artifact `combined-modpack-2.1-evidence`, specifically `factorio-create.log`. The native save-load benchmark did not exercise battle commands.
 **Installed:** AAI Programmable Vehicles **0.9.2**, `kj_vehicles` **2.2.1**, `kj_40kbaneblade`, `kj_40kpredator`, `kj_40klemanruss`, `kj_40kdreadnought` all **2.1.0**, plus Tanks for Bob **1.8.95** (temporary 2.1 metadata bridge), and vanilla/Space Age/Quality content.
@@ -40,7 +40,7 @@ The combined headless `factorio-create.log` shows calls from `__aai-programmable
 - [LuaEntityPrototype.indexed_guns](https://lua-api.factorio.com/latest/classes/LuaEntityPrototype.html) exposes current engine gun slots; [LuaEntity.selected_gun_index](https://lua-api.factorio.com/latest/classes/LuaEntity.html) selects the current car/character/spider gun when applicable. **Gun selection is not concurrent multi-gun firing.**
 - [UnitPrototype.attack_parameters](https://lua-api.factorio.com/latest/prototypes/UnitPrototype.html) exposes one primary attack-parameters object. [LuaCommandable](https://lua-api.factorio.com/latest/classes/LuaCommandable.html) applies to units, spider units and groups. **Cars are not automatically `commandable`** just because `LuaEntity` exposes the optional field. Do not call `car.commandable:set_command` without a proven non-nil commandable.
 - [`LuaEntity.get_driver/set_driver`](https://lua-api.factorio.com/latest/classes/LuaEntity.html), `riding_state`, `shooting_state`, `selected_gun_index`, and `get_inventory` are native capabilities with differing entity-type restrictions. Never assume a `unit` accepts `set_driver` or that a car accepts a unit attack command.
-- AAI's **public cross-mod `remote.interfaces` contract is not established by the available documentation or this historical smoke artifact**. [LuaRemote.interfaces](https://lua-api.factorio.com/latest/classes/LuaRemote.html) can be inspected at runtime, but **do not guess interface/function names or call them**.
+- **Actual read-only engine investigation now confirms** `remote.interfaces['aai-programmable-vehicles']` with 13 registered function names, including `set_unit_command`, `set_unit_data`, `set_path_waypoint` and read/query functions. [See verified enumeration and source declaration sites](READONLY_NATIVE_INTERFACE_FINDINGS.md). This confirms **names, not safe argument contracts or allowed usage**. No `remote.call` is authorized until further non-mutating semantic analysis.
 
 ### Critical hypothesis to test later: why one weapon?
 
@@ -94,7 +94,7 @@ Entities, gun slots and target references must be read by native `name` / `unit_
 
 ## 5. Open evidence blockers (future test designs, NOT branch failures now)
 
-- Exact `remote.interfaces` names/functions exposed by **installed AAI 0.9.2** (observe live runtime read-only; do not assume undocumented external access).
+- **Observed:** installed AAI 0.9.2 exposes the `aai-programmable-vehicles` interface and 13 function names ([native run #42162178961](https://github.com/mrcalzon02/Tech-Priests/actions/runs/42162178961)); **still unknown:** exact delegate argument/data-field contracts and safe operational semantics.
 - Exact **generated AI entity and item IDs** for each weapon configuration (the log records source car and gun, but not reliably the derivative prototype name).
 - Whether AAI can switch mode mid-mission without replacing an entity; whether players can take/release manual control and restore AAI orders.
 - Per-weapon target policy, range, ammo category, initial ammo, quality, projectile effects, turret orientation, multi-target acquisition and firing cooldown.
