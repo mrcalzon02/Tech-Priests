@@ -55,6 +55,33 @@ def main():
     smaller.thumbnail((1000,1050),Image.Resampling.LANCZOS)
     jpg=out/"emergency_miner_comparison_preview.jpg"
     smaller.save(jpg,"JPEG",quality=82,optimize=True)
+    # The current prototype's original 1254px art at 0.034 scale spans
+    # ~42.6 game pixels. Approximate the actual 1x1 visual readability,
+    # avoiding judgments from a flattering zoomed-in beauty render.
+    game_size=43
+    magnify=4
+    pad=18
+    tile=game_size*magnify
+    strip=Image.new("RGB", (4*(tile+pad)+pad, tile+108), (39,41,42))
+    draw_small=ImageDraw.Draw(strip)
+    for index,(label,file) in enumerate(NAMES):
+        orig=to_display(ORIGINAL if file is None else out/file, game_size)
+        enlarged=orig.resize((tile,tile),Image.Resampling.NEAREST)
+        x=pad+index*(tile+pad)
+        strip.paste(enlarged,(x,49))
+        draw_small.text((x,14),label.split(" (")[0][:22],fill=(237,235,221))
+        strip.paste(orig,(x,49+tile+8))
+        draw_small.text((x+47,49+tile+19),"43px actual-size swatch",fill=(229,225,215))
+    small_path=out/"emergency_miner_43px_display_readability.png"
+    strip.save(small_path,"PNG",optimize=True)
+    small_jpg=out/"emergency_miner_43px_display_preview.jpg"
+    strip.save(small_jpg,"JPEG",quality=84,optimize=True)
+    if args.print_preview:
+        print("BEGIN_IMAGE_BASE64_EMERGENCY_MINER_GAME_SCALE",flush=True)
+        data=base64.b64encode(small_jpg.read_bytes()).decode("ascii")
+        for i in range(0,len(data),116):
+            print(data[i:i+116],flush=True)
+        print("END_IMAGE_BASE64_EMERGENCY_MINER_GAME_SCALE",flush=True)
     if args.print_preview:
         print("BEGIN_IMAGE_BASE64_EMERGENCY_MINER_MODEL_COMPARISON",flush=True)
         data=base64.b64encode(jpg.read_bytes()).decode("ascii")
