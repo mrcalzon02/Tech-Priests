@@ -102,6 +102,31 @@ jobs:
             exit "$status"
           }
 
+      - name: Identify the mod defining invalid prototype references
+        if: failure()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, zipfile
+          root = pathlib.Path(os.environ["RUNNER_TEMP"]) / "combined-mods"
+          targets = (b"thetazine-thruster",)
+          for archive in sorted(root.glob("*.zip")):
+              try:
+                  with zipfile.ZipFile(archive) as z:
+                      for member in z.namelist():
+                          if not member.lower().endswith((".lua", ".json")):
+                              continue
+                          if any(target in z.read(member) for target in targets):
+                              print(f"[MODPACK-SOURCE] {archive.name}: {member}", flush=True)
+              except (zipfile.BadZipFile, OSError):
+                  print(f"[MODPACK-SOURCE] archive-unreadable {archive.name}", flush=True)
+          local = root / "tech-priests"
+          if local.is_dir():
+              for path in local.rglob("*.lua"):
+                  if any(target in path.read_bytes() for target in targets):
+                      print(f"[MODPACK-SOURCE] tech-priests: {path.relative_to(local)}", flush=True)
+          PY
+
       - name: Fail closed on missing required mods or unproven native loads
         if: always()
         shell: bash
