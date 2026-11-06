@@ -772,8 +772,8 @@ def main(out):
         "perimeter_hoses_visible_on_chassis_shoulders":True,
         "control_deck_width_reference_units":486,
         "source_contour_mesh_count":sum(
-            "SOURCE_TRACED_CAST_SURFACE" in ob.data.name for ob in real_objects
-            if ob.type=="MESH"),
+            ob.type=="MESH" and "SOURCE_TRACED_CAST_SURFACE" in ob.data.name
+            for ob in bpy.data.objects),
         "separate_LCD_and_switch_faceplates":True,
         "terminated_cable_routes":CABLE_ROUTES,
         "modeled_hidden_internal_components":0,
