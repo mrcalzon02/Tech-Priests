@@ -1,0 +1,100 @@
+name: Martian bunker editable Blender gallery
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'art/source-to-3d/martian-bunker/revisions/v02/**'
+      - '.github/workflows/martian-bunker-3d.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: martian-bunker-blender-main
+  cancel-in-progress: false
+jobs:
+  bunker-gallery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install mesh validation and Blender
+        run: |
+          python -m pip install 'numpy>=1.26,<3' 'trimesh>=4,<5' 'Pillow>=10,<12'
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
+          blender --version | head -n 2
+      - name: Recover complete editable source from immutable v02 gallery archive
+        run: |
+          mkdir -p art/source-to-3d/martian-bunker/src/v02
+          unzip -o art/source-to-3d/martian-bunker/revisions/v02/martian_bunker_v02_package.zip -d art/source-to-3d/martian-bunker/src/v02
+          python -m py_compile art/source-to-3d/martian-bunker/src/v02/build_blockout.py art/source-to-3d/martian-bunker/src/v02/setup_blender.py
+      - name: Rebuild actual GLB and validate rear clearance contract
+        run: |
+          python art/source-to-3d/martian-bunker/src/v02/build_blockout.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import trimesh
+          p=Path('art/source-to-3d/martian-bunker/src/v02')
+          m=json.loads((p/'component_manifest_v02.json').read_text())
+          assert m['parts_count']>=130 and m['rotating_mesh_count']>=35
+          assert m['reference_footprint_tiles']==[3,3]
+          assert m['base_footprint_unchanged']
+          assert m['rear_equipment_clearance_z']>=0.10
+          assert 0 < m['rear_vertical_clearance'] < m['rear_equipment_clearance_z']
+          s=trimesh.load(p/'martian_heavy_weapon_bunker_blockout_v02.glb',force='scene')
+          assert len(s.geometry)==m['parts_count']
+          assert 'co-rotating' in m['rear_mast_mount']
+          print('MODEL_ORIGINAL_MESH_AND_CLEARANCE_VALIDATED')
+          PY
+      - name: Save actual Blender master and render two orthographic views
+        run: |
+          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v02/setup_blender.py -- --render
+      - name: Validate, stage and build Factorio-scale Blender preview
+        run: |
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          from PIL import Image
+          p=Path('art/source-to-3d/martian-bunker/src/v02')
+          gallery=Path('art/source-to-3d/martian-bunker/gallery')
+          for name in ('martian_heavy_weapon_bunker_v02.blend','martian_heavy_weapon_bunker_blockout_v02.glb','bunker_blender_front_v02.png','bunker_blender_rear_v02.png'):
+              f=p/name
+              assert f.is_file() and f.stat().st_size>10000,(name,f)
+              print('EVIDENCE',name,f.stat().st_size,hashlib.sha256(f.read_bytes()).hexdigest())
+          for label in ('front','rear'):
+              fn=p/f'bunker_blender_{label}_v02.png'
+              with Image.open(fn) as im:
+                  assert im.size == (900,900)
+              (gallery/f'v02_blender_{label}.png').write_bytes(fn.read_bytes())
+          with Image.open(gallery/'v02_blender_front.png') as im:
+              im.thumbnail((256,256))
+              im.save(gallery/'v02_blender_256px.png')
+          print('BLENDER_NATIVE_MASTER_AND_RENDERED_GALLERY_VERIFIED')
+          PY
+      - name: Publish tested source, GLB, native Blend and gallery on main
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add art/source-to-3d/martian-bunker/src/v02 art/source-to-3d/martian-bunker/gallery/v02_blender_front.png art/source-to-3d/martian-bunker/gallery/v02_blender_rear.png art/source-to-3d/martian-bunker/gallery/v02_blender_256px.png
+          if git diff --cached --quiet; then
+            echo 'No gallery changes; source and master already present'
+            exit 0
+          fi
+          git commit -m 'art: validate and publish editable Blender Martian bunker v02'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+      - name: Preserve model evidence as a run artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: martian-bunker-v02-blender-master-gallery
+          path: |
+            art/source-to-3d/martian-bunker/src/v02/
+            art/source-to-3d/martian-bunker/gallery/v02_blender_*.png
+          if-no-files-found: warn
+          retention-days: 30
