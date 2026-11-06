@@ -304,6 +304,17 @@ local function safe_suffix(item)
   return tostring(item or ""):gsub("[^%w%-_]", "-")
 end
 
+-- Factorio 2.1 uses LuaRecipePrototype.categories; 2.0 uses category.
+-- Both are strict native objects, not permissive data-stage Lua dictionaries.
+local function emergency_recipe_categories_1276(proto)
+  if not proto then return {} end
+  local multi_ok, multi = pcall(function() return proto.categories end)
+  if multi_ok and type(multi)=="table" and #multi>0 then return multi end
+  local single_ok, single = pcall(function() return proto.category end)
+  if single_ok and type(single)=="string" then return {single} end
+  return {}
+end
+
 local function recipe_for(role, item)
   item = item or "iron-ore"
   if role == "miner" then
@@ -325,9 +336,10 @@ local function recipe_for(role, item)
       return nil
     end
     local prototype=prototypes and prototypes.recipe and prototypes.recipe[item]
-    local category=prototype and prototype.category
-    if category=="smelting" or category=="tech-priests-emergency-smelting" then
-      return nil
+    for _,category in ipairs(emergency_recipe_categories_1276(prototype)) do
+      if category=="smelting" or category=="tech-priests-emergency-smelting" then
+        return nil
+      end
     end
     if item == "repair-pack" and recipe_exists("tech-priests-emergency-repair-pack") then return "tech-priests-emergency-repair-pack" end
     if recipe_exists(item) then return item end
@@ -526,7 +538,8 @@ local function set_recipe(entity, recipe, pair, reason)
       local proto=prototypes and prototypes.recipe and prototypes.recipe[recipe]
       record_recipe_selection(pair,entity,recipe,"engine-unconfirmed",
         "selected="..tostring(selected).." category="..
-        tostring(proto and proto.category).." set_return="..tostring(result)..
+        table.concat(emergency_recipe_categories_1276(proto),",")..
+        " set_return="..tostring(result)..
         (not read_ok and " read-error" or "")..
         (not predicted and " preflight="..tostring(capability_reason) or ""))
       return false,capability_reason or "engine-unconfirmed"

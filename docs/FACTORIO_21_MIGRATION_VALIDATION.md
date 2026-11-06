@@ -70,3 +70,9 @@ After core and Mechanicus Reborn 0.0.3 **both passed 600 native ticks** in run h
 The runner checks all six native acceptance markers: living pairs, recovery, duration diagnosis, actual bootstrap-to-science, real Conclave research/force schism, and hostile-damage defense, with no fatal markers. Next it executes the existing separate-process autosave/reload engine script. It records its own result JSON only if **both** benchmark and persistence checks pass.
 
 A distinct GitHub commit status `tech-priests/factorio-2.1-core-endurance` reports this outcome independently; the broader, still-blocked required third-party modpack acceptance remains RED. Core success is not proof that future Mechanicist, Bob, 40K AAI or Servo-Skull releases have been validated.
+
+## 2.1 runtime LuaRecipePrototype and stochastic product readers
+
+Source audit found two latent errors that 600-tick startup does not exercise: `scripts/magos_ratio_planning.lua` attempted the removed 2.1 `recipe.category` API and treated all `independent_probability` recipes as 100% deterministic; `scripts/core/emergency_facility_doctrine.lua` directly indexed the removed `category` field during smelting/refusal and diagnostic work.
+
+Both now probe 2.1 `categories` before 2.0 `category` with guarded reads, preserving real native recipe classifications, and Magos yield computation now accounts for 2.1 `independent_probability * (shared_probability.max - shared_probability.min)`, including true zero chance. `runtime_recipe_schema_21_1276.lua` extracts and tests the actual runtime code against strict API test fixtures. No imaginary recipe or production output is counted.

@@ -50,8 +50,25 @@ local function tech_priests_0257_recipe_hidden(recipe)
 end
 
 local function tech_priests_0257_recipe_category(recipe)
-  local ok, category = pcall(function() return recipe.category end)
-  if ok then return category end
+  if not recipe then return nil end
+  -- LuaRecipePrototype is a strict API object: Factorio 2.1 has 'categories',
+  -- while 2.0 has 'category'. Unknown property reads throw.
+  local multi_ok, categories = pcall(function() return recipe.categories end)
+  if multi_ok and type(categories) == "table" and #categories > 0 then
+    -- Prefer machine-specialist categories if more than one is supported;
+    -- otherwise classify a multi-category vanilla recipe by its first option.
+    for _, specialist in ipairs({
+      "smelting", "metallurgy", "chemistry", "oil-processing",
+      "chemistry-or-cryogenics"
+    }) do
+      for _, category in ipairs(categories) do
+        if category == specialist then return category end
+      end
+    end
+    return categories[1]
+  end
+  local single_ok, category = pcall(function() return recipe.category end)
+  if single_ok and type(category) == "string" then return category end
   return nil
 end
 
@@ -88,7 +105,26 @@ local function tech_priests_0257_product_amount(recipe, item_name, kind)
         if low and high then quantity=(low+high)/2
         else quantity=low or high or 1 end
       end
-      local probability=tonumber(product.probability) or 1
+      -- Factorio 2.1 renamed product.probability to independent_probability
+      -- and added shared_probability. Prefer native 2.1 fields when present;
+      -- on strict 2.0 prototypes an unknown field read may throw.
+      local ok_chance, chance = pcall(function()
+        return product.independent_probability
+      end)
+      if not ok_chance or chance == nil then
+        local ok_legacy, legacy = pcall(function() return product.probability end)
+        chance = ok_legacy and legacy or nil
+      end
+      local probability=tonumber(chance)
+      if probability==nil then probability=1 end
+      local ok_shared, shared = pcall(function()
+        return product.shared_probability
+      end)
+      if ok_shared and type(shared)=="table" then
+        local lo=tonumber(shared.min) or 0
+        local hi=tonumber(shared.max) or 1
+        probability=probability*math.max(0,hi-lo)
+      end
       if quantity>=0 and probability>=0 and probability<=1 then
         amount=amount+quantity*probability
       end
