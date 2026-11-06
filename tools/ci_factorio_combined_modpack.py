@@ -316,7 +316,12 @@ def gate(args):
         if any(term in body for term in ("Error while loading", "Error while running",
                                         "stack traceback", "Failed to load")):
             messages.append(f"{label}: Factorio reported a runtime error")
+        # Some vehicle plugins expose runtime/control.lua and a zero data-stage
+        # checksum, without an individual "Loading mod ... (data.lua)" line.
+        # Factorio's own checksum ledger proves those packages were enabled.
         loaded = set(re.findall(r"Loading mod\s+([^\s]+)\s+[0-9]", body))
+        loaded.update(re.findall(r"Checksum of\s+([A-Za-z0-9_.-]+):\s*\d+", body))
+        loaded.update(re.findall(r"Checksum for script __([A-Za-z0-9_.-]+)__/", body))
         for item in manifest["installed"]:
             if item["name"] not in loaded:
                 messages.append(f"{label}: {item['name']} not confirmed loaded in native engine log")
@@ -345,6 +350,8 @@ def selftest():
     assert version("2.1") == version("2.1.0")
     assert satisfies("1.2.3", ">=", "1.2")
     assert not satisfies("1.2.3", "<", "1.2")
+    sample = "1.563 Checksum of kj_40kbaneblade: 0"
+    assert re.search(r"Checksum of\s+([A-Za-z0-9_.-]+):\s*\d+", sample).group(1) == "kj_40kbaneblade"
     def fake(name):
         if name == "first":
             return {"releases": [{"version": "1.0.0", "info_json": {
