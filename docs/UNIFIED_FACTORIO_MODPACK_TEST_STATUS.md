@@ -18,7 +18,7 @@ The single **Factorio 2.1.24** combined CI job successfully:
 8. Loaded the same save in a second, independent headless process and completed **1,200 additional ticks**.
 9. Recorded all native logs, installed-version inventory, original Mod Portal ZIP SHA-1 values, verdict and save in a GitHub Actions artifact.
 
-**Gate result:** `native_smoke=true`, `full_required_modpack_pass=false`. The overall workflow intentionally fails because the explicitly mandated legacy AAI compatibility fix has no 2.1 release. Successful endurance tests are not release approval.
+**Historical gate result (run #42149797508):** `native_smoke=true`, `full_required_modpack_pass=false` because the now-retired AAI fix was mandatory at that checkpoint. This does not describe later runs. Native startup and endurance are not proof of every gameplay behavior.
 
 ## Exact external mod versions verified in the 2.1 unified run
 
@@ -46,20 +46,26 @@ The single **Factorio 2.1.24** combined CI job successfully:
 
 The earlier [Factorio 2.0.77 combined run](https://github.com/mrcalzon02/Tech-Priests/actions/runs/42149466493) SHA-1-verified **14 external ZIPs**, including Tanks for Bob 1.8.95 and Mechanicist 0.1.1, created a save, and completed 3,600 benchmark ticks without native load/runtime failures. Its full-modpack gate remained blocked by the unavailable legacy AAI fix. The original [Factorio runtime workflow](../.github/workflows/factorio-runtime-tests.yml) retains dedicated 2.0 regression testing.
 
-## Unresolved mandatory integration evidence
+## Legacy AAI compatibility decision (2026-11-05 local)
 
-- **`40kvehicles-AAI-fix`:** The published release only targets legacy Factorio 1.1, so no compatible 2.0/2.1 archive can be installed. Do **not** fake a 2.1 release. Check whether current `kj_vehicles` / AAI integration implements equivalent behavior with *actual native* route, stop and resume tests for Predator, Leman Russ and Dreadnought. Until confirmed, the mandatory compatibility contract stays red.
+The user explicitly retired `40kvehicles-AAI-fix` as an outdated Factorio 1.1-era compatibility workaround. It is **not required, downloaded, or release-blocking** in the 2.0 or 2.1 unified smoke contracts. The current AAI Programmable Vehicles and KJ vehicle stack remain required and are presumed compatible. This is a **risk acceptance**, not a claim that real movement/stop/resume gameplay tests have passed.
+
+This change applies to the retired patch specifically, not to future fatal engine errors, broken required Mod Portal downloads, or actual unresolved gameplay failures.
+
+## Remaining integration evidence
+
+- **Retired legacy AAI fix:** No longer a blocker, and no replacement port is required. Current AAI/KJ behavior is assumed compatible and remains **unverified**, not a separate release gate.
 - **Tanks for Bob 2.1 release:** The current 1.8.95 ZIP is officially targeted at Factorio 2.0. The temporary metadata bridge verifies integration behavior only. Authoritative native 2.1 packaging and standalone publication require separate approval and proof.
 - **Nonfatal KJ vehicle diagnostics:** `kj_vehicles/data-final-fixes.lua:775` reports four vehicle-turret lookup warnings; startup and endurance still passed. Confirm these are benign for mounted weapons before granting combat compatibility.
 - **Functional scenario evidence still missing:** Full Tech-Priests ranked resource acquisition, science-production and hostile-defense assertions under this exact unified pack; actual AAI vehicle orders/stop-resume; real Servo-Skull roboport/logistic construction operations; machine recipes and research progression; persisted simulation state through a new-save checkpoint and process restart; dedicated-server multiplayer clients.
 
 ## Follow-on test sequence
 
-1. Extend this **one unified Factorio 2.1 profile**, not a matrix of profiles, with explicit AAI movement / stop-resume and Servo-Skull robot delivery assertions.
+1. Continue the **one unified Factorio 2.1 profile**, not a matrix. Prioritize real Servo-Skull robot delivery and Tech-Priests factory scenarios; vehicle movement checks may be diagnostic but are no longer a mandatory gate solely because the legacy fix is absent.
 2. Wire existing Tech-Priests ranked industrial / combat scenario harness into the same combined pack and run it for 123,000 ticks with its assertion tags, not only an empty-map endurance benchmark.
 3. Create a runtime save checkpoint after gameplay and reload it in a new process. The current extra 1,200 ticks only reloads the initial created save.
 4. Investigate KJ vehicle turret warnings and any actual ammunition / weapon behavior failures.
-5. Keep the gate red until the **specific required behavior** is proved and all modpack versions are legitimately compatible. Do not change shipping Factorio-version declarations to manufacture a green result.
+5. Permit the unified **native startup/endurance** gate to go green without the retired AAI fix when its actual required mods load and simulation completes. Keep broader gameplay/release readiness separate; do not change shipping Factorio-version declarations to manufacture evidence.
 
 ## Code and evidence
 
