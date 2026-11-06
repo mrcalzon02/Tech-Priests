@@ -1,5 +1,12 @@
 # Fortified Martian Heavy-Weapon Bunker — 3D development
 
+## v0.8 — real editable geometry toward owner-selected appearance
+
+**Current modeling revision.** [Source visual target](style-references/visual-target-v08.png) (reference only), [native Blender development gallery](gallery/README.md) and [reproducible actual 3D source](revisions/v08/martian_bunker_v08_actual_model_source.zip). This is **not** image generation: the 172-part v0.7 mesh is extended to 254 real independent parts; circular gun mantlet, 12 attached ring fasteners, two bolted round sightheads, headlight/status brackets, gun cover, 5 turned collars, roof access armor, recoil seal hardware, and original machine cog are modeled as physical parts, moving with the turret. A full 23-material procedural PBR atlas is regenerated and assigned in Blender. The v0.7 bunker, footprint and service cabling remain.
+
+**Quality contract:** the existing single Blender CI renders both flat and weathered variants, reimports both GLBs, and publishes the actual .blend, exported GLB, close-ups and Factorio-size diagnostic only after geometry/material checks. The owner's selected screenshot is held as a comparison target, not as a substitute for model work. No Factorio sprites or gameplay code changed.
+
+
 ## Active v0.7 — replace square gun jacket in the editable Blender asset
 
 The v0.6 barrel refinement left `21_gun_tube_outer_shroud` as a **literal cuboid**. This source error is now fixed in v0.7, not just in a reference image: the box is removed, replaced with a 48-sided tapered, hollow cylindrical gun jacket and circular connectors, seated into the mantlet and attached to the moving turret pivot. The original three user-provided weathering reference views guide 512×512 deterministic painted armor/steel/ferrocrete PBR map regeneration.

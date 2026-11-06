@@ -1,5 +1,32 @@
 # Fortified Martian Bunker — development progress gallery
 
+## v0.8 — user-selected visual target rebuilt in the REAL Blender model
+
+**Source target** (design comparison only, *never baked into geometry or a texture*):
+![Owner-selected bunker turret appearance target](../style-references/visual-target-v08.png)
+
+**Actual edit:** inherits the native Blender v0.7 with its circular, hollow main barrel. Adds **82 named, functional modeled components** (254 total, 165 turret-moving) to reconstruct visible features from the selected render instead of generating another unrelated picture:
+
+- Full concentric, bolted gun mantlet, overlapping mechanical oil seal and machined wear lip (genuine 56-sided annular geometry).
+- 18-arc-segment curved machined gun service hatch with four radial bolts; five round gun-service bands aligned with the barrel.
+- Paired recessed circular optical heads with retaining rings, six bolts each, genuinely seated dark lenses and working green status lights.
+- Forward-shielded optical hood, amber side status instrument, removable top turret service armor, attached bolt/seam details, physical hydraulic recoil seals.
+- An **original** machine-purity cog medallion, simple identification marks, mechanical joins; no copied eagle/Aquila.
+- 23 procedural, original 512×512 albedo/ORM/normal sets (69 image maps) using the three hard paint-weathering reference photos, never copying their pixels.
+
+**Native Blender gallery (outputs only published after the CI passes):**
+
+![Actual Blender close front render](v08_barrel_three_quarter.png)
+
+![Actual Blender head-on render](v08_barrel_head_on.png)
+
+![Actual Blender source-to-finish three stage view](v08_three_stage_reference_progress.png)
+
+[Editable textured Blender master](../src/v08/martian_heavy_weapon_bunker_v08_textured.blend) · [Blender-exported GLB](../src/v08/martian_heavy_weapon_bunker_v08_textured_export.glb) · [Rebuildable v0.8 source ZIP](../revisions/v08/martian_bunker_v08_actual_model_source.zip) · [Validation](../src/v08/validation_report_v08.json)
+
+**Gate:** prove non-floating mounted parts, cylindrical shroud/open muzzle, 360° traverse, glTF material/UV survival, visually different flat-versus-textured Blender renders. Approval against the target image still requires viewing actual rendered outputs; **not** claimed an exact photograph-to-3D reconstruction or a game-ready sprite.
+
+
 ## v0.7 — ACTUAL Blender model: round barrel jacket and applied weathering
 
 **The v0.6 rectangular cannon shroud is deleted from the underlying geometry.** The replacement is a tapered 48-sided, truly cylindrical gun jacket, complete with fitted concentric locking flange, round service collar and eight physically seated flange bolts. The open pressure barrel and muzzle remain in place; all parts traverse with the turret.
