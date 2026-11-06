@@ -242,11 +242,13 @@ def roots_for_family(family):
                        else "tests/modpacks/required_21_1271.json")
     data = json.loads(contract.read_text(encoding="utf-8"))
     names = data["required_mod_ids"] if family == "2.0" else data["mandatory_mod_ids"]
-    # The explicitly mandated AAI fix must never silently disappear from an acceptance run.
-    names = list(dict.fromkeys(names + [
-        data["required_compatibility_behavior"]["upstream_mod_id"]
-        if family == "2.0" else data["mandated_aai_fix"]
-    ]))
+    # The obsolete Factorio 1.1 AAI fix is intentionally retired by policy.
+    # Keep its name in the contract/audit trail but never install or gate on it.
+    retired = (data["required_compatibility_behavior"]["upstream_mod_id"]
+               if family == "2.0" else data["retired_aai_fix"]["mod_id"])
+    if retired in names:
+        raise ValueError("Retired AAI patch must not be in the required modpack: " + retired)
+    names = list(dict.fromkeys(names))
     return names, contract
 
 
@@ -405,6 +407,8 @@ def selftest():
     assert version("2.1") == version("2.1.0")
     assert satisfies("1.2.3", ">=", "1.2")
     assert not satisfies("1.2.3", "<", "1.2")
+    assert "40kvehicles-AAI-fix" not in roots_for_family("2.1")[0]
+    assert "40kvehicles-AAI-fix" not in roots_for_family("2.0")[0]
     sample = "1.563 Checksum of kj_40kbaneblade: 0"
     assert re.search(r"Checksum of\s+([A-Za-z0-9_.-]+):\s*\d+", sample).group(1) == "kj_40kbaneblade"
     def fake(name):
