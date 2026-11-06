@@ -1,10 +1,10 @@
 {
   "model": "v0.4",
   "parts": 131,
-  "surface_mounts": 20,
+  "surface_mounts": 22,
   "corner_and_foot_bodies": 8,
-  "native_blend_sha256": "1607826233c4d1f15a7cf75b81e1ccff7d630a14bd25b1cc841a244c3428e66b",
-  "blender_glb_sha256": "e5acfcd30873d7d0ef657ee028d66a4dd6a6d2896146200a71245422f341a054",
+  "native_blend_sha256": "1722fc134b4cd17bd8d2ee400ae3a5e98d8279f4c0e4b172c72a2fac1df0026b",
+  "blender_glb_sha256": "802338783bbafc35f1954f425cd60b12117996f119d6ad3ef17ddf8eaa671faf",
   "renders": {
     "front": {
       "visible_pixels": 247664,
@@ -16,14 +16,14 @@
     },
     "rear": {
       "visible_pixels": 257156,
-      "red_pixels": 42603,
+      "red_pixels": 43361,
       "span_px": [
         672,
         592
       ]
     },
     "front_west": {
-      "visible_pixels": 247314,
+      "visible_pixels": 247108,
       "red_pixels": 27085,
       "span_px": [
         672,
@@ -31,8 +31,8 @@
       ]
     },
     "rear_east": {
-      "visible_pixels": 254929,
-      "red_pixels": 28808,
+      "visible_pixels": 254708,
+      "red_pixels": 29714,
       "span_px": [
         672,
         592

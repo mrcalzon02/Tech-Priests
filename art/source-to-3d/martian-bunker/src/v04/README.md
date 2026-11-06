@@ -15,7 +15,7 @@
 
 ## Reproducible checks
 
-Run `python build_blockout.py` then `python verify_hull_conformance.py`. The latter inspects the actual raw mesh vertices at the top and bottom of **20 hull-mounted parts**, proves the side-plane slope, checks the eight corner/foot meshes, preserves 131 named parts and 42 rotating objects, and fails on even slight detached panels.
+Run `python build_blockout.py` then `python verify_hull_conformance.py`. The latter inspects the actual raw mesh vertices at the top and bottom of **22 hull-mounted parts**, proves the side-plane slope, checks the eight corner/foot meshes, preserves 131 named parts and 42 rotating objects, and fails on even slight detached panels.
 
 Blender Actions then constructs the native editable `.blend`, renders front/rear/other corners, exports `.glb`, opens the exported model in a **clean Blender instance**, and checks its geometry, color and corner taper again. Source previews are diagnostic only. No existing Factorio sprite or gameplay prototype is modified.
 

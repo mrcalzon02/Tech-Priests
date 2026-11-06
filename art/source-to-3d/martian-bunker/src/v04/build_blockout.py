@@ -271,10 +271,10 @@ box('28_right_magazine_inspection_panel',(.36,.92,1.39),(.08,.28,.21),
 for y in [.85,1.06]: anchor_bolt(f'28_magazine_bolt_{y}',(.42,y,1.40),'x',.025)
 
 # Power & signal paths terminate at cabinets / rotary coupling, never nowhere.
-box('29_rear_control_cabinet',(-1.03,.94,1.38),(.35,.46,.25),
-    'iron','control','Ballistic-protected remote-fire electronics outside rotating envelope')
-box('30_controller_access_panel',(-1.03,1.188,1.38),(.29,.025,.19),
-    'red_highlight','control','Serviced controller access panel')
+box('29_rear_control_cabinet',(.66,.99,1.01),(.35,.38,.25),
+    'iron','control','Remote-fire electronics housed behind the southward-inclined north wall')
+face_plate('30_controller_access_panel','N',.66,1.02,.29,.19,.05,
+    'red_highlight','control','Controller service panel follows rear wall taper beneath roof chamfer')
 # The mast is part of the rotating turret, not fixed atop the bunker.
 strut('31_antenna_mount_angled_rear',(.42,.49,2.15),(.47,.84,2.35),
       .13,.15,'machine_steel','comms','Rear casing bolted standoff; rotates with turret and clears barrel')
@@ -289,9 +289,9 @@ for sx,label in [(-1,'W'),(1,'E')]:
         'brass','comms','Tuned antenna element on co-rotating remote-control mast')
 pipe('35_telemetry_hardline',[(.47,.80,2.46),(.47,.63,2.38),(.39,.49,2.33),(.28,.19,2.20)],
     .028,'machine_steel','power_signal','Mast connects to co-rotating turret control bus; fixed feed via slip ring')
-pipe('36_controller_to_slipring',[(-1.03,.89,1.43),(-.83,.74,1.44),(-.60,.52,1.51),(-.44,.22,1.64)],
+pipe('36_controller_to_slipring',[(.66,1.10,1.05),(.48,.83,1.23),(.23,.52,1.51),(-.44,.22,1.64)],
     .037,'machine_steel','power_signal','Low stationary controller cable to protected rotating slip ring')
-pipe('37_ammo_condition_probe_to_controller',[(.27,.93,1.36),(.36,1.06,1.35),(.36,1.16,1.27),(-1.03,1.16,1.27)],
+pipe('37_ammo_condition_probe_to_controller',[(.27,.93,1.36),(.36,1.06,1.35),(.36,1.16,1.27),(.66,1.14,1.05)],
     .025,'brass','power_signal','Ready-magazine condition cable kept below turret underside')
 
 # Targeting optic physically seated on turret cheek (rotating with gun).
@@ -315,8 +315,8 @@ for i in range(4):
     face_plate(f'45_vent_louver_{i+1}','N',-.49+i*.12,.79,.048,.22,.028,
         'machine_steel','thermal','Actual mounted intake louvers over rear cooling duct',stand_off=.056,penetration=.024)
 # Certification attaches directly to the accessible rear controller cover, not air.
-box('46_maintenance_purity_certificate',(-1.03,1.214,1.38),(.155,.012,.13),
-    'parchment','rites','Controller-specific certificate affixed flush to serviced cabinet')
+face_plate('46_maintenance_purity_certificate','N',.66,1.02,.14,.11,.012,
+    'parchment','rites','Purity certificate truly seated on rear service-panel plate',stand_off=.048,penetration=.016)
 box('47_oil_service_port',(.54,-.47,2.26),(.13,.10,.06),
     'brass','rites','Oiling point for weapon elevation bearing, mechanically anchored')
 
@@ -426,7 +426,7 @@ for a in BUTTRESS_PROFILES:
 # Additional flag: world-space static mounts must follow the shell's slope.
 for name in ('08_recessed_hatch_void','09_steel_service_hatch',
  '11_left_approach_sensor','44_rear_vent_guard','55_east_wall_controller_armor',
- '59_exterior_supply_breaker','66_bunker_condition_gauge'):
+ '59_exterior_supply_breaker','66_bunker_condition_gauge','30_controller_access_panel'):
     a=next(x for x in ATTACHMENTS if x['name']==name)
     assert abs(a['surface_slope']) > .17,(name,a['surface_slope'])
 print('HULL_SURFACE_CONTACT_AND_INWARD_BUTTRESS_GEOMETRY_PASSED',len(ATTACHMENTS),len(BUTTRESS_PROFILES))

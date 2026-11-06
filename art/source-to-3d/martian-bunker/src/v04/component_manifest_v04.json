@@ -10,11 +10,11 @@
   "render_comparison": "Factorio assembling-machine 3x3 visual-density benchmark, NOT geometry source",
   "parts_count": 131,
   "rotating_mesh_count": 42,
-  "static_rear_top_z": 1.6737217305335712,
+  "static_rear_top_z": 1.6764074661548387,
   "rear_equipment_top_z": 1.56,
   "rear_equipment_clearance_z": 0.1399999999999999,
   "moving_min_z": 1.7,
-  "rear_vertical_clearance": 0.02627826946642875,
+  "rear_vertical_clearance": 0.023592533845161245,
   "rear_mast_mount": "turret rear casing (co-rotating, behind bore line)",
   "base_footprint_unchanged": true,
   "triangles_total": 4536,
@@ -401,14 +401,14 @@
       "name": "29_rear_control_cabinet",
       "material": "iron",
       "system": "control",
-      "purpose": "Ballistic-protected remote-fire electronics outside rotating envelope",
+      "purpose": "Remote-fire electronics housed behind the southward-inclined north wall",
       "triangles": 12
     },
     {
       "name": "30_controller_access_panel",
       "material": "red_highlight",
       "system": "control",
-      "purpose": "Serviced controller access panel",
+      "purpose": "Controller service panel follows rear wall taper beneath roof chamfer",
       "triangles": 12
     },
     {
@@ -667,7 +667,7 @@
       "name": "46_maintenance_purity_certificate",
       "material": "parchment",
       "system": "rites",
-      "purpose": "Controller-specific certificate affixed flush to serviced cabinet",
+      "purpose": "Purity certificate truly seated on rear service-panel plate",
       "triangles": 12
     },
     {
@@ -999,6 +999,18 @@
       "contact_type": "face-mounted equipment"
     },
     {
+      "name": "30_controller_access_panel",
+      "face": "N",
+      "lateral": 0.66,
+      "z_bottom": 0.925,
+      "z_top": 1.115,
+      "stand_off": 0.0,
+      "penetration": 0.025,
+      "outer_projection": 0.05,
+      "surface_slope": -0.172043,
+      "contact_type": "shell"
+    },
+    {
       "name": "44_rear_vent_guard",
       "face": "N",
       "lateral": -0.3,
@@ -1055,6 +1067,18 @@
       "stand_off": 0.056,
       "penetration": 0.024,
       "outer_projection": 0.028,
+      "surface_slope": -0.172043,
+      "contact_type": "face-mounted equipment"
+    },
+    {
+      "name": "46_maintenance_purity_certificate",
+      "face": "N",
+      "lateral": 0.66,
+      "z_bottom": 0.965,
+      "z_top": 1.075,
+      "stand_off": 0.048,
+      "penetration": 0.016,
+      "outer_projection": 0.012,
       "surface_slope": -0.172043,
       "contact_type": "face-mounted equipment"
     },
