@@ -147,6 +147,16 @@ A family should share recognizable formwork, mounting grids, fastener vocabulary
 For the emergency miner, the owner-authoritative principle is **face-down modulated laser ablation and very slow, polluting proto-matter reconstitution**, but the sprite shows an armored **upper control interface**. Reconstruct that *visible box*, with no auger and no invisible laser/electronics machinery.
 
 
+### Perspective and layered-machine reconstruction (mandatory)
+
+The supplied sprite can be a stylized or AI-generated **oblique** view with internally inconsistent perspective, not an orthographic blueprint. Infer a coherent physical 3D object rather than copying incompatible projection artifacts. Establish the camera target from observed visible top **and** front/side faces; distinguish azimuth from elevation and compare fixed-angle renders. A roughly 45-degree azimuth, 25-degree elevation view is the initial reference for the emergency miner, not a universal camera requirement.
+
+For a layered machine, identify its visibly distinct **foundation plate**, **raised central chassis**, and **elevated controls/equipment plate** separately. The foundation remains visible around the footprint; the central enclosure has actual side/front height; the upper equipment deck supports physical controls, connectors, sockets, machinery and shielding. Preserve contact, structural overlap, and realistic stepped shadow gaps. Do not infer a false flat top merely because a generated illustration has weak shading. Other structures may require a different number of layers.
+
+Every visible hose and wire must have an engineered and modeled **start fitting, supported route, and end fitting**; never terminate curves in empty space, including at a camera crop or while crossing plate edges. Distinguish colored knife-switch **handles** from standalone electrical sockets, and recognize larger components like pulse capacitors by their vertical length, collars and mounting base. Cable paths and mounting hardware should survive target-scale rendering.
+
+**Show your work to the owner:** each Blender run needs at least one, ideally two, **actual rendered previews inline in the conversation**: (1) source/reference versus matched camera render and (2) alternate angle/detail with target game-pixel scale. For batches, show a labeled contact sheet inline. GitHub archives, commits, artifact links and build status may supplement but never replace visible rendered proof. Report what changed and what still fails visually; mark owner approval pending until explicit review.
+
 **Goal:** High-detail original 3D objects recognizable as their intended 2D sprite subject and renderable as polished Factorio-scale images. Work on **one asset at a time**.
 
 1. **Reference contract.** Identify the specific existing sprite or approved design brief, camera orientation, reference dimensions, intended game footprint, weapon mission and obvious mechanical constraints.
