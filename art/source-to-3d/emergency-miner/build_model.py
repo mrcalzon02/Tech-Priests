@@ -1,4 +1,4 @@
-"""V07: three-layer perspective-corrected emergency laser-ablator enclosure.
+"""V08: exposed hydraulic channels and three-layer perspective-corrected miner.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -299,13 +299,13 @@ def build_enclosure():
                607,561,564,516,dark)
     # 3. A smaller, higher control deck supports the monitor and wiring.
     octagonal_case("LAYER_3 Elevated control deck structural body",
-                   340,254,.470,.556,565,424,29,panel)
+                   340,254,.470,.556,486,424,29,panel)
     frame_ring("LAYER_3 Control deck machine-edge step",
-               340,254,.547,.567,569,432,542,408,edge)
+               340,254,.547,.567,491,432,466,408,edge)
     cube("LAYER_3 Visible front vertical console fascia",340,460,.536,
-         532,23,.132,iron,.009)
+         471,23,.132,iron,.009)
     cube("LAYER_3 Inset front shadow reveal",340,472,.481,
-         512,8,.018,crevice,.002)
+         456,8,.018,crevice,.002)
     # Distinctive lower armor rail and lifting feet.
     cube("Lower projecting shell flange",340,576,.445,620,82,.054,iron,.009)
     cube("Lower full width shoe",338,595,.465,540,37,.056,panel,.006)
@@ -460,27 +460,27 @@ def build_enclosure():
     # the exposed chassis shoulder. End fittings physically grip the hose.
     for side in (-1,1):
         prefix="L" if side<0 else "R"
-        x=74 if side<0 else 606
+        x=66 if side<0 else 614
         top_gland=f"{prefix} rear hydraulic bulkhead connector"
         bottom_gland=f"{prefix} front hydraulic manifold connector"
-        cable_gland(top_gland,x,84,.466)
-        cable_gland(bottom_gland,x+8*side,405,.463)
-        points=[(x,84,.466),(x-9*side,117,.473),
-                (x-12*side,171,.482),(x-12*side,230,.475),
-                (x-12*side,299,.468),(x-4*side,356,.473),
-                (x+8*side,405,.463)]
+        cable_gland(top_gland,x,84,.500)
+        cable_gland(bottom_gland,x+8*side,405,.497)
+        points=[(x,84,.500),(x-9*side,117,.507),
+                (x-12*side,171,.516),(x-12*side,230,.509),
+                (x-12*side,299,.502),(x-4*side,356,.507),
+                (x+8*side,405,.497)]
         routed_cable(prefix+" actual perimeter ribbed hydraulic conduit",
            points,.022,MATERIALS["black_wire"],top_gland,bottom_gland,
            "External sealed heat-transfer hose, connected at both ends")
         for i in range(13):
             y=105+i*21
             xi=x-(10 if 1<i<9 else 4)*side
-            torus(prefix+f" hydraulic rib {i:02d}",xi,y,.480,
+            torus(prefix+f" hydraulic rib {i:02d}",xi,y,.514,
                   .022,.003,MATERIALS["iron"],rotation=(math.pi/2,0,0))
         for y in (150,284,348):
-            cube(prefix+f" steel hose retaining bracket {y}",x,y,.493,
+            cube(prefix+f" steel hose retaining bracket {y}",x,y,.527,
                  44,23,.028,edge,.003)
-            screws(prefix+f" hose bracket stud {y}",[(x,y)],.515)
+            screws(prefix+f" hose bracket stud {y}",[(x,y)],.549)
 
     # Localized real 3D surface wear is source-grounded: prominent pitting
     # and cut-back paint occur on the original's blank armored steel faces.
@@ -657,12 +657,12 @@ def main(out):
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V07 stepped three-layer chassis, grounded wiring, knife switches and capacitors"
+    scene["asset_revision"]="V08 visible perimeter hydraulic channels and three-layer controller"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v07.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v08.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -687,8 +687,8 @@ def main(out):
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V07 THREE-LAYER EXTERIOR CANDIDATE REQUIRES VISUAL REVIEW",
-        "candidate_revision":"V07",
+        "state":"V08 THREE-LAYER EXTERIOR WITH EXPOSED HOSES REQUIRES VISUAL REVIEW",
+        "candidate_revision":"V08",
         "original_source_sha256":SOURCE_SHA256,
         "source_sprite_replaced":False,
         "gameplay_changed":False,
@@ -698,6 +698,8 @@ def main(out):
         "view_angle_target_degrees":{"azimuth":45,"elevation":25},
         "visible_pulse_capacitors":3,
         "physical_knife_switches":3,
+        "perimeter_hoses_visible_on_chassis_shoulders":True,
+        "control_deck_width_reference_units":486,
         "terminated_cable_routes":CABLE_ROUTES,
         "modeled_hidden_internal_components":0,
         "render_geometry_policy":"GAME_CAMERA_VISIBLE_ONLY",
