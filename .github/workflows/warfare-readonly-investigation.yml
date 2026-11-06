@@ -39,6 +39,7 @@ jobs:
           test -f warfare/probes/native-readonly-capability/control.lua
           test -f warfare/experiments/skitarii-ci-mod/data.lua
           test -f warfare/experiments/skitarii-ci-mod/scenarios/skitarii-move-attack/control.lua
+          test -f warfare/experiments/skitarii-ci-mod/scenarios/skitarii-ammo-proxy/control.lua
           if grep -En 'surface\.create_entity|\.teleport\(|\.set_command\(|remote\.call\(|\.shooting_target\s*=|\.insert\(|\.remove\(|\.destroy\(' warfare/probes/native-readonly-capability/control.lua; then
             echo "Read-only probe violated its no-world-write boundary."
             exit 1
@@ -167,6 +168,25 @@ jobs:
           grep -Fq '[WAR-SKITARII] native_attack_verified=true' "$log_file"
           grep -F '[WAR-SKITARII]' "$log_file" \
             | tee "test-artifacts/warfare-readonly/skitarii-summary.txt"
+
+      - name: Prove original hidden-turret proxy consumes native ammunition
+        shell: bash
+        run: |
+          set -euo pipefail
+          bin="$RUNNER_TEMP/warfare-engine/factorio/bin/x64/factorio"
+          log_file="test-artifacts/warfare-readonly/factorio-skitarii-ammo-proxy.log"
+          timeout 600 "$bin" --mod-directory "$RUNNER_TEMP/warfare-mods" \
+            --test-scenario warfare-skitarii-experiment/skitarii-ammo-proxy \
+            --test-ticks 900 > "$log_file" 2>&1 || {
+              status=$?
+              tail -n 130 "$log_file" || true
+              exit "$status"
+            }
+          grep -Fq '[WAR-AMMO] STATUS=PASS' "$log_file"
+          grep -Fq '[WAR-AMMO] ammo_consumption_verified=true' "$log_file"
+          grep -Fq '[WAR-AMMO] proxy_damage_verified=true' "$log_file"
+          grep -F '[WAR-AMMO]' "$log_file" \
+            | tee "test-artifacts/warfare-readonly/skitarii-ammo-summary.txt"
 
       - name: Publish investigation and disposable experiment evidence
         if: always()
