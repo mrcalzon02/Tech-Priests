@@ -21,7 +21,14 @@ for k,v in pairs(table) do library[k]=v end
 library.deepcopy=clone
 local env={
   table=library,
-  data={raw={["assembling-machine"]={["assembling-machine-1"]=vanilla}}},
+  data={raw={
+    ["assembling-machine"]={["assembling-machine-1"]=vanilla},
+    -- Real registered categories in a Factorio 2.0 data stage.
+    ["recipe-category"]={
+      crafting={},["basic-crafting"]={},["advanced-crafting"]={},
+      electronics={},
+    },
+  }},
   tech_priests_micro_icon_path=function()return "test-icon.png" end,
   tech_priests_apply_micro_icon=function()end,
   tech_priests_micro_crafting_art=function()return {} end,
@@ -49,6 +56,19 @@ assert(categories["crafting"] and categories["basic-crafting"]
 assert(not categories["smelting"]
     and not categories["tech-priests-emergency-smelting"],
   "electronics repair incorrectly moved plate smelting into the assembler")
+-- Native 2.1 removed basic-crafting. Rebuild from a real 2.1 registry and
+-- verify both electronics construction and absence of fabricated categories.
+env.data.raw["recipe-category"]["basic-crafting"]=nil
+local assembler21=factory()
+local categories21={}
+for _,category in ipairs(assembler21.crafting_categories or {}) do
+  assert(env.data.raw["recipe-category"][category]~=nil,
+    "2.1 emergency assembler referenced a removed native category")
+  categories21[category]=true
+end
+assert(categories21.crafting and categories21["advanced-crafting"]
+  and categories21.electronics and not categories21["basic-crafting"],
+  "2.1 category migration lost electronic fabrication or retained removed basic-crafting")
 assert(vanilla.crafting_categories[1]=="crafting"
     and vanilla.crafting_categories[2]==nil,
   "emergency assembler modification changed the vanilla prototype")
