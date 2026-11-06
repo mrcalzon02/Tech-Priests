@@ -165,6 +165,17 @@ assert(machine_calls==1 and resumed.waiting==1
   and pair.canonical_action_0744.family=="machine-logistics"
   and pair.machine_logistics_custody_0528==held and held.count==5,
   "foreign routine order starved physical machine custody return")
+-- An active 0256 expansion plan is not a competing physical lease.
+-- Existing 0528 held output must receive service without inventing a deposit.
+pair.station_expansion_0256={status="active"}
+game.tick=game.tick+5
+local expansion_resumed=dispatcher.service_pair(pair,
+  "active-expansion-plan-with-held-machine-cargo")
+assert(machine_calls==2 and expansion_resumed.waiting==1
+  and pair.canonical_action_0744.family=="machine-logistics"
+  and pair.machine_logistics_custody_0528==held and held.count==5,
+  "unleased expansion plan stranded real machine cargo")
+pair.station_expansion_0256=nil
 pair.machine_logistics_custody_0528=nil
 pair.machine_logistics_0528.custody=nil
 _G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528=nil
