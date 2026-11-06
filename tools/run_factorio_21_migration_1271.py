@@ -228,20 +228,73 @@ def native_probe(data, binary, root, profile, report):
     enabled += [{"name": mid, "enabled": True} for mid in sorted(installed)]
     (mods / "mod-list.json").write_text(
         json.dumps({"mods": enabled}, indent=2) + "\n", encoding="utf-8")
+    endurance = profile == "core-endurance"
+    if endurance:
+        # Install the EXISTING 2.0 ground-rank harness in a disposable 2.1
+        # copy. The real in-game runtime and resource accounting stay unchanged.
+        harness = staged / "scripts/core/ci_ground_rank_harness.lua"
+        shutil.copy2(ROOT / "tests/scenarios/all-ground-ranks/ground_rank_harness.lua",
+                     harness)
+        with (staged / "control.lua").open("a", encoding="utf-8") as control:
+            control.write("\n_G.TP_CI_LATE_COMBAT=true\n")
+            control.write('require("scripts.core.ci_ground_rank_harness").install()\n')
     save = dest / "migration-initial.zip"
     run_logged([str(binary), "--mod-directory", str(mods), "--create",
                 str(save), "--map-gen-seed", "907260"], dest / "create.log", 180)
     if not save.is_file():
         raise ValueError("No genuine initial save after Factorio --create")
+    ticks = 123000 if endurance else 600
+    benchmark_log = dest / "benchmark.log"
     run_logged([str(binary), "--mod-directory", str(mods), "--benchmark",
-                str(save), "--benchmark-ticks", "600"], dest / "benchmark.log", 300)
-    result = {"target": data["target_factorio"], "profile": profile,
-              "installed": installed, "native_create": True,
-              "native_600_ticks": True,
-              "scope": "isolated migration smoke, NOT full modpack or 123k proof"}
+                str(save), "--benchmark-ticks", str(ticks)], benchmark_log,
+               1800 if endurance else 300)
+    if endurance:
+        log = benchmark_log.read_text(encoding="utf-8", errors="replace")
+        markers = [
+            "[TP-GROUND-RANK-TEST] PASS ground ranks with live pairs=4",
+            "[TP-GROUND-RANK-TEST] PASS recovery assessments=",
+            "[TP-GROUND-RANK-TEST] DURATION_DIAGNOSIS verdict=",
+            "[TP-GROUND-RANK-TEST] PASS autonomous bootstrap-to-science",
+            "[TP-GROUND-RANK-TEST] PASS CONCLAVE_NATIVE_1187_GENUINE_RESEARCH_AND_FORCE_SCHISM",
+            "[TP-GROUND-RANK-TEST] PASS hostile-damage defensive establishment",
+        ]
+        missing = [marker for marker in markers if marker not in log]
+        fatal = [signature for signature in
+                 ("[TP-GROUND-RANK-TEST] FAIL ", "[TP-GROUND-RANK-TEST] ERROR ",
+                  "[Tech-Priests][CRITICAL]", "stack traceback")
+                 if signature in log]
+        if missing or fatal:
+            raise ValueError("Native 2.1 123k ground-rank acceptance failed: "
+                             + "missing=" + repr(missing)
+                             + " fatal=" + repr(fatal))
+        print("[TP-2.1-MIGRATION] 123K NATIVE PASS six required science/combat "
+              "milestone groups; beginning independent save/reload", flush=True)
+        run_logged([
+            sys.executable, str(ROOT / "tools/run_factorio_save_reload_smoke.py"),
+            "--binary", str(binary),
+            "--mod-dir", str(mods),
+            "--initial-save", str(save),
+            "--work-dir", str(dest / "save-reload"),
+            "--artifact-dir", str(dest / "test-artifacts"),
+            "--reload-timeout", "900"
+        ], dest / "save-reload-driver.log", 1800)
+        result = {"target": data["target_factorio"], "profile": profile,
+                  "installed": installed, "native_create": True,
+                  "native_123000_ticks": True, "save_reload_complete": True,
+                  "required_markers": markers,
+                  "scope": "native 2.1 123k science/combat and real save/reload; "
+                           "NOT the complete third-party modpack"}
+        print("[TP-2.1-MIGRATION] 123K + SAVE/RELOAD NATIVE PASS "
+              "core-endurance", flush=True)
+    else:
+        result = {"target": data["target_factorio"], "profile": profile,
+                  "installed": installed, "native_create": True,
+                  "native_600_ticks": True,
+                  "scope": "isolated migration smoke, NOT full modpack or 123k proof"}
+        print("[TP-2.1-MIGRATION] NATIVE SMOKE PASS",
+              profile, "not full release acceptance", flush=True)
     (dest / "result.json").write_text(json.dumps(result, indent=2) + "\n",
                                       encoding="utf-8")
-    print("[TP-2.1-MIGRATION] NATIVE SMOKE PASS", profile, "not full release acceptance")
 
 
 def main():
@@ -250,7 +303,7 @@ def main():
     group.add_argument("--static", action="store_true")
     group.add_argument("--audit", type=pathlib.Path)
     group.add_argument("--gate", type=pathlib.Path)
-    group.add_argument("--profile", choices=("core", "mechanicus"))
+    group.add_argument("--profile", choices=("core", "mechanicus", "core-endurance"))
     p.add_argument("--factorio", type=pathlib.Path)
     p.add_argument("--report", type=pathlib.Path)
     p.add_argument("--output-dir", type=pathlib.Path)

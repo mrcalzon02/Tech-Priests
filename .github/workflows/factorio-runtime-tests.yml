@@ -307,6 +307,33 @@ jobs:
         run: |
           set -euo pipefail
           python3 tools/run_factorio_21_migration_1271.py --profile mechanicus --report "$RUNNER_TEMP/factorio-21-migration/migration-portal-report.json" --factorio "$RUNNER_TEMP/factorio-21-engine/factorio/bin/x64/factorio" --output-dir "$RUNNER_TEMP/factorio-21-migration"
+      - name: Native 2.1.24 123k industrial science combat and separate-process save-reload
+        if: success() || failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/run_factorio_21_migration_1271.py --profile core-endurance --factorio "$RUNNER_TEMP/factorio-21-engine/factorio/bin/x64/factorio" --output-dir "$RUNNER_TEMP/factorio-21-migration"
+      - name: Publish independent 2.1.24 core endurance status
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const record = `${process.env.RUNNER_TEMP}/factorio-21-migration/core-endurance/result.json`;
+            let passed = false;
+            try {
+              const result = JSON.parse(fs.readFileSync(record, 'utf8'));
+              passed = result.target === '2.1.24' && result.native_123000_ticks === true && result.save_reload_complete === true;
+            } catch (_) {}
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: passed ? 'success' : 'failure',
+              context: 'tech-priests/factorio-2.1-core-endurance',
+              description: passed ? '2.1.24 native 123k + save/reload verified' : '2.1.24 core endurance or save/reload incomplete',
+              target_url: `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });
       - name: Enforce full mandatory 2.1.24 modpack acceptance
         if: success() || failure()
         shell: bash
@@ -328,6 +355,14 @@ jobs:
             ${{ runner.temp }}/factorio-21-migration/mechanicus/benchmark.log
             ${{ runner.temp }}/factorio-21-migration/mechanicus/result.json
             ${{ runner.temp }}/factorio-21-migration/mechanicus/migration-initial.zip
+            ${{ runner.temp }}/factorio-21-migration/core-endurance/create.log
+            ${{ runner.temp }}/factorio-21-migration/core-endurance/benchmark.log
+            ${{ runner.temp }}/factorio-21-migration/core-endurance/result.json
+            ${{ runner.temp }}/factorio-21-migration/core-endurance/migration-initial.zip
+            ${{ runner.temp }}/factorio-21-migration/core-endurance/save-reload-driver.log
+            ${{ runner.temp }}/factorio-21-migration/core-endurance/save-reload/*.log
+            ${{ runner.temp }}/factorio-21-migration/core-endurance/test-artifacts/*.json
+            ${{ runner.temp }}/factorio-21-migration/core-endurance/test-artifacts/*.md
           if-no-files-found: warn
       - name: Publish separate 2.1.24 migration status
         if: always()

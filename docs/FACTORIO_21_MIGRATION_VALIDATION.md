@@ -62,3 +62,11 @@ The production `tech-priests_src/info.json` already includes `? space-age >= 2.0
 Run https://github.com/mrcalzon02/Tech-Priests/actions/runs/42139177932 reached prototype ID binding but rejected `basic-crafting`: a legacy recipe category is absent from Factorio 2.1. The emergency assembler hardcoded `basic-crafting` alongside crafting/electronics/advanced-crafting, while only checking `pressing` dynamically.
 
 `native_crafting_categories_1275.lua` now selects **all** permitted emergency-workshop categories exclusively from `data.raw["recipe-category"]`. It preserves legacy `basic-crafting` in a 2.0 mod set if that category exists, omits it on 2.1, and still permits a real modded `pressing` category. It never invents machine capabilities or permits smelting. Unit tests check both prototype inventories; native 2.1.24 acceptance still requires a real load and simulation.
+
+## Real 2.1.24 123k industrial/combat endurance + save/reload acceptance
+
+After core and Mechanicus Reborn 0.0.3 **both passed 600 native ticks** in run https://github.com/mrcalzon02/Tech-Priests/actions/runs/42139389697, the next acceptance phase mounts the existing `all-ground-ranks` fixture in a **disposable** 2.1 migration copy and runs 123,000 actual Factorio ticks. This is independent of the blocked upstream 2.1 modpack and the protected 2.0 runtime baseline.
+
+The runner checks all six native acceptance markers: living pairs, recovery, duration diagnosis, actual bootstrap-to-science, real Conclave research/force schism, and hostile-damage defense, with no fatal markers. Next it executes the existing separate-process autosave/reload engine script. It records its own result JSON only if **both** benchmark and persistence checks pass.
+
+A distinct GitHub commit status `tech-priests/factorio-2.1-core-endurance` reports this outcome independently; the broader, still-blocked required third-party modpack acceptance remains RED. Core success is not proof that future Mechanicist, Bob, 40K AAI or Servo-Skull releases have been validated.
