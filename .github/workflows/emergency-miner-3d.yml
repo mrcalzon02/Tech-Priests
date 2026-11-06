@@ -23,16 +23,18 @@ jobs:
         run: |
           python art/source-to-3d/emergency-miner/inspect_sprite.py \
             --out art-output/emergency-miner --print-preview
-      - name: Install Blender for actual editable high-detail 3D modeling
+      - name: Install pinned official Blender for editable 3D modeling
+        uses: bradyajohnston/setup-blender@v5
+        with:
+          version: '4.2.6'
+      - name: Verify Blender and NumPy
         run: |
-          sudo apt-get update -qq
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
           blender --version | head -n 2
-          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
+          blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
       - name: Build V13 coherent 3D middle chassis without invented front slab overlays
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
-          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
+          blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
             --python art/source-to-3d/emergency-miner/build_model.py -- \
             --out art-output/emergency-miner
       - name: Verify only game-camera visible geometry and source-registered renders
