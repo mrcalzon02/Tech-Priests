@@ -1610,6 +1610,12 @@ local function verify_final(state)
           " feed_phase="..tostring(feed and feed.phase)..
           " feed_request="..tostring(feed and feed.requested)..
           " feed_moved="..tostring(feed and feed.moved)..
+          " feed_source_item="..tostring(feed and feed.source_item)..
+          " feed_source_stock="..tostring(feed and feed.source_stock)..
+          " feed_source_slots="..tostring(feed and feed.source_slots)..
+          " feed_input_available="..tostring(feed and feed.engine_input_available)..
+          " feed_engine_accepts_one="..tostring(feed and feed.engine_accepts_one)..
+          " feed_custody_blocked="..tostring(feed and feed.pending_feed_custody)..
           " feed_sequence="..tostring(feed and feed.sequence)..
           " settled_total="..tostring(tagged and tagged.stats
             and tagged.stats["local-electronics-output-settled-0357"] or 0)..

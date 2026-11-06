@@ -960,15 +960,41 @@ end
 local function feed_inputs_from_pair(pair, entity, want_item, engine_circuit_iron_needed, preserve_incumbent_inputs)
   local input = safe_inventory(entity, crafter_index_1277("input",entity.type=="furnace" and "furnace" or "assembler"))
   local function trace_input(phase,recipe_name,requested,inserted)
-    -- Read-only primitive evidence from the real machine-service path. A
-    -- final preflight alone cannot prove a transfer was even attempted.
-    -- No recipe, inventory, route or research flag is changed by this trace.
+    -- 1279: Capture read-only native inventory authority when the engine
+    -- refuses real stock, without inserting items or changing reservations.
     local last=pair.emergency_facility_input_diagnostic_0357
+    local probe_item=entity.type=="furnace" and
+      ((want_item=="iron-plate" and "iron-ore") or
+       (want_item=="copper-plate" and "copper-ore") or
+       (want_item=="stone-brick" and "stone")) or nil
+    local source_count,source_slots=0,0
+    if probe_item then
+      for _,slot in ipairs(managed_sources(pair)) do
+        if slot.inv and slot.inv.valid then
+          local count=inventory_count(slot.inv,probe_item)
+          source_count=source_count+count
+          if count>0 then source_slots=source_slots+1 end
+        end
+      end
+    end
+    local accepts_one=nil
+    if probe_item and input and input.valid then
+      local ok,accepted=pcall(function()
+        return input.can_insert({name=probe_item,count=1})
+      end)
+      accepts_one=ok and accepted==true
+    end
     pair.emergency_facility_input_diagnostic_0357={
       tick=now(),machine=valid(entity) and entity.name or "invalid",
       recipe=recipe_name,output=want_item,phase=phase,
       requested=math.max(0,tonumber(requested) or 0),
       moved=math.max(0,tonumber(inserted) or 0),
+      source_item=probe_item,
+      source_stock=source_count,
+      source_slots=source_slots,
+      engine_input_available=input and input.valid==true or false,
+      engine_accepts_one=accepts_one,
+      pending_feed_custody=pair.emergency_facility_feed_custody_0357~=nil,
       sequence=(type(last)=="table" and (tonumber(last.sequence) or 0) or 0)+1,
     }
   end
