@@ -1,4 +1,4 @@
-"""V19: source-anchored 3D reconstruction of the two forged front foundation feet.
+"""V20: correct height and proportions of the two source-visible front foundation supports.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -592,17 +592,22 @@ def build_enclosure():
     # two photographed feet as tapered, continuous cross-section solids.
     # The rear edge climbs toward the upper armor shoulder, while the lower
     # toe reaches the outer original foundation. No extra faceplates.
-    for i,cx in enumerate((106,574)):
+    for i,cx in enumerate((95,585)):
         side="left" if i==0 else "right"
-        shoulder_x=118 if i==0 else 562
+        shoulder_x=119 if i==0 else 561
+        mid_x=98 if i==0 else 582
+        top_x=110 if i==0 else 570
         lofted_cast_chassis(
             "SOURCE FOUNDATION "+side+" structural foot",[
-                (.156,cx,528,118,214,30),
-                (.195,cx,523,115,203,27),
-                (.255,shoulder_x-11 if i==0 else shoulder_x+11,
-                       493,91,133,23),
-                (.307,shoulder_x,456,71,76,17),
-            ],edge)
+                # Low outer foot reaches the source's real full-depth base.
+                (.156,cx,536,124,199,30),
+                # Bolted lower forefoot with prominent vertical sidewall.
+                (.285,mid_x,515,121,172,31),
+                # Rising beveled shoulder meets middle chassis body.
+                (.454,top_x,482,103,138,25),
+                # High rear cap joins the source-visible upper corner.
+                (.555,shoulder_x,440,76,85,19),
+            ],iron)
 
     # Exactly six source-located LARGE base/shoulder anchor heads and
     # two smaller middle-front screws; no evenly spaced invented bolt row.
@@ -611,7 +616,7 @@ def build_enclosure():
         # Mount bolts on their ACTUAL sloped-foot surfaces rather than the
         # flat base plane. Rear perimeter heads remain on the base itself.
         bolt(f"Foundation source anchor bolt {i}",x,y,
-             .312 if 430<y<500 else (.200 if y>530 else .184),
+             .555 if 430<y<500 else (.284 if y>530 else .184),
              1.38)
     for i,x in enumerate((180,497)):
         front_facing_bolt(f"Middle front source screw {i}",x,512,.295)
@@ -1067,12 +1072,12 @@ def main(out):
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V19 two physically lofted original front mounting feet, re-seated visible anchors"
+    scene["asset_revision"]="V20 two tall dark cast source-corner feet with integrated shoulders and real bolt heights"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v19.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v20.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -1097,15 +1102,15 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v19.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v20.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V19 TWO SOURCE-LOCKED 3D FOUNDATION FEET; VISUAL REVIEW PENDING",
-        "candidate_revision":"V19",
+        "state":"V20 SOURCE-VISIBLE TALL CORNER SUPPORTS; VISUAL REVIEW PENDING",
+        "candidate_revision":"V20",
         "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
         "middle_chassis_physical_cross_sections":reopened_casting.get("cross_sections"),
         "upper_machine_physical_cross_sections":reopened_upper.get("cross_sections"),
@@ -1135,6 +1140,8 @@ def main(out):
         "deletion_only_iteration":False,
         "source_profiled_foundation_feet":2,
         "foundation_foot_construction":"TWO_FOUR_SECTION_TAPERED_CONNECTED_SOLIDS",
+        "foundation_foot_upper_join_before_compression":0.555,
+        "foundation_foot_mid_support_before_compression":0.454,
         "removed_unsupported_objects":["LAYER_1 Foundation left front diagonal anchor gusset",
             "LAYER_1 Foundation right front diagonal anchor gusset",
             "Controller leading machined armor lip"],

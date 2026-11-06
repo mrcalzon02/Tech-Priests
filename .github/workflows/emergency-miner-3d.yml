@@ -31,7 +31,7 @@ jobs:
         run: |
           blender --version | head -n 2
           blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
-      - name: Build V19 source-profiled left/right foundation feet, no added unsourced parts
+      - name: Build V20 corrected-height original dark cast front mounting feet
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
           blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
@@ -46,7 +46,8 @@ jobs:
           d=Path('art-output/emergency-miner')
           m=json.loads((d/'model_manifest.json').read_text())
           assert m['asset']=='tech-priests-emergency-miner'
-          assert m['candidate_revision']=='V19'
+          assert m['candidate_revision']=='V20'
+          assert abs(m['foundation_foot_upper_join_before_compression']-0.555)<0.001
           assert m['source_profiled_foundation_feet']==2
           assert m['foundation_foot_construction']=='TWO_FOUR_SECTION_TAPERED_CONNECTED_SOLIDS'
           assert not m['deletion_only_iteration']
@@ -140,7 +141,7 @@ jobs:
               with Image.open(p) as im:
                   im.verify()
               proof.append({'name':filename,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
-          data={'asset':'emergency-miner','revision':'V19',
+          data={'asset':'emergency-miner','revision':'V20',
                 'commit':os.environ['GITHUB_SHA'],
                 'run':os.environ['GITHUB_RUN_ID'],
                 'user_visible_delivery':'MUST_EMBED_REAL_RENDER_IMAGES_IN_CHAT',
