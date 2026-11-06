@@ -271,7 +271,8 @@ def install(args):
         manifest["local_mod"] = stage_local_mod(args.family, mods)
         selected, errors = resolve(args.family, names)
         manifest["blockers"] += errors
-        username, token = os.getenv("FACTORIO_USERNAME", ""), os.getenv("FACTORIO_TOKEN", "")
+        username = os.getenv("FACTORIO_USERNAME", "").strip()
+        token = os.getenv("FACTORIO_TOKEN", "").strip()
         if selected and (not username or not token):
             manifest["blockers"].append("Missing GitHub Actions FACTORIO_USERNAME or FACTORIO_TOKEN secret")
         else:
