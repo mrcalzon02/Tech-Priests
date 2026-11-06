@@ -23,11 +23,55 @@ jobs:
         run: |
           python art/source-to-3d/emergency-miner/inspect_sprite.py \
             --out art-output/emergency-miner --print-preview
-      - name: Preserve original image measurements and source previews
+      - name: Install Blender for actual editable high-detail 3D modeling
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender
+          blender --version | head -n 2
+      - name: Build one actual 3D miner model with source-faithful enclosure and isolated inferred drill
+        run: |
+          python -m py_compile art/source-to-3d/emergency-miner/build_model.py
+          blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
+            --python art/source-to-3d/emergency-miner/build_model.py -- \
+            --out art-output/emergency-miner
+      - name: Verify saved Blender scene, actual GLB export, and source-registered renders
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from PIL import Image
+          d=Path('art-output/emergency-miner')
+          m=json.loads((d/'model_manifest.json').read_text())
+          assert m['asset']=='tech-priests-emergency-miner'
+          assert m['source_visible_parts']>=75
+          assert m['source_unobserved_mining_parts']>=10
+          assert not m['source_sprite_replaced']
+          assert not m['gameplay_changed']
+          assert not m['input_sprite_reused_as_texture']
+          assert not m['appearance_approved']
+          assert not m['underbody_drill_source_observed']
+          for field, hashfield in (('saved_master','saved_master_sha256'),
+                                   ('physical_glb_export','physical_glb_sha256')):
+              p=d/m[field]
+              assert p.stat().st_size>20000
+              assert hashlib.sha256(p.read_bytes()).hexdigest()==m[hashfield]
+          for file in m['transparent_render_frames']:
+              p=d/file
+              assert p.stat().st_size>30000
+              with Image.open(p) as image:
+                  assert image.size==(1000,1000)
+                  assert image.mode=='RGBA'
+          print('EMERGENCY_MINER_REAL_3D_EDITABLE_MASTER_AND_GLTF_MODEL_VERIFIED__VISUAL_APPROVAL_PENDING')
+          PY
+      - name: Build matched reference-versus-real-3D comparison contact sheet
+        run: |
+          python art/source-to-3d/emergency-miner/compare_renders.py \
+            --out art-output/emergency-miner --print-preview
+      - name: Preserve source audit, complete editable 3D model and true Blender renders
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emergency-miner-source-visual-audit
+          name: emergency-miner-one-asset-source-to-3d-candidate
           path: art-output/emergency-miner/
           if-no-files-found: warn
           retention-days: 30
