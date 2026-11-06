@@ -1,9 +1,9 @@
-name: Martian bunker Blender asset verification
+name: Martian bunker v06 barrel and PBR textures
 on:
   push:
     branches: [main]
     paths:
-      - 'art/source-to-3d/martian-bunker/revisions/v05/**'
+      - 'art/source-to-3d/martian-bunker/revisions/v06/**'
       - '.github/workflows/martian-bunker-3d.yml'
   workflow_dispatch:
 permissions:
@@ -12,140 +12,61 @@ concurrency:
   group: martian-bunker-blender-main
   cancel-in-progress: false
 jobs:
-  bunker-v05-two-pass:
+  barrel-v06:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install independent geometry verifier and real Blender
+      - name: Install Blender and PBR source verifier
         run: |
           python -m pip install 'numpy>=1.26,<3' 'trimesh>=4,<5' 'Pillow>=10,<13' 'scipy>=1.12,<2'
           sudo apt-get update -qq
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
           blender --version | head -n 2
-      - name: Extract reproducible v05 source and validate syntax
+      - name: Recover source and generate independent tileable texture maps
         run: |
-          mkdir -p art/source-to-3d/martian-bunker/src/v05
-          unzip -o art/source-to-3d/martian-bunker/revisions/v05/martian_bunker_turret_front_v05_source.zip -d art/source-to-3d/martian-bunker/src/v05
-          python -m py_compile art/source-to-3d/martian-bunker/src/v05/build_blockout.py art/source-to-3d/martian-bunker/src/v05/setup_blender.py art/source-to-3d/martian-bunker/src/v05/verify_exported_blender_glb.py art/source-to-3d/martian-bunker/src/v05/verify_turret_front.py
-      - name: PASS ONE — sloped armored cheek and genuine open gun-mantlet assembly
+          mkdir -p art/source-to-3d/martian-bunker/src/v06
+          unzip -o art/source-to-3d/martian-bunker/revisions/v06/martian_bunker_barrel_texture_v06_source.zip -d art/source-to-3d/martian-bunker/src/v06
+          python -m py_compile art/source-to-3d/martian-bunker/src/v06/*.py
+          python art/source-to-3d/martian-bunker/src/v06/build_blockout.py
+          python art/source-to-3d/martian-bunker/src/v06/make_textures.py
+          python art/source-to-3d/martian-bunker/src/v06/verify_barrel_v06.py
+          python art/source-to-3d/martian-bunker/src/v06/verify_turret_front.py
+      - name: Native Blender baseline with revised barrel but flat paint
         run: |
-          export BUNKER_TURRET_PASS=1
-          python art/source-to-3d/martian-bunker/src/v05/build_blockout.py
-          python art/source-to-3d/martian-bunker/src/v05/verify_turret_front.py
-          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v05/setup_blender.py -- --render
-          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v05/verify_exported_blender_glb.py
-          cp art/source-to-3d/martian-bunker/src/v05/component_manifest_v05.json art/source-to-3d/martian-bunker/src/v05/pass1_component_manifest_v05.json
-          cp art/source-to-3d/martian-bunker/src/v05/martian_heavy_weapon_bunker_v05.blend art/source-to-3d/martian-bunker/src/v05/martian_heavy_weapon_bunker_pass1_v05.blend
-          cp art/source-to-3d/martian-bunker/src/v05/martian_heavy_weapon_bunker_v05_blender_export.glb art/source-to-3d/martian-bunker/src/v05/martian_heavy_weapon_bunker_pass1_v05.glb
-          cp art/source-to-3d/martian-bunker/src/v05/bunker_blender_front_v05.png art/source-to-3d/martian-bunker/gallery/v05_pass1_full_front.png
-          cp art/source-to-3d/martian-bunker/src/v05/bunker_turret_close_front_v05.png art/source-to-3d/martian-bunker/gallery/v05_pass1_turret_close.png
-          cp art/source-to-3d/martian-bunker/src/v05/bunker_turret_head_on_v05.png art/source-to-3d/martian-bunker/gallery/v05_pass1_turret_head_on.png
-      - name: PASS TWO — attached trunnions, recoil brackets, barrel sleeve and elevation gauge
+          BUNKER_TEXTURE_MODE=FLAT PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v06/setup_blender.py -- --render
+          BUNKER_TEXTURE_MODE=FLAT PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v06/verify_exported_blender_glb.py
+      - name: Native Blender textured material build and independent GLB roundtrip
         run: |
-          export BUNKER_TURRET_PASS=2
-          python art/source-to-3d/martian-bunker/src/v05/build_blockout.py
-          python art/source-to-3d/martian-bunker/src/v05/verify_turret_front.py
-          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v05/setup_blender.py -- --render
-          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v05/verify_exported_blender_glb.py
-      - name: Verify two real rendered revisions, color, silhouette and export comparison gallery
+          BUNKER_TEXTURE_MODE=TEXTURED PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v06/setup_blender.py -- --render
+          BUNKER_TEXTURE_MODE=TEXTURED PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/src/v06/verify_exported_blender_glb.py
+      - name: Validate comparisons, texture impact and publish gallery
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          from PIL import Image, ImageDraw
-          import hashlib, json, numpy as np
-          src=Path('art/source-to-3d/martian-bunker/src/v05')
-          gal=Path('art/source-to-3d/martian-bunker/gallery')
-          a=json.loads((src/'pass1_component_manifest_v05.json').read_text())
-          b=json.loads((src/'component_manifest_v05.json').read_text())
-          assert a['turret_front_refinement_pass']==1 and a['parts_count']==136,a
-          assert b['turret_front_refinement_pass']==2 and b['parts_count']==152,b
-          assert a['reference_footprint_tiles']==b['reference_footprint_tiles']==[3,3]
-          assert len(b['hull_attachments'])==22
-          assert len(b['inward_sloped_buttresses'])==8
-          assert b['rear_equipment_clearance_z']>=0.10
-          files=['martian_heavy_weapon_bunker_pass1_v05.blend',
-            'martian_heavy_weapon_bunker_pass1_v05.glb',
-            'martian_heavy_weapon_bunker_v05.blend',
-            'martian_heavy_weapon_bunker_v05_blender_export.glb']
-          checks={}
-          for name in files:
-              p=src/name
-              assert p.is_file() and p.stat().st_size>30000,(name,'missing master or GLB')
-              checks[name]={'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
-          for label in ('front','rear','front_west','rear_east'):
-              f=src/f'bunker_blender_{label}_v05.png'
-              assert f.is_file() and f.stat().st_size>30000
-              with Image.open(f) as im:
-                  img=np.asarray(im.convert('RGBA'),dtype=np.int32)
-                  assert im.size==(900,900)
-              alpha=img[:,:,3]>30
-              red=(img[:,:,0]>img[:,:,1]*1.3)&(img[:,:,0]>img[:,:,2]*1.3)&(img[:,:,0]>50)&alpha
-              assert alpha.sum()>20000 and red.sum()>400,(label,'missing geometry/material')
-              (gal/f'v05_pass2_full_{label}.png').write_bytes(f.read_bytes())
-          for label in ('close_front','head_on'):
-              f=src/f'bunker_turret_{label}_v05.png'
-              assert f.is_file() and f.stat().st_size>30000
-              (gal/f'v05_pass2_turret_{label}.png').write_bytes(f.read_bytes())
-          p1=np.asarray(Image.open(gal/'v05_pass1_turret_close.png').convert('RGB')).astype(np.int16)
-          p2=np.asarray(Image.open(gal/'v05_pass2_turret_close_front.png').convert('RGB')).astype(np.int16)
-          delta=np.max(np.abs(p1-p2),axis=2)
-          assert np.count_nonzero(delta>12)>1000,('pass two render indistinguishable from pass one',np.count_nonzero(delta>12))
-          def labeled(path,label):
-              with Image.open(path) as im:
-                  base=Image.new('RGB',(900,960),(30,33,36))
-                  base.paste(im.convert('RGB'),(0,60))
-              ImageDraw.Draw(base).text((28,22),label,fill=(236,224,198))
-              return base
-          views=[
-            labeled(gal/'v04_blender_front.png','v0.4  •  ORIGINAL TURRET FRONT'),
-            labeled(gal/'v05_pass1_full_front.png','v0.5 PASS 1  •  FACETED ARMOR'),
-            labeled(gal/'v05_pass2_full_front.png','v0.5 PASS 2  •  MECHANICAL DETAIL')
-          ]
-          comparison=Image.new('RGB',(2700,960),(30,33,36))
-          for i,view in enumerate(views): comparison.paste(view,(i*900,0))
-          comparison.save(gal/'v05_assembly_progress_3stage.png')
-          close=Image.new('RGB',(1800,960),(30,33,36))
-          close.paste(labeled(gal/'v05_pass1_turret_close.png','PASS 1  •  ARMOR AND OPEN MANTLET'),(0,0))
-          close.paste(labeled(gal/'v05_pass2_turret_close_front.png','PASS 2  •  SUPPORTED RECOIL AND BEARINGS'),(900,0))
-          close.save(gal/'v05_turret_close_comparison.png')
-          with Image.open(gal/'v05_pass2_full_front.png') as im:
-              im.thumbnail((256,256))
-              im.save(gal/'v05_final_256px.png')
-          report={'pass1_mesh_count':a['parts_count'],'pass2_mesh_count':b['parts_count'],
-                  'pass1_rotating_meshes':a['rotating_mesh_count'],'pass2_rotating_meshes':b['rotating_mesh_count'],
-                  'mounts':len(b['hull_attachments']),
-                  'corner_supports':len(b['inward_sloped_buttresses']),
-                  'closeup_difference_pixels_gt12':int(np.count_nonzero(delta>12)),
-                  'assets':checks,'result':'Native Blender both stages; independent GLB reimport; full and close-up renders verified'}
-          (src/'validation_report_v05.json').write_text(json.dumps(report,indent=2)+'\n')
-          print('TURRET_TWO_PASS_NATIVE_BLENDER_AND_GALLERY_PASSED',report)
-          PY
-      - name: Commit editable Blender masters, final GLB and before-after gallery to main
+          python art/source-to-3d/martian-bunker/src/v06/verify_render_v06.py
+      - name: Commit editable native Blender masters, final GLB, PBR textures, renders
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          find art/source-to-3d/martian-bunker/src/v05 -type d -name __pycache__ -prune -exec rm -rf {} +
-          find art/source-to-3d/martian-bunker/src/v05 -type f -name '*.blend1' -delete
-          git add art/source-to-3d/martian-bunker/src/v05 art/source-to-3d/martian-bunker/gallery/v05_*.png
+          find art/source-to-3d/martian-bunker/src/v06 -type d -name __pycache__ -prune -exec rm -rf {} +
+          find art/source-to-3d/martian-bunker/src/v06 -type f -name '*.blend1' -delete
+          git add art/source-to-3d/martian-bunker/src/v06 art/source-to-3d/martian-bunker/gallery/v06_*.png
           if git diff --cached --quiet; then
-            echo 'No changed art assets'
-            exit 0
+            echo 'No modified assets'; exit 0
           fi
-          git commit -m 'art: publish verified two-pass front turret geometry, Blender sources and gallery'
+          git commit -m 'art: publish verified hollow-barrel v06 native Blender PBR materials and gallery'
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
-      - name: Archive render and model evidence
+      - name: Preserve full model evidence as GitHub Actions artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: martian-bunker-v05-turret-front-two-pass
+          name: martian-bunker-v06-barrel-and-original-textures
           path: |
-            art/source-to-3d/martian-bunker/src/v05/
-            art/source-to-3d/martian-bunker/gallery/v05_*.png
+            art/source-to-3d/martian-bunker/src/v06/
+            art/source-to-3d/martian-bunker/gallery/v06_*.png
           if-no-files-found: warn
           retention-days: 30

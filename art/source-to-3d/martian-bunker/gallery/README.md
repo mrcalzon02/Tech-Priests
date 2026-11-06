@@ -1,5 +1,24 @@
 # Fortified Martian Bunker — development progress gallery
 
+## v0.6 — hollow barrel refinement and original PBR texture system
+
+This revision uses an **owner-provided image as stylistic direction only**. The reference image is **not stored, reproduced, used as texture pixels, or imported as geometry**.
+
+**Barrel:** The previous solid disk muzzle becomes a genuinely hollow, lathed pressure tube, with a stepped replaceable blue-tempered crown, open inner liner, three machined service collars, supported shroud heat rails and four seated crown ribs. Every new barrel part moves with the turret. The v0.5 bunker hull, 22 hull attachments, 8 sloped corner foot/buttress parts and antenna remain unchanged.
+
+**Textures:** 20 original material classes, each with deterministic 384×384 tileable albedo, occlusion/roughness/metalness and tangent-space normal maps (60 image files total). Painted red, granular ferrocrete, heat-darkened metal, machined gray steel, brass, glass and other service surfaces have physically distinct finish. The finished Blender scene **packs image assets**, and the exported GLB must pass a clean Blender import with UVs and textures intact.
+
+![Previous barrel / new open barrel / textured refinement](v06_three_stage_barrel_comparison.png)
+
+![Original generated PBR material swatches](v06_material_swatch.png)
+
+[Barrel three-quarter closeup](v06_barrel_three_quarter.png) · [Muzzle head-on](v06_barrel_head_on.png) · [Barrel side](v06_barrel_side.png) · [Full front](v06_textured_front.png) · [Full rear](v06_textured_rear.png) · [Factorio-scale 256px](v06_factorio_256px.png)
+
+[**Native textured Blender master**](../src/v06/martian_heavy_weapon_bunker_v06_textured.blend) · [**Final PBR GLB**](../src/v06/martian_heavy_weapon_bunker_v06_textured_export.glb) · [Full source and map generator](../revisions/v06/martian_bunker_barrel_texture_v06_source.zip) · [Validation report](../src/v06/validation_report_v06.json)
+
+**Status:** CI must pass and final renders need visual inspection. Not yet approved as production Factorio sprites. Neither sprites nor gameplay data are modified.
+
+
 ## v0.5 — two progressive refinements of the *front of the rotating turret*
 
 These are **real Blender-rendered, editable two-stage geometry builds**, not concept illustrations.

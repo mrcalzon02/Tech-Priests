@@ -1,5 +1,10 @@
 # Fortified Martian Heavy-Weapon Bunker — 3D development
 
+## v0.6 — barrel and original PBR materials
+
+**Latest asset candidate.** Builds from v0.5 without changing the hull or turret mount. An actual open-bore lathed pressure barrel, stepped heat-treated muzzle crown and fitted collar/bracket details replace the earlier blunt disk. The connected single-job Blender workflow builds flat-vs-textured comparisons with **60 original albedo/ORM/normal maps** generated from reproducible Python source; packs them into editable Blender and final GLB. [Source ZIP](revisions/v06/martian_bunker_barrel_texture_v06_source.zip) · [Development gallery](gallery/README.md) · [Single Blender workflow](../../../.github/workflows/martian-bunker-3d.yml). Source image provided by the owner is a *style guide*, not copied/repackaged material. No gameplay or sprite change.
+
+
 ## v0.5 — two-pass front turret refinement
 
 **Current modeling candidate:** v0.5 pass 2, an actual change to the armored gun carriage. [See both passes in the GitHub development gallery](gallery/README.md). [Rebuildable source archive](revisions/v05/martian_bunker_turret_front_v05_source.zip) contains one source generator with explicit `BUNKER_TURRET_PASS=1|2`, hull assertions and clean export tests. The native Blender workflow builds both versions and publishes each editable master, inspected renders, and the pass-two export GLB. All existing v0.4 hull/roof/magazine geometry is intentionally preserved. **Verified Blender output:** [editable pass-one master](src/v05/martian_heavy_weapon_bunker_pass1_v05.blend), [editable pass-two master](src/v05/martian_heavy_weapon_bunker_v05.blend), [final exported GLB](src/v05/martian_heavy_weapon_bunker_v05_blender_export.glb), [passing CI](https://github.com/mrcalzon02/Tech-Priests/actions/runs/42164290455). No Factorio sprites or gameplay code are changed.
