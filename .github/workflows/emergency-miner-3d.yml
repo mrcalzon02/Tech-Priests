@@ -1,0 +1,33 @@
+name: Emergency miner source-to-3D asset
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'art/source-to-3d/emergency-miner/**'
+      - '.github/workflows/emergency-miner-3d.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  emergency-miner-art:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare source inspection
+        run: python -m pip install 'Pillow==11.3.0'
+      - name: Inspect actual emergency miner sprite and icon with exact measurements
+        run: |
+          python art/source-to-3d/emergency-miner/inspect_sprite.py \
+            --out art-output/emergency-miner --print-preview
+      - name: Preserve original image measurements and source previews
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: emergency-miner-source-visual-audit
+          path: art-output/emergency-miner/
+          if-no-files-found: warn
+          retention-days: 30
