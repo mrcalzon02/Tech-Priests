@@ -139,6 +139,10 @@ local function recipe_should_receive_detritus_slot(recipe)
   if recipe.name == "mechanical-detritus-reclamation" then return false end
   if recipe.name == "mechanical-detritus-recycling" then return false end
   if recipe.category == "recycling" then return false end
+  -- Factorio 2.1 moved recipe.category into recipe.categories.
+  for _, category in ipairs(recipe.categories or {}) do
+    if category == "recycling" then return false end
+  end
 
   -- Keep the zero-probability Mechanical Detritus product slot on item-producing
   -- recipes, including recipes the player can also handcraft. The engine should
@@ -589,3 +593,10 @@ end
 -- processing-unit/Planetary Magos technology gate at the final-fixes stage.
 -- 0.1.311/0.1.314: equipment grid experiment removed. Do not install armor grids
 -- or grid equipment unlocks for Tech-Priests until the whole mechanic is redesigned.
+
+-- 1274: Do not hand 2.0 recipe prototype fields to Factorio 2.1.
+-- This must run LAST: the preceding systems inject zero-probability
+-- Mechanical Detritus into existing recipes (including vanilla recipes).
+-- Preserve the actual zero chance and native recipe category semantics.
+require("prototypes.compatibility.native_recipe_schema_1274")(
+  data.raw.recipe, mods and mods["base"])

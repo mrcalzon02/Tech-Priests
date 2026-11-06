@@ -44,3 +44,9 @@ The migration job at https://github.com/mrcalzon02/Tech-Priests/actions/runs/421
 The requester and active provider caches are deep copies of native 2.1 chests. The `native_robot_door_1273.lua` helper now puts the hidden 1px docking animation and zero landing offset in the actual 2.1 `robot_door` schema, clearing removed top-level fields. For Factorio 2.0 the old top-level fields are retained. `hidden_logistic_cache_robot_door_21_1273.lua` covers both versions.
 
 Proof requires **engine create + 600 ticks on native 2.1.24**, not merely Lua static tests.
+
+## 2.1.24 third native prototype blocker — recipe product probability
+
+Run https://github.com/mrcalzon02/Tech-Priests/actions/runs/42138471172 got past the hidden robotic door validation. Factorio 2.1 then rejected `speed-module.results[1]` due to removed product `probability`. Tech Priests adds zero-probability Mechanical Detritus to recipe outputs and also has its own stochastic product recipes.
+
+The final-fixes adapter `native_recipe_schema_1274.lua` now migrates legacy `probability` to `independent_probability` without changing values, including zero. It also migrates legacy `category` and `additional_categories` into 2.1 `categories` while preserving 2.0. The adapter is run **after** all Detritus and custom recipe creation, including modification of base recipes. Explicit source tests check original recipe identity, counted outputs, zero chance, recycling category and idempotence. A native 2.1 engine create and benchmark still must pass before accepting the repair.
