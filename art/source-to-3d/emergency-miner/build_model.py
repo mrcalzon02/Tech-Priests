@@ -85,6 +85,9 @@ def link_to(obj, collection=None):
 
 def assign(obj, m):
     obj.data.materials.append(m)
+    # Blender 4.0 requires auto smooth for the weighted-normal modifier.
+    if obj.type == "MESH" and hasattr(obj.data, "use_auto_smooth"):
+        obj.data.use_auto_smooth = True
     return obj
 
 
@@ -417,7 +420,9 @@ def rig_scene():
     scene.render.resolution_percentage=100
     scene.render.engine="CYCLES"
     scene.cycles.samples=28
-    scene.cycles.use_denoising=True
+    # Ubuntu Blender 4.0 can be compiled without OpenImageDenoiser.
+    # CPU samples are retained; do not request a build-disabled denoiser.
+    scene.cycles.use_denoising=False
     scene.render.threads_mode="FIXED"
     scene.render.threads=2
     scene.view_settings.view_transform = "AgX" if "AgX" in [
