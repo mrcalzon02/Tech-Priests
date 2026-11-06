@@ -229,7 +229,8 @@ def native_probe(data, binary, root, profile, report):
     (mods / "mod-list.json").write_text(
         json.dumps({"mods": enabled}, indent=2) + "\n", encoding="utf-8")
     endurance = profile == "core-endurance"
-    if endurance:
+    feed_probe = profile == "core-feed-probe"
+    if endurance or feed_probe:
         # Install the EXISTING 2.0 ground-rank harness in a disposable 2.1
         # copy. The real in-game runtime and resource accounting stay unchanged.
         harness = staged / "scripts/core/ci_ground_rank_harness.lua"
@@ -243,11 +244,34 @@ def native_probe(data, binary, root, profile, report):
                 str(save), "--map-gen-seed", "907260"], dest / "create.log", 180)
     if not save.is_file():
         raise ValueError("No genuine initial save after Factorio --create")
-    ticks = 123000 if endurance else 600
+    ticks = 123000 if endurance else 12000 if feed_probe else 600
     benchmark_log = dest / "benchmark.log"
     run_logged([str(binary), "--mod-directory", str(mods), "--benchmark",
                 str(save), "--benchmark-ticks", str(ticks)], benchmark_log,
                1800 if endurance else 300)
+    if feed_probe:
+        probe_log = benchmark_log.read_text(encoding="utf-8", errors="replace")
+        observations = [
+            line for line in probe_log.splitlines()
+            if "[TP-GROUND-RANK-TEST] FEED_PROBE_1280 rank=" in line
+        ]
+        if len(observations) < 2 or "[TP-GROUND-RANK-TEST] FAIL " in probe_log:
+            raise ValueError("Real furnace feed probe missing observations "
+                             "or failed native fixture; see " + str(benchmark_log))
+        result = {
+            "target": data["target_factorio"], "profile": profile,
+            "native_12000_ticks": True, "observed_stations": len(observations),
+            "scope": "read-only furnace feed diagnostics, not full industrial acceptance"
+        }
+        (dest / "result.json").write_text(
+            json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        print("[TP-2.1-MIGRATION] FEED PROBE 1280 NATIVE PASS: "
+              + str(len(observations))
+              + " physical station observations; not smelting acceptance",
+              flush=True)
+        for line in observations:
+            print(line[-900:], flush=True)
+        return
     if endurance:
         log = benchmark_log.read_text(encoding="utf-8", errors="replace")
         markers = [
@@ -303,7 +327,7 @@ def main():
     group.add_argument("--static", action="store_true")
     group.add_argument("--audit", type=pathlib.Path)
     group.add_argument("--gate", type=pathlib.Path)
-    group.add_argument("--profile", choices=("core", "mechanicus", "core-endurance"))
+    group.add_argument("--profile", choices=("core", "mechanicus", "core-feed-probe", "core-endurance"))
     p.add_argument("--factorio", type=pathlib.Path)
     p.add_argument("--report", type=pathlib.Path)
     p.add_argument("--output-dir", type=pathlib.Path)

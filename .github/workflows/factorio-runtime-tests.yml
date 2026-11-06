@@ -307,6 +307,12 @@ jobs:
         run: |
           set -euo pipefail
           python3 tools/run_factorio_21_migration_1271.py --profile mechanicus --report "$RUNNER_TEMP/factorio-21-migration/migration-portal-report.json" --factorio "$RUNNER_TEMP/factorio-21-engine/factorio/bin/x64/factorio" --output-dir "$RUNNER_TEMP/factorio-21-migration"
+      - name: Native 2.1.24 short real furnace feed diagnostic (12k ticks)
+        if: success() || failure()
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/run_factorio_21_migration_1271.py --profile core-feed-probe --factorio "$RUNNER_TEMP/factorio-21-engine/factorio/bin/x64/factorio" --output-dir "$RUNNER_TEMP/factorio-21-migration"
       - name: Native 2.1.24 123k industrial science combat and separate-process save-reload
         if: success() || failure()
         shell: bash
@@ -355,6 +361,9 @@ jobs:
             ${{ runner.temp }}/factorio-21-migration/mechanicus/benchmark.log
             ${{ runner.temp }}/factorio-21-migration/mechanicus/result.json
             ${{ runner.temp }}/factorio-21-migration/mechanicus/migration-initial.zip
+            ${{ runner.temp }}/factorio-21-migration/core-feed-probe/create.log
+            ${{ runner.temp }}/factorio-21-migration/core-feed-probe/benchmark.log
+            ${{ runner.temp }}/factorio-21-migration/core-feed-probe/result.json
             ${{ runner.temp }}/factorio-21-migration/core-endurance/create.log
             ${{ runner.temp }}/factorio-21-migration/core-endurance/benchmark.log
             ${{ runner.temp }}/factorio-21-migration/core-endurance/result.json

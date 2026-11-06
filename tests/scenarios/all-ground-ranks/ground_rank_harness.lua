@@ -10955,6 +10955,62 @@ local function pulse()
       bootstrap_probe()
       state.probe_9000=true
     end
+    -- 1280: sample actual 2.1 furnace feed authority early, not just
+    -- at 108k. Engine inventory and storage custody are read-only here.
+    if LATE_COMBAT_SMOKE and elapsed>=9000 and not state.feed_probe_1280 then
+      for _,spec in ipairs(stations) do
+        local found=game.surfaces[1].find_entities_filtered({
+          name=spec.name,position={spec.x,spec.y},radius=2,
+          force=game.forces.player})
+        local station=found and found[1]
+        if station and station.valid then
+          local pair=storage.tech_priests.pairs_by_station
+            and storage.tech_priests.pairs_by_station[station.unit_number]
+          local diag=pair and pair.emergency_facility_input_diagnostic_0357
+          local chest=station.get_inventory(defines.inventory.chest)
+          local furnaces=game.surfaces[1].find_entities_filtered({
+            name="tech-priests-emergency-smelter",
+            position=station.position,radius=36,force=station.force})
+          local found_input=0
+          local found_iron,found_copper=0,0
+          for _,furnace in ipairs(furnaces or {}) do
+            local inv_id=crafter_index_1277("input","furnace")
+            local inv=nil
+            if inv_id then
+              local ok,actual=pcall(function()return furnace.get_inventory(inv_id)end)
+              if ok and actual and actual.valid then inv=actual end
+            end
+            if inv then
+              found_input=found_input+1
+              found_iron=found_iron+inv.get_item_count("iron-ore")
+              found_copper=found_copper+inv.get_item_count("copper-ore")
+            end
+          end
+          emit("FEED_PROBE_1280 rank="..spec.name..
+            " tick="..game.tick..
+            " station_iron="..tostring(chest and chest.valid
+              and chest.get_item_count("iron-ore") or 0)..
+            " station_copper="..tostring(chest and chest.valid
+              and chest.get_item_count("copper-ore") or 0)..
+            " furnaces="..tostring(#(furnaces or {}))..
+            " valid_furnace_inputs="..tostring(found_input)..
+            " input_iron="..tostring(found_iron)..
+            " input_copper="..tostring(found_copper)..
+            " feed_phase="..tostring(diag and diag.phase)..
+            " feed_recipe="..tostring(diag and diag.recipe)..
+            " feed_item="..tostring(diag and diag.source_item)..
+            " feed_source_stock="..tostring(diag and diag.source_stock)..
+            " feed_source_slots="..tostring(diag and diag.source_slots)..
+            " engine_input_valid="..tostring(diag and diag.engine_input_available)..
+            " accepts_one="..tostring(diag and diag.engine_accepts_one)..
+            " feed_request="..tostring(diag and diag.requested)..
+            " feed_moved="..tostring(diag and diag.moved)..
+            " custody_blocked="..tostring(diag and diag.pending_feed_custody))
+        end
+      end
+      state.feed_probe_1280=true
+    end
+
     -- Capture real progress in the same world at each elapsed milestone.
     -- Never fail or inject science at the historical 36k boundary.
     for _,checkpoint in ipairs(DURATION_CHECKPOINTS) do
