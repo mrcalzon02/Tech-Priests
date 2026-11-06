@@ -228,8 +228,12 @@ function M.service_pair(pair,reason)
      or pair.item_family_custody_0702 or pair.energy_family_custody_0707
      or pair.rocket_silo_custody_0710 or pair.artillery_custody_0713
      or pair.roboport_repair_custody_0715 or pair.defense_task_0259
+     -- A planned/active expansion is not itself physical worker custody.
+     -- Preserve its priority for unladen machine work, but do not strand
+     -- an already-held 0528 item when no 0256 builder lease exists.
      or (pair.station_expansion_0256
-       and pair.station_expansion_0256.status=="active")) then
+       and pair.station_expansion_0256.status=="active"
+       and not (machine.custody or pair.machine_logistics_custody_0528))) then
    local action={kind="machine-logistics",source="incumbent-0528",
      reason=phase,item=machine.item,target=machine.machine}
    local result=execute(pair,"machine-logistics",
