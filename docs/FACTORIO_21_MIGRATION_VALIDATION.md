@@ -90,3 +90,11 @@ Factorio 2.1 **removed** `defines.inventory.assembling_machine_input/output` and
 Factorio 2.1 removed `LuaEntity.fluidbox`, introducing `LuaEntity.set_fluid(index,fluid)` which returns the **accepted native fluid quantity**. The generated Void-Fusion thruster servicing previously read `thruster.fluidbox` directly, silently leaving custom thrusters unpowered by their fluid proxy on 2.1. This is now a guarded native `set_fluid` call with an actual positive-quantity receipt; 2.0's old indexed fluidbox remains a fallback. A refused transfer is never reported as success.
 
 The generated station-work inventory helper also now prefers native 2.1 `crafter_input` over removed `assembling_machine_input`, and the Magos receipt offline test now sets the correct Lua module search path before importing the updated real engine harness. `native_thruster_fluid_21_1278.lua` asserts native acceptance/refusal and the 2.0 fallback. Full native engine test remains authoritative.
+
+## Factorio 2.1 native fluidbox read-only planners
+
+Factorio 2.1 removed `LuaEntity.fluidbox`. Tech Priests' 0689 standard-fluid doctrine, 0691 standard pipe planner, 0719 fluid turret connection planner, 0716 turret readiness and 0705 energy readiness previously treated a missing 2.1 fluidbox object as no real fluid network.
+
+`scripts/core/native_fluidbox_1279.lua` is a **read-only observation adapter** over the actual Factorio 2.1 `LuaEntity` methods: `get_fluid_box_prototype`, `get_fluid_box_pipe_connections`, `get_fluid_box_neighbours`, `get_fluid_segment_fluid`, `get_fluid_segment_id`, `get_fluid_capacity`, `get_fluid_filter`, `get_fluid` and `fluids_count`. Old Factorio 2.0 LuaFluidBox values remain intact. Internal turret-only buffers are excluded from counted pipe ports when no fluidbox prototype exists. No values or pipe connections are fabricated.
+
+`tests/unit/native_fluidbox_21_1279.lua` verifies native pipe/segment/filter/capacity/actual fluid amounts, connected versus disconnected pipes, and original 2.0 fallback. Native Factorio 2.1 pipe and boiler behavior still requires real-engine scenario verification; source tests alone cannot prove network construction or steam generation.

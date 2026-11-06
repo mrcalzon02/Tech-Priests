@@ -57,6 +57,9 @@ jobs:
       - name: Regress 2.1 removed fluidbox and native thruster fluid acceptance
         run: lua5.2 tests/unit/native_thruster_fluid_21_1278.lua
 
+      - name: Verify 2.1 fluid network read-only native API and 2.0 fallback
+        run: lua5.2 tests/unit/native_fluidbox_21_1279.lua
+
       - name: Validate Factorio 2.1.24 migration contract
         run: python3 tools/run_factorio_21_migration_1271.py --static
 
