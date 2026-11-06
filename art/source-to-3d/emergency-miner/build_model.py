@@ -720,18 +720,18 @@ def build_enclosure():
     # Wire paths derived from the actual source, with HIDDEN ends passing
     # under EXISTING steel coverwork, not imaginary visible brass glands.
     cable_gland("Rear red under left clamp",181,55,.506,occluded=True)
-    cable_gland("Rear red hidden beneath steel cover",477,105,.508,occluded=True)
+    cable_gland("Rear red hidden beneath steel cover",450,130,.445,occluded=True)
     routed_cable("Top red insulated cable",
         [(181,55,.506),(257,57,.510),(345,69,.513),
-         (423,82,.512),(477,105,.508)],.010,MATERIALS["red_wire"],
+         (423,82,.512),(436,104,.494),(450,130,.445)],.010,MATERIALS["red_wire"],
         "Rear red under left clamp","Rear red hidden beneath steel cover",
         "Red rear conductor routed under existing cable clips")
     cable_gland("Rear green beneath center band",299,46,.507,occluded=True)
-    cable_gland("Green hidden behind right hose",588,241,.529,occluded=True)
+    cable_gland("Green hidden behind right hose",561,235,.445,occluded=True)
     routed_cable("Top bright green insulated cable",
         [(299,46,.507),(374,51,.511),(429,79,.512),
-         (506,98,.521),(567,122,.523),(589,166,.527),
-         (588,241,.529)],.010,MATERIALS["green_wire"],
+         (506,98,.521),(567,122,.523),(586,167,.527),
+         (578,203,.497),(561,235,.445)],.010,MATERIALS["green_wire"],
         "Rear green beneath center band","Green hidden behind right hose",
         "Continuous green conductor under existing top clamps and right hose")
     cable_gland("Rear copper under left retaining band",181,57,.508,occluded=True)
@@ -747,10 +747,10 @@ def build_enclosure():
         cube(f"Original rear rectangular retaining clamp {idx}",
              x,56,.511,21,29,.027,metal,.003)
     cable_gland("Right red hidden under outer sleeve",616,270,.530,occluded=True)
-    cable_gland("Right red disappears at upper case edge",607,419,.530,occluded=True)
+    cable_gland("Right red disappears at upper case edge",566,413,.455,occluded=True)
     routed_cable("Right visible red high voltage feed",
         [(616,270,.530),(618,323,.530),(620,369,.532),
-         (615,399,.531),(607,419,.530)],.013,MATERIALS["red_wire"],
+         (615,399,.531),(599,409,.510),(566,413,.455)],.013,MATERIALS["red_wire"],
         "Right red hidden under outer sleeve",
         "Right red disappears at upper case edge",
         "Visible red right-side cable goes under real existing metalwork")
@@ -758,14 +758,15 @@ def build_enclosure():
         prefix="L" if side<0 else "R"
         x=69 if side<0 else 616
         rear_x=128 if side<0 else 550
-        end_x=104 if side<0 else 584
+        end_x=125 if side<0 else 565
         cable_gland(prefix+" black hose concealed rear",rear_x,58,.565,occluded=True)
-        cable_gland(prefix+" black hose concealed lower",end_x,404,.565,occluded=True)
+        cable_gland(prefix+" black hose concealed lower",end_x,404,.450,occluded=True)
         points=[(rear_x,58,.565),((rear_x+x)/2,54,.572),
                 (x+(-8 if side<0 else 8),77,.572),
                 (x,105,.573),(x,164,.571),(x,240,.570),
                 (x,320,.569),(x+(-2 if side<0 else 2),355,.566),
-                (end_x,404,.565)]
+                ((112 if side<0 else 586),381,.541),
+                (end_x,404,.450)]
         routed_cable(prefix+" actual perimeter ribbed hydraulic conduit",
             points,.022,MATERIALS["black_wire"],
             prefix+" black hose concealed rear",
@@ -846,14 +847,14 @@ def build_enclosure():
       "chamfered source 1x1 enclosure and thick raised edge", "six structural fasteners",
       "left vertical bearing plate", "top maintenance cover with real vent wells",
       "three horizontally mounted industrial pulse capacitors", "green computer display with tiny geometry",
-      "four colored indicator lamps", "three physical knife switches with colored handle ends",
-      "real red-green cable conduits and gold clamps",
+      "four colored indicator lamps", "four source-located switch lanes with one dark lever",
+      "red green and copper wiring under four rectangular original retaining clamps",
       "corrugated black hydraulic perimeter with clamps",
       "foundation slab / raised armored chassis / top instrument panel",
-      "low rear cable drops and protected bulkhead endpoint glands",
+      "source-located cable ends occluded beneath existing cast coverwork",
       "source-traced irregular armor plates, split control faces, tapered front castings",
       "11-degree continuous forward-sloped control panel",
-      "perimeter hoses enter upper machine horizontally through lateral fittings",
+      "perimeter hoses disappear underneath the real upper machine casting",
     ])
 
 
@@ -1114,7 +1115,7 @@ def main(out):
         "front_setback_evidence":front_evidence,
         "carved_front_service_channel":recess_evidence,
         "foundation_corner_cast_gussets":2,
-        "capacitors_visible_circular_top_faces":3,
+        "capacitors_visible_front_round_ends":3,
         "foundation_plate_corner_bolts":6,
         "chassis_front_armor_bolts":2,
         "capacitor_ends_read_forward":True,
