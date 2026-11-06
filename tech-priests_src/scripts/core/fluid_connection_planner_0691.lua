@@ -27,7 +27,8 @@ local function reservations_module()local r=rawget(_G,"TechPriestsWorkReservatio
 local function ensure_reservation_category()
  local r=reservations_module();if not r then return nil end;local category="standard-fluid-pipe-route";local found=false;for _,v in ipairs(r.categories or{})do if v==category then found=true break end end;if not found then r.categories=r.categories or{};r.categories[#r.categories+1]=category end;local state=type(r.root)=="function"and r.root()or nil;if state then state.reservations=state.reservations or{};state.reservations[category]=state.reservations[category]or{}end;return r
 end
-local function fluidbox(e)local ok,b=pcall(function()return e.fluidbox end);return ok and b and b.valid and b or nil end
+local NATIVE_FLUIDBOX_1279=require("scripts.core.native_fluidbox_1279")
+local function fluidbox(e)return NATIVE_FLUIDBOX_1279.observe(e)end
 local function segment_contents(box,index)local out={};if box and box.valid then pcall(function()out=box.get_fluid_segment_contents(index)or{}end)end;return type(out)=="table"and out or{}end
 local function segment_id(box,index)local v;if box and box.valid then pcall(function()v=box.get_fluid_segment_id(index)end)end;return v end
 local function filter_name(box,index)local f;if box and box.valid then pcall(function()f=box.get_filter(index)end);if type(f)=="table"then f=f.name end;if not f then pcall(function()f=box.get_locked_fluid(index)end)end end;return type(f)=="string"and f~=""and f or nil end

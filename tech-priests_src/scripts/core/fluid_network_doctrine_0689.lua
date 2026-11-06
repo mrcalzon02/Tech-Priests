@@ -21,7 +21,8 @@ function M.root()
 end
 local function stat(k,n)local r=M.root();r.stats[k]=(tonumber(r.stats[k])or 0)+(tonumber(n)or 1)end
 local function record(pair,action,detail)local r=M.root();r.recent[#r.recent+1]={tick=now(),station=safe(station_unit(pair)),action=tostring(action),detail=tostring(detail or"")};while#r.recent>160 do table.remove(r.recent,1)end;stat(action)end
-local function fluidbox(e)local ok,b=pcall(function()return e.fluidbox end);return ok and b and b.valid and b or nil end
+local NATIVE_FLUIDBOX_1279=require("scripts.core.native_fluidbox_1279")
+local function fluidbox(e)return NATIVE_FLUIDBOX_1279.observe(e)end
 local function get_recipe(e)local ok,r=pcall(function()return e.get_recipe and e.get_recipe()end);return ok and r or nil end
 local function recipe_fluids(recipe,field)
  local out={};local records;pcall(function()records=recipe and recipe[field]end);for _,rec in pairs(records or{})do local name=rec.name or rec[1];local kind=rec.type or(rec.name and"item");if kind=="fluid"and type(name)=="string"then out[#out+1]={name=name,amount=tonumber(rec.amount or rec.amount_min or rec[2])or 1,temperature=tonumber(rec.temperature)}end end;return out
