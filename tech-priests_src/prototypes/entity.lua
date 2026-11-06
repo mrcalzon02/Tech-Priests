@@ -315,7 +315,13 @@ local function make_station(def)
     station.circuit_wire_max_distance = substation_source.maximum_wire_distance or station.circuit_wire_max_distance
     station.draw_circuit_wires = true
     station.draw_copper_wires = false
-    if station.circuit_connector and substation_source.connection_points and substation_source.connection_points[1] then
+    -- Factorio 2.1 accepts an array of circuit connectors. The vanilla
+    -- steel-chest connector copied above already has a valid native schema;
+    -- writing .points directly onto its top level corrupts that array.
+    -- Preserve the older 2.0 custom attachment point unchanged.
+    local factorio_21 = (mods["base"] or ""):match("^2%.1%.") ~= nil
+    if not factorio_21 and station.circuit_connector and
+        substation_source.connection_points and substation_source.connection_points[1] then
       station.circuit_connector = table.deepcopy(station.circuit_connector)
       station.circuit_connector.points = table.deepcopy(substation_source.connection_points[1])
     end
