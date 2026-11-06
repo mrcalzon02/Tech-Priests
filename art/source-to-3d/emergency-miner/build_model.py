@@ -1,4 +1,4 @@
-"""V17: strict sprite-locked exterior hardware and surface connections.
+"""V18: deletion-first sprite fidelity cleanup; no added geometry or invented wear.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -582,14 +582,10 @@ def build_enclosure():
     # Deliberately NO front full-width shoe, frontal stepped skirt, faux
     # dark structural spar or overlapping corner boots. Their source edges
     # are the projection of the real chassis bevel, lip, and base frame.
-    # Two true L-shaped cast foundation anchor feet on the visible front.
-    # Unlike earlier false slabs, these are compact local mounting gussets.
-    cast_contour("LAYER_1 Foundation left front diagonal anchor gusset",
-        [(30,528),(66,516),(112,545),(109,587),
-         (83,617),(42,614),(25,589)],.139,.188,edge,.008)
-    cast_contour("LAYER_1 Foundation right front diagonal anchor gusset",
-        [(650,528),(614,516),(568,545),(571,587),
-         (597,617),(638,614),(655,589)],.139,.188,edge,.008)
+    # The wide light-gray front-corner gussets in V17 are NOT present in
+    # the source reference. DELETE the two meshes; retain real foundation
+    # casting and source-located steel anchoring bolts. Do not replace
+    # with new decorative polygons.
     # Exactly six source-located LARGE base/shoulder anchor heads and
     # two smaller middle-front screws; no evenly spaced invented bolt row.
     for i,(x,y) in enumerate(((75,69),(605,69),(126,455),
@@ -640,11 +636,11 @@ def build_enclosure():
         .492,.511,panel,.004)
     cube("Real module separating seam",391,370,.514,
          4,107,.006,crevice,.001)
-    cast_contour("Controller leading machined armor lip",
-        [(177,417),(572,418),(577,428),
-         (563,445),(185,445),(170,428)],
-        .486,.516,iron,.004)
-
+    # The V17 full-width front control armor lip was a fabricated extra
+    # shelf. Original source has a THIN seam at the joined face edge.
+    # The two actual adjoining faceplates already define that seam.
+    # Deliberately build NO additional front lip.
+    
     front_panel_shapes=set(VISIBLE.objects)-front_panel_before
     # Only the faceplate and its physical controls incline toward the viewer.
     # The upper-rear machinery roof, perimeter tubes and foundation remain level.
@@ -779,22 +775,10 @@ def build_enclosure():
         sleeve_y=185 if side<0 else 204
         cube(prefix+" source metal hose sleeve",x,sleeve_y,.573,
              31,29,.029,brass if side>0 else edge,.004)
-        # Localized real 3D surface wear is source-grounded: prominent pitting
-    # and cut-back paint occur on the original's blank armored steel faces.
-    forged_patina_marks("Dark oxidized upper cover scars",192,389,112,213,
-                        .502,45,"oxide",3101)
-    forged_patina_marks("Bright cut-metal upper cover scratches",192,389,113,213,
-                        .503,12,"edge_scar",3102)
-    forged_patina_marks("Rusted middle cover surface",185,399,236,287,
-                        .495,15,"oxide",3103)
-    forged_patina_marks("Rusted upper socket carrier",447,551,128,214,
-                        .499,12,"oxide",3104)
-    forged_patina_marks("Ground left vertical cover plate",121,153,129,371,
-                        .487,15,"oxide",3105)
-    forged_patina_marks("Worn forward armored rail",189,553,477,528,
-                        .477,18,"oxide",3106)
-    forged_patina_marks("Forward rail exposed metal nicks",190,546,478,528,
-                        .478,8,"edge_scar",3107)
+        # No random geometry stamped onto metal to masquerade as source wear.
+    # Foundry texture stays in the shader; future source-guided aging should
+    # use physically mapped material regions, not arbitrary debris objects.
+    
     # Preserve strong physical separation between base, chassis and upper
     # machine controls. Lifting all parts indiscriminately produces floating
     # side hoses; named sidewall routes remain anchored at chassis height.
@@ -1014,6 +998,17 @@ def main(out):
             if (pos-actual).length>.004:
                 raise RuntimeError("Cable occlusion marker drifted after 3D remap: "+
                                    wire["name"]+" -> "+name)
+    # Real deletion gate: it is a failure if any unsupported piece returns.
+    for obsolete in ("LAYER_1 Foundation left front diagonal anchor gusset",
+                     "LAYER_1 Foundation right front diagonal anchor gusset",
+                     "Controller leading machined armor lip"):
+        if bpy.data.objects.get(obsolete) is not None:
+            raise RuntimeError("Faux V17 overlay survived deletion: "+obsolete)
+    if any("scar" in o.name.lower() or
+           "oxidized" in o.name.lower() or
+           "rusted" in o.name.lower()
+           for o in VISIBLE.objects):
+        raise RuntimeError("Random geometry wear survived deletion-only pass")
     # Structural evidence: this is a watertight cross-section-based 3D hull,
     # not several overlaid sprites extruded into thick planar front strips.
     casting=bpy.data.objects.get("LAYER_2 Raised central machine chassis")
@@ -1045,12 +1040,12 @@ def main(out):
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V17 source-locked hardware: 4 switch lanes, hidden cable ends and real horizontal capacitor mouths"
+    scene["asset_revision"]="V18 remove unsourced gussets, false control shelf, and randomly stamped faux wear"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v17.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v18.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -1075,15 +1070,15 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v17.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v18.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V17 SOURCE-LOCKED EXTERIOR HARDWARE; VISUAL REVIEW PENDING",
-        "candidate_revision":"V17",
+        "state":"V18 DELETE ONLY UNSOURCED SURFACE GEOMETRY; VISUAL REVIEW PENDING",
+        "candidate_revision":"V18",
         "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
         "middle_chassis_physical_cross_sections":reopened_casting.get("cross_sections"),
         "upper_machine_physical_cross_sections":reopened_upper.get("cross_sections"),
@@ -1110,11 +1105,16 @@ def main(out):
             "chassis_front_screws":2},
         "source_cable_routes":6,
         "visibly_fabricated_gold_terminal_rings":0,
+        "deletion_only_iteration":True,
+        "removed_unsupported_objects":["LAYER_1 Foundation left front diagonal anchor gusset",
+            "LAYER_1 Foundation right front diagonal anchor gusset",
+            "Controller leading machined armor lip"],
+        "random_stamped_surface_marks":0,
         "physical_knife_switches":4,
         "middle_chassis_height_evidence":shrink_evidence,
         "front_setback_evidence":front_evidence,
         "carved_front_service_channel":recess_evidence,
-        "foundation_corner_cast_gussets":2,
+        "foundation_corner_cast_gussets":0,
         "capacitors_visible_front_round_ends":3,
         "foundation_plate_corner_bolts":6,
         "chassis_front_armor_bolts":2,
