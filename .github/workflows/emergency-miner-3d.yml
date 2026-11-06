@@ -31,7 +31,7 @@ jobs:
         run: |
           blender --version | head -n 2
           blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
-      - name: Build V18 deletion-only source cleanup without invented front geometry
+      - name: Build V19 source-profiled left/right foundation feet, no added unsourced parts
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
           blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
@@ -46,8 +46,10 @@ jobs:
           d=Path('art-output/emergency-miner')
           m=json.loads((d/'model_manifest.json').read_text())
           assert m['asset']=='tech-priests-emergency-miner'
-          assert m['candidate_revision']=='V18'
-          assert m['deletion_only_iteration']
+          assert m['candidate_revision']=='V19'
+          assert m['source_profiled_foundation_feet']==2
+          assert m['foundation_foot_construction']=='TWO_FOUR_SECTION_TAPERED_CONNECTED_SOLIDS'
+          assert not m['deletion_only_iteration']
           assert m['foundation_corner_cast_gussets']==0
           assert m['random_stamped_surface_marks']==0
           assert len(m['removed_unsupported_objects'])==3
@@ -138,7 +140,7 @@ jobs:
               with Image.open(p) as im:
                   im.verify()
               proof.append({'name':filename,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
-          data={'asset':'emergency-miner','revision':'V18',
+          data={'asset':'emergency-miner','revision':'V19',
                 'commit':os.environ['GITHUB_SHA'],
                 'run':os.environ['GITHUB_RUN_ID'],
                 'user_visible_delivery':'MUST_EMBED_REAL_RENDER_IMAGES_IN_CHAT',

@@ -1,4 +1,4 @@
-"""V18: deletion-first sprite fidelity cleanup; no added geometry or invented wear.
+"""V19: source-anchored 3D reconstruction of the two forged front foundation feet.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -586,12 +586,33 @@ def build_enclosure():
     # the source reference. DELETE the two meshes; retain real foundation
     # casting and source-located steel anchoring bolts. Do not replace
     # with new decorative polygons.
+    # The original has two DIFFERENTIATED, heavy front mounting feet with
+    # sloped outer shoulders and broad contact with the foundation.
+    # V18 intentionally removed false flat pads. V19 constructs ONLY the
+    # two photographed feet as tapered, continuous cross-section solids.
+    # The rear edge climbs toward the upper armor shoulder, while the lower
+    # toe reaches the outer original foundation. No extra faceplates.
+    for i,cx in enumerate((106,574)):
+        side="left" if i==0 else "right"
+        shoulder_x=118 if i==0 else 562
+        lofted_cast_chassis(
+            "SOURCE FOUNDATION "+side+" structural foot",[
+                (.156,cx,528,118,214,30),
+                (.195,cx,523,115,203,27),
+                (.255,shoulder_x-11 if i==0 else shoulder_x+11,
+                       493,91,133,23),
+                (.307,shoulder_x,456,71,76,17),
+            ],edge)
+
     # Exactly six source-located LARGE base/shoulder anchor heads and
     # two smaller middle-front screws; no evenly spaced invented bolt row.
     for i,(x,y) in enumerate(((75,69),(605,69),(126,455),
                                (550,454),(116,569),(560,568))):
+        # Mount bolts on their ACTUAL sloped-foot surfaces rather than the
+        # flat base plane. Rear perimeter heads remain on the base itself.
         bolt(f"Foundation source anchor bolt {i}",x,y,
-             .207 if y>530 else .184,1.38)
+             .312 if 430<y<500 else (.200 if y>530 else .184),
+             1.38)
     for i,x in enumerate((180,497)):
         front_facing_bolt(f"Middle front source screw {i}",x,512,.295)
 
@@ -998,6 +1019,12 @@ def main(out):
             if (pos-actual).length>.004:
                 raise RuntimeError("Cable occlusion marker drifted after 3D remap: "+
                                    wire["name"]+" -> "+name)
+    # The two originally observed foot assemblies are actual 3D solids.
+    for side in ("left","right"):
+        foot=bpy.data.objects.get("SOURCE FOUNDATION "+side+" structural foot")
+        if (foot is None or foot.get("physical_design")!="LOFTED_3D_INTEGRATED_CHASSIS"
+            or len(foot.data.vertices)!=32):
+            raise RuntimeError("Source-defined forged 3D foundation foot missing: "+side)
     # Real deletion gate: it is a failure if any unsupported piece returns.
     for obsolete in ("LAYER_1 Foundation left front diagonal anchor gusset",
                      "LAYER_1 Foundation right front diagonal anchor gusset",
@@ -1040,12 +1067,12 @@ def main(out):
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V18 remove unsourced gussets, false control shelf, and randomly stamped faux wear"
+    scene["asset_revision"]="V19 two physically lofted original front mounting feet, re-seated visible anchors"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v18.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v19.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -1070,15 +1097,15 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v18.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v19.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V18 DELETE ONLY UNSOURCED SURFACE GEOMETRY; VISUAL REVIEW PENDING",
-        "candidate_revision":"V18",
+        "state":"V19 TWO SOURCE-LOCKED 3D FOUNDATION FEET; VISUAL REVIEW PENDING",
+        "candidate_revision":"V19",
         "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
         "middle_chassis_physical_cross_sections":reopened_casting.get("cross_sections"),
         "upper_machine_physical_cross_sections":reopened_upper.get("cross_sections"),
@@ -1105,7 +1132,9 @@ def main(out):
             "chassis_front_screws":2},
         "source_cable_routes":6,
         "visibly_fabricated_gold_terminal_rings":0,
-        "deletion_only_iteration":True,
+        "deletion_only_iteration":False,
+        "source_profiled_foundation_feet":2,
+        "foundation_foot_construction":"TWO_FOUR_SECTION_TAPERED_CONNECTED_SOLIDS",
         "removed_unsupported_objects":["LAYER_1 Foundation left front diagonal anchor gusset",
             "LAYER_1 Foundation right front diagonal anchor gusset",
             "Controller leading machined armor lip"],
