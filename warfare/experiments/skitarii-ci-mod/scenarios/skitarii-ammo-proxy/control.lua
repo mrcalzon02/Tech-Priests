@@ -83,7 +83,11 @@ script.on_nth_tick(10, function(event)
       before_ammo = slot.ammo
       assert(before_ammo > 0, "Magazine had no native ammo")
 
-      proxy.active = true
+      -- Factorio 2.1 LuaEntity.active is READ-ONLY; normal active state is
+      -- engine-owned. An old Tech-Priests proxy writer used pcall around the
+      -- illegal assignment, silently hiding that compatibility error.
+      emit("proxy_active_native", proxy.active)
+      assert(proxy.active, "Native proxy is inactive; must identify why")
       proxy.operable = false
       proxy.shooting_target = target
       assert(proxy.shooting_target == target,
