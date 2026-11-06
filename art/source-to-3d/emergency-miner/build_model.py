@@ -1,4 +1,4 @@
-"""V12: slightly retracted front profile, preserving V11 geometry and connections.
+"""V13: physically coherent 3D chassis; source image is a projection, not an assembly diagram.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -135,6 +135,46 @@ def octagonal_case(name, x, y, z_bottom, z_top, w, h, chamfer, m):
     obj.modifiers.new("Cast weighted normals", "WEIGHTED_NORMAL")
     return obj
 
+
+
+def lofted_cast_chassis(name, stations, m):
+    """One watertight tapered *volume*, designed in 3D cross-sections.
+
+    Each station is (z, center_x, center_y, width_px, depth_px, chamfer_px).
+    The 2D sprite is a comparison projection, NOT a stack of front-facing
+    contour plates. Physically define sidewalls and rounded corner transitions.
+    """
+    if len(stations)<3 or any(stations[i+1][0]<=stations[i][0]
+                             for i in range(len(stations)-1)):
+        raise RuntimeError("Chassis stations must rise monotonically")
+    verts=[]
+    for z,cx,cy,w,d,chamfer in stations:
+        outline=ring_outline(width(w),width(d),width(chamfer))
+        center=pixel(cx,cy,0)
+        verts.extend((center[0]+x,center[1]+y,z) for x,y in outline)
+    count=len(stations)
+    faces=[tuple(reversed(range(8))),tuple(range(8*(count-1),8*count))]
+    for level in range(count-1):
+        for index in range(8):
+            nxt=(index+1)%8
+            faces.append((8*level+index,8*level+nxt,
+                          8*(level+1)+nxt,8*(level+1)+index))
+    mesh=bpy.data.meshes.new(name+"_INTEGRATED_CAST_VOLUME")
+    mesh.from_pydata(verts,[],faces)
+    mesh.update()
+    obj=bpy.data.objects.new(name,mesh)
+    VISIBLE.objects.link(obj)
+    assign(obj,m)
+    obj["physical_design"]="LOFTED_3D_INTEGRATED_CHASSIS"
+    obj["cross_sections"]=count
+    if len(mesh.vertices)!=8*count or len(mesh.polygons)!=(count-1)*8+2:
+        raise RuntimeError("Invalid solid chassis connectivity")
+    bevel=obj.modifiers.new("Real cast corner breaks", "BEVEL")
+    bevel.width=.006
+    bevel.segments=3
+    bevel.limit_method="ANGLE"
+    obj.modifiers.new("Solid forged normal weighting", "WEIGHTED_NORMAL")
+    return obj
 
 
 def cast_contour(name, outline, z_bottom, z_top, m, bevel=.005):
@@ -464,11 +504,19 @@ def build_enclosure():
                    638,625,45,dark)
     frame_ring("LAYER_1 Foundation exposed bolted rim",340,329,.155,.174,
                638,625,589,565,edge)
-    # 2. Raised armored chassis with an exposed vertical FRONT face.
-    octagonal_case("LAYER_2 Raised central machine chassis",340,315,.165,.475,
-                   608,563,40,iron)
-    frame_ring("LAYER_2 Chassis upper shoulder",340,315,.457,.483,
-               607,561,564,516,dark)
+    # 2. One real 3D armored chassis, not a drawn-outline stack.
+    # Its walls taper upward in both width and depth. The front is a face of
+    # this single casting; it needs NO additional stacked full-width slabs.
+    lofted_cast_chassis("LAYER_2 Raised central machine chassis",[
+        (.165,340,317,582,508,38),
+        (.200,340,310,585,520,42),
+        (.350,340,307,570,477,44),
+        (.475,340,302,549,455,40),
+    ],iron)
+    # A slim rim overlaps the upper edge of that physical casting. It is a
+    # true metal lip, not a separate false "front armor" band.
+    frame_ring("LAYER_2 Chassis upper shoulder",340,302,.451,.482,
+               552,459,514,417,dark)
     # 3. A smaller, higher control deck supports the monitor and wiring.
     octagonal_case("LAYER_3 Elevated control deck structural body",
                    340,254,.470,.556,486,424,29,panel)
@@ -479,41 +527,17 @@ def build_enclosure():
          (128,478),(107,454)],.470,.600,iron,.009)
     cube("LAYER_3 Narrow shadow reveal",340,476,.480,
          448,5,.014,crevice,.001)
-    # Traced steel skirt and unequal trapezoidal lower supports, not
-    # a stack of rectangular consumer-equipment boxes.
-    cast_contour("Cast frontal armor stepped skirt",
-        [(49,527),(630,527),(646,558),(627,601),
-         (57,601),(38,562)],.422,.476,iron,.008)
-    cast_contour("Forged bottom full-width armored shoe",
-        [(78,575),(599,575),(579,625),(99,627)],
-        .442,.493,panel,.006)
-    cast_contour("Recessed front structural dark spar",
-        [(103,481),(580,481),(574,532),(108,534)],
-        .414,.470,dark,.005)
-    cast_contour("Upper tapered front armor guard",
-        [(132,437),(550,438),(571,456),
-         (557,479),(140,479),(118,458)],
-        .430,.483,iron,.006)
-    cube("Inset bottom mechanical seam",332,556,.483,
-         425,5,.010,crevice,.001)
-    for index,x in enumerate((75,610)):
-        cast_contour(f"Heavy cast front corner boot {index}",
-            [(x-37,511),(x+39,511),(x+48,532),
-             (x+45,600),(x+27,613),(x-43,613),
-             (x-51,592),(x-47,532)],
-            .305,.474,dark,.012)
-        cast_contour(f"Purpose-shaped bolted front lug {index}",
-            [(x-31,534),(x+29,533),(x+38,551),
-             (x+31,580),(x-29,578),(x-37,559)],
-            .450,.498,edge,.006)
+    # Deliberately NO front full-width shoe, frontal stepped skirt, faux
+    # dark structural spar or overlapping corner boots. Their source edges
+    # are the projection of the real chassis bevel, lip, and base frame.
     # Four highly visible corner bolts belong to the perimeter BASE plate;
     # additional fasteners are physically installed on the BLUE chassis face.
     for i,(x,y) in enumerate(((73,73),(601,73),(75,607),(604,607))):
         bolt(f"Foundation perimeter anchor bolt {i}",x,y,.184,1.60)
-    for i,(x,y) in enumerate(((119,452),(552,463),(127,568),(552,574))):
+    for i,(x,y) in enumerate(((119,452),(552,463),(127,510),(552,510))):
         bolt(f"Chassis bolted top-lip fitting {i}",x,y,.488,1.16)
     for i,x in enumerate((145,215,466,538)):
-        front_facing_bolt(f"Blue chassis front armor hex bolt {i}",x,606,.295)
+        front_facing_bolt(f"Blue chassis front armor hex bolt {i}",x,557,.295)
 
     # Capture the lower structure so only controls and the attached rear
     # wiring are lifted, not the chassis/foundation or perimeter hoses.
@@ -928,17 +952,34 @@ def main(out):
     # CONTINUOUS physical height reduction preserving every connection.
     shrink_evidence=shorten_middle_chassis_preserving_connections()
     front_evidence=retract_front_fascia(20)
+    # Structural evidence: this is a watertight cross-section-based 3D hull,
+    # not several overlaid sprites extruded into thick planar front strips.
+    casting=bpy.data.objects.get("LAYER_2 Raised central machine chassis")
+    if casting is None or casting.get("physical_design")!="LOFTED_3D_INTEGRATED_CHASSIS":
+        raise RuntimeError("Missing single solid modeled chassis")
+    forbidden_front_overlays=("Cast frontal armor stepped skirt",
+        "Forged bottom full-width armored shoe",
+        "Recessed front structural dark spar",
+        "Upper tapered front armor guard",
+        "Inset bottom mechanical seam",
+        "Heavy cast front corner boot 0","Heavy cast front corner boot 1",
+        "Purpose-shaped bolted front lug 0","Purpose-shaped bolted front lug 1")
+    remaining=[name for name in forbidden_front_overlays if bpy.data.objects.get(name)]
+    if remaining:
+        raise RuntimeError("Stacked false front armor still exists: "+str(remaining))
+    if len(casting.data.vertices)!=32 or len(casting.data.polygons)!=26:
+        raise RuntimeError("Lofted chassis topology invalid")
     save_render(scene,top,OUTPUT/"01_source_view_real_mesh.png")
     save_render(scene,iso,OUTPUT/"02_game_candidate_full_miner.png")
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V12 front armor tucked back 20 source pixels; unchanged 3-layer hardware"
+    scene["asset_revision"]="V13 genuine lofted middle chassis; removed false front overlays"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v12.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v13.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -956,15 +997,18 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v12.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v13.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V12 FRONT PROFILE TUCKED BACK 20 PIXELS; VISUAL APPROVAL PENDING",
-        "candidate_revision":"V12",
+        "state":"V13 PHYSICAL SOLID CHASSIS WITH NO FALSE FRONT SLABS; VISUAL REVIEW PENDING",
+        "candidate_revision":"V13",
+        "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
+        "middle_chassis_physical_cross_sections":casting.get("cross_sections"),
+        "fabricated_front_overlay_count":len(remaining),
         "original_source_sha256":SOURCE_SHA256,
         "source_sprite_replaced":False,
         "gameplay_changed":False,
