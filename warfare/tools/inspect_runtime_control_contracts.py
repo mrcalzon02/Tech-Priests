@@ -101,6 +101,17 @@ def inspect_mechanicus(path: Path) -> dict:
             if any(s in n.lower() for s in ("character", "engineer", "player", "skin", "armor"))
         ]
         all_images = sorted(source_name(n) for n in image_files)
+        png_sizes = {}
+        for name in image_files:
+            if not name.lower().endswith(".png"):
+                continue
+            with z.open(name) as entry:
+                header = entry.read(24)
+            if len(header) == 24 and header[:8] == bytes.fromhex("89504e470d0a1a0a"):
+                width = int.from_bytes(header[16:20], "big")
+                height = int.from_bytes(header[20:24], "big")
+                if width > 0 and height > 0:
+                    png_sizes[source_name(name)] = [width, height]
     citations = []
     referenced_graphics = set()
     graphic_token = re.compile(r"""["']([^"'\n]+\.(?:png|jpg|jpeg|webp))["']""", re.I)
@@ -132,6 +143,7 @@ def inspect_mechanicus(path: Path) -> dict:
         "lua_file_paths": sorted(source_name(n) for n in entries),
         "images_total": len(image_files),
         "all_image_paths": all_images[:100],
+        "png_dimensions": png_sizes,
         "graphic_paths_referenced_by_lua": sorted(referenced_graphics)[:100],
         "possible_character_image_paths": sorted(likely_character_images)[:90],
         "character_related_source_locations": citations[:220],
@@ -176,6 +188,8 @@ def main() -> int:
           f"character-image-candidates={len(m['possible_character_image_paths'])}")
     for name in m["all_image_paths"][:25]:
         print(f"[WAR-CONTRACT] GRAPHIC {name}")
+    for name, wh in sorted(m["png_dimensions"].items()):
+        print(f"[WAR-CONTRACT] SIZE {name} {wh[0]}x{wh[1]}")
     for name in m["graphic_paths_referenced_by_lua"][:25]:
         print(f"[WAR-CONTRACT] LUA-GRAPHIC-REF {name}")
     for hit in m["character_related_source_locations"][:25]:
