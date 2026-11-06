@@ -138,6 +138,37 @@ assert(after_delivery.acted==1 and calls==defense_before+1
   "hostile response failed to resume immediately after custody cleared")
 _G.TechPriestsDirectAcquisitionExecutor0513=nil
 _G.TECH_PRIESTS_ACTION_STATE_ARBITER_0488=nil
+-- 2026-11-06: a newly queued routine order must not starve an already
+-- physically held 0528 machine-output return. The 0528 authority alone
+-- performs the eventual station deposit; this dispatcher test grants none.
+pair.defense_task_0259=nil
+pair.defense_perimeter_0259.threats={}
+local held={item="iron-ore",count=5}
+local machine={valid=true,unit_number=106}
+pair.machine_logistics_0528={phase="return-custody-to-station",
+  action="clear-output",item="iron-ore",machine=machine,custody=held}
+pair.machine_logistics_custody_0528=held
+pair.order_queue_0469={current={kind="station-craft",status="active"}}
+local machine_calls=0
+_G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528={
+  service_pair=function(p)
+    assert(p==pair and p.machine_logistics_0528.custody==held
+      and p.machine_logistics_custody_0528==held,
+      "dispatcher altered machine output custody")
+    machine_calls=machine_calls+1
+    return {processed=1,waiting=1,detail="return-custody-to-station"}
+  end,
+}
+game.tick=game.tick+5
+local resumed=dispatcher.service_pair(pair,"foreign-routine-order-with-machine-cargo")
+assert(machine_calls==1 and resumed.waiting==1
+  and pair.canonical_action_0744.family=="machine-logistics"
+  and pair.machine_logistics_custody_0528==held and held.count==5,
+  "foreign routine order starved physical machine custody return")
+pair.machine_logistics_custody_0528=nil
+pair.machine_logistics_0528.custody=nil
+_G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528=nil
+pair.order_queue_0469=nil
 print("[defense-canonical-dispatcher] PASS physical return before hostile turret, exact cargo handoff")
 print("[defense-canonical-dispatcher] PASS owned emergency defense, custody yield and resumption")
 -- Exercise the new resource relay through the already-validated dispatcher suite.
