@@ -1,4 +1,4 @@
-"""V08: exposed hydraulic channels and three-layer perspective-corrected miner.
+"""V09: source-traced stepped castings instead of stacked generic boxes.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -133,6 +133,30 @@ def octagonal_case(name, x, y, z_bottom, z_top, w, h, chamfer, m):
     bevel.segments = 3
     bevel.limit_method = "ANGLE"
     obj.modifiers.new("Cast weighted normals", "WEIGHTED_NORMAL")
+    return obj
+
+
+
+def cast_contour(name, outline, z_bottom, z_top, m, bevel=.005):
+    """Physically thick, reference-traced casting with nonrectangular edges."""
+    if len(outline)<4 or z_top<=z_bottom:
+        raise RuntimeError("Bad cast contour: "+name)
+    n=len(outline)
+    vertices=[pixel(x,y,z) for z in (z_bottom,z_top) for x,y in outline]
+    faces=[tuple(reversed(range(n))),tuple(range(n,2*n))]
+    faces.extend((i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n))
+    mesh=bpy.data.meshes.new(name+"_SOURCE_TRACED_CAST_SURFACE")
+    mesh.from_pydata(vertices,[],faces)
+    mesh.update()
+    obj=bpy.data.objects.new(name,mesh)
+    VISIBLE.objects.link(obj)
+    assign(obj,m)
+    if bevel:
+        mod=obj.modifiers.new("Cast contour bevel","BEVEL")
+        mod.width=bevel
+        mod.segments=2
+        mod.limit_method="ANGLE"
+        obj.modifiers.new("Cast weighted normals","WEIGHTED_NORMAL")
     return obj
 
 
@@ -302,39 +326,85 @@ def build_enclosure():
                    340,254,.470,.556,486,424,29,panel)
     frame_ring("LAYER_3 Control deck machine-edge step",
                340,254,.547,.567,491,432,466,408,edge)
-    cube("LAYER_3 Visible front vertical console fascia",340,460,.536,
-         471,23,.132,iron,.009)
-    cube("LAYER_3 Inset front shadow reveal",340,472,.481,
-         456,8,.018,crevice,.002)
-    # Distinctive lower armor rail and lifting feet.
-    cube("Lower projecting shell flange",340,576,.445,620,82,.054,iron,.009)
-    cube("Lower full width shoe",338,595,.465,540,37,.056,panel,.006)
-    cube("Front load-bearing black steel spar",345,511,.437,492,53,.070,dark,.009)
-    cube("Forward raised steel guard",338,461,.456,447,35,.045,iron,.006)
-    cube("Inset bottom mechanical seam",332,556,.483,434,11,.013,crevice,.002)
-    for i,xx in enumerate((75,610)):
-        cube(f"Heavy left-right bottom foot {i}",xx,566,.383,86,127,.170,dark,.014)
-        cube(f"Reinforced load ear {i}",xx,558,.490,57,55,.027,edge,.005)
+    cast_contour("LAYER_3 Shaped frontal equipment fascia",
+        [(117,438),(559,439),(574,453),(558,478),
+         (128,478),(107,454)],.470,.600,iron,.009)
+    cube("LAYER_3 Narrow shadow reveal",340,476,.480,
+         448,5,.014,crevice,.001)
+    # Traced steel skirt and unequal trapezoidal lower supports, not
+    # a stack of rectangular consumer-equipment boxes.
+    cast_contour("Cast frontal armor stepped skirt",
+        [(49,527),(630,527),(646,558),(627,601),
+         (57,601),(38,562)],.422,.476,iron,.008)
+    cast_contour("Forged bottom full-width armored shoe",
+        [(78,575),(599,575),(579,625),(99,627)],
+        .442,.493,panel,.006)
+    cast_contour("Recessed front structural dark spar",
+        [(103,481),(580,481),(574,532),(108,534)],
+        .414,.470,dark,.005)
+    cast_contour("Upper tapered front armor guard",
+        [(132,437),(550,438),(571,456),
+         (557,479),(140,479),(118,458)],
+        .430,.483,iron,.006)
+    cube("Inset bottom mechanical seam",332,556,.483,
+         425,5,.010,crevice,.001)
+    for index,x in enumerate((75,610)):
+        cast_contour(f"Heavy cast front corner boot {index}",
+            [(x-37,511),(x+39,511),(x+48,532),
+             (x+45,600),(x+27,613),(x-43,613),
+             (x-51,592),(x-47,532)],
+            .305,.474,dark,.012)
+        cast_contour(f"Purpose-shaped bolted front lug {index}",
+            [(x-31,534),(x+29,533),(x+38,551),
+             (x+31,580),(x-29,578),(x-37,559)],
+            .450,.498,edge,.006)
     for x,y in [(119,452),(552,463),(127,568),(552,574),(75,74),(600,74)]:
         bolt("Milled chassis structural fastener",x,y,.478,1.52)
 
     # Capture the lower structure so only controls and the attached rear
     # wiring are lifted, not the chassis/foundation or perimeter hoses.
     fixed_lower_objects=set(VISIBLE.objects)
-    # Upper panel layout follows source landmarks, but its height is truly 3D.
-    cube("Left vertical cast mounting rail",138,258,.455,58,291,.052,panel,.005)
-    cube("Main high blank steel maintenance cover",301,164,.456,264,136,.051,panel,.004)
-    cube("Left lower horizontal transmission cover",297,264,.452,259,70,.045,iron,.003)
-    cube("Right upper socket plate",497,176,.460,157,112,.042,panel,.004)
-    cube("Right lower cover",501,264,.455,154,70,.043,iron,.004)
-    cube("Lower instrument bank",380,365,.458,420,131,.059,panel,.004)
-    cube("Lower dark instrument recess",377,364,.488,403,113,.006,crevice,.002)
-    # Secondary modular covers allow individual steel panel seams to be read.
-    cube("Upper blank top inset cast panel",300,165,.490,244,118,.014,panel,.003)
-    cube("Middle cover horizontal field",295,263,.480,241,55,.018,iron,.003)
-    cube("Socket tray face",497,177,.486,140,95,.014,panel,.003)
-    cube("Instrument bay face upper lip",378,311,.494,411,16,.012,edge,.001)
-    cube("Console bottom guard bottom lip",379,425,.497,420,20,.025,iron,.005)
+    # Outline follows recognizable sheet metal seams in the sprite.
+    # The LCD and knife switches are TWO different modules, not a single
+    # generic dark rectangular face stuck to the chassis.
+    cast_contour("Full-length left equipment mounting casting",
+        [(122,100),(154,100),(166,113),(166,380),
+         (154,406),(119,396),(108,382),(110,115)],
+        .453,.487,panel,.005)
+    cast_contour("Vented upper source-shaped maintenance plate",
+        [(180,101),(394,102),(415,118),(416,215),
+         (400,226),(177,226),(169,215),(169,115)],
+        .452,.499,panel,.004)
+    cast_contour("Mid-level split service cover",
+        [(176,227),(405,227),(414,239),(413,282),
+         (398,298),(177,297),(169,287),(168,238)],
+        .447,.491,iron,.003)
+    cast_contour("Three-capacitor contoured carrier plate",
+        [(441,116),(559,116),(575,132),(575,209),
+         (566,225),(436,225),(428,212),(428,129)],
+        .456,.499,panel,.004)
+    cast_contour("Right lower inspection door",
+        [(438,226),(569,225),(578,236),(578,288),
+         (563,299),(441,298),(430,288),(430,238)],
+        .451,.490,iron,.004)
+    cast_contour("Upper controller shared sloped mount",
+        [(177,301),(571,301),(587,318),(585,424),
+         (569,442),(178,440),(163,422),(164,318)],
+        .455,.493,dark,.006)
+    cast_contour("Left LCD and diagnostics faceplate",
+        [(176,307),(380,306),(392,317),(391,419),
+         (380,432),(176,431),(168,418),(168,320)],
+        .493,.511,panel,.004)
+    cast_contour("Right knife-switch faceplate",
+        [(397,308),(568,308),(578,320),(578,420),
+         (567,433),(400,433),(390,422),(391,322)],
+        .492,.511,panel,.004)
+    cube("Real module separating seam",391,370,.514,
+         4,107,.006,crevice,.001)
+    cast_contour("Controller leading machined armor lip",
+        [(177,417),(572,418),(577,428),
+         (563,445),(185,445),(170,428)],
+        .486,.516,iron,.004)
 
     # The three real recessed vent apertures, not printed dark stripes.
     for i,(y,w) in enumerate(((153,68),(177,67),(201,65))):
@@ -523,6 +593,7 @@ def build_enclosure():
       "corrugated black hydraulic perimeter with clamps",
       "foundation slab / raised armored chassis / top instrument panel",
       "low rear cable drops and protected bulkhead endpoint glands",
+      "source-traced irregular armor plates, split control faces, tapered front castings",
     ])
 
 
@@ -591,9 +662,9 @@ def create_materials():
     # Source is dark oil-browned, oxidized foundry steel, not clean aluminum.
     # Tight roughness and material noise avoid a sterile plastic appearance.
     material("black_steel",(.026,.025,.024),.63,.73,.38)
-    material("iron",(.082,.073,.063),.67,.71,.46)
-    material("edge_steel",(.175,.154,.125),.79,.58,.39)
-    material("worn_steel",(.114,.099,.080),.73,.68,.48)
+    material("iron",(.067,.057,.048),.67,.75,.45)
+    material("edge_steel",(.145,.122,.094),.79,.65,.38)
+    material("worn_steel",(.089,.075,.060),.73,.72,.47)
     material("crevice",(.006,.009,.008),.13,.85,.09)
     material("brass",(.31,.196,.060),.76,.51,.31)
     material("old_gold",(.28,.159,.048),.82,.54,.31)
@@ -657,12 +728,12 @@ def main(out):
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V08 visible perimeter hydraulic channels and three-layer controller"
+    scene["asset_revision"]="V09 source-shaped castings and divided upper controls"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v08.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v09.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -680,15 +751,15 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v08.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v09.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V08 THREE-LAYER EXTERIOR WITH EXPOSED HOSES REQUIRES VISUAL REVIEW",
-        "candidate_revision":"V08",
+        "state":"V09 SPRITE-TRACED ARMOR AND CONTROLS REQUIRES VISUAL REVIEW",
+        "candidate_revision":"V09",
         "original_source_sha256":SOURCE_SHA256,
         "source_sprite_replaced":False,
         "gameplay_changed":False,
@@ -700,6 +771,10 @@ def main(out):
         "physical_knife_switches":3,
         "perimeter_hoses_visible_on_chassis_shoulders":True,
         "control_deck_width_reference_units":486,
+        "source_contour_mesh_count":sum(
+            "SOURCE_TRACED_CAST_SURFACE" in ob.data.name for ob in real_objects
+            if ob.type=="MESH"),
+        "separate_LCD_and_switch_faceplates":True,
         "terminated_cable_routes":CABLE_ROUTES,
         "modeled_hidden_internal_components":0,
         "render_geometry_policy":"GAME_CAMERA_VISIBLE_ONLY",

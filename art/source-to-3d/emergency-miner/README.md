@@ -46,3 +46,9 @@ Render preview requirement: every completed modeling run needs an **inline revie
 ## V08 — protect the characteristic exposed perimeter hoses
 
 V07 successfully introduced the three layers and electrical hardware, but its upper control slab was too wide, hiding the corrugated hydraulic hoses seen prominently around the original housing. V08 narrows only the structural upper plate to approximately the controller face's width, preserves raised front fascia, and moves both corrugated hoses into exposed outer chassis channels. The hoses retain checked physical glands and bolted retainers. The design remains original-sprite-led and intentionally leaves hidden laser hardware unmodeled. As always, the owner needs real, inline rendered proof from V08 before visual acceptance.
+
+## V09 — source-matched casting contours, fewer generic boxes
+
+V08's layered construction was recognizable but its broad rectangular front strips and duplicated plates looked like generic stamped boxes. V09 replaces the bulky front armor strips, four corner protrusions, and flat stacked upper cover plates with **custom irregular, beveled cast mesh silhouettes** following the actual reference. The LCD/button module and the knife-switch power module have distinct shaped faces. Core behavior, cabling/hose end fittings, the three capacitor housings and the three-height construction remain intact. Material undertones are darkened slightly to approach the original worn foundry metal. No hidden mechanical details are modeled.
+
+Compare the true Blender V09 renders beside the original and at 43-pixel game scale. Geometry construction passes are diagnostic only; final visual acceptance remains with the project owner.
