@@ -20,6 +20,9 @@ for _,case in ipairs({{"input",2,7},{"output",3,8},{"modules",4,9}}) do
  assert(native.index(mixed,role)==new,
   "modern native enum was not preferred when both exist")
 end
+local divergent={furnace_source=3,furnace_result=4,assembling_machine_input=5,assembling_machine_output=6}
+assert(native.index(divergent,"input","furnace")==3 and native.index(divergent,"output","furnace")==4)
+assert(native.index(divergent,"input","assembler")==5 and native.index(divergent,"output","assembler")==6)
 assert(native.index(modern,"trash")==10)
 assert(native.index({},"input")==nil and native.index(nil,"input")==nil)
 assert(native.index(modern,"unsupported")==nil)
@@ -29,8 +32,8 @@ for _,path in ipairs({
 }) do
  local file=assert(io.open(path,"rb"))
  local text=file:read("*a");file:close()
- assert(text:find('crafter_index_1277("input")',1,true)
-  and text:find('crafter_index_1277("output")',1,true),
+ assert(text:find('crafter_index_1277("input"',1,true)
+  and text:find('crafter_index_1277("output"',1,true),
   "missing tested native crafter index usage: "..path)
  for _,name in ipairs({"assembling_machine_input","assembling_machine_output",
     "furnace_source","furnace_result"}) do

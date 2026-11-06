@@ -12,8 +12,8 @@
 
 local M = {}
 local native_crafter_inventory_1277 = require("scripts.core.native_crafter_inventory_1277")
-local function crafter_index_1277(role)
-  return native_crafter_inventory_1277.index(defines and defines.inventory,role)
+local function crafter_index_1277(role,family)
+  return native_crafter_inventory_1277.index(defines and defines.inventory,role,family)
 end
 M.version = "0.1.348"
 M.storage_key = "emergency_facility_doctrine_0343"
@@ -450,8 +450,8 @@ local function machine_has_live_batch(entity)
   if not (valid(entity) and defines and defines.inventory) then return false end
   local ok_progress,progress=pcall(function()return entity.crafting_progress end)
   if ok_progress and tonumber(progress) and progress>0 then return true end
-  for _,id in ipairs({crafter_index_1277("input"),
-      crafter_index_1277("output")}) do
+  for _,id in ipairs({crafter_index_1277("input",entity.type=="furnace" and "furnace" or "assembler"),
+      crafter_index_1277("output",entity.type=="furnace" and "furnace" or "assembler")}) do
     local inventory=safe_inventory(entity,id)
     if inventory then
       local ok,total=pcall(function()return inventory.get_item_count()end)
@@ -714,7 +714,7 @@ local function settle_local_miner_outputs(pair,facilities)
         and miner.force==pair.station.force
         and dist_sq(miner.position,pair.station.position)<=radius_for(pair)^2 then
       if not machine_output_reserved_by_logistics(pair,miner) then
-        local output=safe_inventory(miner,crafter_index_1277("output"))
+        local output=safe_inventory(miner,crafter_index_1277("output","assembler"))
         if output then
           local products,seen={},{}
           local selected=nil
@@ -768,7 +768,7 @@ local function settle_local_electronics_outputs(pair, facilities)
       and assembler.force==pair.station.force)
       or dist_sq(assembler.position,pair.station.position)>radius_for(pair)^2
       or machine_output_reserved_by_logistics(pair,assembler) then return 0 end
-  local output=safe_inventory(assembler,crafter_index_1277("output"))
+  local output=safe_inventory(assembler,crafter_index_1277("output","assembler"))
   if not output then return 0 end
   local restored,electronics_restored,labs_restored,science_restored,parts_restored=
     0,0,0,0,0
@@ -911,7 +911,7 @@ local function release_furnace_iron_for_copper(pair, entity, input)
   if ok_progress and tonumber(progress) and progress>0 then
     return false -- Finish an already-progressing iron smelt first.
   end
-  local result=safe_inventory(entity,crafter_index_1277("output"))
+  local result=safe_inventory(entity,crafter_index_1277("output","furnace"))
   -- Returning finished iron plates is essential: the old output also locks
   -- Factorio's automatic furnace recipe selection, even after source swap.
   if not return_furnace_item(pair,result,"iron-plate",
@@ -950,7 +950,7 @@ local function release_furnace_copper_for_iron(pair, entity, input, want_item, e
   if ok_progress and tonumber(progress) and progress>0 then
     return false
   end
-  local result=safe_inventory(entity,crafter_index_1277("output"))
+  local result=safe_inventory(entity,crafter_index_1277("output","furnace"))
   if not return_furnace_item(pair,result,"copper-plate",
       "physical-furnace-copper-output-return-0357") then return false end
   return return_furnace_item(pair,input,"copper-ore",
@@ -958,7 +958,7 @@ local function release_furnace_copper_for_iron(pair, entity, input, want_item, e
 end
 
 local function feed_inputs_from_pair(pair, entity, want_item, engine_circuit_iron_needed, preserve_incumbent_inputs)
-  local input = safe_inventory(entity, crafter_index_1277("input")) or safe_inventory(entity, crafter_index_1277("input"))
+  local input = safe_inventory(entity, crafter_index_1277("input",entity.type=="furnace" and "furnace" or "assembler"))
   local function trace_input(phase,recipe_name,requested,inserted)
     -- Read-only primitive evidence from the real machine-service path. A
     -- final preflight alone cannot prove a transfer was even attempted.
@@ -1197,7 +1197,7 @@ local function initial_miner_recipe(pair, facilities, miner, request_item)
     for _, rec in pairs(facilities) do
       if rec and rec.role == "smelter" and valid(rec.entity) then
         iron = iron + inventory_count(
-          safe_inventory(rec.entity, crafter_index_1277("input")), "iron-ore")
+          safe_inventory(rec.entity, crafter_index_1277("input","furnace")), "iron-ore")
         coal = coal + inventory_count(
           safe_inventory(rec.entity, defines.inventory.fuel), "coal")
       end
@@ -1359,7 +1359,7 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
   -- An explicit iron/copper smelt remains authoritative; this only services
   -- the immediately dependent copper-cable request.
   if smelter and request_item=="copper-cable" then
-    local source=safe_inventory(smelter,crafter_index_1277("input"))
+    local source=safe_inventory(smelter,crafter_index_1277("input","furnace"))
     if inventory_count(source,"copper-ore")>0
         or source_inventory_for(pair,"copper-ore") then
       smelter_request="copper-plate"
@@ -1376,8 +1376,8 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
       and request_item~="copper-plate"
       and request_item~="iron-plate"
       and request_item~="stone-brick" then
-    local inputs=safe_inventory(assembler,crafter_index_1277("input"))
-    local furnace_input=safe_inventory(smelter,crafter_index_1277("input"))
+    local inputs=safe_inventory(assembler,crafter_index_1277("input","assembler"))
+    local furnace_input=safe_inventory(smelter,crafter_index_1277("input","furnace"))
     local iron_missing=inventory_count(inputs,"iron-plate")==0
       and not source_inventory_for(pair,"iron-plate")
     local iron_available=source_inventory_for(pair,"iron-ore")
@@ -1393,7 +1393,7 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
   -- miner otherwise takes the last available coal and leaves copper blocked.
   -- No fuel is reserved synthetically or removed from another machine.
   if smelter and smelter_request=="copper-plate" then
-    local source=safe_inventory(smelter,crafter_index_1277("input"))
+    local source=safe_inventory(smelter,crafter_index_1277("input","furnace"))
     if inventory_count(source,"copper-ore")>0
         or source_inventory_for(pair,"copper-ore") then
       feed_fuel_from_pair(pair,smelter)
