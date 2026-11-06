@@ -167,4 +167,48 @@ check(#moves == 6 and deposits == 5,
 check(pair.machine_logistics_custody_0528.count == 2,
   "blocked return silently lost machine-output custody")
 
-print("[machine-station-contact] PASS scenarios=7")
+-- 1068: a collision-clear station point can be path-blocked in the real
+-- world. A held output must try another physical perimeter point after
+-- bounded no-progress, without any remote deposit or custody mutation.
+surface.can_place_entity = function(args)
+  local x, y = args.position.x, args.position.y
+  return x * x + y * y >= 1.3 * 1.3
+end
+priest.position = { x = 9, y = 0 }
+local held = { item = "iron-ore", count = 2, kind = "retention" }
+pair.machine_logistics_0528 = {
+  phase = "return-custody-to-station", action = "clear-output",
+  item = "iron-ore", count = 2, custody = held, machine = machine,
+}
+pair.machine_logistics_custody_0528 = held
+local before_moves, before_deposits = #moves, deposits
+result = Logistics.service_pair(pair, "test-station-stall-first")
+check(result.waiting == 1 and #moves == before_moves + 1,
+  "initial physical station contact not requested")
+local first = moves[#moves].pos
+game.tick = game.tick + 145
+result = Logistics.service_pair(pair, "test-station-stall-alternate")
+check(result.waiting == 1 and #moves == before_moves + 2,
+  "stalled station carrier did not request another physical contact")
+local second = moves[#moves].pos
+check(first.x ~= second.x or first.y ~= second.y,
+  "stalled station carrier repeated the same blocked contact")
+check(pair.machine_logistics_0528.station_contact_attempt_0528 == 1
+  and pair.machine_logistics_custody_0528 == held
+  and held.count == 2 and deposits == before_deposits,
+  "station contact retry changed real custody or credited a remote deposit")
+-- A measured approach toward the new contact must preserve that destination.
+priest.position = { x = priest.position.x - 0.3, y = priest.position.y }
+game.tick = game.tick + 100
+result = Logistics.service_pair(pair, "test-station-stall-progress")
+check(result.waiting == 1 and #moves == before_moves + 3
+  and moves[#moves].pos.x == second.x
+  and moves[#moves].pos.y == second.y,
+  "station contact churned despite physical approach progress")
+priest.position = { x = second.x, y = second.y }
+result = Logistics.service_pair(pair, "test-station-stall-arrival")
+check(result.acted == 1 and deposits == before_deposits + 2
+  and pair.machine_logistics_custody_0528 == nil,
+  "stalled station cargo was not physically deposited after arrival")
+
+print("[machine-station-contact] PASS scenarios=8")
