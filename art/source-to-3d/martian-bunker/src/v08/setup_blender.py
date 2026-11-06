@@ -56,7 +56,7 @@ for key, hx in payload['materials'].items():
         emissive = bsdf.inputs.get('Emission Color') or bsdf.inputs.get('Emission')
         strength = bsdf.inputs.get('Emission Strength')
         if emissive: emissive.default_value=(*rgb,1.0)
-        if strength: strength.default_value=1.8 if key=='indicator_green' else 1.0
+        if strength: strength.default_value=0.62 if key=='indicator_green' else 0.48
     materials[key]=mat
 
 # Original deterministic PBR image maps; delivered both in editable .blend and GLB.
@@ -280,9 +280,9 @@ def look_from(pos,target=None,scale=5.45):
 world=bpy.data.worlds.new('RT-P | Warm workshop ambient')
 world.use_nodes=True
 world.node_tree.nodes['Background'].inputs['Color'].default_value=(.31,.31,.30,1.0)
-world.node_tree.nodes['Background'].inputs['Strength'].default_value=.8
+world.node_tree.nodes['Background'].inputs['Strength'].default_value=.64
 bpy.context.scene.world=world
-for name,xyz,energy,size in [('Warm key',(-4,-6,8),1450,5),('Cold steel fill',(4,5,7),750,4)]:
+for name,xyz,energy,size in [('Warm key',(-4,-6,8),1350,5),('Cold steel fill',(4,5,7),650,4)]:
     lamp=bpy.data.lights.new(name,'AREA')
     lamp.energy=energy
     lamp.shape='DISK';lamp.size=size
@@ -303,6 +303,7 @@ sc.render.resolution_percentage=100
 sc.render.film_transparent=True
 sc.render.image_settings.file_format='PNG'
 sc.view_settings.view_transform='Standard' # preserve diagnostic material identity
+sc.view_settings.exposure=-0.35 # source reference: lower key-to-fill contrast and darker aged armor
 
 # Export ONLY physical meshes + moving pivot; Blender handles GLB Y-up conversion.
 bpy.ops.object.select_all(action='DESELECT')

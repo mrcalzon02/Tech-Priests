@@ -58,23 +58,23 @@ for key,hx in COL.items():
         family='weathered_ferrocrete'
         dust=clamp((coarse+.6*medium+.4)/3.7)
         arr*= (.94+.045*coarse+.040*grain)[...,None]
-        arr=arr*(1-.21*dust[...,None])+np.array([.44,.26,.19])[None,None,:]*(.21*dust[...,None])
+        arr=arr*(1-.30*dust[...,None])+np.array([.44,.26,.19])[None,None,:]*(.30*dust[...,None])
         tiny=(grain>1.75)&(medium<.75)
         arr[tiny]*=.70
         rou=clamp(.83+.055*grain+.020*medium).astype(np.float32)
         height=.022*grain+.012*fine+.015*medium-.020*tiny.astype(np.float32)
     elif key in ('martian_red','red_highlight','red_dark','oxide_red'):
         family='battleworn_martian_red_paint'
-        sc=scratches(rng,280,21)
+        sc=scratches(rng,430,21)
         # Correlated chips in islands, rather than evenly scattered noise.
-        islands=(grain>1.76)&(medium>.30)&(coarse>-.55)
-        fragments=(fine>2.05)&(medium>.25)
+        islands=(grain>1.56)&(medium>.28)&(coarse>-.55)
+        fragments=(fine>1.95)&(medium>.25)
         chips=islands|fragments|(sc>.25)
         chip_edges=binary_dilation(chips,iterations=1)
         exposed=chips&((fine>.0)|(sc>.25))
         dust=clamp(.11+.12*coarse+.095*patina+.07*medium)
         grime=clamp(.15+.19*patina+.12*medium)
-        arr *= (.95+.05*coarse+.024*fine)[...,None]
+        arr *= (.92+.05*coarse+.024*fine)[...,None]
         arr=arr*(1-.42*dust[...,None])+np.array([.50,.27,.16])[None,None,:]*(.42*dust[...,None])
         arr=arr*(1-.14*grime[...,None])
         # Bright exposed steel is rare; most paint chips show dark blackened primer.
@@ -148,7 +148,7 @@ for key,hx in COL.items():
                'uv_repeat_per_tile_unit':1.25,'source_color_hex':hx,
                'chipped_area_fraction':round(worn,4)}
 (OUT/'texture_manifest.json').write_text(json.dumps({
-    'generator':'make_textures.py','version':'v0.7 hard-style-reference translation',
+    'generator':'make_textures.py','version':'v0.8 owner-targeted edge chipping, oxide dust and dark metal',
     'dimension':[N,N],'source':'Original deterministic synthetic weathering; no photo or AI-generated texture pixels',
     'materials':meta},indent=2)+'\n',encoding='utf-8')
-print('BUILT_ORIGINAL_V07_TEXTURES',len(meta),'material types,',len(list(OUT.glob('*.png'))),'maps')
+print('BUILT_ORIGINAL_V08_TEXTURES',len(meta),'material types,',len(list(OUT.glob('*.png'))),'maps')

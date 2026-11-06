@@ -5,37 +5,37 @@
   "bore_radius": 0.047,
   "material_count": 23,
   "pbr_maps": 69,
-  "texture_difference_pixels": 561993,
+  "texture_difference_pixels": 560035,
   "render_checks": {
     "flat_front": {
       "visible_pixels": 249422,
-      "red_pixels": 43102
+      "red_pixels": 41978
     },
     "flat_rear": {
       "visible_pixels": 263031,
-      "red_pixels": 46449
+      "red_pixels": 45973
     },
     "textured_front": {
       "visible_pixels": 249422,
-      "red_pixels": 42806
+      "red_pixels": 41063
     },
     "textured_rear": {
       "visible_pixels": 263031,
-      "red_pixels": 46516
+      "red_pixels": 45428
     }
   },
   "asset_hashes": {
     "martian_heavy_weapon_bunker_v08_flat.blend": {
-      "sha256": "11c2e284553ca117285f1844892e12f571022da3954042d73ea5952b5c1a4cfd",
+      "sha256": "d0e307f56154f7f28ab408a402943328a45cf89dce5c64be5bb1be58842d5430",
       "bytes": 4740020
     },
     "martian_heavy_weapon_bunker_v08_textured.blend": {
-      "sha256": "6886237346af9bda1c90759aa3386f551ee3f152a046d941549d102defe2987a",
-      "bytes": 24318412
+      "sha256": "597bf705df9a95187507262058474b7b3e6eb0e7d6d17550c82ef08d297fb6b8",
+      "bytes": 24403300
     },
     "martian_heavy_weapon_bunker_v08_textured_export.glb": {
-      "sha256": "e2582a30a1305920d591685daf2df932f36ad066eb7fde1b35a7e430f1b25082",
-      "bytes": 17774840
+      "sha256": "3ec1ecfe36da8e5c2fa7722dc3951c7f1aae4077850261d4c3dfb3af3d31a5cd",
+      "bytes": 17838152
     }
   },
   "old_square_shroud_absent": true,

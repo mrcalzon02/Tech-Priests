@@ -1,6 +1,6 @@
 {
   "generator": "make_textures.py",
-  "version": "v0.7 hard-style-reference translation",
+  "version": "v0.8 owner-targeted edge chipping, oxide dust and dark metal",
   "dimension": [
     512,
     512
@@ -49,7 +49,7 @@
       },
       "uv_repeat_per_tile_unit": 1.25,
       "source_color_hex": "#842921",
-      "chipped_area_fraction": 0.0346
+      "chipped_area_fraction": 0.0506
     },
     "red_highlight": {
       "family": "battleworn_martian_red_paint",
@@ -60,7 +60,7 @@
       },
       "uv_repeat_per_tile_unit": 1.25,
       "source_color_hex": "#a83a2b",
-      "chipped_area_fraction": 0.0324
+      "chipped_area_fraction": 0.047
     },
     "red_dark": {
       "family": "battleworn_martian_red_paint",
@@ -71,7 +71,7 @@
       },
       "uv_repeat_per_tile_unit": 1.25,
       "source_color_hex": "#541d1b",
-      "chipped_area_fraction": 0.0326
+      "chipped_area_fraction": 0.0472
     },
     "iron": {
       "family": "turned_gunmetal_steel",
@@ -192,7 +192,7 @@
       },
       "uv_repeat_per_tile_unit": 1.25,
       "source_color_hex": "#713025",
-      "chipped_area_fraction": 0.0338
+      "chipped_area_fraction": 0.0494
     },
     "machined_bright": {
       "family": "turned_gunmetal_steel",

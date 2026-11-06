@@ -712,7 +712,7 @@ target_add('86_periscope_armored_overhang',box,(-.70,-.911,2.325),(.325,.286,.05
 for sign in (-1,1):
     target_add(f'86_periscope_hood_cheek_{sign:+d}',box,(-.70+sign*.153,-.936,2.254),
           (.043,.185,.145),'iron','sensing','Side hood physically braces left periscope lens')
-target_add('86_periscope_acquisition_lens',box,(-.70,-.935,2.225),(.146,.018,.075),
+target_add('86_periscope_acquisition_lens',box,(-.70,-.927,2.225),(.146,.018,.075),
            'indicator_green','sensing','Reflective green-acquisition screen behind machined sight hood')
 
 # Right-side amber hydraulic and weapon-arm status window in a recessed cover.

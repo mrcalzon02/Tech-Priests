@@ -28,5 +28,25 @@ for side in ('W','E'):
 for n in a:
     lo,hi=bounds(n)
     assert lo[2]>=1.69 and hi[2]<3.12,(n,'outside rotating envelope')
+
+# A part can share the traverse pivot yet still FLOAT in its default pose.
+# Enforce spatial continuity of every owner-target detail against at least
+# one other rotating mesh, with a strict 0.001-tile contact tolerance.
+rotating=[p['name'] for p in blob['parts'] if p['rotating']]
+for n in a:
+    lo1,hi1=bounds(n)
+    contacting=False
+    for other in rotating:
+        if other==n:continue
+        lo2,hi2=bounds(other)
+        if np.all(lo1<=hi2+0.001) and np.all(lo2<=hi1+0.001):
+            contacting=True
+            break
+    assert contacting, (n,'target detail still floating from ALL turret members')
+# The new optical glass must intersect the ORIGINAL mounted sight window.
+la,ha=bounds('86_periscope_acquisition_lens')
+lb,hb=bounds('39_primary_optic_lens')
+assert np.all(np.minimum(ha,hb)-np.maximum(la,lb)>0), 'New periscope glass not physically seated into existing sight window'
+
 assert np.min(np.asarray(g['23_muzzle_reinforcement']['vertices'])[:,1])<-2.02
 print('V08_TARGET_GEOMETRY_AND_TURRET_ATTACHMENTS_PASS',len(g),'parts',len(a),'new target meshes')
