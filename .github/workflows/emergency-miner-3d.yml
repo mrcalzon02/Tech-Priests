@@ -26,12 +26,13 @@ jobs:
       - name: Install Blender for actual editable high-detail 3D modeling
         run: |
           sudo apt-get update -qq
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
           blender --version | head -n 2
+          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
       - name: Build one actual 3D miner model with source-faithful enclosure and isolated inferred drill
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
-          blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
+          PYTHONPATH=/usr/lib/python3/dist-packages blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
             --python art/source-to-3d/emergency-miner/build_model.py -- \
             --out art-output/emergency-miner
       - name: Verify saved Blender scene, actual GLB export, and source-registered renders
