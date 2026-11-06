@@ -309,14 +309,38 @@ local function station_contact(pair, state)
     end)
     return ok and allowed == true
   end
-  local remembered = state and state.station_contact_0528
-  if remembered and is_clear(remembered) then return remembered end
+  -- A collision-clear standing point is not necessarily path-reachable.
+  -- The native 1068 return loitered at >6 tiles from the station for
+  -- thousands of ticks while carrying five real coal. Rotate the contact
+  -- only after 120 ticks without 0.2 tiles of actual approach progress.
+  -- Keep the same engine cargo and the original station transfer radius.
+  local same_station = state and state.station_contact_unit_0528 == station.unit_number
+  if state and not same_station then
+    state.station_contact_attempt_0528 = 0
+    state.station_contact_best_remaining_0528 = nil
+    state.station_contact_last_progress_tick_0528 = nil
+  end
+  local remembered = same_station and state.station_contact_0528 or nil
+  if remembered and is_clear(remembered) then
+    local remaining = math.sqrt(dist_sq(priest.position, remembered))
+    local best = tonumber(state.station_contact_best_remaining_0528)
+    if not best or best - remaining >= 0.2 then
+      state.station_contact_best_remaining_0528 = remaining
+      state.station_contact_last_progress_tick_0528 = now()
+    end
+    if now() - (tonumber(state.station_contact_last_progress_tick_0528)
+        or now()) < 120 then
+      return remembered
+    end
+    state.station_contact_attempt_0528 =
+      (tonumber(state.station_contact_attempt_0528) or 0) + 1
+  end
   local offsets = {
     {1,0},{0,1},{-1,0},{0,-1},
     {0.70710678,0.70710678},{-0.70710678,0.70710678},
     {-0.70710678,-0.70710678},{0.70710678,-0.70710678},
   }
-  local best, best_distance = nil, nil
+  local choices = {}
   for _, radius in ipairs({1.35, 1.45, 1.55, 1.7, 1.85}) do
     for _, direction in ipairs(offsets) do
       local pos = {
@@ -324,19 +348,30 @@ local function station_contact(pair, state)
         y = station.position.y + radius * direction[2],
       }
       if is_clear(pos) then
-        -- Reach the cargo-transfer radius with margin. A merely nearest
-        -- outer-ring contact can make the movement controller loiter at 2.1+
-        -- tiles from the station, permanently withholding physical cargo.
-        local distance = dist_sq(pos, station.position) * 10000
-          + dist_sq(pos, priest.position)
-        if not best_distance or distance < best_distance then
-          best, best_distance = pos, distance
-        end
+        choices[#choices + 1] = {
+          pos = pos,
+          score = dist_sq(pos, station.position) * 10000
+            + dist_sq(pos, priest.position),
+        }
       end
     end
   end
-  if state then state.station_contact_0528 = best end
-  return best
+  if #choices == 0 then
+    if state then state.station_contact_0528 = nil end
+    return nil
+  end
+  table.sort(choices, function(a, b) return a.score < b.score end)
+  local stride = math.max(1, math.floor(#choices / 4))
+  local attempt = state and (tonumber(state.station_contact_attempt_0528) or 0) or 0
+  local selected = choices[1 + ((attempt * stride) % #choices)].pos
+  if state then
+    state.station_contact_0528 = selected
+    state.station_contact_unit_0528 = station.unit_number
+    state.station_contact_best_remaining_0528 =
+      math.sqrt(dist_sq(priest.position, selected))
+    state.station_contact_last_progress_tick_0528 = now()
+  end
+  return selected
 end
 -- A mining drill is a solid entity, just like the station. Sending a priest
 -- carrying real coal to the drill's center can leave the movement controller
