@@ -117,6 +117,9 @@ def resolve(family, requested, metadata_get=json_from_portal):
                 errors.append(str(cache[name]))
                 continue
             release = select_release(name, cache[name], family, conditions)
+            if release is None and family == "2.1" and name == "tanks_for_bob_fork":
+                # This is a test-only compatibility probe, NOT a released 2.1 mod.
+                release = select_release(name, cache[name], "2.0", conditions)
             if release is None:
                 errors.append(f"{name}: no Factorio {family} release satisfying required constraints")
             else:
@@ -194,6 +197,44 @@ def download_checked(name, release, mods_dir, username, token):
     return {"name": name, "version": release["version"],
             "sha1": expected, "filename": filename,
             "factorio_version": release["info_json"]["factorio_version"]}
+
+
+def test_only_tanks_21_bridge(mods_dir, record):
+    """Modify only a disposable runner copy of the intact, SHA-1-verified 2.0 ZIP.
+
+    Never distribute this staged ZIP or call it an official 2.1 release.
+    The original release's SHA-1 remains recorded in the manifest, while a
+    separate SHA-256 identifies this deliberately modified test artifact.
+    """
+    path = mods_dir / record["filename"]
+    pending = path.with_suffix(".staged")
+    try:
+        with zipfile.ZipFile(path) as source, zipfile.ZipFile(pending, "w") as destination:
+            entries = [
+                name for name in source.namelist()
+                if name.count("/") == 1 and name.endswith("/info.json")
+            ]
+            if len(entries) != 1:
+                raise ValueError("Tanks bridge ZIP does not have one package metadata file")
+            for entry in source.infolist():
+                contents = source.read(entry)
+                if entry.filename == entries[0]:
+                    info = json.loads(contents)
+                    if (info.get("name") != "tanks_for_bob_fork"
+                            or info.get("factorio_version") != "2.0"):
+                        raise ValueError("Unexpected source package metadata for bridge")
+                    info["factorio_version"] = "2.1"
+                    contents = (json.dumps(info, indent=2) + "\n").encode("utf-8")
+                destination.writestr(entry, contents)
+        if not zipfile.is_zipfile(pending):
+            raise ValueError("Invalid temporary bridge ZIP")
+        pending.replace(path)
+        record["test_only_2_1_metadata_bridge"] = True
+        record["staged_sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+        print("[MODPACK] TEST-ONLY 2.1 metadata bridge for Tanks for Bob 2.0 archive")
+    finally:
+        pending.unlink(missing_ok=True)
+    return record
 
 
 def roots_for_family(family):
@@ -278,14 +319,19 @@ def install(args):
         else:
             for name, release in sorted(selected.items()):
                 try:
-                    manifest["installed"].append(download_checked(name, release, mods, username, token))
+                    record = download_checked(name, release, mods, username, token)
+                    if args.family == "2.1" and name == "tanks_for_bob_fork":
+                        record = test_only_tanks_21_bridge(mods, record)
+                    manifest["installed"].append(record)
                     print(f"[MODPACK] VERIFIED {name} {release['version']}", flush=True)
                 except ValueError as error:
                     manifest["blockers"].append(str(error))
                     # A global 403 will affect every download: avoid hammering the API.
                     if "authenticated download HTTP 403" in str(error):
                         break
-        enabled = list(dict.fromkeys(OFFICIAL_ENABLED + ("tech-priests",) +
+        enabled = list(dict.fromkeys(OFFICIAL_ENABLED +
+                                     (("recycler",) if args.family == "2.1" else ()) +
+                                     ("tech-priests",) +
                                      tuple(item["name"] for item in manifest["installed"])))
         (mods / "mod-list.json").write_text(
             json.dumps({"mods": [{"name": name, "enabled": True} for name in enabled]},
