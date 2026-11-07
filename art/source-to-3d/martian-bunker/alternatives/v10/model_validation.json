@@ -1,0 +1,658 @@
+{
+  "revision": "V10 bevel and shading refinement",
+  "source_vertices_positions_materials_and_UVs_preserved": true,
+  "non_destructive_modifiers": true,
+  "refined_objects": [
+    {
+      "name": "ROTARY_ADAPTER",
+      "bevel_width": 0.006,
+      "segments": 4
+    },
+    {
+      "name": "FIN_ROOT",
+      "bevel_width": 0.006,
+      "segments": 4
+    },
+    {
+      "name": "CENTRAL_FIN",
+      "bevel_width": 0.01,
+      "segments": 4
+    },
+    {
+      "name": "CAST_CANNON_LEFT_1",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "ROUNDED_MUZZLE_LEFT_1",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "FIN_TO_CANNON_MOUNT_1",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "BOTTOM_FEED_LEFT_1",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "BOTTOM_FEED_SOCKET_LEFT_1",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "CAST_CANNON_LEFT_2",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "ROUNDED_MUZZLE_LEFT_2",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "FIN_TO_CANNON_MOUNT_2",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "BOTTOM_FEED_LEFT_2",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "BOTTOM_FEED_SOCKET_LEFT_2",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "CAST_CANNON_LEFT_3",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "ROUNDED_MUZZLE_LEFT_3",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "FIN_TO_CANNON_MOUNT_3",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "BOTTOM_FEED_LEFT_3",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "BOTTOM_FEED_SOCKET_LEFT_3",
+      "bevel_width": 0.0025,
+      "segments": 3
+    },
+    {
+      "name": "CENTRAL_AMMUNITION_ARMOURED_SPINE",
+      "bevel_width": 0.012,
+      "segments": 4
+    },
+    {
+      "name": "CENTRAL_ARM_TO_FIN_BRIDGE",
+      "bevel_width": 0.012,
+      "segments": 4
+    },
+    {
+      "name": "SPINE_REAR_SERVICE_COVER",
+      "bevel_width": 0.004200000017881393,
+      "segments": 3
+    },
+    {
+      "name": "SPINE_REAR_REINFORCEMENT",
+      "bevel_width": 0.004200000017881393,
+      "segments": 3
+    },
+    {
+      "name": "SPINE_REAR_REINFORCEMENT.001",
+      "bevel_width": 0.004200000017881393,
+      "segments": 3
+    },
+    {
+      "name": "SPINE_REAR_REINFORCEMENT.002",
+      "bevel_width": 0.004200000017881393,
+      "segments": 3
+    },
+    {
+      "name": "SERVICE_PANEL_BOLT",
+      "bevel_width": 0.0026400017738342284,
+      "segments": 3
+    },
+    {
+      "name": "SERVICE_PANEL_BOLT.001",
+      "bevel_width": 0.0026400017738342284,
+      "segments": 3
+    },
+    {
+      "name": "SERVICE_PANEL_BOLT.002",
+      "bevel_width": 0.0026400017738342284,
+      "segments": 3
+    },
+    {
+      "name": "SERVICE_PANEL_BOLT.003",
+      "bevel_width": 0.0026400017738342284,
+      "segments": 3
+    },
+    {
+      "name": "SERVICE_PANEL_BOLT.004",
+      "bevel_width": 0.0026400017738342284,
+      "segments": 3
+    },
+    {
+      "name": "SERVICE_PANEL_BOLT.005",
+      "bevel_width": 0.0026400017738342284,
+      "segments": 3
+    },
+    {
+      "name": "SERVICE_PANEL_BOLT.006",
+      "bevel_width": 0.0026400017738342284,
+      "segments": 3
+    },
+    {
+      "name": "SERVICE_PANEL_BOLT.007",
+      "bevel_width": 0.0026400017738342284,
+      "segments": 3
+    },
+    {
+      "name": "CENTRAL_FEED_BASE_CASTING",
+      "bevel_width": 0.012,
+      "segments": 4
+    },
+    {
+      "name": "CENTRAL_FEED_TOP_CAP",
+      "bevel_width": 0.010800000429153443,
+      "segments": 4
+    },
+    {
+      "name": "OPEN_MECHANICAL_HOPPER_LEFT_1",
+      "bevel_width": 0.0024,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT.001",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT.002",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT.003",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_NECK_LEFT_1",
+      "bevel_width": 0.006,
+      "segments": 4
+    },
+    {
+      "name": "OPEN_MECHANICAL_HOPPER_LEFT_2",
+      "bevel_width": 0.0024,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT.004",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT.005",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT.006",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT.007",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_NECK_LEFT_2",
+      "bevel_width": 0.006,
+      "segments": 4
+    },
+    {
+      "name": "OPEN_MECHANICAL_HOPPER_LEFT_3",
+      "bevel_width": 0.0024,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT.008",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT.009",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT.010",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_ROLLED_LIP_LEFT.011",
+      "bevel_width": 0.002880000025033951,
+      "segments": 3
+    },
+    {
+      "name": "HOPPER_NECK_LEFT_3",
+      "bevel_width": 0.006,
+      "segments": 4
+    },
+    {
+      "name": "HATCH_FRAME_JAMB",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_JAMB.001",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE.001",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "LIFTED_HATCH_LEAF",
+      "bevel_width": 0.003840000182390213,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_LEAF_HANDLE",
+      "bevel_width": 0.002159999907016754,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_JAMB.002",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_JAMB.003",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE.002",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE.003",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "LIFTED_HATCH_LEAF.001",
+      "bevel_width": 0.003840000182390213,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_LEAF_HANDLE.001",
+      "bevel_width": 0.002159999907016754,
+      "segments": 3
+    },
+    {
+      "name": "SLOPED_EXIT_CHUTE_LEFT_1",
+      "bevel_width": 0.0023,
+      "segments": 3
+    },
+    {
+      "name": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_1",
+      "detail": "rubber segment edge smoothing; original width retained"
+    },
+    {
+      "name": "HATCH_FRAME_JAMB.004",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_JAMB.005",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE.004",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE.005",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "LIFTED_HATCH_LEAF.002",
+      "bevel_width": 0.003840000182390213,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_LEAF_HANDLE.002",
+      "bevel_width": 0.002159999907016754,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_JAMB.006",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_JAMB.007",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE.006",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE.007",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "LIFTED_HATCH_LEAF.003",
+      "bevel_width": 0.003840000182390213,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_LEAF_HANDLE.003",
+      "bevel_width": 0.002159999907016754,
+      "segments": 3
+    },
+    {
+      "name": "SLOPED_EXIT_CHUTE_LEFT_2",
+      "bevel_width": 0.0023,
+      "segments": 3
+    },
+    {
+      "name": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_2",
+      "detail": "rubber segment edge smoothing; original width retained"
+    },
+    {
+      "name": "HATCH_FRAME_JAMB.008",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_JAMB.009",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE.008",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE.009",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "LIFTED_HATCH_LEAF.004",
+      "bevel_width": 0.003840000182390213,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_LEAF_HANDLE.004",
+      "bevel_width": 0.002159999907016754,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_JAMB.010",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_JAMB.011",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE.010",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_FRAME_CROSSPIECE.011",
+      "bevel_width": 0.0032,
+      "segments": 3
+    },
+    {
+      "name": "LIFTED_HATCH_LEAF.005",
+      "bevel_width": 0.003840000182390213,
+      "segments": 3
+    },
+    {
+      "name": "HATCH_LEAF_HANDLE.005",
+      "bevel_width": 0.002159999907016754,
+      "segments": 3
+    },
+    {
+      "name": "SLOPED_EXIT_CHUTE_LEFT_3",
+      "bevel_width": 0.0023,
+      "segments": 3
+    },
+    {
+      "name": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_3",
+      "detail": "rubber segment edge smoothing; original width retained"
+    },
+    {
+      "name": "ROOF_SENSOR_PEDESTAL",
+      "bevel_width": 0.006,
+      "segments": 4
+    },
+    {
+      "name": "ROOF_OPTICAL_HEAD",
+      "bevel_width": 0.012,
+      "segments": 4
+    },
+    {
+      "name": "OPTICAL_HEAD_BROW",
+      "bevel_width": 0.005400000214576721,
+      "segments": 3
+    },
+    {
+      "name": "OPTIC_BRASS_BEZEL",
+      "bevel_width": 0.002759993076324463,
+      "segments": 3
+    },
+    {
+      "name": "OPTIC_BRASS_BEZEL.001",
+      "bevel_width": 0.002759993076324463,
+      "segments": 3
+    },
+    {
+      "name": "BARREL_INSTRUMENT_RED_HOUSING_LEFT_1",
+      "bevel_width": 0.007,
+      "segments": 4
+    },
+    {
+      "name": "BARREL_OPTIC_BRASS_LEFT_1",
+      "bevel_width": 0.0018000000715255736,
+      "segments": 3
+    },
+    {
+      "name": "INSTRUMENT_CABLE_LEFT_1",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "BARREL_INSTRUMENT_RED_HOUSING_LEFT_2",
+      "bevel_width": 0.007,
+      "segments": 4
+    },
+    {
+      "name": "BARREL_OPTIC_BRASS_LEFT_2",
+      "bevel_width": 0.0017999982833862304,
+      "segments": 3
+    },
+    {
+      "name": "INSTRUMENT_CABLE_LEFT_2",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "BARREL_INSTRUMENT_RED_HOUSING_LEFT_3",
+      "bevel_width": 0.007,
+      "segments": 4
+    },
+    {
+      "name": "BARREL_OPTIC_BRASS_LEFT_3",
+      "bevel_width": 0.0017999982833862304,
+      "segments": 3
+    },
+    {
+      "name": "INSTRUMENT_CABLE_LEFT_3",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "ANTENNA_BRASS_BASE_0",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "ANTENNA_INSULATOR_0",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "SHORT_ANTENNA_0",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "ANTENNA_RUBBER_TIP_0",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "ANTENNA_BRASS_BASE_1",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "ANTENNA_INSULATOR_1",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "SHORT_ANTENNA_1",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "ANTENNA_RUBBER_TIP_1",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "REAR_CONTROL_SENSOR_BOX",
+      "bevel_width": 0.006,
+      "segments": 4
+    },
+    {
+      "name": "REAR_STATUS_BRASS_0",
+      "bevel_width": 0.0015600013732910156,
+      "segments": 3
+    },
+    {
+      "name": "REAR_STATUS_BRASS_1",
+      "bevel_width": 0.0015600013732910156,
+      "segments": 3
+    },
+    {
+      "name": "REAR_STATUS_BRASS_2",
+      "bevel_width": 0.0015600013732910156,
+      "segments": 3
+    },
+    {
+      "name": "REAR_SENSOR_CABLE_0",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "CABLE_BRASS_CLIP",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "CABLE_BRASS_CLIP.001",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "CABLE_BRASS_CLIP.002",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "REAR_SENSOR_CABLE_1",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "CABLE_BRASS_CLIP.003",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "CABLE_BRASS_CLIP.004",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "CABLE_BRASS_CLIP.005",
+      "bevel_width": 0.0015,
+      "segments": 3
+    },
+    {
+      "name": "ROOF_REAR_SENSOR_PUCK",
+      "bevel_width": 0.006,
+      "segments": 4
+    },
+    {
+      "name": "ROOF_REAR_SENSOR_CAP",
+      "bevel_width": 0.0023999977111816406,
+      "segments": 3
+    }
+  ],
+  "existing_bunker_modified": false,
+  "cannon_conveyor_and_hatch_layout_preserved": true,
+  "GLB_reimported": true,
+  "mesh_count": 189
+}
