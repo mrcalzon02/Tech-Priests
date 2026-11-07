@@ -1,0 +1,14 @@
+{
+  "revision": "V06 enlarged central ammunition arm",
+  "existing_cannons_cradles_and_air_pipes_unchanged": true,
+  "six_open_tapered_hoppers": true,
+  "existing_guides_raised_for_hopper_lips": true,
+  "reload_animation": "Named path markers only; no animation authored yet",
+  "six_visible_supply_ports": true,
+  "central_fin_width_multiplier": 1.65,
+  "central_housing": "Continuous armoured rear spine with six branch outlets into cradle backs",
+  "internal_distribution": "Concealed fictional game-asset mechanism; no functional weapon internals constructed",
+  "existing_bunker_modified": false,
+  "GLB_reimported": true,
+  "mesh_count": 187
+}
