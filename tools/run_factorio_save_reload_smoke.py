@@ -1498,17 +1498,25 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
     # alone, to a five-priest-only population, or to broker callback timing.
     # A missing/malformed trace remains UNMEASURED. Incomplete engine runs
     # retain separately labelled partial measurements, not fictional full runs.
-    headers = list(re.finditer(r"(?m)^\s*tick,scriptUpdate\s*$", content))
+    # Factorio 2.0.77 emits "run 1:", "tick,scriptUpdate,",
+    # followed by "t0,3055900," through "t47999,<nanoseconds>,".
+    # Older two-column fixtures remain supported without inventing readings.
+    headers = list(re.finditer(
+        r"(?m)^[ \t]*tick,scriptUpdate(,?)[ \t]*$", content))
     if len(headers) == 1:
         ordered_ticks = []
         durations_ns = []
+        native_csv = headers[0].group(1) == ","
+        row_pattern = (r"t(\d+),([0-9]+(?:\.[0-9]+)?),"
+                       if native_csv else
+                       r"(\d+),([0-9]+(?:\.[0-9]+)?)")
         for line in content[headers[0].end():].splitlines():
             row = line.strip()
-            match = re.fullmatch(r"(\d+),([0-9]+(?:\.[0-9]+)?)", row)
+            match = re.fullmatch(row_pattern, row)
             if not match:
-                # Reject malformed numeric observations instead of silently
-                # truncating a corrupt series into a plausible partial trace.
-                if re.match(r"^\d+,", row):
+                # Malformed tick rows invalidate the measurement, rather
+                # than masquerading as valid partial engine output.
+                if re.match(r"^(?:t)?\d+,", row):
                     ordered_ticks = []
                     durations_ns = []
                     break
@@ -1518,6 +1526,7 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
             tick = int(match.group(1))
             duration = float(match.group(2))
             if (not math.isfinite(duration) or duration < 0
+                    or (native_csv and not ordered_ticks and tick != 0)
                     or (ordered_ticks and tick != ordered_ticks[-1] + 1)):
                 ordered_ticks = []
                 durations_ns = []
@@ -1797,6 +1806,36 @@ def self_test_native_efficiency_1062() -> None:
     assert measured["script_sample_coverage"] == "complete"
     assert measured["script_scope"] == "engine-all-mods-scriptUpdate"
     assert measured["broker_pulse_sample_count"] is None
+    # Exact Factorio 2.0.77 --benchmark-verbose native CSV envelope,
+    # observed in production 2.0.77 run 42335267326 (48,000 rows).
+    native = native_efficiency_observation_1062(
+        "  Performed 4 updates in 20.000 ms\n"
+        "run 1:\n"
+        "tick,scriptUpdate,\n"
+        "t0,1000000,\nt1,2000000,\nt2,3000000,\nt3,4000000,\n"
+        " 583.883 Goodbye\n")
+    assert native["script_average_ms_per_tick"] == 2.5
+    assert native["script_p95_ms_per_tick"] == 4.0
+    assert native["script_sample_count"] == 4
+    assert native["script_sample_coverage"] == "complete"
+    assert native["script_scope"] == "engine-all-mods-scriptUpdate"
+    for bad_native in (
+        "t0,1000000,\nt0,2000000,\n",   # duplicate tick
+        "t0,1000000,\nt2,2000000,\n",   # missing tick
+        "t0,1000000,\nt1,NaN,\n",       # invalid numeric observation
+        "t0,1000000,\nt1,-2000000,\n",  # negative nanoseconds
+        "t0,1000000,\nt1,2000000\n",    # missing native trailing comma
+        "t1,1000000,\nt2,2000000,\n",   # nonzero first native tick
+        "t0,1000000,\nt1,2000000,\nt2,3000000,\n"
+        "t3,4000000,\nt4,5000000,\n",   # more samples than updates
+    ):
+        invalid = native_efficiency_observation_1062(
+            "  Performed 4 updates in 20.000 ms\n"
+            "run 1:\ntick,scriptUpdate,\n" + bad_native)
+        assert invalid["script_average_ms_per_tick"] is None, bad_native
+    assert native_efficiency_observation_1062(
+        "run 1:\ntick,scriptUpdate,\nt0,1000000,\nt1,2000000,\n"
+    )["script_sample_coverage"] == "partial"
     for bad_csv in (
         "tick,scriptUpdate\n100,1000000\n100,2000000\n",
         "tick,scriptUpdate\n100,-1000000\n",
