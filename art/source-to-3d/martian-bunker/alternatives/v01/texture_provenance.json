@@ -1,0 +1,19 @@
+{
+  "source_repository": "mrcalzon02/Tech-Priests",
+  "source_commit": "31afc20bb57baa7878568800c2c994365314065a",
+  "source_path": "art/material-libraries/martian-bunker-reference/v01/textures",
+  "sha256": {
+    "01_oxide_red_paint.png": "8cd0b0a008c1f7503b3c7cc419a33d8c5446c662acedcc41a000525e9437df55",
+    "01_oxide_red_paint/01_oxide_red_paint_Roughness.png": "045c5a5309a0d94f5058cd4f526a9ff9f47a626472640c806f0f81e57f24236f",
+    "01_oxide_red_paint/01_oxide_red_paint_Metallic.png": "4825c875c286c05c4553e2da5c862a2212b7d5cc92c1fb73dad215e588988783",
+    "02_dark_gunmetal.png": "48fb87fc53745dd1303e471426cf8b9a1e57dd28c4f7a010c9d46817b1d732e1",
+    "02_dark_gunmetal/02_dark_gunmetal_Roughness.png": "057db35029476c2b3d822ad5bc14b341d4a920aa5d1961ba2963aabb9ee16588",
+    "02_dark_gunmetal/02_dark_gunmetal_Metallic.png": "c9d3f98647261d4a313102ba68be6dbb6025d697a5c3b877c5d067967093dcb9",
+    "03_worn_machined_steel.png": "315e0e07050ef365cdfa9151f73f31c5d1003083c6fd38eec5c176138288db69",
+    "03_worn_machined_steel/03_worn_machined_steel_Roughness.png": "2bd8d6ba17956ea8995ab7a95ff5c7d9225aeb968adb54d27c9998e7a1684f4f",
+    "03_worn_machined_steel/03_worn_machined_steel_Metallic.png": "3d5f246c8d9a4b9e3b9b6e1e1da1f388794042a53ba3ad1c8b0e0d215d4c7ebd",
+    "04_tarnished_brass.png": "68c1c1a79f467f4f2fedbc2e05c339d4a92775f366a50a6eb5ee5787a84a88ae",
+    "04_tarnished_brass/04_tarnished_brass_Roughness.png": "d4d4ea69a0f3de98cb3ddb32f1d82db774741935d80de15a96794350256a008b",
+    "04_tarnished_brass/04_tarnished_brass_Metallic.png": "837c920fac2f183aead2aa62b1832375b8604ec34ba3998438c87fc11705a9cf"
+  }
+}

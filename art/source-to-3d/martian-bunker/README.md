@@ -1,5 +1,11 @@
 # Fortified Martian Heavy-Weapon Bunker — 3D development
 
+## Alternative turret blockouts — V01
+
+Owner-sketch energy dish and twelve-tube grenade lobber, fitted to the established M2 bunker base. Independent editable Blender assemblies, turret-only mapped GLBs, packed committed textures and real mounted/front/rear review renders. Primitive massing checkpoint; twelve tubes verified as three rows of four. Base mesh geometry and world transforms are preserved. Saved native files reopen, GLBs reimport and turret traversal leaves the base fixed.
+
+[Review board](alternatives/v01/Turret_Blockouts_V01_Review.png) · [Models, provenance and reproduction](alternatives/v01/README.md) · [Executed verification](alternatives/v01/reopen_validation.json).
+
 ## CURRENT: v1.0 (v10 source folder) reference-conformance correction
 
 The user-selected image in [style-references/visual-target-v08.png](style-references/visual-target-v08.png) is the reference, not a license to add speculative components. The previous v09 Blender gun had a giant knob at the end and an unnecessary raised red service armor slab on its roof. These were absent from the source image.
