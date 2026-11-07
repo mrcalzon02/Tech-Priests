@@ -530,7 +530,11 @@ def cut_three_true_maintenance_vents():
         well=bpy.data.objects.get(f"Physical vent cavity dark well {index}")
         if well is None:
             raise RuntimeError("Missing source vent well "+str(index))
-        center=well.matrix_world.translation.copy()
+        # Height-compression remaps mesh vertices rather than object origins.
+        # Use the actual evaluated geometry centroid, not location.z (which
+        # still refers to pre-compression coordinates).
+        points=[well.matrix_world @ v.co for v in well.data.vertices]
+        center=sum(points,Vector((0,0,0)))/len(points)
         bpy.ops.mesh.primitive_cube_add(size=1,
             location=(center.x,center.y,top-.003))
         cutter=bpy.context.object
