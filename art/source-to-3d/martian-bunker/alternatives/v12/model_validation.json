@@ -1,0 +1,41 @@
+{
+  "revision": "V12 corrugated compression hoses",
+  "six_corrugated_hoses_after_mirroring": true,
+  "hose_records": [
+    {
+      "hose": "BOTTOM_FEED_LEFT_1",
+      "corrugation_count": 12,
+      "pitch": 0.0284457358071057,
+      "valley_radius": 0.061,
+      "crest_radius": 0.079,
+      "source_centerline_and_endpoints_preserved": true,
+      "original_iron_material_retained": true,
+      "smooth_socket_transition": true
+    },
+    {
+      "hose": "BOTTOM_FEED_LEFT_2",
+      "corrugation_count": 12,
+      "pitch": 0.028445721575114703,
+      "valley_radius": 0.061,
+      "crest_radius": 0.079,
+      "source_centerline_and_endpoints_preserved": true,
+      "original_iron_material_retained": true,
+      "smooth_socket_transition": true
+    },
+    {
+      "hose": "BOTTOM_FEED_LEFT_3",
+      "corrugation_count": 13,
+      "pitch": 0.02774449780668967,
+      "valley_radius": 0.061,
+      "crest_radius": 0.079,
+      "source_centerline_and_endpoints_preserved": true,
+      "original_iron_material_retained": true,
+      "smooth_socket_transition": true
+    }
+  ],
+  "all_other_V11_geometry_transforms_and_materials_preserved": true,
+  "pneumatic_socket_positions_and_geometry_preserved": true,
+  "existing_bunker_modified": false,
+  "GLB_reimported": true,
+  "mesh_count": 247
+}
