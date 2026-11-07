@@ -1,0 +1,12 @@
+{
+  "revision": "V09 sensor and antenna fit",
+  "all_V08_existing_meshes_materials_and_transforms_preserved": true,
+  "short_antenna_count": 2,
+  "barrel_sensor_pairs": 3,
+  "roof_optical_cluster": true,
+  "rear_control_box_and_cable_runs": true,
+  "conveyor_hatches_and_hoppers_unchanged": true,
+  "existing_bunker_modified": false,
+  "GLB_reimported": true,
+  "mesh_count": 189
+}
