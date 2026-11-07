@@ -1660,6 +1660,26 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
             result["delivered_ore"] = count
             result["delivered_ore_per_1000_ticks"] = round(
                 1000.0 * count / (end - start), 6)
+    # A deficit starts at the first accepted PHYSICAL 0256 station-recovery
+    # writ with real station_stock=0, NOT at fixture creation or a ghost.
+    # This is CI-authorized shortage-to-receipt latency, not a claim that
+    # the Magos autonomously discovered the deficit. Never infer a value
+    # if any live writ, identity, chronology or four-hop receipt is absent.
+    writs = re.findall(
+        r"REVERSAL_ENGINE_REAL_WRIT_ASSIGNED tick=(\d+) "
+        r"id=(\d+) root=(\d+) station_stock=0 ghost=(\d+)", content)
+    returns = re.findall(
+        r"PASS REVERSAL_ENGINE_NATURAL_ORE_RETURN tick=(\d+) "
+        r"original_magos=(\d+) original_priests=5 physical_hops=4", content)
+    if (len(writs) == len(returns) == 1 and fixture
+            and result["delivered_ore"] is not None):
+        writ_tick, writ_id, root, ghost = map(int, writs[0])
+        return_tick, receipt_root = map(int, returns[0])
+        if (writ_id > 0 and root > 0 and ghost > 0
+                and root == receipt_root
+                and int(fixture.group(1)) <= writ_tick < return_tick
+                and return_tick == int(delivered.group(1))):
+            result["deficit_to_first_delivery_ticks"] = return_tick - writ_tick
     return result
 
 
@@ -1681,6 +1701,34 @@ def self_test_native_efficiency_1062() -> None:
     assert observed["fixture_to_first_delivery_ticks"] == 39840
     assert observed["delivered_ore"] == 1
     assert abs(observed["delivered_ore_per_1000_ticks"] - 0.0251) < 0.0001
+    # The real 2.0.77 run 42339417106 recorded a zero-stock 0256 writ
+    # at tick 13580 and the original Magos receipt at tick 47360. Demand
+    # the same engine-backed identities and physical-four-hop receipt here.
+    accepted_writ = (
+        "[TP-GROUND-RANK-TEST] REVERSAL_ENGINE_REAL_WRIT_ASSIGNED "
+        "tick=14000 id=2 root=899 station_stock=0 ghost=1000\\n")
+    accepted = native_efficiency_observation_1062(fixture + accepted_writ)
+    assert accepted["deficit_to_first_delivery_ticks"] == 39780
+    for bad_writ in (
+        accepted_writ.replace("root=899", "root=898"),
+        accepted_writ.replace("station_stock=0", "station_stock=1"),
+        accepted_writ.replace("id=2", "id=0"),
+        accepted_writ.replace("ghost=1000", "ghost=0"),
+        accepted_writ.replace("tick=14000", "tick=13939"),
+        accepted_writ.replace("tick=14000", "tick=53780"),
+        accepted_writ + accepted_writ,
+        accepted_writ.replace("REAL_WRIT_ASSIGNED", "GHOST_PLANNED"),
+    ):
+        invalid = native_efficiency_observation_1062(fixture + bad_writ)
+        assert invalid["deficit_to_first_delivery_ticks"] is None, bad_writ
+        # A wrong diagnostic must not weaken existing native delivery proof.
+        assert invalid["delivered_ore"] == 1
+    assert native_efficiency_observation_1062(
+        fixture.replace("original_magos=899", "original_magos=898")
+        + accepted_writ)["deficit_to_first_delivery_ticks"] is None
+    assert native_efficiency_observation_1062(
+        fixture.replace("physical_hops=4", "physical_hops=3")
+        + accepted_writ)["deficit_to_first_delivery_ticks"] is None
     profile_fixture = fixture + (
         "[TP-RUNTIME-PROFILE-1064] tick=18000 scope=broker-pulse "
         "duration=Duration: 0.200ms\n"

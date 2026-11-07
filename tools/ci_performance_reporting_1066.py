@@ -35,6 +35,7 @@ METRICS = (
     ("profile_window_paired_priests_end", "Actual live paired priests at reversal window end (mixed)", "pairs"),
     ("delivered_ore_per_1000_ticks", "Ore delivery throughput", "ore/1000 ticks"),
     ("fixture_to_first_delivery_ticks", "Fixture to first delivery", "ticks"),
+    ("deficit_to_first_delivery_ticks", "Accepted zero-stock 0256 writ to first Magos ore delivery", "ticks"),
     ("movement_denials_per_1000_ticks", "Movement denials", "count/1000 ticks"),
     ("scan_calls_per_1000_ticks", "All scan calls (unmeasured)", "count/1000 ticks"),
     ("routed_scan_calls_per_1000_ticks", "Routed scans (mixed population)", "count/1000 ticks"),
@@ -129,6 +130,14 @@ def build_markdown(report: dict[str, object]) -> str:
             "pairs across all forces, measured at two boundaries. They are "
             "**not** a five-priest-only benchmark or sufficient population "
             "provenance for seed/hardware-matched scaling comparisons.",
+        ])
+    if primary.get("deficit_to_first_delivery_ticks") is not None:
+        lines.extend([
+            "",
+            "The shortage latency starts when the live CI-authorized Magos "
+            "0256 recovery writ was accepted with zero physical Senior "
+            "station stock, and ends at the counted four-hop Magos receipt. "
+            "It does not establish autonomous deficit discovery.",
         ])
     callbacks = primary.get("service_callback_top_1068") or []
     lines.extend(["", "#### Highest sampled broker callbacks", ""])
