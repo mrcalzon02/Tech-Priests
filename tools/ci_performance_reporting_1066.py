@@ -31,6 +31,8 @@ METRICS = (
     ("broker_pulse_p95_ms_per_sample", "p95 broker dispatch", "ms/sample"),
     ("script_average_ms_per_tick", "All-mod engine scriptUpdate mean", "ms/tick"),
     ("script_p95_ms_per_tick", "All-mod engine scriptUpdate p95", "ms/tick"),
+    ("profile_window_paired_priests_start", "Actual live paired priests at reversal window start (mixed)", "pairs"),
+    ("profile_window_paired_priests_end", "Actual live paired priests at reversal window end (mixed)", "pairs"),
     ("delivered_ore_per_1000_ticks", "Ore delivery throughput", "ore/1000 ticks"),
     ("fixture_to_first_delivery_ticks", "Fixture to first delivery", "ticks"),
     ("movement_denials_per_1000_ticks", "Movement denials", "count/1000 ticks"),
@@ -118,6 +120,15 @@ def build_markdown(report: dict[str, object]) -> str:
             f"coverage **{primary.get('script_sample_coverage')}**. "
             "This is native engine script timing, not isolated Tech Priests "
             "or broker time; partial traces cannot establish full-run cost.",
+        ])
+    if (primary.get("profile_window_paired_priests_start") is not None
+            and primary.get("profile_window_paired_priests_end") is not None):
+        lines.extend([
+            "",
+            "Reversal-window paired-priest counts are actual live physical "
+            "pairs across all forces, measured at two boundaries. They are "
+            "**not** a five-priest-only benchmark or sufficient population "
+            "provenance for seed/hardware-matched scaling comparisons.",
         ])
     callbacks = primary.get("service_callback_top_1068") or []
     lines.extend(["", "#### Highest sampled broker callbacks", ""])

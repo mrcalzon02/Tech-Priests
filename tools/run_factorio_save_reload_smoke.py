@@ -1443,6 +1443,8 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
         "scenario": "five-station-starvation-reversal",
         "reversal_priests": None,
         "benchmark_population": None,
+        "profile_window_paired_priests_start": None,
+        "profile_window_paired_priests_end": None,
         "engine_benchmark_updates": None,
         "engine_benchmark_wall_ms": None,
         "engine_update_average_ms_per_tick": None,
@@ -1596,6 +1598,20 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
         r"movement_requests=(-?\d+) movement_collapses=(-?\d+) "
         r"movement_priority_denials=(-?\d+) movement_stalled_repaths=(-?\d+) "
         r"broker_processed=(-?\d+) broker_blocked=(-?\d+)", content)
+    # The Method I reversal is embedded in a larger industrial scenario.
+    # Measure the real live paired population at BOTH boundaries, but do
+    # not misrepresent this as an isolated 5-priest benchmark or use it as
+    # benchmark-wide population provenance for a matched-run comparison.
+    population = re.findall(
+        r"RUNTIME_PAIRED_POPULATION_1071 boundary=(start|end) "
+        r"tick=(\\d+) pairs=(\\d+) scope=live-paired-all-forces", content)
+    if len(population) == 2 and len(starts) == len(ends) == 1:
+        beginning, ending = population
+        if (beginning[0] == "start" and ending[0] == "end"
+                and int(beginning[1]) == int(starts[0])
+                and int(ending[1]) == int(ends[0])):
+            result["profile_window_paired_priests_start"] = int(beginning[2])
+            result["profile_window_paired_priests_end"] = int(ending[2])
     if len(starts) == len(ends) == len(activity) == 1:
         end, start, *counts = map(int, activity[0])
         duration = end - start
@@ -1707,6 +1723,28 @@ def self_test_native_efficiency_1062() -> None:
     assert activity["movement_priority_denials_per_1000_ticks"] == 3
     assert activity["movement_stalled_repaths_per_1000_ticks"] == 1
     assert activity["broker_service_blocked_fraction"] == 0.25
+    population_fixture = activity_fixture + (
+        "[TP-GROUND-RANK-TEST] RUNTIME_PAIRED_POPULATION_1071 "
+        "boundary=start tick=18000 pairs=18 scope=live-paired-all-forces\\n"
+        "[TP-GROUND-RANK-TEST] RUNTIME_PAIRED_POPULATION_1071 "
+        "boundary=end tick=20000 pairs=19 scope=live-paired-all-forces\\n")
+    population = native_efficiency_observation_1062(population_fixture)
+    assert population["profile_window_paired_priests_start"] == 18
+    assert population["profile_window_paired_priests_end"] == 19
+    assert population["benchmark_population"] is None
+    for bad_population in (
+        population_fixture.replace("boundary=end", "boundary=start"),
+        population_fixture.replace("boundary=end tick=20000",
+                                   "boundary=end tick=20001"),
+        population_fixture.replace("pairs=19 scope=live-paired-all-forces",
+                                   "pairs=19 scope=isolated"),
+        population_fixture + (
+            "[TP-GROUND-RANK-TEST] RUNTIME_PAIRED_POPULATION_1071 "
+            "boundary=end tick=20000 pairs=19 scope=live-paired-all-forces\\n"),
+    ):
+        invalid_population = native_efficiency_observation_1062(bad_population)
+        assert invalid_population["profile_window_paired_priests_start"] is None
+        assert invalid_population["profile_window_paired_priests_end"] is None
     assert activity["scan_calls_per_1000_ticks"] is None
     assert activity["movement_denials_per_1000_ticks"] is None
     assert activity["blocked_fraction"] is None

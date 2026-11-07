@@ -7651,6 +7651,25 @@ local function reversal_engine_natural_ore_return(state)
     " delivered_count=1 cargo_empty=true")
 end
 
+-- 1071: Observe actual paired-priest population in the native reversal
+-- window. This is a read-only count of live, unique physical pairs across
+-- all forces, NOT a five-priest-only scenario or a license to spawn units.
+local function ci_live_paired_priest_population_1071()
+  local tp=storage and storage.tech_priests
+  local seen,total={},0
+  for station_unit,pair in pairs(tp and tp.pairs_by_station or {}) do
+    local station=pair and pair.station
+    local priest=pair and pair.priest
+    if station and station.valid and station.unit_number==station_unit
+        and priest and priest.valid and priest.unit_number
+        and not seen[priest.unit_number] then
+      seen[priest.unit_number]=true
+      total=total+1
+    end
+  end
+  return total
+end
+
 -- CI-only read-only cumulative counters. The reversal runs among other
 -- priests: these are mixed-population metrics, never per-priest or script time.
 local function ci_activity_counters_1067()
@@ -10850,6 +10869,9 @@ local function pulse()
           state.profile_window_counters_1067=ci_activity_counters_1067()
           emit("RUNTIME_PROFILE_WINDOW_1064_START tick="..game.tick..
             " scope=broker-pulse population=mixed reversal_priests=5")
+          emit("RUNTIME_PAIRED_POPULATION_1071 boundary=start tick="..game.tick..
+            " pairs="..ci_live_paired_priest_population_1071()..
+            " scope=live-paired-all-forces")
         end
         _G.TP_CI_RUNTIME_PROFILE_1064=active
         reversal_engine_verify(state)
@@ -10878,6 +10900,9 @@ local function pulse()
           _G.TP_CI_RUNTIME_PROFILE_1064=false
           emit("RUNTIME_PROFILE_WINDOW_1064_END tick="..game.tick..
             " scope=broker-pulse population=mixed reversal_priests=5")
+          emit("RUNTIME_PAIRED_POPULATION_1071 boundary=end tick="..game.tick..
+            " pairs="..ci_live_paired_priest_population_1071()..
+            " scope=live-paired-all-forces")
           local before=state.profile_window_counters_1067
           if before then
             local after=ci_activity_counters_1067()
