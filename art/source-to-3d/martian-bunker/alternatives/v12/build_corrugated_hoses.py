@@ -64,7 +64,7 @@ for name,sig in source.items():assert signature(bpy.data.objects[name])==sig,nam
 assert len(records)==3
 report={'revision':'V12 corrugated compression hoses','six_corrugated_hoses_after_mirroring':True,'hose_records':records,'all_other_V11_geometry_transforms_and_materials_preserved':True,'pneumatic_socket_positions_and_geometry_preserved':True,'existing_bunker_modified':False}
 S.render.resolution_x=S.render.resolution_y=int(os.getenv('LOADER_RENDER_SIZE','1100'));S.render.resolution_percentage=100;S.cycles.samples=int(os.getenv('LOADER_RENDER_SAMPLES','32'));cam=S.camera
-views=[('oblique',(-4,-6,4.8),(0,.15,3.02),4.05),('rear',(-4,5,4.5),(0,.28,3.02),4.05),('side',(-7,-1,3.3),(0,.15,2.80),3.15),('detail',(-4,-2,3.4),(-.25,-.10,2.90),1.60)]
+views=[('oblique',(-4,-6,4.8),(0,.15,3.02),4.05),('rear',(-4,5,4.5),(0,.28,3.02),4.05),('side',(-7,-1,3.3),(0,.15,3.02),4.05),('detail',(-4,-2,3.4),(-.25,-.10,2.90),1.60)]
 for i,(name,pos,target,scale) in enumerate(views):
  cam.location=pos;cam.rotation_euler=(Vector(target)-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.ortho_scale=scale
  if i==0:bpy.ops.wm.save_as_mainfile(filepath=str(O/'six_lobber_corrugated_hoses_v12.blend'),compress=True)
