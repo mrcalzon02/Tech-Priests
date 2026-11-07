@@ -246,6 +246,25 @@ local severed=Planner.service_robot_network_pair_0338(pair)
 assert(severed.waiting==1 and ghost.valid
   and ghost_creations==1 and logistic_items["senior-cogitator-station"]==1,
   "lost power fabricated a robot build or duplicated a ghost")
+-- Real mid-dispatch power loss: a ghost already claimed by the original
+-- commander must remain pending despite unavailable electrical power and
+-- a construction robot already committed to the native network. No mock
+-- engine entity, second ghost or item debit can count as completion.
+network.available_construction_robots=1
+local in_flight_task=pair.robot_network_task_0338
+local in_flight_request=pair.robot_network_request_0338
+for duration=60,180,60 do
+  game.tick=10720+duration
+  local stalled=Planner.service_robot_network_pair_0338(pair)
+  assert(stalled.waiting==1
+    and stalled.detail=="robot-ghost-still-present"
+    and pair.robot_network_task_0338==in_flight_task
+    and pair.robot_network_request_0338==in_flight_request
+    and ghost.valid and ghost_creations==1 and claims==1
+    and logistic_items["senior-cogitator-station"]==1,
+    "mid-flight power interruption lost original ghost or credited station")
+end
+network.available_construction_robots=2
 package.loaded["scripts.core.construction_planner"]=nil
 local Reloaded=require("scripts.core.construction_planner")
 assert(Reloaded.service_robot_network_pair_0338(pair).waiting==1

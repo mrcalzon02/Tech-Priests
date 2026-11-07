@@ -9161,6 +9161,63 @@ local function robot_engine_s2_service_1071(state)
   -- A disconnected network must refuse the 0338 ghost without losing the
   -- requested item, ownership, identities, or introducing a second claim.
   -- Restore from that SAME mined substation item, not a supplied free item.
+  -- 1350: sever the actual powering substation only AFTER a genuine
+  -- construction robot has left the dock for the existing, original ghost.
+  -- Both the ghost and the physical power-source item stay under custody
+  -- through an engine-observed interruption. No second ghost or receipt.
+  if test.phase=="midflight-power-cut-1350" then
+    if game.tick-test.midflight_cut_tick_1350<120 then return end
+    local hold=test.midflight_hold_1350
+    local active=root.robot_network_task_0338
+    local ghost=active and active.ghost
+    local source=test.power_source_1331
+    local built=test.surface.find_entities_filtered{
+      name=ROBOT_ENGINE_S2_ITEM_1071,
+      position=ROBOT_ENGINE_S2_TARGET_1071,
+      radius=1,force=root.station.force,limit=2}
+    if not(hold and hold.valid
+      and hold.get_item_count("substation")==1
+      and source and not source.valid
+      and not port.is_connected_to_electric_network()
+      and active and active==test.midflight_task_1350
+      and ghost and ghost.valid
+      and ghost==test.midflight_ghost_1350
+      and active.phase=="awaiting-real-construction-robot"
+      and root.robot_network_request_0338==test.midflight_request_1350
+      and root.priest.unit_number==test.magos_priest
+      and #built==0 and not test.robot_event_station
+      and not active.robot_build_receipt_0338) then
+      error("ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUSTODY_INVALID_1350")
+    end
+    local spec={name="substation",position={x=18,y=8},
+      force=root.station.force}
+    if not test.surface.can_place_entity(spec) then
+      error("ROBOT_ENGINE_S2_MIDFLIGHT_RESTORE_SITE_BLOCKED_1350")
+    end
+    if hold.remove{name="substation",count=1}~=1 then
+      error("ROBOT_ENGINE_S2_MIDFLIGHT_RESTORE_DEBIT_FAILED_1350")
+    end
+    local rebuilt=test.surface.create_entity(spec)
+    if not(rebuilt and rebuilt.valid and rebuilt.name=="substation") then
+      if hold.valid then hold.insert{name="substation",count=1} end
+      error("ROBOT_ENGINE_S2_MIDFLIGHT_RESTORE_ENTITY_REFUSED_1350")
+    end
+    if hold.get_item_count("substation")~=0 then
+      error("ROBOT_ENGINE_S2_MIDFLIGHT_RESTORE_ITEM_DISCREPANCY_1350")
+    end
+    hold.destroy()
+    test.midflight_hold_1350=nil
+    test.power_source_1331=rebuilt
+    test.midflight_negative_passed_1350=true
+    test.phase="awaiting-robot-construction"
+    emit("PASS ROBOT_ENGINE_S2_NATIVE_MIDFLIGHT_POWER_RECOVERY_1350 tick="..
+      game.tick.." magos="..test.magos_unit..
+      " priest="..test.magos_priest..
+      " ghost=1 native_build_event=0 substation_mined=1"..
+      " substation_rebuilt=1 original_task_retained=true"..
+      " original_request_retained=true")
+    return
+  end
   -- 1340: native missing-robot refusal. The same physical three robots
   -- are quarantined in a real LuaInventory for 180 simulation ticks.
   -- Neither ghost construction nor item spending may occur in that window.
@@ -9369,6 +9426,41 @@ local function robot_engine_s2_service_1071(state)
       emit("ROBOT_ENGINE_S2_CONTROL_UNAVAILABLE_1074 reason=physical-source-mine-unavailable")
     end
   end
+  -- 1350: wait for observable, flying construction robots serving the
+  -- already-submitted ghost. The robot, not this fixture, must own and spend
+  -- the station item; only a real power substation is mined/restored here.
+  if test.phase=="awaiting-robot-construction"
+    and test.ghost_seen and not test.midflight_negative_passed_1350
+    and not test.robot_event_station then
+    local active=root.robot_network_task_0338
+    local ghost=active and active.ghost
+    local flying=test.surface.find_entities_filtered{
+      type="construction-robot",position=port.position,
+      radius=64,force=root.station.force,limit=32}
+    if ghost and ghost.valid and #flying>0 then
+      local hold=game.create_inventory(1)
+      local source=test.power_source_1331
+      if not(hold and hold.valid and source and source.valid
+        and source.name=="substation"
+        and source.mine{inventory=hold}==true
+        and not source.valid
+        and hold.get_item_count("substation")==1) then
+        error("ROBOT_ENGINE_S2_MIDFLIGHT_PHYSICAL_POWER_CUT_FAILED_1350")
+      end
+      test.midflight_hold_1350=hold
+      test.midflight_task_1350=active
+      test.midflight_ghost_1350=ghost
+      test.midflight_request_1350=root.robot_network_request_0338
+      test.midflight_cut_tick_1350=game.tick
+      test.phase="midflight-power-cut-1350"
+      emit("ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick="..game.tick..
+        " magos="..test.magos_unit..
+        " priest="..test.magos_priest..
+        " observed_flying_robots="..#flying..
+        " ghost=1 substation_custody=1")
+      return
+    end
+  end
   -- 1073: bounded *read-only* native diagnostics following the real ghost.
   -- A source-level mock cannot tell whether Factorio dispatched a robot,
   -- fetched the item, built the target or lost the event. Never turn any of
@@ -9450,6 +9542,7 @@ local function robot_engine_s2_service_1071(state)
     and #ghosts==0 and test.robot_event_unit
     and test.robotless_negative_passed_1340==true
     and test.power_negative_passed_1331==true
+    and test.midflight_negative_passed_1350==true
     and test.robot_event_tick>=test.ghost_tick) then
     error("ROBOT_ENGINE_S2_REAL_BUILD_CUSTODY_OR_RANK_INVALID")
   end
