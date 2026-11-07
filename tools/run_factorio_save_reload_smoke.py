@@ -68,6 +68,42 @@ def verify_robot_engine_s2_log(content: str) -> None:
             and len({s[1], s[2], g[1], g[2], g[3],
                      c[3], c[4], c[5]}) == 8):
         raise RuntimeError("S2 native robot, hierarchy or custody identity mismatch")
+    # 1340: the same original request must refuse construction while ALL
+    # three genuine docked robots are held in an engine-owned inventory.
+    # This is a distinct native safety gate, not inferred from a later build.
+    def exactly_one_native_1340(pattern: str, marker: str) -> tuple[int, ...]:
+        if content.count(marker) != 1:
+            raise RuntimeError("S2 native robotless evidence missing or duplicated: " + marker)
+        matches = list(re.finditer(pattern, content))
+        if len(matches) != 1:
+            raise RuntimeError("S2 native robotless custody/count mismatch: " + marker)
+        return tuple(map(int, matches[0].groups()))
+
+    request = exactly_one_native_1340(
+        r"ROBOT_ENGINE_S2_REQUEST tick=(\d+) magos=(\d+) "
+        r"priest=(\d+) port=(\d+) powered=true robots=3 network_stock=1",
+        "ROBOT_ENGINE_S2_REQUEST tick=")
+    robotless_cut = exactly_one_native_1340(
+        r"ROBOT_ENGINE_S2_NATIVE_ROBOTLESS_CUT_1340 tick=(\d+) "
+        r"magos=(\d+) priest=(\d+) removed_robots=3 "
+        r"station_stock=1 request_retained=true",
+        "ROBOT_ENGINE_S2_NATIVE_ROBOTLESS_CUT_1340 tick=")
+    robotless_refusal = exactly_one_native_1340(
+        r"PASS ROBOT_ENGINE_S2_NATIVE_ROBOTLESS_REFUSAL_1340 tick=(\d+) "
+        r"magos=(\d+) priest=(\d+) ghost=0 claim=0 station_stock=1 "
+        r"removed_robots=3 restored_robots=3 "
+        r"request_retained=true item_conserved=true",
+        "PASS ROBOT_ENGINE_S2_NATIVE_ROBOTLESS_REFUSAL_1340 tick=")
+    if not (s[0] < request[0] == robotless_cut[0]
+            and robotless_refusal[0] - robotless_cut[0] >= 180
+            and robotless_refusal[0] < g[0]
+            and request[1:3] == robotless_cut[1:] == robotless_refusal[1:]
+            and request[1:3] == g[1:3] == c[1:3]
+            and request[3] == g[3]):
+        raise RuntimeError("S2 robotless refusal did not conserve the original "
+                           "Magos, three physical robots, pending request, "
+                           "station inventory or 180-tick native refusal")
+
 
 
 def verify_robot_frontier_native_1080_log(content: str) -> None:
@@ -2860,10 +2896,19 @@ def self_test() -> int:
     robot_positive = (
         "ROBOT_ENGINE_S2_SOURCE_MINED tick=100 source_unit=10 "
         "provider_unit=11 stock=1 physical_mine=true\n"
-        "ROBOT_ENGINE_S2_GHOST tick=150 magos=20 magos_priest=21 "
+        "ROBOT_ENGINE_S2_REQUEST tick=110 magos=20 priest=21 port=22 "
+        "powered=true robots=3 network_stock=1\n"
+        "ROBOT_ENGINE_S2_NATIVE_ROBOTLESS_CUT_1340 tick=110 "
+        "magos=20 priest=21 removed_robots=3 station_stock=1 "
+        "request_retained=true\n"
+        "PASS ROBOT_ENGINE_S2_NATIVE_ROBOTLESS_REFUSAL_1340 tick=290 "
+        "magos=20 priest=21 ghost=0 claim=0 station_stock=1 "
+        "removed_robots=3 restored_robots=3 request_retained=true "
+        "item_conserved=true\n"
+        "ROBOT_ENGINE_S2_GHOST tick=310 magos=20 magos_priest=21 "
         "port=22 network_stock_before=1 ghost=1\n"
-        "ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=160 station=30 robot=31\n"
-        "PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick=180 magos=20 "
+        "ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=320 station=30 robot=31\n"
+        "PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick=340 magos=20 "
         "magos_priest=21 station=30 priest=32 robot=31 "
         "source_delta=1 network_delta=1 ghost=0 "
         "hierarchy=direct-senior robot_event=on_robot_built_entity"
@@ -2879,7 +2924,22 @@ def self_test() -> int:
         ("robot_event=on_robot_built_entity", "robot_event=script"),
         ("station=30 priest=32", "station=33 priest=32"),
         ("robot=31 source_delta=1", "robot=34 source_delta=1"),
-        ("tick=160 station=30", "tick=90 station=30"),
+        ("tick=320 station=30", "tick=90 station=30"),
+        ("ROBOT_ENGINE_S2_REQUEST tick=110", "NO_REQUEST tick=110"),
+        ("powered=true robots=3", "powered=true robots=0"),
+        ("ROBOTLESS_CUT_1340 tick=110", "ROBOTLESS_CUT_1340 tick=111"),
+        ("removed_robots=3 station_stock=1", "removed_robots=2 station_stock=1"),
+        ("REFUSAL_1340 tick=290", "REFUSAL_1340 tick=289"),
+        ("ghost=0 claim=0 station_stock=1", "ghost=1 claim=0 station_stock=1"),
+        ("ghost=0 claim=0 station_stock=1", "ghost=0 claim=1 station_stock=1"),
+        ("removed_robots=3 restored_robots=3", "removed_robots=3 restored_robots=2"),
+        ("request_retained=true item_conserved=true",
+         "request_retained=true item_conserved=false"),
+        ("REFUSAL_1340 tick=290 magos=20 priest=21",
+         "REFUSAL_1340 tick=290 magos=20 priest=22"),
+        ("ROBOT_ENGINE_S2_GHOST tick=310", "ROBOT_ENGINE_S2_GHOST tick=289"),
+        ("ROBOT_ENGINE_S2_REQUEST tick=110 magos=20 priest=21 port=22",
+         "ROBOT_ENGINE_S2_REQUEST tick=110 magos=20 priest=21 port=23"),
     ):
         bad = robot_positive.replace(old, new, 1)
         try:
@@ -2888,6 +2948,17 @@ def self_test() -> int:
             pass
         else:
             raise AssertionError("S2 unsafe native robot evidence accepted: " + old)
+    # Duplicate native receipt events may not falsely establish one refusal.
+    receipt = robot_positive.split(
+        "PASS ROBOT_ENGINE_S2_NATIVE_ROBOTLESS_REFUSAL_1340", 1)[1]
+    receipt = "PASS ROBOT_ENGINE_S2_NATIVE_ROBOTLESS_REFUSAL_1340" + receipt.split("\n", 1)[0]
+    try:
+        verify_robot_engine_s2_log(robot_positive + "\n" + receipt)
+    except RuntimeError:
+        pass
+    else:
+        raise AssertionError("duplicate native robotless refusal was credited")
+
 
     frontier_positive = (
         "ROBOT_FRONTIER_1080_SOURCE tick=200 magos=20 priest=21 "
