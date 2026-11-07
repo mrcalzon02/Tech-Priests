@@ -94,6 +94,46 @@ local function relinquish_unladen_direct_movement(pair,family)
 end
 function M.service_pair(pair,reason)
  local r=root();if r.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
+ -- Diagnose a stalled existing return BEFORE direct-custody and defense early
+ -- returns. Observe 0528 phase regardless of its custody flag: 0984 drill
+ -- escrow is a distinct physical inventory and must never be inferred from
+ -- 0528 custody. Rate-limit per pair and retain a save-safe scalar snapshot.
+ local pending_machine=pair.machine_logistics_0528
+ if type(pending_machine)=="table"
+     and lower(pending_machine.phase)=="return-custody-to-station" then
+  local previous=pair.machine_return_entry_probe_0510
+  local flags={
+   "0528-custody="..safe(pending_machine.custody~=nil),
+   "pair-0528-custody="..safe(pair.machine_logistics_custody_0528~=nil),
+   "direct-custody="..safe(pair.direct_acquisition_custody_0513~=nil),
+   "direct-active="..safe(direct_active(pair)),
+   "defense-task="..safe(pair.defense_task_0259~=nil),
+   "combat-target="..safe(valid(pair.combat_target)),
+   "machine-valid="..safe(valid(pending_machine.machine)),
+   "order="..safe((pair.order_queue_0469 and pair.order_queue_0469.current
+     or pair.active_order_0469) and
+     (pair.order_queue_0469 and pair.order_queue_0469.current
+       or pair.active_order_0469).kind),
+   "movement-owner="..safe(pair.movement_request_0418
+     and pair.movement_request_0418.owner),
+  }
+  local signature=table.concat(flags,",")
+  local emit=not previous or previous.signature~=signature
+    or now()-(tonumber(previous.last_log_tick)or 0)>=600
+  if emit and log then
+   log("[TP-0528-ENTRY-0510] tick="..safe(now())
+     .." station="..safe(station_unit(pair))
+     .." priest="..safe(priest_unit(pair))
+     .." last-service="..safe(pending_machine.active_updated_tick)
+     .." phase="..safe(pending_machine.phase)
+     .." "..signature)
+  end
+  pair.machine_return_entry_probe_0510={
+   tick=now(),last_log_tick=emit and now()
+     or previous.last_log_tick,signature=signature,
+   last_service_tick=pending_machine.active_updated_tick,
+  }
+ end
  -- 1141: A committed, counted ranked ore receipt must receive another real
  -- 0837 service attempt even while the final Magos is completing its OWN
  -- incumbent defense, construction or 0513 cargo return. The normal 1129
