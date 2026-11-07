@@ -1,5 +1,11 @@
 # Fortified Martian Heavy-Weapon Bunker — 3D development
 
+## V04 lobber review: six cast-iron cannons
+
+The lobber now has three short, bulbous cast-iron cannons on each side of one central fin, six total. Each has a thick rounded ring muzzle and a large feeder connected directly into its bottom breech. The shared fin and three source stations use centreline mirroring. This pass renders the head by itself and does not load or change the established bunker.
+
+[Actual four-view Blender render](alternatives/v04/Six_Cast_Iron_Lobber_Review.png) · [Editable packed Blender model](alternatives/v04/six_cast_iron_lobber_v04.blend) · [GLB](alternatives/v04/six_cast_iron_lobber_v04.glb) · [Complete review ZIP](alternatives/v04/Six_Cast_Iron_Lobber_V04.zip) · [Executed count, connection and export validation](alternatives/v04/validation.json).
+
 ## V02 correction: restore the established bunker base
 
 V01 used the base embedded in the turret-shot source, where forty base parts had lost their world placement transforms. Its mounted previews and base-preservation claims are rejected. V02 restores the intact full M2 paving-V6 bunker, verifies all 98 base meshes and world matrices against that independent source, and compares base-only renders before/after attaching each unchanged turret. The native turret entities and GLBs remain byte-identical.
