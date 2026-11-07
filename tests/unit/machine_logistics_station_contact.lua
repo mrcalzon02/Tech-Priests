@@ -211,4 +211,82 @@ check(result.acted == 1 and deposits == before_deposits + 2
   and pair.machine_logistics_custody_0528 == nil,
   "stalled station cargo was not physically deposited after arrival")
 
-print("[machine-station-contact] PASS scenarios=8")
+-- An invalidated receiver must not strand an already-debited REAL
+-- LuaInventory. Use the unchanged 0528 service/deposit path: first walk,
+-- then full-parent refusal with exact retained custody, then slot recovery.
+local native_carried,station_iron,refuse_deposit=3,0,true
+local orphan_hold={valid=true}
+orphan_hold.get_item_count=function(name)
+  return name=="iron-ore" and native_carried or 0
+end
+orphan_hold.remove=function(spec)
+  check(spec.name=="iron-ore","invalid native hold debit")
+  local n=math.min(native_carried,spec.count)
+  native_carried=native_carried-n
+  return n
+end
+orphan_hold.insert=function(spec)
+  check(spec.name=="iron-ore","invalid native hold refund")
+  native_carried=native_carried+spec.count
+  return spec.count
+end
+orphan_hold.destroy=function() orphan_hold.valid=false end
+local previous_authority=_G.TechPriestsStorageRoleAuthority0686
+_G.TechPriestsStorageRoleAuthority0686={
+  generic_item_count=function(_,item)
+    check(item=="iron-ore","unexpected canonical item count")
+    return station_iron
+  end,
+  deposit_exact=function(_,item,n)
+    check(item=="iron-ore" and n==3,"invalid canonical deposit")
+    if refuse_deposit then return false,"parent-full",0 end
+    station_iron=station_iron+n
+    return true,"deposited",n
+  end,
+}
+surface.can_place_entity=function(args)
+  local x,y=args.position.x,args.position.y
+  return x*x+y*y>=1.3*1.3
+end
+machine.valid=false
+priest.position={x=9,y=0}
+local orphan_custody={item="iron-ore",count=3,kind="retention",
+  inventory_0984=orphan_hold}
+local orphan_state={
+  phase="return-custody-to-station",action="clear-output",
+  machine=machine,machine_unit=machine.unit_number,
+  drill_source_unit_0983=77,item="iron-ore",custody=orphan_custody,
+  drill_pickup_0983={
+    status="carried",station_unit=station.unit_number,
+    priest_unit=priest.unit_number,receiver_unit=machine.unit_number,
+    drill_unit=77,item="iron-ore",count=3,
+    source_before=10,source_after=7,tick=game.tick-10,
+  },
+}
+pair.machine_logistics_0528=orphan_state
+pair.machine_logistics_custody_0528=orphan_custody
+local original_moves=#moves
+result=Logistics.service_pair(pair,"invalid-receiver-physical-return")
+check(result.waiting==1 and #moves==original_moves+1
+  and native_carried==3 and station_iron==0,
+  "vanished receiver prevented physical station return")
+priest.position={x=moves[#moves].pos.x,y=moves[#moves].pos.y}
+result=Logistics.service_pair(pair,"native-parent-full")
+check(result.blocked==1 and native_carried==3 and station_iron==0
+  and pair.machine_logistics_custody_0528==orphan_custody
+  and orphan_state.phase=="return-custody-to-station",
+  "blocked native deposit lost original engine-owned inventory")
+refuse_deposit=false
+result=Logistics.service_pair(pair,"native-parent-space-restored")
+check(result.acted==1 and station_iron==3 and native_carried==0
+  and orphan_hold.valid==false
+  and pair.machine_logistics_custody_0528==nil
+  and pair.machine_logistics_0528.phase=="complete",
+  "native output failed exact canonical receipt after source vanished")
+check(pair.drill_output_receipts_0983
+  and pair.drill_output_receipts_0983[#pair.drill_output_receipts_0983].count==3,
+  "native output completion omitted exact provenance receipt")
+_G.TechPriestsStorageRoleAuthority0686=previous_authority
+machine.valid=true
+
+print("[machine-station-contact] PASS scenarios=9")

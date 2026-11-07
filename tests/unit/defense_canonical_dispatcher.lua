@@ -175,6 +175,24 @@ assert(machine_calls==2 and expansion_resumed.waiting==1
   and pair.canonical_action_0744.family=="machine-logistics"
   and pair.machine_logistics_custody_0528==held and held.count==5,
   "unleased expansion plan stranded real machine cargo")
+-- A native 2.0.77 log observed a loaded 0984 carrier after its source
+-- receiver became invalid. That must still get the incumbent 0528 service.
+machine.valid=false
+held.inventory_0984={valid=true}
+pair.machine_logistics_0528.drill_pickup_0983={status="carried"}
+game.tick=game.tick+5
+local orphan_return=dispatcher.service_pair(pair,"invalid-receiver-held-0984")
+assert(machine_calls==3 and orphan_return.waiting==1
+  and pair.canonical_action_0744.source=="incumbent-0528"
+  and pair.machine_logistics_custody_0528==held and held.count==5,
+  "invalid machine prevented service to original proven output hold")
+pair.machine_logistics_0528.drill_pickup_0983=nil
+game.tick=game.tick+5
+dispatcher.service_pair(pair,"invalid-receiver-without-proof")
+assert(pair.canonical_action_0744.source~="incumbent-0528",
+  "unproven invalid-machine hold was granted incumbent priority")
+machine.valid=true
+held.inventory_0984=nil
 pair.station_expansion_0256=nil
 pair.machine_logistics_custody_0528=nil
 pair.machine_logistics_0528.custody=nil

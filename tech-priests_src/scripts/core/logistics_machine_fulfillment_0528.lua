@@ -1811,7 +1811,20 @@ function M.service_pair(pair, reason)
     if not began then return result({ blocked = 1, detail = why }) end
     state = pair.machine_logistics_0528
   end
-  if not valid(state.machine) then return M.abort_pair(pair, "machine-invalid") end
+  -- A receiver may be destroyed AFTER a counted 0984 engine-inventory
+  -- pickup. Abort/refund explicitly refuses such a hold, correctly, but an
+  -- invalid receiver must not also prevent the original physical return.
+  -- The canonical output deposit still verifies provenance, exact cargo,
+  -- station contact, and refusal/recovery; nothing is credited remotely.
+  local orphaned_output=state.phase=="return-custody-to-station"
+    and state.action=="clear-output"
+    and type(state.custody)=="table"
+    and state.custody.inventory_0984~=nil
+    and pair.machine_logistics_custody_0528==state.custody
+    and type(state.drill_pickup_0983)=="table"
+  if not valid(state.machine) and not orphaned_output then
+    return M.abort_pair(pair, "machine-invalid")
+  end
   state.updated_tick = now()
   pair.target = state.machine
   if state.phase == "move-to-station"

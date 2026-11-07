@@ -254,7 +254,16 @@ function M.service_pair(pair,reason)
  if family_owned(r,"machine-logistics")
    and phase~="" and phase~="complete" and phase~="failed"
    and phase~="idle" and phase~="none"
-   and valid(machine.machine)
+   and (valid(machine.machine)
+     -- An invalidated receiver is no longer needed to return output ALREADY
+     -- debited into the original engine-owned 0984 hold. Require a proven
+     -- existing 0528 carrier, never initiate a new transaction here.
+     or (phase=="return-custody-to-station"
+       and machine.action=="clear-output"
+       and type(machine.custody)=="table"
+       and machine.custody.inventory_0984
+       and pair.machine_logistics_custody_0528==machine.custody
+       and type(machine.drill_pickup_0983)=="table"))
    -- A real 0528 custody hold cannot be abandoned merely because a newer
    -- routine order or strict craft request appeared while the worker walked.
    -- Resume only its existing transaction; all competing physical custody
