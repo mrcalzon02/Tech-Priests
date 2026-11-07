@@ -1,0 +1,14 @@
+{
+  "energy_dish": {
+    "same_canvas": true,
+    "identical_pixels": false,
+    "mean_absolute_channel_difference_0_to_255": 1.9749999410123564e-05,
+    "maximum_channel_difference_0_to_255": 5.0
+  },
+  "grenade_lobber_12": {
+    "same_canvas": true,
+    "identical_pixels": false,
+    "mean_absolute_channel_difference_0_to_255": 9.499999578110874e-06,
+    "maximum_channel_difference_0_to_255": 5.0
+  }
+}

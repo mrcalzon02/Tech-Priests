@@ -1,3 +1,5 @@
+> **Rejected mounted baseline.** Forty bunker-base parts in the turret-shot source had incorrect world transforms. The V01 base-preservation checks compared against the damaged source and are invalid. Use [V02 and its independent intact-source verification](../v02/README.md). The independent turret entities and GLBs remain unchanged.
+
 # Martian bunker alternative turret blockouts — V01
 
 Two independent editable primitive assemblies, fitted to the established M2 bunker bearing at world Z=1.70. The bunker base is copied intact from the packed M2 V10 source; original cannon and firing effects are removed from these alternative scenes. Source remains unchanged. This is a massing review checkpoint, not production sprites or gameplay integration.

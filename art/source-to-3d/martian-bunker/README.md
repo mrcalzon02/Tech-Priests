@@ -1,6 +1,12 @@
 # Fortified Martian Heavy-Weapon Bunker — 3D development
 
-## Alternative turret blockouts — V01
+## V02 correction: restore the established bunker base
+
+V01 used the base embedded in the turret-shot source, where forty base parts had lost their world placement transforms. Its mounted previews and base-preservation claims are rejected. V02 restores the intact full M2 paving-V6 bunker, verifies all 98 base meshes and world matrices against that independent source, and compares base-only renders before/after attaching each unchanged turret. The native turret entities and GLBs remain byte-identical.
+
+[Corrected mounted review](alternatives/v02/Turret_Blockouts_V02_Review.png) · [Corrected models and reproduction](alternatives/v02/README.md) · [Forty misplaced parts identified](alternatives/v02/source_comparison.json) · [Independent verification](alternatives/v02/reopen_validation.json).
+
+## Rejected mounted baseline: alternative turret blockouts — V01
 
 Owner-sketch energy dish and twelve-tube grenade lobber, fitted to the established M2 bunker base. Independent editable Blender assemblies, turret-only mapped GLBs, packed committed textures and real mounted/front/rear review renders. Primitive massing checkpoint; twelve tubes verified as three rows of four. Base mesh geometry and world transforms are preserved. Saved native files reopen, GLBs reimport and turret traversal leaves the base fixed.
 

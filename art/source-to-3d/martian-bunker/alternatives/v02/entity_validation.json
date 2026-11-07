@@ -1,0 +1,18 @@
+{
+  "energy_dish": {
+    "status": "PASS",
+    "standalone_native_mesh_count": 73,
+    "reopened": true,
+    "all_images_packed": true,
+    "bunker_base_excluded": true,
+    "bytes": 20562539
+  },
+  "grenade_lobber_12": {
+    "status": "PASS",
+    "standalone_native_mesh_count": 47,
+    "reopened": true,
+    "all_images_packed": true,
+    "bunker_base_excluded": true,
+    "bytes": 20570617
+  }
+}

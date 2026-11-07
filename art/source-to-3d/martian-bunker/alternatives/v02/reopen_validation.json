@@ -1,0 +1,30 @@
+{
+  "energy_dish": {
+    "status": "PASS",
+    "native_reopened": true,
+    "base_geometry_and_world_transforms_unchanged": true,
+    "all_images_packed": true,
+    "mapped_UVs": true,
+    "traverse_moves_turret_only": true,
+    "minimum_turret_z": 1.7000000476837158,
+    "mesh_count": 73,
+    "grenade_tubes": 0,
+    "GLB_reimported": true,
+    "GLB_turret_only": true,
+    "GLB_embedded_images": 8
+  },
+  "grenade_lobber_12": {
+    "status": "PASS",
+    "native_reopened": true,
+    "base_geometry_and_world_transforms_unchanged": true,
+    "all_images_packed": true,
+    "mapped_UVs": true,
+    "traverse_moves_turret_only": true,
+    "minimum_turret_z": 1.7000000476837158,
+    "mesh_count": 47,
+    "grenade_tubes": 12,
+    "GLB_reimported": true,
+    "GLB_turret_only": true,
+    "GLB_embedded_images": 8
+  }
+}
