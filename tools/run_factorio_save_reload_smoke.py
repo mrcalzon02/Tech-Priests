@@ -1504,6 +1504,12 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
             row = line.strip()
             match = re.fullmatch(r"(\\d+),([0-9]+(?:\\.[0-9]+)?)", row)
             if not match:
+                # Reject malformed numeric observations instead of silently
+                # truncating a corrupt series into a plausible partial trace.
+                if re.match(r"^\\d+,", row):
+                    ordered_ticks = []
+                    durations_ns = []
+                    break
                 if durations_ns:
                     break
                 continue
