@@ -9161,6 +9161,81 @@ local function robot_engine_s2_service_1071(state)
   -- A disconnected network must refuse the 0338 ghost without losing the
   -- requested item, ownership, identities, or introducing a second claim.
   -- Restore from that SAME mined substation item, not a supplied free item.
+  -- 1340: native missing-robot refusal. The same physical three robots
+  -- are quarantined in a real LuaInventory for 180 simulation ticks.
+  -- Neither ghost construction nor item spending may occur in that window.
+  if test.phase=="robotless-request-1340" then
+    if game.tick-test.robotless_cut_tick_1340<180 then return end
+    local robot_inv=port.get_inventory(defines.inventory.roboport_robot)
+    local hold=test.robotless_hold_1340
+    local stock=provider.get_inventory(defines.inventory.chest)
+    local cell_now=port.logistic_cell
+    local net=cell_now and cell_now.logistic_network
+    local ghosts=test.surface.find_entities_filtered{
+      name="entity-ghost",position=ROBOT_ENGINE_S2_TARGET_1071,
+      radius=2,force=root.station.force,limit=4}
+    if not(hold and hold.valid and robot_inv and robot_inv.valid
+        and stock and stock.valid and net and net.valid~=false
+        and port.is_connected_to_electric_network()
+        and net.available_construction_robots==0
+        and net.all_construction_robots==0
+        and robot_inv.get_item_count("construction-robot")==0
+        and hold.get_item_count("construction-robot")==3
+        and stock.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==1
+        and root.robot_network_task_0338==nil
+        and root.robot_network_request_0338==test.robotless_request_1340
+        and root.priest.unit_number==test.magos_priest
+        and #ghosts==0 and not test.robot_event_station) then
+      error("ROBOT_ENGINE_S2_ROBOTLESS_REFUSAL_OR_CUSTODY_INVALID_1340")
+    end
+    if robot_inv.can_insert and not robot_inv.can_insert{
+        name="construction-robot",count=3} then
+      error("ROBOT_ENGINE_S2_ROBOT_RESTORE_INVENTORY_FULL_1340")
+    end
+    if hold.remove{name="construction-robot",count=3}~=3 then
+      error("ROBOT_ENGINE_S2_ROBOT_RESTORE_DEBIT_FAILED_1340")
+    end
+    local restored=robot_inv.insert{name="construction-robot",count=3}
+    if restored~=3 then
+      if restored<3 then
+        hold.insert{name="construction-robot",count=3-restored}
+      end
+      error("ROBOT_ENGINE_S2_ROBOT_RESTORE_PARTIAL_1340")
+    end
+    if hold.get_item_count("construction-robot")~=0
+        or robot_inv.get_item_count("construction-robot")~=3 then
+      error("ROBOT_ENGINE_S2_ROBOT_RESTORE_COUNT_INVALID_1340")
+    end
+    hold.destroy()
+    test.robotless_hold_1340=nil
+    test.robotless_negative_passed_1340=true
+    emit("PASS ROBOT_ENGINE_S2_NATIVE_ROBOTLESS_REFUSAL_1340 tick="..
+      game.tick.." magos="..test.magos_unit..
+      " priest="..test.magos_priest..
+      " ghost=0 claim=0 station_stock=1 removed_robots=3 restored_robots=3"..
+      " request_retained=true item_conserved=true")
+    -- Following the robotless recovery, test the existing real power cut
+    -- against the identical, still-unclaimed original ranked request.
+    local power_hold=game.create_inventory(1)
+    local source=test.power_source_1331
+    if not(power_hold and power_hold.valid and source and source.valid
+      and source.name=="substation"
+      and source.mine{inventory=power_hold}==true
+      and not source.valid
+      and power_hold.get_item_count("substation")==1
+      and stock.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==1) then
+      error("ROBOT_ENGINE_S2_PHYSICAL_POWER_CUT_FAILED_1331")
+    end
+    test.power_cut_hold_1331=power_hold
+    test.power_request_1331=root.robot_network_request_0338
+    test.power_cut_tick_1331=game.tick
+    test.phase="power-cut-before-robot-ghost-1331"
+    emit("ROBOT_ENGINE_S2_NATIVE_POWER_CUT_1331 tick="..game.tick..
+      " magos="..test.magos_unit..
+      " priest="..test.magos_priest..
+      " substation_custody=1 station_stock=1")
+    return
+  end
   if test.phase=="power-cut-before-robot-ghost-1331" then
     if game.tick-test.power_cut_tick_1331<180 then return end
     local real_inventory=provider.get_inventory(defines.inventory.chest)
@@ -9236,26 +9311,28 @@ local function robot_engine_s2_service_1071(state)
       " port="..port.unit_number..
       " powered=true robots="..network.available_construction_robots..
       " network_stock=1")
-    -- Native power-loss stimulus at the earliest still-unclaimed boundary.
-    -- The existing 0338 authority, not this fixture, decides ghost creation.
-    local hold=game.create_inventory(1)
-    local source=test.power_source_1331
-    if not(hold and hold.valid and source and source.valid
-      and source.name=="substation"
-      and source.mine{inventory=hold}==true
-      and not source.valid
-      and hold.get_item_count("substation")==1
+    -- Withdraw EXISTING real construction robot items from the docked
+    -- powered roboport into a separate engine-owned inventory. No robots
+    -- are spawned, destroyed, or credited by a script-side counter.
+    local robot_inv=port.get_inventory(defines.inventory.roboport_robot)
+    local hold=game.create_inventory(3)
+    if not(robot_inv and robot_inv.valid and hold and hold.valid
+      and robot_inv.get_item_count("construction-robot")==3
+      and robot_inv.remove{name="construction-robot",count=3}==3
+      and hold.insert{name="construction-robot",count=3}==3
+      and robot_inv.get_item_count("construction-robot")==0
+      and hold.get_item_count("construction-robot")==3
       and inv.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==1) then
-      error("ROBOT_ENGINE_S2_PHYSICAL_POWER_CUT_FAILED_1331")
+      error("ROBOT_ENGINE_S2_PHYSICAL_ROBOT_WITHDRAWAL_FAILED_1340")
     end
-    test.power_cut_hold_1331=hold
-    test.power_request_1331=root.robot_network_request_0338
-    test.power_cut_tick_1331=game.tick
-    test.phase="power-cut-before-robot-ghost-1331"
-    emit("ROBOT_ENGINE_S2_NATIVE_POWER_CUT_1331 tick="..game.tick..
+    test.robotless_hold_1340=hold
+    test.robotless_request_1340=root.robot_network_request_0338
+    test.robotless_cut_tick_1340=game.tick
+    test.phase="robotless-request-1340"
+    emit("ROBOT_ENGINE_S2_NATIVE_ROBOTLESS_CUT_1340 tick="..game.tick..
       " magos="..test.magos_unit..
       " priest="..test.magos_priest..
-      " substation_custody=1 station_stock=1")
+      " removed_robots=3 station_stock=1 request_retained=true")
     return
   end
   local task=root.robot_network_task_0338
@@ -9371,6 +9448,7 @@ local function robot_engine_s2_service_1071(state)
     and inv.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==0
     and network.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==0
     and #ghosts==0 and test.robot_event_unit
+    and test.robotless_negative_passed_1340==true
     and test.power_negative_passed_1331==true
     and test.robot_event_tick>=test.ghost_tick) then
     error("ROBOT_ENGINE_S2_REAL_BUILD_CUSTODY_OR_RANK_INVALID")

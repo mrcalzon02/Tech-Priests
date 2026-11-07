@@ -190,7 +190,15 @@ powered=false
 refuse("roboport-unpowered")
 powered=true
 network.available_construction_robots=0
-refuse("no-available-construction-robots")
+-- Bounded repeated refusals must retain the exact ranked request and identity.
+local robotless_original_request=pair.robot_network_request_0338
+for attempt=1,3 do
+  game.tick=10630+attempt*60
+  refuse("no-available-construction-robots")
+  assert(pair.robot_network_request_0338==robotless_original_request
+    and pair.priest.valid and pair.station.valid,
+    "robotless retries discarded the original priest or request")
+end
 network.available_construction_robots=2
 logistic_items["senior-cogitator-station"]=0
 local no_item=Planner.service_robot_network_pair_0338(pair)
