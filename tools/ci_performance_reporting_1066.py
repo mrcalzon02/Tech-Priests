@@ -29,8 +29,8 @@ METRICS = (
     ("broker_pulse_sample_count", "Sampled broker dispatches", "samples"),
     ("broker_pulse_average_ms_per_sample", "Mean broker dispatch", "ms/sample"),
     ("broker_pulse_p95_ms_per_sample", "p95 broker dispatch", "ms/sample"),
-    ("script_average_ms_per_tick", "Whole-script time", "ms/tick"),
-    ("script_p95_ms_per_tick", "Whole-script p95", "ms/tick"),
+    ("script_average_ms_per_tick", "All-mod engine scriptUpdate mean", "ms/tick"),
+    ("script_p95_ms_per_tick", "All-mod engine scriptUpdate p95", "ms/tick"),
     ("delivered_ore_per_1000_ticks", "Ore delivery throughput", "ore/1000 ticks"),
     ("fixture_to_first_delivery_ticks", "Fixture to first delivery", "ticks"),
     ("movement_denials_per_1000_ticks", "Movement denials", "count/1000 ticks"),
@@ -110,6 +110,15 @@ def build_markdown(report: dict[str, object]) -> str:
         change = f"{comp['change_percent']:+.2f}%" if comp else "—"
         note = comp["note"] if comp else "unmeasured / not comparable"
         lines.append(f"| {label} | {current} | {ref} | {change} | {note} |")
+    if primary.get("script_scope") == "engine-all-mods-scriptUpdate":
+        lines.extend([
+            "",
+            f"ScriptUpdate provenance: **all installed mods**, "
+            f"{primary.get('script_sample_count')} engine ticks, "
+            f"coverage **{primary.get('script_sample_coverage')}**. "
+            "This is native engine script timing, not isolated Tech Priests "
+            "or broker time; partial traces cannot establish full-run cost.",
+        ])
     callbacks = primary.get("service_callback_top_1068") or []
     lines.extend(["", "#### Highest sampled broker callbacks", ""])
     if callbacks:
@@ -128,7 +137,7 @@ def build_markdown(report: dict[str, object]) -> str:
         lines.append("Not measured in this run.")
     lines.extend([
         "",
-        "Broker dispatch is not whole-script time. Whole-engine UPS is not an",
+        "Broker dispatch is not scriptUpdate or whole-script time. Whole-engine UPS is not an",
         "isolated five-priest UPS benchmark. Changes beyond the reference band",
         "merit investigation under matched seed, population and runner conditions;",
         "**they never block a functional release or test pass.**",
