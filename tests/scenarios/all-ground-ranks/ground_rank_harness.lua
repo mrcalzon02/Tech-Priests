@@ -10828,7 +10828,7 @@ local function ci_five_sample_1291(state)
   if not rec or state.finished or game.tick-rec.started<600 then return end
   local total=ci_live_paired_priest_population_1071()
   local pairs=storage.tech_priests.pairs_by_station or {}
-  local seen,original,identities={},0,true
+  local seen,original,identities,current_ids={},0,true,{}
   for _,unit in ipairs(rec.units) do
     local pair=pairs[unit]
     local station=pair and pair.station
@@ -10840,22 +10840,45 @@ local function ci_five_sample_1291(state)
     else
       seen[priest.unit_number]=true
       original=original+1
-      if rec.samples==0 then
-        rec.priest_ids[unit]=priest.unit_number
-      elseif rec.priest_ids[unit]~=priest.unit_number then
-        identities=false
-      end
+      current_ids[unit]=priest.unit_number
     end
   end
-  rec.samples=rec.samples+1
-  if total~=5 or original~=5 or not identities then rec.bad=rec.bad+1 end
-  if rec.samples==1 then
+
+  -- The native baseline starts when *all five* actual station/priest pairs
+  -- exist, not a fixed 600 ticks after placing the CI-only stations. The
+  -- preceding engine run observed ZERO live pairs at tick 600 and five at
+  -- tick 11880; crediting that startup interval as a five-pair baseline
+  -- would invalidate the population provenance. Never manufacture a pair
+  -- or replace a lost identity to satisfy the profiler.
+  if not rec.window_start_tick then
+    if total~=5 or original~=5 or not identities then
+      if (game.tick-rec.started)%3000==0 then
+        emit("CI_FIVE_PROFILE_1291_WAITING tick="..game.tick..
+          " all="..total.." original="..original.." requested=5")
+      end
+      if game.tick-rec.started>=29880 then
+        emit("CI_FIVE_PROFILE_1291_UNAVAILABLE reason=no_complete_five_pair_window"..
+          " tick="..game.tick.." all="..total.." original="..original)
+        state.finished=true
+      end
+      return
+    end
+    rec.window_start_tick=game.tick
+    rec.priest_ids=current_ids
     rec.activity_start=ci_five_activity_snapshot_1291()
     rec.activity_start_tick=game.tick
     emit("CI_FIVE_PROFILE_1291_START tick="..game.tick..
       " all="..total.." original="..original.." requested=5")
   end
-  if game.tick-rec.started>=11880 then
+
+  -- From the first real five-pair observation onward, reject every lost
+  -- original, any unexpected additional pair and every identity replacement.
+  for _,unit in ipairs(rec.units) do
+    if rec.priest_ids[unit]~=current_ids[unit] then identities=false end
+  end
+  rec.samples=rec.samples+1
+  if total~=5 or original~=5 or not identities then rec.bad=rec.bad+1 end
+  if game.tick-rec.window_start_tick>=11280 then
     emit("CI_FIVE_PROFILE_1291_END tick="..game.tick..
       " all="..total.." original="..original.." requested=5"..
       " samples="..rec.samples.." bad="..rec.bad..
@@ -10880,6 +10903,10 @@ local function ci_five_sample_1291(state)
       " movement_stalled_repaths="..delta("movement_stalled_repaths")..
       " broker_processed="..delta("broker_processed")..
       " broker_blocked="..delta("broker_blocked"))
+    state.finished=true
+  elseif game.tick-rec.started>=29880 then
+    emit("CI_FIVE_PROFILE_1291_UNAVAILABLE reason=insufficient_stable_window"..
+      " tick="..game.tick.." samples="..rec.samples)
     state.finished=true
   end
 end

@@ -3071,7 +3071,7 @@ def ci_five_observation_1291(content: str) -> dict[str, object]:
         "ore_per_1000_ticks": None,
         "first_delivery_ticks": None,
         "notes": "CI-created initial stations, authentic paired priests and engine "
-                 "timings; no physical station construction or counted ore delivery. "
+                 "timings (including authentic startup); no physical station construction or counted ore delivery. 
                  "Count/identity sampled every 60 ticks after 600-tick warmup; "
                  "UPS and script timings include warmup and all installed mods.",
     }
@@ -3083,7 +3083,7 @@ def ci_five_observation_1291(content: str) -> dict[str, object]:
                 and n==(b-a)//60+1 and n>=180
                 and at==ao==bt==bo==5 and bad==0
                 and stable=="true" and "CI_FIVE_PROFILE_1291_UNAVAILABLE" not in content
-                and native["engine_benchmark_updates"]==12000
+                and native["engine_benchmark_updates"]==30000
                 and native["script_sample_coverage"]=="complete"):
             result["paired_population_verified"]=5
             result["first_observed_tick"]=a
@@ -3120,19 +3120,22 @@ def ci_five_observation_1291(content: str) -> dict[str, object]:
 
 def self_test_ci_five_1291() -> None:
     log = (
-        "CI_FIVE_PROFILE_1291_START tick=600 all=5 original=5 requested=5\n"
-        "CI_FIVE_PROFILE_1291_END tick=11880 all=5 original=5 "
+        "CI_FIVE_PROFILE_1291_WAITING tick=600 all=0 original=0 requested=5\n"
+        "CI_FIVE_PROFILE_1291_START tick=7200 all=5 original=5 requested=5\n"
+        "CI_FIVE_PROFILE_1291_END tick=18480 all=5 original=5 
         "requested=5 samples=189 bad=0 identity_stable=true interval=60\n"
-        "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=600 end_tick=11880 "
+        "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=7200 end_tick=18480 
         "routed_scans=120 direct_scans=6 movement_requests=12 "
         "movement_collapses=3 movement_priority_denials=2 "
         "movement_stalled_repaths=unmeasured broker_processed=160 "
         "broker_blocked=4\n"
-        "  Performed 12000 updates in 120000.000 ms\n"
+        "  Performed 30000 updates in 150000.000 ms\n"
         "tick,scriptUpdate\n"
-        + "".join(f"{i},1000000\n" for i in range(12000)))
+        + "".join(f"{i},1000000\n" for i in range(30000)))
     observed = ci_five_observation_1291(log)
     assert observed["paired_population_verified"] == 5
+    assert observed["first_observed_tick"] == 7200
+    assert observed["last_observed_tick"] == 18480
     assert observed["routed_scans_per_1000_ticks"] == round(120000 / 11280, 6)
     assert observed["movement_requests_per_1000_ticks"] == round(12000 / 11280, 6)
     assert observed["movement_stalled_repaths_per_1000_ticks"] is None
@@ -3140,9 +3143,9 @@ def self_test_ci_five_1291() -> None:
     for malformed in (
         log.replace("routed_scans=120", "routed_scans=unmeasured"),
         log.replace("routed_scans=120", "routed_scans=-1"),
-        log.replace("end_tick=11880", "end_tick=11820"),
+        log.replace("end_tick=18480", "end_tick=11820"),
         log.replace("CI_FIVE_PROFILE_1291_ACTIVITY", "INVALID_ACTIVITY"),
-        log + "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=600 end_tick=11880 "
+        log + "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=600 end_tick=18480 "
               "routed_scans=120 direct_scans=6 movement_requests=12 "
               "movement_collapses=3 movement_priority_denials=2 "
               "movement_stalled_repaths=unmeasured broker_processed=160 "
@@ -3150,12 +3153,14 @@ def self_test_ci_five_1291() -> None:
     ):
         assert ci_five_observation_1291(malformed)["routed_scans_per_1000_ticks"] is None
     for tampered in (
+        log.replace("CI_FIVE_PROFILE_1291_WAITING tick=600 all=0 original=0 requested=5",
+                    "CI_FIVE_PROFILE_1291_START tick=600 all=0 original=0 requested=5"),
         log.replace("all=5", "all=6", 1),
         log.replace("bad=0", "bad=1", 1),
         log.replace("identity_stable=true", "identity_stable=false", 1),
         log.replace("samples=189", "samples=188", 1),
-        log.replace("tick=11880", "tick=11820", 1),
-        log+"CI_FIVE_PROFILE_1291_END tick=11880 all=5 original=5 "
+        log.replace("tick=18480", "tick=11820", 1),
+        log+"CI_FIVE_PROFILE_1291_END tick=18480 all=5 original=5 "
             "requested=5 samples=189 bad=0 identity_stable=true interval=60\n"):
         assert ci_five_observation_1291(tampered)["paired_population_verified"] is None
     print("[ci-five-1291] PASS native population provenance positive/negative")
@@ -3191,7 +3196,7 @@ def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
     log_path=output/"factorio-ci-five.log"
     with log_path.open("w",encoding="utf-8") as handle:
         measured=subprocess.run([str(binary),"--mod-directory",str(mods),
-            "--benchmark",str(save),"--benchmark-ticks","12000",
+            "--benchmark",str(save),"--benchmark-ticks","30000",
             "--benchmark-verbose","tick,scriptUpdate"],
             stdout=handle,stderr=subprocess.STDOUT,check=False,timeout=450)
     report=ci_five_observation_1291(
