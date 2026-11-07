@@ -3044,19 +3044,22 @@ def self_test() -> int:
 
 
 
-def ci_five_observation_1291(content: str) -> dict[str, object]:
-    """One separate native five-pair scenario; no resource receipt is credited."""
+def ci_five_observation_1291(content: str, expected: int = 5) -> dict[str, object]:
+    """Native 5/25-pair population: no earned construction or resource receipt."""
+    if expected not in (5, 25):
+        raise ValueError("unproven profiling population")
     native = native_efficiency_observation_1062(content)
     starts = re.findall(
         r"CI_FIVE_PROFILE_1291_START tick=(\d+) all=(\d+) "
-        r"original=(\d+) requested=5", content)
+        r"original=(\d+) requested=" + str(expected), content)
     ends = re.findall(
         r"CI_FIVE_PROFILE_1291_END tick=(\d+) all=(\d+) "
-        r"original=(\d+) requested=5 samples=(\d+) "
+        r"original=(\d+) requested=" + str(expected) + r" samples=(\d+) "
         r"bad=(\d+) identity_stable=(true|false) interval=60", content)
     result = {
-        "schema": "ci-five-paired-performance-1291-v1",
-        "scenario": "separate-ci-initialized-five-station-autonomy",
+        "schema": "ci-paired-performance-1291-v1",
+        "scenario": f"separate-ci-initialized-{expected}-station-autonomy",
+        "requested_population": expected,
         "paired_population_verified": None,
         "observed_interval_ticks": 60,
         "engine_ups_including_warmup": native["engine_benchmark_ups"],
@@ -3082,11 +3085,11 @@ def ci_five_observation_1291(content: str) -> dict[str, object]:
         b,bt,bo,n,bad=map(int,(b,bt,bo,n,bad))
         if (a>=600 and b>=11880 and b>a and (b-a)%60==0
                 and n==(b-a)//60+1 and n>=180
-                and at==ao==bt==bo==5 and bad==0
+                and at==ao==bt==bo==expected and bad==0
                 and stable=="true" and "CI_FIVE_PROFILE_1291_UNAVAILABLE" not in content
                 and native["engine_benchmark_updates"]==30000
                 and native["script_sample_coverage"]=="complete"):
-            result["paired_population_verified"]=5
+            result["paired_population_verified"]=expected
             result["first_observed_tick"]=a
             result["last_observed_tick"]=b
             result["observed_samples"]=n
@@ -3101,7 +3104,7 @@ def ci_five_observation_1291(content: str) -> dict[str, object]:
         r"CI_FIVE_PROFILE_1291_ACTIVITY start_tick=(\d+) end_tick=(\d+) "
         + " ".join(key + r"=(\d+|unmeasured)" for key in activity_keys))
     activity = re.findall(activity_pattern, content)
-    if result["paired_population_verified"] == 5 and len(activity) == 1:
+    if result["paired_population_verified"] == expected and len(activity) == 1:
         start, end, *observations = activity[0]
         start, end = int(start), int(end)
         if (start == result["first_observed_tick"]
@@ -3164,13 +3167,34 @@ def self_test_ci_five_1291() -> None:
         log+"CI_FIVE_PROFILE_1291_END tick=18480 all=5 original=5 "
             "requested=5 samples=189 bad=0 identity_stable=true interval=60\n"):
         assert ci_five_observation_1291(tampered)["paired_population_verified"] is None
-    print("[ci-five-1291] PASS native population provenance positive/negative")
+    scaled = (log.replace("all=5", "all=25")
+              .replace("original=5", "original=25")
+              .replace("requested=5", "requested=25"))
+    assert ci_five_observation_1291(scaled, expected=25)["paired_population_verified"] == 25
+    assert ci_five_observation_1291(log, expected=25)["paired_population_verified"] is None
+    assert ci_five_observation_1291(
+        scaled.replace("all=25", "all=24", 1), expected=25
+    )["paired_population_verified"] is None
+    assert ci_five_observation_1291(
+        scaled.replace("identity_stable=true", "identity_stable=false"),
+        expected=25)["paired_population_verified"] is None
+    try:
+        ci_five_observation_1291(log, expected=100)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("unsupported 100-priest profiling accepted")
+    print("[ci-five-1291] PASS native 5/25 provenance positive/negative")
 
 
 def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
-                     work: pathlib.Path, output: pathlib.Path) -> None:
-    """Diagnostic native engine process on a separate seed-matched clean save."""
-    area=work/"ci-five"
+                     work: pathlib.Path, output: pathlib.Path,
+                     population: int = 5) -> None:
+    """Serial native 5/25-pair runs: matched seed, ticks, hardware."""
+    if population not in (5, 25):
+        raise ValueError("unproven profiling population")
+    suffix="five" if population==5 else "25"
+    area=work/("ci-"+suffix)
     area.mkdir(parents=True,exist_ok=True)
     mods=area/"mods"
     install_smoke_mod(source_mods,mods)
@@ -3185,28 +3209,31 @@ def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
     src=src.replace(HARNESS_INSTALL,
                     "_G.TP_CI_LATE_COMBAT=false\n"
                     "_G.TP_CI_FIVE_PROFILE_1291=true\n"
+                    + (f"_G.TP_CI_PROFILE_POPULATION_1291={population}\n"
+                       if population==25 else "")
                     +HARNESS_INSTALL,1)
     control.write_text(src,encoding="utf-8")
-    save=area/"five-pair-start.zip"
-    with (output/"factorio-ci-five-create.log").open("w",encoding="utf-8") as handle:
+    save=area/(suffix+"-pair-start.zip")
+    with (output/("factorio-ci-"+suffix+"-create.log")).open("w",encoding="utf-8") as handle:
         created=subprocess.run([str(binary),"--mod-directory",str(mods),
             "--create",str(save),"--map-gen-seed","907260"],
             stdout=handle,stderr=subprocess.STDOUT,check=False,timeout=120)
     if created.returncode!=0 or not save.is_file():
         raise RuntimeError("native isolated five-pair save creation failed")
-    log_path=output/"factorio-ci-five.log"
+    log_path=output/("factorio-ci-"+suffix+".log")
     with log_path.open("w",encoding="utf-8") as handle:
         measured=subprocess.run([str(binary),"--mod-directory",str(mods),
             "--benchmark",str(save),"--benchmark-ticks","30000",
             "--benchmark-verbose","tick,scriptUpdate"],
             stdout=handle,stderr=subprocess.STDOUT,check=False,timeout=450)
     report=ci_five_observation_1291(
-        log_path.read_text(encoding="utf-8",errors="replace"))
+        log_path.read_text(encoding="utf-8",errors="replace"), expected=population)
     report["engine_exit_status"]=measured.returncode
     report["performance_is_release_blocking"]=False
-    (output/"performance-ci-five.json").write_text(
+    (output/("performance-ci-"+suffix+".json")).write_text(
         json.dumps(report,indent=2,sort_keys=True)+"\n",encoding="utf-8")
-    print("CI_FIVE_1291 "+json.dumps(report,sort_keys=True))
+    print(("CI_FIVE_1291 " if population==5 else "CI_25_1291 ")+
+          json.dumps(report,sort_keys=True))
 
 
 def install_smoke_mod(source_mods: pathlib.Path, dest_mods: pathlib.Path) -> None:
@@ -3488,6 +3515,16 @@ def execute(args: argparse.Namespace) -> int:
                         "performance_is_release_blocking":False,
                         "error":str(exc)},indent=2)+"\n",encoding="utf-8")
         print("CI_FIVE_1291 UNMEASURED: "+str(exc))
+    # Scaling: 25 only until genuine 25-pair native evidence establishes safety.
+    try:
+        run_ci_five_1291(binary, pathlib.Path(args.mod_dir).resolve(),
+                         work, output, population=25)
+    except Exception as exc:
+        (output/"performance-ci-25.json").write_text(
+            json.dumps({"paired_population_verified":None,
+                        "performance_is_release_blocking":False,
+                        "error":str(exc)},indent=2)+"\n",encoding="utf-8")
+        print("CI_25_1291 UNMEASURED: "+str(exc))
     return 0
 
 
