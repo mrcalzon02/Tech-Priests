@@ -22,6 +22,9 @@ SAVE_NAME = "_autosave-tech-priests-ci-persistence.zip"
 STRANDED_SAVE_NAME = "_autosave-tech-priests-ci-stranded.zip"
 ORE_CARRY_SAVE_NAME = "_autosave-tech-priests-ci-ore-carried.zip"
 STOCK_CARRY_SAVE_NAME = "_autosave-tech-priests-ci-stock-carried.zip"
+ROBOT_MIDFLIGHT_SAVE_NAME = "_autosave-tech-priests-ci-robot-midflight.zip"
+ROBOT_MIDFLIGHT_SAVE_MARKER = "[TP-GROUND-RANK-TEST] ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360"
+ROBOT_MIDFLIGHT_RELOAD_MARKER = "[TP-GROUND-RANK-TEST] PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360"
 STRANDED_REQUEST_MARKER = "[TP-GROUND-RANK-TEST] CARGO_ENGINE_DEATH_SAVE_REQUESTED"
 STRANDED_RELOAD_MARKER = "[TP-GROUND-RANK-TEST] PASS CARGO_ENGINE_STRANDED_RELOAD"
 ORE_CARRY_SAVE_MARKER = "[TP-GROUND-RANK-TEST] ORE_ENGINE_CARRIER_SAVE_REQUESTED"
@@ -104,6 +107,56 @@ def verify_robot_engine_s2_log(content: str) -> None:
                            "Magos, three physical robots, pending request, "
                            "station inventory or 180-tick native refusal")
 
+
+
+def verify_robot_midflight_reload_1360_log(first: str, reloaded: str) -> None:
+    """Require genuine serialized S3 custody and resumed native robot build."""
+    pre = checkpointed_pre_save_evidence(
+        first, ROBOT_MIDFLIGHT_SAVE_MARKER, ROBOT_MIDFLIGHT_SAVE_NAME)
+    def receipt(content: str, marker: str, pattern: str) -> tuple[int, ...]:
+        if content.count(marker) != 1:
+            raise RuntimeError("S3 missing or duplicated native receipt: " + marker)
+        matches = list(re.finditer(pattern, content))
+        if len(matches) != 1:
+            raise RuntimeError("S3 malformed native receipt: " + marker)
+        return tuple(map(int, matches[0].groups()))
+
+    cut = receipt(pre, "ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick=",
+        r"ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick=(\\d+) "
+        r"magos=(\\d+) priest=(\\d+) observed_flying_robots=(\\d+) "
+        r"ghost=1 substation_custody=1")
+    saved = receipt(pre, "ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=",
+        r"ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=(\\d+) "
+        r"magos=(\\d+) priest=(\\d+) ghost=1 substation_custody=1")
+    observed = receipt(reloaded, "PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick=",
+        r"PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick=(\\d+) "
+        r"magos=(\\d+) priest=(\\d+) ghost=1 substation_held=1 "
+        r"power_disconnected=true original_task_retained=true "
+        r"original_request_retained=true built=0 native_build_event=0")
+    restored = receipt(reloaded, "PASS ROBOT_ENGINE_S2_NATIVE_MIDFLIGHT_POWER_RECOVERY_1350 tick=",
+        r"PASS ROBOT_ENGINE_S2_NATIVE_MIDFLIGHT_POWER_RECOVERY_1350 tick=(\\d+) "
+        r"magos=(\\d+) priest=(\\d+) ghost=1 native_build_event=0 "
+        r"substation_mined=1 substation_rebuilt=1 original_task_retained=true "
+        r"original_request_retained=true")
+    event = receipt(reloaded, "ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=",
+        r"ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=(\\d+) "
+        r"station=(\\d+) robot=(\\d+)")
+    built = receipt(reloaded, "PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick=",
+        r"PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick=(\\d+) "
+        r"magos=(\\d+) magos_priest=(\\d+) station=(\\d+) "
+        r"priest=(\\d+) robot=(\\d+) source_delta=1 network_delta=1 "
+        r"ghost=0 hierarchy=direct-senior robot_event=on_robot_built_entity")
+    if not (cut[3] > 0 and cut[0] == saved[0]
+            and saved[0] <= observed[0] < restored[0] < event[0] <= built[0]
+            and cut[1:3] == saved[1:] == observed[1:]
+            == restored[1:] == built[1:3]
+            and built[3] == event[1] and built[5] == event[2]
+            and len({cut[1], cut[2], built[3], built[4], built[5]}) == 5
+            and "ROBOT_ENGINE_S2_SOURCE_MINED" not in reloaded
+            and "ROBOT_ENGINE_S2_REQUEST tick=" not in reloaded
+            and "ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT" not in pre):
+        raise RuntimeError("S3 reloaded Magos, task, ghost, substation, "
+                           "robot event or exact physical build discrepant")
 
 
 def verify_robot_frontier_native_1080_log(content: str) -> None:
@@ -2960,6 +3013,64 @@ def self_test() -> int:
         raise AssertionError("duplicate native robotless refusal was credited")
 
 
+    # 1360: a separate engine process, not a second fixture setup, must
+    # read the original mid-flight ghost/task/substation custody and then
+    # observe genuine power restoration and native robot construction.
+    s3_before = (
+        "ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick=400 "
+        "magos=20 priest=21 observed_flying_robots=1 "
+        "ghost=1 substation_custody=1\\n"
+        "ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=400 "
+        "magos=20 priest=21 ghost=1 substation_custody=1\\n"
+        "1.111 Info AppManager.cpp:324: Saving to "
+        "_autosave-tech-priests-ci-robot-midflight (blocking).\\n"
+        "1.222 Info AppManagerStates.cpp:2111: Saving finished\\n"
+    )
+    s3_after = (
+        "PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick=460 "
+        "magos=20 priest=21 ghost=1 substation_held=1 "
+        "power_disconnected=true original_task_retained=true "
+        "original_request_retained=true built=0 native_build_event=0\\n"
+        "PASS ROBOT_ENGINE_S2_NATIVE_MIDFLIGHT_POWER_RECOVERY_1350 tick=520 "
+        "magos=20 priest=21 ghost=1 native_build_event=0 "
+        "substation_mined=1 substation_rebuilt=1 original_task_retained=true "
+        "original_request_retained=true\\n"
+        "ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=700 station=30 robot=31\\n"
+        "PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick=740 magos=20 "
+        "magos_priest=21 station=30 priest=32 robot=31 "
+        "source_delta=1 network_delta=1 ghost=0 hierarchy=direct-senior "
+        "robot_event=on_robot_built_entity\\n"
+    )
+    verify_robot_midflight_reload_1360_log(s3_before, s3_after)
+    for old, new in (
+        ("substation_held=1", "substation_held=0"),
+        ("original_task_retained=true", "original_task_retained=false"),
+        ("power_disconnected=true", "power_disconnected=false"),
+        ("built=0 native_build_event=0", "built=1 native_build_event=0"),
+        ("magos=20 priest=21 ghost=1", "magos=20 priest=99 ghost=1"),
+        ("tick=520 magos=20", "tick=400 magos=20"),
+        ("station=30 robot=31", "station=31 robot=31"),
+        ("ghost=0 hierarchy=direct-senior", "ghost=1 hierarchy=direct-senior"),
+    ):
+        bad = s3_after.replace(old, new, 1)
+        try:
+            verify_robot_midflight_reload_1360_log(s3_before, bad)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("S3 forged reload receipt accepted: " + old)
+    for bad_before in (
+        s3_before.replace("Saving finished", "Saving aborted"),
+        s3_before.replace("observed_flying_robots=1", "observed_flying_robots=0"),
+        s3_before.replace("SAVE_REQUESTED_1360", "UNRELATED_SAVE_1360"),
+    ):
+        try:
+            verify_robot_midflight_reload_1360_log(bad_before, s3_after)
+        except RuntimeError:
+            pass
+        else:
+            raise AssertionError("S3 missing physical pre-save evidence accepted")
+
     frontier_positive = (
         "ROBOT_FRONTIER_1080_SOURCE tick=200 magos=20 priest=21 "
         "port=22 poles=8 roboports=4 magos_poles=4 magos_ports=2 "
@@ -3463,7 +3574,8 @@ def install_smoke_mod(source_mods: pathlib.Path, dest_mods: pathlib.Path) -> Non
                         '_G.TP_CI_SAVE_RELOAD_SMOKE=true\n'
                         '_G.TP_CI_STRANDED_RELOAD_PROBE=false\n'
                         '_G.TP_CI_COURIER_RELOAD_PROBE=false\n'
-                        '_G.TP_CI_STOCK_RELOAD_PROBE=false\n' + HARNESS_INSTALL)
+                        '_G.TP_CI_STOCK_RELOAD_PROBE=false\n'
+                        '_G.TP_CI_S2_MIDFLIGHT_RELOAD_PROBE=false\n' + HARNESS_INSTALL)
     control.write_text(text, encoding="utf-8")
 
 
@@ -3694,6 +3806,45 @@ def execute(args: argparse.Namespace) -> int:
     verify_robot_frontier_native_1080_log(combined)
     verify_robot_frontier_native_1111_log(combined)
     verify_robot_frontier_native_1120_log(combined)
+    # Sixth REAL process reopens the checkpoint taken while the original
+    # robot was dispatched, the station ghost still pending and its powering
+    # substation physically held. The saved world, not a fresh fixture, owns
+    # the 0338 task, material and priest. A successful source test cannot
+    # substitute for this independent native Factorio receipt.
+    midflight_save = game_root / "saves" / ROBOT_MIDFLIGHT_SAVE_NAME
+    check_engine_log(content, ROBOT_MIDFLIGHT_SAVE_MARKER)
+    if not midflight_save.is_file():
+        raise RuntimeError("S3 native midflight autosave missing on disk")
+    with zipfile.ZipFile(midflight_save) as archive:
+        if archive.testzip() is not None:
+            raise RuntimeError("S3 native midflight autosave failed CRC")
+    midflight_copy = output / "tech-priests-robot-midflight-checkpoint.zip"
+    shutil.copy2(midflight_save, midflight_copy)
+    midflight_control = control.read_text(encoding="utf-8")
+    midflight_flag = "_G.TP_CI_S2_MIDFLIGHT_RELOAD_PROBE=false"
+    if midflight_control.count(midflight_flag) != 1:
+        raise RuntimeError("isolated S3 independent reload flag missing")
+    control.write_text(midflight_control.replace(
+        midflight_flag, "_G.TP_CI_S2_MIDFLIGHT_RELOAD_PROBE=true"),
+        encoding="utf-8")
+    midflight_log_path = work / "factorio-robot-midflight-reload.log"
+    with midflight_log_path.open("w", encoding="utf-8") as handle:
+        midflight_result = subprocess.run(
+            [str(binary), "--mod-directory", str(mods),
+             "--benchmark", str(midflight_copy),
+             "--benchmark-ticks", "3000"],
+            stdout=handle, stderr=subprocess.STDOUT,
+            check=False, timeout=args.reload_timeout)
+    midflight_log = midflight_log_path.read_text(
+        encoding="utf-8", errors="replace")
+    if midflight_result.returncode != 0:
+        raise RuntimeError("S3 independent native reload process failed: "
+                           + str(midflight_result.returncode))
+    check_engine_log(midflight_log, ROBOT_MIDFLIGHT_RELOAD_MARKER)
+    verify_robot_midflight_reload_1360_log(content, midflight_log)
+    print("PASS S3/1360: independent Factorio process resumed original "
+          "unpowered robot-dispatch ghost with counted substation held, "
+          "then restored power and built one real ranked Senior")
     if "held=1 chest_delta=0" not in combined:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
@@ -3797,7 +3948,8 @@ def main(argv: list[str]) -> int:
         if args.work_dir:
             for name in ("factorio-save-server.log", "factorio-stranded-server.log",
                          "factorio-ore-carry-server.log", "factorio-stock-carry-server.log",
-                         "factorio-reload.log"):
+                         "factorio-reload.log",
+                         "factorio-robot-midflight-reload.log"):
                 path = pathlib.Path(args.work_dir) / name
                 if path.is_file():
                     print(f"--- tail {name} ---", file=sys.stderr)

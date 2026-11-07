@@ -9166,6 +9166,45 @@ local function robot_engine_s2_service_1071(state)
   -- Both the ghost and the physical power-source item stay under custody
   -- through an engine-observed interruption. No second ghost or receipt.
   if test.phase=="midflight-power-cut-1350" then
+    -- 1360: a sixth, independently launched Factorio process must read
+    -- the SAME serialized ghost, pending 0338 task, original request and
+    -- physically held substation before any power is restored. This probe
+    -- does not create or debit an item, task, entity or construction receipt.
+    if rawget(_G,"TP_CI_S2_MIDFLIGHT_RELOAD_PROBE")==true
+        and not test.midflight_reload_passed_1360 then
+      local active=root.robot_network_task_0338
+      local hold=test.midflight_hold_1350
+      local ghost=active and active.ghost
+      local built=test.surface.find_entities_filtered{
+        name=ROBOT_ENGINE_S2_ITEM_1071,
+        position=ROBOT_ENGINE_S2_TARGET_1071,
+        radius=1,force=root.station.force,limit=2}
+      local ghosts=test.surface.find_entities_filtered{
+        name="entity-ghost",position=ROBOT_ENGINE_S2_TARGET_1071,
+        radius=2,force=root.station.force,limit=4}
+      if not(test.midflight_save_requested_1360
+        and game.tick>=test.midflight_cut_tick_1350
+        and hold and hold.valid and hold.get_item_count("substation")==1
+        and test.power_source_1331 and not test.power_source_1331.valid
+        and not port.is_connected_to_electric_network()
+        and active and active==test.midflight_task_1350
+        and active.phase=="awaiting-real-construction-robot"
+        and ghost and ghost.valid and ghost==test.midflight_ghost_1350
+        and #ghosts==1 and ghosts[1]==ghost and #built==0
+        and root.robot_network_request_0338==test.midflight_request_1350
+        and root.priest.unit_number==test.magos_priest
+        and not test.robot_event_station
+        and not active.robot_build_receipt_0338) then
+        error("ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_INVALID_1360")
+      end
+      test.midflight_reload_passed_1360=true
+      emit("PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick="..
+        game.tick.." magos="..test.magos_unit..
+        " priest="..test.magos_priest..
+        " ghost=1 substation_held=1 power_disconnected=true"..
+        " original_task_retained=true original_request_retained=true"..
+        " built=0 native_build_event=0")
+    end
     if game.tick-test.midflight_cut_tick_1350<120 then return end
     local hold=test.midflight_hold_1350
     local active=root.robot_network_task_0338
@@ -9457,6 +9496,19 @@ local function robot_engine_s2_service_1071(state)
         " magos="..test.magos_unit..
         " priest="..test.magos_priest..
         " observed_flying_robots="..#flying..
+        " ghost=1 substation_custody=1")
+      -- Save the LIVE mid-dispatch native world, not a recreated fixture.
+      -- The next Factorio process alone may accept the persisted custody.
+      test.midflight_save_requested_1360=true
+      local saved,reason=pcall(function()
+        game.auto_save("tech-priests-ci-robot-midflight")
+      end)
+      if not saved then
+        error("ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REFUSED_1360:"..tostring(reason))
+      end
+      emit("ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick="..
+        game.tick.." magos="..test.magos_unit..
+        " priest="..test.magos_priest..
         " ghost=1 substation_custody=1")
       return
     end
