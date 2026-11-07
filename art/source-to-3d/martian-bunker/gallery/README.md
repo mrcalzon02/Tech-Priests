@@ -1,5 +1,22 @@
 # Fortified Martian Bunker — development progress gallery
 
+## v1.0 (source folder v10) — remove **only** features absent from the owner-selected image
+
+**Source of truth:** [owner-selected turret image](../style-references/visual-target-v08.png); previous assistant procedural embellishments are not a substitute.
+
+![Selected target versus real rejected and corrected geometry](v10_reference_vs_existing_vs_corrected.png)
+
+![Corrected actual source GLB engineering render](v10_front_geometry.png)
+
+**Actual geometry changes:** (1) reduce the **existing** heat-blue muzzle crown's outer radius from 0.159 to **0.110** with the same y extent and open bore; (2) delete the fabricated raised `87_roof_red_inspection_armor` and its **four** roof bolts. Do **not** replace them with other ornaments. No new meshes.
+
+**Strict regression:** compare GLB vertices/faces against previous v0.9 for every named mesh. Exactly **193** parts must remain geometrically unchanged, exactly **one** existing muzzle must be reshaped, and exactly **five** roof parts deleted: **199 → 194** parts; **110 → 105** co-rotating. Checks also preserve 3×3 base, hollow bore, turret parent hierarchy, 22 existing outer wall mounts and eight existing sloped buttress/foot bodies.
+
+[Rebuildable original-model source and corrected geometry GLB](../revisions/v10/martian_bunker_v10_reference_bound_source.zip) · [Native Blender render after successful CI](v10_barrel_three_quarter.png) · [Editable Blender master after successful CI](../src/v10/martian_heavy_weapon_bunker_v10_textured.blend) · [Blender GLB after successful CI](../src/v10/martian_heavy_weapon_bunker_v10_textured_export.glb) · [Automated validation report](../src/v10/validation_report_v10.json)
+
+**Not yet claimed:** pixel-perfect match with the detailed reference or final game sprite approval. The rest of the preexisting geometry is intentionally unchanged to prevent another accidental redesign.
+
+
 ## v0.9 — actual geometry cleanup, subtractive not decorative
 
 **Rejected over-detailing in v0.8.** The actual source model was reduced from **254 to 199 mesh components** (165 to 110 moving meshes), with no new decorative parts. The 3×3 foundation, mechanical gun bearings, cylindrical open gun, fixed rear services, co-rotating antenna, 22 wall attachments and eight sloped corner components remain intact.

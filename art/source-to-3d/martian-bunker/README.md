@@ -1,5 +1,16 @@
 # Fortified Martian Heavy-Weapon Bunker — 3D development
 
+## CURRENT: v1.0 (v10 source folder) reference-conformance correction
+
+The user-selected image in [style-references/visual-target-v08.png](style-references/visual-target-v08.png) is the reference, not a license to add speculative components. The previous v09 Blender gun had a giant knob at the end and an unnecessary raised red service armor slab on its roof. These were absent from the source image.
+
+**Exact approved scope:** change ONE muzzle crown mesh to a thin open-bore profile, remove ONE invented roof plate and FOUR bolts. Exactly 193 other source meshes remain unchanged, verified by comparison with previous named GLB geometry. No new parts, panels, clamps, decorative rings, fake damage, or extra lights.
+
+[Actual model/source ZIP](revisions/v10/martian_bunker_v10_reference_bound_source.zip) · [same-camera geometry proof](gallery/v10_reference_vs_existing_vs_corrected.png) · [reference rules and regression](revisions/v10/martian_bunker_v10_reference_bound_source.zip) · [native Blender pipeline](../../../.github/workflows/martian-bunker-3d.yml).
+
+No production sprite or gameplay code changed. High-detail target matching still requires your visual approval after inspecting real Blender renders.
+
+
 ## Current revision: v0.9 subtractive turret cleanup
 
 **Real editable mesh work, not AI image generation.** The previous v0.8 attempt accumulated unnecessary concentric rings and decorative parts. The new source eliminates 55 pieces while preserving the entire bunker, gun bore, turret rotation, sensors and required armor load paths.
