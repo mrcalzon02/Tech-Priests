@@ -383,7 +383,7 @@ def verify_relocation_log(content: str) -> None:
     deposits = list(re.finditer(
         r"RELOCATION_ENGINE_STOCK_DEPOSIT[^\n]*"
         r" item=(wooden-chest|iron-chest) worker=(\d+)"
-        r" parent=(\d+) held=0", content))
+        r" parent=(\d+)[^\n]* native_item_delta=1 held=0", content))
     if not (stock and finished and len(pickups) == len(deposits) == 2
             and [p.group(1) for p in pickups] == ["wooden-chest", "iron-chest"]
             and [d.group(1) for d in deposits] == ["wooden-chest", "iron-chest"]
@@ -2317,7 +2317,7 @@ def self_test() -> int:
     loaded_stock = (
         STOCK_CARRY_RELOAD_MARKER
         + " tick=10001 child=15 parent=10 worker=77 writ=41 held=1 parent_received=0 child_iron=1\n"
-        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest worker=77 parent=10 held=0\n")
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest worker=77 parent=10 native_item_delta=1 held=0\n")
     verify_stock_carry_reload_log(saved_stock, loaded_stock)
     for bad_before, bad_after in (
         (saved_stock, loaded_stock.replace("worker=77", "worker=78")),
@@ -2345,12 +2345,12 @@ def self_test() -> int:
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_CANDIDATE_RESERVED candidate=15 writ=41\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_PREFLIGHT_PASS ghost=20 worker=10 writ=41 remote_mining_denied=true\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PICKUP item=wooden-chest carrier=77 held=1\n"
-        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest worker=77 parent=10 held=0\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=wooden-chest worker=77 parent=10 native_item_delta=1 held=0\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PARENT_CONGESTED tick=10010 parent=10 slots=19 filler=stone-furnace native_mines=19 wooden=1 iron=0\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PICKUP item=iron-chest carrier=77 held=1\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PARENT_FULL_DENIED tick=10020 parent=10 worker=77 held_iron=1 parent_iron=0 filler=19\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_PARENT_SPACE_RESTORED tick=10080 parent=10 worker=77 held_iron=1 released_filler=1 native_transfer=true\n"
-        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=iron-chest worker=77 parent=10 held=0\n"
+        "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=iron-chest worker=77 parent=10 native_item_delta=1 held=0\n"
         "[TP-GROUND-RANK-TEST] PASS RELOCATION_ENGINE_STOCK_CONGESTION tick=10100 parent=10 worker=77 blocked=1 recovered=1 filler=19 reserved_filler=1 parent_iron=1 held_iron=0\n"
         "RELOCATION_ENGINE_MINED carried=1\n"
         "[TP-GROUND-RANK-TEST] PASS RELOCATION_ENGINE_STOCK_EVACUATION old_station=15 worker=77 wooden=1 iron=1 journeys=2 held=0 source_removed=true\n"
@@ -2383,8 +2383,10 @@ def self_test() -> int:
                     "STOCK_PARENT_FULL_DENIED tick=10020 parent=10 worker=78"),
                 good_stock_relocation.replace("reserved_filler=1", "reserved_filler=0"),
                 good_stock_relocation.replace(
-                    "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=iron-chest worker=77 parent=10 held=0\n", ""),
+                    "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_STOCK_DEPOSIT item=iron-chest worker=77 parent=10 native_item_delta=1 held=0\n", ""),
                 good_stock_relocation.replace("journeys=2", "journeys=1"),
+                good_stock_relocation.replace("native_item_delta=1", "native_item_delta=0", 1),
+                good_stock_relocation.replace("native_item_delta=1", "native_item_delta=2", 1),
                 "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_WORKER_RESERVED worker=10 writ=41\n"
                 "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_GHOST_POSITION_VERIFIED ghost=20 offset_sq=0.5\n"
         "[TP-GROUND-RANK-TEST] RELOCATION_ENGINE_CANDIDATE_RESERVED candidate=15 writ=41\n"
