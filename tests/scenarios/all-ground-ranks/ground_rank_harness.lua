@@ -9182,6 +9182,16 @@ local function robot_engine_s2_service_1071(state)
       local ghosts=test.surface.find_entities_filtered{
         name="entity-ghost",position=ROBOT_ENGINE_S2_TARGET_1071,
         radius=2,force=root.station.force,limit=4}
+      -- The exact engine robot observed at the power cut must survive
+      -- serialization; another robot must not silently replace its custody.
+      local original_robot=test.midflight_robot_1360
+      if not(original_robot and original_robot.valid
+        and original_robot.type=="construction-robot"
+        and original_robot.unit_number==test.midflight_robot_unit_1360
+        and original_robot.surface==test.surface
+        and original_robot.force==root.station.force) then
+        error("ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_ROBOT_LOST_1360")
+      end
       if not(test.midflight_save_requested_1360
         and game.tick>=test.midflight_cut_tick_1350
         and hold and hold.valid and hold.get_item_count("substation")==1
@@ -9201,6 +9211,7 @@ local function robot_engine_s2_service_1071(state)
       emit("PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick="..
         game.tick.." magos="..test.magos_unit..
         " priest="..test.magos_priest..
+        " robot="..test.midflight_robot_unit_1360..
         " ghost=1 substation_held=1 power_disconnected=true"..
         " original_task_retained=true original_request_retained=true"..
         " built=0 native_build_event=0")
@@ -9477,6 +9488,13 @@ local function robot_engine_s2_service_1071(state)
       type="construction-robot",position=port.position,
       radius=64,force=root.station.force,limit=32}
     if ghost and ghost.valid and #flying>0 then
+      local dispatched=flying[1]
+      if not(dispatched and dispatched.valid
+        and dispatched.unit_number and dispatched.type=="construction-robot"
+        and dispatched.surface==test.surface
+        and dispatched.force==root.station.force) then
+        error("ROBOT_ENGINE_S2_MIDFLIGHT_ROBOT_IDENTITY_INVALID_1360")
+      end
       local hold=game.create_inventory(1)
       local source=test.power_source_1331
       if not(hold and hold.valid and source and source.valid
@@ -9487,6 +9505,8 @@ local function robot_engine_s2_service_1071(state)
         error("ROBOT_ENGINE_S2_MIDFLIGHT_PHYSICAL_POWER_CUT_FAILED_1350")
       end
       test.midflight_hold_1350=hold
+      test.midflight_robot_1360=dispatched
+      test.midflight_robot_unit_1360=dispatched.unit_number
       test.midflight_task_1350=active
       test.midflight_ghost_1350=ghost
       test.midflight_request_1350=root.robot_network_request_0338
@@ -9496,6 +9516,7 @@ local function robot_engine_s2_service_1071(state)
         " magos="..test.magos_unit..
         " priest="..test.magos_priest..
         " observed_flying_robots="..#flying..
+        " robot="..test.midflight_robot_unit_1360..
         " ghost=1 substation_custody=1")
       -- Save the LIVE mid-dispatch native world, not a recreated fixture.
       -- The next Factorio process alone may accept the persisted custody.
@@ -9509,6 +9530,7 @@ local function robot_engine_s2_service_1071(state)
       emit("ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick="..
         game.tick.." magos="..test.magos_unit..
         " priest="..test.magos_priest..
+        " robot="..test.midflight_robot_unit_1360..
         " ghost=1 substation_custody=1")
       return
     end

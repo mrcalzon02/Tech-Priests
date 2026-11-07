@@ -124,13 +124,15 @@ def verify_robot_midflight_reload_1360_log(first: str, reloaded: str) -> None:
     cut = receipt(pre, "ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick=",
         r"ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick=(\d+) "
         r"magos=(\d+) priest=(\d+) observed_flying_robots=(\d+) "
-        r"ghost=1 substation_custody=1")
+        r"robot=(\d+) ghost=1 substation_custody=1")
     saved = receipt(pre, "ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=",
         r"ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=(\d+) "
-        r"magos=(\d+) priest=(\d+) ghost=1 substation_custody=1")
+        r"magos=(\d+) priest=(\d+) robot=(\d+) "
+        r"ghost=1 substation_custody=1")
     observed = receipt(reloaded, "PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick=",
         r"PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick=(\d+) "
-        r"magos=(\d+) priest=(\d+) ghost=1 substation_held=1 "
+        r"magos=(\d+) priest=(\d+) robot=(\d+) "
+        r"ghost=1 substation_held=1 "
         r"power_disconnected=true original_task_retained=true "
         r"original_request_retained=true built=0 native_build_event=0")
     restored = receipt(reloaded, "PASS ROBOT_ENGINE_S2_NATIVE_MIDFLIGHT_POWER_RECOVERY_1350 tick=",
@@ -146,10 +148,11 @@ def verify_robot_midflight_reload_1360_log(first: str, reloaded: str) -> None:
         r"magos=(\d+) magos_priest=(\d+) station=(\d+) "
         r"priest=(\d+) robot=(\d+) source_delta=1 network_delta=1 "
         r"ghost=0 hierarchy=direct-senior robot_event=on_robot_built_entity")
-    if not (cut[3] > 0 and cut[0] == saved[0]
+    if not (cut[3] > 0 and cut[4] > 0 and cut[0] == saved[0]
             and saved[0] <= observed[0] < restored[0] < event[0] <= built[0]
-            and cut[1:3] == saved[1:] == observed[1:]
+            and cut[1:3] == saved[1:3] == observed[1:3]
             == restored[1:] == built[1:3]
+            and cut[4] == saved[3] == observed[3]
             and built[3] == event[1] and built[5] == event[2]
             and len({cut[1], cut[2], built[3], built[4], built[5]}) == 5
             and "ROBOT_ENGINE_S2_SOURCE_MINED" not in reloaded
@@ -3056,16 +3059,16 @@ def self_test() -> int:
     s3_before = (
         "ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick=400 "
         "magos=20 priest=21 observed_flying_robots=1 "
-        "ghost=1 substation_custody=1\n"
+        "robot=25 ghost=1 substation_custody=1\n"
         "[TP-GROUND-RANK-TEST] ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=400 "
-        "magos=20 priest=21 ghost=1 substation_custody=1\n"
+        "magos=20 priest=21 robot=25 ghost=1 substation_custody=1\n"
         "1.111 Info AppManager.cpp:324: Saving to "
         "_autosave-tech-priests-ci-robot-midflight (blocking).\n"
         "1.222 Info AppManagerStates.cpp:2111: Saving finished\n"
     )
     s3_after = (
         "PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick=460 "
-        "magos=20 priest=21 ghost=1 substation_held=1 "
+        "magos=20 priest=21 robot=25 ghost=1 substation_held=1 "
         "power_disconnected=true original_task_retained=true "
         "original_request_retained=true built=0 native_build_event=0\n"
         "PASS ROBOT_ENGINE_S2_NATIVE_MIDFLIGHT_POWER_RECOVERY_1350 tick=520 "
@@ -3084,7 +3087,8 @@ def self_test() -> int:
         ("original_task_retained=true", "original_task_retained=false"),
         ("power_disconnected=true", "power_disconnected=false"),
         ("built=0 native_build_event=0", "built=1 native_build_event=0"),
-        ("magos=20 priest=21 ghost=1", "magos=20 priest=99 ghost=1"),
+        ("magos=20 priest=21 robot=25 ghost=1", "magos=20 priest=21 robot=26 ghost=1"),
+        ("magos=20 priest=21 robot=25 ghost=1", "magos=20 priest=99 robot=25 ghost=1"),
         ("tick=520 magos=20", "tick=400 magos=20"),
         ("station=30 robot=31", "station=31 robot=31"),
         ("ghost=0 hierarchy=direct-senior", "ghost=1 hierarchy=direct-senior"),
@@ -3099,6 +3103,7 @@ def self_test() -> int:
     for bad_before in (
         s3_before.replace("Saving finished", "Saving aborted"),
         s3_before.replace("observed_flying_robots=1", "observed_flying_robots=0"),
+        s3_before.replace("robot=25 ghost=1", "robot=26 ghost=1", 1),
         s3_before.replace("SAVE_REQUESTED_1360", "UNRELATED_SAVE_1360"),
     ):
         try:
