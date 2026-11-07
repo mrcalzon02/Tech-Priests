@@ -10785,6 +10785,44 @@ local function ci_five_setup_1291(state)
     " stations="..#units.." setup=ci-only-real-entities")
 end
 
+
+-- Sample counters from authoritative broker/movement readback at the five-pair
+-- native boundaries; absent counters are unmeasured, not inferred zero.
+local function ci_five_activity_snapshot_1291()
+  local tp=storage and storage.tech_priests or {}
+  local broker=tp.runtime_tick_broker_0600 or {}
+  local ext=broker.external_stats or {}
+  local movement=tp.movement_controller_0419 or {}
+  local ms=movement.stats or {}
+  local function observed(obj,key)
+    local value=obj[key]
+    if type(value)=="number" and value>=0 then return value end
+    return false
+  end
+  local processed,blocked,service_seen=0,0,false
+  for _,service in pairs(broker.service_stats or {}) do
+    if type(service.processed)~="number"
+        or type(service.blocked)~="number" then
+      processed=false
+      blocked=false
+      break
+    end
+    service_seen=true
+    processed=processed+service.processed
+    blocked=blocked+service.blocked
+  end
+  return {
+    routed_scans=observed(ext,"scans_attempted"),
+    direct_scans=observed(ext,"direct_surface_scans"),
+    movement_requests=observed(ext,"path_requests"),
+    movement_collapses=observed(ext,"path_requests_collapsed"),
+    movement_priority_denials=observed(ms,"lower_priority_retargets_denied"),
+    movement_stalled_repaths=observed(ms,"stalled_repaths"),
+    broker_processed=service_seen and processed or false,
+    broker_blocked=service_seen and blocked or false,
+  }
+end
+
 local function ci_five_sample_1291(state)
   local rec=state.ci_five_1291
   if not rec or state.finished or game.tick-rec.started<600 then return end
@@ -10812,6 +10850,8 @@ local function ci_five_sample_1291(state)
   rec.samples=rec.samples+1
   if total~=5 or original~=5 or not identities then rec.bad=rec.bad+1 end
   if rec.samples==1 then
+    rec.activity_start=ci_five_activity_snapshot_1291()
+    rec.activity_start_tick=game.tick
     emit("CI_FIVE_PROFILE_1291_START tick="..game.tick..
       " all="..total.." original="..original.." requested=5")
   end
@@ -10820,6 +10860,26 @@ local function ci_five_sample_1291(state)
       " all="..total.." original="..original.." requested=5"..
       " samples="..rec.samples.." bad="..rec.bad..
       " identity_stable="..tostring(rec.bad==0).." interval=60")
+    local after=ci_five_activity_snapshot_1291()
+    local function delta(key)
+      local before=rec.activity_start and rec.activity_start[key]
+      local now=after[key]
+      if type(before)=="number" and type(now)=="number" and now>=before then
+        return tostring(now-before)
+      end
+      return "unmeasured"
+    end
+    emit("CI_FIVE_PROFILE_1291_ACTIVITY start_tick="..
+      tostring(rec.activity_start_tick or -1)..
+      " end_tick="..game.tick..
+      " routed_scans="..delta("routed_scans")..
+      " direct_scans="..delta("direct_scans")..
+      " movement_requests="..delta("movement_requests")..
+      " movement_collapses="..delta("movement_collapses")..
+      " movement_priority_denials="..delta("movement_priority_denials")..
+      " movement_stalled_repaths="..delta("movement_stalled_repaths")..
+      " broker_processed="..delta("broker_processed")..
+      " broker_blocked="..delta("broker_blocked"))
     state.finished=true
   end
 end

@@ -3089,6 +3089,32 @@ def ci_five_observation_1291(content: str) -> dict[str, object]:
             result["first_observed_tick"]=a
             result["last_observed_tick"]=b
             result["observed_samples"]=n
+
+    # Count only authentic source counters in the proven stable five-pair
+    # interval. Missing data stays null; engine script timing includes warmup.
+    activity_keys = ("routed_scans", "direct_scans", "movement_requests", "movement_collapses", "movement_priority_denials", "movement_stalled_repaths", "broker_processed", "broker_blocked")
+    for key in activity_keys:
+        result[key + "_per_1000_ticks"] = None
+    result["broker_service_blocked_fraction"] = None
+    activity_pattern = (
+        r"CI_FIVE_PROFILE_1291_ACTIVITY start_tick=(\d+) end_tick=(\d+) "
+        + " ".join(key + r"=(\d+|unmeasured)" for key in activity_keys))
+    activity = re.findall(activity_pattern, content)
+    if result["paired_population_verified"] == 5 and len(activity) == 1:
+        start, end, *observations = activity[0]
+        start, end = int(start), int(end)
+        if (start == result["first_observed_tick"]
+                and end == result["last_observed_tick"] and end > start):
+            elapsed = end - start
+            counts = {}
+            for key, val in zip(activity_keys, observations):
+                if val != "unmeasured":
+                    counts[key] = int(val)
+                    result[key + "_per_1000_ticks"] = round(
+                        counts[key] * 1000 / elapsed, 6)
+            if counts.get("broker_processed", 0) > 0 and "broker_blocked" in counts:
+                result["broker_service_blocked_fraction"] = round(
+                    counts["broker_blocked"] / counts["broker_processed"], 6)
     return result
 
 
@@ -3097,10 +3123,32 @@ def self_test_ci_five_1291() -> None:
         "CI_FIVE_PROFILE_1291_START tick=600 all=5 original=5 requested=5\n"
         "CI_FIVE_PROFILE_1291_END tick=11880 all=5 original=5 "
         "requested=5 samples=189 bad=0 identity_stable=true interval=60\n"
+        "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=600 end_tick=11880 "
+        "routed_scans=120 direct_scans=6 movement_requests=12 "
+        "movement_collapses=3 movement_priority_denials=2 "
+        "movement_stalled_repaths=unmeasured broker_processed=160 "
+        "broker_blocked=4\n"
         "  Performed 12000 updates in 120000.000 ms\n"
         "tick,scriptUpdate\n"
         + "".join(f"{i},1000000\n" for i in range(12000)))
-    assert ci_five_observation_1291(log)["paired_population_verified"]==5
+    observed = ci_five_observation_1291(log)
+    assert observed["paired_population_verified"] == 5
+    assert observed["routed_scans_per_1000_ticks"] == round(120000 / 11280, 6)
+    assert observed["movement_requests_per_1000_ticks"] == round(12000 / 11280, 6)
+    assert observed["movement_stalled_repaths_per_1000_ticks"] is None
+    assert observed["broker_service_blocked_fraction"] == 0.025
+    for malformed in (
+        log.replace("routed_scans=120", "routed_scans=unmeasured"),
+        log.replace("routed_scans=120", "routed_scans=-1"),
+        log.replace("end_tick=11880", "end_tick=11820"),
+        log.replace("CI_FIVE_PROFILE_1291_ACTIVITY", "INVALID_ACTIVITY"),
+        log + "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=600 end_tick=11880 "
+              "routed_scans=120 direct_scans=6 movement_requests=12 "
+              "movement_collapses=3 movement_priority_denials=2 "
+              "movement_stalled_repaths=unmeasured broker_processed=160 "
+              "broker_blocked=4\\n",
+    ):
+        assert ci_five_observation_1291(malformed)["routed_scans_per_1000_ticks"] is None
     for tampered in (
         log.replace("all=5", "all=6", 1),
         log.replace("bad=0", "bad=1", 1),
