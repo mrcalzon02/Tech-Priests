@@ -1,0 +1,94 @@
+{
+  "status": "planning_revision_A_no_animation_authored",
+  "source_commit": "e5aead307471d7c8867b8ae2ecc212aa5225af39",
+  "source_blend": "art/source-to-3d/martian-bunker/alternatives/v14/six_lobber_bolted_mount_v14.blend",
+  "front_view": "camera on -Y; screen right is +X",
+  "master_ticks_per_second": 60,
+  "shot_interval_ticks": 80,
+  "cycle_ticks": 480,
+  "order_interpretation": "row by row, top right to bottom left",
+  "stations": [
+    {
+      "id": "TOP_R",
+      "source_row": 1,
+      "model_side": "positive_X",
+      "shot_tick": 0,
+      "blender_shot_frame": 1,
+      "time_seconds": 0.0
+    },
+    {
+      "id": "TOP_L",
+      "source_row": 1,
+      "model_side": "negative_X",
+      "shot_tick": 80,
+      "blender_shot_frame": 81,
+      "time_seconds": 1.3333333333333333
+    },
+    {
+      "id": "MID_R",
+      "source_row": 2,
+      "model_side": "positive_X",
+      "shot_tick": 160,
+      "blender_shot_frame": 161,
+      "time_seconds": 2.6666666666666665
+    },
+    {
+      "id": "MID_L",
+      "source_row": 2,
+      "model_side": "negative_X",
+      "shot_tick": 240,
+      "blender_shot_frame": 241,
+      "time_seconds": 4.0
+    },
+    {
+      "id": "BOT_R",
+      "source_row": 3,
+      "model_side": "positive_X",
+      "shot_tick": 320,
+      "blender_shot_frame": 321,
+      "time_seconds": 5.333333333333333
+    },
+    {
+      "id": "BOT_L",
+      "source_row": 3,
+      "model_side": "negative_X",
+      "shot_tick": 400,
+      "blender_shot_frame": 401,
+      "time_seconds": 6.666666666666667
+    }
+  ],
+  "proposed_local_offsets": {
+    "flash": [
+      0,
+      5
+    ],
+    "smoke": [
+      3,
+      90
+    ],
+    "recoil_peak_tick": 3,
+    "recoil_hold_end_tick": 6,
+    "recoil_rest_tick": 24,
+    "conveyor_start_tick": 1,
+    "hatch_open": [
+      1,
+      8
+    ],
+    "grenade_belt_travel": [
+      8,
+      72
+    ],
+    "hopper_entry": [
+      73,
+      90
+    ],
+    "return_to_ready": [
+      91,
+      100
+    ]
+  },
+  "loop_phase_rule": "(master_tick - shot_tick) % cycle_ticks",
+  "preview_samples_per_second": 15,
+  "existing_reload_path_markers_require_refitting": true,
+  "approved_cannon_FX_source_requires_lookup": true
+}
