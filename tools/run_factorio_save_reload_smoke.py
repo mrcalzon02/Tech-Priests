@@ -3045,17 +3045,19 @@ def self_test() -> int:
 
 
 def ci_stable_pair_script_1291(content: str, start: int, end: int,
-                               population: int) -> dict[str, object] | None:
+                               population: int,
+                               creation_log: str | None) -> dict[str, object] | None:
     """Measure native all-mod scriptUpdate in the verified paired interval.
 
-    Factorio verbose CSV ticks are benchmark-relative; align with game.tick
-    only when a fresh CI save proves the starting game tick was exactly zero.
+    The actual Factorio --create log, not the later --benchmark log, proves
+    that the CI-only save began at game tick zero. Match that physical save
+    provenance before aligning verbose benchmark ticks with game.tick.
     This remains diagnostic and cannot satisfy construction or ore gates.
     """
     created = re.findall(
         r"CI_FIVE_PROFILE_1291_CREATED tick=(\d+) stations="
         + str(population) + r" requested=" + str(population)
-        + r" setup=ci-only-real-entities", content)
+        + r" setup=ci-only-real-entities", creation_log or "")
     if created != ["0"] or not (0 <= start < end <= 30000):
         return None
     headers = re.findall(r"(?m)^[ \t]*tick,scriptUpdate(,?)[ \t]*$", content)
@@ -3088,7 +3090,8 @@ def ci_stable_pair_script_1291(content: str, start: int, end: int,
     }
 
 
-def ci_five_observation_1291(content: str, expected: int = 5) -> dict[str, object]:
+def ci_five_observation_1291(content: str, expected: int = 5, *,
+                             creation_log: str | None = None) -> dict[str, object]:
     """Native 5/25/100-pair population, no earned resource receipt."""
     if expected not in (5, 25, 100):
         raise ValueError("unproven profiling population")
@@ -3144,7 +3147,8 @@ def ci_five_observation_1291(content: str, expected: int = 5) -> dict[str, objec
             # Whole-run script cost includes population-dependent startup.
             # Publish a comparable 11,280-tick paired-window cost only when
             # the benchmark tick origin and all native samples are verified.
-            stable = ci_stable_pair_script_1291(content, a, b, expected)
+            stable = ci_stable_pair_script_1291(
+                content, a, b, expected, creation_log)
             if stable is not None:
                 result.update(stable)
 
@@ -3205,25 +3209,43 @@ def self_test_ci_five_1291() -> None:
     native_rows = "".join(
         f"t{i},{3000000 if 7200 <= i < 18480 else 1000000},\n"
         for i in range(30000))
-    native_log = (
+    # The real Factorio --create process writes CREATED to its own log.
+    # The subsequent --benchmark log has START/END and native verbose CSV,
+    # but must not be expected to repeat the creation-time marker.
+    creation_log = (
         "CI_FIVE_PROFILE_1291_CREATED tick=0 stations=5 requested=5 "
-        "setup=ci-only-real-entities\n"
-        + log.replace("tick,scriptUpdate\n" + source_rows,
-                      "run 1:\ntick,scriptUpdate,\n" + native_rows))
-    paired = ci_five_observation_1291(native_log)
+        "setup=ci-only-real-entities\n")
+    native_log = log.replace("tick,scriptUpdate\n" + source_rows,
+                             "run 1:\ntick,scriptUpdate,\n" + native_rows)
+    paired = ci_five_observation_1291(
+        native_log, creation_log=creation_log)
     assert paired["paired_population_verified"] == 5
     assert paired["stable_all_mod_script_mean_ms_per_tick"] == 3.0
     assert paired["stable_all_mod_script_p95_ms_per_tick"] == 3.0
     assert paired["stable_all_mod_script_sample_count"] == 11280
+    assert ci_five_observation_1291(native_log)[
+        "stable_all_mod_script_mean_ms_per_tick"] is None
+    # A forged marker in benchmark output cannot substitute for the distinct
+    # actual --create log, and a wrong/duplicate creation marker cannot pass.
+    assert ci_five_observation_1291(creation_log + native_log)[
+        "stable_all_mod_script_mean_ms_per_tick"] is None
+    for invalid_creation in (
+        creation_log.replace("tick=0", "tick=60"),
+        creation_log.replace("stations=5", "stations=25"),
+        creation_log.replace("requested=5", "requested=25"),
+        creation_log + creation_log,
+        "",
+    ):
+        assert ci_five_observation_1291(
+            native_log, creation_log=invalid_creation)[
+                "stable_all_mod_script_mean_ms_per_tick"] is None
     for invalid_native in (
-        native_log.replace("CREATED tick=0", "CREATED tick=60"),
         native_log.replace("identity_stable=true", "identity_stable=false"),
         native_log.replace("t7200,3000000,", "t7200,garbled,"),
-        native_log + "CI_FIVE_PROFILE_1291_CREATED tick=0 stations=5 "
-                     "requested=5 setup=ci-only-real-entities\n",
     ):
-        assert ci_five_observation_1291(invalid_native)[
-            "stable_all_mod_script_mean_ms_per_tick"] is None
+        assert ci_five_observation_1291(
+            invalid_native, creation_log=creation_log)[
+                "stable_all_mod_script_mean_ms_per_tick"] is None
     for malformed in (
         log.replace("routed_scans=120", "routed_scans=unmeasured"),
         log.replace("routed_scans=120", "routed_scans=-1"),
@@ -3266,15 +3288,18 @@ def self_test_ci_five_1291() -> None:
     assert ci_five_observation_1291(
         hundred.replace("identity_stable=true", "identity_stable=false"),
         expected=100)["paired_population_verified"] is None
-    native_hundred = (native_log.replace("stations=5", "stations=100")
-                      .replace("all=5", "all=100")
+    native_hundred = (native_log.replace("all=5", "all=100")
                       .replace("original=5", "original=100")
                       .replace("requested=5", "requested=100"))
+    creation_hundred = (creation_log.replace("stations=5", "stations=100")
+                        .replace("requested=5", "requested=100"))
     assert ci_five_observation_1291(
-        native_hundred, expected=100)["stable_all_mod_script_mean_ms_per_tick"] == 3.0
+        native_hundred, expected=100,
+        creation_log=creation_hundred)["stable_all_mod_script_mean_ms_per_tick"] == 3.0
     assert ci_five_observation_1291(
         native_hundred.replace("t7200,3000000,", "t7200,garbled,"),
-        expected=100)["stable_all_mod_script_mean_ms_per_tick"] is None
+        expected=100,
+        creation_log=creation_hundred)["stable_all_mod_script_mean_ms_per_tick"] is None
     try:
         ci_five_observation_1291(log, expected=101)
     except ValueError:
@@ -3311,7 +3336,8 @@ def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
                     +HARNESS_INSTALL,1)
     control.write_text(src,encoding="utf-8")
     save=area/(suffix+"-pair-start.zip")
-    with (output/("factorio-ci-"+suffix+"-create.log")).open("w",encoding="utf-8") as handle:
+    creation_log_path=output/("factorio-ci-"+suffix+"-create.log")
+    with creation_log_path.open("w",encoding="utf-8") as handle:
         created=subprocess.run([str(binary),"--mod-directory",str(mods),
             "--create",str(save),"--map-gen-seed","907260"],
             stdout=handle,stderr=subprocess.STDOUT,check=False,timeout=120)
@@ -3334,7 +3360,10 @@ def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
             # full-window acceptance; profiling never blocks functionality.
             timed_out=True
     report=ci_five_observation_1291(
-        log_path.read_text(encoding="utf-8",errors="replace"), expected=population)
+        log_path.read_text(encoding="utf-8",errors="replace"),
+        expected=population,
+        creation_log=creation_log_path.read_text(
+            encoding="utf-8",errors="replace"))
     report["engine_exit_status"]=engine_exit_status
     report["engine_timeout_seconds"]=timeout_seconds if timed_out else None
     report["performance_is_release_blocking"]=False
