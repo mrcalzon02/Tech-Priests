@@ -1,4 +1,4 @@
-"""V20: correct height and proportions of the two source-visible front foundation supports.
+"""V21: carve source-observed foot faces, actual vent openings and seated front screws.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -498,6 +498,147 @@ def carve_real_chassis_front_recess():
             "recess_width":.59,"recess_height":.033}
 
 
+def source_front_raycast(solid, source_x, z):
+    """Find the ACTUAL visible -Y casting face at a specified source x/height.
+
+    This prevents a declared fastener or recess from being attached to the
+    projected 2D coordinate instead of the underlying three-dimensional wall.
+    """
+    bpy.context.view_layer.update()
+    local=solid.matrix_world.inverted()
+    start=local @ Vector((pixel(source_x,0,0)[0],-1.2,z))
+    direction=(local.to_3x3() @ Vector((0,1,0))).normalized()
+    hit,point,normal,index=solid.ray_cast(start,direction)
+    if not hit:
+        raise RuntimeError("No cast surface underneath registered source feature "+
+                           solid.name+" x="+str(source_x)+" z="+str(z))
+    return solid.matrix_world @ point
+
+
+def cut_three_true_maintenance_vents():
+    """Three visible source slots CUT into the original existing cover mesh.
+
+    They were painted-on black rectangles in V20; do not add fake new plates.
+    Source coordinates: x~223; y=153,177,201, widths 68,67,65 px.
+    """
+    cover=bpy.data.objects.get("Vented upper source-shaped maintenance plate")
+    if cover is None:
+        raise RuntimeError("Missing actual source maintenance cover")
+    top=max((cover.matrix_world @ v.co).z for v in cover.data.vertices)
+    original_vertices=len(cover.data.vertices)
+    for index,(y,w) in enumerate(((153,68),(177,67),(201,65))):
+        well=bpy.data.objects.get(f"Physical vent cavity dark well {index}")
+        if well is None:
+            raise RuntimeError("Missing source vent well "+str(index))
+        center=well.matrix_world.translation.copy()
+        bpy.ops.mesh.primitive_cube_add(size=1,
+            location=(center.x,center.y,top-.003))
+        cutter=bpy.context.object
+        cutter.name="TEMP_SOURCE_VENT_SLOT_CUTTER"
+        cutter.dimensions=(width(w),width(9),.018)
+        bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
+        bpy.ops.object.select_all(action="DESELECT")
+        cover.select_set(True)
+        bpy.context.view_layer.objects.active=cover
+        boolean=cover.modifiers.new("Source vent physical aperture "+str(index),"BOOLEAN")
+        boolean.operation="DIFFERENCE"
+        boolean.solver="EXACT"
+        boolean.object=cutter
+        bpy.ops.object.modifier_apply(modifier=boolean.name)
+        bpy.data.objects.remove(cutter,do_unlink=True)
+        # Preserve the already registered black vent interior, but place
+        # its *actual* top just below the cast lip instead of painting it
+        # visibly on top. The cavity has a forged recess, not a decal.
+        well.location.z += (top-.007-center.z)
+    bpy.context.view_layer.update()
+    if len(cover.data.vertices)<=original_vertices:
+        raise RuntimeError("Three claimed vent booleans made no physical apertures")
+    cover["actual_source_cut_vents"]=3
+    return {"cut_slots":3,"vertices_before":original_vertices,
+            "vertices_after":len(cover.data.vertices),
+            "source_y":[153,177,201],"new_visible_plate_count":0}
+
+
+def carve_source_corner_foot_faces():
+    """Carve inset rectangular front faces INTO BOTH V20 cast foot solids.
+
+    The source feet have dark recesses and stepped shoulders. V20 instead
+    modeled tall smooth uniform buttresses. Cut these existing volumes; do
+    not attach new featureless front face plates or decorative gussets.
+    """
+    records=[]
+    for side,cx in (("left",95),("right",585)):
+        foot=bpy.data.objects.get("SOURCE FOUNDATION "+side+" structural foot")
+        if not foot:
+            raise RuntimeError("Missing source foundation foot "+side)
+        before=len(foot.data.vertices)
+        contact=source_front_raycast(foot,cx,.239)
+        bpy.ops.mesh.primitive_cube_add(size=1,
+            location=(contact.x,contact.y+.012,.239))
+        cutter=bpy.context.object
+        cutter.name="TEMP_"+side+"_FOOT_RECESSED_FACE_CUTTER"
+        cutter.dimensions=(width(55),.064,.062)
+        bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
+        bpy.ops.object.select_all(action="DESELECT")
+        foot.select_set(True)
+        bpy.context.view_layer.objects.active=foot
+        boolean=foot.modifiers.new("Original recessed forged foot face","BOOLEAN")
+        boolean.operation="DIFFERENCE"
+        boolean.solver="EXACT"
+        boolean.object=cutter
+        bpy.ops.object.modifier_apply(modifier=boolean.name)
+        bpy.data.objects.remove(cutter,do_unlink=True)
+        bpy.context.view_layer.update()
+        after=len(foot.data.vertices)
+        if after<=before:
+            raise RuntimeError("Foot inset did not change actual foot casting "+side)
+        # Material-zone recessed metal on TRUE cut surfaces, never decals.
+        foot.data.materials.append(MATERIALS["black_steel"])
+        zone_count=0
+        for poly in foot.data.polygons:
+            pos=foot.matrix_world @ poly.center
+            if (abs(pos.x-contact.x)<width(31)
+                and abs(pos.z-.239)<.034
+                and pos.y>contact.y+.017):
+                poly.material_index=len(foot.data.materials)-1
+                zone_count+=1
+        foot["source_front_face_recess_cut"]=True
+        records.append({"side":side,"vertices_before":before,
+                        "vertices_after":after,"dark_cavity_faces":zone_count,
+                        "reference_x":cx})
+    return {"count":len(records),"feet":records,
+            "new_overlay_plates":0}
+
+
+def seat_original_front_face_screws():
+    """Move ONLY the two documented screw assemblies onto the real front wall.
+
+    V20 placed the screws by projected pixel Y, which submerged them in
+    the solid chassis. Raycasting the existing chassis fixes that mistake.
+    """
+    chassis=bpy.data.objects["LAYER_2 Raised central machine chassis"]
+    records=[]
+    for idx,x in enumerate((180,497)):
+        prefix=f"Middle front source screw {idx}"
+        parts=[o for o in VISIBLE.objects if o.name.startswith(prefix+"_")]
+        if len(parts)!=3:
+            raise RuntimeError("Expected existing 3-part screw, "+prefix)
+        washer=bpy.data.objects[prefix+"_washer"]
+        ws=[washer.matrix_world @ v.co for v in washer.data.vertices]
+        center=sum(ws,Vector((0,0,0)))/len(ws)
+        target=source_front_raycast(chassis,x,center.z)
+        # Torus washer face must be immediately OUTSIDE the existing casting.
+        delta=Vector((0,target.y-.006-center.y,0))
+        if delta.length>.2:
+            raise RuntimeError("Source screw was unreasonably distant from chassis")
+        for part in parts:
+            part.location+=delta
+        records.append({"source_x":x,"original_world_y":round(center.y,5),
+                        "physical_surface_y":round(target.y,5),
+                        "seating_correction":round(delta.y,5)})
+    return {"count":2,"screws":records,"new_screws":0}
+
+
 def forged_patina_marks(name, left, right, top, bottom, z, count, material_name, seed):
     """Actual shallow, non-coplanar exposed-metal chips, not pasted artwork.
 
@@ -684,12 +825,14 @@ def build_enclosure():
     # Three cylinder bodies lie along the machine plane with their ROUND
     # FRONT MOUTHS exposed: no upright posts or individual boxed pedestals.
     for idx,x in enumerate((459,503,547)):
+        # The source shows compact dark inset circular ends, NOT three bright
+        # silver long barrels. These still remain physically horizontal cans.
         cylinder(f"Capacitor {idx} horizontal supported shell",
-                 x,160,.527,.034,.056,edge,40,rotation=(math.pi/2,0,0))
+                 x,154,.527,.026,.037,dark,40,rotation=(math.pi/2,0,0))
         torus(f"Capacitor {idx} forward round steel lip",
-              x,188,.527,.032,.004,edge,rotation=(math.pi/2,0,0))
+              x,168,.527,.024,.003,edge,rotation=(math.pi/2,0,0))
         cylinder(f"Capacitor {idx} recessed dark mouth",
-                 x,190,.527,.027,.006,crevice,40,
+                 x,169,.527,.020,.007,crevice,40,
                  rotation=(math.pi/2,0,0))
         front_details_before=set(VISIBLE.objects)
         # Green display is mounted inside the control bank, not painted on shell.
@@ -1067,17 +1210,20 @@ def main(out):
     if len(upper_cast.data.vertices)!=32 or len(upper_cast.data.polygons)!=26:
         raise RuntimeError("Upper machine is not a coherent four-section solid")
     recess_evidence=carve_real_chassis_front_recess()
+    true_vents=cut_three_true_maintenance_vents()
+    foot_faces=carve_source_corner_foot_faces()
+    seated_screws=seat_original_front_face_screws()
     save_render(scene,top,OUTPUT/"01_source_view_real_mesh.png")
     save_render(scene,iso,OUTPUT/"02_game_candidate_full_miner.png")
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V20 two tall dark cast source-corner feet with integrated shoulders and real bolt heights"
+    scene["asset_revision"]="V21 two tall dark cast source-corner feet with integrated shoulders and real bolt heights"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v20.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v21.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -1102,15 +1248,15 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v20.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v21.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V20 SOURCE-VISIBLE TALL CORNER SUPPORTS; VISUAL REVIEW PENDING",
-        "candidate_revision":"V20",
+        "state":"V21 SOURCE-VISIBLE TALL CORNER SUPPORTS; VISUAL REVIEW PENDING",
+        "candidate_revision":"V21",
         "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
         "middle_chassis_physical_cross_sections":reopened_casting.get("cross_sections"),
         "upper_machine_physical_cross_sections":reopened_upper.get("cross_sections"),
@@ -1150,6 +1296,9 @@ def main(out):
         "middle_chassis_height_evidence":shrink_evidence,
         "front_setback_evidence":front_evidence,
         "carved_front_service_channel":recess_evidence,
+        "real_vent_apertures":true_vents,
+        "source_recessed_foot_faces":foot_faces,
+        "actual_chassis_seated_front_screws":seated_screws,
         "foundation_corner_cast_gussets":0,
         "capacitors_visible_front_round_ends":3,
         "foundation_plate_corner_bolts":6,

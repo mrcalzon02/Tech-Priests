@@ -99,3 +99,7 @@ The model must retain editability and true physical depth. Although endpoints re
 - **Hard next-pass rule:** No additional parts beyond the documented original source geometry. Fix the actual connected existing mesh's recesses, bevel cross sections, face placements and material zoning; verify from the source-matched camera AND distinct actual side view; show both real Blender renders in the chat.
 
 These are observations, not permission to add arbitrary hardware or change any in-game sprite. The original source remains the only appearance authority; all candidate meshes remain subject to owner's approval.
+
+## V21 reconstruction hypothesis / acceptance gate
+
+V20's in-chat source contact sheet demonstrated that the foundation feet are featureless, the three vent apertures read as applied dark bands, front bolts are submerged, and the top capacitor shells look like silver drums. V21 changes the actual existing meshes: cut three source-observed vent slots into their existing steel cover; cut one original-shaped recessed face into each already-present forged foot; physically seat the two original front armor screws using cast-mesh ray hits; and shrink/darken three existing horizontal capacitors to expose source-dark mouth surfaces. **No** extra straps, switches, LEDs, bolts, projecting armor bars, random plates, wires or hidden internals. This is a testable candidate, not visual approval. Inspect generated contact sheets before further changes.

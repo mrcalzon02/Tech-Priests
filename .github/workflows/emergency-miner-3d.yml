@@ -31,7 +31,7 @@ jobs:
         run: |
           blender --version | head -n 2
           blender -b --python-expr "import numpy; print('Blender glTF NumPy available',numpy.__version__)"
-      - name: Build V20 corrected-height original dark cast front mounting feet
+      - name: Build V21 corrected-height original dark cast front mounting feet
         run: |
           python -m py_compile art/source-to-3d/emergency-miner/build_model.py
           blender -b --factory-startup --disable-autoexec -t 2 --python-exit-code 12 \
@@ -46,9 +46,16 @@ jobs:
           d=Path('art-output/emergency-miner')
           m=json.loads((d/'model_manifest.json').read_text())
           assert m['asset']=='tech-priests-emergency-miner'
-          assert m['candidate_revision']=='V20'
+          assert m['candidate_revision']=='V21'
           assert abs(m['foundation_foot_upper_join_before_compression']-0.555)<0.001
           assert m['source_profiled_foundation_feet']==2
+          assert m['real_vent_apertures']['cut_slots']==3
+          assert m['real_vent_apertures']['vertices_after']>m['real_vent_apertures']['vertices_before']
+          assert m['source_recessed_foot_faces']['count']==2
+          assert all(f['vertices_after']>f['vertices_before'] for f in m['source_recessed_foot_faces']['feet'])
+          assert m['source_recessed_foot_faces']['new_overlay_plates']==0
+          assert m['actual_chassis_seated_front_screws']['count']==2
+          assert m['actual_chassis_seated_front_screws']['new_screws']==0
           assert m['foundation_foot_construction']=='TWO_FOUR_SECTION_TAPERED_CONNECTED_SOLIDS'
           assert not m['deletion_only_iteration']
           assert m['foundation_corner_cast_gussets']==0
@@ -141,7 +148,7 @@ jobs:
               with Image.open(p) as im:
                   im.verify()
               proof.append({'name':filename,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
-          data={'asset':'emergency-miner','revision':'V20',
+          data={'asset':'emergency-miner','revision':'V21',
                 'commit':os.environ['GITHUB_SHA'],
                 'run':os.environ['GITHUB_RUN_ID'],
                 'user_visible_delivery':'MUST_EMBED_REAL_RENDER_IMAGES_IN_CHAT',
