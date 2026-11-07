@@ -3123,9 +3123,9 @@ def self_test_ci_five_1291() -> None:
     log = (
         "CI_FIVE_PROFILE_1291_WAITING tick=600 all=0 original=0 requested=5\n"
         "CI_FIVE_PROFILE_1291_START tick=7200 all=5 original=5 requested=5\n"
-        "CI_FIVE_PROFILE_1291_END tick=18480 all=5 original=5 
+        "CI_FIVE_PROFILE_1291_END tick=18480 all=5 original=5 "
         "requested=5 samples=189 bad=0 identity_stable=true interval=60\n"
-        "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=7200 end_tick=18480 
+        "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=7200 end_tick=18480 "
         "routed_scans=120 direct_scans=6 movement_requests=12 "
         "movement_collapses=3 movement_priority_denials=2 "
         "movement_stalled_repaths=unmeasured broker_processed=160 "
