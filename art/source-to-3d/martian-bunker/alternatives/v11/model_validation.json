@@ -1,0 +1,28 @@
+{
+  "revision": "V11 reduced sensors and inset plating",
+  "individual_barrel_sensor_pods_removed": 6,
+  "removed_source_objects": [
+    "BARREL_INSTRUMENT_RED_HOUSING_LEFT_1",
+    "BARREL_OPTIC_BRASS_LEFT_1",
+    "BARREL_OPTIC_GLASS_LEFT_1",
+    "INSTRUMENT_CABLE_LEFT_1",
+    "BARREL_INSTRUMENT_RED_HOUSING_LEFT_2",
+    "BARREL_OPTIC_BRASS_LEFT_2",
+    "BARREL_OPTIC_GLASS_LEFT_2",
+    "INSTRUMENT_CABLE_LEFT_2",
+    "BARREL_INSTRUMENT_RED_HOUSING_LEFT_3",
+    "BARREL_OPTIC_BRASS_LEFT_3",
+    "BARREL_OPTIC_GLASS_LEFT_3",
+    "INSTRUMENT_CABLE_LEFT_3"
+  ],
+  "main_optical_cluster_and_two_antennas_retained": true,
+  "front_fin_inset_panels": 3,
+  "pillar_side_inset_panels": 6,
+  "optical_head_rear_service_panel": 1,
+  "recessed_faces_and_fastener_seats": true,
+  "remaining_V10_source_geometry_materials_and_transforms_preserved": true,
+  "cannons_conveyors_hatches_hoppers_preserved": true,
+  "existing_bunker_modified": false,
+  "GLB_reimported": true,
+  "mesh_count": 247
+}
