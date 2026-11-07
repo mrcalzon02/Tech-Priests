@@ -249,6 +249,9 @@ jobs:
             ${{ runner.temp }}/factorio-save-reload/factorio-ore-carry-server.log
             ${{ runner.temp }}/factorio-save-reload/factorio-stock-carry-server.log
             ${{ runner.temp }}/factorio-save-reload/factorio-reload.log
+            test-artifacts/factorio-ci-five-create.log
+            test-artifacts/factorio-ci-five.log
+            test-artifacts/performance-ci-five.json
             test-artifacts/performance-observations.json
             test-artifacts/performance-summary.md
             test-artifacts/performance-123k-benchmark.json

@@ -10,6 +10,8 @@ end
 -- The uninterrupted 108,600-tick benchmark remains unchanged.
 local SAVE_RELOAD_SMOKE=rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
 local LATE_COMBAT_SMOKE=rawget(_G,"TP_CI_LATE_COMBAT")==true
+-- Optional separate-run CI-only five-pair performance fixture.
+local CI_FIVE_PROFILE_1291=rawget(_G,"TP_CI_FIVE_PROFILE_1291")==true
 -- 1091: bind the mixed-defense audit at startup; Factorio forbids runtime
 -- require() inside the periodic combat checkpoint.
 local COMBAT_LAYER_AUDIT_1091=LATE_COMBAT_SMOKE
@@ -10749,11 +10751,92 @@ local function conclave_native_schism_verify_1187(state)
   return true
 end
 
+
+-- 1291: These CI-initialized, real engine stations are not materials earned,
+-- a remote acquisition gate, or a construction receipt. Use only the
+-- canonical 0600 broker; normal gameplay and physical ledgers are unchanged.
+local function ci_five_setup_1291(state)
+  local surface,force=game.surfaces[1],game.forces.player
+  local specs={
+    {"junior-cogitator-station",0},
+    {"intermediate-cogitator-station",64},
+    {"senior-cogitator-station",128},
+    {"planetary-magos-cogitator-station",192},
+    {"junior-cogitator-station",256}}
+  for _,s in ipairs(specs) do
+    surface.request_to_generate_chunks({x=s[2],y=0},2)
+  end
+  surface.force_generate_chunk_requests()
+  local units={}
+  for _,s in ipairs(specs) do
+    local pos=surface.find_non_colliding_position(s[1],{x=s[2],y=0},32,2)
+    if not pos then error("CI_FIVE_PROFILE_1291_NO_SITE") end
+    local entity=surface.create_entity{
+      name=s[1],position=pos,force=force,raise_built=true}
+    if not(entity and entity.valid and entity.unit_number) then
+      error("CI_FIVE_PROFILE_1291_STATION_REFUSED")
+    end
+    units[#units+1]=entity.unit_number
+  end
+  state.started_tick=game.tick
+  state.ci_five_1291={units=units,started=game.tick,
+    samples=0,bad=0,priest_ids={}}
+  emit("CI_FIVE_PROFILE_1291_CREATED tick="..game.tick..
+    " stations="..#units.." setup=ci-only-real-entities")
+end
+
+local function ci_five_sample_1291(state)
+  local rec=state.ci_five_1291
+  if not rec or state.finished or game.tick-rec.started<600 then return end
+  local total=ci_live_paired_priest_population_1071()
+  local pairs=storage.tech_priests.pairs_by_station or {}
+  local seen,original,identities={},0,true
+  for _,unit in ipairs(rec.units) do
+    local pair=pairs[unit]
+    local station=pair and pair.station
+    local priest=pair and pair.priest
+    if not(station and station.valid and station.unit_number==unit
+        and priest and priest.valid and priest.unit_number
+        and priest.force==station.force and not seen[priest.unit_number]) then
+      identities=false
+    else
+      seen[priest.unit_number]=true
+      original=original+1
+      if rec.samples==0 then
+        rec.priest_ids[unit]=priest.unit_number
+      elseif rec.priest_ids[unit]~=priest.unit_number then
+        identities=false
+      end
+    end
+  end
+  rec.samples=rec.samples+1
+  if total~=5 or original~=5 or not identities then rec.bad=rec.bad+1 end
+  if rec.samples==1 then
+    emit("CI_FIVE_PROFILE_1291_START tick="..game.tick..
+      " all="..total.." original="..original.." requested=5")
+  end
+  if game.tick-rec.started>=11880 then
+    emit("CI_FIVE_PROFILE_1291_END tick="..game.tick..
+      " all="..total.." original="..original.." requested=5"..
+      " samples="..rec.samples.." bad="..rec.bad..
+      " identity_stable="..tostring(rec.bad==0).." interval=60")
+    state.finished=true
+  end
+end
+
 local function initialize_fixture()
   storage.tech_priests=storage.tech_priests or {}
   local state=storage.tech_priests.ci_ground_rank_test or {}
   storage.tech_priests.ci_ground_rank_test=state
   if state.started_tick or state.failed then return end
+  if CI_FIVE_PROFILE_1291 then
+    local ok,err=pcall(ci_five_setup_1291,state)
+    if not ok then
+      state.failed=tostring(err)
+      emit("CI_FIVE_PROFILE_1291_UNAVAILABLE reason="..state.failed)
+    end
+    return
+  end
   local ok,err=pcall(function()
     setup_fixture()
     prestock_fixture(state)
@@ -10784,6 +10867,16 @@ local function pulse()
   local key="ci_ground_rank_test"
   local state=storage.tech_priests[key] or {}
   storage.tech_priests[key]=state
+  if CI_FIVE_PROFILE_1291 then
+    if state.started_tick and not state.finished and not state.failed then
+      local ok,err=pcall(ci_five_sample_1291,state)
+      if not ok then
+        state.failed=tostring(err)
+        emit("CI_FIVE_PROFILE_1291_UNAVAILABLE reason="..state.failed)
+      end
+    end
+    return {processed=1,acted=0,detail="optional-ci-five-pair-profile"}
+  end
   if state.finished or state.failed then return {processed=0,acted=0,detail="fixture-complete"} end
   local ok,err=pcall(function()
     if not state.started_tick then error("fixture on_init did not run") end
