@@ -1,0 +1,62 @@
+{
+  "revision": "V14 bolted inset girder mounting plate",
+  "recessed_girder_bays": 8,
+  "inset_diagonal_members": 8,
+  "bolt_washer_and_seat_sets": 16,
+  "mounting_plate_diameter_and_height_retained": true,
+  "new_mounting_parts_parented_to_traverse_not_elevation": true,
+  "bay_records": [
+    {
+      "bay": 1,
+      "recessed_floor_z": 1.781,
+      "original_deck_z": 1.82,
+      "diagonal_member_top_below_deck": true
+    },
+    {
+      "bay": 2,
+      "recessed_floor_z": 1.781,
+      "original_deck_z": 1.82,
+      "diagonal_member_top_below_deck": true
+    },
+    {
+      "bay": 3,
+      "recessed_floor_z": 1.781,
+      "original_deck_z": 1.82,
+      "diagonal_member_top_below_deck": true
+    },
+    {
+      "bay": 4,
+      "recessed_floor_z": 1.781,
+      "original_deck_z": 1.82,
+      "diagonal_member_top_below_deck": true
+    },
+    {
+      "bay": 5,
+      "recessed_floor_z": 1.781,
+      "original_deck_z": 1.82,
+      "diagonal_member_top_below_deck": true
+    },
+    {
+      "bay": 6,
+      "recessed_floor_z": 1.781,
+      "original_deck_z": 1.82,
+      "diagonal_member_top_below_deck": true
+    },
+    {
+      "bay": 7,
+      "recessed_floor_z": 1.781,
+      "original_deck_z": 1.82,
+      "diagonal_member_top_below_deck": true
+    },
+    {
+      "bay": 8,
+      "recessed_floor_z": 1.781,
+      "original_deck_z": 1.82,
+      "diagonal_member_top_below_deck": true
+    }
+  ],
+  "all_other_V13_source_geometry_materials_and_transforms_preserved": true,
+  "existing_bunker_modified": false,
+  "GLB_reimported": true,
+  "mesh_count": 311
+}
