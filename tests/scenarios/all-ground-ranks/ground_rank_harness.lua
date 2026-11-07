@@ -10786,13 +10786,46 @@ local function ci_five_setup_1291(state)
   end
   surface.force_generate_chunk_requests()
   local units={}
-  for _,s in ipairs(specs) do
-    local pos=surface.find_non_colliding_position(s[1],{x=s[2],y=s[3] or 0},32,2)
-    if not pos then error("CI_FIVE_PROFILE_1291_NO_SITE") end
+  for index,s in ipairs(specs) do
+    local origin={x=s[2],y=s[3] or 0}
+    local pos=surface.find_non_colliding_position(s[1],origin,32,2)
+    if CI_PROFILE_POPULATION_1291==100 then
+      -- The real 100-site native create refused a station after a collision
+      -- search returned a candidate. Verify the actual engine placement
+      -- predicate, then try a small, deterministic and bounded set of nearby
+      -- sites. Never count an unbuilt station or bypass the built event.
+      local offsets={
+        {0,0},{16,0},{-16,0},{0,16},{0,-16},
+        {16,16},{-16,16},{16,-16},{-16,-16},
+        {32,0},{-32,0},{0,32},{0,-32}}
+      local checked={}
+      pos=nil
+      for _,delta in ipairs(offsets) do
+        local center={x=origin.x+delta[1],y=origin.y+delta[2]}
+        local candidate=surface.find_non_colliding_position(s[1],center,32,2)
+        if candidate then
+          local key=tostring(candidate.x)..":"..tostring(candidate.y)
+          if not checked[key] then
+            checked[key]=true
+            if surface.can_place_entity{
+                name=s[1],position=candidate,force=force} then
+              pos=candidate
+              break
+            end
+          end
+        end
+      end
+    end
+    if not pos then
+      error("CI_FIVE_PROFILE_1291_NO_PLACEABLE_SITE index="..index..
+        " name="..s[1].." origin="..origin.x..","..origin.y)
+    end
     local entity=surface.create_entity{
       name=s[1],position=pos,force=force,raise_built=true}
     if not(entity and entity.valid and entity.unit_number) then
-      error("CI_FIVE_PROFILE_1291_STATION_REFUSED")
+      error("CI_FIVE_PROFILE_1291_STATION_REFUSED index="..index..
+        " name="..s[1].." pos="..pos.x..","..pos.y..
+        " can_place_prechecked="..tostring(CI_PROFILE_POPULATION_1291==100))
     end
     units[#units+1]=entity.unit_number
   end
