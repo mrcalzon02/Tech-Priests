@@ -12,6 +12,11 @@ local SAVE_RELOAD_SMOKE=rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
 local LATE_COMBAT_SMOKE=rawget(_G,"TP_CI_LATE_COMBAT")==true
 -- Optional separate-run CI-only five-pair performance fixture.
 local CI_FIVE_PROFILE_1291=rawget(_G,"TP_CI_FIVE_PROFILE_1291")==true
+local CI_PROFILE_POPULATION_1291=rawget(_G,"TP_CI_PROFILE_POPULATION_1291") or 5
+if CI_FIVE_PROFILE_1291 and CI_PROFILE_POPULATION_1291~=5
+    and CI_PROFILE_POPULATION_1291~=25 then
+  error("CI_PROFILE_1291_UNSUPPORTED_POPULATION")
+end
 -- 1091: bind the mixed-defense audit at startup; Factorio forbids runtime
 -- require() inside the periodic combat checkpoint.
 local COMBAT_LAYER_AUDIT_1091=LATE_COMBAT_SMOKE
@@ -10763,13 +10768,24 @@ local function ci_five_setup_1291(state)
     {"senior-cogitator-station",128},
     {"planetary-magos-cogitator-station",192},
     {"junior-cogitator-station",256}}
+  if CI_PROFILE_POPULATION_1291==25 then
+    -- CI-only real stations, not earned construction or resource credit.
+    local names={
+      "junior-cogitator-station","intermediate-cogitator-station",
+      "senior-cogitator-station","planetary-magos-cogitator-station",
+      "junior-cogitator-station"}
+    specs={}
+    for i=0,24 do
+      specs[#specs+1]={names[(i%5)+1],(i%5)*64,math.floor(i/5)*64}
+    end
+  end
   for _,s in ipairs(specs) do
-    surface.request_to_generate_chunks({x=s[2],y=0},2)
+    surface.request_to_generate_chunks({x=s[2],y=s[3] or 0},2)
   end
   surface.force_generate_chunk_requests()
   local units={}
   for _,s in ipairs(specs) do
-    local pos=surface.find_non_colliding_position(s[1],{x=s[2],y=0},32,2)
+    local pos=surface.find_non_colliding_position(s[1],{x=s[2],y=s[3] or 0},32,2)
     if not pos then error("CI_FIVE_PROFILE_1291_NO_SITE") end
     local entity=surface.create_entity{
       name=s[1],position=pos,force=force,raise_built=true}
@@ -10780,9 +10796,11 @@ local function ci_five_setup_1291(state)
   end
   state.started_tick=game.tick
   state.ci_five_1291={units=units,started=game.tick,
+    requested=CI_PROFILE_POPULATION_1291,
     samples=0,bad=0,priest_ids={}}
   emit("CI_FIVE_PROFILE_1291_CREATED tick="..game.tick..
-    " stations="..#units.." setup=ci-only-real-entities")
+    " stations="..#units.." requested="..CI_PROFILE_POPULATION_1291..
+    " setup=ci-only-real-entities")
 end
 
 
@@ -10825,6 +10843,7 @@ end
 
 local function ci_five_sample_1291(state)
   local rec=state.ci_five_1291
+  local requested=rec and rec.requested or 5
   if not rec or state.finished or game.tick-rec.started<600 then return end
   local total=ci_live_paired_priest_population_1071()
   local pairs=storage.tech_priests.pairs_by_station or {}
@@ -10851,13 +10870,13 @@ local function ci_five_sample_1291(state)
   -- would invalidate the population provenance. Never manufacture a pair
   -- or replace a lost identity to satisfy the profiler.
   if not rec.window_start_tick then
-    if total~=5 or original~=5 or not identities then
+    if total~=requested or original~=requested or not identities then
       if (game.tick-rec.started)%3000==0 then
         emit("CI_FIVE_PROFILE_1291_WAITING tick="..game.tick..
-          " all="..total.." original="..original.." requested=5")
+          " all="..total.." original="..original.." requested="..requested)
       end
       if game.tick-rec.started>=29880 then
-        emit("CI_FIVE_PROFILE_1291_UNAVAILABLE reason=no_complete_five_pair_window"..
+        emit("CI_FIVE_PROFILE_1291_UNAVAILABLE reason=no_complete_requested_pair_window"..
           " tick="..game.tick.." all="..total.." original="..original)
         state.finished=true
       end
@@ -10868,7 +10887,7 @@ local function ci_five_sample_1291(state)
     rec.activity_start=ci_five_activity_snapshot_1291()
     rec.activity_start_tick=game.tick
     emit("CI_FIVE_PROFILE_1291_START tick="..game.tick..
-      " all="..total.." original="..original.." requested=5")
+      " all="..total.." original="..original.." requested="..requested)
   end
 
   -- From the first real five-pair observation onward, reject every lost
@@ -10877,10 +10896,10 @@ local function ci_five_sample_1291(state)
     if rec.priest_ids[unit]~=current_ids[unit] then identities=false end
   end
   rec.samples=rec.samples+1
-  if total~=5 or original~=5 or not identities then rec.bad=rec.bad+1 end
+  if total~=requested or original~=requested or not identities then rec.bad=rec.bad+1 end
   if game.tick-rec.window_start_tick>=11280 then
     emit("CI_FIVE_PROFILE_1291_END tick="..game.tick..
-      " all="..total.." original="..original.." requested=5"..
+      " all="..total.." original="..original.." requested="..requested..
       " samples="..rec.samples.." bad="..rec.bad..
       " identity_stable="..tostring(rec.bad==0).." interval=60")
     local after=ci_five_activity_snapshot_1291()
