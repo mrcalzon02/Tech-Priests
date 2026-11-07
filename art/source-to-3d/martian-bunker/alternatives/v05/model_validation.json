@@ -1,0 +1,102 @@
+{
+  "revision": "V05 loose pineapple grenade visual loader",
+  "total_cannons": 6,
+  "loaders_after_mirroring": 6,
+  "open_cradles_after_mirroring": 6,
+  "source_grenade_bodies": 12,
+  "grenades_after_mirroring": 24,
+  "cannon_shapes_and_UVs_unchanged": true,
+  "cannon_XY_and_aim_angles_unchanged": true,
+  "station_vertical_shifts": {
+    "upper_pair": 0.28,
+    "middle_pair": 0.14,
+    "lower_pair": 0
+  },
+  "pneumatic_pipe_shapes_and_connections_retained": true,
+  "central_fin_height_increase": 0.28,
+  "loader_visuals": "Loose olive-green segmented pineapple bodies with attached spoon levers and pull rings, open cradles and guide troughs into exterior side hoods.",
+  "no_arming_or_functional_weapon_internals_modeled": true,
+  "existing_bunker_modified": false,
+  "loaders": [
+    {
+      "station": 1,
+      "cannon_center": [
+        -0.27000001072883606,
+        0.03999999910593033,
+        3.380000114440918
+      ],
+      "only_vertical_translation": 0.28,
+      "cradle_center": [
+        -0.21,
+        0.435,
+        3.355000114440918
+      ],
+      "guide_start": [
+        -0.25,
+        0.4350000023841858,
+        3.2300000190734863
+      ],
+      "guide_end_at_side_hood": [
+        -0.5350000262260437,
+        0.11500000208616257,
+        3.2100000381469727
+      ],
+      "air_feeder_retained": true,
+      "visible_loose_grenades_per_cradle": 3
+    },
+    {
+      "station": 2,
+      "cannon_center": [
+        -0.27000001072883606,
+        -0.2199999988079071,
+        2.859999895095825
+      ],
+      "only_vertical_translation": 0.14,
+      "cradle_center": [
+        -0.21,
+        0.435,
+        2.8349998950958253
+      ],
+      "guide_start": [
+        -0.25,
+        0.4350000023841858,
+        2.7099997997283936
+      ],
+      "guide_end_at_side_hood": [
+        -0.5350000262260437,
+        -0.14499999582767487,
+        2.68999981880188
+      ],
+      "air_feeder_retained": true,
+      "visible_loose_grenades_per_cradle": 3
+    },
+    {
+      "station": 3,
+      "cannon_center": [
+        -0.27000001072883606,
+        -0.47999998927116394,
+        2.3399999141693115
+      ],
+      "only_vertical_translation": 0.0,
+      "cradle_center": [
+        -0.21,
+        0.435,
+        2.3149999141693116
+      ],
+      "guide_start": [
+        -0.25,
+        0.4350000023841858,
+        2.18999981880188
+      ],
+      "guide_end_at_side_hood": [
+        -0.5350000262260437,
+        -0.4050000011920929,
+        2.169999837875366
+      ],
+      "air_feeder_retained": true,
+      "visible_loose_grenades_per_cradle": 3
+    }
+  ],
+  "GLB_reimported": true,
+  "native_mesh_count": 147
+}
