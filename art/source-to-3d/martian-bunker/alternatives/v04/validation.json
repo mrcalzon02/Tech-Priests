@@ -1,0 +1,88 @@
+{
+  "revision": "V04 six cast-iron lobber cannons",
+  "source_cannons_on_one_side": 3,
+  "total_cannons_after_mirroring": 6,
+  "rounded_muzzle_rims_after_mirroring": 6,
+  "bottom_feeders_after_mirroring": 6,
+  "central_fin_count": 1,
+  "bearing_interface_z": 1.7,
+  "connections": [
+    {
+      "station": 1,
+      "left_cannon_center": [
+        -0.27000001072883606,
+        0.03999999910593033,
+        3.0999999046325684
+      ],
+      "left_feeder_start_on_fin": [
+        -0.054999999701976776,
+        0.17999999225139618,
+        2.7099997997283936
+      ],
+      "left_feeder_end": [
+        -0.27000001072883606,
+        0.18250000476837158,
+        2.853182792663574
+      ],
+      "left_breech_feed_center": [
+        -0.27000001072883606,
+        0.18250000476837158,
+        2.853182792663574
+      ],
+      "mirrors_to_right": true
+    },
+    {
+      "station": 2,
+      "left_cannon_center": [
+        -0.27000001072883606,
+        -0.2199999988079071,
+        2.7200000286102295
+      ],
+      "left_feeder_start_on_fin": [
+        -0.054999999701976776,
+        -0.07999999821186066,
+        2.3299999237060547
+      ],
+      "left_feeder_end": [
+        -0.27000001072883606,
+        -0.07750000059604645,
+        2.4731826782226562
+      ],
+      "left_breech_feed_center": [
+        -0.27000001072883606,
+        -0.07750000059604645,
+        2.4731826782226562
+      ],
+      "mirrors_to_right": true
+    },
+    {
+      "station": 3,
+      "left_cannon_center": [
+        -0.27000001072883606,
+        -0.47999998927116394,
+        2.3399999141693115
+      ],
+      "left_feeder_start_on_fin": [
+        -0.054999999701976776,
+        -0.3400000035762787,
+        2.0299999713897705
+      ],
+      "left_feeder_end": [
+        -0.27000001072883606,
+        -0.3374999761581421,
+        2.0931825637817383
+      ],
+      "left_breech_feed_center": [
+        -0.27000001072883606,
+        -0.3374999761581421,
+        2.0931825637817383
+      ],
+      "mirrors_to_right": true
+    }
+  ],
+  "existing_bunker_modified": false,
+  "scope": "turret-only native asset; existing bunker not loaded or replaced",
+  "glb_reimported": true,
+  "native_mesh_count": 18,
+  "exported_casting_objects_each_contain_one_mirrored_pair": true
+}
