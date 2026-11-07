@@ -2015,10 +2015,15 @@ def self_test() -> int:
         if artifact_policy.count(required) != 1:
             raise AssertionError("S3 failure evidence not archived: " + required)
     runner_source = pathlib.Path(__file__).read_text(encoding="utf-8")
+    # Search the executable function, not these marker strings in the
+    # self-test itself (a previous S3 source regression failed that way).
+    execute_start = runner_source.index("def execute(args: argparse.Namespace)")
     measured_boundary = runner_source.index(
-        "    # Completed fifth-process evidence survives")
-    sixth_boundary = runner_source.index("    # Sixth REAL server process checkpoints")
-    seventh_boundary = runner_source.index("    # Seventh REAL process reopens")
+        "    # Completed fifth-process evidence survives", execute_start)
+    sixth_boundary = runner_source.index(
+        "    # Sixth REAL server process checkpoints", execute_start)
+    seventh_boundary = runner_source.index(
+        "    # Seventh REAL process reopens", execute_start)
     if not measured_boundary < sixth_boundary < seventh_boundary:
         raise AssertionError("S3 engine boundaries reordered")
     previous = runner_source[measured_boundary:sixth_boundary]
