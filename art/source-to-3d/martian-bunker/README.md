@@ -1,5 +1,11 @@
 # Fortified Martian Heavy-Weapon Bunker — 3D development
 
+## V05 lobber review: loose pineapple grenade loaders
+
+The six cast-iron cannon shapes, UVs, aim angles and lateral positions are preserved. Only the upper two station heights change to provide room for open grenade cradles, guide troughs and side-loading hoods. The existing back pipes remain pneumatic air supplies. Visible olive-green pineapple grenades carry segmented bodies, attached spoons and pull rings. This is an exterior game-asset loading concept; the established bunker is not modified.
+
+[Actual overview and grenade close-up](alternatives/v05/Loose_Pineapple_Loader_V05_Review.png) · [Packed editable Blender model](alternatives/v05/six_lobber_loose_grenade_loader_v05.blend) · [GLB](alternatives/v05/six_lobber_loose_grenade_loader_v05.glb) · [Model and render ZIP](alternatives/v05/Loose_Pineapple_Loader_V05.zip) · [Preservation and export checks](alternatives/v05/model_validation.json).
+
 ## V04 lobber review: six cast-iron cannons
 
 The lobber now has three short, bulbous cast-iron cannons on each side of one central fin, six total. Each has a thick rounded ring muzzle and a large feeder connected directly into its bottom breech. The shared fin and three source stations use centreline mirroring. This pass renders the head by itself and does not load or change the established bunker.
