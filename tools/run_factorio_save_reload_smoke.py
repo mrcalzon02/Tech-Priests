@@ -1433,7 +1433,9 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
     """Report measured native timings and deliveries; never infer script cost.
 
     Diagnostic only. This must not become a release/engine acceptance gate.
-    Factorio's benchmark measures the entire update, not Lua script time.
+    Factorio's regular benchmark measures whole-engine updates. The optional
+    verbose scriptUpdate series is an engine measure of ALL active mod scripts,
+    never isolated Tech Priests time or broker callback time.
     The five-station reversal is a fixture within a larger mixed population,
     so the benchmark must not be mislabeled a five-priest scaling result.
     """
@@ -1447,6 +1449,9 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
         "engine_benchmark_ups": None,
         "script_average_ms_per_tick": None,
         "script_p95_ms_per_tick": None,
+        "script_scope": None,
+        "script_sample_count": None,
+        "script_sample_coverage": None,
         "broker_pulse_sample_count": None,
         "broker_pulse_average_ms_per_sample": None,
         "broker_pulse_p95_ms_per_sample": None,
@@ -1485,6 +1490,45 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
             result["engine_benchmark_wall_ms"] = round(elapsed, 3)
             result["engine_update_average_ms_per_tick"] = round(elapsed / updates, 6)
             result["engine_benchmark_ups"] = round(1000.0 * updates / elapsed, 3)
+    # Factorio 2.0 --benchmark-verbose tick,scriptUpdate outputs one CSV
+    # observation per actual benchmark tick in NANOSECONDS. Engine scriptUpdate
+    # includes all installed mod scripts; never attribute this to Tech Priests
+    # alone, to a five-priest-only population, or to broker callback timing.
+    # A missing/malformed trace remains UNMEASURED. Incomplete engine runs
+    # retain separately labelled partial measurements, not fictional full runs.
+    headers = list(re.finditer(r"(?m)^\\s*tick,scriptUpdate\\s*$", content))
+    if len(headers) == 1:
+        ordered_ticks = []
+        durations_ns = []
+        for line in content[headers[0].end():].splitlines():
+            row = line.strip()
+            match = re.fullmatch(r"(\\d+),([0-9]+(?:\\.[0-9]+)?)", row)
+            if not match:
+                if durations_ns:
+                    break
+                continue
+            tick = int(match.group(1))
+            duration = float(match.group(2))
+            if (not math.isfinite(duration) or duration < 0
+                    or (ordered_ticks and tick != ordered_ticks[-1] + 1)):
+                ordered_ticks = []
+                durations_ns = []
+                break
+            ordered_ticks.append(tick)
+            durations_ns.append(duration)
+        if durations_ns:
+            expected = result["engine_benchmark_updates"]
+            # Do not claim full coverage if the engine stopped early, or if
+            # verbose output is incomplete despite a successful footer.
+            if expected is None or len(durations_ns) <= expected:
+                ms = sorted(value / 1000000.0 for value in durations_ns)
+                result["script_average_ms_per_tick"] = round(sum(ms) / len(ms), 6)
+                result["script_p95_ms_per_tick"] = round(
+                    ms[math.ceil(0.95 * len(ms)) - 1], 6)
+                result["script_scope"] = "engine-all-mods-scriptUpdate"
+                result["script_sample_count"] = len(ms)
+                result["script_sample_coverage"] = (
+                    "complete" if expected == len(ms) else "partial")
     # LuaProfiler is non-numeric inside Lua: read only engine-rendered
     # LocalisedString timings. This samples BROKER dispatch, not whole-script
     # ms/tick, and the five-priest reversal runs in a mixed population.
@@ -1697,6 +1741,42 @@ def self_test_native_efficiency_1062() -> None:
     assert missing["engine_benchmark_ups"] is None
     assert missing["delivered_ore"] is None
     assert missing["script_p95_ms_per_tick"] is None
+    # Engine's per-tick scriptUpdate field is nanoseconds for ALL active
+    # mods, not one callback or this mod alone. Require monotonic complete CSV.
+    measured = native_efficiency_observation_1062(
+        "tick,scriptUpdate\\n"
+        "100,1000000\\n101,2000000\\n102,3000000\\n103,4000000\\n"
+        "  Performed 4 updates in 20.000 ms\\n")
+    assert measured["script_average_ms_per_tick"] == 2.5
+    assert measured["script_p95_ms_per_tick"] == 4.0
+    assert measured["script_sample_count"] == 4
+    assert measured["script_sample_coverage"] == "complete"
+    assert measured["script_scope"] == "engine-all-mods-scriptUpdate"
+    assert measured["broker_pulse_sample_count"] is None
+    for bad_csv in (
+        "tick,scriptUpdate\\n100,1000000\\n100,2000000\\n",
+        "tick,scriptUpdate\\n100,-1000000\\n",
+        "tick,scriptUpdate\\n100,1000000\\n102,2000000\\n",
+        "tick,scriptUpdate\\n100,1000000\\n101,NaN\\n",
+        "tick,scriptUpdate\\n100,1000000\\n101,2000000\\n"
+        "tick,scriptUpdate\\n200,3000000\\n",
+    ):
+        bad = native_efficiency_observation_1062(
+            bad_csv + "  Performed 4 updates in 20.000 ms\\n")
+        assert bad["script_average_ms_per_tick"] is None, bad_csv
+    partial = native_efficiency_observation_1062(
+        "tick,scriptUpdate\\n100,1000000\\n101,2000000\\n")
+    assert partial["script_sample_coverage"] == "partial"
+    assert partial["script_sample_count"] == 2
+    assert partial["engine_benchmark_updates"] is None
+    incomplete = native_efficiency_observation_1062(
+        "tick,scriptUpdate\\n100,1000000\\n101,2000000\\n"
+        "  Performed 4 updates in 20.000 ms\\n")
+    assert incomplete["script_sample_coverage"] == "partial"
+    assert native_efficiency_observation_1062(
+        "tick,scriptUpdate\\n100,1000000\\n101,2000000\\n"
+        "  Performed 1 updates in 20.000 ms\\n")[
+            "script_average_ms_per_tick"] is None
     print("[native-efficiency-1062] PASS optional diagnostic self-test")
 
 
@@ -3029,7 +3109,8 @@ def execute(args: argparse.Namespace) -> int:
     with reload_log.open("w", encoding="utf-8") as handle:
         result = subprocess.run([str(binary), "--mod-directory", str(mods),
                                  "--benchmark", str(stock_carried),
-                                 "--benchmark-ticks", "48000"],
+                                 "--benchmark-ticks", "48000",
+                                 "--benchmark-verbose", "tick,scriptUpdate"],
                                 stdout=handle, stderr=subprocess.STDOUT,
                                 check=False, timeout=args.reload_timeout)
     content = reload_log.read_text(encoding="utf-8", errors="replace")
