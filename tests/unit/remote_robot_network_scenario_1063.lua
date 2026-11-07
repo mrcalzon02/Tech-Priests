@@ -47,6 +47,7 @@ local port={valid=true,type="roboport",name="roboport",
 local pair={station={valid=true,unit_number=5001,
   position={x=0,y=0},force=force,surface=surface},
   priest={valid=true,unit_number=5002}}
+storage.tech_priests.pairs_by_station={[5001]=pair}
 local function inspect()return Readiness.inspect_entity(pair,port,true)end
 local active,why=inspect()
 assert(why=="inspected" and active and active.read_only==true
@@ -239,10 +240,35 @@ assert(missing.blocked==1
   "lost ghost was treated as a real built station")
 real_station={valid=true,name="senior-cogitator-station",
   unit_number=7001,position={x=20,y=0},force=force,surface=surface}
+-- The engine entity could have been created by a player/script, and an
+-- unrelated logistic consumer can independently spend the same item.
+-- Neither eventless condition may masquerade as a native robot build.
 local phantom=Planner.service_robot_network_pair_0338(pair)
-assert(phantom.blocked==1 and phantom.detail=="robot-material-debit-unverified"
+assert(phantom.blocked==1
+  and phantom.detail=="robot-native-build-event-unverified"
   and ghost_creations==1,
-  "station entity without real robot item debit was credited")
+  "entity without a native robot-built event was credited")
+logistic_items["senior-cogitator-station"]=0
+local unrelated_debit=Planner.service_robot_network_pair_0338(pair)
+assert(unrelated_debit.blocked==1
+  and unrelated_debit.detail=="robot-native-build-event-unverified"
+  and not pair.robot_network_task_0338.stock_delta_verified,
+  "unrelated physical stock debit forged a robot construction receipt")
+local wrong_force={index=2}
+assert(not Planner.observe_native_robot_build_0338{
+  entity=real_station,robot={valid=true,type="construction-robot",
+    unit_number=6001,force=wrong_force,surface=surface}},
+  "a foreign-force robot forged a native build event")
+assert(not pair.robot_network_task_0338.robot_build_receipt_0338)
+assert(Planner.observe_native_robot_build_0338{
+  entity=real_station,robot={valid=true,type="construction-robot",
+    unit_number=6002,force=force,surface=surface}},
+  "the original native robot build event did not bind the pending ghost")
+assert(pair.robot_network_task_0338.robot_build_receipt_0338.robot_unit==6002)
+logistic_items["senior-cogitator-station"]=1
+local unspent=Planner.service_robot_network_pair_0338(pair)
+assert(unspent.blocked==1 and unspent.detail=="robot-material-debit-unverified",
+  "a real robot event without native item consumption was credited")
 logistic_items["senior-cogitator-station"]=0
 local waiting=Planner.service_robot_network_pair_0338(pair)
 assert(waiting.waiting==1
@@ -268,7 +294,7 @@ assert(done.acted==1
   and releases==1 and claims==1 and ghost_creations==1
   and logistic_items["senior-cogitator-station"]==0,
   "robot station completion lacked exact debit, rank, priest or custody")
-print("[remote-expansion-robot-0338-1070] PASS canonical ghost, live power/coverage/robots/supply, exact native-item debit, real station and ranked pair; Factorio engine still pending")
+print("[remote-expansion-robot-0338-1070] PASS canonical ghost, live power/coverage/robots/supply, original native robot event, exact item debit, ranked pair; engine proof separate")
 
 -- Next-rank remote outpost: the existing paired Senior, not a distant
 -- Magos, must own the Intermediate ghost and its exact native receipt.
@@ -300,6 +326,14 @@ assert(senior_ghost.waiting==1
 ghost.valid=false
 remote_station={valid=true,name="intermediate-cogitator-station",
   unit_number=7101,position={x=25,y=0},force=force,surface=surface}
+local no_event=Planner.service_robot_network_pair_0338(child)
+assert(no_event.blocked==1
+  and no_event.detail=="robot-native-build-event-unverified",
+  "Senior accepted an Intermediate without a physical robot event")
+assert(Planner.observe_native_robot_build_0338{
+  entity=remote_station,robot={valid=true,type="construction-robot",
+    unit_number=6003,force=force,surface=surface}},
+  "Senior did not retain the native robot event for the remote station")
 local no_debit=Planner.service_robot_network_pair_0338(child)
 assert(no_debit.blocked==1 and no_debit.detail=="robot-material-debit-unverified",
   "Senior accepted remote station without physical item consumption")

@@ -523,6 +523,40 @@ local function robot_network_preflight_0338(pair,request,receipt_only)
  return nil,"robot-network-unavailable"
 end
 M.robot_network_preflight_0338=robot_network_preflight_0338
+-- A real built entity plus an unrelated network stock change is not proof
+-- that a construction robot built THIS station. Record the canonical native
+-- on_robot_built_entity event against the already-owned 0338 ghost task.
+-- Keep only primitive unit identities/tick so the receipt survives save/load.
+function M.observe_native_robot_build_0338(event)
+ local entity=event and event.entity
+ local robot=event and event.robot
+ if not(valid(entity) and valid(robot)
+   and entity.unit_number and robot.unit_number
+   and robot.type=="construction-robot"
+   and robot.force==entity.force and robot.surface==entity.surface)then
+  return false
+ end
+ for _,pair in pairs(pair_map())do
+  local task=pair and pair.robot_network_task_0338
+  if valid_pair(pair) and task
+    and task.phase=="awaiting-real-construction-robot"
+    and not task.robot_build_receipt_0338
+    and task.entity_name==entity.name
+    and task.position and dist_sq(entity.position,task.position)<=0.36
+    and pair.station.force==entity.force
+    and pair.station.surface==entity.surface
+    and type(task.started_tick)=="number"
+    and now()>=task.started_tick then
+   task.robot_build_receipt_0338={
+    station_unit=entity.unit_number,robot_unit=robot.unit_number,
+    force_index=entity.force.index,surface_index=entity.surface.index,
+    tick=now()}
+   stat("native-robot-station-build-events")
+   return true
+  end
+ end
+ return false
+end
 local function robot_station_at_0338(pair,task)
  local surface=pair.station.surface
  local found
@@ -612,6 +646,17 @@ function M.service_robot_network_pair_0338(pair)
  local entity=robot_station_at_0338(pair,task)
  if not entity then
   return {processed=1,blocked=1,detail="robot-ghost-lost-without-real-station"}
+ end
+ local native=task.robot_build_receipt_0338
+ if not(native and native.station_unit==entity.unit_number
+   and type(native.robot_unit)=="number"
+   and native.force_index==entity.force.index
+   and native.surface_index==entity.surface.index
+   and type(native.tick)=="number"
+   and type(task.started_tick)=="number"
+   and native.tick>=task.started_tick
+   and native.tick<=now())then
+  return {processed=1,blocked=1,detail="robot-native-build-event-unverified"}
  end
  if not task.stock_delta_verified then
   local live,why=robot_network_preflight_0338(pair,request,true)
@@ -1856,5 +1901,23 @@ end
 local function register_service()
  local broker=canonical_broker();if not(broker and type(broker.register_service)=="function")then return false end;local service=broker.register_service({name="construction_discovery_0338",category="construction",interval=M.discovery_interval,priority=58,budget=M.max_pairs_per_discovery,note="discovery only; dispatcher owns physical construction",fn=function(_,budget)return M.service_all("broker-discovery",budget)end});return service~=nil
 end
-function M.install()M.root();register_creative_command();_G.TechPriestsConstructionPlanner0338=M;_G.TECH_PRIESTS_CONSTRUCTION_PLANNER=M;if not register_service()then return false end;if log then log("[Tech-Priests recovery] dispatcher-owned construction planner armed; defense effectiveness and exact custody enabled")end;return true end
+local function register_native_robot_receipt_0338()
+ if not(script and type(script.on_event)=="function"
+   and defines and defines.events and defines.events.on_robot_built_entity)then
+  -- Pure source fixtures without Factorio's event API retain their normal
+  -- direct-executor tests; native production must register the real event.
+  return not(script and type(script.on_event)=="function")
+ end
+ local ok,registry=pcall(require,"scripts.core.runtime_event_registry")
+ if not(ok and registry and type(registry.on_event)=="function")then
+  return false
+ end
+ local registered,route=pcall(registry.on_event,
+  defines.events.on_robot_built_entity,function(event)
+   M.observe_native_robot_build_0338(event)
+  end,nil,{owner="construction-planner-0338",
+    route="native-robot-station-receipt",priority=20})
+ return registered and route~=nil and route~=false
+end
+function M.install()M.root();register_creative_command();_G.TechPriestsConstructionPlanner0338=M;_G.TECH_PRIESTS_CONSTRUCTION_PLANNER=M;if not register_service()then return false end;if not register_native_robot_receipt_0338()then return false end;if log then log("[Tech-Priests recovery] dispatcher-owned construction planner armed; defense effectiveness and exact custody enabled")end;return true end
 return M
