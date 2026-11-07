@@ -2014,8 +2014,12 @@ def self_test() -> int:
         if artifact_policy.count(required) != 1:
             raise AssertionError("S3 failure evidence not archived: " + required)
     runner_source = pathlib.Path(__file__).read_text(encoding="utf-8")
+    measured_boundary = runner_source.index(
+        "    # Completed fifth-process evidence survives")
     sixth_boundary = runner_source.index("    # Sixth REAL process reopens")
-    previous = runner_source[max(0, sixth_boundary - 1700):sixth_boundary]
+    if measured_boundary >= sixth_boundary:
+        raise AssertionError("S3 metrics follow the native reload boundary")
+    previous = runner_source[measured_boundary:sixth_boundary]
     if ("performance-s3-preflight-1360.json" not in previous or
             "NATIVE_EFFICIENCY_1062" not in previous):
         raise AssertionError("fifth-process metrics suppressed on S3 failure")
