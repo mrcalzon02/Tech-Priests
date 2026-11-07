@@ -1604,7 +1604,7 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
     # benchmark-wide population provenance for a matched-run comparison.
     population = re.findall(
         r"RUNTIME_PAIRED_POPULATION_1071 boundary=(start|end) "
-        r"tick=(\\d+) pairs=(\\d+) scope=live-paired-all-forces", content)
+        r"tick=(\d+) pairs=(\d+) scope=live-paired-all-forces", content)
     if len(population) == 2 and len(starts) == len(ends) == 1:
         beginning, ending = population
         if (beginning[0] == "start" and ending[0] == "end"
@@ -1725,9 +1725,9 @@ def self_test_native_efficiency_1062() -> None:
     assert activity["broker_service_blocked_fraction"] == 0.25
     population_fixture = activity_fixture + (
         "[TP-GROUND-RANK-TEST] RUNTIME_PAIRED_POPULATION_1071 "
-        "boundary=start tick=18000 pairs=18 scope=live-paired-all-forces\\n"
+        "boundary=start tick=18000 pairs=18 scope=live-paired-all-forces\n"
         "[TP-GROUND-RANK-TEST] RUNTIME_PAIRED_POPULATION_1071 "
-        "boundary=end tick=20000 pairs=19 scope=live-paired-all-forces\\n")
+        "boundary=end tick=20000 pairs=19 scope=live-paired-all-forces\n")
     population = native_efficiency_observation_1062(population_fixture)
     assert population["profile_window_paired_priests_start"] == 18
     assert population["profile_window_paired_priests_end"] == 19
@@ -1740,7 +1740,7 @@ def self_test_native_efficiency_1062() -> None:
                                    "pairs=19 scope=isolated"),
         population_fixture + (
             "[TP-GROUND-RANK-TEST] RUNTIME_PAIRED_POPULATION_1071 "
-            "boundary=end tick=20000 pairs=19 scope=live-paired-all-forces\\n"),
+            "boundary=end tick=20000 pairs=19 scope=live-paired-all-forces\n"),
     ):
         invalid_population = native_efficiency_observation_1062(bad_population)
         assert invalid_population["profile_window_paired_priests_start"] is None
