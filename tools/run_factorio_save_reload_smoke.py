@@ -2017,7 +2017,7 @@ def self_test() -> int:
     runner_source = pathlib.Path(__file__).read_text(encoding="utf-8")
     # Search the executable function, not these marker strings in the
     # self-test itself (a previous S3 source regression failed that way).
-    execute_start = runner_source.index("def execute(args: argparse.Namespace)")
+    execute_start = runner_source.index("\ndef execute(args: argparse.Namespace) -> int:\n")
     measured_boundary = runner_source.index(
         "    # Completed fifth-process evidence survives", execute_start)
     sixth_boundary = runner_source.index(
