@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "status": "VERIFIED_RENDER_DELIVERY",
+  "asset": "Approved intact bunker base, independent of turret",
+  "date": "2026-11-07",
+  "resolution": [
+    2048,
+    2048
+  ],
+  "directions": [
+    "north",
+    "east",
+    "south",
+    "west"
+  ],
+  "png_depth_bits": 16,
+  "visible_base_meshes": 98,
+  "packed_texture_count": 53,
+  "camera_elevation_degrees": 45,
+  "renderer": "Blender 5.0.1 Cycles",
+  "geometry_and_placement": "Preserved approved V6 intact base; verified transforms for all 98 visible meshes",
+  "contents": [
+    "four original RGBA beauty renders",
+    "four neutral base and runtime-tint mask pairs",
+    "four separate ground-shadow and glow PNG layers",
+    "eight multilayer EXR files",
+    "packed editable Blender capture scene",
+    "resumable isolated Blender workers",
+    "verification and SHA-256 manifests"
+  ],
+  "publication": {
+    "github_contents": "This record and checksums; binary assets are in the authenticated downloads below.",
+    "downloads": {
+      "package": "https://chatgpt.com/library?file_id=libfile_23cb590ab27c819194bbcde673764132&account_id=personal",
+      "north": "https://chatgpt.com/library?file_id=libfile_91f8bb3c507081919e833702a4bc9906&account_id=personal",
+      "east": "https://chatgpt.com/library?file_id=libfile_28886531a150819192015c58673ebb38&account_id=personal",
+      "south": "https://chatgpt.com/library?file_id=libfile_32a6e27e2e18819185cff6cc0501fa81&account_id=personal",
+      "west": "https://chatgpt.com/library?file_id=libfile_1b5883a08e14819196a409b1e93e67bc&account_id=personal",
+      "preview": "https://chatgpt.com/library?file_id=libfile_1f36598261e88191bdcc44fc6a6560eb&account_id=personal"
+    }
+  },
+  "archive": {
+    "filename": "Bunker_Base_Final_4_Directions.zip",
+    "status": "PASS",
+    "size_bytes": 483348299,
+    "files": 49,
+    "sha256": "4011b3a8f2b9c7bebda9040ba7a8db4581686a001ef2a12b7cf06018ec699741",
+    "crc": "PASS",
+    "shadow_borders_transparent": true
+  },
+  "verification": {
+    "status": "PASS",
+    "renderer": "5.0.1",
+    "visible_base_meshes": 98,
+    "packed_texture_count": 53,
+    "all_used_textures_packed": true,
+    "turret_globally_hidden": true,
+    "ground_shadow_separate": true,
+    "resolution": [
+      2048,
+      2048
+    ],
+    "samples_max": 128,
+    "adaptive_threshold": 0.019999999552965164,
+    "camera_elevation_degrees": 45,
+    "orthographic_scale": 5.047421455383301,
+    "approved_transform_check": "PASS: all 98 visible base world transforms match approved intact master at neutral yaw"
+  },
+  "frame_captures": [
+    {
+      "direction": "north",
+      "frame": 1,
+      "yaw_degrees": 180,
+      "beauty": "base_north.png",
+      "passes": "base_north_passes.exr",
+      "origin_pixels": [
+        1024,
+        1474.7522583007812
+      ],
+      "elapsed_seconds": 204.98
+    },
+    {
+      "direction": "east",
+      "frame": 2,
+      "yaw_degrees": 90,
+      "beauty": "base_east.png",
+      "passes": "base_east_passes.exr",
+      "origin_pixels": [
+        1024,
+        1474.7522583007812
+      ],
+      "elapsed_seconds": 232.34
+    },
+    {
+      "direction": "south",
+      "frame": 3,
+      "yaw_degrees": 0,
+      "beauty": "base_south.png",
+      "passes": "base_south_passes.exr",
+      "origin_pixels": [
+        1024,
+        1474.7522583007812
+      ],
+      "elapsed_seconds": 204.58
+    },
+    {
+      "direction": "west",
+      "frame": 4,
+      "yaw_degrees": 270,
+      "beauty": "base_west.png",
+      "passes": "base_west_passes.exr",
+      "origin_pixels": [
+        1024,
+        1474.7522583007812
+      ],
+      "elapsed_seconds": 180.12
+    }
+  ],
+  "sha256": {
+    "source_provenance.json": "403ffb4eeb0d23ec0de5af0bacb5e17297b011d40fd8577b5c1a3b6da88acce2",
+    "capture_beauty.py": "a8a1f9439e7fb86fb0364c5251058b100e1933e01fa8f738019d2cd358a484eb",
+    "base_west.png": "8904dd60f91bb6c7323d707e6e4ffb26381ce955f01b68195a0a854c54f8a2a0",
+    "base_south_shadow.exr": "fde224d4e0e561fbf0f39e72767e972b2a56533d908db9ada6254733e043cea0",
+    "verification.json": "239e6ee52dd1f3e6ce855507c76ad11c58f282c14b0dca2da824d05cbaa90991",
+    "README.txt": "0cefabffb1ffbcd4f02fce91188fd8c31c838b231865f493cad6aa8e0dd6f92d",
+    "base_west_shadow.png": "e5e080830535014a839c98ef4e2c79c71f58051c938422892c052a2d365a324b",
+    "Bunker_Base_Four_Directions_Contact_Sheet.png": "a235a1313c42677a020f45fa8c1730435f699c9c8d9b9e1a6160e0b5930ebaf7",
+    "render_shadows.py": "8c0240d8a739e71b49b84254a3986789c39654eb9278497b56be6498851bb769",
+    "base_west_shadow.exr": "7e8c94e75c736457a0c3cfd16bccbac458ed88b9bce87d6c8a5d2d7320e99be5",
+    "base_east_passes.exr": "3e7b51fcbfdb8cc3bc34aa1909635f1f7a2312015e6390d1b11075f7c032f070",
+    "base_south_shadow.png": "80e4907225ac59ea71a8e9d6f2ba9a61144e9aa83ed0a6f067fefda23fbb2711",
+    "base_north_shadow.exr": "5e0c1eb4dd4a241c29aea6f4ce0c631818a746192b8830e845bfece3e04f518d",
+    "base_west_passes.exr": "b588fa5e830708b572e34801b8d68c26e4edb1b59438344a334d231cd94c64b6",
+    "base_south_glow.png": "544a074f1b3b289fe231d92499464545f01c40aebb77877764bc3c7100025ee1",
+    "base_east_glow.png": "c54d1992de38f80f81b61ce35668faf6217746baca49e7472fadfa30aeb55cdd",
+    "base_east_shadow.png": "3a673919c0460acdef8a7b522dc5f621340caebdf14b48a9208453bb01a9bd67",
+    "base_north_glow.png": "5ece114bca2eb92de99860b7a8e42b40df49180d489f9bfff2fc8207b0ddc154",
+    "render_team_mask.py": "ffee54def4f1c74121b74fcef53e36fe56a8d468e970b9f525e48033e4bbdbb7",
+    "rerender.py": "c34692ec0100ebeab2609c2fd63dadeb62126e4cb4bc71bde3f1606848be6ced",
+    "native_source_validation.json": "bd93ed01e92516b9c646b77a63790661141fe8cc816e9e7c050c2d26f9e729dc",
+    "base_east.png": "372d8920e1031e0ff51d6600472c06d460c0220a155dace38e37db6d501e6afb",
+    "capture_manifest.json": "de31aa463c2c4f44c96f41cbec21c2f29d7e3a1ef6580cd9005a025039432da2",
+    "Bunker_Base_Final_Capture.blend": "f10f2232cbbc13520f75df99d775d9d9479c9254a00a0656aeee0c92ba70eb91",
+    "base_south_passes.exr": "8c2f4df72f523391efb3f49a2f4a89a74a8b650f9539bb025fe7a9508843b91d",
+    "base_east_shadow.exr": "96ac04a96e0b06854c3177e5fdbf59bb2a554ffb15261f8c1095968c33526607",
+    "base_south.png": "b0458db218903cc9c5a4d8cae2577817b8f68d2adffeba0cbf50f31b64ca9d2b",
+    "auxiliary_manifest.json": "d475c59ac9bea9d04e3bea135f9d3225445d0606270225ef8e52a8d3e0f4f89a",
+    "base_north_shadow.png": "60b94812a495c711765bb00f5e89ca9674489fcb7f4afeb443fb969156f34910",
+    "export_auxiliary.py": "4e172114f637e907ac6b5cc8120ec463d20c976bb0322010435d705064a3d6c8",
+    "build_team_layers.py": "a75ecd88f9dbcdb33d56fc8e57f6e4e1402ea5136a4349ce658b445c5c21d2d6",
+    "base_west_glow.png": "0401b7cd8c6c5879f671dc05befab271e7003a5d567115241c40ccf9698074b7",
+    "base_north.png": "9dac01a069648947457965f5e56f351bdc0826afeb6ade2ac5314d33ca33f49e",
+    "base_north_passes.exr": "970bcc06a64cdc26fda6a1cbce8f1e64f0eafda582249422818daf1a7a96474b",
+    "team_color/panel_coverage_north.png": "386e84195864f08cd9b876454d5e4c730ac5e772db859615f9e71b07c8ab633a",
+    "team_color/base_north_mask.png": "ad114d70e701c6e74e0191520173ab32e71d61e5f25556a5fe56a4814f96fe3b",
+    "team_color/base_west_neutral.png": "6f0f341fcf6970fc77801a838056293c319c7d4ebaaa3513f517dd627adbaf03",
+    "team_color/base_south_neutral.png": "26d368f43ebb37b16e6f44daa814aa9f2fddf1f4b2c808bd956e5841597558c8",
+    "team_color/base_south_mask.png": "8cb95b6aadd2aafd382cc17dc67dfbb3766b2ad373a76af99ca7a128504a8769",
+    "team_color/panel_coverage_east.png": "fd43cc318f30ed61b5e867e9db144c4d08118de2ce95bbba5bce285587cb1d0a",
+    "team_color/panel_coverage_west.png": "c25d13f851266cb220d52d7588af4f58aaf94be11c68b936297a09364bf501f8",
+    "team_color/base_east_mask.png": "ac3bb34779597a6df260dba9038ac30945398e1bd0620a5be8714eb12ab8daf1",
+    "team_color/base_east_neutral.png": "aacb5f49e58b00813e194a6c89f2a7e541bc844d5e6cddd6884f857cd1837805",
+    "team_color/mask_selection.json": "2e69cd366dbf133189ff1d2246d49f395a522cfc58800634435235f66b5e83b0",
+    "team_color/team_color_validation.json": "5f43981d2b7886f1636003fe6a3d3036a5125d839635fbde87e72d34ad32af23",
+    "team_color/base_north_neutral.png": "13d2705d0236698cd3121e2e968fb0b9c102bec75670a2fbe9d139f4500c6b67",
+    "team_color/base_west_mask.png": "b78b39ab478d17d01c83fdf39787ecdd0227b16031271f6ba94f36784f9bc185",
+    "team_color/panel_coverage_south.png": "8ecefff54ed2647d724fc20bd01e2533f013fd843869f5f387e5a61c48d00b6c"
+  },
+  "engine_integration": "Render delivery only; in-game graphics registration has not been validated."
+}
