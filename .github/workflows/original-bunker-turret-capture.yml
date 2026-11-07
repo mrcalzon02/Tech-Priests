@@ -1,0 +1,121 @@
+name: Original bunker turret full rotation and firing
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/original-bunker-turret-capture.yml'
+      - 'art/source-to-3d/martian-bunker/captures/original-turret-64/source_manifest.json'
+      - 'art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/**'
+      - 'art/source-to-3d/martian-bunker/captures/original-turret-64/render_capture.py'
+      - 'art/source-to-3d/martian-bunker/captures/original-turret-64/validate_scene.py'
+      - 'art/source-to-3d/martian-bunker/captures/original-turret-64/assemble_capture.py'
+      - 'art/source-to-3d/martian-bunker/captures/original-turret-64/restore_source.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: original-bunker-turret-64
+  cancel-in-progress: false
+env:
+  CAPTURE: art/source-to-3d/martian-bunker/captures/original-turret-64
+jobs:
+  capture:
+    name: Heading ${{ matrix.direction }} of 64
+    runs-on: ubuntu-24.04
+    timeout-minutes: 100
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        direction: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: art/source-to-3d/martian-bunker/captures/original-turret-64
+          filter: blob:none
+      - name: Restore checksummed native source
+        run: python3 "$CAPTURE/restore_source.py"
+      - name: Install Blender 5.0.1
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libxi6 libxfixes3 libxrender1 libgl1 libegl1 libxkbcommon0
+          curl --fail --location --retry 3 https://download.blender.org/release/Blender5.0/blender-5.0.1-linux-x64.tar.xz --output blender.tar.xz
+          tar -xf blender.tar.xz
+      - name: Verify saved rig and all heading transforms
+        run: ./blender-5.0.1-linux-x64/blender -b "$CAPTURE/original_bunker_turret_capture.blend" -t 4 --python-exit-code 12 --python "$CAPTURE/validate_scene.py" -- "$CAPTURE/scene_validation.json"
+      - name: Render the complete firing cycle at this heading
+        env:
+          DIRECTION: ${{ matrix.direction }}
+        run: ./blender-5.0.1-linux-x64/blender -b "$CAPTURE/original_bunker_turret_capture.blend" -t 4 --python-exit-code 12 --python "$CAPTURE/render_capture.py" -- --directions "$DIRECTION" --frames all --out rendered
+      - name: Preserve completed heading frames
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: original-turret-heading-${{ matrix.direction }}
+          path: rendered/
+          if-no-files-found: error
+          retention-days: 30
+  assemble:
+    needs: capture
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: art/source-to-3d/martian-bunker/captures/original-turret-64
+          filter: blob:none
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install assembly dependencies
+        run: |
+          python -m pip install Pillow numpy
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: original-turret-heading-*
+          merge-multiple: true
+          path: rendered
+      - name: Restore source and verify all captures
+        run: |
+          python3 "$CAPTURE/restore_source.py"
+          python3 "$CAPTURE/assemble_capture.py" --input rendered --output delivery
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Original-Bunker-Turret-Full-Rotation-And-Firing
+          path: |
+            Original_Bunker_Turret_Full_Rotation_And_Firing.zip
+            delivery/Turret_Full_Rotation.gif
+            delivery/Turret_Rotation_And_All_Direction_Firing.mp4
+            delivery/Turret_Eight_Heading_Contact_Sheet.png
+            delivery/capture_manifest.json
+          if-no-files-found: error
+          retention-days: 90
+      - name: Publish verified capture package and delivery record
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          tag="original-bunker-turret-capture-${RUN_ID}"
+          gh release create "$tag" --target "$GITHUB_SHA" --title 'Original bunker turret — 64-direction rotation and firing' --notes 'Verified 64 headings, 32 firing frames per heading, fixed registration, transparent atlases and packed editable Blender source. Includes a rotation preview and an all-heading firing movie.' --prerelease Original_Bunker_Turret_Full_Rotation_And_Firing.zip delivery/Turret_Full_Rotation.gif delivery/Turret_Rotation_And_All_Direction_Firing.mp4 delivery/Turret_Eight_Heading_Contact_Sheet.png delivery/capture_manifest.json
+          python3 - <<'PY'
+          import json,hashlib,os
+          from pathlib import Path
+          p=Path('Original_Bunker_Turret_Full_Rotation_And_Firing.zip')
+          data={'status':'VERIFIED_CAPTURE_PUBLISHED','source_commit':os.environ['GITHUB_SHA'],'run_url':os.environ['RUN_URL'],'release_url':'https://github.com/'+os.environ['GITHUB_REPOSITORY']+'/releases/tag/original-bunker-turret-capture-'+os.environ['RUN_ID'],'package_sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'size_bytes':p.stat().st_size,'capture':json.loads(Path('delivery/capture_manifest.json').read_text())}
+          Path(os.environ['CAPTURE'],'DELIVERY.json').write_text(json.dumps(data,indent=2))
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add "$CAPTURE/DELIVERY.json"
+          git commit -m 'Record verified original bunker turret full rotation and firing delivery'
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          exit 1

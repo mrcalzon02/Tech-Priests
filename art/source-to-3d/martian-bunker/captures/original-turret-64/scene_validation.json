@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "directions": 64,
+  "source_reopened": true,
+  "barrel_recoil": 0.13,
+  "inner_recoil": 0.13,
+  "mount_rings_fixed_to_housing": true,
+  "first_last_turret_poses_match": true,
+  "smoke_follows_all_64_headings": true,
+  "base_absent": true,
+  "textures_packed": true
+}

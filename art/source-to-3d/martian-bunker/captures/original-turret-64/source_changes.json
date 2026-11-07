@@ -1,0 +1,13 @@
+{
+  "source": "martian_bunker_M2_symbology_v10.blend",
+  "removed_rejected_glyphs": [
+    "SYMBOL_BRASS_ROOF_MARS_0",
+    "SYMBOL_BRASS_ROOF_MARS_1",
+    "SYMBOL_BRASS_SERVICE_PLATE_MARS_0",
+    "SYMBOL_BRASS_SERVICE_PLATE_MARS_1"
+  ],
+  "base": "excluded and removed from capture copy",
+  "smoke": "parented to traverse with inverse preserving original east-facing curves",
+  "geometry": "original turret retained",
+  "camera_scale": 6.199999809265137
+}
