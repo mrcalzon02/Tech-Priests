@@ -54,6 +54,7 @@ for row in range(3):
   o=bpy.data.objects.new('RELOAD_PATH_LEFT_%d_'%(row+1)+label,None);col.objects.link(o);o.location=loc;o.empty_display_size=.025;o.hide_render=True
 # Replace projecting blocks and storage cradles with true recessed hatches.
 rubber=matte('CONVEYOR | rough charcoal rubber',(.018,.023,.020),.94)
+tread=matte('CONVEYOR | raised rubber tread',(.065,.075,.067),.92)
 for o in list(col.objects):
  if o.name.startswith(('OPEN_CRADLE_', 'CRADLE_', 'HOPPER_LEFT_', 'OPEN_GRENADE_GUIDE_')):
   bpy.data.objects.remove(o,do_unlink=True)
@@ -84,7 +85,7 @@ for row in range(3):
  for i in range(1,len(pts)-1,2):
   p=pts[i]+Vector((0,0,.023));t=pts[i+1]-pts[i-1];t.z=0;t.normalize();a=Vector((-t.y,t.x,0))
   # Soft rubber cross ribs read as a driven tread from the game camera.
-  rib=rod('RUBBER_TREAD_LEFT',p-a*.048,p+a*.048,.004,rubber)
+  rib=rod('RUBBER_TREAD_LEFT',p-a*.048,p+a*.048,.008,tread)
  loose_grenade('HATCH_EXIT_PROP_LEFT_'+str(row+1),(-.24,.490,z+.090),Matrix.Rotation(math.pi/2,3,'X'))
 bpy.context.view_layer.update()
 for name,sig in original.items():assert signature(bpy.data.objects[name])==sig,name
