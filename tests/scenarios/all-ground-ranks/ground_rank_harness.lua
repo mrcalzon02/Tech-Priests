@@ -9076,7 +9076,7 @@ local function robot_engine_s2_place_1071(state)
   end
   -- These are real powered entities. No editor energy interface, synthetic
   -- robot, script-built target station or production stock grant is used.
-  place("substation",18,8)
+  local power_source_1331=place("substation",18,8)
   place("substation",18,24)
   for _,x in ipairs({10,14,22,26}) do
     for _,y in ipairs({18,22,26,30}) do
@@ -9126,6 +9126,7 @@ local function robot_engine_s2_place_1071(state)
   state.robot_engine_s2_1071={
     phase="awaiting-powered-pair",surface=surface,magos=magos,
     port=port,provider=provider,source_unit=source_unit,
+    power_source_1331=power_source_1331,
     control_ready_1074=control_ready,
     magos_unit=magos.unit_number,started_tick=game.tick}
   emit("ROBOT_ENGINE_S2_SOURCE_MINED tick="..game.tick..
@@ -9154,6 +9155,53 @@ local function robot_engine_s2_service_1071(state)
     and provider and provider.valid) then return end
   if test.magos_priest and root.priest.unit_number~=test.magos_priest then
     error("ROBOT_ENGINE_S2_ORIGINAL_MAGOS_PRIEST_REPLACED")
+  end
+  -- Method II native negative: remove a genuine powered-network substation
+  -- into an engine-owned inventory after the original Magos issues its request.
+  -- A disconnected network must refuse the 0338 ghost without losing the
+  -- requested item, ownership, identities, or introducing a second claim.
+  -- Restore from that SAME mined substation item, not a supplied free item.
+  if test.phase=="power-cut-before-robot-ghost-1331" then
+    if game.tick-test.power_cut_tick_1331<180 then return end
+    local real_inventory=provider.get_inventory(defines.inventory.chest)
+    local hold=test.power_cut_hold_1331
+    if port.is_connected_to_electric_network()
+      or root.robot_network_task_0338
+      or root.robot_network_request_0338~=test.power_request_1331
+      or not(hold and hold.valid
+        and hold.get_item_count("substation")==1)
+      or not(real_inventory and real_inventory.valid
+        and real_inventory.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==1)
+      or root.priest.unit_number~=test.magos_priest then
+      error("ROBOT_ENGINE_S2_POWER_REFUSAL_CUSTODY_INVALID_1331")
+    end
+    local source_position={x=18,y=8}
+    local spec={name="substation",position=source_position,
+      force=root.station.force}
+    if not test.surface.can_place_entity(spec) then
+      error("ROBOT_ENGINE_S2_POWER_RESTORE_SITE_BLOCKED_1331")
+    end
+    if hold.remove{name="substation",count=1}~=1 then
+      error("ROBOT_ENGINE_S2_POWER_RESTORE_PHYSICAL_DEBIT_FAILED_1331")
+    end
+    local rebuilt=test.surface.create_entity(spec)
+    if not(rebuilt and rebuilt.valid and rebuilt.name=="substation") then
+      error("ROBOT_ENGINE_S2_POWER_RESTORE_ENTITY_REFUSED_1331")
+    end
+    if hold.get_item_count("substation")~=0 then
+      error("ROBOT_ENGINE_S2_POWER_RESTORE_ITEM_DISCREPANCY_1331")
+    end
+    hold.destroy()
+    test.power_cut_hold_1331=nil
+    test.power_source_1331=rebuilt
+    test.power_negative_passed_1331=true
+    test.phase="awaiting-canonical-ghost"
+    emit("PASS ROBOT_ENGINE_S2_NATIVE_POWER_REFUSAL_1331 tick="..game.tick..
+      " magos="..test.magos_unit..
+      " priest="..test.magos_priest..
+      " ghost=0 stock=1 substation_mined=1 substation_rebuilt=1"..
+      " request_retained=true item_conserved=true")
+    return
   end
   reserve_robot_frontier_intent_1122(root)
   local inv=provider.get_inventory(defines.inventory.chest)
@@ -9188,6 +9236,27 @@ local function robot_engine_s2_service_1071(state)
       " port="..port.unit_number..
       " powered=true robots="..network.available_construction_robots..
       " network_stock=1")
+    -- Native power-loss stimulus at the earliest still-unclaimed boundary.
+    -- The existing 0338 authority, not this fixture, decides ghost creation.
+    local hold=game.create_inventory(1)
+    local source=test.power_source_1331
+    if not(hold and hold.valid and source and source.valid
+      and source.name=="substation"
+      and source.mine{inventory=hold}==true
+      and not source.valid
+      and hold.get_item_count("substation")==1
+      and inv.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==1) then
+      error("ROBOT_ENGINE_S2_PHYSICAL_POWER_CUT_FAILED_1331")
+    end
+    test.power_cut_hold_1331=hold
+    test.power_request_1331=root.robot_network_request_0338
+    test.power_cut_tick_1331=game.tick
+    test.phase="power-cut-before-robot-ghost-1331"
+    emit("ROBOT_ENGINE_S2_NATIVE_POWER_CUT_1331 tick="..game.tick..
+      " magos="..test.magos_unit..
+      " priest="..test.magos_priest..
+      " substation_custody=1 station_stock=1")
+    return
   end
   local task=root.robot_network_task_0338
     or root.robot_network_last_task_0338
@@ -9302,6 +9371,7 @@ local function robot_engine_s2_service_1071(state)
     and inv.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==0
     and network.get_item_count(ROBOT_ENGINE_S2_ITEM_1071)==0
     and #ghosts==0 and test.robot_event_unit
+    and test.power_negative_passed_1331==true
     and test.robot_event_tick>=test.ghost_tick) then
     error("ROBOT_ENGINE_S2_REAL_BUILD_CUSTODY_OR_RANK_INVALID")
   end

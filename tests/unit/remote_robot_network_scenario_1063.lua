@@ -207,6 +207,18 @@ request.position={x=20,y=0}
 request.root_station_unit=9999
 refuse("robot-request-rank-or-identity-invalid")
 request.root_station_unit=5001
+-- Post-request power interruption must keep the SAME original request,
+-- not place a ghost or consume a station item while the network is dark.
+local original_request=request
+powered=false
+local dark=Planner.service_robot_network_pair_0338(pair)
+assert(dark.blocked==1 and dark.detail=="roboport-unpowered"
+  and pair.robot_network_request_0338==original_request
+  and pair.robot_network_task_0338==nil
+  and ghost_creations==0 and claims==0
+  and logistic_items["senior-cogitator-station"]==1,
+  "interrupted powered request fabricated or discarded physical construction")
+powered=true
 assert(Planner.recommend_action(pair).source=="construction-planner-0338",
   "robot ghost was not offered through the existing dispatcher family")
 local first=Planner.service_pair(pair,"S2-canonical-dispatch")
