@@ -1,0 +1,5 @@
+# V10 bevel and surface refinement
+
+Non-destructive finishing pass on the V09 native model. Bevel widths are sized for each part: broad armour and castings, smaller sensor pods, narrow hatch jambs, thin chute and hopper edges, and tiny brass/cable fittings. Existing excessively large frame bevels are reduced to retain a crisp mechanical profile. Curved castings and ferrules gain smooth shading with sharp transitions at planar edges. Area weighted normals are evaluated after edge bevels. Rubber shoes retain their original dimensions and material with smoother edge subdivisions.
+
+Source vertex positions, world transforms, UV coordinates and material slots are checked against V09. Cannon aiming, hatches, conveyor paths, antenna lengths and bunker base are unchanged. No reload animation is authored. Native modifier stacks remain editable; the GLB export evaluates them and is reimported for verification. Includes whole views plus separate conveyor and sensor close-ups. Run build_refinement.py using Blender 5.0.1, then make_review.py with Pillow.
