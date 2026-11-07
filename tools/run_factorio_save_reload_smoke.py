@@ -1496,17 +1496,17 @@ def native_efficiency_observation_1062(content: str) -> dict[str, object]:
     # alone, to a five-priest-only population, or to broker callback timing.
     # A missing/malformed trace remains UNMEASURED. Incomplete engine runs
     # retain separately labelled partial measurements, not fictional full runs.
-    headers = list(re.finditer(r"(?m)^\\s*tick,scriptUpdate\\s*$", content))
+    headers = list(re.finditer(r"(?m)^\s*tick,scriptUpdate\s*$", content))
     if len(headers) == 1:
         ordered_ticks = []
         durations_ns = []
         for line in content[headers[0].end():].splitlines():
             row = line.strip()
-            match = re.fullmatch(r"(\\d+),([0-9]+(?:\\.[0-9]+)?)", row)
+            match = re.fullmatch(r"(\d+),([0-9]+(?:\.[0-9]+)?)", row)
             if not match:
                 # Reject malformed numeric observations instead of silently
                 # truncating a corrupt series into a plausible partial trace.
-                if re.match(r"^\\d+,", row):
+                if re.match(r"^\d+,", row):
                     ordered_ticks = []
                     durations_ns = []
                     break
@@ -1750,9 +1750,9 @@ def self_test_native_efficiency_1062() -> None:
     # Engine's per-tick scriptUpdate field is nanoseconds for ALL active
     # mods, not one callback or this mod alone. Require monotonic complete CSV.
     measured = native_efficiency_observation_1062(
-        "tick,scriptUpdate\\n"
-        "100,1000000\\n101,2000000\\n102,3000000\\n103,4000000\\n"
-        "  Performed 4 updates in 20.000 ms\\n")
+        "tick,scriptUpdate\n"
+        "100,1000000\n101,2000000\n102,3000000\n103,4000000\n"
+        "  Performed 4 updates in 20.000 ms\n")
     assert measured["script_average_ms_per_tick"] == 2.5
     assert measured["script_p95_ms_per_tick"] == 4.0
     assert measured["script_sample_count"] == 4
@@ -1760,28 +1760,28 @@ def self_test_native_efficiency_1062() -> None:
     assert measured["script_scope"] == "engine-all-mods-scriptUpdate"
     assert measured["broker_pulse_sample_count"] is None
     for bad_csv in (
-        "tick,scriptUpdate\\n100,1000000\\n100,2000000\\n",
-        "tick,scriptUpdate\\n100,-1000000\\n",
-        "tick,scriptUpdate\\n100,1000000\\n102,2000000\\n",
-        "tick,scriptUpdate\\n100,1000000\\n101,NaN\\n",
-        "tick,scriptUpdate\\n100,1000000\\n101,2000000\\n"
-        "tick,scriptUpdate\\n200,3000000\\n",
+        "tick,scriptUpdate\n100,1000000\n100,2000000\n",
+        "tick,scriptUpdate\n100,-1000000\n",
+        "tick,scriptUpdate\n100,1000000\n102,2000000\n",
+        "tick,scriptUpdate\n100,1000000\n101,NaN\n",
+        "tick,scriptUpdate\n100,1000000\n101,2000000\n"
+        "tick,scriptUpdate\n200,3000000\n",
     ):
         bad = native_efficiency_observation_1062(
-            bad_csv + "  Performed 4 updates in 20.000 ms\\n")
+            bad_csv + "  Performed 4 updates in 20.000 ms\n")
         assert bad["script_average_ms_per_tick"] is None, bad_csv
     partial = native_efficiency_observation_1062(
-        "tick,scriptUpdate\\n100,1000000\\n101,2000000\\n")
+        "tick,scriptUpdate\n100,1000000\n101,2000000\n")
     assert partial["script_sample_coverage"] == "partial"
     assert partial["script_sample_count"] == 2
     assert partial["engine_benchmark_updates"] is None
     incomplete = native_efficiency_observation_1062(
-        "tick,scriptUpdate\\n100,1000000\\n101,2000000\\n"
-        "  Performed 4 updates in 20.000 ms\\n")
+        "tick,scriptUpdate\n100,1000000\n101,2000000\n"
+        "  Performed 4 updates in 20.000 ms\n")
     assert incomplete["script_sample_coverage"] == "partial"
     assert native_efficiency_observation_1062(
-        "tick,scriptUpdate\\n100,1000000\\n101,2000000\\n"
-        "  Performed 1 updates in 20.000 ms\\n")[
+        "tick,scriptUpdate\n100,1000000\n101,2000000\n"
+        "  Performed 1 updates in 20.000 ms\n")[
             "script_average_ms_per_tick"] is None
     print("[native-efficiency-1062] PASS optional diagnostic self-test")
 
