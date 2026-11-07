@@ -2007,6 +2007,7 @@ def self_test() -> int:
                        ".github/workflows/factorio-runtime-tests.yml"
                        ).read_text(encoding="utf-8")
     for required in (
+        "${{ runner.temp }}/factorio-save-reload/factorio-robot-midflight-save-server.log",
         "${{ runner.temp }}/factorio-save-reload/factorio-robot-midflight-reload.log",
         "test-artifacts/tech-priests-robot-midflight-checkpoint.zip",
         "test-artifacts/performance-s3-preflight-1360.json",
@@ -2016,13 +2017,22 @@ def self_test() -> int:
     runner_source = pathlib.Path(__file__).read_text(encoding="utf-8")
     measured_boundary = runner_source.index(
         "    # Completed fifth-process evidence survives")
-    sixth_boundary = runner_source.index("    # Sixth REAL process reopens")
-    if measured_boundary >= sixth_boundary:
-        raise AssertionError("S3 metrics follow the native reload boundary")
+    sixth_boundary = runner_source.index("    # Sixth REAL server process checkpoints")
+    seventh_boundary = runner_source.index("    # Seventh REAL process reopens")
+    if not measured_boundary < sixth_boundary < seventh_boundary:
+        raise AssertionError("S3 engine boundaries reordered")
     previous = runner_source[measured_boundary:sixth_boundary]
     if ("performance-s3-preflight-1360.json" not in previous or
             "NATIVE_EFFICIENCY_1062" not in previous):
         raise AssertionError("fifth-process metrics suppressed on S3 failure")
+    native_save = runner_source[sixth_boundary:seventh_boundary]
+    if ("server_checkpoint(" not in native_save or
+            "stock_carried" not in native_save or
+            "ROBOT_MIDFLIGHT_SAVE_MARKER" not in native_save or
+            "checkpointed_pre_save_evidence(" not in native_save):
+        raise AssertionError("S3 midflight checkpoint not made by a native server")
+    if "verify_robot_midflight_reload_1360_log(midflight_server_log, midflight_log)" not in runner_source[seventh_boundary:]:
+        raise AssertionError("S3 reload not verified against real server save")
     # 1175: The native fourth-process checkpoint requested a save at tick
     # 9975, then completed ore hop 2 in the SAME tick before the blocking
     # save began. Its fifth-process reload started from that persisted hop
@@ -3847,20 +3857,21 @@ def execute(args: argparse.Namespace) -> int:
             "measurements": None, "reason": str(exc),
         }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         print("NATIVE_EFFICIENCY_1062 UNMEASURED: " + str(exc), flush=True)
-    # Sixth REAL process reopens the checkpoint taken while the original
-    # robot was dispatched, the station ghost still pending and its powering
-    # substation physically held. The saved world, not a fresh fixture, owns
-    # the 0338 task, material and priest. A successful source test cannot
-    # substitute for this independent native Factorio receipt.
-    midflight_save = game_root / "saves" / ROBOT_MIDFLIGHT_SAVE_NAME
-    check_engine_log(content, ROBOT_MIDFLIGHT_SAVE_MARKER)
-    if not midflight_save.is_file():
-        raise RuntimeError("S3 native midflight autosave missing on disk")
-    with zipfile.ZipFile(midflight_save) as archive:
-        if archive.testzip() is not None:
-            raise RuntimeError("S3 native midflight autosave failed CRC")
-    midflight_copy = output / "tech-priests-robot-midflight-checkpoint.zip"
-    shutil.copy2(midflight_save, midflight_copy)
+    # Sixth REAL server process checkpoints the identical fourth-process
+    # world at the physical mid-flight cut. Factorio --benchmark DOES NOT
+    # persist game.auto_save() requests (observed 42412909755), so the
+    # measured 48k fifth benchmark remains untouched and is not treated as
+    # a source of serialized custody. This is a genuine native server save.
+    midflight_copy, midflight_server_log = server_checkpoint(
+        stock_carried, work / "factorio-robot-midflight-save-server.log",
+        ROBOT_MIDFLIGHT_SAVE_NAME, ROBOT_MIDFLIGHT_SAVE_MARKER,
+        "tech-priests-robot-midflight-checkpoint.zip")
+    checkpointed_pre_save_evidence(midflight_server_log,
+                                   ROBOT_MIDFLIGHT_SAVE_MARKER,
+                                   ROBOT_MIDFLIGHT_SAVE_NAME)
+    # Seventh REAL process reopens this CRC-checked midflight checkpoint.
+    # The saved world, not a freshly created fixture, owns the original
+    # 0338 task, unpowered ghost, held material and priest identity.
     midflight_control = control.read_text(encoding="utf-8")
     midflight_flag = "_G.TP_CI_S2_MIDFLIGHT_RELOAD_PROBE=false"
     if midflight_control.count(midflight_flag) != 1:
@@ -3882,8 +3893,9 @@ def execute(args: argparse.Namespace) -> int:
         raise RuntimeError("S3 independent native reload process failed: "
                            + str(midflight_result.returncode))
     check_engine_log(midflight_log, ROBOT_MIDFLIGHT_RELOAD_MARKER)
-    verify_robot_midflight_reload_1360_log(content, midflight_log)
-    print("PASS S3/1360: independent Factorio process resumed original "
+    verify_robot_midflight_reload_1360_log(midflight_server_log, midflight_log)
+    print("PASS S3/1360: independently saved native server checkpoint and "
+          "separate Factorio process resumed original "
           "unpowered robot-dispatch ghost with counted substation held, "
           "then restored power and built one real ranked Senior")
     if "held=1 chest_delta=0" not in combined:
