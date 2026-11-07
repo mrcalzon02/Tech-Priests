@@ -1,12 +1,18 @@
 """Six cast-iron lobber cannons: three per mirrored side, each bottom fed.
 Blender 5.0.1. Run from repository root with --python-exit-code 12.
 """
-import bpy, math, json, hashlib
+import bpy, math, json, hashlib, shutil
 from pathlib import Path
 from mathutils import Vector
 O=Path("art/source-to-3d/martian-bunker/alternatives/v04").resolve()
 T=Path("art/source-to-3d/martian-bunker/alternatives/v02/textures").resolve()
 O.mkdir(parents=True,exist_ok=True)
+source_tiles=T
+T=O/"textures"
+T.mkdir(exist_ok=True)
+for key in ["02_dark_gunmetal","01_oxide_red_paint","03_worn_machined_steel"]:
+ if not (T/(key+".png")).exists():
+  shutil.copy2(source_tiles/(key+".png"),T/(key+".png"))
 bpy.ops.wm.read_factory_settings(use_empty=True)
 S=bpy.context.scene
 col=bpy.data.collections.new("SIX_CAST_IRON_LOBBER");S.collection.children.link(col)
@@ -105,7 +111,7 @@ for row in range(3):
  mirrored(cylinder("FIN_TO_CANNON_MOUNT_%d"%(row+1),(-.06,C.y,C.z),(-.17,C.y,C.z),.085,iron))
  end=C-axis*.285
  start=Vector((-.055,C.y+.14,max(2.03,C.z-.39)))
- path=[start,Vector((-.15,C.y+.27,C.z-.39)),Vector((-.25,C.y+.23,C.z-.38)),end-axis*.10,end]
+ path=[start,Vector((-.15,start.y,start.z)),Vector((-.25,C.y+.23,C.z-.38)),end-axis*.10,end]
  feeder("BOTTOM_FEED_LEFT_%d"%(row+1),path)
  # Feed socket is part of the cannon's bottom, and the pipe end coincides with it.
  mirrored(cylinder("BOTTOM_FEED_SOCKET_LEFT_%d"%(row+1),end-axis*.022,end+axis*.02,.080,iron))
