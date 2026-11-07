@@ -1,0 +1,26 @@
+{
+  "status": "VERIFIED_FULL_ROTATION_DELIVERED",
+  "directions": 64,
+  "step_degrees": 5.625,
+  "canvas": [
+    640,
+    640
+  ],
+  "archive": {
+    "filename": "Original_Bunker_Turret_Complete_Rotation.zip",
+    "size_bytes": 72051604,
+    "sha256": "3efa95d2f05bb477717a83cc7ec910598b9e41d0478378abfd8ab09540a87cb4",
+    "url": "https://chatgpt.com/library?file_id=libfile_d06d2dd931588191ae1771810b49ea2a&account_id=personal"
+  },
+  "preview": "https://chatgpt.com/library?file_id=libfile_ee809ba888f481919c2900711390e913&account_id=personal",
+  "source_commit": "e9c4e1d4008378c194feb7281241349a9b2658c9",
+  "source_sha256": "827885c9c42cb752dea9bae1a0d31cb957f144f21d945ad019c507aaa6e2b9a3",
+  "verification": [
+    "all 64 transparent frames at 640 x 640",
+    "nonempty alpha with no clipped edges",
+    "GIF has 64 frames",
+    "ZIP CRC and native source SHA-256 verified",
+    "saved rig, recoil, fixed rings and smoke heading transforms passed"
+  ],
+  "separate_full_firing_run": "https://github.com/mrcalzon02/Tech-Priests/actions/runs/42425745723"
+}
