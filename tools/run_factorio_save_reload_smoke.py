@@ -1689,7 +1689,7 @@ def self_test_native_efficiency_1062() -> None:
         "tick=13940 hierarchy=4-3-2-1-1 station_spares=0 components=0 "
         "original_priests=5 fixture_only=true\n"
         "[TP-GROUND-RANK-TEST] PASS REVERSAL_ENGINE_NATURAL_ORE_RETURN "
-        "tick=53780 original_magos=899 physical_hops=4 "
+        "tick=53780 original_magos=899 original_priests=5 physical_hops=4 "
         "magos_inventory_delta=1 delivered_count=1 cargo_empty=true\n"
         "  Performed 48000 updates in 447299.911 ms\n"
         "  avg: 9.319 ms, min: 0.107 ms, max: 7485.600 ms\n")
@@ -1706,7 +1706,7 @@ def self_test_native_efficiency_1062() -> None:
     # the same engine-backed identities and physical-four-hop receipt here.
     accepted_writ = (
         "[TP-GROUND-RANK-TEST] REVERSAL_ENGINE_REAL_WRIT_ASSIGNED "
-        "tick=14000 id=2 root=899 station_stock=0 ghost=1000\\n")
+        "tick=14000 id=2 root=899 station_stock=0 ghost=1000\n")
     accepted = native_efficiency_observation_1062(fixture + accepted_writ)
     assert accepted["deficit_to_first_delivery_ticks"] == 39780
     for bad_writ in (
