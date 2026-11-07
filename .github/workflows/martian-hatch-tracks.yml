@@ -1,0 +1,64 @@
+name: Recessed pillar hatches and rubber tracks Blender build
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/martian-hatch-tracks.yml'
+      - 'art/source-to-3d/martian-bunker/alternatives/v07/build_hatch_tracks.py'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: martian-hatch-tracks
+  cancel-in-progress: false
+jobs:
+  build-and-render-loose-loaders:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            art/source-to-3d/martian-bunker/alternatives/v05
+            art/source-to-3d/martian-bunker/alternatives/v07
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Blender 5.0.1 and review dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libxi6 libxfixes3 libxrender1 libgl1 libegl1 libxkbcommon0 fonts-dejavu-core
+          python -m pip install Pillow
+          curl --fail --location --retry 3 https://download.blender.org/release/Blender5.0/blender-5.0.1-linux-x64.tar.xz --output blender.tar.xz
+          tar -xf blender.tar.xz
+          ./blender-5.0.1-linux-x64/blender --version | head -n 2
+      - name: Build loader on preserved V05 cannons render and reimport GLB
+        env:
+          LOADER_RENDER_SIZE: '900'
+          LOADER_RENDER_SAMPLES: '16'
+        run: |
+          python -m py_compile art/source-to-3d/martian-bunker/alternatives/v07/build_hatch_tracks.py
+          ./blender-5.0.1-linux-x64/blender -b --factory-startup -t 2 --python-exit-code 12 --python art/source-to-3d/martian-bunker/alternatives/v07/build_hatch_tracks.py
+      - name: Assemble review and native model package
+        run: python art/source-to-3d/martian-bunker/alternatives/v07/make_review.py
+      - name: Publish model and actual render images to main
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          find art/source-to-3d/martian-bunker/alternatives/v07 -type d -name __pycache__ -prune -exec rm -rf {} +
+          find art/source-to-3d/martian-bunker/alternatives/v07 -name '*.blend1' -delete
+          git add art/source-to-3d/martian-bunker/alternatives/v07
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish recessed pillar hatches and rubber track renders'
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+      - name: Preserve model package and rendered evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: central-ammunition-arm-v07
+          path: art/source-to-3d/martian-bunker/alternatives/v07/
+          if-no-files-found: warn
+          retention-days: 30
