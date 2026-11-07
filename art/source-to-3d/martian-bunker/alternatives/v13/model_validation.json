@@ -1,0 +1,34 @@
+{
+  "revision": "V13 selected corner chamfers",
+  "sensor_box_lower_left_and_right_corners_chamfered": true,
+  "cabinet_rear_left_and_right_vertical_corners_chamfered": true,
+  "corner_records": [
+    {
+      "object": "ROOF_OPTICAL_HEAD",
+      "selected_edge_indices": [
+        0,
+        7
+      ],
+      "flat_chamfer_width": 0.03200000151991844,
+      "flat_chamfer_segments": 1,
+      "small_edge_finish_width": 0.003
+    },
+    {
+      "object": "CENTRAL_AMMUNITION_ARMOURED_SPINE",
+      "selected_edge_indices": [
+        3,
+        6
+      ],
+      "flat_chamfer_width": 0.04500000178813934,
+      "flat_chamfer_segments": 1,
+      "small_edge_finish_width": 0.003
+    }
+  ],
+  "side_panel_depth_fit_scale": 0.85,
+  "adjusted_side_panel_parts": 42,
+  "all_unrelated_geometry_materials_and_transforms_preserved": true,
+  "corrugated_hoses_cannons_conveyors_hatches_preserved": true,
+  "existing_bunker_modified": false,
+  "GLB_reimported": true,
+  "mesh_count": 247
+}
