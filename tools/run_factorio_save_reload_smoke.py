@@ -122,29 +122,29 @@ def verify_robot_midflight_reload_1360_log(first: str, reloaded: str) -> None:
         return tuple(map(int, matches[0].groups()))
 
     cut = receipt(pre, "ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick=",
-        r"ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick=(\\d+) "
-        r"magos=(\\d+) priest=(\\d+) observed_flying_robots=(\\d+) "
+        r"ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick=(\d+) "
+        r"magos=(\d+) priest=(\d+) observed_flying_robots=(\d+) "
         r"ghost=1 substation_custody=1")
     saved = receipt(pre, "ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=",
-        r"ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=(\\d+) "
-        r"magos=(\\d+) priest=(\\d+) ghost=1 substation_custody=1")
+        r"ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=(\d+) "
+        r"magos=(\d+) priest=(\d+) ghost=1 substation_custody=1")
     observed = receipt(reloaded, "PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick=",
-        r"PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick=(\\d+) "
-        r"magos=(\\d+) priest=(\\d+) ghost=1 substation_held=1 "
+        r"PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick=(\d+) "
+        r"magos=(\d+) priest=(\d+) ghost=1 substation_held=1 "
         r"power_disconnected=true original_task_retained=true "
         r"original_request_retained=true built=0 native_build_event=0")
     restored = receipt(reloaded, "PASS ROBOT_ENGINE_S2_NATIVE_MIDFLIGHT_POWER_RECOVERY_1350 tick=",
-        r"PASS ROBOT_ENGINE_S2_NATIVE_MIDFLIGHT_POWER_RECOVERY_1350 tick=(\\d+) "
-        r"magos=(\\d+) priest=(\\d+) ghost=1 native_build_event=0 "
+        r"PASS ROBOT_ENGINE_S2_NATIVE_MIDFLIGHT_POWER_RECOVERY_1350 tick=(\d+) "
+        r"magos=(\d+) priest=(\d+) ghost=1 native_build_event=0 "
         r"substation_mined=1 substation_rebuilt=1 original_task_retained=true "
         r"original_request_retained=true")
     event = receipt(reloaded, "ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=",
-        r"ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=(\\d+) "
-        r"station=(\\d+) robot=(\\d+)")
+        r"ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=(\d+) "
+        r"station=(\d+) robot=(\d+)")
     built = receipt(reloaded, "PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick=",
-        r"PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick=(\\d+) "
-        r"magos=(\\d+) magos_priest=(\\d+) station=(\\d+) "
-        r"priest=(\\d+) robot=(\\d+) source_delta=1 network_delta=1 "
+        r"PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick=(\d+) "
+        r"magos=(\d+) magos_priest=(\d+) station=(\d+) "
+        r"priest=(\d+) robot=(\d+) source_delta=1 network_delta=1 "
         r"ghost=0 hierarchy=direct-senior robot_event=on_robot_built_entity")
     if not (cut[3] > 0 and cut[0] == saved[0]
             and saved[0] <= observed[0] < restored[0] < event[0] <= built[0]
@@ -3019,27 +3019,27 @@ def self_test() -> int:
     s3_before = (
         "ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick=400 "
         "magos=20 priest=21 observed_flying_robots=1 "
-        "ghost=1 substation_custody=1\\n"
+        "ghost=1 substation_custody=1\n"
         "ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=400 "
-        "magos=20 priest=21 ghost=1 substation_custody=1\\n"
+        "magos=20 priest=21 ghost=1 substation_custody=1\n"
         "1.111 Info AppManager.cpp:324: Saving to "
-        "_autosave-tech-priests-ci-robot-midflight (blocking).\\n"
-        "1.222 Info AppManagerStates.cpp:2111: Saving finished\\n"
+        "_autosave-tech-priests-ci-robot-midflight (blocking).\n"
+        "1.222 Info AppManagerStates.cpp:2111: Saving finished\n"
     )
     s3_after = (
         "PASS ROBOT_ENGINE_S2_MIDFLIGHT_RELOAD_CUSTODY_1360 tick=460 "
         "magos=20 priest=21 ghost=1 substation_held=1 "
         "power_disconnected=true original_task_retained=true "
-        "original_request_retained=true built=0 native_build_event=0\\n"
+        "original_request_retained=true built=0 native_build_event=0\n"
         "PASS ROBOT_ENGINE_S2_NATIVE_MIDFLIGHT_POWER_RECOVERY_1350 tick=520 "
         "magos=20 priest=21 ghost=1 native_build_event=0 "
         "substation_mined=1 substation_rebuilt=1 original_task_retained=true "
-        "original_request_retained=true\\n"
-        "ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=700 station=30 robot=31\\n"
+        "original_request_retained=true\n"
+        "ROBOT_ENGINE_S2_NATIVE_ROBOT_EVENT tick=700 station=30 robot=31\n"
         "PASS ROBOT_ENGINE_S2_PHYSICAL_BUILD tick=740 magos=20 "
         "magos_priest=21 station=30 priest=32 robot=31 "
         "source_delta=1 network_delta=1 ghost=0 hierarchy=direct-senior "
-        "robot_event=on_robot_built_entity\\n"
+        "robot_event=on_robot_built_entity\n"
     )
     verify_robot_midflight_reload_1360_log(s3_before, s3_after)
     for old, new in (
