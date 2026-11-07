@@ -249,6 +249,7 @@ jobs:
             ${{ runner.temp }}/factorio-save-reload/factorio-ore-carry-server.log
             ${{ runner.temp }}/factorio-save-reload/factorio-stock-carry-server.log
             ${{ runner.temp }}/factorio-save-reload/factorio-reload.log
+            ${{ runner.temp }}/factorio-save-reload/factorio-robot-midflight-reload.log
             test-artifacts/factorio-ci-five-create.log
             test-artifacts/factorio-ci-five.log
             test-artifacts/performance-ci-five.json
@@ -259,6 +260,8 @@ jobs:
             test-artifacts/factorio-ci-100.log
             test-artifacts/performance-ci-100.json
             test-artifacts/performance-observations.json
+            test-artifacts/performance-s3-preflight-1360.json
+            test-artifacts/tech-priests-robot-midflight-checkpoint.zip
             test-artifacts/performance-summary.md
             test-artifacts/performance-123k-benchmark.json
             test-artifacts/performance-123k-benchmark.md

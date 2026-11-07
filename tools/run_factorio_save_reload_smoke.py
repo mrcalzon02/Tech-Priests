@@ -2001,6 +2001,24 @@ def self_test_native_efficiency_1062() -> None:
 
 
 def self_test() -> int:
+    # 1360 focused regression: independent-process failure must retain its
+    # native engine log, checkpoint and separately measured fifth-process data.
+    artifact_policy = (pathlib.Path(__file__).resolve().parents[1] /
+                       ".github/workflows/factorio-runtime-tests.yml"
+                       ).read_text(encoding="utf-8")
+    for required in (
+        "${{ runner.temp }}/factorio-save-reload/factorio-robot-midflight-reload.log",
+        "test-artifacts/tech-priests-robot-midflight-checkpoint.zip",
+        "test-artifacts/performance-s3-preflight-1360.json",
+    ):
+        if artifact_policy.count(required) != 1:
+            raise AssertionError("S3 failure evidence not archived: " + required)
+    runner_source = pathlib.Path(__file__).read_text(encoding="utf-8")
+    sixth_boundary = runner_source.index("    # Sixth REAL process reopens")
+    previous = runner_source[max(0, sixth_boundary - 1700):sixth_boundary]
+    if ("performance-s3-preflight-1360.json" not in previous or
+            "NATIVE_EFFICIENCY_1062" not in previous):
+        raise AssertionError("fifth-process metrics suppressed on S3 failure")
     # 1175: The native fourth-process checkpoint requested a save at tick
     # 9975, then completed ore hop 2 in the SAME tick before the blocking
     # save began. Its fifth-process reload started from that persisted hop
@@ -3806,6 +3824,25 @@ def execute(args: argparse.Namespace) -> int:
     verify_robot_frontier_native_1080_log(combined)
     verify_robot_frontier_native_1111_log(combined)
     verify_robot_frontier_native_1120_log(combined)
+    # Completed fifth-process evidence survives a failed independent S3 reload.
+    # No script/broker timing claim is attributed to the sixth process.
+    preflight_path = output / "performance-s3-preflight-1360.json"
+    try:
+        preflight_metrics = native_efficiency_observation_1062(content)
+        preflight_path.write_text(json.dumps({
+            "scope": "completed-fifth-process-only",
+            "s3_sixth_process_accepted": False,
+            "measurements": preflight_metrics,
+        }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        print("NATIVE_EFFICIENCY_1062 " +
+              json.dumps(preflight_metrics, sort_keys=True), flush=True)
+    except Exception as exc:
+        preflight_path.write_text(json.dumps({
+            "scope": "completed-fifth-process-only",
+            "s3_sixth_process_accepted": False,
+            "measurements": None, "reason": str(exc),
+        }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        print("NATIVE_EFFICIENCY_1062 UNMEASURED: " + str(exc), flush=True)
     # Sixth REAL process reopens the checkpoint taken while the original
     # robot was dispatched, the station ghost still pending and its powering
     # substation physically held. The saved world, not a fresh fixture, owns
@@ -3849,8 +3886,6 @@ def execute(args: argparse.Namespace) -> int:
         raise RuntimeError("stranded cargo did not survive independent engine reload")
     if "held=0 net_fixture_delta=0" not in combined:
         raise RuntimeError("re-imprinted priest did not return the conserved item")
-    print("NATIVE_EFFICIENCY_1062 "+json.dumps(
-        native_efficiency_observation_1062(content), sort_keys=True))
     print("PASS: five real Factorio processes, four CRC-verified saves, "
           "4 identities preserved, stranded cargo persisted across reload, "
           "a naturally mined ore item persisted in its original engine-owned "
