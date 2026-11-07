@@ -3071,7 +3071,8 @@ def ci_five_observation_1291(content: str) -> dict[str, object]:
         "ore_per_1000_ticks": None,
         "first_delivery_ticks": None,
         "notes": "CI-created initial stations, authentic paired priests and engine "
-                 "timings (including authentic startup); no physical station construction or counted ore delivery. 
+                 "timings (including authentic startup); no physical station "
+                 "construction or counted ore delivery. "
                  "Count/identity sampled every 60 ticks after 600-tick warmup; "
                  "UPS and script timings include warmup and all installed mods.",
     }
