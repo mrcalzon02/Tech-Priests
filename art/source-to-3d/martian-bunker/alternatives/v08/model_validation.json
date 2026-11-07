@@ -1,0 +1,44 @@
+{
+  "revision": "V08 continuous segmented rubber tracks",
+  "existing_cannons_and_air_pipes_unchanged": true,
+  "recessed_hatches_cut_into_pillar": 6,
+  "rubber_tracks": 6,
+  "chutes": "slight downward slope with continuous segmented rubber loops",
+  "track_checks": [
+    {
+      "station": 1,
+      "shoes_per_closed_loop": 41,
+      "uniform_pitch": 0.03365218867347334,
+      "seam_gap": 0.0022,
+      "closed_return": true,
+      "shared_material": "CONVEYOR | continuous vulcanized rubber segments"
+    },
+    {
+      "station": 2,
+      "shoes_per_closed_loop": 56,
+      "uniform_pitch": 0.03425394503179193,
+      "seam_gap": 0.0022,
+      "closed_return": true,
+      "shared_material": "CONVEYOR | continuous vulcanized rubber segments"
+    },
+    {
+      "station": 3,
+      "shoes_per_closed_loop": 73,
+      "uniform_pitch": 0.03386213328830944,
+      "seam_gap": 0.0022,
+      "closed_return": true,
+      "shared_material": "CONVEYOR | continuous vulcanized rubber segments"
+    }
+  ],
+  "single_material_all_track_segments": true,
+  "six_open_tapered_hoppers": true,
+  "existing_guides_raised_for_hopper_lips": true,
+  "reload_animation": "Named path markers only; no animation authored yet",
+  "six_visible_supply_ports": true,
+  "central_fin_width_multiplier": 1.65,
+  "central_housing": "Widened pillar with six recessed hatch openings and raised hatch leaves",
+  "internal_distribution": "Concealed fictional game-asset mechanism; no functional weapon internals constructed",
+  "existing_bunker_modified": false,
+  "GLB_reimported": true,
+  "mesh_count": 145
+}
