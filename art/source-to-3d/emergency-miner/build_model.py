@@ -68,7 +68,19 @@ def material(name, rgb, metallic=0.5, roughness=0.55, variation=0.0, emission=0.
         bump.inputs["Strength"].default_value = 0.18
         bump.inputs["Distance"].default_value = 0.007
         links.new(noise.outputs["Fac"], bump.inputs["Height"])
-        links.new(bump.outputs["Normal"], shader.inputs["Normal"])
+        # Source-dark forged surface grain; shaders, not fabricated detail geometry.
+        if name in {"black_steel","iron","edge_steel","worn_steel"}:
+            grain=nodes.new("ShaderNodeTexNoise")
+            grain.inputs["Scale"].default_value=150.0
+            grain.inputs["Detail"].default_value=2.0
+            fine=nodes.new("ShaderNodeBump")
+            fine.inputs["Strength"].default_value=.16
+            fine.inputs["Distance"].default_value=.0015
+            links.new(grain.outputs["Fac"],fine.inputs["Height"])
+            links.new(bump.outputs["Normal"],fine.inputs["Normal"])
+            links.new(fine.outputs["Normal"],shader.inputs["Normal"])
+        else:
+            links.new(bump.outputs["Normal"], shader.inputs["Normal"])
     MATERIALS[name] = m
     return m
 
@@ -576,12 +588,12 @@ def carve_source_corner_foot_faces():
         if not foot:
             raise RuntimeError("Missing source foundation foot "+side)
         before=len(foot.data.vertices)
-        contact=source_front_raycast(foot,cx,.239)
+        contact=source_front_raycast(foot,cx,.263)
         bpy.ops.mesh.primitive_cube_add(size=1,
-            location=(contact.x,contact.y+.012,.239))
+            location=(contact.x,contact.y+.006,.263))
         cutter=bpy.context.object
         cutter.name="TEMP_"+side+"_FOOT_RECESSED_FACE_CUTTER"
-        cutter.dimensions=(width(55),.064,.062)
+        cutter.dimensions=(width(49),.036,.051)
         bpy.ops.object.transform_apply(location=False,rotation=False,scale=True)
         bpy.ops.object.select_all(action="DESELECT")
         foot.select_set(True)
@@ -601,9 +613,9 @@ def carve_source_corner_foot_faces():
         zone_count=0
         for poly in foot.data.polygons:
             pos=foot.matrix_world @ poly.center
-            if (abs(pos.x-contact.x)<width(31)
-                and abs(pos.z-.239)<.034
-                and pos.y>contact.y+.017):
+            if (abs(pos.x-contact.x)<width(26)
+                and abs(pos.z-.263)<.028
+                and pos.y>contact.y+.009):
                 poly.material_index=len(foot.data.materials)-1
                 zone_count+=1
         foot["source_front_face_recess_cut"]=True
@@ -1077,10 +1089,10 @@ def save_render(scene, camera, path):
 def create_materials():
     # Source is dark oil-browned, oxidized foundry steel, not clean aluminum.
     # Tight roughness and material noise avoid a sterile plastic appearance.
-    material("black_steel",(.026,.025,.024),.63,.73,.38)
-    material("iron",(.067,.057,.048),.67,.75,.45)
-    material("edge_steel",(.145,.122,.094),.79,.65,.38)
-    material("worn_steel",(.089,.075,.060),.73,.72,.47)
+    material("black_steel",(.021,.020,.018),.63,.73,.38)
+    material("iron",(.047,.038,.031),.67,.75,.45)
+    material("edge_steel",(.104,.082,.058),.79,.65,.38)
+    material("worn_steel",(.064,.052,.041),.73,.72,.47)
     material("crevice",(.006,.009,.008),.13,.85,.09)
     material("brass",(.31,.196,.060),.76,.51,.31)
     material("old_gold",(.28,.159,.048),.82,.54,.31)
