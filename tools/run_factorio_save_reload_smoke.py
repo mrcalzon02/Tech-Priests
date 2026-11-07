@@ -3020,7 +3020,7 @@ def self_test() -> int:
         "ROBOT_ENGINE_S2_MIDFLIGHT_POWER_CUT_1350 tick=400 "
         "magos=20 priest=21 observed_flying_robots=1 "
         "ghost=1 substation_custody=1\n"
-        "ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=400 "
+        "[TP-GROUND-RANK-TEST] ROBOT_ENGINE_S2_MIDFLIGHT_SAVE_REQUESTED_1360 tick=400 "
         "magos=20 priest=21 ghost=1 substation_custody=1\n"
         "1.111 Info AppManager.cpp:324: Saving to "
         "_autosave-tech-priests-ci-robot-midflight (blocking).\n"
