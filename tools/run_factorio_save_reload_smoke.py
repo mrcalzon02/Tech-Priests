@@ -3044,6 +3044,50 @@ def self_test() -> int:
 
 
 
+def ci_stable_pair_script_1291(content: str, start: int, end: int,
+                               population: int) -> dict[str, object] | None:
+    """Measure native all-mod scriptUpdate in the verified paired interval.
+
+    Factorio verbose CSV ticks are benchmark-relative; align with game.tick
+    only when a fresh CI save proves the starting game tick was exactly zero.
+    This remains diagnostic and cannot satisfy construction or ore gates.
+    """
+    created = re.findall(
+        r"CI_FIVE_PROFILE_1291_CREATED tick=(\d+) stations="
+        + str(population) + r" requested=" + str(population)
+        + r" setup=ci-only-real-entities", content)
+    if created != ["0"] or not (0 <= start < end <= 30000):
+        return None
+    headers = re.findall(r"(?m)^[ \t]*tick,scriptUpdate(,?)[ \t]*$", content)
+    if len(headers) != 1:
+        return None
+    native_csv = headers[0] == ","
+    pattern = (r"(?m)^t(\d+),([0-9]+(?:\.[0-9]+)?),$" if native_csv
+               else r"(?m)^(\d+),([0-9]+(?:\.[0-9]+)?)$")
+    rows = re.findall(pattern, content)
+    if len(rows) != 30000:
+        return None
+    durations = []
+    for index, (tick_text, duration_text) in enumerate(rows):
+        if int(tick_text) != index:
+            return None
+        duration = float(duration_text)
+        if not math.isfinite(duration) or duration < 0:
+            return None
+        if start <= index < end:
+            durations.append(duration / 1000000.0)
+    if len(durations) != end - start:
+        return None
+    ordered = sorted(durations)
+    return {
+        "stable_all_mod_script_mean_ms_per_tick":
+            round(sum(ordered) / len(ordered), 6),
+        "stable_all_mod_script_p95_ms_per_tick":
+            round(ordered[math.ceil(0.95 * len(ordered)) - 1], 6),
+        "stable_all_mod_script_sample_count": len(ordered),
+    }
+
+
 def ci_five_observation_1291(content: str, expected: int = 5) -> dict[str, object]:
     """Native 5/25-pair population: no earned construction or resource receipt."""
     if expected not in (5, 25):
@@ -3071,13 +3115,17 @@ def ci_five_observation_1291(content: str, expected: int = 5) -> dict[str, objec
             native["script_p95_ms_per_tick"],
         "script_sample_coverage": native["script_sample_coverage"],
         "script_sample_count": native["script_sample_count"],
+        "stable_all_mod_script_mean_ms_per_tick": None,
+        "stable_all_mod_script_p95_ms_per_tick": None,
+        "stable_all_mod_script_sample_count": None,
         "ore_per_1000_ticks": None,
         "first_delivery_ticks": None,
         "notes": "CI-created initial stations, authentic paired priests and engine "
                  "timings (including authentic startup); no physical station "
                  "construction or counted ore delivery. "
-                 "Count/identity sampled every 60 ticks after 600-tick warmup; "
-                 "UPS and script timings include warmup and all installed mods.",
+                 "Count/identity sampled every 60 ticks after actual pairing; "
+                 "whole-run UPS and all-mod script timings include warmup. "
+                 "Verified paired-window all-mod script timing is separate.",
     }
     if len(starts)==len(ends)==1:
         a,at,ao=map(int,starts[0])
@@ -3093,6 +3141,12 @@ def ci_five_observation_1291(content: str, expected: int = 5) -> dict[str, objec
             result["first_observed_tick"]=a
             result["last_observed_tick"]=b
             result["observed_samples"]=n
+            # Whole-run script cost includes population-dependent startup.
+            # Publish a comparable 11,280-tick paired-window cost only when
+            # the benchmark tick origin and all native samples are verified.
+            stable = ci_stable_pair_script_1291(content, a, b, expected)
+            if stable is not None:
+                result.update(stable)
 
     # Count only authentic source counters in the proven stable five-pair
     # interval. Missing data stays null; engine script timing includes warmup.
@@ -3144,6 +3198,32 @@ def self_test_ci_five_1291() -> None:
     assert observed["movement_requests_per_1000_ticks"] == round(12000 / 11280, 6)
     assert observed["movement_stalled_repaths_per_1000_ticks"] is None
     assert observed["broker_service_blocked_fraction"] == 0.025
+    assert observed["stable_all_mod_script_mean_ms_per_tick"] is None
+    # Native 2.0.77 CSV, with startup at 1ms and the actual stable pair
+    # interval at 3ms; a whole-run average cannot represent paired costs.
+    source_rows = "".join(f"{i},1000000\n" for i in range(30000))
+    native_rows = "".join(
+        f"t{i},{3000000 if 7200 <= i < 18480 else 1000000},\n"
+        for i in range(30000))
+    native_log = (
+        "CI_FIVE_PROFILE_1291_CREATED tick=0 stations=5 requested=5 "
+        "setup=ci-only-real-entities\n"
+        + log.replace("tick,scriptUpdate\n" + source_rows,
+                      "run 1:\ntick,scriptUpdate,\n" + native_rows))
+    paired = ci_five_observation_1291(native_log)
+    assert paired["paired_population_verified"] == 5
+    assert paired["stable_all_mod_script_mean_ms_per_tick"] == 3.0
+    assert paired["stable_all_mod_script_p95_ms_per_tick"] == 3.0
+    assert paired["stable_all_mod_script_sample_count"] == 11280
+    for invalid_native in (
+        native_log.replace("CREATED tick=0", "CREATED tick=60"),
+        native_log.replace("identity_stable=true", "identity_stable=false"),
+        native_log.replace("t7200,3000000,", "t7200,garbled,"),
+        native_log + "CI_FIVE_PROFILE_1291_CREATED tick=0 stations=5 "
+                     "requested=5 setup=ci-only-real-entities\n",
+    ):
+        assert ci_five_observation_1291(invalid_native)[
+            "stable_all_mod_script_mean_ms_per_tick"] is None
     for malformed in (
         log.replace("routed_scans=120", "routed_scans=unmeasured"),
         log.replace("routed_scans=120", "routed_scans=-1"),
