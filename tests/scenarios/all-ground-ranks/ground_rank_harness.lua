@@ -14,7 +14,8 @@ local LATE_COMBAT_SMOKE=rawget(_G,"TP_CI_LATE_COMBAT")==true
 local CI_FIVE_PROFILE_1291=rawget(_G,"TP_CI_FIVE_PROFILE_1291")==true
 local CI_PROFILE_POPULATION_1291=rawget(_G,"TP_CI_PROFILE_POPULATION_1291") or 5
 if CI_FIVE_PROFILE_1291 and CI_PROFILE_POPULATION_1291~=5
-    and CI_PROFILE_POPULATION_1291~=25 then
+    and CI_PROFILE_POPULATION_1291~=25
+    and CI_PROFILE_POPULATION_1291~=100 then
   error("CI_PROFILE_1291_UNSUPPORTED_POPULATION")
 end
 -- 1091: bind the mixed-defense audit at startup; Factorio forbids runtime
@@ -10768,15 +10769,16 @@ local function ci_five_setup_1291(state)
     {"senior-cogitator-station",128},
     {"planetary-magos-cogitator-station",192},
     {"junior-cogitator-station",256}}
-  if CI_PROFILE_POPULATION_1291==25 then
+  if CI_PROFILE_POPULATION_1291==25 or CI_PROFILE_POPULATION_1291==100 then
     -- CI-only real stations, not earned construction or resource credit.
     local names={
       "junior-cogitator-station","intermediate-cogitator-station",
       "senior-cogitator-station","planetary-magos-cogitator-station",
       "junior-cogitator-station"}
     specs={}
-    for i=0,24 do
-      specs[#specs+1]={names[(i%5)+1],(i%5)*64,math.floor(i/5)*64}
+    local cols=CI_PROFILE_POPULATION_1291==100 and 10 or 5
+    for i=0,CI_PROFILE_POPULATION_1291-1 do
+      specs[#specs+1]={names[(i%5)+1],(i%cols)*64,math.floor(i/cols)*64}
     end
   end
   for _,s in ipairs(specs) do

@@ -255,6 +255,9 @@ jobs:
             test-artifacts/factorio-ci-25-create.log
             test-artifacts/factorio-ci-25.log
             test-artifacts/performance-ci-25.json
+            test-artifacts/factorio-ci-100-create.log
+            test-artifacts/factorio-ci-100.log
+            test-artifacts/performance-ci-100.json
             test-artifacts/performance-observations.json
             test-artifacts/performance-summary.md
             test-artifacts/performance-123k-benchmark.json
