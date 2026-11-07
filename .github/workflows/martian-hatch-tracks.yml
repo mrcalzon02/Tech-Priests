@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           sparse-checkout: |
             art/source-to-3d/martian-bunker/alternatives/v05
             art/source-to-3d/martian-bunker/alternatives/v07
