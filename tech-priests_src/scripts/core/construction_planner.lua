@@ -8,6 +8,10 @@
 -- Already-active physical cargo/tasks continue under their original owner.
 local Recycling0822=require("scripts.core.station_recycling_0822")
 local M={version="0.1.674-dev",storage_key="construction_planner",discovery_interval=233,max_pairs_per_discovery=6,move_priority=968,move_ttl=60*12,reservation_ttl=60*20,request_timeout=60*20,travel_ticks_per_tile=20,max_travel_extra_ticks=60*120,max_ground_detour_extra_ticks=60*60,pickup_reach_sq=2.56,build_reach_sq=4,return_reach_sq=2.56,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true}
+-- Original 0836 rail requests must not hold 0338 indefinitely without
+-- a real source item. The 0338 physical builder, not the observer, owns
+-- task admission and this finite no-custody refusal.
+M.rail_source_wait_ticks_0836=60*120
 local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
 local function safe(v)if v==nil then return"nil"end;local ok,s=pcall(tostring,v);return ok and s or"?"end
@@ -1660,7 +1664,31 @@ function M.service_pair(pair,reason)
   task.creative_build=true
   task.phase="move-site"
  end
- if task.phase=="waiting-source"then local source=source_for_item(pair,task.item_name);if not source then return{processed=1,waiting=1,detail="waiting-source"}end;task.source_entity=source.entity;task.source_inv=source.inv;task.source_label=source.label;task.phase="move-source"end
+ if task.phase=="waiting-source"then
+  local source=source_for_item(pair,task.item_name)
+  if not source then
+   -- The earlier 0836 admission watchdog cannot run while 0338 owns
+   -- an active task. If all previously stocked rails disappear after
+   -- admission, this physical builder used to wait forever with no item
+   -- custody. Bound only this original rail writ; other manufacturing
+   -- jobs retain their existing legitimate waiting-source policy.
+   if marked_rail_request_0836(task) then
+    local started=tonumber(task.started_tick)
+    if not started or started<0 or started>now()
+      or now()-started>M.rail_source_wait_ticks_0836 then
+     -- No source item was debited; canonical 0338 abort releases its
+     -- reservation and records the exact original task refusal.
+     -- 0836 observes that terminal receipt and blocks the mission.
+     return M.abort_pair(pair,"rail-physical-source-unavailable")
+    end
+   end
+   return{processed=1,waiting=1,detail="waiting-source"}
+  end
+  task.source_entity=source.entity
+  task.source_inv=source.inv
+  task.source_label=source.label
+  task.phase="move-source"
+ end
  if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if not within_entity_reach(pair.priest.position,task.source_entity,M.pickup_reach_sq) then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
  if task.phase=="pickup"then local removed=remove_item(task.source_inv,task.item_name,1);if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end;task.carried={item_name=task.item_name,count=1};sync_custody(pair,task,"removed-source");task.phase="move-site"end
  if task.phase=="move-site"then

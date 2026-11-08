@@ -190,6 +190,46 @@ do
    and not p.construction_task_0338 and not p.construction_custody_0338
    and stock.rail==3 and stock["stone-furnace"]==1,
    "admitted but revoked rail task debited stock or kept unauthorized custody")
+ -- If a funded rail mission loses its real supply *after* 0338
+ -- admission, no permanent waiting-source task may monopolize the builder.
+ -- The no-cargo refusal must retain the original request and pending
+ -- mission for 0836 to observe; neither physical item nor ghost is spent.
+ mission.force_index=1
+ stock.rail=0
+ p.construction_last_task_0338=nil
+ p.construction_candidate_0338=nil
+ p.construction_cooldown_0338=0
+ local start_tick=game.tick
+ local waiting=Builder.service_pair(p,"rail-source-exhausted-after-discovery")
+ assert(waiting and waiting.waiting==1
+   and p.construction_task_0338
+   and p.construction_task_0338.phase=="waiting-source"
+   and p.construction_task_0338.request_value==req
+   and not p.construction_custody_0338
+   and p.construction_request==req
+   and stock.rail==0 and stock["stone-furnace"]==1,
+   "unstocked original rail unexpectedly consumed inventory or lost ownership")
+ game.tick=start_tick+Builder.rail_source_wait_ticks_0836
+ local at_limit=Builder.service_pair(p,"rail-source-wait-boundary")
+ assert(at_limit and at_limit.waiting==1
+   and p.construction_task_0338
+   and p.construction_task_0338.phase=="waiting-source",
+   "valid bounded source wait was interrupted before expiry")
+ game.tick=game.tick+1
+ local expired=Builder.service_pair(p,"rail-source-exhausted-bounded-refusal")
+ assert(expired and expired.blocked==1
+   and p.construction_last_task_0338
+   and p.construction_last_task_0338.phase=="aborted"
+   and p.construction_last_task_0338.result=="rail-physical-source-unavailable"
+   and p.construction_last_task_0338.request_value==req
+   and not p.construction_task_0338
+   and not p.construction_custody_0338
+   and p.construction_request==req
+   and mission.pending_rail_0836.request==req
+   and stock.rail==0 and stock["stone-furnace"]==1
+   and p.construction_bootstrap_ghost_0645==bootstrap,
+   "expired original rail blocked forever or damaged real item/request custody")
+ game.tick=start_tick
  storage.tech_priests.pairs_by_station[104]=previous
  prototypes=old_prototypes
  surface.find_entity, surface.can_place_entity=old_find,old_can
