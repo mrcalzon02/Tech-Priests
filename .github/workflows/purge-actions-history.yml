@@ -1,0 +1,108 @@
+name: Delete Actions run history
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/purge-actions-history.yml']
+  schedule:
+    - cron: '23 * * * *'
+  workflow_dispatch:
+permissions:
+  actions: write
+  contents: write
+concurrency:
+  group: delete-actions-run-history
+  cancel-in-progress: false
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Cancel old jobs and delete run records
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 -u - <<'PY'
+          import json, os, time, urllib.request, urllib.error
+          repo = os.environ["GITHUB_REPOSITORY"]
+          current = int(os.environ["GITHUB_RUN_ID"])
+          base = "https://api.github.com/repos/" + repo
+          headers = {"Authorization": "Bearer " + os.environ["GH_TOKEN"], "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+          calls = 0
+          class Budget(Exception): pass
+          def api(method, path, body=None, missing_ok=False):
+              global calls
+              if calls >= 850: raise Budget()
+              for attempt in range(4):
+                  req = urllib.request.Request(base + path, data=None if body is None else json.dumps(body).encode(), headers=headers, method=method)
+                  calls += 1
+                  try:
+                      with urllib.request.urlopen(req, timeout=60) as response:
+                          raw = response.read()
+                          return json.loads(raw) if raw else None
+                  except urllib.error.HTTPError as error:
+                      raw = error.read().decode()
+                      if missing_ok and error.code == 404: return None
+                      if error.code in (403, 429) and (error.headers.get("X-RateLimit-Remaining") == "0" or "rate limit" in raw.lower()):
+                          print("API rate limit reached; next hourly pass resumes.", flush=True)
+                          raise Budget()
+                      if error.code >= 500 or error.code == 429:
+                          time.sleep(min(60, 5 * 2**attempt))
+                          continue
+                      if error.code == 409: return {"conflict": True}
+                      raise RuntimeError(str(error.code) + " " + path + " " + raw[:300])
+              raise RuntimeError("Retry limit reached for " + path)
+          deleted = cancelled = 0
+          try:
+              # Disable historical workflow registrations so other commits cannot restart them.
+              page = 1
+              while True:
+                  workflows = api("GET", "/actions/workflows?per_page=100&page=" + str(page))["workflows"]
+                  for workflow in workflows:
+                      if workflow["path"] != ".github/workflows/purge-actions-history.yml" and workflow["state"] == "active":
+                          api("PUT", "/actions/workflows/" + str(workflow["id"]) + "/disable")
+                  if len(workflows) < 100: break
+                  page += 1
+              # Free runners first; API cancellation is asynchronous.
+              for status in ("in_progress", "queued", "waiting", "pending", "requested"):
+                  page = 1
+                  while True:
+                      runs = api("GET", "/actions/runs?per_page=100&status=" + status + "&page=" + str(page))["workflow_runs"]
+                      for run in runs:
+                          if run["id"] == current: continue
+                          result = api("POST", "/actions/runs/" + str(run["id"]) + "/cancel", {})
+                          cancelled += 1
+                          print("Cancel requested:", run["id"], flush=True)
+                      if len(runs) < 100: break
+                      page += 1
+              while True:
+                  runs = api("GET", "/actions/runs?per_page=100")["workflow_runs"]
+                  targets = [run for run in runs if run["id"] != current]
+                  if not targets:
+                      print("All other run records deleted.", flush=True)
+                      # Stop recurrence before attempting to remove this final definition.
+                      wf = api("GET", "/actions/workflows/purge-actions-history.yml")
+                      api("PUT", "/actions/workflows/" + str(wf["id"]) + "/disable")
+                      try:
+                          file = api("GET", "/contents/.github/workflows/purge-actions-history.yml?ref=main")
+                          api("DELETE", "/contents/.github/workflows/purge-actions-history.yml",
+                              {"message": "Remove completed Actions history purge", "sha": file["sha"], "branch": "main"})
+                      except Exception as error:
+                          print("Final definition needs connector removal:", str(error), flush=True)
+                      break
+                  progress = False
+                  for run in targets:
+                      if run["status"] != "completed": continue
+                      result = api("DELETE", "/actions/runs/" + str(run["id"]), missing_ok=True)
+                      if result and result.get("conflict"): continue
+                      deleted += 1
+                      progress = True
+                      print("Deleted:", run["id"], "count:", deleted, flush=True)
+                  if not progress:
+                      print("Waiting for cancellations to finish; next hourly pass resumes.", flush=True)
+                      break
+          except Budget:
+              print("Request budget exhausted; next hourly pass resumes.", flush=True)
+          finally:
+              print("Pass totals: deleted =", deleted, "cancel requested =", cancelled, "API calls =", calls, flush=True)
+          
+          PY
