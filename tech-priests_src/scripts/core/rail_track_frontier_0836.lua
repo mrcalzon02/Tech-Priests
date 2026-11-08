@@ -304,9 +304,7 @@ function M.verify_pending(pair)
   end
   if type(route.built_units)~="table"
       or #route.built_units~=route.segment
-      or (route.segment>0 and (
-        type(route.last_position)~="table"
-        or route.last_built_unit~=route.built_units[route.segment])) then
+      or (route.segment>0 and type(route.last_position)~="table") then
     return reject(m,"rail-chain-ledger-incomplete")
   end
   if pending.segment>1 then
