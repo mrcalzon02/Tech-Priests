@@ -1,0 +1,74 @@
+{
+  "revision": "V06",
+  "rejected_design": "V05 continuously tapered reducing elbows removed",
+  "design": "Separate cast water/steam interface plenums behind the machinery; full-size external openings and native-size machine fittings",
+  "core_202_world_geometry_unchanged": true,
+  "footprint_tiles": [
+    2,
+    2
+  ],
+  "manifolds": [
+    {
+      "fluid": "Water",
+      "body": "Water cast interface manifold",
+      "closed_mesh_nonmanifold_edges": 0,
+      "connected_components": 1,
+      "full_size_pipe_center": [
+        -1,
+        0.5,
+        0.36
+      ],
+      "external_body_diameter": 0.57,
+      "external_bore_diameter": 0.49,
+      "machine_coupling_outer_diameter": 0.2,
+      "machine_coupling_bore_diameter": 0.17192982456140352,
+      "vessel_seat": [
+        -0.4684109687805176,
+        0.38209471106529236,
+        0.5366231799125671
+      ],
+      "separate_plenum": true
+    },
+    {
+      "fluid": "Steam",
+      "body": "Steam cast interface manifold",
+      "closed_mesh_nonmanifold_edges": 0,
+      "connected_components": 1,
+      "full_size_pipe_center": [
+        1,
+        0.5,
+        0.36
+      ],
+      "external_body_diameter": 0.57,
+      "external_bore_diameter": 0.49,
+      "machine_coupling_outer_diameter": 0.2,
+      "machine_coupling_bore_diameter": 0.17192982456140352,
+      "vessel_seat": [
+        0.5017634034156799,
+        0.3359561264514923,
+        0.6266729831695557
+      ],
+      "separate_plenum": true
+    }
+  ],
+  "geometry_scope": "Two independent hollow chambers, without hidden mechanism detail",
+  "runtime_integration": "Pending; no runtime or animation changes",
+  "glb_readback": {
+    "native_mesh_count": 218,
+    "glb_mesh_count": 218,
+    "bounds_error_tiles": 0.0,
+    "reference_meshes_exported": false
+  },
+  "mouth_interface_checks": [
+    {
+      "fluid": "Water",
+      "matching_interface_vertices": 128,
+      "max_radius_error": 8.66487259998383e-08
+    },
+    {
+      "fluid": "Steam",
+      "matching_interface_vertices": 128,
+      "max_radius_error": 7.85879432640968e-08
+    }
+  ]
+}
