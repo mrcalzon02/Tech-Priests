@@ -1,0 +1,26 @@
+--- a/tech-priests_src/prototypes/entity.lua
++++ b/tech-priests_src/prototypes/entity.lua
+@@ -1334,12 +1334,11 @@
+     boiler.energy_source.fuel_inventory_size = 1
+   end
+   boiler.fluid_box = {
+-    production_type = "input-output",
++    production_type = "input",
+     filter = "water",
+     volume = 100,
+     pipe_connections = {
+-      { flow_direction = "input-output", direction = defines.direction.west, position = { -MICRO_PIPE_EDGE, 0 } },
+-      { flow_direction = "input-output", direction = defines.direction.south, position = { 0, MICRO_PIPE_EDGE } }
++      { flow_direction = "input", direction = defines.direction.west, position = { -0.5, -0.5 } }
+     }
+   }
+   boiler.output_fluid_box = {
+@@ -1347,7 +1346,7 @@
+     filter = "steam",
+     volume = 100,
+     pipe_connections = {
+-      { flow_direction = "output", direction = defines.direction.east, position = { MICRO_PIPE_EDGE, 0 } }
++      { flow_direction = "output", direction = defines.direction.east, position = { 0.5, -0.5 } }
+     }
+   }
+   boiler.pictures = tech_priests_micro_boiler_pictures("tech-priests-emergency-boiler", MICRO_TWO_TILE_SPRITE_SCALE_0541)

@@ -1,0 +1,10 @@
+{
+  "model": "Condenser V21",
+  "review": "Accepted by user after four 45-degree orthographic cardinal views; user directed saving and moving on to boiler.",
+  "native_final_state": "Geometry unchanged; 45-degree orthographic camera and hidden reference collections saved",
+  "native_sha256": "1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b",
+  "view_archive": "https://chatgpt.com/library?file_id=libfile_2602f85cfef48191b070ef09bfe130f5&account_id=personal",
+  "complete_package": "https://chatgpt.com/library?file_id=libfile_a0e5a008866881919cf7c32c9a7aab0c&account_id=personal",
+  "next_active_model": "Boiler V05",
+  "runtime_integration": "Pending"
+}
