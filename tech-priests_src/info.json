@@ -1,11 +1,11 @@
 {
   "name": "tech-priests",
-  "version": "0.1.672",
+  "version": "0.1.675",
   "title": "Tech Priests",
   "author": "christopher vardeman",
-  "factorio_version": "2.0",
+  "factorio_version": "2.1",
   "dependencies": [
-    "base >= 2.0.0",
+    "base >= 2.1.0",
     "mechanicist-factorio",
     "tanks_for_bob_fork",
     "kj_40kbaneblade",
@@ -17,8 +17,8 @@
     "? mechanicus-reborn",
     "? informatron",
     "? factoryplanner",
-    "? space-age >= 2.0.0",
-    "? quality >= 2.0.0",
+    "? space-age >= 2.1.0",
+    "? quality >= 2.1.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
   "description": "Tech-Priest logistics drones and Cogitator Stations with physical item-family and real fluid-network construction, plus 0.1.672 read-only energy readiness: boiler fluid-path proof, burner-generator electrical checks, reactor heat-network and burnt-result checks, fusion prerequisites, and observation-only fluid generators."
