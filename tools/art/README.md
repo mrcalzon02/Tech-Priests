@@ -24,7 +24,7 @@ blender -b approved-v08.blend --python tools/art/prepare_boiler_source.py -- --o
 This adds cold frame zero, skips zero-density steam, and enables denoising/render
 caching without changing mesh geometry, working-loop timing, lighting or materials.
 
-Three rendering processes share eight CPU threads. Each saves source/configuration
+Four rendering processes share eight CPU threads. Each saves source/configuration
 identity and completed-frame hashes. Resume a failed capture using:
 
 ```sh

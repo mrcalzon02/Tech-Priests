@@ -606,3 +606,6 @@ require("prototypes.compatibility.native_recipe_schema_1274")(
 
 -- Final registration: do not let legacy micro-art rescaling erase sprite shifts.
 require("prototypes.workbench_graphics")
+
+-- Boiler V08: authored four-way animation and native rear-row pipe interfaces.
+require("prototypes.generated_graphics.emergency-boiler-v08")

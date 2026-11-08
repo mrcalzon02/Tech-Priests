@@ -243,7 +243,13 @@ def package(job, cfg, capture, out, mod, install):
                    'target.fluid_box.pipe_connections = {{flow_direction="input-output", '
                    'direction=defines.direction.west, position={-0.5, -0.5}}}\n'
                    'target.output_fluid_box.pipe_connections = {{flow_direction="output", '
-                   'direction=defines.direction.east, position={0.5, -0.5}}}\n')
+                   'direction=defines.direction.east, position={0.5, -0.5}}}\n'
+                   f'local icon = "__{job["mod_name"]}__/graphics/icons/{job["asset"]}-{job["revision"]}.png"\n'
+                   'target.icon, target.icons, target.icon_size = icon, nil, 64\n'
+                   'for _, kind in ipairs({"item", "recipe"}) do\n'
+                   f'  local prototype = (data.raw[kind] or {{}})["{target}"]\n'
+                   '  if prototype then prototype.icon, prototype.icons, prototype.icon_size = icon, nil, 64 end\n'
+                   'end\n')
     lua = out/'prototype-ready.lua'
     lua.write_text(snippet)
     generated.append(lua)

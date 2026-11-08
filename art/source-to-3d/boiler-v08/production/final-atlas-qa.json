@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "checks": [
+    "all final RGBA channels equal verified source cells",
+    "N/E/S/W geometry coordinate mapping",
+    "source hashes",
+    "atlas dimensions <=8192",
+    "correct per-resolution scale"
+  ],
+  "source_direction_indices": [
+    0,
+    3,
+    2,
+    1
+  ],
+  "fps": 24,
+  "loop_seconds": 4.0,
+  "animation_speed": 0.4,
+  "sheets": [
+    {
+      "state": "idle",
+      "size": 128,
+      "file": "emergency-boiler-v08-idle-128.png",
+      "columns": 1,
+      "rows_per_direction": 1,
+      "frames_per_direction": 1,
+      "sha256": "ae8c29a017002376e4fd8f8a303b59288ffc52dad479c7e604b28a0b561ba93f",
+      "scale": 0.8375,
+      "cells_verified": 4
+    },
+    {
+      "state": "idle",
+      "size": 256,
+      "file": "emergency-boiler-v08-idle.png",
+      "columns": 1,
+      "rows_per_direction": 1,
+      "frames_per_direction": 1,
+      "sha256": "64797f650c3787ac08962b94ac284412889f0b53293b18e12603b552e6864d84",
+      "scale": 0.41875,
+      "cells_verified": 4
+    },
+    {
+      "state": "working",
+      "size": 128,
+      "file": "emergency-boiler-v08-working-128.png",
+      "columns": 8,
+      "rows_per_direction": 12,
+      "frames_per_direction": 96,
+      "sha256": "c1a5fc8df5c6bcef6543b47cf38dbc1c8f7a83d8781c9dca467b35dac9fe9d2b",
+      "scale": 0.8375,
+      "cells_verified": 384
+    },
+    {
+      "state": "working",
+      "size": 256,
+      "file": "emergency-boiler-v08-working.png",
+      "columns": 12,
+      "rows_per_direction": 8,
+      "frames_per_direction": 96,
+      "sha256": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2",
+      "scale": 0.41875,
+      "cells_verified": 384
+    }
+  ],
+  "cells_verified": 776
+}

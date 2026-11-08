@@ -137,5 +137,5 @@
     ]
   },
   "threads": 8,
-  "workers": 3
+  "workers": 4
 }

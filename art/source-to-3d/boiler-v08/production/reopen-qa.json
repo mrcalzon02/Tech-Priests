@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "blender": "5.0.1",
+  "checks": [
+    "saved master SHA256",
+    "MODEL/RENDER scenes",
+    "frozen camera and daylight",
+    "mesh count",
+    "packed image maps",
+    "transparent RGBA"
+  ]
+}

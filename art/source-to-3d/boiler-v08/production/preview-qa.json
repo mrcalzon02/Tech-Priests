@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "gif_duration_ms": 4000,
+  "mp4": {
+    "r_frame_rate": "24/1",
+    "duration": "4.000000",
+    "nb_read_frames": "96"
+  }
+}

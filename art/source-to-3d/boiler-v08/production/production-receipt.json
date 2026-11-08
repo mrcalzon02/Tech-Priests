@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "passed": true,
+  "factorio_client_tested": false,
+  "prototype_attached": true,
+  "asset": "emergency-boiler",
+  "revision": "v08",
+  "camera": {
+    "elevation_deg": 45,
+    "azimuth_deg": 0,
+    "distance": 8.485281374,
+    "target": [
+      0,
+      0,
+      0.85
+    ],
+    "ortho_scale": 3.35
+  },
+  "directions": [
+    "north",
+    "east",
+    "south",
+    "west"
+  ],
+  "source_frame_count": 388,
+  "source_direction_indices": [
+    0,
+    3,
+    2,
+    1
+  ],
+  "frames_per_direction": 96,
+  "fps": 24,
+  "master_sha256": "468d66089f9f5541cd7d579d824c5546cde96cc85de11713e6bb5b8826bfd991",
+  "files": {
+    "prototype_ready/graphics/entity/emergency-boiler-v08-idle-128.png": "ae8c29a017002376e4fd8f8a303b59288ffc52dad479c7e604b28a0b561ba93f",
+    "prototype_ready/graphics/entity/emergency-boiler-v08-idle.png": "64797f650c3787ac08962b94ac284412889f0b53293b18e12603b552e6864d84",
+    "prototype_ready/graphics/entity/emergency-boiler-v08-working-128.png": "c1a5fc8df5c6bcef6543b47cf38dbc1c8f7a83d8781c9dca467b35dac9fe9d2b",
+    "prototype_ready/graphics/entity/emergency-boiler-v08-working.png": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2",
+    "prototype_ready/graphics/icons/emergency-boiler-v08.png": "bfb29487f12d4cba649718a21defd06b8f421a24bed0616f9b326bca28188a7d",
+    "prototype-ready.lua": "6b75d25f7ece1e716d47099da050e8fe32c29f050a236c9c2e6495be6a760262",
+    "four-way-review.png": "c9fbbc6f4d3fe3b915f53db86941142eb78362611e8985d64afea4dfd49b45db"
+  },
+  "note": "Game-ready assets and exact boiler Lua are packaged. Full isolated Factorio 2.1.24 load, native pipe attachment and steam production passed. Installed into the repository mod source; graphical client appearance has not been tested.",
+  "boiler_graphics_schema": "BoilerPictureSet",
+  "isolated_engine_test": {
+    "passed": true,
+    "factorio_version": "2.1.24",
+    "isolated_full_mod_load": true,
+    "cardinal_pipe_pairs_connected": 4,
+    "steam_production_directions": 4,
+    "runtime_ticks": 600,
+    "graphics_client_tested": false,
+    "live_mod_prototype_changed": false,
+    "shipping_source_installed": true
+  },
+  "idle_frames_per_direction": 1
+}

@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "factorio_version": "2.1.24",
+  "isolated_full_mod_load": true,
+  "cardinal_pipe_pairs_connected": 4,
+  "steam_production_directions": 4,
+  "runtime_ticks": 600,
+  "graphics_client_tested": false,
+  "live_mod_prototype_changed": false,
+  "shipping_source_installed": true
+}

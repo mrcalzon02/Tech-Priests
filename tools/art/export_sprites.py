@@ -183,7 +183,8 @@ def main():
                 if not receipt_path.exists():
                     continue
                 receipt = json.loads(receipt_path.read_text())
-                if receipt['source_sha256'] != source_hash or receipt['config'] != cfg:
+                render_cfg = lambda value: {k:v for k,v in value.items() if k not in {'workers','threads'}}
+                if receipt['source_sha256'] != source_hash or render_cfg(receipt['config']) != render_cfg(cfg):
                     raise ValueError('Resume source/configuration differs: '+str(receipt_path))
                 for record in receipt['frames']:
                     if digest(out/record['path']) != record['sha256']:
