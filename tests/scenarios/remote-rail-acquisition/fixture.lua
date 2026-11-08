@@ -48,7 +48,12 @@ local function setup()
   end)
   local natural
   for _,e in ipairs(candidates) do
-    if e.valid and (tonumber(e.amount)or 0)>0 then
+    -- The native fixture must choose a patch 0835/0836 can ACTUALLY
+    -- reach with 320 original item-debited rails. X-only eligibility can
+    -- choose an off-axis patch outside the terminal 16-tile clearance.
+    local needed=Frontier.required_segments_for_target(STATION,e.position)
+    if e.valid and (tonumber(e.amount)or 0)>0
+        and needed and needed<=Frontier.max_segments then
       natural=e;break
     end
   end

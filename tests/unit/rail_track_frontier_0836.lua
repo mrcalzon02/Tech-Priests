@@ -9,8 +9,9 @@ f:close()
 assert(source:find("NO_NATURALLY_GENERATED_EASTBOUND_IRON_PATCH",1,true)
   and source:find("NATURAL_ORE_SOURCE_DAMAGED_DURING_FIXTURE_ISOLATION",1,true)
   and source:find("native_ore_amount=",1,true)
+  and source:find("Frontier.required_segments_for_target(STATION,e.position)",1,true)
   and not source:find('surface.create_entity{name="iron-ore"',1,true),
-  "native railway test must not fabricate the destination resource")
+  "native railway test must choose reachable generated ore, not fabricate it")
 local Track=require("scripts.core.rail_track_frontier_0836")
 game={tick=2400}
 defines={direction={east=4},inventory={chest=1},
