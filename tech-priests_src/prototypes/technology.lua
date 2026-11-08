@@ -611,7 +611,7 @@ local function assign_icon_fields(target, icon_fields)
   target.icon_size = nil
   target.icon_mipmaps = nil
 
-  icon_fields = icon_fields or tech_priests_internal_icon(TECH_PRIESTS_CATEGORY_TECH_ICON, 256)
+  icon_fields = icon_fields or tech_priests_internal_icon(TECH_PRIESTS_CATEGORY_TECH_ICON, 64)
   for key, value in pairs(icon_fields) do
     if value ~= nil then
       target[key] = value
@@ -620,7 +620,7 @@ local function assign_icon_fields(target, icon_fields)
 end
 
 for _, technology in pairs(techs) do
-  assign_icon_fields(technology, technology_icon_sources[technology.name] or tech_priests_internal_icon(TECH_PRIESTS_CATEGORY_TECH_ICON, 256))
+  assign_icon_fields(technology, technology_icon_sources[technology.name] or tech_priests_internal_icon(TECH_PRIESTS_CATEGORY_TECH_ICON, 64))
 end
 
 
