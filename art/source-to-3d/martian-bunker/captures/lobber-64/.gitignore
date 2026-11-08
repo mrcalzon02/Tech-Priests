@@ -1,0 +1,5 @@
+lobber_capture.blend*
+__pycache__/
+rendered/
+delivery/
+*.partial

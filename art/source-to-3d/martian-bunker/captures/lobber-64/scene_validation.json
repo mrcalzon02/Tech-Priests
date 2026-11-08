@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "directions": 64,
+  "fps": 24,
+  "frames_per_direction": 192,
+  "cycle_frames": 12288,
+  "idle_frames": 64,
+  "entry_frames_per_direction": 15,
+  "settle_frames_per_direction": 15,
+  "camera": "original bunker 45 degree orthographic",
+  "pixels_per_world_unit": 103.22580962721946,
+  "entity_origin_pixel": [
+    320.0,
+    434.6742248535156
+  ],
+  "mount_pixel": [
+    320.0,
+    310.58837890625
+  ],
+  "all_idle_hatches_closed": true,
+  "idle_effects_disabled": true,
+  "six_independent_shots_verified": true,
+  "entry_joins_cycle": true,
+  "tail_returns_to_idle": true,
+  "textures_packed": true,
+  "base_excluded": true,
+  "eight_heading_extreme_bounds_checked": true,
+  "camera_and_area_lights_fixed_at_all_64_headings": true
+}

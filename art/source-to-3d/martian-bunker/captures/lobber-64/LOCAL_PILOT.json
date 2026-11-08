@@ -1,0 +1,110 @@
+{
+  "status": "PASS",
+  "directions": [
+    0
+  ],
+  "median_seconds_per_three_pass_pose": 133.1386114689958,
+  "projected_worst_chunk_minutes": 115.80298317520064,
+  "frames": [
+    {
+      "direction": 0,
+      "files": [
+        {
+          "file": "d00/beauty/idle_000.png",
+          "alpha_bounds": [
+            238,
+            155,
+            401,
+            368
+          ]
+        },
+        {
+          "file": "d00/emission/idle_000.png",
+          "alpha_bounds": [
+            312,
+            290,
+            327,
+            294
+          ]
+        },
+        {
+          "file": "d00/shadow/idle_000.png",
+          "alpha_bounds": [
+            115,
+            335,
+            1147,
+            1189
+          ]
+        },
+        {
+          "file": "d00/beauty/cycle_001.png",
+          "alpha_bounds": [
+            238,
+            137,
+            401,
+            368
+          ]
+        },
+        {
+          "file": "d00/emission/cycle_001.png",
+          "alpha_bounds": [
+            284,
+            137,
+            327,
+            293
+          ]
+        },
+        {
+          "file": "d00/shadow/cycle_001.png",
+          "alpha_bounds": [
+            111,
+            329,
+            1158,
+            1190
+          ]
+        },
+        {
+          "file": "d00/beauty/cycle_004.png",
+          "alpha_bounds": [
+            238,
+            155,
+            401,
+            368
+          ]
+        },
+        {
+          "file": "d00/emission/cycle_004.png",
+          "alpha_bounds": [
+            312,
+            289,
+            328,
+            293
+          ]
+        },
+        {
+          "file": "d00/shadow/cycle_004.png",
+          "alpha_bounds": [
+            115,
+            335,
+            1147,
+            1189
+          ]
+        }
+      ]
+    }
+  ],
+  "correct_shadow_registration": {
+    "beauty_cell": 640,
+    "shadow_cell": 1280,
+    "shadow_offset_pixels": [
+      -320,
+      -320
+    ],
+    "same_pixels_per_world_unit": true
+  },
+  "source_identity": {
+    "source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+    "config_sha256": "9dd6aac249aa44f10f6ab2bb7a03873b6dc251ba0924f1d0164c9ddf56d2fb7e",
+    "renderer_sha256": "cdc81d50fb6aa35bb8b7b5db06ceb0076b329a255f6aa043332da01941530923"
+  }
+}

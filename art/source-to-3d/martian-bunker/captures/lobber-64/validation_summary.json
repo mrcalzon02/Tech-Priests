@@ -1,0 +1,9 @@
+{
+  "native_scene": "PASS: 64 idle headings, six shots, entry/tail and eight-heading motion bounds",
+  "source_reconstruction": "PASS: all 16 parts reconstructed byte-identical packed scene",
+  "assembler_guards": "PASS: valid alpha accepted, clipping and corrupt PNG rejected",
+  "workflow_coverage": "PASS: 384 unique direction/chunk jobs in two pilot-gated matrices",
+  "local_render_pilot": "PASS: north idle, firing and flex poses; all three passes valid and unclipped",
+  "local_pilot_max_chunk_minutes": 115.80298317520064,
+  "full_capture_status": "NOT_STARTED_AT_COMMIT"
+}
