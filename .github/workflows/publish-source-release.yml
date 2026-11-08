@@ -14,8 +14,9 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - name: Package Factorio mod and publish release
+      - name: Package Factorio mod
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -30,7 +31,7 @@ jobs:
           git -c protocol.version=2 fetch --quiet --depth=1 --filter=blob:none origin "${GITHUB_SHA}"
           git checkout -q --detach FETCH_HEAD
           python3 - <<'PY'
-          import json, pathlib, shutil, zipfile
+          import json, pathlib, zipfile
           src = pathlib.Path("tech-priests_src")
           metadata = json.loads((src / "info.json").read_text(encoding="utf-8"))
           folder = f"{metadata['name']}_{metadata['version']}"
@@ -41,12 +42,90 @@ jobs:
                       archive.write(item, pathlib.Path(folder) / item.relative_to(src))
           pathlib.Path("../release-name.txt").write_text(folder, encoding="utf-8")
           PY
-          cd ..
+
+      - name: Headless Factorio 2.1.24 startup diagnostics
+        shell: bash
+        run: |
+          set -u
+          mkdir -p diagnostics/mods diagnostics/game
+          folder="$(cat release-name.txt)"
+          cp "${folder}.zip" diagnostics/mods/
+          python3 - <<'PY'
+          import json, pathlib
+          root = pathlib.Path("diagnostics")
+          info = json.loads(pathlib.Path("repo/tech-priests_src/info.json").read_text(encoding="utf-8"))
+          enabled = ["base", "space-age", "quality", "elevated-rails", info["name"]]
+          (root / "mods" / "mod-list.json").write_text(json.dumps({"mods": [{"name": name, "enabled": True} for name in enabled]}, indent=2))
+          required = [dep for dep in info.get("dependencies", []) if not dep.startswith("?") and not dep.startswith("!") and not dep.startswith("~") and not dep.startswith("base ")]
+          (root / "required-dependencies.txt").write_text("\n".join(required) + "\n")
+          PY
+          echo "Factorio headless 2.1.24; commit ${GITHUB_SHA}" > diagnostics/summary.txt
+          echo "Only the packaged mod and bundled official mods are available in this isolated environment." >> diagnostics/summary.txt
+          echo "Required external dependencies (not provisioned):" >> diagnostics/summary.txt
+          cat diagnostics/required-dependencies.txt >> diagnostics/summary.txt
+          curl -fLsS --retry 2 --connect-timeout 20 --max-time 240 \
+            "https://www.factorio.com/get-download/2.1.24/headless/linux64" \
+            -o diagnostics/factorio-headless.tar.xz 2> diagnostics/download-error.txt
+          download_status=$?
+          if [ "$download_status" -ne 0 ]; then
+            echo "RESULT: ENVIRONMENT_UNAVAILABLE - headless download failed (curl status $download_status)." >> diagnostics/summary.txt
+          else
+            tar -xJf diagnostics/factorio-headless.tar.xz -C diagnostics/game > diagnostics/extract.log 2>&1
+            extract_status=$?
+            if [ "$extract_status" -ne 0 ]; then
+              echo "RESULT: ENVIRONMENT_UNAVAILABLE - headless extraction failed." >> diagnostics/summary.txt
+            else
+              diagnostics/game/factorio/bin/x64/factorio --version > diagnostics/version.txt 2>&1
+              version_status=$?
+              if [ "$version_status" -ne 0 ]; then
+                echo "RESULT: ENVIRONMENT_UNAVAILABLE - headless executable failed to start." >> diagnostics/summary.txt
+              else
+                timeout 120 diagnostics/game/factorio/bin/x64/factorio \
+                  --mod-directory "$PWD/diagnostics/mods" \
+                  --create "$PWD/diagnostics/startup-test.zip" \
+                  > diagnostics/startup.log 2>&1
+                status=$?
+                echo "Headless create exit status: $status" >> diagnostics/summary.txt
+                if [ "$status" -eq 0 ]; then
+                  echo "RESULT: HEADLESS_STARTUP_OK (does not validate graphical sprite atlas)" >> diagnostics/summary.txt
+                elif grep -Eiq 'missing (required )?dependenc|requires mod|is not installed|does not have required mod|missing mod' diagnostics/startup.log; then
+                  echo "RESULT: BLOCKED_MISSING_DEPENDENCIES (not a mod compatibility pass)" >> diagnostics/summary.txt
+                else
+                  echo "RESULT: HEADLESS_STARTUP_FAILED (inspect startup.log)" >> diagnostics/summary.txt
+                fi
+              fi
+            fi
+          fi
+          rm -rf diagnostics/game diagnostics/factorio-headless.tar.xz diagnostics/mods diagnostics/startup-test.zip
+          cat diagnostics/summary.txt
+          # Diagnostics only: do not block publication on external download or missing dependencies.
+
+      - name: Publish release and diagnostic report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
           folder="$(cat release-name.txt)"
           tag="factorio-mod-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          {
+            echo "Factorio 2.1 mod ZIP from tech-priests_src at commit $GITHUB_SHA."
+            echo
+            echo "Headless diagnostic (separate from game release packaging):"
+            cat diagnostics/summary.txt
+            echo
+            echo "Headless checks do not render sprites and do not replace a graphical Factorio startup."
+          } > release-notes.txt
           gh release create "$tag" "${folder}.zip" \
             --repo "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \
             --title "Tech Priests Factorio mod ${folder}" \
-            --notes "Factorio 2.1 mod ZIP from tech-priests_src at commit $GITHUB_SHA. No build, tests, or validation executed." \
+            --notes-file release-notes.txt \
             --prerelease
+          cd diagnostics
+          zip -q -9 ../headless-diagnostics.zip summary.txt required-dependencies.txt download-error.txt
+          if [ -f version.txt ]; then zip -q -9 ../headless-diagnostics.zip version.txt; fi
+          if [ -f startup.log ]; then zip -q -9 ../headless-diagnostics.zip startup.log; fi
+          if [ -f extract.log ]; then zip -q -9 ../headless-diagnostics.zip extract.log; fi
+          cd ..
+          gh release upload "$tag" headless-diagnostics.zip --repo "$GITHUB_REPOSITORY"
