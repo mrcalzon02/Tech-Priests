@@ -38,6 +38,29 @@ local function track_at(pair,point,direction)
   end
 end
 M.track_at=track_at
+-- Single physical geometry contract shared with the 0835 natural-ore
+-- observer. Rail credit uses Euclidean last-RAIL clearance, not the X
+-- coordinate of a hypothetical next segment.
+function M.required_segments_for_target(start,target)
+  if not(start and target and type(start.x)=="number"
+      and type(start.y)=="number" and type(target.x)=="number"
+      and type(target.y)=="number")then return nil end
+  local forward=target.x-start.x
+  local lateral=math.abs(target.y-start.y)
+  if forward<=M.start_offset or lateral>M.max_lateral_error
+      or lateral>M.destination_clearance then return nil end
+  local x_clearance=math.sqrt(M.destination_clearance^2-lateral^2)
+  return math.max(1,math.ceil(
+    (forward-M.start_offset-x_clearance)/M.segment_step)+1)
+end
+function M.last_rail_reaches_target(rail,target)
+  if not(rail and target and type(rail.x)=="number"
+      and type(rail.y)=="number" and type(target.x)=="number"
+      and type(target.y)=="number")then return false end
+  local dx=target.x-rail.x
+  local dy=target.y-rail.y
+  return dx>=0 and dx*dx+dy*dy<=M.destination_clearance^2
+end
 -- A completed 0338 debit and correct coordinates do not prove a traversable
 -- railway. Verify Factorio's own straight-through rail edge.
 local function connected_straight_rails(from,to)
@@ -169,11 +192,11 @@ function M.plan_next(pair)
     end
   end
   -- Completion requires the LAST ACTUALLY BUILT rail to lie within
-  -- destination clearance. The next candidate is not a physical rail:
-  -- at capacity segment 320 is x=650, so x=666 is reachable but x=668
-  -- is not. Never credit a route using hypothetical future geometry.
+  -- the true 2D destination clearance. At capacity the last rail is
+  -- (650,0): (666,0) is reachable, but (665,6) is NOT. A hypothetical
+  -- next candidate is never credited as a real item-debited rail.
   if route.segment>0 and route.last_position
-      and route.last_position.x>=target.x-M.destination_clearance then
+      and M.last_rail_reaches_target(route.last_position,target) then
     local accepted,why=audit_original_chain(pair,route,direction)
     if accepted==nil then
       m.stage="verifying-original-native-rail-chain"

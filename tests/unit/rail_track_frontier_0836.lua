@@ -197,11 +197,12 @@ for i=1,319 do
     return args.rail_direction==defines.rail_direction.front and next_rail or nil
   end
 end
-local function terminal_case(target_x)
+local function terminal_case(target_x,target_y)
   local units={}
   for i=1,#chain do units[i]=chain[i].unit_number end
   local objective={status="building-physical-rail",root_station_unit=104,
-    target={x=target_x,y=0},surface_index=1,force_index=1,
+    target={x=target_x,y=target_y or 0},
+    surface_index=1,force_index=1,
     rail_frontier_0836={segment=320,last_position={x=650,y=0},
       start_position={x=12,y=0},direction=4,built_units=units}}
   return {station=pair.station,priest=pair.priest,
@@ -228,6 +229,19 @@ assert(not terminal_ok and terminal_why=="physical-frontier-reached"
   and terminal_mission.rail_frontier_0836.segment==320
   and terminal_pair.construction_request==nil and item_count==698,
   "terminal frontier credited without auditing the native counted rail chain")
+local diagonal_pair,diagonal_mission=terminal_case(664,6)
+local diagonal_ok,diagonal_reason=finish_terminal_audit(diagonal_pair)
+assert(not diagonal_ok and diagonal_reason=="physical-frontier-reached"
+  and diagonal_mission.status=="rail-track-established"
+  and diagonal_pair.construction_request==nil and item_count==698,
+  "physically reachable lateral rail target was refused")
+local lateral_over_pair,lateral_over_mission=terminal_case(665,6)
+local lateral_over_ok,lateral_over_why=Track.plan_next(lateral_over_pair)
+assert(not lateral_over_ok
+  and lateral_over_why=="maximum-verified-rail-segments"
+  and lateral_over_mission.status=="rail-track-blocked"
+  and lateral_over_pair.construction_request==nil and item_count==698,
+  "east-only clearance falsely certified unreachable diagonal ore")
 -- A damaged middle rail must fail closed even though the last one remains,
 -- and no new item is issued or the old 0338 receipts silently discarded.
 local broken=chain[160].get_connected_rail

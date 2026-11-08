@@ -35,6 +35,12 @@ local terminal_reachable={valid=true,name="iron-ore",unit_number=994,
   type="resource",surface=surface,position={x=666,y=0},amount=10000}
 local terminal_unreachable={valid=true,name="iron-ore",unit_number=995,
   type="resource",surface=surface,position={x=668,y=0},amount=10000}
+-- At the last paid rail (650,0), (664,6) is within 16 true tiles,
+-- while (665,6) is outside it despite its east coordinate being <= 666.
+local lateral_terminal_reachable={valid=true,name="iron-ore",unit_number=996,
+  type="resource",surface=surface,position={x=664,y=6},amount=10000}
+local lateral_terminal_unreachable={valid=true,name="iron-ore",unit_number=997,
+  type="resource",surface=surface,position={x=665,y=6},amount=10000}
 local remote_entities={ore}
 surface.find_entities_filtered=function(args)
   assert(args.type=="resource" and args.name=="iron-ore",
@@ -96,6 +102,23 @@ blocked("no-charted-rail-corridor-ore")
 -- Native physical frontier ends at x=650, not its unbuilt x=652 candidate.
 remote_entities={terminal_unreachable}
 blocked("no-charted-rail-corridor-ore")
+remote_entities={lateral_terminal_unreachable}
+blocked("no-charted-rail-corridor-ore")
+-- The physically unbuildable closer diagonal must not hide a valid patch.
+remote_entities={lateral_terminal_unreachable,ore}
+local still_reachable,still_reason=Rail.assess(pair)
+assert(still_reason=="starved-charted-patch"
+    and still_reachable and still_reachable.position.x==512,
+  "unreachable lateral ore stole the counted railway mission")
+remote_entities={lateral_terminal_reachable}
+qty.rail=319
+blocked("insufficient-physical-rails-to-reach-ore")
+qty.rail=320
+local diagonal_target,diagonal_why=Rail.assess(pair)
+assert(diagonal_why=="starved-charted-patch"
+    and diagonal_target and diagonal_target.position.x==664
+    and diagonal_target.position.y==6 and qty.rail==320,
+  "diagonal patch within real last-rail clearance rejected")
 remote_entities={terminal_reachable}
 qty.rail=319
 blocked("insufficient-physical-rails-to-reach-ore")

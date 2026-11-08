@@ -126,26 +126,28 @@ function M.assess(pair)
     if valid(entity) and (tonumber(entity.amount) or 0)>0
         and entity.surface==surface then
       local d=dist2(entity.position,at)
+      local needed=Frontier.required_segments_for_target(at,entity.position)
       if entity.position.x>=at.x+M.remote_min
           and entity.position.x<=at.x+max_target
           and math.abs(entity.position.y-at.y)<=lateral
           and d>=M.remote_min*M.remote_min
           and d<=max_target*max_target
           and charted(force,surface,entity.position)
+          and needed and needed<=capacity
           and (not best_distance or d<best_distance) then
         best=entity;best_distance=d
       end
     end
   end
   if not best then return nil,"no-charted-rail-corridor-ore" end
-  -- The 64-item initial-readiness floor does not supply the entire line:
-  -- the closest admissible patch (192 east) needs 83 counted rail items.
-  -- Never start a mission whose selected natural patch cannot be reached
-  -- from the Magos with the rail it already physically owns. The actual
-  -- 0338 constructor still removes each item at the source, one by one.
-  local last_needed=best.position.x-at.x-clearance-offset
-  local needed_segments=math.max(1,math.ceil(last_needed/step)+1)
-  if needed_segments>capacity then
+  -- The 64-item initial-readiness floor cannot supply the entire line:
+  -- the closest admissible patch (192 east) needs 83 real rail items.
+  -- The shared 0836 geometry accounts for BOTH east and lateral distance;
+  -- a charted diagonal ore patch cannot steal an impossible rail mission.
+  -- 0338 still owns and removes every actual item, one by one.
+  local needed_segments=Frontier.required_segments_for_target(
+    at,best.position)
+  if not needed_segments or needed_segments>capacity then
     return nil,"rail-destination-exceeds-segment-capacity"
   end
   if count(pair,"rail")<needed_segments then
