@@ -1,10 +1,10 @@
--- Factorio 2.0 test-only distant-resource TRAIN acceptance, independent
+-- Factorio-native test-only distant-resource TRAIN acceptance, independent
 -- of ranked Cogitator relays. Test fixture seeds supply and technology only.
 -- It NEVER creates rails, locomotives, wagons, miners or mined cargo.
 local M={}
 local PREFIX="[TP-REMOTE-RAIL-TEST] "
 local STATION={x=0,y=0}
-local ORE={x=512,y=0}
+local ORE -- Selected from pre-existing native world-generated iron ore.
 local KEY="ci_remote_rail_acquisition"
 local function emit(msg)log(PREFIX..msg)end
 local function fail(msg)error(PREFIX.."FAIL "..msg)end
@@ -26,25 +26,55 @@ local function setup()
   for _,n in ipairs(necessary) do
     if not prototypes.entity[n] then fail("MISSING_PROTOTYPE "..n) end
   end
-  for x=0,512,64 do surface.request_to_generate_chunks({x=x,y=0},3) end
+  -- The fixture may generate world chunks, never fabricate an ore entity.
+  for x=0,960,64 do surface.request_to_generate_chunks({x=x,y=0},3) end
   surface.force_generate_chunk_requests()
+  -- The production 0836 planner supports eastbound rail with <=6 tiles
+  -- of lateral error. Choose a genuinely generated resource in that band.
+  local candidates=surface.find_entities_filtered{
+    type="resource",name="iron-ore",area={{192,-5},{960,5}}}
+  table.sort(candidates,function(a,b)
+    return a.position.x<b.position.x or
+      (a.position.x==b.position.x
+        and math.abs(a.position.y)<math.abs(b.position.y))
+  end)
+  local natural
+  for _,e in ipairs(candidates) do
+    if e.valid and (tonumber(e.amount)or 0)>0 then
+      natural=e;break
+    end
+  end
+  if not natural then
+    fail("NO_NATURALLY_GENERATED_EASTBOUND_IRON_PATCH seed_requires_reselection")
+  end
+  ORE={x=natural.position.x,y=natural.position.y}
+  local original_amount=natural.amount
   local tiles={}
-  for x=-25,539 do for y=-16,16 do
+  for x=-25,ORE.x+28 do for y=-16,16 do
     tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
   end end
   surface.set_tiles(tiles,true)
-  -- The central factory and entire 512-tile railway corridor have no
-  -- naturally occurring ore, trees, cliffs, enemy buildings or biters.
+  -- The Magos and build corridor are cleared of unrelated obstacles,
+  -- but the real native target iron patch must remain untouched.
   -- This is a controlled isolated test world, not a gameplay cleanup.
   -- Exclude the ENTIRE Magos short-range acquisition footprint; clearing
   -- only the rail corridor left naturally generated ore 20 tiles north
   -- of the station and incorrectly defeated genuine starvation detection.
-  local exclusion={{-96,-80},{576,80}}
-  local area={{-25,-16},{540,17}}
+  local exclusion={{-96,-80},{math.max(576,ORE.x+64),80}}
+  local area={{-25,-16},{ORE.x+28,17}}
   for _,e in ipairs(surface.find_entities_filtered{area=exclusion}) do
-    if e.valid and (e.type=="resource" or e.type=="tree"
+    -- Preserve naturally generated target ore, including its surrounding
+    -- patch. Other resources here are fixture obstacles, never delivery.
+    local target_patch=e.type=="resource" and e.name=="iron-ore"
+      and math.abs(e.position.x-ORE.x)<=16
+      and math.abs(e.position.y-ORE.y)<=16
+    if e.valid and not target_patch
+        and (e.type=="resource" or e.type=="tree"
         or e.type=="simple-entity" or e.type=="cliff"
         or e.force==game.forces.enemy) then e.destroy() end
+  end
+  if not(natural.valid and natural.amount==original_amount) then
+    fail("NATURAL_ORE_SOURCE_DAMAGED_DURING_FIXTURE_ISOLATION")
   end
   local station=surface.create_entity{
     name="planetary-magos-cogitator-station",
@@ -77,17 +107,10 @@ local function setup()
       fail("STATION_PRESTOCK_CAPACITY "..item[1].." inserted="..accepted)
     end
   end
-  -- Only a real 9x9 ore patch is provisioned at the distant destination.
-  local ore_tiles=0
-  for dx=-4,4 do for dy=-4,4 do
-    local pos={x=ORE.x+dx,y=ORE.y+dy}
-    if surface.can_place_entity{name="iron-ore",position=pos} then
-      local e=surface.create_entity{name="iron-ore",
-        position=pos,amount=10000}
-      if e and e.valid then ore_tiles=ore_tiles+1 end
-    end
-  end end
-  if ore_tiles~=81 then fail("REMOTE_ORE_PATCH_INCOMPLETE "..ore_tiles.."/81")end
+  -- Do not credit test-script materialization of ore as native mining.
+  local ore_tiles=count(surface,{type="resource",name="iron-ore",
+    position=ORE,radius=16})
+  if ore_tiles<1 then fail("NATURAL_REMOTE_ORE_PATCH_MISSING")end
   -- The destination has been charted by prior remote reconnaissance. The
   -- Magos may use only charted map intelligence, not omniscient surface scans.
   force.chart(surface,{{ORE.x-20,ORE.y-20},{ORE.x+20,ORE.y+20}})
@@ -109,9 +132,14 @@ local function setup()
   s.started=game.tick
   s.start_ore=inventory.get_item_count("iron-ore")
   s.start_rail=inventory.get_item_count("rail")
+  s.natural_ore_x=ORE.x
+  s.natural_ore_y=ORE.y
+  s.natural_ore_amount=original_amount
   s.outbound=false;s.returned=false;s.ride_proof=false
-  emit("SETUP no_biters=true local_resources=0 distant_iron_tiles=81"..
-    " target_x=512 rails=700 locomotives=2 wagons=3"..
+  emit("SETUP no_biters=true local_resources=0 natural_iron=true"..
+    " native_ore_amount="..original_amount..
+    " target_x="..ORE.x.." target_y="..ORE.y..
+    " rails=700 locomotives=2 wagons=3"..
     " tech_preset=true track_prebuilt=0 initial_iron="..s.start_ore)
 end
 local function inspect(s,elapsed)
@@ -130,7 +158,9 @@ local function inspect(s,elapsed)
         or objective.status=="rail-track-established"
         or objective.status=="rail-track-blocked")
       and objective.item=="iron-ore" and objective.target
-      and objective.target.x>=480
+      and objective.target.x>=192
+      and math.abs(objective.target.x-s.natural_ore_x)<=16
+      and math.abs(objective.target.y-s.natural_ore_y)<=16
       and objective.root_station_unit==s.station_unit
       and objective.created_tick and objective.next_step) then
     fail("STARVATION_DETECTION_DID_NOT_CREATE_PERSISTENT_RAIL_OBJECTIVE")
@@ -141,12 +171,13 @@ local function inspect(s,elapsed)
   end
   local rails=surface.find_entities_filtered{
     type={"straight-rail","half-diagonal-rail",
-      "curved-rail-a","curved-rail-b"},area={{-25,-16},{540,17}},
+      "curved-rail-a","curved-rail-b"},
+    area={{-25,-16},{s.natural_ore_x+28,17}},
     force=station.force}
   local near,far=0,0
   for _,e in ipairs(rails) do
     if e.position.x<=24 then near=near+1 end
-    if e.position.x>=480 then far=far+1 end
+    if e.position.x>=s.natural_ore_x-32 then far=far+1 end
   end
   -- A route objective and even a ghost are not physically placed rail.
   -- The first acceptance requires a real segment with the exact unit
@@ -179,11 +210,15 @@ local function inspect(s,elapsed)
       " station_rail_delta="..tostring(s.start_rail-current_rail))
   end
   local locomotives=surface.find_entities_filtered{
-    name="locomotive",area={{-25,-16},{540,17}},force=station.force}
+    name="locomotive",area={{-25,-16},{s.natural_ore_x+28,17}},
+    force=station.force}
   local wagons=count(surface,{name="cargo-wagon",
-    area={{-25,-16},{540,17}},force=station.force})
+    area={{-25,-16},{s.natural_ore_x+28,17}},force=station.force})
   local drills=surface.find_entities_filtered{
-    type="mining-drill",area={{480,-16},{540,17}},force=station.force}
+    type="mining-drill",
+    area={{s.natural_ore_x-32,s.natural_ore_y-24},
+          {s.natural_ore_x+32,s.natural_ore_y+24}},
+    force=station.force}
   local resource_drills=0
   for _,e in ipairs(drills)do
     if e.valid then resource_drills=resource_drills+1 end
@@ -193,7 +228,7 @@ local function inspect(s,elapsed)
   for _,loco in ipairs(locomotives) do
     if loco.valid and loco.train and loco.train.valid then
       local train=loco.train
-      if loco.position.x>=475 then s.outbound=true end
+      if loco.position.x>=s.natural_ore_x-37 then s.outbound=true end
       if s.outbound and loco.position.x<=28 then s.returned=true end
       local ride=p.train_transport_rail_0835
       if ride and ride.train_id==train.id
@@ -210,6 +245,7 @@ local function inspect(s,elapsed)
       .get_item_count("iron-ore")-s.start_ore
   emit("CHECKPOINT elapsed="..elapsed..
     " starvation="..tostring(objective and objective.status)..
+    " natural_target="..tostring(s.natural_ore_x)..
     " target="..tostring(objective and objective.target and objective.target.x)..
     " rail="..#rails..
     " near_rail="..near.." far_rail="..far..

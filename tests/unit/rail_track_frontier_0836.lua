@@ -1,6 +1,16 @@
 -- The real 0338 constructor is the sole item-debit/build owner.
 -- 0836 may only sequence and accept verified successful 0338 tasks.
 package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
+-- This is an acceptance-fixture integrity guard, NOT native ore-delivery
+-- proof. The exact engine scenario must reject missing natural resources.
+local f=assert(io.open("tests/scenarios/remote-rail-acquisition/fixture.lua","r"))
+local source=f:read("*a")
+f:close()
+assert(source:find("NO_NATURALLY_GENERATED_EASTBOUND_IRON_PATCH",1,true)
+  and source:find("NATURAL_ORE_SOURCE_DAMAGED_DURING_FIXTURE_ISOLATION",1,true)
+  and source:find("native_ore_amount=",1,true)
+  and not source:find('surface.create_entity{name="iron-ore"',1,true),
+  "native railway test must not fabricate the destination resource")
 local Track=require("scripts.core.rail_track_frontier_0836")
 game={tick=2400}
 defines={direction={east=4},inventory={chest=1},
