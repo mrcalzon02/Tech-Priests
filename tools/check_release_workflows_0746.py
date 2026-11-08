@@ -28,6 +28,46 @@ ACTIVE_PUBLISH_FORBIDDEN = (
     "ncipollo/release-action",
     "svenstaro/upload-release-action",
 )
+# Explicit art delivery workflows publish Blender assets, not playable mod ZIPs.
+# Keep the verified-mod release gate separate from these GitHub-only deliveries.
+ART_DELIVERY_WORKFLOWS = frozenset((
+    'lobber-bunker-capture.yml',
+    'lobber-initial-delivery-repack.yml',
+    'martian-bunker-3d.yml',
+    'martian-central-ammunition-arm.yml',
+    'martian-corner-chamfers.yml',
+    'martian-corrugated-hoses.yml',
+    'martian-hatch-tracks.yml',
+    'martian-inset-girder-mount.yml',
+    'martian-inset-plating.yml',
+    'martian-lobber-refinement.yml',
+    'martian-loose-grenade-loader.yml',
+    'martian-segmented-tracks.yml',
+    'martian-sensor-fit.yml',
+    'martian-six-iron-lobber.yml',
+    'martian-v03-fresh-export.yml',
+    'original-bunker-turret-capture.yml',
+))
+SOURCE_SNAPSHOT_WORKFLOW = "current-source-release.yml"
+
+
+def non_mod_delivery(name: str, text: str) -> bool:
+    if name in ART_DELIVERY_WORKFLOWS:
+        return ("art/source-to-3d/" in text and not any(
+            fragment in text for fragment in
+            ("tech-priests_src", "package_local.py", "tech-priests_", "mods.factorio.com")
+        ))
+    if name == SOURCE_SNAPSHOT_WORKFLOW:
+        return all(fragment in text for fragment in (
+            "git archive --format=zip", "head tech-priests_src",
+            '--prerelease', 'source-snapshot-${github_run_id}',
+            'unverified source snapshot',
+        )) and not any(fragment in text for fragment in (
+            "package_local.py", "mods.factorio.com", "--latest", "verified_release_authorization"
+        ))
+    return False
+
+
 PACKAGE_PATH = pathlib.Path("tools/package_local.py")
 PACKAGE_REQUIRED = (
     'RELEASE_AUTHORIZATION_CHECKER = "check_release_authorization_0745.py"',
@@ -63,6 +103,8 @@ def check(root: pathlib.Path) -> int:
             if not path.is_file() or path.suffix not in (".yml", ".yaml"):
                 continue
             workflow_text = path.read_text(encoding="utf-8", errors="replace").lower()
+            if non_mod_delivery(path.name, workflow_text):
+                continue
             for fragment in ACTIVE_PUBLISH_FORBIDDEN:
                 if fragment in workflow_text:
                     errors.append(
@@ -122,6 +164,26 @@ def self_test(source_root: pathlib.Path) -> int:
             print("release audit self-test failed: live publisher accepted", file=sys.stderr)
             return 1
         live.unlink()
+        art = workflows / sorted(ART_DELIVERY_WORKFLOWS)[0]
+        art.write_text("permissions: {contents: write}\n# art/source-to-3d/example\n", encoding="utf-8")
+        if result() != 0:
+            print("release audit self-test failed: art delivery rejected", file=sys.stderr)
+            return 1
+        art.write_text(art.read_text() + "# tech-priests_src\n", encoding="utf-8")
+        if result() == 0:
+            print("release audit self-test failed: mod publisher disguised as art accepted", file=sys.stderr)
+            return 1
+        art.unlink()
+        snapshot = workflows / SOURCE_SNAPSHOT_WORKFLOW
+        snapshot.write_text("contents: write\ngit archive --format=zip --output source.zip HEAD tech-priests_src\ngh release create source-snapshot-${GITHUB_RUN_ID} --prerelease\n# Unverified source snapshot\n", encoding="utf-8")
+        if result() != 0:
+            print("release audit self-test failed: source snapshot rejected", file=sys.stderr)
+            return 1
+        snapshot.write_text(snapshot.read_text().replace("--prerelease", "--latest"), encoding="utf-8")
+        if result() == 0:
+            print("release audit self-test failed: stable source publisher accepted", file=sys.stderr)
+            return 1
+        snapshot.unlink()
         package.write_text("# safety requirements removed\n", encoding="utf-8")
         if result() == 0:
             print("release audit self-test failed: unsafe packager accepted", file=sys.stderr)
