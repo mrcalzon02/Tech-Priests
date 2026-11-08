@@ -16,20 +16,22 @@
     "Boiler sprite-only per-direction scale/shift correction: actual four-way zoom-4 native mouth/pipe visuals inspected; exporter/job persist registrations, physical fields and atlas bytes unchanged",
     "Recovered editable boiler V08 locally from exact approved V07b and unchanged authoring scripts; 270 mesh hashes, packed textures, prepared motion/loop gates and eight local pilot renders verified",
     "Boiler native cold/working state layers: all 768 source working composites checked, native filtering defect repaired, four-way cold/working/stopped views and 30-sample native loop reviewed; physical registrations unchanged",
-    "Boiler circuit mounts derived from a fixed cage-top point: 98 static source frames, 24 native sprite transforms, red/green pins and wire shadows checked; four connected/disconnected native directions reviewed"
+    "Boiler circuit mounts derived from a fixed cage-top point: 98 static source frames, 24 native sprite transforms, red/green pins and wire shadows checked; four connected/disconnected native directions reviewed",
+    "Mechanicus-independent priest sprite loading: five exact MIT PNG copies with attribution; both absent/enabled native profiles loaded, 10 unit and 5 corpse graphic definitions identical; all 203 entity PNGs verified"
   ],
   "verification": {
     "graphical_client": "Targeted native Factorio 2.1.24 attachment/placement slice reviewed: four custom thrusters + vanilla control, connected/disconnected caps, four boiler directions; other assets and working-state/wire gates remain open",
     "workbench": "384 exact RGBA capture-to-atlas cells; idle/icon retained",
     "installed_atlases": "96 files; 3288 cells",
     "behavior_tests": "not run",
-    "all_entity_pngs": "198/198 full PNG verify/decode",
+    "all_entity_pngs": "203/203 full PNG verify/decode",
     "rig": "Approved A02 restored: 64-heading idle/transition/extreme checks and six independent firing states pass locally; full capture incomplete",
     "energy_dish": "Partial candidate: 33 meshes / 10332 triangles / 0 degenerates; position/UV/material coverage passes; idle beauty 64/64; full state and native integration gates open",
     "boiler_visual_registration": "docs/art/boiler-v08-visual-alignment: native four-way draw review; supersedes rejected common-scale visual baseline. Physical connection readback is preservation evidence only.",
     "boiler_editable_source": "docs/art/boiler-v08-source-recovery: new reconstructed native at profile path, independently reopened; not historical Library binary identity or complete atlas equivalence",
     "boiler_cold_working": "docs/art/boiler-v08-state-layers: reviewed static cold + conditional full-pose activity; 768 source cell composites within 2/255, native module and loop bound to hashes; wires remain open",
-    "boiler_circuit_attachments": "docs/art/boiler-v08-wire-attachments: native four-way connected/disconnected review, exact module binding, Blender projection, native geometry readback and actual exporter/stale-source guard pass"
+    "boiler_circuit_attachments": "docs/art/boiler-v08-wire-attachments: native four-way connected/disconnected review, exact module binding, Blender projection, native geometry readback and actual exporter/stale-source guard pass",
+    "priest_sprite_import": "docs/art/priest-sprite-import: verified native 2.1.24 loading with package physically absent and version 0.0.3 enabled; source PNGs exact, artwork/model quality not reclassified"
   },
   "open_defects": [
     "Condenser V21 native source remains Library-linked and unlocated locally",
@@ -37,10 +39,9 @@
     "A02 full 64-heading capture, final atlases and native graphics integration still incomplete",
     "Energy dish V03 final surfacing/fidelity and firing/emission/shadow/native prototype integration open",
     "Thruster authored 3D bodies, model exports and final visual acceptance unfinished",
-    "Optional Mechanicus sprite dependency is referenced unconditionally in entity.lua; normal-profile loading without that package remains an open graphics import gate",
     "Boiler G5 current-model GLB export/reimport, PBR and socket/bounds inspection is not yet evidenced; native pipe/state/wire review does not close it"
   ],
-  "next_slice": "Continue existing A02 workers. Resolve the known optional Mechanicus sprite import without degrading intended priest art; verify native loading with dependency absent/present. Then complete the current boiler G5 interchange/export inspection and continue authored thruster bodies, workbench/condenser and remaining model ledger gates.",
+  "next_slice": "Continue existing A02 workers without duplication. Complete the current boiler G5 GLB export/reimport/PBR/bounds/socket inspection, then continue authored thruster bodies and the remaining workbench/condenser/bunker/reactor-family ledger gates.",
   "automation": "tech-priests-local-model-completion, every four hours",
   "publication": "Read exact delivered SHA and status from issue #13; never infer publication from local commit",
   "local_work": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work",
@@ -54,7 +55,7 @@
     "further_artifact_recovery": "Second import completed: 1482 additional PNGs; 48 cached chunks plus four local chunks. 62/68 bundles complete; remaining missing frames render locally.",
     "new_local_profile": "OPTIX / CPU compositor; source and render settings unchanged; numerical differences measured",
     "live_process_claim": "Read actual local-capture-state.json and verify process commands; this committed snapshot is not proof of current liveness",
-    "last_independently_verified_chunks": 210,
+    "last_independently_verified_chunks": 229,
     "packaging": "Use package_local_lobber_capture.py, never the destructive legacy assembler directly on capture cache. Incomplete-cache refusal verified; full packaging pending.",
     "evidence": "docs/art/lobber-a02-latest-progress.json: completed local receipts have all frame hashes rechecked"
   },

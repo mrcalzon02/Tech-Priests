@@ -1,0 +1,14 @@
+{
+  "name": "Mechanicus",
+  "title": "Mechanicus (outdated)",
+  "owner": "markmen494",
+  "license": {
+    "description": "A permissive license that is short and to the point. It lets people do anything with your code with proper attribution and without warranty.",
+    "id": "default_mit",
+    "name": "mit",
+    "title": "MIT",
+    "url": "https://opensource.org/licenses/MIT"
+  },
+  "homepage": "",
+  "source_url": null
+}

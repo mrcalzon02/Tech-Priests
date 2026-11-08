@@ -15,3 +15,5 @@ Raw native-review hashes and canonical Git text hashes are recorded separately; 
 The boiler's source, cold/working graphics, pipe fit and wire attachment slices are now reviewed against the approved V07b-derived model. This does not close the overall model goal or prove every mod configuration loads: the unconditional optional Mechanicus sprite namespace remains a separate known startup integration gate. The review profile enables the already-installed dependency.
 
 G5 remains separately open: this wire-rendering slice does not provide an independently reimported current-model GLB with PBR, bounds and socket inspection. Native `.blend` reopening and sprite/circuit acceptance are not substitutes for that interchange gate.
+
+Subsequent import slice: the optional sprite-namespace startup gate is now resolved by licensed local copies and two-profile native proof in [priest-sprite-import](../priest-sprite-import/README.md). This does not change the earlier wire captures or close boiler G5.

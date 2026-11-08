@@ -146,8 +146,16 @@ A02 independently rehashed progress is 196/384 chunks. Actual controller and fou
 
 The inherited connector floated across the pressure vessels at vanilla size. The corrected brass case uses the measured fixed cage-top junction, shared camera/yaw/registration, and matching pin/LED/shadow transforms. All four connected/disconnected native views were inspected. The real exporter and changed-source rejection pass; physical pipe and body/state settings remain intact. See [wire attachment evidence](boiler-v08-wire-attachments/README.md). This closes the four-direction wire visual gate, not the overall model goal.
 
-**P0 — optional sprite namespace blocks normal loading:** `prototypes/entity.lua` unconditionally uses `__mechanicus-reborn__/images/` for priest sprites, while `info.json` declares that package optional. This matches the owner's uploaded startup error. Model review currently uses the already-installed dependency in an isolated profile. Resolve the authorized art/dependency path while preserving intended priest appearance, then prove native load with the dependency absent and present; do not substitute generic art and call the visual completion done. No behavior/regression tests are needed for that import gate.
+**Resolved P0 — former optional sprite namespace load failure:** `prototypes/entity.lua` unconditionally uses `__mechanicus-reborn__/images/` for priest sprites, while `info.json` declares that package optional. This matches the owner's uploaded startup error. Model review currently uses the already-installed dependency in an isolated profile. Resolve the authorized art/dependency path while preserving intended priest appearance, then prove native load with the dependency absent and present; do not substitute generic art and call the visual completion done. No behavior/regression tests are needed for that import gate.
 
 A02 independent frame-hash checkpoint: 210/384 chunks. Confirm live processes before resuming, and preserve existing render workers.
 
 Boiler completion audit: G5 (current-model GLB export/reimport with PBR/bounds/socket evidence) remains open. The newly reviewed wire attachment does not silently close that independent export requirement.
+
+## Mechanicus-independent sprite import verified
+
+The former missing-enabled-mod path is removed from runtime Lua. Five exact existing MIT sprite sheets now ship under the Tech-Priests namespace with full attribution/permission notice. The installed archive matches the official 0.0.3 release checksum; all image bytes, animation parameters, scale, shifts, tints and entity logic remain unchanged apart from resource naming. Mechanicus remains an optional player-skin mod. Two isolated native Factorio 2.1.24 profiles, package physically absent and enabled, reached actual graphics capture; all 10 priest and 5 corpse graphic definitions match between configurations. See [import evidence and source map](priest-sprite-import/README.md). This closes that import gate, not priest 3D-model or final animation-quality acceptance. All 203 entity PNGs verify/decode.
+
+Boiler G5 independent GLB reimport/PBR/bounds/socket evidence is still open. Other structure and model gates remain as recorded; no behavior/regression or release milestone is claimed by the graphics-load proof.
+
+A02 independent frame-hash checkpoint: 229/384 chunks. Existing controller and four Blender render workers were re-observed live during this import slice.

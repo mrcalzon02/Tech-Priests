@@ -6,7 +6,7 @@ local smoke_animations = require("__base__.prototypes.entity.smoke-animations")
 
 local substation_source = data.raw["electric-pole"] and data.raw["electric-pole"]["substation"]
 
-local MR_BASE_PATH = "__mechanicus-reborn__/images/"
+local PRIEST_GRAPHICS_PATH = "__tech-priests__/graphics/entity/tech-priest/"
 local MODEL_SCALE = 0.65
 
 
@@ -374,7 +374,7 @@ end
 
 local function sprite(filename, animation_speed, shadow, tint)
   local layer = {
-    filename = MR_BASE_PATH .. filename,
+    filename = PRIEST_GRAPHICS_PATH .. filename,
     width = 150,
     height = 160,
     shift = util.by_pixel(shadow and 20 or 0, shadow and -8 or -21),
@@ -417,7 +417,7 @@ local function make_priest_corpse(def)
   priest_corpse.time_before_shading_off = 60 * 10
 
   local priest_dead_animation = {
-    filename = MR_BASE_PATH .. "level1_dead.png",
+    filename = PRIEST_GRAPHICS_PATH .. "level1_dead.png",
     width = 150,
     height = 160,
     frame_count = 2,

@@ -1,0 +1,1545 @@
+{
+  "status": "NATIVE_ASSET_IMPORT_GATE_PASSES_MECHANICUS_ABSENT_AND_ENABLED",
+  "scope": "Asset namespaces, decoded sprites, native prototype/graphics loading. No behavior/regression assertion, new 3D model or final animation-quality acceptance.",
+  "baseline_commit": "b9f13f57a34451b627bb63daaab388d671a686e6",
+  "original_entity_source_changes_only_variable_and_resource_prefix": true,
+  "upstream_official_archive_sha1_match": true,
+  "licensed_source_images_byte_identical": true,
+  "source_animation_cells_preserved": 706,
+  "native_units_per_profile": 10,
+  "native_corpses_per_profile": 5,
+  "displayed_units_per_profile": 80,
+  "boiler_directions_per_profile": 4,
+  "native_graphic_definitions_identical_between_profiles": true,
+  "unconditional_external_namespace_removed_from_runtime_lua": true,
+  "mechanicus_dependency_remains_optional": true,
+  "packaging_selector_includes_all_five_pngs_and_notice": true,
+  "native_receipts": {
+    "without": {
+      "scope": "Native graphics/asset loading only; frozen displayed units, no behavior assertions",
+      "active_mods": {
+        "base": "2.1.24",
+        "elevated-rails": "2.1.24",
+        "recycler": "2.1.24",
+        "quality": "2.1.24",
+        "space-age": "2.1.24",
+        "tech-priests": "0.1.678",
+        "model-visual-review": "0.1.0"
+      },
+      "tick": 10,
+      "displayed_unit_count": 80,
+      "poses": [
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        }
+      ]
+    },
+    "with": {
+      "scope": "Native graphics/asset loading only; frozen displayed units, no behavior assertions",
+      "active_mods": {
+        "base": "2.1.24",
+        "elevated-rails": "2.1.24",
+        "mechanicus-reborn": "0.0.3",
+        "recycler": "2.1.24",
+        "quality": "2.1.24",
+        "space-age": "2.1.24",
+        "tech-priests": "0.1.678",
+        "model-visual-review": "0.1.0"
+      },
+      "tick": 10,
+      "displayed_unit_count": 80,
+      "poses": [
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "junior-tech-priest",
+          "position": {
+            "y": 0,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "intermediate-tech-priest",
+          "position": {
+            "y": 5,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "senior-tech-priest",
+          "position": {
+            "y": 10,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "planetary-magos-tech-priest",
+          "position": {
+            "y": 15,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "void-tech-priest",
+          "position": {
+            "y": 20,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "junior-tech-priest-belt-immune",
+          "position": {
+            "y": 25,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "intermediate-tech-priest-belt-immune",
+          "position": {
+            "y": 30,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "senior-tech-priest-belt-immune",
+          "position": {
+            "y": 35,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "planetary-magos-tech-priest-belt-immune",
+          "position": {
+            "y": 40,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 0
+          },
+          "direction": 0,
+          "orientation": 0
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 4
+          },
+          "direction": 0,
+          "orientation": 0.125
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 8
+          },
+          "direction": 0,
+          "orientation": 0.25
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 12
+          },
+          "direction": 0,
+          "orientation": 0.375
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 16
+          },
+          "direction": 0,
+          "orientation": 0.5
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 20
+          },
+          "direction": 0,
+          "orientation": 0.625
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 24
+          },
+          "direction": 0,
+          "orientation": 0.75
+        },
+        {
+          "name": "void-tech-priest-belt-immune",
+          "position": {
+            "y": 45,
+            "x": 28
+          },
+          "direction": 0,
+          "orientation": 0.875
+        }
+      ]
+    }
+  },
+  "native_screenshot_sha256": {
+    "without/boiler-four-directions.png": "60411ddb26eaa78bc4cad1c6960befb282e8ff6b5ae0adb47ba9f71e3bcf89a9",
+    "without/corpses.png": "8e902a84105145b5d2dc7021e5b8fb18248ceb90e13c4c895e4d584bca0e1617",
+    "without/intermediate-tech-priest-belt-immune.png": "54fed71c328fdcb3961e78f670503c71522e0c34b4b583780a259f8c5fd095fe",
+    "without/intermediate-tech-priest.png": "917e219d59b982556a97bc31f1c04d00436f9c0ba31d5aa66988aab51c63cc4d",
+    "without/junior-tech-priest-belt-immune.png": "75ba51dd5cbfe303d292a2d010d00a16f7256f8fb3210c604349c06e006fe616",
+    "without/junior-tech-priest.png": "d4d8b54943dff2e140126173621d6e9242f8c54dd15fb5dbdadd64847afb0d7b",
+    "without/planetary-magos-tech-priest-belt-immune.png": "7ded7d1150c7f00051cfd74b0b77233954543ee1c11438e1819257673368e729",
+    "without/planetary-magos-tech-priest.png": "a6d7972e054f3950b63ca882f0923714040960813210e46884d063f7989b8090",
+    "without/senior-tech-priest-belt-immune.png": "240b36984e878ba8555710ee5e6bdce16280eeab09023ce63e657b8c98d14c08",
+    "without/senior-tech-priest.png": "ec086a86f57bb9296fa44a6d4639cacec2340c3734fa37f478cc1776b9dc7fcb",
+    "without/void-tech-priest-belt-immune.png": "7336055d7418b63b69dcb5c0203cf49d9d329ec900b421595e8a3eb211a6c06d",
+    "without/void-tech-priest.png": "66c86976b0f82bf9d6a46eb01e9ca3a737a88fcc93fd730d32150a70da3bff89",
+    "with/boiler-four-directions.png": "00f57ba4b42b66a4766c7f38e96d7ad59492b436aceb7e5a4f88c873b94bf742",
+    "with/corpses.png": "8e902a84105145b5d2dc7021e5b8fb18248ceb90e13c4c895e4d584bca0e1617",
+    "with/intermediate-tech-priest-belt-immune.png": "a5289ec8784b7a31330ae9c4aca1b1764fc09e2610460ea9f0f833828ea7e910",
+    "with/intermediate-tech-priest.png": "df7a52df3f9bf76415884c73b63aab4dee0ba8ae4ce70c4858693d372772e609",
+    "with/junior-tech-priest-belt-immune.png": "c13c1c3d44a7a3377f6c8b4fa6660e2f289e8ade5bbd712f058470a4e6849c2c",
+    "with/junior-tech-priest.png": "335bffeacbb9eb610a35997bef40799e1b6b4c815743231e57ca9ba567709c00",
+    "with/planetary-magos-tech-priest-belt-immune.png": "ff175952276473f427af3c256c1e481c3fd6fb18a55028a8c16a1a7235478da3",
+    "with/planetary-magos-tech-priest.png": "e135a34b8c42e542d236de8ffa50a49a83f5bc15a830cbeda8e5ecc81849243e",
+    "with/senior-tech-priest-belt-immune.png": "0cfbafaaa2fb26bf6aa6ed8bfb54597cbd52a0ac0540fdbe34fb2e6337930c25",
+    "with/senior-tech-priest.png": "819c475ea5d90dd48c15339392f31edca7534043fa6e47c4cad365b02bee13a6",
+    "with/void-tech-priest-belt-immune.png": "65e22c57fb051be2fd44d22ed05c99d196f012d547f37f58e11fe2680458366d",
+    "with/void-tech-priest.png": "6b1975ad5cb226346521ea39a1eb617221b4cc95c1a661a6a3189b52de7a34a8"
+  },
+  "native_review_working_file_sha256": {
+    "tech-priests_src/prototypes/entity.lua": "eb58ca0ae6a6e1af00b57aecc6d0950a4fa82cb09a9a581bdd0f40521c414f0a",
+    "tech-priests_src/THIRD-PARTY-NOTICES-MECHANICUS.txt": "ddabca494299968d9848bc67eb105189527658260e31c5815ff013b18c19b13d",
+    "tools/art/native_visual_review/prepare.py": "d79e30ec2109385602df446ed848c9c9ffb1052d3bb924383831d5470b6308fa",
+    "tech-priests_src/graphics/entity/tech-priest/level1_dead.png": "d36769aa131ae288b0ea4f5eef9aae60dfbeb5e0d9c3393480acab408b28a58a",
+    "tech-priests_src/graphics/entity/tech-priest/level1_idle_gun.png": "8ccdef468c32fd8f3e69061c95ec152927dd71660fae269c01caef80e986d272",
+    "tech-priests_src/graphics/entity/tech-priest/level1_idle_gun_shadow.png": "e28e04874fd68e5c10f775154c4aaffaedbb01c9ec01baec79979621dbdccc38",
+    "tech-priests_src/graphics/entity/tech-priest/level1_running.png": "376be34a7f000cef8bd70bcdec8a0a66d87aa1560549dc8c04e073517481270d",
+    "tech-priests_src/graphics/entity/tech-priest/level1_running_shadow.png": "edc1c4b1215b957694d469fed3c857ca4eb86af26a1db612e609024f9205f1ea"
+  },
+  "canonical_git_content_sha256": {
+    "tech-priests_src/prototypes/entity.lua": "5e6a9676b2052fc87714c733c8ade8f8bae25026f0c02b0086bd9c7ac68f63cc",
+    "tech-priests_src/THIRD-PARTY-NOTICES-MECHANICUS.txt": "14296bf380558a5d9cbd3e24a0cf4045d650fe577b2bd772878657aae1d7095c",
+    "tools/art/native_visual_review/prepare.py": "dd01ff58197206e25685b56c42e94201b3dffe078ac96feeb17bab784996102d",
+    "tech-priests_src/graphics/entity/tech-priest/level1_dead.png": "d36769aa131ae288b0ea4f5eef9aae60dfbeb5e0d9c3393480acab408b28a58a",
+    "tech-priests_src/graphics/entity/tech-priest/level1_idle_gun.png": "8ccdef468c32fd8f3e69061c95ec152927dd71660fae269c01caef80e986d272",
+    "tech-priests_src/graphics/entity/tech-priest/level1_idle_gun_shadow.png": "e28e04874fd68e5c10f775154c4aaffaedbb01c9ec01baec79979621dbdccc38",
+    "tech-priests_src/graphics/entity/tech-priest/level1_running.png": "376be34a7f000cef8bd70bcdec8a0a66d87aa1560549dc8c04e073517481270d",
+    "tech-priests_src/graphics/entity/tech-priest/level1_running_shadow.png": "edc1c4b1215b957694d469fed3c857ca4eb86af26a1db612e609024f9205f1ea"
+  },
+  "hash_context": "Native review hashes bind Windows working files; canonical text hashes use Git LF. PNG bytes are identical in both contexts.",
+  "visual_review": "Viewed the actual dependency comparison and rank gallery; intended sprite sources and tier tints remain. This accepts resource loading and preservation, not final priest art/model quality. Independent instance screenshots are not claimed byte-identical; native-pixel-comparison.json retains their differences.",
+  "remaining": [
+    "Boiler G5 GLB reimport/PBR/bounds/socket inspection",
+    "A02 full capture/packaging and remaining structure/model ledger gates",
+    "Priest bitmap import is not recovery of an editable 3D priest model"
+  ]
+}

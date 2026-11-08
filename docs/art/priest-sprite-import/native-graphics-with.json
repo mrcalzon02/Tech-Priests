@@ -1,0 +1,982 @@
+{
+  "corpses": [
+    {
+      "animation": {
+        "animation_speed": 0.05,
+        "direction_count": 1,
+        "filename": "__tech-priests__/graphics/entity/tech-priest/level1_dead.png",
+        "frame_count": 2,
+        "height": 160,
+        "scale": 0.65,
+        "shift": [
+          0,
+          -0.65625
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.7,
+          "g": 0.7,
+          "r": 0.7
+        },
+        "width": 150
+      },
+      "decay_animation": {
+        "animation_speed": 0.05,
+        "direction_count": 1,
+        "filename": "__tech-priests__/graphics/entity/tech-priest/level1_dead.png",
+        "frame_count": 2,
+        "height": 160,
+        "scale": 0.65,
+        "shift": [
+          0,
+          -0.65625
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.7,
+          "g": 0.7,
+          "r": 0.7
+        },
+        "width": 150
+      },
+      "name": "intermediate-tech-priest-corpse"
+    },
+    {
+      "animation": {
+        "animation_speed": 0.05,
+        "direction_count": 1,
+        "filename": "__tech-priests__/graphics/entity/tech-priest/level1_dead.png",
+        "frame_count": 2,
+        "height": 160,
+        "scale": 0.65,
+        "shift": [
+          0,
+          -0.65625
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.18,
+          "g": 0.58,
+          "r": 1
+        },
+        "width": 150
+      },
+      "decay_animation": {
+        "animation_speed": 0.05,
+        "direction_count": 1,
+        "filename": "__tech-priests__/graphics/entity/tech-priest/level1_dead.png",
+        "frame_count": 2,
+        "height": 160,
+        "scale": 0.65,
+        "shift": [
+          0,
+          -0.65625
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.18,
+          "g": 0.58,
+          "r": 1
+        },
+        "width": 150
+      },
+      "name": "junior-tech-priest-corpse"
+    },
+    {
+      "animation": {
+        "animation_speed": 0.05,
+        "direction_count": 1,
+        "filename": "__tech-priests__/graphics/entity/tech-priest/level1_dead.png",
+        "frame_count": 2,
+        "height": 160,
+        "scale": 0.65,
+        "shift": [
+          0,
+          -0.65625
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.06,
+          "g": 0.07,
+          "r": 0.08
+        },
+        "width": 150
+      },
+      "decay_animation": {
+        "animation_speed": 0.05,
+        "direction_count": 1,
+        "filename": "__tech-priests__/graphics/entity/tech-priest/level1_dead.png",
+        "frame_count": 2,
+        "height": 160,
+        "scale": 0.65,
+        "shift": [
+          0,
+          -0.65625
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.06,
+          "g": 0.07,
+          "r": 0.08
+        },
+        "width": 150
+      },
+      "name": "planetary-magos-tech-priest-corpse"
+    },
+    {
+      "animation": {
+        "animation_speed": 0.05,
+        "direction_count": 1,
+        "filename": "__tech-priests__/graphics/entity/tech-priest/level1_dead.png",
+        "frame_count": 2,
+        "height": 160,
+        "scale": 0.65,
+        "shift": [
+          0,
+          -0.65625
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.08,
+          "g": 0.1,
+          "r": 0.92
+        },
+        "width": 150
+      },
+      "decay_animation": {
+        "animation_speed": 0.05,
+        "direction_count": 1,
+        "filename": "__tech-priests__/graphics/entity/tech-priest/level1_dead.png",
+        "frame_count": 2,
+        "height": 160,
+        "scale": 0.65,
+        "shift": [
+          0,
+          -0.65625
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.08,
+          "g": 0.1,
+          "r": 0.92
+        },
+        "width": 150
+      },
+      "name": "senior-tech-priest-corpse"
+    },
+    {
+      "animation": {
+        "animation_speed": 0.05,
+        "direction_count": 1,
+        "filename": "__tech-priests__/graphics/entity/tech-priest/level1_dead.png",
+        "frame_count": 2,
+        "height": 160,
+        "scale": 0.65,
+        "shift": [
+          0,
+          -0.65625
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.86,
+          "g": 0.96,
+          "r": 1
+        },
+        "width": 150
+      },
+      "decay_animation": {
+        "animation_speed": 0.05,
+        "direction_count": 1,
+        "filename": "__tech-priests__/graphics/entity/tech-priest/level1_dead.png",
+        "frame_count": 2,
+        "height": 160,
+        "scale": 0.65,
+        "shift": [
+          0,
+          -0.65625
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.86,
+          "g": 0.96,
+          "r": 1
+        },
+        "width": 150
+      },
+      "name": "void-tech-priest-corpse"
+    }
+  ],
+  "mechanicus_version": "0.0.3",
+  "units": [
+    {
+      "attack_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.32,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.7,
+              "g": 0.7,
+              "r": 0.7
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.32,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      },
+      "name": "intermediate-tech-priest",
+      "run_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.82,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.7,
+              "g": 0.7,
+              "r": 0.7
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.82,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      }
+    },
+    {
+      "attack_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.36,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.7,
+              "g": 0.7,
+              "r": 0.7
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.36,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      },
+      "name": "intermediate-tech-priest-belt-immune",
+      "run_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.92,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.7,
+              "g": 0.7,
+              "r": 0.7
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.92,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      }
+    },
+    {
+      "attack_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.32,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.18,
+              "g": 0.58,
+              "r": 1
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.32,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      },
+      "name": "junior-tech-priest",
+      "run_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.82,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.18,
+              "g": 0.58,
+              "r": 1
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.82,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      }
+    },
+    {
+      "attack_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.36,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.18,
+              "g": 0.58,
+              "r": 1
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.36,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      },
+      "name": "junior-tech-priest-belt-immune",
+      "run_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.92,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.18,
+              "g": 0.58,
+              "r": 1
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.92,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      }
+    },
+    {
+      "attack_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.32,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.06,
+              "g": 0.07,
+              "r": 0.08
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.32,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      },
+      "name": "planetary-magos-tech-priest",
+      "run_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.82,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.06,
+              "g": 0.07,
+              "r": 0.08
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.82,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      }
+    },
+    {
+      "attack_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.36,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.06,
+              "g": 0.07,
+              "r": 0.08
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.36,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      },
+      "name": "planetary-magos-tech-priest-belt-immune",
+      "run_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.92,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.06,
+              "g": 0.07,
+              "r": 0.08
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.92,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      }
+    },
+    {
+      "attack_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.32,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.08,
+              "g": 0.1,
+              "r": 0.92
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.32,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      },
+      "name": "senior-tech-priest",
+      "run_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.82,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.08,
+              "g": 0.1,
+              "r": 0.92
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.82,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      }
+    },
+    {
+      "attack_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.36,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.08,
+              "g": 0.1,
+              "r": 0.92
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.36,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      },
+      "name": "senior-tech-priest-belt-immune",
+      "run_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.92,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.08,
+              "g": 0.1,
+              "r": 0.92
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.92,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      }
+    },
+    {
+      "attack_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.32,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.86,
+              "g": 0.96,
+              "r": 1
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.32,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      },
+      "name": "void-tech-priest",
+      "run_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.82,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.86,
+              "g": 0.96,
+              "r": 1
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.82,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      }
+    },
+    {
+      "attack_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.36,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.86,
+              "g": 0.96,
+              "r": 1
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.36,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      },
+      "name": "void-tech-priest-belt-immune",
+      "run_animation": {
+        "layers": [
+          {
+            "animation_speed": 0.92,
+            "direction_count": 8,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0,
+              -0.65625
+            ],
+            "tint": {
+              "a": 1,
+              "b": 0.86,
+              "g": 0.96,
+              "r": 1
+            },
+            "width": 150
+          },
+          {
+            "animation_speed": 0.92,
+            "direction_count": 8,
+            "draw_as_shadow": true,
+            "filename": "__tech-priests__/graphics/entity/tech-priest/level1_running_shadow.png",
+            "frame_count": 22,
+            "height": 160,
+            "scale": 0.65,
+            "shift": [
+              0.625,
+              -0.25
+            ],
+            "width": 150
+          }
+        ]
+      }
+    }
+  ]
+}

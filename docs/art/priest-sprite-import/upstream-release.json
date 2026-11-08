@@ -1,0 +1,13 @@
+{
+  "version": "0.0.3",
+  "file_name": "mechanicus-reborn_0.0.3.zip",
+  "sha1": "c1d049a0f6dd25c9ccd12d57b022515a9344ee2f",
+  "info_json": {
+    "dependencies": [
+      "base >= 2.0"
+    ],
+    "factorio_version": "2.1"
+  },
+  "installed_archive_sha1": "c1d049a0f6dd25c9ccd12d57b022515a9344ee2f",
+  "installed_archive_matches_official_release": true
+}

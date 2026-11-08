@@ -47,3 +47,5 @@ The earlier common native shift/scale was visually rejected even though the pipe
 To reconstruct again from the exact approved V07b file, use `tools/art/rebuild_boiler_source.py` as documented in the recovery evidence. Existing production sprite replacement still requires full capture and visual-state acceptance.
 
 The source/render/pipe/wire slices are reviewed in the isolated dependency-enabled native profile. This does not prove loading with the optional Mechanicus mod disabled.
+
+The separate optional Mechanicus sprite-namespace gate is now resolved and native-loaded both absent/enabled; see [import proof](../../../docs/art/priest-sprite-import/README.md). Boiler G5 interchange inspection remains open. Earlier dependency-enabled views retain their original evidence scope.

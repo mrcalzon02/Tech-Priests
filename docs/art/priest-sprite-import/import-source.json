@@ -1,0 +1,45 @@
+{
+  "source_archive": "mechanicus-reborn_0.0.3.zip",
+  "source_archive_sha256": "cc984d8ff8925c5427af1bd5dcfb05f9933e5d7155506851e66b23c525c8f91c",
+  "source_mod": "mechanicus-reborn",
+  "source_version": "0.0.3",
+  "original_author": "markmen494",
+  "fork_author": "Mad Engineer (mad_engineer)",
+  "license": "MIT",
+  "source_urls": [
+    "https://mods.factorio.com/mod/Mechanicus",
+    "https://mods.factorio.com/mod/mechanicus-reborn"
+  ],
+  "files": [
+    {
+      "filename": "level1_running.png",
+      "source_member": "mechanicus-reborn/images/level1_running.png",
+      "bytes": 1863839,
+      "sha256": "376be34a7f000cef8bd70bcdec8a0a66d87aa1560549dc8c04e073517481270d"
+    },
+    {
+      "filename": "level1_running_shadow.png",
+      "source_member": "mechanicus-reborn/images/level1_running_shadow.png",
+      "bytes": 320649,
+      "sha256": "edc1c4b1215b957694d469fed3c857ca4eb86af26a1db612e609024f9205f1ea"
+    },
+    {
+      "filename": "level1_idle_gun.png",
+      "source_member": "mechanicus-reborn/images/level1_idle_gun.png",
+      "bytes": 1840241,
+      "sha256": "8ccdef468c32fd8f3e69061c95ec152927dd71660fae269c01caef80e986d272"
+    },
+    {
+      "filename": "level1_idle_gun_shadow.png",
+      "source_member": "mechanicus-reborn/images/level1_idle_gun_shadow.png",
+      "bytes": 328289,
+      "sha256": "e28e04874fd68e5c10f775154c4aaffaedbb01c9ec01baec79979621dbdccc38"
+    },
+    {
+      "filename": "level1_dead.png",
+      "source_member": "mechanicus-reborn/images/level1_dead.png",
+      "bytes": 24909,
+      "sha256": "d36769aa131ae288b0ea4f5eef9aae60dfbeb5e0d9c3393480acab408b28a58a"
+    }
+  ]
+}

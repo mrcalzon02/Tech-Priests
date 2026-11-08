@@ -1,0 +1,74 @@
+[
+  {
+    "path": "boiler-four-directions.png",
+    "exact_native_pixels": false,
+    "max_channel_delta": 173,
+    "mean_channel_delta": 1.2819953070746528
+  },
+  {
+    "path": "corpses.png",
+    "exact_native_pixels": true,
+    "max_channel_delta": 0,
+    "mean_channel_delta": 0.0
+  },
+  {
+    "path": "intermediate-tech-priest-belt-immune.png",
+    "exact_native_pixels": false,
+    "max_channel_delta": 1,
+    "mean_channel_delta": 0.0003185453869047619
+  },
+  {
+    "path": "intermediate-tech-priest.png",
+    "exact_native_pixels": false,
+    "max_channel_delta": 1,
+    "mean_channel_delta": 0.00031001984126984125
+  },
+  {
+    "path": "junior-tech-priest-belt-immune.png",
+    "exact_native_pixels": false,
+    "max_channel_delta": 1,
+    "mean_channel_delta": 0.00029878162202380955
+  },
+  {
+    "path": "junior-tech-priest.png",
+    "exact_native_pixels": false,
+    "max_channel_delta": 1,
+    "mean_channel_delta": 0.0002879309275793651
+  },
+  {
+    "path": "planetary-magos-tech-priest-belt-immune.png",
+    "exact_native_pixels": false,
+    "max_channel_delta": 1,
+    "mean_channel_delta": 0.0002879309275793651
+  },
+  {
+    "path": "planetary-magos-tech-priest.png",
+    "exact_native_pixels": false,
+    "max_channel_delta": 1,
+    "mean_channel_delta": 0.000313507564484127
+  },
+  {
+    "path": "senior-tech-priest-belt-immune.png",
+    "exact_native_pixels": false,
+    "max_channel_delta": 1,
+    "mean_channel_delta": 0.0003154451884920635
+  },
+  {
+    "path": "senior-tech-priest.png",
+    "exact_native_pixels": false,
+    "max_channel_delta": 1,
+    "mean_channel_delta": 0.00030653211805555555
+  },
+  {
+    "path": "void-tech-priest-belt-immune.png",
+    "exact_native_pixels": false,
+    "max_channel_delta": 1,
+    "mean_channel_delta": 0.00031001984126984125
+  },
+  {
+    "path": "void-tech-priest.png",
+    "exact_native_pixels": false,
+    "max_channel_delta": 1,
+    "mean_channel_delta": 0.0002735925099206349
+  }
+]
