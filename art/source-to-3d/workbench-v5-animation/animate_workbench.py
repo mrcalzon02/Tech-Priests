@@ -62,7 +62,15 @@ cam=sc.camera;cam.data.ortho_scale=2.05;target=Vector((0,0,.63));ang=math.radian
 sc.render.resolution_x=480;sc.render.resolution_y=480;sc.render.resolution_percentage=100
 sc.render.engine='CYCLES';sc.cycles.samples=8;sc.cycles.use_denoising=False
 # Compositor adds a restrained glow to the bright spark cores.
-sc.use_nodes=True;cn=sc.node_tree.nodes;cn.clear();rl=cn.new('CompositorNodeRLayers');gl=cn.new('CompositorNodeGlare');gl.glare_type='FOG_GLOW';gl.quality='MEDIUM';gl.threshold=1.3;gl.size=6;comp=cn.new('CompositorNodeComposite');sc.node_tree.links.new(rl.outputs['Image'],gl.inputs['Image']);sc.node_tree.links.new(gl.outputs['Image'],comp.inputs['Image'])
+if bpy.app.version >= (5,0,0):
+ tree=bpy.data.node_groups.new('Workbench restrained spark glow','CompositorNodeTree');sc.compositing_node_group=tree;tree.interface.new_socket(name='Image',in_out='OUTPUT',socket_type='NodeSocketColor');output_type='NodeGroupOutput'
+else:
+ sc.use_nodes=True;tree=sc.node_tree;output_type='CompositorNodeComposite'
+cn=tree.nodes;cn.clear();rl=cn.new('CompositorNodeRLayers');gl=cn.new('CompositorNodeGlare');gl.glare_type='FOG_GLOW';gl.quality='MEDIUM'
+if hasattr(gl,'threshold'): gl.threshold=1.3
+elif 'Threshold' in gl.inputs: gl.inputs['Threshold'].default_value=1.3
+if hasattr(gl,'size'): gl.size=6
+comp=cn.new(output_type);tree.links.new(rl.outputs['Image'],gl.inputs['Image']);tree.links.new(gl.outputs['Image'],comp.inputs['Image'])
 # Verify impacts contact the sheet at its center, with a clean rest-to-rest loop.
 for f in hits:
  sc.frame_set(f);center=hammer[1].matrix_world.translation;assert abs(center.x)<.001 and abs(center.y)<.001,(f,center);assert abs(center.z-.885)<.001
