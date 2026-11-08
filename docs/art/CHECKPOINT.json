@@ -35,8 +35,10 @@
   "capture_checkpoint": {
     "initial_verified_chunks": 39,
     "total_chunks": 384,
-    "further_artifact_recovery": "in progress; 62/68 bundles downloaded, missing output remains local render work",
+    "further_artifact_recovery": "Second import completed: 1482 additional PNGs; 48 cached chunks plus four local chunks. 62/68 bundles complete; remaining missing frames render locally.",
     "new_local_profile": "OPTIX / CPU compositor; source and render settings unchanged; numerical differences measured",
-    "live_process_claim": "Read actual local-capture-state.json and verify process commands; this committed snapshot is not proof of current liveness"
+    "live_process_claim": "Read actual local-capture-state.json and verify process commands; this committed snapshot is not proof of current liveness",
+    "last_independently_verified_chunks": 52,
+    "packaging": "Use package_local_lobber_capture.py, never the destructive legacy assembler directly on capture cache. Incomplete-cache refusal verified; full packaging pending."
   }
 }

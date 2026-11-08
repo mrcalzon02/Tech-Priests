@@ -9,7 +9,7 @@ The initial audit missed two segmented native sources stored as manifest-checked
 
 ## A02 recovery checkpoint
 
-Initial verified cache: 39/384 chunks. Heading 0 independently passes all 669 PNG checks, including the full 192-frame eight-second cycle; see the [actual key poses](lobber-a02-recovered-keyposes.png), [loop preview](lobber-a02-recovered-eight-second-loop.gif) and [frame hashes](lobber-a02-heading-00-validation.json). Further artifact recovery and four local Blender workers continue. The optional GPU profile and measured CPU/GPU differences are documented in LOCAL_BLENDER_CAPTURE.md. Full export and game integration remain open.
+Initial verified cache: 39/384 chunks; second import independently verifies 52/384 including four completed local chunks. Heading 0 independently passes all 669 PNG checks, including the full 192-frame eight-second cycle; see the [actual key poses](lobber-a02-recovered-keyposes.png), [loop preview](lobber-a02-recovered-eight-second-loop.gif) and [frame hashes](lobber-a02-heading-00-validation.json). Artifact import has exited successfully, its heading reservation is released, and four local Blender workers continue. The optional GPU profile and measured CPU/GPU differences are documented in LOCAL_BLENDER_CAPTURE.md. Full export and game integration remain open.
 
 ## Initial static-study checkpoint (historical)
 
