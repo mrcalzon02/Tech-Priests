@@ -66,7 +66,9 @@ if bpy.app.version >= (5,0,0):
  tree=bpy.data.node_groups.new('Workbench restrained spark glow','CompositorNodeTree');sc.compositing_node_group=tree;tree.interface.new_socket(name='Image',in_out='OUTPUT',socket_type='NodeSocketColor');output_type='NodeGroupOutput'
 else:
  sc.use_nodes=True;tree=sc.node_tree;output_type='CompositorNodeComposite'
-cn=tree.nodes;cn.clear();rl=cn.new('CompositorNodeRLayers');gl=cn.new('CompositorNodeGlare');gl.glare_type='FOG_GLOW';gl.quality='MEDIUM'
+cn=tree.nodes;cn.clear();rl=cn.new('CompositorNodeRLayers');gl=cn.new('CompositorNodeGlare')
+if hasattr(gl,'glare_type'): gl.glare_type='FOG_GLOW';gl.quality='MEDIUM'
+else: gl.inputs['Type'].default_value='Fog Glow'
 if hasattr(gl,'threshold'): gl.threshold=1.3
 elif 'Threshold' in gl.inputs: gl.inputs['Threshold'].default_value=1.3
 if hasattr(gl,'size'): gl.size=6
