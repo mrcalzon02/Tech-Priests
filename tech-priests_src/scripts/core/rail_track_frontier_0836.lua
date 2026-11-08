@@ -26,10 +26,14 @@ local function track_at(pair,point,direction)
   -- An item request, ghost or ledger entry is not proof of physical track.
   local scan=rawget(_G,"TechPriestsScanRouting0610")
   if not(scan and type(scan.find_entities)=="function")then return nil end
+  -- Every paid 0338 receipt and predecessor identity must be read from
+  -- live Factorio. The 0579 indexed area can lag rail creation/destruction;
+  -- cached geometry is not physical construction or connectivity proof.
   local ok,entities=pcall(scan.find_entities,pair.station.surface,{
     name="straight-rail",position=point,radius=0.25,
     force=pair.station.force,limit=4},
-    {category="construction",limit=4,record_negative=false})
+    {category="construction",limit=4,record_negative=false,
+      require_fresh=true})
   if not ok or type(entities)~="table"then return nil end
   for _,e in ipairs(entities)do
     if valid(e) and close(e.position,point)

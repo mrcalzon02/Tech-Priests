@@ -19,7 +19,12 @@ defines={direction={east=4},inventory={chest=1},
 prototypes={item={rail={name="rail"}},entity={["straight-rail"]={name="straight-rail"}}}
 local force={index=1}
 local sites={}
+-- Deliberately stale indexed view: initially missing newly paid rails,
+-- later still pointing to a removed original predecessor.
+local indexed_rails={}
 local scan_calls=0
+local fresh_scan_calls=0
+local indexed_scan_calls=0
 local surface={index=1,can_place_entity=function(spec)
   assert(spec.name=="straight-rail" and spec.direction==4
     and spec.force==force,"rail placement bypassed engine placement check")
@@ -30,7 +35,14 @@ _G.TechPriestsScanRouting0610={find_entities=function(s,filters,opts)
     and filters.limit==4 and filters.name=="straight-rail"
     and filters.radius==0.25,"rail touched unbudgeted entity scan")
   scan_calls=scan_calls+1
-  local e=sites[filters.position.x]
+  local e
+  if opts.require_fresh==true then
+    fresh_scan_calls=fresh_scan_calls+1
+    e=sites[filters.position.x]
+  else
+    indexed_scan_calls=indexed_scan_calls+1
+    e=indexed_rails[filters.position.x]
+  end
   return e and {e} or {}
 end}
 local pair={station={valid=true,unit_number=104,
@@ -205,6 +217,9 @@ assert(Track.verify_pending(pair)==true
   "connected second 0338 rail was not verified")
 -- Do not spend the next rail against a replacement in the old location.
 local second_real=sites[14]
+-- The index still advertises the old paid unit while the engine now
+-- contains a replacement. Only the live engine read may refuse credit.
+indexed_rails[14]=second_real
 sites[14]={valid=true,unit_number=2999,name="straight-rail",
   position={x=14,y=0},direction=4,force=force}
 local tampered_mission={status="building-physical-rail",
@@ -491,8 +506,10 @@ assert(not lost_while_busy and lost_busy_reason=="pending-original-rail-request-
   and item_count==698,
   "lost rail writ was hidden behind active Magos work")
 game.tick=old_tick
-assert(scan_calls>2,"rail builder never verified real physical track")
-print("[rail-track-frontier-0836] PASS 0338 source debit, native connected track, disconnected refusal and retained custody")
+assert(scan_calls>2 and fresh_scan_calls==scan_calls
+  and indexed_scan_calls==0,
+  "0836 accepted stale indexed rail geometry instead of live engine receipts")
+print("[rail-track-frontier-0836] PASS fresh native 0338 rail identity, connected track, disconnected refusal and retained custody")
 -- Prove the actual 0510 dispatcher, not a separate rail tick executor,
 -- owns rail constructor pulses and honors stronger physical duties.
 dofile("tests/unit/rail_dispatcher_handoff_0836.lua")
