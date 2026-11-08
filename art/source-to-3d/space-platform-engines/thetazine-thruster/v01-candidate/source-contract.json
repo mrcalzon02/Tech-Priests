@@ -1,0 +1,97 @@
+{
+  "status": "SOURCE_CONTRACT_ESTABLISHED_RENDER_AND_NATIVE_GATES_OPEN",
+  "reference_sha256": {
+    "idle": "00a1d681570f01cd7b5df2c46d31a539283ac11b0467e3aa930f472d2a910417",
+    "run": "0a6170f2642afdc43d8c2dd7bfed7f2bf96470f33883a1fbe125656cf6cf6f2d"
+  },
+  "hydrogen_reference_sha256": "5b7daa6196aac7f232cfa4dfa7bf833b318451b05d2f49aa3201dc55213aa3c2",
+  "shared_upper_body_rectangle": [
+    0,
+    0,
+    256,
+    230
+  ],
+  "shared_upper_body_exact_rgba_pixels": 13433,
+  "compared_pixels": 58880,
+  "max_rgba_difference": 255,
+  "reference_cells": {
+    "idle": {
+      "count": 2,
+      "cell": [
+        256,
+        512
+      ]
+    },
+    "run": {
+      "count": 2,
+      "cell": [
+        256,
+        512
+      ]
+    }
+  },
+  "silhouette": "Both source sprites share the same crossbeam, twin canisters, shoulders, six feeds, pressure chamber, winged skull and bell construction. Thetazine has its own two-frame idle/run flame/light artwork and distinct 5x5 native interface. Reusing the verified authored construction is explicit, not an independently recovered historical native model.",
+  "native_contract": {
+    "direction": "fixed north, not rotatable",
+    "footprint": [
+      5,
+      5
+    ],
+    "collision_box": [
+      [
+        -2.15,
+        -2.35
+      ],
+      [
+        2.15,
+        2.35
+      ]
+    ],
+    "fuel_cell": [
+      -2,
+      -1
+    ],
+    "fuel_mating": [
+      -2.5,
+      -1
+    ],
+    "fuel_adjacent_pipe": [
+      -3,
+      -1
+    ],
+    "fuel": "thetazine-fuel",
+    "oxidizer_cell": [
+      2,
+      -1
+    ],
+    "oxidizer_mating": [
+      2.5,
+      -1
+    ],
+    "oxidizer_adjacent_pipe": [
+      3,
+      -1
+    ],
+    "oxidizer": "water",
+    "caps": [
+      "pipe-4",
+      "pipe-1"
+    ],
+    "wire_attachment": "No new wire points invented; existing native definition must be read back before integration."
+  },
+  "pipeline_reconciliation": {
+    "tech_priests_main": "d03e6f288e7ef20fcabcabf5abf9735d26e2c9fb",
+    "hb_main": "b02cf5a8d",
+    "hb_reference": "tools/factorio-render-pipeline/THRUSTER_ENTITY_ASSEMBLY_R17.md",
+    "scope": "HB R17 describes separate conditional body/glow/cap layers in vanilla. It is not Thetazine art authority. No Actions or HB modifications."
+  },
+  "open_gates": [
+    "Actual exported mesh/UV/PBR/socket inspection",
+    "Viewed exported-artifact renders and scored review",
+    "Native pipe-mouth registration and connected/disconnected caps",
+    "Complete source-state beauty/emission/plume/shadow capture, atlas and real prototype import",
+    "Native graphical proof; no propulsion or behavior tests"
+  ],
+  "shared_upper_body_alpha_iou_over_128": 0.99975637305929,
+  "comparison_limit": "RGBA pixels are NOT identical. Near-identical alpha silhouette supports shared visible construction, not original native source identity or final Thetazine appearance approval."
+}

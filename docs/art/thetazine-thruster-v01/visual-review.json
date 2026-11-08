@@ -1,0 +1,40 @@
+{
+  "status": "REVIEWED_CANDIDATE_BELOW_FINAL_SURFACE_GATE",
+  "reviewer": "assistant; no new owner approval",
+  "scale": "1 poor to 5 strong; final threshold 4 on every required category",
+  "native_sha256": "f3ecc524e9b484b136914f8bab2ff8588941f53e678a642a8f030d9dbabf91ac",
+  "glb_sha256": "05d1fbf4f214bdcafba7aad603a724895f48a844179784562aa6ec1fb55f331a",
+  "reference_sha256": {
+    "idle": "00a1d681570f01cd7b5df2c46d31a539283ac11b0467e3aa930f472d2a910417",
+    "run": "0a6170f2642afdc43d8c2dd7bfed7f2bf96470f33883a1fbe125656cf6cf6f2d"
+  },
+  "viewed_render_sha256": {
+    "front.png": "86f471216beb60de5a5d000ce33fe4296044dc6f6f94f1d9a2dcef478cd12f25",
+    "oblique.png": "f5d967f43d42f0b81c928ef8efcbe9ffef2b72e6849e810d6f706a64bfcd610b",
+    "rear.png": "b60665434546ec1404ebdb5ab84d81e24566a759dd3a67f442cd5cfbd7218a62",
+    "rear-clay.png": "6dc6a9c5cec3f6b6ed8860fe0aeeae11a793664b060a1823569ba0cfba7dd803"
+  },
+  "scores": {
+    "structural_reference_fidelity": {
+      "score": 4,
+      "reason": "Broad saddle beam, paired canisters, diagonal shoulders, six feeds, paired external actuators, emblem, chamber and flared hollow bell follow the independently inspected Thetazine source. Fine source plate/engraving detail is simplified."
+    },
+    "construction_and_supported_fittings": {
+      "score": 4,
+      "reason": "Rear and clay views show a supported two-foot structure, continuous supply routing, hollow bell and retaining ribs; 82 listed mounting heads contact supports. This is not exhaustive intersection proof."
+    },
+    "surfacing": {
+      "score": 3,
+      "reason": "Shared cast/tank/brass/bell maps remain technically valid and directionally appropriate. The smooth broad plates and sparse weathering do not yet match the denser legacy construction detail; finish is below final threshold."
+    },
+    "source_state_fidelity": {
+      "score": 2,
+      "reason": "Two idle and two run source references were inspected, but changing flame/plume shapes have not been modeled or captured. Candidate contains light controls only."
+    },
+    "model_interface": {
+      "score": 4,
+      "reason": "Actual imported standard flanges remain at +/-2.5,1,.36, feet at Z0; analytical draw fit only. Native pipe-mouth/cap acceptance remains explicitly open."
+    }
+  },
+  "decision": "Keep separately editable v01-candidate; do not install or mark model family done. Repair source plate/surface fidelity and capture source state/flame layers before native graphics promotion."
+}

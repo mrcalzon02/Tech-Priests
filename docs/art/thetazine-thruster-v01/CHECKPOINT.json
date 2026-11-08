@@ -1,0 +1,23 @@
+{
+  "status": "candidate_checkpoint_not_completed_asset",
+  "candidate_native_sha256": "f3ecc524e9b484b136914f8bab2ff8588941f53e678a642a8f030d9dbabf91ac",
+  "candidate_glb_sha256": "05d1fbf4f214bdcafba7aad603a724895f48a844179784562aa6ec1fb55f331a",
+  "expensive_phases_complete": [
+    "native candidate saved",
+    "actual GLB exported",
+    "raw export audited",
+    "independent triangle and socket reimport checked",
+    "four actual exported-model CPU renders viewed"
+  ],
+  "pending": [
+    "surface detail 3/5 to required 4/5",
+    "source state/flame fidelity 2/5 to required 4/5",
+    "complete capture/atlas/shadow registration",
+    "native connected/disconnected pipe-mouth/cap review",
+    "actual late prototype import and native graphical proof"
+  ],
+  "active_thetazine_render": false,
+  "local_candidates": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\thetazine-v01\\candidate-02",
+  "next": "Resume this candidate: surface/construction refinement, full source-state/flame capture and exact atlas packaging, then actual native visual registration/caps. Do not select another body before this checkpoint is resolved.",
+  "canonical_text": "Fresh candidate-02 rebuilt from LF source contract and builder; every source receipt matches canonical Git bytes."
+}

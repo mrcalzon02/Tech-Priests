@@ -1,0 +1,240 @@
+{
+  "status": "MODELED_CANDIDATE_NATIVE_INTEGRATION_OPEN",
+  "builder_sha256": "e73f2e453eb2962016b3d5a739b37dc625bb66538a1fe256ac324d63491b3a44",
+  "input_model_sha256": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+  "reference_sha256": {
+    "idle": "00a1d681570f01cd7b5df2c46d31a539283ac11b0467e3aa930f472d2a910417",
+    "run": "0a6170f2642afdc43d8c2dd7bfed7f2bf96470f33883a1fbe125656cf6cf6f2d"
+  },
+  "source_contract_sha256": "41f58285c345b688f5838ff5705271b660d47918775e2cb0894ec1234ce3af88",
+  "mesh_count": 291,
+  "triangles": 93236,
+  "retained_body_scale": 1.25,
+  "standard_fitting_changes": [
+    {
+      "name": "fuel socket flange",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        -0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "fuel closed seat",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        -0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "fuel flange fastener",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        -0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "fuel flange fastener.001",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        -0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "fuel flange fastener.002",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        -0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "fuel flange fastener.003",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        -0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "fuel flange fastener.004",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        -0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "fuel flange fastener.005",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        -0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "oxidizer socket flange",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "oxidizer closed seat",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "oxidizer flange fastener",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "oxidizer flange fastener.001",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "oxidizer flange fastener.002",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "oxidizer flange fastener.003",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "oxidizer flange fastener.004",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    },
+    {
+      "name": "oxidizer flange fastener.005",
+      "operation": "translate standard pipe fitting, retain bore and bolt circle",
+      "delta": [
+        0.5,
+        0.5,
+        0.0
+      ]
+    }
+  ],
+  "new_supply_routes": [
+    {
+      "name": "fuel 5x5 routed neck",
+      "centerline": [
+        [
+          -2.299999952316284,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          -1.9199999570846558,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          -1.4700000286102295,
+          1.0199999809265137,
+          0.5699999928474426
+        ],
+        [
+          -1.037500023841858,
+          1.1195210218429565,
+          0.650784969329834
+        ]
+      ],
+      "radius": 0.175,
+      "flange_overlap": 0.04,
+      "body_end": [
+        -1.037500023841858,
+        1.1195210218429565,
+        0.650784969329834
+      ]
+    },
+    {
+      "name": "oxidizer 5x5 routed neck",
+      "centerline": [
+        [
+          2.299999952316284,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          1.9199999570846558,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          1.4700000286102295,
+          1.0199999809265137,
+          0.5699999928474426
+        ],
+        [
+          1.037500023841858,
+          1.1195210218429565,
+          0.650784969329834
+        ]
+      ],
+      "radius": 0.175,
+      "flange_overlap": 0.04,
+      "body_end": [
+        1.037500023841858,
+        1.1195210218429565,
+        0.650784969329834
+      ]
+    }
+  ],
+  "source_states": {
+    "idle": [
+      0,
+      1
+    ],
+    "run": [
+      16,
+      17
+    ]
+  },
+  "states_scope": "Source emission controls only; no mechanical deformation or plume animation acceptance. Static cold/hot GLB snapshot exports current frame only.",
+  "native_sha256": "f3ecc524e9b484b136914f8bab2ff8588941f53e678a642a8f030d9dbabf91ac",
+  "glb_sha256": "05d1fbf4f214bdcafba7aad603a724895f48a844179784562aa6ec1fb55f331a",
+  "shared_surface_plan": "Shared source construction: same cast beam, steel canisters, brass fittings and heat-worn bell maps. Existing UV regions preserve grain and circumferential/axial seam direction. New supply necks use cylindrical UVs. Common fabrication is intentional; no map renaming or recolor uniqueness claim.",
+  "prior_meshes": 291
+}

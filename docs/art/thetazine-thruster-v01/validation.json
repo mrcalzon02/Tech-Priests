@@ -1,0 +1,40 @@
+{
+  "status": "PASS_STATIC_MODEL_EXPORT_CANDIDATE_FINAL_VISUAL_AND_NATIVE_GATES_OPEN",
+  "observed_utc": "2026-11-08T22:06:27.088402+00:00",
+  "base_main": "d03e6f288e7ef20fcabcabf5abf9735d26e2c9fb",
+  "unchanged_runtime_tree": "9aec574bc95e424f912ca31c983684c791486324",
+  "canonical_source_sha256": {
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v01-candidate/build_model.py": "e73f2e453eb2962016b3d5a739b37dc625bb66538a1fe256ac324d63491b3a44",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v01-candidate/prepare_contract.py": "b199d0899b176a6fbb49c1b383c2d7ff1b99f5e24440e63c87c53eacea715f8f",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v01-candidate/README.md": "a81543f368d5cf812435bd4d846f631d4189b5922a500d7ea2f1ed233ccc9054",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v01-candidate/source-contract.json": "41f58285c345b688f5838ff5705271b660d47918775e2cb0894ec1234ce3af88",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v01-candidate/source-manifest.json": "9eaf1621098ecd9bd468618b58611a5c262ae7ea3b96d89b920ba699dbef5f88",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v01-candidate/thetazine-thruster-v01.blend": "f3ecc524e9b484b136914f8bab2ff8588941f53e678a642a8f030d9dbabf91ac",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v01-candidate/thetazine-thruster-v01.glb": "05d1fbf4f214bdcafba7aad603a724895f48a844179784562aa6ec1fb55f331a",
+    "tools/art/thetazine_thruster_v01/audit_glb.py": "a5518a15dc067e95aa67ae05825293df10ce48f867bf4c72e80560abd95d4a4b",
+    "tools/art/thetazine_thruster_v01/render_review.py": "7818fff290eda59043274441fdd5afc41907bf1c9ea129c84beb0a308952a3db",
+    "tools/art/thetazine_thruster_v01/verify_export.py": "b5a04f0cef09fcae3cd065b8afdee430a6163b77f038eb04ce0c7b6dcfa15f34",
+    "tools/art/thetazine_thruster_v01/verify_interfaces.py": "d5be535ba293060c38ce7c63913915817fbfdd34d559a24b2b84c9dd4c1f25db"
+  },
+  "native_sha256": "f3ecc524e9b484b136914f8bab2ff8588941f53e678a642a8f030d9dbabf91ac",
+  "glb_sha256": "05d1fbf4f214bdcafba7aad603a724895f48a844179784562aa6ec1fb55f331a",
+  "reference_sha256": {
+    "idle": "00a1d681570f01cd7b5df2c46d31a539283ac11b0467e3aa930f472d2a910417",
+    "run": "0a6170f2642afdc43d8c2dd7bfed7f2bf96470f33883a1fbe125656cf6cf6f2d"
+  },
+  "checks": {
+    "raw_glb": "RAW_GLB_GEOMETRY_UV_NORMAL_IMAGE_AUDIT_PASS",
+    "native_reimport": "PASS_ACTUAL_NATIVE_GLB_TRIANGLE_UV_MATERIAL_WINDING_AND_SOCKET_REIMPORT",
+    "model_interfaces": "PASS_MODEL_FITTINGS_FEET_AND_LISTED_SUPPORT_CONTACTS_NATIVE_VISUAL_REVIEW_PENDING",
+    "rendered_and_viewed_actual_glb": [
+      "front",
+      "oblique",
+      "rear",
+      "rear-clay"
+    ]
+  },
+  "review": "visual-review.json; final surface/state gate not passed",
+  "runtime_changed": false,
+  "behavior_tests": "not run",
+  "next_slice": "Resume this candidate: surface/construction refinement, full source-state/flame capture and exact atlas packaging, then actual native visual registration/caps. Do not select another body before this checkpoint is resolved."
+}
