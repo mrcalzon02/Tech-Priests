@@ -348,6 +348,22 @@ function M.service_pair(pair)
     or pair.inventory_transfer_custody_0687
     or pair.construction_task_0340
   if incumbent and not original_builder then
+    -- An original 0338 rail may finish before this broker pulse while a
+    -- separate incumbent duty is already active. Reconcile its completed
+    -- physical receipt without admitting or planning the NEXT rail: otherwise
+    -- an actually built/paid segment can stay uncredited indefinitely.
+    -- The exact existing request, entity, unit and native predecessor proof
+    -- remain mandatory inside verify_pending; no competing item is debited.
+    local previous=pair.construction_last_task_0338
+    if pending and not task and not custody
+        and previous and previous.request_value==pending.request
+        and previous.phase=="complete" then
+      local credited,why=M.verify_pending(pair)
+      if credited then
+        return true,"physical-rail-receipt-reconciled-while-occupied"
+      end
+      return false,why
+    end
     return false,"original-magos-incumbent-duty"
   end
   if m.pending_rail_0836 then

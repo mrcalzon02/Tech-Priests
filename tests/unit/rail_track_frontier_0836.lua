@@ -105,11 +105,38 @@ item_count=item_count-1
 pair.construction_last_task_0338={request_value=req,phase="complete",
   built_entity=sites[12]}
 pair.construction_request=nil
-local progressed=Track.verify_pending(pair)
-assert(progressed==true and mission.rail_frontier_0836.segment==1
+-- An unrelated physical duty can become incumbent after 0338 completes but
+-- before the strategic broker observes that paid rail. Receipt reconciliation
+-- is safe; dispatching the NEXT rail while occupied would preempt real work.
+local finished_incumbent={kind="already-active-original-magos-duty"}
+pair.active_task=finished_incumbent
+local unrelated={item_name="rail",entity_name="straight-rail"}
+local actual_receipt=pair.construction_last_task_0338
+pair.construction_last_task_0338={request_value=unrelated,
+  phase="complete",built_entity=sites[12]}
+local foreign,foreign_reason=Track.service_pair(pair)
+assert(not foreign and foreign_reason=="original-magos-incumbent-duty"
+  and mission.pending_rail_0836.request==req
+  and mission.rail_frontier_0836.segment==0
+  and pair.construction_request==nil and item_count==699,
+  "unrelated 0338 receipt stole a pending paid railway segment")
+pair.construction_last_task_0338=actual_receipt
+local progressed,receipt_reason=Track.service_pair(pair)
+assert(progressed==true
+  and receipt_reason=="physical-rail-receipt-reconciled-while-occupied"
+  and mission.rail_frontier_0836.segment==1
   and mission.rail_frontier_0836.built_units[1]==2101
-  and mission.pending_rail_0836==nil and item_count==699,
-  "first real builder completion not linked to exact physical segment")
+  and mission.pending_rail_0836==nil and item_count==699
+  and pair.active_task==finished_incumbent
+  and pair.construction_request==nil,
+  "a physically paid original rail was not reconciled without preempting duty")
+local paused_after_receipt,paused_reason=Track.service_pair(pair)
+assert(not paused_after_receipt
+  and paused_reason=="original-magos-incumbent-duty"
+  and mission.rail_frontier_0836.segment==1
+  and pair.construction_request==nil and item_count==699,
+  "credited rail incorrectly dispatched another job over Magos incumbent")
+pair.active_task=nil
 local next_ok,next_why=Track.service_pair(pair)
 local next_req=pair.construction_request
 assert(next_ok==true and next_why=="rail-segment-requested"
