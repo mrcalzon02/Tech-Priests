@@ -427,6 +427,7 @@ for _, spec in pairs(void_cargo_intermediates_0415) do
     type = "item",
     name = spec.name,
     icons = tech_priests_void_cargo_icon(spec.icon, spec.tint),
+    icon_size = 64,
     subgroup = "tech-priest-void-cargo",
     order = spec.order,
     stack_size = 50
@@ -445,7 +446,7 @@ local function tech_priests_copy_named_prototype_0415(proto_type, source_name, n
     prototype.order = "z[void-gear]-" .. new_name
     prototype.icons = tech_priests_void_cargo_icon((source.icon or fallback_icon), { r = 0.82, g = 0.96, b = 1.0, a = 1.0 })
     prototype.icon = nil
-    prototype.icon_size = nil
+    prototype.icon_size = 64
   else
     prototype = {
       type = "item",
@@ -453,6 +454,7 @@ local function tech_priests_copy_named_prototype_0415(proto_type, source_name, n
       localised_name = { "item-name." .. new_name },
       localised_description = { "item-description." .. new_name },
       icons = tech_priests_void_cargo_icon(fallback_icon, { r = 0.82, g = 0.96, b = 1.0, a = 1.0 }),
+      icon_size = 64,
       subgroup = "tech-priest-void-cargo",
       order = "z[void-gear]-" .. new_name,
       stack_size = 10
