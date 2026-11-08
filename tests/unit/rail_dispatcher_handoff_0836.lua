@@ -261,7 +261,80 @@ do
    and mission.pending_rail_0836.request==req
    and stock.rail==0 and stock["stone-furnace"]==1,
    "persisted creative rail bypass produced unpaid rail or lost original custody")
+ -- Source-observed functional blocker: a railway that reaches the
+ -- remote resource can require its original Magos to walk from the last rail
+ -- all the way HOME for a physically stocked next rail, then return outward.
+ -- The legacy 7200-tick travel cap expired before the ~25960-tick journey.
+ -- This test never manufactures rail, forces a move, or accepts engine track.
  creative_root.creative_instant_build=previous_creative
+ game.tick=start_tick
+ stock.rail=3
+ req.position={x=650,y=0}
+ req.rail_segment_0836=320
+ mission.rail_frontier_0836.segment=319
+ mission.pending_rail_0836={request=req,position=req.position,
+   direction=4,segment=320}
+ priest.position={x=648,y=0}
+ p.construction_last_task_0338=nil
+ p.construction_candidate_0338=nil
+ p.construction_custody_0338=nil
+ local far={phase="move-source",started_tick=game.tick,
+   item_name="rail",entity_name="straight-rail",
+   site_reason="remote-rail-physical-frontier-0836",
+   request_field="construction_request",request_value=req,
+   position=req.position,direction=4,source_entity=station}
+ p.construction_task_0338=far
+ local outbound=Builder.service_pair(p,"counted-distant-rail-source-return")
+ local physical_ticks=math.ceil((648+650)*Builder.travel_ticks_per_tile)
+ assert(outbound and outbound.detail=="moving-source"
+   and far.travel_allowance_ticks_0338==physical_ticks
+   and physical_ticks>Builder.max_travel_extra_ticks
+   and physical_ticks<=Builder.rail_max_travel_extra_ticks_0836
+   and p.construction_task_0338==far
+   and not p.construction_custody_0338 and stock.rail==3,
+   "distant original rail cannot physically walk to source and back")
+ game.tick=start_tick+Builder.request_timeout
+   +Builder.max_travel_extra_ticks+1
+ local still=Builder.service_pair(p,"rail-has-real-travel-budget")
+ assert(still and still.detail=="moving-source"
+   and p.construction_task_0338==far
+   and p.construction_request==req
+   and stock.rail==3 and not p.construction_custody_0338,
+   "original 0836 rail timed out at short generic building distance")
+ game.tick=start_tick+Builder.request_timeout+physical_ticks+1
+ local expired_far=Builder.service_pair(p,"rail-still-has-bounded-deadline")
+ assert(expired_far and expired_far.blocked==1
+   and p.construction_last_task_0338==far
+   and far.phase=="aborted"
+   and not p.construction_task_0338 and not p.construction_custody_0338
+   and p.construction_request==req
+   and stock.rail==3,
+   "distant rail deadline lost bounded physical accounting/refusal")
+ -- The longer cap belongs ONLY to the original 0836 rail request:
+ -- regular remote builds still abort under the generic finite deadline.
+ game.tick=start_tick
+ p.construction_last_task_0338=nil
+ local ordinary={phase="move-source",started_tick=game.tick,
+   item_name="stone-furnace",entity_name="stone-furnace",
+   request_field="construction_bootstrap_ghost_0645",
+   request_value=bootstrap,position={x=650,y=0},
+   source_entity=station}
+ p.construction_task_0338=ordinary
+ local normal=Builder.service_pair(p,"ordinary-build-cap-unchanged")
+ assert(normal and normal.detail=="moving-source"
+   and ordinary.travel_allowance_ticks_0338
+      ==Builder.max_travel_extra_ticks
+   and stock["stone-furnace"]==1,
+   "ordinary construction acquired expanded rail-only timeout")
+ game.tick=start_tick+Builder.request_timeout
+   +Builder.max_travel_extra_ticks+1
+ local normal_expired=Builder.service_pair(p,"ordinary-build-expiry")
+ assert(normal_expired and normal_expired.blocked==1
+   and p.construction_last_task_0338==ordinary
+   and ordinary.phase=="aborted"
+   and not p.construction_task_0338 and not p.construction_custody_0338
+   and stock["stone-furnace"]==1 and stock.rail==3,
+   "ordinary construction timeout bypassed or item stock changed")
  game.tick=start_tick
  storage.tech_priests.pairs_by_station[104]=previous
  prototypes=old_prototypes

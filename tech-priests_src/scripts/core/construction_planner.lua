@@ -12,6 +12,11 @@ local M={version="0.1.674-dev",storage_key="construction_planner",discovery_inte
 -- a real source item. The 0338 physical builder, not the observer, owns
 -- task admission and this finite no-custody refusal.
 M.rail_source_wait_ticks_0836=60*120
+-- An original 0836 rail may lie 650 tiles east while all REAL rail stock
+-- remains at its Magos station. The same priest must walk back to stock and
+-- then out to the segment. Keep a bounded rail-only travel budget; never
+-- extend the standard construction deadline or bypass movement/item custody.
+M.rail_max_travel_extra_ticks_0836=60*600
 local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
 local function safe(v)if v==nil then return"nil"end;local ok,s=pcall(tostring,v);return ok and s or"?"end
@@ -1553,7 +1558,15 @@ local function construction_active_timeout(pair,task)
   local distance=math.sqrt(dist_sq(pair.priest.position,source))
     +math.sqrt(dist_sq(source,site))
   task.active_started_tick_0338=now()
-  task.travel_allowance_ticks_0338=math.min(M.max_travel_extra_ticks,
+  -- Only the exact authorized original railway writ gets enough time
+  -- for the physical source-to-priest-to-remote-site round trip. A foreign,
+  -- revoked or ordinary build keeps the original strict timeout.
+  local travel_cap=M.max_travel_extra_ticks
+  if marked_rail_request_0836(task)
+      and authorized_rail_candidate_0836(pair,task) then
+    travel_cap=M.rail_max_travel_extra_ticks_0836
+  end
+  task.travel_allowance_ticks_0338=math.min(travel_cap,
     math.ceil(distance*M.travel_ticks_per_tile))
  end
  return now()-task.active_started_tick_0338>
