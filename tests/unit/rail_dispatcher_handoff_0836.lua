@@ -136,6 +136,17 @@ do
   and p.construction_bootstrap_ghost_0645==bootstrap
   and stock.rail==3 and stock["stone-furnace"]==1,
   "verified 0836 request lost to an unstarted funded bootstrap ghost")
+ -- Discovery alone is not authorization to spend an original rail.
+ -- Revoke exactly the pending 0836 receipt before dispatcher admission.
+ mission.pending_rail_0836.request={}
+ local refused=Builder.service_pair(p,"stale-rail-before-admission")
+ assert(refused and refused.blocked==1
+   and not p.construction_task_0338 and not p.construction_custody_0338
+   and p.construction_request==req and stock.rail==3
+   and p.construction_bootstrap_ghost_0645==bootstrap,
+   "stale discovered rail entered physical builder or lost actual stock")
+ mission.pending_rail_0836.request=req
+ p.construction_candidate_0338=nil
  req.rail_mission_station_unit_0836=999
  local foreign=choose()
  assert(foreign and foreign.request_value==bootstrap and stock.rail==3,
@@ -167,6 +178,18 @@ do
   and stock.rail==3 and stock["stone-furnace"]==1
   and not p.construction_custody_0338,
   "cached funded ghost stole exact rail or fabricated item debit")
+ -- An already admitted but not yet debited 0338 rail task is not allowed
+ -- to continue once the original Magos/force mission ownership disappears.
+ mission.force_index=999
+ local revoked=Builder.service_pair(p,"rail-owner-changed-before-item-debit")
+ assert(revoked and revoked.blocked==1
+   and p.construction_last_task_0338
+   and p.construction_last_task_0338.phase=="aborted"
+   and p.construction_last_task_0338.result
+     =="rail-original-physical-request-stale"
+   and not p.construction_task_0338 and not p.construction_custody_0338
+   and stock.rail==3 and stock["stone-furnace"]==1,
+   "admitted but revoked rail task debited stock or kept unauthorized custody")
  storage.tech_priests.pairs_by_station[104]=previous
  prototypes=old_prototypes
  surface.find_entity, surface.can_place_entity=old_find,old_can

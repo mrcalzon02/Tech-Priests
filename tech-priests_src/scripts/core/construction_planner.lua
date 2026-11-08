@@ -244,6 +244,34 @@ local function owned_pending_rail_0836(pair,request)
    and point.y==pending.position.y
    and request.direction==pending.direction
 end
+-- 0836 rail discovery is not material authority. Recheck the original live
+-- pending Magos request before admitting a cached 0338 candidate and at
+-- each subsequent physical-custody step. No replacement rail mission may
+-- inherit a stale original rail's construction item or movement lease.
+local function marked_rail_request_0836(candidate)
+ local request=type(candidate)=="table" and candidate.request_value
+ return type(candidate)=="table" and (
+   candidate.site_reason=="remote-rail-physical-frontier-0836"
+   or (type(request)=="table" and (
+     request.rail_mission_station_unit_0836~=nil
+     or request.rail_segment_0836~=nil
+     or request.site_reason=="remote-rail-physical-frontier-0836")))
+end
+local function authorized_rail_candidate_0836(pair,candidate)
+ local request=candidate and candidate.request_value
+ return type(candidate)=="table"
+   and candidate.request_field=="construction_request"
+   and candidate.site_reason=="remote-rail-physical-frontier-0836"
+   and candidate.item_name=="rail"
+   and candidate.entity_name=="straight-rail"
+   and type(request)=="table"
+   and type(request.position)=="table"
+   and type(candidate.position)=="table"
+   and candidate.position.x==request.position.x
+   and candidate.position.y==request.position.y
+   and candidate.direction==request.direction
+   and owned_pending_rail_0836(pair,request)
+end
 local function frontier_owned_by_pair_0338(pair,request)
  if not(type(request)=="table" and valid_pair(pair))then return false end
  local unit=station_unit(pair)
@@ -1007,6 +1035,10 @@ local function begin_task(pair,c)
   local stand,why=frontier_site_contact_0338(pair,c.entity_name,c.position)
   if not stand then return nil,why end
  end
+ if marked_rail_request_0836(c)
+   and not authorized_rail_candidate_0836(pair,c) then
+  return nil,"rail-original-physical-request-stale"
+ end
  local task={version=M.version,phase="waiting-source",item_name=c.item_name,entity_name=c.entity_name,category=c.category,position={x=c.position.x,y=c.position.y},direction=c.direction,site_reason=c.site_reason,effectiveness=c.effectiveness,request_field=c.request_field,request_value=c.request_value,ghost=c.ghost,started_tick=now()};local ok,why=claim_site(pair,task);if not ok then return nil,why end;pair.construction_task_0338=task;return task
 end
 local function restore_orphan_custody(pair)
@@ -1591,6 +1623,13 @@ function M.service_pair(pair,reason)
   if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end
  end
  if task.phase=="return-custody"then return return_custody(pair,task)end
+ -- An admitted 0836 task can still lose its original Magos ownership while
+ -- moving or across reload. Keep any already-debited item in the existing
+ -- 0338 return-custody path, never place it against a different rail writ.
+ if marked_rail_request_0836(task)
+   and not authorized_rail_candidate_0836(pair,task) then
+  return M.abort_pair(pair,"rail-original-physical-request-stale")
+ end
  -- Preexisting real local infrastructure supersedes only this one-time
  -- bootstrap smelter; original item custody returns through 0338.
  if task.entity_name=="tech-priests-emergency-smelter"
