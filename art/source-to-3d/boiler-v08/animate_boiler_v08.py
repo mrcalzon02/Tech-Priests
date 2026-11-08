@@ -89,6 +89,14 @@ for old_camera in list(bpy.data.objects):
  if old_camera.type=='CAMERA' and old_camera!=cam:bpy.data.objects.remove(old_camera,do_unlink=True)
 for camera_data in list(bpy.data.cameras):
  if camera_data.users==0:bpy.data.cameras.remove(camera_data)
+for screen in bpy.data.screens:
+ for area in screen.areas:
+  if area.type!='VIEW_3D':continue
+  space=area.spaces.active;space.shading.use_scene_world=True;space.shading.use_scene_lights=True
+  if hasattr(space.shading,'use_scene_world_render'):space.shading.use_scene_world_render=True
+  if hasattr(space.shading,'use_scene_lights_render'):space.shading.use_scene_lights_render=True
+  if screen.name in ['Layout','Animation','Shading']:space.shading.type='RENDERED';space.region_3d.view_perspective='CAMERA'
+if bpy.context.window and bpy.data.workspaces.get('Layout'):bpy.context.window.workspace=bpy.data.workspaces['Layout']
 s.render.engine='CYCLES';s.cycles.device='CPU';s.cycles.samples=24;s.render.resolution_x=720;s.render.resolution_y=720;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.render.image_settings.color_mode='RGBA';s.render.film_transparent=False
 s.frame_set(1);bpy.context.view_layer.update()
 assert all(sig(bpy.data.objects[n])==h for n,h in before.items())

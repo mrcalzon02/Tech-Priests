@@ -1,0 +1,14 @@
+{
+  "engine": "CYCLES",
+  "frame": 25,
+  "resolution": [
+    900,
+    900
+  ],
+  "samples": 16,
+  "steam_visible": true,
+  "camera": "BOILER_FACTORIO_EXPORT_45",
+  "camera_orthographic_scale": 3.3499999046325684,
+  "lighting": "Unchanged from supplied V07b",
+  "seconds": 25.447713038003712
+}

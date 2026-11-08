@@ -29,11 +29,16 @@ python3 package_boiler_v08.py
 
 The supplied model was saved in Edit Mode; the build script first returns to Object Mode before creating the independent effect meshes. No source mesh is used as a particle mesh or altered by an effect constructor.
 
-## Saved assets
+## Tubing and appearance correction
 
-- [Animated Blender V08](https://chatgpt.com/library?file_id=libfile_472d55643ae4819189e12200eb66d4ca&account_id=personal)
-- [Complete animation package and untouched V07b source](https://chatgpt.com/library?file_id=libfile_161c07109b94819180761fee95d96017&account_id=personal)
-- [Operating-loop GIF](https://chatgpt.com/library?file_id=libfile_926b3b2180d481918b34256e7f60bba4&account_id=personal)
-- [Operating-loop MP4](https://chatgpt.com/library?file_id=libfile_00cfeaf6fb348191b47c8ec95ea5851b&account_id=personal)
+The original 384-pixel GIF/MP4 used low-sample Eevee, which changed the appearance of metal shading and thin tubes. Those files are now explicitly labelled draft Eevee timing previews. They are not an appearance reference. The replacement Cycles image uses the native scene lights/world, native materials and visible steam. A complete corrected Cycles animation preview has not been rendered in this inspection pass.
 
-Packed native binaries and previews are linked above; this repository directory contains reproducible scripts and verification records.
+A source-versus-animation audit found all machinery meshes present, no tube visibility masks, opaque tube materials, matching light transforms/energies and matching colour management. Cycles checks were rendered at frames 1 and 25. Main workspaces now open in Rendered mode with Scene Lights and Scene World enabled. Future preview capture uses Cycles at 720 pixels and 16 samples; packaging rejects draft Eevee frames as an appearance reference.
+
+## Saved current files
+
+- [Corrected native viewport and animation](https://chatgpt.com/library?file_id=libfile_472d55643ae4819189e12200eb66d4ca&account_id=personal)
+- [Corrected package with tubing appearance audit](https://chatgpt.com/library?file_id=libfile_161c07109b94819180761fee95d96017&account_id=personal)
+- [Actual Cycles appearance with steam](https://chatgpt.com/library?file_id=libfile_47ea67a1d0848191994713f08ac1878b&account_id=personal)
+
+The earlier GIF/MP4 are explicitly labelled draft Eevee timing previews. No complete corrected Cycles motion loop is claimed by this inspection pass.

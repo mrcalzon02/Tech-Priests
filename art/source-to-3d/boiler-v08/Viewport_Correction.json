@@ -1,0 +1,67 @@
+{
+  "render_engine": "CYCLES",
+  "views": [
+    {
+      "workspace": "Animation",
+      "shading": "RENDERED",
+      "scene_lights": true,
+      "scene_world": true
+    },
+    {
+      "workspace": "Animation",
+      "shading": "RENDERED",
+      "scene_lights": true,
+      "scene_world": true
+    },
+    {
+      "workspace": "Geometry Nodes",
+      "shading": "SOLID",
+      "scene_lights": true,
+      "scene_world": true
+    },
+    {
+      "workspace": "Layout",
+      "shading": "RENDERED",
+      "scene_lights": true,
+      "scene_world": true
+    },
+    {
+      "workspace": "Modeling",
+      "shading": "SOLID",
+      "scene_lights": true,
+      "scene_world": true
+    },
+    {
+      "workspace": "Scripting",
+      "shading": "SOLID",
+      "scene_lights": true,
+      "scene_world": true
+    },
+    {
+      "workspace": "Sculpting",
+      "shading": "SOLID",
+      "scene_lights": true,
+      "scene_world": true
+    },
+    {
+      "workspace": "Shading",
+      "shading": "RENDERED",
+      "scene_lights": true,
+      "scene_world": true
+    },
+    {
+      "workspace": "Texture Paint",
+      "shading": "SOLID",
+      "scene_lights": true,
+      "scene_world": true
+    },
+    {
+      "workspace": "UV Editing",
+      "shading": "SOLID",
+      "scene_lights": true,
+      "scene_world": true
+    }
+  ],
+  "tube_visibility_or_material_alpha_changed": false,
+  "mesh_geometry_changed": false
+}

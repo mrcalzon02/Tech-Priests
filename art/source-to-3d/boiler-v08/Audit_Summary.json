@@ -1,0 +1,85 @@
+{
+  "source_mesh_count": 270,
+  "missing_machinery": false,
+  "tube_objects_checked": 22,
+  "tube_visibility_masks": false,
+  "lights_identical": true,
+  "color_management_identical": true,
+  "reference_only_visibility_changes": [
+    {
+      "name": "Water reference one-tile barrel",
+      "changes": {
+        "collection_hidden": [
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "name": "Water reference near collar",
+      "changes": {
+        "collection_hidden": [
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "name": "Water reference far collar",
+      "changes": {
+        "collection_hidden": [
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "name": "Steam reference one-tile barrel",
+      "changes": {
+        "collection_hidden": [
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "name": "Steam reference near collar",
+      "changes": {
+        "collection_hidden": [
+          false,
+          true
+        ]
+      }
+    },
+    {
+      "name": "Steam reference far collar",
+      "changes": {
+        "collection_hidden": [
+          false,
+          true
+        ]
+      }
+    }
+  ],
+  "old_preview": {
+    "engine": "BLENDER_EEVEE",
+    "resolution": [
+      384,
+      384
+    ],
+    "render_samples": 2,
+    "appearance_status": "Draft timing preview only; not a material/lighting reference"
+  },
+  "correction": {
+    "render_engine": "CYCLES",
+    "correct_frame": 25,
+    "resolution": [
+      900,
+      900
+    ],
+    "steam_visible": true,
+    "native_viewports": "Rendered mode with Scene Lights and Scene World",
+    "geometry_or_alpha_edits": false
+  },
+  "corrected_full_motion_preview_rendered": false
+}
