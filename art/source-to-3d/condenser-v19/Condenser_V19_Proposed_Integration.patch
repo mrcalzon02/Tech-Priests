@@ -1,0 +1,11 @@
+--- a/tech-priests_src/prototypes/entity.lua
++++ b/tech-priests_src/prototypes/entity.lua
+@@ -1401,7 +1401,7 @@
+       production_type = "output",
+       volume = 100,
+       pipe_connections = {
+-        { flow_direction = "output", direction = defines.direction.east, position = { MICRO_PIPE_EDGE, 0 } }
++        { flow_direction = "output", direction = defines.direction.east, position = { 0.5, 0.5 } }
+       }
+     }
+   }
