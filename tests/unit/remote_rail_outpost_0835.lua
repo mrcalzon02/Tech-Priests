@@ -4,7 +4,7 @@ package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.
 local Rail=require("scripts.core.remote_rail_outpost_0835")
 local Frontier=require("scripts.core.rail_track_frontier_0836")
 local max_reachable=math.min(Rail.remote_max,
-  Frontier.start_offset+Frontier.max_segments*Frontier.segment_step
+  Frontier.start_offset+(Frontier.max_segments-1)*Frontier.segment_step
   +Frontier.destination_clearance)
 assert(max_reachable==666,"unexpected 0836 physical-rail reach budget")
 game={tick=1000}
@@ -97,10 +97,14 @@ blocked("no-charted-rail-corridor-ore")
 remote_entities={terminal_unreachable}
 blocked("no-charted-rail-corridor-ore")
 remote_entities={terminal_reachable}
+qty.rail=319
+blocked("insufficient-physical-rails-to-reach-ore")
+qty.rail=320
 local edge_target,edge_reason=Rail.assess(pair)
 assert(edge_reason=="starved-charted-patch"
-    and edge_target and edge_target.position.x==666,
-  "real 320th rail at x=650 should reach only an x=666 destination")
+    and edge_target and edge_target.position.x==666 and qty.rail==320,
+  "real 320th rail at x=650 needs exactly 320 paid rail segments")
+qty.rail=700
 -- A closer, charted ore deposit above the eastbound rail corridor must
 -- not permanently divert 0836 into "terrain-route-planner-required".
 remote_entities={off_corridor,beyond_segment_budget,ore}
@@ -112,6 +116,17 @@ assert(corridor_reason=="starved-charted-patch"
 remote_entities={off_corridor}
 blocked("no-charted-rail-corridor-ore")
 remote_entities={ore}
+-- x=512 needs 243 contiguous two-tile rail entities, not just the
+-- obsolete 64-rail minimum. Refuse before making or spending any request.
+qty.rail=242
+blocked("insufficient-physical-rails-to-reach-ore")
+qty.rail=243
+local minimum_target,minimum_why=Rail.assess(pair)
+assert(minimum_why=="starved-charted-patch"
+    and minimum_target and minimum_target.position.x==512
+    and qty.rail==243 and pair.construction_request==nil,
+  "counted 243-rail reach was not accepted without material mutation")
+qty.rail=700
 local decision,why=Rail.assess(pair)
 assert(why=="starved-charted-patch" and decision and
     decision.item=="iron-ore" and decision.position.x==512

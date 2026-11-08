@@ -138,6 +138,19 @@ function M.assess(pair)
     end
   end
   if not best then return nil,"no-charted-rail-corridor-ore" end
+  -- The 64-item initial-readiness floor does not supply the entire line:
+  -- the closest admissible patch (192 east) needs 83 counted rail items.
+  -- Never start a mission whose selected natural patch cannot be reached
+  -- from the Magos with the rail it already physically owns. The actual
+  -- 0338 constructor still removes each item at the source, one by one.
+  local last_needed=best.position.x-at.x-clearance-offset
+  local needed_segments=math.max(1,math.ceil(last_needed/step)+1)
+  if needed_segments>capacity then
+    return nil,"rail-destination-exceeds-segment-capacity"
+  end
+  if count(pair,"rail")<needed_segments then
+    return nil,"insufficient-physical-rails-to-reach-ore"
+  end
   return {item=item,position={x=best.position.x,y=best.position.y},
     resource_unit=best.unit_number,resource_name=best.name,
     distance=math.sqrt(best_distance),
