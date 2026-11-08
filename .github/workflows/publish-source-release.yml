@@ -1,4 +1,4 @@
-name: Publish current source release
+name: Publish Factorio mod release
 
 on:
   workflow_dispatch:
@@ -14,22 +14,38 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-      - name: Package source and publish release
+      - name: Package Factorio mod and publish release
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          set -e
-          short_sha="${GITHUB_SHA:0:12}"
-          archive="Tech-Priests-source-${short_sha}.zip"
-          git archive --format=zip --output="$archive" HEAD
-          tag="source-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
-          gh release create "$tag" "$archive" \
+          set -euo pipefail
+          mkdir repo
+          cd repo
+          git init -q
+          git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          git sparse-checkout init --cone
+          git sparse-checkout set tech-priests_src
+          git -c protocol.version=2 fetch --quiet --depth=1 --filter=blob:none origin "${GITHUB_SHA}"
+          git checkout -q --detach FETCH_HEAD
+          python3 - <<'PY'
+          import json, pathlib, shutil, zipfile
+          src = pathlib.Path("tech-priests_src")
+          metadata = json.loads((src / "info.json").read_text(encoding="utf-8"))
+          folder = f"{metadata['name']}_{metadata['version']}"
+          out = pathlib.Path("..") / f"{folder}.zip"
+          with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
+              for item in sorted(src.rglob("*")):
+                  if item.is_file():
+                      archive.write(item, pathlib.Path(folder) / item.relative_to(src))
+          pathlib.Path("../release-name.txt").write_text(folder, encoding="utf-8")
+          PY
+          cd ..
+          folder="$(cat release-name.txt)"
+          tag="factorio-mod-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          gh release create "$tag" "${folder}.zip" \
             --repo "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \
-            --title "Tech Priests source release ($short_sha)" \
-            --notes "Source-only snapshot of main at commit $GITHUB_SHA. No build, tests, or validation performed." \
+            --title "Tech Priests Factorio mod ${folder}" \
+            --notes "Installable Factorio 2.0 mod ZIP from tech-priests_src at commit $GITHUB_SHA. No build, tests, or validation executed." \
             --prerelease
