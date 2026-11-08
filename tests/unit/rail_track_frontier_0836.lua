@@ -145,8 +145,11 @@ local other={station={valid=true,unit_number=999,
   surface=surface,force=force},priest={valid=true}}
 other.remote_rail_outpost_0835=mission
 assert(Track.service_pair(other)==false
-  and mission.rail_frontier_0836.segment==1,
-  "another Magos seized original track custody")
+  and mission.rail_frontier_0836.segment==2
+  and mission.pending_rail_0836==pending
+  and other.construction_request==nil
+  and item_count==698,
+  "another Magos seized original rail custody or changed counted stock")
 assert(scan_calls>2,"rail builder never verified real physical track")
 print("[rail-track-frontier-0836] PASS 0338 source debit, native connected track, disconnected refusal and retained custody")
 -- Prove the actual 0510 dispatcher, not a separate rail tick executor,
