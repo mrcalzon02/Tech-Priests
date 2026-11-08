@@ -1,0 +1,34 @@
+{
+  "width": 128,
+  "height": 128,
+  "scale": 0.5,
+  "shift": [
+    0,
+    -0.4454772721475249
+  ],
+  "fps": 12,
+  "frames": 96,
+  "columns": 12,
+  "rows": 8,
+  "seconds": 8,
+  "directions": [
+    "north",
+    "east",
+    "south",
+    "west"
+  ],
+  "source": "0251d186d82b5027dcaf81880237be35d4c980a2",
+  "camera_elevation_degrees": 45,
+  "shadow": "transparent Cycles shadow catcher integrated into RGBA",
+  "files": {
+    "icon.png": "29156a43d598365eb5666cdcb1e578f000e9235f8f47c320fdf848f2f91d2d65",
+    "idle-east.png": "2fde4eaf663a036510a616861820fc9e08fb83c615f65d26e041e18aac88a40c",
+    "idle-north.png": "0547e5f8a642cdc92cff99a6b982876c782ed1c6f6cf32f962c2e6ceec3fd1ee",
+    "idle-south.png": "965bb3756248c7698aee6dfae3b557ae245f70eba1b673e31f92a63ca293a2f2",
+    "idle-west.png": "ab3d4703474bc8d523231fb80d145587ea5d3d9e0b4d00ffde993b85d68808c9",
+    "working-east.png": "7414c4c52b5fb5a16defdf7f584c952a0435a854bd3f5e88edf824fe8e74edea",
+    "working-north.png": "2a73e9197f76e57c586b38e668a41b0d692ae45e97e836d046ba9ef88ade0da9",
+    "working-south.png": "f1ffbeb0d7ef9f61e75b60446a31b190b0f56085e340bec301560b37ebb1a828",
+    "working-west.png": "5134616245f031f852f6ecac5e6aa7da56499a45d40cfa5f6f3aebc38fa57444"
+  }
+}

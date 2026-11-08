@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.678
+Date: 2026-11-07
+  Graphics:
+    - Replaced emergency assembler art with the approved one-tile rough timber workbench.
+    - Added four-direction hammer strikes, impact sparks, gradual sheet heating, laydown and cooling.
+    - Added a cold resting idle sprite and matching item/recipe icon.
+
+---------------------------------------------------------------------------------------------------
 Version: 0.1.648
 Date: 2026-06-11
   Changes:

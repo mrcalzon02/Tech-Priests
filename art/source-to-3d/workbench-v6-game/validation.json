@@ -1,0 +1,10 @@
+{
+  "factorio_version": "2.1.24",
+  "packaged_crafting": "WORKBENCH_SMOKE_PASS products=3 direction=0",
+  "test_passed_tick": 601,
+  "atlas_hashes_verified": 9,
+  "cardinal_directions": 4,
+  "frames_per_direction": 96,
+  "zip_matches_source": true,
+  "graphical_engine_render_test": false
+}

@@ -603,3 +603,6 @@ require("prototypes.bunker_autocannon").finalize()
 -- Preserve the actual zero chance and native recipe category semantics.
 require("prototypes.compatibility.native_recipe_schema_1274")(
   data.raw.recipe, mods and mods["base"])
+
+-- Final registration: do not let legacy micro-art rescaling erase sprite shifts.
+require("prototypes.workbench_graphics")
