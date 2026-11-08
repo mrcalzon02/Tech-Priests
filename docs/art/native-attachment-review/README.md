@@ -1,5 +1,7 @@
 # Native structure attachment review — Factorio 2.1.24
 
+**Boiler visual baseline rejected:** physical pipe coordinates did not prove sprite-mouth alignment. See [the subsequent four-direction visual correction](../boiler-v08-visual-alignment/README.md).
+
 The actual installed graphical client loaded an exact tracked working-tree mod copy and captured the dedicated placement scenario. High sprite quality was retained with low VRAM residency so four existing Blender workers could continue. The isolated config, mods, new map and autosave stay in the task scratch folder; the user's normal Factorio profile and saves are untouched. The installed Mechanicus Reborn 0.0.3 ZIP is enabled only in the review profile because the mod's character sprites reference it. No vendor art or dependency ZIP is committed here.
 
 ## Corrected native integration

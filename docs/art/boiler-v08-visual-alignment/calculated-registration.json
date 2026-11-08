@@ -1,0 +1,174 @@
+{
+  "status": "CALCULATED_CANDIDATE_REQUIRES_NATIVE_VISUAL_REVIEW",
+  "source_v07b_sha256": "0fae930858a9f8c92a5f85e2cfb1e8bd08317542470a09f6fc049de9c39306f4",
+  "primary_cell_size": 256,
+  "directional_registration": {
+    "north": {
+      "scale": 0.41875000452389943,
+      "shift": [
+        2.4959445269340243e-08,
+        -0.5554280906151662
+      ]
+    },
+    "east": {
+      "scale": 0.5922018570126781,
+      "shift": [
+        -0.2071066696524052,
+        -0.4899986699720637
+      ]
+    },
+    "south": {
+      "scale": 0.41875000452389893,
+      "shift": [
+        2.4959445269340213e-08,
+        -0.2625349157679864
+      ]
+    },
+    "west": {
+      "scale": 0.5922018570126723,
+      "shift": [
+        0.2071066696523982,
+        -0.4899986699720589
+      ]
+    }
+  },
+  "anchors": [
+    {
+      "direction": "north",
+      "source_mouth_centres_px": [
+        [
+          51.582088470458984,
+          127.45957946777344
+        ],
+        [
+          204.41790771484375,
+          127.45957946777344
+        ]
+      ],
+      "target_pipe_interfaces_px_relative_entity_origin": [
+        [
+          -32,
+          -18
+        ],
+        [
+          32,
+          -18
+        ]
+      ],
+      "predicted_mouth_centres_px": [
+        [
+          -31.999999999999996,
+          -18.0
+        ],
+        [
+          32.0,
+          -18.0
+        ]
+      ],
+      "max_anchor_residual_px": 3.552713678800501e-15
+    },
+    {
+      "direction": "east",
+      "source_mouth_centres_px": [
+        [
+          166.20895385742188,
+          100.44175720214844
+        ],
+        [
+          166.20895385742188,
+          208.5130157470703
+        ]
+      ],
+      "target_pipe_interfaces_px_relative_entity_origin": [
+        [
+          16,
+          -32
+        ],
+        [
+          16,
+          32
+        ]
+      ],
+      "predicted_mouth_centres_px": [
+        [
+          16.0,
+          -32.0
+        ],
+        [
+          16.0,
+          31.999999999999993
+        ]
+      ],
+      "max_anchor_residual_px": 7.105427357601002e-15
+    },
+    {
+      "direction": "south",
+      "source_mouth_centres_px": [
+        [
+          204.41790771484375,
+          181.49520874023438
+        ],
+        [
+          51.582088470458984,
+          181.49520111083984
+        ]
+      ],
+      "target_pipe_interfaces_px_relative_entity_origin": [
+        [
+          32,
+          14
+        ],
+        [
+          -32,
+          14
+        ]
+      ],
+      "predicted_mouth_centres_px": [
+        [
+          31.99999999999996,
+          14.000001597404498
+        ],
+        [
+          -31.99999999999996,
+          13.999998402595505
+        ]
+      ],
+      "max_anchor_residual_px": 1.5974044984545803e-06
+    },
+    {
+      "direction": "west",
+      "source_mouth_centres_px": [
+        [
+          89.7910385131836,
+          208.5130157470703
+        ],
+        [
+          89.79105377197266,
+          100.44175720214844
+        ]
+      ],
+      "target_pipe_interfaces_px_relative_entity_origin": [
+        [
+          -16,
+          32
+        ],
+        [
+          -16,
+          -32
+        ]
+      ],
+      "predicted_mouth_centres_px": [
+        [
+          -16.00000451814161,
+          31.99999999999968
+        ],
+        [
+          -15.999995481858388,
+          -31.99999999999968
+        ]
+      ],
+      "max_anchor_residual_px": 4.518141611953308e-06
+    }
+  ],
+  "scope": "Draw scale/shift only; no physical pipe or collision changes. No sprite pixels or timeline changes."
+}

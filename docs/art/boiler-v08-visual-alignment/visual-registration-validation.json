@@ -1,0 +1,67 @@
+{
+  "status": "SPRITE_REGISTRATION_CORRECTED_FOUR_NATIVE_VIEWS_INSPECTED",
+  "scope": "Visual draw scale and shift only. Physical pipe coordinates, collision/selection boxes, sprites, cell layout and animation timing unchanged.",
+  "registration": {
+    "north": {
+      "scale": 0.41875000452389943,
+      "shift": [
+        2.4959445269340243e-08,
+        -0.5554280906151662
+      ]
+    },
+    "east": {
+      "scale": 0.5922018570126781,
+      "shift": [
+        -0.2071066696524052,
+        -0.4899986699720637
+      ]
+    },
+    "south": {
+      "scale": 0.41875000452389893,
+      "shift": [
+        2.4959445269340213e-08,
+        -0.2625349157679864
+      ]
+    },
+    "west": {
+      "scale": 0.5922018570126723,
+      "shift": [
+        0.2071066696523982,
+        -0.4899986699720589
+      ]
+    }
+  },
+  "source_v07b_sha256": "0fae930858a9f8c92a5f85e2cfb1e8bd08317542470a09f6fc049de9c39306f4",
+  "module_sha256": "0444b7aefd76206bd548af4e0bf4cf8072c1eac248a332257aafc9fc1302e50c",
+  "working_atlas_sha256": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2",
+  "generated_module_matches_native_reviewed_bytes": true,
+  "physical_ports_before_after_identical": true,
+  "physical_ports_are_not_visual_acceptance": "Engine connection readback only establishes that the existing functional interfaces were preserved; visual evidence is the native screenshot set.",
+  "visual_review": "All four actual native closeups viewed. East/west mouth separation now spans the two native pipe joints; north/south height offsets align horizontal sleeve centre-lines. Both exposed mouths in each orientation meet the adjoining native pipe graphics. This corrects the previously rejected common scale/shift.",
+  "reference_landmarks": {
+    "horizontal_native_pipe_texture_centreline_y": 60,
+    "vertical_native_pipe_texture_joint_y": [
+      32,
+      96
+    ],
+    "native_pipe_texture_cell_size": 128,
+    "native_pipe_scale": 0.5,
+    "model_mouths": "Water (-1,0.5,0.36), steam (1,0.5,0.36); measured against unchanged V07b flange meshes and checked against actual sprite pixels."
+  },
+  "native_screenshots_sha256": {
+    "before/north.png": "221ed92ef3e1b98dfc78e5dcec9057ba5c4cd143a9dc2a78ceedf731a5153e31",
+    "corrected/north.png": "76aff8566e1959100fd3fbbe44b3ebfd234effffbca226355bd7580f373b1232",
+    "before/east.png": "b81fa68f4ebbd8d531bcacebc25934b4c609395245f68de8f81dae97ef4638f1",
+    "corrected/east.png": "066231a6025c68a218562ee787625a41b6012ac4f86f72a9968aed3f37283949",
+    "before/south.png": "29b1d947fe5d1b7de33c04b3671c960a6b851bcb0a2c5498b0edef696db1d5f8",
+    "corrected/south.png": "2110e672a4d8269c62c72d98afce15927ebfdea9fbd4d7bdbb1b2444489f5a8b",
+    "before/west.png": "d86491f941d4073f1811d4d98d9d238a6a57f700643352e1c6d768a3e2f21e24",
+    "corrected/west.png": "d12792ce9ce396782fc81dec598f5bcce42b7f98e6b14bb93691860462ce3c1e"
+  },
+  "no_behavior_tests": true,
+  "open_asset_gates": [
+    "Cold-idle/working visual-state separation",
+    "Circuit-wire graphical anchors",
+    "Full boiler model acceptance is not inferred from this placement correction"
+  ]
+}

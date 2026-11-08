@@ -12,7 +12,8 @@
     "Energy dish V03 continuity/UV refinement, evaluated-modifier GLB readback, 64 calibrated idle headings, 128 atlas cell checks and four-direction base-sprite composition",
     "Native Factorio 2.1.24 thruster pipe-cap gates, exact grid sockets and footprint-specific platform-edge masks repaired and visually reviewed",
     "Four native boiler placement directions / eight exact pipe endpoints recorded",
-    "Recovered reactor source-chat identities and v14 package/assessment links; native bytes not yet recovered"
+    "Recovered reactor source-chat identities and v14 package/assessment links; native bytes not yet recovered",
+    "Boiler sprite-only per-direction scale/shift correction: actual four-way zoom-4 native mouth/pipe visuals inspected; exporter/job persist registrations, physical fields and atlas bytes unchanged"
   ],
   "verification": {
     "graphical_client": "Targeted native Factorio 2.1.24 attachment/placement slice reviewed: four custom thrusters + vanilla control, connected/disconnected caps, four boiler directions; other assets and working-state/wire gates remain open",
@@ -21,7 +22,8 @@
     "behavior_tests": "not run",
     "all_entity_pngs": "194/194 full PNG verify/decode",
     "rig": "Approved A02 restored: 64-heading idle/transition/extreme checks and six independent firing states pass locally; full capture incomplete",
-    "energy_dish": "Partial candidate: 33 meshes / 10332 triangles / 0 degenerates; position/UV/material coverage passes; idle beauty 64/64; full state and native integration gates open"
+    "energy_dish": "Partial candidate: 33 meshes / 10332 triangles / 0 degenerates; position/UV/material coverage passes; idle beauty 64/64; full state and native integration gates open",
+    "boiler_visual_registration": "docs/art/boiler-v08-visual-alignment: native four-way draw review; supersedes rejected common-scale visual baseline. Physical connection readback is preservation evidence only."
   },
   "open_defects": [
     "Condenser V21 native source remains Library-linked and unlocated locally",
@@ -31,7 +33,7 @@
     "Thruster authored 3D bodies, model exports and final visual acceptance unfinished",
     "Boiler V08 idle atlas is not referenced by its current structure module; cold-idle/working state and circuit-wire anchors need review"
   ],
-  "next_slice": "Keep existing A02 workers running toward all 384 chunks; do not duplicate managers. Author the hydrogen thruster body against the verified native attachment contract. Recover boiler prepared source and review cold-idle/working separation and circuit anchors. Recover the v14 reactor package from the located chat before editing its ring-relative models.",
+  "next_slice": "Continue the existing A02 render workers without duplication. Preserve the new per-direction boiler visual registration. Remaining boiler cold-idle/working and wire gates are separate; then author thruster bodies against the verified native interface contract and recover linked reactor source bytes.",
   "automation": "tech-priests-local-model-completion, every four hours",
   "publication": "Read exact delivered SHA and status from issue #13; never infer publication from local commit",
   "local_work": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work",

@@ -1,0 +1,38 @@
+{
+  "status": "GENERATED_MODULE_BYTE_IDENTICAL_TO_NATIVE_VISUAL_CANDIDATE",
+  "module_sha256": "0444b7aefd76206bd548af4e0bf4cf8072c1eac248a332257aafc9fc1302e50c",
+  "atlas_sha256": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2",
+  "job_directional_registration": {
+    "north": {
+      "scale": 0.41875000452389943,
+      "shift": [
+        2.4959445269340243e-08,
+        -0.5554280906151662
+      ]
+    },
+    "east": {
+      "scale": 0.5922018570126781,
+      "shift": [
+        -0.2071066696524052,
+        -0.4899986699720637
+      ]
+    },
+    "south": {
+      "scale": 0.41875000452389893,
+      "shift": [
+        2.4959445269340213e-08,
+        -0.2625349157679864
+      ]
+    },
+    "west": {
+      "scale": 0.5922018570126723,
+      "shift": [
+        0.2071066696523982,
+        -0.4899986699720589
+      ]
+    }
+  },
+  "physical_fields_changed": false,
+  "sprite_pixels_changed": false,
+  "frames_per_direction": 96
+}

@@ -39,3 +39,7 @@ The generic prototype attachment helper supports crafting machines/furnaces only
 The boiler job emits its exact-target module as `prototype-ready.lua`, to run after
 tech-priests-emergency-boiler is declared. Engine-test the boiler-specific graphics
 and ports before live installation. An isolated test does not change the live mod.
+
+### Per-direction visual registration
+
+A production job may supply `directional_registration` with all four `north`, `east`, `south`, `west` keys, each containing a finite positive `scale` and two-number `shift`. These are draw values at `primary_size`; the physical prototype fields are independent. Both directional animations and boiler structure generation consume the map and record it in the production receipt. Use actual native visual references to fit these values; a connected fluid box does not establish visual mouth alignment. Boiler V08 is the checked example.

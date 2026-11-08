@@ -9,7 +9,7 @@ materials, circular interfaces and rear structural cage remain intact.
   steam from the actual rear-tank top nozzle.
 - Fixed 45-degree orthographic camera and authored Cycles lighting; one camera.
 - 128px and 256px RGBA cells, with a stable 3.35-tile canvas and ground pivot.
-- The 256px sheet uses scale 0.41875; 128px uses 0.8375 for the same world size.
+- Native draw registration is per direction: at 256px N/S use scale 0.41875, E/W 0.592201857, with separate shifts. The source capture canvas/geometry are unchanged. See the production job and [visual correction](../../../docs/art/boiler-v08-visual-alignment/README.md).
 - A 2x2 footprint and native rear-row water/steam pipe connectors.
 
 The generated boiler module is registered from data-final-fixes.lua. It replaces
@@ -43,3 +43,5 @@ python3 tools/art/produce_factorio_asset.py --job tools/art/jobs/boiler-v08.json
 The common exporter supports hash-verified checkpoint resumption. See tools/art/README.md.
 The prior low-resolution Eevee previews are obsolete timing drafts; this export uses
 Cycles with the authored scene lights, world and packed materials.
+
+The earlier common native shift/scale was visually rejected even though the pipe systems connected. The subsequent four-way sprite-only registration is recorded in the linked native visual review. Do not infer visual alignment from the historical fluid connectivity probe above.

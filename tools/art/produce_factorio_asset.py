@@ -58,6 +58,17 @@ def load_job(job_path):
             or not isinstance(job['shift'], list) or len(job['shift']) != 2
             or any(type(v) not in (int, float) or not math.isfinite(v) for v in job['shift'])):
         raise ValueError('Invalid Factorio scale or shift')
+    per_direction = job.get('directional_registration')
+    if per_direction is not None:
+        if not isinstance(per_direction, dict) or set(per_direction) != set(DIRECTIONS):
+            raise ValueError('directional_registration must define all four cardinal directions')
+        for name, registration in per_direction.items():
+            if (not isinstance(registration, dict) or set(registration) != {'scale','shift'}
+                    or type(registration['scale']) not in (int,float)
+                    or not math.isfinite(registration['scale']) or registration['scale'] <= 0
+                    or not isinstance(registration['shift'],list) or len(registration['shift']) != 2
+                    or any(type(v) not in (int,float) or not math.isfinite(v) for v in registration['shift'])):
+                raise ValueError('Invalid directional sprite registration: '+name)
     sizes = job['sizes']
     if not isinstance(sizes, list) or not sizes or any(type(v) is not int or v <= 0 for v in sizes) or len(set(sizes)) != len(sizes) or job['primary_size'] not in sizes:
         raise ValueError('Invalid requested sprite sizes')
@@ -162,15 +173,30 @@ def atlas(capture, sheet, source_count, dest_count, size, direction_order=(0,1,2
     return output, columns, per_direction
 
 
+def sprite_registration(job, direction):
+    return (job.get('directional_registration') or {}).get(direction,
+               {'scale':job['scale'],'shift':job['shift']})
+
+
+def animation_lua(job, cfg, file, size, frames, columns, rows, index, direction):
+    registration = sprite_registration(job,direction)
+    scale,shift = registration['scale'],registration['shift']
+    return (f'{{ filename = "__{job["mod_name"]}__/graphics/entity/{file}", '
+            f'width = {size}, height = {size}, frame_count = {frames}, line_length = {columns}, '
+            f'x = 0, y = {index*rows*size}, animation_speed = {cfg["fps"]/60:.8g}, '
+            f'scale = {scale:.12g}, shift = {{{shift[0]:.12g}, {shift[1]:.12g}}} }}')
+
+
 def directional_lua(job, cfg, file, size, frames, columns, rows):
-    speed = cfg['fps']/60
-    fields = []
-    for index, name in enumerate(DIRECTIONS):
-        fields.append(f'    {name} = {{ filename = "__{job["mod_name"]}__/graphics/entity/{file}", '
-                      f'width = {size}, height = {size}, frame_count = {frames}, line_length = {columns}, '
-                      f'x = 0, y = {index*rows*size}, animation_speed = {speed:.8g}, '
-                      f'scale = {job["scale"]:g}, shift = {{{job["shift"][0]:g}, {job["shift"][1]:g}}} }}')
+    fields = [f'    {name} = '+animation_lua(job,cfg,file,size,frames,columns,rows,index,name)
+              for index,name in enumerate(DIRECTIONS)]
     return '{\n' + ',\n'.join(fields) + '\n  }'
+
+
+def boiler_pictures_lua(job, cfg, file, size, frames, columns, rows):
+    fields = ['  '+name+' = { structure = '+animation_lua(job,cfg,file,size,frames,columns,rows,index,name)+' }'
+              for index,name in enumerate(DIRECTIONS)]
+    return '{\n'+',\n'.join(fields)+'\n}'
 
 
 def package(job, cfg, capture, out, mod, install):
@@ -224,18 +250,10 @@ def package(job, cfg, capture, out, mod, install):
         if not isinstance(target, str) or not SAFE.fullmatch(target):
             raise ValueError('Exact boiler_target required for boiler graphics')
         name,col,rows = layout[(active or 'idle',size)]
-        pictures = []
-        for index, direction in enumerate(DIRECTIONS):
-            animation = ('{ filename = "__'+job['mod_name']+'__/graphics/entity/'+name+'", '
-                         f'width = {size}, height = {size}, frame_count = {count}, '
-                         f'line_length = {col}, x = 0, y = {index*rows*size}, '
-                         f'animation_speed = {cfg["fps"]/60:.8g}, scale = {job["scale"]:g}, '
-                         f'shift = {{{job["shift"][0]:.10g}, {job["shift"][1]:.10g}}} }}')
-            pictures.append('  '+direction+' = { structure = '+animation+' }')
         snippet = ('-- Factorio 2.1 BoilerPictureSet; complete frames, no duplicate body overlays.\n'
                    '-- Load after the exact boiler prototype has been declared.\n'
                    f'local target = assert(data.raw.boiler["{target}"], "Missing boiler {target}")\n'
-                   'target.pictures = {\n'+',\n'.join(pictures)+'\n}\n'
+                   'target.pictures = '+boiler_pictures_lua(job,cfg,name,size,count,col,rows)+'\n'
                    'target.water_reflection = nil\n'
                    '-- Match the authored 2x2 body and rear-row circular pipe mouths.\n'
                    'target.collision_box = {{-0.85, -0.85}, {0.85, 0.85}}\n'
@@ -272,6 +290,7 @@ def package(job, cfg, capture, out, mod, install):
         'asset':job['asset'],'revision':job['revision'],'camera':cfg['camera_override'],
         'directions':list(DIRECTIONS),'source_frame_count':qa['capture_count'],
         'source_direction_indices':direction_order,
+        'directional_registration':{name:sprite_registration(job,name) for name in DIRECTIONS},
         'frames_per_direction':count,'fps':cfg['fps'],'master_sha256':manifest['master_sha256'],
         'files':{str(f.relative_to(out)):sha(f) for f in generated},
         'note':'Prototype-ready snippet only; verify insertion and actual Factorio runtime before acceptance.'

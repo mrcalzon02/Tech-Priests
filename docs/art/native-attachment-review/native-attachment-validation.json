@@ -1,5 +1,5 @@
 {
-  "status": "PASS_NATIVE_ATTACHMENT_AND_UNFUELLED_PLACEMENT_SLICE",
+  "status": "THRUSTER_ATTACHMENT_PASS_BOILER_VISUAL_BASELINE_REJECTED",
   "client": "Factorio 2.1.24 graphical / high quality / low VRAM residency",
   "module_sha256": "66309d39766463ebef47a918cb35fd73f660e73d3373e2737c069a407689eda2",
   "baseline_module_sha256": "8737277649161daab02b7427581b0dce93b2cef0c2ac76e6fd64cca4de6fc9e3",
@@ -93,10 +93,12 @@
   "visual_review": {
     "scope": "Actual graphical-client screenshots viewed; no overall thruster model completion claim",
     "caps": "Gold native connector overlays visibly bridge each liquid-thruster shoulder to its pipe, and disappear when pipes are removed. Source body silhouettes remain unchanged and primitive.",
-    "boiler": "All four unfuelled placement views inspected with and without adjacent pipes. This does not approve cold-idle/working art separation or circuit-wire anchors.",
+    "boiler": "Owner rejected the visual sprite alignment despite physically matching pipe coordinates. This older image is only the physical-interface baseline. See ../boiler-v08-visual-alignment for the subsequent sprite-only correction.",
     "reviewed_proof_sha256": {
       "native-thruster-cap-proof.png": "735b312627f72bb07d1608173b589935d8f021222cc30c6d732d07a2a6b15242",
       "native-boiler-four-directions-proof.png": "04d28641faf0402367f33d678f610374da2e743dd67d9ea7b84aeca74cb5c963"
     }
-  }
+  },
+  "boiler_visual_alignment_accepted": false,
+  "boiler_visual_correction": "docs/art/boiler-v08-visual-alignment/visual-registration-validation.json"
 }
