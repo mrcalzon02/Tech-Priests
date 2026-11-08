@@ -1,0 +1,185 @@
+{
+  "stage": "geometry cleanup only; rig preparation remains incomplete",
+  "source_sha256": "1469d897424644d2b1d6ae5ed2c13c551cc3a3e66359fc4c4537f052788c9edb",
+  "native_sha256": "294e3a1b415584fcdc340ce7befd88c54b7f69d356b30ac6c11764fb96b2afbc",
+  "glb_sha256": "89471bb219cb4a85833b09364bbd2824eef2b4ebdedc02726625939182af0779",
+  "before_triangles": 457512,
+  "after_triangles": 455748,
+  "removed_zero_area_triangles": 1764,
+  "changed_objects": [
+    {
+      "object": "HATCH_RECESSED_DARK_BACK",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "HATCH_RECESSED_DARK_BACK.001",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "HATCH_RECESSED_DARK_BACK.002",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "HATCH_RECESSED_DARK_BACK.003",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "SLOPED_EXIT_CHUTE_LEFT_2",
+      "removed_zero_area_triangles": 4,
+      "retained_triangles": 4020,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "HATCH_RECESSED_DARK_BACK.004",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "HATCH_RECESSED_DARK_BACK.005",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "CABLE_BRASS_CLIP.002",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_01",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_02",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_03",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_04",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_05",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_06",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_07",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_08",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_09",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_10",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_11",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_12",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_13",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_14",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_15",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_16",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    }
+  ],
+  "all_surviving_source_positions_uvs_material_indices_exact": true,
+  "parent_world_frames_retained": true,
+  "recoil_controls": 6,
+  "animation_authored": false,
+  "runtime_integrated": false,
+  "visual_acceptance": "pending actual render comparison and independent reopen"
+}

@@ -4,7 +4,8 @@
   "completed_slices": [
     "Repository reconciliation and evidence inventory",
     "Local V15 six-control recoil rig preparation and independent GLB inspection",
-    "Four corrupt workbench working atlases regenerated from committed V5 source"
+    "Four corrupt workbench working atlases regenerated from committed V5 source",
+    "V16 removes 1764 inherited degenerate triangles with exact surviving surface correspondence; independent native/GLB zero-degenerate readback"
   ],
   "verification": {
     "graphical_client": "not run",
@@ -15,13 +16,12 @@
     "rig": "6 independent controls; 302 other meshes preserved; native/GLB reopened"
   },
   "open_defects": [
-    "V14-derived lobber retains 1764 degenerate triangles",
     "Lobber loaders/hatches/belts/grenade props/hoses not rigged or animated",
     "Condenser V21 native source remains Library-linked and unlocated locally",
     "Thruster platform/body/cap alignment needs graphical jig",
     "Lumberyard and metallic hydrogen/plasma chain sources unlocated"
   ],
-  "next_slice": "Recover exact condenser V21 package and check pipe frame; or complete one lobber loader station while locating references. Do not repeat completed workbench repair.",
+  "next_slice": "Continue from geometry-clean V16: complete one independent loader/hatch/belt/grenade/hose station and inspect motion; pursue exact condenser V21 and missing chain/lumberyard sources.",
   "automation": "tech-priests-local-model-completion, every four hours",
   "publication": "Read exact delivered SHA and status from issue #13; never infer publication from local commit",
   "local_work": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work",

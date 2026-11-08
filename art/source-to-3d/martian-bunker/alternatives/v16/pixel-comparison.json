@@ -1,0 +1,32 @@
+{
+  "source_sha256": "5fbd19a012fbc4eb3460a303610cb904720601d552514b1db49368a87748dd9d",
+  "candidate_sha256": "0f8d77c92bf0e1d4cbd3827c350e351fea4c7fc62936d3f0751be9eeb08ce29b",
+  "same_camera_lights_seed_samples": true,
+  "max_rgba_channel_difference": [
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      0
+    ]
+  ],
+  "mean_absolute_rgba_difference": [
+    0.0001171875,
+    9.521484375e-05,
+    0.00010986328125,
+    0.0
+  ],
+  "alpha_max_difference": 0,
+  "visual_review": "pending board inspection",
+  "note": "Monte Carlo/shading diagnostics do not override exact surviving mesh correspondence."
+}

@@ -1,0 +1,36 @@
+{
+  "stage": "V16 degenerate-geometry cleanup; final visual approval and animation remain open",
+  "source_sha256": "1469d897424644d2b1d6ae5ed2c13c551cc3a3e66359fc4c4537f052788c9edb",
+  "native_sha256": "294e3a1b415584fcdc340ce7befd88c54b7f69d356b30ac6c11764fb96b2afbc",
+  "glb_sha256": "89471bb219cb4a85833b09364bbd2824eef2b4ebdedc02726625939182af0779",
+  "scored_checks": {
+    "geometry_cleanup": {
+      "score": 5,
+      "reason": "Existing degenerate criterion now finds zero triangles in reopened native and independently imported GLB; exact surviving source correspondence checked.",
+      "out_of": 5
+    },
+    "final_source_fidelity": {
+      "score": null,
+      "reason": "Preservation pass, not new owner-sketch acceptance."
+    },
+    "visible_preservation": {
+      "score": 5,
+      "reason": "Viewed actual source/candidate and GLB rear/clay board: silhouette, bores, loaded props, plate and materials preserved. Matched alpha identical; max RGB difference one byte.",
+      "out_of": 5
+    },
+    "animation": {
+      "score": 0,
+      "reason": "Not authored; six recoil controls only.",
+      "out_of": 5
+    }
+  },
+  "render_sha256": {
+    "candidate-game.png": "0f8d77c92bf0e1d4cbd3827c350e351fea4c7fc62936d3f0751be9eeb08ce29b",
+    "candidate-rear.png": "dea64c2df05435023fe7b7a38dfae9b3026c580ad968a2d9260a78a919026c9d",
+    "glb-clay.png": "84971f1444965b20349146b2bb35433e4c14858dd9bb8089d8e4cea65ca25fc5",
+    "glb-game.png": "5a6566942074c812740e4be967e356f9755ff9849f74dd13d12c4808edd67ed3",
+    "glb-rear.png": "c6150bad661fcae7063f5e660aeeba8b382760206460e0714c137b09e1b129f5",
+    "source-game.png": "5fbd19a012fbc4eb3460a303610cb904720601d552514b1db49368a87748dd9d"
+  },
+  "result": "Accepted as geometry-cleanup checkpoint only"
+}

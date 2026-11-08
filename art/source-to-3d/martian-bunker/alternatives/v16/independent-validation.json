@@ -1,0 +1,6012 @@
+{
+  "stage": "geometry cleanup only; rig preparation remains incomplete",
+  "source_sha256": "1469d897424644d2b1d6ae5ed2c13c551cc3a3e66359fc4c4537f052788c9edb",
+  "native_sha256": "294e3a1b415584fcdc340ce7befd88c54b7f69d356b30ac6c11764fb96b2afbc",
+  "glb_sha256": "89471bb219cb4a85833b09364bbd2824eef2b4ebdedc02726625939182af0779",
+  "before_triangles": 457512,
+  "after_triangles": 455748,
+  "removed_zero_area_triangles": 1764,
+  "changed_objects": [
+    {
+      "object": "HATCH_RECESSED_DARK_BACK",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "HATCH_RECESSED_DARK_BACK.001",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "HATCH_RECESSED_DARK_BACK.002",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "HATCH_RECESSED_DARK_BACK.003",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "SLOPED_EXIT_CHUTE_LEFT_2",
+      "removed_zero_area_triangles": 4,
+      "retained_triangles": 4020,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "HATCH_RECESSED_DARK_BACK.004",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "HATCH_RECESSED_DARK_BACK.005",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "CABLE_BRASS_CLIP.002",
+      "removed_zero_area_triangles": 32,
+      "retained_triangles": 156,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_01",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_02",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_03",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_04",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_05",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_06",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_07",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_08",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_09",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_10",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_11",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_12",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_13",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_14",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_15",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    },
+    {
+      "object": "MOUNTING_BOLT_SEAT_16",
+      "removed_zero_area_triangles": 96,
+      "retained_triangles": 668,
+      "surviving_position_uv_material_correspondence": "exact",
+      "source_modifiers_baked_only_for_affected_object": true
+    }
+  ],
+  "all_surviving_source_positions_uvs_material_indices_exact": true,
+  "parent_world_frames_retained": true,
+  "recoil_controls": 6,
+  "animation_authored": false,
+  "runtime_integrated": false,
+  "visual_acceptance": "pending same-camera pixel comparison and viewed renders",
+  "native_independently_reopened": true,
+  "glb_independently_imported": true,
+  "source_metrics": {
+    "mesh_count": 320,
+    "triangles": 457512,
+    "degenerate_triangles": 1764,
+    "bounds": [
+      [
+        -0.7799999713897705,
+        -0.7799999713897705,
+        1.7000000476837158
+      ],
+      [
+        0.7799999713897705,
+        0.9739999771118164,
+        4.530000686645508
+      ]
+    ],
+    "meshes": [
+      {
+        "object": "ROTARY_ADAPTER",
+        "triangles": 5124,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FIN_ROOT",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_FIN",
+        "triangles": 416,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FIN_TO_CANNON_MOUNT_1",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_LEFT_1",
+        "triangles": 61760,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FIN_TO_CANNON_MOUNT_2",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_LEFT_2",
+        "triangles": 61760,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FIN_TO_CANNON_MOUNT_3",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_LEFT_3",
+        "triangles": 66240,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_AMMUNITION_ARMOURED_SPINE",
+        "triangles": 1436,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_ARM_TO_FIN_BRIDGE",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_SERVICE_COVER",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_REINFORCEMENT",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_REINFORCEMENT.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_REINFORCEMENT.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.001",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.002",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.003",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.004",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.005",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.006",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.007",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_FEED_BASE_CASTING",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_FEED_TOP_CAP",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPEN_MECHANICAL_HOPPER_LEFT_1",
+        "triangles": 1024,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.001",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.002",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.003",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_NECK_LEFT_1",
+        "triangles": 600,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_DARK_THROAT_LEFT_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPEN_MECHANICAL_HOPPER_LEFT_2",
+        "triangles": 1024,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.004",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.005",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.006",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.007",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_NECK_LEFT_2",
+        "triangles": 600,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_DARK_THROAT_LEFT_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPEN_MECHANICAL_HOPPER_LEFT_3",
+        "triangles": 1024,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.008",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.009",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.010",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.011",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_NECK_LEFT_3",
+        "triangles": 600,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_DARK_THROAT_LEFT_3",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK",
+        "triangles": 188,
+        "degenerate_triangles": 32,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.001",
+        "triangles": 188,
+        "degenerate_triangles": 32,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SLOPED_EXIT_CHUTE_LEFT_1",
+        "triangles": 3704,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_1",
+        "triangles": 15416,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.002",
+        "triangles": 188,
+        "degenerate_triangles": 32,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.003",
+        "triangles": 188,
+        "degenerate_triangles": 32,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.006",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.007",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.006",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.007",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SLOPED_EXIT_CHUTE_LEFT_2",
+        "triangles": 4024,
+        "degenerate_triangles": 4,
+        "uv_layers": 1
+      },
+      {
+        "object": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_2",
+        "triangles": 21056,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.004",
+        "triangles": 188,
+        "degenerate_triangles": 32,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.008",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.009",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.008",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.009",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.005",
+        "triangles": 188,
+        "degenerate_triangles": 32,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.010",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.011",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.010",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.011",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SLOPED_EXIT_CHUTE_LEFT_3",
+        "triangles": 4680,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_3",
+        "triangles": 27448,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_SENSOR_PEDESTAL",
+        "triangles": 956,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_OPTICAL_HEAD",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_BROW",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_BRASS_BEZEL",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_RECESSED_GLASS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_BRASS_BEZEL.001",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_RECESSED_GLASS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_BRASS_BASE_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_INSULATOR_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SHORT_ANTENNA_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_RUBBER_TIP_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_BRASS_BASE_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_INSULATOR_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SHORT_ANTENNA_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_RUBBER_TIP_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_CONTROL_SENSOR_BOX",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_BRASS_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_LAMP_0",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_BRASS_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_LAMP_1",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_BRASS_2",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_LAMP_2",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_SENSOR_CABLE_0",
+        "triangles": 3840,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.002",
+        "triangles": 188,
+        "degenerate_triangles": 32,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_SENSOR_CABLE_1",
+        "triangles": 3840,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_REAR_SENSOR_PUCK",
+        "triangles": 956,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_REAR_SENSOR_CAP",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_01",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_01",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_02",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_02",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_03",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_03",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_04",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_04",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_05",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_05",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_06",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_06",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_07",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_07",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_08",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_08",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_01",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_01",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_01",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_02",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_02",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_02",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_03",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_03",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_03",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_04",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_04",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_04",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_05",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_05",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_05",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_06",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_06",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_06",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_07",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_07",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_07",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_08",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_08",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_08",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_09",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_09",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_09",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_10",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_10",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_10",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_11",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_11",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_11",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_12",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_12",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_12",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_13",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_13",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_13",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_14",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_14",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_14",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_15",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_15",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_15",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_16",
+        "triangles": 764,
+        "degenerate_triangles": 96,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_16",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_16",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_TOP_L",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_TOP_R",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_TOP_L",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_TOP_R",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_TOP_L",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_TOP_R",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_MID_L",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_MID_R",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_MID_L",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_MID_R",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_MID_L",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_MID_R",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_BOT_L",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_BOT_R",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_BOT_L",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_BOT_R",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_BOT_L",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_BOT_R",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      }
+    ]
+  },
+  "native_metrics": {
+    "mesh_count": 320,
+    "triangles": 455748,
+    "degenerate_triangles": 0,
+    "bounds": [
+      [
+        -0.7799999713897705,
+        -0.7799999713897705,
+        1.7000000476837158
+      ],
+      [
+        0.7799999713897705,
+        0.9739999771118164,
+        4.530000686645508
+      ]
+    ],
+    "meshes": [
+      {
+        "object": "ROTARY_ADAPTER",
+        "triangles": 5124,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FIN_ROOT",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_FIN",
+        "triangles": 416,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FIN_TO_CANNON_MOUNT_1",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_LEFT_1",
+        "triangles": 61760,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FIN_TO_CANNON_MOUNT_2",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_LEFT_2",
+        "triangles": 61760,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FIN_TO_CANNON_MOUNT_3",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_LEFT_3",
+        "triangles": 66240,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_AMMUNITION_ARMOURED_SPINE",
+        "triangles": 1436,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_ARM_TO_FIN_BRIDGE",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_SERVICE_COVER",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_REINFORCEMENT",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_REINFORCEMENT.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_REINFORCEMENT.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.001",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.002",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.003",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.004",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.005",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.006",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.007",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_FEED_BASE_CASTING",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_FEED_TOP_CAP",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPEN_MECHANICAL_HOPPER_LEFT_1",
+        "triangles": 1024,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.001",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.002",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.003",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_NECK_LEFT_1",
+        "triangles": 600,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_DARK_THROAT_LEFT_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPEN_MECHANICAL_HOPPER_LEFT_2",
+        "triangles": 1024,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.004",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.005",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.006",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.007",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_NECK_LEFT_2",
+        "triangles": 600,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_DARK_THROAT_LEFT_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPEN_MECHANICAL_HOPPER_LEFT_3",
+        "triangles": 1024,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.008",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.009",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.010",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.011",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_NECK_LEFT_3",
+        "triangles": 600,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_DARK_THROAT_LEFT_3",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.001",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SLOPED_EXIT_CHUTE_LEFT_1",
+        "triangles": 3704,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_1",
+        "triangles": 15416,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.002",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.003",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.006",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.007",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.006",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.007",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SLOPED_EXIT_CHUTE_LEFT_2",
+        "triangles": 4020,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_2",
+        "triangles": 21056,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.004",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.008",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.009",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.008",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.009",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.005",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.010",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.011",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.010",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.011",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SLOPED_EXIT_CHUTE_LEFT_3",
+        "triangles": 4680,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_3",
+        "triangles": 27448,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_SENSOR_PEDESTAL",
+        "triangles": 956,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_OPTICAL_HEAD",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_BROW",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_BRASS_BEZEL",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_RECESSED_GLASS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_BRASS_BEZEL.001",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_RECESSED_GLASS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_BRASS_BASE_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_INSULATOR_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SHORT_ANTENNA_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_RUBBER_TIP_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_BRASS_BASE_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_INSULATOR_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SHORT_ANTENNA_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_RUBBER_TIP_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_CONTROL_SENSOR_BOX",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_BRASS_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_LAMP_0",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_BRASS_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_LAMP_1",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_BRASS_2",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_LAMP_2",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_SENSOR_CABLE_0",
+        "triangles": 3840,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.002",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_SENSOR_CABLE_1",
+        "triangles": 3840,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_REAR_SENSOR_PUCK",
+        "triangles": 956,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_REAR_SENSOR_CAP",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_01",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_01",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_02",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_02",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_03",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_03",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_04",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_04",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_05",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_05",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_06",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_06",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_07",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_07",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_08",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_08",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_01",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_01",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_01",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_02",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_02",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_02",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_03",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_03",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_03",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_04",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_04",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_04",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_05",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_05",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_05",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_06",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_06",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_06",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_07",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_07",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_07",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_08",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_08",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_08",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_09",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_09",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_09",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_10",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_10",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_10",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_11",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_11",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_11",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_12",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_12",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_12",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_13",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_13",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_13",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_14",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_14",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_14",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_15",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_15",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_15",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_16",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_16",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_16",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_TOP_L",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_TOP_R",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_TOP_L",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_TOP_R",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_TOP_L",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_TOP_R",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_MID_L",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_MID_R",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_MID_L",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_MID_R",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_MID_L",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_MID_R",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_BOT_L",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_BOT_R",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_BOT_L",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_BOT_R",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_BOT_L",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_BOT_R",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      }
+    ]
+  },
+  "glb_metrics": {
+    "mesh_count": 320,
+    "triangles": 455748,
+    "degenerate_triangles": 0,
+    "bounds": [
+      [
+        -0.7799999713897705,
+        -0.7799999713897705,
+        1.7000000476837158
+      ],
+      [
+        0.7799999713897705,
+        0.9739999771118164,
+        4.530000686645508
+      ]
+    ],
+    "meshes": [
+      {
+        "object": "FIN_ROOT",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_01",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_02",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_03",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_04",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_05",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_06",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_07",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_DIAGONAL_GIRDER_08",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_01",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_02",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_03",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_04",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_05",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_06",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_07",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "INSET_GIRDER_BAY_FLOOR_08",
+        "triangles": 24,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_BRASS_BASE_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_BRASS_BASE_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_INSULATOR_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_INSULATOR_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_RUBBER_TIP_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ANTENNA_RUBBER_TIP_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_LEFT_1",
+        "triangles": 61760,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_LEFT_2",
+        "triangles": 61760,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_LEFT_3",
+        "triangles": 66240,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.002",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CABLE_BRASS_CLIP.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_AMMUNITION_ARMOURED_SPINE",
+        "triangles": 1436,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_ARM_TO_FIN_BRIDGE",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_FEED_BASE_CASTING",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_FEED_TOP_CAP",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CENTRAL_FIN",
+        "triangles": 416,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_1",
+        "triangles": 15416,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_2",
+        "triangles": 21056,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_3",
+        "triangles": 27448,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FIN_TO_CANNON_MOUNT_1",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FIN_TO_CANNON_MOUNT_2",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FIN_TO_CANNON_MOUNT_3",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_1_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_2_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "FRONT_FIN_ACCESS_PANEL_3_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_1_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_2_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_EXIT_PROP_LEFT_3_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.006",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.007",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.008",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.009",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.010",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_CROSSPIECE.011",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.006",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.007",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.008",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.009",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.010",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_FRAME_JAMB.011",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_LEAF_HANDLE.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.001",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.002",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.003",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.004",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HATCH_RECESSED_DARK_BACK.005",
+        "triangles": 156,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_DARK_THROAT_LEFT_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_DARK_THROAT_LEFT_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_DARK_THROAT_LEFT_3",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_NECK_LEFT_1",
+        "triangles": 600,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_NECK_LEFT_2",
+        "triangles": 600,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_NECK_LEFT_3",
+        "triangles": 600,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.001",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.002",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.003",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.004",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.005",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.006",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.007",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.008",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.009",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.010",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "HOPPER_ROLLED_LIP_LEFT.011",
+        "triangles": 1528,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.003",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.004",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "LIFTED_HATCH_LEAF.005",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPEN_MECHANICAL_HOPPER_LEFT_1",
+        "triangles": 1024,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPEN_MECHANICAL_HOPPER_LEFT_2",
+        "triangles": 1024,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPEN_MECHANICAL_HOPPER_LEFT_3",
+        "triangles": 1024,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_BRASS_BEZEL",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_BRASS_BEZEL.001",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_RECESSED_GLASS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTIC_RECESSED_GLASS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_BROW",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "OPTICAL_HEAD_REAR_SERVICE_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_1_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_2_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_L_3_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_1_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_2_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_FASTENER_RECESS",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_FASTENER_RECESS.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_HEX_FASTENER",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_HEX_FASTENER.001",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_INSET_OXIDE_FACE",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_PLATE_RIM",
+        "triangles": 384,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PILLAR_SIDE_PANEL_R_3_RECESSED_GASKET",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_1_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_2_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_NECK",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_PINEAPPLE_BODY",
+        "triangles": 1440,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_PULL_RING",
+        "triangles": 768,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_RAISED_SEGMENTS",
+        "triangles": 960,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_SPOON_0",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_SPOON_1",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "PRESENTED_LEFT_3_SPOON_2",
+        "triangles": 376,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_CONTROL_SENSOR_BOX",
+        "triangles": 300,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_SENSOR_CABLE_0",
+        "triangles": 3840,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_SENSOR_CABLE_1",
+        "triangles": 3840,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_BRASS_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_BRASS_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_BRASS_2",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_LAMP_0",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_LAMP_1",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "REAR_STATUS_LAMP_2",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_BOT_L",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_BOT_L",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_BOT_L",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_BOT_R",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_BOT_R",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_BOT_R",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_MID_L",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_MID_L",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_MID_L",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_MID_R",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_MID_R",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_MID_R",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_TOP_L",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_TOP_L",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_TOP_L",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "BOTTOM_FEED_SOCKET_TOP_R",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "CAST_CANNON_TOP_R",
+        "triangles": 3968,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROUNDED_MUZZLE_TOP_R",
+        "triangles": 2048,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_OPTICAL_HEAD",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_REAR_SENSOR_CAP",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_REAR_SENSOR_PUCK",
+        "triangles": 956,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROOF_SENSOR_PEDESTAL",
+        "triangles": 956,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.001",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.002",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.003",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.004",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.005",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.006",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SERVICE_PANEL_BOLT.007",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SHORT_ANTENNA_0",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SHORT_ANTENNA_1",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SLOPED_EXIT_CHUTE_LEFT_1",
+        "triangles": 3704,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SLOPED_EXIT_CHUTE_LEFT_2",
+        "triangles": 4020,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SLOPED_EXIT_CHUTE_LEFT_3",
+        "triangles": 4680,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_REINFORCEMENT",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_REINFORCEMENT.001",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_REINFORCEMENT.002",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "SPINE_REAR_SERVICE_COVER",
+        "triangles": 188,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_01",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_02",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_03",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_04",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_05",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_06",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_07",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_08",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_09",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_10",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_11",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_12",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_13",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_14",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_15",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_HEX_HEAD_16",
+        "triangles": 284,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_01",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_02",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_03",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_04",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_05",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_06",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_07",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_08",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_09",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_10",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_11",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_12",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_13",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_14",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_15",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_SEAT_16",
+        "triangles": 668,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_01",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_02",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_03",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_04",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_05",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_06",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_07",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_08",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_09",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_10",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_11",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_12",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_13",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_14",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_15",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "MOUNTING_BOLT_WASHER_16",
+        "triangles": 764,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      },
+      {
+        "object": "ROTARY_ADAPTER",
+        "triangles": 5124,
+        "degenerate_triangles": 0,
+        "uv_layers": 1
+      }
+    ]
+  },
+  "render_sha256": {
+    "candidate-game.png": "0f8d77c92bf0e1d4cbd3827c350e351fea4c7fc62936d3f0751be9eeb08ce29b",
+    "candidate-rear.png": "dea64c2df05435023fe7b7a38dfae9b3026c580ad968a2d9260a78a919026c9d",
+    "glb-clay.png": "84971f1444965b20349146b2bb35433e4c14858dd9bb8089d8e4cea65ca25fc5",
+    "glb-game.png": "5a6566942074c812740e4be967e356f9755ff9849f74dd13d12c4808edd67ed3",
+    "glb-rear.png": "c6150bad661fcae7063f5e660aeeba8b382760206460e0714c137b09e1b129f5",
+    "source-game.png": "5fbd19a012fbc4eb3460a303610cb904720601d552514b1db49368a87748dd9d"
+  }
+}
