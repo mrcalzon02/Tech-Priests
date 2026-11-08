@@ -1,0 +1,12 @@
+{
+  "preview_frames": 48,
+  "resolution": [
+    384,
+    384
+  ],
+  "duration_milliseconds": 4000,
+  "all_adjacent_frames_change": true,
+  "minimum_adjacent_pixel_difference": 0.4900580512152778,
+  "source_pose_rate": 24,
+  "preview_rate": 12
+}
