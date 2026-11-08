@@ -1,0 +1,11 @@
+{
+  "observed_log_lines": [
+    "   0.003 2026-11-08 14:33:59; Factorio 2.1.24 (build 87808, win64, steam, space-age)",
+    "   0.003 Program arguments: \"C:\\Program Files (x86)\\Steam\\steamapps\\common\\Factorio\\bin\\x64\\Factorio.exe\" \"--config\" \"C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\vanilla-thruster-parity\\native-baseline\\config.ini\" \"--mod-directory\" \"C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\vanilla-thruster-parity\\native-baseline\\mods\" \"--load-scenario\" \"model-visual-review/model-placement\" \"--disable-audio\" \"--window-size\" \"1280x900\" ",
+    "   0.557 Graphics options: [Graphics quality: high] [Video memory usage: low] [DXT: high-quality]",
+    "  23.470 Real VRAM usage for the whole program: 374.90 MB"
+  ],
+  "high_quality_actual_log_verified": true,
+  "earlier_mode_correction": "Earlier --low-vram reviews actually reported medium quality despite the profile requesting high. Default native review launcher now omits that flag and explicitly requests high. Historical geometry/readback checks remain evidence; old images do not establish high-quality appearance acceptance.",
+  "platform_tile_variants": "No platform tile/transition definition edited; actual native data-stage source still declares 32 side overlay and 32 side background choices. Restored graphics mode restores their visible variety."
+}

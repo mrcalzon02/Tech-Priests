@@ -1,0 +1,8 @@
+{
+  "status": "COLD_CLOCK_NOT_ACCEPTED_AS_WORKING_LOOP",
+  "screenshots_sampled": 64,
+  "decoded_counter_values": [
+    0
+  ],
+  "scope": "No powered working-clock claim. Frozen frame-zero native image still proves the new model actually loaded."
+}

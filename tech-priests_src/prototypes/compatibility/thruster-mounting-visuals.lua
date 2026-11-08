@@ -61,7 +61,7 @@ local function ensure_flag(entity, flag)
   entity.flags[#entity.flags + 1] = flag
 end
 
-local function fit_platform_edge_rules(thruster, vanilla)
+local function fit_platform_edge_rules(thruster, vanilla, supported_front_rows)
   if not (thruster and vanilla and vanilla.tile_buildability_rules) then return end
   local rules = table.deepcopy(vanilla.tile_buildability_rules)
   local support, exhaust
@@ -78,8 +78,17 @@ local function fit_platform_edge_rules(thruster, vanilla)
   -- and intersect the lower body of the 1x9 spine.
   support.area = {{-half_width + 0.2, -half_height + 0.2},
                   {half_width - 0.2, half_height - 0.2}}
+  -- Authored liquid mounts, their fixed pipe cells and the required entity
+  -- origin are on three fore rows. Keep those supported; the vessel/bell
+  -- overhang a native empty-space notch rather than solid foundation.
+  -- Sealed bodies retain the existing full-body rule until modeled.
+  local clear_start = half_height
+  if supported_front_rows then
+    clear_start = -half_height + supported_front_rows
+    support.area[2][2] = clear_start - 0.2
+  end
   local far_edge = exhaust.area[2][2]
-  exhaust.area = {{-half_width + 0.2, half_height + 0.2},
+  exhaust.area = {{-half_width + 0.2, clear_start + 0.2},
                   {half_width - 0.2, far_edge}}
   thruster.tile_buildability_rules = rules
 end
@@ -170,9 +179,10 @@ local function align_liquid_thrusters()
     local fuel_position = {-1.50, -0.50}
     local oxidizer_position = {1.50, -0.50}
     ensure_flag(hydrogen, "not-rotatable")
-    fit_platform_edge_rules(hydrogen, vanilla)
+    fit_platform_edge_rules(hydrogen, vanilla, 3)
     set_single_input_port(hydrogen.fuel_fluid_box, "liquid-hydrogen", fuel_position, west)
     set_single_input_port(hydrogen.oxidizer_fluid_box, "liquid-oxygen", oxidizer_position, east)
+    hydrogen.collision_box = {{-1.85, -1.85}, {1.85, 0}}
     copy_vanilla_pipe_visuals(hydrogen, vanilla, fuel_position, oxidizer_position)
   end
 
@@ -183,7 +193,7 @@ local function align_liquid_thrusters()
     local fuel_position = {-2.00, -1.00}
     local oxidizer_position = {2.00, -1.00}
     ensure_flag(thetazine, "not-rotatable")
-    fit_platform_edge_rules(thetazine, vanilla)
+    fit_platform_edge_rules(thetazine, vanilla, 3)
     thetazine.collision_box = {{-2.15, -2.35}, {2.15, 2.35}}
     thetazine.selection_box = {{-2.25, -2.50}, {2.25, 2.50}}
     thetazine.drawing_box = {{-3.35, -3.30}, {3.35, 5.70}}
@@ -191,6 +201,7 @@ local function align_liquid_thrusters()
     thetazine.hit_visualization_box = {{-2.25, -2.50}, {2.25, 2.50}}
     set_single_input_port(thetazine.fuel_fluid_box, "thetazine-fuel", fuel_position, west)
     set_single_input_port(thetazine.oxidizer_fluid_box, "water", oxidizer_position, east)
+    thetazine.collision_box = {{-2.15, -2.35}, {2.15, 0}}
     copy_vanilla_pipe_visuals(thetazine, vanilla, fuel_position, oxidizer_position)
   end
 end
@@ -214,3 +225,36 @@ end
 
 align_liquid_thrusters()
 align_sealed_void_thrusters()
+
+-- A static service cradle is independent of the body and working glow.
+-- ThrusterGraphicsSet in native 2.1 exposes WorkingVisualisation layers,
+-- not the old integration_patch field. Reference the installed vanilla
+-- machinery without copying Wube PNGs into this mod.
+local function add_platform_service_underlay()
+  local thrusters = data.raw.thruster or {}
+  local vanilla = thrusters.thruster
+  local patch = vanilla and vanilla.graphics_set and vanilla.graphics_set.integration_patch
+  if not patch then return end
+  for _, name in ipairs({HYDROGEN_THRUSTER, THETAZINE_THRUSTER}) do
+    local p = thrusters[name]
+    if p and p.graphics_set then
+      local animation = table.deepcopy(patch)
+      local donor_height = vanilla.tile_height or math.ceil(
+        vanilla.collision_box[2][2] - vanilla.collision_box[1][2])
+      translate_sprite_shifts(animation, {0, (donor_height - p.tile_height) / 2})
+      local visual = {name="platform-service-underlay", always_draw=true,
+        render_layer="floor", animation=animation}
+      p.graphics_set.working_visualisations = p.graphics_set.working_visualisations or {}
+      local replaced = false
+      for i, existing in ipairs(p.graphics_set.working_visualisations) do
+        if existing.name == visual.name then
+          p.graphics_set.working_visualisations[i] = visual
+          replaced = true
+          break
+        end
+      end
+      if not replaced then table.insert(p.graphics_set.working_visualisations, visual) end
+    end
+  end
+end
+add_platform_service_underlay()

@@ -1,0 +1,19 @@
+{
+  "status": "working_pilot_not_final_art",
+  "source_native_sha256": "61f419d9c9c37dc74f02ecf5fb824461bb3bae11a52c8f9005575b4d4c8b4e74",
+  "source_glb_sha256": "1ae5b945ebb71f4cabcb7de24fd8b37249766fe3d3b85289a28c4888e55130ab",
+  "local_study": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\vanilla-thruster-parity\\animation-study-04",
+  "all_expensive_phases_complete": [
+    "64-source-pose native/GLB mechanical reimport",
+    "four actual GLB render views",
+    "128 beauty/emission source PNGs",
+    "exact atlas and source archive checks",
+    "native high-quality cutaway and 14 edge probes",
+    "64 native active body-clock screenshots decoded"
+  ],
+  "active_thetazine_render": false,
+  "next": "Owner-requested shape/material/mechanical refinement; then shadow/idle, glow-phase, separate flame/plume registration and final conditional runtime import. Maintain fixed ports and origin-containing mount collision.",
+  "reference_zip_local_path": "C:/Program Files (x86)/Steam/steamapps/common/Factorio/data/space-age/graphics/entity/thruster.zip",
+  "reference_zip_sha256": "0670bc10c11800e89beb4d39dd692dc32a4d3ea4b967b742559b54a8d7967791",
+  "do_not_promote_unfinished_body": true
+}

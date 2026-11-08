@@ -1,0 +1,1615 @@
+{
+  "status": "AUTHORED_64_FRAME_MECHANICAL_STUDY_REQUIRES_EXPORT_AND_RENDER_REVIEW",
+  "source_sha256": "f3ecc524e9b484b136914f8bab2ff8588941f53e678a642a8f030d9dbabf91ac",
+  "reference_zip_sha256": "0670bc10c11800e89beb4d39dd692dc32a4d3ea4b967b742559b54a8d7967791",
+  "reference_audit_sha256": "ff4b202428dc81d303572e0dab34e9e15b10da4acfdf66c9e8e57b13ba02fcb1",
+  "builder_sha256": "cea171b581c0e20c85664ca44a16a7e6a42302a0d5eb0af351a09c3e64374586",
+  "native_sha256": "61f419d9c9c37dc74f02ecf5fb824461bb3bae11a52c8f9005575b4d4c8b4e74",
+  "glb_sha256": "1ae5b945ebb71f4cabcb7de24fd8b37249766fe3d3b85289a28c4888e55130ab",
+  "mechanism": "12 rigid overlapping closed petal meshes, tangential throat hinges, attached seam rails/inner thermal liners, 12 articulated actuator rods; main structure/sockets remain static. New authored mechanism driven by measured reference body-alpha lip width; not exact vanilla-part identity.",
+  "render_components": [
+    "body beauty",
+    "body emission",
+    "static source-authored underlay",
+    "body shadow pending",
+    "native gated caps preserved separately",
+    "flame/plume native integration pending"
+  ],
+  "fps": 30,
+  "cycle_frames": 64,
+  "wrap_frame": 65,
+  "source_body_parts_removed": [
+    "Continuous hollow bell",
+    "Nozzle external transverse seam",
+    "Nozzle external transverse seam.001",
+    "Nozzle external transverse seam.002",
+    "Nozzle external transverse seam.003",
+    "Nozzle longitudinal panel rib 0",
+    "Physical inner thermal liner 0",
+    "Nozzle seam retaining pin",
+    "Nozzle seam retaining pin.001",
+    "Nozzle seam retaining pin.002",
+    "Nozzle longitudinal panel rib 1",
+    "Physical inner thermal liner 1",
+    "Nozzle seam retaining pin.003",
+    "Nozzle seam retaining pin.004",
+    "Nozzle seam retaining pin.005",
+    "Nozzle longitudinal panel rib 2",
+    "Physical inner thermal liner 2",
+    "Nozzle seam retaining pin.006",
+    "Nozzle seam retaining pin.007",
+    "Nozzle seam retaining pin.008",
+    "Nozzle longitudinal panel rib 3",
+    "Physical inner thermal liner 3",
+    "Nozzle seam retaining pin.009",
+    "Nozzle seam retaining pin.010",
+    "Nozzle seam retaining pin.011",
+    "Nozzle longitudinal panel rib 4",
+    "Physical inner thermal liner 4",
+    "Nozzle seam retaining pin.012",
+    "Nozzle seam retaining pin.013",
+    "Nozzle seam retaining pin.014",
+    "Nozzle longitudinal panel rib 5",
+    "Physical inner thermal liner 5",
+    "Nozzle seam retaining pin.015",
+    "Nozzle seam retaining pin.016",
+    "Nozzle seam retaining pin.017",
+    "Nozzle longitudinal panel rib 6",
+    "Physical inner thermal liner 6",
+    "Nozzle seam retaining pin.018",
+    "Nozzle seam retaining pin.019",
+    "Nozzle seam retaining pin.020",
+    "Nozzle longitudinal panel rib 7",
+    "Physical inner thermal liner 7",
+    "Nozzle seam retaining pin.021",
+    "Nozzle seam retaining pin.022",
+    "Nozzle seam retaining pin.023",
+    "Nozzle longitudinal panel rib 8",
+    "Physical inner thermal liner 8",
+    "Nozzle seam retaining pin.024",
+    "Nozzle seam retaining pin.025",
+    "Nozzle seam retaining pin.026",
+    "Nozzle longitudinal panel rib 9",
+    "Physical inner thermal liner 9",
+    "Nozzle seam retaining pin.027",
+    "Nozzle seam retaining pin.028",
+    "Nozzle seam retaining pin.029",
+    "Nozzle longitudinal panel rib 10",
+    "Physical inner thermal liner 10",
+    "Nozzle seam retaining pin.030",
+    "Nozzle seam retaining pin.031",
+    "Nozzle seam retaining pin.032",
+    "Nozzle longitudinal panel rib 11",
+    "Physical inner thermal liner 11",
+    "Nozzle seam retaining pin.033",
+    "Nozzle seam retaining pin.034",
+    "Nozzle seam retaining pin.035"
+  ],
+  "mesh_count": 439,
+  "new_geometry_repairs": [
+    {
+      "part": "Nozzle articulated petal 00",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 00",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 00 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 00 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 00 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 00 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 00 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 00 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 00 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 00 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 00",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 00",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 00",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Nozzle articulated petal 01",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 01",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 01 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 01 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 01 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 01 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 01 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 01 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 01 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 01 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 01",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 01",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 01",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Nozzle articulated petal 02",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 02",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 02 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 02 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 02 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 02 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 02 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 02 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 02 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 02 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 02",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 02",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 02",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Nozzle articulated petal 03",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 03",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 03 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 03 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 03 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 03 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 03 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 03 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 03 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 03 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 03",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 03",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 03",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Nozzle articulated petal 04",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 04",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 04 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 04 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 04 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 04 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 04 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 04 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 04 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 04 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 04",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 04",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 04",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Nozzle articulated petal 05",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 05",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 05 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 05 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 05 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 05 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 05 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 05 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 05 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 05 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 05",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 05",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 05",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Nozzle articulated petal 06",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 06",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 06 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 06 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 06 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 06 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 06 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 06 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 06 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 06 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 06",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 06",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 06",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Nozzle articulated petal 07",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 07",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 07 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 07 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 07 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 07 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 07 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 07 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 07 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 07 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 07",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 07",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 07",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Nozzle articulated petal 08",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 08",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 08 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 08 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 08 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 08 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 08 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 08 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 08 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 08 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 08",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 08",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 08",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Nozzle articulated petal 09",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 09",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 09 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 09 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 09 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 09 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 09 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 09 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 09 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 09 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 09",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 09",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 09",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Nozzle articulated petal 10",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 10",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 10 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 10 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 10 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 10 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 10 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 10 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 10 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 10 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 10",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 10",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 10",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Nozzle articulated petal 11",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal throat hinge 11",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 11 -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Hinge keeper 11 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 11 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 11 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 11 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 11 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 11 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal supported seam 11 5",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Petal thermal liner 11",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Actuator fixed shoulder 11",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Articulated actuator rod 11",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay fore crossmember",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay continuous side bearer -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay side bearing block -1 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay exposed pipe -1 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener -1 0 -0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener -1 0 0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay side bearing block -1 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay exposed pipe -1 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener -1 1 -0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener -1 1 0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay side bearing block -1 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay exposed pipe -1 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener -1 2 -0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener -1 2 0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay side bearing block -1 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay exposed pipe -1 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener -1 3 -0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener -1 3 0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay side bearing block -1 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay exposed pipe -1 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener -1 4 -0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener -1 4 0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve casing -1 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve barrel -1 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve spindle -1 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve casing -1 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve barrel -1 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve spindle -1 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay foot riser -1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay continuous side bearer 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay side bearing block 1 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay exposed pipe 1 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener 1 0 -0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener 1 0 0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay side bearing block 1 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay exposed pipe 1 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener 1 1 -0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener 1 1 0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay side bearing block 1 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay exposed pipe 1 2",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener 1 2 -0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener 1 2 0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay side bearing block 1 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay exposed pipe 1 3",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener 1 3 -0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener 1 3 0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay side bearing block 1 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay exposed pipe 1 4",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener 1 4 -0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay block fastener 1 4 0.13",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve casing 1 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve barrel 1 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve spindle 1 0",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve casing 1 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve barrel 1 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay valve spindle 1 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "part": "Underlay foot riser 1",
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    }
+  ],
+  "samples": [
+    {
+      "frame": 1,
+      "source_body_frame": 0,
+      "measured_lip_width_px": 250,
+      "six_harmonic_smoothed_width_px": 249.83785468858835,
+      "petal_angle_radians": 0.0
+    },
+    {
+      "frame": 2,
+      "source_body_frame": 1,
+      "measured_lip_width_px": 248,
+      "six_harmonic_smoothed_width_px": 250.3072009235147,
+      "petal_angle_radians": 0.0009968096194802253
+    },
+    {
+      "frame": 3,
+      "source_body_frame": 2,
+      "measured_lip_width_px": 252,
+      "six_harmonic_smoothed_width_px": 250.93137954218244,
+      "petal_angle_radians": 0.002322452836116302
+    },
+    {
+      "frame": 4,
+      "source_body_frame": 3,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 251.60501163146859,
+      "petal_angle_radians": 0.0037531170408554226
+    },
+    {
+      "frame": 5,
+      "source_body_frame": 4,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 252.20820498553778,
+      "petal_angle_radians": 0.005034170137754093
+    },
+    {
+      "frame": 6,
+      "source_body_frame": 5,
+      "measured_lip_width_px": 250,
+      "six_harmonic_smoothed_width_px": 252.63955019131052,
+      "petal_angle_radians": 0.005950244798990018
+    },
+    {
+      "frame": 7,
+      "source_body_frame": 6,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 252.84646280983264,
+      "petal_angle_radians": 0.006389674555905128
+    },
+    {
+      "frame": 8,
+      "source_body_frame": 7,
+      "measured_lip_width_px": 254,
+      "six_harmonic_smoothed_width_px": 252.8426912004548,
+      "petal_angle_radians": 0.006381664638763285
+    },
+    {
+      "frame": 9,
+      "source_body_frame": 8,
+      "measured_lip_width_px": 255,
+      "six_harmonic_smoothed_width_px": 252.70606601247752,
+      "petal_angle_radians": 0.006091507738292694
+    },
+    {
+      "frame": 10,
+      "source_body_frame": 9,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 252.55545256801202,
+      "petal_angle_radians": 0.005771642177676801
+    },
+    {
+      "frame": 11,
+      "source_body_frame": 10,
+      "measured_lip_width_px": 252,
+      "six_harmonic_smoothed_width_px": 252.51260693861482,
+      "petal_angle_radians": 0.005680648480238762
+    },
+    {
+      "frame": 12,
+      "source_body_frame": 11,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 252.66004352914254,
+      "petal_angle_radians": 0.0059937675397240455
+    },
+    {
+      "frame": 13,
+      "source_body_frame": 12,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 253.0082103541093,
+      "petal_angle_radians": 0.006733183476575056
+    },
+    {
+      "frame": 14,
+      "source_body_frame": 13,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 253.48330078140808,
+      "petal_angle_radians": 0.007742140153534431
+    },
+    {
+      "frame": 15,
+      "source_body_frame": 14,
+      "measured_lip_width_px": 254,
+      "six_harmonic_smoothed_width_px": 253.94128085980483,
+      "petal_angle_radians": 0.008714744427218174
+    },
+    {
+      "frame": 16,
+      "source_body_frame": 15,
+      "measured_lip_width_px": 255,
+      "six_harmonic_smoothed_width_px": 254.20580661762534,
+      "petal_angle_radians": 0.009276505753664758
+    },
+    {
+      "frame": 17,
+      "source_body_frame": 16,
+      "measured_lip_width_px": 254,
+      "six_harmonic_smoothed_width_px": 254.12005392589194,
+      "petal_angle_radians": 0.0090943972848121
+    },
+    {
+      "frame": 18,
+      "source_body_frame": 17,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 253.59752618629255,
+      "petal_angle_radians": 0.007984720088718495
+    },
+    {
+      "frame": 19,
+      "source_body_frame": 18,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 252.656331727675,
+      "petal_angle_radians": 0.005985884600407812
+    },
+    {
+      "frame": 20,
+      "source_body_frame": 19,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 251.42560236327455,
+      "petal_angle_radians": 0.0033720877317709895
+    },
+    {
+      "frame": 21,
+      "source_body_frame": 20,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 250.12054482307337,
+      "petal_angle_radians": 0.0006003847136519966
+    },
+    {
+      "frame": 22,
+      "source_body_frame": 21,
+      "measured_lip_width_px": 248,
+      "six_harmonic_smoothed_width_px": 248.99179330374395,
+      "petal_angle_radians": -0.0017968856165715317
+    },
+    {
+      "frame": 23,
+      "source_body_frame": 22,
+      "measured_lip_width_px": 246,
+      "six_harmonic_smoothed_width_px": 248.2624972110605,
+      "petal_angle_radians": -0.003345773400173716
+    },
+    {
+      "frame": 24,
+      "source_body_frame": 23,
+      "measured_lip_width_px": 247,
+      "six_harmonic_smoothed_width_px": 248.0705401608049,
+      "petal_angle_radians": -0.003753451719126831
+    },
+    {
+      "frame": 25,
+      "source_body_frame": 24,
+      "measured_lip_width_px": 249,
+      "six_harmonic_smoothed_width_px": 248.4321774178493,
+      "petal_angle_radians": -0.002985405703497095
+    },
+    {
+      "frame": 26,
+      "source_body_frame": 25,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 249.23746591095164,
+      "petal_angle_radians": -0.0012751208773010279
+    },
+    {
+      "frame": 27,
+      "source_body_frame": 26,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 250.2788748408474,
+      "petal_angle_radians": 0.0009366499920259839
+    },
+    {
+      "frame": 28,
+      "source_body_frame": 27,
+      "measured_lip_width_px": 252,
+      "six_harmonic_smoothed_width_px": 251.3050738570616,
+      "petal_angle_radians": 0.0031161087972465407
+    },
+    {
+      "frame": 29,
+      "source_body_frame": 28,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 252.0848850910948,
+      "petal_angle_radians": 0.004772266381851274
+    },
+    {
+      "frame": 30,
+      "source_body_frame": 29,
+      "measured_lip_width_px": 252,
+      "six_harmonic_smoothed_width_px": 252.4638031608502,
+      "petal_angle_radians": 0.005577001010080868
+    },
+    {
+      "frame": 31,
+      "source_body_frame": 30,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 252.3980247694756,
+      "petal_angle_radians": 0.005437303359568916
+    },
+    {
+      "frame": 32,
+      "source_body_frame": 31,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 251.95772815618398,
+      "petal_angle_radians": 0.00450221292868101
+    },
+    {
+      "frame": 33,
+      "source_body_frame": 32,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 251.30028427451012,
+      "petal_angle_radians": 0.003105936653573499
+    },
+    {
+      "frame": 34,
+      "source_body_frame": 33,
+      "measured_lip_width_px": 250,
+      "six_harmonic_smoothed_width_px": 250.6224634364406,
+      "petal_angle_radians": 0.0016663712720223
+    },
+    {
+      "frame": 35,
+      "source_body_frame": 34,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 250.10607716166763,
+      "petal_angle_radians": 0.0005696579221554371
+    },
+    {
+      "frame": 36,
+      "source_body_frame": 35,
+      "measured_lip_width_px": 250,
+      "six_harmonic_smoothed_width_px": 249.8724154882791,
+      "petal_angle_radians": 7.34011405088634e-05
+    },
+    {
+      "frame": 37,
+      "source_body_frame": 36,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 249.95726030318824,
+      "petal_angle_radians": 0.0002535967975591112
+    },
+    {
+      "frame": 38,
+      "source_body_frame": 37,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 250.31149299551004,
+      "petal_angle_radians": 0.001005925226384103
+    },
+    {
+      "frame": 39,
+      "source_body_frame": 38,
+      "measured_lip_width_px": 250,
+      "six_harmonic_smoothed_width_px": 250.82458380149464,
+      "petal_angle_radians": 0.0020956383247160027
+    },
+    {
+      "frame": 40,
+      "source_body_frame": 39,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 251.36193264928772,
+      "petal_angle_radians": 0.0032368657856944975
+    },
+    {
+      "frame": 41,
+      "source_body_frame": 40,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 251.80392822742095,
+      "petal_angle_radians": 0.004175574723684832
+    },
+    {
+      "frame": 42,
+      "source_body_frame": 41,
+      "measured_lip_width_px": 252,
+      "six_harmonic_smoothed_width_px": 252.07539307821554,
+      "petal_angle_radians": 0.004752107450980794
+    },
+    {
+      "frame": 43,
+      "source_body_frame": 42,
+      "measured_lip_width_px": 252,
+      "six_harmonic_smoothed_width_px": 252.15821513754415,
+      "petal_angle_radians": 0.004928003010453531
+    },
+    {
+      "frame": 44,
+      "source_body_frame": 43,
+      "measured_lip_width_px": 252,
+      "six_harmonic_smoothed_width_px": 252.08585609373318,
+      "petal_angle_radians": 0.004774328575954664
+    },
+    {
+      "frame": 45,
+      "source_body_frame": 44,
+      "measured_lip_width_px": 252,
+      "six_harmonic_smoothed_width_px": 251.92406744714228,
+      "petal_angle_radians": 0.004430724850561008
+    },
+    {
+      "frame": 46,
+      "source_body_frame": 45,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 251.74577401171035,
+      "petal_angle_radians": 0.004052067352330846
+    },
+    {
+      "frame": 47,
+      "source_body_frame": 46,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 251.60874161085664,
+      "petal_angle_radians": 0.00376103875792996
+    },
+    {
+      "frame": 48,
+      "source_body_frame": 47,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 251.54243167147277,
+      "petal_angle_radians": 0.003620209872969276
+    },
+    {
+      "frame": 49,
+      "source_body_frame": 48,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 251.5464108958573,
+      "petal_angle_radians": 0.0036286609439631313
+    },
+    {
+      "frame": 50,
+      "source_body_frame": 49,
+      "measured_lip_width_px": 250,
+      "six_harmonic_smoothed_width_px": 251.59840399531015,
+      "petal_angle_radians": 0.0037390837653212103
+    },
+    {
+      "frame": 51,
+      "source_body_frame": 50,
+      "measured_lip_width_px": 250,
+      "six_harmonic_smoothed_width_px": 251.66707082725574,
+      "petal_angle_radians": 0.003884918080043482
+    },
+    {
+      "frame": 52,
+      "source_body_frame": 51,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 251.72379246795407,
+      "petal_angle_radians": 0.004005383125941225
+    },
+    {
+      "frame": 53,
+      "source_body_frame": 52,
+      "measured_lip_width_px": 254,
+      "six_harmonic_smoothed_width_px": 251.74922303239373,
+      "petal_angle_radians": 0.0040593923532072675
+    },
+    {
+      "frame": 54,
+      "source_body_frame": 53,
+      "measured_lip_width_px": 252,
+      "six_harmonic_smoothed_width_px": 251.73332038093346,
+      "petal_angle_radians": 0.004025618433291133
+    },
+    {
+      "frame": 55,
+      "source_body_frame": 54,
+      "measured_lip_width_px": 250,
+      "six_harmonic_smoothed_width_px": 251.67071541798643,
+      "petal_angle_radians": 0.0038926584411935923
+    },
+    {
+      "frame": 56,
+      "source_body_frame": 55,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 251.55532200285938,
+      "petal_angle_radians": 0.0036475863382468316
+    },
+    {
+      "frame": 57,
+      "source_body_frame": 56,
+      "measured_lip_width_px": 253,
+      "six_harmonic_smoothed_width_px": 251.37822455740456,
+      "petal_angle_radians": 0.0032714666047178684
+    },
+    {
+      "frame": 58,
+      "source_body_frame": 57,
+      "measured_lip_width_px": 252,
+      "six_harmonic_smoothed_width_px": 251.13109390126283,
+      "petal_angle_radians": 0.00274660874401135
+    },
+    {
+      "frame": 59,
+      "source_body_frame": 58,
+      "measured_lip_width_px": 250,
+      "six_harmonic_smoothed_width_px": 250.81444382421287,
+      "petal_angle_radians": 0.002074102866334986
+    },
+    {
+      "frame": 60,
+      "source_body_frame": 59,
+      "measured_lip_width_px": 249,
+      "six_harmonic_smoothed_width_px": 250.44720456908635,
+      "petal_angle_radians": 0.001294152673202585
+    },
+    {
+      "frame": 61,
+      "source_body_frame": 60,
+      "measured_lip_width_px": 249,
+      "six_harmonic_smoothed_width_px": 250.0726039634605,
+      "petal_angle_radians": 0.0004985666786272229
+    },
+    {
+      "frame": 62,
+      "source_body_frame": 61,
+      "measured_lip_width_px": 250,
+      "six_harmonic_smoothed_width_px": 249.7559651745334,
+      "petal_angle_radians": -0.00017391911446865154
+    },
+    {
+      "frame": 63,
+      "source_body_frame": 62,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 249.57269351948872,
+      "petal_angle_radians": -0.0005631562458668737
+    },
+    {
+      "frame": 64,
+      "source_body_frame": 63,
+      "measured_lip_width_px": 251,
+      "six_harmonic_smoothed_width_px": 249.58854754131113,
+      "petal_angle_radians": -0.0005294850649773926
+    },
+    {
+      "frame": 65,
+      "source_body_frame": 0,
+      "measured_lip_width_px": 250,
+      "six_harmonic_smoothed_width_px": 249.83785468858835,
+      "petal_angle_radians": 0.0
+    }
+  ],
+  "native_graphics_installed": false,
+  "final_surface_or_animation_approval": false
+}

@@ -1,0 +1,30 @@
+{
+  "status": "WORKING_PILOT_REQUIRES_FURTHER_DEVELOPMENT",
+  "reviewer": "assistant, plus owner feedback that models need further development/refinement but look like they are working; not final approval",
+  "owner_feedback_date": "2026-11-08 America/Anchorage",
+  "native_sha256": "61f419d9c9c37dc74f02ecf5fb824461bb3bae11a52c8f9005575b4d4c8b4e74",
+  "glb_sha256": "1ae5b945ebb71f4cabcb7de24fd8b37249766fe3d3b85289a28c4888e55130ab",
+  "render_receipt": "review-render-receipt.json",
+  "source_capture": "capture-receipt.json",
+  "native_loop": "native-working-validation.json",
+  "scores": {
+    "construction": {
+      "score": 4,
+      "reason": "Twelve closed overlapping rigid petals have throat hinges, attached seams and actuator rods. U-shaped under-deck source machinery has a separate render collection. Rear/clay actual GLB views expose the load structure. This is a source-authored one-degree-of-freedom study, not an exact recovered vanilla mechanism."
+    },
+    "interchange_and_mechanical_loop": {
+      "score": 5,
+      "reason": "Actual exported geometry/UV/material/winding audit, all 64 moving-part bounds plus wrap/fixed sockets, one 48-channel clip and actual native frame-counter progression pass."
+    },
+    "reference_and_surface_refinement": {
+      "score": 3,
+      "reason": "Source silhouette families remain recognizable, but plate detail, model-specific wear, construction transitions and finish are still simplified. Owner expressly requested further development."
+    },
+    "full_segmented_parity": {
+      "score": 3,
+      "reason": "Body64, source glow64, source underlay, gated cap interfaces and native working body clock are evidenced. Shadow, idle-state packaging, native glow-phase synchronization, flame/plume anchor review and final refinement remain open."
+    }
+  },
+  "final_threshold": 4,
+  "decision": "Retain as v02-animation-study; do not promote the new body to ordinary runtime graphics or claim completed models. Reviewed mounting/clearance and native quality fixes are separate delivered integration changes."
+}

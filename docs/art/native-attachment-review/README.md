@@ -2,7 +2,7 @@
 
 **Boiler visual baseline rejected:** physical pipe coordinates did not prove sprite-mouth alignment. See [the subsequent four-direction visual correction](../boiler-v08-visual-alignment/README.md).
 
-The actual installed graphical client loaded an exact tracked working-tree mod copy and captured the dedicated placement scenario. High sprite quality was retained with low VRAM residency so four existing Blender workers could continue. The isolated config, mods, new map and autosave stay in the task scratch folder; the user's normal Factorio profile and saves are untouched. The installed Mechanicus Reborn 0.0.3 ZIP is enabled only in the review profile because the mod's character sprites reference it. No vendor art or dependency ZIP is committed here.
+The actual installed graphical client loaded an exact tracked working-tree mod copy and captured the dedicated placement scenario. Correction: this historical fixture used --low-vram and actually reported medium sprite quality despite requesting high. Its images do not establish high-quality final appearance acceptance. The subsequent thruster-segment-parity review fixes the launcher default and records actual high-quality captures; geometry/readback evidence retains its stated scope. The isolated config, mods, new map and autosave stay in the task scratch folder; the user's normal Factorio profile and saves are untouched. The installed Mechanicus Reborn 0.0.3 ZIP is enabled only in the review profile because the mod's character sprites reference it. No vendor art or dependency ZIP is committed here.
 
 ## Corrected native integration
 

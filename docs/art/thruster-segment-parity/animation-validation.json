@@ -1,0 +1,66 @@
+{
+  "status": "PASS_ACTUAL_GLB_64_FRAME_MECHANICAL_REIMPORT_FIXED_SOCKETS_AND_CLOSED_PETALS",
+  "native_sha256": "61f419d9c9c37dc74f02ecf5fb824461bb3bae11a52c8f9005575b4d4c8b4e74",
+  "glb_sha256": "1ae5b945ebb71f4cabcb7de24fd8b37249766fe3d3b85289a28c4888e55130ab",
+  "sampled_cycle_frames": 64,
+  "wrap_frame": 65,
+  "source_fps": 30,
+  "source_frames": "1..65",
+  "imported_frames": "1..65; clip retains source time 1/30..65/30 seconds",
+  "animated_parts_checked_each_pose": 24,
+  "max_world_bounds_delta": 4.76837158203125e-07,
+  "max_petal_bbox_motion_units": 0.024553894996643066,
+  "closed_petal_topology": [
+    {
+      "name": "Nozzle articulated petal 00",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 01",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 02",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 03",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 04",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 05",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 06",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 07",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 08",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 09",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 10",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 11",
+      "nonmanifold_edges": 0
+    }
+  ],
+  "socket_frames_checked_each_source": 65,
+  "native_wrap_exact": true,
+  "scope": "Mechanical clip and socket inspection only. Emission material animation is authored in Blender and rendered separately; not claimed as a glTF material animation or native working-clock acceptance."
+}

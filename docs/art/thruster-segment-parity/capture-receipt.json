@@ -1,0 +1,779 @@
+{
+  "status": "COMPLETE_SOURCE_CAPTURE_REQUIRES_REVIEW",
+  "source_sha256": "61f419d9c9c37dc74f02ecf5fb824461bb3bae11a52c8f9005575b4d4c8b4e74",
+  "renderer_sha256": "1c7f3546b4b480ec48eedfce8433cc80e068853699d013ae696fe0e3c8b1f808",
+  "target_frames": 64,
+  "target_pngs": 128,
+  "completed_pngs": 128,
+  "files": [
+    {
+      "source_frame": 1,
+      "pass": "beauty",
+      "file": "body-01-beauty.png",
+      "sha256": "b5a423eee8e0d7812d795ad391d4a95a50c8945eb29f5c3475f699d8d6200d1b"
+    },
+    {
+      "source_frame": 1,
+      "pass": "emission",
+      "file": "body-01-emission.png",
+      "sha256": "acb2f4e643165cd2ab8bb1ea05d2337fd995f5602a75165df5d1fe0e2390e4c0"
+    },
+    {
+      "source_frame": 2,
+      "pass": "beauty",
+      "file": "body-02-beauty.png",
+      "sha256": "0fa9947ff3f2f4b79a5e876f38ea8c1e173608294868289885a5db4853153193"
+    },
+    {
+      "source_frame": 2,
+      "pass": "emission",
+      "file": "body-02-emission.png",
+      "sha256": "15a23bd086fdaa4830a070b286b33636074b54ca3940d081cfc3340546b06d22"
+    },
+    {
+      "source_frame": 3,
+      "pass": "beauty",
+      "file": "body-03-beauty.png",
+      "sha256": "13351585d420fd6842755b6a431a6f32ef173cc2f1f0e180245ba038ebf58468"
+    },
+    {
+      "source_frame": 3,
+      "pass": "emission",
+      "file": "body-03-emission.png",
+      "sha256": "3770186b7af591312886d95c4a7adf0984cb42249f06d71e79c5b043900d4833"
+    },
+    {
+      "source_frame": 4,
+      "pass": "beauty",
+      "file": "body-04-beauty.png",
+      "sha256": "992f1b84d20e8be155192229b00d8e8da43fe205c851e41a4dbbd21fac4781b3"
+    },
+    {
+      "source_frame": 4,
+      "pass": "emission",
+      "file": "body-04-emission.png",
+      "sha256": "ec20dc7ddb1b1f7d9187f093bb33677becccdbf2a2546104986b05252eebc92a"
+    },
+    {
+      "source_frame": 5,
+      "pass": "beauty",
+      "file": "body-05-beauty.png",
+      "sha256": "fa12ce6f1d4b769f90ca388a09d98562f8de51d94bfcc278416998c8eb72fee8"
+    },
+    {
+      "source_frame": 5,
+      "pass": "emission",
+      "file": "body-05-emission.png",
+      "sha256": "42335c776779e57fef35c2fc17f3183815dbcda89d758b5fa4cb008d1d7c6626"
+    },
+    {
+      "source_frame": 6,
+      "pass": "beauty",
+      "file": "body-06-beauty.png",
+      "sha256": "3313d6b454b8f78523295e426a9553ed4c81a58310f7cf89ba4074099c7e690b"
+    },
+    {
+      "source_frame": 6,
+      "pass": "emission",
+      "file": "body-06-emission.png",
+      "sha256": "b37cb7406bd955f12300c02ba31ab9cd62be22b4ecb481314bf8603360541b96"
+    },
+    {
+      "source_frame": 7,
+      "pass": "beauty",
+      "file": "body-07-beauty.png",
+      "sha256": "51ea1cd8445adb94c144f96b1a194790f8e36e5e63b7ae1e5e020677aaba5c89"
+    },
+    {
+      "source_frame": 7,
+      "pass": "emission",
+      "file": "body-07-emission.png",
+      "sha256": "724344687ee5154f6df4c451e35113404778144e73dacd3ee75f231b3daa8380"
+    },
+    {
+      "source_frame": 8,
+      "pass": "beauty",
+      "file": "body-08-beauty.png",
+      "sha256": "69ba9b4f526190161420b07b86b4dcbcef3cbb17cd767ef2e3917d503b9d1d11"
+    },
+    {
+      "source_frame": 8,
+      "pass": "emission",
+      "file": "body-08-emission.png",
+      "sha256": "7f087b400f0654b2a156dfa1a79183614947fff9895a81ab859ce891dd10636c"
+    },
+    {
+      "source_frame": 9,
+      "pass": "beauty",
+      "file": "body-09-beauty.png",
+      "sha256": "9c6bf74ca68736c02549760deeda434536a4d73cb0a570be0095927744eb0913"
+    },
+    {
+      "source_frame": 9,
+      "pass": "emission",
+      "file": "body-09-emission.png",
+      "sha256": "0444f504e8bdab5ce4154046999532914f29a639602996468d0a16c6450f4d6e"
+    },
+    {
+      "source_frame": 10,
+      "pass": "beauty",
+      "file": "body-10-beauty.png",
+      "sha256": "eafb7b6f905b9dec48bcea9dc725d86392a0e92dfd354d21814b69fb8797274e"
+    },
+    {
+      "source_frame": 10,
+      "pass": "emission",
+      "file": "body-10-emission.png",
+      "sha256": "15df9af3c428c191795c43d4ef3b9459358d75a3135f249983461ddf1a9a2291"
+    },
+    {
+      "source_frame": 11,
+      "pass": "beauty",
+      "file": "body-11-beauty.png",
+      "sha256": "e7a5c0994fab0189070ad064c545d104a3819db7eea3d93ed8c9de73e653c894"
+    },
+    {
+      "source_frame": 11,
+      "pass": "emission",
+      "file": "body-11-emission.png",
+      "sha256": "44bb2ff84d7e3a7bf6c410b8aa1d15f0d53b06018c403e826924d233555f980e"
+    },
+    {
+      "source_frame": 12,
+      "pass": "beauty",
+      "file": "body-12-beauty.png",
+      "sha256": "06c101bd85b7bf92a077e2d15df1ce6d799f923510c3dc45d8bf29382f59d170"
+    },
+    {
+      "source_frame": 12,
+      "pass": "emission",
+      "file": "body-12-emission.png",
+      "sha256": "57e279268d8939a50cc8aafacd47da66dd7fbdbe72466e94435d4da374e7d923"
+    },
+    {
+      "source_frame": 13,
+      "pass": "beauty",
+      "file": "body-13-beauty.png",
+      "sha256": "4d7096096f4597779a3441b0292257c748d4b0ff183a3f3ac56b2dc50a4c01bb"
+    },
+    {
+      "source_frame": 13,
+      "pass": "emission",
+      "file": "body-13-emission.png",
+      "sha256": "dbdd1e4b2621c210b05b35b5807a8a9b8cd33f20103d7de6ada237fb27102fdd"
+    },
+    {
+      "source_frame": 14,
+      "pass": "beauty",
+      "file": "body-14-beauty.png",
+      "sha256": "c95dd422101b9951a91f16e2fad86d7927a6f88eaee8827c3dba8c114d9f78b4"
+    },
+    {
+      "source_frame": 14,
+      "pass": "emission",
+      "file": "body-14-emission.png",
+      "sha256": "a7e73d9304972eb96f1e19116569bde6861ed65ac947af5c8419aff9e3d580ef"
+    },
+    {
+      "source_frame": 15,
+      "pass": "beauty",
+      "file": "body-15-beauty.png",
+      "sha256": "1791f36a60a845ed3bc4246e212f26da1cf37bcfe1249a062b7458881c15e89b"
+    },
+    {
+      "source_frame": 15,
+      "pass": "emission",
+      "file": "body-15-emission.png",
+      "sha256": "9e8eff37f0292b6bfd65620a88a83478f7650dcabf765b44fd76ad2e02aedf9b"
+    },
+    {
+      "source_frame": 16,
+      "pass": "beauty",
+      "file": "body-16-beauty.png",
+      "sha256": "0913288d4a32474a35a75cf24df9e179ca515613a76d9c3b952e4fa4416ab00f"
+    },
+    {
+      "source_frame": 16,
+      "pass": "emission",
+      "file": "body-16-emission.png",
+      "sha256": "b7c1252a4b8f1ea8e66b69ad34b2aa4f36ff631acd1f9296f7f9727007689a0a"
+    },
+    {
+      "source_frame": 17,
+      "pass": "beauty",
+      "file": "body-17-beauty.png",
+      "sha256": "e11db28c0a11fe288df2ea15fcb4067fa594f423d279e081484fdad265d44d13"
+    },
+    {
+      "source_frame": 17,
+      "pass": "emission",
+      "file": "body-17-emission.png",
+      "sha256": "bb41ede285cb47a83317f9daed3310da43610eab10252dc7aa84bd949f265f48"
+    },
+    {
+      "source_frame": 18,
+      "pass": "beauty",
+      "file": "body-18-beauty.png",
+      "sha256": "7857a1abc3af75279a6f9aa0d98728487e11d5452a0c509e47d05ab6ff5c4b3a"
+    },
+    {
+      "source_frame": 18,
+      "pass": "emission",
+      "file": "body-18-emission.png",
+      "sha256": "ad8ab49b04a657d99869d1d5b937cc1c28fea34973cbdbe7f84e6c3b94076da4"
+    },
+    {
+      "source_frame": 19,
+      "pass": "beauty",
+      "file": "body-19-beauty.png",
+      "sha256": "a5864015333f378440091ce0d23acee9db8003c266f158a42d3642c9cbcb230f"
+    },
+    {
+      "source_frame": 19,
+      "pass": "emission",
+      "file": "body-19-emission.png",
+      "sha256": "72f1f8cca010279302c26e46dd3551c228bfa370a8347d9ba1c631e2c7211c14"
+    },
+    {
+      "source_frame": 20,
+      "pass": "beauty",
+      "file": "body-20-beauty.png",
+      "sha256": "0f13a5bfface38dd0bd5532648bb2d1eda429c83eb823e38e3e2964816cd82eb"
+    },
+    {
+      "source_frame": 20,
+      "pass": "emission",
+      "file": "body-20-emission.png",
+      "sha256": "ae4f3056fafed1651234ae90a1a739fb5dbfebdea6e13aa2fdd9a1350a171e34"
+    },
+    {
+      "source_frame": 21,
+      "pass": "beauty",
+      "file": "body-21-beauty.png",
+      "sha256": "06cf1b107e5edc43fb38e5ae5fd5fb2dc2dcbc6d704db95838b31022b7301fe1"
+    },
+    {
+      "source_frame": 21,
+      "pass": "emission",
+      "file": "body-21-emission.png",
+      "sha256": "beeb66de3181b0db70d221e40b7d7340c6c9849d42fe0b91ba673dbdada48ba8"
+    },
+    {
+      "source_frame": 22,
+      "pass": "beauty",
+      "file": "body-22-beauty.png",
+      "sha256": "c8f2d0ed8246856fe349d795e436652c6f0daec4caaff9feb7f1bcbadbd860a4"
+    },
+    {
+      "source_frame": 22,
+      "pass": "emission",
+      "file": "body-22-emission.png",
+      "sha256": "e7a452fb9036d42d0b5ffab3ad48b53b88920b1c5e05720c86c45338d09ffd17"
+    },
+    {
+      "source_frame": 23,
+      "pass": "beauty",
+      "file": "body-23-beauty.png",
+      "sha256": "d9e2f5be6e9aba4485a173278f335098ab6f27aef685c5502cba9257b02afbfb"
+    },
+    {
+      "source_frame": 23,
+      "pass": "emission",
+      "file": "body-23-emission.png",
+      "sha256": "5ad9759a6f8cc91d4933cfd066619eeb2cb94a8bb5e0b345ed61e7edbba6af21"
+    },
+    {
+      "source_frame": 24,
+      "pass": "beauty",
+      "file": "body-24-beauty.png",
+      "sha256": "63a7960d10fb39cba86d82a26434639fc6a848120d70cf54923d778577837e2a"
+    },
+    {
+      "source_frame": 24,
+      "pass": "emission",
+      "file": "body-24-emission.png",
+      "sha256": "d5f956a5074e1799d7b8553dc0664ae243177fb4b7ec6e9822a0d03172161f11"
+    },
+    {
+      "source_frame": 25,
+      "pass": "beauty",
+      "file": "body-25-beauty.png",
+      "sha256": "56ceb24bac0bf09c1253dd0943777b8dfc316b519f2fbd1d1304868391559602"
+    },
+    {
+      "source_frame": 25,
+      "pass": "emission",
+      "file": "body-25-emission.png",
+      "sha256": "7353f68e54244f6fa0ae9f75f909ffb8d57f888367fc884981e4bcfaf6c307e0"
+    },
+    {
+      "source_frame": 26,
+      "pass": "beauty",
+      "file": "body-26-beauty.png",
+      "sha256": "f4ebafb69ae1faaccd4df8a0d0570b5ec7815cac5a473cd5367b8269963e3be5"
+    },
+    {
+      "source_frame": 26,
+      "pass": "emission",
+      "file": "body-26-emission.png",
+      "sha256": "95de8e0554cf06843026e23431470d58dbdd3f8531a21e67aae64a2a7230261b"
+    },
+    {
+      "source_frame": 27,
+      "pass": "beauty",
+      "file": "body-27-beauty.png",
+      "sha256": "571f0664cbbe78151adea79cf0a49eb7d69aed75f9bd652d194a1761527ae1fc"
+    },
+    {
+      "source_frame": 27,
+      "pass": "emission",
+      "file": "body-27-emission.png",
+      "sha256": "87fa942605ddccbc5e6843675da707778a3f69f723e3343fa88ffc68e86ef67e"
+    },
+    {
+      "source_frame": 28,
+      "pass": "beauty",
+      "file": "body-28-beauty.png",
+      "sha256": "f37a7d32b4ee7d531b2da5b7f7188365cf73bdcd1af34f9adcba03d9750332b2"
+    },
+    {
+      "source_frame": 28,
+      "pass": "emission",
+      "file": "body-28-emission.png",
+      "sha256": "d283b3556d9adec870ecf23f2327b8c1b18498a80fc8f7019d34a1b0fdc56ac9"
+    },
+    {
+      "source_frame": 29,
+      "pass": "beauty",
+      "file": "body-29-beauty.png",
+      "sha256": "6761effb14929224f8ea9e6c2bb1684035905231768450401badfbcb2ab38c93"
+    },
+    {
+      "source_frame": 29,
+      "pass": "emission",
+      "file": "body-29-emission.png",
+      "sha256": "4ad3e408a12a2e456540fd264d73d5b8478672981ec8c844653488c212eee9ef"
+    },
+    {
+      "source_frame": 30,
+      "pass": "beauty",
+      "file": "body-30-beauty.png",
+      "sha256": "84031f528c7869c5947ae2adc29abd7ff1209ff0a7a553f560914fd1299479a0"
+    },
+    {
+      "source_frame": 30,
+      "pass": "emission",
+      "file": "body-30-emission.png",
+      "sha256": "908549c35a63fce24b573d702dea0bf350d21fd5c31c0275d9532ccd425bf39e"
+    },
+    {
+      "source_frame": 31,
+      "pass": "beauty",
+      "file": "body-31-beauty.png",
+      "sha256": "d406c55133c08a32b9a94795ad73a9914b427a2c191ffc3a4c3f33e0c8625b00"
+    },
+    {
+      "source_frame": 31,
+      "pass": "emission",
+      "file": "body-31-emission.png",
+      "sha256": "692803dfc7d2fe9dd6e0e61701cac72212803b8ec98b1a9c8a794ed88b31cc7b"
+    },
+    {
+      "source_frame": 32,
+      "pass": "beauty",
+      "file": "body-32-beauty.png",
+      "sha256": "88b7548b60bf0955d7f3eb2c21c1a0040e4f2fc88adbbba162c51c43dbf5e03f"
+    },
+    {
+      "source_frame": 32,
+      "pass": "emission",
+      "file": "body-32-emission.png",
+      "sha256": "2d6d75c83142cd1fd9d19d17656422719d701ba0991610198daed8af5cd2a96b"
+    },
+    {
+      "source_frame": 33,
+      "pass": "beauty",
+      "file": "body-33-beauty.png",
+      "sha256": "6418644b42183256015ed3e7809c73c3b9e9afd89f2f096ac28167f1b6cfcdb1"
+    },
+    {
+      "source_frame": 33,
+      "pass": "emission",
+      "file": "body-33-emission.png",
+      "sha256": "9adcb4f7a351a21c2b5827b84721beb51eba3d685297763b0ecce3b9a5af449b"
+    },
+    {
+      "source_frame": 34,
+      "pass": "beauty",
+      "file": "body-34-beauty.png",
+      "sha256": "eaf7dc9247c91ef98ddd49fe3fe46d3b90646dff0154b16c12672f97759cddd4"
+    },
+    {
+      "source_frame": 34,
+      "pass": "emission",
+      "file": "body-34-emission.png",
+      "sha256": "bd517b6fac051d31463c1012d8085d152148fc7a7953c0e246f1be746f18c47a"
+    },
+    {
+      "source_frame": 35,
+      "pass": "beauty",
+      "file": "body-35-beauty.png",
+      "sha256": "c63ef623b878918d60aab872041d7aeb84e0a4e4d3d0a2ea5b2c40f2ab6a1cb0"
+    },
+    {
+      "source_frame": 35,
+      "pass": "emission",
+      "file": "body-35-emission.png",
+      "sha256": "8d0ec5e7f67a8dcb917eceebe107f9e909c584d9d4a56669b087fab87e9bbcb1"
+    },
+    {
+      "source_frame": 36,
+      "pass": "beauty",
+      "file": "body-36-beauty.png",
+      "sha256": "355efddf528628da7f2e24fc60d80f77c916bfdfae7317d17c78c2628a6af4a9"
+    },
+    {
+      "source_frame": 36,
+      "pass": "emission",
+      "file": "body-36-emission.png",
+      "sha256": "970722e511b0aa9b0e7fc07aabd876ee31193cde4cc7a38d9af1f598b8d64a81"
+    },
+    {
+      "source_frame": 37,
+      "pass": "beauty",
+      "file": "body-37-beauty.png",
+      "sha256": "3180aa0e518dc7610b77ab5d3bbbfb5afbdc5aa90f7fb695bfb959e0e6527593"
+    },
+    {
+      "source_frame": 37,
+      "pass": "emission",
+      "file": "body-37-emission.png",
+      "sha256": "d778ac880a4d652bfb3b5287a89bca5b03ac47f21b6723ae2dbcb374fcac455a"
+    },
+    {
+      "source_frame": 38,
+      "pass": "beauty",
+      "file": "body-38-beauty.png",
+      "sha256": "86913e3092f25c1a86baa2269bee3e7c80765659f5acb1b3d29b4a49c956db12"
+    },
+    {
+      "source_frame": 38,
+      "pass": "emission",
+      "file": "body-38-emission.png",
+      "sha256": "9ce23c675af6a7eb390704a9b4339cc5aa3889832a437ad91b08e033a78db979"
+    },
+    {
+      "source_frame": 39,
+      "pass": "beauty",
+      "file": "body-39-beauty.png",
+      "sha256": "c62787fb1caf6e88eb66abd057b384743d036d334826ec7be96571a2a0099a7f"
+    },
+    {
+      "source_frame": 39,
+      "pass": "emission",
+      "file": "body-39-emission.png",
+      "sha256": "abd2744e7aa5fbc6416d9befadc2dcff3e2bcf1a58bad1d2a6b7acd8ec3c0e23"
+    },
+    {
+      "source_frame": 40,
+      "pass": "beauty",
+      "file": "body-40-beauty.png",
+      "sha256": "4b07fe13339f912de4142dba28db2ea72662476e6d70381dd4317adbdb9ff886"
+    },
+    {
+      "source_frame": 40,
+      "pass": "emission",
+      "file": "body-40-emission.png",
+      "sha256": "72a46bf822778aaa71fba45dd3e508497169b83abba43a2dc68b625ab2fac744"
+    },
+    {
+      "source_frame": 41,
+      "pass": "beauty",
+      "file": "body-41-beauty.png",
+      "sha256": "227a35b1c595c8b3be49b0f9bd38fc6fc6549354e612b4fdce541cc26359f2be"
+    },
+    {
+      "source_frame": 41,
+      "pass": "emission",
+      "file": "body-41-emission.png",
+      "sha256": "570bc013d66349dc99a7120b8af49b7ccbc8cf9f61ac36b2148eae7de299315f"
+    },
+    {
+      "source_frame": 42,
+      "pass": "beauty",
+      "file": "body-42-beauty.png",
+      "sha256": "0bdc124849a19bd599bf9946cfdc75f4f8a936e8ea5d5477294bc13e98477e18"
+    },
+    {
+      "source_frame": 42,
+      "pass": "emission",
+      "file": "body-42-emission.png",
+      "sha256": "1b251adb58e42ba0e9edca883a8ee83339197949d45263ea95946a5807cfe7e2"
+    },
+    {
+      "source_frame": 43,
+      "pass": "beauty",
+      "file": "body-43-beauty.png",
+      "sha256": "d147bd55125fb9ed0716a66f2753c2a75d2eb61994ce9f87abb9284ddc639e9f"
+    },
+    {
+      "source_frame": 43,
+      "pass": "emission",
+      "file": "body-43-emission.png",
+      "sha256": "3a64fe362d0fdf894965a50ee82f1abf9c8385e55325f09a15f52e1b0b440842"
+    },
+    {
+      "source_frame": 44,
+      "pass": "beauty",
+      "file": "body-44-beauty.png",
+      "sha256": "b6c6b2be29aa8d59316e4dc5f55a611a8b7ea21c686b82bb737f5a0e9a05c3a6"
+    },
+    {
+      "source_frame": 44,
+      "pass": "emission",
+      "file": "body-44-emission.png",
+      "sha256": "0a47817ef4ab96d67528fb833595383d65e58d1d64676db67198de1b41d2ea9a"
+    },
+    {
+      "source_frame": 45,
+      "pass": "beauty",
+      "file": "body-45-beauty.png",
+      "sha256": "e926aa13806b0d8df476f5aae97b2a4b1772961e0a57023cb17631713cba211d"
+    },
+    {
+      "source_frame": 45,
+      "pass": "emission",
+      "file": "body-45-emission.png",
+      "sha256": "5e75a545e5dd79545f9bea87afa390f21db2e6c107ce93455f8cf8857f6eb0dd"
+    },
+    {
+      "source_frame": 46,
+      "pass": "beauty",
+      "file": "body-46-beauty.png",
+      "sha256": "7f09dc76a7c11ce0fbba3cfbaf7e1752b7588e8d44625bb992a0461b8240e037"
+    },
+    {
+      "source_frame": 46,
+      "pass": "emission",
+      "file": "body-46-emission.png",
+      "sha256": "27c3cc6400c37f6cb641a9436bae0af54bc1f1d65ecb278bc05857b0f3e3b2eb"
+    },
+    {
+      "source_frame": 47,
+      "pass": "beauty",
+      "file": "body-47-beauty.png",
+      "sha256": "efd906958d2ea7b0ff43fa9ea12b53d37ed137070038e6ce59b89b43e57f72a8"
+    },
+    {
+      "source_frame": 47,
+      "pass": "emission",
+      "file": "body-47-emission.png",
+      "sha256": "9cca6e6611a560f16c0c6059eedc5c33b52c13051142396a6bb3c5849d0b0fe5"
+    },
+    {
+      "source_frame": 48,
+      "pass": "beauty",
+      "file": "body-48-beauty.png",
+      "sha256": "e76ad71dded0180c296c0d9bfd4029b7e56e83508349f0b6751f916360a37d2a"
+    },
+    {
+      "source_frame": 48,
+      "pass": "emission",
+      "file": "body-48-emission.png",
+      "sha256": "c58e93ff071cb24f53d72d637ffdf46e95a5670562451a7ad318f4dd43cdbd40"
+    },
+    {
+      "source_frame": 49,
+      "pass": "beauty",
+      "file": "body-49-beauty.png",
+      "sha256": "fed2817604f56f0db83b0cb64748b5ecc517b2a7b55dbd751fd4752ad157196f"
+    },
+    {
+      "source_frame": 49,
+      "pass": "emission",
+      "file": "body-49-emission.png",
+      "sha256": "4d056a889aeb09583ddcef3e7325b440ca698a85600edfe2c5480930923048eb"
+    },
+    {
+      "source_frame": 50,
+      "pass": "beauty",
+      "file": "body-50-beauty.png",
+      "sha256": "0ff426494b60cc458cb502071027c3231452a4eb8438704481caf3c4e2059161"
+    },
+    {
+      "source_frame": 50,
+      "pass": "emission",
+      "file": "body-50-emission.png",
+      "sha256": "e778e364f90178a2e7efd0175698aeb0b07a30c2892ab38b7f8387fce3b29ef1"
+    },
+    {
+      "source_frame": 51,
+      "pass": "beauty",
+      "file": "body-51-beauty.png",
+      "sha256": "7ca46d1892b4bf7d1427323cf67ec417985d89a725061623be0fd12f5b0a4665"
+    },
+    {
+      "source_frame": 51,
+      "pass": "emission",
+      "file": "body-51-emission.png",
+      "sha256": "f64dad78d2f0bf32055ccb564c7f2811642a96a30b3fc6a19730e0419f9a3340"
+    },
+    {
+      "source_frame": 52,
+      "pass": "beauty",
+      "file": "body-52-beauty.png",
+      "sha256": "3fd45676604fb9bde5a7dba8995c151ad2b480af43681fb1b468a93879324501"
+    },
+    {
+      "source_frame": 52,
+      "pass": "emission",
+      "file": "body-52-emission.png",
+      "sha256": "26f8c97eef64900f366d1ad16c17af4a18568ee9bca76656a0382971c2a9ea06"
+    },
+    {
+      "source_frame": 53,
+      "pass": "beauty",
+      "file": "body-53-beauty.png",
+      "sha256": "67a1bc1dede34233a72a33f1828056dd34cfdf8a327d88f5c133dfbe30404bfc"
+    },
+    {
+      "source_frame": 53,
+      "pass": "emission",
+      "file": "body-53-emission.png",
+      "sha256": "42b0e8fdd8c80092e591394e057f80c7f2387877223fa9cce01189df791b6fa6"
+    },
+    {
+      "source_frame": 54,
+      "pass": "beauty",
+      "file": "body-54-beauty.png",
+      "sha256": "3d9c2fad57f7b0af0e4f4642f1f4ebcc879ca6db24bbad0ca5ee5dc7b26f509a"
+    },
+    {
+      "source_frame": 54,
+      "pass": "emission",
+      "file": "body-54-emission.png",
+      "sha256": "308b6c2d04696fc7ebba636b91067e25ce46b25b6c215393318d2391e6809d6f"
+    },
+    {
+      "source_frame": 55,
+      "pass": "beauty",
+      "file": "body-55-beauty.png",
+      "sha256": "ee76dfd9419ef7615f1a3c977f89a551b289b7e7b9891aa571114e21afec7e44"
+    },
+    {
+      "source_frame": 55,
+      "pass": "emission",
+      "file": "body-55-emission.png",
+      "sha256": "1bf5b7773d4f0722c97b96316b6e4c930fa078b40cd3bccaafefb5db681c337d"
+    },
+    {
+      "source_frame": 56,
+      "pass": "beauty",
+      "file": "body-56-beauty.png",
+      "sha256": "770b91773eb27a0f6c4e7c1bb9d7e78d30d7e8ee7c41132eda20140224b90ae2"
+    },
+    {
+      "source_frame": 56,
+      "pass": "emission",
+      "file": "body-56-emission.png",
+      "sha256": "190939d3c0b80c21d00c8e655537613968cf591574bcbb5334ecddca325dea9a"
+    },
+    {
+      "source_frame": 57,
+      "pass": "beauty",
+      "file": "body-57-beauty.png",
+      "sha256": "61e79f006c03dbb053c1b66d0dfe3c36da1ada597117bec0b30499e1c170c328"
+    },
+    {
+      "source_frame": 57,
+      "pass": "emission",
+      "file": "body-57-emission.png",
+      "sha256": "92f195cdaf054a7a39701ae0417a973c92df0a244ae3dd2d98bc9f94c60bd7f6"
+    },
+    {
+      "source_frame": 58,
+      "pass": "beauty",
+      "file": "body-58-beauty.png",
+      "sha256": "ff4cb064f64334b247eb8bf16ca9ffa3a14986dbffc7081c73638935519ce210"
+    },
+    {
+      "source_frame": 58,
+      "pass": "emission",
+      "file": "body-58-emission.png",
+      "sha256": "0647750db41c2debaea61955555120262a88ae7f765dd78adf6a460ad22dcfab"
+    },
+    {
+      "source_frame": 59,
+      "pass": "beauty",
+      "file": "body-59-beauty.png",
+      "sha256": "66f119bea1d021c4575c1d55a2fb96a4e29b99b55e0a441e0105fa83e56f1b49"
+    },
+    {
+      "source_frame": 59,
+      "pass": "emission",
+      "file": "body-59-emission.png",
+      "sha256": "2413608f61e790d91ce6509d95b43d14a0c5e90df3955cb6e882c195cd3e9d5b"
+    },
+    {
+      "source_frame": 60,
+      "pass": "beauty",
+      "file": "body-60-beauty.png",
+      "sha256": "c12698a5c754c68dfa13ed504173efca314686aae3dab13280752f49152ba00a"
+    },
+    {
+      "source_frame": 60,
+      "pass": "emission",
+      "file": "body-60-emission.png",
+      "sha256": "72c9e029dfe9b96353db98b608cbdff79e411fb4b7f9e4d83ea0feba926c933f"
+    },
+    {
+      "source_frame": 61,
+      "pass": "beauty",
+      "file": "body-61-beauty.png",
+      "sha256": "7a302c062fab4f37215b47c45f97233d53ca315c784e8c58d7221af730e5ff5f"
+    },
+    {
+      "source_frame": 61,
+      "pass": "emission",
+      "file": "body-61-emission.png",
+      "sha256": "e98d95ac1d0a3d4c68862674b7cde8a22d112cf759e58611746ac2784ce8265b"
+    },
+    {
+      "source_frame": 62,
+      "pass": "beauty",
+      "file": "body-62-beauty.png",
+      "sha256": "a18f7f67af5350e353fe7d9229f135c5a76e4003317b6e8c0f5c8a58087178c1"
+    },
+    {
+      "source_frame": 62,
+      "pass": "emission",
+      "file": "body-62-emission.png",
+      "sha256": "98ca7fee0168c246fe33afcc28a3ca24714bbdc407abf92bcff5113d1468d760"
+    },
+    {
+      "source_frame": 63,
+      "pass": "beauty",
+      "file": "body-63-beauty.png",
+      "sha256": "e2bec45030da01f7d586587f7d2dbc851804e17e64272bfffa9774e7b69acfa3"
+    },
+    {
+      "source_frame": 63,
+      "pass": "emission",
+      "file": "body-63-emission.png",
+      "sha256": "99ded9a3c2519c0878554a19f3341e05b7fd6f8ed4d02231f5d00efc5a98cc42"
+    },
+    {
+      "source_frame": 64,
+      "pass": "beauty",
+      "file": "body-64-beauty.png",
+      "sha256": "7fb71954bf03642507aff1e9ddb950d7bf8027cfe01240ba8f50c307174a0c23"
+    },
+    {
+      "source_frame": 64,
+      "pass": "emission",
+      "file": "body-64-emission.png",
+      "sha256": "1176135865ad96046223ad42f67c4558ddcac590b99435ad82389afde11a1e58"
+    }
+  ],
+  "scope": "Actual authored mechanical cycle, separate beauty/emission, 512x768, 16 CPU samples, two threads. Native working-clock/atlas/shadow/exhaust gates remain separate."
+}
