@@ -47,5 +47,5 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --target "$GITHUB_SHA" \
             --title "Tech Priests Factorio mod ${folder}" \
-            --notes "Installable Factorio 2.0 mod ZIP from tech-priests_src at commit $GITHUB_SHA. No build, tests, or validation executed." \
+            --notes "Factorio 2.1 mod ZIP from tech-priests_src at commit $GITHUB_SHA. No build, tests, or validation executed." \
             --prerelease
