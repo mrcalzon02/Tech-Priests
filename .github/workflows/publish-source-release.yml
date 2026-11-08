@@ -46,6 +46,7 @@ jobs:
       - name: Headless Factorio 2.1.24 startup diagnostics
         shell: bash
         run: |
+          set +e
           set -u
           mkdir -p diagnostics/mods diagnostics/game
           folder="$(cat release-name.txt)"
