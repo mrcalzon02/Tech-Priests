@@ -196,6 +196,12 @@ do
  -- mission for 0836 to observe; neither physical item nor ghost is spent.
  mission.force_index=1
  stock.rail=0
+ -- An administrator may enable creative construction for unrelated jobs,
+ -- but original 0836 rails must still wait for a real item and must never
+ -- receive a completion receipt from the creative source-bypass path.
+ local creative_root=Builder.root()
+ local previous_creative=creative_root.creative_instant_build
+ creative_root.creative_instant_build=true
  p.construction_last_task_0338=nil
  p.construction_candidate_0338=nil
  p.construction_cooldown_0338=0
@@ -207,8 +213,9 @@ do
    and p.construction_task_0338.request_value==req
    and not p.construction_custody_0338
    and p.construction_request==req
+   and p.construction_task_0338.creative_build~=true
    and stock.rail==0 and stock["stone-furnace"]==1,
-   "unstocked original rail unexpectedly consumed inventory or lost ownership")
+   "creative mode let an unstocked original rail bypass 0338 physical source accounting")
  game.tick=start_tick+Builder.rail_source_wait_ticks_0836
  local at_limit=Builder.service_pair(p,"rail-source-wait-boundary")
  assert(at_limit and at_limit.waiting==1
@@ -229,6 +236,32 @@ do
    and stock.rail==0 and stock["stone-furnace"]==1
    and p.construction_bootstrap_ghost_0645==bootstrap,
    "expired original rail blocked forever or damaged real item/request custody")
+ -- A persisted creative-marked rail must also fail closed if it entered
+ -- a previous save with the creative shortcut already active. It cannot
+ -- build a free rail or publish a valid paid construction receipt.
+ game.tick=start_tick
+ p.construction_last_task_0338=nil
+ p.construction_candidate_0338=nil
+ p.construction_cooldown_0338=0
+ local restored=Builder.service_pair(p,"reenter-original-rail-after-timeout")
+ assert(restored and p.construction_task_0338
+   and p.construction_task_0338.phase=="waiting-source"
+   and not p.construction_task_0338.creative_build,
+   "original no-stock rail could not reenter the real-source wait")
+ p.construction_task_0338.phase="move-site"
+ p.construction_task_0338.creative_build=true
+ local denied=Builder.service_pair(p,"persisted-creative-rail-rejected")
+ assert(denied and denied.blocked==1
+   and p.construction_last_task_0338
+   and p.construction_last_task_0338.phase=="aborted"
+   and p.construction_last_task_0338.result=="rail-creative-item-bypass-forbidden"
+   and p.construction_last_task_0338.request_value==req
+   and not p.construction_task_0338 and not p.construction_custody_0338
+   and p.construction_request==req
+   and mission.pending_rail_0836.request==req
+   and stock.rail==0 and stock["stone-furnace"]==1,
+   "persisted creative rail bypass produced unpaid rail or lost original custody")
+ creative_root.creative_instant_build=previous_creative
  game.tick=start_tick
  storage.tech_priests.pairs_by_station[104]=previous
  prototypes=old_prototypes

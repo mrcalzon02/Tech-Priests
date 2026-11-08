@@ -1627,6 +1627,12 @@ function M.service_pair(pair,reason)
   if not task then return{processed=1,blocked=1,detail="reservation-blocked:"..safe(why)}end
  end
  if task.phase=="return-custody"then return return_custody(pair,task)end
+ -- A physically credited railway may NEVER inherit the admin creative
+ -- shortcut, including a preexisting creative task loaded from a save.
+ -- Refuse via the same 0338 abort authority before any engine placement.
+ if marked_rail_request_0836(task) and task.creative_build==true then
+  return M.abort_pair(pair,"rail-creative-item-bypass-forbidden")
+ end
  -- An admitted 0836 task can still lose its original Magos ownership while
  -- moving or across reload. Keep any already-debited item in the existing
  -- 0338 return-custody path, never place it against a different rail writ.
@@ -1660,7 +1666,10 @@ function M.service_pair(pair,reason)
   return M.abort_pair(pair,why)
  end
  if task.phase=="clear-ground-pickup"then return clear_ground_site(pair,task)end
- if task.phase=="waiting-source" and creative_enabled() then
+ -- Rail acceptance requires a real 0338 source item even when an admin
+ -- enabled creative building for unrelated manual/test construction.
+ if task.phase=="waiting-source" and creative_enabled()
+   and not marked_rail_request_0836(task) then
   task.creative_build=true
   task.phase="move-site"
  end
