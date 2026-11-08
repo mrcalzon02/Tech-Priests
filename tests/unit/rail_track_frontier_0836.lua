@@ -42,6 +42,17 @@ local mission={status="starvation-confirmed",root_station_unit=104,
   item="iron-ore",next_step="plan-physical-track-route"}
 pair.remote_rail_outpost_0835=mission
 local item_count=700
+-- The SAME budgeted strategic broker that plans rail also runs while the
+-- Magos is executing non-rail duties. Do not seize its original assignment.
+local incumbent={kind="original-magos-existing-duty"}
+pair.active_task=incumbent
+local deferred,deferred_reason=Track.service_pair(pair)
+assert(not deferred and deferred_reason=="original-magos-incumbent-duty"
+  and mission.status=="starvation-confirmed"
+  and not mission.pending_rail_0836 and not mission.rail_frontier_0836
+  and not pair.construction_request and item_count==700,
+  "0836 issued a physical rail request over incumbent Magos work")
+pair.active_task=nil
 local original=Track.service_pair(pair)
 local req=pair.construction_request
 assert(original==true and req and req.item_name=="rail"
@@ -50,6 +61,25 @@ assert(original==true and req and req.item_name=="rail"
   and req.rail_segment_0836==1 and item_count==700
   and mission.rail_frontier_0836.segment==0 and not sites[12],
   "planning first rail created track, consumed stock or skipped custody")
+-- A pending, NOT YET ADMITTED rail does not outrank a newly incumbent
+-- physical ore return. Preserve its original request for later service.
+pair.direct_acquisition_custody_0513={item="iron-ore",count=1}
+local paused,paused_reason=Track.service_pair(pair)
+assert(not paused and paused_reason=="original-magos-incumbent-duty"
+  and pair.construction_request==req
+  and mission.pending_rail_0836.request==req and item_count==700,
+  "pending rail stole active physical ore custody or lost its writ")
+pair.direct_acquisition_custody_0513=nil
+-- Conversely a 0338 builder ALREADY admitted for the exact rail must keep
+-- its original physical construction custody/timeout and not be abandoned.
+pair.active_task={kind="existing-background-order"}
+pair.construction_task_0338={request_value=req,phase="move-source"}
+local continued,continued_reason=Track.service_pair(pair)
+assert(continued==true and continued_reason=="physical-builder-in-progress"
+  and pair.construction_request==req and item_count==700,
+  "original admitted 0338 rail was interrupted by background work")
+pair.active_task=nil
+pair.construction_task_0338=nil
 local unchanged,reason=Track.service_pair(pair)
 assert(unchanged and reason=="waiting-for-construction-proof"
   and pair.construction_request==req

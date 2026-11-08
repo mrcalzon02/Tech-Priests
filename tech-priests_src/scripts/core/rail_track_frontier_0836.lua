@@ -328,6 +328,28 @@ function M.service_pair(pair)
   if m.status=="rail-track-blocked" or m.status=="rail-track-established"then
     return false,m.status
   end
+  -- The strategic ore observer runs in the broker as well as 0510. Neither
+  -- path may issue a NEW rail construction writ while the original Magos
+  -- is completing an incumbent duty or carrying someone else's real goods.
+  -- A 0338 task/cargo already admitted for this EXACT original pending rail
+  -- retains its own movement, debit, timeout and refund authority.
+  local pending=m.pending_rail_0836
+  local task=pair.construction_task_0338
+  local custody=pair.construction_custody_0338
+  local original_builder=pending and (
+    (task and task.request_value==pending.request)
+    or (custody and custody.request_value==pending.request))
+  local incumbent=pair.active_task or pair.current_task
+    or pair.active_order_0469
+    or (pair.order_queue_0469 and pair.order_queue_0469.current)
+    or pair.active_acquisition_0333 or pair.direct_acquisition_task_0336
+    or pair.direct_acquisition_custody_0513
+    or pair.machine_logistics_custody_0528
+    or pair.inventory_transfer_custody_0687
+    or pair.construction_task_0340
+  if incumbent and not original_builder then
+    return false,"original-magos-incumbent-duty"
+  end
   if m.pending_rail_0836 then
     local done,why=M.verify_pending(pair)
     if m.status=="rail-track-blocked" then return false,why end
