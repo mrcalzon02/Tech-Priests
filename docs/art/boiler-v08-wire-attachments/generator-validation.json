@@ -1,0 +1,57 @@
+{
+  "native_module_sha256": "d717ba9afb4efc916552d65546461d98a3d057736c49ae4d4aeba8e10090ea7b",
+  "projection_vs_blender_max_error_tiles": 1.3529963593938987e-06,
+  "projection_vs_blender_max_error_native_pixels": 4.329588350060476e-05,
+  "projection_tolerance_native_pixels": 0.001,
+  "projection_note": "Analytic orthographic projection versus float-rounded Blender camera; evaluated in native pixel units.",
+  "registration": {
+    "north": {
+      "scale": 0.500000005401671,
+      "main_offset": [
+        0.6671271049777739,
+        -1.2023203253842645
+      ],
+      "shadow_offset": [
+        0.6671271049777739,
+        -0.6061000417273731
+      ]
+    },
+    "east": {
+      "scale": 0.7071066949405111,
+      "main_offset": [
+        1.096318600515077,
+        0.1839455184375513
+      ],
+      "shadow_offset": [
+        1.096318600515077,
+        1.0271282177945973
+      ]
+    },
+    "south": {
+      "scale": 0.5000000054016703,
+      "main_offset": [
+        -0.6671270550588826,
+        0.3939982926909569
+      ],
+      "shadow_offset": [
+        -0.6671270550588826,
+        0.9902185763478475
+      ]
+    },
+    "west": {
+      "scale": 0.7071066949405042,
+      "main_offset": [
+        -1.0963186005150714,
+        -1.1503084644452937
+      ],
+      "shadow_offset": [
+        -1.0963186005150714,
+        -0.30712576508825595
+      ]
+    }
+  },
+  "source_model_sha256": "eb6aad420f04d7ca3b13933fb0323228252d569233690bac5b2c87bb3751a93d",
+  "actual_packaging_pilot_pass": true,
+  "stale_source_rejected_before_output_creation": true,
+  "final_actual_packaging_pilot_pass": true
+}

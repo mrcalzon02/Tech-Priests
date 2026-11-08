@@ -1,0 +1,502 @@
+[
+  {
+    "points": {
+      "shadow": {
+        "green": [
+          0.90150210751019,
+          -0.52797504088294
+        ],
+        "red": [
+          0.85462710700375,
+          -0.62172504189581
+        ]
+      },
+      "wire": {
+        "green": [
+          0.82337710666613,
+          -1.1866953252112
+        ],
+        "red": [
+          0.7921271063285,
+          -1.2648203260553
+        ]
+      }
+    },
+    "sprites": {
+      "blue_led_light_offset": [
+        0.667127104978,
+        -1.2179453255488
+      ],
+      "connector_main": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04a-base-sequence.png",
+        "height": 50,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          0.667127104978,
+          -1.20232032538
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.24,
+          "g": 0.38,
+          "r": 0.5
+        },
+        "width": 52,
+        "x": 104,
+        "y": 0
+      },
+      "led_blue": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04e-blue-LED-on-sequence.png",
+        "height": 60,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          0.667127104978,
+          -1.2179453255488
+        ],
+        "width": 60,
+        "x": 120,
+        "y": 0
+      },
+      "led_blue_off": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04f-blue-LED-off-sequence.png",
+        "height": 44,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          0.667127104978,
+          -1.2179453255488
+        ],
+        "width": 46,
+        "x": 92,
+        "y": 0
+      },
+      "led_green": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04h-green-LED-sequence.png",
+        "height": 46,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          0.667127104978,
+          -1.2179453255488
+        ],
+        "width": 48,
+        "x": 96,
+        "y": 0
+      },
+      "led_light": {
+        "intensity": 0,
+        "size": 0.9
+      },
+      "led_red": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04i-red-LED-sequence.png",
+        "height": 46,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          0.667127104978,
+          -1.2179453255488
+        ],
+        "width": 48,
+        "x": 96,
+        "y": 0
+      },
+      "red_green_led_light_offset": [
+        0.667127104978,
+        -1.2648203260553
+      ],
+      "wire_pins": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04c-wire-sequence.png",
+        "height": 58,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          0.667127104978,
+          -1.20232032538
+        ],
+        "width": 62,
+        "x": 124,
+        "y": 0
+      }
+    }
+  },
+  {
+    "points": {
+      "shadow": {
+        "green": [
+          0.98583317943547,
+          1.1597107230914
+        ],
+        "red": [
+          1.1184156847369,
+          1.1597107230914
+        ]
+      },
+      "wire": {
+        "green": [
+          0.91954192678475,
+          0.27233385530563
+        ],
+        "red": [
+          1.0742215163031,
+          0.27233385530563
+        ]
+      }
+    },
+    "sprites": {
+      "blue_led_light_offset": [
+        0.94163901100166,
+        0.095557181570375
+      ],
+      "connector_main": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04a-base-sequence.png",
+        "height": 50,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          1.09631860052,
+          0.183945518438
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.24,
+          "g": 0.38,
+          "r": 0.5
+        },
+        "width": 52,
+        "x": 0,
+        "y": 0
+      },
+      "led_blue": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04e-blue-LED-on-sequence.png",
+        "height": 60,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          1.09631860052,
+          0.16184843422109
+        ],
+        "width": 60,
+        "x": 0,
+        "y": 0
+      },
+      "led_blue_off": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04f-blue-LED-off-sequence.png",
+        "height": 44,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          1.09631860052,
+          0.16184843422109
+        ],
+        "width": 46,
+        "x": 0,
+        "y": 0
+      },
+      "led_green": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04h-green-LED-sequence.png",
+        "height": 46,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          1.09631860052,
+          0.16184843422109
+        ],
+        "width": 48,
+        "x": 0,
+        "y": 0
+      },
+      "led_light": {
+        "intensity": 0,
+        "size": 0.9
+      },
+      "led_red": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04i-red-LED-sequence.png",
+        "height": 46,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          1.09631860052,
+          0.16184843422109
+        ],
+        "width": 48,
+        "x": 0,
+        "y": 0
+      },
+      "red_green_led_light_offset": [
+        1.0521244320862,
+        0.073460097353469
+      ],
+      "wire_pins": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04c-wire-sequence.png",
+        "height": 58,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          1.09631860052,
+          0.183945518438
+        ],
+        "width": 62,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "points": {
+      "shadow": {
+        "green": [
+          -0.71400205556544,
+          0.88084357516631
+        ],
+        "red": [
+          -0.77650205624069,
+          0.95896857601038
+        ]
+      },
+      "wire": {
+        "green": [
+          -0.7921270564095,
+          0.22212329083406
+        ],
+        "red": [
+          -0.82337705674713,
+          0.33149829201575
+        ]
+      }
+    },
+    "sprites": {
+      "blue_led_light_offset": [
+        -0.667127055059,
+        0.23774829100288
+      ],
+      "connector_main": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04a-base-sequence.png",
+        "height": 50,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          -0.667127055059,
+          0.393998292691
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.24,
+          "g": 0.38,
+          "r": 0.5
+        },
+        "width": 52,
+        "x": 312,
+        "y": 0
+      },
+      "led_blue": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04e-blue-LED-on-sequence.png",
+        "height": 60,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          -0.667127055059,
+          0.37837329252219
+        ],
+        "width": 60,
+        "x": 360,
+        "y": 0
+      },
+      "led_blue_off": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04f-blue-LED-off-sequence.png",
+        "height": 44,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          -0.667127055059,
+          0.37837329252219
+        ],
+        "width": 46,
+        "x": 276,
+        "y": 0
+      },
+      "led_green": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04h-green-LED-sequence.png",
+        "height": 46,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          -0.667127055059,
+          0.37837329252219
+        ],
+        "width": 48,
+        "x": 288,
+        "y": 0
+      },
+      "led_light": {
+        "intensity": 0,
+        "size": 0.9
+      },
+      "led_red": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04i-red-LED-sequence.png",
+        "height": 46,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          -0.667127055059,
+          0.37837329252219
+        ],
+        "width": 48,
+        "x": 288,
+        "y": 0
+      },
+      "red_green_led_light_offset": [
+        -0.667127055059,
+        0.28462329150931
+      ],
+      "wire_pins": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04c-wire-sequence.png",
+        "height": 58,
+        "priority": "low",
+        "scale": 0.250000002701,
+        "shift": [
+          -0.667127055059,
+          0.393998292691
+        ],
+        "width": 62,
+        "x": 372,
+        "y": 0
+      }
+    }
+  },
+  {
+    "points": {
+      "shadow": {
+        "green": [
+          -0.78695942148331,
+          -0.46180535460634
+        ],
+        "red": [
+          -0.98583317943547,
+          -0.46180535460634
+        ]
+      },
+      "wire": {
+        "green": [
+          -0.91954192678475,
+          -1.393376390836
+        ],
+        "red": [
+          -1.0742215163031,
+          -1.393376390836
+        ]
+      }
+    },
+    "sprites": {
+      "blue_led_light_offset": [
+        -0.94163901100166,
+        -1.2607938855345
+      ],
+      "connector_main": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04a-base-sequence.png",
+        "height": 50,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          -1.09631860052,
+          -1.15030846445
+        ],
+        "tint": {
+          "a": 1,
+          "b": 0.24,
+          "g": 0.38,
+          "r": 0.5
+        },
+        "width": 52,
+        "x": 208,
+        "y": 0
+      },
+      "led_blue": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04e-blue-LED-on-sequence.png",
+        "height": 60,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          -1.09631860052,
+          -1.1724055486669
+        ],
+        "width": 60,
+        "x": 240,
+        "y": 0
+      },
+      "led_blue_off": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04f-blue-LED-off-sequence.png",
+        "height": 44,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          -1.09631860052,
+          -1.1724055486669
+        ],
+        "width": 46,
+        "x": 184,
+        "y": 0
+      },
+      "led_green": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04h-green-LED-sequence.png",
+        "height": 46,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          -1.09631860052,
+          -1.1724055486669
+        ],
+        "width": 48,
+        "x": 192,
+        "y": 0
+      },
+      "led_light": {
+        "intensity": 0,
+        "size": 0.9
+      },
+      "led_red": {
+        "draw_as_glow": true,
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04i-red-LED-sequence.png",
+        "height": 46,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          -1.09631860052,
+          -1.1724055486669
+        ],
+        "width": 48,
+        "x": 192,
+        "y": 0
+      },
+      "red_green_led_light_offset": [
+        -1.0521244320862,
+        -1.2828909697514
+      ],
+      "wire_pins": {
+        "filename": "__base__/graphics/entity/circuit-connector/ccm-universal-04c-wire-sequence.png",
+        "height": 58,
+        "priority": "low",
+        "scale": 0.3535533474705,
+        "shift": [
+          -1.09631860052,
+          -1.15030846445
+        ],
+        "width": 62,
+        "x": 248,
+        "y": 0
+      }
+    }
+  }
+]

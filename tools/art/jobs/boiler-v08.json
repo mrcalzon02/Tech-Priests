@@ -54,5 +54,21 @@
       ]
     }
   },
-  "boiler_state_layers": "source-over-v1"
+  "boiler_state_layers": "source-over-v1",
+  "boiler_circuit_attachment": {
+    "mount_object": "Steam rear cage upright",
+    "mount_model_space": [
+      0.6671270728111267,
+      0.9216609597206116,
+      0.8431828022003174
+    ],
+    "source_model_sha256": "eb6aad420f04d7ca3b13933fb0323228252d569233690bac5b2c87bb3751a93d",
+    "native_scale": 0.5,
+    "base_tint": [
+      0.5,
+      0.38,
+      0.24,
+      1.0
+    ]
+  }
 }

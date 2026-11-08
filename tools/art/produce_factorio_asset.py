@@ -73,6 +73,23 @@ def load_job(job_path):
                     or not isinstance(registration['shift'],list) or len(registration['shift']) != 2
                     or any(type(v) not in (int,float) or not math.isfinite(v) for v in registration['shift'])):
                 raise ValueError('Invalid directional sprite registration: '+name)
+    circuit = job.get('boiler_circuit_attachment')
+    if circuit is not None:
+        if (job.get('graphics_schema') != 'boiler' or not isinstance(circuit,dict)
+                or set(circuit) != {'mount_object','mount_model_space','source_model_sha256','native_scale','base_tint'}
+                or not isinstance(circuit['mount_object'],str) or not circuit['mount_object']
+                or not isinstance(circuit['source_model_sha256'],str)
+                or not re.fullmatch(r'[0-9a-f]{64}',circuit['source_model_sha256'])
+                or type(circuit['native_scale']) not in (int,float)
+                or not math.isfinite(circuit['native_scale']) or circuit['native_scale'] <= 0):
+            raise ValueError('Invalid measured boiler circuit attachment')
+        for key,length in [('mount_model_space',3),('base_tint',4)]:
+            value=circuit[key]
+            if (not isinstance(value,list) or len(value)!=length
+                    or any(type(v) not in (int,float) or not math.isfinite(v) for v in value)):
+                raise ValueError('Invalid circuit attachment '+key)
+        if any(v<0 or v>1 for v in circuit['base_tint']):
+            raise ValueError('Invalid circuit attachment tint')
     sizes = job['sizes']
     if not isinstance(sizes, list) or not sizes or any(type(v) is not int or v <= 0 for v in sizes) or len(set(sizes)) != len(sizes) or job['primary_size'] not in sizes:
         raise ValueError('Invalid requested sprite sizes')
@@ -239,11 +256,17 @@ def boiler_module_lua(job, cfg, layout, size, count):
                f'  local prototype = (data.raw[kind] or {{}})["{target}"]\n'
                '  if prototype then prototype.icon, prototype.icons, prototype.icon_size = icon, nil, 64 end\n'
                'end\n')
+    if job.get('boiler_circuit_attachment'):
+        from boiler_circuit_attachment import circuit_attachment_lua
+        snippet += circuit_attachment_lua(job,cfg)
     return snippet
 
 
 def package(job, cfg, capture, out, mod, install):
     manifest, qa, index = validate_capture(capture, job, cfg)
+    circuit = job.get('boiler_circuit_attachment')
+    if circuit and manifest.get('source_sha256') != circuit['source_model_sha256']:
+        raise ValueError('Boiler mount source changed: remeasure the model-space circuit attachment')
     active = job['active_state']
     count = len(cfg['states'][active]) if active else 1
     if count > 256:
@@ -325,6 +348,10 @@ def package(job, cfg, capture, out, mod, install):
     picture = out/'four-way-review.png'
     review.save(picture)
     generated.append(picture)
+    projected_circuit = None
+    if circuit:
+        from boiler_circuit_attachment import circuit_registration
+        projected_circuit = circuit_registration(job,cfg)
     receipt = {
         'schema':1,'passed':True,'factorio_client_tested':False,'prototype_attached':False,
         'asset':job['asset'],'revision':job['revision'],'camera':cfg['camera_override'],
@@ -332,6 +359,8 @@ def package(job, cfg, capture, out, mod, install):
         'source_direction_indices':direction_order,
         'directional_registration':{name:sprite_registration(job,name) for name in DIRECTIONS},
         'boiler_state_layers':state_layer_reports,
+        'boiler_circuit_attachment':job.get('boiler_circuit_attachment'),
+        'boiler_circuit_registration':projected_circuit,
         'frames_per_direction':count,'fps':cfg['fps'],'master_sha256':manifest['master_sha256'],
         'files':{str(f.relative_to(out)):sha(f) for f in generated},
         'note':'Prototype-ready snippet only; verify insertion and actual Factorio runtime before acceptance.'

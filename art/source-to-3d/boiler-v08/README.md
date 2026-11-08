@@ -12,7 +12,7 @@ materials, circular interfaces and rear structural cage remain intact.
 - Native draw registration is per direction: at 256px N/S use scale 0.41875, E/W 0.592201857, with separate shifts. The source capture canvas/geometry are unchanged. See the production job and [visual correction](../../../docs/art/boiler-v08-visual-alignment/README.md).
 - A 2x2 footprint and native rear-row water/steam pipe connectors.
 
-The generated module is registered after legacy graphics rescaling. The runtime uses a static cold structure plus a native conditional activity clip. All 96 working poses, rattle rigs and nozzle steam are retained; the original idle/working source atlases remain untouched. The small cold-alpha compatibility adjustment, source-pixel bounds, filtering repair and actual native four-direction cold/working/stopped review are documented in [state-layer evidence](../../../docs/art/boiler-v08-state-layers/README.md). The inherited duplicate burner smoke is removed as a visual-only adjustment. Circuit-wire placement remains open.
+The generated module is registered after legacy graphics rescaling. The runtime uses a static cold structure plus a native conditional activity clip. All 96 working poses, rattle rigs and nozzle steam are retained; the original idle/working source atlases remain untouched. The small cold-alpha compatibility adjustment, source-pixel bounds, filtering repair and actual native four-direction cold/working/stopped review are documented in [state-layer evidence](../../../docs/art/boiler-v08-state-layers/README.md). The inherited duplicate burner smoke is removed as a visual-only adjustment. Circuit-wire placement is now native-reviewed at the measured fixed cage-top mount; see [wire evidence](../../../docs/art/boiler-v08-wire-attachments/README.md). The separate optional sprite-dependency startup gate remains open for the wider mod.
 
 [Game-ready package](https://chatgpt.com/library?file_id=libfile_dfa7cc946308819186108d67de62cc95&account_id=personal)
 includes the sprite atlases, Lua, native prepared Blender scene, saved MODEL/RENDER
@@ -45,3 +45,5 @@ Cycles with the authored scene lights, world and packed materials.
 The earlier common native shift/scale was visually rejected even though the pipe systems connected. The subsequent four-way sprite-only registration is recorded in the linked native visual review. Do not infer visual alignment from the historical fluid connectivity probe above.
 
 To reconstruct again from the exact approved V07b file, use `tools/art/rebuild_boiler_source.py` as documented in the recovery evidence. Existing production sprite replacement still requires full capture and visual-state acceptance.
+
+The source/render/pipe/wire slices are reviewed in the isolated dependency-enabled native profile. This does not prove loading with the optional Mechanicus mod disabled.

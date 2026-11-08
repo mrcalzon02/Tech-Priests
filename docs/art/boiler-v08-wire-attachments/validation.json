@@ -1,0 +1,454 @@
+{
+  "status": "FOUR_DIRECTION_WIRE_ATTACHMENT_GATE_NATIVE_REVIEWED",
+  "scope": "Prototype/sprite attachment and rendering only. No circuit control, fuel economy or behavior/regression assertion.",
+  "mount_object": "Steam rear cage upright",
+  "mount_model_space": [
+    0.6671270728111267,
+    0.9216609597206116,
+    0.8431828022003174
+  ],
+  "source_model_sha256": "eb6aad420f04d7ca3b13933fb0323228252d569233690bac5b2c87bb3751a93d",
+  "static_source_frames_checked": 98,
+  "native_sprite_entries_checked": 24,
+  "native_sprite_pin_led_shadow_affine_max_error_tiles": 4.9320547645947954e-12,
+  "original_graphics_and_physical_module_preserved_as_prefix": true,
+  "states": {
+    "connected": {
+      "scope": "Native visible wire attachment review only; no circuit behavior assertions",
+      "entities": [
+        {
+          "direction": 0,
+          "position": {
+            "y": 0,
+            "x": -18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -18.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -19.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -19.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": -17.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -16.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -16.5
+              }
+            }
+          ],
+          "red_connections": 1,
+          "green_connections": 1
+        },
+        {
+          "direction": 4,
+          "position": {
+            "y": 0,
+            "x": -6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": -5.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": -5.5
+              }
+            }
+          ],
+          "red_connections": 1,
+          "green_connections": 1
+        },
+        {
+          "direction": 8,
+          "position": {
+            "y": 0,
+            "x": 6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 6.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 7.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 7.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": 5.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 4.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 4.5
+              }
+            }
+          ],
+          "red_connections": 1,
+          "green_connections": 1
+        },
+        {
+          "direction": 12,
+          "position": {
+            "y": 0,
+            "x": 18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": 17.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": 17.5
+              }
+            }
+          ],
+          "red_connections": 1,
+          "green_connections": 1
+        }
+      ]
+    },
+    "disconnected": {
+      "scope": "Native visible wire attachment review only; no circuit behavior assertions",
+      "entities": [
+        {
+          "direction": 0,
+          "position": {
+            "y": 0,
+            "x": -18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -18.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -19.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -19.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": -17.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -16.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -16.5
+              }
+            }
+          ],
+          "red_connections": 0,
+          "green_connections": 0
+        },
+        {
+          "direction": 4,
+          "position": {
+            "y": 0,
+            "x": -6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": -5.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": -5.5
+              }
+            }
+          ],
+          "red_connections": 0,
+          "green_connections": 0
+        },
+        {
+          "direction": 8,
+          "position": {
+            "y": 0,
+            "x": 6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 6.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 7.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 7.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": 5.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 4.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 4.5
+              }
+            }
+          ],
+          "red_connections": 0,
+          "green_connections": 0
+        },
+        {
+          "direction": 12,
+          "position": {
+            "y": 0,
+            "x": 18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": 17.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": 17.5
+              }
+            }
+          ],
+          "red_connections": 0,
+          "green_connections": 0
+        }
+      ]
+    }
+  },
+  "generator_validation": {
+    "native_module_sha256": "d717ba9afb4efc916552d65546461d98a3d057736c49ae4d4aeba8e10090ea7b",
+    "projection_vs_blender_max_error_tiles": 1.3529963593938987e-06,
+    "projection_vs_blender_max_error_native_pixels": 4.329588350060476e-05,
+    "projection_tolerance_native_pixels": 0.001,
+    "projection_note": "Analytic orthographic projection versus float-rounded Blender camera; evaluated in native pixel units.",
+    "registration": {
+      "north": {
+        "scale": 0.500000005401671,
+        "main_offset": [
+          0.6671271049777739,
+          -1.2023203253842645
+        ],
+        "shadow_offset": [
+          0.6671271049777739,
+          -0.6061000417273731
+        ]
+      },
+      "east": {
+        "scale": 0.7071066949405111,
+        "main_offset": [
+          1.096318600515077,
+          0.1839455184375513
+        ],
+        "shadow_offset": [
+          1.096318600515077,
+          1.0271282177945973
+        ]
+      },
+      "south": {
+        "scale": 0.5000000054016703,
+        "main_offset": [
+          -0.6671270550588826,
+          0.3939982926909569
+        ],
+        "shadow_offset": [
+          -0.6671270550588826,
+          0.9902185763478475
+        ]
+      },
+      "west": {
+        "scale": 0.7071066949405042,
+        "main_offset": [
+          -1.0963186005150714,
+          -1.1503084644452937
+        ],
+        "shadow_offset": [
+          -1.0963186005150714,
+          -0.30712576508825595
+        ]
+      }
+    },
+    "source_model_sha256": "eb6aad420f04d7ca3b13933fb0323228252d569233690bac5b2c87bb3751a93d",
+    "actual_packaging_pilot_pass": true,
+    "stale_source_rejected_before_output_creation": true,
+    "final_actual_packaging_pilot_pass": true
+  },
+  "native_review_working_file_sha256": {
+    "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua": "d717ba9afb4efc916552d65546461d98a3d057736c49ae4d4aeba8e10090ea7b",
+    "tools/art/boiler_circuit_attachment.py": "adf2ac0726bd9c839cb817f99af2d11e544ff0f7da126c6ad0abef0c33e9c725",
+    "tools/art/boiler_circuit_attachment.lua": "6555903829669b95d32371a42cdac68aabba0627748077565927a02819d836b7",
+    "tools/art/jobs/boiler-v08.json": "0687ed2b0c0bc4bf25d27d91618a9a1907c11be1372fd5caad25febad08ce6bc",
+    "tools/art/produce_factorio_asset.py": "ea14235cf6262c7b7191f8f70bc502915eea179ba7d350620907747fea4e58c4"
+  },
+  "canonical_git_content_sha256": {
+    "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua": "500cea38944fc2d5b03d35010dcbb21bf84229cb60a276e38a500ddad2bde483",
+    "tools/art/boiler_circuit_attachment.py": "adf2ac0726bd9c839cb817f99af2d11e544ff0f7da126c6ad0abef0c33e9c725",
+    "tools/art/boiler_circuit_attachment.lua": "9a7f675715dacd50d9533966e5e060d11e7d555472c678b8069cfb3c0db7d112",
+    "tools/art/jobs/boiler-v08.json": "3763a966d527f2ed60417f428d8b26a389a3d22ad19172b97fecd0d7165cec19",
+    "tools/art/produce_factorio_asset.py": "5f11bc9d0a0dc434f8e67ea6b2c88c3945a2910dc7ed4d332bfd0ee866bbbe5b"
+  },
+  "hash_context": "Native hashes retain actual Windows review bytes. Canonical text hashes normalize CRLF to LF as Git does.",
+  "native_render_sha256": {
+    "four-way-native-disconnected.png": "29029fb78ce7a394cbd27ce8fb885e1099749c2d12a5307cc89590ed7d97e3d1",
+    "four-way-native-wires.png": "6d891d95d456084f774e40d11eff635560fa24aa4f69fd1bc115f9e0b3547aab",
+    "baseline/east.png": "7fb16c8d9604eb60631602338c756fbbebcb1d98bae17d51f7b7151dd1bd6414",
+    "baseline/north.png": "84e7ac2bf17985c565f7df8ce59b1d7520e9755a1a93bac8be7751614d7646c6",
+    "baseline/south.png": "59440bd1ffe83fd26f2e342ed91e677d0ef3243c951562d45c62804c6ac006c2",
+    "baseline/west.png": "19b9a31ceeb7ea60291408c7ba892339f1cd6f79e05ee4e5e1052a831cb477dd",
+    "connected/connected-east.png": "0fd53ff8aa74f7904495b3091183e9c83965f86e27f2e4f0985db07877775b91",
+    "connected/connected-north.png": "c6844f119d457e5f4693e81cb07fd38c928b392a73a94eed264f51a09a7065a7",
+    "connected/connected-south.png": "b1ab2cfa4765e850cede7cef9e50053c21103f706243de29c54d50359ea1ee54",
+    "connected/connected-west.png": "78cac4fca7967c8d806449baab07651599865ad194f9248e091513deefe2e722",
+    "disconnected/disconnected-east.png": "6ac9813be02be10dca4c5982fa7de76732ee96bac9aa5727ed3e4f5c79413ba3",
+    "disconnected/disconnected-north.png": "b4de2b37349cabb5153159cb7a20badb08191057e2190d234217a4a925784b1e",
+    "disconnected/disconnected-south.png": "9489ea5a86a16a4b47bf486cd2af0ae0b98902d3607eae9ad88ebee3b9bdda00",
+    "disconnected/disconnected-west.png": "55575aef9013ba170679b0a1d7bbe98ef2d53ce7491917fa4bbb0d119fc166ca"
+  },
+  "visual_review": "All four connected/disconnected native views inspected. Cases sit on the fixed cage junction instead of across the pressure vessels; both wire colors terminate on the scaled native pins. Native cases and pins disappear cleanly when disconnected. Body, pipe contacts and cold/working sprite registration are unchanged.",
+  "review_counts": {
+    "supported_mount_views": 4,
+    "red_pin_contacts": 4,
+    "green_pin_contacts": 4,
+    "disconnected_views": 4
+  },
+  "remaining_global_integration_gate": "The optional Mechanicus sprite import still blocks startup when its package is not enabled. This review used the isolated dependency-enabled profile; normal-profile standalone loading is not inferred.",
+  "remaining_asset_gates": [
+    "G5: independently exported/reimported current boiler GLB with PBR, bounds and socket inspection evidence"
+  ]
+}
