@@ -132,4 +132,3 @@ report={'stage':'rig_preparation_only','source_sha256':source_hash,'blender_vers
  'native_sha256':hashlib.sha256(native.read_bytes()).hexdigest()}
 (a.out/'rig-validation.json').write_text(json.dumps(report,indent=2)+'\n')
 print('V15_REST_RIG_PREPARATION_PASS',flush=True)
-
