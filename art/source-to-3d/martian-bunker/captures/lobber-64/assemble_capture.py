@@ -90,7 +90,7 @@ def assemble(I,D):
  source=D/'Lobber_Editable_Source_And_Metadata.zip'
  with zipfile.ZipFile(source,'w',zipfile.ZIP_DEFLATED,6) as z:
   for path in O.iterdir():
-   if path.suffix in ['.blend','.py','.json','.md']:z.write(path,'source/'+path.name)
+   if path.suffix in ['.blend','.py','.json','.md','.sh']:z.write(path,'source/'+path.name)
  archives.append(source)
  for p in archives:
   with zipfile.ZipFile(p) as z:assert z.testzip() is None,p.name

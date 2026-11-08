@@ -19,7 +19,13 @@ The repeating cycle retains the last barrel's reload across the seam. Entry repl
 
 `restore_source.py` reconstructs the packed native scene from individually checksummed parts and checks the complete SHA-256. `validate_scene.py` reopens and checks camera, packed textures, all 64 idle orientations, six firing events, clean transitions, fixed lighting and eight-heading motion bounds. `render_capture.py` renders one heading and one 32-frame chunk, with idle/entry on chunk 0 and settling on chunk 5. Cached images are reused only with matching source/config/renderer identities and valid PNG CRCs/dimensions.
 
-The GitHub workflow `.github/workflows/lobber-bunker-capture.yml` first runs four cardinal pilot jobs. Missing passes, absent flash emission, clipped alpha and an excessive projected chunk runtime fail that gate. The full capture then runs two matrices of 32 headings × 6 chunks, each under GitHub's matrix job count cap, with 20 workers total. Native scene validation is performed in the pilot rather than repeated in every chunk. Chunks preserve partial outputs and use attempt-specific caches for bounded retries.
+The original 64-heading run remains at https://github.com/mrcalzon02/Tech-Priests/actions/runs/42429529804 . Its old workflow definitions were removed from main during the workflow cleanup; the source and valid render artifacts are retained. The sole replacement workflow for this export is `.github/workflows/lobber-export-recovery.yml`.
+
+The recovery workflow has a narrow push trigger on its own file, manual dispatch, and a completion hook restricted to the original source run. The cleanup cancelled the unfinished original capture. Recovery preserves successful chunks and resumes at most eight missing chunks per run, with eight simultaneous workers. After a successful batch, verified artifact progress permits exactly one next dispatch. No progress or any failed batch stops continuation. The chain is bounded to 64 waves (48 suffice for an entirely missing 384-chunk capture); no hundreds-job matrix or polling runner is created. A missing original chunk inventory is rejected rather than guessed.
+
+Pinned Blender 5.0.1 is restored from cache or fetched through the official mirror service with the original download server as fallback. Its official archive SHA-256 is checked; HTTP failures including 403 receive bounded retries. Valid partial frame caches and uploaded partial artifacts are reused only with matching pixel identities. Completed repairs receive a distinct complete-artifact name after every expected pass is checked.
+
+Finalization runs after repairs and again when the original source run completes. If either side is still incomplete, it records the state and exits without holding a waiting runner. Once every chunk is covered, it merges original frames and repairs, validates the complete output, assembles engine-safe sheets and publishes the recovered release. The checked delivery record makes repeated completion events idempotent. No other removed workflows are restored.
 
 Video encoding streams frames directly to ffmpeg. Raw assembly working copies are removed only after their sheets are written; sheet PNG working copies are removed after their delivery ZIP passes CRC verification, keeping disk use bounded. Raw frames remain available in individual capture-job artifacts.
 
@@ -31,4 +37,8 @@ Restore source, then run Blender with the saved scene and `validate_scene.py`. R
 
 `prepare_capture.py` is the provenance/rebuild step and takes `LOBBER_SOURCE` and `BUNKER_CAPTURE_REFERENCE` paths. The original bunker reference SHA-256 is fixed in that script. All textures are packed in the reconstructed source; Python auto-execution is unnecessary for ordinary native playback.
 
-Every delivered sprite sheet is at most 5120 pixels on either axis, below the engine's 8192-pixel input-width limit. The initial capture run is repacked by `lobber-initial-delivery-repack.yml` with the corrected engine-safe layouts; raw render frames and capture identities are unchanged.
+Every delivered sprite sheet is at most 5120 pixels on either axis, below the engine's 8192-pixel input-width limit. The recovery workflow uses this corrected assembler for final delivery; raw render frames and capture identities are unchanged.
+
+## Recovery checks
+
+Run `python -m pip install Pillow PyYAML`, then `python test_recovery.py`. Tests cover failed-chunk selection, completed-frame reuse, completion gating, bounded work, artifact identities, credential-safe redirects, transient HTTP retries, and installer mirror/cache/checksum behavior. The optional real-pilot importer test is skipped in checkouts without the earlier local pilot frames.

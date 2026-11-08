@@ -1,0 +1,231 @@
+name: Lobber export targeted recovery
+'on':
+  push:
+    branches:
+    - main
+    paths:
+    - .github/workflows/lobber-export-recovery.yml
+  workflow_dispatch:
+    inputs:
+      wave:
+        description: Bounded continuation wave; use 0 for an initial/manual resume
+        required: false
+        default: 0
+        type: number
+  workflow_run:
+    workflows:
+    - Alternate bunker lobber rotation and firing capture
+    types:
+    - completed
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: lobber-export-recovery-42429529804
+  cancel-in-progress: false
+env:
+  CAPTURE: art/source-to-3d/martian-bunker/captures/lobber-64
+  RECOVERY_WAVE: ${{ inputs.wave || '0' }}
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      has_repairs: ${{ steps.plan.outputs.has_repairs }}
+      verified_before: ${{ steps.plan.outputs.verified_before }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: art/source-to-3d/martian-bunker/captures/lobber-64
+        filter: blob:none
+        ref: main
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install image validation dependency
+      run: python -m pip install Pillow
+    - name: Select only failed or missing completed chunks
+      id: plan
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: python "$CAPTURE/recover_export.py" plan
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: lobber-recovery-plan-${{ github.run_attempt }}
+        path: recovery_state.json
+        if-no-files-found: warn
+        retention-days: 30
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.id == 42429529804 }}
+  repair:
+    needs: plan
+    if: ${{ needs.plan.outputs.has_repairs == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: art/source-to-3d/martian-bunker/captures/lobber-64
+        filter: blob:none
+        ref: main
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install image validation dependency
+      run: python -m pip install Pillow
+    - name: Restore verified capture source
+      run: python "$CAPTURE/restore_source.py"
+    - name: Install Blender runtime libraries
+      run: 'sudo apt-get update -qq -o Acquire::Retries=3
+
+        sudo apt-get install -y -qq libxi6 libxfixes3 libxrender1 libgl1 libegl1 libxkbcommon0'
+    - uses: actions/cache/restore@v4
+      id: blender-cache
+      with:
+        path: .tools/blender-5.0.1-linux-x64
+        key: blender-5.0.1-linux-x64-8019580ee1b7262e505f4196a00237ccf743c88d205b38d34201510676e60b09
+    - name: Install pinned Blender with mirror fallback and 403 retries
+      run: bash "$CAPTURE/install_blender.sh"
+    - uses: actions/cache/save@v4
+      if: ${{ steps.blender-cache.outputs.cache-hit != 'true' }}
+      with:
+        path: .tools/blender-5.0.1-linux-x64
+        key: blender-5.0.1-linux-x64-8019580ee1b7262e505f4196a00237ccf743c88d205b38d34201510676e60b09
+    - uses: actions/cache/restore@v4
+      with:
+        path: rendered
+        key: lobber-${{ hashFiles('art/source-to-3d/martian-bunker/captures/lobber-64/source_manifest.json', 'art/source-to-3d/martian-bunker/captures/lobber-64/capture_config.json',
+          'art/source-to-3d/martian-bunker/captures/lobber-64/render_capture.py', 'art/source-to-3d/martian-bunker/captures/lobber-64/capture_common.py')
+          }}-d${{ matrix.direction }}-c${{ matrix.chunk }}-recovery-${{ github.run_id }}-${{ github.run_attempt }}
+        restore-keys: lobber-${{ hashFiles('art/source-to-3d/martian-bunker/captures/lobber-64/source_manifest.json', 'art/source-to-3d/martian-bunker/captures/lobber-64/capture_config.json',
+          'art/source-to-3d/martian-bunker/captures/lobber-64/render_capture.py', 'art/source-to-3d/martian-bunker/captures/lobber-64/capture_common.py')
+          }}-d${{ matrix.direction }}-c${{ matrix.chunk }}-
+    - name: Reuse any valid frames already uploaded for this failed chunk
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: python "$CAPTURE/recover_export.py" seed --direction "${{ matrix.direction }}" --chunk "${{ matrix.chunk }}" --directory
+        rendered
+    - name: Render only missing poses in the selected chunk
+      run: .tools/blender-5.0.1-linux-x64/blender -b "$CAPTURE/lobber_capture.blend" -t 4 --python-exit-code 12 --python "$CAPTURE/render_capture.py"
+        -- --direction "${{ matrix.direction }}" --chunk "${{ matrix.chunk }}" --out rendered
+    - name: Validate every expected pass and pose before declaring recovery complete
+      run: python "$CAPTURE/recover_export.py" verify --direction "${{ matrix.direction }}" --chunk "${{ matrix.chunk }}"
+        --directory rendered
+    - uses: actions/upload-artifact@v4
+      with:
+        name: lobber-repair-complete-42429529804-${{ matrix.key }}
+        path: rendered/
+        if-no-files-found: error
+        retention-days: 30
+    - uses: actions/upload-artifact@v4
+      if: failure() || cancelled()
+      with:
+        name: lobber-repair-partial-42429529804-${{ matrix.key }}-${{ github.run_attempt }}
+        path: rendered/
+        if-no-files-found: warn
+        retention-days: 30
+    - uses: actions/cache/save@v4
+      if: always()
+      with:
+        path: rendered
+        key: lobber-${{ hashFiles('art/source-to-3d/martian-bunker/captures/lobber-64/source_manifest.json', 'art/source-to-3d/martian-bunker/captures/lobber-64/capture_config.json',
+          'art/source-to-3d/martian-bunker/captures/lobber-64/render_capture.py', 'art/source-to-3d/martian-bunker/captures/lobber-64/capture_common.py')
+          }}-d${{ matrix.direction }}-c${{ matrix.chunk }}-recovery-${{ github.run_id }}-${{ github.run_attempt }}
+  finalize:
+    needs:
+    - plan
+    - repair
+    if: ${{ always() && needs.plan.result == 'success' && (needs.repair.result == 'success' || needs.repair.result == 'skipped')
+      }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: write
+      actions: write
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: art/source-to-3d/martian-bunker/captures/lobber-64
+        filter: blob:none
+        ref: main
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install image validation dependency
+      run: python -m pip install Pillow
+    - name: Check whether the original capture and all repairs are complete
+      id: ready
+      env:
+        GH_TOKEN: ${{ github.token }}
+        VERIFIED_BEFORE: ${{ needs.plan.outputs.verified_before }}
+      run: python "$CAPTURE/recover_export.py" ready
+    - name: Install video tool and restore packed source
+      if: ${{ steps.ready.outputs.ready == 'true' }}
+      run: 'sudo apt-get update -qq -o Acquire::Retries=3
+
+        sudo apt-get install -y -qq ffmpeg
+
+        python "$CAPTURE/restore_source.py"'
+    - name: Merge verified original frames and targeted repairs
+      if: ${{ steps.ready.outputs.ready == 'true' }}
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: python "$CAPTURE/recover_export.py" collect --directory rendered
+    - name: Assemble engine-safe sheets, previews, editable source and checksums
+      if: ${{ steps.ready.outputs.ready == 'true' }}
+      run: python "$CAPTURE/assemble_capture.py" --input rendered --output delivery
+    - uses: actions/upload-artifact@v4
+      if: ${{ steps.ready.outputs.ready == 'true' }}
+      with:
+        name: Lobber-Verified-Recovered-Export
+        path: 'delivery/*.zip
+
+          delivery/*.gif
+
+          delivery/*.mp4
+
+          delivery/*Contact_Sheet.png
+
+          delivery/*manifest.json
+
+          delivery/checksums.json'
+        if-no-files-found: error
+        retention-days: 90
+    - name: Publish verified recovered export and read-back record
+      if: ${{ steps.ready.outputs.ready == 'true' }}
+      env:
+        GH_TOKEN: ${{ github.token }}
+        SOURCE_COMMIT: ${{ steps.ready.outputs.source_commit }}
+        RECOVERY_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      run: "tag=lobber-export-42429529804-recovered\nif gh release view \"$tag\" >/dev/null 2>&1; then\n  gh release upload\
+        \ \"$tag\" --clobber delivery/*.zip delivery/*.gif delivery/*.mp4 delivery/*Contact_Sheet.png delivery/*manifest.json\
+        \ delivery/checksums.json\nelse\n  gh release create \"$tag\" --target \"$SOURCE_COMMIT\" --title 'Alternate bunker\
+        \ lobber \u2014 verified recovered 64-heading export' --prerelease --notes \"Full eight-second firing cycles, clean\
+        \ rotation/entry/settling, registered colour/emission/shadow layers, engine-safe sprite sheets and checksummed editable\
+        \ source. Recovery: $RECOVERY_RUN_URL\" delivery/*.zip delivery/*.gif delivery/*.mp4 delivery/*Contact_Sheet.png delivery/*manifest.json\
+        \ delivery/checksums.json\nfi\nexport ASSEMBLY_COMMIT=\"$(git rev-parse HEAD)\"\npython \"$CAPTURE/recover_export.py\"\
+        \ record\ngit config user.name 'github-actions[bot]'\ngit config user.email '41898282+github-actions[bot]@users.noreply.github.com'\n\
+        git add \"$CAPTURE/DELIVERY.json\"\ngit commit -m 'Record verified recovered lobber rotation and directional firing\
+        \ export'\nfor attempt in 1 2 3; do\n  git fetch origin main\n  git rebase origin/main\n  if git push origin HEAD:main;\
+        \ then exit 0; fi\ndone\nexit 1"
+    - name: Continue with only the next eight missing chunks
+      if: ${{ steps.ready.outputs.continue == 'true' }}
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: gh workflow run lobber-export-recovery.yml --ref main -f wave="${{ steps.ready.outputs.next_wave }}"
+    - name: Record deferred finalization without occupying a waiting runner
+      if: ${{ steps.ready.outputs.ready != 'true' }}
+      run: echo "Finalization is deferred. A next batch was dispatched only if verified progress and continuation limits allowed
+        it; otherwise source completion or an existing publication determines the result."
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: lobber-recovery-finalization-state-${{ github.run_attempt }}
+        path: recovery_state.json
+        if-no-files-found: warn
+        retention-days: 30
