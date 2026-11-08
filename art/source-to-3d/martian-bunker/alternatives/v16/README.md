@@ -1,3 +1,5 @@
+**Historical static study:** the approved A02 animated native scene is stored in captures/lobber-64/source_manifest.json plus source_parts. Use that restored animation for production. See docs/art/LOCAL_BLENDER_CAPTURE.md. This study does not supersede A02.
+
 # V16 — degenerate geometry cleanup
 
 Local Blender 5.0.1 geometry correction derived from V15. **Still an incomplete, unintegrated turret candidate.** No firing, loader motion, gameplay code or Actions work was added.

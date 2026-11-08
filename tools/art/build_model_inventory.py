@@ -26,15 +26,30 @@ def main():
                         'reference_limit':'Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.',
                         'acceptance':'unreviewed_in_this_audit'})
     def assets(where, ps, prefix):
-        return [{'path':p,'bytes':(where/p).stat().st_size,'sha256':hashlib.file_digest((where/p).open('rb'),'sha256').hexdigest()} for p in ps if p.startswith(prefix) and p.endswith(('.blend','.glb','.zip'))]
+        return [{'path':p,'bytes':(where/p).stat().st_size,'sha256':hashlib.file_digest((where/p).open('rb'),'sha256').hexdigest()} for p in ps if p.startswith(prefix) and p.endswith(('.blend','.glb','.gltf','.zip'))]
+    segmented=[]
+    for p in tracked:
+        if not p.startswith('art/') or not p.endswith('source_manifest.json'):continue
+        manifest=json.loads((root/p).read_text(encoding='utf-8-sig'))
+        if not isinstance(manifest.get('parts'),list):continue
+        combined=hashlib.sha256();parts=[]
+        for part in manifest['parts']:
+            path=((root/p).parent/part['path']).resolve()
+            if not path.is_relative_to(root):raise ValueError('Source fragment escapes repository')
+            data=path.read_bytes();actual=hashlib.sha256(data).hexdigest()
+            assert len(data)==part['size_bytes'] and actual==part['sha256'],str(path)
+            combined.update(data);parts.append({'path':path.relative_to(root).as_posix(),'bytes':len(data),'sha256':actual})
+        assert combined.hexdigest()==manifest['sha256'],p
+        segmented.append({'manifest':p,'assembled_filename':manifest['filename'],'assembled_bytes':sum(v['bytes'] for v in parts),'assembled_sha256':combined.hexdigest(),'fragments_verified':True,'parts':parts,'acceptance':'source availability proven; read linked capture records before assigning animation/export completion'})
     report={'schema':1,'tech_priests_head':git(root,'rev-parse','HEAD'),'pipeline_head':git(hb,'rev-parse','HEAD'),
       'snapshot_kind':'Tracked working-tree bytes, including staged asset changes; HEAD values identify the reconciled base, not a claim that every staged file already belongs to that commit.',
       'working_tree_delta':git(root,'diff','--name-only','HEAD').splitlines(),
       'scope':'All tracked entity PNGs and authored model/package files; excludes repeated dist/version snapshots, effects, GUI and third-party character replacements.',
-      'sprites':sprites,'model_sources_and_exports':assets(root,tracked,'art/'),
+      'sprites':sprites,'model_sources_and_exports':assets(root,tracked,'art/'),'segmented_model_sources':segmented,
       'pipeline_sources_and_exports':assets(hb,htracked,'tools/factorio-render-pipeline/'),
       'integration_sources':sorted(p for p in lua if p.startswith('tech-priests_src/prototypes/') or p in ['tech-priests_src/data.lua','tech-priests_src/data-updates.lua','tech-priests_src/data-final-fixes.lua']),
-      'production_scripts':sorted(p for p in tracked if p.startswith('tools/art/')),
+      'production_scripts':sorted(p for p in tracked if p.startswith('tools/art/') or (p.startswith('art/') and p.endswith('.py'))),
+      'capture_records':sorted(p for p in tracked if p.startswith('art/') and ('/captures/' in p or 'manifest' in p.lower()) and p.endswith(('.md','.json'))),
       'pipeline_scripts':sorted(p for p in htracked if p.startswith('tools/factorio-render-pipeline/')),
       'unresolved_requested_assets':['lumberyard','metallic-hydrogen pellet production chain','large plasma reactor'],
       'no_automatic_done_claims':True}

@@ -1,27 +1,22 @@
 {
   "schema": 1,
-  "tech_priests_head": "5204a22fb6faa003f2b6c828e25dfacbb5a5062c",
+  "tech_priests_head": "f8fa6d871abe1f514631c3f83421eae2d32d638e",
   "pipeline_head": "42d6b3295e4292e571f34f7106380b2b92e121c1",
   "snapshot_kind": "Tracked working-tree bytes, including staged asset changes; HEAD values identify the reconciled base, not a claim that every staged file already belongs to that commit.",
   "working_tree_delta": [
+    "art/source-to-3d/martian-bunker/alternatives/v15/README.md",
     "art/source-to-3d/martian-bunker/alternatives/v16/README.md",
-    "art/source-to-3d/martian-bunker/alternatives/v16/candidate-game.png",
-    "art/source-to-3d/martian-bunker/alternatives/v16/candidate-rear.png",
-    "art/source-to-3d/martian-bunker/alternatives/v16/cleanup-validation.json",
-    "art/source-to-3d/martian-bunker/alternatives/v16/glb-clay.png",
-    "art/source-to-3d/martian-bunker/alternatives/v16/glb-game.png",
-    "art/source-to-3d/martian-bunker/alternatives/v16/glb-rear.png",
-    "art/source-to-3d/martian-bunker/alternatives/v16/independent-validation.json",
-    "art/source-to-3d/martian-bunker/alternatives/v16/local-proof.png",
-    "art/source-to-3d/martian-bunker/alternatives/v16/pixel-comparison.json",
-    "art/source-to-3d/martian-bunker/alternatives/v16/render-review.json",
-    "art/source-to-3d/martian-bunker/alternatives/v16/six_lobber_clean_geometry_v16.blend",
-    "art/source-to-3d/martian-bunker/alternatives/v16/six_lobber_clean_geometry_v16.glb",
-    "art/source-to-3d/martian-bunker/alternatives/v16/source-game.png",
     "docs/art/CHECKPOINT.json",
+    "docs/art/LOCAL_BLENDER_CAPTURE.md",
     "docs/art/MODEL_COMPLETION_LEDGER.md",
-    "tools/art/clean_lobber_degenerate_geometry.py",
-    "tools/art/verify_lobber_clean_geometry.py"
+    "docs/art/a02-local-pilot-validation.json",
+    "docs/art/a02-local-scene-validation.json",
+    "docs/art/a02-source-identity.json",
+    "docs/art/lobber-a02-local-pilot.png",
+    "docs/art/model-inventory.json",
+    "tools/art/build_model_inventory.py",
+    "tools/art/restore_segmented_capture.py",
+    "tools/art/run_local_lobber_capture.py"
   ],
   "scope": "All tracked entity PNGs and authored model/package files; excludes repeated dist/version snapshots, effects, GUI and third-party character replacements.",
   "sprites": [
@@ -2361,6 +2356,498 @@
       "sha256": "98f834f7719d21c99838d09f53f122cbb6212f3c21e0c1180fd9a71c0924a6d7"
     }
   ],
+  "segmented_model_sources": [
+    {
+      "manifest": "art/source-to-3d/martian-bunker/captures/lobber-64/source_manifest.json",
+      "assembled_filename": "lobber_capture.blend",
+      "assembled_bytes": 11179678,
+      "assembled_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+      "fragments_verified": true,
+      "parts": [
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part000.bin",
+          "bytes": 700000,
+          "sha256": "fae3433e479dccce69da146c7084ecfde3f01f7e65c999dcce2fe300ff4ed846"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part001.bin",
+          "bytes": 700000,
+          "sha256": "4bd74f255cc632f1b4d518a2ebc22f362e15b364273019c365d8441459fcfdc5"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part002.bin",
+          "bytes": 700000,
+          "sha256": "92beddebd25623695624de76bb0a1441a496d95ea54b5aca58edc7de9755bfc5"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part003.bin",
+          "bytes": 700000,
+          "sha256": "ee84818efbd27b2b33ac2cad1081e1fc4bef0d8a11858831d5889281d6184c0a"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part004.bin",
+          "bytes": 700000,
+          "sha256": "1e5d78d97d71e9777db11e4f0a2f0149f8a6d38d489cd573619747ee1c98fe72"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part005.bin",
+          "bytes": 700000,
+          "sha256": "9473ff8553f239e3b6f70d6a7626febead897c51e995181d9c26779c8a1e8d31"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part006.bin",
+          "bytes": 700000,
+          "sha256": "08cc86952c079d8e81402dc9882b0b702c49d2b5212ef132c25557abe3d5e9f5"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part007.bin",
+          "bytes": 700000,
+          "sha256": "1da3803b16016e9e4617bcac1293ab996878f74de5a66c8556c647a97bbc7249"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part008.bin",
+          "bytes": 700000,
+          "sha256": "e67985b6342ae31894715e2df467bef8b94b1fc863ba078ea79fa51b55d05617"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part009.bin",
+          "bytes": 700000,
+          "sha256": "9163f3b7797deb840fe9db0627fb72e7a506344c347b0ab42838a5e9b87200ef"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part010.bin",
+          "bytes": 700000,
+          "sha256": "a7a9a64ee2784a76d0733bf280a03fc336fc191a89d3bb662a7ed8aac04155d3"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part011.bin",
+          "bytes": 700000,
+          "sha256": "5ca9ba559a1cda6f640dfeae69ae080c4729b9799603a9cbf25fadd4c5613974"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part012.bin",
+          "bytes": 700000,
+          "sha256": "d610c414a267e414875a3e1ce2f47f5564c86fbb7e6c4e645525c24c769757cc"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part013.bin",
+          "bytes": 700000,
+          "sha256": "5f7d3ed8b1b1e4f514746f492b86209f2af572e0c2b93a777eb87cf1a3222ab7"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part014.bin",
+          "bytes": 700000,
+          "sha256": "5b1d029ece3764bdda0eb0d58aa56de6677adc8e9d463bdd41d1038a3e03076d"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/part015.bin",
+          "bytes": 679678,
+          "sha256": "08f1d2887b304b0db618ac66fa6f5930a92398f93c47e0810f64361ddb2c67ce"
+        }
+      ],
+      "acceptance": "source availability proven; read linked capture records before assigning animation/export completion"
+    },
+    {
+      "manifest": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_manifest.json",
+      "assembled_filename": "original_bunker_turret_capture.blend",
+      "assembled_bytes": 54303119,
+      "assembled_sha256": "827885c9c42cb752dea9bae1a0d31cb957f144f21d945ad019c507aaa6e2b9a3",
+      "fragments_verified": true,
+      "parts": [
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part000.bin",
+          "bytes": 700000,
+          "sha256": "cebae29cef1c52564e6c80d7ea57167158b11f15d1b037896471cd88e3d33667"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part001.bin",
+          "bytes": 700000,
+          "sha256": "74f92cace7db5403402d56a5319a6775b947551f9226839a25193b2eba89e78e"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part002.bin",
+          "bytes": 700000,
+          "sha256": "a2bf4d6ef9b0d054fc5d712268ba8a37b242f46e4e4d46312be5d4ff2282fc8b"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part003.bin",
+          "bytes": 700000,
+          "sha256": "e1e0012e2760b7bce7f2676b504516bb4305ccdaded601584aad1f739b31c9d8"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part004.bin",
+          "bytes": 700000,
+          "sha256": "5e72e9d99faac61e0743e9537578738baba597bfdc90d22500d8b410ff5ea27d"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part005.bin",
+          "bytes": 700000,
+          "sha256": "579096d6b3205ff44ce2980d6879456ae7cc6a4770444169c7b9fd668d6f4928"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part006.bin",
+          "bytes": 700000,
+          "sha256": "c8656ce28b3e6317901fb821f6fd6922e0103b7fb7b7b1275e69f9a28e50b3bc"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part007.bin",
+          "bytes": 700000,
+          "sha256": "d64e5c7cd6c1dbdba64c9bdb22ebbbd7bd1d2ff88f1ed7f4af377d7ca3248d5e"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part008.bin",
+          "bytes": 700000,
+          "sha256": "40fce6d7433fc2b959558c709efd27c50f4fa9f811e4e48189a501369e1cbbdf"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part009.bin",
+          "bytes": 700000,
+          "sha256": "f6e0a4af135120079d8de92a5113e4a08efac7ddb40b176351fb06baf98784bf"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part010.bin",
+          "bytes": 700000,
+          "sha256": "acfe29953255e8422bfe647f59ac13c3a051e6710e2856a9da407d34097c3fda"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part011.bin",
+          "bytes": 700000,
+          "sha256": "74233daf57d766b4ca259c0c1eea2b6d5802068cd4434850a38899398aaca1f1"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part012.bin",
+          "bytes": 700000,
+          "sha256": "6a12c0f546c0b3e7c43940ab6afbbedc0da4072b7a0c7d96cab22421f28d3c4d"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part013.bin",
+          "bytes": 700000,
+          "sha256": "245e6136b138333e84db7ae26daf1c75895540fe7a84267d20f03e56f599e471"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part014.bin",
+          "bytes": 700000,
+          "sha256": "3e8eec9b35b836c8a76aa057937004270560201c8d53947fa82be62c216b8953"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part015.bin",
+          "bytes": 700000,
+          "sha256": "bcfbdc198b5b46212e99f8554e3458466fb5f32ca11eda2ce91cc84eeccb8a06"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part016.bin",
+          "bytes": 700000,
+          "sha256": "c1c954bddc3b6bbff436e14da60278571a25332d0c0ae6880f180b4ef96eb210"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part017.bin",
+          "bytes": 700000,
+          "sha256": "2e701156c8c6846516443de21c80fb3f2aefa95f001b6d2516fb32edac2b033b"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part018.bin",
+          "bytes": 700000,
+          "sha256": "24e7ed01d0d40dec25dbc65d00880c0966a3c28d6ce900e4b489bca60a1d669a"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part019.bin",
+          "bytes": 700000,
+          "sha256": "a0ebcda68ead9310c9af3b3093052571a610f165efc75deeb32f6407773c9f8d"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part020.bin",
+          "bytes": 700000,
+          "sha256": "18daa5cec32e34e9f3e7066677f273890be1b0ac4d9a9dfbdbb1e29d7e76e03e"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part021.bin",
+          "bytes": 700000,
+          "sha256": "5af15918c93636bd0e0c20843e7f98513fd12f72bc50a49dc9d63f1f7932e72c"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part022.bin",
+          "bytes": 700000,
+          "sha256": "63cc40d618be6980f3ee5d3a490a1ee22a30cab86d1a28e38fe06c5d055838ed"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part023.bin",
+          "bytes": 700000,
+          "sha256": "b341d7e55b7268b8d67fc7ebd8e9c9a48c6b02bb3a2ab57c5e85385f0ac0dcb1"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part024.bin",
+          "bytes": 700000,
+          "sha256": "5b760a88062c504d35a102be5b5c30de41b9991fe2d127deb26ac9dcae96f467"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part025.bin",
+          "bytes": 700000,
+          "sha256": "643632dd0a1a458e582dddb3254443620517cca5724479cc3ebc2d843a3d15fd"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part026.bin",
+          "bytes": 700000,
+          "sha256": "e7628e26a7c6dd4c4d1bcf58b8a36b142fe5df8ee143a533d73762f1fa6138d0"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part027.bin",
+          "bytes": 700000,
+          "sha256": "5553702b20a204e041720b8e71dcedf15587de54e1cf6d89d3d654d89f90c691"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part028.bin",
+          "bytes": 700000,
+          "sha256": "972f408f57d8e6c6997e77eff043ee504983c89b346c377fb4df11d5a1e83b37"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part029.bin",
+          "bytes": 700000,
+          "sha256": "2d4c30f1be4b32199e4afb6b6973dd2132a82e75f982ee9997a34342cbd1db30"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part030.bin",
+          "bytes": 700000,
+          "sha256": "16add8631c29d799880afd07c248ef8fe46f968fb5ae8b5c34f77eaf40432479"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part031.bin",
+          "bytes": 700000,
+          "sha256": "73a6e4161d25c78814a7443103c58d53d1a9878a28dc0014043ab4ca814f19d8"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part032.bin",
+          "bytes": 700000,
+          "sha256": "a95ccff141a8619476db33a94fa2af3e02335e458d3b733b75963f599f1a75bf"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part033.bin",
+          "bytes": 700000,
+          "sha256": "fca604e8e21472a00e42f511f5d25f49e57df6c06e1a156056f18bd4568540c1"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part034.bin",
+          "bytes": 700000,
+          "sha256": "f169c07fc9852dd034c4ca903028223297e7d2a318f0285c4eb2226d74e79e8a"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part035.bin",
+          "bytes": 700000,
+          "sha256": "c4c6b7d69d226ca2085b4293973b949a5a2663bb27f8e16b63426e6468a8556d"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part036.bin",
+          "bytes": 700000,
+          "sha256": "3d573fe27e6b4d4debd4aef5ea1d7ac4f8c899e459a0617205d72f02da767697"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part037.bin",
+          "bytes": 700000,
+          "sha256": "0d9b88303f9873d16feca88116f2414e84a549e5fcaf0ae5023aed7802d90cfa"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part038.bin",
+          "bytes": 700000,
+          "sha256": "41708d421e49b2dd6aa867dc8975ca8b405f337b84703e4955b8031e52a6982f"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part039.bin",
+          "bytes": 700000,
+          "sha256": "4503e39cebf2e644d5a506d594a85d72c547075b27cd4d571d8e1de638f468ff"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part040.bin",
+          "bytes": 700000,
+          "sha256": "733574a10098f0205fa7a74afed5bcf6175c7eb72309437e06934e80446b2f8e"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part041.bin",
+          "bytes": 700000,
+          "sha256": "72dc96a05e3341def4162b58e12e0bccd27eaa0a2e0cce9917d6eed35bf88969"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part042.bin",
+          "bytes": 700000,
+          "sha256": "18c454811fb0a37724b63eacb408353a9699fbe409140823241182cbe7356cfd"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part043.bin",
+          "bytes": 700000,
+          "sha256": "59b4f1ef910ff4fa015fb6cba950ef82afcb47c6b954a639df556315af10b676"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part044.bin",
+          "bytes": 700000,
+          "sha256": "fc6b082ac61377c67a51e2c1c4638e04ff6fff785eea1c34f295e1f0e77893e8"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part045.bin",
+          "bytes": 700000,
+          "sha256": "b37d363cf335364d760c8b6c9c8cd87dd4ad84b6cf05885c8d8df0a564374332"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part046.bin",
+          "bytes": 700000,
+          "sha256": "6df888312354d7fb2531620189c777df12eaaad37520da1f3d616515dd49078a"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part047.bin",
+          "bytes": 700000,
+          "sha256": "0b3b9341b399c579ffe589ec280d12bc532d6fa79aa15a88f1046e881d08757a"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part048.bin",
+          "bytes": 700000,
+          "sha256": "4ef08de4e049aa1f5aa26587e06eee1c9029d710413a646c3a40f06e27355771"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part049.bin",
+          "bytes": 700000,
+          "sha256": "9099954a8ec33f363e1540e47f8d7d792d6899cb725477a1582711e67aad53fa"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part050.bin",
+          "bytes": 700000,
+          "sha256": "5d87048f10645dc766a87020112b8bfe4a0a8b7d54a8511ff9291c0fec3cf1b8"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part051.bin",
+          "bytes": 700000,
+          "sha256": "69821d465614ae7d3fc26e9add1958ba55657a5067ae5fe847cb6f6b446a8350"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part052.bin",
+          "bytes": 700000,
+          "sha256": "8bb81970c212f280335eabc5786be586031a4e339928154e0a3f7c120892fded"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part053.bin",
+          "bytes": 700000,
+          "sha256": "3bf528caee7684e3683124a20b4e37ae988e02542097842673075dfc186e5559"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part054.bin",
+          "bytes": 700000,
+          "sha256": "542377f88d8a2d0f83745da62fb84143428d5c9443b315ec27ea750506edb8ca"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part055.bin",
+          "bytes": 700000,
+          "sha256": "63c44bab532fe106ed414f61fd95c9cb66694e4d7666774829ccaa5d3e1b5608"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part056.bin",
+          "bytes": 700000,
+          "sha256": "933149b8b91323cc5c659e97443721bbfe3750d10bdc5e594af39142107907a9"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part057.bin",
+          "bytes": 700000,
+          "sha256": "4da53f9d75b53037685217ae678b6d1a960cee4b5e5bc495fdb72a5a0783fd3b"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part058.bin",
+          "bytes": 700000,
+          "sha256": "f3462d8478e1501adf0e1e07dc9463bbd64351d751f4ed1cf65736d3d6e3c665"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part059.bin",
+          "bytes": 700000,
+          "sha256": "a71305eaed56894af5da36a0d143ba4bb37108811116a63c7fa42a53fd26cb13"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part060.bin",
+          "bytes": 700000,
+          "sha256": "c026dfc501e4a7c8add35805de3d3b3cbc4dd7ae0b07d9de12a6dc468cfa6d77"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part061.bin",
+          "bytes": 700000,
+          "sha256": "2c2e5374c69fa14a7c092777d75f5e05aaf2fd82289134d4781337736602f25e"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part062.bin",
+          "bytes": 700000,
+          "sha256": "5a5d8787fae9f8374324a8769a1289e20cb86ee5621157e48d392df8c913d5dd"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part063.bin",
+          "bytes": 700000,
+          "sha256": "e50459a4a7e8b692d805aac57054ce012a44e8e71ed3a81b53f8938b2b8ddcdb"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part064.bin",
+          "bytes": 700000,
+          "sha256": "5c07e04c651d249e798e25136d7938941427de9080705130070c96a4a0ab8cf1"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part065.bin",
+          "bytes": 700000,
+          "sha256": "867ebd40219a45904620b424c9bf38791a9dc258acfb5e4d3cb7aeb75c77cb38"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part066.bin",
+          "bytes": 700000,
+          "sha256": "cf497cd6881bd5e76d6f9bf80cac47630e2003c7c3c302cc99a49e89bb7bb5d7"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part067.bin",
+          "bytes": 700000,
+          "sha256": "8b4576ff9db6c7c0de16085c9448a896fe0589d1cd136160bf727d1f661b2397"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part068.bin",
+          "bytes": 700000,
+          "sha256": "946c01645b765c358558c94ed957cca993f8219611eedcdfff6182eef985e7fa"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part069.bin",
+          "bytes": 700000,
+          "sha256": "c58bac7620fc4c2ab48ec0625a6058d9ec5d42cac5c59be937e471064bdd5e52"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part070.bin",
+          "bytes": 700000,
+          "sha256": "d76094ba686384697b469a1f6bb544e0365c7dcfe2e9aa0259e4991f63148784"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part071.bin",
+          "bytes": 700000,
+          "sha256": "f45f26891d8d4f61fa3ebe4839f027c0c75bc9eb5009051a54d4f7de50444a81"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part072.bin",
+          "bytes": 700000,
+          "sha256": "63b0f06f23ca0070a595b5ace11219a8fc33788bbc6b5a2a8c870d34386ad668"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part073.bin",
+          "bytes": 700000,
+          "sha256": "d375af1c6a97fa643ce18033145fbdafbec17c4a6e8860548e0a35efc540c27b"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part074.bin",
+          "bytes": 700000,
+          "sha256": "36c0929c2983efe2e1682a948aa8a102267d6aa5efe31470eac866c39963639a"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part075.bin",
+          "bytes": 700000,
+          "sha256": "3e75f66f6094e051fdc81e04f691b0d950afef123dcb8c3cded7f9132b42e063"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part076.bin",
+          "bytes": 700000,
+          "sha256": "2900777c2a41f7e419f90e986e2475ba3fe1082144af1e2c30809c0a8710bb6d"
+        },
+        {
+          "path": "art/source-to-3d/martian-bunker/captures/original-turret-64/source_parts/part077.bin",
+          "bytes": 403119,
+          "sha256": "6060b4f262bb442ed7ddfe8524589b3e7aa5ccf9b1c75104c1833f287798d8ea"
+        }
+      ],
+      "acceptance": "source availability proven; read linked capture records before assigning animation/export completion"
+    }
+  ],
   "pipeline_sources_and_exports": [],
   "integration_sources": [
     "tech-priests_src/data-final-fixes.lua",
@@ -2398,6 +2885,143 @@
     "tech-priests_src/prototypes/workbench_graphics.lua"
   ],
   "production_scripts": [
+    "art/source-to-3d/boiler-v05/build_boiler_v05.py",
+    "art/source-to-3d/boiler-v05/readback_boiler_v05.py",
+    "art/source-to-3d/boiler-v06/build_boiler_v06.py",
+    "art/source-to-3d/boiler-v06/readback_boiler_v06.py",
+    "art/source-to-3d/boiler-v07/build_boiler_v07.py",
+    "art/source-to-3d/boiler-v07/readback_boiler_v07.py",
+    "art/source-to-3d/boiler-v08/animate_boiler_v08.py",
+    "art/source-to-3d/boiler-v08/audit_boiler_tubing.py",
+    "art/source-to-3d/boiler-v08/cleanup_boiler_v08_cameras.py",
+    "art/source-to-3d/boiler-v08/correct_boiler_v08_viewport.py",
+    "art/source-to-3d/boiler-v08/package_boiler_v08.py",
+    "art/source-to-3d/boiler-v08/preview_boiler_v08.py",
+    "art/source-to-3d/boiler-v08/render_boiler_tubing_audit.py",
+    "art/source-to-3d/boiler-v08/render_boiler_v08_corrected_cycles.py",
+    "art/source-to-3d/boiler-v08/validate_boiler_v08.py",
+    "art/source-to-3d/condenser-v19/build_condenser_v19.py",
+    "art/source-to-3d/condenser-v19/readback_condenser_v19.py",
+    "art/source-to-3d/condenser-v19/validate_condenser_v19.py",
+    "art/source-to-3d/condenser-v20/build_condenser_v20.py",
+    "art/source-to-3d/condenser-v20/readback_condenser_v20.py",
+    "art/source-to-3d/condenser-v21/build_condenser_v21.py",
+    "art/source-to-3d/condenser-v21/finalize_condenser_v21.py",
+    "art/source-to-3d/condenser-v21/readback_condenser_v21.py",
+    "art/source-to-3d/condenser-v21/render_condenser_v21_export_views.py",
+    "art/source-to-3d/emergency-miner/build_model.py",
+    "art/source-to-3d/emergency-miner/compare_renders.py",
+    "art/source-to-3d/emergency-miner/inspect_sprite.py",
+    "art/source-to-3d/martian-bunker/alternatives/v01/build_turrets.py",
+    "art/source-to-3d/martian-bunker/alternatives/v01/make_review.py",
+    "art/source-to-3d/martian-bunker/alternatives/v01/save_entities.py",
+    "art/source-to-3d/martian-bunker/alternatives/v01/verify_turrets.py",
+    "art/source-to-3d/martian-bunker/alternatives/v02/build_turrets.py",
+    "art/source-to-3d/martian-bunker/alternatives/v02/make_review.py",
+    "art/source-to-3d/martian-bunker/alternatives/v02/restore_intact_base.py",
+    "art/source-to-3d/martian-bunker/alternatives/v02/save_entities.py",
+    "art/source-to-3d/martian-bunker/alternatives/v02/verify_base_renders.py",
+    "art/source-to-3d/martian-bunker/alternatives/v02/verify_turrets.py",
+    "art/source-to-3d/martian-bunker/alternatives/v04/build_six_lobber.py",
+    "art/source-to-3d/martian-bunker/alternatives/v05/build_loose_loader.py",
+    "art/source-to-3d/martian-bunker/alternatives/v05/make_review.py",
+    "art/source-to-3d/martian-bunker/alternatives/v06/build_central_feed.py",
+    "art/source-to-3d/martian-bunker/alternatives/v06/make_review.py",
+    "art/source-to-3d/martian-bunker/alternatives/v07/build_hatch_tracks.py",
+    "art/source-to-3d/martian-bunker/alternatives/v07/make_review.py",
+    "art/source-to-3d/martian-bunker/alternatives/v08/build_segmented_tracks.py",
+    "art/source-to-3d/martian-bunker/alternatives/v08/make_review.py",
+    "art/source-to-3d/martian-bunker/alternatives/v09/build_sensor_fit.py",
+    "art/source-to-3d/martian-bunker/alternatives/v09/make_review.py",
+    "art/source-to-3d/martian-bunker/alternatives/v10/build_refinement.py",
+    "art/source-to-3d/martian-bunker/alternatives/v10/make_review.py",
+    "art/source-to-3d/martian-bunker/alternatives/v11/build_plating.py",
+    "art/source-to-3d/martian-bunker/alternatives/v11/make_review.py",
+    "art/source-to-3d/martian-bunker/alternatives/v12/build_corrugated_hoses.py",
+    "art/source-to-3d/martian-bunker/alternatives/v12/make_review.py",
+    "art/source-to-3d/martian-bunker/alternatives/v13/build_corner_chamfers.py",
+    "art/source-to-3d/martian-bunker/alternatives/v13/make_review.py",
+    "art/source-to-3d/martian-bunker/alternatives/v14/build_mounting_plate.py",
+    "art/source-to-3d/martian-bunker/alternatives/v14/make_review.py",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/assemble_capture.py",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/capture_common.py",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/prepare_capture.py",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/record_delivery.py",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/recover_export.py",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/render_capture.py",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/restore_source.py",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/test_recovery.py",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/validate_scene.py",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/verify_pilot.py",
+    "art/source-to-3d/martian-bunker/captures/original-turret-64/assemble_capture.py",
+    "art/source-to-3d/martian-bunker/captures/original-turret-64/render_capture.py",
+    "art/source-to-3d/martian-bunker/captures/original-turret-64/restore_source.py",
+    "art/source-to-3d/martian-bunker/captures/original-turret-64/validate_scene.py",
+    "art/source-to-3d/martian-bunker/src/v02/build_blockout.py",
+    "art/source-to-3d/martian-bunker/src/v02/render_preview.py",
+    "art/source-to-3d/martian-bunker/src/v02/setup_blender.py",
+    "art/source-to-3d/martian-bunker/src/v03/build_blockout.py",
+    "art/source-to-3d/martian-bunker/src/v03/render_preview.py",
+    "art/source-to-3d/martian-bunker/src/v03/setup_blender.py",
+    "art/source-to-3d/martian-bunker/src/v03/verify_exported_blender_glb.py",
+    "art/source-to-3d/martian-bunker/src/v04/build_blockout.py",
+    "art/source-to-3d/martian-bunker/src/v04/render_preview.py",
+    "art/source-to-3d/martian-bunker/src/v04/setup_blender.py",
+    "art/source-to-3d/martian-bunker/src/v04/verify_exported_blender_glb.py",
+    "art/source-to-3d/martian-bunker/src/v04/verify_hull_conformance.py",
+    "art/source-to-3d/martian-bunker/src/v05/build_blockout.py",
+    "art/source-to-3d/martian-bunker/src/v05/render_preview.py",
+    "art/source-to-3d/martian-bunker/src/v05/setup_blender.py",
+    "art/source-to-3d/martian-bunker/src/v05/verify_exported_blender_glb.py",
+    "art/source-to-3d/martian-bunker/src/v05/verify_turret_front.py",
+    "art/source-to-3d/martian-bunker/src/v06/build_blockout.py",
+    "art/source-to-3d/martian-bunker/src/v06/make_textures.py",
+    "art/source-to-3d/martian-bunker/src/v06/render_preview.py",
+    "art/source-to-3d/martian-bunker/src/v06/setup_blender.py",
+    "art/source-to-3d/martian-bunker/src/v06/verify_barrel_v06.py",
+    "art/source-to-3d/martian-bunker/src/v06/verify_exported_blender_glb.py",
+    "art/source-to-3d/martian-bunker/src/v06/verify_render_v06.py",
+    "art/source-to-3d/martian-bunker/src/v06/verify_turret_front.py",
+    "art/source-to-3d/martian-bunker/src/v07/build_blockout.py",
+    "art/source-to-3d/martian-bunker/src/v07/make_textures.py",
+    "art/source-to-3d/martian-bunker/src/v07/render_preview.py",
+    "art/source-to-3d/martian-bunker/src/v07/setup_blender.py",
+    "art/source-to-3d/martian-bunker/src/v07/verify_barrel_v07.py",
+    "art/source-to-3d/martian-bunker/src/v07/verify_exported_blender_glb.py",
+    "art/source-to-3d/martian-bunker/src/v07/verify_render_v07.py",
+    "art/source-to-3d/martian-bunker/src/v07/verify_turret_front.py",
+    "art/source-to-3d/martian-bunker/src/v08/build_blockout.py",
+    "art/source-to-3d/martian-bunker/src/v08/make_textures.py",
+    "art/source-to-3d/martian-bunker/src/v08/render_preview.py",
+    "art/source-to-3d/martian-bunker/src/v08/setup_blender.py",
+    "art/source-to-3d/martian-bunker/src/v08/verify_barrel_v08.py",
+    "art/source-to-3d/martian-bunker/src/v08/verify_exported_blender_glb.py",
+    "art/source-to-3d/martian-bunker/src/v08/verify_render_v08.py",
+    "art/source-to-3d/martian-bunker/src/v08/verify_turret_front.py",
+    "art/source-to-3d/martian-bunker/src/v08/verify_visual_target_v08.py",
+    "art/source-to-3d/martian-bunker/src/v09/build_blockout.py",
+    "art/source-to-3d/martian-bunker/src/v09/make_textures.py",
+    "art/source-to-3d/martian-bunker/src/v09/render_preview.py",
+    "art/source-to-3d/martian-bunker/src/v09/setup_blender.py",
+    "art/source-to-3d/martian-bunker/src/v09/verify_barrel_v09.py",
+    "art/source-to-3d/martian-bunker/src/v09/verify_exported_blender_glb.py",
+    "art/source-to-3d/martian-bunker/src/v09/verify_render_v09.py",
+    "art/source-to-3d/martian-bunker/src/v09/verify_turret_front.py",
+    "art/source-to-3d/martian-bunker/src/v09/verify_visual_target_v09.py",
+    "art/source-to-3d/martian-bunker/src/v10/build_blockout.py",
+    "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+    "art/source-to-3d/martian-bunker/src/v10/render_preview.py",
+    "art/source-to-3d/martian-bunker/src/v10/setup_blender.py",
+    "art/source-to-3d/martian-bunker/src/v10/verify_barrel_v10.py",
+    "art/source-to-3d/martian-bunker/src/v10/verify_exported_blender_glb.py",
+    "art/source-to-3d/martian-bunker/src/v10/verify_reference_fidelity_v10.py",
+    "art/source-to-3d/martian-bunker/src/v10/verify_render_v10.py",
+    "art/source-to-3d/martian-bunker/src/v10/verify_turret_front.py",
+    "art/source-to-3d/martian-bunker/src/v10/verify_visual_target_v10.py",
+    "art/source-to-3d/workbench-v4/build_workbench_v4.py",
+    "art/source-to-3d/workbench-v5-animation/animate_workbench.py",
+    "art/source-to-3d/workbench-v6-game/assemble_sheets.py",
+    "art/source-to-3d/workbench-v6-game/export_workbench.py",
     "tools/art/README.md",
     "tools/art/attach_factorio_prototype.py",
     "tools/art/audit_png_decode.py",
@@ -2410,11 +3034,43 @@
     "tools/art/produce_factorio_asset.py",
     "tools/art/profiles/boiler-v08.json",
     "tools/art/render_sprite_frames.py",
+    "tools/art/restore_segmented_capture.py",
+    "tools/art/run_local_lobber_capture.py",
     "tools/art/verify_boiler_production.py",
     "tools/art/verify_installed_model_sprites.py",
     "tools/art/verify_lobber_clean_geometry.py",
     "tools/art/verify_lobber_station_rig.py",
     "tools/art/verify_sprite_master.py"
+  ],
+  "capture_records": [
+    "art/source-to-3d/martian-bunker/captures/base-four-directions-2048/DELIVERY.json",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/LOCAL_PILOT.json",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/README.md",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/capture_config.json",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/scene_validation.json",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/source_manifest.json",
+    "art/source-to-3d/martian-bunker/captures/lobber-64/validation_summary.json",
+    "art/source-to-3d/martian-bunker/captures/original-turret-64/DELIVERY.json",
+    "art/source-to-3d/martian-bunker/captures/original-turret-64/README.md",
+    "art/source-to-3d/martian-bunker/captures/original-turret-64/ROTATION_DELIVERY.json",
+    "art/source-to-3d/martian-bunker/captures/original-turret-64/scene_validation.json",
+    "art/source-to-3d/martian-bunker/captures/original-turret-64/source_changes.json",
+    "art/source-to-3d/martian-bunker/captures/original-turret-64/source_manifest.json",
+    "art/source-to-3d/martian-bunker/src/v02/component_manifest_v02.json",
+    "art/source-to-3d/martian-bunker/src/v03/component_manifest_v03.json",
+    "art/source-to-3d/martian-bunker/src/v04/component_manifest_v04.json",
+    "art/source-to-3d/martian-bunker/src/v05/component_manifest_v05.json",
+    "art/source-to-3d/martian-bunker/src/v05/pass1_component_manifest_v05.json",
+    "art/source-to-3d/martian-bunker/src/v06/component_manifest_v06.json",
+    "art/source-to-3d/martian-bunker/src/v06/textures/texture_manifest.json",
+    "art/source-to-3d/martian-bunker/src/v07/component_manifest_v07.json",
+    "art/source-to-3d/martian-bunker/src/v07/textures/texture_manifest.json",
+    "art/source-to-3d/martian-bunker/src/v08/component_manifest_v08.json",
+    "art/source-to-3d/martian-bunker/src/v08/textures/texture_manifest.json",
+    "art/source-to-3d/martian-bunker/src/v09/component_manifest_v09.json",
+    "art/source-to-3d/martian-bunker/src/v09/textures/texture_manifest.json",
+    "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+    "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json"
   ],
   "pipeline_scripts": [
     "tools/factorio-render-pipeline/CALIBRATION_FINDINGS.md",

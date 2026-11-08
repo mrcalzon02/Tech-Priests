@@ -1,3 +1,5 @@
+**Historical static study:** the approved A02 animated native scene is stored in captures/lobber-64/source_manifest.json plus source_parts. Use that restored animation for production. See docs/art/LOCAL_BLENDER_CAPTURE.md. This study does not supersede A02.
+
 # V15 — independent cannon recoil rig preparation
 
 **Candidate checkpoint only. No firing/reload animation, final art approval or game integration.** Derived from the unchanged V14 bolted mounting plate source, using local Blender 5.0.1. The bunker base is not in this turret-only source and was not changed.

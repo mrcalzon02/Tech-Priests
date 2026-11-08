@@ -1,0 +1,105 @@
+{
+  "status": "PASS",
+  "directions": [
+    16
+  ],
+  "median_seconds_per_three_pass_pose": 30.34299999999348,
+  "projected_worst_chunk_minutes": 24.887199999997392,
+  "frames": [
+    {
+      "direction": 16,
+      "files": [
+        {
+          "file": "work\\lobber-a02-pilot\\d16\\beauty\\idle_000.png",
+          "alpha_bounds": [
+            219,
+            98,
+            401,
+            368
+          ]
+        },
+        {
+          "file": "work\\lobber-a02-pilot\\d16\\emission\\idle_000.png",
+          "alpha_bounds": [
+            219,
+            148,
+            269,
+            227
+          ]
+        },
+        {
+          "file": "work\\lobber-a02-pilot\\d16\\shadow\\idle_000.png",
+          "alpha_bounds": [
+            115,
+            323,
+            1123,
+            1189
+          ]
+        },
+        {
+          "file": "work\\lobber-a02-pilot\\d16\\beauty\\cycle_001.png",
+          "alpha_bounds": [
+            220,
+            97,
+            402,
+            368
+          ]
+        },
+        {
+          "file": "work\\lobber-a02-pilot\\d16\\emission\\cycle_001.png",
+          "alpha_bounds": [
+            220,
+            135,
+            345,
+            226
+          ]
+        },
+        {
+          "file": "work\\lobber-a02-pilot\\d16\\shadow\\cycle_001.png",
+          "alpha_bounds": [
+            112,
+            321,
+            1156,
+            1190
+          ]
+        },
+        {
+          "file": "work\\lobber-a02-pilot\\d16\\beauty\\cycle_004.png",
+          "alpha_bounds": [
+            219,
+            96,
+            403,
+            368
+          ]
+        },
+        {
+          "file": "work\\lobber-a02-pilot\\d16\\emission\\cycle_004.png",
+          "alpha_bounds": [
+            219,
+            148,
+            271,
+            226
+          ]
+        },
+        {
+          "file": "work\\lobber-a02-pilot\\d16\\shadow\\cycle_004.png",
+          "alpha_bounds": [
+            116,
+            323,
+            1123,
+            1189
+          ]
+        }
+      ]
+    }
+  ],
+  "correct_shadow_registration": {
+    "beauty_cell": 640,
+    "shadow_cell": 1280,
+    "shadow_offset_pixels": [
+      -320,
+      -320
+    ],
+    "same_pixels_per_world_unit": true
+  }
+}

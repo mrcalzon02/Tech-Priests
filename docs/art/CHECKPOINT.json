@@ -5,7 +5,9 @@
     "Repository reconciliation and evidence inventory",
     "Local V15 six-control recoil rig preparation and independent GLB inspection",
     "Four corrupt workbench working atlases regenerated from committed V5 source",
-    "V16 removes 1764 inherited degenerate triangles with exact surviving surface correspondence; independent native/GLB zero-degenerate readback"
+    "V16 removes 1764 inherited degenerate triangles with exact surviving surface correspondence; independent native/GLB zero-degenerate readback",
+    "Recovered approved A02 animated lobber and original turret/camera from 94 verified binary source parts; corrected initial source authority audit",
+    "Ran A02 native 64-heading animation-state validation and new heading-16 three-pass pilot locally"
   ],
   "verification": {
     "graphical_client": "not run",
@@ -13,18 +15,20 @@
     "installed_atlases": "96 files; 3288 cells",
     "behavior_tests": "not run",
     "all_entity_pngs": "194/194 full PNG verify/decode",
-    "rig": "6 independent controls; 302 other meshes preserved; native/GLB reopened"
+    "rig": "Approved A02 restored: 64-heading idle/transition/extreme checks and six independent firing states pass locally; full capture incomplete"
   },
   "open_defects": [
-    "Lobber loaders/hatches/belts/grenade props/hoses not rigged or animated",
     "Condenser V21 native source remains Library-linked and unlocated locally",
     "Thruster platform/body/cap alignment needs graphical jig",
-    "Lumberyard and metallic hydrogen/plasma chain sources unlocated"
+    "Lumberyard and metallic hydrogen/plasma chain sources unlocated",
+    "A02 full 64-heading capture, final atlases and native graphics integration still incomplete"
   ],
-  "next_slice": "Continue from geometry-clean V16: complete one independent loader/hatch/belt/grenade/hose station and inspect motion; pursue exact condenser V21 and missing chain/lumberyard sources.",
+  "next_slice": "Monitor existing live A02 download/seeder/Blender controller, verify source identities and reuse completed frames; do not rebuild the pre-existing approved rig or launch duplicate managers. Finish all 384 chunks, assemble and integrate.",
   "automation": "tech-priests-local-model-completion, every four hours",
   "publication": "Read exact delivered SHA and status from issue #13; never infer publication from local commit",
   "local_work": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work",
   "compatible_blender": "work\\blender-5.0.1\\blender-5.0.1-windows-x64\\blender.exe",
-  "source_base": "3cc400f27047f83fce96795da698914af6eab522"
+  "source_base": "3cc400f27047f83fce96795da698914af6eab522",
+  "current_lobber_source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+  "live_capture_state": "work\\lobber-a02-rendered\\local-capture-state.json"
 }
