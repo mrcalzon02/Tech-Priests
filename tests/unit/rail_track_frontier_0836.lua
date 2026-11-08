@@ -108,6 +108,24 @@ assert(Track.verify_pending(pair)==true
   and mission.rail_frontier_0836.built_units[2]==2102
   and mission.pending_rail_0836==nil and item_count==698,
   "connected second 0338 rail was not verified")
+-- Do not spend the next rail against a replacement in the old location.
+local second_real=sites[14]
+sites[14]={valid=true,unit_number=2999,name="straight-rail",
+  position={x=14,y=0},direction=4,force=force}
+local tampered_mission={status="building-physical-rail",
+  root_station_unit=104,target={x=512,y=0},
+  surface_index=1,force_index=1,
+  rail_frontier_0836={segment=2,last_position={x=14,y=0},
+    direction=4,built_units={2101,2102},start_position={x=12,y=0}}}
+local tampered_pair={station=pair.station,priest=pair.priest,
+  remote_rail_outpost_0835=tampered_mission}
+local altered,altered_reason=Track.plan_next(tampered_pair)
+assert(not altered and altered_reason=="previous-physical-rail-identity-changed"
+  and tampered_mission.status=="rail-track-blocked"
+  and tampered_mission.rail_frontier_0836.segment==2
+  and tampered_pair.construction_request==nil and item_count==698,
+  "replacement predecessor caused an unauthorized rail item request")
+sites[14]=second_real
 local third_ok,third_reason=Track.service_pair(pair)
 local third_req=pair.construction_request
 local pending=mission.pending_rail_0836
@@ -140,6 +158,17 @@ local detached_pair={station=pair.station,priest=pair.priest,
   remote_rail_outpost_0835=detached_mission,
   construction_last_task_0338={request_value=detached_req,
     phase="complete",built_entity=second}}
+-- A new physical 0338 receipt does not legitimize a replaced predecessor.
+local kept_id=detached_mission.rail_frontier_0836.built_units[1]
+detached_mission.rail_frontier_0836.built_units[1]=2998
+local wrong_id,wrong_id_reason=Track.verify_pending(detached_pair)
+assert(not wrong_id and wrong_id_reason=="previous-physical-rail-identity-changed"
+  and detached_mission.rail_frontier_0836.segment==1
+  and detached_mission.pending_rail_0836.request==detached_req
+  and item_count==698,
+  "completed rail incorrectly reconciled against another predecessor")
+detached_mission.rail_frontier_0836.built_units[1]=kept_id
+detached_mission.status="building-physical-rail"
 local detached_ok,detached_reason=Track.verify_pending(detached_pair)
 assert(not detached_ok
   and detached_reason=="physical-rail-segments-disconnected"

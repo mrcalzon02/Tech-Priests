@@ -209,6 +209,47 @@ local function inspect(s,elapsed)
       " unit="..tostring(first_unit)..
       " station_rail_delta="..tostring(s.start_rail-current_rail))
   end
+  -- Distinct native intermediate gate: two original 0338-built rails,
+  -- separate real item debits and Factorio's actual graph connectivity.
+  if elapsed>=36000 and not s.connected_track_verified then
+    local frontier=objective and objective.rail_frontier_0836
+    local ids=frontier and frontier.built_units
+    local first,second
+    for _,track in ipairs(rails) do
+      if track.valid and track.name=="straight-rail"
+          and track.force==station.force then
+        if ids and track.unit_number==ids[1] then first=track end
+        if ids and track.unit_number==ids[2] then second=track end
+      end
+    end
+    local connected=false
+    if first and second and first~=second
+        and type(first.get_connected_rail)=="function" then
+      for _,rail_direction in ipairs({
+        defines.rail_direction.front,defines.rail_direction.back}) do
+        local ok,neighbor=pcall(first.get_connected_rail,{
+          rail_direction=rail_direction,
+          rail_connection_direction=defines.rail_connection_direction.straight})
+        if ok and neighbor==second then connected=true;break end
+      end
+    end
+    local current_rail=station.get_inventory(defines.inventory.chest)
+      .get_item_count("rail")
+    if not(frontier and frontier.segment>=2 and first and second
+        and connected and s.start_rail-current_rail>=2) then
+      fail("TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN"..
+        " segment="..tostring(frontier and frontier.segment)..
+        " first="..tostring(first and first.unit_number)..
+        " second="..tostring(second and second.unit_number)..
+        " native_connected="..tostring(connected)..
+        " stock_delta="..tostring(s.start_rail-current_rail))
+    end
+    s.connected_track_verified=true
+    emit("PASS two distinct 0338-debited native-connected rails"..
+      " first_unit="..first.unit_number..
+      " second_unit="..second.unit_number..
+      " station_rail_delta="..(s.start_rail-current_rail))
+  end
   local locomotives=surface.find_entities_filtered{
     name="locomotive",area={{-25,-16},{s.natural_ore_x+28,17}},
     force=station.force}

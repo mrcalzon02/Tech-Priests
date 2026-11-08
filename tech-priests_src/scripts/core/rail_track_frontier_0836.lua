@@ -119,8 +119,14 @@ function M.plan_next(pair)
     return reject(m,"no-physical-rail-placed")
   end
   if route.last_position then
-    if not track_at(pair,route.last_position,direction)then
+    local predecessor=track_at(pair,route.last_position,direction)
+    if not predecessor then
       return reject(m,"previous-physical-rail-missing")
+    end
+    -- A same-position replacement is not the original 0338-item-debited rail.
+    if not (route.built_units
+        and predecessor.unit_number==route.built_units[route.segment]) then
+      return reject(m,"previous-physical-rail-identity-changed")
     end
     if next_pos.x-route.last_position.x~=M.segment_step then
       return reject(m,"disconnected-rail-step")
@@ -189,6 +195,11 @@ function M.verify_pending(pair)
   if pending.segment>1 then
     local predecessor=route.last_position
       and track_at(pair,route.last_position,pending.direction)
+    if not (valid(predecessor) and route.built_units
+        and predecessor.unit_number==route.built_units[route.segment]) then
+      -- Keep the real builder debit; refuse identity substitution.
+      return reject(m,"previous-physical-rail-identity-changed")
+    end
     if not connected_straight_rails(predecessor,actual)then
       -- Keep the physical item debit and built entity, but do not advance
       -- an untraversable frontier or claim a completed train route.
