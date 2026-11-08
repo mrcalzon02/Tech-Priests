@@ -177,9 +177,9 @@ assert(not detached_ok
   and detached_mission.pending_rail_0836.request==detached_req
   and item_count==698,
   "two adjacent engine-disconnected rails were falsely counted")
--- Boundary: 320 original 0338-debited rail sections have already been
--- built. Exactly reachable x=668 must conclude without a 321st item debit;
--- x=670 cannot, and a lost final original rail may not claim completion.
+-- Boundary: 320 original 0338-debited rail sections end at x=650.
+-- Target x=666 is within 16 tiles of a REAL last rail; x=668 is not,
+-- and a lost original final rail may not claim completion.
 local terminal_rail={valid=true,unit_number=3201,name="straight-rail",
   position={x=650,y=0},direction=4,force=force}
 sites[650]=terminal_rail
@@ -191,22 +191,22 @@ local function terminal_case(target_x)
   return {station=pair.station,priest=pair.priest,
     remote_rail_outpost_0835=objective},objective
 end
-local terminal_pair,terminal_mission=terminal_case(668)
+local terminal_pair,terminal_mission=terminal_case(666)
 local terminal_ok,terminal_why=Track.plan_next(terminal_pair)
 assert(not terminal_ok and terminal_why=="physical-frontier-reached"
   and terminal_mission.status=="rail-track-established"
   and terminal_mission.rail_frontier_0836.segment==320
   and terminal_pair.construction_request==nil and item_count==698,
-  "exact capacity physical frontier falsely refused as out of segments")
-local over_pair,over_mission=terminal_case(670)
+  "physically reached x=666 frontier falsely refused as out of segments")
+local over_pair,over_mission=terminal_case(668)
 local over_ok,over_why=Track.plan_next(over_pair)
 assert(not over_ok and over_why=="maximum-verified-rail-segments"
   and over_mission.status=="rail-track-blocked"
   and over_mission.rail_frontier_0836.segment==320
   and over_pair.construction_request==nil and item_count==698,
-  "over-budget target requested an unauthorized 321st rail")
+  "unbuilt x=652 candidate falsely completed an unreachable x=668 target")
 sites[650]=nil
-local missing_pair,missing_mission=terminal_case(668)
+local missing_pair,missing_mission=terminal_case(666)
 local missing_ok,missing_why=Track.plan_next(missing_pair)
 assert(not missing_ok and missing_why=="previous-physical-rail-missing"
   and missing_mission.status=="rail-track-blocked"

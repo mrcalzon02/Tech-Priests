@@ -121,17 +121,20 @@ function M.plan_next(pair)
       return reject(m,"disconnected-rail-step")
     end
   end
-  -- The 320th credited rail is at x=650 from a station at x=0.
-  -- The next candidate x=652 already meets a target at x=668 with
-  -- sixteen tiles clearance: completion precedes budget exhaustion.
-  if next_pos.x>=target.x-M.destination_clearance then
-    if route.segment>0 then
-      m.status="rail-track-established"
-      m.stage="physical-rail-frontier-reached"
-      m.next_step="validate-train-route-connectivity"
-      m.last_update_tick=now()
-      return false,"physical-frontier-reached"
-    end
+  -- Completion requires the LAST ACTUALLY BUILT rail to lie within
+  -- destination clearance. The next candidate is not a physical rail:
+  -- at capacity segment 320 is x=650, so x=666 is reachable but x=668
+  -- is not. Never credit a route using hypothetical future geometry.
+  if route.segment>0 and route.last_position
+      and route.last_position.x>=target.x-M.destination_clearance then
+    m.status="rail-track-established"
+    m.stage="physical-rail-frontier-reached"
+    m.next_step="validate-train-route-connectivity"
+    m.last_update_tick=now()
+    return false,"physical-frontier-reached"
+  end
+  if route.segment==0
+      and next_pos.x>=target.x-M.destination_clearance then
     return reject(m,"no-physical-rail-placed")
   end
   if route.segment>=M.max_segments then

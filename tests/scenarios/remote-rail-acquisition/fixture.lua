@@ -5,9 +5,9 @@ local M={}
 local Frontier=require("scripts.core.rail_track_frontier_0836")
 local PREFIX="[TP-REMOTE-RAIL-TEST] "
 -- Keep the native target inside the production builder's counted segment
--- budget, not merely the observer's much larger reconnaissance radius.
+-- budget, using the last REAL item-debited rail, not an unbuilt next step.
 local MAX_NATIVE_TARGET_X=math.min(960,
-  Frontier.start_offset+Frontier.segment_step*Frontier.max_segments
+  Frontier.start_offset+Frontier.segment_step*(Frontier.max_segments-1)
   +Frontier.destination_clearance)
 local STATION={x=0,y=0}
 local ORE -- Selected from pre-existing native world-generated iron ore.

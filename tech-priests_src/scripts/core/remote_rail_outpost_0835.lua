@@ -109,9 +109,9 @@ function M.assess(pair)
   end
   -- 0836 stops after its MAXIMUM counted builder segments. A farther
   -- charted patch must not steal a mission that cannot ever reach it.
-  -- The last credited rail is at offset+(capacity-1)*step; the next
-  -- step can end the frontier only within its destination clearance.
-  local reachable=offset+capacity*step+clearance
+  -- Only an ACTUALLY CREDITED last rail can complete the frontier.
+  -- Do not include a future unbuilt candidate in the reachable bound.
+  local reachable=offset+(capacity-1)*step+clearance
   local max_target=math.min(M.remote_max,reachable)
   if max_target<M.remote_min then
     return nil,"rail-corridor-geometry-unavailable"

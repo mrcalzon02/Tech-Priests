@@ -6,7 +6,7 @@ local Frontier=require("scripts.core.rail_track_frontier_0836")
 local max_reachable=math.min(Rail.remote_max,
   Frontier.start_offset+Frontier.max_segments*Frontier.segment_step
   +Frontier.destination_clearance)
-assert(max_reachable==668,"unexpected 0836 reachable target budget")
+assert(max_reachable==666,"unexpected 0836 physical-rail reach budget")
 game={tick=1000}
 defines={inventory={chest=1}}
 local qty={
@@ -22,7 +22,8 @@ local force={index=1,technologies={
     railway={researched=true},
     ["automated-rail-transportation"]={researched=true}}}
 force.is_chunk_charted=function(_,sector)
-  return intel and sector.y==0 and (sector.x==8 or sector.x==16 or sector.x==25)
+  return intel and sector.y==0 and (sector.x==8 or sector.x==16
+    or sector.x==20 or sector.x==25)
 end
 local ore={valid=true,name="iron-ore",unit_number=991,
   type="resource",surface=surface,position={x=512,y=0},amount=10000}
@@ -30,6 +31,10 @@ local off_corridor={valid=true,name="iron-ore",unit_number=992,
   type="resource",surface=surface,position={x=256,y=16},amount=10000}
 local beyond_segment_budget={valid=true,name="iron-ore",unit_number=993,
   type="resource",surface=surface,position={x=800,y=0},amount=10000}
+local terminal_reachable={valid=true,name="iron-ore",unit_number=994,
+  type="resource",surface=surface,position={x=666,y=0},amount=10000}
+local terminal_unreachable={valid=true,name="iron-ore",unit_number=995,
+  type="resource",surface=surface,position={x=668,y=0},amount=10000}
 local remote_entities={ore}
 surface.find_entities_filtered=function(args)
   assert(args.type=="resource" and args.name=="iron-ore",
@@ -88,6 +93,14 @@ remote=true
 -- budget is NOT reachable merely because it is within the 1024-tile survey.
 remote_entities={beyond_segment_budget}
 blocked("no-charted-rail-corridor-ore")
+-- Native physical frontier ends at x=650, not its unbuilt x=652 candidate.
+remote_entities={terminal_unreachable}
+blocked("no-charted-rail-corridor-ore")
+remote_entities={terminal_reachable}
+local edge_target,edge_reason=Rail.assess(pair)
+assert(edge_reason=="starved-charted-patch"
+    and edge_target and edge_target.position.x==666,
+  "real 320th rail at x=650 should reach only an x=666 destination")
 -- A closer, charted ore deposit above the eastbound rail corridor must
 -- not permanently divert 0836 into "terrain-route-planner-required".
 remote_entities={off_corridor,beyond_segment_budget,ore}
