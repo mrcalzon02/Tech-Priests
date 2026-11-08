@@ -609,3 +609,6 @@ require("prototypes.workbench_graphics")
 
 -- Boiler V08: authored four-way animation and native rear-row pipe interfaces.
 require("prototypes.generated_graphics.emergency-boiler-v08")
+
+-- Hydrogen V01: authored fixed-direction body; retain native conditional pipe caps.
+require("prototypes.generated_graphics.hydrogen-thruster-v01")

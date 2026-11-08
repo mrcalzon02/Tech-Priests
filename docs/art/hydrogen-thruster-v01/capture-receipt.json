@@ -1,0 +1,251 @@
+{
+  "source_sha256": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+  "status": "CAPTURED_REQUIRES_REVIEW",
+  "files": [
+    {
+      "state": "idle",
+      "index": 0,
+      "source_frame": 0,
+      "pass": "beauty",
+      "file": "idle-00-beauty.png",
+      "sha256": "f98d82758f07265497767a7b1704aedc60c6055550e38fa451a0e979baef6a98"
+    },
+    {
+      "state": "idle",
+      "index": 0,
+      "source_frame": 0,
+      "pass": "emission",
+      "file": "idle-00-emission.png",
+      "sha256": "924ff4330aad29c562f28c9e0bd349e5cac2123d17b41850cd7690b3e28758a1"
+    },
+    {
+      "state": "idle",
+      "index": 1,
+      "source_frame": 1,
+      "pass": "beauty",
+      "file": "idle-01-beauty.png",
+      "sha256": "f0914a5767f4f8c2c09d72c10cc90ceb0e9d589b9957feec2c521d6da94d2784"
+    },
+    {
+      "state": "idle",
+      "index": 1,
+      "source_frame": 1,
+      "pass": "emission",
+      "file": "idle-01-emission.png",
+      "sha256": "c5703851f9407a0c4f6a90377f85417b59c7ed6a8a511ac9bd3d7c275e3c0f6b"
+    },
+    {
+      "state": "idle",
+      "index": 2,
+      "source_frame": 2,
+      "pass": "beauty",
+      "file": "idle-02-beauty.png",
+      "sha256": "0f0ee7730ac0ece52fe48e8006d2cc58776ef1968785cad38d542b789cd02494"
+    },
+    {
+      "state": "idle",
+      "index": 2,
+      "source_frame": 2,
+      "pass": "emission",
+      "file": "idle-02-emission.png",
+      "sha256": "14c8606e28cc1230a1336e0f39cedee2197d41f2b0831654fd77134b25df75b1"
+    },
+    {
+      "state": "idle",
+      "index": 3,
+      "source_frame": 3,
+      "pass": "beauty",
+      "file": "idle-03-beauty.png",
+      "sha256": "8ac1bdef262c1e0cf44c63073901493edc2555714bf85aadd85dd9f469def249"
+    },
+    {
+      "state": "idle",
+      "index": 3,
+      "source_frame": 3,
+      "pass": "emission",
+      "file": "idle-03-emission.png",
+      "sha256": "e4751413161deb926756cbc31c1aa1d4918fa550bb5271d3b38d180326d41985"
+    },
+    {
+      "state": "idle",
+      "index": 4,
+      "source_frame": 4,
+      "pass": "beauty",
+      "file": "idle-04-beauty.png",
+      "sha256": "58c1429038dfc80522e09ca917f115478ec996072812d53226af1fd45e0c401e"
+    },
+    {
+      "state": "idle",
+      "index": 4,
+      "source_frame": 4,
+      "pass": "emission",
+      "file": "idle-04-emission.png",
+      "sha256": "fc792a57701042584f2aa9e1497bfdcbe8109e6d7ea221678705d37165740547"
+    },
+    {
+      "state": "idle",
+      "index": 5,
+      "source_frame": 5,
+      "pass": "beauty",
+      "file": "idle-05-beauty.png",
+      "sha256": "1f5b84ac4cba6ec94b54ade5ea24bab2a58127ec8220efcec70de5dc2891ee4b"
+    },
+    {
+      "state": "idle",
+      "index": 5,
+      "source_frame": 5,
+      "pass": "emission",
+      "file": "idle-05-emission.png",
+      "sha256": "c202e58f925ebbc71d062ba2add30ae9c5a39cd7489af6aad746185e8f840cbe"
+    },
+    {
+      "state": "idle",
+      "index": 6,
+      "source_frame": 6,
+      "pass": "beauty",
+      "file": "idle-06-beauty.png",
+      "sha256": "3e80294cc9a1c1c3db0191d943521b344adc2ae06b259ab54541985cb62cdcaa"
+    },
+    {
+      "state": "idle",
+      "index": 6,
+      "source_frame": 6,
+      "pass": "emission",
+      "file": "idle-06-emission.png",
+      "sha256": "1a07092a031fba7b76d29a4bfc0c6e6b016231eeec520b03f711142e5fbaf13c"
+    },
+    {
+      "state": "run",
+      "index": 0,
+      "source_frame": 16,
+      "pass": "beauty",
+      "file": "run-00-beauty.png",
+      "sha256": "34adf874111162114b0d7ed92f67f58cd2857f4906d8aed9015286ae55ead452"
+    },
+    {
+      "state": "run",
+      "index": 0,
+      "source_frame": 16,
+      "pass": "emission",
+      "file": "run-00-emission.png",
+      "sha256": "d517b1e4f359b56f58b83b5a0fa9e587565be691799dbfb5afce22dff02a6295"
+    },
+    {
+      "state": "run",
+      "index": 1,
+      "source_frame": 17,
+      "pass": "beauty",
+      "file": "run-01-beauty.png",
+      "sha256": "5a58eb6265bb21ef6333f047c2e1278398f563fdb3f901270343259bc8727080"
+    },
+    {
+      "state": "run",
+      "index": 1,
+      "source_frame": 17,
+      "pass": "emission",
+      "file": "run-01-emission.png",
+      "sha256": "33243ffaba91f0d083ef4bc2bd9e0853f5d302c737b968a9724576e2dc72374d"
+    },
+    {
+      "state": "run",
+      "index": 2,
+      "source_frame": 18,
+      "pass": "beauty",
+      "file": "run-02-beauty.png",
+      "sha256": "d1b7d37b7fac30017f0fef118e4a9c3a1bbdf79b41ef7d33249e160986e10f84"
+    },
+    {
+      "state": "run",
+      "index": 2,
+      "source_frame": 18,
+      "pass": "emission",
+      "file": "run-02-emission.png",
+      "sha256": "db55620542bf34bc56048be1a57ce88185b561981d0db62addfa268a909a8628"
+    },
+    {
+      "state": "run",
+      "index": 3,
+      "source_frame": 19,
+      "pass": "beauty",
+      "file": "run-03-beauty.png",
+      "sha256": "a1d7c232e964ec55a89711549a0242cfb6ea4e2d94f2afaab03029e38039d485"
+    },
+    {
+      "state": "run",
+      "index": 3,
+      "source_frame": 19,
+      "pass": "emission",
+      "file": "run-03-emission.png",
+      "sha256": "606fab226d6a1bcf5b7dd8147c6c10973f1e106ed3ea3b353363abb942236b9d"
+    },
+    {
+      "state": "run",
+      "index": 4,
+      "source_frame": 20,
+      "pass": "beauty",
+      "file": "run-04-beauty.png",
+      "sha256": "3602e06d30a6277ca0875e5a37e9b057b4cdc7494c2fcba85b7bbdc513ddd59a"
+    },
+    {
+      "state": "run",
+      "index": 4,
+      "source_frame": 20,
+      "pass": "emission",
+      "file": "run-04-emission.png",
+      "sha256": "15508c6b64b623241ca0117bc6a7ae1da433867acff69e4136a4e81afed3076d"
+    },
+    {
+      "state": "run",
+      "index": 5,
+      "source_frame": 21,
+      "pass": "beauty",
+      "file": "run-05-beauty.png",
+      "sha256": "a7c71250827e51b22df856d8ac3e6bf1a04134e2fee08729c3c6981a28115419"
+    },
+    {
+      "state": "run",
+      "index": 5,
+      "source_frame": 21,
+      "pass": "emission",
+      "file": "run-05-emission.png",
+      "sha256": "8cbbd9f5ce22fee53254cf4054c2cd7d1255c5ffaf9653ac74b8e98ae1472d9b"
+    },
+    {
+      "state": "run",
+      "index": 6,
+      "source_frame": 22,
+      "pass": "beauty",
+      "file": "run-06-beauty.png",
+      "sha256": "89cf19a2ba62b678033a02aef92b5808b86f617af37cb9cceed8618f421de9d6"
+    },
+    {
+      "state": "run",
+      "index": 6,
+      "source_frame": 22,
+      "pass": "emission",
+      "file": "run-06-emission.png",
+      "sha256": "b3ca711832c96df090dbe588f6dc86f0b6988e3b6710ad01f954a8d4d7e5b327"
+    }
+  ],
+  "states": {
+    "idle": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "run": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ]
+  },
+  "scope": "Fixed 45-degree camera, 512x768, 16 CPU samples, two threads. No mesh motion invented; 7+7 source emission poses."
+}

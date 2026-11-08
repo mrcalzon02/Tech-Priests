@@ -61,3 +61,7 @@ Keep both helper files beside the producer. Packaging rejects a capture from a d
 ## Boiler cold-pose model interchange
 
 `boiler_interchange/` contains the exercised hash-guarded static branch builder, raw GLB audit, independent reimport/source comparison, actual mating-plane/socket checks and CPU render review. See `docs/art/boiler-v08-glb/README.md` for full commands and limitations. This branch does not replace the production animation or installed sprites; runtime ports and directional placement remain fixed.
+
+## Authored hydrogen thruster V01
+
+`hydrogen_thruster_v01/` provides the exercised fixed-direction capture, independent export/interface audit, geometry-shadow render, exact atlas packer and isolated native frozen-frame review. The game-specific builder and PBR source maps are under `art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/`. The generated module imports after legacy rescaling; native cap overlays/physical ports remain separate. See `docs/art/hydrogen-thruster-v01/README.md`. Do not substitute these fixed-direction rules for boiler rotations or the two distinct fusion bodies.

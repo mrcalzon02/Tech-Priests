@@ -1,0 +1,14 @@
+{
+  "source_model_sha256": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+  "module_sha256": "c5e3115e94b64309dfa5925b2a812760ef719bea7a7e31619519bf66540d5e4d",
+  "images": {
+    "hydrogen-thruster-v01-idle.png": "6769eac7b445da20856fb723c9ac4cc0fd4621824a4579e79c7f261b14b8b7ac",
+    "hydrogen-thruster-v01-run-emission.png": "0b429230f52a9823ce8f58dea6e4f52d6a533975f4e7e6dc831297fa827e410e",
+    "hydrogen-thruster-v01-run.png": "2dd51726ec5ee193546696bd2c4d58d73134c8778b72128446878d4e023eaa73",
+    "hydrogen-thruster-v01-shadow.png": "eea192d313ac7394d6bcfcbfbc975fee6ffdc16823b6be1e68b53992f7e1b139"
+  },
+  "actual_target_idle": "hydrogen-thruster",
+  "forced_run_graphics_only": "hydrogen-model-run",
+  "legacy_comparison": "hydrogen-model-legacy",
+  "nonvisual_prototype_and_cap_preservation_asserted_in_data_stage": true
+}

@@ -1,0 +1,1806 @@
+{
+  "status": "SOURCE_AUTHORED_CANDIDATE_REQUIRES_VISUAL_AND_NATIVE_REVIEW",
+  "source_sprite_sha256": "5b7daa6196aac7f232cfa4dfa7bf833b318451b05d2f49aa3201dc55213aa3c2",
+  "source_run_sprite_sha256": "d62a7eb04bdd7dec8076909ad02ae8d423a77865f5d64456c80fb9b892fa95a3",
+  "builder_sha256": "af389f531a2d7777f659fb891fdcd40a2164f8c1192b02b1ceecca9f9028cc98",
+  "parts": [
+    {
+      "name": "Upper mounting beam",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Lower mounting crossmember",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Central regulator spine",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Central regulator seat",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Recessed regulator rim",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud.001",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud.002",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud.003",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud.004",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud.005",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Central regulator seat.001",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Recessed regulator rim.001",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud.006",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud.007",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud.008",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud.009",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud.010",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Regulator rim stud.011",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Crossbeam saddle -1.35",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Saddle fastener",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Saddle fastener.001",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Crossbeam saddle 0",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Saddle fastener.002",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Saddle fastener.003",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Crossbeam saddle 1.35",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Saddle fastener.004",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Saddle fastener.005",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Platform saddle foot -1.35",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Supported saddle cheek",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Deck foot bolt",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Supported saddle cheek.001",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Deck foot bolt.001",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Platform saddle foot 1.35",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Supported saddle cheek.002",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Deck foot bolt.002",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Supported saddle cheek.003",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Deck foot bolt.003",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Beam face rivet",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Beam face rivet.001",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Beam face rivet.002",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Beam face rivet.003",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Beam face rivet.004",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Beam face rivet.005",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Beam face rivet.006",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Beam face rivet.007",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Beam face rivet.008",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Beam face rivet.009",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Diagonal shoulder -1",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Shoulder raised rib -1",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Shoulder pivot",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Shoulder pivot pin",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Shoulder pivot.001",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Shoulder pivot pin.001",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Diagonal shoulder 1",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Shoulder raised rib 1",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Shoulder pivot.002",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Shoulder pivot pin.002",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Shoulder pivot.003",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Shoulder pivot pin.003",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Paired canister -1",
+      "triangles": 864,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister rolled restraint",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister rolled restraint.001",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister rolled restraint.002",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister rolled restraint.003",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister lower attachment",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister saddle",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister saddle.001",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister header feed -1",
+      "triangles": 400,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer pressure return -1",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Paired canister 1",
+      "triangles": 864,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister rolled restraint.004",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister rolled restraint.005",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister rolled restraint.006",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister rolled restraint.007",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister lower attachment.001",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister saddle.002",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister saddle.003",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Canister header feed 1",
+      "triangles": 400,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer pressure return 1",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed column 0",
+      "triangles": 192,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.001",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.002",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.003",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed upper manifold",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed receiver screw",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed column 1",
+      "triangles": 192,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.004",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.005",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.006",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.007",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed upper manifold.001",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed receiver screw.001",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed column 2",
+      "triangles": 192,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.008",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.009",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.010",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.011",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed upper manifold.002",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed receiver screw.002",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed column 3",
+      "triangles": 192,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.012",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.013",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.014",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.015",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed upper manifold.003",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed receiver screw.003",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed column 4",
+      "triangles": 192,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.016",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.017",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.018",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.019",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed upper manifold.004",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed receiver screw.004",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed column 5",
+      "triangles": 192,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.020",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.021",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.022",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed collar.023",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed upper manifold.005",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Feed receiver screw.005",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Lower feed return -1",
+      "triangles": 400,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer actuator body -1",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer actuator collar",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer actuator collar.001",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer actuator collar.002",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer actuator collar.003",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Source actuator helical thread -1",
+      "triangles": 6720,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Actuator support clevis",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Clevis fixed pin",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Actuator support clevis.001",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Clevis fixed pin.001",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Lower feed return 1",
+      "triangles": 400,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer actuator body 1",
+      "triangles": 256,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer actuator collar.004",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer actuator collar.005",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer actuator collar.006",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Outer actuator collar.007",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Source actuator helical thread 1",
+      "triangles": 6720,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Actuator support clevis.002",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Clevis fixed pin.002",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Actuator support clevis.003",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Clevis fixed pin.003",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Main pressure chamber",
+      "triangles": 640,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure chamber retaining band",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.001",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.002",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.003",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.004",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.005",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.006",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.007",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.008",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.009",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.010",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.011",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure chamber retaining band.001",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.012",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.013",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.014",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.015",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.016",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.017",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.018",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.019",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.020",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.021",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.022",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.023",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure chamber retaining band.002",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.024",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.025",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.026",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.027",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.028",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.029",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.030",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.031",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.032",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.033",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.034",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure flange stud.035",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure casing axial panel seam",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure casing axial panel seam.001",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure casing axial panel seam.002",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure casing axial panel seam.003",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure casing axial panel seam.004",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure casing axial panel seam.005",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure casing axial panel seam.006",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Pressure casing axial panel seam.007",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Continuous hollow bell",
+      "triangles": 2560,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle external transverse seam",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle external transverse seam.001",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle external transverse seam.002",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle external transverse seam.003",
+      "triangles": 384,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 0",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 0",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.001",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.002",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 1",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 1",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.003",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.004",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.005",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 2",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 2",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.006",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.007",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.008",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 3",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 3",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.009",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.010",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.011",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 4",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 4",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.012",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.013",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.014",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 5",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 5",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.015",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.016",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.017",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 6",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 6",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.018",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.019",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.020",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 7",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 7",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.021",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.022",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.023",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 8",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 8",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.024",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.025",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.026",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 9",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 9",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.027",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.028",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.029",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 10",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 10",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.030",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.031",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.032",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 11",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Physical inner thermal liner 11",
+      "triangles": 1200,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.033",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.034",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.035",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Emblem backing boss",
+      "triangles": 528,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Winged skull cranium",
+      "triangles": 1216,
+      "numerical_faces_removed": 8,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast wing feather",
+      "triangles": 84,
+      "numerical_faces_removed": 24,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast wing feather.001",
+      "triangles": 84,
+      "numerical_faces_removed": 24,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast wing feather.002",
+      "triangles": 84,
+      "numerical_faces_removed": 24,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast wing feather.003",
+      "triangles": 84,
+      "numerical_faces_removed": 24,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast wing feather.004",
+      "triangles": 84,
+      "numerical_faces_removed": 24,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast wing feather.005",
+      "triangles": 84,
+      "numerical_faces_removed": 24,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast wing feather.006",
+      "triangles": 84,
+      "numerical_faces_removed": 24,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast wing feather.007",
+      "triangles": 84,
+      "numerical_faces_removed": 24,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Skull jaw",
+      "triangles": 528,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast skull tooth",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast skull tooth.001",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast skull tooth.002",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast skull tooth.003",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "Cast skull tooth.004",
+      "triangles": 108,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "fuel socket flange",
+      "triangles": 576,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "fuel closed seat",
+      "triangles": 320,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "fuel routed supply neck",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "fuel flange fastener",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "fuel flange fastener.001",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "fuel flange fastener.002",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "fuel flange fastener.003",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "fuel flange fastener.004",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "fuel flange fastener.005",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "oxidizer socket flange",
+      "triangles": 576,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "oxidizer closed seat",
+      "triangles": 320,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "oxidizer routed supply neck",
+      "triangles": 600,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "oxidizer flange fastener",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "oxidizer flange fastener.001",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "oxidizer flange fastener.002",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "oxidizer flange fastener.003",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "oxidizer flange fastener.004",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    },
+    {
+      "name": "oxidizer flange fastener.005",
+      "triangles": 48,
+      "numerical_faces_removed": 0,
+      "uv_faces_repaired": 0
+    }
+  ],
+  "mesh_count": 291,
+  "triangles": 92996,
+  "axis": [
+    0.0,
+    -0.9063078165054321,
+    -0.4226182699203491
+  ],
+  "transverse_up": [
+    0.0,
+    -0.4226182699203491,
+    0.9063078165054321
+  ],
+  "camera_elevation": 45,
+  "orthographic_scale": 9,
+  "render_cell": [
+    512,
+    768
+  ],
+  "states": {
+    "idle": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "run": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ]
+  },
+  "fixed_direction": "north; no four-way variants invented",
+  "source_reference_features": [
+    "crossbeam and saddles",
+    "paired canisters",
+    "diagonal shoulders",
+    "six feed columns",
+    "outer actuators",
+    "bolted pressure chamber",
+    "continuous hollow flared bell",
+    "cast winged skull",
+    "explicit native socket flanges"
+  ],
+  "native_sha256": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+  "glb_sha256": "302afbedb000f75987f9474ef042299f6f44e99b3f63758720f68f0c1c7417ea"
+}

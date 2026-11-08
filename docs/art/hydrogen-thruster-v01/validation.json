@@ -1,0 +1,155 @@
+{
+  "status": "PASS_AUTHORED_HYDROGEN_MODEL_RENDER_AND_NATIVE_GRAPHICS_INTEGRATION",
+  "scope": "Model/render/export and exact-source graphical integration only. Real working-clock progression, propellant/consumption/thrust and behavior/regression are not tested. Source graphics are installed in the repository; no normal user profile or release ZIP was changed.",
+  "source_base": "833b5b0a7d35ad7f287dd1852a2a1d7ca86885c0",
+  "pipeline_base": "cb4b02123bd373f40462b6a9da32b3316896870e",
+  "mesh_count": 291,
+  "triangle_count": 92996,
+  "embedded_images": 18,
+  "materials": 7,
+  "fixed_native_direction": "north only; not rotatable",
+  "source_states": {
+    "idle": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "run": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ]
+  },
+  "source_cell_size": [
+    512,
+    768
+  ],
+  "native_scale": 0.375,
+  "native_shift": [
+    -2.9802322387695312e-08,
+    1.3184055089950562
+  ],
+  "native_drawing_box": [
+    [
+      -2.65,
+      -2.95
+    ],
+    [
+      2.65,
+      5.25
+    ]
+  ],
+  "native_body_alpha_bottom_tiles": 4.916061758995056,
+  "drawing_box_is_visual_culling_only": true,
+  "rendered_source_images": 28,
+  "exact_source_to_atlas_rgba_cells": 28,
+  "runtime_atlases": 4,
+  "source_only_idle_emission_export": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/exported-passes/hydrogen-thruster-v01-idle-emission.png",
+  "native_verified_source_files": 1432,
+  "native_png_count": 21,
+  "native_frozen_working_poses": 7,
+  "native_working_clock_cycle_proven": false,
+  "max_glb_position_delta": 2.384185791015625e-07,
+  "max_glb_uv_delta": 1.1920928955078125e-07,
+  "max_mouth_draw_error_px": 4.76837158203125e-06,
+  "mounting_heads_checked": 82,
+  "max_checked_head_support_distance": 1.0202671774095506e-06,
+  "no_declared_circuit_wire_socket": true,
+  "no_nonvisual_prototype_field_changes": true,
+  "native_cap_visualisations_preserved": true,
+  "all_entity_pngs_verified": 207,
+  "canonical_git_content_sha256": {
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/hydrogen-thruster-v01.blend": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/hydrogen-thruster-v01.glb": "302afbedb000f75987f9474ef042299f6f44e99b3f63758720f68f0c1c7417ea",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/build_model.py": "af389f531a2d7777f659fb891fdcd40a2164f8c1192b02b1ceecca9f9028cc98",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/make_textures.py": "56a1104a53018f653c355d017abbbc861f1675af9e06078ba6e36eec98a4ab23",
+    "tech-priests_src/prototypes/generated_graphics/hydrogen-thruster-v01.lua": "c5e3115e94b64309dfa5925b2a812760ef719bea7a7e31619519bf66540d5e4d",
+    "tech-priests_src/data-final-fixes.lua": "93bafda37b7d069caa7761007453f0d975fab236ff11f4500354d94d26ab8f02",
+    "tech-priests_src/info.json": "830f86e119a20eb5c23fd5ea60753271b84bdbaab8ba6f66514a93408d2fe5b3",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/bell-basecolor.png": "6d5601fdf7ea346dbb49a37b4a6578bfbb525847ad397de18e6fcc52dacdfb95",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/bell-metalrough.png": "8e0e838d487c83c743ac0c047bf97002a85c7d0c7b41c8413b2a7d813a9ea81e",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/bell-normal.png": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/brass-basecolor.png": "869d66660140979c9a99c758425c520205856c29decdf76d4bb7f21a2963519c",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/brass-metalrough.png": "7f5712279cc43a2c4dc1df2a1b0471965c56486a8fa88c688578192688321967",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/brass-normal.png": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/cast-basecolor.png": "4f4c6d065ba863b3512226db5f5746357cc8e384bbe3360cb3acaf390e79ecb8",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/cast-metalrough.png": "1034cd11e130cbf89649ac61bdd582b0c6fa3cba2e2b3878ee36e69b83480e14",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/cast-normal.png": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/dark-basecolor.png": "5706c4c4f00aa1efac62500bf1298279717a936d1190aaef76945fa5c768692f",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/dark-metalrough.png": "4193712c8926992e21763a12a3a2159f434b5d02eebf0b303182f0b9ded92c41",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/dark-normal.png": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/steel-basecolor.png": "394c94747c66e95de541b1b6019cc6fb42c40975b59149248d7908ae5fd21a16",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/steel-metalrough.png": "80345ba8983e3dc6c005a0e1242afdff5f55630b542ccd7b9f0aa28893f6b2ef",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/steel-normal.png": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/tank-basecolor.png": "c26d9b42c55ed8ba2a76b374752ab29a4dbe83c0187d1cdc5a1f73182f781663",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/tank-metalrough.png": "ad601a09c14c1b138210e7fdb3ae40882006904b718462d991c9071c474fdeca",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/tank-normal.png": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+    "tools/art/hydrogen_thruster_v01/audit_glb.py": "ea55a36c2f4f237b7523f675e654584d6eb4fa3a7d1b718c1cb15f3f7bdac7ba",
+    "tools/art/hydrogen_thruster_v01/capture.py": "bf64e1d4989b66e085976586d3ad1f847f35393f2cb2839bdb7a3d52a4c52f4f",
+    "tools/art/hydrogen_thruster_v01/package_candidate.py": "705acb793d37fe361b9a7a1e787d2dc6c201a82e5a8c6b899f36ecdaacdc0ba7",
+    "tools/art/hydrogen_thruster_v01/render_directional_shadow.py": "c254f5a819acaedb12be9cd389ed034c1f18f0d03b1f47b95a5e77ad3993e890",
+    "tools/art/hydrogen_thruster_v01/render_review.py": "0b53afd3d1b81443041be3dbf8e394ee6ae6d8d2e509c7cfdce47167e0b1620f",
+    "tools/art/hydrogen_thruster_v01/verify_interfaces.py": "afd0c548e7f508e3f46ebee4efe62e4e1e4d141b448d786f5d0c35fa329e4fa4",
+    "tools/art/hydrogen_thruster_v01/verify_roundtrip.py": "d7327b2239d0d3cc219abe325c31d066d6cfd163337486c7984136437a384411",
+    "tools/art/hydrogen_thruster_v01/native_review/prepare.py": "60171b2dd1c5fc57915f0afeac0716ee8df331e376cbf84a8446efa0f0d243a8",
+    "tools/art/hydrogen_thruster_v01/native_review/review.py": "8b09d5a4ba4e5272ee824a80a065e4f5615ab62783a8b8c87623cc0fe1fe3d80",
+    "tools/art/hydrogen_thruster_v01/native_review/control.lua": "198c5469e1e095657d9a44b8af2695aef521560c0a942e76472a45fcf9d80d05",
+    "tools/art/hydrogen_thruster_v01/native_review/json.lua": "c0ebf7662fa6fb11bd91676dde0c1b5acec10c8396d0d0478da16983fd7b7d7a",
+    "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-idle.png": "6769eac7b445da20856fb723c9ac4cc0fd4621824a4579e79c7f261b14b8b7ac",
+    "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png": "0b429230f52a9823ce8f58dea6e4f52d6a533975f4e7e6dc831297fa827e410e",
+    "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png": "2dd51726ec5ee193546696bd2c4d58d73134c8778b72128446878d4e023eaa73",
+    "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png": "eea192d313ac7394d6bcfcbfbc975fee6ffdc16823b6be1e68b53992f7e1b139",
+    "tech-priests_src/graphics/icons/hydrogen-thruster.png": "e451df0219e14d586fcc0b64a7d9fbd499ff4685724a254c452167eb0d763ae2"
+  },
+  "publication": "Read exact delivered SHA/readback from issue #13; local artifact evidence is not itself proof of a push.",
+  "remaining_goal": "Other three authored thruster bodies, full A02 capture/packaging/native integration, condenser/workbench/reactor/lumberyard and remaining asset-family ledger gates.",
+  "all_14_body_source_alpha_masks_exactly_identical": true,
+  "source_body_alpha_max_delta": 0,
+  "actual_glb_review_renders_unclipped": [
+    {
+      "file": "oblique.png",
+      "bbox": [
+        90,
+        75,
+        614,
+        557
+      ]
+    },
+    {
+      "file": "rear.png",
+      "bbox": [
+        96,
+        238,
+        610,
+        424
+      ]
+    },
+    {
+      "file": "rear-clay.png",
+      "bbox": [
+        96,
+        238,
+        610,
+        424
+      ]
+    }
+  ],
+  "hash_context": "Canonical bindings use Git LF for text and raw bytes for binary. Native tested-source.json binds Windows working-copy bytes before documentation checkpoints; these are not interchangeable hash contexts.",
+  "icon": {
+    "path": "tech-priests_src/graphics/icons/hydrogen-thruster.png",
+    "sha256": "e451df0219e14d586fcc0b64a7d9fbd499ff4685724a254c452167eb0d763ae2",
+    "size": [
+      64,
+      64
+    ],
+    "decision": "Existing reference icon reviewed and retained: same broad beam/paired-canister/single-bell identity. No item/recipe icon changes."
+  }
+}

@@ -1,0 +1,497 @@
+{
+  "status": "PASS_IMPORTED_MATING_PLANES_FOOT_CONTACT_FIXED_CAMERA_AND_MOUNTING_HEAD_CONTACT",
+  "contacts": [
+    {
+      "name": "fuel",
+      "position": [
+        -2.0,
+        0.5,
+        0.36000001430511475
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        -2.220446049250313e-16
+      ],
+      "actual_flange_bounds": [
+        [
+          -2.0,
+          0.2150000035762787,
+          0.07500001788139343
+        ],
+        [
+          -1.7599999904632568,
+          0.7849999666213989,
+          0.6449999809265137
+        ]
+      ],
+      "native_pixel_prediction": [
+        -64.0,
+        -18.0
+      ],
+      "native_pixel_target": [
+        -64,
+        -18
+      ]
+    },
+    {
+      "name": "oxidizer",
+      "position": [
+        2.0,
+        0.5,
+        0.36000001430511475
+      ],
+      "normal": [
+        1.0,
+        0.0,
+        -2.220446049250313e-16
+      ],
+      "actual_flange_bounds": [
+        [
+          1.7599999904632568,
+          0.2150000035762787,
+          0.07500001788139343
+        ],
+        [
+          2.0,
+          0.7849999666213989,
+          0.6449999809265137
+        ]
+      ],
+      "native_pixel_prediction": [
+        63.99999523162842,
+        -18.0
+      ],
+      "native_pixel_target": [
+        64,
+        -18
+      ]
+    }
+  ],
+  "feet": [
+    {
+      "name": "Platform saddle foot -1.35",
+      "min_z": 0.0
+    },
+    {
+      "name": "Platform saddle foot 1.35",
+      "min_z": 0.0
+    }
+  ],
+  "max_native_mouth_pixel_error": 4.76837158203125e-06,
+  "mounting_heads_checked": 82,
+  "max_checked_head_support_distance": 1.0202671774095506e-06,
+  "hardware": [
+    {
+      "name": "Regulator rim stud",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Regulator rim stud.001",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.002",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.003",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Regulator rim stud.004",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 3.725290298461914e-09
+    },
+    {
+      "name": "Regulator rim stud.005",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 3.725290298461914e-09
+    },
+    {
+      "name": "Regulator rim stud.006",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Regulator rim stud.007",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Regulator rim stud.008",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Regulator rim stud.009",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Regulator rim stud.010",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Regulator rim stud.011",
+      "support_group": "Recessed regulator rim",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Saddle fastener",
+      "support_group": "Crossbeam saddle",
+      "nearest_back_face_support_distance": 1.1920928955078125e-07
+    },
+    {
+      "name": "Saddle fastener.001",
+      "support_group": "Crossbeam saddle",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Saddle fastener.002",
+      "support_group": "Crossbeam saddle",
+      "nearest_back_face_support_distance": 9.313225746154785e-09
+    },
+    {
+      "name": "Saddle fastener.003",
+      "support_group": "Crossbeam saddle",
+      "nearest_back_face_support_distance": 3.725290298461914e-09
+    },
+    {
+      "name": "Saddle fastener.004",
+      "support_group": "Crossbeam saddle",
+      "nearest_back_face_support_distance": 1.1920928955078125e-07
+    },
+    {
+      "name": "Saddle fastener.005",
+      "support_group": "Crossbeam saddle",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Deck foot bolt",
+      "support_group": "Platform saddle foot",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Deck foot bolt.001",
+      "support_group": "Platform saddle foot",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Deck foot bolt.002",
+      "support_group": "Platform saddle foot",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Deck foot bolt.003",
+      "support_group": "Platform saddle foot",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Shoulder pivot pin",
+      "support_group": "Shoulder pivot",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Shoulder pivot pin.001",
+      "support_group": "Shoulder pivot",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Shoulder pivot pin.002",
+      "support_group": "Shoulder pivot",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Shoulder pivot pin.003",
+      "support_group": "Shoulder pivot",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Feed receiver screw",
+      "support_group": "Feed upper manifold",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Feed receiver screw.001",
+      "support_group": "Feed upper manifold",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Feed receiver screw.002",
+      "support_group": "Feed upper manifold",
+      "nearest_back_face_support_distance": 1.053671194739536e-08
+    },
+    {
+      "name": "Feed receiver screw.003",
+      "support_group": "Feed upper manifold",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Feed receiver screw.004",
+      "support_group": "Feed upper manifold",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Feed receiver screw.005",
+      "support_group": "Feed upper manifold",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Clevis fixed pin",
+      "support_group": "Actuator support clevis",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Clevis fixed pin.001",
+      "support_group": "Actuator support clevis",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Clevis fixed pin.002",
+      "support_group": "Actuator support clevis",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Clevis fixed pin.003",
+      "support_group": "Actuator support clevis",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.001",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 2.9802322387695312e-08
+    },
+    {
+      "name": "Pressure flange stud.002",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 4.214684778958144e-08
+    },
+    {
+      "name": "Pressure flange stud.003",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 3.1044083970144243e-10
+    },
+    {
+      "name": "Pressure flange stud.004",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 4.470348358154297e-08
+    },
+    {
+      "name": "Pressure flange stud.005",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.006",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.007",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 1.3328003944934608e-07
+    },
+    {
+      "name": "Pressure flange stud.008",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.009",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 3.104409784793205e-10
+    },
+    {
+      "name": "Pressure flange stud.010",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.011",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 8.429369557916289e-08
+    },
+    {
+      "name": "Pressure flange stud.012",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.013",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 8.429369557916289e-08
+    },
+    {
+      "name": "Pressure flange stud.014",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 4.214684778958144e-08
+    },
+    {
+      "name": "Pressure flange stud.015",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 3.064571885147416e-08
+    },
+    {
+      "name": "Pressure flange stud.016",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 4.214684778958144e-08
+    },
+    {
+      "name": "Pressure flange stud.017",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 8.429369557916289e-08
+    },
+    {
+      "name": "Pressure flange stud.018",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.019",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 1.3328003944934608e-07
+    },
+    {
+      "name": "Pressure flange stud.020",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.021",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 1.1920968745471328e-07
+    },
+    {
+      "name": "Pressure flange stud.022",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 2.9802322387695312e-08
+    },
+    {
+      "name": "Pressure flange stud.023",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud.024",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.025",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.026",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 2.9802322387695312e-08
+    },
+    {
+      "name": "Pressure flange stud.027",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 5.960545479410939e-08
+    },
+    {
+      "name": "Pressure flange stud.028",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 2.9802322387695312e-08
+    },
+    {
+      "name": "Pressure flange stud.029",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.030",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.031",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Pressure flange stud.032",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 1.4901161193847656e-07
+    },
+    {
+      "name": "Pressure flange stud.033",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 3.104409784793205e-10
+    },
+    {
+      "name": "Pressure flange stud.034",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 1.4901161193847656e-07
+    },
+    {
+      "name": "Pressure flange stud.035",
+      "support_group": "Pressure chamber retaining band",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Beam face rivet",
+      "support_group": "Upper mounting beam",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Beam face rivet.001",
+      "support_group": "Upper mounting beam",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Beam face rivet.002",
+      "support_group": "Upper mounting beam",
+      "nearest_back_face_support_distance": 2.920019426255749e-07
+    },
+    {
+      "name": "Beam face rivet.003",
+      "support_group": "Upper mounting beam",
+      "nearest_back_face_support_distance": 1.0202671774095506e-06
+    },
+    {
+      "name": "Beam face rivet.004",
+      "support_group": "Upper mounting beam",
+      "nearest_back_face_support_distance": 6.95742244261055e-07
+    },
+    {
+      "name": "Beam face rivet.005",
+      "support_group": "Upper mounting beam",
+      "nearest_back_face_support_distance": 2.9802322387695312e-08
+    },
+    {
+      "name": "Beam face rivet.006",
+      "support_group": "Upper mounting beam",
+      "nearest_back_face_support_distance": 5.960464477539063e-08
+    },
+    {
+      "name": "Beam face rivet.007",
+      "support_group": "Upper mounting beam",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Beam face rivet.008",
+      "support_group": "Upper mounting beam",
+      "nearest_back_face_support_distance": 0.0
+    },
+    {
+      "name": "Beam face rivet.009",
+      "support_group": "Upper mounting beam",
+      "nearest_back_face_support_distance": 0.0
+    }
+  ],
+  "scope": "One fixed native north-facing body. Imported model sockets and plane centers, two feet at the platform plane, and listed mounting-head groups only; this is not a claim about every geometric intersection or gameplay connectivity."
+}

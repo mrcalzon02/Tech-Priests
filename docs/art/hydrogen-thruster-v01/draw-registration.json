@@ -1,0 +1,53 @@
+{
+  "status": "MEASURED_REQUIRES_NATIVE_CAP_VISUAL_REVIEW",
+  "scale": 0.375,
+  "shift": [
+    -2.9802322387695312e-08,
+    1.3184055089950562
+  ],
+  "cell": [
+    512,
+    768
+  ],
+  "points": {
+    "fuel": {
+      "model_position": [
+        -2.0,
+        0.5,
+        0.36000001430511475
+      ],
+      "pixel": [
+        85.33333587646484,
+        223.49606323242188
+      ],
+      "target_native_pixel": [
+        -64,
+        -18
+      ],
+      "fit_shift": [
+        -2.9802322387695312e-08,
+        1.3184055089950562
+      ]
+    },
+    "oxidizer": {
+      "model_position": [
+        2.0,
+        0.5,
+        0.36000001430511475
+      ],
+      "pixel": [
+        426.6666564941406,
+        223.49606323242188
+      ],
+      "target_native_pixel": [
+        64,
+        -18
+      ],
+      "fit_shift": [
+        1.1920928955078125e-07,
+        1.3184055089950562
+      ]
+    }
+  },
+  "native_fluidbox_fields_unchanged": true
+}

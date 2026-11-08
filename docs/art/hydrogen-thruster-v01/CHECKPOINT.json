@@ -1,0 +1,11 @@
+{
+  "status": "PASS_MODEL_EXPORT_SOURCE_ATLASES_AND_EXACT_SOURCE_NATIVE_GRAPHICS_REVIEW",
+  "source_base": "833b5b0a7d35ad7f287dd1852a2a1d7ca86885c0",
+  "source_model_sha256": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+  "glb_sha256": "302afbedb000f75987f9474ef042299f6f44e99b3f63758720f68f0c1c7417ea",
+  "module_sha256": "c5e3115e94b64309dfa5925b2a812760ef719bea7a7e31619519bf66540d5e4d",
+  "scope": "Only visual code/resources, including a graphics drawing-box expansion. Original sprites retained; all functional fields/caps are preserved in prior native review. Final tracked-source native run still pending.",
+  "next": "Verify publication/readback, then Thetazine body against its own source reference; preserve existing A02 render workers.",
+  "validation": "validation.json",
+  "native_source_files": 1432
+}

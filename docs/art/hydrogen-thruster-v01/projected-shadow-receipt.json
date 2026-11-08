@@ -1,0 +1,24 @@
+{
+  "status": "RENDERED_REQUIRES_ALPHA_REVIEW",
+  "native_model_sha256": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+  "file": "projected-shadow.png",
+  "sha256": "eea192d313ac7394d6bcfcbfbc975fee6ffdc16823b6be1e68b53992f7e1b139",
+  "method": "Actual source triangles clipped to z >= platform plane, projected along parallel sunlight onto that plane, then rendered as a black matte with the unchanged camera. Not a painted or guessed shadow.",
+  "caster_meshes": 291,
+  "projected_faces": 20226,
+  "light_travel_direction": [
+    4.0,
+    6.0,
+    -8.0
+  ],
+  "platform_plane_z": -0.001,
+  "cell": [
+    768,
+    1024
+  ],
+  "ortho_scale": 12,
+  "pixels_per_model_unit": 85.33333333333333,
+  "native_scale": 0.375,
+  "native_shift": "same as body; identical optical axis and pixels per model unit",
+  "rejected_method": "Cycles shadow-catcher passes retain nonzero low-alpha image-border noise and are not used."
+}

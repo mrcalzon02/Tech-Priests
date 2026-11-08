@@ -706,3 +706,7 @@ The model-completion lane verified fresh Factorio 2.1.24 graphical fixtures with
 ### Boiler static model interchange — graphics-only acceptance
 
 The separate cold-pose native/GLB branch passes raw geometry/UV/normal/image inspection, indexed source-geometry preservation, independent reopen/reimport, fixed mating planes and cage-mount bounds, and all four existing sprite draw projections. Eight source/GLB/clay CPU renders were viewed. See `docs/art/boiler-v08-glb/`. Production animation source, sprites, physical ports, recipes and behavior are untouched. No GLB animation, behavior/regression suite, release readiness or full model-family completion is claimed.
+
+### Hydrogen V01 — graphics-only model/import acceptance
+
+The authored model/static GLB, 18 PBR maps, 7+7 source poses, exact atlas cells, registered shadow and real late import pass the model/render/native graphics lane. All seven working rectangles are displayed as frozen native variants; connected/disconnected caps and night glow are reviewed. All nonvisual prototype fields are preserved. Only the graphics set and measured drawing-box extent change. Source/fixture hashes and commands are in `docs/art/hydrogen-thruster-v01/`. Powered working-clock, fuel/thrust behavior, regression and release readiness are not tested or claimed.

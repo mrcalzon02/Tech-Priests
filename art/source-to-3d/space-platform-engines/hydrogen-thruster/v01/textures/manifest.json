@@ -1,0 +1,185 @@
+{
+  "scope": "Asset-specific cast-metal/tank/brass/steel/bell/dark PBR tiles; UV direction and bell axial heat band follow their named construction regions. Subtle finish only; edges, bands and seams are geometry.",
+  "files": [
+    {
+      "file": "cast-basecolor.png",
+      "sha256": "4f4c6d065ba863b3512226db5f5746357cc8e384bbe3360cb3acaf390e79ecb8",
+      "channel": "basecolor",
+      "region": "cast",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "cast-metalrough.png",
+      "sha256": "1034cd11e130cbf89649ac61bdd582b0c6fa3cba2e2b3878ee36e69b83480e14",
+      "channel": "metalrough",
+      "region": "cast",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "cast-normal.png",
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+      "channel": "normal",
+      "region": "cast",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "tank-basecolor.png",
+      "sha256": "c26d9b42c55ed8ba2a76b374752ab29a4dbe83c0187d1cdc5a1f73182f781663",
+      "channel": "basecolor",
+      "region": "tank",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "tank-metalrough.png",
+      "sha256": "ad601a09c14c1b138210e7fdb3ae40882006904b718462d991c9071c474fdeca",
+      "channel": "metalrough",
+      "region": "tank",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "tank-normal.png",
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+      "channel": "normal",
+      "region": "tank",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "brass-basecolor.png",
+      "sha256": "869d66660140979c9a99c758425c520205856c29decdf76d4bb7f21a2963519c",
+      "channel": "basecolor",
+      "region": "brass",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "brass-metalrough.png",
+      "sha256": "7f5712279cc43a2c4dc1df2a1b0471965c56486a8fa88c688578192688321967",
+      "channel": "metalrough",
+      "region": "brass",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "brass-normal.png",
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+      "channel": "normal",
+      "region": "brass",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "steel-basecolor.png",
+      "sha256": "394c94747c66e95de541b1b6019cc6fb42c40975b59149248d7908ae5fd21a16",
+      "channel": "basecolor",
+      "region": "steel",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "steel-metalrough.png",
+      "sha256": "80345ba8983e3dc6c005a0e1242afdff5f55630b542ccd7b9f0aa28893f6b2ef",
+      "channel": "metalrough",
+      "region": "steel",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "steel-normal.png",
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+      "channel": "normal",
+      "region": "steel",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "bell-basecolor.png",
+      "sha256": "6d5601fdf7ea346dbb49a37b4a6578bfbb525847ad397de18e6fcc52dacdfb95",
+      "channel": "basecolor",
+      "region": "bell",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "bell-metalrough.png",
+      "sha256": "8e0e838d487c83c743ac0c047bf97002a85c7d0c7b41c8413b2a7d813a9ea81e",
+      "channel": "metalrough",
+      "region": "bell",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "bell-normal.png",
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+      "channel": "normal",
+      "region": "bell",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "dark-basecolor.png",
+      "sha256": "5706c4c4f00aa1efac62500bf1298279717a936d1190aaef76945fa5c768692f",
+      "channel": "basecolor",
+      "region": "dark",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "dark-metalrough.png",
+      "sha256": "4193712c8926992e21763a12a3a2159f434b5d02eebf0b303182f0b9ded92c41",
+      "channel": "metalrough",
+      "region": "dark",
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "file": "dark-normal.png",
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d",
+      "channel": "normal",
+      "region": "dark",
+      "size": [
+        1024,
+        1024
+      ]
+    }
+  ]
+}

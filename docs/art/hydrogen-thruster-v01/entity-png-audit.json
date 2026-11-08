@@ -1,0 +1,2075 @@
+{
+  "status": "ALL_207_ENTITY_PNGS_FULLY_VERIFIED_DECODED",
+  "files": [
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-east-glow.png",
+      "bytes": 1096,
+      "sha256": "074065f07e35265d9695cced0f42844dbb02e5766c4ed185d0a372b2d033b093",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-east-shadow.png",
+      "bytes": 30858,
+      "sha256": "44f86025274b7ca798daa1a9a4945400b946931b51ad49711190544f12f1e0d2",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-east.png",
+      "bytes": 184844,
+      "sha256": "6e37217ad11a378d6a231fdc2c061f1a359dd4e45d74bbac9306b256391347f3",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-glow.png",
+      "bytes": 1337,
+      "sha256": "8e9f135e43d7c4f595fecc5590a610b6d9b575e0648359dd8b81251429775deb",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-shadow.png",
+      "bytes": 30288,
+      "sha256": "735fb344a878a8f487bd18a8f82902ae8b362c44915409a4cb7ebeff266894ab",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-north.png",
+      "bytes": 182148,
+      "sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-south-glow.png",
+      "bytes": 1321,
+      "sha256": "b25be0af24085745a3fd284fe8ef32cd740183ff2a446763958458ee594a8cca",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-south-shadow.png",
+      "bytes": 31182,
+      "sha256": "ca9b33a53f741ab183af41c23aaf2d61a911c7e91310a696a9942d23890bdde1",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-south.png",
+      "bytes": 184037,
+      "sha256": "276faf696bf31e7c650d7971d220a30a8470e80b2392a9c4e37cfdd56d58a610",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-west-glow.png",
+      "bytes": 1268,
+      "sha256": "28ec9e12a99073da7834ecd226fdc6f8705077ef1860bbf8bd19e73965a6a6ca",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-west-shadow.png",
+      "bytes": 31786,
+      "sha256": "2121295c485fe8aec02a3917ca5f64a0227fcca55b58672751d610a86b41d38f",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-west.png",
+      "bytes": 185598,
+      "sha256": "51a01eb90484e008002d5b12ff0963870b77d76d023af5dff09d15d591a3538c",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-00.png",
+      "bytes": 295981,
+      "sha256": "9bf9f3474147d54ba4adf16251b38c2eca83c1cbd577f790377a28271d41ae68",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-01.png",
+      "bytes": 313953,
+      "sha256": "d08262970f32057763472baca39a94d69b970e4311d50432637a289883d8b80f",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-02.png",
+      "bytes": 326508,
+      "sha256": "dbf6251aecbdf9f8a4619c3dc68092669830724701e04f20d16f9cfbac642237",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-03.png",
+      "bytes": 334575,
+      "sha256": "b7bb1cc9e50d56e606704693c2b2285165611b83aabc561290fee6cf8d2443dd",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-04.png",
+      "bytes": 344039,
+      "sha256": "4486082d4f8f92160a2b874ffb63d96a33beb22419671272977f7c4a80aa15a4",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-05.png",
+      "bytes": 353754,
+      "sha256": "326c5c9b64e1aebc38af3e668009acecbebcdd4748108f87337996d590ba1edf",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-06.png",
+      "bytes": 361123,
+      "sha256": "962cae7e1a60ce98ce964bea5ebfe13bb41ed2a1a1012e0fba46dd57549d26a3",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-07.png",
+      "bytes": 367069,
+      "sha256": "82cfff02bf3fb36f18fca53d74ab5b81087fae20a3d7dc4ea3544bf46e47fe08",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-08.png",
+      "bytes": 371340,
+      "sha256": "f46713400edda17c18f1c11eecd59f19a07d7f5e469a72eecd614e380b1e950c",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-09.png",
+      "bytes": 374859,
+      "sha256": "beb1937755a3060c1e6cfdc3e753f5df67d20c614e090afd1f38b4400d846e5b",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-10.png",
+      "bytes": 377754,
+      "sha256": "ec50abb66b2dcb9e2b4b08cb10ceccc4557a015e8f4b283ecfbf6abd3dddaf6b",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-11.png",
+      "bytes": 379550,
+      "sha256": "3431796524fc829e6db2e4f1d952b631d173d8f1c1d69b3ddf41c6de9b72f2c1",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-12.png",
+      "bytes": 381229,
+      "sha256": "4e712ecf83bb73851f581cf4e3334d9514b0bd0f1dda3407a94233b7a32a37b3",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-13.png",
+      "bytes": 378084,
+      "sha256": "72363c461d13b47eed316a7d54c1d3c5ba1c7f9513689a0e81bb53ea461ed67c",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-14.png",
+      "bytes": 373987,
+      "sha256": "4ad0b0308c343f93db32e13062b0b8b7ff92507e9e37ee21221e6104e26913e2",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-15.png",
+      "bytes": 369090,
+      "sha256": "7bddbda6547116f82109a5e394ae9cf31aa69a1b48be130637783858bf93bc80",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-16.png",
+      "bytes": 361037,
+      "sha256": "3d3e82b524ce01d961b5930b5f07a99c84ebc3fe6c7c73e883ada9afe71b78e5",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-17.png",
+      "bytes": 372208,
+      "sha256": "d8d039a4cc3340c44756216261234d3f3b2ecdf3f105fd84ba02546d08bd6694",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-18.png",
+      "bytes": 386870,
+      "sha256": "f635d58adca148735548a508358a1feefc360eb0bfa3d6ade56183417dd37a1a",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-19.png",
+      "bytes": 393151,
+      "sha256": "ddfa46e3e97bff271bd8ace763c52a8f5e6ac744d67117a032f4239f4888de96",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-20.png",
+      "bytes": 398589,
+      "sha256": "0015e93840e09dfb60f32532ee8de6b6b332c3899535b9244b941a4355f8adfe",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-21.png",
+      "bytes": 403352,
+      "sha256": "392299741edf18839025caa1207bf4cb15205e3812edbae37c042a04fc01330c",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-22.png",
+      "bytes": 405094,
+      "sha256": "73f89933741e29f7576ff24ee817a6bc22d68317d7f164409b02c9f2dc9f96cf",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-23.png",
+      "bytes": 403322,
+      "sha256": "612b5bfb5f6d95ec44e46b659749317827330971647adf8ecdd213a5cfc1c569",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-24.png",
+      "bytes": 397177,
+      "sha256": "4f6bc4481998839de42bb89ab3392130b10022d7f4d1c89855ed5882a837c3bf",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-25.png",
+      "bytes": 394458,
+      "sha256": "b2f6d36d4ac5757f123a91f793ce2cca0e8aa9439606c78a19caff0d93fd13ab",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-26.png",
+      "bytes": 387099,
+      "sha256": "4248594dbe444191573071ce354f5e7621e86427a51c888b9f773fcb367578ed",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-27.png",
+      "bytes": 376961,
+      "sha256": "844575c8b21760e49b35e6c518fbd4ad3526965b30e9b0aad6b044b7489a1ee8",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-28.png",
+      "bytes": 368164,
+      "sha256": "b4f88819c13381e5769479d9d71deed1fefd7dad639d9754a1d77acab79136c4",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-29.png",
+      "bytes": 354673,
+      "sha256": "83ab888faefbed706bb62a00bc1c4f1367dd4b4c5225183b663090e48ecb4fe8",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-30.png",
+      "bytes": 340073,
+      "sha256": "49d73a8faf84614d261f0b82649ce6783b477f69997263e049c8395a76d6c023",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-31.png",
+      "bytes": 324070,
+      "sha256": "e63d8d80db7224f245c63ae49e88eb9429f05006d754a086a6158a13b2e05b1b",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-32.png",
+      "bytes": 310405,
+      "sha256": "1989e47c257e0bf95a5b83a75b0d17097576f3aeb181ea5d9b6519e0bcb7a4ab",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-33.png",
+      "bytes": 322126,
+      "sha256": "b38345f3045fddea8ef7c2eb6c4020639af3ef0c278c42360e4a2bf0d54dfc05",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-34.png",
+      "bytes": 331482,
+      "sha256": "110011b9fd793a975f75f98c502fb0bb6b74a45f5ad892c3c54949a5e3e48de7",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-35.png",
+      "bytes": 340627,
+      "sha256": "8725299ed251bf90824ccb2af11c02ec13104e0d43f464d057c77a8bdb399c93",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-36.png",
+      "bytes": 349067,
+      "sha256": "225f5e69b4381aa48833a5aa0752051aa85089ea4d5f3639ceec1758926c27a1",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-37.png",
+      "bytes": 358897,
+      "sha256": "5ee5830b87365114d100b3a7effebd94dd6a62ed53e7e559aa5d4376a78627a7",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-38.png",
+      "bytes": 365787,
+      "sha256": "b22f74b675378af9f4d7a84ea637c737b38b398d0ed1b062032e6c17bf0dc01d",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-39.png",
+      "bytes": 370773,
+      "sha256": "0fc785f6129c864774f3ba111bc331342aa2737b6e248613798277e9b99b698c",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-40.png",
+      "bytes": 371419,
+      "sha256": "b68490207a6ad8f7f6042856b099900290ce871c8fa63f107f080fbd34a53c15",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-41.png",
+      "bytes": 377016,
+      "sha256": "62f2298f246c80a450382b1c8453f99a680309fa27f3adb80edd3e0f15337423",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-42.png",
+      "bytes": 375776,
+      "sha256": "da72f99f8b6ca7eb1be3c3dac46a7dc8ba6c09c8a4c0af91dccf0a284cea3033",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-43.png",
+      "bytes": 377359,
+      "sha256": "a09b6d1b33c36ce96b1e4665c469654e8ae533815dde251a296db7e37c657a6e",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-44.png",
+      "bytes": 373853,
+      "sha256": "eae0fe8beec23a08ac5852d07a4ac9f82da9a2f88c85ffbc4c4c4dd9f7ec8fc4",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-45.png",
+      "bytes": 370722,
+      "sha256": "fcfbf1f0b79210517b6bcedaa1b4908c1e1899a5cefdeb35c036b410b6015a8f",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-46.png",
+      "bytes": 363792,
+      "sha256": "d6c6c956d55ccead679fcb6d7720fa628a5e157711229d37b78546cdbb22225c",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-47.png",
+      "bytes": 358957,
+      "sha256": "f7b548ecf93292e22ca69d2ed490c46f29be4c3d6536fe1d1d4a7f8cea63ebfb",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-48.png",
+      "bytes": 343492,
+      "sha256": "f783bd88646688cf6177ddfc8879fc6a3a3648b84f9fb5d8f2795f53f4d63d16",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-49.png",
+      "bytes": 352538,
+      "sha256": "9164e5083c303310bd27c2842e877902f41679e97cf842d10b2e5a09e703d2ad",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-50.png",
+      "bytes": 356353,
+      "sha256": "2b8fefe53b83a93b9bbb5dc66ae0dd3f95ef7945c4efc17b9a604b540455668f",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-51.png",
+      "bytes": 359022,
+      "sha256": "2c59631c21afbeaa8617e36fc49edaeedabfede01710284458a5349351ce7b5e",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-52.png",
+      "bytes": 356349,
+      "sha256": "44e1ae8feb4d819c02e76e9a126838a3068400913016273a7e7f2c7cc1ba8821",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-53.png",
+      "bytes": 359122,
+      "sha256": "0b6380e9e1957dab56bc91677979cea2e59416890f949b95fde447cdfad82a88",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-54.png",
+      "bytes": 355982,
+      "sha256": "7a306495fd80a1b0d06491d208a41262636b14deb16a43db0cc112a24e965575",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-55.png",
+      "bytes": 353360,
+      "sha256": "8fbef2faff601aca5d81c8b5732a17226bc1e34341b98571c4e4ec5b858a4367",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-56.png",
+      "bytes": 351244,
+      "sha256": "4b30b5d079d17f8e2452326d827ba5f1b5dc43a7aae354933a50fce2fa877712",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-57.png",
+      "bytes": 352036,
+      "sha256": "10a58c89f703d8140ef125297b41cbae0c565cf08563fd1c7999d69e3935f11e",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-58.png",
+      "bytes": 347275,
+      "sha256": "bfc515afb9a0d5dfcc0af7eb8f8ea750c9e4ef6f6da4f8c96071aa4ac6742251",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-59.png",
+      "bytes": 341656,
+      "sha256": "bf3dab047df647733f1e121f085ad3dbf447bcf7978bc264f235d4b3ed87dcec",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-60.png",
+      "bytes": 337367,
+      "sha256": "6bae4215fc4286002ffd0e622e90b95e12f6c87d56d0e95f8bba6e2d161078cf",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-61.png",
+      "bytes": 326244,
+      "sha256": "3cc295fbd2f1c209186cfc39618ac0ebce2a6f58f82b3f71da586d163dbf8a70",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-62.png",
+      "bytes": 318425,
+      "sha256": "11a249cc33ca6278f442a0bb6522d09eb3dbfa443a2e13d5f07b810fec4dba8d",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-63.png",
+      "bytes": 305513,
+      "sha256": "e339eacda52d8f561650cb67e8323bec82d46c6e4c26fe3d1cd67fa9d9a1dbc5",
+      "size": [
+        8192,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/icon.png",
+      "bytes": 21222,
+      "sha256": "6291292d23450cc1526fc518bfe44608caf4e474ec23770e3d9dd464ed251962",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-00.png",
+      "bytes": 114267,
+      "sha256": "d6729f32fb621dc2789172cc584767d7a23c6e07fd4aa04bebabc527a602ec85",
+      "size": [
+        256,
+        2048
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-01.png",
+      "bytes": 123696,
+      "sha256": "e69eee08769e8bb02cbb56d7932da5fec8a4faf5e05b1dec0b0f18677c9c011f",
+      "size": [
+        256,
+        2048
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-02.png",
+      "bytes": 125510,
+      "sha256": "202cc5c18a11ef533e64d90cec9314388b865425b0749adf1e86e06fcd7b1f65",
+      "size": [
+        256,
+        2048
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-03.png",
+      "bytes": 126453,
+      "sha256": "69eeebad1de4725c313d101dc89dc2bf64517b81fd0fa258e51868720d1ef64f",
+      "size": [
+        256,
+        2048
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-04.png",
+      "bytes": 120772,
+      "sha256": "aaeda3a54875cebcd47e1cc4ada26f9e5bb227deb735c9d14160a1c3072ec991",
+      "size": [
+        256,
+        2048
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-05.png",
+      "bytes": 121980,
+      "sha256": "098c9daad15ebeaea611dba230a5b38d35c79e168b285d97799ec2b960c4ec1b",
+      "size": [
+        256,
+        2048
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-06.png",
+      "bytes": 115170,
+      "sha256": "e3ce118ec4d99eebd90e611177fa2b6201fe4665a9a28e876d335ef70ba92e8b",
+      "size": [
+        256,
+        2048
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-07.png",
+      "bytes": 115720,
+      "sha256": "5a9b83c18973b6e7e744a72a7e0aab1be8d78ce4deaa9fb6f3a60cb3ec3fde9d",
+      "size": [
+        256,
+        2048
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/citadel-manufactoreo/citadel-manufactoreo-active.png",
+      "bytes": 48359,
+      "sha256": "b36e77899698cacb49245f2432cb5bde4a4020ee48542aebd34d21e1603291ea",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/citadel-manufactoreo/citadel-manufactoreo-idle.png",
+      "bytes": 47552,
+      "sha256": "f0941a0bf379522ab4feaf997359fd27acf2e843842e43f262fe78c6c4ac9fcc",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/cogitator-station.png",
+      "bytes": 18078,
+      "sha256": "bd55624d676c567da6e1769af7cdd763d42c6515066809a2f397ff2d17d3f23e",
+      "size": [
+        184,
+        270
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/deployment-arrow.png",
+      "bytes": 1281,
+      "sha256": "b3f685a26031516ccd9907c6365ef94602400b6fcc920c9ca78984aac20ea2dc",
+      "size": [
+        96,
+        96
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/junior-cogitator-station.png",
+      "bytes": 297028,
+      "sha256": "006e846328b26f935ae7b5cc5465a2541c08aaf65f570d69bc1e93bc2c31d0a0",
+      "size": [
+        1027,
+        1532
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/planetary-magos-cogitator-station.png",
+      "bytes": 340644,
+      "sha256": "17ac2e320db6840bc604fe8364f14f31c3319a5120cf5a9d50e0753ca34940e9",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/senior-cogitator-station.png",
+      "bytes": 331602,
+      "sha256": "7e46476f16ec4dd0ed68122ca98f7f6b90133d28909f6ae8e9352d4db1911d58",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/void-cogitator-station.png",
+      "bytes": 330401,
+      "sha256": "54829c4253c75de2ae21f5f80092c9d0ee8075f68e57a29569765d7a4d7a08a2",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-activity-128.png",
+      "bytes": 2362241,
+      "sha256": "71c3cc082fdfa7b9158d66fdd321fad2ac0d2985f281be62068e7d04318642b8",
+      "size": [
+        1024,
+        6144
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-activity.png",
+      "bytes": 6679358,
+      "sha256": "2bb3545a99030ea9b4fbb07ea44f23b61573372236a77efee07f545ca967f80f",
+      "size": [
+        3072,
+        8192
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-cold-128.png",
+      "bytes": 43481,
+      "sha256": "eb811c5aa5b083b4cc501992c5743a6073a76afa1d48b7e0d34169bb393fbd8d",
+      "size": [
+        128,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-cold.png",
+      "bytes": 129382,
+      "sha256": "2e45849e38c7e100ed7003ed8169890a63905b5745a248a3d0c1bd27bed2c8dc",
+      "size": [
+        256,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-idle-128.png",
+      "bytes": 43041,
+      "sha256": "ae8c29a017002376e4fd8f8a303b59288ffc52dad479c7e604b28a0b561ba93f",
+      "size": [
+        128,
+        512
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-idle.png",
+      "bytes": 127559,
+      "sha256": "64797f650c3787ac08962b94ac284412889f0b53293b18e12603b552e6864d84",
+      "size": [
+        256,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-working-128.png",
+      "bytes": 2347143,
+      "sha256": "c1a5fc8df5c6bcef6543b47cf38dbc1c8f7a83d8781c9dca467b35dac9fe9d2b",
+      "size": [
+        1024,
+        6144
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-working.png",
+      "bytes": 6621553,
+      "sha256": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2",
+      "size": [
+        3072,
+        8192
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-1.png",
+      "bytes": 19037,
+      "sha256": "ae7e803175e223a6b46b264c240cba6c6d17412749e7c28e058005620b9bed5d",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-2.png",
+      "bytes": 21521,
+      "sha256": "9b42c46e4e5f36f25982418db03b488bfbe8ce3b42da3a473a0301554137710c",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-3.png",
+      "bytes": 21746,
+      "sha256": "b8e34cdcbbef2c392ee7a0f036c6f8c5eefb2953a35b791ab2d370d573a0718b",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-4.png",
+      "bytes": 24273,
+      "sha256": "8c0099a7f46d673910eb9bbbdd244ff85d2fb44bb598c3c515d27db58171fcda",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-5.png",
+      "bytes": 20369,
+      "sha256": "13bd05c4227479093d15a36b5b3c7a7ac95d9c620e07296da1fe86444ec39edb",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-6.png",
+      "bytes": 20998,
+      "sha256": "be8855bf74c0ca85e5f31d7b2d96af1298c7040b8ef65f7fe58cec791b5ca767",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-7.png",
+      "bytes": 22229,
+      "sha256": "1e186a26391c79446e6b1128ae77f29d87c8a9a366bf7af659069550601beff0",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-8.png",
+      "bytes": 20180,
+      "sha256": "b84eaef00204834ab678b98a284919f485fe322fa720682c4994da05869faf26",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-sheet.png",
+      "bytes": 91976,
+      "sha256": "1b25c33de89a8933983a6316e790c5d6dd006cdb28e5543fda47f3e1de71af9b",
+      "size": [
+        2048,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-1.png",
+      "bytes": 19663,
+      "sha256": "a58417d9fd689641c0ce16a46e382cfe99a8945ccc9ac4de8ece61157b07bb6b",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-2.png",
+      "bytes": 18406,
+      "sha256": "04131584407f7df311d5386100bf67879c76139ce6e11feccf740c3de2d6e3b0",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-3.png",
+      "bytes": 19037,
+      "sha256": "ae7e803175e223a6b46b264c240cba6c6d17412749e7c28e058005620b9bed5d",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-4.png",
+      "bytes": 20180,
+      "sha256": "b84eaef00204834ab678b98a284919f485fe322fa720682c4994da05869faf26",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-5.png",
+      "bytes": 19663,
+      "sha256": "a58417d9fd689641c0ce16a46e382cfe99a8945ccc9ac4de8ece61157b07bb6b",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-6.png",
+      "bytes": 19037,
+      "sha256": "ae7e803175e223a6b46b264c240cba6c6d17412749e7c28e058005620b9bed5d",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-7.png",
+      "bytes": 18406,
+      "sha256": "04131584407f7df311d5386100bf67879c76139ce6e11feccf740c3de2d6e3b0",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-8.png",
+      "bytes": 20180,
+      "sha256": "b84eaef00204834ab678b98a284919f485fe322fa720682c4994da05869faf26",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-sheet.png",
+      "bytes": 58808,
+      "sha256": "7b2282170835c8235b610fefd966c152b7dddec9972858283f1beb772191124a",
+      "size": [
+        2048,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle.png",
+      "bytes": 19663,
+      "sha256": "a58417d9fd689641c0ce16a46e382cfe99a8945ccc9ac4de8ece61157b07bb6b",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor.png",
+      "bytes": 19663,
+      "sha256": "a58417d9fd689641c0ce16a46e382cfe99a8945ccc9ac4de8ece61157b07bb6b",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/hydrogen-thruster/hydrogen-thruster-idle.png",
+      "bytes": 65669,
+      "sha256": "5b7daa6196aac7f232cfa4dfa7bf833b318451b05d2f49aa3201dc55213aa3c2",
+      "size": [
+        1792,
+        512
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/hydrogen-thruster/hydrogen-thruster-run.png",
+      "bytes": 143568,
+      "sha256": "d62a7eb04bdd7dec8076909ad02ae8d423a77865f5d64456c80fb9b892fa95a3",
+      "size": [
+        1792,
+        512
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-idle.png",
+      "bytes": 472260,
+      "sha256": "6769eac7b445da20856fb723c9ac4cc0fd4621824a4579e79c7f261b14b8b7ac",
+      "size": [
+        3584,
+        768
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+      "bytes": 230868,
+      "sha256": "0b429230f52a9823ce8f58dea6e4f52d6a533975f4e7e6dc831297fa827e410e",
+      "size": [
+        3584,
+        768
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+      "bytes": 682963,
+      "sha256": "2dd51726ec5ee193546696bd2c4d58d73134c8778b72128446878d4e023eaa73",
+      "size": [
+        3584,
+        768
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+      "bytes": 186783,
+      "sha256": "eea192d313ac7394d6bcfcbfbc975fee6ffdc16823b6be1e68b53992f7e1b139",
+      "size": [
+        768,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/future/emm11.png",
+      "bytes": 549911,
+      "sha256": "d64b2499757ed73a293eefe732f6eea254e7247a1e45afaa9313cf37c0d14ef5",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/future/emm13.png",
+      "bytes": 330678,
+      "sha256": "6d1aff73df4300dfa624fced3014449ff7cab38252e3ec32e91b6e0ad780c0be",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/future/emm7.png",
+      "bytes": 588314,
+      "sha256": "7570bbcc8d53664dc6509fb6d2879a140e97bf604c77b53822310bc9c2201b90",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/future/emm_05.png",
+      "bytes": 551444,
+      "sha256": "8327607ad6537d93dc48adb32cc581778e57313396035237e042fa6e64bad966",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-atmospheric-water-condenser-shadow.png",
+      "bytes": 6592,
+      "sha256": "fa01154a352eea4678806c7ae7683714ff4b29ed29ed633fe7757552eb8712cd",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-atmospheric-water-condenser.png",
+      "bytes": 547777,
+      "sha256": "b0d588c82a6131e7ed53f9754844279e7b31ea850d1be372d52f7b19bd6d417a",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-assembler-shadow.png",
+      "bytes": 7128,
+      "sha256": "e6b31fa06cef5cfe415950be41c7497741a1849d4f74c57da82bb5dd581bf6b1",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-assembler.png",
+      "bytes": 441557,
+      "sha256": "7eb767449ded95b4241137cbd98dca010ade7f5d57e355f3444100fffd294862",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-boiler-shadow.png",
+      "bytes": 5962,
+      "sha256": "a8db746a3fe003b4dc6fd0bef0b3c3cd8c6cc5a311c6a0793ce18383f6670e34",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-boiler.png",
+      "bytes": 355212,
+      "sha256": "4cf507cd4fd47c16c391c0cd76e92c4b852a429eba3dbfb65fd6f8f4051eeedc",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-laboratorium-shadow.png",
+      "bytes": 28206,
+      "sha256": "f61767cfcef5565cec3a6317dfe6fae455054a5e18940dbd0af999d0b53390bc",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-laboratorium.png",
+      "bytes": 604757,
+      "sha256": "0d8af86f08ce1a29c06e148dd0aed1afbce6ccba333803014eb9b1ae6190ee3d",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-miner-shadow.png",
+      "bytes": 5798,
+      "sha256": "8e793d771f727041b81aaa782ae0e3593d002fcac9115a4fbe9889aaee257d84",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-miner.png",
+      "bytes": 638041,
+      "sha256": "29442badbd53d2f69880fb625330ed071e6d362119e458952f575d53cc1bf700",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-power-grid-shadow.png",
+      "bytes": 9899,
+      "sha256": "54e11b05a505c578504010ef16631b5aefa207eb4e9a02a059e5b42d0db1e1f3",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-power-grid.png",
+      "bytes": 481291,
+      "sha256": "9209a929b615bd6473e73e56f494fb20d924571baeaabc8cf54ca6f34265d402",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-smelter-shadow.png",
+      "bytes": 5975,
+      "sha256": "a314fa1e8679482c485a7395e6f24e7d5c16b43b848e3923d8ad5402d4553919",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-smelter.png",
+      "bytes": 521394,
+      "sha256": "ba274b459959094a0f6b1bf32ed2c3224b7aa85aa887ae491f7f848c634a747c",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-steam-engine-shadow.png",
+      "bytes": 5650,
+      "sha256": "ebb370154b98eb4593bca24ac7a00939f0f2c53b39d5235cebaba9471d48d3a0",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-steam-engine.png",
+      "bytes": 279126,
+      "sha256": "c656a3c72250757a7bc63e8f1ac4a1eaf86fec309831a38e667ed1b3112f12e9",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/orbital-trader/orbital-trader-shadow.png",
+      "bytes": 13363,
+      "sha256": "1ac41482424dec6254a6bb209c6d1237a1d78c0155c0f7f243dda048a1a8ae8c",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/orbital-trader/orbital-trader.png",
+      "bytes": 78984,
+      "sha256": "46824491fa45a9fe42eef1b20233764acde6e925e4ad59de519e49e406f56036",
+      "size": [
+        384,
+        384
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/sterling-steam-catalyzer/sterling-steam-catalyzer-shadow.png",
+      "bytes": 6825,
+      "sha256": "72e273cc0e09fd621011674f667202d00080fd40575cececdc1f20dfe1c65196",
+      "size": [
+        1402,
+        1122
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/sterling-steam-catalyzer/sterling-steam-catalyzer.png",
+      "bytes": 488107,
+      "sha256": "2b391249f671ed14a5c562e9045ccd7d5b1f6508ac3e25c31bc705813fa81349",
+      "size": [
+        1402,
+        1122
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory-shadow.png",
+      "bytes": 7246,
+      "sha256": "744a8947c42452cefbeb33b518aa126de872083a5e43bf6686b2309cf932231c",
+      "size": [
+        1315,
+        1196
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory.png",
+      "bytes": 607077,
+      "sha256": "29d135a9f811d3842ad584f570eaa6a8bd2bc496f1834072f27fdc9cfcc7db5e",
+      "size": [
+        1315,
+        1196
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-basic-space-cargo-inventory-shadow.png",
+      "bytes": 5200,
+      "sha256": "fe8f67a54c6d8c8ab16fb39568d21513c615d4a43ef65ecc6aa4a317c6ebd195",
+      "size": [
+        1889,
+        833
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-basic-space-cargo-inventory.png",
+      "bytes": 472556,
+      "sha256": "e42f840867f9eaadba006e4897519dc14ca167da2b64f4d11992ca6528dda2e8",
+      "size": [
+        1889,
+        833
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-martian-stone-cache-shadow.png",
+      "bytes": 8513,
+      "sha256": "2a527ff8271bddd7b65e9503adf3a231e70e9e79e1f88ef5b9a28a096bc7ae77",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-martian-stone-cache.png",
+      "bytes": 496838,
+      "sha256": "c2d0143aa5047b6a9f6a425aa7b1ab5e34b284f2f9760a01ce66a0f78aa323b5",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-coal-shadow.png",
+      "bytes": 8511,
+      "sha256": "44439939bf6826d6469c6ba6fec1bdddfb978136aa94d38b493b13fd7a0a849c",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-coal.png",
+      "bytes": 494255,
+      "sha256": "800ab4f9c27d8215877b125367343ad2798c5ab8c759dd25059667ba4a97a240",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-cable-shadow.png",
+      "bytes": 8789,
+      "sha256": "5666bc608c2b541a43419f464260d4d357818101ce363545180490ec8a4f293d",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-cable.png",
+      "bytes": 508271,
+      "sha256": "5fbc369b3fe3bcb8d5c1fe96d2dd22dc35ffd08b569df2e4e56bbc50b6f2cd03",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-ore-shadow.png",
+      "bytes": 8515,
+      "sha256": "8b0e638af138c174bca2362e6dbe09ad6325b3ad684a3dbf444f812fe25a6da2",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-ore.png",
+      "bytes": 566608,
+      "sha256": "f8aebd78fe025f8a7c9a1aa465d21606538845b60dbb6365edaccccc78b93df5",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-plate-shadow.png",
+      "bytes": 8679,
+      "sha256": "5b0dedf23a34e2fe0a9de591f2f42ed9f708b6e05ad028d4cbd5a60d1db12281",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-plate.png",
+      "bytes": 501477,
+      "sha256": "544497545621f069675b9166ca121e77722cf6a3846f61654a5e251e44a5098e",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-empty-shadow.png",
+      "bytes": 8365,
+      "sha256": "e483a4b4c2d836e647eb03032aebb5e028f34227d1824414648934e4200d76a9",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-empty.png",
+      "bytes": 508339,
+      "sha256": "251283d921f924e2e700af93b79f63a33b70ef5f92bb55f85cef387dc34f67f7",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-gear-wheel-shadow.png",
+      "bytes": 6736,
+      "sha256": "1a0f1f4a6a5d9719dfd12a5e5082bcd0fa19377f8913ec49cc0069b535fbdea3",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-gear-wheel.png",
+      "bytes": 356484,
+      "sha256": "c7096928950819a6ee4bb29df657cdbab0e7fda2f3ea92b6359a8980a6149aa9",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-ore-shadow.png",
+      "bytes": 8419,
+      "sha256": "512f559a3ac3919f50764bbf8c18b14841f9ba68aa4b98072645177c2a07d959",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-ore.png",
+      "bytes": 519268,
+      "sha256": "a1d7b6677f20045779fbab1ad0dd418e12cb604db48a4c7df43c1b93ff382286",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-plate-shadow.png",
+      "bytes": 8668,
+      "sha256": "7be388dfa2745e93eac97b2a37677cf0743679042e9e62a9cb8622a262b5a9f0",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-plate.png",
+      "bytes": 488207,
+      "sha256": "cc4d1dfec55075f75c01d2c1aca75324d4cd395abd85d9cdd06fde05f304df3c",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-stick-shadow.png",
+      "bytes": 8682,
+      "sha256": "e9e62234903e13c8965564eea4f61ae32ae90b5f1fd3e18bcb9958d6e1782685",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-stick.png",
+      "bytes": 508709,
+      "sha256": "2f7cc0be43d5532fb32442b801bb7df615bf659f9857026f6be0c77eebd25310",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-item-vault-shadow.png",
+      "bytes": 6418,
+      "sha256": "87791bbb02fdb3ec631216f0c6755db9f19b9b97f485a344cceba336157d609f",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-item-vault.png",
+      "bytes": 382110,
+      "sha256": "48c930af3749cd4f8a585c6dff78de408d1855019c90daabde617a44830ab186",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-pressurized-fluid-vault-shadow.png",
+      "bytes": 6370,
+      "sha256": "1e9a5cdf309d110e338659d886a680d3f4800b686ea3b99be3a83041b87cc42e",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-pressurized-fluid-vault.png",
+      "bytes": 386285,
+      "sha256": "4fbaeee99407c8917d7f416c4a133ff5a527851f8cc892b81fbeb86317480dec",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank-shadow.png",
+      "bytes": 6350,
+      "sha256": "e8f5901fce8d3d6eee4116834311d07c313c7e0fc57717e719a3dcb983e161e5",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank.png",
+      "bytes": 343683,
+      "sha256": "4ba973a3e6ed53e0acbb350a4a1be4827fb0de00a801b65f4f066d21cfa9003b",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-stone-shadow.png",
+      "bytes": 8592,
+      "sha256": "8d8e16e74c3936475fcd167953d9a5b35bffb437e6dd159df95c24eaebb8a2ad",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-stone.png",
+      "bytes": 532024,
+      "sha256": "b5a48cdd493fc062825aa8eea1071a56d5c1ff127bbb45c9aedac65142843ed7",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-wood-shadow.png",
+      "bytes": 8389,
+      "sha256": "ab7101a903575a4bee6b56562abb05f95876dda63bec0a5f8d2b225e5fc8eac9",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-wood.png",
+      "bytes": 499150,
+      "sha256": "c992161bd1eccea4c9fc2c5e6f60f4a175fe0acba7c62e92946eae3ef278d558",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/tech-priest/level1_dead.png",
+      "bytes": 24909,
+      "sha256": "d36769aa131ae288b0ea4f5eef9aae60dfbeb5e0d9c3393480acab408b28a58a",
+      "size": [
+        300,
+        160
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/tech-priest/level1_idle_gun.png",
+      "bytes": 1840241,
+      "sha256": "8ccdef468c32fd8f3e69061c95ec152927dd71660fae269c01caef80e986d272",
+      "size": [
+        3300,
+        1280
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
+      "bytes": 328289,
+      "sha256": "e28e04874fd68e5c10f775154c4aaffaedbb01c9ec01baec79979621dbdccc38",
+      "size": [
+        3300,
+        1280
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/tech-priest/level1_running.png",
+      "bytes": 1863839,
+      "sha256": "376be34a7f000cef8bd70bcdec8a0a66d87aa1560549dc8c04e073517481270d",
+      "size": [
+        3300,
+        1280
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/tech-priest/level1_running_shadow.png",
+      "bytes": 320649,
+      "sha256": "edc1c4b1215b957694d469fed3c857ca4eb86af26a1db612e609024f9205f1ea",
+      "size": [
+        3300,
+        1280
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster/thetazine-thruster-idle.png",
+      "bytes": 33325,
+      "sha256": "00a1d681570f01cd7b5df2c46d31a539283ac11b0467e3aa930f472d2a910417",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster/thetazine-thruster-run.png",
+      "bytes": 58919,
+      "sha256": "0a6170f2642afdc43d8c2dd7bfed7f2bf96470f33883a1fbe125656cf6cf6f2d",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/icon.png",
+      "bytes": 6620,
+      "sha256": "29156a43d598365eb5666cdcb1e578f000e9235f8f47c320fdf848f2f91d2d65",
+      "size": [
+        64,
+        64
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/idle-east.png",
+      "bytes": 26292,
+      "sha256": "2fde4eaf663a036510a616861820fc9e08fb83c615f65d26e041e18aac88a40c",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/idle-north.png",
+      "bytes": 26344,
+      "sha256": "0547e5f8a642cdc92cff99a6b982876c782ed1c6f6cf32f962c2e6ceec3fd1ee",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/idle-south.png",
+      "bytes": 26319,
+      "sha256": "965bb3756248c7698aee6dfae3b557ae245f70eba1b673e31f92a63ca293a2f2",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/idle-west.png",
+      "bytes": 26174,
+      "sha256": "ab3d4703474bc8d523231fb80d145587ea5d3d9e0b4d00ffde993b85d68808c9",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/working-east.png",
+      "bytes": 841333,
+      "sha256": "be3a79e924a74fdfc9a4fc1bb0bcbf21d020b635ae262f1fcbef1479c886ffc7",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/working-north.png",
+      "bytes": 829612,
+      "sha256": "41b44cd57b0b590534e03474c0b8b2da35404ae168898d3ae7468558f33e9b56",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/working-south.png",
+      "bytes": 901460,
+      "sha256": "60e854a7a90989f5685dd1eda435ba0c1ec3304256ba10ac801c501a33bbae2d",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/working-west.png",
+      "bytes": 886632,
+      "sha256": "c066fb7ad95bfc80f980b162438ce0bf8b9295f0c11f4444c4cc5dc5839ed19f",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-idle.png",
+      "bytes": 21334,
+      "sha256": "947148be59b0fee357d8db8e9bcb31ac5a30797aa128e208cec187d0041aebc6",
+      "size": [
+        384,
+        576
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-run.png",
+      "bytes": 38652,
+      "sha256": "3e4bb73224b7d0ddc4447d185dda4ff497cc68eb9dec0326d97b3f14a1600ea7",
+      "size": [
+        384,
+        576
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-idle.png",
+      "bytes": 43594,
+      "sha256": "3b7b6d743220a516fcfae11162b9ad2e5cff713338f5f7c549664c260a35df16",
+      "size": [
+        384,
+        512
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-run.png",
+      "bytes": 49192,
+      "sha256": "daa696918c1dd7e35a1eb4bc8ae84102d23bc559100cefcb25488d92f5f2f045",
+      "size": [
+        384,
+        512
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-steam-engine/void-steam-engine-shadow.png",
+      "bytes": 6130,
+      "sha256": "4ed999301521910455ec479e7c0369b0f8a7c1328135007014bc4791edabafc1",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-steam-engine/void-steam-engine.png",
+      "bytes": 376725,
+      "sha256": "3243d3250117df3e2233d9db0afd4aacb910ccbd3aacff16a9f1a8d20302e454",
+      "size": [
+        1024,
+        1024
+      ],
+      "mode": "P"
+    }
+  ]
+}

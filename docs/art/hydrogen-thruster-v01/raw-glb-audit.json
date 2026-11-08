@@ -1,0 +1,4021 @@
+{
+  "status": "RAW_GLB_GEOMETRY_UV_NORMAL_IMAGE_AUDIT_PASS",
+  "failures": [],
+  "glb_sha256": "302afbedb000f75987f9474ef042299f6f44e99b3f63758720f68f0c1c7417ea",
+  "mesh_count": 291,
+  "triangle_count": 92996,
+  "parts": [
+    {
+      "name": "Upper mounting beam authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Lower mounting crossmember authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Central regulator spine authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Central regulator seat authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Recessed regulator rim authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Regulator rim stud authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.001 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.002 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.003 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.004 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.005 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Central regulator seat.001 authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Recessed regulator rim.001 authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Regulator rim stud.006 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.007 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.008 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.009 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.010 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Regulator rim stud.011 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Crossbeam saddle -1.35 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Saddle fastener authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Saddle fastener.001 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Crossbeam saddle 0 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Saddle fastener.002 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Saddle fastener.003 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Crossbeam saddle 1.35 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Saddle fastener.004 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Saddle fastener.005 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Platform saddle foot -1.35 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Supported saddle cheek authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Deck foot bolt authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Supported saddle cheek.001 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Deck foot bolt.001 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Platform saddle foot 1.35 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Supported saddle cheek.002 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Deck foot bolt.002 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Supported saddle cheek.003 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Deck foot bolt.003 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Beam face rivet authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Beam face rivet.001 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Beam face rivet.002 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Beam face rivet.003 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Beam face rivet.004 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Beam face rivet.005 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Beam face rivet.006 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Beam face rivet.007 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Beam face rivet.008 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Beam face rivet.009 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Diagonal shoulder -1 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Shoulder raised rib -1 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Shoulder pivot authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Shoulder pivot pin authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Shoulder pivot.001 authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Shoulder pivot pin.001 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Diagonal shoulder 1 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Shoulder raised rib 1 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Shoulder pivot.002 authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Shoulder pivot pin.002 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Shoulder pivot.003 authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Shoulder pivot pin.003 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Paired canister -1 authored triangles",
+      "triangles": 864,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister rolled restraint authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister rolled restraint.001 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister rolled restraint.002 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister rolled restraint.003 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister lower attachment authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister saddle authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Canister saddle.001 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Canister header feed -1 authored triangles",
+      "triangles": 400,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Outer pressure return -1 authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Paired canister 1 authored triangles",
+      "triangles": 864,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister rolled restraint.004 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister rolled restraint.005 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister rolled restraint.006 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister rolled restraint.007 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister lower attachment.001 authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Canister saddle.002 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Canister saddle.003 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Canister header feed 1 authored triangles",
+      "triangles": 400,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Outer pressure return 1 authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed column 0 authored triangles",
+      "triangles": 192,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.001 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.002 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.003 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed upper manifold authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed receiver screw authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed column 1 authored triangles",
+      "triangles": 192,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.004 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.005 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.006 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.007 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed upper manifold.001 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed receiver screw.001 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed column 2 authored triangles",
+      "triangles": 192,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.008 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.009 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.010 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.011 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed upper manifold.002 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed receiver screw.002 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed column 3 authored triangles",
+      "triangles": 192,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.012 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.013 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.014 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.015 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed upper manifold.003 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed receiver screw.003 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed column 4 authored triangles",
+      "triangles": 192,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.016 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.017 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.018 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.019 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed upper manifold.004 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed receiver screw.004 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed column 5 authored triangles",
+      "triangles": 192,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Feed collar.020 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.021 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.022 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed collar.023 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed upper manifold.005 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Feed receiver screw.005 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Lower feed return -1 authored triangles",
+      "triangles": 400,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Outer actuator body -1 authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Outer actuator collar authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Outer actuator collar.001 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Outer actuator collar.002 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Outer actuator collar.003 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Source actuator helical thread -1 authored triangles",
+      "triangles": 6720,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Actuator support clevis authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Clevis fixed pin authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Actuator support clevis.001 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Clevis fixed pin.001 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Lower feed return 1 authored triangles",
+      "triangles": 400,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Outer actuator body 1 authored triangles",
+      "triangles": 256,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Outer actuator collar.004 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Outer actuator collar.005 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Outer actuator collar.006 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Outer actuator collar.007 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Source actuator helical thread 1 authored triangles",
+      "triangles": 6720,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Actuator support clevis.002 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Clevis fixed pin.002 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Actuator support clevis.003 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Clevis fixed pin.003 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Main pressure chamber authored triangles",
+      "triangles": 640,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure chamber retaining band authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 0
+    },
+    {
+      "name": "Pressure flange stud.001 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud.002 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.003 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.004 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.005 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.006 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 0
+    },
+    {
+      "name": "Pressure flange stud.007 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud.008 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.009 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.010 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.011 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure chamber retaining band.001 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud.012 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud.013 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud.014 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.015 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.016 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.017 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.018 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud.019 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud.020 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.021 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.022 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.023 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure chamber retaining band.002 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud.024 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 0
+    },
+    {
+      "name": "Pressure flange stud.025 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud.026 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.027 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.028 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.029 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure flange stud.030 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 0
+    },
+    {
+      "name": "Pressure flange stud.031 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.032 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.033 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.034 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Pressure flange stud.035 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure casing axial panel seam authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure casing axial panel seam.001 authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure casing axial panel seam.002 authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure casing axial panel seam.003 authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure casing axial panel seam.004 authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure casing axial panel seam.005 authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure casing axial panel seam.006 authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Pressure casing axial panel seam.007 authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Continuous hollow bell authored triangles",
+      "triangles": 2560,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle external transverse seam authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle external transverse seam.001 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle external transverse seam.002 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle external transverse seam.003 authored triangles",
+      "triangles": 384,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 0 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 0 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle seam retaining pin.001 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.002 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 1 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 1 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.003 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 0
+    },
+    {
+      "name": "Nozzle seam retaining pin.004 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.005 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 2 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 2 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.006 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.007 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.008 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 3 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 3 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.009 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.010 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.011 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 4 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 4 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.012 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.013 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.014 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 5 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 5 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.015 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle seam retaining pin.016 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.017 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 6 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 6 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.018 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle seam retaining pin.019 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle seam retaining pin.020 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 7 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 7 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.021 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.022 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle seam retaining pin.023 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 8 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 8 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.024 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.025 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.026 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 9 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 9 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.027 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.028 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.029 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 10 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 10 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.030 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.031 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.032 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle longitudinal panel rib 11 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Physical inner thermal liner 11 authored triangles",
+      "triangles": 1200,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Nozzle seam retaining pin.033 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle seam retaining pin.034 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Nozzle seam retaining pin.035 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Emblem backing boss authored triangles",
+      "triangles": 528,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Winged skull cranium authored triangles",
+      "triangles": 1216,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast wing feather authored triangles",
+      "triangles": 84,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast wing feather.001 authored triangles",
+      "triangles": 84,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast wing feather.002 authored triangles",
+      "triangles": 84,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast wing feather.003 authored triangles",
+      "triangles": 84,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast wing feather.004 authored triangles",
+      "triangles": 84,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast wing feather.005 authored triangles",
+      "triangles": 84,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast wing feather.006 authored triangles",
+      "triangles": 84,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast wing feather.007 authored triangles",
+      "triangles": 84,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Skull jaw authored triangles",
+      "triangles": 528,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "Cast skull tooth authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast skull tooth.001 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast skull tooth.002 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast skull tooth.003 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "Cast skull tooth.004 authored triangles",
+      "triangles": 108,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "fuel socket flange authored triangles",
+      "triangles": 576,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "fuel closed seat authored triangles",
+      "triangles": 320,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "fuel routed supply neck authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "fuel flange fastener authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "fuel flange fastener.001 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "fuel flange fastener.002 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "fuel flange fastener.003 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "fuel flange fastener.004 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "fuel flange fastener.005 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "oxidizer socket flange authored triangles",
+      "triangles": 576,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "oxidizer closed seat authored triangles",
+      "triangles": 320,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "oxidizer routed supply neck authored triangles",
+      "triangles": 600,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 1.1920928955078125e-07
+    },
+    {
+      "name": "oxidizer flange fastener authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "oxidizer flange fastener.001 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "oxidizer flange fastener.002 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "oxidizer flange fastener.003 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "oxidizer flange fastener.004 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    },
+    {
+      "name": "oxidizer flange fastener.005 authored triangles",
+      "triangles": 48,
+      "degenerate_triangles": 0,
+      "degenerate_uv_triangles": 0,
+      "max_normal_length_error": 5.960464477539063e-08
+    }
+  ],
+  "images": [
+    {
+      "name": "cast-normal",
+      "bytes": 464432,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d"
+    },
+    {
+      "name": "cast-basecolor",
+      "bytes": 427003,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "4f4c6d065ba863b3512226db5f5746357cc8e384bbe3360cb3acaf390e79ecb8"
+    },
+    {
+      "name": "cast-metalrough",
+      "bytes": 271230,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "1034cd11e130cbf89649ac61bdd582b0c6fa3cba2e2b3878ee36e69b83480e14"
+    },
+    {
+      "name": "brass-normal",
+      "bytes": 464432,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d"
+    },
+    {
+      "name": "brass-basecolor",
+      "bytes": 508224,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "869d66660140979c9a99c758425c520205856c29decdf76d4bb7f21a2963519c"
+    },
+    {
+      "name": "brass-metalrough",
+      "bytes": 271145,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "7f5712279cc43a2c4dc1df2a1b0471965c56486a8fa88c688578192688321967"
+    },
+    {
+      "name": "steel-normal",
+      "bytes": 464432,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d"
+    },
+    {
+      "name": "steel-basecolor",
+      "bytes": 410724,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "394c94747c66e95de541b1b6019cc6fb42c40975b59149248d7908ae5fd21a16"
+    },
+    {
+      "name": "steel-metalrough",
+      "bytes": 271419,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "80345ba8983e3dc6c005a0e1242afdff5f55630b542ccd7b9f0aa28893f6b2ef"
+    },
+    {
+      "name": "tank-normal",
+      "bytes": 464432,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d"
+    },
+    {
+      "name": "tank-basecolor",
+      "bytes": 408488,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "c26d9b42c55ed8ba2a76b374752ab29a4dbe83c0187d1cdc5a1f73182f781663"
+    },
+    {
+      "name": "tank-metalrough",
+      "bytes": 271431,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "ad601a09c14c1b138210e7fdb3ae40882006904b718462d991c9071c474fdeca"
+    },
+    {
+      "name": "dark-normal",
+      "bytes": 464432,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d"
+    },
+    {
+      "name": "dark-basecolor",
+      "bytes": 206960,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "5706c4c4f00aa1efac62500bf1298279717a936d1190aaef76945fa5c768692f"
+    },
+    {
+      "name": "dark-metalrough",
+      "bytes": 271090,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "4193712c8926992e21763a12a3a2159f434b5d02eebf0b303182f0b9ded92c41"
+    },
+    {
+      "name": "bell-normal",
+      "bytes": 464432,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "9824b2c7c054af1245cae4bc4976f816d41b0431a33a4792d7bb2df59e3f729d"
+    },
+    {
+      "name": "bell-basecolor",
+      "bytes": 482756,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "6d5601fdf7ea346dbb49a37b4a6578bfbb525847ad397de18e6fcc52dacdfb95"
+    },
+    {
+      "name": "bell-metalrough",
+      "bytes": 172171,
+      "size": [
+        1024,
+        1024
+      ],
+      "sha256": "8e0e838d487c83c743ac0c047bf97002a85c7d0c7b41c8413b2a7d813a9ea81e"
+    }
+  ],
+  "materials": [
+    {
+      "name": "Hydrogen cast",
+      "base_color_texture": {
+        "index": 1
+      },
+      "metallic_roughness_texture": {
+        "index": 2
+      },
+      "normal_texture": {
+        "index": 0,
+        "scale": 0.18000000715255737
+      },
+      "emissive_texture": null,
+      "alpha_mode": "OPAQUE",
+      "extensions": []
+    },
+    {
+      "name": "Hydrogen brass",
+      "base_color_texture": {
+        "index": 4
+      },
+      "metallic_roughness_texture": {
+        "index": 5
+      },
+      "normal_texture": {
+        "index": 3,
+        "scale": 0.18000000715255737
+      },
+      "emissive_texture": null,
+      "alpha_mode": "OPAQUE",
+      "extensions": []
+    },
+    {
+      "name": "Hydrogen steel",
+      "base_color_texture": {
+        "index": 7
+      },
+      "metallic_roughness_texture": {
+        "index": 8
+      },
+      "normal_texture": {
+        "index": 6,
+        "scale": 0.18000000715255737
+      },
+      "emissive_texture": null,
+      "alpha_mode": "OPAQUE",
+      "extensions": []
+    },
+    {
+      "name": "Hydrogen tank",
+      "base_color_texture": {
+        "index": 10
+      },
+      "metallic_roughness_texture": {
+        "index": 11
+      },
+      "normal_texture": {
+        "index": 9,
+        "scale": 0.18000000715255737
+      },
+      "emissive_texture": null,
+      "alpha_mode": "OPAQUE",
+      "extensions": []
+    },
+    {
+      "name": "Hydrogen dark",
+      "base_color_texture": {
+        "index": 13
+      },
+      "metallic_roughness_texture": {
+        "index": 14
+      },
+      "normal_texture": {
+        "index": 12,
+        "scale": 0.18000000715255737
+      },
+      "emissive_texture": null,
+      "alpha_mode": "OPAQUE",
+      "extensions": []
+    },
+    {
+      "name": "Hydrogen bell",
+      "base_color_texture": {
+        "index": 16
+      },
+      "metallic_roughness_texture": {
+        "index": 17
+      },
+      "normal_texture": {
+        "index": 15,
+        "scale": 0.18000000715255737
+      },
+      "emissive_texture": null,
+      "alpha_mode": "OPAQUE",
+      "extensions": []
+    },
+    {
+      "name": "Hydrogen inner bell thermal blue",
+      "base_color_texture": {
+        "index": 19
+      },
+      "metallic_roughness_texture": {
+        "index": 20
+      },
+      "normal_texture": {
+        "index": 18,
+        "scale": 0.18000000715255737
+      },
+      "emissive_texture": null,
+      "alpha_mode": "OPAQUE",
+      "extensions": []
+    }
+  ],
+  "nodes": [
+    {
+      "extras": {
+        "fluid": "liquid-hydrogen",
+        "coordinate_frame": "Blender X right, Y platform/fore, Z up; candidate height .36 requires native visual jig"
+      },
+      "name": "socket_fuel",
+      "rotation": [
+        0.5,
+        -0.5,
+        0.5,
+        0.5
+      ],
+      "translation": [
+        -2,
+        0.36000001430511475,
+        -0.5
+      ]
+    },
+    {
+      "extras": {
+        "fluid": "liquid-oxygen",
+        "coordinate_frame": "Blender X right, Y platform/fore, Z up; candidate height .36 requires native visual jig"
+      },
+      "name": "socket_oxidizer",
+      "rotation": [
+        0.5,
+        0.5,
+        -0.5,
+        0.5
+      ],
+      "translation": [
+        2,
+        0.36000001430511475,
+        -0.5
+      ]
+    },
+    {
+      "mesh": 0,
+      "name": "Upper mounting beam",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0,
+        0.9577080607414246,
+        -1.927586317062378
+      ]
+    },
+    {
+      "mesh": 1,
+      "name": "Lower mounting crossmember",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0,
+        0.39674967527389526,
+        -1.0085511207580566
+      ]
+    },
+    {
+      "mesh": 2,
+      "name": "Central regulator spine",
+      "rotation": [
+        0.843391478061676,
+        0,
+        0,
+        0.5372995734214783
+      ],
+      "translation": [
+        0,
+        0.5498815178871155,
+        -1.0529992580413818
+      ]
+    },
+    {
+      "mesh": 3,
+      "name": "Central regulator seat"
+    },
+    {
+      "mesh": 4,
+      "name": "Recessed regulator rim"
+    },
+    {
+      "mesh": 5,
+      "name": "Regulator rim stud"
+    },
+    {
+      "mesh": 6,
+      "name": "Regulator rim stud.001"
+    },
+    {
+      "mesh": 7,
+      "name": "Regulator rim stud.002"
+    },
+    {
+      "mesh": 8,
+      "name": "Regulator rim stud.003"
+    },
+    {
+      "mesh": 9,
+      "name": "Regulator rim stud.004"
+    },
+    {
+      "mesh": 10,
+      "name": "Regulator rim stud.005"
+    },
+    {
+      "mesh": 11,
+      "name": "Central regulator seat.001"
+    },
+    {
+      "mesh": 12,
+      "name": "Recessed regulator rim.001"
+    },
+    {
+      "mesh": 13,
+      "name": "Regulator rim stud.006"
+    },
+    {
+      "mesh": 14,
+      "name": "Regulator rim stud.007"
+    },
+    {
+      "mesh": 15,
+      "name": "Regulator rim stud.008"
+    },
+    {
+      "mesh": 16,
+      "name": "Regulator rim stud.009"
+    },
+    {
+      "mesh": 17,
+      "name": "Regulator rim stud.010"
+    },
+    {
+      "mesh": 18,
+      "name": "Regulator rim stud.011"
+    },
+    {
+      "mesh": 19,
+      "name": "Crossbeam saddle -1.35",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        -1.350000023841858,
+        1.0936542749404907,
+        -1.8641936779022217
+      ]
+    },
+    {
+      "mesh": 20,
+      "name": "Saddle fastener"
+    },
+    {
+      "mesh": 21,
+      "name": "Saddle fastener.001"
+    },
+    {
+      "mesh": 22,
+      "name": "Crossbeam saddle 0",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0,
+        1.0936542749404907,
+        -1.8641936779022217
+      ]
+    },
+    {
+      "mesh": 23,
+      "name": "Saddle fastener.002"
+    },
+    {
+      "mesh": 24,
+      "name": "Saddle fastener.003"
+    },
+    {
+      "mesh": 25,
+      "name": "Crossbeam saddle 1.35",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        1.350000023841858,
+        1.0936542749404907,
+        -1.8641936779022217
+      ]
+    },
+    {
+      "mesh": 26,
+      "name": "Saddle fastener.004"
+    },
+    {
+      "mesh": 27,
+      "name": "Saddle fastener.005"
+    },
+    {
+      "mesh": 28,
+      "name": "Platform saddle foot -1.35",
+      "translation": [
+        -1.350000023841858,
+        0.054999999701976776,
+        -1.927586317062378
+      ]
+    },
+    {
+      "mesh": 29,
+      "name": "Supported saddle cheek",
+      "rotation": [
+        0,
+        -1,
+        0,
+        7.549790126404332e-08
+      ],
+      "translation": [
+        -1.4700000286102295,
+        0.4938540458679199,
+        -1.927586317062378
+      ]
+    },
+    {
+      "mesh": 30,
+      "name": "Deck foot bolt"
+    },
+    {
+      "mesh": 31,
+      "name": "Supported saddle cheek.001",
+      "rotation": [
+        0,
+        -1,
+        0,
+        7.549790126404332e-08
+      ],
+      "translation": [
+        -1.2300000190734863,
+        0.4938540458679199,
+        -1.927586317062378
+      ]
+    },
+    {
+      "mesh": 32,
+      "name": "Deck foot bolt.001"
+    },
+    {
+      "mesh": 33,
+      "name": "Platform saddle foot 1.35",
+      "translation": [
+        1.350000023841858,
+        0.054999999701976776,
+        -1.927586317062378
+      ]
+    },
+    {
+      "mesh": 34,
+      "name": "Supported saddle cheek.002",
+      "rotation": [
+        0,
+        -1,
+        0,
+        7.549790126404332e-08
+      ],
+      "translation": [
+        1.2300000190734863,
+        0.4938540458679199,
+        -1.927586317062378
+      ]
+    },
+    {
+      "mesh": 35,
+      "name": "Deck foot bolt.002"
+    },
+    {
+      "mesh": 36,
+      "name": "Supported saddle cheek.003",
+      "rotation": [
+        0,
+        -1,
+        0,
+        7.549790126404332e-08
+      ],
+      "translation": [
+        1.4700000286102295,
+        0.4938540458679199,
+        -1.927586317062378
+      ]
+    },
+    {
+      "mesh": 37,
+      "name": "Deck foot bolt.003"
+    },
+    {
+      "mesh": 38,
+      "name": "Beam face rivet"
+    },
+    {
+      "mesh": 39,
+      "name": "Beam face rivet.001"
+    },
+    {
+      "mesh": 40,
+      "name": "Beam face rivet.002"
+    },
+    {
+      "mesh": 41,
+      "name": "Beam face rivet.003"
+    },
+    {
+      "mesh": 42,
+      "name": "Beam face rivet.004"
+    },
+    {
+      "mesh": 43,
+      "name": "Beam face rivet.005"
+    },
+    {
+      "mesh": 44,
+      "name": "Beam face rivet.006"
+    },
+    {
+      "mesh": 45,
+      "name": "Beam face rivet.007"
+    },
+    {
+      "mesh": 46,
+      "name": "Beam face rivet.008"
+    },
+    {
+      "mesh": 47,
+      "name": "Beam face rivet.009"
+    },
+    {
+      "mesh": 48,
+      "name": "Diagonal shoulder -1",
+      "rotation": [
+        0.777077317237854,
+        0.1837218999862671,
+        -0.26384779810905457,
+        0.5410928726196289
+      ],
+      "translation": [
+        -1.3200000524520874,
+        0.2008916735649109,
+        -0.399236261844635
+      ]
+    },
+    {
+      "mesh": 49,
+      "name": "Shoulder raised rib -1",
+      "rotation": [
+        0.7759624719619751,
+        0.18541280925273895,
+        -0.26588013768196106,
+        0.5411211252212524
+      ],
+      "translation": [
+        -1.340000033378601,
+        0.3075355291366577,
+        -0.3439904749393463
+      ]
+    },
+    {
+      "mesh": 50,
+      "name": "Shoulder pivot"
+    },
+    {
+      "mesh": 51,
+      "name": "Shoulder pivot pin"
+    },
+    {
+      "mesh": 52,
+      "name": "Shoulder pivot.001"
+    },
+    {
+      "mesh": 53,
+      "name": "Shoulder pivot pin.001"
+    },
+    {
+      "mesh": 54,
+      "name": "Diagonal shoulder 1",
+      "rotation": [
+        0.777077317237854,
+        -0.1837218999862671,
+        0.26384779810905457,
+        0.5410928726196289
+      ],
+      "translation": [
+        1.3200000524520874,
+        0.2008916735649109,
+        -0.399236261844635
+      ]
+    },
+    {
+      "mesh": 55,
+      "name": "Shoulder raised rib 1",
+      "rotation": [
+        0.7759624719619751,
+        -0.18541280925273895,
+        0.26588013768196106,
+        0.5411211252212524
+      ],
+      "translation": [
+        1.340000033378601,
+        0.3075355291366577,
+        -0.3439904749393463
+      ]
+    },
+    {
+      "mesh": 56,
+      "name": "Shoulder pivot.002"
+    },
+    {
+      "mesh": 57,
+      "name": "Shoulder pivot pin.002"
+    },
+    {
+      "mesh": 58,
+      "name": "Shoulder pivot.003"
+    },
+    {
+      "mesh": 59,
+      "name": "Shoulder pivot pin.003"
+    },
+    {
+      "mesh": 60,
+      "name": "Paired canister -1"
+    },
+    {
+      "mesh": 61,
+      "name": "Canister rolled restraint"
+    },
+    {
+      "mesh": 62,
+      "name": "Canister rolled restraint.001"
+    },
+    {
+      "mesh": 63,
+      "name": "Canister rolled restraint.002"
+    },
+    {
+      "mesh": 64,
+      "name": "Canister rolled restraint.003"
+    },
+    {
+      "mesh": 65,
+      "name": "Canister lower attachment"
+    },
+    {
+      "mesh": 66,
+      "name": "Canister saddle",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        -0.46000000834465027,
+        0.405104398727417,
+        -1.3577362298965454
+      ]
+    },
+    {
+      "mesh": 67,
+      "name": "Canister saddle.001",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        -0.46000000834465027,
+        -0.06822806596755981,
+        -0.3426714539527893
+      ]
+    },
+    {
+      "mesh": 68,
+      "name": "Canister header feed -1"
+    },
+    {
+      "mesh": 69,
+      "name": "Outer pressure return -1"
+    },
+    {
+      "mesh": 70,
+      "name": "Paired canister 1"
+    },
+    {
+      "mesh": 71,
+      "name": "Canister rolled restraint.004"
+    },
+    {
+      "mesh": 72,
+      "name": "Canister rolled restraint.005"
+    },
+    {
+      "mesh": 73,
+      "name": "Canister rolled restraint.006"
+    },
+    {
+      "mesh": 74,
+      "name": "Canister rolled restraint.007"
+    },
+    {
+      "mesh": 75,
+      "name": "Canister lower attachment.001"
+    },
+    {
+      "mesh": 76,
+      "name": "Canister saddle.002",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0.46000000834465027,
+        0.405104398727417,
+        -1.3577362298965454
+      ]
+    },
+    {
+      "mesh": 77,
+      "name": "Canister saddle.003",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0.46000000834465027,
+        -0.06822806596755981,
+        -0.3426714539527893
+      ]
+    },
+    {
+      "mesh": 78,
+      "name": "Canister header feed 1"
+    },
+    {
+      "mesh": 79,
+      "name": "Outer pressure return 1"
+    },
+    {
+      "mesh": 80,
+      "name": "Feed column 0"
+    },
+    {
+      "mesh": 81,
+      "name": "Feed collar"
+    },
+    {
+      "mesh": 82,
+      "name": "Feed collar.001"
+    },
+    {
+      "mesh": 83,
+      "name": "Feed collar.002"
+    },
+    {
+      "mesh": 84,
+      "name": "Feed collar.003"
+    },
+    {
+      "mesh": 85,
+      "name": "Feed upper manifold",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        -0.6499999761581421,
+        0.027947943657636642,
+        0.06629086285829544
+      ]
+    },
+    {
+      "mesh": 86,
+      "name": "Feed receiver screw"
+    },
+    {
+      "mesh": 87,
+      "name": "Feed column 1"
+    },
+    {
+      "mesh": 88,
+      "name": "Feed collar.004"
+    },
+    {
+      "mesh": 89,
+      "name": "Feed collar.005"
+    },
+    {
+      "mesh": 90,
+      "name": "Feed collar.006"
+    },
+    {
+      "mesh": 91,
+      "name": "Feed collar.007"
+    },
+    {
+      "mesh": 92,
+      "name": "Feed upper manifold.001",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        -0.38999998569488525,
+        0.027947943657636642,
+        0.06629086285829544
+      ]
+    },
+    {
+      "mesh": 93,
+      "name": "Feed receiver screw.001"
+    },
+    {
+      "mesh": 94,
+      "name": "Feed column 2"
+    },
+    {
+      "mesh": 95,
+      "name": "Feed collar.008"
+    },
+    {
+      "mesh": 96,
+      "name": "Feed collar.009"
+    },
+    {
+      "mesh": 97,
+      "name": "Feed collar.010"
+    },
+    {
+      "mesh": 98,
+      "name": "Feed collar.011"
+    },
+    {
+      "mesh": 99,
+      "name": "Feed upper manifold.002",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        -0.12999999523162842,
+        0.027947943657636642,
+        0.06629086285829544
+      ]
+    },
+    {
+      "mesh": 100,
+      "name": "Feed receiver screw.002"
+    },
+    {
+      "mesh": 101,
+      "name": "Feed column 3"
+    },
+    {
+      "mesh": 102,
+      "name": "Feed collar.012"
+    },
+    {
+      "mesh": 103,
+      "name": "Feed collar.013"
+    },
+    {
+      "mesh": 104,
+      "name": "Feed collar.014"
+    },
+    {
+      "mesh": 105,
+      "name": "Feed collar.015"
+    },
+    {
+      "mesh": 106,
+      "name": "Feed upper manifold.003",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0.12999999523162842,
+        0.027947943657636642,
+        0.06629086285829544
+      ]
+    },
+    {
+      "mesh": 107,
+      "name": "Feed receiver screw.003"
+    },
+    {
+      "mesh": 108,
+      "name": "Feed column 4"
+    },
+    {
+      "mesh": 109,
+      "name": "Feed collar.016"
+    },
+    {
+      "mesh": 110,
+      "name": "Feed collar.017"
+    },
+    {
+      "mesh": 111,
+      "name": "Feed collar.018"
+    },
+    {
+      "mesh": 112,
+      "name": "Feed collar.019"
+    },
+    {
+      "mesh": 113,
+      "name": "Feed upper manifold.004",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0.38999998569488525,
+        0.027947943657636642,
+        0.06629086285829544
+      ]
+    },
+    {
+      "mesh": 114,
+      "name": "Feed receiver screw.004"
+    },
+    {
+      "mesh": 115,
+      "name": "Feed column 5"
+    },
+    {
+      "mesh": 116,
+      "name": "Feed collar.020"
+    },
+    {
+      "mesh": 117,
+      "name": "Feed collar.021"
+    },
+    {
+      "mesh": 118,
+      "name": "Feed collar.022"
+    },
+    {
+      "mesh": 119,
+      "name": "Feed collar.023"
+    },
+    {
+      "mesh": 120,
+      "name": "Feed upper manifold.005",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0.6499999761581421,
+        0.027947943657636642,
+        0.06629086285829544
+      ]
+    },
+    {
+      "mesh": 121,
+      "name": "Feed receiver screw.005"
+    },
+    {
+      "mesh": 122,
+      "name": "Lower feed return -1"
+    },
+    {
+      "mesh": 123,
+      "name": "Outer actuator body -1"
+    },
+    {
+      "mesh": 124,
+      "name": "Outer actuator collar"
+    },
+    {
+      "mesh": 125,
+      "name": "Outer actuator collar.001"
+    },
+    {
+      "mesh": 126,
+      "name": "Outer actuator collar.002"
+    },
+    {
+      "mesh": 127,
+      "name": "Outer actuator collar.003"
+    },
+    {
+      "mesh": 128,
+      "name": "Source actuator helical thread -1"
+    },
+    {
+      "mesh": 129,
+      "name": "Actuator support clevis",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        -0.9200000166893005,
+        -0.3011324405670166,
+        0.6300339698791504
+      ]
+    },
+    {
+      "mesh": 130,
+      "name": "Clevis fixed pin"
+    },
+    {
+      "mesh": 131,
+      "name": "Actuator support clevis.001",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        -0.9200000166893005,
+        -0.9773216247558594,
+        2.0801265239715576
+      ]
+    },
+    {
+      "mesh": 132,
+      "name": "Clevis fixed pin.001"
+    },
+    {
+      "mesh": 133,
+      "name": "Lower feed return 1"
+    },
+    {
+      "mesh": 134,
+      "name": "Outer actuator body 1"
+    },
+    {
+      "mesh": 135,
+      "name": "Outer actuator collar.004"
+    },
+    {
+      "mesh": 136,
+      "name": "Outer actuator collar.005"
+    },
+    {
+      "mesh": 137,
+      "name": "Outer actuator collar.006"
+    },
+    {
+      "mesh": 138,
+      "name": "Outer actuator collar.007"
+    },
+    {
+      "mesh": 139,
+      "name": "Source actuator helical thread 1"
+    },
+    {
+      "mesh": 140,
+      "name": "Actuator support clevis.002",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0.9200000166893005,
+        -0.3011324405670166,
+        0.6300339698791504
+      ]
+    },
+    {
+      "mesh": 141,
+      "name": "Clevis fixed pin.002"
+    },
+    {
+      "mesh": 142,
+      "name": "Actuator support clevis.003",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0.9200000166893005,
+        -0.9773216247558594,
+        2.0801265239715576
+      ]
+    },
+    {
+      "mesh": 143,
+      "name": "Clevis fixed pin.003"
+    },
+    {
+      "mesh": 144,
+      "name": "Main pressure chamber"
+    },
+    {
+      "mesh": 145,
+      "name": "Pressure chamber retaining band"
+    },
+    {
+      "mesh": 146,
+      "name": "Pressure flange stud"
+    },
+    {
+      "mesh": 147,
+      "name": "Pressure flange stud.001"
+    },
+    {
+      "mesh": 148,
+      "name": "Pressure flange stud.002"
+    },
+    {
+      "mesh": 149,
+      "name": "Pressure flange stud.003"
+    },
+    {
+      "mesh": 150,
+      "name": "Pressure flange stud.004"
+    },
+    {
+      "mesh": 151,
+      "name": "Pressure flange stud.005"
+    },
+    {
+      "mesh": 152,
+      "name": "Pressure flange stud.006"
+    },
+    {
+      "mesh": 153,
+      "name": "Pressure flange stud.007"
+    },
+    {
+      "mesh": 154,
+      "name": "Pressure flange stud.008"
+    },
+    {
+      "mesh": 155,
+      "name": "Pressure flange stud.009"
+    },
+    {
+      "mesh": 156,
+      "name": "Pressure flange stud.010"
+    },
+    {
+      "mesh": 157,
+      "name": "Pressure flange stud.011"
+    },
+    {
+      "mesh": 158,
+      "name": "Pressure chamber retaining band.001"
+    },
+    {
+      "mesh": 159,
+      "name": "Pressure flange stud.012"
+    },
+    {
+      "mesh": 160,
+      "name": "Pressure flange stud.013"
+    },
+    {
+      "mesh": 161,
+      "name": "Pressure flange stud.014"
+    },
+    {
+      "mesh": 162,
+      "name": "Pressure flange stud.015"
+    },
+    {
+      "mesh": 163,
+      "name": "Pressure flange stud.016"
+    },
+    {
+      "mesh": 164,
+      "name": "Pressure flange stud.017"
+    },
+    {
+      "mesh": 165,
+      "name": "Pressure flange stud.018"
+    },
+    {
+      "mesh": 166,
+      "name": "Pressure flange stud.019"
+    },
+    {
+      "mesh": 167,
+      "name": "Pressure flange stud.020"
+    },
+    {
+      "mesh": 168,
+      "name": "Pressure flange stud.021"
+    },
+    {
+      "mesh": 169,
+      "name": "Pressure flange stud.022"
+    },
+    {
+      "mesh": 170,
+      "name": "Pressure flange stud.023"
+    },
+    {
+      "mesh": 171,
+      "name": "Pressure chamber retaining band.002"
+    },
+    {
+      "mesh": 172,
+      "name": "Pressure flange stud.024"
+    },
+    {
+      "mesh": 173,
+      "name": "Pressure flange stud.025"
+    },
+    {
+      "mesh": 174,
+      "name": "Pressure flange stud.026"
+    },
+    {
+      "mesh": 175,
+      "name": "Pressure flange stud.027"
+    },
+    {
+      "mesh": 176,
+      "name": "Pressure flange stud.028"
+    },
+    {
+      "mesh": 177,
+      "name": "Pressure flange stud.029"
+    },
+    {
+      "mesh": 178,
+      "name": "Pressure flange stud.030"
+    },
+    {
+      "mesh": 179,
+      "name": "Pressure flange stud.031"
+    },
+    {
+      "mesh": 180,
+      "name": "Pressure flange stud.032"
+    },
+    {
+      "mesh": 181,
+      "name": "Pressure flange stud.033"
+    },
+    {
+      "mesh": 182,
+      "name": "Pressure flange stud.034"
+    },
+    {
+      "mesh": 183,
+      "name": "Pressure flange stud.035"
+    },
+    {
+      "mesh": 184,
+      "name": "Pressure casing axial panel seam"
+    },
+    {
+      "mesh": 185,
+      "name": "Pressure casing axial panel seam.001"
+    },
+    {
+      "mesh": 186,
+      "name": "Pressure casing axial panel seam.002"
+    },
+    {
+      "mesh": 187,
+      "name": "Pressure casing axial panel seam.003"
+    },
+    {
+      "mesh": 188,
+      "name": "Pressure casing axial panel seam.004"
+    },
+    {
+      "mesh": 189,
+      "name": "Pressure casing axial panel seam.005"
+    },
+    {
+      "mesh": 190,
+      "name": "Pressure casing axial panel seam.006"
+    },
+    {
+      "mesh": 191,
+      "name": "Pressure casing axial panel seam.007"
+    },
+    {
+      "mesh": 192,
+      "name": "Continuous hollow bell"
+    },
+    {
+      "mesh": 193,
+      "name": "Nozzle external transverse seam"
+    },
+    {
+      "mesh": 194,
+      "name": "Nozzle external transverse seam.001"
+    },
+    {
+      "mesh": 195,
+      "name": "Nozzle external transverse seam.002"
+    },
+    {
+      "mesh": 196,
+      "name": "Nozzle external transverse seam.003"
+    },
+    {
+      "mesh": 197,
+      "name": "Nozzle longitudinal panel rib 0"
+    },
+    {
+      "mesh": 198,
+      "name": "Physical inner thermal liner 0"
+    },
+    {
+      "mesh": 199,
+      "name": "Nozzle seam retaining pin"
+    },
+    {
+      "mesh": 200,
+      "name": "Nozzle seam retaining pin.001"
+    },
+    {
+      "mesh": 201,
+      "name": "Nozzle seam retaining pin.002"
+    },
+    {
+      "mesh": 202,
+      "name": "Nozzle longitudinal panel rib 1"
+    },
+    {
+      "mesh": 203,
+      "name": "Physical inner thermal liner 1"
+    },
+    {
+      "mesh": 204,
+      "name": "Nozzle seam retaining pin.003"
+    },
+    {
+      "mesh": 205,
+      "name": "Nozzle seam retaining pin.004"
+    },
+    {
+      "mesh": 206,
+      "name": "Nozzle seam retaining pin.005"
+    },
+    {
+      "mesh": 207,
+      "name": "Nozzle longitudinal panel rib 2"
+    },
+    {
+      "mesh": 208,
+      "name": "Physical inner thermal liner 2"
+    },
+    {
+      "mesh": 209,
+      "name": "Nozzle seam retaining pin.006"
+    },
+    {
+      "mesh": 210,
+      "name": "Nozzle seam retaining pin.007"
+    },
+    {
+      "mesh": 211,
+      "name": "Nozzle seam retaining pin.008"
+    },
+    {
+      "mesh": 212,
+      "name": "Nozzle longitudinal panel rib 3"
+    },
+    {
+      "mesh": 213,
+      "name": "Physical inner thermal liner 3"
+    },
+    {
+      "mesh": 214,
+      "name": "Nozzle seam retaining pin.009"
+    },
+    {
+      "mesh": 215,
+      "name": "Nozzle seam retaining pin.010"
+    },
+    {
+      "mesh": 216,
+      "name": "Nozzle seam retaining pin.011"
+    },
+    {
+      "mesh": 217,
+      "name": "Nozzle longitudinal panel rib 4"
+    },
+    {
+      "mesh": 218,
+      "name": "Physical inner thermal liner 4"
+    },
+    {
+      "mesh": 219,
+      "name": "Nozzle seam retaining pin.012"
+    },
+    {
+      "mesh": 220,
+      "name": "Nozzle seam retaining pin.013"
+    },
+    {
+      "mesh": 221,
+      "name": "Nozzle seam retaining pin.014"
+    },
+    {
+      "mesh": 222,
+      "name": "Nozzle longitudinal panel rib 5"
+    },
+    {
+      "mesh": 223,
+      "name": "Physical inner thermal liner 5"
+    },
+    {
+      "mesh": 224,
+      "name": "Nozzle seam retaining pin.015"
+    },
+    {
+      "mesh": 225,
+      "name": "Nozzle seam retaining pin.016"
+    },
+    {
+      "mesh": 226,
+      "name": "Nozzle seam retaining pin.017"
+    },
+    {
+      "mesh": 227,
+      "name": "Nozzle longitudinal panel rib 6"
+    },
+    {
+      "mesh": 228,
+      "name": "Physical inner thermal liner 6"
+    },
+    {
+      "mesh": 229,
+      "name": "Nozzle seam retaining pin.018"
+    },
+    {
+      "mesh": 230,
+      "name": "Nozzle seam retaining pin.019"
+    },
+    {
+      "mesh": 231,
+      "name": "Nozzle seam retaining pin.020"
+    },
+    {
+      "mesh": 232,
+      "name": "Nozzle longitudinal panel rib 7"
+    },
+    {
+      "mesh": 233,
+      "name": "Physical inner thermal liner 7"
+    },
+    {
+      "mesh": 234,
+      "name": "Nozzle seam retaining pin.021"
+    },
+    {
+      "mesh": 235,
+      "name": "Nozzle seam retaining pin.022"
+    },
+    {
+      "mesh": 236,
+      "name": "Nozzle seam retaining pin.023"
+    },
+    {
+      "mesh": 237,
+      "name": "Nozzle longitudinal panel rib 8"
+    },
+    {
+      "mesh": 238,
+      "name": "Physical inner thermal liner 8"
+    },
+    {
+      "mesh": 239,
+      "name": "Nozzle seam retaining pin.024"
+    },
+    {
+      "mesh": 240,
+      "name": "Nozzle seam retaining pin.025"
+    },
+    {
+      "mesh": 241,
+      "name": "Nozzle seam retaining pin.026"
+    },
+    {
+      "mesh": 242,
+      "name": "Nozzle longitudinal panel rib 9"
+    },
+    {
+      "mesh": 243,
+      "name": "Physical inner thermal liner 9"
+    },
+    {
+      "mesh": 244,
+      "name": "Nozzle seam retaining pin.027"
+    },
+    {
+      "mesh": 245,
+      "name": "Nozzle seam retaining pin.028"
+    },
+    {
+      "mesh": 246,
+      "name": "Nozzle seam retaining pin.029"
+    },
+    {
+      "mesh": 247,
+      "name": "Nozzle longitudinal panel rib 10"
+    },
+    {
+      "mesh": 248,
+      "name": "Physical inner thermal liner 10"
+    },
+    {
+      "mesh": 249,
+      "name": "Nozzle seam retaining pin.030"
+    },
+    {
+      "mesh": 250,
+      "name": "Nozzle seam retaining pin.031"
+    },
+    {
+      "mesh": 251,
+      "name": "Nozzle seam retaining pin.032"
+    },
+    {
+      "mesh": 252,
+      "name": "Nozzle longitudinal panel rib 11"
+    },
+    {
+      "mesh": 253,
+      "name": "Physical inner thermal liner 11"
+    },
+    {
+      "mesh": 254,
+      "name": "Nozzle seam retaining pin.033"
+    },
+    {
+      "mesh": 255,
+      "name": "Nozzle seam retaining pin.034"
+    },
+    {
+      "mesh": 256,
+      "name": "Nozzle seam retaining pin.035"
+    },
+    {
+      "mesh": 257,
+      "name": "Emblem backing boss",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0,
+        -0.03195202350616455,
+        1.803763747215271
+      ]
+    },
+    {
+      "mesh": 258,
+      "name": "Winged skull cranium",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0,
+        0.04024726152420044,
+        1.8263970613479614
+      ]
+    },
+    {
+      "mesh": 259,
+      "name": "Cast wing feather",
+      "rotation": [
+        0.45623350143432617,
+        -0.5389916300773621,
+        0.547088086605072,
+        0.4494815468788147
+      ],
+      "translation": [
+        -0.3400000035762787,
+        0.010639607906341553,
+        1.8070738315582275
+      ]
+    },
+    {
+      "mesh": 260,
+      "name": "Cast wing feather.001",
+      "rotation": [
+        0.4752650856971741,
+        -0.5201375484466553,
+        0.5473859906196594,
+        0.45160678029060364
+      ],
+      "translation": [
+        -0.3075000047683716,
+        -0.01471748948097229,
+        1.861452341079712
+      ]
+    },
+    {
+      "mesh": 261,
+      "name": "Cast wing feather.002",
+      "rotation": [
+        0.5025895237922668,
+        -0.49308153986930847,
+        0.5464502573013306,
+        0.45350465178489685
+      ],
+      "translation": [
+        -0.2750000059604645,
+        -0.04007461667060852,
+        1.9158308506011963
+      ]
+    },
+    {
+      "mesh": 262,
+      "name": "Cast wing feather.003",
+      "rotation": [
+        0.5443762540817261,
+        -0.4517763555049896,
+        0.5416693687438965,
+        0.45403409004211426
+      ],
+      "translation": [
+        -0.24250000715255737,
+        -0.06543165445327759,
+        1.9702092409133911
+      ]
+    },
+    {
+      "mesh": 263,
+      "name": "Cast wing feather.004",
+      "rotation": [
+        0.45623350143432617,
+        0.5389916300773621,
+        -0.547088086605072,
+        0.4494815468788147
+      ],
+      "translation": [
+        0.3400000035762787,
+        0.010639607906341553,
+        1.8070738315582275
+      ]
+    },
+    {
+      "mesh": 264,
+      "name": "Cast wing feather.005",
+      "rotation": [
+        0.4752650856971741,
+        0.5201375484466553,
+        -0.5473859906196594,
+        0.45160678029060364
+      ],
+      "translation": [
+        0.3075000047683716,
+        -0.01471748948097229,
+        1.861452341079712
+      ]
+    },
+    {
+      "mesh": 265,
+      "name": "Cast wing feather.006",
+      "rotation": [
+        0.5025895237922668,
+        0.49308153986930847,
+        -0.5464502573013306,
+        0.45350465178489685
+      ],
+      "translation": [
+        0.2750000059604645,
+        -0.04007461667060852,
+        1.9158308506011963
+      ]
+    },
+    {
+      "mesh": 266,
+      "name": "Cast wing feather.007",
+      "rotation": [
+        0.5443762540817261,
+        0.4517763555049896,
+        -0.5416693687438965,
+        0.45403409004211426
+      ],
+      "translation": [
+        0.24250000715255737,
+        -0.06543165445327759,
+        1.9702092409133911
+      ]
+    },
+    {
+      "mesh": 267,
+      "name": "Skull jaw",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0,
+        -0.014387786388397217,
+        1.9553933143615723
+      ]
+    },
+    {
+      "mesh": 268,
+      "name": "Cast skull tooth",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        -0.05000000074505806,
+        0.027312159538269043,
+        2.0079398155212402
+      ]
+    },
+    {
+      "mesh": 269,
+      "name": "Cast skull tooth.001",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        -0.02500000037252903,
+        0.027312159538269043,
+        2.0079398155212402
+      ]
+    },
+    {
+      "mesh": 270,
+      "name": "Cast skull tooth.002",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0,
+        0.027312159538269043,
+        2.0079398155212402
+      ]
+    },
+    {
+      "mesh": 271,
+      "name": "Cast skull tooth.003",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0.02500000037252903,
+        0.027312159538269043,
+        2.0079398155212402
+      ]
+    },
+    {
+      "mesh": 272,
+      "name": "Cast skull tooth.004",
+      "rotation": [
+        0.21643956005573273,
+        0,
+        0,
+        0.9762960076332092
+      ],
+      "translation": [
+        0.05000000074505806,
+        0.027312159538269043,
+        2.0079398155212402
+      ]
+    },
+    {
+      "mesh": 273,
+      "name": "fuel socket flange"
+    },
+    {
+      "mesh": 274,
+      "name": "fuel closed seat"
+    },
+    {
+      "mesh": 275,
+      "name": "fuel routed supply neck"
+    },
+    {
+      "mesh": 276,
+      "name": "fuel flange fastener"
+    },
+    {
+      "mesh": 277,
+      "name": "fuel flange fastener.001"
+    },
+    {
+      "mesh": 278,
+      "name": "fuel flange fastener.002"
+    },
+    {
+      "mesh": 279,
+      "name": "fuel flange fastener.003"
+    },
+    {
+      "mesh": 280,
+      "name": "fuel flange fastener.004"
+    },
+    {
+      "mesh": 281,
+      "name": "fuel flange fastener.005"
+    },
+    {
+      "mesh": 282,
+      "name": "oxidizer socket flange"
+    },
+    {
+      "mesh": 283,
+      "name": "oxidizer closed seat"
+    },
+    {
+      "mesh": 284,
+      "name": "oxidizer routed supply neck"
+    },
+    {
+      "mesh": 285,
+      "name": "oxidizer flange fastener"
+    },
+    {
+      "mesh": 286,
+      "name": "oxidizer flange fastener.001"
+    },
+    {
+      "mesh": 287,
+      "name": "oxidizer flange fastener.002"
+    },
+    {
+      "mesh": 288,
+      "name": "oxidizer flange fastener.003"
+    },
+    {
+      "mesh": 289,
+      "name": "oxidizer flange fastener.004"
+    },
+    {
+      "mesh": 290,
+      "name": "oxidizer flange fastener.005"
+    }
+  ],
+  "animations": 0
+}

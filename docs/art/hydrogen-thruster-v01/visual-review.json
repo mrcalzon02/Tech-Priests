@@ -1,0 +1,56 @@
+{
+  "reviewer": "assistant; no new owner approval claimed",
+  "reference_sha256": {
+    "hydrogen-thruster-idle.png": "5b7daa6196aac7f232cfa4dfa7bf833b318451b05d2f49aa3201dc55213aa3c2",
+    "hydrogen-thruster-run.png": "d62a7eb04bdd7dec8076909ad02ae8d423a77865f5d64456c80fb9b892fa95a3"
+  },
+  "native_model_sha256": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+  "glb_sha256": "302afbedb000f75987f9474ef042299f6f44e99b3f63758720f68f0c1c7417ea",
+  "render_receipt": "review-render-receipt.json",
+  "native_image_hashes": {
+    "candidate-idle-connected.png": "e955fb2fa1899d06011fe4c8851d2b4a79d365f3a6f70a120376cd3dd41af2b1",
+    "candidate-idle-disconnected.png": "540bc8b99eef9d907dc507225c1dc81af646daa44c99c4f3b8e9911216db1826",
+    "candidate-run-connected.png": "bce369c6a8631613f2c99052777a55392339a1d84a4a3281bbb37fccc358bebb",
+    "candidate-run-disconnected.png": "bf8ce7ff122aaf5e63e2e50b45b4c7a9d2f66c7ec93c3602ad8362e9711d5b5d",
+    "frozen-source-pose-0.png": "a3bfb30c6af05863a2b732d4775b1ea1a18a520bd822de0b2d56250f598678d7",
+    "frozen-source-pose-1.png": "efd3439539e416d18db231d8acd3d56ed783276840cbccdf736eff90f051c732",
+    "frozen-source-pose-2.png": "fb67fb7aea0e1ee6ce6c8c27e62f11e61f1f797e450e37e2d556146aaef1e458",
+    "frozen-source-pose-3.png": "8737a138df21ad16fd13269ee00474fb65d1bb77e25f60ae15ba452538cfc07c",
+    "frozen-source-pose-4.png": "197a4628a341c6e77bd40b99b7a57f0d63f0e239d5272643ef139fa4e357a7c3",
+    "frozen-source-pose-5.png": "f9441cb65c3e7d5cbc9d1dcc23421b3c1818f8fd73ea7a1a7acef9ba59b5ff07",
+    "frozen-source-pose-6.png": "4fb507ab96f05f99c84ce37cf5f35504f1519fb062c62cc2b02e55ca26e04098",
+    "legacy-connected.png": "61a4ac855b85962ce7f820d5a4a0afb52ddf8856336aa8d193bac02eb88e261c",
+    "legacy-disconnected.png": "8338be893649723db4ad2415d1c9d08600ab7f809dc29109aa2ece5841f0e376",
+    "run-loop-1.png": "bce369c6a8631613f2c99052777a55392339a1d84a4a3281bbb37fccc358bebb",
+    "run-loop-2.png": "dac4e9d7b58784bfa1bd7368cbe089bc7cc26bda8ccf9616da3ec239208177a5",
+    "run-loop-3.png": "ed6e1c7945e88b12d8cfbe80b305d531d8a6cc96c6139834e0b27890a048bf7f",
+    "run-loop-4.png": "8fe35b8832ffb56daf048a0f9fefc0af9762a40bc73b083b54fba6df624d94b6",
+    "run-loop-5.png": "efa1854ef3199dc6fb662823af8f231c70ad3400d0167aab2dc3402f0af9a51b",
+    "run-loop-6.png": "20fcb056da285d1b37d0d2557967c42462ee6ace19c0353c834b248372caeedd",
+    "run-loop-7.png": "6290de6e2fc4f567a8af217e59197638754b5d674078adfe7b650b1578274355",
+    "run-night.png": "fb02e8b3bad6a78316adcec2474b0a07308b3f16d694ccc3e925fe89ffa4274a"
+  },
+  "scores_out_of_5": {
+    "source_component_and_silhouette_fidelity": {
+      "score": 4,
+      "reason": "Retains wide crossbeam/saddles, paired canisters, diagonal links, feed columns, side actuators, stepped pressure chamber, winged cast emblem and one flared hollow bell. Fine legacy engraving is simplified for a readable modeled source; not a pixel replica."
+    },
+    "construction_and_support": {
+      "score": 4,
+      "reason": "Actual rear/clay views show volumetric routed pipes, a continuous bell wall, supported canisters and platform feet. Independent contact checks pass for 82 named mounting heads and two feet; this is not an exhaustive intersection claim."
+    },
+    "surface_definition": {
+      "score": 4,
+      "reason": "Distinct cast, tank, brass, steel, bell and dark regions use 18 authored maps; bell heat/lip and panel seam treatments follow its UV construction. Actual exported PBR/normal channels load and visible stretching or new large seams were not found at inspected views."
+    },
+    "native_interfaces": {
+      "score": 5,
+      "reason": "Both imported flange planes/centers match fixed sockets; actual native cap overlays connect/disconnect correctly and physical fields are unchanged."
+    },
+    "visual_state_export": {
+      "score": 4,
+      "reason": "Seven idle and seven working source poses, separate emission and registered shadow are fully checked. All seven working source rectangles display as frozen native variants and night glow remains visible. Real working-clock/propulsion behavior is outside this review."
+    }
+  },
+  "verdict": "Accepted as the first authored hydrogen-body graphics integration. No acceptance claim for the other thruster bodies, full modeling goal or propulsion behavior."
+}

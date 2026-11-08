@@ -1,0 +1,360 @@
+{
+  "status": "ATLAS_SOURCE_CELL_EQUIVALENCE_PASS_REQUIRES_FINAL_NATIVE_REVIEW",
+  "source_model_sha256": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+  "glb_sha256": "302afbedb000f75987f9474ef042299f6f44e99b3f63758720f68f0c1c7417ea",
+  "registration": {
+    "status": "MEASURED_REQUIRES_NATIVE_CAP_VISUAL_REVIEW",
+    "scale": 0.375,
+    "shift": [
+      -2.9802322387695312e-08,
+      1.3184055089950562
+    ],
+    "cell": [
+      512,
+      768
+    ],
+    "points": {
+      "fuel": {
+        "model_position": [
+          -2.0,
+          0.5,
+          0.36000001430511475
+        ],
+        "pixel": [
+          85.33333587646484,
+          223.49606323242188
+        ],
+        "target_native_pixel": [
+          -64,
+          -18
+        ],
+        "fit_shift": [
+          -2.9802322387695312e-08,
+          1.3184055089950562
+        ]
+      },
+      "oxidizer": {
+        "model_position": [
+          2.0,
+          0.5,
+          0.36000001430511475
+        ],
+        "pixel": [
+          426.6666564941406,
+          223.49606323242188
+        ],
+        "target_native_pixel": [
+          64,
+          -18
+        ],
+        "fit_shift": [
+          1.1920928955078125e-07,
+          1.3184055089950562
+        ]
+      }
+    },
+    "native_fluidbox_fields_unchanged": true
+  },
+  "source_cell_checks": [
+    {
+      "file": "idle-00-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "f98d82758f07265497767a7b1704aedc60c6055550e38fa451a0e979baef6a98"
+    },
+    {
+      "file": "idle-01-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "f0914a5767f4f8c2c09d72c10cc90ceb0e9d589b9957feec2c521d6da94d2784"
+    },
+    {
+      "file": "idle-02-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "0f0ee7730ac0ece52fe48e8006d2cc58776ef1968785cad38d542b789cd02494"
+    },
+    {
+      "file": "idle-03-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "8ac1bdef262c1e0cf44c63073901493edc2555714bf85aadd85dd9f469def249"
+    },
+    {
+      "file": "idle-04-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "58c1429038dfc80522e09ca917f115478ec996072812d53226af1fd45e0c401e"
+    },
+    {
+      "file": "idle-05-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "1f5b84ac4cba6ec94b54ade5ea24bab2a58127ec8220efcec70de5dc2891ee4b"
+    },
+    {
+      "file": "idle-06-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "3e80294cc9a1c1c3db0191d943521b344adc2ae06b259ab54541985cb62cdcaa"
+    },
+    {
+      "file": "idle-00-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "924ff4330aad29c562f28c9e0bd349e5cac2123d17b41850cd7690b3e28758a1"
+    },
+    {
+      "file": "idle-01-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "c5703851f9407a0c4f6a90377f85417b59c7ed6a8a511ac9bd3d7c275e3c0f6b"
+    },
+    {
+      "file": "idle-02-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "14c8606e28cc1230a1336e0f39cedee2197d41f2b0831654fd77134b25df75b1"
+    },
+    {
+      "file": "idle-03-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "e4751413161deb926756cbc31c1aa1d4918fa550bb5271d3b38d180326d41985"
+    },
+    {
+      "file": "idle-04-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "fc792a57701042584f2aa9e1497bfdcbe8109e6d7ea221678705d37165740547"
+    },
+    {
+      "file": "idle-05-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "c202e58f925ebbc71d062ba2add30ae9c5a39cd7489af6aad746185e8f840cbe"
+    },
+    {
+      "file": "idle-06-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "1a07092a031fba7b76d29a4bfc0c6e6b016231eeec520b03f711142e5fbaf13c"
+    },
+    {
+      "file": "run-00-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "34adf874111162114b0d7ed92f67f58cd2857f4906d8aed9015286ae55ead452"
+    },
+    {
+      "file": "run-01-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "5a58eb6265bb21ef6333f047c2e1278398f563fdb3f901270343259bc8727080"
+    },
+    {
+      "file": "run-02-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "d1b7d37b7fac30017f0fef118e4a9c3a1bbdf79b41ef7d33249e160986e10f84"
+    },
+    {
+      "file": "run-03-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "a1d7c232e964ec55a89711549a0242cfb6ea4e2d94f2afaab03029e38039d485"
+    },
+    {
+      "file": "run-04-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "3602e06d30a6277ca0875e5a37e9b057b4cdc7494c2fcba85b7bbdc513ddd59a"
+    },
+    {
+      "file": "run-05-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "a7c71250827e51b22df856d8ac3e6bf1a04134e2fee08729c3c6981a28115419"
+    },
+    {
+      "file": "run-06-beauty.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "89cf19a2ba62b678033a02aef92b5808b86f617af37cb9cceed8618f421de9d6"
+    },
+    {
+      "file": "run-00-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "d517b1e4f359b56f58b83b5a0fa9e587565be691799dbfb5afce22dff02a6295"
+    },
+    {
+      "file": "run-01-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "33243ffaba91f0d083ef4bc2bd9e0853f5d302c737b968a9724576e2dc72374d"
+    },
+    {
+      "file": "run-02-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "db55620542bf34bc56048be1a57ce88185b561981d0db62addfa268a909a8628"
+    },
+    {
+      "file": "run-03-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "606fab226d6a1bcf5b7dd8147c6c10973f1e106ed3ea3b353363abb942236b9d"
+    },
+    {
+      "file": "run-04-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "15508c6b64b623241ca0117bc6a7ae1da433867acff69e4136a4e81afed3076d"
+    },
+    {
+      "file": "run-05-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "8cbbd9f5ce22fee53254cf4054c2cd7d1255c5ffaf9653ac74b8e98ae1472d9b"
+    },
+    {
+      "file": "run-06-emission.png",
+      "alpha_bbox": [
+        81,
+        76,
+        431,
+        691
+      ],
+      "sha256": "b3ca711832c96df090dbe588f6dc86f0b6988e3b6710ad01f954a8d4d7e5b327"
+    }
+  ],
+  "pngs": {
+    "hydrogen-thruster-v01-idle-emission.png": "18a1b202fc766a7c8237c285b4308815cd7166f90a39c6a7d5867845ee40fca2",
+    "hydrogen-thruster-v01-idle.png": "6769eac7b445da20856fb723c9ac4cc0fd4621824a4579e79c7f261b14b8b7ac",
+    "hydrogen-thruster-v01-run-emission.png": "0b429230f52a9823ce8f58dea6e4f52d6a533975f4e7e6dc831297fa827e410e",
+    "hydrogen-thruster-v01-run.png": "2dd51726ec5ee193546696bd2c4d58d73134c8778b72128446878d4e023eaa73",
+    "hydrogen-thruster-v01-shadow.png": "eea192d313ac7394d6bcfcbfbc975fee6ffdc16823b6be1e68b53992f7e1b139"
+  },
+  "module_sha256": "c5e3115e94b64309dfa5925b2a812760ef719bea7a7e31619519bf66540d5e4d",
+  "native_shadow_alpha_bbox": [
+    214,
+    222,
+    602,
+    526
+  ],
+  "native_shadow_border_alpha_zero": true,
+  "exact_rgba_cells_checked": 28,
+  "native_body_alpha_bottom_tiles": 4.916061758995056,
+  "drawing_box_bottom_with_quarter_tile_margin": 5.25,
+  "module_changes": "Only graphics_set idle/run animation, random-start display flag, one thermal glow visual and drawing-box culling extent. Native pipe-cap visuals and all nonvisual prototype fields remain unchanged.",
+  "idle_emission_atlas": "Exported source channel retained for future graphics use; current module uses the run emission channel only for working glow."
+}

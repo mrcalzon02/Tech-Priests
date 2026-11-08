@@ -5,9 +5,9 @@ Authority: the owner requested local Blender production, source-faithful structu
 
 ## Latest authoritative checkpoint
 
-Current inventory: **203 entity PNGs / 99 direct model/export/package files**, plus the two verified segmented source packages. The optional Mechanicus sprite namespace load gate is native-verified absent/enabled. Boiler sprite placement, cold/working state and wire-mount slices retain their prior evidence; **G5 static cold-pose interchange now passes** with 264 meshes / 224,311 triangles, 13 embedded images and independently verified bounds/sockets. See [actual export review](boiler-v08-glb/README.md). Native working animation/sprites are retained; no animated GLB or full-goal completion is claimed.
+Current inventory: **207 entity PNGs / 101 direct model/export/package files**, plus the two verified segmented source packages. The optional Mechanicus sprite namespace load gate is native-verified absent/enabled. Boiler sprite placement, cold/working state and wire-mount slices retain their prior evidence; **G5 static cold-pose interchange now passes** with 264 meshes / 224,311 triangles, 13 embedded images and independently verified bounds/sockets. See [actual export review](boiler-v08-glb/README.md). Native working animation/sprites are retained; no animated GLB or full-goal completion is claimed.
 
-A02 latest independently rehashed checkpoint is **239/384 chunks** in `lobber-a02-latest-progress.json`. Historical counts below are snapshots, not the current total. Full A02 capture/packaging/native integration and the authored thruster bodies remain priorities; other family rows still require their individual gates.
+A02 latest independently rehashed checkpoint is **272/384 chunks** in `lobber-a02-latest-progress.json`. Historical counts below are snapshots, not the current total. Full A02 capture/packaging/native integration and the authored thruster bodies remain priorities; other family rows still require their individual gates.
 
 ## Current source authority — A02 restored
 
@@ -40,7 +40,7 @@ Every row inherits gates G1–G8 below. Each named cache/station variant must re
 
 | Priority | Asset / current integration | Evidence / next concrete work | Direction and interface done criteria |
 |---|---|---|---|
-| P0 | Hydrogen platform thruster: native attachment slice repaired; body still primitive | Native 2.1.24 graphical jig verifies conditional cap overlays, exact pipe endpoints and legal 4x4 platform edge. No accepted authored 3D body yet. | Fixed north-facing body. Fuel west `(-1.5,-0.5)`, oxidizer east `(1.5,-0.5)`; adjacent ordinary pipe centres match exactly. Build/refine the model shoulders and bell to this measured contract; preserve idle/run and cap states. |
+| Reviewed graphics lane | Hydrogen platform thruster V01: authored model and source graphics integrated | 291 meshes / 92,996 triangles; 18 PBR images; actual GLB reimport, 7+7 pose capture, exact atlases, shadow and native cap/night/frozen-frame review pass. See hydrogen-thruster-v01. Original sprites retained. | Fixed north only, 4x4. Fuel/oxygen native cells (-1.5,-0.5)/(1.5,-0.5), mating planes (-2,-0.5)/(2,-0.5), source sockets (+/-2,0.5,0.36). Physical fields and cap gates unchanged; only drawing box expands to bottom 5.25. No circuit connector declared. Real propulsion-clock/behavior testing is outside this lane. |
 | P0 | Thetazine platform thruster: native attachment slice repaired; body still primitive | Conditional native caps, exact pipe endpoints and legal 5x5 platform edge verified in graphical client. Own authored body remains open. | Fixed north-facing body. Fuel west `(-2,-1)`, water east `(2,-1)`; actual 5x5 half-tile origin retained. Preserve 4.3x4.7 collision extent, exhaust clearance and source silhouette. |
 | P0 | Void fusion thruster, narrow | 1x9 supported-body / aft-void masks now fit its actual footprint; native edge acceptance verified at last foundation row 4 for y-origin 0.5. Authored body still open. | Fixed direction, no visible fluid ports. Preserve sealed electric/ritual interface; do not invent pipes for hidden bookkeeping fluids. Match body, bearing and wire/power-service contract before export. |
 | P0 | Large void fusion thruster | 4x4 supported-body / aft-void masks repaired; native edge acceptance verified at last foundation row 1 for integer origin. Wide legacy sprite remains the reference. | Fixed direction, zero visible fluid ports. Independently author wide body/camera/exhaust geometry; do not scale the 1x9 spine or copy its sockets. |
@@ -165,3 +165,7 @@ The former missing-enabled-mod path is removed from runtime Lua. Five exact exis
 Boiler G5 independent GLB reimport/PBR/bounds/socket evidence is still open. Other structure and model gates remain as recorded; no behavior/regression or release milestone is claimed by the graphics-load proof.
 
 A02 independent frame-hash checkpoint: 229/384 chunks. Existing controller and four Blender render workers were re-observed live during this import slice.
+
+## Authored hydrogen body — graphics lane reviewed
+
+The first actual source-faithful hydrogen body now has a packed editable source, independently reimported static GLB, named PBR maps, supported mounts, verified pipe flanges, seven idle/seven working source poses, exact RGBA atlases and a registered geometry shadow. The real late import loads in the exact tracked native copy. Connected/disconnected caps and night glow are reviewed; all seven working source rectangles are independently displayed as frozen variants. Cold-clock screenshots are not treated as proof of a powered working cycle. See [source, native proof and commands](hydrogen-thruster-v01/README.md). Other three thruster bodies and all other open family gates remain distinct work.

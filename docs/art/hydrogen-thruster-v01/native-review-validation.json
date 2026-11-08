@@ -1,0 +1,1450 @@
+{
+  "status": "NATIVE_GRAPHICS_LOAD_CAP_JOIN_FROZEN_SOURCE_POSE_REVIEW_PASS",
+  "scope": "Actual target idle plus forced working-display clone and seven fixed source-frame variants; exact same native nonvisual prototype fields, no propellant/thrust/behavior tests. Sequential cold-thruster screenshot differences are not accepted as proof of working-clock progression.",
+  "binding": {
+    "source_model_sha256": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+    "module_sha256": "c5e3115e94b64309dfa5925b2a812760ef719bea7a7e31619519bf66540d5e4d",
+    "images": {
+      "hydrogen-thruster-v01-idle.png": "6769eac7b445da20856fb723c9ac4cc0fd4621824a4579e79c7f261b14b8b7ac",
+      "hydrogen-thruster-v01-run-emission.png": "0b429230f52a9823ce8f58dea6e4f52d6a533975f4e7e6dc831297fa827e410e",
+      "hydrogen-thruster-v01-run.png": "2dd51726ec5ee193546696bd2c4d58d73134c8778b72128446878d4e023eaa73",
+      "hydrogen-thruster-v01-shadow.png": "eea192d313ac7394d6bcfcbfbc975fee6ffdc16823b6be1e68b53992f7e1b139"
+    },
+    "actual_target_idle": "hydrogen-thruster",
+    "forced_run_graphics_only": "hydrogen-model-run",
+    "legacy_comparison": "hydrogen-model-legacy",
+    "nonvisual_prototype_and_cap_preservation_asserted_in_data_stage": true
+  },
+  "graphics": {
+    "candidate_graphics": {
+      "always_draw_idle_animation": false,
+      "animation": {
+        "north": {
+          "layers": [
+            {
+              "animation_speed": 0.18,
+              "blend_mode": "normal",
+              "draw_as_glow": false,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+              "frame_count": 7,
+              "height": 768,
+              "line_length": 7,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 512
+            },
+            {
+              "animation_speed": 0.18,
+              "draw_as_shadow": true,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+              "frame_count": 1,
+              "height": 1024,
+              "repeat_count": 7,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 768
+            }
+          ]
+        }
+      },
+      "animation_random_start_frame": false,
+      "idle_animation": {
+        "north": {
+          "layers": [
+            {
+              "animation_speed": 0.18,
+              "blend_mode": "normal",
+              "draw_as_glow": false,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-idle.png",
+              "frame_count": 7,
+              "height": 768,
+              "line_length": 7,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 512
+            },
+            {
+              "animation_speed": 0.18,
+              "draw_as_shadow": true,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+              "frame_count": 1,
+              "height": 1024,
+              "repeat_count": 7,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 768
+            }
+          ]
+        }
+      },
+      "working_visualisations": [
+        {
+          "always_draw": true,
+          "animation": {
+            "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-1.png",
+            "height": 832,
+            "scale": 0.5,
+            "shift": [
+              0,
+              4.46875
+            ],
+            "width": 384
+          },
+          "enabled_by_name": true,
+          "name": "pipe-1"
+        },
+        {
+          "always_draw": true,
+          "animation": {
+            "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-4.png",
+            "height": 832,
+            "scale": 0.5,
+            "shift": [
+              0,
+              4.46875
+            ],
+            "width": 384
+          },
+          "enabled_by_name": true,
+          "name": "pipe-4"
+        },
+        {
+          "always_draw": false,
+          "animation": {
+            "animation_speed": 0.18,
+            "blend_mode": "additive",
+            "draw_as_glow": true,
+            "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+            "frame_count": 7,
+            "height": 768,
+            "line_length": 7,
+            "scale": 0.375,
+            "shift": [
+              -2.9802322387695e-08,
+              1.3184055089951
+            ],
+            "width": 512
+          },
+          "name": "hydrogen-v01-thermal-glow"
+        }
+      ]
+    },
+    "circuit_connector": false,
+    "circuit_wire_connection_point": false,
+    "circuit_wire_max_distance": false,
+    "collision_box": [
+      [
+        -1.85,
+        -1.85
+      ],
+      [
+        1.85,
+        1.85
+      ]
+    ],
+    "drawing_box": [
+      [
+        -2.65,
+        -2.95
+      ],
+      [
+        2.65,
+        5.25
+      ]
+    ],
+    "footprint": [
+      4,
+      4
+    ],
+    "forced_run_graphics": {
+      "always_draw_idle_animation": false,
+      "animation": {
+        "north": {
+          "layers": [
+            {
+              "animation_speed": 0.18,
+              "blend_mode": "normal",
+              "draw_as_glow": false,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+              "frame_count": 7,
+              "height": 768,
+              "line_length": 7,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 512
+            },
+            {
+              "animation_speed": 0.18,
+              "draw_as_shadow": true,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+              "frame_count": 1,
+              "height": 1024,
+              "repeat_count": 7,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 768
+            }
+          ]
+        }
+      },
+      "animation_random_start_frame": false,
+      "idle_animation": {
+        "north": {
+          "layers": [
+            {
+              "animation_speed": 0.18,
+              "blend_mode": "normal",
+              "draw_as_glow": false,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+              "frame_count": 7,
+              "height": 768,
+              "line_length": 7,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 512
+            },
+            {
+              "animation_speed": 0.18,
+              "draw_as_shadow": true,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+              "frame_count": 1,
+              "height": 1024,
+              "repeat_count": 7,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 768
+            }
+          ]
+        }
+      },
+      "working_visualisations": [
+        {
+          "always_draw": true,
+          "animation": {
+            "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-1.png",
+            "height": 832,
+            "scale": 0.5,
+            "shift": [
+              0,
+              4.46875
+            ],
+            "width": 384
+          },
+          "enabled_by_name": true,
+          "name": "pipe-1"
+        },
+        {
+          "always_draw": true,
+          "animation": {
+            "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-4.png",
+            "height": 832,
+            "scale": 0.5,
+            "shift": [
+              0,
+              4.46875
+            ],
+            "width": 384
+          },
+          "enabled_by_name": true,
+          "name": "pipe-4"
+        },
+        {
+          "always_draw": true,
+          "animation": {
+            "animation_speed": 0.18,
+            "blend_mode": "additive",
+            "draw_as_glow": true,
+            "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+            "frame_count": 7,
+            "height": 768,
+            "line_length": 7,
+            "scale": 0.375,
+            "shift": [
+              -2.9802322387695e-08,
+              1.3184055089951
+            ],
+            "width": 512
+          },
+          "name": "hydrogen-v01-thermal-glow"
+        }
+      ]
+    },
+    "fuel": {
+      "draw_only_when_connected": true,
+      "filter": "liquid-hydrogen",
+      "pipe_connections": [
+        {
+          "direction": 12,
+          "enable_working_visualisations": [
+            "pipe-4"
+          ],
+          "flow_direction": "input",
+          "position": [
+            -1.5,
+            -0.5
+          ]
+        }
+      ],
+      "production_type": "input",
+      "volume": 1000
+    },
+    "native_cap_visualisations_preserved": true,
+    "nonvisual_fields_preserved": true,
+    "old_graphics": {
+      "always_draw_idle_animation": false,
+      "animation": {
+        "east": {
+          "animation_speed": 0.18,
+          "filename": "__tech-priests__/graphics/entity/hydrogen-thruster/hydrogen-thruster-run.png",
+          "frame_count": 7,
+          "height": 512,
+          "line_length": 7,
+          "priority": "high",
+          "scale": 0.54,
+          "shift": [
+            0,
+            1.25
+          ],
+          "width": 256
+        },
+        "north": {
+          "animation_speed": 0.18,
+          "filename": "__tech-priests__/graphics/entity/hydrogen-thruster/hydrogen-thruster-run.png",
+          "frame_count": 7,
+          "height": 512,
+          "line_length": 7,
+          "priority": "high",
+          "scale": 0.54,
+          "shift": [
+            0,
+            1.25
+          ],
+          "width": 256
+        },
+        "south": {
+          "animation_speed": 0.18,
+          "filename": "__tech-priests__/graphics/entity/hydrogen-thruster/hydrogen-thruster-run.png",
+          "frame_count": 7,
+          "height": 512,
+          "line_length": 7,
+          "priority": "high",
+          "scale": 0.54,
+          "shift": [
+            0,
+            1.25
+          ],
+          "width": 256
+        },
+        "west": {
+          "animation_speed": 0.18,
+          "filename": "__tech-priests__/graphics/entity/hydrogen-thruster/hydrogen-thruster-run.png",
+          "frame_count": 7,
+          "height": 512,
+          "line_length": 7,
+          "priority": "high",
+          "scale": 0.54,
+          "shift": [
+            0,
+            1.25
+          ],
+          "width": 256
+        }
+      },
+      "idle_animation": {
+        "east": {
+          "animation_speed": 0.18,
+          "filename": "__tech-priests__/graphics/entity/hydrogen-thruster/hydrogen-thruster-idle.png",
+          "frame_count": 7,
+          "height": 512,
+          "line_length": 7,
+          "priority": "high",
+          "scale": 0.54,
+          "shift": [
+            0,
+            1.25
+          ],
+          "width": 256
+        },
+        "north": {
+          "animation_speed": 0.18,
+          "filename": "__tech-priests__/graphics/entity/hydrogen-thruster/hydrogen-thruster-idle.png",
+          "frame_count": 7,
+          "height": 512,
+          "line_length": 7,
+          "priority": "high",
+          "scale": 0.54,
+          "shift": [
+            0,
+            1.25
+          ],
+          "width": 256
+        },
+        "south": {
+          "animation_speed": 0.18,
+          "filename": "__tech-priests__/graphics/entity/hydrogen-thruster/hydrogen-thruster-idle.png",
+          "frame_count": 7,
+          "height": 512,
+          "line_length": 7,
+          "priority": "high",
+          "scale": 0.54,
+          "shift": [
+            0,
+            1.25
+          ],
+          "width": 256
+        },
+        "west": {
+          "animation_speed": 0.18,
+          "filename": "__tech-priests__/graphics/entity/hydrogen-thruster/hydrogen-thruster-idle.png",
+          "frame_count": 7,
+          "height": 512,
+          "line_length": 7,
+          "priority": "high",
+          "scale": 0.54,
+          "shift": [
+            0,
+            1.25
+          ],
+          "width": 256
+        }
+      },
+      "working_visualisations": [
+        {
+          "always_draw": true,
+          "animation": {
+            "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-1.png",
+            "height": 832,
+            "scale": 0.5,
+            "shift": [
+              0,
+              4.46875
+            ],
+            "width": 384
+          },
+          "enabled_by_name": true,
+          "name": "pipe-1"
+        },
+        {
+          "always_draw": true,
+          "animation": {
+            "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-4.png",
+            "height": 832,
+            "scale": 0.5,
+            "shift": [
+              0,
+              4.46875
+            ],
+            "width": 384
+          },
+          "enabled_by_name": true,
+          "name": "pipe-4"
+        }
+      ]
+    },
+    "oxidizer": {
+      "draw_only_when_connected": true,
+      "filter": "liquid-oxygen",
+      "pipe_connections": [
+        {
+          "direction": 4,
+          "enable_working_visualisations": [
+            "pipe-1"
+          ],
+          "flow_direction": "input",
+          "position": [
+            1.5,
+            -0.5
+          ]
+        }
+      ],
+      "production_type": "input",
+      "volume": 1000
+    },
+    "pose_graphics": [
+      {
+        "body": {
+          "north": {
+            "layers": [
+              {
+                "animation_speed": 0.18,
+                "blend_mode": "normal",
+                "draw_as_glow": false,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+                "frame_count": 1,
+                "height": 768,
+                "line_length": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 512,
+                "x": 0
+              },
+              {
+                "animation_speed": 0.18,
+                "draw_as_shadow": true,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+                "frame_count": 1,
+                "height": 1024,
+                "repeat_count": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 768
+              }
+            ]
+          }
+        },
+        "name": "hydrogen-model-pose-0",
+        "source_index": 0,
+        "visuals": [
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-1.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-1"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-4.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-4"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "animation_speed": 0.18,
+              "blend_mode": "additive",
+              "draw_as_glow": true,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+              "frame_count": 1,
+              "height": 768,
+              "line_length": 1,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 512,
+              "x": 0
+            },
+            "name": "hydrogen-v01-thermal-glow"
+          }
+        ]
+      },
+      {
+        "body": {
+          "north": {
+            "layers": [
+              {
+                "animation_speed": 0.18,
+                "blend_mode": "normal",
+                "draw_as_glow": false,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+                "frame_count": 1,
+                "height": 768,
+                "line_length": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 512,
+                "x": 512
+              },
+              {
+                "animation_speed": 0.18,
+                "draw_as_shadow": true,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+                "frame_count": 1,
+                "height": 1024,
+                "repeat_count": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 768
+              }
+            ]
+          }
+        },
+        "name": "hydrogen-model-pose-1",
+        "source_index": 1,
+        "visuals": [
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-1.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-1"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-4.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-4"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "animation_speed": 0.18,
+              "blend_mode": "additive",
+              "draw_as_glow": true,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+              "frame_count": 1,
+              "height": 768,
+              "line_length": 1,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 512,
+              "x": 512
+            },
+            "name": "hydrogen-v01-thermal-glow"
+          }
+        ]
+      },
+      {
+        "body": {
+          "north": {
+            "layers": [
+              {
+                "animation_speed": 0.18,
+                "blend_mode": "normal",
+                "draw_as_glow": false,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+                "frame_count": 1,
+                "height": 768,
+                "line_length": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 512,
+                "x": 1024
+              },
+              {
+                "animation_speed": 0.18,
+                "draw_as_shadow": true,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+                "frame_count": 1,
+                "height": 1024,
+                "repeat_count": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 768
+              }
+            ]
+          }
+        },
+        "name": "hydrogen-model-pose-2",
+        "source_index": 2,
+        "visuals": [
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-1.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-1"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-4.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-4"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "animation_speed": 0.18,
+              "blend_mode": "additive",
+              "draw_as_glow": true,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+              "frame_count": 1,
+              "height": 768,
+              "line_length": 1,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 512,
+              "x": 1024
+            },
+            "name": "hydrogen-v01-thermal-glow"
+          }
+        ]
+      },
+      {
+        "body": {
+          "north": {
+            "layers": [
+              {
+                "animation_speed": 0.18,
+                "blend_mode": "normal",
+                "draw_as_glow": false,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+                "frame_count": 1,
+                "height": 768,
+                "line_length": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 512,
+                "x": 1536
+              },
+              {
+                "animation_speed": 0.18,
+                "draw_as_shadow": true,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+                "frame_count": 1,
+                "height": 1024,
+                "repeat_count": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 768
+              }
+            ]
+          }
+        },
+        "name": "hydrogen-model-pose-3",
+        "source_index": 3,
+        "visuals": [
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-1.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-1"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-4.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-4"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "animation_speed": 0.18,
+              "blend_mode": "additive",
+              "draw_as_glow": true,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+              "frame_count": 1,
+              "height": 768,
+              "line_length": 1,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 512,
+              "x": 1536
+            },
+            "name": "hydrogen-v01-thermal-glow"
+          }
+        ]
+      },
+      {
+        "body": {
+          "north": {
+            "layers": [
+              {
+                "animation_speed": 0.18,
+                "blend_mode": "normal",
+                "draw_as_glow": false,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+                "frame_count": 1,
+                "height": 768,
+                "line_length": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 512,
+                "x": 2048
+              },
+              {
+                "animation_speed": 0.18,
+                "draw_as_shadow": true,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+                "frame_count": 1,
+                "height": 1024,
+                "repeat_count": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 768
+              }
+            ]
+          }
+        },
+        "name": "hydrogen-model-pose-4",
+        "source_index": 4,
+        "visuals": [
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-1.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-1"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-4.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-4"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "animation_speed": 0.18,
+              "blend_mode": "additive",
+              "draw_as_glow": true,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+              "frame_count": 1,
+              "height": 768,
+              "line_length": 1,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 512,
+              "x": 2048
+            },
+            "name": "hydrogen-v01-thermal-glow"
+          }
+        ]
+      },
+      {
+        "body": {
+          "north": {
+            "layers": [
+              {
+                "animation_speed": 0.18,
+                "blend_mode": "normal",
+                "draw_as_glow": false,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+                "frame_count": 1,
+                "height": 768,
+                "line_length": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 512,
+                "x": 2560
+              },
+              {
+                "animation_speed": 0.18,
+                "draw_as_shadow": true,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+                "frame_count": 1,
+                "height": 1024,
+                "repeat_count": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 768
+              }
+            ]
+          }
+        },
+        "name": "hydrogen-model-pose-5",
+        "source_index": 5,
+        "visuals": [
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-1.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-1"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-4.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-4"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "animation_speed": 0.18,
+              "blend_mode": "additive",
+              "draw_as_glow": true,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+              "frame_count": 1,
+              "height": 768,
+              "line_length": 1,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 512,
+              "x": 2560
+            },
+            "name": "hydrogen-v01-thermal-glow"
+          }
+        ]
+      },
+      {
+        "body": {
+          "north": {
+            "layers": [
+              {
+                "animation_speed": 0.18,
+                "blend_mode": "normal",
+                "draw_as_glow": false,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+                "frame_count": 1,
+                "height": 768,
+                "line_length": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 512,
+                "x": 3072
+              },
+              {
+                "animation_speed": 0.18,
+                "draw_as_shadow": true,
+                "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+                "frame_count": 1,
+                "height": 1024,
+                "repeat_count": 1,
+                "scale": 0.375,
+                "shift": [
+                  -2.9802322387695e-08,
+                  1.3184055089951
+                ],
+                "width": 768
+              }
+            ]
+          }
+        },
+        "name": "hydrogen-model-pose-6",
+        "source_index": 6,
+        "visuals": [
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-1.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-1"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "filename": "__space-age__/graphics/entity/thruster/thruster-pipe-connection-4.png",
+              "height": 832,
+              "scale": 0.5,
+              "shift": [
+                0,
+                4.46875
+              ],
+              "width": 384
+            },
+            "enabled_by_name": true,
+            "name": "pipe-4"
+          },
+          {
+            "always_draw": true,
+            "animation": {
+              "animation_speed": 0.18,
+              "blend_mode": "additive",
+              "draw_as_glow": true,
+              "filename": "__tech-priests__/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+              "frame_count": 1,
+              "height": 768,
+              "line_length": 1,
+              "scale": 0.375,
+              "shift": [
+                -2.9802322387695e-08,
+                1.3184055089951
+              ],
+              "width": 512,
+              "x": 3072
+            },
+            "name": "hydrogen-v01-thermal-glow"
+          }
+        ]
+      }
+    ],
+    "selection_box": [
+      [
+        -2,
+        -2
+      ],
+      [
+        2,
+        2
+      ]
+    ],
+    "tile_buildability_rules": [
+      {
+        "area": [
+          [
+            -1.8,
+            -1.8
+          ],
+          [
+            1.8,
+            1.8
+          ]
+        ],
+        "colliding_tiles": {
+          "layers": {
+            "empty_space": true
+          }
+        },
+        "remove_on_collision": true,
+        "required_tiles": {
+          "layers": {
+            "ground_tile": true
+          }
+        }
+      },
+      {
+        "area": [
+          [
+            -1.8,
+            2.2
+          ],
+          [
+            1.8,
+            90.3
+          ]
+        ],
+        "remove_on_collision": true,
+        "required_tiles": {
+          "layers": {
+            "empty_space": true
+          }
+        }
+      }
+    ]
+  },
+  "receipts": {
+    "connected": {
+      "state": "connected",
+      "tick": 60,
+      "scope": "Graphics-only forced idle/run display clones; no propellant, thrust, travel, consumption or behavior assertions.",
+      "entities": [
+        {
+          "label": "legacy",
+          "name": "hydrogen-model-legacy",
+          "position": {
+            "y": 0,
+            "x": -21
+          },
+          "direction": 0,
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -22.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -23.5
+              },
+              "connected_name": "pipe"
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": -19.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -18.5
+              },
+              "connected_name": "pipe"
+            }
+          ]
+        },
+        {
+          "label": "candidate-idle",
+          "name": "hydrogen-thruster",
+          "position": {
+            "y": 0,
+            "x": -9
+          },
+          "direction": 0,
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -10.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -11.5
+              },
+              "connected_name": "pipe"
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": -7.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -6.5
+              },
+              "connected_name": "pipe"
+            }
+          ]
+        },
+        {
+          "label": "candidate-run",
+          "name": "hydrogen-model-run",
+          "position": {
+            "y": 0,
+            "x": 9
+          },
+          "direction": 0,
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": 7.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": 6.5
+              },
+              "connected_name": "pipe"
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": 10.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": 11.5
+              },
+              "connected_name": "pipe"
+            }
+          ]
+        }
+      ]
+    },
+    "disconnected": {
+      "state": "disconnected",
+      "tick": 150,
+      "scope": "Graphics-only forced idle/run display clones; no propellant, thrust, travel, consumption or behavior assertions.",
+      "entities": [
+        {
+          "label": "legacy",
+          "name": "hydrogen-model-legacy",
+          "position": {
+            "y": 0,
+            "x": -21
+          },
+          "direction": 0,
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -22.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -23.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": -19.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -18.5
+              }
+            }
+          ]
+        },
+        {
+          "label": "candidate-idle",
+          "name": "hydrogen-thruster",
+          "position": {
+            "y": 0,
+            "x": -9
+          },
+          "direction": 0,
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -10.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -11.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": -7.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -6.5
+              }
+            }
+          ]
+        },
+        {
+          "label": "candidate-run",
+          "name": "hydrogen-model-run",
+          "position": {
+            "y": 0,
+            "x": 9
+          },
+          "direction": 0,
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": 7.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": 6.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": 10.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": 11.5
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "native_png_sha256": {
+    "candidate-idle-connected.png": "e955fb2fa1899d06011fe4c8851d2b4a79d365f3a6f70a120376cd3dd41af2b1",
+    "candidate-idle-disconnected.png": "540bc8b99eef9d907dc507225c1dc81af646daa44c99c4f3b8e9911216db1826",
+    "candidate-run-connected.png": "bce369c6a8631613f2c99052777a55392339a1d84a4a3281bbb37fccc358bebb",
+    "candidate-run-disconnected.png": "bf8ce7ff122aaf5e63e2e50b45b4c7a9d2f66c7ec93c3602ad8362e9711d5b5d",
+    "frozen-source-pose-0.png": "a3bfb30c6af05863a2b732d4775b1ea1a18a520bd822de0b2d56250f598678d7",
+    "frozen-source-pose-1.png": "efd3439539e416d18db231d8acd3d56ed783276840cbccdf736eff90f051c732",
+    "frozen-source-pose-2.png": "fb67fb7aea0e1ee6ce6c8c27e62f11e61f1f797e450e37e2d556146aaef1e458",
+    "frozen-source-pose-3.png": "8737a138df21ad16fd13269ee00474fb65d1bb77e25f60ae15ba452538cfc07c",
+    "frozen-source-pose-4.png": "197a4628a341c6e77bd40b99b7a57f0d63f0e239d5272643ef139fa4e357a7c3",
+    "frozen-source-pose-5.png": "f9441cb65c3e7d5cbc9d1dcc23421b3c1818f8fd73ea7a1a7acef9ba59b5ff07",
+    "frozen-source-pose-6.png": "4fb507ab96f05f99c84ce37cf5f35504f1519fb062c62cc2b02e55ca26e04098",
+    "legacy-connected.png": "61a4ac855b85962ce7f820d5a4a0afb52ddf8856336aa8d193bac02eb88e261c",
+    "legacy-disconnected.png": "8338be893649723db4ad2415d1c9d08600ab7f809dc29109aa2ece5841f0e376",
+    "run-loop-1.png": "bce369c6a8631613f2c99052777a55392339a1d84a4a3281bbb37fccc358bebb",
+    "run-loop-2.png": "dac4e9d7b58784bfa1bd7368cbe089bc7cc26bda8ccf9616da3ec239208177a5",
+    "run-loop-3.png": "ed6e1c7945e88b12d8cfbe80b305d531d8a6cc96c6139834e0b27890a048bf7f",
+    "run-loop-4.png": "8fe35b8832ffb56daf048a0f9fefc0af9762a40bc73b083b54fba6df624d94b6",
+    "run-loop-5.png": "efa1854ef3199dc6fb662823af8f231c70ad3400d0167aab2dc3402f0af9a51b",
+    "run-loop-6.png": "20fcb056da285d1b37d0d2557967c42462ee6ace19c0353c834b248372caeedd",
+    "run-loop-7.png": "6290de6e2fc4f567a8af217e59197638754b5d674078adfe7b650b1578274355",
+    "run-night.png": "fb02e8b3bad6a78316adcec2474b0a07308b3f16d694ccc3e925fe89ffa4274a"
+  },
+  "native_frozen_blue_liner_roi": [
+    270,
+    730,
+    530,
+    830
+  ],
+  "native_frozen_source_pose_count": 7,
+  "native_frozen_blue_roi_means": [
+    3.125192307692308,
+    2.621384615384615,
+    3.495653846153846,
+    2.2373461538461537,
+    3.015,
+    1.9706923076923077,
+    3.067423076923077
+  ],
+  "native_working_clock_cycle_proven": false,
+  "source_working_clip_preview": "Seven actual Blender source captures; source indices 0 and 6 intentionally match. The GIF is labeled as a source render, not an engine propulsion cycle.",
+  "viewed_preview_board": "native-review-board.png",
+  "manual_visual_review": "Viewed the final actual-native comparison board, all seven frozen source poses, night glow and the actual reimported GLB oblique/rear/clay renders. Accepted for graphics integration; no new owner approval or real propulsion-clock result claimed."
+}

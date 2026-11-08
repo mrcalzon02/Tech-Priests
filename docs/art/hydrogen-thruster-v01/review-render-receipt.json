@@ -1,0 +1,21 @@
+{
+  "native_model_sha256": "396690cccd81487d1bb2a8e05325a3ccbfc0c52e72332449f10bb8fe567fc27e",
+  "actual_glb_sha256": "302afbedb000f75987f9474ef042299f6f44e99b3f63758720f68f0c1c7417ea",
+  "files": [
+    {
+      "file": "oblique.png",
+      "sha256": "9bec3b8aa591db38d940aa83227240269b167183b4125fb0d7d263889b0593e2",
+      "scope": "Actual independently reimported GLB inspection in source lighting, hidden-side support and routed interfaces; clay removes material distraction."
+    },
+    {
+      "file": "rear.png",
+      "sha256": "ed2f6a25e7c1c23328f4df73e667be386ae612885abb45d398fe20a98211e201",
+      "scope": "Actual independently reimported GLB inspection in source lighting, hidden-side support and routed interfaces; clay removes material distraction."
+    },
+    {
+      "file": "rear-clay.png",
+      "sha256": "a1d27dfb9af9875ee5e217192cba2099ee3fd05275be7d363398dec05a86d941",
+      "scope": "Actual independently reimported GLB inspection in source lighting, hidden-side support and routed interfaces; clay removes material distraction."
+    }
+  ]
+}
