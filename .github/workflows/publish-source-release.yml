@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - .github/workflows/publish-source-release.yml
+      - tech-priests_src/info.json
 
 permissions:
   contents: write
