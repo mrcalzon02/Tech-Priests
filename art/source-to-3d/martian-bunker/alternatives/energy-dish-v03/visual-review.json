@@ -1,0 +1,51 @@
+{
+  "status": "partial_visual_acceptance_for_continuity_and_UV_slice_only",
+  "owner_approval": "not claimed",
+  "reference_sha256": "68af9209dee88bdb32bb0951f7517716743b77d5ff64a875f3d28b7913b8c329",
+  "model_hashes": {
+    "energy_dish_v03.blend": "b4851a3cfca888e51eff8f77ba12e0adc8d216b65304448aaefc40bb1cdc5c71",
+    "energy_dish_v03.glb": "abfd314c61095428d5bf0c821242923a8aed6c22170e77419315f71a29f872d8"
+  },
+  "viewed_renders": {
+    "glb-clay.png": "9de552222e391ff135ce243d3dbaf8b2359128e967bb3a490e45b79a23a92800",
+    "glb-front.png": "8537833866b039356a39163fb888c8cb3be6fe56cd227a51c56378a9d576cc40",
+    "glb-rear.png": "5b03757e0a31f743ef24c03fca2254adacaeeb4102ce367f907534fff4fe18ef",
+    "local-proof.png": "e17c6878c0eedd1b48ed5ffdd159c8b4d733d457f330439b9e2ae1fc26f81912",
+    "native-256-review.png": "9fc51c248299829fb01ea75895e107187631adfd487ffaa51829d682e86d7838",
+    "native-front.png": "e533e8d2b962510668c91271612a9b33585e8dcc67f02682a9ea6616d7b3e991",
+    "native-rear.png": "e170eaa0d7e653964f11b98033ff8b29965f4b9b0e61d0cb4e3c6a67b0c4738c",
+    "source-front.png": "abc4e8d04f9c8f78ac077c0233da0db08d908b1bbdf436bb205590f1a80e8d18",
+    "source-rear.png": "f81aeeb8154ddf1166e299539c3cb488b4b12f3a547242aae835fd960a82e85d"
+  },
+  "scores_out_of_5": {
+    "sketch_silhouette": {
+      "score": 4,
+      "reason": "Rectangular concave trough, straight cross-width rims, forward feed and triangulated supports preserved; hidden depth remains inferred from prior blockout."
+    },
+    "construction": {
+      "score": 3,
+      "reason": "Two continuous connected rails replace 48 overlapping segment meshes; six fasteners sit on actual foot/pivot supports. Reflector assembly remains a simple blockout in several areas."
+    },
+    "surface_readability": {
+      "score": 3,
+      "reason": "Large panel UVs now follow width/arc length and reduce enlarged tiling. Existing worn-metal/paint maps retain a coarse finish; detailed model-specific surface authoring remains open."
+    },
+    "export_fitness": {
+      "score": 4,
+      "reason": "Evaluated bevels now exported explicitly. Native/GLB 33 meshes, 10332 triangles, zero degenerates and matching position/UV/material coverage; normals/shader conversion and stochastic render differences prevent pixel parity claims."
+    }
+  },
+  "open_gates": [
+    "Owner fidelity acceptance of inferred hidden depth and dish concept",
+    "Final surfacing and emitter/working visual state",
+    "Shadow and emission sprite passes",
+    "Mounted sprite registration and exact native prototype graphics import",
+    "Graphical-client placement review"
+  ],
+  "no_behavior_tests": true,
+  "viewed_directional_proofs": {
+    "idle64-eight-headings.png": "97460e10646efa7ac375ec22e1e05e6e92ab95e43805f01fcb2d9cbdecb7eaa7",
+    "mounted-sprite-composition.png": "5b97a8898bb304c5aea6e230ea36fb65a3f67ddbde3f36125e91cc3e2d9bba3d"
+  },
+  "directional_acceptance": "64 idle beauty headings and 128 atlas cells pass; actual sprite preview viewed on fixed north base at cap headings 0,16,32,48"
+}

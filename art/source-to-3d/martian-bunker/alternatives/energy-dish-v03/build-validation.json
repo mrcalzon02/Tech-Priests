@@ -1,0 +1,52 @@
+{
+  "source_path": "C:/GITS/Tech-Priests/art/source-to-3d/martian-bunker/alternatives/v02/energy_dish_entity.blend",
+  "source_sha256": "7e02d9ed6f0b105a2bb63c71f0aaacfe02ff2314283261401a8e2d3e1f3039dc",
+  "reference": "alternatives/v02/reference/owner_turret_sketch.jpg",
+  "status": "candidate_pending_independent_export_and_visual_review",
+  "removed_segment_meshes": 48,
+  "new_continuous_rails": 2,
+  "supported_fasteners": 6,
+  "old_bounds": [
+    [
+      -1.0149999856948853,
+      -1.1600000858306885,
+      1.7000000476837158
+    ],
+    [
+      1.0149999856948853,
+      0.7800000905990601,
+      3.8570501804351807
+    ]
+  ],
+  "new_bounds": [
+    [
+      -1.0149999856948853,
+      -1.1600000858306885,
+      1.7000000476837158
+    ],
+    [
+      1.0149999856948853,
+      0.7800000905990601,
+      3.8570501804351807
+    ]
+  ],
+  "preserved_existing_meshes": 25,
+  "mount_interface": [
+    0,
+    0,
+    1.7
+  ],
+  "elevation_pivot": [
+    0,
+    0,
+    2.34
+  ],
+  "surface_plan": {
+    "reflector": "machined steel; continuous arc-length UV, two repeats per model unit",
+    "backing": "oxide red painted plate; same spatial UV density",
+    "rails": "gunmetal; circumference and length mapping",
+    "mount": "unchanged pedestal geometry; attached steel fasteners"
+  },
+  "no_base_included": true,
+  "no_behavior_changes": true
+}

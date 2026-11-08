@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "mesh_count": 33,
+  "triangle_count_each": 10332,
+  "unique_position_uv_material_corners_matched": 7130,
+  "max_world_position_delta": 2.384185791015625e-07,
+  "max_uv_delta": 5.960464477539063e-08,
+  "max_part_surface_area_delta": 1.999144233488792e-07,
+  "material_assignments_match": true,
+  "scope": "Evaluated native unique position/UV/material coverage, per-part triangle counts and surface area versus actual imported GLB. N-gon cap triangulation may choose different diagonals; triangle topology and render pixels are not claimed identical."
+}

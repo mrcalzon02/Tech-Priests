@@ -1,0 +1,70 @@
+{
+  "status": "COMPOSITED_PREVIEW",
+  "scope": "Actual installed base PNGs and candidate dish PNGs at recorded graphic scales/shifts; proves sprite registration preview only, not native game placement, 3D mount clearance, final shadow or prototype installation",
+  "base_draw": {
+    "base_scale": 0.315463840961,
+    "base_shift": [
+      0,
+      -1.110906552544
+    ]
+  },
+  "dish_draw": {
+    "scale": 0.7749999761581421,
+    "shift": [
+      0.0,
+      -1.1109066140377881
+    ]
+  },
+  "preview_pixels_per_tile": 64,
+  "base_sources": [
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north-shadow.png",
+      "sha256": "735fb344a878a8f487bd18a8f82902ae8b362c44915409a4cb7ebeff266894ab"
+    },
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north.png",
+      "sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48"
+    },
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north-glow.png",
+      "sha256": "8e9f135e43d7c4f595fecc5590a610b6d9b575e0648359dd8b81251429775deb"
+    },
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north-shadow.png",
+      "sha256": "735fb344a878a8f487bd18a8f82902ae8b362c44915409a4cb7ebeff266894ab"
+    },
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north.png",
+      "sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48"
+    },
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north-glow.png",
+      "sha256": "8e9f135e43d7c4f595fecc5590a610b6d9b575e0648359dd8b81251429775deb"
+    },
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north-shadow.png",
+      "sha256": "735fb344a878a8f487bd18a8f82902ae8b362c44915409a4cb7ebeff266894ab"
+    },
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north.png",
+      "sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48"
+    },
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north-glow.png",
+      "sha256": "8e9f135e43d7c4f595fecc5590a610b6d9b575e0648359dd8b81251429775deb"
+    },
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north-shadow.png",
+      "sha256": "735fb344a878a8f487bd18a8f82902ae8b362c44915409a4cb7ebeff266894ab"
+    },
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north.png",
+      "sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48"
+    },
+    {
+      "path": "C:/GITS/Tech-Priests/tech-priests_src/graphics/entity/bunker-autocannon/base-north-glow.png",
+      "sha256": "8e9f135e43d7c4f595fecc5590a610b6d9b575e0648359dd8b81251429775deb"
+    }
+  ],
+  "dish_atlas_sha256": "f577697017a1df96589b3c4c62afed38d22d9138156e28c2e44c4dce991b8aef"
+}

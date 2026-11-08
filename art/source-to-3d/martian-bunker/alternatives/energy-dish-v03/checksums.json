@@ -1,0 +1,126 @@
+{
+  "energy_dish_v03.blend": {
+    "bytes": 20569394,
+    "sha256": "b4851a3cfca888e51eff8f77ba12e0adc8d216b65304448aaefc40bb1cdc5c71"
+  },
+  "energy_dish_v03.glb": {
+    "bytes": 15411936,
+    "sha256": "abfd314c61095428d5bf0c821242923a8aed6c22170e77419315f71a29f872d8"
+  },
+  "build-validation.json": {
+    "bytes": 1397,
+    "sha256": "e53bec39cc25db891d882785be9bee90ea193bbe89a90c8407143a5ab59f6a2c"
+  },
+  "independent-validation.json": {
+    "bytes": 57331,
+    "sha256": "049e0475cc87d5bb8d099970ecb30b57ae3511c5efcfc0b592748437ebd90e77"
+  },
+  "surface-roundtrip-validation.json": {
+    "bytes": 587,
+    "sha256": "d528c6b14555ed8e6f44cf4f17fafd590bcc286dd93b21f14836f797238bd172"
+  },
+  "render-comparison.json": {
+    "bytes": 580,
+    "sha256": "914e93fd10232d1457a960ad11fdff2983a139a24ffa3f967d846eddbece22bd"
+  },
+  "visual-review.json": {
+    "bytes": 3110,
+    "sha256": "7138dcada7e1c26763f1815493f007a48c2bb930df094dffe6a1d76e26741a72"
+  },
+  "README.md": {
+    "bytes": 3929,
+    "sha256": "12f8237d098c8468f5486644505291985992ecc8935c889efad1b7db182a33fa"
+  },
+  "source-front.png": {
+    "bytes": 234474,
+    "sha256": "abc4e8d04f9c8f78ac077c0233da0db08d908b1bbdf436bb205590f1a80e8d18"
+  },
+  "source-rear.png": {
+    "bytes": 250785,
+    "sha256": "f81aeeb8154ddf1166e299539c3cb488b4b12f3a547242aae835fd960a82e85d"
+  },
+  "native-front.png": {
+    "bytes": 234284,
+    "sha256": "e533e8d2b962510668c91271612a9b33585e8dcc67f02682a9ea6616d7b3e991"
+  },
+  "native-rear.png": {
+    "bytes": 247801,
+    "sha256": "e170eaa0d7e653964f11b98033ff8b29965f4b9b0e61d0cb4e3c6a67b0c4738c"
+  },
+  "native-256-review.png": {
+    "bytes": 65272,
+    "sha256": "9fc51c248299829fb01ea75895e107187631adfd487ffaa51829d682e86d7838"
+  },
+  "glb-front.png": {
+    "bytes": 206773,
+    "sha256": "8537833866b039356a39163fb888c8cb3be6fe56cd227a51c56378a9d576cc40"
+  },
+  "glb-rear.png": {
+    "bytes": 224266,
+    "sha256": "5b03757e0a31f743ef24c03fca2254adacaeeb4102ce367f907534fff4fe18ef"
+  },
+  "glb-clay.png": {
+    "bytes": 168305,
+    "sha256": "9de552222e391ff135ce243d3dbaf8b2359128e967bb3a490e45b79a23a92800"
+  },
+  "local-proof.png": {
+    "bytes": 663496,
+    "sha256": "e17c6878c0eedd1b48ed5ffdd159c8b4d733d457f330439b9e2ae1fc26f81912"
+  },
+  "idle64-640.png": {
+    "bytes": 6132956,
+    "sha256": "9583a8a1710b74c1820d3f1ea99cec232a6799b9ea85ffd80b997620d47c4823"
+  },
+  "idle64-256.png": {
+    "bytes": 993206,
+    "sha256": "f577697017a1df96589b3c4c62afed38d22d9138156e28c2e44c4dce991b8aef"
+  },
+  "idle64-rotation.gif": {
+    "bytes": 662522,
+    "sha256": "bfedd6f1aa47373338b64adbf894fbaac5fd447722dda8ef3a43cb3b7ae7c40b"
+  },
+  "idle64-eight-headings.png": {
+    "bytes": 224051,
+    "sha256": "97460e10646efa7ac375ec22e1e05e6e92ab95e43805f01fcb2d9cbdecb7eaa7"
+  },
+  "idle64-validation.json": {
+    "bytes": 18126,
+    "sha256": "8cb9d965f5267c07b9318632785b912425f41318a0d2fac7028598af35391575"
+  },
+  "mounted-sprite-composition.png": {
+    "bytes": 185897,
+    "sha256": "5b97a8898bb304c5aea6e230ea36fb65a3f67ddbde3f36125e91cc3e2d9bba3d"
+  },
+  "mounted-sprite-composition.json": {
+    "bytes": 3156,
+    "sha256": "d7298f3361870113385c5454aa8cd20ab9c5537505d75524d2e9b140b3166d72"
+  },
+  "refine_energy_dish_v03.py": {
+    "bytes": 6191,
+    "sha256": "e381ef83669c7fc3ab29939f64be034745034de927b248e0dac4eb921c3b9c01"
+  },
+  "review_energy_dish_v03.py": {
+    "bytes": 5823,
+    "sha256": "453171b045b15f713d8fb8739b76c98df0b3677838103b45b705b320d7a127c8"
+  },
+  "verify_dish_surface_roundtrip.py": {
+    "bytes": 2990,
+    "sha256": "0763888fff313974d1fcc1fc1b32b9df2f2b8bab9a870cc8b37ef65375be6c19"
+  },
+  "capture_dish_idle64.py": {
+    "bytes": 3894,
+    "sha256": "0e7f529014688da05688e33f7cb24159930873171f4add814aa0303caa0193e4"
+  },
+  "package_dish_idle64.py": {
+    "bytes": 4078,
+    "sha256": "51bb713a00a34d7e1e365822d3a2eec4ce1aecf45ee53bddc54c74aec9c77e9f"
+  },
+  "make_dish_v03_review.py": {
+    "bytes": 2216,
+    "sha256": "78d773ed663b5acd8e9e92bf58be9e42622af0e007a5a3a2261c6891ce52b520"
+  },
+  "compose_dish_mount_preview.py": {
+    "bytes": 2748,
+    "sha256": "a2256a757241287426b6a211031272e47eeb68af58bb2a42cffddaa962d1063c"
+  }
+}

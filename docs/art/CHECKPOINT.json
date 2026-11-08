@@ -8,7 +8,8 @@
     "V16 removes 1764 inherited degenerate triangles with exact surviving surface correspondence; independent native/GLB zero-degenerate readback",
     "Recovered approved A02 animated lobber and original turret/camera from 94 verified binary source parts; corrected initial source authority audit",
     "Ran A02 native 64-heading animation-state validation and new heading-16 three-pass pilot locally",
-    "Independently verified all 669 PNGs for A02 heading 0 and published actual eight-second loop preview"
+    "Independently verified all 669 PNGs for A02 heading 0 and published actual eight-second loop preview",
+    "Energy dish V03 continuity/UV refinement, evaluated-modifier GLB readback, 64 calibrated idle headings, 128 atlas cell checks and four-direction base-sprite composition"
   ],
   "verification": {
     "graphical_client": "not run",
@@ -16,13 +17,15 @@
     "installed_atlases": "96 files; 3288 cells",
     "behavior_tests": "not run",
     "all_entity_pngs": "194/194 full PNG verify/decode",
-    "rig": "Approved A02 restored: 64-heading idle/transition/extreme checks and six independent firing states pass locally; full capture incomplete"
+    "rig": "Approved A02 restored: 64-heading idle/transition/extreme checks and six independent firing states pass locally; full capture incomplete",
+    "energy_dish": "Partial candidate: 33 meshes / 10332 triangles / 0 degenerates; position/UV/material coverage passes; idle beauty 64/64; full state and native integration gates open"
   },
   "open_defects": [
     "Condenser V21 native source remains Library-linked and unlocated locally",
     "Thruster platform/body/cap alignment needs graphical jig",
     "Lumberyard and metallic hydrogen/plasma chain sources unlocated",
-    "A02 full 64-heading capture, final atlases and native graphics integration still incomplete"
+    "A02 full 64-heading capture, final atlases and native graphics integration still incomplete",
+    "Energy dish V03 final surfacing/fidelity and firing/emission/shadow/native prototype integration open"
   ],
   "next_slice": "Monitor existing live A02 download/seeder/Blender controller, verify source identities and reuse completed frames; do not rebuild the pre-existing approved rig or launch duplicate managers. Finish all 384 chunks, assemble and integrate.",
   "automation": "tech-priests-local-model-completion, every four hours",

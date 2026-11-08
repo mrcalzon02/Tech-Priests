@@ -1,3 +1,5 @@
+> **Current production authority:** continue locally using [LOCAL_BLENDER_CAPTURE.md](../../../../../docs/art/LOCAL_BLENDER_CAPTURE.md). The cloud recovery description below is historical; its active run was cancelled. Do not dispatch Actions or invoke the destructive assembler directly on verified captures. Use the capture-preserving local staging wrapper.
+
 # Alternate bunker topper — six-cannon lobber capture
 
 The [approved A02 source package](https://chatgpt.com/library?file_id=libfile_2dbbd397c3f08191a917a7192f12fa28&account_id=personal) supplies the native lobber: recessed inward-sliding hatches, six independent firing/reload stations, chassis rock, flexible antennas and existing muzzle effects. The original bunker capture's packed camera, area lights, world and AgX colour settings are copied without resizing the lobber. Mounting pivot remains at world (0, 0, 1.70). Concrete bunker geometry is excluded.

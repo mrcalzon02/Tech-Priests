@@ -1,0 +1,784 @@
+{
+  "status": "VERIFIED_64_IDLE_BEAUTY_ONLY",
+  "source_identity": {
+    "dish_native_sha256": "b4851a3cfca888e51eff8f77ba12e0adc8d216b65304448aaefc40bb1cdc5c71",
+    "calibrated_camera_source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+    "capture_script_sha256": "0e7f529014688da05688e33f7cb24159930873171f4add814aa0303caa0193e4",
+    "size": 640,
+    "samples": 16,
+    "backend": "CPU",
+    "directions": 64,
+    "mapping": "north0_clockwise",
+    "yaw_degrees": "180-direction*5.625",
+    "camera_world_matrix": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        -0.7071067690849304,
+        -8.0
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        0.7071067690849304,
+        9.571059226989746
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "ortho_scale": 6.199999809265137,
+    "mount_world": [
+      0,
+      0,
+      1.7
+    ],
+    "elevation_pivot": [
+      0,
+      0,
+      2.34
+    ],
+    "scope": "Idle beauty only; no firing/emission/shadow or game integration claim"
+  },
+  "direction_count": 64,
+  "frames_per_direction": 1,
+  "atlas_columns": 8,
+  "atlas_rows": 8,
+  "source_cell": 640,
+  "candidate_game_cell": 256,
+  "factorio_scale_at_256": 0.7749999761581421,
+  "factorio_shift": [
+    0.0,
+    -1.1109066140377881
+  ],
+  "entity_origin_pixel_at_640": [
+    320.0,
+    434.6742346542837
+  ],
+  "mount_pixel_at_640": [
+    320.0,
+    310.58839781042883
+  ],
+  "atlas_cell_readback": "128 exact RGBA cells verified: 64 raw +64 deterministic Lanczos downsample",
+  "no_clipped_raw_frames": true,
+  "planned_imports": {
+    "sprites": "tech-priests_src/graphics/entity/bunker-energy-dish/",
+    "graphics_module": "tech-priests_src/prototypes/generated_graphics/bunker-energy-dish-v03.lua"
+  },
+  "integration_status": "not installed; exact native turret/prototype and firing/emission/shadow states remain open",
+  "records": [
+    {
+      "direction": 0,
+      "yaw_degrees": 180.0,
+      "raw_sha256": "2d31158d4b5da574e4296a4151f67573b060e4461861de57586c9191b7864239",
+      "raw_alpha_bounds": [
+        214,
+        126,
+        426,
+        369
+      ]
+    },
+    {
+      "direction": 1,
+      "yaw_degrees": 174.375,
+      "raw_sha256": "9f28e5d23111d8d0d476fce6d127674c45dba4c884aac0be1f5058d3d62367d8",
+      "raw_alpha_bounds": [
+        213,
+        120,
+        428,
+        368
+      ]
+    },
+    {
+      "direction": 2,
+      "yaw_degrees": 168.75,
+      "raw_sha256": "89583d864a698ce14a5f5435af2287cf2da7d334bf0b8b2610cd7de386e3359c",
+      "raw_alpha_bounds": [
+        214,
+        114,
+        429,
+        369
+      ]
+    },
+    {
+      "direction": 3,
+      "yaw_degrees": 163.125,
+      "raw_sha256": "658830e9ec39db61a0c29e773568543e9a302b339af3234024b35c5530838191",
+      "raw_alpha_bounds": [
+        215,
+        107,
+        429,
+        368
+      ]
+    },
+    {
+      "direction": 4,
+      "yaw_degrees": 157.5,
+      "raw_sha256": "f4ae0968d660bfa092e962aa3e3a0ff59af687e87e2591a4bb7388d398ae72df",
+      "raw_alpha_bounds": [
+        217,
+        102,
+        429,
+        369
+      ]
+    },
+    {
+      "direction": 5,
+      "yaw_degrees": 151.875,
+      "raw_sha256": "43c0e26b472564428361a302e5eef7c999fed086a4593c26356a507ebc3301bc",
+      "raw_alpha_bounds": [
+        220,
+        97,
+        427,
+        368
+      ]
+    },
+    {
+      "direction": 6,
+      "yaw_degrees": 146.25,
+      "raw_sha256": "8585feee021b95c665e0cf6143b6712f7bf8b88a1c49fe6b859dbfbfab1acc7f",
+      "raw_alpha_bounds": [
+        223,
+        93,
+        424,
+        369
+      ]
+    },
+    {
+      "direction": 7,
+      "yaw_degrees": 140.625,
+      "raw_sha256": "f23cbe8e80a8e944211cb7635a7fa53310363911808d5eadb7559f74d8a88e1f",
+      "raw_alpha_bounds": [
+        227,
+        88,
+        421,
+        368
+      ]
+    },
+    {
+      "direction": 8,
+      "yaw_degrees": 135.0,
+      "raw_sha256": "41aae5fa5561f53e354a4a684ac3fc7eaf706261a271fd7011389f558863fffd",
+      "raw_alpha_bounds": [
+        231,
+        86,
+        418,
+        369
+      ]
+    },
+    {
+      "direction": 9,
+      "yaw_degrees": 129.375,
+      "raw_sha256": "30b0aab25727d070fe39628d4f2c5e8d5425de7af0671753c476b385f244ed2f",
+      "raw_alpha_bounds": [
+        236,
+        83,
+        420,
+        368
+      ]
+    },
+    {
+      "direction": 10,
+      "yaw_degrees": 123.75,
+      "raw_sha256": "fdbbc90c0a1f45a8d98b2944410fa3cd6bde218f6cd63bfa2881b2359551a052",
+      "raw_alpha_bounds": [
+        238,
+        81,
+        426,
+        369
+      ]
+    },
+    {
+      "direction": 11,
+      "yaw_degrees": 118.125,
+      "raw_sha256": "9908a36b0d58b4d829d0a4b005a28255eb25948f6f7fd6899c3a803e7d4e1437",
+      "raw_alpha_bounds": [
+        238,
+        80,
+        431,
+        368
+      ]
+    },
+    {
+      "direction": 12,
+      "yaw_degrees": 112.5,
+      "raw_sha256": "7c2d4d60d24161d2840a05a52b47c560d2c93d05bc1d2e9832433154a186c9a7",
+      "raw_alpha_bounds": [
+        238,
+        80,
+        436,
+        369
+      ]
+    },
+    {
+      "direction": 13,
+      "yaw_degrees": 106.875,
+      "raw_sha256": "7331a31799a5ac00d788ee35ca764dfcbda458e581837e61e35d5db3bac094b8",
+      "raw_alpha_bounds": [
+        238,
+        79,
+        439,
+        368
+      ]
+    },
+    {
+      "direction": 14,
+      "yaw_degrees": 101.25,
+      "raw_sha256": "0dfdfa0121fadac76371e8f393ba4de6e589a83d9b14a88df6be958c614cb6d4",
+      "raw_alpha_bounds": [
+        238,
+        80,
+        441,
+        369
+      ]
+    },
+    {
+      "direction": 15,
+      "yaw_degrees": 95.625,
+      "raw_sha256": "dd362c941c673c8099fdbed5405a726d37ee8db1ca3453e088262514130d8032",
+      "raw_alpha_bounds": [
+        238,
+        82,
+        441,
+        368
+      ]
+    },
+    {
+      "direction": 16,
+      "yaw_degrees": 90.0,
+      "raw_sha256": "531328422e4a0d75e242d1f3bbf18d3a731b5f3e9b16142b7925009560e7315c",
+      "raw_alpha_bounds": [
+        238,
+        84,
+        441,
+        369
+      ]
+    },
+    {
+      "direction": 17,
+      "yaw_degrees": 84.375,
+      "raw_sha256": "7471f34d8bfe9acf6e5cc73582b1476bb49ec388eb52a94a024fb0f611fa820e",
+      "raw_alpha_bounds": [
+        238,
+        86,
+        441,
+        370
+      ]
+    },
+    {
+      "direction": 18,
+      "yaw_degrees": 78.75,
+      "raw_sha256": "50e78be6aa4f7aa11fb3bd5e194aa8fa1cf80a35df51c6d69cb5717a4acfdaa2",
+      "raw_alpha_bounds": [
+        238,
+        90,
+        440,
+        372
+      ]
+    },
+    {
+      "direction": 19,
+      "yaw_degrees": 73.125,
+      "raw_sha256": "19f4eccc794aa1684e7e8ac88255964cc85dbb693f64d47068f06f995e3e0035",
+      "raw_alpha_bounds": [
+        238,
+        94,
+        439,
+        372
+      ]
+    },
+    {
+      "direction": 20,
+      "yaw_degrees": 67.5,
+      "raw_sha256": "cd0b50b70adc677acb202c535caa64c2b89d62ac8aab9d939a3ba80fb3493f25",
+      "raw_alpha_bounds": [
+        238,
+        98,
+        435,
+        373
+      ]
+    },
+    {
+      "direction": 21,
+      "yaw_degrees": 61.875,
+      "raw_sha256": "c797e70814a775ca1dd25558e23bf4932f78b428f043f5b800630bf9ca09eefd",
+      "raw_alpha_bounds": [
+        238,
+        103,
+        431,
+        372
+      ]
+    },
+    {
+      "direction": 22,
+      "yaw_degrees": 56.25,
+      "raw_sha256": "6e9d45e790a6d6ac0a26efcb41340b6bf4b0c9dfc1e8945593f2992166ccec20",
+      "raw_alpha_bounds": [
+        238,
+        108,
+        426,
+        371
+      ]
+    },
+    {
+      "direction": 23,
+      "yaw_degrees": 50.625,
+      "raw_sha256": "717bb38c32456d3c24ad7a34740df51e829831af564c0dc5242c1f820ea731f2",
+      "raw_alpha_bounds": [
+        236,
+        113,
+        420,
+        369
+      ]
+    },
+    {
+      "direction": 24,
+      "yaw_degrees": 45.0,
+      "raw_sha256": "cd73cc6bf95b45a348f767a8539974b5eaa5e0b76cb0cca541cb5a8042981979",
+      "raw_alpha_bounds": [
+        231,
+        119,
+        418,
+        369
+      ]
+    },
+    {
+      "direction": 25,
+      "yaw_degrees": 39.375,
+      "raw_sha256": "7fdec23dd3dba19da7eed8f45add802767f14b387b1980afb8b7d1b08169d50b",
+      "raw_alpha_bounds": [
+        227,
+        125,
+        422,
+        368
+      ]
+    },
+    {
+      "direction": 26,
+      "yaw_degrees": 33.75,
+      "raw_sha256": "be567f5d673ae204925095d64525221b5a5f1cd776ff55049512fe9736e4cf10",
+      "raw_alpha_bounds": [
+        223,
+        132,
+        424,
+        369
+      ]
+    },
+    {
+      "direction": 27,
+      "yaw_degrees": 28.125,
+      "raw_sha256": "17ac1f8ff54f8e2ba4ac3f28d9f8e556b1e477d065fa53aa17136514bcc4d678",
+      "raw_alpha_bounds": [
+        220,
+        138,
+        427,
+        368
+      ]
+    },
+    {
+      "direction": 28,
+      "yaw_degrees": 22.5,
+      "raw_sha256": "b9bd291ee25b4bba83298ba7290e6a495e62aa389f54327f9426ef2486e0be05",
+      "raw_alpha_bounds": [
+        217,
+        144,
+        429,
+        369
+      ]
+    },
+    {
+      "direction": 29,
+      "yaw_degrees": 16.875,
+      "raw_sha256": "be28c4413c5e9cdaea882aa033ee7615c280efca4bb707f209c234412ae0950d",
+      "raw_alpha_bounds": [
+        215,
+        152,
+        429,
+        368
+      ]
+    },
+    {
+      "direction": 30,
+      "yaw_degrees": 11.25,
+      "raw_sha256": "33c2129a859ce917f692245fcdc6d17a832402fc58f99fdb9ef25fb205a84d73",
+      "raw_alpha_bounds": [
+        214,
+        158,
+        429,
+        369
+      ]
+    },
+    {
+      "direction": 31,
+      "yaw_degrees": 5.625,
+      "raw_sha256": "aae92648c9d1fa3d9e6b60d7b24ebf9868a8f3247aec72784d09cae69d9db716",
+      "raw_alpha_bounds": [
+        213,
+        165,
+        428,
+        368
+      ]
+    },
+    {
+      "direction": 32,
+      "yaw_degrees": 0.0,
+      "raw_sha256": "3bd3a9754b0a49e3ee41e0fbfa4765e313669c5414a173f37138e8ac3ff2ad2b",
+      "raw_alpha_bounds": [
+        214,
+        171,
+        426,
+        369
+      ]
+    },
+    {
+      "direction": 33,
+      "yaw_degrees": -5.625,
+      "raw_sha256": "6cf61203866eb5ca0150af3a918199682c573ca9e5a9dce2fecc6db4bcc33830",
+      "raw_alpha_bounds": [
+        212,
+        165,
+        427,
+        368
+      ]
+    },
+    {
+      "direction": 34,
+      "yaw_degrees": -11.25,
+      "raw_sha256": "1d4e3bbc0fa741af5f4148ba5529382c498a9b90abaee2770bd1e556a64f4563",
+      "raw_alpha_bounds": [
+        211,
+        158,
+        426,
+        369
+      ]
+    },
+    {
+      "direction": 35,
+      "yaw_degrees": -16.875,
+      "raw_sha256": "97360fb6b3626fcdf065d8e8d496873959ffa6d77fc95dc938e4fb7a0181ede9",
+      "raw_alpha_bounds": [
+        210,
+        151,
+        426,
+        368
+      ]
+    },
+    {
+      "direction": 36,
+      "yaw_degrees": -22.5,
+      "raw_sha256": "b0dda407252db724effa5e5d529e3b2bbe0e5721d372410ad1d88376b148074f",
+      "raw_alpha_bounds": [
+        211,
+        145,
+        423,
+        369
+      ]
+    },
+    {
+      "direction": 37,
+      "yaw_degrees": -28.125,
+      "raw_sha256": "2acb377261ca4b83279f41554b8427583788e36f5dfdb559fff4085d325469b3",
+      "raw_alpha_bounds": [
+        213,
+        138,
+        420,
+        368
+      ]
+    },
+    {
+      "direction": 38,
+      "yaw_degrees": -33.75,
+      "raw_sha256": "00c1f67fd2dde44e5d9b32acf69d61a96144c23ab302b9129e6b5452aadc4ee6",
+      "raw_alpha_bounds": [
+        215,
+        132,
+        416,
+        369
+      ]
+    },
+    {
+      "direction": 39,
+      "yaw_degrees": -39.375,
+      "raw_sha256": "616fa9d325c524fe2ff41c35963cbe6fbeb9af0df5622c98afa197246197df87",
+      "raw_alpha_bounds": [
+        219,
+        125,
+        413,
+        368
+      ]
+    },
+    {
+      "direction": 40,
+      "yaw_degrees": -45.0,
+      "raw_sha256": "2ab93a1288235d15ed635d542e73f6b1d5b717f16eba66526aa4cb40569777cf",
+      "raw_alpha_bounds": [
+        223,
+        119,
+        409,
+        369
+      ]
+    },
+    {
+      "direction": 41,
+      "yaw_degrees": -50.625,
+      "raw_sha256": "9314dd7fddc5a5bc0eed8534ab6d02bff63a421fa53f84ee37cb7867ed3a0c75",
+      "raw_alpha_bounds": [
+        220,
+        114,
+        404,
+        369
+      ]
+    },
+    {
+      "direction": 42,
+      "yaw_degrees": -56.25,
+      "raw_sha256": "a0bfe6e91a470134e9d6e76974460e230f208abf9bd4e76be4fb778d10eb4e26",
+      "raw_alpha_bounds": [
+        214,
+        108,
+        401,
+        371
+      ]
+    },
+    {
+      "direction": 43,
+      "yaw_degrees": -61.875,
+      "raw_sha256": "a5937fcbd7d461d909336c4af2e02eb1b91e59e812101ba3672b34b2b1af33d2",
+      "raw_alpha_bounds": [
+        208,
+        103,
+        401,
+        372
+      ]
+    },
+    {
+      "direction": 44,
+      "yaw_degrees": -67.5,
+      "raw_sha256": "cfa431449cce6130fbee315a56826c59ed1c4198d4bc5697621668e7cec41767",
+      "raw_alpha_bounds": [
+        205,
+        98,
+        401,
+        372
+      ]
+    },
+    {
+      "direction": 45,
+      "yaw_degrees": -73.125,
+      "raw_sha256": "6fc9ee000d14534e9b5f12bab02ec70af9595558a64e325e9bdc086ddbf60d4d",
+      "raw_alpha_bounds": [
+        202,
+        94,
+        401,
+        372
+      ]
+    },
+    {
+      "direction": 46,
+      "yaw_degrees": -78.75,
+      "raw_sha256": "79e2793e0329b1453026c404de41e2eb16ef27f450fa043410db08f39b58f4e4",
+      "raw_alpha_bounds": [
+        200,
+        90,
+        401,
+        372
+      ]
+    },
+    {
+      "direction": 47,
+      "yaw_degrees": -84.375,
+      "raw_sha256": "34c307df6a1f0e269ac8f619e26c5be34683defd336d1bc3df6ef3ae195eb3d1",
+      "raw_alpha_bounds": [
+        198,
+        87,
+        401,
+        371
+      ]
+    },
+    {
+      "direction": 48,
+      "yaw_degrees": -90.0,
+      "raw_sha256": "24b23ecfa2c3e81f0d9d56485e49e3abc544d93d4c525f14074bca7c81839981",
+      "raw_alpha_bounds": [
+        199,
+        84,
+        401,
+        369
+      ]
+    },
+    {
+      "direction": 49,
+      "yaw_degrees": -95.625,
+      "raw_sha256": "d60341aadbfc2619320811eaf99bb4a9901747282510d2701aa6472a2ad71f8e",
+      "raw_alpha_bounds": [
+        199,
+        82,
+        401,
+        368
+      ]
+    },
+    {
+      "direction": 50,
+      "yaw_degrees": -101.25,
+      "raw_sha256": "ceafb41ffece956b7d8cda69be0b111d5f6444ea0d4de3285275750a45943309",
+      "raw_alpha_bounds": [
+        200,
+        80,
+        401,
+        369
+      ]
+    },
+    {
+      "direction": 51,
+      "yaw_degrees": -106.875,
+      "raw_sha256": "473c2e490da43caa74f5a1246f8656d8942d2dfbeb6b2b0f1ec343f69b710770",
+      "raw_alpha_bounds": [
+        202,
+        80,
+        401,
+        368
+      ]
+    },
+    {
+      "direction": 52,
+      "yaw_degrees": -112.5,
+      "raw_sha256": "90a522cb1f8a51a4ba4ef6a6f798400f168070f9482f42242ee2b9d78cfb234d",
+      "raw_alpha_bounds": [
+        204,
+        79,
+        401,
+        369
+      ]
+    },
+    {
+      "direction": 53,
+      "yaw_degrees": -118.125,
+      "raw_sha256": "d1c67cf64992a3d85f497c201b2f8fb838562a73596d31ac885e779b3e2075aa",
+      "raw_alpha_bounds": [
+        209,
+        80,
+        401,
+        368
+      ]
+    },
+    {
+      "direction": 54,
+      "yaw_degrees": -123.75,
+      "raw_sha256": "45dd3e26fbee5e6bc6831edd694bdd740909a12c5ae28c09e53a4e15d0f3c584",
+      "raw_alpha_bounds": [
+        213,
+        81,
+        401,
+        369
+      ]
+    },
+    {
+      "direction": 55,
+      "yaw_degrees": -129.375,
+      "raw_sha256": "b2d19a728c4c50b3dca67f6d5f58d637dcd05a30edce5848ebf2f5e15c53e030",
+      "raw_alpha_bounds": [
+        220,
+        83,
+        405,
+        368
+      ]
+    },
+    {
+      "direction": 56,
+      "yaw_degrees": -135.0,
+      "raw_sha256": "7825fe1dce68cf57c1da0ada9833113325e41a3d920259369a68394e5a7b907f",
+      "raw_alpha_bounds": [
+        223,
+        86,
+        409,
+        369
+      ]
+    },
+    {
+      "direction": 57,
+      "yaw_degrees": -140.625,
+      "raw_sha256": "b617e878c9fc00a0564634a4cf5ef54d7f5b85615e84c08f5f299b75b6b6c14c",
+      "raw_alpha_bounds": [
+        219,
+        89,
+        413,
+        368
+      ]
+    },
+    {
+      "direction": 58,
+      "yaw_degrees": -146.25,
+      "raw_sha256": "9f1479eda7049558e3944c207663a2ff4621fd44eaeb8610ce23893c4bf3111b",
+      "raw_alpha_bounds": [
+        215,
+        93,
+        416,
+        369
+      ]
+    },
+    {
+      "direction": 59,
+      "yaw_degrees": -151.875,
+      "raw_sha256": "900ad6bc6b639528073c38b6b71aeefbe1ea4c291f8c7325e145c883f04f1d91",
+      "raw_alpha_bounds": [
+        213,
+        97,
+        420,
+        368
+      ]
+    },
+    {
+      "direction": 60,
+      "yaw_degrees": -157.5,
+      "raw_sha256": "9ab25bc5e66fa5df7ec28c6003eab9712bfd43550f7d141a7268b5c48572d95c",
+      "raw_alpha_bounds": [
+        211,
+        102,
+        423,
+        369
+      ]
+    },
+    {
+      "direction": 61,
+      "yaw_degrees": -163.125,
+      "raw_sha256": "6fee2297471a8405f925fea11ce8bcd5cbcc60aaa84ea8d7329fd5d2decd6b24",
+      "raw_alpha_bounds": [
+        211,
+        108,
+        425,
+        368
+      ]
+    },
+    {
+      "direction": 62,
+      "yaw_degrees": -168.75,
+      "raw_sha256": "da1eade9012ca97d0259bbecc373517ba8e22ce1742d5691bc3b0f311754bf7e",
+      "raw_alpha_bounds": [
+        211,
+        113,
+        427,
+        369
+      ]
+    },
+    {
+      "direction": 63,
+      "yaw_degrees": -174.375,
+      "raw_sha256": "c7493bc8abe2265ffbf08ba3e739b40da5c8b031ccd8ac5f2f58e8ec12508025",
+      "raw_alpha_bounds": [
+        212,
+        120,
+        426,
+        368
+      ]
+    }
+  ]
+}
