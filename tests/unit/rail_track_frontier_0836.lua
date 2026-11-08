@@ -3,7 +3,8 @@
 package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
 local Track=require("scripts.core.rail_track_frontier_0836")
 game={tick=2400}
-defines={direction={east=4},inventory={chest=1}}
+defines={direction={east=4},inventory={chest=1},
+  rail_direction={front=0,back=1},rail_connection_direction={straight=1}}
 prototypes={item={rail={name="rail"}},entity={["straight-rail"]={name="straight-rail"}}}
 local force={index=1}
 local sites={}
@@ -74,17 +75,69 @@ assert(next_ok==true and next_why=="rail-segment-requested"
   and next_req.position.x==14 and next_req.rail_segment_0836==2
   and item_count==699 and mission.rail_frontier_0836.segment==1,
   "rail frontier failed to advance by one physically adjacent segment")
-local pending=mission.pending_rail_0836
+-- The engine's own straight connection, not coordinate proximity,
+-- must bind two physically built and separately debited 0338 segments.
+local second={valid=true,unit_number=2102,name="straight-rail",
+  position={x=14,y=0},direction=4,force=force}
+sites[14]=second
+local connection_live=true
+sites[12].get_connected_rail=function(args)
+  assert(args.rail_connection_direction==defines.rail_connection_direction.straight
+    and (args.rail_direction==defines.rail_direction.front
+      or args.rail_direction==defines.rail_direction.back),
+    "did not ask the native rail connection API")
+  return connection_live and args.rail_direction==defines.rail_direction.front
+    and second or nil
+end
+item_count=item_count-1 -- Existing 0338 debit independently tested.
 pair.construction_last_task_0338={request_value=next_req,
+  phase="complete",built_entity=second}
+pair.construction_request=nil
+assert(Track.verify_pending(pair)==true
+  and mission.rail_frontier_0836.segment==2
+  and mission.rail_frontier_0836.built_units[2]==2102
+  and mission.pending_rail_0836==nil and item_count==698,
+  "connected second 0338 rail was not verified")
+local third_ok,third_reason=Track.service_pair(pair)
+local third_req=pair.construction_request
+local pending=mission.pending_rail_0836
+assert(third_ok and third_reason=="rail-segment-requested"
+  and third_req.position.x==16 and third_req.rail_segment_0836==3,
+  "connected frontier did not request the next counted rail")
+pair.construction_last_task_0338={request_value=third_req,
   phase="aborted",result="engine-site-collision"}
-pair.construction_request=next_req
+pair.construction_request=third_req
 local no_credit,blocked=Track.verify_pending(pair)
 assert(not no_credit and blocked=="physical-rail-builder-aborted:engine-site-collision"
   and mission.status=="rail-track-blocked"
-  and mission.rail_frontier_0836.segment==1
+  and mission.rail_frontier_0836.segment==2
   and mission.pending_rail_0836==pending
-  and item_count==699,
-  "failed engine builder forged a track or lost unfinished request")
+  and item_count==698,
+  "aborted physical builder forged a segment or lost its request")
+-- A completed, correctly aligned second rail is still NOT proof of
+-- a route when the engine says those two rail entities are disconnected.
+connection_live=false
+local detached_req={item_name="rail",entity_name="straight-rail",
+  position={x=14,y=0},direction=4}
+local detached_mission={status="building-physical-rail",
+  root_station_unit=104,target={x=512,y=0},
+  surface_index=1,force_index=1,
+  rail_frontier_0836={segment=1,last_position={x=12,y=0},
+    direction=4,built_units={2101}},
+  pending_rail_0836={position={x=14,y=0},direction=4,
+    segment=2,request=detached_req}}
+local detached_pair={station=pair.station,priest=pair.priest,
+  remote_rail_outpost_0835=detached_mission,
+  construction_last_task_0338={request_value=detached_req,
+    phase="complete",built_entity=second}}
+local detached_ok,detached_reason=Track.verify_pending(detached_pair)
+assert(not detached_ok
+  and detached_reason=="physical-rail-segments-disconnected"
+  and detached_mission.status=="rail-track-blocked"
+  and detached_mission.rail_frontier_0836.segment==1
+  and detached_mission.pending_rail_0836.request==detached_req
+  and item_count==698,
+  "two adjacent engine-disconnected rails were falsely counted")
 -- A new Magos or an uncharted/different target must never claim this
 -- persistent mission or construct the pending physical rail on its behalf.
 local other={station={valid=true,unit_number=999,
@@ -95,7 +148,7 @@ assert(Track.service_pair(other)==false
   and mission.rail_frontier_0836.segment==1,
   "another Magos seized original track custody")
 assert(scan_calls>2,"rail builder never verified real physical track")
-print("[rail-track-frontier-0836] PASS real builder provenance, sequential track, save identity, failed-custody guard")
+print("[rail-track-frontier-0836] PASS 0338 source debit, native connected track, disconnected refusal and retained custody")
 -- Prove the actual 0510 dispatcher, not a separate rail tick executor,
 -- owns rail constructor pulses and honors stronger physical duties.
 dofile("tests/unit/rail_dispatcher_handoff_0836.lua")

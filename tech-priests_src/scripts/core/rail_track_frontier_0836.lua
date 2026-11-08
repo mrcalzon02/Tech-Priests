@@ -38,6 +38,21 @@ local function track_at(pair,point,direction)
   end
 end
 M.track_at=track_at
+-- A completed 0338 debit and correct coordinates do not prove a traversable
+-- railway. Verify Factorio's own straight-through rail edge.
+local function connected_straight_rails(from,to)
+  local rd=defines and defines.rail_direction
+  local cd=defines and defines.rail_connection_direction
+  if not (valid(from) and valid(to) and rd and cd
+      and cd.straight~=nil
+      and type(from.get_connected_rail)=="function") then return false end
+  for _,direction in ipairs({rd.front,rd.back}) do
+    local ok,neighbor=pcall(from.get_connected_rail,{
+      rail_direction=direction,rail_connection_direction=cd.straight})
+    if ok and neighbor==to then return true end
+  end
+  return false
+end
 local function reject(objective,reason)
   objective.status="rail-track-blocked"
   objective.stage="blocked"
@@ -169,6 +184,15 @@ function M.verify_pending(pair)
   local route=m.rail_frontier_0836
   if not (route and pending.segment==route.segment+1)then
     return reject(m,"out-of-order-physical-rail")
+  end
+  if pending.segment>1 then
+    local predecessor=route.last_position
+      and track_at(pair,route.last_position,pending.direction)
+    if not connected_straight_rails(predecessor,actual)then
+      -- Keep the physical item debit and built entity, but do not advance
+      -- an untraversable frontier or claim a completed train route.
+      return reject(m,"physical-rail-segments-disconnected")
+    end
   end
   route.segment=pending.segment
   route.last_position=pos(pending.position.x,pending.position.y)
