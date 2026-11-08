@@ -962,5 +962,30 @@
     "east": 30,
     "south": 30,
     "west": 30
-  }
+  },
+  "hash_context": "production_inputs_sha256 and files retain exact native-review Windows working-file hashes. Canonical publication Git blobs use LF for text; both byte contexts are retained and normalized equivalence was checked.",
+  "published_git_blob_content_sha256": {
+    "tools/art/boiler_state_layers.py": "9018eb0c2659ee64965a5af2f89770dabe8b361b3d79a007e9196ba0ebcdc00a",
+    "tools/art/produce_factorio_asset.py": "5e3177acf0f7c87636a6100386dcb0d69ee91b43b421eed73d51cb2d4e662757",
+    "tools/art/jobs/boiler-v08.json": "85869dd53070e09bb898d27d8ed5f32092c94501fa9c789cd35817f237c7b189",
+    "tools/art/profiles/boiler-v08.json": "12c381a335356fde37516fc3247292864626e96e592cfc0e8d5d7249f2c3e1bb",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-cold.png": "2e45849e38c7e100ed7003ed8169890a63905b5745a248a3d0c1bd27bed2c8dc",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-activity.png": "2bb3545a99030ea9b4fbb07ea44f23b61573372236a77efee07f545ca967f80f",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-cold-128.png": "eb811c5aa5b083b4cc501992c5743a6073a76afa1d48b7e0d34169bb393fbd8d",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-activity-128.png": "71c3cc082fdfa7b9158d66fdd321fad2ac0d2985f281be62068e7d04318642b8",
+    "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua": "7129e30bcca9d4da093c45d7dcf0154a6da2c6b635577fce72ba9af27e677bed"
+  },
+  "native_to_git_byte_context": {
+    "tools/art/boiler_state_layers.py": "native_review_CRLF_to_Git_LF_only",
+    "tools/art/produce_factorio_asset.py": "native_review_CRLF_to_Git_LF_only",
+    "tools/art/jobs/boiler-v08.json": "native_review_CRLF_to_Git_LF_only",
+    "tools/art/profiles/boiler-v08.json": "native_review_CRLF_to_Git_LF_only",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-cold.png": "binary_or_identical_text_bytes",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-activity.png": "binary_or_identical_text_bytes",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-cold-128.png": "binary_or_identical_text_bytes",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-activity-128.png": "binary_or_identical_text_bytes",
+    "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua": "native_review_CRLF_to_Git_LF_only"
+  },
+  "publication_content_baseline_commit": "70981fe7f0e3b4f04cad022148f157bf1e04fa51",
+  "rejected_sparse_body_comparison_sha256": "518146c1b8174d9e76f2b2f96698e427bd769c1a6ba3013eaa6128a05adb967c"
 }

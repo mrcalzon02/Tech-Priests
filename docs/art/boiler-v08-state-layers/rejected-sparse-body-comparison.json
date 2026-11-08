@@ -1,0 +1,30 @@
+[
+  {
+    "direction": "north",
+    "opaque_body_interior_pixels": 43296,
+    "max_channel_delta": 66,
+    "mean_channel_delta": 3.543391229366839,
+    "pixels_with_channel_delta_over_8": 8995
+  },
+  {
+    "direction": "east",
+    "opaque_body_interior_pixels": 89054,
+    "max_channel_delta": 66,
+    "mean_channel_delta": 2.2441814329882246,
+    "pixels_with_channel_delta_over_8": 12521
+  },
+  {
+    "direction": "south",
+    "opaque_body_interior_pixels": 40362,
+    "max_channel_delta": 57,
+    "mean_channel_delta": 1.6641395371884447,
+    "pixels_with_channel_delta_over_8": 3976
+  },
+  {
+    "direction": "west",
+    "opaque_body_interior_pixels": 83177,
+    "max_channel_delta": 79,
+    "mean_channel_delta": 2.081532955825128,
+    "pixels_with_channel_delta_over_8": 11192
+  }
+]
