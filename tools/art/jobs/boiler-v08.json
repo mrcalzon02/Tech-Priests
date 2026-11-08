@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "asset": "emergency-boiler",
+  "revision": "v08",
+  "capture_profile": "tools/art/profiles/boiler-v08.json",
+  "mod_root": "tech-priests_src",
+  "mod_name": "tech-priests",
+  "active_state": "working",
+  "primary_size": 256,
+  "sizes": [
+    128,
+    256
+  ],
+  "scale": 0.41875,
+  "shift": [
+    0,
+    -0.6010407640085653
+  ],
+  "graphics_schema": "boiler",
+  "boiler_target": "tech-priests-emergency-boiler",
+  "source_direction_indices": [
+    0,
+    3,
+    2,
+    1
+  ]
+}
