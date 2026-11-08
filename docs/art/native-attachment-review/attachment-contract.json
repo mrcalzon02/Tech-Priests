@@ -1,0 +1,54 @@
+{
+  "status": "native_2d_attachment_contract_verified_model_authoring_open",
+  "units": "Factorio entity-local tiles; +X east, +Y south",
+  "direction_policy": "Native fixed north-facing platform body; not rotatable. Do not invent four-way thruster behavior.",
+  "height_and_camera": "Model Z/socket height and authored export registration still require the actual 3D/native-pipe jig. The X/Y cell centres below are not themselves the external mating planes.",
+  "assets": [
+    {
+      "name": "hydrogen-thruster",
+      "footprint": [4,4],
+      "normal_origin_grid": "integer X/Y",
+      "supported_local_body": [[-2,-2],[2,2]],
+      "aft_void_begins_y": 2,
+      "fuel": {"fluid":"liquid-hydrogen","cell_centre":[-1.5,-0.5],"outward_normal":[-1,0],"mating_plane_xy":[-2,-0.5],"adjacent_pipe_centre":[-2.5,-0.5],"native_cap":"pipe-4"},
+      "oxidizer": {"fluid":"liquid-oxygen","cell_centre":[1.5,-0.5],"outward_normal":[1,0],"mating_plane_xy":[2,-0.5],"adjacent_pipe_centre":[2.5,-0.5],"native_cap":"pipe-1"},
+      "planned_source_directory": "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/",
+      "sprite_directory": "tech-priests_src/graphics/entity/hydrogen-thruster/"
+    },
+    {
+      "name": "thetazine-thruster",
+      "footprint": [5,5],
+      "normal_origin_grid": "half-tile X/Y",
+      "supported_local_body": [[-2.5,-2.5],[2.5,2.5]],
+      "aft_void_begins_y": 2.5,
+      "fuel": {"fluid":"thetazine-fuel","cell_centre":[-2,-1],"outward_normal":[-1,0],"mating_plane_xy":[-2.5,-1],"adjacent_pipe_centre":[-3,-1],"native_cap":"pipe-4"},
+      "oxidizer": {"fluid":"water","cell_centre":[2,-1],"outward_normal":[1,0],"mating_plane_xy":[2.5,-1],"adjacent_pipe_centre":[3,-1],"native_cap":"pipe-1"},
+      "planned_source_directory": "art/source-to-3d/space-platform-engines/thetazine-thruster/v01/",
+      "sprite_directory": "tech-priests_src/graphics/entity/thetazine-thruster/"
+    },
+    {
+      "name": "void-fusion-thruster",
+      "footprint": [1,9],
+      "normal_origin_grid": "half-tile X/Y",
+      "supported_local_body": [[-0.5,-4.5],[0.5,4.5]],
+      "aft_void_begins_y": 4.5,
+      "visible_fluid_ports": [],
+      "interface_note": "Sealed electric/ritual drive; internal helper fluids are not exposed pipe inputs.",
+      "sprite_directory": "tech-priests_src/graphics/entity/void-fusion-thruster/"
+    },
+    {
+      "name": "large-void-fusion-thruster",
+      "footprint": [4,4],
+      "normal_origin_grid": "integer X/Y",
+      "supported_local_body": [[-2,-2],[2,2]],
+      "aft_void_begins_y": 2,
+      "visible_fluid_ports": [],
+      "interface_note": "Wide electric variant is a distinct body, not a scaled 1x9 spine.",
+      "sprite_directory": "tech-priests_src/graphics/entity/void-fusion-thruster/"
+    }
+  ],
+  "all_asset_open_gates": ["Authored native model and independent runtime export", "Model-specific surfaces and source silhouette acceptance", "3D/socket-height/native-camera registration", "Wire/circuit anchors where actually supported", "Idle/run render states and final sprite promotion"],
+  "prototype_construction": "tech-priests_src/prototypes/compatibility/space-age.lua",
+  "final_attachment_override": "tech-priests_src/prototypes/compatibility/thruster-mounting-visuals.lua",
+  "cap_export_rule": "Keep the native conditional cap overlays separate from body sprites; do not bake a connected cap into every idle/run frame."
+}

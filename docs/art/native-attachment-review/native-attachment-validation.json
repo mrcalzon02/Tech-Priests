@@ -1,0 +1,102 @@
+{
+  "status": "PASS_NATIVE_ATTACHMENT_AND_UNFUELLED_PLACEMENT_SLICE",
+  "client": "Factorio 2.1.24 graphical / high quality / low VRAM residency",
+  "module_sha256": "66309d39766463ebef47a918cb35fd73f660e73d3373e2737c069a407689eda2",
+  "baseline_module_sha256": "8737277649161daab02b7427581b0dce93b2cef0c2ac76e6fd64cca4de6fc9e3",
+  "scope": "Native prototype/render/attachment checks only; no fuel use, thrust, AI, logistics, combat or behavior/regression suite invoked",
+  "placement_sweep": {
+    "last_foundation_tile_y_tested": [
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "results": {
+      "thruster": {
+        "original_legal_edges": [
+          2
+        ],
+        "corrected_legal_edges": [
+          2
+        ]
+      },
+      "hydrogen-thruster": {
+        "original_legal_edges": [],
+        "corrected_legal_edges": [
+          1
+        ]
+      },
+      "thetazine-thruster": {
+        "original_legal_edges": [
+          2
+        ],
+        "corrected_legal_edges": [
+          2
+        ]
+      },
+      "void-fusion-thruster": {
+        "original_legal_edges": [],
+        "corrected_legal_edges": [
+          4
+        ]
+      },
+      "large-void-fusion-thruster": {
+        "original_legal_edges": [],
+        "corrected_legal_edges": [
+          1
+        ]
+      }
+    }
+  },
+  "pipe_endpoint_alignment": {
+    "hydrogen-thruster": {
+      "original_max_axis_offset_tiles": 0.5,
+      "corrected_max_axis_offset_tiles": 0
+    },
+    "thetazine-thruster": {
+      "original_max_axis_offset_tiles": 0.09765625,
+      "corrected_max_axis_offset_tiles": 0
+    }
+  },
+  "boiler_four_directions_eight_pipe_connections_match": true,
+  "disconnected_states_have_no_connected_pipe_targets": true,
+  "screenshots_sha256": {
+    "baseline/boiler-four-directions.png": "007bf566f6b91661e670f5d79d181c25cb7d3332a2959ae64aa71fa91c5eecbf",
+    "baseline/hydrogen-thruster-connected.png": "e733cb9bf680acf9d888e2960f9d7136892c3cabefb2c09756688c5c8ebc7642",
+    "baseline/hydrogen-thruster-disconnected.png": "6c3e66ce91108dc65dcc1cbed25eb508847c47308eb5e77ab83850728755aedb",
+    "baseline/large-void-fusion-thruster-connected.png": "c97e010aba0a895c1e813f8bffd6d207a808bdf539e13e086e7944bbd93236c3",
+    "baseline/large-void-fusion-thruster-disconnected.png": "be2e0ac44d88b25084d040e1b95046671b93c6ab9068a48f445afc8c78dec6ec",
+    "baseline/thetazine-thruster-connected.png": "27ffd564b16206499898657e34155c961d55f3cee932fce7ff740ca6735330ad",
+    "baseline/thetazine-thruster-disconnected.png": "b37ac279f578c021bd3cd0e752f9a5870460bcc9c7b0fb487e4d2e8237036779",
+    "baseline/thruster-connected.png": "44af72787653e1133280b5c733a24892a2e763498a902bde5765c3c80c2c3fb5",
+    "baseline/thruster-disconnected.png": "ff693fc0c239f424d74ee34ef176d2a4b34a2d7bb716b6285e91f9ca6fab6fbe",
+    "baseline/void-fusion-thruster-connected.png": "9005f2d465757935afe848e391047670f2a2871095ec425c124e37c9bca3bd2c",
+    "baseline/void-fusion-thruster-disconnected.png": "4b83f2fbc787e14b3926e53d7d45a92be0f191f274f775f0447013596aa1dbc6",
+    "corrected/boiler-four-directions.png": "e0a606275fe8e0a2f6d18a8a6fa835b94dfc81a0dcd67b017ef079aad5413bf2",
+    "corrected/hydrogen-thruster-connected.png": "8b3fee6e6c9c55df806152314797008ea27b6cffb77ca4b4f1fa27583cdacf66",
+    "corrected/hydrogen-thruster-disconnected.png": "805537fadb0c4e425181182f36af95aad39c1d5f0cccf85abf3ece38180f9b56",
+    "corrected/large-void-fusion-thruster-connected.png": "dcf88842d99a9aa554deecd35d5b206689103fbc23784977209346e423ac284a",
+    "corrected/large-void-fusion-thruster-disconnected.png": "11d21edd5ef8819dc8d2b039c9b87b405fa1f78f0f62cd76281423a72b8582f9",
+    "corrected/thetazine-thruster-connected.png": "5cb394e6d14c6e7fa9e77a0262986a41ca71543b12c727876996468821bc679f",
+    "corrected/thetazine-thruster-disconnected.png": "95aeef317c9fa0d539b042c3d426dada542fd158f2ef480ee8b0a7a2656d9832",
+    "corrected/thruster-connected.png": "17772248b95d874820162550500353f41ee94996d4c6d9ba315a6355d287074f",
+    "corrected/thruster-disconnected.png": "d6650021618d93e60d0f999578c3773b324a081830b7cd9f7678250cc84b2f9d",
+    "corrected/void-fusion-thruster-connected.png": "c378c18b9d70d0e0111348639c0b97c50fa34735ff45f2465c9ff95779f92e66",
+    "corrected/void-fusion-thruster-disconnected.png": "e2d62ea2f29129d5e87501c3a82dbd3514658d712b27b0e121067c366fcc3788"
+  },
+  "full_model_completion": false,
+  "remaining": "Thruster authored 3D geometry/surfacing and final model-to-sprite export remain open; this slice fixes native attachment geometry and connector graphics.",
+  "visual_review": {
+    "scope": "Actual graphical-client screenshots viewed; no overall thruster model completion claim",
+    "caps": "Gold native connector overlays visibly bridge each liquid-thruster shoulder to its pipe, and disappear when pipes are removed. Source body silhouettes remain unchanged and primitive.",
+    "boiler": "All four unfuelled placement views inspected with and without adjacent pipes. This does not approve cold-idle/working art separation or circuit-wire anchors.",
+    "reviewed_proof_sha256": {
+      "native-thruster-cap-proof.png": "735b312627f72bb07d1608173b589935d8f021222cc30c6d732d07a2a6b15242",
+      "native-boiler-four-directions-proof.png": "04d28641faf0402367f33d678f610374da2e743dd67d9ea7b84aeca74cb5c963"
+    }
+  }
+}

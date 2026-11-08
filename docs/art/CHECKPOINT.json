@@ -9,10 +9,13 @@
     "Recovered approved A02 animated lobber and original turret/camera from 94 verified binary source parts; corrected initial source authority audit",
     "Ran A02 native 64-heading animation-state validation and new heading-16 three-pass pilot locally",
     "Independently verified all 669 PNGs for A02 heading 0 and published actual eight-second loop preview",
-    "Energy dish V03 continuity/UV refinement, evaluated-modifier GLB readback, 64 calibrated idle headings, 128 atlas cell checks and four-direction base-sprite composition"
+    "Energy dish V03 continuity/UV refinement, evaluated-modifier GLB readback, 64 calibrated idle headings, 128 atlas cell checks and four-direction base-sprite composition",
+    "Native Factorio 2.1.24 thruster pipe-cap gates, exact grid sockets and footprint-specific platform-edge masks repaired and visually reviewed",
+    "Four native boiler placement directions / eight exact pipe endpoints recorded",
+    "Recovered reactor source-chat identities and v14 package/assessment links; native bytes not yet recovered"
   ],
   "verification": {
-    "graphical_client": "not run",
+    "graphical_client": "Targeted native Factorio 2.1.24 attachment/placement slice reviewed: four custom thrusters + vanilla control, connected/disconnected caps, four boiler directions; other assets and working-state/wire gates remain open",
     "workbench": "384 exact RGBA capture-to-atlas cells; idle/icon retained",
     "installed_atlases": "96 files; 3288 cells",
     "behavior_tests": "not run",
@@ -22,12 +25,13 @@
   },
   "open_defects": [
     "Condenser V21 native source remains Library-linked and unlocated locally",
-    "Thruster platform/body/cap alignment needs graphical jig",
-    "Lumberyard and metallic hydrogen/plasma chain sources unlocated",
+    "Lumberyard/intermediate pellet-chain designs unlocated; reactor chats located but native v14 bytes unrecovered",
     "A02 full 64-heading capture, final atlases and native graphics integration still incomplete",
-    "Energy dish V03 final surfacing/fidelity and firing/emission/shadow/native prototype integration open"
+    "Energy dish V03 final surfacing/fidelity and firing/emission/shadow/native prototype integration open",
+    "Thruster authored 3D bodies, model exports and final visual acceptance unfinished",
+    "Boiler V08 idle atlas is not referenced by its current structure module; cold-idle/working state and circuit-wire anchors need review"
   ],
-  "next_slice": "Monitor existing live A02 download/seeder/Blender controller, verify source identities and reuse completed frames; do not rebuild the pre-existing approved rig or launch duplicate managers. Finish all 384 chunks, assemble and integrate.",
+  "next_slice": "Keep existing A02 workers running toward all 384 chunks; do not duplicate managers. Author the hydrogen thruster body against the verified native attachment contract. Recover boiler prepared source and review cold-idle/working separation and circuit anchors. Recover the v14 reactor package from the located chat before editing its ring-relative models.",
   "automation": "tech-priests-local-model-completion, every four hours",
   "publication": "Read exact delivered SHA and status from issue #13; never infer publication from local commit",
   "local_work": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work",
@@ -41,7 +45,9 @@
     "further_artifact_recovery": "Second import completed: 1482 additional PNGs; 48 cached chunks plus four local chunks. 62/68 bundles complete; remaining missing frames render locally.",
     "new_local_profile": "OPTIX / CPU compositor; source and render settings unchanged; numerical differences measured",
     "live_process_claim": "Read actual local-capture-state.json and verify process commands; this committed snapshot is not proof of current liveness",
-    "last_independently_verified_chunks": 52,
-    "packaging": "Use package_local_lobber_capture.py, never the destructive legacy assembler directly on capture cache. Incomplete-cache refusal verified; full packaging pending."
-  }
+    "last_independently_verified_chunks": 163,
+    "packaging": "Use package_local_lobber_capture.py, never the destructive legacy assembler directly on capture cache. Incomplete-cache refusal verified; full packaging pending.",
+    "evidence": "docs/art/lobber-a02-latest-progress.json: completed local receipts have all frame hashes rechecked"
+  },
+  "external_model_sources": "docs/art/external-model-sources.json; v14 reactor chats located, package bytes unrecovered"
 }

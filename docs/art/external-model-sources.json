@@ -1,0 +1,64 @@
+{
+  "status": "chat_design_sources_located_native_package_bytes_not_recovered",
+  "scope": "Relevant recovered chat evidence; reported historical model completion is not independently verified model acceptance.",
+  "reactor_family": {
+    "source_chat": "https://chatgpt.com/c/6aefafd6-f2a8-83e8-9888-c5c6aa215a88",
+    "source_title": "Rebuild Plasma Reactors",
+    "reported_latest_revision": "v14",
+    "reported_models": [
+      "Minoris",
+      "Majoris",
+      "Maximus"
+    ],
+    "package": "https://chatgpt.com/library?file_id=libfile_a3796cbd07d48191a3fe03c7f4645781&account_id=personal",
+    "assessment": "https://chatgpt.com/library?file_id=libfile_30e8b6187a8c8191a3fabfbda868c54d&account_id=personal",
+    "source_hash": null,
+    "reported_remaining_work": "Reference shape detail and surface wear; package geometry, current revision and acceptance must be independently inspected after recovery.",
+    "reference_constraints": [
+      "Use the main collider/containment ring centre, ellipse, tilt and orientation as the reference anchor before comparing props.",
+      "Keep established ring, camera and assembly positions fixed during shape refinements unless actual reference evidence requires correction.",
+      "Rebuild only machinery visible in the reference; no arbitrary ornament or random replacement equipment.",
+      "Prior reported canister counts are 2/3/5; inspect actual latest source before treating them as proven."
+    ]
+  },
+  "reactor_camera_and_previous_geometry": {
+    "source_chat": "https://chatgpt.com/c/6aef84bc-cb98-83e8-81c6-5c5694eaee19",
+    "source_title": "Explain 40K Plasma Reactors",
+    "reported_v10_inspection_camera": "Orthographic, original +X/-Y azimuth, 20 degrees elevation. This is reference-inspection evidence, not an automatically approved Factorio production camera.",
+    "reported_v07_v08_footprints": [
+      "4x4",
+      "6x6",
+      "8x8"
+    ],
+    "footprint_authority": "Historical reported sizes, superseding earlier 3/5/7 starting proposals; measure latest v14 package and intended prototype before freezing final sizes.",
+    "reported_model_details": "Half-round radiators recessed into machinery-side housings; supported plasma conduits with elbows, collars and saddles; central emblems on containment-ring faces.",
+    "sandbox_package_link": "sandbox:/mnt/data/tech_priests_plasma_reactors_camera_v10.zip",
+    "native_bytes_available": false
+  },
+  "initial_reactor_proposal": {
+    "source_chat": "https://chatgpt.com/c/6aef8384-c84c-83e8-922c-eb98fce3e468",
+    "source_title": "Plan Reactor Models",
+    "authority": "Initial proposals only; neither the 3/5/7 footprints nor direct fluid-fuel electricity proposal establish final recipes or completed integration. Current user scope includes the metallic-hydrogen-pellet chain."
+  },
+  "pipe_model_review": {
+    "source_chat": "https://chatgpt.com/c/6aefdc9d-bcd0-83e8-a35c-80130430c366",
+    "source_title": "Reconstruct Pipe Models",
+    "reference_image_sha256": "2451cc1d1a350fda3de425640be2d397f058eb790c613d0fff9012b6c43e7956",
+    "constraint": "Correct actual boiler/condenser 3D model sizing and pipe attachment geometry; do not alter a reference image as a substitute."
+  },
+  "local_search": {
+    "roots": [
+      "Downloads",
+      "Documents"
+    ],
+    "archive_contents_examined": 2988,
+    "matching_model_or_archive_member_names": 0,
+    "pattern_scope": "plasma_reactor, reactor_minoris/majoris/maximus, metallic/metallized hydrogen, lumberyard",
+    "conclusion": "No matching local bytes located in these roots. This does not prove the files are absent elsewhere or unavailable in Library."
+  },
+  "remaining_source_gaps": [
+    "Recover v14 native package and original reference images with hashes.",
+    "Locate the remaining water-to-pellet stage designs; the reactor chats do not by themselves establish the whole chain.",
+    "Locate lumberyard chat/source; do not silently substitute the timber workbench."
+  ]
+}

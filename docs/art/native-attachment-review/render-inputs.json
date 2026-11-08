@@ -1,0 +1,62 @@
+{
+  "tested_working_tree_base": "6c1ca568ca342b5a39a3b02ca126dd7d7b69cb75",
+  "tested_module_sha256": "66309d39766463ebef47a918cb35fd73f660e73d3373e2737c069a407689eda2",
+  "source_sprite_inputs": [
+    {
+      "path": "graphics/entity/emergency-boiler-v08-idle-128.png",
+      "sha256": "ae8c29a017002376e4fd8f8a303b59288ffc52dad479c7e604b28a0b561ba93f"
+    },
+    {
+      "path": "graphics/entity/emergency-boiler-v08-idle.png",
+      "sha256": "64797f650c3787ac08962b94ac284412889f0b53293b18e12603b552e6864d84"
+    },
+    {
+      "path": "graphics/entity/emergency-boiler-v08-working-128.png",
+      "sha256": "c1a5fc8df5c6bcef6543b47cf38dbc1c8f7a83d8781c9dca467b35dac9fe9d2b"
+    },
+    {
+      "path": "graphics/entity/emergency-boiler-v08-working.png",
+      "sha256": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2"
+    },
+    {
+      "path": "graphics/entity/hydrogen-thruster/hydrogen-thruster-idle.png",
+      "sha256": "5b7daa6196aac7f232cfa4dfa7bf833b318451b05d2f49aa3201dc55213aa3c2"
+    },
+    {
+      "path": "graphics/entity/hydrogen-thruster/hydrogen-thruster-run.png",
+      "sha256": "d62a7eb04bdd7dec8076909ad02ae8d423a77865f5d64456c80fb9b892fa95a3"
+    },
+    {
+      "path": "graphics/entity/thetazine-thruster/thetazine-thruster-idle.png",
+      "sha256": "00a1d681570f01cd7b5df2c46d31a539283ac11b0467e3aa930f472d2a910417"
+    },
+    {
+      "path": "graphics/entity/thetazine-thruster/thetazine-thruster-run.png",
+      "sha256": "0a6170f2642afdc43d8c2dd7bfed7f2bf96470f33883a1fbe125656cf6cf6f2d"
+    },
+    {
+      "path": "graphics/entity/void-fusion-thruster/void-fusion-thruster-idle.png",
+      "sha256": "947148be59b0fee357d8db8e9bcb31ac5a30797aa128e208cec187d0041aebc6"
+    },
+    {
+      "path": "graphics/entity/void-fusion-thruster/void-fusion-thruster-run.png",
+      "sha256": "3e4bb73224b7d0ddc4447d185dda4ff497cc68eb9dec0326d97b3f14a1600ea7"
+    },
+    {
+      "path": "graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-idle.png",
+      "sha256": "3b7b6d743220a516fcfae11162b9ad2e5cff713338f5f7c549664c260a35df16"
+    },
+    {
+      "path": "graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-run.png",
+      "sha256": "daa696918c1dd7e35a1eb4bc8ae84102d23bc559100cefcb25488d92f5f2f045"
+    }
+  ],
+  "installed_native_reference_hashes": {
+    "__space-age__/graphics/entity/thruster/thruster-pipe-connection-1.png": "0d5d481b7ce4abeaf3c347dfdaf737131e0233860db81da6f21d4c0976715ac6",
+    "__space-age__/graphics/entity/thruster/thruster-pipe-connection-4.png": "127c810e64305236573fbb20e429941baeed3d62d90458eb74ef413d7b5767f5",
+    "__space-age__/prototypes/entity/entities.lua": "c6a98f7c300f06eb760251b81b32eb0871905a0e04b53db8a755f5d76228d551"
+  },
+  "native_art_not_redistributed": true,
+  "client": "Factorio 2.1.24 build 87808",
+  "scope": "Bindings for the actual review capture; subsequent unrelated main commits do not broaden this evidence."
+}

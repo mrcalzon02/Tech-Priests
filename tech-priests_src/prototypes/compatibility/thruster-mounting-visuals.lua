@@ -14,16 +14,19 @@ local function vector_xy(value)
   return { x, y }
 end
 
-local function first_pipe_position(fluid_box)
+local function pipe_connection_for_direction(fluid_box, direction)
   local connections = type(fluid_box) == "table" and fluid_box.pipe_connections or nil
-  local connection = type(connections) == "table" and connections[1] or nil
-  if type(connection) ~= "table" then return nil end
-  return vector_xy(connection.position)
+  for _, connection in pairs(connections or {}) do
+    if connection.direction == direction and vector_xy(connection.position) then
+      return connection
+    end
+  end
 end
 
-local function enabled_visualisation_names(fluid_box)
+local function enabled_visualisation_names(connection)
   local names = {}
-  local enabled = type(fluid_box) == "table" and fluid_box.enable_working_visualisations or nil
+  -- Native gates belong to each PipeConnectionDefinition, not the FluidBox.
+  local enabled = type(connection) == "table" and connection.enable_working_visualisations or nil
   if type(enabled) ~= "table" then return names end
   for _, name in pairs(enabled) do
     if type(name) == "string" then names[#names + 1] = name end
@@ -58,6 +61,29 @@ local function ensure_flag(entity, flag)
   entity.flags[#entity.flags + 1] = flag
 end
 
+local function fit_platform_edge_rules(thruster, vanilla)
+  if not (thruster and vanilla and vanilla.tile_buildability_rules) then return end
+  local rules = table.deepcopy(vanilla.tile_buildability_rules)
+  local support, exhaust
+  for _, rule in pairs(rules) do
+    local layers = rule.required_tiles and rule.required_tiles.layers
+    if layers and layers.ground_tile then support = rule end
+    if layers and layers.empty_space then exhaust = rule end
+  end
+  if not (support and exhaust) then return end
+  local half_width = thruster.tile_width / 2
+  local half_height = thruster.tile_height / 2
+  -- Keep the native supported-body / clear-aft doctrine, fitted to this
+  -- body's real grid. The 4x5 donor areas contradict an integer 4x4 origin
+  -- and intersect the lower body of the 1x9 spine.
+  support.area = {{-half_width + 0.2, -half_height + 0.2},
+                  {half_width - 0.2, half_height - 0.2}}
+  local far_edge = exhaust.area[2][2]
+  exhaust.area = {{-half_width + 0.2, half_height + 0.2},
+                  {half_width - 0.2, far_edge}}
+  thruster.tile_buildability_rules = rules
+end
+
 local function set_single_input_port(fluid_box, filter, position, direction)
   if type(fluid_box) ~= "table" then return end
   fluid_box.filter = filter or fluid_box.filter
@@ -77,14 +103,6 @@ local function copy_optional_graphics_field(target_graphics, source_graphics, fi
   end
 end
 
-local function restore_enabled_names(target_box, source_box)
-  if type(target_box) ~= "table" or type(source_box) ~= "table" then return end
-  if type(source_box.enable_working_visualisations) == "table" then
-    target_box.enable_working_visualisations = table.deepcopy(source_box.enable_working_visualisations)
-    target_box.draw_only_when_connected = true
-  end
-end
-
 local function copy_vanilla_pipe_visuals(target, source, target_fuel_position, target_oxidizer_position)
   if not (target and source and target.graphics_set and source.graphics_set) then return false end
 
@@ -92,31 +110,37 @@ local function copy_vanilla_pipe_visuals(target, source, target_fuel_position, t
   if type(source_visuals) ~= "table" then return false end
 
   local mappings = {}
-  local function register(fluid_box, target_position)
-    local source_position = first_pipe_position(fluid_box)
+  local function register(source_box, target_box, target_position)
+    local target_connection = target_box and target_box.pipe_connections and target_box.pipe_connections[1]
+    if not target_connection then return end
+    local source_connection = pipe_connection_for_direction(source_box, target_connection.direction)
+    local source_position = source_connection and vector_xy(source_connection.position)
     if not source_position or not target_position then return end
     local delta = {
       target_position[1] - source_position[1],
       target_position[2] - source_position[2]
     }
-    for _, name in pairs(enabled_visualisation_names(fluid_box)) do
-      mappings[name] = delta
+    for _, name in pairs(enabled_visualisation_names(source_connection)) do
+      mappings[name] = { delta = delta, connection = target_connection }
     end
   end
 
-  register(source.fuel_fluid_box, target_fuel_position)
-  register(source.oxidizer_fluid_box, target_oxidizer_position)
+  register(source.fuel_fluid_box, target.fuel_fluid_box, target_fuel_position)
+  register(source.oxidizer_fluid_box, target.oxidizer_fluid_box, target_oxidizer_position)
 
   local copied = {}
   local restored = {}
   for _, visual in pairs(source_visuals) do
     local name = type(visual) == "table" and visual.name or nil
-    local delta = name and mappings[name] or nil
-    if delta and not copied[name] then
+    local mapping = name and mappings[name] or nil
+    if mapping and not copied[name] then
       local clone = table.deepcopy(visual)
-      translate_sprite_shifts(clone, delta)
+      translate_sprite_shifts(clone, mapping.delta)
       restored[#restored + 1] = clone
       copied[name] = true
+      local connection = mapping.connection
+      connection.enable_working_visualisations = connection.enable_working_visualisations or {}
+      connection.enable_working_visualisations[#connection.enable_working_visualisations + 1] = name
     end
   end
 
@@ -126,8 +150,8 @@ local function copy_vanilla_pipe_visuals(target, source, target_fuel_position, t
   copy_optional_graphics_field(target.graphics_set, source.graphics_set, "status_colors")
   copy_optional_graphics_field(target.graphics_set, source.graphics_set, "default_recipe_tint")
   copy_optional_graphics_field(target.graphics_set, source.graphics_set, "recipe_not_set_tint")
-  restore_enabled_names(target.fuel_fluid_box, source.fuel_fluid_box)
-  restore_enabled_names(target.oxidizer_fluid_box, source.oxidizer_fluid_box)
+  target.fuel_fluid_box.draw_only_when_connected = true
+  target.oxidizer_fluid_box.draw_only_when_connected = true
   return true
 end
 
@@ -141,9 +165,12 @@ local function align_liquid_thrusters()
 
   local hydrogen = thrusters[HYDROGEN_THRUSTER]
   if hydrogen then
-    local fuel_position = {-1.80, -1.00}
-    local oxidizer_position = {1.80, -1.00}
+    -- The even 4x4 body has an integer origin: half-tile socket centres
+    -- meet normal pipe centres exactly, rather than drawing half a row high.
+    local fuel_position = {-1.50, -0.50}
+    local oxidizer_position = {1.50, -0.50}
     ensure_flag(hydrogen, "not-rotatable")
+    fit_platform_edge_rules(hydrogen, vanilla)
     set_single_input_port(hydrogen.fuel_fluid_box, "liquid-hydrogen", fuel_position, west)
     set_single_input_port(hydrogen.oxidizer_fluid_box, "liquid-oxygen", oxidizer_position, east)
     copy_vanilla_pipe_visuals(hydrogen, vanilla, fuel_position, oxidizer_position)
@@ -151,9 +178,12 @@ local function align_liquid_thrusters()
 
   local thetazine = thrusters[THETAZINE_THRUSTER]
   if thetazine then
-    local fuel_position = {-2.10, -1.00}
-    local oxidizer_position = {2.10, -1.00}
+    -- The odd 5x5 body has a half-tile origin, so integer local sockets
+    -- place the adjacent pipe centres on the same normal half-tile grid.
+    local fuel_position = {-2.00, -1.00}
+    local oxidizer_position = {2.00, -1.00}
     ensure_flag(thetazine, "not-rotatable")
+    fit_platform_edge_rules(thetazine, vanilla)
     thetazine.collision_box = {{-2.15, -2.35}, {2.15, 2.35}}
     thetazine.selection_box = {{-2.25, -2.50}, {2.25, 2.50}}
     thetazine.drawing_box = {{-3.35, -3.30}, {3.35, 5.70}}
@@ -167,14 +197,17 @@ end
 
 local function align_sealed_void_thrusters()
   local thrusters = data.raw.thruster or {}
+  local vanilla = thrusters.thruster
   local narrow = thrusters[VOID_FUSION_THRUSTER]
   if narrow then
     ensure_flag(narrow, "not-rotatable")
+    fit_platform_edge_rules(narrow, vanilla)
   end
 
   local large = thrusters[LARGE_VOID_FUSION_THRUSTER]
   if large then
     ensure_flag(large, "not-rotatable")
+    fit_platform_edge_rules(large, vanilla)
     large.drawing_box = {{-2.85, -2.95}, {2.85, 4.55}}
   end
 end

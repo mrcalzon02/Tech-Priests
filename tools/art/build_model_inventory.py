@@ -53,6 +53,9 @@ def main():
       'pipeline_scripts':sorted(p for p in htracked if p.startswith('tools/factorio-render-pipeline/')),
       'unresolved_requested_assets':['lumberyard','metallic-hydrogen pellet production chain','large plasma reactor'],
       'no_automatic_done_claims':True}
+    source_register=root/'docs/art/external-model-sources.json'
+    if source_register.is_file():
+        report['external_model_source_register']={'path':source_register.relative_to(root).as_posix(),'sha256':hashlib.sha256(source_register.read_bytes()).hexdigest(),'status':json.loads(source_register.read_text(encoding='utf-8'))['status']}
     a.out.parent.mkdir(parents=True,exist_ok=True); a.out.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'sprites':len(sprites),'families':len(set(r['family'] for r in sprites)), 'models_and_packages':len(report['model_sources_and_exports']), 'heads':[report['tech_priests_head'],report['pipeline_head']]}))
 if __name__=='__main__':main()
