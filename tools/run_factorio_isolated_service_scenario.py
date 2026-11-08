@@ -55,6 +55,15 @@ def run(argv: list[str], log_file: pathlib.Path, timeout: int) -> int:
             return 124
 
 
+def rail_connected_smoke_verdict(exit_code: int, log: str) -> bool:
+    """Accept ONLY two original physical counted connected rails, never a plan."""
+    prefix = "[TP-REMOTE-RAIL-TEST] "
+    first = prefix + "PASS first physical rail built and exact stock debited"
+    connected = prefix + "PASS two distinct 0338-debited native-connected rails"
+    return (exit_code == 0 and prefix + "FAIL " not in log
+            and first in log and connected in log)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--scenario", choices=tuple(CASES), required=True)
@@ -69,6 +78,9 @@ def main() -> int:
     ap.add_argument("--midgame-smoke", action="store_true",
                     help="Use 18,060 native ticks to audit the three earliest "
                          "bootstrap checkpoints; never accept the factory goal")
+    ap.add_argument("--rail-connected-smoke", action="store_true",
+                    help="Genuine 36k-tick two-paid-connected-rails gate ONLY; "
+                         "does not accept train travel or ore delivery")
     ap.add_argument("--seed", type=int, default=907260)
     ap.add_argument("--timeout-seconds", type=int, default=1800)
     args = ap.parse_args()
@@ -79,13 +91,19 @@ def main() -> int:
         ap.error("Specify --factorio /path/to/factorio (Factorio 2.0.77)")
     if args.midgame_smoke and args.scenario != "midgame-science":
         ap.error("--midgame-smoke is available only for midgame-science")
+    if args.rail_connected_smoke and args.scenario != "remote-rail-acquisition":
+        ap.error("--rail-connected-smoke requires remote-rail-acquisition")
     tick_count = (args.ticks if args.ticks is not None else
-                  (18060 if args.midgame_smoke else scenario["ticks"]))
+                  (18060 if args.midgame_smoke else
+                   36060 if args.rail_connected_smoke else scenario["ticks"]))
     if tick_count < 600:
         ap.error("--ticks must be at least 600")
     if args.midgame_smoke and not 18060 <= tick_count < 36000:
         ap.error("--midgame-smoke must cover native 0/9k/18k marks "
                  "without claiming full nine-checkpoint acceptance")
+    if args.rail_connected_smoke and not 36060 <= tick_count < 90000:
+        ap.error("--rail-connected-smoke requires the native 36k checkpoint "
+                 "and cannot credit the full 90k train expedition")
     version = subprocess.run([str(factorio), "--version"],
                              capture_output=True, text=True, check=False)
     version_line = (version.stdout or version.stderr).splitlines()[0:1]
@@ -145,6 +163,31 @@ def main() -> int:
     for line in contents.splitlines():
         if scenario["prefix"] in line:
             print(line[:1200])
+    if args.rail_connected_smoke:
+        # Save partial real-engine diagnostics even on a failed process.
+        passed = rail_connected_smoke_verdict(benchmark, contents)
+        prefix = "[TP-REMOTE-RAIL-TEST] "
+        evidence = {
+            "scenario": args.scenario,
+            "gate": "two-original-connected-item-debited-rails-only",
+            "ticks_requested": tick_count,
+            "engine_exit_code": benchmark,
+            "first_paid_rail": prefix + "PASS first physical rail built and exact stock debited" in contents,
+            "native_connected_pair": prefix + "PASS two distinct 0338-debited native-connected rails" in contents,
+            "fixture_failed": prefix + "FAIL " in contents,
+            "accepted": passed,
+            "train_and_ore_delivery_accepted": False,
+        }
+        (output / "rail-connected-smoke-result.json").write_text(
+            json.dumps(evidence, indent=2, sort_keys=True), encoding="utf-8")
+        if not passed:
+            print("FAIL real-engine two-paid-rails smoke; train/ore UNTESTED")
+            print("Engine logs: " + str(output / "benchmark.log"))
+            return 1
+        print("PASS two original item-debited native-connected rails ONLY; "
+              "train/Magos journey and ore return UNTESTED")
+        print("Engine logs: " + str(output / "benchmark.log"))
+        return 0
     if args.scenario == "midgame-science":
         from midgame_checkpoint_audit import inspect, validate_smoke
         # Factorio HEADLESS DOES NOT render PNG screenshots. Archive its
