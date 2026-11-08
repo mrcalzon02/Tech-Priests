@@ -180,24 +180,66 @@ assert(not detached_ok
 -- Boundary: 320 original 0338-debited rail sections end at x=650.
 -- Target x=666 is within 16 tiles of a REAL last rail; x=668 is not,
 -- and a lost original final rail may not claim completion.
-local terminal_rail={valid=true,unit_number=3201,name="straight-rail",
-  position={x=650,y=0},direction=4,force=force}
-sites[650]=terminal_rail
+-- Populate the original 320 physical rail identities and native graph
+-- edges; a terminal segment alone must never certify a broken earlier line.
+local chain={}
+for i=1,320 do
+  local x=12+(i-1)*Track.segment_step
+  chain[i]={valid=true,unit_number=4000+i,name="straight-rail",
+    position={x=x,y=0},direction=4,force=force}
+  sites[x]=chain[i]
+end
+for i=1,319 do
+  local next_rail=chain[i+1]
+  chain[i].get_connected_rail=function(args)
+    assert(args.rail_connection_direction==defines.rail_connection_direction.straight,
+      "terminal audit did not ask Factorio for the straight native edge")
+    return args.rail_direction==defines.rail_direction.front and next_rail or nil
+  end
+end
 local function terminal_case(target_x)
+  local units={}
+  for i=1,#chain do units[i]=chain[i].unit_number end
   local objective={status="building-physical-rail",root_station_unit=104,
     target={x=target_x,y=0},surface_index=1,force_index=1,
     rail_frontier_0836={segment=320,last_position={x=650,y=0},
-      start_position={x=12,y=0},direction=4,built_units={[320]=3201}}}
+      start_position={x=12,y=0},direction=4,built_units=units}}
   return {station=pair.station,priest=pair.priest,
     remote_rail_outpost_0835=objective},objective
 end
+local function finish_terminal_audit(p)
+  for step=1,42 do
+    local progressed,why=Track.service_pair(p)
+    if why~="rail-chain-audit-in-progress" then
+      return progressed,why,step
+    end
+    assert(progressed==true and
+      p.remote_rail_outpost_0835.status=="building-physical-rail",
+      "pending incremental native rail audit was credited as route completion")
+  end
+  error("native rail integrity sweep exceeded bounded broker pulses")
+end
 local terminal_pair,terminal_mission=terminal_case(666)
-local terminal_ok,terminal_why=Track.plan_next(terminal_pair)
+local terminal_ok,terminal_why,audit_calls=finish_terminal_audit(terminal_pair)
 assert(not terminal_ok and terminal_why=="physical-frontier-reached"
+  and audit_calls>1 and audit_calls<=42
   and terminal_mission.status=="rail-track-established"
+  and terminal_mission.rail_frontier_0836.chain_audit_completed_tick_0836
   and terminal_mission.rail_frontier_0836.segment==320
   and terminal_pair.construction_request==nil and item_count==698,
-  "physically reached x=666 frontier falsely refused as out of segments")
+  "terminal frontier credited without auditing the native counted rail chain")
+-- A damaged middle rail must fail closed even though the last one remains,
+-- and no new item is issued or the old 0338 receipts silently discarded.
+local broken=chain[160].get_connected_rail
+chain[160].get_connected_rail=function()return nil end
+local broken_pair,broken_mission=terminal_case(666)
+local broken_ok,broken_reason=finish_terminal_audit(broken_pair)
+assert(not broken_ok and broken_reason=="rail-chain-disconnected:161"
+  and broken_mission.status=="rail-track-blocked"
+  and broken_mission.rail_frontier_0836.segment==320
+  and broken_pair.construction_request==nil and item_count==698,
+  "destroyed native connection was falsely accepted as a trainable route")
+chain[160].get_connected_rail=broken
 local over_pair,over_mission=terminal_case(668)
 local over_ok,over_why=Track.plan_next(over_pair)
 assert(not over_ok and over_why=="maximum-verified-rail-segments"
@@ -205,6 +247,7 @@ assert(not over_ok and over_why=="maximum-verified-rail-segments"
   and over_mission.rail_frontier_0836.segment==320
   and over_pair.construction_request==nil and item_count==698,
   "unbuilt x=652 candidate falsely completed an unreachable x=668 target")
+local last_rail=sites[650]
 sites[650]=nil
 local missing_pair,missing_mission=terminal_case(666)
 local missing_ok,missing_why=Track.plan_next(missing_pair)
@@ -212,6 +255,7 @@ assert(not missing_ok and missing_why=="previous-physical-rail-missing"
   and missing_mission.status=="rail-track-blocked"
   and missing_pair.construction_request==nil and item_count==698,
   "a vanished original final rail was accepted as track completion")
+sites[650]=last_rail
 -- A new Magos or an uncharted/different target must never claim this
 -- persistent mission or construct the pending physical rail on its behalf.
 local other={station={valid=true,unit_number=999,

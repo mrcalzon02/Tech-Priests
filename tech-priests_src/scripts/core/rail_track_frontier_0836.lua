@@ -60,6 +60,53 @@ local function reject(objective,reason)
   objective.last_update_tick=now()
   return false,reason
 end
+-- On completion, prove the ENTIRE originally item-debited chain still exists
+-- and is traversable. The previous 0338 receipts only proved neighboring rails
+-- at the moment each segment was built; an earlier rail may since be destroyed.
+-- Sweep a bounded number of native graph edges per existing broker pulse.
+-- Persist only primitive progress: never store entity references in the audit.
+local function audit_original_chain(pair,route,direction)
+  local n=tonumber(route.segment)
+  if not(n and n>=2 and n==math.floor(n) and n<=M.max_segments
+      and type(route.built_units)=="table"
+      and type(route.start_position)=="table"
+      and type(route.last_position)=="table"
+      and route.direction==direction
+      and close(route.last_position,pos(
+        route.start_position.x+(n-1)*M.segment_step,
+        route.start_position.y)))then
+    return false,"rail-chain-ledger-incomplete"
+  end
+  local first=tonumber(route.chain_audit_index_0836) or 1
+  if first<1 or first>n or first~=math.floor(first)then
+    return false,"rail-chain-audit-cursor-invalid"
+  end
+  local last=math.min(n,first+8)
+  local previous=nil
+  for i=first,last do
+    local point=pos(route.start_position.x+(i-1)*M.segment_step,
+      route.start_position.y)
+    local rail=track_at(pair,point,direction)
+    if not rail then
+      return false,"rail-chain-segment-missing:"..i
+    end
+    if not(rail.unit_number and rail.unit_number==route.built_units[i])then
+      return false,"rail-chain-identity-changed:"..i
+    end
+    if previous and not connected_straight_rails(previous,rail)then
+      return false,"rail-chain-disconnected:"..i
+    end
+    previous=rail
+  end
+  if last==n then
+    route.chain_audit_index_0836=nil
+    route.chain_audit_completed_tick_0836=now()
+    return true,"native-original-rail-chain-connected"
+  end
+  -- Revisit this last, real rail as the predecessor of the next slice.
+  route.chain_audit_index_0836=last
+  return nil,"rail-chain-audit-in-progress"
+end
 function M.plan_next(pair)
   local m=pair and pair.remote_rail_outpost_0835
   if not eligible(pair,m)then return false,"not-authorized-rail-mission"end
@@ -127,8 +174,16 @@ function M.plan_next(pair)
   -- is not. Never credit a route using hypothetical future geometry.
   if route.segment>0 and route.last_position
       and route.last_position.x>=target.x-M.destination_clearance then
+    local accepted,why=audit_original_chain(pair,route,direction)
+    if accepted==nil then
+      m.stage="verifying-original-native-rail-chain"
+      m.next_step="audit-connected-item-debited-rail"
+      m.last_update_tick=now()
+      return true,why
+    end
+    if not accepted then return reject(m,why) end
     m.status="rail-track-established"
-    m.stage="physical-rail-frontier-reached"
+    m.stage="connected-original-physical-rail-frontier"
     m.next_step="validate-train-route-connectivity"
     m.last_update_tick=now()
     return false,"physical-frontier-reached"
