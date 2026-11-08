@@ -1,0 +1,30 @@
+[
+  {
+    "direction": "north",
+    "max_channel_delta": 80,
+    "mean_channel_delta": 0.2865552145337302,
+    "changed_pixels": 46844,
+    "pixels_with_channel_delta_over_8": 14126
+  },
+  {
+    "direction": "east",
+    "max_channel_delta": 79,
+    "mean_channel_delta": 0.2952117435515873,
+    "changed_pixels": 43354,
+    "pixels_with_channel_delta_over_8": 15431
+  },
+  {
+    "direction": "south",
+    "max_channel_delta": 65,
+    "mean_channel_delta": 0.1341738746279762,
+    "changed_pixels": 21078,
+    "pixels_with_channel_delta_over_8": 6639
+  },
+  {
+    "direction": "west",
+    "max_channel_delta": 79,
+    "mean_channel_delta": 0.2599962022569444,
+    "changed_pixels": 38780,
+    "pixels_with_channel_delta_over_8": 13583
+  }
+]

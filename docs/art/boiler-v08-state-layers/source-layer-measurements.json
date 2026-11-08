@@ -1,0 +1,94 @@
+{
+  "256": {
+    "method": "source-over-v1",
+    "size": 256,
+    "frames_per_direction": 96,
+    "columns": 12,
+    "rows_per_direction": 8,
+    "directions": [
+      {
+        "direction": "north",
+        "cold_alpha_changed_pixels": 1415,
+        "cold_original_occupied_pixels": 18729,
+        "cold_max_alpha_reduction": 120.0,
+        "cold_alpha_coverage_reduction_fraction": 0.0006375664031216864,
+        "working_composite_black_white_max_channel_error": 1.360784313725506,
+        "working_composite_black_white_mean_channel_error": 0.006830269474869
+      },
+      {
+        "direction": "east",
+        "cold_alpha_changed_pixels": 740,
+        "cold_original_occupied_pixels": 17697,
+        "cold_max_alpha_reduction": 49.0,
+        "cold_alpha_coverage_reduction_fraction": 0.0003774225639891924,
+        "working_composite_black_white_max_channel_error": 1.250980392156853,
+        "working_composite_black_white_mean_channel_error": 0.004340485549960055
+      },
+      {
+        "direction": "south",
+        "cold_alpha_changed_pixels": 660,
+        "cold_original_occupied_pixels": 16368,
+        "cold_max_alpha_reduction": 67.0,
+        "cold_alpha_coverage_reduction_fraction": 0.0003974041844467878,
+        "working_composite_black_white_max_channel_error": 1.3882352941176268,
+        "working_composite_black_white_mean_channel_error": 0.0036548240512025492
+      },
+      {
+        "direction": "west",
+        "cold_alpha_changed_pixels": 780,
+        "cold_original_occupied_pixels": 16745,
+        "cold_max_alpha_reduction": 94.0,
+        "cold_alpha_coverage_reduction_fraction": 0.0008510514872855905,
+        "working_composite_black_white_max_channel_error": 1.7215686274509732,
+        "working_composite_black_white_mean_channel_error": 0.00427394962518568
+      }
+    ],
+    "visual_acceptance": "Native inspection required; numerical bounds alone are not art acceptance."
+  },
+  "128": {
+    "method": "source-over-v1",
+    "size": 128,
+    "frames_per_direction": 96,
+    "columns": 8,
+    "rows_per_direction": 12,
+    "directions": [
+      {
+        "direction": "north",
+        "cold_alpha_changed_pixels": 678,
+        "cold_original_occupied_pixels": 5176,
+        "cold_max_alpha_reduction": 56.0,
+        "cold_alpha_coverage_reduction_fraction": 0.0013053195931885255,
+        "working_composite_black_white_max_channel_error": 1.152941176470574,
+        "working_composite_black_white_mean_channel_error": 0.005628934872695819
+      },
+      {
+        "direction": "east",
+        "cold_alpha_changed_pixels": 387,
+        "cold_original_occupied_pixels": 4755,
+        "cold_max_alpha_reduction": 13.0,
+        "cold_alpha_coverage_reduction_fraction": 0.0006715335384077092,
+        "working_composite_black_white_max_channel_error": 1.1882352941176388,
+        "working_composite_black_white_mean_channel_error": 0.0024319110612723753
+      },
+      {
+        "direction": "south",
+        "cold_alpha_changed_pixels": 389,
+        "cold_original_occupied_pixels": 4426,
+        "cold_max_alpha_reduction": 12.0,
+        "cold_alpha_coverage_reduction_fraction": 0.0007376999127366992,
+        "working_composite_black_white_max_channel_error": 1.3725490196078516,
+        "working_composite_black_white_mean_channel_error": 0.0025342180837992887
+      },
+      {
+        "direction": "west",
+        "cold_alpha_changed_pixels": 434,
+        "cold_original_occupied_pixels": 4539,
+        "cold_max_alpha_reduction": 76.0,
+        "cold_alpha_coverage_reduction_fraction": 0.001358607688018839,
+        "working_composite_black_white_max_channel_error": 1.3647058823529357,
+        "working_composite_black_white_mean_channel_error": 0.0024484522202435715
+      }
+    ],
+    "visual_acceptance": "Native inspection required; numerical bounds alone are not art acceptance."
+  }
+}

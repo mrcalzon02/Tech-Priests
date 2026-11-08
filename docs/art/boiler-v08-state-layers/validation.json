@@ -1,0 +1,966 @@
+{
+  "status": "NATIVE_COLD_WORKING_STATE_LAYER_GATE_REVIEWED_WIRE_GATE_OPEN",
+  "scope": "Graphics and sprite/prototype integration only; no behavior or regression suite.",
+  "physical_lua_tail_unchanged": true,
+  "per_direction_registration_unchanged": true,
+  "source_atlases_preserved": true,
+  "source_reconstruction": [
+    {
+      "size": 256,
+      "working_cells_compared": 384,
+      "unique_activity_cells_per_direction": [
+        96,
+        96,
+        96,
+        96
+      ],
+      "black_white_display_max_channel_delta": 2,
+      "cold_rgb_unchanged": true,
+      "cold_alpha_only_reduced": true,
+      "source_files": {
+        "idle": "64797f650c3787ac08962b94ac284412889f0b53293b18e12603b552e6864d84",
+        "working": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2",
+        "cold": "2e45849e38c7e100ed7003ed8169890a63905b5745a248a3d0c1bd27bed2c8dc",
+        "activity": "2bb3545a99030ea9b4fbb07ea44f23b61573372236a77efee07f545ca967f80f"
+      }
+    },
+    {
+      "size": 128,
+      "working_cells_compared": 384,
+      "unique_activity_cells_per_direction": [
+        96,
+        96,
+        96,
+        96
+      ],
+      "black_white_display_max_channel_delta": 2,
+      "cold_rgb_unchanged": true,
+      "cold_alpha_only_reduced": true,
+      "source_files": {
+        "idle": "ae8c29a017002376e4fd8f8a303b59288ffc52dad479c7e604b28a0b561ba93f",
+        "working": "c1a5fc8df5c6bcef6543b47cf38dbc1c8f7a83d8781c9dca467b35dac9fe9d2b",
+        "cold": "eb811c5aa5b083b4cc501992c5743a6073a76afa1d48b7e0d34169bb393fbd8d",
+        "activity": "71c3cc082fdfa7b9158d66fdd321fad2ac0d2985f281be62068e7d04318642b8"
+      }
+    }
+  ],
+  "files": {
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-cold.png": "2e45849e38c7e100ed7003ed8169890a63905b5745a248a3d0c1bd27bed2c8dc",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-activity.png": "2bb3545a99030ea9b4fbb07ea44f23b61573372236a77efee07f545ca967f80f",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-cold-128.png": "eb811c5aa5b083b4cc501992c5743a6073a76afa1d48b7e0d34169bb393fbd8d",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-activity-128.png": "71c3cc082fdfa7b9158d66fdd321fad2ac0d2985f281be62068e7d04318642b8",
+    "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua": "ea3d481334d1f1210a35478accde509acf0fe5262b1fc4547da90f4d7ed09d16"
+  },
+  "source_model_sha256": "eb6aad420f04d7ca3b13933fb0323228252d569233690bac5b2c87bb3751a93d",
+  "native_module_matches_promoted_bytes": true,
+  "native_states": {
+    "120": {
+      "scope": "Cold/working sprite rendering only; direct fixture supply, no behavior assertions",
+      "tick": 120,
+      "entities": [
+        {
+          "direction": 0,
+          "position": {
+            "y": 0,
+            "x": -18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -18.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -19.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -19.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": -17.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -16.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -16.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        },
+        {
+          "direction": 4,
+          "position": {
+            "y": 0,
+            "x": -6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": -5.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": -5.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        },
+        {
+          "direction": 8,
+          "position": {
+            "y": 0,
+            "x": 6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 6.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 7.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 7.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": 5.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 4.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 4.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        },
+        {
+          "direction": 12,
+          "position": {
+            "y": 0,
+            "x": 18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": 17.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": 17.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        }
+      ]
+    },
+    "240": {
+      "scope": "Cold/working sprite rendering only; direct fixture supply, no behavior assertions",
+      "tick": 240,
+      "entities": [
+        {
+          "direction": 0,
+          "position": {
+            "y": 0,
+            "x": -18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -18.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -19.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -19.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": -17.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -16.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -16.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        },
+        {
+          "direction": 4,
+          "position": {
+            "y": 0,
+            "x": -6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": -5.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": -5.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        },
+        {
+          "direction": 8,
+          "position": {
+            "y": 0,
+            "x": 6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 6.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 7.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 7.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": 5.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 4.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 4.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        },
+        {
+          "direction": 12,
+          "position": {
+            "y": 0,
+            "x": 18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": 17.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": 17.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        }
+      ]
+    },
+    "420": {
+      "scope": "Cold/working sprite rendering only; direct fixture supply, no behavior assertions",
+      "tick": 420,
+      "entities": [
+        {
+          "direction": 0,
+          "position": {
+            "y": 0,
+            "x": -18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -18.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -19.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -19.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": -17.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -16.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -16.5
+              }
+            }
+          ],
+          "status": 1,
+          "burning": 2799333.3333333335
+        },
+        {
+          "direction": 4,
+          "position": {
+            "y": 0,
+            "x": -6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": -5.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": -5.5
+              }
+            }
+          ],
+          "status": 1,
+          "burning": 2799333.3333333335
+        },
+        {
+          "direction": 8,
+          "position": {
+            "y": 0,
+            "x": 6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 6.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 7.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 7.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": 5.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 4.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 4.5
+              }
+            }
+          ],
+          "status": 1,
+          "burning": 2799333.3333333335
+        },
+        {
+          "direction": 12,
+          "position": {
+            "y": 0,
+            "x": 18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": 17.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": 17.5
+              }
+            }
+          ],
+          "status": 1,
+          "burning": 2799333.3333333335
+        }
+      ]
+    },
+    "480": {
+      "scope": "Cold/working sprite rendering only; direct fixture supply, no behavior assertions",
+      "tick": 480,
+      "entities": [
+        {
+          "direction": 0,
+          "position": {
+            "y": 0,
+            "x": -18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -18.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -19.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -19.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": -17.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -16.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -16.5
+              }
+            }
+          ],
+          "status": 1,
+          "burning": 2199333.3333333335
+        },
+        {
+          "direction": 4,
+          "position": {
+            "y": 0,
+            "x": -6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": -5.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": -5.5
+              }
+            }
+          ],
+          "status": 1,
+          "burning": 2199333.3333333335
+        },
+        {
+          "direction": 8,
+          "position": {
+            "y": 0,
+            "x": 6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 6.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 7.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 7.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": 5.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 4.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 4.5
+              }
+            }
+          ],
+          "status": 1,
+          "burning": 2199333.3333333335
+        },
+        {
+          "direction": 12,
+          "position": {
+            "y": 0,
+            "x": 18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": 17.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": 17.5
+              }
+            }
+          ],
+          "status": 1,
+          "burning": 2199333.3333333335
+        }
+      ]
+    },
+    "1200": {
+      "scope": "Cold/working sprite rendering only; direct fixture supply, no behavior assertions",
+      "tick": 1200,
+      "entities": [
+        {
+          "direction": 0,
+          "position": {
+            "y": 0,
+            "x": -18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -18.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -19.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -19.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": -17.5
+              },
+              "target_position": {
+                "y": -0.5,
+                "x": -16.5
+              },
+              "connected_position": {
+                "y": -0.5,
+                "x": -16.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        },
+        {
+          "direction": 4,
+          "position": {
+            "y": 0,
+            "x": -6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": -0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": -5.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": -5.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": -5.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": -5.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        },
+        {
+          "direction": 8,
+          "position": {
+            "y": 0,
+            "x": 6
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 6.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 7.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 7.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": 0.5,
+                "x": 5.5
+              },
+              "target_position": {
+                "y": 0.5,
+                "x": 4.5
+              },
+              "connected_position": {
+                "y": 0.5,
+                "x": 4.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        },
+        {
+          "direction": 12,
+          "position": {
+            "y": 0,
+            "x": 18
+          },
+          "ports": [
+            {
+              "index": 1,
+              "position": {
+                "y": 0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": 1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": 1.5,
+                "x": 17.5
+              }
+            },
+            {
+              "index": 2,
+              "position": {
+                "y": -0.5,
+                "x": 17.5
+              },
+              "target_position": {
+                "y": -1.5,
+                "x": 17.5
+              },
+              "connected_position": {
+                "y": -1.5,
+                "x": 17.5
+              }
+            }
+          ],
+          "status": 59,
+          "burning": 0
+        }
+      ]
+    }
+  },
+  "native_visual_review": "Viewed all four native cold/working/stopped directions and fixed-pose comparisons. Body, pipes and contacts remain aligned. Working animation preserves every original pose; native conditional fire hides activity when cold. Duplicate inherited burner smoke is removed because steam is authored at the source nozzle.",
+  "filtering_repair": "Sparse transparent holes inside opaque body regions were rejected by native comparison. Continuous opaque activity lowers opaque-body mean differences from about 1.66\u20133.54 to 0.20\u20130.37 codes in the fixed-pose diagnostic. Native differences are retained honestly, including filtering and pipe-window animation; no native pixel identity claim.",
+  "open_gates": [
+    "Four-direction circuit connector placement/visible wire review",
+    "Full boiler acceptance after remaining attachment gates"
+  ],
+  "production_inputs_sha256": {
+    "tools/art/boiler_state_layers.py": "bc9c6dfa05a2bcb7085677c7de62d44eb90cd68d508ac61ffdef748330bd5046",
+    "tools/art/produce_factorio_asset.py": "33318b3936958ec813fbebb6d873c3a869048672f636d3e8a407f5d04b9ca30b",
+    "tools/art/jobs/boiler-v08.json": "ceb9ac4cc87cbc70f4bb18462b06bf28170013053a87131e31a3d4b9ff94ac30",
+    "tools/art/profiles/boiler-v08.json": "ac0047acebd13c38c0d941d3a70819dd3c6e3959e799a12b228f9cfbf22b27a9"
+  },
+  "native_evidence_sha256": {
+    "native-cold-working-stopped.png": "bdb45253dc6eb3ffd4f645185c3f5b23044f9a22f254d541200d68ba9294309a",
+    "native-working-loop.gif": "2397216f8fca7ca7bb435b3883ce2fa18ffed6ee8d4c83bc9549e18a42fdd806",
+    "native/120-east.png": "1d82388f99a6750f6dc5f6eb654e63e8ed1a77d6a6a4c2f30d0c0cabbaddf996",
+    "native/120-north.png": "83310a1e3ddaa040d7d3f6e99b9b9114b7bbfb7c6f30e4a0778df230dfdc83d3",
+    "native/120-south.png": "d8ba42d9cdc4e8e8ffae1fefa0fd1923243cae0f3c1936113b395a07c3d04e37",
+    "native/120-west.png": "5311ca8252c9ef4eb602d99838677fd69cf4ab87d0ce3d086e09ae7e2202029f",
+    "native/1200-east.png": "711abde6f6a0db7d15127854955aa5ed325ddd8cff9730d95c3f2d99f40b0950",
+    "native/1200-north.png": "a126a3f2d78d5b54f7c1334d142c6eaa506fbe7d06a2dfcef8e2d79d74a95a76",
+    "native/1200-south.png": "b87d3a9b3a82f4d757dd9d2133cfdf75220b1c5fcc407d88f0c85160b3077e44",
+    "native/1200-west.png": "6a3c26b5de864829ce76793b71ac133124a983e0cf3aceb69000f16373dfaae0",
+    "native/240-east.png": "1d82388f99a6750f6dc5f6eb654e63e8ed1a77d6a6a4c2f30d0c0cabbaddf996",
+    "native/240-north.png": "83310a1e3ddaa040d7d3f6e99b9b9114b7bbfb7c6f30e4a0778df230dfdc83d3",
+    "native/240-south.png": "d8ba42d9cdc4e8e8ffae1fefa0fd1923243cae0f3c1936113b395a07c3d04e37",
+    "native/240-west.png": "5311ca8252c9ef4eb602d99838677fd69cf4ab87d0ce3d086e09ae7e2202029f",
+    "native/420-east.png": "90df70fa869fd1661d09d99da1e3ecfaa6a256770bf5ade8cc8cd0ef757391d6",
+    "native/420-north.png": "d2d840f11a60a9f00e135ae97354b2975c878e3ad53bf7db0dc919b8007096a8",
+    "native/420-south.png": "bf9f654ffd0e0965e492e95535fb76a0fe04d66589233aef7bee1bb37c2b04b5",
+    "native/420-west.png": "4ae23bb82675099d5aca7caadc945ce1299cf97a900f565e0a3cf5912be84787",
+    "native/480-east.png": "94ccad34bfcee11b4f616ce546eb3b29f001ef156d9e016d24a7485b0db8858f",
+    "native/480-north.png": "6662f924829df4cf3d39de330a5c7ca0ddd1430b4d24d1152c35a6fc0ac4c956",
+    "native/480-south.png": "59c7af774d67c181d3ab0b30ad753d3ef994d21744f24ea7d2f2b0988a835a47",
+    "native/480-west.png": "d3f85019678cd8d329afb8d56350fd097ff543520b61a44e3cf37bab21f2f934",
+    "native-fixed-pose/candidate-east.png": "8ae899bd5cecd6e97612b1bd2bb5c1d46f86c7ac5da0c1d85e12a90f12134a4c",
+    "native-fixed-pose/candidate-north.png": "15e8db4d5e5dd0cc91584f4ccadc398de7c383f2ee9e03bcc783dcdbc8e009ba",
+    "native-fixed-pose/candidate-south.png": "b9406dad651f271cceb035119b0411c4e5bb1bce5ae873b31275326d21e6e44c",
+    "native-fixed-pose/candidate-west.png": "3049ab735df6caad2c2f20ff2530f88ae13e16fb358701e0aec0212e485b6182",
+    "native-fixed-pose/reference-east.png": "3130f1d11a5600d8906f826d4983ed4d6bd66a2b07f9f28861af6e9d54bd1b86",
+    "native-fixed-pose/reference-north.png": "acdf56bb6c78cdd55ac1815e25763717b535d626ab7c2514786ec2bb93f333b6",
+    "native-fixed-pose/reference-south.png": "a6e7093397e63d0c8e9158c72782735119158d887338a130132e0f4417e29bae",
+    "native-fixed-pose/reference-west.png": "847d4844001fa692903334a70d106d70c3fbe29a0b5c7f13cedb92e902c6167d",
+    "native-loop-keyposes.png": "6b2e2860338fc93bb4ac5677077449a0dd8c5eed337f96e0ddaa5392bd5020fd"
+  },
+  "review_gates": {
+    "pipe_visual_fit": "4/4 directions reviewed; inherited accepted registration unchanged",
+    "cold_working_stopped": "4/4 directions reviewed for all three states",
+    "source_working_pose_coverage": "768/768 reconstructed cells checked over black and white",
+    "native_loop_preview": "30 samples / 120 raw screenshots; 4 directions; source hashes recorded",
+    "circuit_wires": "0/4 native wire views reviewed; remains open"
+  },
+  "native_loop_unique_central_body_crops": {
+    "north": 30,
+    "east": 30,
+    "south": 30,
+    "west": 30
+  }
+}

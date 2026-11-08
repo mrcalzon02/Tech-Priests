@@ -46,6 +46,10 @@ def load_job(job_path):
         if not isinstance(job[key], str) or not SAFE.fullmatch(job[key]):
             raise ValueError(f'Unsafe {key}')
     active = job['active_state']
+    state_layers = job.get('boiler_state_layers')
+    if state_layers is not None and (state_layers != 'source-over-v1'
+            or job.get('graphics_schema') != 'boiler' or active != 'working'):
+        raise ValueError('boiler_state_layers requires boiler + working + source-over-v1')
     if job.get('graphics_schema', 'crafting') not in {'crafting', 'boiler'}:
         raise ValueError('Unknown graphics_schema')
     if job.get('graphics_schema') == 'boiler' and not SAFE.fullmatch(job.get('boiler_target','')):
@@ -105,7 +109,8 @@ def preflight(job, out, mod, install):
     if out.exists():
         raise FileExistsError(f'Output already exists: {out}; use a fresh revision')
     if install:
-        for state in ('idle', job['active_state']):
+        states = ['idle', job['active_state']] + (['cold','activity'] if job.get('boiler_state_layers') else [])
+        for state in states:
             if state is None:
                 continue
             for size in job['sizes']:
@@ -193,10 +198,48 @@ def directional_lua(job, cfg, file, size, frames, columns, rows):
     return '{\n' + ',\n'.join(fields) + '\n  }'
 
 
-def boiler_pictures_lua(job, cfg, file, size, frames, columns, rows):
-    fields = ['  '+name+' = { structure = '+animation_lua(job,cfg,file,size,frames,columns,rows,index,name)+' }'
-              for index,name in enumerate(DIRECTIONS)]
+def boiler_pictures_lua(job, cfg, file, size, frames, columns, rows, cold=None):
+    fields = []
+    for index,name in enumerate(DIRECTIONS):
+        active = animation_lua(job,cfg,file,size,frames,columns,rows,index,name)
+        if cold:
+            cold_file,cold_columns,cold_rows = cold
+            structure = animation_lua(job,cfg,cold_file,size,1,cold_columns,cold_rows,index,name)
+            fields.append('  '+name+' = { structure = '+structure+', fire = '+active+' }')
+        else:
+            fields.append('  '+name+' = { structure = '+active+' }')
     return '{\n'+',\n'.join(fields)+'\n}'
+
+
+def boiler_module_lua(job, cfg, layout, size, count):
+    active = job['active_state']
+    target = job.get('boiler_target')
+    if not isinstance(target, str) or not SAFE.fullmatch(target):
+        raise ValueError('Exact boiler_target required for boiler graphics')
+    layered = bool(job.get('boiler_state_layers'))
+    name,col,rows = layout[('activity' if layered else active or 'idle',size)]
+    cold = layout[('cold',size)] if layered else None
+    snippet = (('-- Factorio 2.1 BoilerPictureSet; static cold body and conditional working activity.\n' if layered else
+                '-- Factorio 2.1 BoilerPictureSet; complete frames, no duplicate body overlays.\n')
+               + '-- Load after the exact boiler prototype has been declared.\n'
+               f'local target = assert(data.raw.boiler["{target}"], "Missing boiler {target}")\n'
+               + ('target.fire_flicker_enabled = false\ntarget.energy_source.smoke = nil -- Steam is authored at the model nozzle.\n' if layered else '')
+               + 'target.pictures = '+boiler_pictures_lua(job,cfg,name,size,count,col,rows,cold)+'\n'
+               'target.water_reflection = nil\n'
+               '-- Match the authored 2x2 body and rear-row circular pipe mouths.\n'
+               'target.collision_box = {{-0.85, -0.85}, {0.85, 0.85}}\n'
+               'target.selection_box = {{-1, -1}, {1, 1}}\n'
+               'target.fluid_box.pipe_connections = {{flow_direction="input-output", '
+               'direction=defines.direction.west, position={-0.5, -0.5}}}\n'
+               'target.output_fluid_box.pipe_connections = {{flow_direction="output", '
+               'direction=defines.direction.east, position={0.5, -0.5}}}\n'
+               f'local icon = "__{job["mod_name"]}__/graphics/icons/{job["asset"]}-{job["revision"]}.png"\n'
+               'target.icon, target.icons, target.icon_size = icon, nil, 64\n'
+               'for _, kind in ipairs({"item", "recipe"}) do\n'
+               f'  local prototype = (data.raw[kind] or {{}})["{target}"]\n'
+               '  if prototype then prototype.icon, prototype.icons, prototype.icon_size = icon, nil, 64 end\n'
+               'end\n')
+    return snippet
 
 
 def package(job, cfg, capture, out, mod, install):
@@ -211,6 +254,7 @@ def package(job, cfg, capture, out, mod, install):
     icons.mkdir(parents=True)
     generated = []
     layout = {}
+    state_layer_reports = {}
     direction_order = job.get('source_direction_indices', [0,1,2,3])
     if sorted(direction_order) != [0,1,2,3]:
         raise ValueError('source_direction_indices must be a four-way permutation')
@@ -225,6 +269,23 @@ def package(job, cfg, capture, out, mod, install):
                     raise ValueError('Atlas save/reopen roundtrip failed')
             layout[(state,size)] = (path.name,columns,rows)
             generated.append(path)
+    if job.get('boiler_state_layers'):
+        from boiler_state_layers import split_boiler_state_layers
+        for size in job['sizes']:
+            idle_name,_,_ = layout[('idle',size)]
+            active_name,columns,rows = layout[(active,size)]
+            with Image.open(entity/idle_name) as idle_image, Image.open(entity/active_name) as active_image:
+                cold_image,activity_image,layer_report = split_boiler_state_layers(
+                    idle_image,active_image,count,columns,rows)
+            for state,image,cols,state_rows in [('cold',cold_image,1,1),('activity',activity_image,columns,rows)]:
+                path = entity/asset_name(job,state,size)
+                image.save(path)
+                with Image.open(path) as reopened:
+                    if reopened.mode != 'RGBA' or reopened.tobytes() != image.tobytes():
+                        raise ValueError('State-layer PNG save/reopen mismatch')
+                layout[(state,size)] = (path.name,cols,state_rows)
+                generated.append(path)
+            state_layer_reports[str(size)] = layer_report
     start = next((f for f in manifest['frames'] if f['state']=='idle' and f['direction']==0 and f['index']==0),None)
     if not start:
         raise ValueError('No north idle source frame for icon')
@@ -246,28 +307,7 @@ def package(job, cfg, capture, out, mod, install):
     else:
         snippet = '-- Attach to an entity accepting Animation4Way.\ngraphics_set = { animation = '+idle_lua+' }\n'
     if job.get('graphics_schema') == 'boiler':
-        target = job.get('boiler_target')
-        if not isinstance(target, str) or not SAFE.fullmatch(target):
-            raise ValueError('Exact boiler_target required for boiler graphics')
-        name,col,rows = layout[(active or 'idle',size)]
-        snippet = ('-- Factorio 2.1 BoilerPictureSet; complete frames, no duplicate body overlays.\n'
-                   '-- Load after the exact boiler prototype has been declared.\n'
-                   f'local target = assert(data.raw.boiler["{target}"], "Missing boiler {target}")\n'
-                   'target.pictures = '+boiler_pictures_lua(job,cfg,name,size,count,col,rows)+'\n'
-                   'target.water_reflection = nil\n'
-                   '-- Match the authored 2x2 body and rear-row circular pipe mouths.\n'
-                   'target.collision_box = {{-0.85, -0.85}, {0.85, 0.85}}\n'
-                   'target.selection_box = {{-1, -1}, {1, 1}}\n'
-                   'target.fluid_box.pipe_connections = {{flow_direction="input-output", '
-                   'direction=defines.direction.west, position={-0.5, -0.5}}}\n'
-                   'target.output_fluid_box.pipe_connections = {{flow_direction="output", '
-                   'direction=defines.direction.east, position={0.5, -0.5}}}\n'
-                   f'local icon = "__{job["mod_name"]}__/graphics/icons/{job["asset"]}-{job["revision"]}.png"\n'
-                   'target.icon, target.icons, target.icon_size = icon, nil, 64\n'
-                   'for _, kind in ipairs({"item", "recipe"}) do\n'
-                   f'  local prototype = (data.raw[kind] or {{}})["{target}"]\n'
-                   '  if prototype then prototype.icon, prototype.icons, prototype.icon_size = icon, nil, 64 end\n'
-                   'end\n')
+        snippet = boiler_module_lua(job,cfg,layout,size,count)
     lua = out/'prototype-ready.lua'
     lua.write_text(snippet)
     generated.append(lua)
@@ -291,6 +331,7 @@ def package(job, cfg, capture, out, mod, install):
         'directions':list(DIRECTIONS),'source_frame_count':qa['capture_count'],
         'source_direction_indices':direction_order,
         'directional_registration':{name:sprite_registration(job,name) for name in DIRECTIONS},
+        'boiler_state_layers':state_layer_reports,
         'frames_per_direction':count,'fps':cfg['fps'],'master_sha256':manifest['master_sha256'],
         'files':{str(f.relative_to(out)):sha(f) for f in generated},
         'note':'Prototype-ready snippet only; verify insertion and actual Factorio runtime before acceptance.'

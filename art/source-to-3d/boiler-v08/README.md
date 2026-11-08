@@ -12,10 +12,7 @@ materials, circular interfaces and rear structural cage remain intact.
 - Native draw registration is per direction: at 256px N/S use scale 0.41875, E/W 0.592201857, with separate shifts. The source capture canvas/geometry are unchanged. See the production job and [visual correction](../../../docs/art/boiler-v08-visual-alignment/README.md).
 - A 2x2 footprint and native rear-row water/steam pipe connectors.
 
-The generated boiler module is registered from data-final-fixes.lua. It replaces
-the complete BoilerPictureSet, rather than layering a second full body. The atlas,
-icon and exact-target Lua are installed in tech-priests_src. No recipe costs,
-health, heat output or fuel consumption were changed.
+The generated module is registered after legacy graphics rescaling. The runtime uses a static cold structure plus a native conditional activity clip. All 96 working poses, rattle rigs and nozzle steam are retained; the original idle/working source atlases remain untouched. The small cold-alpha compatibility adjustment, source-pixel bounds, filtering repair and actual native four-direction cold/working/stopped review are documented in [state-layer evidence](../../../docs/art/boiler-v08-state-layers/README.md). The inherited duplicate burner smoke is removed as a visual-only adjustment. Circuit-wire placement remains open.
 
 [Game-ready package](https://chatgpt.com/library?file_id=libfile_dfa7cc946308819186108d67de62cc95&account_id=personal)
 includes the sprite atlases, Lua, native prepared Blender scene, saved MODEL/RENDER
@@ -28,8 +25,7 @@ master, export scripts and QA records.
 Validation: all 388 source captures and 776 final atlas cells verified, source/master
 hashes checked, master independently reopened, and final cardinal mappings checked.
 The actual exported Lua loaded in Factorio 2.1.24 with the full native mod; pipe pairs
-connected and all four boilers produced steam over a 600-tick probe. Graphical-client
-appearance remains a diagnostic that has not been reviewed.
+connected and all four boilers produced steam over a 600-tick probe. Those are historical records; current native graphical state acceptance is linked above, and no behavior/regression suite was rerun.
 
 ## Repeat the established export
 

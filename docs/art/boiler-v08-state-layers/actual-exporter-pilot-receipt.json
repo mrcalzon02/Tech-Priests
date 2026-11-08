@@ -1,0 +1,173 @@
+{
+  "schema": 1,
+  "passed": true,
+  "factorio_client_tested": false,
+  "prototype_attached": false,
+  "asset": "emergency-boiler",
+  "revision": "v08",
+  "camera": {
+    "elevation_deg": 45,
+    "azimuth_deg": 0,
+    "distance": 8.485281374,
+    "target": [
+      0,
+      0,
+      0.85
+    ],
+    "ortho_scale": 3.35
+  },
+  "directions": [
+    "north",
+    "east",
+    "south",
+    "west"
+  ],
+  "source_frame_count": 8,
+  "source_direction_indices": [
+    0,
+    3,
+    2,
+    1
+  ],
+  "directional_registration": {
+    "north": {
+      "scale": 0.41875000452389943,
+      "shift": [
+        2.4959445269340243e-08,
+        -0.5554280906151662
+      ]
+    },
+    "east": {
+      "scale": 0.5922018570126781,
+      "shift": [
+        -0.2071066696524052,
+        -0.4899986699720637
+      ]
+    },
+    "south": {
+      "scale": 0.41875000452389893,
+      "shift": [
+        2.4959445269340213e-08,
+        -0.2625349157679864
+      ]
+    },
+    "west": {
+      "scale": 0.5922018570126723,
+      "shift": [
+        0.2071066696523982,
+        -0.4899986699720589
+      ]
+    }
+  },
+  "boiler_state_layers": {
+    "128": {
+      "method": "source-over-v1",
+      "size": 128,
+      "frames_per_direction": 1,
+      "columns": 1,
+      "rows_per_direction": 1,
+      "directions": [
+        {
+          "direction": "north",
+          "cold_alpha_changed_pixels": 251,
+          "cold_original_occupied_pixels": 5176,
+          "cold_max_alpha_reduction": 18.0,
+          "cold_alpha_coverage_reduction_fraction": 0.00039045777234210757,
+          "working_composite_black_white_max_channel_error": 1.117647058823537,
+          "working_composite_black_white_mean_channel_error": 0.002247051164215688
+        },
+        {
+          "direction": "east",
+          "cold_alpha_changed_pixels": 146,
+          "cold_original_occupied_pixels": 4755,
+          "cold_max_alpha_reduction": 7.0,
+          "cold_alpha_coverage_reduction_fraction": 0.0002150365197614917,
+          "working_composite_black_white_max_channel_error": 1.050980392156865,
+          "working_composite_black_white_mean_channel_error": 0.0012284422232434636
+        },
+        {
+          "direction": "south",
+          "cold_alpha_changed_pixels": 127,
+          "cold_original_occupied_pixels": 4426,
+          "cold_max_alpha_reduction": 5.0,
+          "cold_alpha_coverage_reduction_fraction": 0.0001792541844033101,
+          "working_composite_black_white_max_channel_error": 0.9725490196078473,
+          "working_composite_black_white_mean_channel_error": 0.0006834341809640552
+        },
+        {
+          "direction": "west",
+          "cold_alpha_changed_pixels": 196,
+          "cold_original_occupied_pixels": 4539,
+          "cold_max_alpha_reduction": 76.0,
+          "cold_alpha_coverage_reduction_fraction": 0.0006715735015455853,
+          "working_composite_black_white_max_channel_error": 1.0745098039215562,
+          "working_composite_black_white_mean_channel_error": 0.0015021829044117637
+        }
+      ],
+      "visual_acceptance": "Native inspection required; numerical bounds alone are not art acceptance."
+    },
+    "256": {
+      "method": "source-over-v1",
+      "size": 256,
+      "frames_per_direction": 1,
+      "columns": 1,
+      "rows_per_direction": 1,
+      "directions": [
+        {
+          "direction": "north",
+          "cold_alpha_changed_pixels": 548,
+          "cold_original_occupied_pixels": 18729,
+          "cold_max_alpha_reduction": 13.0,
+          "cold_alpha_coverage_reduction_fraction": 0.00017993881641901154,
+          "working_composite_black_white_max_channel_error": 1.0470588235294354,
+          "working_composite_black_white_mean_channel_error": 0.0032500023935355684
+        },
+        {
+          "direction": "east",
+          "cold_alpha_changed_pixels": 335,
+          "cold_original_occupied_pixels": 17697,
+          "cold_max_alpha_reduction": 20.0,
+          "cold_alpha_coverage_reduction_fraction": 0.00010985366898719247,
+          "working_composite_black_white_max_channel_error": 1.0470588235294354,
+          "working_composite_black_white_mean_channel_error": 0.0019591088388480585
+        },
+        {
+          "direction": "south",
+          "cold_alpha_changed_pixels": 261,
+          "cold_original_occupied_pixels": 16368,
+          "cold_max_alpha_reduction": 4.0,
+          "cold_alpha_coverage_reduction_fraction": 7.169536123621527e-05,
+          "working_composite_black_white_max_channel_error": 1.0392156862745194,
+          "working_composite_black_white_mean_channel_error": 0.0017469019671670864
+        },
+        {
+          "direction": "west",
+          "cold_alpha_changed_pixels": 353,
+          "cold_original_occupied_pixels": 16745,
+          "cold_max_alpha_reduction": 94.0,
+          "cold_alpha_coverage_reduction_fraction": 0.000441840988002857,
+          "working_composite_black_white_max_channel_error": 1.1333333333333406,
+          "working_composite_black_white_mean_channel_error": 0.0022065006829555
+        }
+      ],
+      "visual_acceptance": "Native inspection required; numerical bounds alone are not art acceptance."
+    }
+  },
+  "frames_per_direction": 1,
+  "fps": 24,
+  "master_sha256": "494b4561066d3c84d46057aa831fd30a4f44174b1384970f2ff6e271661f8802",
+  "files": {
+    "prototype_ready\\graphics\\entity\\emergency-boiler-v08-idle-128.png": "f2d43aa1704a70ddaa0f04a09318300ad8de024d78360eae7c1e9800dc22c0f7",
+    "prototype_ready\\graphics\\entity\\emergency-boiler-v08-idle.png": "046a61119af4d269dc7e4d3f620b2e886f6707ff6e699547c00bcfc2840e7f80",
+    "prototype_ready\\graphics\\entity\\emergency-boiler-v08-working-128.png": "0afb94b2d4ce6c2034a6cb3d77a703259f665db832b97e93f6880ee8b05ffff0",
+    "prototype_ready\\graphics\\entity\\emergency-boiler-v08-working.png": "057a3554d9a53ac7ef9c1cb99dec8a149fbad8f852fda0749a32f87961e7667c",
+    "prototype_ready\\graphics\\entity\\emergency-boiler-v08-cold-128.png": "f4faca2c77b73f0de2c90b82a8a31ca26ec54ebd7153b25bcc2ebb2d3d135b34",
+    "prototype_ready\\graphics\\entity\\emergency-boiler-v08-activity-128.png": "ce33706740e735716b5b957ed1a75acf57f938afa3837bef78c03133fc3164b5",
+    "prototype_ready\\graphics\\entity\\emergency-boiler-v08-cold.png": "ff9ee3aa9b08496f8874f1004b8488a308bd399544ae872c83e54badda7cf578",
+    "prototype_ready\\graphics\\entity\\emergency-boiler-v08-activity.png": "4e7baa5b97dd13432722bd116244a7e843da092ee756171c3686c8bd402423d4",
+    "prototype_ready\\graphics\\icons\\emergency-boiler-v08.png": "992d0da7455585ca2dc4ce5bae9f4df0adb89475f2f7dfe0f3b11e86343cc0bb",
+    "prototype-ready.lua": "6ed78329ff8e9df5f67a6cf93c728bad17e1ec7b63f933bc114313672766acb2",
+    "four-way-review.png": "47b7fb03850a3a2090de2b9dfe6c2832590ba34cc109ce27b3e50444d2dc0fc0"
+  },
+  "note": "Prototype-ready snippet only; verify insertion and actual Factorio runtime before acceptance."
+}

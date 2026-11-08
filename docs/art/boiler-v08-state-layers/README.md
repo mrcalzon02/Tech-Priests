@@ -1,0 +1,25 @@
+# Boiler V08 — native cold/working graphics gate
+
+The native-reviewed boiler now uses a single static `cold` structure and a conditional `activity` animation in BoilerPictureSet `fire`. This fixes the working clip being used as the unconditional structure. The engine chooses the fire visibility; no gameplay script or status poller was added. The accepted four directional scale/shift registrations, physical water/steam connections, collision/selection boxes and 96-frame/24fps timeline are retained. All source atlases and the editable native model remain unchanged.
+
+The original three canister rattle rigs, animated indicators and authored nozzle steam remain in the full working poses. The inherited burner smoke is removed from this exact boiler because it duplicates the authored nozzle steam. Fuel, energy, fluid, recipes, health and behavior code are untouched.
+
+## Layer construction and fidelity
+
+A complete working image cannot simply be drawn over an unchanged idle body: some moving edge pixels have lower alpha than idle. The local helper finds the largest cold alpha compatible with every working pose and color channel, retains the original cold RGB, then solves each normal source-over activity pixel. The cold alpha coverage reduction is below 0.086% at 256px and 0.136% at 128px. Some individual boundary pixels change more; the full measurements are retained. This is a measured antialiasing allowance, not source-mesh identity or a claim that cold RGBA is byte-identical.
+
+All **768 working cells** (96 poses × four directions × two sizes) were independently reopened and recomposited with Pillow. Every resulting displayed RGB channel is within 2/255 of the original working image over both black and white. Activity cells remain unique for every pose. This bound applies to source pixels before native texture sampling; it is not a claim that native screenshots are identical.
+
+Native testing exposed a real filtering defect in an earlier sparse overlay: transparent holes in unchanged opaque pixels caused fine body details to drift under scaling. That candidate was rejected. The repaired activity keeps opaque body regions continuous. In the fixed-pose diagnostic, mean differences inside the opaque body fell from about 1.66–3.54 to 0.20–0.37 code values. Maximum native differences and pipe-window animation effects remain in the report, without being hidden by a global average. Full-pose comparisons were made both with normal compression and a temporary uncompressed diagnostic; the final actual-module state capture uses the normal isolated profile. The source-pixel numerical bounds and native visual acceptance are separate gates.
+
+## Native evidence and production path
+
+`native/` contains actual Factorio 2.1.24 graphical captures of cold ticks 120/240, working ticks 420/480 and stopped tick 1200. Each state has four orientations and unchanged physical-port readback. The fixture directly supplies graphical states; it asserts no throughput, fuel economy, recipes, AI or behavior/regression result. `native-cold-working-stopped.png` crops/resizes and labels these captures. All four directions and the full-pose diagnostic were viewed; the body and both rendered mouths continue to meet the native pipes.
+
+`native-working-loop.gif` presents 30 samples from actual native working screenshots in all four directions. The 120 original screenshot hashes, simulation ticks and GIF hash are recorded in `native-loop-verification.json`; raw loop images remain in the persistent local review workspace. The GIF uses a fixed palette for presentation. It is not a newly rendered Blender loop or full-frame native acceptance of every pose.
+
+The generated Lua installed in the mod is byte-identical to the file loaded for the final native review. `tools/art/jobs/boiler-v08.json` selects `source-over-v1`; the actual exporter invokes `boiler_state_layers.py`, saves/reopens both size variants and records layer metrics in its receipt. Its saved-master reopen gate and real packaging branch passed with the eight-render source pilot. That receipt is explicitly a pilot, not a fabricated full recapture. The complete installed 96-frame layers were separately regenerated and independently checked as described above. All **198 current entity PNGs** decode and verify.
+
+Runtime files: `graphics/entity/emergency-boiler-v08-cold[-128].png`, `graphics/entity/emergency-boiler-v08-activity[-128].png`, and the existing exact-target generated graphics module. The module is still imported after legacy graphics rescaling. The original idle/working PNGs are retained as source exports; their lack of a direct runtime reference is intentional. No Blender render or GitHub Action was dispatched for this atlas decomposition.
+
+The cold/working visual-state gate is reviewed. **The boiler is not fully complete:** four-direction circuit connector placement and visible wire review remain open. The installed 2.1 BoilerPrototype supports a four-entry connector tuple; do not assume that the inherited vanilla connector positions fit this model.

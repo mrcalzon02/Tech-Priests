@@ -1,0 +1,34 @@
+[
+  {
+    "direction": "north",
+    "world_max": 88,
+    "world_mean": 0.09738071986607143,
+    "body_max": 40,
+    "body_mean": 0.32965323971421534,
+    "body_over8_pixels": 806
+  },
+  {
+    "direction": "east",
+    "world_max": 79,
+    "world_mean": 0.08575885106646826,
+    "body_max": 70,
+    "body_mean": 0.2720970796745046,
+    "body_over8_pixels": 1380
+  },
+  {
+    "direction": "south",
+    "world_max": 72,
+    "world_mean": 0.060428292410714284,
+    "body_max": 36,
+    "body_mean": 0.2017822043836612,
+    "body_over8_pixels": 642
+  },
+  {
+    "direction": "west",
+    "world_max": 79,
+    "world_mean": 0.10232282366071428,
+    "body_max": 79,
+    "body_mean": 0.3734405745177954,
+    "body_over8_pixels": 1844
+  }
+]

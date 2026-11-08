@@ -1,39 +1,72 @@
 {
   "schema": 1,
-  "tech_priests_head": "0491f7be6b88e3ce9d987221f023ce20ac44bf8a",
+  "tech_priests_head": "bde83d9ae0575d03ed34f952df67b53ce2ae3c74",
   "pipeline_head": "c7953ac1d068b7b95c260dbd4d3b084eb507f817",
-  "snapshot_kind": "Tracked working-tree bytes, including staged asset changes; HEAD values identify the reconciled base, not a claim that every staged file already belongs to that commit.",
+  "snapshot_kind": "working_tree_including_native_reviewed_boiler_state_layers",
   "working_tree_delta": [
     "art/source-to-3d/boiler-v08/README.md",
-    "art/source-to-3d/boiler-v08/production-source.blend",
     "docs/art/CHECKPOINT.json",
     "docs/art/MODEL_COMPLETION_LEDGER.md",
-    "docs/art/boiler-v08-visual-alignment/README.md",
-    "docs/art/boiler-v08-visual-alignment/before-after.png",
-    "docs/art/boiler-v08-visual-alignment/before/east.png",
-    "docs/art/boiler-v08-visual-alignment/before/north.png",
-    "docs/art/boiler-v08-visual-alignment/before/physical-ports.json",
-    "docs/art/boiler-v08-visual-alignment/before/south.png",
-    "docs/art/boiler-v08-visual-alignment/before/west.png",
-    "docs/art/boiler-v08-visual-alignment/calculated-registration.json",
-    "docs/art/boiler-v08-visual-alignment/corrected/east.png",
-    "docs/art/boiler-v08-visual-alignment/corrected/north.png",
-    "docs/art/boiler-v08-visual-alignment/corrected/physical-ports.json",
-    "docs/art/boiler-v08-visual-alignment/corrected/south.png",
-    "docs/art/boiler-v08-visual-alignment/corrected/west.png",
-    "docs/art/boiler-v08-visual-alignment/fixture-control.lua",
-    "docs/art/boiler-v08-visual-alignment/four-orientations.png",
-    "docs/art/boiler-v08-visual-alignment/generation-readback.json",
-    "docs/art/boiler-v08-visual-alignment/source-mouth-projections.json",
-    "docs/art/boiler-v08-visual-alignment/visual-registration-validation.json",
-    "docs/art/native-attachment-review/README.md",
-    "docs/art/native-attachment-review/native-attachment-validation.json",
+    "docs/art/boiler-v08-state-layers/README.md",
+    "docs/art/boiler-v08-state-layers/actual-exporter-pilot-receipt.json",
+    "docs/art/boiler-v08-state-layers/entity-png-audit.json",
+    "docs/art/boiler-v08-state-layers/fixed-pose-fixture-control.lua",
+    "docs/art/boiler-v08-state-layers/fixed-pose-fixture-data.lua",
+    "docs/art/boiler-v08-state-layers/fixture-control.lua",
+    "docs/art/boiler-v08-state-layers/native-cold-working-stopped.png",
+    "docs/art/boiler-v08-state-layers/native-fixed-pose-comparison.json",
+    "docs/art/boiler-v08-state-layers/native-fixed-pose/candidate-east.png",
+    "docs/art/boiler-v08-state-layers/native-fixed-pose/candidate-north.png",
+    "docs/art/boiler-v08-state-layers/native-fixed-pose/candidate-south.png",
+    "docs/art/boiler-v08-state-layers/native-fixed-pose/candidate-state.json",
+    "docs/art/boiler-v08-state-layers/native-fixed-pose/candidate-west.png",
+    "docs/art/boiler-v08-state-layers/native-fixed-pose/reference-east.png",
+    "docs/art/boiler-v08-state-layers/native-fixed-pose/reference-north.png",
+    "docs/art/boiler-v08-state-layers/native-fixed-pose/reference-south.png",
+    "docs/art/boiler-v08-state-layers/native-fixed-pose/reference-state.json",
+    "docs/art/boiler-v08-state-layers/native-fixed-pose/reference-west.png",
+    "docs/art/boiler-v08-state-layers/native-loop-keyposes.png",
+    "docs/art/boiler-v08-state-layers/native-loop-verification.json",
+    "docs/art/boiler-v08-state-layers/native-working-loop.gif",
+    "docs/art/boiler-v08-state-layers/native/120-east.png",
+    "docs/art/boiler-v08-state-layers/native/120-north.png",
+    "docs/art/boiler-v08-state-layers/native/120-south.png",
+    "docs/art/boiler-v08-state-layers/native/120-state.json",
+    "docs/art/boiler-v08-state-layers/native/120-west.png",
+    "docs/art/boiler-v08-state-layers/native/1200-east.png",
+    "docs/art/boiler-v08-state-layers/native/1200-north.png",
+    "docs/art/boiler-v08-state-layers/native/1200-south.png",
+    "docs/art/boiler-v08-state-layers/native/1200-state.json",
+    "docs/art/boiler-v08-state-layers/native/1200-west.png",
+    "docs/art/boiler-v08-state-layers/native/240-east.png",
+    "docs/art/boiler-v08-state-layers/native/240-north.png",
+    "docs/art/boiler-v08-state-layers/native/240-south.png",
+    "docs/art/boiler-v08-state-layers/native/240-state.json",
+    "docs/art/boiler-v08-state-layers/native/240-west.png",
+    "docs/art/boiler-v08-state-layers/native/420-east.png",
+    "docs/art/boiler-v08-state-layers/native/420-north.png",
+    "docs/art/boiler-v08-state-layers/native/420-south.png",
+    "docs/art/boiler-v08-state-layers/native/420-state.json",
+    "docs/art/boiler-v08-state-layers/native/420-west.png",
+    "docs/art/boiler-v08-state-layers/native/480-east.png",
+    "docs/art/boiler-v08-state-layers/native/480-north.png",
+    "docs/art/boiler-v08-state-layers/native/480-south.png",
+    "docs/art/boiler-v08-state-layers/native/480-state.json",
+    "docs/art/boiler-v08-state-layers/native/480-west.png",
+    "docs/art/boiler-v08-state-layers/rejected-sparse-native-comparison.json",
+    "docs/art/boiler-v08-state-layers/source-layer-measurements.json",
+    "docs/art/boiler-v08-state-layers/validation.json",
+    "docs/art/lobber-a02-latest-progress.json",
+    "docs/art/model-inventory.json",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-activity-128.png",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-activity.png",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-cold-128.png",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-cold.png",
     "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
     "tools/art/README.md",
+    "tools/art/boiler_state_layers.py",
     "tools/art/jobs/boiler-v08.json",
-    "tools/art/produce_factorio_asset.py",
-    "tools/art/rebuild_boiler_source.py",
-    "tools/art/verify_rebuilt_boiler_source.py"
+    "tools/art/produce_factorio_asset.py"
   ],
   "scope": "All tracked entity PNGs and authored model/package files; excludes repeated dist/version snapshots, effects, GUI and third-party character replacements.",
   "sprites": [
@@ -910,13 +943,73 @@
       "acceptance": "unreviewed_in_this_audit"
     },
     {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-activity-128.png",
+      "bytes": 2362241,
+      "sha256": "71c3cc082fdfa7b9158d66fdd321fad2ac0d2985f281be62068e7d04318642b8",
+      "dimensions": [
+        1024,
+        6144
+      ],
+      "mode": "RGBA",
+      "family": "emergency-boiler-v08",
+      "literal_lua_references": [],
+      "reference_limit": "128px alternate export is retained; primary runtime module uses 256px.",
+      "acceptance": "native_state_layer_gate_reviewed_wire_gate_open"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-activity.png",
+      "bytes": 6679358,
+      "sha256": "2bb3545a99030ea9b4fbb07ea44f23b61573372236a77efee07f545ca967f80f",
+      "dimensions": [
+        3072,
+        8192
+      ],
+      "mode": "RGBA",
+      "family": "emergency-boiler-v08",
+      "literal_lua_references": [
+        "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua"
+      ],
+      "reference_limit": "128px alternate export is retained; primary runtime module uses 256px.",
+      "acceptance": "native_state_layer_gate_reviewed_wire_gate_open"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-cold-128.png",
+      "bytes": 43481,
+      "sha256": "eb811c5aa5b083b4cc501992c5743a6073a76afa1d48b7e0d34169bb393fbd8d",
+      "dimensions": [
+        128,
+        512
+      ],
+      "mode": "RGBA",
+      "family": "emergency-boiler-v08",
+      "literal_lua_references": [],
+      "reference_limit": "128px alternate export is retained; primary runtime module uses 256px.",
+      "acceptance": "native_state_layer_gate_reviewed_wire_gate_open"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-cold.png",
+      "bytes": 129382,
+      "sha256": "2e45849e38c7e100ed7003ed8169890a63905b5745a248a3d0c1bd27bed2c8dc",
+      "dimensions": [
+        256,
+        1024
+      ],
+      "mode": "RGBA",
+      "family": "emergency-boiler-v08",
+      "literal_lua_references": [
+        "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua"
+      ],
+      "reference_limit": "128px alternate export is retained; primary runtime module uses 256px.",
+      "acceptance": "native_state_layer_gate_reviewed_wire_gate_open"
+    },
+    {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-idle-128.png",
       "family": "emergency-boiler-v08",
       "bytes": 43041,
       "sha256": "ae8c29a017002376e4fd8f8a303b59288ffc52dad479c7e604b28a0b561ba93f",
       "literal_lua_references": [],
       "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
-      "acceptance": "unreviewed_in_this_audit"
+      "acceptance": "original_source_export_preserved_runtime_uses_derived_cold_activity"
     },
     {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-idle.png",
@@ -925,7 +1018,7 @@
       "sha256": "64797f650c3787ac08962b94ac284412889f0b53293b18e12603b552e6864d84",
       "literal_lua_references": [],
       "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
-      "acceptance": "unreviewed_in_this_audit"
+      "acceptance": "original_source_export_preserved_runtime_uses_derived_cold_activity"
     },
     {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-working-128.png",
@@ -934,33 +1027,16 @@
       "sha256": "c1a5fc8df5c6bcef6543b47cf38dbc1c8f7a83d8781c9dca467b35dac9fe9d2b",
       "literal_lua_references": [],
       "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
-      "acceptance": "unreviewed_in_this_audit"
+      "acceptance": "original_source_export_preserved_runtime_uses_derived_cold_activity"
     },
     {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-working.png",
       "family": "emergency-boiler-v08",
       "bytes": 6621553,
       "sha256": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2",
-      "literal_lua_references": [
-        {
-          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
-          "line": 5
-        },
-        {
-          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
-          "line": 6
-        },
-        {
-          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
-          "line": 7
-        },
-        {
-          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
-          "line": 8
-        }
-      ],
+      "literal_lua_references": [],
       "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
-      "acceptance": "unreviewed_in_this_audit"
+      "acceptance": "original_source_export_preserved_runtime_uses_derived_cold_activity"
     },
     {
       "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-1.png",
@@ -3066,6 +3142,7 @@
     "tools/art/README.md",
     "tools/art/attach_factorio_prototype.py",
     "tools/art/audit_png_decode.py",
+    "tools/art/boiler_state_layers.py",
     "tools/art/build_model_inventory.py",
     "tools/art/clean_lobber_degenerate_geometry.py",
     "tools/art/enable_local_optix.py",
@@ -3080,6 +3157,7 @@
     "tools/art/prepare_lobber_station_rig.py",
     "tools/art/produce_factorio_asset.py",
     "tools/art/profiles/boiler-v08.json",
+    "tools/art/rebuild_boiler_source.py",
     "tools/art/render_sprite_frames.py",
     "tools/art/restore_segmented_capture.py",
     "tools/art/run_local_lobber_capture.py",
@@ -3087,9 +3165,8 @@
     "tools/art/verify_installed_model_sprites.py",
     "tools/art/verify_lobber_clean_geometry.py",
     "tools/art/verify_lobber_station_rig.py",
-    "tools/art/verify_sprite_master.py",
-    "tools/art/rebuild_boiler_source.py",
-    "tools/art/verify_rebuilt_boiler_source.py"
+    "tools/art/verify_rebuilt_boiler_source.py",
+    "tools/art/verify_sprite_master.py"
   ],
   "capture_records": [
     "art/source-to-3d/martian-bunker/captures/base-four-directions-2048/DELIVERY.json",
