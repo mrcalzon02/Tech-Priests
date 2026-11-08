@@ -214,9 +214,43 @@ end
 -- still-live, directly paired rank-3 Senior on the same force/surface.
 -- Revalidate that exact edge inside 0338 too: 0488's recommendation is
 -- read-only and is not sufficient authority to prioritize construction.
+-- Only the exact original Magos 0836 pending rail may use the 0338
+-- item-carrying builder. A claimed rail marker is not item authority.
+local function owned_pending_rail_0836(pair,request)
+ local mission=pair and pair.remote_rail_outpost_0835
+ local pending=mission and mission.pending_rail_0836
+ local route=mission and mission.rail_frontier_0836
+ local station=pair and pair.station
+ local priest=pair and pair.priest
+ local point=request and request.position
+ return type(request)=="table" and valid_pair(pair)
+   and station.name=="planetary-magos-cogitator-station"
+   and station.force and station.surface
+   and priest.force==station.force and priest.surface==station.surface
+   and type(mission)=="table"
+   and mission.status=="building-physical-rail"
+   and mission.root_station_unit==station.unit_number
+   and mission.force_index==station.force.index
+   and mission.surface_index==station.surface.index
+   and type(route)=="table" and type(route.segment)=="number"
+   and type(pending)=="table" and type(pending.position)=="table"
+   and pending.request==request and pair.construction_request==request
+   and request.rail_mission_station_unit_0836==station.unit_number
+   and request.rail_segment_0836==route.segment+1
+   and pending.segment==request.rail_segment_0836
+   and request.item_name=="rail" and request.entity_name=="straight-rail"
+   and request.site_reason=="remote-rail-physical-frontier-0836"
+   and point and point.x==pending.position.x
+   and point.y==pending.position.y
+   and request.direction==pending.direction
+end
 local function frontier_owned_by_pair_0338(pair,request)
  if not(type(request)=="table" and valid_pair(pair))then return false end
  local unit=station_unit(pair)
+ if request.rail_mission_station_unit_0836~=nil
+   or request.site_reason=="remote-rail-physical-frontier-0836" then
+  return owned_pending_rail_0836(pair,request)
+ end
  if request.frontier_root_unit_1076==unit then
   return request.frontier_builder_unit_1076==nil
     or request.frontier_builder_unit_1076==unit
@@ -334,7 +368,10 @@ local function construction_request(pair)
  local frontier=pair.construction_request
  if type(frontier)=="table"
    and frontier_owned_by_pair_0338(pair,frontier)
-   and (not b or not source_for_item(pair,b.placeable.item_name)) then
+   -- Only the exact pending 0836 request can pass a still UNSTARTED
+   -- funded bootstrap ghost; power and already begun custody retain priority.
+   and (owned_pending_rail_0836(pair,frontier)
+    or not b or not source_for_item(pair,b.placeable.item_name)) then
   local earlier_funded=false
   for _,field in ipairs({"structure_construction_requested_item",
       "construction_requested_item"}) do
@@ -372,8 +409,10 @@ local function construction_request(pair)
    -- construction fallback after failing its ranked priority preflight.
    -- This is only a fail-closed refusal, never request/cargo deletion.
    if field=="construction_request" and type(value)=="table"
-     and value.frontier_root_unit_1076~=nil
-     and not frontier_owned_by_pair_0338(pair,value)then return nil end
+     and (value.frontier_root_unit_1076~=nil
+     or value.rail_mission_station_unit_0836~=nil
+     or value.site_reason=="remote-rail-physical-frontier-0836")
+    and not frontier_owned_by_pair_0338(pair,value)then return nil end
    local p=normalize_placeable(value)
    if p then return{field=field,value=value,placeable=p,
      position=type(value)=="table"and(value.position or value.site_position)or nil,
@@ -390,8 +429,8 @@ local function plan_request(pair,request)
  local planner=site_planner();if not(planner and type(planner.plan_site)=="function")then return nil,"site-planner-unavailable"end;local ok,pos,why,report=pcall(planner.plan_site,pair,request.placeable);if not ok then return nil,"site-planner-error:"..safe(pos)end;return pos,why,report
 end
 -- Discovery can run between the frontier's request and the dispatcher.
--- A cached *unfunded* bootstrap candidate must not steal that already
--- submitted physical frontier request. Funded work and custody still win.
+-- A cached unstarted bootstrap candidate may not steal an exact pending
+-- 0836 rail request, even when its stock is funded. Physical tasks/cargo win.
 local function refresh_unfunded_frontier_candidate(pair)
  local frontier=pair and pair.construction_request
  local c=pair and pair.construction_candidate_0338
@@ -401,7 +440,8 @@ local function refresh_unfunded_frontier_candidate(pair)
    and not pair.construction_task_0338
    and not pair.construction_custody_0338
    and type(c.item_name)=="string"
-   and not source_for_item(pair,c.item_name)) then return false end
+   and (owned_pending_rail_0836(pair,frontier)
+     or not source_for_item(pair,c.item_name))) then return false end
  pair.construction_candidate_0338=nil
  return true
 end
