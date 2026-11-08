@@ -1,0 +1,58 @@
+name: Workbench hammer animation
+on:
+  push:
+    branches: [main]
+    paths:
+      - art/source-to-3d/workbench-v5-animation/animate_workbench.py
+      - .github/workflows/workbench-animation.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: workbench-hammer-animation
+  cancel-in-progress: false
+jobs:
+  animate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            art/source-to-3d/workbench-v4/rough_timber_workbench_v4_source.zip
+            art/source-to-3d/workbench-v5-animation
+            art/source-to-3d/martian-bunker/captures/lobber-64/install_blender.sh
+      - name: Install render and video libraries
+        run: |
+          sudo apt-get update -qq -o Acquire::Retries=3
+          sudo apt-get install -y -qq libxi6 libxfixes3 libxrender1 libgl1 libegl1 libxkbcommon0 ffmpeg
+      - uses: actions/cache@v4
+        with:
+          path: .tools/blender-5.0.1-linux-x64
+          key: blender-5.0.1-linux-x64-8019580ee1b7262e505f4196a00237ccf743c88d205b38d34201510676e60b09
+      - name: Use established Blender installer and approved model
+        run: |
+          bash art/source-to-3d/martian-bunker/captures/lobber-64/install_blender.sh
+          unzip -o art/source-to-3d/workbench-v4/rough_timber_workbench_v4_source.zip rough_timber_workbench_v4.blend -d art/source-to-3d/workbench-v5-animation
+      - name: Animate and render complete work cycle
+        run: .tools/blender-5.0.1-linux-x64/blender -b -t 4 --python-exit-code 12 --python art/source-to-3d/workbench-v5-animation/animate_workbench.py -- --render
+      - name: Verify frames and assemble video
+        working-directory: art/source-to-3d/workbench-v5-animation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          expected=[Path('frames')/f'frame_{i:04d}.png' for i in range(1,193,2)]
+          assert len(list(Path('frames').glob('*.png')))==96 and all(p.stat().st_size>1000 for p in expected)
+          PY
+          ffmpeg -y -framerate 12 -pattern_type glob -i 'frames/frame_*.png' -c:v libx264 -crf 18 -pix_fmt yuv420p -movflags +faststart workbench_v5_cycle.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Workbench-V5-Hammer-Heat-Cooling-Cycle
+          path: |
+            art/source-to-3d/workbench-v5-animation/rough_timber_workbench_v5_animated.blend
+            art/source-to-3d/workbench-v5-animation/workbench_v5_cycle.mp4
+            art/source-to-3d/workbench-v5-animation/frames
+            art/source-to-3d/workbench-v5-animation/animation_manifest.json
+            art/source-to-3d/workbench-v5-animation/animate_workbench.py
+          if-no-files-found: error
+          retention-days: 90
