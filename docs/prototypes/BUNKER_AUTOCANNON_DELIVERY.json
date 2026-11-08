@@ -1,0 +1,47 @@
+{
+  "name": "Bunker autocannon playable prototype",
+  "version": "0.1.0",
+  "factorio": "2.1",
+  "footprint": [
+    3,
+    3
+  ],
+  "rounds_per_minute_average": 320,
+  "physical_damage_per_round": 552.5,
+  "magazine_rounds": 20,
+  "recipe": {
+    "iron_plate": 16,
+    "rifle_equivalent_rounds": 20,
+    "rifle_iron_plate": 8,
+    "cost_multiplier_per_round": 2
+  },
+  "package": {
+    "filename": "tech-priests-bunker-cannon-prototype_0.1.0.zip",
+    "bytes": 24033955,
+    "sha256": "857a75bc45947107f3e3c2bed4772d2af03385cdaebac059f92c99f18adbad65",
+    "library_file_id": "libfile_1c6a3600be2c8191a8119dda570135f4"
+  },
+  "preview": {
+    "mp4_library_file_id": "libfile_7cf8b76df1e88191bbbdca5c3f84a988",
+    "png_library_file_id": "libfile_5a707146a1408191b4c4126d5d94b8ce",
+    "gif_library_file_id": "libfile_5e216b5404d48191b28cb33f9c9a96c8",
+    "kind": "Sprite assembly, not graphical client screenshot"
+  },
+  "validation": {
+    "headless": [
+      "2.1.24 standalone production package",
+      "2.0.77 fixture",
+      "2.1.24 Tech-Priests core fixture"
+    ],
+    "directions": 8,
+    "shots_per_cycle": 20,
+    "ticks_per_cycle": 225,
+    "graphical_client_tested": false,
+    "third_party_modpack_tested": false
+  },
+  "publication": {
+    "base_commit": "d75cba2799361f10446aeaeeaaf60be5f0447f90",
+    "full_mod_release_repackaged": false,
+    "workflow_added": false
+  }
+}

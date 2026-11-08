@@ -594,6 +594,9 @@ end
 -- 0.1.311/0.1.314: equipment grid experiment removed. Do not install armor grids
 -- or grid equipment unlocks for Tech-Priests until the whole mechanic is redesigned.
 
+-- Resolve the cannon against final donor rates, ammunition and recipe amounts.
+require("prototypes.bunker_autocannon").finalize()
+
 -- 1274: Do not hand 2.0 recipe prototype fields to Factorio 2.1.
 -- This must run LAST: the preceding systems inject zero-probability
 -- Mechanical Detritus into existing recipes (including vanilla recipes).

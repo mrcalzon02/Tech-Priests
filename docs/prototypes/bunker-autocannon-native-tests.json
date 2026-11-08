@@ -1,0 +1,249 @@
+{
+  "status": "PASS",
+  "scope": "native headless combat; 8 directions, native inserter feed, real ammo consumption, exact rolling 20-shot / 225-tick cadence, 552.5 physical hits; no graphical client or third-party modpack claim",
+  "tests": {
+    "native_21": {
+      "status": "PASS",
+      "engine": "2.1.24",
+      "directions_tested": 8,
+      "stats": [
+        {
+          "hits": 183,
+          "measured_shots_per_second": 5.344943067649028,
+          "first_tick": 602,
+          "last_tick": 2095,
+          "samples": 134,
+          "complete_magazine_average": 5.333333333333333
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 608,
+          "last_tick": 2090,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 610,
+          "last_tick": 2092,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.344943067649028,
+          "first_tick": 600,
+          "last_tick": 2093,
+          "samples": 134,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 185,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 610,
+          "last_tick": 2092,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 186
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.344943067649028,
+          "first_tick": 600,
+          "last_tick": 2093,
+          "samples": 134,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 609,
+          "last_tick": 2091,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 608,
+          "last_tick": 2090,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        }
+      ],
+      "inserter_supply": true
+    },
+    "native_20": {
+      "status": "PASS",
+      "engine": "2.0.77",
+      "directions_tested": 8,
+      "stats": [
+        {
+          "hits": 183,
+          "measured_shots_per_second": 5.344943067649028,
+          "first_tick": 602,
+          "last_tick": 2095,
+          "samples": 134,
+          "complete_magazine_average": 5.333333333333333
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 608,
+          "last_tick": 2090,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 610,
+          "last_tick": 2092,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.344943067649028,
+          "first_tick": 600,
+          "last_tick": 2093,
+          "samples": 134,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 185,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 610,
+          "last_tick": 2092,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 186
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.344943067649028,
+          "first_tick": 600,
+          "last_tick": 2093,
+          "samples": 134,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 609,
+          "last_tick": 2091,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 608,
+          "last_tick": 2090,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        }
+      ],
+      "inserter_supply": true
+    },
+    "core_plus_prototype_21": {
+      "status": "PASS",
+      "engine": "2.1.24",
+      "directions_tested": 8,
+      "stats": [
+        {
+          "hits": 183,
+          "measured_shots_per_second": 5.344943067649028,
+          "first_tick": 602,
+          "last_tick": 2095,
+          "samples": 134,
+          "complete_magazine_average": 5.333333333333333
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 608,
+          "last_tick": 2090,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 610,
+          "last_tick": 2092,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.344943067649028,
+          "first_tick": 600,
+          "last_tick": 2093,
+          "samples": 134,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 185,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 610,
+          "last_tick": 2092,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 186
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.344943067649028,
+          "first_tick": 600,
+          "last_tick": 2093,
+          "samples": 134,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 609,
+          "last_tick": 2091,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        },
+        {
+          "hits": 186,
+          "measured_shots_per_second": 5.34412955465587,
+          "first_tick": 608,
+          "last_tick": 2090,
+          "samples": 133,
+          "complete_magazine_average": 5.333333333333333,
+          "rounds_consumed": 187
+        }
+      ],
+      "inserter_supply": true
+    }
+  },
+  "packaged_prototype": {
+    "archive": "tech-priests-bunker-cannon-prototype_0.1.0.zip",
+    "size_bytes": 24033955,
+    "sha256": "857a75bc45947107f3e3c2bed4772d2af03385cdaebac059f92c99f18adbad65",
+    "fixture": false
+  }
+}
