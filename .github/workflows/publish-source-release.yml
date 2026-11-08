@@ -1,0 +1,35 @@
+name: Publish current source release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-source-release.yml
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Package source and publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -e
+          short_sha="${GITHUB_SHA:0:12}"
+          archive="Tech-Priests-source-${short_sha}.zip"
+          git archive --format=zip --output="$archive" HEAD
+          tag="source-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          gh release create "$tag" "$archive" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "Tech Priests source release ($short_sha)" \
+            --notes "Source-only snapshot of main at commit $GITHUB_SHA. No build, tests, or validation performed." \
+            --prerelease
