@@ -1,0 +1,75 @@
+{
+  "revision": "V07",
+  "rejected_design": "V05 tapered elbows and V06 rectangular manifolds rejected",
+  "design": "Circular coaxial water/steam interface drums, circumferential mounting straps, diagonal supports and a braced rear structural cage",
+  "core_202_world_geometry_unchanged": true,
+  "footprint_tiles": [
+    2,
+    2
+  ],
+  "manifolds": [
+    {
+      "fluid": "Water",
+      "body": "Water circular interface manifold",
+      "closed_mesh_nonmanifold_edges": 0,
+      "connected_components": 1,
+      "full_size_pipe_center": [
+        -1,
+        0.5,
+        0.36
+      ],
+      "external_body_diameter": 0.57,
+      "external_bore_diameter": 0.49,
+      "machine_coupling_outer_diameter": 0.2,
+      "machine_coupling_bore_diameter": 0.17192982456140352,
+      "vessel_seat": [
+        -0.4684109687805176,
+        0.38209471106529236,
+        0.5366231799125671
+      ],
+      "separate_plenum": true
+    },
+    {
+      "fluid": "Steam",
+      "body": "Steam circular interface manifold",
+      "closed_mesh_nonmanifold_edges": 0,
+      "connected_components": 1,
+      "full_size_pipe_center": [
+        1,
+        0.5,
+        0.36
+      ],
+      "external_body_diameter": 0.57,
+      "external_bore_diameter": 0.49,
+      "machine_coupling_outer_diameter": 0.2,
+      "machine_coupling_bore_diameter": 0.17192982456140352,
+      "vessel_seat": [
+        0.5017634034156799,
+        0.3359561264514923,
+        0.6266729831695557
+      ],
+      "separate_plenum": true
+    }
+  ],
+  "geometry_scope": "Two independent circular chambers; rear cage and supports are visible load-bearing geometry, with no hidden mechanisms",
+  "runtime_integration": "Pending; no runtime or animation changes",
+  "glb_readback": {
+    "native_mesh_count": 246,
+    "glb_mesh_count": 246,
+    "bounds_error_tiles": 0.0,
+    "reference_meshes_exported": false
+  },
+  "mouth_interface_checks": [
+    {
+      "fluid": "Water",
+      "matching_interface_vertices": 128,
+      "max_radius_error": 1.1106589392628763e-07
+    },
+    {
+      "fluid": "Steam",
+      "matching_interface_vertices": 128,
+      "max_radius_error": 1.1106589392628763e-07
+    }
+  ],
+  "flange_throat_join": "Manifold neck ends at flange inner face X=+/-0.925; flange carries bore onward to X=+/-1, avoiding duplicate bore walls and coplanar visible mouth caps"
+}
