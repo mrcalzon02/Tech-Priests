@@ -2,7 +2,13 @@
 -- of ranked Cogitator relays. Test fixture seeds supply and technology only.
 -- It NEVER creates rails, locomotives, wagons, miners or mined cargo.
 local M={}
+local Frontier=require("scripts.core.rail_track_frontier_0836")
 local PREFIX="[TP-REMOTE-RAIL-TEST] "
+-- Keep the native target inside the production builder's counted segment
+-- budget, not merely the observer's much larger reconnaissance radius.
+local MAX_NATIVE_TARGET_X=math.min(960,
+  Frontier.start_offset+Frontier.segment_step*Frontier.max_segments
+  +Frontier.destination_clearance)
 local STATION={x=0,y=0}
 local ORE -- Selected from pre-existing native world-generated iron ore.
 local KEY="ci_remote_rail_acquisition"
@@ -29,10 +35,12 @@ local function setup()
   -- The fixture may generate world chunks, never fabricate an ore entity.
   for x=0,960,64 do surface.request_to_generate_chunks({x=x,y=0},3) end
   surface.force_generate_chunk_requests()
-  -- The production 0836 planner supports eastbound rail with <=6 tiles
-  -- of lateral error. Choose a genuinely generated resource in that band.
+  -- 0836 accepts only the buildable eastbound corridor AND a finite
+  -- number of individually debited rail segments. Keep the world ore
+  -- natural and refuse seeds with no reachable generated patch.
   local candidates=surface.find_entities_filtered{
-    type="resource",name="iron-ore",area={{192,-5},{960,5}}}
+    type="resource",name="iron-ore",
+    area={{192,-5},{MAX_NATIVE_TARGET_X,5}}}
   table.sort(candidates,function(a,b)
     return a.position.x<b.position.x or
       (a.position.x==b.position.x
@@ -45,7 +53,8 @@ local function setup()
     end
   end
   if not natural then
-    fail("NO_NATURALLY_GENERATED_EASTBOUND_IRON_PATCH seed_requires_reselection")
+    fail("NO_NATURALLY_GENERATED_EASTBOUND_IRON_PATCH seed_requires_reselection"..
+      " max_reachable_x="..MAX_NATIVE_TARGET_X)
   end
   ORE={x=natural.position.x,y=natural.position.y}
   local original_amount=natural.amount

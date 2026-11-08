@@ -96,13 +96,30 @@ function M.assess(pair)
   -- canonical, budget-limited scans. No terrain or items are fabricated.
   local at=pair.station.position
   local lateral=Frontier.max_lateral_error
-  if type(lateral)~="number" or lateral<0 then
+  local offset=Frontier.start_offset
+  local step=Frontier.segment_step
+  local capacity=Frontier.max_segments
+  local clearance=Frontier.destination_clearance
+  if type(lateral)~="number" or lateral<0
+      or type(offset)~="number" or offset<0
+      or type(step)~="number" or step<=0
+      or type(capacity)~="number" or capacity<1
+      or type(clearance)~="number" or clearance<0 then
+    return nil,"rail-corridor-geometry-unavailable"
+  end
+  -- 0836 stops after its MAXIMUM counted builder segments. A farther
+  -- charted patch must not steal a mission that cannot ever reach it.
+  -- The last credited rail is at offset+(capacity-1)*step; the next
+  -- step can end the frontier only within its destination clearance.
+  local reachable=offset+capacity*step+clearance
+  local max_target=math.min(M.remote_max,reachable)
+  if max_target<M.remote_min then
     return nil,"rail-corridor-geometry-unavailable"
   end
   local resources,why=scan_resources(surface,{
     type="resource",name=item,
     area={{at.x+M.remote_min,at.y-lateral},
-          {at.x+M.remote_max,at.y+lateral}},limit=512})
+          {at.x+max_target,at.y+lateral}},limit=512})
   if not resources then return nil,why end
   local best,best_distance
   for _,entity in pairs(resources) do
@@ -110,10 +127,10 @@ function M.assess(pair)
         and entity.surface==surface then
       local d=dist2(entity.position,at)
       if entity.position.x>=at.x+M.remote_min
-          and entity.position.x<=at.x+M.remote_max
+          and entity.position.x<=at.x+max_target
           and math.abs(entity.position.y-at.y)<=lateral
           and d>=M.remote_min*M.remote_min
-          and d<=M.remote_max*M.remote_max
+          and d<=max_target*max_target
           and charted(force,surface,entity.position)
           and (not best_distance or d<best_distance) then
         best=entity;best_distance=d

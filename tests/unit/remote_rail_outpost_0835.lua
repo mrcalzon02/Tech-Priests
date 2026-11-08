@@ -2,6 +2,11 @@
 -- remote-ore mocks. The production planner creates no entities or resources.
 package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
 local Rail=require("scripts.core.remote_rail_outpost_0835")
+local Frontier=require("scripts.core.rail_track_frontier_0836")
+local max_reachable=math.min(Rail.remote_max,
+  Frontier.start_offset+Frontier.max_segments*Frontier.segment_step
+  +Frontier.destination_clearance)
+assert(max_reachable==668,"unexpected 0836 reachable target budget")
 game={tick=1000}
 defines={inventory={chest=1}}
 local qty={
@@ -17,12 +22,14 @@ local force={index=1,technologies={
     railway={researched=true},
     ["automated-rail-transportation"]={researched=true}}}
 force.is_chunk_charted=function(_,sector)
-  return intel and sector.y==0 and (sector.x==8 or sector.x==16)
+  return intel and sector.y==0 and (sector.x==8 or sector.x==16 or sector.x==25)
 end
 local ore={valid=true,name="iron-ore",unit_number=991,
   type="resource",surface=surface,position={x=512,y=0},amount=10000}
 local off_corridor={valid=true,name="iron-ore",unit_number=992,
   type="resource",surface=surface,position={x=256,y=16},amount=10000}
+local beyond_segment_budget={valid=true,name="iron-ore",unit_number=993,
+  type="resource",surface=surface,position={x=800,y=0},amount=10000}
 local remote_entities={ore}
 surface.find_entities_filtered=function(args)
   assert(args.type=="resource" and args.name=="iron-ore",
@@ -32,7 +39,7 @@ surface.find_entities_filtered=function(args)
   end
   assert(args.area and args.area[1][1]==192
       and args.area[1][2]==-6
-      and args.area[2][1]==1024
+      and args.area[2][1]==max_reachable
       and args.area[2][2]==6,
     "rail observer did not bound its resource scan to the buildable corridor")
   return remote and remote_entities or {}
@@ -77,9 +84,13 @@ force.technologies.railway.researched=true
 remote=false
 blocked("no-charted-rail-corridor-ore")
 remote=true
+-- A perfectly charted, aligned patch beyond the 320-segment construction
+-- budget is NOT reachable merely because it is within the 1024-tile survey.
+remote_entities={beyond_segment_budget}
+blocked("no-charted-rail-corridor-ore")
 -- A closer, charted ore deposit above the eastbound rail corridor must
 -- not permanently divert 0836 into "terrain-route-planner-required".
-remote_entities={off_corridor,ore}
+remote_entities={off_corridor,beyond_segment_budget,ore}
 local corridor_decision,corridor_reason=Rail.assess(pair)
 assert(corridor_reason=="starved-charted-patch"
     and corridor_decision and corridor_decision.position.x==512
@@ -148,7 +159,6 @@ end
 defines.direction={east=4}
 prototypes={item={rail={name="rail"}},entity={
   ["straight-rail"]={name="straight-rail"}}}
-local Frontier=require("scripts.core.rail_track_frontier_0836")
 local started,selected=Rail.observe_pair(pair)
 local mission=pair.remote_rail_outpost_0835
 assert(started and selected=="starvation-objective-created"
