@@ -1,0 +1,609 @@
+{
+  "status": "VERIFIED_CAPTURE_PUBLISHED",
+  "source_commit": "e9c4e1d4008378c194feb7281241349a9b2658c9",
+  "run_url": "https://github.com/mrcalzon02/Tech-Priests/actions/runs/42425745723",
+  "release_url": "https://github.com/mrcalzon02/Tech-Priests/releases/tag/original-bunker-turret-capture-42425745723",
+  "package_sha256": "ecd1ae7e4cdb02a741e4e403430860fab820466e5011bab905ba687c644c670b",
+  "size_bytes": 270365917,
+  "capture": {
+    "status": "VERIFIED_CAPTURE",
+    "direction_count": 64,
+    "direction_order": "north 0, clockwise; east 16, south 32, west 48",
+    "rotation_file": "rotation_64_directions.png",
+    "rotation_columns": 8,
+    "rotation_rows": 8,
+    "cell_width": 640,
+    "cell_height": 640,
+    "fps": 24,
+    "firing_frames_per_direction": 32,
+    "rendered_frames": 2048,
+    "idle_frames": "firing frame 1 of each direction",
+    "base_included": false,
+    "camera": "fixed 45 degree orthographic",
+    "registration": "same 640 x 640 canvas, camera, scale and pivot for every frame",
+    "directions": [
+      {
+        "direction": 0,
+        "orientation": 0.0,
+        "yaw_degrees": 180.0,
+        "file": "firing_d00.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 1,
+        "orientation": 0.015625,
+        "yaw_degrees": 174.375,
+        "file": "firing_d01.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 2,
+        "orientation": 0.03125,
+        "yaw_degrees": 168.75,
+        "file": "firing_d02.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 3,
+        "orientation": 0.046875,
+        "yaw_degrees": 163.125,
+        "file": "firing_d03.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 4,
+        "orientation": 0.0625,
+        "yaw_degrees": 157.5,
+        "file": "firing_d04.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 5,
+        "orientation": 0.078125,
+        "yaw_degrees": 151.875,
+        "file": "firing_d05.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 6,
+        "orientation": 0.09375,
+        "yaw_degrees": 146.25,
+        "file": "firing_d06.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 7,
+        "orientation": 0.109375,
+        "yaw_degrees": 140.625,
+        "file": "firing_d07.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 8,
+        "orientation": 0.125,
+        "yaw_degrees": 135.0,
+        "file": "firing_d08.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 9,
+        "orientation": 0.140625,
+        "yaw_degrees": 129.375,
+        "file": "firing_d09.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 10,
+        "orientation": 0.15625,
+        "yaw_degrees": 123.75,
+        "file": "firing_d10.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 11,
+        "orientation": 0.171875,
+        "yaw_degrees": 118.125,
+        "file": "firing_d11.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 12,
+        "orientation": 0.1875,
+        "yaw_degrees": 112.5,
+        "file": "firing_d12.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 13,
+        "orientation": 0.203125,
+        "yaw_degrees": 106.875,
+        "file": "firing_d13.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 14,
+        "orientation": 0.21875,
+        "yaw_degrees": 101.25,
+        "file": "firing_d14.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 15,
+        "orientation": 0.234375,
+        "yaw_degrees": 95.625,
+        "file": "firing_d15.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 16,
+        "orientation": 0.25,
+        "yaw_degrees": 90.0,
+        "file": "firing_d16.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 17,
+        "orientation": 0.265625,
+        "yaw_degrees": 84.375,
+        "file": "firing_d17.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 18,
+        "orientation": 0.28125,
+        "yaw_degrees": 78.75,
+        "file": "firing_d18.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 19,
+        "orientation": 0.296875,
+        "yaw_degrees": 73.125,
+        "file": "firing_d19.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 20,
+        "orientation": 0.3125,
+        "yaw_degrees": 67.5,
+        "file": "firing_d20.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 21,
+        "orientation": 0.328125,
+        "yaw_degrees": 61.875,
+        "file": "firing_d21.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 22,
+        "orientation": 0.34375,
+        "yaw_degrees": 56.25,
+        "file": "firing_d22.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 23,
+        "orientation": 0.359375,
+        "yaw_degrees": 50.625,
+        "file": "firing_d23.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 24,
+        "orientation": 0.375,
+        "yaw_degrees": 45.0,
+        "file": "firing_d24.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 25,
+        "orientation": 0.390625,
+        "yaw_degrees": 39.375,
+        "file": "firing_d25.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 26,
+        "orientation": 0.40625,
+        "yaw_degrees": 33.75,
+        "file": "firing_d26.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 27,
+        "orientation": 0.421875,
+        "yaw_degrees": 28.125,
+        "file": "firing_d27.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 28,
+        "orientation": 0.4375,
+        "yaw_degrees": 22.5,
+        "file": "firing_d28.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 29,
+        "orientation": 0.453125,
+        "yaw_degrees": 16.875,
+        "file": "firing_d29.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 30,
+        "orientation": 0.46875,
+        "yaw_degrees": 11.25,
+        "file": "firing_d30.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 31,
+        "orientation": 0.484375,
+        "yaw_degrees": 5.625,
+        "file": "firing_d31.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 32,
+        "orientation": 0.5,
+        "yaw_degrees": 0.0,
+        "file": "firing_d32.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 33,
+        "orientation": 0.515625,
+        "yaw_degrees": -5.625,
+        "file": "firing_d33.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 34,
+        "orientation": 0.53125,
+        "yaw_degrees": -11.25,
+        "file": "firing_d34.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 35,
+        "orientation": 0.546875,
+        "yaw_degrees": -16.875,
+        "file": "firing_d35.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 36,
+        "orientation": 0.5625,
+        "yaw_degrees": -22.5,
+        "file": "firing_d36.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 37,
+        "orientation": 0.578125,
+        "yaw_degrees": -28.125,
+        "file": "firing_d37.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 38,
+        "orientation": 0.59375,
+        "yaw_degrees": -33.75,
+        "file": "firing_d38.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 39,
+        "orientation": 0.609375,
+        "yaw_degrees": -39.375,
+        "file": "firing_d39.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 40,
+        "orientation": 0.625,
+        "yaw_degrees": -45.0,
+        "file": "firing_d40.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 41,
+        "orientation": 0.640625,
+        "yaw_degrees": -50.625,
+        "file": "firing_d41.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 42,
+        "orientation": 0.65625,
+        "yaw_degrees": -56.25,
+        "file": "firing_d42.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 43,
+        "orientation": 0.671875,
+        "yaw_degrees": -61.875,
+        "file": "firing_d43.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 44,
+        "orientation": 0.6875,
+        "yaw_degrees": -67.5,
+        "file": "firing_d44.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 45,
+        "orientation": 0.703125,
+        "yaw_degrees": -73.125,
+        "file": "firing_d45.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 46,
+        "orientation": 0.71875,
+        "yaw_degrees": -78.75,
+        "file": "firing_d46.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 47,
+        "orientation": 0.734375,
+        "yaw_degrees": -84.375,
+        "file": "firing_d47.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 48,
+        "orientation": 0.75,
+        "yaw_degrees": -90.0,
+        "file": "firing_d48.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 49,
+        "orientation": 0.765625,
+        "yaw_degrees": -95.625,
+        "file": "firing_d49.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 50,
+        "orientation": 0.78125,
+        "yaw_degrees": -101.25,
+        "file": "firing_d50.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 51,
+        "orientation": 0.796875,
+        "yaw_degrees": -106.875,
+        "file": "firing_d51.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 52,
+        "orientation": 0.8125,
+        "yaw_degrees": -112.5,
+        "file": "firing_d52.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 53,
+        "orientation": 0.828125,
+        "yaw_degrees": -118.125,
+        "file": "firing_d53.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 54,
+        "orientation": 0.84375,
+        "yaw_degrees": -123.75,
+        "file": "firing_d54.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 55,
+        "orientation": 0.859375,
+        "yaw_degrees": -129.375,
+        "file": "firing_d55.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 56,
+        "orientation": 0.875,
+        "yaw_degrees": -135.0,
+        "file": "firing_d56.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 57,
+        "orientation": 0.890625,
+        "yaw_degrees": -140.625,
+        "file": "firing_d57.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 58,
+        "orientation": 0.90625,
+        "yaw_degrees": -146.25,
+        "file": "firing_d58.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 59,
+        "orientation": 0.921875,
+        "yaw_degrees": -151.875,
+        "file": "firing_d59.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 60,
+        "orientation": 0.9375,
+        "yaw_degrees": -157.5,
+        "file": "firing_d60.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 61,
+        "orientation": 0.953125,
+        "yaw_degrees": -163.125,
+        "file": "firing_d61.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 62,
+        "orientation": 0.96875,
+        "yaw_degrees": -168.75,
+        "file": "firing_d62.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      },
+      {
+        "direction": 63,
+        "orientation": 0.984375,
+        "yaw_degrees": -174.375,
+        "file": "firing_d63.png",
+        "columns": 8,
+        "rows": 4,
+        "frame_count": 32
+      }
+    ],
+    "alpha_bounds_union": [
+      26,
+      23,
+      616,
+      476
+    ]
+  }
+}
