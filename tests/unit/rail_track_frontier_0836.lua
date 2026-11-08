@@ -422,6 +422,38 @@ assert(not bad_tick and bad_tick_why=="pending-rail-start-tick-invalid"
   and bad_tick_mission.status=="rail-track-blocked"
   and item_count==698,
   "ambiguous persisted rail admission tick acquired new item authority")
+-- Independent physical custody must never hide an overdue original
+-- unadmitted rail request, while a still-live writ stays deferred.
+local occupied_pair,occupied_mission,occupied_req=stalled_pair(0)
+local held={item="iron-ore",count=1}
+occupied_pair.direct_acquisition_custody_0513=held
+local refused,why=Track.service_pair(occupied_pair)
+assert(not refused and why=="pending-physical-rail-admission-timeout"
+  and occupied_mission.status=="rail-track-blocked"
+  and occupied_pair.direct_acquisition_custody_0513==held
+  and occupied_pair.construction_request==occupied_req
+  and occupied_mission.pending_rail_0836.request==occupied_req
+  and item_count==698,
+  "expired original rail remained indefinitely pending behind real custody")
+local waiting_pair,waiting_mission,waiting_req=stalled_pair(7000)
+waiting_pair.direct_acquisition_custody_0513=held
+local deferred,why_wait=Track.service_pair(waiting_pair)
+assert(not deferred and why_wait=="original-magos-incumbent-duty"
+  and waiting_mission.status=="building-physical-rail"
+  and waiting_pair.construction_request==waiting_req
+  and waiting_pair.direct_acquisition_custody_0513==held
+  and item_count==698,
+  "unexpired original rail stole incumbent ore cargo")
+local lost_pair,lost_mission,lost_req=stalled_pair(7000)
+lost_pair.direct_acquisition_custody_0513=held
+lost_pair.construction_request=nil
+local lost_while_busy,lost_busy_reason=Track.service_pair(lost_pair)
+assert(not lost_while_busy and lost_busy_reason=="pending-original-rail-request-lost"
+  and lost_mission.status=="rail-track-blocked"
+  and lost_mission.pending_rail_0836.request==lost_req
+  and lost_pair.direct_acquisition_custody_0513==held
+  and item_count==698,
+  "lost rail writ was hidden behind active Magos work")
 game.tick=old_tick
 assert(scan_calls>2,"rail builder never verified real physical track")
 print("[rail-track-frontier-0836] PASS 0338 source debit, native connected track, disconnected refusal and retained custody")

@@ -376,6 +376,13 @@ function M.service_pair(pair)
       end
       return false,why
     end
+    -- The unadmitted original rail's deadline must still be serviced
+    -- if an unrelated Magos task acquires custody after planning. Read and
+    -- refuse that stale original writ without touching live physical duty.
+    if pending and not task and not custody then
+      local _,why=M.verify_pending(pair)
+      if m.status=="rail-track-blocked" then return false,why end
+    end
     return false,"original-magos-incumbent-duty"
   end
   if m.pending_rail_0836 then
