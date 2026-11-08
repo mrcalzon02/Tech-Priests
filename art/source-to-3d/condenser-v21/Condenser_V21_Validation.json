@@ -1,0 +1,68 @@
+{
+  "revision": "V21",
+  "scope": "Properly fuse side outlet into housing and transition body finish to adjacent pipe metal",
+  "fused_parts": [
+    "Water outlet chassis receiver",
+    "Water outlet continuous hollow manifold"
+  ],
+  "joined_mesh": "Condenser right continuous side cheek",
+  "joined_mesh_connected_components": 1,
+  "joined_mesh_nonmanifold_edges": 0,
+  "join_plane_matches_adjacent_barrel": true,
+  "join_ring_max_error_tiles": 1.0132789611816406e-06,
+  "pipe_mouth_blender": [
+    1,
+    -0.5,
+    0.36
+  ],
+  "tile_footprint": [
+    2,
+    2
+  ],
+  "adjacent_reference_geometry_unchanged": true,
+  "reference_hashes": {
+    "Reference pipe 0 barrel": "b6a9dc64a0f74b0d875906eff22edb603848fb616f0c1f80ad6de2ba599433f5",
+    "Reference pipe 0 start collar": "3251efe0da4f99ae5084da4c2041cb168502ff46c6fcfff7ca594cde4edc19b5",
+    "Reference pipe 0 end collar": "72a75eaae94b58b4f1b8254d49cdca850566781f3aea4811a5ce99a96c78fb1c",
+    "Reference pipe 0 bolt 00": "1e711a78796ef31ec0f03e4e26ab39c0a1f0b7edc2f409c7b3ec932a312e90f9",
+    "Reference pipe 0 bolt 01": "349c009598d587d48ce082848725394a34ce2289c5f08fb0f9bfe68f0d41b9c9",
+    "Reference pipe 0 bolt 02": "726feffe50f6b5297965339582d25ca156a431dbbd03e19197a2f3c1f99e7358",
+    "Reference pipe 0 bolt 03": "bfa1bf0ec8bb92656965921333dbea42f090939af375092a2030259518cdf869",
+    "Reference pipe 0 bolt 04": "9df89e94863a8faababb71455a7e19a36cc0607b73fb10bb212d80744d1c9c00",
+    "Reference pipe 0 bolt 05": "64ba6bfb3b0a9ad74a648baef95b7aaec5212654f3f78daf9d781e8f9330e49a",
+    "Reference pipe 0 bolt 06": "47b90831e910b1b1d292fbf52021d1d106bba99eb376ddaaa8ebd75f9a09de77",
+    "Reference pipe 0 bolt 07": "91a4ca63605d745c86d93486fcb4af374a28f020f55a9fb896cbcb7aa9ea590c",
+    "Reference pipe 0 window rim": "0e7e6a860ce0c214b3fd95ea366b57435a3fd2e85b574c190ed55f2f601fb8f9",
+    "Reference pipe 0 inset": "531ceb4117bd2fbc5f663eb3def8ff6bec342d7132fc216a0577ebed200e03d1",
+    "Reference pipe 1 barrel": "fc3a61cf2ed634a1b4c1a5661b160ffe266b59657163e7d77d7eac6b0e89f886",
+    "Reference pipe 1 start collar": "2e780c0e32ce226a805bfc4bb1ceab5d7a52fbe34889f174341470ac4c5877b4",
+    "Reference pipe 1 end collar": "83277bb713b66abb76b2c247a06a961f156a783d3b1af77841c448e77f8c3176",
+    "Reference pipe 1 bolt 00": "70e184e72700ed0bf7f0f563ea5c640b30140ab1db387149eb368e1cd2c416c9",
+    "Reference pipe 1 bolt 01": "2da610a0b0876ad83474bcc51b0b05c80475d4fb54428e29c0bbeb650d70d4c8",
+    "Reference pipe 1 bolt 02": "f625ed756d49048b7eb6356d31be23dd17cf29bbbd079f022c1a25fba179cad7",
+    "Reference pipe 1 bolt 03": "bfd477aaa059a8e93e3bc7f74aa7c97a931213f7c301e3eaebc19c6d226d9826",
+    "Reference pipe 1 bolt 04": "6b5886fed7f2f74bef9d56357e398cfcc5e537e09f09266915e39d2f8482cda3",
+    "Reference pipe 1 bolt 05": "b89b37901deec1680093e8c8cc2ae57d54cfd85fe60f59a56c61a7e0fafb058d",
+    "Reference pipe 1 bolt 06": "e6d6b47de76f3a9206740e2b438b77fbd6602081961a9f5e0dacea7d764ca771",
+    "Reference pipe 1 bolt 07": "49d1b59628d9fc0be7c5b699c6261af8e0e831218948a6b3e3bf6435440d6ae0",
+    "Reference pipe 1 window rim": "757e372858813635b8a43720b92de7afabcfe75a7476c194aa3bc9888b3912c2",
+    "Reference pipe 1 inset": "d808dc6e08bcaad76badbd7b875e7e6ee122153f16e5e9976b7b5e355be67faa"
+  },
+  "root_material": "Existing iron material shared with condenser housing",
+  "neck_finish": "Warm dark housing iron at X=.70, graded to adjacent silver/green steel by X=.95; fine mottled wear and roughness transition",
+  "outer_flange_material_is_adjacent_collar_material": true,
+  "native_and_glb_validation": "Native reopened; GLB mesh count and bounds matched",
+  "runtime_validation": "Not performed; model revision only",
+  "glb_readback": {
+    "native_asset_meshes": 152,
+    "glb_meshes": 152,
+    "bounds_error_tiles": 0.0,
+    "native_transition_faces": 384,
+    "exported_transition_texture_images": [
+      "Outlet_Metal_Transition_BaseColor",
+      "Outlet_Metal_Transition_Roughness"
+    ],
+    "reference_meshes_exported": false,
+    "pass": true
+  }
+}
