@@ -1,0 +1,326 @@
+[
+  {
+    "profile": "optix",
+    "pass": "beauty",
+    "frame": "idle_000.png",
+    "max_rgba_difference": [
+      16,
+      13,
+      11,
+      0
+    ],
+    "mean_rgba_difference": [
+      0.00428466796875,
+      0.00331787109375,
+      0.0030224609375,
+      0.0
+    ],
+    "pixels_any_channel_gt_8": 25
+  },
+  {
+    "profile": "optix",
+    "pass": "beauty",
+    "frame": "cycle_001.png",
+    "max_rgba_difference": [
+      16,
+      14,
+      11,
+      1
+    ],
+    "mean_rgba_difference": [
+      0.00475830078125,
+      0.00387451171875,
+      0.0035107421875,
+      9.765625e-06
+    ],
+    "pixels_any_channel_gt_8": 19
+  },
+  {
+    "profile": "optix",
+    "pass": "beauty",
+    "frame": "cycle_004.png",
+    "max_rgba_difference": [
+      22,
+      21,
+      20,
+      32
+    ],
+    "mean_rgba_difference": [
+      0.00451904296875,
+      0.0037841796875,
+      0.00349853515625,
+      0.0001123046875
+    ],
+    "pixels_any_channel_gt_8": 26
+  },
+  {
+    "profile": "optix",
+    "pass": "emission",
+    "frame": "idle_000.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "pixels_any_channel_gt_8": 0
+  },
+  {
+    "profile": "optix",
+    "pass": "emission",
+    "frame": "cycle_001.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "pixels_any_channel_gt_8": 0
+  },
+  {
+    "profile": "optix",
+    "pass": "emission",
+    "frame": "cycle_004.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "pixels_any_channel_gt_8": 0
+  },
+  {
+    "profile": "optix",
+    "pass": "shadow",
+    "frame": "idle_000.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.0002618408203125
+    ],
+    "pixels_any_channel_gt_8": 0
+  },
+  {
+    "profile": "optix",
+    "pass": "shadow",
+    "frame": "cycle_001.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.000377197265625
+    ],
+    "pixels_any_channel_gt_8": 0
+  },
+  {
+    "profile": "optix",
+    "pass": "shadow",
+    "frame": "cycle_004.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.00028564453125
+    ],
+    "pixels_any_channel_gt_8": 0
+  },
+  {
+    "profile": "optix_gpu_compositor",
+    "pass": "beauty",
+    "frame": "idle_000.png",
+    "max_rgba_difference": [
+      16,
+      13,
+      11,
+      0
+    ],
+    "mean_rgba_difference": [
+      0.004287109375,
+      0.00331787109375,
+      0.0030224609375,
+      0.0
+    ],
+    "pixels_any_channel_gt_8": 25
+  },
+  {
+    "profile": "optix_gpu_compositor",
+    "pass": "beauty",
+    "frame": "cycle_001.png",
+    "max_rgba_difference": [
+      16,
+      14,
+      11,
+      1
+    ],
+    "mean_rgba_difference": [
+      0.0047607421875,
+      0.00387451171875,
+      0.0035107421875,
+      9.765625e-06
+    ],
+    "pixels_any_channel_gt_8": 19
+  },
+  {
+    "profile": "optix_gpu_compositor",
+    "pass": "beauty",
+    "frame": "cycle_004.png",
+    "max_rgba_difference": [
+      22,
+      21,
+      20,
+      32
+    ],
+    "mean_rgba_difference": [
+      0.00451904296875,
+      0.00378173828125,
+      0.00349365234375,
+      0.0001123046875
+    ],
+    "pixels_any_channel_gt_8": 26
+  },
+  {
+    "profile": "optix_gpu_compositor",
+    "pass": "emission",
+    "frame": "idle_000.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "pixels_any_channel_gt_8": 0
+  },
+  {
+    "profile": "optix_gpu_compositor",
+    "pass": "emission",
+    "frame": "cycle_001.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "pixels_any_channel_gt_8": 0
+  },
+  {
+    "profile": "optix_gpu_compositor",
+    "pass": "emission",
+    "frame": "cycle_004.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "pixels_any_channel_gt_8": 0
+  },
+  {
+    "profile": "optix_gpu_compositor",
+    "pass": "shadow",
+    "frame": "idle_000.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.078192138671875
+    ],
+    "pixels_any_channel_gt_8": 0
+  },
+  {
+    "profile": "optix_gpu_compositor",
+    "pass": "shadow",
+    "frame": "cycle_001.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.06641357421875
+    ],
+    "pixels_any_channel_gt_8": 0
+  },
+  {
+    "profile": "optix_gpu_compositor",
+    "pass": "shadow",
+    "frame": "cycle_004.png",
+    "max_rgba_difference": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "mean_rgba_difference": [
+      0.0,
+      0.0,
+      0.0,
+      0.0760968017578125
+    ],
+    "pixels_any_channel_gt_8": 0
+  }
+]

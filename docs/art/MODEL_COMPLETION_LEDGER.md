@@ -7,6 +7,10 @@ Authority: the owner requested local Blender production, source-faithful structu
 
 The initial audit missed two segmented native sources stored as manifest-checked binary parts. Both have now been restored and hash-verified. The lobber already has the repository-designated approved A02 animation, including six independent loader/firing stations. Native SHA-256: 0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed. V15/V16 below are historical static studies and must not supersede A02. The local 64-heading scene checks and a new three-pass heading-16 pilot pass. Four bounded local workers are rendering missing frames while existing valid artifacts are recovered. Full target remains 64 headings / 384 chunks / 42,816 PNGs; completion and prototype integration are still open. See LOCAL_BLENDER_CAPTURE.md for precise authority, recovery paths and commands. The old independently running Actions recovery run 42459758206 was cancelled and read back completed/cancelled. No new Actions were dispatched.
 
+## A02 recovery checkpoint
+
+Initial verified cache: 39/384 chunks. Heading 0 independently passes all 669 PNG checks, including the full 192-frame eight-second cycle; see the [actual key poses](lobber-a02-recovered-keyposes.png), [loop preview](lobber-a02-recovered-eight-second-loop.gif) and [frame hashes](lobber-a02-heading-00-validation.json). Further artifact recovery and four local Blender workers continue. The optional GPU profile and measured CPU/GPU differences are documented in LOCAL_BLENDER_CAPTURE.md. Full export and game integration remain open.
+
 ## Initial static-study checkpoint (historical)
 
 - Both checkouts downloaded and fast-forward reconciled. Tech-Priests main advanced to `3cc400f27047f83fce96795da698914af6eab522` during download; the intervening change was rail code only and is preserved.

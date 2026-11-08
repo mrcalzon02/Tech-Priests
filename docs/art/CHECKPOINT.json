@@ -7,7 +7,8 @@
     "Four corrupt workbench working atlases regenerated from committed V5 source",
     "V16 removes 1764 inherited degenerate triangles with exact surviving surface correspondence; independent native/GLB zero-degenerate readback",
     "Recovered approved A02 animated lobber and original turret/camera from 94 verified binary source parts; corrected initial source authority audit",
-    "Ran A02 native 64-heading animation-state validation and new heading-16 three-pass pilot locally"
+    "Ran A02 native 64-heading animation-state validation and new heading-16 three-pass pilot locally",
+    "Independently verified all 669 PNGs for A02 heading 0 and published actual eight-second loop preview"
   ],
   "verification": {
     "graphical_client": "not run",
@@ -30,5 +31,12 @@
   "compatible_blender": "work\\blender-5.0.1\\blender-5.0.1-windows-x64\\blender.exe",
   "source_base": "3cc400f27047f83fce96795da698914af6eab522",
   "current_lobber_source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
-  "live_capture_state": "work\\lobber-a02-rendered\\local-capture-state.json"
+  "live_capture_state": "work\\lobber-a02-rendered\\local-capture-state.json",
+  "capture_checkpoint": {
+    "initial_verified_chunks": 39,
+    "total_chunks": 384,
+    "further_artifact_recovery": "in progress; 62/68 bundles downloaded, missing output remains local render work",
+    "new_local_profile": "OPTIX / CPU compositor; source and render settings unchanged; numerical differences measured",
+    "live_process_claim": "Read actual local-capture-state.json and verify process commands; this committed snapshot is not proof of current liveness"
+  }
 }
