@@ -292,8 +292,22 @@ function M.verify_pending(pair)
     return reject(m,"physical-rail-not-at-committed-site")
   end
   local route=m.rail_frontier_0836
-  if not (route and pending.segment==route.segment+1)then
+  -- An interrupted or migrated save may retain a paid 0338 receipt but
+  -- lose/corrupt the 0836 primitive ledger. Fail closed before indexing or
+  -- appending it: never reconstruct counted rail identities from geometry.
+  if not (type(route)=="table" and type(route.segment)=="number"
+      and route.segment>=0 and route.segment<M.max_segments
+      and route.segment==math.floor(route.segment)
+      and type(pending.segment)=="number"
+      and pending.segment==route.segment+1)then
     return reject(m,"out-of-order-physical-rail")
+  end
+  if type(route.built_units)~="table"
+      or #route.built_units~=route.segment
+      or (route.segment>0 and (
+        type(route.last_position)~="table"
+        or route.last_built_unit~=route.built_units[route.segment])) then
+    return reject(m,"rail-chain-ledger-incomplete")
   end
   if pending.segment>1 then
     local predecessor=route.last_position

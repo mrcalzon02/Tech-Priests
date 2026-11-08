@@ -105,6 +105,43 @@ item_count=item_count-1
 pair.construction_last_task_0338={request_value=req,phase="complete",
   built_entity=sites[12]}
 pair.construction_request=nil
+-- A saved original 0338 completion with an absent/corrupt primitive chain
+-- cannot be credited by guessing a new inventory debit or rail identity.
+-- This exercises the real first-segment receipt without changing stock.
+local function damaged_chain_receipt(route)
+  local req_copy={item_name="rail",entity_name="straight-rail",
+    position={x=12,y=0},direction=4}
+  local obj={status="building-physical-rail",root_station_unit=104,
+    surface_index=1,force_index=1,target={x=512,y=0},
+    rail_frontier_0836=route,
+    pending_rail_0836={request=req_copy,segment=1,
+      position={x=12,y=0},direction=4,started_tick=2400}}
+  local p={station=pair.station,priest=pair.priest,
+    remote_rail_outpost_0835=obj,
+    construction_last_task_0338={request_value=req_copy,
+      phase="complete",built_entity=sites[12]}}
+  return p,obj
+end
+local missing_ledger,missing_ledger_mission=damaged_chain_receipt({
+  segment=0,direction=4,start_position={x=12,y=0}})
+local missing_ok,missing_why=Track.verify_pending(missing_ledger)
+assert(not missing_ok and missing_why=="rail-chain-ledger-incomplete"
+  and missing_ledger_mission.pending_rail_0836
+  and missing_ledger_mission.status=="rail-track-blocked"
+  and item_count==699,
+  "missing persisted paid-rail ledger crashed or invented rail identity")
+local inconsistent_ledger,inconsistent_mission=damaged_chain_receipt({
+  segment=0,built_units={9999},direction=4})
+local bad_ok,bad_why=Track.verify_pending(inconsistent_ledger)
+assert(not bad_ok and bad_why=="rail-chain-ledger-incomplete"
+  and inconsistent_mission.pending_rail_0836 and item_count==699,
+  "inconsistent persisted rail ledger was silently extended")
+local corrupt_segment,corrupt_mission=damaged_chain_receipt({
+  segment="corrupt",built_units={}})
+local corrupt_ok,corrupt_why=Track.verify_pending(corrupt_segment)
+assert(not corrupt_ok and corrupt_why=="out-of-order-physical-rail"
+  and corrupt_mission.pending_rail_0836 and item_count==699,
+  "invalid persisted segment index threw instead of refusing")
 -- An unrelated physical duty can become incumbent after 0338 completes but
 -- before the strategic broker observes that paid rail. Receipt reconciliation
 -- is safe; dispatching the NEXT rail while occupied would preempt real work.
