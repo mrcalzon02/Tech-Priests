@@ -395,7 +395,8 @@ end
 local old_tick=game.tick
 game.tick=7201
 local live_pair,live_mission,live_request=stalled_pair(0)
-live_pair.construction_task_0338={phase="moving-to-source"}
+live_pair.construction_task_0338={request_value=live_request,
+  phase="moving-to-source"}
 local active,active_why=Track.verify_pending(live_pair)
 assert(not active and active_why=="physical-builder-in-progress"
   and live_mission.status=="building-physical-rail"
@@ -408,6 +409,41 @@ assert(not late and late_why=="pending-physical-rail-admission-timeout"
   and live_mission.pending_rail_0836.request==live_request
   and live_pair.construction_request==live_request and item_count==698,
   "unadmitted 0338 rail task waited forever or fabricated an item")
+-- Independently owned 0338 construction/cargo cannot indefinitely shield
+-- the original unadmitted rail writ; neither task nor item may be seized.
+local foreign_req={item_name="iron-ore",owner="foreign-construction"}
+local foreign_task={request_value=foreign_req,phase="move-site",
+  carried=true,item_name="iron-ore"}
+local foreign_pair,foreign_mission,foreign_rail=stalled_pair(0)
+foreign_pair.construction_task_0338=foreign_task
+local foreign_block,foreign_reason=Track.service_pair(foreign_pair)
+assert(not foreign_block and foreign_reason=="pending-physical-rail-admission-timeout"
+  and foreign_mission.status=="rail-track-blocked"
+  and foreign_pair.construction_task_0338==foreign_task
+  and foreign_pair.construction_request==foreign_rail
+  and foreign_mission.pending_rail_0836.request==foreign_rail
+  and item_count==698,
+  "different physical builder indefinitely shielded overdue rail writ")
+local current_pair,current_mission,current_req=stalled_pair(7000)
+current_pair.construction_task_0338=foreign_task
+local current,current_why=Track.service_pair(current_pair)
+assert(not current and current_why=="original-magos-incumbent-duty"
+  and current_mission.status=="building-physical-rail"
+  and current_pair.construction_task_0338==foreign_task
+  and current_pair.construction_request==current_req
+  and item_count==698,
+  "live original rail request preempted unrelated 0338 physical custody")
+local foreign_custody={request_value=foreign_req,item_name="iron-ore",
+  count=1,source_unit=999}
+local custody_pair,custody_mission,custody_req=stalled_pair(0)
+custody_pair.construction_custody_0338=foreign_custody
+local custody_block,custody_reason=Track.service_pair(custody_pair)
+assert(not custody_block and custody_reason=="pending-physical-rail-admission-timeout"
+  and custody_mission.status=="rail-track-blocked"
+  and custody_pair.construction_custody_0338==foreign_custody
+  and custody_pair.construction_request==custody_req
+  and item_count==698,
+  "foreign real-item custody bypassed rail deadline or was displaced")
 local missing_pair,missing_mission,missing_request=stalled_pair(7000)
 missing_pair.construction_request=nil
 local lost,lost_why=Track.verify_pending(missing_pair)

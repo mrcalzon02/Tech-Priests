@@ -253,7 +253,13 @@ function M.verify_pending(pair)
   if not eligible(pair,m)then return false,"not-authorized-rail-mission"end
   local pending=m.pending_rail_0836
   if not pending then return false,"no-pending-rail"end
-  if pair.construction_task_0338 or pair.construction_custody_0338 then
+  -- Only the exact original 0338 request may defer rail verification.
+  -- Another physical construction task retains its own cargo while this
+  -- unadmitted rail writ must still expire under its existing deadline.
+  local builder=pair.construction_task_0338
+  local custody=pair.construction_custody_0338
+  if (builder and builder.request_value==pending.request)
+      or (custody and custody.request_value==pending.request) then
     return false,"physical-builder-in-progress"
   end
   local previous=pair.construction_last_task_0338
@@ -359,6 +365,8 @@ function M.service_pair(pair)
     or pair.machine_logistics_custody_0528
     or pair.inventory_transfer_custody_0687
     or pair.construction_task_0340
+    or (task and not original_builder)
+    or (custody and not original_builder)
   if incumbent and not original_builder then
     -- An original 0338 rail may finish before this broker pulse while a
     -- separate incumbent duty is already active. Reconcile its completed
@@ -379,7 +387,9 @@ function M.service_pair(pair)
     -- The unadmitted original rail's deadline must still be serviced
     -- if an unrelated Magos task acquires custody after planning. Read and
     -- refuse that stale original writ without touching live physical duty.
-    if pending and not task and not custody then
+    if pending and not original_builder then
+      -- Preserve the unrelated builder or its item custody, but enforce
+      -- the original, unadmitted railway request's finite waiting bound.
       local _,why=M.verify_pending(pair)
       if m.status=="rail-track-blocked" then return false,why end
     end
