@@ -102,12 +102,28 @@ function M.plan_next(pair)
     initial_stock_tick=now(),built_units={},started_tick=now(),
   }
   local route=m.rail_frontier_0836
-  if route.segment>=M.max_segments then
-    return reject(m,"maximum-verified-rail-segments")
-  end
   local next_pos=route.last_position
     and pos(route.last_position.x+M.segment_step,route.last_position.y)
     or pos(route.start_position.x,route.start_position.y)
+  -- Reconfirm the original item-debited rail even when the next step
+  -- would finish the frontier. A persisted count cannot certify a
+  -- missing or same-position substituted physical segment.
+  if route.last_position then
+    local predecessor=track_at(pair,route.last_position,direction)
+    if not predecessor then
+      return reject(m,"previous-physical-rail-missing")
+    end
+    if not (route.built_units
+        and predecessor.unit_number==route.built_units[route.segment]) then
+      return reject(m,"previous-physical-rail-identity-changed")
+    end
+    if next_pos.x-route.last_position.x~=M.segment_step then
+      return reject(m,"disconnected-rail-step")
+    end
+  end
+  -- The 320th credited rail is at x=650 from a station at x=0.
+  -- The next candidate x=652 already meets a target at x=668 with
+  -- sixteen tiles clearance: completion precedes budget exhaustion.
   if next_pos.x>=target.x-M.destination_clearance then
     if route.segment>0 then
       m.status="rail-track-established"
@@ -118,19 +134,8 @@ function M.plan_next(pair)
     end
     return reject(m,"no-physical-rail-placed")
   end
-  if route.last_position then
-    local predecessor=track_at(pair,route.last_position,direction)
-    if not predecessor then
-      return reject(m,"previous-physical-rail-missing")
-    end
-    -- A same-position replacement is not the original 0338-item-debited rail.
-    if not (route.built_units
-        and predecessor.unit_number==route.built_units[route.segment]) then
-      return reject(m,"previous-physical-rail-identity-changed")
-    end
-    if next_pos.x-route.last_position.x~=M.segment_step then
-      return reject(m,"disconnected-rail-step")
-    end
+  if route.segment>=M.max_segments then
+    return reject(m,"maximum-verified-rail-segments")
   end
   -- Do not claim an existing foreign rail as ours; all segments must be
   -- built by our counted physical construction task.
