@@ -3,7 +3,8 @@
 -- Never build remotely, spawn stock, bypass the dispatcher or use an uncharted
 -- railway destination. Terrain-routing and a runnable railway remain later gates.
 local M={version="0.1.676.0836",start_offset=12,segment_step=2,
-  destination_clearance=16,max_segments=320,max_lateral_error=6}
+  destination_clearance=16,max_segments=320,max_lateral_error=6,
+  pending_admission_timeout_ticks=60*120}
 local function valid(e)return e and e.valid==true end
 local function now()return game and game.tick or 0 end
 local function pos(x,y)return{x=x,y=y}end
@@ -267,6 +268,22 @@ function M.verify_pending(pair)
         and previous.phase=="aborted"then
       return reject(m,"physical-rail-builder-aborted:"..
         tostring(previous.result))
+    end
+    -- A pending candidate is not permanent physical custody. 0338 may
+    -- refuse admission (no source, invalid reservation or stale candidate)
+    -- without producing a terminal task. Do not leave the first rail
+    -- pending forever: retain the original request and all counted items,
+    -- and fail closed after bounded waiting. Active 0338 task/cargo is
+    -- handled above and retains its own travel/refund deadlines.
+    if pair.construction_request~=pending.request then
+      return reject(m,"pending-original-rail-request-lost")
+    end
+    local started=tonumber(pending.started_tick)
+    if not started or started<0 or started>now() then
+      return reject(m,"pending-rail-start-tick-invalid")
+    end
+    if now()-started>M.pending_admission_timeout_ticks then
+      return reject(m,"pending-physical-rail-admission-timeout")
     end
     return false,"waiting-for-construction-proof"
   end

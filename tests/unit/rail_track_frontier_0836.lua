@@ -283,6 +283,52 @@ assert(Track.service_pair(other)==false
   and other.construction_request==nil
   and item_count==698,
   "another Magos seized original rail custody or changed counted stock")
+-- If the existing 0338 builder never admits the first candidate, the
+-- original paid-rail writ must not remain pending indefinitely. The
+-- timed-out/stale writ is retained for audit, without any item debit.
+local function stalled_pair(started)
+  local request={item_name="rail",entity_name="straight-rail",
+    position={x=12,y=0},direction=4}
+  local objective={status="building-physical-rail",
+    root_station_unit=104,target={x=512,y=0},
+    surface_index=1,force_index=1,
+    pending_rail_0836={position=request.position,direction=4,
+      segment=1,request=request,started_tick=started}}
+  return {station=pair.station,priest=pair.priest,
+    construction_request=request,remote_rail_outpost_0835=objective},
+    objective,request
+end
+local old_tick=game.tick
+game.tick=7201
+local live_pair,live_mission,live_request=stalled_pair(0)
+live_pair.construction_task_0338={phase="moving-to-source"}
+local active,active_why=Track.verify_pending(live_pair)
+assert(not active and active_why=="physical-builder-in-progress"
+  and live_mission.status=="building-physical-rail"
+  and live_pair.construction_request==live_request,
+  "active counted 0338 builder was timed out by parallel rail owner")
+live_pair.construction_task_0338=nil
+local late,late_why=Track.verify_pending(live_pair)
+assert(not late and late_why=="pending-physical-rail-admission-timeout"
+  and live_mission.status=="rail-track-blocked"
+  and live_mission.pending_rail_0836.request==live_request
+  and live_pair.construction_request==live_request and item_count==698,
+  "unadmitted 0338 rail task waited forever or fabricated an item")
+local missing_pair,missing_mission,missing_request=stalled_pair(7000)
+missing_pair.construction_request=nil
+local lost,lost_why=Track.verify_pending(missing_pair)
+assert(not lost and lost_why=="pending-original-rail-request-lost"
+  and missing_mission.status=="rail-track-blocked"
+  and missing_mission.pending_rail_0836.request==missing_request
+  and item_count==698,
+  "lost original rail request silently kept pending custody")
+local bad_tick_pair,bad_tick_mission=stalled_pair(nil)
+local bad_tick,bad_tick_why=Track.verify_pending(bad_tick_pair)
+assert(not bad_tick and bad_tick_why=="pending-rail-start-tick-invalid"
+  and bad_tick_mission.status=="rail-track-blocked"
+  and item_count==698,
+  "ambiguous persisted rail admission tick acquired new item authority")
+game.tick=old_tick
 assert(scan_calls>2,"rail builder never verified real physical track")
 print("[rail-track-frontier-0836] PASS 0338 source debit, native connected track, disconnected refusal and retained custody")
 -- Prove the actual 0510 dispatcher, not a separate rail tick executor,
