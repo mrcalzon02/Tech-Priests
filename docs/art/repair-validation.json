@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "scope": "Actual local rerender of committed V5 animation into four working atlases, complete PNG CRC/decode and exact RGBA cell readback",
+  "source_sha256": "b2932e12fcf81c9deb51ca2bab3a47c2df1caae3ee2529289738e5c346c36587",
+  "blender_version": "5.0.1",
+  "working_frames": 384,
+  "timing": "Existing 96 cells at 12fps per direction, impacts retained by established exporter",
+  "sheets": [
+    {
+      "direction": "north",
+      "path": "working-north.png",
+      "sha256": "41b44cd57b0b590534e03474c0b8b2da35404ae168898d3ae7468558f33e9b56",
+      "bytes": 829612,
+      "png_chunks_crc_verified": 15,
+      "cells_exact_rgba_roundtrip": 96,
+      "distinct_frames": 92
+    },
+    {
+      "direction": "east",
+      "path": "working-east.png",
+      "sha256": "be3a79e924a74fdfc9a4fc1bb0bcbf21d020b635ae262f1fcbef1479c886ffc7",
+      "bytes": 841333,
+      "png_chunks_crc_verified": 15,
+      "cells_exact_rgba_roundtrip": 96,
+      "distinct_frames": 92
+    },
+    {
+      "direction": "south",
+      "path": "working-south.png",
+      "sha256": "60e854a7a90989f5685dd1eda435ba0c1ec3304256ba10ac801c501a33bbae2d",
+      "bytes": 901460,
+      "png_chunks_crc_verified": 16,
+      "cells_exact_rgba_roundtrip": 96,
+      "distinct_frames": 92
+    },
+    {
+      "direction": "west",
+      "path": "working-west.png",
+      "sha256": "c066fb7ad95bfc80f980b162438ce0bf8b9295f0c11f4444c4cc5dc5839ed19f",
+      "bytes": 886632,
+      "png_chunks_crc_verified": 16,
+      "cells_exact_rgba_roundtrip": 96,
+      "distinct_frames": 92
+    }
+  ],
+  "idle_icon_replacement": false,
+  "native_graphical_client": "not_run",
+  "behavior_tests": "not_run"
+}

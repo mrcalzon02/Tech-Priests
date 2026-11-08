@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "status": "Source-declared anchors, not graphical-client acceptance",
+  "rules": [
+    "Do not equate a fluid connection cell with a model flange plane without the native pipe jig.",
+    "Wire points are projected render offsets; do not treat them as 3D socket XYZ.",
+    "Cardinal transforms must use the asset's tested export direction map; do not mirror baked renders."
+  ],
+  "assets": {
+    "hydrogen-thruster": {
+      "source": "tech-priests_src/prototypes/compatibility/thruster-mounting-visuals.lua",
+      "orientation_policy": "not-rotatable; fixed platform-facing",
+      "fuel": {"fluid":"liquid-hydrogen","declared_cell":[-1.8,-1],"direction":"west"},
+      "oxidizer": {"fluid":"liquid-oxygen","declared_cell":[1.8,-1],"direction":"east"},
+      "required_visual_states":["idle","working","fuel_connected","fuel_disconnected","oxidizer_connected","oxidizer_disconnected"],
+      "model_planes_and_cap_pixel_anchors":"unverified; next platform-placement jig"
+    },
+    "thetazine-thruster": {
+      "source": "tech-priests_src/prototypes/compatibility/thruster-mounting-visuals.lua",
+      "orientation_policy": "not-rotatable; fixed platform-facing",
+      "fuel": {"fluid":"thetazine-fuel","declared_cell":[-2.1,-1],"direction":"west"},
+      "oxidizer": {"fluid":"water","declared_cell":[2.1,-1],"direction":"east"},
+      "model_planes_and_cap_pixel_anchors":"unverified; own silhouette and platform-placement jig"
+    },
+    "tech-priests-emergency-boiler": {
+      "source": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+      "orientation_policy": "north/east/south/west; export source indices 0,3,2,1",
+      "water": {"declared_cell":[-0.5,-0.5],"direction":"west"},
+      "steam": {"declared_cell":[0.5,-0.5],"direction":"east"},
+      "footprint_tiles":[2,2],
+      "wire_socket":"none declared by this boiler graphics module",
+      "graphical_pipe_plane_review":"open"
+    },
+    "tech-priests-atmospheric-water-condenser": {
+      "source": "tech-priests_src/prototypes/entity.lua::make_atmospheric_water_condenser",
+      "orientation_policy": "four-way production capture required; legacy static sprite currently installed",
+      "water": {"declared_cell":[0,0],"direction":"east"},
+      "v21_model_outlet_plane_blender_tiles":[1,-0.5,0.36],
+      "alignment_status":"unreconciled; recover exact V21 native source and measure final native cell/plane mapping",
+      "footprint_tiles":[2,2]
+    },
+    "tech-priests-emergency-power-grid": {
+      "source": "tech-priests_src/prototypes/entity.lua::make_emergency_power_grid",
+      "orientation_policy":"current RotatedSprite direction_count=1; four-way model plan must update connector cardinality together",
+      "coordinate_space":"Factorio projected render offsets in tiles, not Blender XYZ",
+      "wire":{"copper":[0,-0.48],"red":[-0.16,-0.42],"green":[0.16,-0.42]},
+      "shadow":{"copper":[0.22,-0.22],"red":[0.06,-0.18],"green":[0.38,-0.18]},
+      "three_dimensional_wire_socket_reconstruction":"open; fixed game-camera projection required"
+    },
+    "cogitator-station-family": {
+      "source":"tech-priests_src/prototypes/entity.lua::make_station",
+      "wire_policy":"red/green circuit only; draw_copper_wires=false; remains container",
+      "factorio_2_1":"native steel-chest connector array inherited",
+      "factorio_2_0":"first substation connection_points entry overrides inherited point when available",
+      "numeric_anchors":"require version-specific final donor readback before modeling; not hardcoded here"
+    },
+    "tech-priests-bunker-autocannon": {
+      "source":"tech-priests_src/prototypes/bunker_autocannon.lua",
+      "orientation_policy":"four cardinal bases; 64 turret azimuth directions; 32 firing frames per azimuth",
+      "circuit_connector":"explicitly nil in current prototype",
+      "wire_socket":"do not invent a circuit socket in this asset-only goal",
+      "base_footprint_tiles":[3,3]
+    }
+  },
+  "remaining_assets":"See MODEL_COMPLETION_LEDGER.md and exhaustive model-inventory.json; finalize each native donor before assigning numeric attachments."
+}

@@ -1,0 +1,130 @@
+{
+  "stage": "rig_preparation_only",
+  "source_sha256": "6ad76b4a5895db689a92f2b1cc187d3cb90cb4690cd8287ce307b36e545f3325",
+  "blender_version": "5.0.1",
+  "six_independent_controls": true,
+  "recoil_parts": [
+    {
+      "source": "CAST_CANNON_LEFT_1",
+      "object": "CAST_CANNON_TOP_L",
+      "station": "TOP_L",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "CAST_CANNON_LEFT_1",
+      "object": "CAST_CANNON_TOP_R",
+      "station": "TOP_R",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_1",
+      "object": "ROUNDED_MUZZLE_TOP_L",
+      "station": "TOP_L",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_1",
+      "object": "ROUNDED_MUZZLE_TOP_R",
+      "station": "TOP_R",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_1",
+      "object": "BOTTOM_FEED_SOCKET_TOP_L",
+      "station": "TOP_L",
+      "evaluated_triangles": 764
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_1",
+      "object": "BOTTOM_FEED_SOCKET_TOP_R",
+      "station": "TOP_R",
+      "evaluated_triangles": 764
+    },
+    {
+      "source": "CAST_CANNON_LEFT_2",
+      "object": "CAST_CANNON_MID_L",
+      "station": "MID_L",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "CAST_CANNON_LEFT_2",
+      "object": "CAST_CANNON_MID_R",
+      "station": "MID_R",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_2",
+      "object": "ROUNDED_MUZZLE_MID_L",
+      "station": "MID_L",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_2",
+      "object": "ROUNDED_MUZZLE_MID_R",
+      "station": "MID_R",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_2",
+      "object": "BOTTOM_FEED_SOCKET_MID_L",
+      "station": "MID_L",
+      "evaluated_triangles": 764
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_2",
+      "object": "BOTTOM_FEED_SOCKET_MID_R",
+      "station": "MID_R",
+      "evaluated_triangles": 764
+    },
+    {
+      "source": "CAST_CANNON_LEFT_3",
+      "object": "CAST_CANNON_BOT_L",
+      "station": "BOT_L",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "CAST_CANNON_LEFT_3",
+      "object": "CAST_CANNON_BOT_R",
+      "station": "BOT_R",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_3",
+      "object": "ROUNDED_MUZZLE_BOT_L",
+      "station": "BOT_L",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_3",
+      "object": "ROUNDED_MUZZLE_BOT_R",
+      "station": "BOT_R",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_3",
+      "object": "BOTTOM_FEED_SOCKET_BOT_L",
+      "station": "BOT_L",
+      "evaluated_triangles": 764
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_3",
+      "object": "BOTTOM_FEED_SOCKET_BOT_R",
+      "station": "BOT_R",
+      "evaluated_triangles": 764
+    }
+  ],
+  "unchanged_other_meshes": 302,
+  "rest_triangles_uv_material_multiset_preserved": true,
+  "max_uv_float_delta": 1.1920928955078125e-07,
+  "uv_numeric_tolerance": 1e-06,
+  "world_position_precision_tiles": 1e-05,
+  "protected_triangle_count": 40680,
+  "top_right_transform_independence_proven": true,
+  "animation_authored": false,
+  "loader_hatch_belt_hose_deformation_authored": false,
+  "runtime_integrated": false,
+  "visual_acceptance": "pending actual render inspection",
+  "source_camera_retained_in_native": true,
+  "native_sha256": "1469d897424644d2b1d6ae5ed2c13c551cc3a3e66359fc4c4537f052788c9edb"
+}
+

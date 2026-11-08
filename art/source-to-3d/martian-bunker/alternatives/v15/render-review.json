@@ -1,0 +1,36 @@
+{
+  "stage": "V15 rig preparation, not final asset approval",
+  "reviewer": "Codex visual inspection of actual local Blender renders",
+  "source_reference_sha256": "6ad76b4a5895db689a92f2b1cc187d3cb90cb4690cd8287ce307b36e545f3325",
+  "native_sha256": "1469d897424644d2b1d6ae5ed2c13c551cc3a3e66359fc4c4537f052788c9edb",
+  "glb_sha256": "8a7bba1dfda5e79a4dd953d5f1f87b9f0c953ad07c3d155aa7407d1684bef459",
+  "render_sha256": {
+    "front.png": "7bd5186e302291260950e805ea772ff5001b9194b8f0b39ffb00847ef0eeb065",
+    "game.png": "1a8bc5dd9c2bb7486aabb5950580b4ef87be7ae9f0958f94b217fbc9fada66ac",
+    "glb-clay.png": "93d2948d87e7b1237d4dd560545a76d89bce511d92c518e6f025300fa2b66192",
+    "glb-front.png": "e2315fe51aca4e5c7207e4591c9f5f19a729a0bc35a35e8957abe5c5266a6e1e",
+    "glb-rear.png": "74abb0d93c8e14788bf6fea9e85f89a966a4f06e4083f41f0a359a6550aa2c4f",
+    "rear.png": "e741b179657a7c5cc9bac038b602c611f1dd0c9a191a953475c085d15550572e"
+  },
+  "scored_checks": {
+    "rest_silhouette_preservation": {
+      "score": 5,
+      "out_of": 5,
+      "reason": "Six original cannon silhouettes, central pillar, attached loader outlines and bolted plate remain in front/rear/game and reimport views; actual geometry guard also passed."
+    },
+    "rig_readiness": {
+      "score": 3,
+      "out_of": 5,
+      "reason": "Six independent cannon/muzzle/socket controls prepared. Loaders, hatches, conveyors, grenade props and deforming hoses are not rigged."
+    },
+    "source_fidelity_final_approval": {
+      "score": null,
+      "reason": "This pass preserves V14; it does not establish new approval against the owner sketch."
+    },
+    "production_geometry": {
+      "score": null,
+      "reason": "1764 inherited degenerate triangles need source-specific diagnosis before a full geometry gate can pass."
+    }
+  },
+  "result": "Accept as durable rig-preparation checkpoint only; motion, geometry cleanup, mounted proof and sprite integration remain open."
+}

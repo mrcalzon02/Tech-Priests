@@ -1,0 +1,207 @@
+{
+  "stage": "rig_preparation_only",
+  "source_sha256": "6ad76b4a5895db689a92f2b1cc187d3cb90cb4690cd8287ce307b36e545f3325",
+  "blender_version": "5.0.1",
+  "six_independent_controls": true,
+  "recoil_parts": [
+    {
+      "source": "CAST_CANNON_LEFT_1",
+      "object": "CAST_CANNON_TOP_L",
+      "station": "TOP_L",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "CAST_CANNON_LEFT_1",
+      "object": "CAST_CANNON_TOP_R",
+      "station": "TOP_R",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_1",
+      "object": "ROUNDED_MUZZLE_TOP_L",
+      "station": "TOP_L",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_1",
+      "object": "ROUNDED_MUZZLE_TOP_R",
+      "station": "TOP_R",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_1",
+      "object": "BOTTOM_FEED_SOCKET_TOP_L",
+      "station": "TOP_L",
+      "evaluated_triangles": 764
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_1",
+      "object": "BOTTOM_FEED_SOCKET_TOP_R",
+      "station": "TOP_R",
+      "evaluated_triangles": 764
+    },
+    {
+      "source": "CAST_CANNON_LEFT_2",
+      "object": "CAST_CANNON_MID_L",
+      "station": "MID_L",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "CAST_CANNON_LEFT_2",
+      "object": "CAST_CANNON_MID_R",
+      "station": "MID_R",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_2",
+      "object": "ROUNDED_MUZZLE_MID_L",
+      "station": "MID_L",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_2",
+      "object": "ROUNDED_MUZZLE_MID_R",
+      "station": "MID_R",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_2",
+      "object": "BOTTOM_FEED_SOCKET_MID_L",
+      "station": "MID_L",
+      "evaluated_triangles": 764
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_2",
+      "object": "BOTTOM_FEED_SOCKET_MID_R",
+      "station": "MID_R",
+      "evaluated_triangles": 764
+    },
+    {
+      "source": "CAST_CANNON_LEFT_3",
+      "object": "CAST_CANNON_BOT_L",
+      "station": "BOT_L",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "CAST_CANNON_LEFT_3",
+      "object": "CAST_CANNON_BOT_R",
+      "station": "BOT_R",
+      "evaluated_triangles": 3968
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_3",
+      "object": "ROUNDED_MUZZLE_BOT_L",
+      "station": "BOT_L",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "ROUNDED_MUZZLE_LEFT_3",
+      "object": "ROUNDED_MUZZLE_BOT_R",
+      "station": "BOT_R",
+      "evaluated_triangles": 2048
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_3",
+      "object": "BOTTOM_FEED_SOCKET_BOT_L",
+      "station": "BOT_L",
+      "evaluated_triangles": 764
+    },
+    {
+      "source": "BOTTOM_FEED_SOCKET_LEFT_3",
+      "object": "BOTTOM_FEED_SOCKET_BOT_R",
+      "station": "BOT_R",
+      "evaluated_triangles": 764
+    }
+  ],
+  "unchanged_other_meshes": 302,
+  "rest_triangles_uv_material_multiset_preserved": true,
+  "max_uv_float_delta": 1.1920928955078125e-07,
+  "uv_numeric_tolerance": 1e-06,
+  "world_position_precision_tiles": 1e-05,
+  "protected_triangle_count": 40680,
+  "top_right_transform_independence_proven": true,
+  "animation_authored": false,
+  "loader_hatch_belt_hose_deformation_authored": false,
+  "runtime_integrated": false,
+  "visual_acceptance": "rig preservation review pending; source fidelity and animation not approved",
+  "source_camera_retained_in_native": true,
+  "native_sha256": "1469d897424644d2b1d6ae5ed2c13c551cc3a3e66359fc4c4537f052788c9edb",
+  "native_independently_reopened": true,
+  "source_packed_images": 2,
+  "glb_sha256": "8a7bba1dfda5e79a4dd953d5f1f87b9f0c953ad07c3d155aa7407d1684bef459",
+  "glb_embedded_images": 2,
+  "before_export": {
+    "mesh_count": 320,
+    "triangles": 457512,
+    "degenerate_triangles": 1764,
+    "meshes_with_uv": 320,
+    "bounds": [
+      [
+        -0.7799999713897705,
+        -0.7799999713897705,
+        1.7000000476837158
+      ],
+      [
+        0.7799999713897705,
+        0.9739999771118164,
+        4.530000686645508
+      ]
+    ],
+    "materials": [
+      "CAST_IRON | dark bore interior",
+      "CAST_IRON | existing dark gunmetal tile",
+      "CONVEYOR | continuous vulcanized rubber segments",
+      "FIN | existing oxide red tile",
+      "GRENADE | attached grey spoon and ring",
+      "GRENADE | attached grey spoon and ring.001",
+      "GRENADE | dark green groove underbody",
+      "GRENADE | dark green groove underbody.001",
+      "GRENADE | olive green raised pineapple segments",
+      "GRENADE | olive green raised pineapple segments.001",
+      "LOADER | grey steel",
+      "SENSORS | aged brass ferrules",
+      "SENSORS | amber indicator",
+      "SENSORS | dark teal optical glass",
+      "SENSORS | rubber cable sheath"
+    ]
+  },
+  "after_reimport": {
+    "mesh_count": 320,
+    "triangles": 457512,
+    "degenerate_triangles": 1764,
+    "meshes_with_uv": 320,
+    "bounds": [
+      [
+        -0.7799999713897705,
+        -0.7799999713897705,
+        1.7000000476837158
+      ],
+      [
+        0.7799999713897705,
+        0.9739999771118164,
+        4.530000686645508
+      ]
+    ],
+    "materials": [
+      "CAST_IRON | dark bore interior",
+      "CAST_IRON | existing dark gunmetal tile",
+      "CONVEYOR | continuous vulcanized rubber segments",
+      "FIN | existing oxide red tile",
+      "GRENADE | attached grey spoon and ring",
+      "GRENADE | attached grey spoon and ring.001",
+      "GRENADE | dark green groove underbody",
+      "GRENADE | dark green groove underbody.001",
+      "GRENADE | olive green raised pineapple segments",
+      "GRENADE | olive green raised pineapple segments.001",
+      "LOADER | grey steel",
+      "SENSORS | aged brass ferrules",
+      "SENSORS | amber indicator",
+      "SENSORS | dark teal optical glass",
+      "SENSORS | rubber cable sheath"
+    ]
+  },
+  "max_bound_delta_tiles": 0.0,
+  "six_controls_reopened_and_reimported": true,
+  "glb_reimported_and_rendered": true
+}
+

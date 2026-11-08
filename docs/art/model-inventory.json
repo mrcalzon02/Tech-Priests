@@ -1,0 +1,2690 @@
+{
+  "schema": 1,
+  "tech_priests_head": "3cc400f27047f83fce96795da698914af6eab522",
+  "pipeline_head": "42d6b3295e4292e571f34f7106380b2b92e121c1",
+  "snapshot_kind": "Tracked working-tree bytes, including staged asset changes; HEAD values identify the reconciled base, not a claim that every staged file already belongs to that commit.",
+  "working_tree_delta": [
+    ".gitignore",
+    "art/source-to-3d/martian-bunker/alternatives/v15/README.md",
+    "art/source-to-3d/martian-bunker/alternatives/v15/front.png",
+    "art/source-to-3d/martian-bunker/alternatives/v15/game.png",
+    "art/source-to-3d/martian-bunker/alternatives/v15/glb-clay.png",
+    "art/source-to-3d/martian-bunker/alternatives/v15/glb-front.png",
+    "art/source-to-3d/martian-bunker/alternatives/v15/glb-rear.png",
+    "art/source-to-3d/martian-bunker/alternatives/v15/local-proof.png",
+    "art/source-to-3d/martian-bunker/alternatives/v15/rear.png",
+    "art/source-to-3d/martian-bunker/alternatives/v15/render-review.json",
+    "art/source-to-3d/martian-bunker/alternatives/v15/rig-validation.json",
+    "art/source-to-3d/martian-bunker/alternatives/v15/roundtrip-validation.json",
+    "art/source-to-3d/martian-bunker/alternatives/v15/six_lobber_independent_recoil_v15.blend",
+    "art/source-to-3d/martian-bunker/alternatives/v15/six_lobber_independent_recoil_v15.glb",
+    "docs/art/CHECKPOINT.json",
+    "docs/art/MODEL_COMPLETION_LEDGER.md",
+    "docs/art/all-entity-png-decode-after.json",
+    "docs/art/all-entity-png-decode-before.json",
+    "docs/art/attachment-contracts.json",
+    "docs/art/capture-checkpoint.json",
+    "docs/art/installed-sprite-validation.json",
+    "docs/art/model-inventory.json",
+    "docs/art/repair-validation.json",
+    "docs/art/workbench-local-repair-proof.png",
+    "tech-priests_src/graphics/entity/timber-workbench/working-east.png",
+    "tech-priests_src/graphics/entity/timber-workbench/working-north.png",
+    "tech-priests_src/graphics/entity/timber-workbench/working-south.png",
+    "tech-priests_src/graphics/entity/timber-workbench/working-west.png",
+    "tools/art/audit_png_decode.py",
+    "tools/art/build_model_inventory.py",
+    "tools/art/prepare_lobber_station_rig.py",
+    "tools/art/verify_installed_model_sprites.py",
+    "tools/art/verify_lobber_station_rig.py"
+  ],
+  "scope": "All tracked entity PNGs and authored model/package files; excludes repeated dist/version snapshots, effects, GUI and third-party character replacements.",
+  "sprites": [
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-east-glow.png",
+      "family": "bunker-autocannon",
+      "bytes": 1096,
+      "sha256": "074065f07e35265d9695cced0f42844dbb02e5766c4ed185d0a372b2d033b093",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-east-shadow.png",
+      "family": "bunker-autocannon",
+      "bytes": 30858,
+      "sha256": "44f86025274b7ca798daa1a9a4945400b946931b51ad49711190544f12f1e0d2",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-east.png",
+      "family": "bunker-autocannon",
+      "bytes": 184844,
+      "sha256": "6e37217ad11a378d6a231fdc2c061f1a359dd4e45d74bbac9306b256391347f3",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-glow.png",
+      "family": "bunker-autocannon",
+      "bytes": 1337,
+      "sha256": "8e9f135e43d7c4f595fecc5590a610b6d9b575e0648359dd8b81251429775deb",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-shadow.png",
+      "family": "bunker-autocannon",
+      "bytes": 30288,
+      "sha256": "735fb344a878a8f487bd18a8f82902ae8b362c44915409a4cb7ebeff266894ab",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-north.png",
+      "family": "bunker-autocannon",
+      "bytes": 182148,
+      "sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-south-glow.png",
+      "family": "bunker-autocannon",
+      "bytes": 1321,
+      "sha256": "b25be0af24085745a3fd284fe8ef32cd740183ff2a446763958458ee594a8cca",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-south-shadow.png",
+      "family": "bunker-autocannon",
+      "bytes": 31182,
+      "sha256": "ca9b33a53f741ab183af41c23aaf2d61a911c7e91310a696a9942d23890bdde1",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-south.png",
+      "family": "bunker-autocannon",
+      "bytes": 184037,
+      "sha256": "276faf696bf31e7c650d7971d220a30a8470e80b2392a9c4e37cfdd56d58a610",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-west-glow.png",
+      "family": "bunker-autocannon",
+      "bytes": 1268,
+      "sha256": "28ec9e12a99073da7834ecd226fdc6f8705077ef1860bbf8bd19e73965a6a6ca",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-west-shadow.png",
+      "family": "bunker-autocannon",
+      "bytes": 31786,
+      "sha256": "2121295c485fe8aec02a3917ca5f64a0227fcca55b58672751d610a86b41d38f",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-west.png",
+      "family": "bunker-autocannon",
+      "bytes": 185598,
+      "sha256": "51a01eb90484e008002d5b12ff0963870b77d76d023af5dff09d15d591a3538c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-00.png",
+      "family": "bunker-autocannon",
+      "bytes": 295981,
+      "sha256": "9bf9f3474147d54ba4adf16251b38c2eca83c1cbd577f790377a28271d41ae68",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-01.png",
+      "family": "bunker-autocannon",
+      "bytes": 313953,
+      "sha256": "d08262970f32057763472baca39a94d69b970e4311d50432637a289883d8b80f",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-02.png",
+      "family": "bunker-autocannon",
+      "bytes": 326508,
+      "sha256": "dbf6251aecbdf9f8a4619c3dc68092669830724701e04f20d16f9cfbac642237",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-03.png",
+      "family": "bunker-autocannon",
+      "bytes": 334575,
+      "sha256": "b7bb1cc9e50d56e606704693c2b2285165611b83aabc561290fee6cf8d2443dd",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-04.png",
+      "family": "bunker-autocannon",
+      "bytes": 344039,
+      "sha256": "4486082d4f8f92160a2b874ffb63d96a33beb22419671272977f7c4a80aa15a4",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-05.png",
+      "family": "bunker-autocannon",
+      "bytes": 353754,
+      "sha256": "326c5c9b64e1aebc38af3e668009acecbebcdd4748108f87337996d590ba1edf",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-06.png",
+      "family": "bunker-autocannon",
+      "bytes": 361123,
+      "sha256": "962cae7e1a60ce98ce964bea5ebfe13bb41ed2a1a1012e0fba46dd57549d26a3",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-07.png",
+      "family": "bunker-autocannon",
+      "bytes": 367069,
+      "sha256": "82cfff02bf3fb36f18fca53d74ab5b81087fae20a3d7dc4ea3544bf46e47fe08",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-08.png",
+      "family": "bunker-autocannon",
+      "bytes": 371340,
+      "sha256": "f46713400edda17c18f1c11eecd59f19a07d7f5e469a72eecd614e380b1e950c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-09.png",
+      "family": "bunker-autocannon",
+      "bytes": 374859,
+      "sha256": "beb1937755a3060c1e6cfdc3e753f5df67d20c614e090afd1f38b4400d846e5b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-10.png",
+      "family": "bunker-autocannon",
+      "bytes": 377754,
+      "sha256": "ec50abb66b2dcb9e2b4b08cb10ceccc4557a015e8f4b283ecfbf6abd3dddaf6b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-11.png",
+      "family": "bunker-autocannon",
+      "bytes": 379550,
+      "sha256": "3431796524fc829e6db2e4f1d952b631d173d8f1c1d69b3ddf41c6de9b72f2c1",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-12.png",
+      "family": "bunker-autocannon",
+      "bytes": 381229,
+      "sha256": "4e712ecf83bb73851f581cf4e3334d9514b0bd0f1dda3407a94233b7a32a37b3",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-13.png",
+      "family": "bunker-autocannon",
+      "bytes": 378084,
+      "sha256": "72363c461d13b47eed316a7d54c1d3c5ba1c7f9513689a0e81bb53ea461ed67c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-14.png",
+      "family": "bunker-autocannon",
+      "bytes": 373987,
+      "sha256": "4ad0b0308c343f93db32e13062b0b8b7ff92507e9e37ee21221e6104e26913e2",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-15.png",
+      "family": "bunker-autocannon",
+      "bytes": 369090,
+      "sha256": "7bddbda6547116f82109a5e394ae9cf31aa69a1b48be130637783858bf93bc80",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-16.png",
+      "family": "bunker-autocannon",
+      "bytes": 361037,
+      "sha256": "3d3e82b524ce01d961b5930b5f07a99c84ebc3fe6c7c73e883ada9afe71b78e5",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-17.png",
+      "family": "bunker-autocannon",
+      "bytes": 372208,
+      "sha256": "d8d039a4cc3340c44756216261234d3f3b2ecdf3f105fd84ba02546d08bd6694",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-18.png",
+      "family": "bunker-autocannon",
+      "bytes": 386870,
+      "sha256": "f635d58adca148735548a508358a1feefc360eb0bfa3d6ade56183417dd37a1a",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-19.png",
+      "family": "bunker-autocannon",
+      "bytes": 393151,
+      "sha256": "ddfa46e3e97bff271bd8ace763c52a8f5e6ac744d67117a032f4239f4888de96",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-20.png",
+      "family": "bunker-autocannon",
+      "bytes": 398589,
+      "sha256": "0015e93840e09dfb60f32532ee8de6b6b332c3899535b9244b941a4355f8adfe",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-21.png",
+      "family": "bunker-autocannon",
+      "bytes": 403352,
+      "sha256": "392299741edf18839025caa1207bf4cb15205e3812edbae37c042a04fc01330c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-22.png",
+      "family": "bunker-autocannon",
+      "bytes": 405094,
+      "sha256": "73f89933741e29f7576ff24ee817a6bc22d68317d7f164409b02c9f2dc9f96cf",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-23.png",
+      "family": "bunker-autocannon",
+      "bytes": 403322,
+      "sha256": "612b5bfb5f6d95ec44e46b659749317827330971647adf8ecdd213a5cfc1c569",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-24.png",
+      "family": "bunker-autocannon",
+      "bytes": 397177,
+      "sha256": "4f6bc4481998839de42bb89ab3392130b10022d7f4d1c89855ed5882a837c3bf",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-25.png",
+      "family": "bunker-autocannon",
+      "bytes": 394458,
+      "sha256": "b2f6d36d4ac5757f123a91f793ce2cca0e8aa9439606c78a19caff0d93fd13ab",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-26.png",
+      "family": "bunker-autocannon",
+      "bytes": 387099,
+      "sha256": "4248594dbe444191573071ce354f5e7621e86427a51c888b9f773fcb367578ed",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-27.png",
+      "family": "bunker-autocannon",
+      "bytes": 376961,
+      "sha256": "844575c8b21760e49b35e6c518fbd4ad3526965b30e9b0aad6b044b7489a1ee8",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-28.png",
+      "family": "bunker-autocannon",
+      "bytes": 368164,
+      "sha256": "b4f88819c13381e5769479d9d71deed1fefd7dad639d9754a1d77acab79136c4",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-29.png",
+      "family": "bunker-autocannon",
+      "bytes": 354673,
+      "sha256": "83ab888faefbed706bb62a00bc1c4f1367dd4b4c5225183b663090e48ecb4fe8",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-30.png",
+      "family": "bunker-autocannon",
+      "bytes": 340073,
+      "sha256": "49d73a8faf84614d261f0b82649ce6783b477f69997263e049c8395a76d6c023",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-31.png",
+      "family": "bunker-autocannon",
+      "bytes": 324070,
+      "sha256": "e63d8d80db7224f245c63ae49e88eb9429f05006d754a086a6158a13b2e05b1b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-32.png",
+      "family": "bunker-autocannon",
+      "bytes": 310405,
+      "sha256": "1989e47c257e0bf95a5b83a75b0d17097576f3aeb181ea5d9b6519e0bcb7a4ab",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-33.png",
+      "family": "bunker-autocannon",
+      "bytes": 322126,
+      "sha256": "b38345f3045fddea8ef7c2eb6c4020639af3ef0c278c42360e4a2bf0d54dfc05",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-34.png",
+      "family": "bunker-autocannon",
+      "bytes": 331482,
+      "sha256": "110011b9fd793a975f75f98c502fb0bb6b74a45f5ad892c3c54949a5e3e48de7",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-35.png",
+      "family": "bunker-autocannon",
+      "bytes": 340627,
+      "sha256": "8725299ed251bf90824ccb2af11c02ec13104e0d43f464d057c77a8bdb399c93",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-36.png",
+      "family": "bunker-autocannon",
+      "bytes": 349067,
+      "sha256": "225f5e69b4381aa48833a5aa0752051aa85089ea4d5f3639ceec1758926c27a1",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-37.png",
+      "family": "bunker-autocannon",
+      "bytes": 358897,
+      "sha256": "5ee5830b87365114d100b3a7effebd94dd6a62ed53e7e559aa5d4376a78627a7",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-38.png",
+      "family": "bunker-autocannon",
+      "bytes": 365787,
+      "sha256": "b22f74b675378af9f4d7a84ea637c737b38b398d0ed1b062032e6c17bf0dc01d",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-39.png",
+      "family": "bunker-autocannon",
+      "bytes": 370773,
+      "sha256": "0fc785f6129c864774f3ba111bc331342aa2737b6e248613798277e9b99b698c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-40.png",
+      "family": "bunker-autocannon",
+      "bytes": 371419,
+      "sha256": "b68490207a6ad8f7f6042856b099900290ce871c8fa63f107f080fbd34a53c15",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-41.png",
+      "family": "bunker-autocannon",
+      "bytes": 377016,
+      "sha256": "62f2298f246c80a450382b1c8453f99a680309fa27f3adb80edd3e0f15337423",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-42.png",
+      "family": "bunker-autocannon",
+      "bytes": 375776,
+      "sha256": "da72f99f8b6ca7eb1be3c3dac46a7dc8ba6c09c8a4c0af91dccf0a284cea3033",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-43.png",
+      "family": "bunker-autocannon",
+      "bytes": 377359,
+      "sha256": "a09b6d1b33c36ce96b1e4665c469654e8ae533815dde251a296db7e37c657a6e",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-44.png",
+      "family": "bunker-autocannon",
+      "bytes": 373853,
+      "sha256": "eae0fe8beec23a08ac5852d07a4ac9f82da9a2f88c85ffbc4c4c4dd9f7ec8fc4",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-45.png",
+      "family": "bunker-autocannon",
+      "bytes": 370722,
+      "sha256": "fcfbf1f0b79210517b6bcedaa1b4908c1e1899a5cefdeb35c036b410b6015a8f",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-46.png",
+      "family": "bunker-autocannon",
+      "bytes": 363792,
+      "sha256": "d6c6c956d55ccead679fcb6d7720fa628a5e157711229d37b78546cdbb22225c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-47.png",
+      "family": "bunker-autocannon",
+      "bytes": 358957,
+      "sha256": "f7b548ecf93292e22ca69d2ed490c46f29be4c3d6536fe1d1d4a7f8cea63ebfb",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-48.png",
+      "family": "bunker-autocannon",
+      "bytes": 343492,
+      "sha256": "f783bd88646688cf6177ddfc8879fc6a3a3648b84f9fb5d8f2795f53f4d63d16",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-49.png",
+      "family": "bunker-autocannon",
+      "bytes": 352538,
+      "sha256": "9164e5083c303310bd27c2842e877902f41679e97cf842d10b2e5a09e703d2ad",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-50.png",
+      "family": "bunker-autocannon",
+      "bytes": 356353,
+      "sha256": "2b8fefe53b83a93b9bbb5dc66ae0dd3f95ef7945c4efc17b9a604b540455668f",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-51.png",
+      "family": "bunker-autocannon",
+      "bytes": 359022,
+      "sha256": "2c59631c21afbeaa8617e36fc49edaeedabfede01710284458a5349351ce7b5e",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-52.png",
+      "family": "bunker-autocannon",
+      "bytes": 356349,
+      "sha256": "44e1ae8feb4d819c02e76e9a126838a3068400913016273a7e7f2c7cc1ba8821",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-53.png",
+      "family": "bunker-autocannon",
+      "bytes": 359122,
+      "sha256": "0b6380e9e1957dab56bc91677979cea2e59416890f949b95fde447cdfad82a88",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-54.png",
+      "family": "bunker-autocannon",
+      "bytes": 355982,
+      "sha256": "7a306495fd80a1b0d06491d208a41262636b14deb16a43db0cc112a24e965575",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-55.png",
+      "family": "bunker-autocannon",
+      "bytes": 353360,
+      "sha256": "8fbef2faff601aca5d81c8b5732a17226bc1e34341b98571c4e4ec5b858a4367",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-56.png",
+      "family": "bunker-autocannon",
+      "bytes": 351244,
+      "sha256": "4b30b5d079d17f8e2452326d827ba5f1b5dc43a7aae354933a50fce2fa877712",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-57.png",
+      "family": "bunker-autocannon",
+      "bytes": 352036,
+      "sha256": "10a58c89f703d8140ef125297b41cbae0c565cf08563fd1c7999d69e3935f11e",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-58.png",
+      "family": "bunker-autocannon",
+      "bytes": 347275,
+      "sha256": "bfc515afb9a0d5dfcc0af7eb8f8ea750c9e4ef6f6da4f8c96071aa4ac6742251",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-59.png",
+      "family": "bunker-autocannon",
+      "bytes": 341656,
+      "sha256": "bf3dab047df647733f1e121f085ad3dbf447bcf7978bc264f235d4b3ed87dcec",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-60.png",
+      "family": "bunker-autocannon",
+      "bytes": 337367,
+      "sha256": "6bae4215fc4286002ffd0e622e90b95e12f6c87d56d0e95f8bba6e2d161078cf",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-61.png",
+      "family": "bunker-autocannon",
+      "bytes": 326244,
+      "sha256": "3cc295fbd2f1c209186cfc39618ac0ebce2a6f58f82b3f71da586d163dbf8a70",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-62.png",
+      "family": "bunker-autocannon",
+      "bytes": 318425,
+      "sha256": "11a249cc33ca6278f442a0bb6522d09eb3dbfa443a2e13d5f07b810fec4dba8d",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/firing-63.png",
+      "family": "bunker-autocannon",
+      "bytes": 305513,
+      "sha256": "e339eacda52d8f561650cb67e8323bec82d46c6e4c26fe3d1cd67fa9d9a1dbc5",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/icon.png",
+      "family": "bunker-autocannon",
+      "bytes": 21222,
+      "sha256": "6291292d23450cc1526fc518bfe44608caf4e474ec23770e3d9dd464ed251962",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-00.png",
+      "family": "bunker-autocannon",
+      "bytes": 114267,
+      "sha256": "d6729f32fb621dc2789172cc584767d7a23c6e07fd4aa04bebabc527a602ec85",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-01.png",
+      "family": "bunker-autocannon",
+      "bytes": 123696,
+      "sha256": "e69eee08769e8bb02cbb56d7932da5fec8a4faf5e05b1dec0b0f18677c9c011f",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-02.png",
+      "family": "bunker-autocannon",
+      "bytes": 125510,
+      "sha256": "202cc5c18a11ef533e64d90cec9314388b865425b0749adf1e86e06fcd7b1f65",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-03.png",
+      "family": "bunker-autocannon",
+      "bytes": 126453,
+      "sha256": "69eeebad1de4725c313d101dc89dc2bf64517b81fd0fa258e51868720d1ef64f",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-04.png",
+      "family": "bunker-autocannon",
+      "bytes": 120772,
+      "sha256": "aaeda3a54875cebcd47e1cc4ada26f9e5bb227deb735c9d14160a1c3072ec991",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-05.png",
+      "family": "bunker-autocannon",
+      "bytes": 121980,
+      "sha256": "098c9daad15ebeaea611dba230a5b38d35c79e168b285d97799ec2b960c4ec1b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-06.png",
+      "family": "bunker-autocannon",
+      "bytes": 115170,
+      "sha256": "e3ce118ec4d99eebd90e611177fa2b6201fe4665a9a28e876d335ef70ba92e8b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/bunker-autocannon/idle-07.png",
+      "family": "bunker-autocannon",
+      "bytes": 115720,
+      "sha256": "5a9b83c18973b6e7e744a72a7e0aab1be8d78ce4deaa9fb6f3a60cb3ec3fde9d",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/citadel-manufactoreo/citadel-manufactoreo-active.png",
+      "family": "citadel-manufactoreo",
+      "bytes": 48359,
+      "sha256": "b36e77899698cacb49245f2432cb5bde4a4020ee48542aebd34d21e1603291ea",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 773
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/citadel-manufactoreo/citadel-manufactoreo-idle.png",
+      "family": "citadel-manufactoreo",
+      "bytes": 47552,
+      "sha256": "f0941a0bf379522ab4feaf997359fd27acf2e843842e43f262fe78c6c4ac9fcc",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 772
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/cogitator-station.png",
+      "family": "cogitator-station",
+      "bytes": 18078,
+      "sha256": "bd55624d676c567da6e1769af7cdd763d42c6515066809a2f397ff2d17d3f23e",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/entity.lua",
+          "line": 345
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/deployment-arrow.png",
+      "family": "cogitator-station",
+      "bytes": 1281,
+      "sha256": "b3f685a26031516ccd9907c6365ef94602400b6fcc920c9ca78984aac20ea2dc",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/junior-cogitator-station.png",
+      "family": "cogitator-station",
+      "bytes": 297028,
+      "sha256": "006e846328b26f935ae7b5cc5465a2541c08aaf65f570d69bc1e93bc2c31d0a0",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/entity.lua",
+          "line": 35
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/planetary-magos-cogitator-station.png",
+      "family": "cogitator-station",
+      "bytes": 340644,
+      "sha256": "17ac2e320db6840bc604fe8364f14f31c3319a5120cf5a9d50e0753ca34940e9",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/entity.lua",
+          "line": 51
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/senior-cogitator-station.png",
+      "family": "cogitator-station",
+      "bytes": 331602,
+      "sha256": "7e46476f16ec4dd0ed68122ca98f7f6b90133d28909f6ae8e9352d4db1911d58",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/entity.lua",
+          "line": 43
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/cogitator-station/void-cogitator-station.png",
+      "family": "cogitator-station",
+      "bytes": 330401,
+      "sha256": "54829c4253c75de2ae21f5f80092c9d0ee8075f68e57a29569765d7a4d7a08a2",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/entity.lua",
+          "line": 62
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-idle-128.png",
+      "family": "emergency-boiler-v08",
+      "bytes": 43041,
+      "sha256": "ae8c29a017002376e4fd8f8a303b59288ffc52dad479c7e604b28a0b561ba93f",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-idle.png",
+      "family": "emergency-boiler-v08",
+      "bytes": 127559,
+      "sha256": "64797f650c3787ac08962b94ac284412889f0b53293b18e12603b552e6864d84",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-working-128.png",
+      "family": "emergency-boiler-v08",
+      "bytes": 2347143,
+      "sha256": "c1a5fc8df5c6bcef6543b47cf38dbc1c8f7a83d8781c9dca467b35dac9fe9d2b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-working.png",
+      "family": "emergency-boiler-v08",
+      "bytes": 6621553,
+      "sha256": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 5
+        },
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 6
+        },
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 7
+        },
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 8
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-1.png",
+      "family": "entropic-extractor",
+      "bytes": 19037,
+      "sha256": "ae7e803175e223a6b46b264c240cba6c6d17412749e7c28e058005620b9bed5d",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-2.png",
+      "family": "entropic-extractor",
+      "bytes": 21521,
+      "sha256": "9b42c46e4e5f36f25982418db03b488bfbe8ce3b42da3a473a0301554137710c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-3.png",
+      "family": "entropic-extractor",
+      "bytes": 21746,
+      "sha256": "b8e34cdcbbef2c392ee7a0f036c6f8c5eefb2953a35b791ab2d370d573a0718b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-4.png",
+      "family": "entropic-extractor",
+      "bytes": 24273,
+      "sha256": "8c0099a7f46d673910eb9bbbdd244ff85d2fb44bb598c3c515d27db58171fcda",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-5.png",
+      "family": "entropic-extractor",
+      "bytes": 20369,
+      "sha256": "13bd05c4227479093d15a36b5b3c7a7ac95d9c620e07296da1fe86444ec39edb",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-6.png",
+      "family": "entropic-extractor",
+      "bytes": 20998,
+      "sha256": "be8855bf74c0ca85e5f31d7b2d96af1298c7040b8ef65f7fe58cec791b5ca767",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-7.png",
+      "family": "entropic-extractor",
+      "bytes": 22229,
+      "sha256": "1e186a26391c79446e6b1128ae77f29d87c8a9a366bf7af659069550601beff0",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-8.png",
+      "family": "entropic-extractor",
+      "bytes": 20180,
+      "sha256": "b84eaef00204834ab678b98a284919f485fe322fa720682c4994da05869faf26",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-sheet.png",
+      "family": "entropic-extractor",
+      "bytes": 91976,
+      "sha256": "1b25c33de89a8933983a6316e790c5d6dd006cdb28e5543fda47f3e1de71af9b",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 861
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-1.png",
+      "family": "entropic-extractor",
+      "bytes": 19663,
+      "sha256": "a58417d9fd689641c0ce16a46e382cfe99a8945ccc9ac4de8ece61157b07bb6b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-2.png",
+      "family": "entropic-extractor",
+      "bytes": 18406,
+      "sha256": "04131584407f7df311d5386100bf67879c76139ce6e11feccf740c3de2d6e3b0",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-3.png",
+      "family": "entropic-extractor",
+      "bytes": 19037,
+      "sha256": "ae7e803175e223a6b46b264c240cba6c6d17412749e7c28e058005620b9bed5d",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-4.png",
+      "family": "entropic-extractor",
+      "bytes": 20180,
+      "sha256": "b84eaef00204834ab678b98a284919f485fe322fa720682c4994da05869faf26",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-5.png",
+      "family": "entropic-extractor",
+      "bytes": 19663,
+      "sha256": "a58417d9fd689641c0ce16a46e382cfe99a8945ccc9ac4de8ece61157b07bb6b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-6.png",
+      "family": "entropic-extractor",
+      "bytes": 19037,
+      "sha256": "ae7e803175e223a6b46b264c240cba6c6d17412749e7c28e058005620b9bed5d",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-7.png",
+      "family": "entropic-extractor",
+      "bytes": 18406,
+      "sha256": "04131584407f7df311d5386100bf67879c76139ce6e11feccf740c3de2d6e3b0",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-8.png",
+      "family": "entropic-extractor",
+      "bytes": 20180,
+      "sha256": "b84eaef00204834ab678b98a284919f485fe322fa720682c4994da05869faf26",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle-sheet.png",
+      "family": "entropic-extractor",
+      "bytes": 58808,
+      "sha256": "7b2282170835c8235b610fefd966c152b7dddec9972858283f1beb772191124a",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 851
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-idle.png",
+      "family": "entropic-extractor",
+      "bytes": 19663,
+      "sha256": "a58417d9fd689641c0ce16a46e382cfe99a8945ccc9ac4de8ece61157b07bb6b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor.png",
+      "family": "entropic-extractor",
+      "bytes": 19663,
+      "sha256": "a58417d9fd689641c0ce16a46e382cfe99a8945ccc9ac4de8ece61157b07bb6b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/hydrogen-thruster/hydrogen-thruster-idle.png",
+      "family": "hydrogen-thruster",
+      "bytes": 65669,
+      "sha256": "5b7daa6196aac7f232cfa4dfa7bf833b318451b05d2f49aa3201dc55213aa3c2",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 1452
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/hydrogen-thruster/hydrogen-thruster-run.png",
+      "family": "hydrogen-thruster",
+      "bytes": 143568,
+      "sha256": "d62a7eb04bdd7dec8076909ad02ae8d423a77865f5d64456c80fb9b892fa95a3",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 1453
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/future/emm11.png",
+      "family": "martian-micro",
+      "bytes": 549911,
+      "sha256": "d64b2499757ed73a293eefe732f6eea254e7247a1e45afaa9313cf37c0d14ef5",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/future/emm13.png",
+      "family": "martian-micro",
+      "bytes": 330678,
+      "sha256": "6d1aff73df4300dfa624fced3014449ff7cab38252e3ec32e91b6e0ad780c0be",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/conclave_center_0558.lua",
+          "line": 7
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/future/emm7.png",
+      "family": "martian-micro",
+      "bytes": 588314,
+      "sha256": "7570bbcc8d53664dc6509fb6d2879a140e97bf604c77b53822310bc9c2201b90",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/future/emm_05.png",
+      "family": "martian-micro",
+      "bytes": 551444,
+      "sha256": "8327607ad6537d93dc48adb32cc581778e57313396035237e042fa6e64bad966",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-atmospheric-water-condenser-shadow.png",
+      "family": "martian-micro",
+      "bytes": 6592,
+      "sha256": "fa01154a352eea4678806c7ae7683714ff4b29ed29ed633fe7757552eb8712cd",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-atmospheric-water-condenser.png",
+      "family": "martian-micro",
+      "bytes": 547777,
+      "sha256": "b0d588c82a6131e7ed53f9754844279e7b31ea850d1be372d52f7b19bd6d417a",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-assembler-shadow.png",
+      "family": "martian-micro",
+      "bytes": 7128,
+      "sha256": "e6b31fa06cef5cfe415950be41c7497741a1849d4f74c57da82bb5dd581bf6b1",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-assembler.png",
+      "family": "martian-micro",
+      "bytes": 441557,
+      "sha256": "7eb767449ded95b4241137cbd98dca010ade7f5d57e355f3444100fffd294862",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-boiler-shadow.png",
+      "family": "martian-micro",
+      "bytes": 5962,
+      "sha256": "a8db746a3fe003b4dc6fd0bef0b3c3cd8c6cc5a311c6a0793ce18383f6670e34",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-boiler.png",
+      "family": "martian-micro",
+      "bytes": 355212,
+      "sha256": "4cf507cd4fd47c16c391c0cd76e92c4b852a429eba3dbfb65fd6f8f4051eeedc",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-laboratorium-shadow.png",
+      "family": "martian-micro",
+      "bytes": 28206,
+      "sha256": "f61767cfcef5565cec3a6317dfe6fae455054a5e18940dbd0af999d0b53390bc",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-laboratorium.png",
+      "family": "martian-micro",
+      "bytes": 604757,
+      "sha256": "0d8af86f08ce1a29c06e148dd0aed1afbce6ccba333803014eb9b1ae6190ee3d",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-miner-shadow.png",
+      "family": "martian-micro",
+      "bytes": 5798,
+      "sha256": "8e793d771f727041b81aaa782ae0e3593d002fcac9115a4fbe9889aaee257d84",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-miner.png",
+      "family": "martian-micro",
+      "bytes": 638041,
+      "sha256": "29442badbd53d2f69880fb625330ed071e6d362119e458952f575d53cc1bf700",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-power-grid-shadow.png",
+      "family": "martian-micro",
+      "bytes": 9899,
+      "sha256": "54e11b05a505c578504010ef16631b5aefa207eb4e9a02a059e5b42d0db1e1f3",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-power-grid.png",
+      "family": "martian-micro",
+      "bytes": 481291,
+      "sha256": "9209a929b615bd6473e73e56f494fb20d924571baeaabc8cf54ca6f34265d402",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-smelter-shadow.png",
+      "family": "martian-micro",
+      "bytes": 5975,
+      "sha256": "a314fa1e8679482c485a7395e6f24e7d5c16b43b848e3923d8ad5402d4553919",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-smelter.png",
+      "family": "martian-micro",
+      "bytes": 521394,
+      "sha256": "ba274b459959094a0f6b1bf32ed2c3224b7aa85aa887ae491f7f848c634a747c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-steam-engine-shadow.png",
+      "family": "martian-micro",
+      "bytes": 5650,
+      "sha256": "ebb370154b98eb4593bca24ac7a00939f0f2c53b39d5235cebaba9471d48d3a0",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-steam-engine.png",
+      "family": "martian-micro",
+      "bytes": 279126,
+      "sha256": "c656a3c72250757a7bc63e8f1ac4a1eaf86fec309831a38e667ed1b3112f12e9",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/orbital-trader/orbital-trader-shadow.png",
+      "family": "orbital-trader",
+      "bytes": 13363,
+      "sha256": "1ac41482424dec6254a6bb209c6d1237a1d78c0155c0f7f243dda048a1a8ae8c",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/entity.lua",
+          "line": 652
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/orbital-trader/orbital-trader.png",
+      "family": "orbital-trader",
+      "bytes": 78984,
+      "sha256": "46824491fa45a9fe42eef1b20233764acde6e925e4ad59de519e49e406f56036",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/entity.lua",
+          "line": 643
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/sterling-steam-catalyzer/sterling-steam-catalyzer-shadow.png",
+      "family": "sterling-steam-catalyzer",
+      "bytes": 6825,
+      "sha256": "72e273cc0e09fd621011674f667202d00080fd40575cececdc1f20dfe1c65196",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/sterling-steam-catalyzer/sterling-steam-catalyzer.png",
+      "family": "sterling-steam-catalyzer",
+      "bytes": 488107,
+      "sha256": "2b391249f671ed14a5c562e9045ccd7d5b1f6508ac3e25c31bc705813fa81349",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory-shadow.png",
+      "family": "stone-cache",
+      "bytes": 7246,
+      "sha256": "744a8947c42452cefbeb33b518aa126de872083a5e43bf6686b2309cf932231c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory.png",
+      "family": "stone-cache",
+      "bytes": 607077,
+      "sha256": "29d135a9f811d3842ad584f570eaa6a8bd2bc496f1834072f27fdc9cfcc7db5e",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-basic-space-cargo-inventory-shadow.png",
+      "family": "stone-cache",
+      "bytes": 5200,
+      "sha256": "fe8f67a54c6d8c8ab16fb39568d21513c615d4a43ef65ecc6aa4a317c6ebd195",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-basic-space-cargo-inventory.png",
+      "family": "stone-cache",
+      "bytes": 472556,
+      "sha256": "e42f840867f9eaadba006e4897519dc14ca167da2b64f4d11992ca6528dda2e8",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-martian-stone-cache-shadow.png",
+      "family": "stone-cache",
+      "bytes": 8513,
+      "sha256": "2a527ff8271bddd7b65e9503adf3a231e70e9e79e1f88ef5b9a28a096bc7ae77",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-martian-stone-cache.png",
+      "family": "stone-cache",
+      "bytes": 496838,
+      "sha256": "c2d0143aa5047b6a9f6a425aa7b1ab5e34b284f2f9760a01ce66a0f78aa323b5",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-coal-shadow.png",
+      "family": "stone-cache",
+      "bytes": 8511,
+      "sha256": "44439939bf6826d6469c6ba6fec1bdddfb978136aa94d38b493b13fd7a0a849c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-coal.png",
+      "family": "stone-cache",
+      "bytes": 494255,
+      "sha256": "800ab4f9c27d8215877b125367343ad2798c5ab8c759dd25059667ba4a97a240",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-cable-shadow.png",
+      "family": "stone-cache",
+      "bytes": 8789,
+      "sha256": "5666bc608c2b541a43419f464260d4d357818101ce363545180490ec8a4f293d",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-cable.png",
+      "family": "stone-cache",
+      "bytes": 508271,
+      "sha256": "5fbc369b3fe3bcb8d5c1fe96d2dd22dc35ffd08b569df2e4e56bbc50b6f2cd03",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-ore-shadow.png",
+      "family": "stone-cache",
+      "bytes": 8515,
+      "sha256": "8b0e638af138c174bca2362e6dbe09ad6325b3ad684a3dbf444f812fe25a6da2",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-ore.png",
+      "family": "stone-cache",
+      "bytes": 566608,
+      "sha256": "f8aebd78fe025f8a7c9a1aa465d21606538845b60dbb6365edaccccc78b93df5",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-plate-shadow.png",
+      "family": "stone-cache",
+      "bytes": 8679,
+      "sha256": "5b0dedf23a34e2fe0a9de591f2f42ed9f708b6e05ad028d4cbd5a60d1db12281",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-copper-plate.png",
+      "family": "stone-cache",
+      "bytes": 501477,
+      "sha256": "544497545621f069675b9166ca121e77722cf6a3846f61654a5e251e44a5098e",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-empty-shadow.png",
+      "family": "stone-cache",
+      "bytes": 8365,
+      "sha256": "e483a4b4c2d836e647eb03032aebb5e028f34227d1824414648934e4200d76a9",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-empty.png",
+      "family": "stone-cache",
+      "bytes": 508339,
+      "sha256": "251283d921f924e2e700af93b79f63a33b70ef5f92bb55f85cef387dc34f67f7",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-gear-wheel-shadow.png",
+      "family": "stone-cache",
+      "bytes": 6736,
+      "sha256": "1a0f1f4a6a5d9719dfd12a5e5082bcd0fa19377f8913ec49cc0069b535fbdea3",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-gear-wheel.png",
+      "family": "stone-cache",
+      "bytes": 356484,
+      "sha256": "c7096928950819a6ee4bb29df657cdbab0e7fda2f3ea92b6359a8980a6149aa9",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-ore-shadow.png",
+      "family": "stone-cache",
+      "bytes": 8419,
+      "sha256": "512f559a3ac3919f50764bbf8c18b14841f9ba68aa4b98072645177c2a07d959",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-ore.png",
+      "family": "stone-cache",
+      "bytes": 519268,
+      "sha256": "a1d7b6677f20045779fbab1ad0dd418e12cb604db48a4c7df43c1b93ff382286",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-plate-shadow.png",
+      "family": "stone-cache",
+      "bytes": 8668,
+      "sha256": "7be388dfa2745e93eac97b2a37677cf0743679042e9e62a9cb8622a262b5a9f0",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-plate.png",
+      "family": "stone-cache",
+      "bytes": 488207,
+      "sha256": "cc4d1dfec55075f75c01d2c1aca75324d4cd395abd85d9cdd06fde05f304df3c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-stick-shadow.png",
+      "family": "stone-cache",
+      "bytes": 8682,
+      "sha256": "e9e62234903e13c8965564eea4f61ae32ae90b5f1fd3e18bcb9958d6e1782685",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-iron-stick.png",
+      "family": "stone-cache",
+      "bytes": 508709,
+      "sha256": "2f7cc0be43d5532fb32442b801bb7df615bf659f9857026f6be0c77eebd25310",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-item-vault-shadow.png",
+      "family": "stone-cache",
+      "bytes": 6418,
+      "sha256": "87791bbb02fdb3ec631216f0c6755db9f19b9b97f485a344cceba336157d609f",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-item-vault.png",
+      "family": "stone-cache",
+      "bytes": 382110,
+      "sha256": "48c930af3749cd4f8a585c6dff78de408d1855019c90daabde617a44830ab186",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-pressurized-fluid-vault-shadow.png",
+      "family": "stone-cache",
+      "bytes": 6370,
+      "sha256": "1e9a5cdf309d110e338659d886a680d3f4800b686ea3b99be3a83041b87cc42e",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-pressurized-fluid-vault.png",
+      "family": "stone-cache",
+      "bytes": 386285,
+      "sha256": "4fbaeee99407c8917d7f416c4a133ff5a527851f8cc892b81fbeb86317480dec",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank-shadow.png",
+      "family": "stone-cache",
+      "bytes": 6350,
+      "sha256": "e8f5901fce8d3d6eee4116834311d07c313c7e0fc57717e719a3dcb983e161e5",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank.png",
+      "family": "stone-cache",
+      "bytes": 343683,
+      "sha256": "4ba973a3e6ed53e0acbb350a4a1be4827fb0de00a801b65f4f066d21cfa9003b",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-stone-shadow.png",
+      "family": "stone-cache",
+      "bytes": 8592,
+      "sha256": "8d8e16e74c3936475fcd167953d9a5b35bffb437e6dd159df95c24eaebb8a2ad",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-stone.png",
+      "family": "stone-cache",
+      "bytes": 532024,
+      "sha256": "b5a48cdd493fc062825aa8eea1071a56d5c1ff127bbb45c9aedac65142843ed7",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-wood-shadow.png",
+      "family": "stone-cache",
+      "bytes": 8389,
+      "sha256": "ab7101a903575a4bee6b56562abb05f95876dda63bec0a5f8d2b225e5fc8eac9",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/stone-cache/tech-priests-stone-cache-wood.png",
+      "family": "stone-cache",
+      "bytes": 499150,
+      "sha256": "c992161bd1eccea4c9fc2c5e6f60f4a175fe0acba7c62e92946eae3ef278d558",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster/thetazine-thruster-idle.png",
+      "family": "thetazine-thruster",
+      "bytes": 33325,
+      "sha256": "00a1d681570f01cd7b5df2c46d31a539283ac11b0467e3aa930f472d2a910417",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 1532
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster/thetazine-thruster-run.png",
+      "family": "thetazine-thruster",
+      "bytes": 58919,
+      "sha256": "0a6170f2642afdc43d8c2dd7bfed7f2bf96470f33883a1fbe125656cf6cf6f2d",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 1533
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/icon.png",
+      "family": "timber-workbench",
+      "bytes": 6620,
+      "sha256": "29156a43d598365eb5666cdcb1e578f000e9235f8f47c320fdf848f2f91d2d65",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/idle-east.png",
+      "family": "timber-workbench",
+      "bytes": 26292,
+      "sha256": "2fde4eaf663a036510a616861820fc9e08fb83c615f65d26e041e18aac88a40c",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/idle-north.png",
+      "family": "timber-workbench",
+      "bytes": 26344,
+      "sha256": "0547e5f8a642cdc92cff99a6b982876c782ed1c6f6cf32f962c2e6ceec3fd1ee",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/idle-south.png",
+      "family": "timber-workbench",
+      "bytes": 26319,
+      "sha256": "965bb3756248c7698aee6dfae3b557ae245f70eba1b673e31f92a63ca293a2f2",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/idle-west.png",
+      "family": "timber-workbench",
+      "bytes": 26174,
+      "sha256": "ab3d4703474bc8d523231fb80d145587ea5d3d9e0b4d00ffde993b85d68808c9",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/working-east.png",
+      "family": "timber-workbench",
+      "bytes": 841333,
+      "sha256": "be3a79e924a74fdfc9a4fc1bb0bcbf21d020b635ae262f1fcbef1479c886ffc7",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/working-north.png",
+      "family": "timber-workbench",
+      "bytes": 829612,
+      "sha256": "41b44cd57b0b590534e03474c0b8b2da35404ae168898d3ae7468558f33e9b56",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/working-south.png",
+      "family": "timber-workbench",
+      "bytes": 901460,
+      "sha256": "60e854a7a90989f5685dd1eda435ba0c1ec3304256ba10ac801c501a33bbae2d",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/timber-workbench/working-west.png",
+      "family": "timber-workbench",
+      "bytes": 886632,
+      "sha256": "c066fb7ad95bfc80f980b162438ce0bf8b9295f0c11f4444c4cc5dc5839ed19f",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-idle.png",
+      "family": "void-fusion-thruster",
+      "bytes": 21334,
+      "sha256": "947148be59b0fee357d8db8e9bcb31ac5a30797aa128e208cec187d0041aebc6",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 1661
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-run.png",
+      "family": "void-fusion-thruster",
+      "bytes": 38652,
+      "sha256": "3e4bb73224b7d0ddc4447d185dda4ff497cc68eb9dec0326d97b3f14a1600ea7",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 1662
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-idle.png",
+      "family": "void-fusion-thruster",
+      "bytes": 43594,
+      "sha256": "3b7b6d743220a516fcfae11162b9ad2e5cff713338f5f7c549664c260a35df16",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 1704
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-fusion-thruster/void-fusion-thruster-wide-run.png",
+      "family": "void-fusion-thruster",
+      "bytes": 49192,
+      "sha256": "daa696918c1dd7e35a1eb4bc8ae84102d23bc559100cefcb25488d92f5f2f045",
+      "literal_lua_references": [
+        {
+          "path": "tech-priests_src/prototypes/compatibility/space-age.lua",
+          "line": 1705
+        }
+      ],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-steam-engine/void-steam-engine-shadow.png",
+      "family": "void-steam-engine",
+      "bytes": 6130,
+      "sha256": "4ed999301521910455ec479e7c0369b0f8a7c1328135007014bc4791edabafc1",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/void-steam-engine/void-steam-engine.png",
+      "family": "void-steam-engine",
+      "bytes": 376725,
+      "sha256": "3243d3250117df3e2233d9db0afd4aacb910ccbd3aacff16a9f1a8d20302e454",
+      "literal_lua_references": [],
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
+    }
+  ],
+  "model_sources_and_exports": [
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v01/energy_dish_entity.blend",
+      "bytes": 20562539,
+      "sha256": "7e02d9ed6f0b105a2bb63c71f0aaacfe02ff2314283261401a8e2d3e1f3039dc"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v01/energy_dish_v01.glb",
+      "bytes": 15508392,
+      "sha256": "1acc5c650526bad42bd4fe0d897d898b8c8ad3da4c6ee68bb1eb5928e46d1919"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v01/grenade_lobber_12_entity.blend",
+      "bytes": 20570617,
+      "sha256": "3dea8c7853c65577ef5d572be0e0ab6901d096680c5a5d8ec2e2e84c0417956f"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v01/grenade_lobber_12_v01.glb",
+      "bytes": 15484556,
+      "sha256": "5172f81e2d896ee55223405fa37dc29263b21321844591f27f1be073c47ad50a"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v02/energy_dish_entity.blend",
+      "bytes": 20562539,
+      "sha256": "7e02d9ed6f0b105a2bb63c71f0aaacfe02ff2314283261401a8e2d3e1f3039dc"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v02/energy_dish_v01.glb",
+      "bytes": 15508392,
+      "sha256": "1acc5c650526bad42bd4fe0d897d898b8c8ad3da4c6ee68bb1eb5928e46d1919"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v02/grenade_lobber_12_entity.blend",
+      "bytes": 20570617,
+      "sha256": "3dea8c7853c65577ef5d572be0e0ab6901d096680c5a5d8ec2e2e84c0417956f"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v02/grenade_lobber_12_v01.glb",
+      "bytes": 15484556,
+      "sha256": "5172f81e2d896ee55223405fa37dc29263b21321844591f27f1be073c47ad50a"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v04/Six_Cast_Iron_Lobber_V04.zip",
+      "bytes": 16977750,
+      "sha256": "a94c0c407f070828feaa9ff795296585588b062902a846f34e872615218c453b"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v04/six_cast_iron_lobber_v04.blend",
+      "bytes": 8296261,
+      "sha256": "f2348e4882fdd68f2abfdb4e2480be5af53843be1e1668e6aa6dc304197eb21b"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v04/six_cast_iron_lobber_v04.glb",
+      "bytes": 6716712,
+      "sha256": "c20902413fba35eeae877e3507f08cbf6e6fca29eecec633501e0a022f68100a"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v05/Loose_Pineapple_Loader_V05.zip",
+      "bytes": 16346806,
+      "sha256": "7cf368c826f22b7b29d93d378b1bd77157a976220f14af6117922fe557564bb2"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v05/six_lobber_loose_grenade_loader_v05.blend",
+      "bytes": 5893217,
+      "sha256": "89251ce0789ffdb9961fca8c84aa972272169b3314f11ba338dd355b18154a91"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v05/six_lobber_loose_grenade_loader_v05.glb",
+      "bytes": 10600988,
+      "sha256": "68a8d69adfd6d68ea44a32dac5b4bdca9661eb5fad5ae6081cc97fc2c82aca2e"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v06/Central_Feed_V06.zip",
+      "bytes": 15822402,
+      "sha256": "0408775393c9a6a2f86aa8bcc9f8eae7301f23515b811b13c1456a790db6ddd8"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v06/six_lobber_central_feed_v06.blend",
+      "bytes": 5940948,
+      "sha256": "aaa6734b259f78a0b3c4bbaed4b16ca4eb747b119fb6848d9b79b8f2382aef49"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v06/six_lobber_central_feed_v06.glb",
+      "bytes": 11210028,
+      "sha256": "ea923a24ffbb5d062c8418ef4a755b97d0608b60b7d22d6f32bdb280834ab3b7"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v07/Central_Feed_V07.zip",
+      "bytes": 15416681,
+      "sha256": "79c45ad0c7da1b72b289d65d0cc4f3f91923f1d3dc1ed3428dbab08e9128cbdd"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v07/six_lobber_central_feed_v07.blend",
+      "bytes": 5862021,
+      "sha256": "6d115f503ed1e222a1fc54c4a20f3112493cd92dca28b53046298a5425236a07"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v07/six_lobber_central_feed_v07.glb",
+      "bytes": 10180932,
+      "sha256": "c0e9c9d63910131918d64b40b92ffeb3b22c763dce2d1b54cf1817e8fcf2be7b"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v08/Central_Feed_V08.zip",
+      "bytes": 16360760,
+      "sha256": "b97b18be73c282cae3c140351e9e1b19d2a5c41a445f637c3c529d370e04fc8d"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v08/six_lobber_central_feed_v08.blend",
+      "bytes": 5848627,
+      "sha256": "e7c105485b79e2587d6fe8576c862778b055ed825217463d9cd58f19a1e218b3"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v08/six_lobber_central_feed_v08.glb",
+      "bytes": 11217352,
+      "sha256": "e6d8b423b97af542ebdd4a97e07fbd1d9982060aa027e56ece741a50451d94ad"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v09/Central_Feed_V09.zip",
+      "bytes": 15988461,
+      "sha256": "dc01c3e01fb6a4b146cc0384e0432e193a8e3a029943a75b8c1a91539c7342bc"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v09/six_lobber_sensor_fit_v09.blend",
+      "bytes": 5937302,
+      "sha256": "0df64e18498e72b912cf4038c68da1b1468f4e11d4cd50cd6aa0e1ad6b40bfda"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v09/six_lobber_sensor_fit_v09.glb",
+      "bytes": 11822744,
+      "sha256": "ac1eab27598199a144a7ab73af4874809afca2cd0e029e9ba50d0aced22f7a08"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v10/Central_Feed_V10.zip",
+      "bytes": 20381530,
+      "sha256": "c5c63cd325bdc3e493ac400686ae265d2faebbd7fe329ec4c64b185fa8031950"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v10/six_lobber_refined_v10.blend",
+      "bytes": 5944001,
+      "sha256": "7a22439ffa5b588cf7883b6634613a05747d038ebfdee8317421a97006d3f18e"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v10/six_lobber_refined_v10.glb",
+      "bytes": 15544560,
+      "sha256": "4387071b914f166a604b0386a9e4d0c81d8613dbfad448c2ee5266910b89f0db"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v11/Central_Feed_V11.zip",
+      "bytes": 21052915,
+      "sha256": "06ab1e815e248196e88d9b69178dd5fa6eab2107b2e3d711a7ef637fd6d318fa"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v11/six_lobber_inset_plating_v11.blend",
+      "bytes": 6005217,
+      "sha256": "3d7bc1bb6c4c4be1b6481ea65db58ce60e024a5788f5b57de23497a99a21a4ab"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v11/six_lobber_inset_plating_v11.glb",
+      "bytes": 16013016,
+      "sha256": "d8b8d05b8bb87cbe2cc2241ec133c46044b5507e8d513c372e88e8df8a045a5a"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v12/Central_Feed_V12.zip",
+      "bytes": 23634717,
+      "sha256": "3835296888567568fb66e82da40d1d09d1b954531a566efb7f2651e3c4a34ac4"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v12/six_lobber_corrugated_hoses_v12.blend",
+      "bytes": 7667759,
+      "sha256": "40b09638588d1cee89175759863b7d7ea5d5bd0a23595bb52d0870d0937f3a28"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v12/six_lobber_corrugated_hoses_v12.glb",
+      "bytes": 19457156,
+      "sha256": "0f5ce7c5a3f9eb0c5af0c2fad3cf5748188c85fadf69c6ad8e727f56914dac86"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v13/Corner_Chamfers_V13.zip",
+      "bytes": 23486938,
+      "sha256": "8b0b6f88cdd3506f13990355fa90e88ce58068f33467ed58f3f07983527bb3b2"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v13/six_lobber_corner_chamfers_v13.blend",
+      "bytes": 7668640,
+      "sha256": "84ee0c575ca1605b2a95d951970310e755d66a215733ec95c2b73639d831a95c"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v13/six_lobber_corner_chamfers_v13.glb",
+      "bytes": 19442760,
+      "sha256": "fe5d319d05ca918c4beaeaf446bf32b9a644e6ee10e73b6538eaccddcb426781"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v14/Inset_Girder_Mount_V14.zip",
+      "bytes": 24236668,
+      "sha256": "e283eb7833e31fded14bf8746824efc66a14c2229574b9201efc402c98eccac8"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v14/six_lobber_bolted_mount_v14.blend",
+      "bytes": 7680537,
+      "sha256": "6ad76b4a5895db689a92f2b1cc187d3cb90cb4690cd8287ce307b36e545f3325"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v14/six_lobber_bolted_mount_v14.glb",
+      "bytes": 21040152,
+      "sha256": "11b41e297c412a577d8ddc2087bfb879f453e7edd589b40ae393ab53a4b1c7f2"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v15/six_lobber_independent_recoil_v15.blend",
+      "bytes": 8481888,
+      "sha256": "1469d897424644d2b1d6ae5ed2c13c551cc3a3e66359fc4c4537f052788c9edb"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/alternatives/v15/six_lobber_independent_recoil_v15.glb",
+      "bytes": 21051588,
+      "sha256": "8a7bba1dfda5e79a4dd953d5f1f87b9f0c953ad07c3d155aa7407d1684bef459"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/revisions/v02/martian_bunker_v02_package.zip",
+      "bytes": 151035,
+      "sha256": "4b2d68a305b14b67fd47014620bfcd134f69b275ff59e88d77eb188ebe8ce1e4"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/revisions/v03/martian_bunker_v03_source.zip",
+      "bytes": 68564,
+      "sha256": "8e0d0158684fbf53a55a5df13e5d7e2bc43edc892850feebcfa7d573ef97bfff"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/revisions/v04/martian_bunker_v04_source.zip",
+      "bytes": 186781,
+      "sha256": "7a2dca40e5f9302534dde6829866b0f4d8c4ef2981ef0649894bf31b6dda9a16"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/revisions/v05/martian_bunker_turret_front_v05_source.zip",
+      "bytes": 24921,
+      "sha256": "75f9ef53bebb21c084cf615488413f697e93a8dedd3e50fccfaeeeb0978657e0"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/revisions/v06/martian_bunker_barrel_texture_v06_source.zip",
+      "bytes": 34228,
+      "sha256": "e0e3cad823bdcb58582a867fd7e504727f78196cec32a032f56ed848d0421648"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/revisions/v07/martian_bunker_v07_round_jacket_source.zip",
+      "bytes": 36641,
+      "sha256": "6824e87593e854bdc00eeb6e41a20d9c7057d3b9d11741eb55e5bb1f8b4f616f"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/revisions/v08/martian_bunker_v08_actual_model_source.zip",
+      "bytes": 41771,
+      "sha256": "3adcbf09b940e24249fa2bb15a7ba5f0fab8bb7a1e3549b1922e37bc7bb70c7b"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/revisions/v09/martian_bunker_v09_subtractive_model_source.zip",
+      "bytes": 408104,
+      "sha256": "d93d50deab0e1e22420afeb321cfb94aa9ad7567e75a7d3bb25e3b24ebc000f4"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/revisions/v10/martian_bunker_v10_reference_bound_source.zip",
+      "bytes": 1423011,
+      "sha256": "d1dfbf8078be0d6cf44b3d87e8404e7b70007eb9ca8ebf66e283478be32dfcb2"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v02/martian_heavy_weapon_bunker_blockout_v02.glb",
+      "bytes": 113944,
+      "sha256": "f98733180578471f9a7fc40ba94e8a40fb3290ee0bc51616a947e797e54d073b"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v02/martian_heavy_weapon_bunker_v02.blend",
+      "bytes": 1895488,
+      "sha256": "742569f16868ff3b7c8dee3f1350f1d2db1495a453b83e91b661093ac9d6229f"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v03/martian_heavy_weapon_bunker_source_geometry_v03.glb",
+      "bytes": 113948,
+      "sha256": "956234cb8abb08630c4932588014333dfd0c1358ddad52f0d4a8eaffb7ee7fa4"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v03/martian_heavy_weapon_bunker_v03.blend",
+      "bytes": 2113084,
+      "sha256": "6bd21951ed36869bcfd3d624bd4a1a72ae63b57f9c412d55ab1e527c7b44a59c"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v03/martian_heavy_weapon_bunker_v03_blender_export.glb",
+      "bytes": 299932,
+      "sha256": "eba33def7464f7dad6c6ebf878638675d5f54d64b606c3d889d5390aba5a5246"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v04/martian_heavy_weapon_bunker_source_geometry_v04.glb",
+      "bytes": 114008,
+      "sha256": "7151637497f75d66e6a102e29538087dd13283d22edcea4eaa5871f332fcb68a"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v04/martian_heavy_weapon_bunker_v04.blend",
+      "bytes": 2140460,
+      "sha256": "1722fc134b4cd17bd8d2ee400ae3a5e98d8279f4c0e4b172c72a2fac1df0026b"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v04/martian_heavy_weapon_bunker_v04_blender_export.glb",
+      "bytes": 304568,
+      "sha256": "802338783bbafc35f1954f425cd60b12117996f119d6ad3ef17ddf8eaa671faf"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v05/martian_heavy_weapon_bunker_pass1_v05.blend",
+      "bytes": 2213176,
+      "sha256": "a5bb79635fbd5746ee426b8d5a87dfccde1e3db9a22e41cbeaef480da2c2bf4e"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v05/martian_heavy_weapon_bunker_pass1_v05.glb",
+      "bytes": 340584,
+      "sha256": "38e2e05466038a6a272675f77479ce0f904aa31fa0ca9f6a32f988aa8e76925e"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v05/martian_heavy_weapon_bunker_source_geometry_v05.glb",
+      "bytes": 153888,
+      "sha256": "ed6ff9a52a83cce864018447332b32e122b7298edaf531037f608aa86f132c93"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v05/martian_heavy_weapon_bunker_v05.blend",
+      "bytes": 2448736,
+      "sha256": "633a1935b116f7ed10e2ef4e6c89e6509f808693384ce6261ad292844da1c6c8"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v05/martian_heavy_weapon_bunker_v05_blender_export.glb",
+      "bytes": 455780,
+      "sha256": "dfff6f0ba9785028180a342084131bec14cda32b8518ee3b428c238e183f545e"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v06/martian_heavy_weapon_bunker_source_geometry_v06.glb",
+      "bytes": 197888,
+      "sha256": "8f66b9ffe1490be304b35230e4fc0aee30aac82683396ac06fbc96222f1aa50e"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v06/martian_heavy_weapon_bunker_v06_flat.blend",
+      "bytes": 3018032,
+      "sha256": "0eff23f21dc8d98efa4a10400e0fe30c46d0ee2108d4273978fa434735e976d8"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v06/martian_heavy_weapon_bunker_v06_flat_export.glb",
+      "bytes": 755120,
+      "sha256": "e67b91532a74fbe6316874dbd4369ff23af22785a458e8d5ab14c0495174ff51"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v06/martian_heavy_weapon_bunker_v06_textured.blend",
+      "bytes": 9264781,
+      "sha256": "7916e884cb619d82e16be05cfd59b3c6770f4d5b73e19862ddf572dd2202afad"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v06/martian_heavy_weapon_bunker_v06_textured_export.glb",
+      "bytes": 5852784,
+      "sha256": "23df6ea93dddd0e9c3a6c7baea6db16992a6b72d8a1faf77d7e27562cb7468ef"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v07/martian_heavy_weapon_bunker_source_geometry_v07.glb",
+      "bytes": 244012,
+      "sha256": "f6a52c14f4687a6547bf93abc64138d6a9319f45256e782bfa6d003900288e12"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v07/martian_heavy_weapon_bunker_v07_flat.blend",
+      "bytes": 3285196,
+      "sha256": "f964fafc476726c6077995aa8507d2fc1628dec11f8539c538f1d2b220c00394"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v07/martian_heavy_weapon_bunker_v07_flat_export.glb",
+      "bytes": 920564,
+      "sha256": "838ff3645960f25f40fec264570d74b6f2bd2ac7d301a361b14d0388cd8ba7e0"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v07/martian_heavy_weapon_bunker_v07_textured.blend",
+      "bytes": 20225249,
+      "sha256": "6d170ce80adf17d97ab320ca20a1e4b415da74581406b0f2c0c6767f288eec0e"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v07/martian_heavy_weapon_bunker_v07_textured_export.glb",
+      "bytes": 14950152,
+      "sha256": "31c8dfdee4688794a7c90d263f9ad33c9b70c534cc313af1851a44cb6efb4da4"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v08/martian_heavy_weapon_bunker_source_geometry_v08.glb",
+      "bytes": 368340,
+      "sha256": "46ab9c4522a8657c915d5904b3352b9e10844f15f35b318ad097f01bf745298b"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v08/martian_heavy_weapon_bunker_v08_flat.blend",
+      "bytes": 4740020,
+      "sha256": "d0e307f56154f7f28ab408a402943328a45cf89dce5c64be5bb1be58842d5430"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v08/martian_heavy_weapon_bunker_v08_flat_export.glb",
+      "bytes": 1268152,
+      "sha256": "7a50bd25e6933199c6e3db1de365a382556668170e809e973453cba6562fd946"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v08/martian_heavy_weapon_bunker_v08_textured.blend",
+      "bytes": 24403300,
+      "sha256": "597bf705df9a95187507262058474b7b3e6eb0e7d6d17550c82ef08d297fb6b8"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v08/martian_heavy_weapon_bunker_v08_textured_export.glb",
+      "bytes": 17838152,
+      "sha256": "3ec1ecfe36da8e5c2fa7722dc3951c7f1aae4077850261d4c3dfb3af3d31a5cd"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v09/martian_heavy_weapon_bunker_source_geometry_v09.glb",
+      "bytes": 279812,
+      "sha256": "27f10fa330bd4c68643d05dcfcf3e94ef7abea88550810758c957b2323c159ad"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v09/martian_heavy_weapon_bunker_v09_flat.blend",
+      "bytes": 3607920,
+      "sha256": "60d5bc135e7ba9ff20d5e0b48edc1107c4373d87cc30b37bb2329541bde8ade3"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v09/martian_heavy_weapon_bunker_v09_flat_export.glb",
+      "bytes": 872368,
+      "sha256": "9bab64131a2b38f3fae9aa63a42879b3bd71cfc5f5762e38fed9314b96c88a29"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v09/martian_heavy_weapon_bunker_v09_textured.blend",
+      "bytes": 23150305,
+      "sha256": "1bcf6b904826eebc993d89dd955268e948de9bf96702fc6ebfb80921e71670de"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v09/martian_heavy_weapon_bunker_v09_textured_export.glb",
+      "bytes": 15098132,
+      "sha256": "43dc68162899685b3cc2e8e95f296d94c7f55eff719d800c4b9392b9a2288076"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_source_geometry_v10.glb",
+      "bytes": 275948,
+      "sha256": "c5c01b80d27cecf005505b4de58a73fe0679e4b9d2db021c1113bf157a054126"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_flat.blend",
+      "bytes": 3561956,
+      "sha256": "1b430f071b8f0abf7aeeb60e18caf866ccc7e5f5fba1c6cb23d05d955a7b0b6a"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_flat_export.glb",
+      "bytes": 859272,
+      "sha256": "533be062941138bb1440637b705a7a1e9c7a3b09b3ea0fcdae73afd44519879c"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "bytes": 23101957,
+      "sha256": "f5a4453c1493da65e20f7903fe58de5edb7493c89a5d3995a6701f1b5abf88df"
+    },
+    {
+      "path": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured_export.glb",
+      "bytes": 15083352,
+      "sha256": "00d6638404f38d5997bbfb923cc37575b1d6e09b08904939c072ec903013befd"
+    },
+    {
+      "path": "art/source-to-3d/workbench-v4/rough_timber_workbench_v4_source.zip",
+      "bytes": 185026,
+      "sha256": "26f1402a2aa1920cdaaa8e8e15399250a86e6a6aa9bb9a00c832a76068d6c2cb"
+    },
+    {
+      "path": "art/source-to-3d/workbench-v5-animation/Workbench_V5_Animated_Source.zip",
+      "bytes": 353361,
+      "sha256": "98f834f7719d21c99838d09f53f122cbb6212f3c21e0c1180fd9a71c0924a6d7"
+    }
+  ],
+  "pipeline_sources_and_exports": [],
+  "integration_sources": [
+    "tech-priests_src/data-final-fixes.lua",
+    "tech-priests_src/data-updates.lua",
+    "tech-priests_src/data.lua",
+    "tech-priests_src/prototypes/bunker_autocannon.lua",
+    "tech-priests_src/prototypes/bunker_autocannon_graphics.lua",
+    "tech-priests_src/prototypes/categories/item-group.lua",
+    "tech-priests_src/prototypes/categories/recipe-category.lua",
+    "tech-priests_src/prototypes/compatibility/factoryplanner.lua",
+    "tech-priests_src/prototypes/compatibility/informatron.lua",
+    "tech-priests_src/prototypes/compatibility/mechanicus-reborn.lua",
+    "tech-priests_src/prototypes/compatibility/native_crafting_categories_1275.lua",
+    "tech-priests_src/prototypes/compatibility/native_fuel_categories_1272.lua",
+    "tech-priests_src/prototypes/compatibility/native_recipe_schema_1274.lua",
+    "tech-priests_src/prototypes/compatibility/native_robot_door_1273.lua",
+    "tech-priests_src/prototypes/compatibility/quality.lua",
+    "tech-priests_src/prototypes/compatibility/space-age.lua",
+    "tech-priests_src/prototypes/compatibility/thruster-mounting-visuals.lua",
+    "tech-priests_src/prototypes/conclave_center_0558.lua",
+    "tech-priests_src/prototypes/emergency_miner_no_fuel_0641.lua",
+    "tech-priests_src/prototypes/entity.lua",
+    "tech-priests_src/prototypes/equipment.lua",
+    "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+    "tech-priests_src/prototypes/gui_inner_styles_0635.lua",
+    "tech-priests_src/prototypes/gui_sprites.lua",
+    "tech-priests_src/prototypes/item.lua",
+    "tech-priests_src/prototypes/lean_graphics_0586.lua",
+    "tech-priests_src/prototypes/martian_stone_cache.lua",
+    "tech-priests_src/prototypes/portrait_cells_0520.lua",
+    "tech-priests_src/prototypes/proxy_ammo_capacity_0739.lua",
+    "tech-priests_src/prototypes/recipe.lua",
+    "tech-priests_src/prototypes/sound.lua",
+    "tech-priests_src/prototypes/technology.lua",
+    "tech-priests_src/prototypes/workbench_graphics.lua"
+  ],
+  "production_scripts": [
+    "tools/art/README.md",
+    "tools/art/attach_factorio_prototype.py",
+    "tools/art/audit_png_decode.py",
+    "tools/art/build_model_inventory.py",
+    "tools/art/export_sprites.py",
+    "tools/art/jobs/boiler-v08.json",
+    "tools/art/prepare_boiler_source.py",
+    "tools/art/prepare_lobber_station_rig.py",
+    "tools/art/produce_factorio_asset.py",
+    "tools/art/profiles/boiler-v08.json",
+    "tools/art/render_sprite_frames.py",
+    "tools/art/verify_boiler_production.py",
+    "tools/art/verify_installed_model_sprites.py",
+    "tools/art/verify_lobber_station_rig.py",
+    "tools/art/verify_sprite_master.py"
+  ],
+  "pipeline_scripts": [
+    "tools/factorio-render-pipeline/CALIBRATION_FINDINGS.md",
+    "tools/factorio-render-pipeline/CODEX_WORK_ORDER.md",
+    "tools/factorio-render-pipeline/MOUNT_CALIBRATION_R51_R52.md",
+    "tools/factorio-render-pipeline/MOUNT_CALIBRATION_R53_R58.md",
+    "tools/factorio-render-pipeline/MOUNT_LOAD_PATH_R63_R66.md",
+    "tools/factorio-render-pipeline/OFFICIAL_RELEASED_3D_BENCHMARKS.md",
+    "tools/factorio-render-pipeline/ORIGINAL_FACTORIO_SPRITE_FIRST_RECONSTRUCTION_CONTRACT.md",
+    "tools/factorio-render-pipeline/PRIVATE_REFERENCE_LIBRARY.md",
+    "tools/factorio-render-pipeline/R100_PRIVATE_ORIGINAL_SOURCE_R11_BAFFLE_LINER_CAUSAL_FINDINGS.md",
+    "tools/factorio-render-pipeline/R101_ORIGINAL_SOURCE_VERIFIED_FIRST_BAFFLE_RESULTS.md",
+    "tools/factorio-render-pipeline/R101_R103_PRIVATE_SOURCE_GEOMETRY_CROSS_VALIDATION.md",
+    "tools/factorio-render-pipeline/R101_REAL_SOURCE_BAFFLE_REPROFILE_PIXEL_AND_EDGE_RESULTS.md",
+    "tools/factorio-render-pipeline/R102_R103_GENUINE_SOURCE_MESH_RESULTS_AND_NEXT_SHAPE_TARGETS.md",
+    "tools/factorio-render-pipeline/R105_EIGHT_ORIGINAL_FRAMES_FIN_ROOT_SOURCE_GAP.md",
+    "tools/factorio-render-pipeline/R106_DISCRETE_FIN_TERMINATION_SOURCE_RULE.md",
+    "tools/factorio-render-pipeline/R106_R107_REAR_FIN_SOURCE_COMPARISON_INTERMEDIATE.md",
+    "tools/factorio-render-pipeline/R110_R112_ORIGINAL_SPRITE_THREE_D_GEOMETRY_FINDINGS.md",
+    "tools/factorio-render-pipeline/R110_R113_SOURCE_GEOMETRY_PHYSICAL_AUDIT.md",
+    "tools/factorio-render-pipeline/R116_R118_SOURCE_RECOVERED_GEOMETRY_AUDIT.md",
+    "tools/factorio-render-pipeline/R119_R120_BARE_BELL_FINS_CLEAN_HINGE_RESET.md",
+    "tools/factorio-render-pipeline/R121_R123_ROUND_MASTER_FIN_SOURCE_COMPARISON_AND_NORMALS.md",
+    "tools/factorio-render-pipeline/R124_R125_ORIGINAL_ROUND_MASTER_FIN_SOURCE_REVIEW.md",
+    "tools/factorio-render-pipeline/R126_R127_FIN_SIDEWAYS_CURL_ROOT_CAUSE_AND_FIX.md",
+    "tools/factorio-render-pipeline/R128_REAL_METAL_FIN_EDGE_REFINEMENT.md",
+    "tools/factorio-render-pipeline/R67_R68_NATIVE_SOURCE_INDEXED_EXPORT.md",
+    "tools/factorio-render-pipeline/R69_AUTHENTIC_SOURCE_ANIMATION_MOTION_GAP.md",
+    "tools/factorio-render-pipeline/R71_PHYSICAL_REFRACTORY_SHAPE_RESULTS.md",
+    "tools/factorio-render-pipeline/R73_REAL_SOURCE_CAMERA_OCCLUSION_RESULTS.md",
+    "tools/factorio-render-pipeline/R74_LAP_GEOMETRY_VERIFIED_AND_REJECTED_FOR_FIDELITY.md",
+    "tools/factorio-render-pipeline/R75_CAUSAL_NOZZLE_ISOLATION_FINDINGS.md",
+    "tools/factorio-render-pipeline/R76_REAL_BAFFLE_SECTION_RESULTS.md",
+    "tools/factorio-render-pipeline/R77_AUTHENTIC_FIN_HINGE_SOURCE_AUDIT.md",
+    "tools/factorio-render-pipeline/R77_AUTHENTIC_SOURCE_COMPARISON_RESULTS.md",
+    "tools/factorio-render-pipeline/R79_ACTUAL_SOURCE_FIN_HINGE_PROFILE_RESULTS.md",
+    "tools/factorio-render-pipeline/R80_R81_AUTHENTIC_FIN_TAPER_SHAPE_RESULTS.md",
+    "tools/factorio-render-pipeline/R84_PRIVATE_ORIGINAL_SPRITE_PARAMETER_SWEEP_FINDINGS.md",
+    "tools/factorio-render-pipeline/R85_SOURCE_SPECULATIVE_COMBINED_GEOMETRY_FINDINGS.md",
+    "tools/factorio-render-pipeline/R87_SOURCE_SIDE_HINGE_BESPOKE_SHAPE_FINDINGS.md",
+    "tools/factorio-render-pipeline/R88_R90_ORIGINAL_SPRITE_RECONSTRUCTION_EVIDENCE.md",
+    "tools/factorio-render-pipeline/R91_SOURCE_ORIGINAL_SIDE_HINGE_COMBINED_RESULTS.md",
+    "tools/factorio-render-pipeline/R92_INDEPENDENT_SOURCE_CAST_CONTOUR_RESULTS.md",
+    "tools/factorio-render-pipeline/R93_ORIGINAL_SPRITE_HINGE_OCCLUDER_FINDINGS.md",
+    "tools/factorio-render-pipeline/R94_STITCHED_PLANAR_BELL_SOURCE_COMPARISON_RESULTS.md",
+    "tools/factorio-render-pipeline/R95_PLANAR_HINGE_SOURCE_FIDELITY_REJECTION.md",
+    "tools/factorio-render-pipeline/R96_PRIVATE_ORIGINAL_SOURCE_PIXELS_VS_REAL_BLENDER_RESULTS.md",
+    "tools/factorio-render-pipeline/R97_GENUINE_SOURCE_NONAFFINE_FORGING_COMPARISON_RESULTS.md",
+    "tools/factorio-render-pipeline/R98_AUTHENTIC_SOURCE_NOZZLE_FLARE_REJECTION.md",
+    "tools/factorio-render-pipeline/R99_PRIVATE_SOURCE_SHELL_SECTION_REJECTION.md",
+    "tools/factorio-render-pipeline/README.md",
+    "tools/factorio-render-pipeline/SOURCE_REGISTRATION_R34.md",
+    "tools/factorio-render-pipeline/SOURCE_VISIBLE_GEOMETRY_R27.md",
+    "tools/factorio-render-pipeline/THRUSTER_ENTITY_ASSEMBLY_R17.md",
+    "tools/factorio-render-pipeline/VANILLA_ASSEMBLED_REFERENCE_R12.md",
+    "tools/factorio-render-pipeline/aperture_isolation_r46.py",
+    "tools/factorio-render-pipeline/audit_official_stl_references.py",
+    "tools/factorio-render-pipeline/audit_original_hinge_owners_r117.py",
+    "tools/factorio-render-pipeline/audit_vanilla_atlas.py",
+    "tools/factorio-render-pipeline/bell_quad_visibility_r59.py",
+    "tools/factorio-render-pipeline/bespoke_real_hinge_cast_contours_r87.py",
+    "tools/factorio-render-pipeline/blender_smoke.py",
+    "tools/factorio-render-pipeline/bootstrap.py",
+    "tools/factorio-render-pipeline/camera_sweep_r09.py",
+    "tools/factorio-render-pipeline/camera_sweep_report_r09.py",
+    "tools/factorio-render-pipeline/capture_analysis.py",
+    "tools/factorio-render-pipeline/cast_surface_exposure_r65.py",
+    "tools/factorio-render-pipeline/central_round_master_pressed_spine_r122.py",
+    "tools/factorio-render-pipeline/central_true_curved_master_fin_r121.py",
+    "tools/factorio-render-pipeline/combined_original_mount_geometry_r85.py",
+    "tools/factorio-render-pipeline/eight_frame_original_3d_verification_r105.py",
+    "tools/factorio-render-pipeline/fin_exposure_r56.py",
+    "tools/factorio-render-pipeline/fin_mount_geometry_sweep_r50.py",
+    "tools/factorio-render-pipeline/hanging_fin_candidate_r58.py",
+    "tools/factorio-render-pipeline/hanging_fin_profile_r57.py",
+    "tools/factorio-render-pipeline/hinge_mesh_ownership_r88.py",
+    "tools/factorio-render-pipeline/industrial_detail_r05.py",
+    "tools/factorio-render-pipeline/inspect_real_round_center_normals_r123.py",
+    "tools/factorio-render-pipeline/inward_refractory_shingles_r61.py",
+    "tools/factorio-render-pipeline/isolate_original_source_collars_r111.py",
+    "tools/factorio-render-pipeline/merge_original_forgings_baffle_r103.py",
+    "tools/factorio-render-pipeline/merge_real_source_forgings_baffle_r104.py",
+    "tools/factorio-render-pipeline/mount_loadpath_audit_r63.py",
+    "tools/factorio-render-pipeline/mount_occlusion_diagnostic_r51.py",
+    "tools/factorio-render-pipeline/mount_radial_visibility_r53.py",
+    "tools/factorio-render-pipeline/mount_shape_fit_r52.py",
+    "tools/factorio-render-pipeline/mounted_fin_candidate_r55.py",
+    "tools/factorio-render-pipeline/native_3d_nozzle_part_isolation_r100.py",
+    "tools/factorio-render-pipeline/native_nozzle_geometry_isolation_r75.py",
+    "tools/factorio-render-pipeline/native_render_invariance.py",
+    "tools/factorio-render-pipeline/nozzle_detail_capture_r11.py",
+    "tools/factorio-render-pipeline/nozzle_layer_isolation_r40.py",
+    "tools/factorio-render-pipeline/nozzle_layer_report_r40.py",
+    "tools/factorio-render-pipeline/occlusion_first_hit_r41.py",
+    "tools/factorio-render-pipeline/official_reference_library.py",
+    "tools/factorio-render-pipeline/original_independent_side_casts_r92.py",
+    "tools/factorio-render-pipeline/original_old_roll_occlusion_r93.py",
+    "tools/factorio-render-pipeline/original_source_3d_hinge_remesh_r89.py",
+    "tools/factorio-render-pipeline/physical_chop_rear_fins_r106.py",
+    "tools/factorio-render-pipeline/physical_cut_separate_source_fins_r107.py",
+    "tools/factorio-render-pipeline/physical_existing_baffle_section_r76.py",
+    "tools/factorio-render-pipeline/physical_forty_flute_liner_r102.py",
+    "tools/factorio-render-pipeline/physical_original_refractory_flare_r98.py",
+    "tools/factorio-render-pipeline/physical_sectioned_shell_r99.py",
+    "tools/factorio-render-pipeline/physical_shingle_materials_r62.py",
+    "tools/factorio-render-pipeline/physical_staggered_refractory_lap_r74.py",
+    "tools/factorio-render-pipeline/physical_stamped_refractory_candidate_r71.py",
+    "tools/factorio-render-pipeline/private_authentic_hinge_compare_r78.py",
+    "tools/factorio-render-pipeline/private_original_mount_ranker_r86.py",
+    "tools/factorio-render-pipeline/private_wube_acquire.py",
+    "tools/factorio-render-pipeline/r67_full_native_cycle.py",
+    "tools/factorio-render-pipeline/r68_original_atlas_page_layout.py",
+    "tools/factorio-render-pipeline/r69_authentic_source_motion_gap.py",
+    "tools/factorio-render-pipeline/real_independent_center_ear_r79.py",
+    "tools/factorio-render-pipeline/real_liner_baffle_reprofile_r101.py",
+    "tools/factorio-render-pipeline/real_source_correct_fin_taper_r80.py",
+    "tools/factorio-render-pipeline/rebuild_bare_bell_fins_three_simple_hinges_r120.py",
+    "tools/factorio-render-pipeline/reference_compare_r07.py",
+    "tools/factorio-render-pipeline/reference_rig_diagnostics.py",
+    "tools/factorio-render-pipeline/refine_one_round_center_source_fin_r124.py",
+    "tools/factorio-render-pipeline/refine_square_plate_edges_r128.py",
+    "tools/factorio-render-pipeline/refractory_first_hit_atlas_r73.py",
+    "tools/factorio-render-pipeline/refractory_shingle_depth_r60.py",
+    "tools/factorio-render-pipeline/remove_axial_curl_real_3d_square_master_r127.py",
+    "tools/factorio-render-pipeline/render_shell_short_return_r42.py",
+    "tools/factorio-render-pipeline/report_occlusion_first_hit_r41.py",
+    "tools/factorio-render-pipeline/report_shell_short_return_r42.py",
+    "tools/factorio-render-pipeline/requirements.txt",
+    "tools/factorio-render-pipeline/rim_clearance_r54.py",
+    "tools/factorio-render-pipeline/run_calibration.py",
+    "tools/factorio-render-pipeline/run_occlusion_first_hit_r41.py",
+    "tools/factorio-render-pipeline/run_shell_short_return_r42.py",
+    "tools/factorio-render-pipeline/save_connected_cast_candidate_r66.py",
+    "tools/factorio-render-pipeline/scene_capture_batch.py",
+    "tools/factorio-render-pipeline/scene_verify.py",
+    "tools/factorio-render-pipeline/sculpted_thruster_r04.py",
+    "tools/factorio-render-pipeline/setup-codex-linux.sh",
+    "tools/factorio-render-pipeline/source_3d_shape_correspondence_r70.py",
+    "tools/factorio-render-pipeline/source_asymmetric_sidewalls_r97.py",
+    "tools/factorio-render-pipeline/source_baffle_physical_registration_r101.py",
+    "tools/factorio-render-pipeline/source_bespoke_cupped_petals_r108.py",
+    "tools/factorio-render-pipeline/source_blue_rolled_toe_one_master_r125.py",
+    "tools/factorio-render-pipeline/source_blunt_taper_fin_r81.py",
+    "tools/factorio-render-pipeline/source_combined_hinge_knees_r91.py",
+    "tools/factorio-render-pipeline/source_continuous_forged_side_shoulders_r111.py",
+    "tools/factorio-render-pipeline/source_discrete_cast_facets_r96.py",
+    "tools/factorio-render-pipeline/source_fin_mount_ears_r77.py",
+    "tools/factorio-render-pipeline/source_flared_real_forged_petals_r109.py",
+    "tools/factorio-render-pipeline/source_folded_stepped_root_brackets_r114.py",
+    "tools/factorio-render-pipeline/source_individual_forged_root_tabs_r113.py",
+    "tools/factorio-render-pipeline/source_individual_hinge_casts_r110.py",
+    "tools/factorio-render-pipeline/source_knee_guard_size_sweep_r90.py",
+    "tools/factorio-render-pipeline/source_original_straight_fin_recovery_r116.py",
+    "tools/factorio-render-pipeline/source_rear_pressure_roll_forging_r112.py",
+    "tools/factorio-render-pipeline/source_subtractive_L_shoulder_casts_r115.py",
+    "tools/factorio-render-pipeline/source_thin_independent_pressed_plates_r112.py",
+    "tools/factorio-render-pipeline/source_three_existing_cast_zone_r118.py",
+    "tools/factorio-render-pipeline/source_vs_native_capture_r34.py",
+    "tools/factorio-render-pipeline/spec-template.json",
+    "tools/factorio-render-pipeline/speculative_real_cast_alignment_r84.py",
+    "tools/factorio-render-pipeline/stitched_original_side_hinges_r95.py",
+    "tools/factorio-render-pipeline/stitched_source_bell_panels_r94.py",
+    "tools/factorio-render-pipeline/straight_azimuth_fin_sweep_r83.py",
+    "tools/factorio-render-pipeline/straight_existing_fin_spines_r82.py",
+    "tools/factorio-render-pipeline/straight_square_edge_master_fin_r126.py",
+    "tools/factorio-render-pipeline/strip_to_bell_fin_inventory_r119.py",
+    "tools/factorio-render-pipeline/test_aperture_isolation_r46.py",
+    "tools/factorio-render-pipeline/test_atlas_audit.py",
+    "tools/factorio-render-pipeline/test_audit_official_stl_references.py",
+    "tools/factorio-render-pipeline/test_bell_quad_visibility_r59.py",
+    "tools/factorio-render-pipeline/test_bootstrap.py",
+    "tools/factorio-render-pipeline/test_fin_exposure_r56.py",
+    "tools/factorio-render-pipeline/test_fin_mount_geometry_sweep_r50.py",
+    "tools/factorio-render-pipeline/test_hanging_fin_candidate_r58.py",
+    "tools/factorio-render-pipeline/test_hanging_fin_profile_r57.py",
+    "tools/factorio-render-pipeline/test_inward_refractory_shingles_r61.py",
+    "tools/factorio-render-pipeline/test_mount_occlusion_diagnostic_r51.py",
+    "tools/factorio-render-pipeline/test_mount_radial_visibility_r53.py",
+    "tools/factorio-render-pipeline/test_mount_shape_fit_r52.py",
+    "tools/factorio-render-pipeline/test_mounted_fin_candidate_r55.py",
+    "tools/factorio-render-pipeline/test_nozzle_layer_isolation_r40.py",
+    "tools/factorio-render-pipeline/test_official_reference_library.py",
+    "tools/factorio-render-pipeline/test_original_sprite_reference_authority.py",
+    "tools/factorio-render-pipeline/test_physical_shingle_materials_r62.py",
+    "tools/factorio-render-pipeline/test_r108_true_3d_petal_geometry.py",
+    "tools/factorio-render-pipeline/test_r109_forged_real_mesh_sections.py",
+    "tools/factorio-render-pipeline/test_r110_original_hinge_cast_geometry.py",
+    "tools/factorio-render-pipeline/test_r67_full_native_cycle.py",
+    "tools/factorio-render-pipeline/test_r68_original_atlas_page_layout.py",
+    "tools/factorio-render-pipeline/test_r69_authentic_source_motion_gap.py",
+    "tools/factorio-render-pipeline/test_rear_fin_material_roundtrip.py",
+    "tools/factorio-render-pipeline/test_refractory_shingle_depth_r60.py",
+    "tools/factorio-render-pipeline/test_rim_clearance_r54.py",
+    "tools/factorio-render-pipeline/test_source_3d_shape_correspondence_r70.py",
+    "tools/factorio-render-pipeline/test_source_vs_native_capture_r34.py",
+    "tools/factorio-render-pipeline/test_thruster_entity_layers_r17.py",
+    "tools/factorio-render-pipeline/test_thruster_motion_r14.py",
+    "tools/factorio-render-pipeline/test_validate_spec.py",
+    "tools/factorio-render-pipeline/test_vane_layout_r22.py",
+    "tools/factorio-render-pipeline/test_vanilla_animation_cycle_r32.py",
+    "tools/factorio-render-pipeline/test_vanilla_axial_patina_r44.py",
+    "tools/factorio-render-pipeline/test_vanilla_beige_radial_skids_r29.py",
+    "tools/factorio-render-pipeline/test_vanilla_bespoke_fin_mounts_r49.py",
+    "tools/factorio-render-pipeline/test_vanilla_broader_fins_rearward_collar_r48.py",
+    "tools/factorio-render-pipeline/test_vanilla_cone_interior_r19.py",
+    "tools/factorio-render-pipeline/test_vanilla_cupped_radial_skids_r31.py",
+    "tools/factorio-render-pipeline/test_vanilla_deep_aperture_and_long_fins_r47.py",
+    "tools/factorio-render-pipeline/test_vanilla_depth_patina_r43.py",
+    "tools/factorio-render-pipeline/test_vanilla_distal_motion_r18.py",
+    "tools/factorio-render-pipeline/test_vanilla_evidence_prune_r27.py",
+    "tools/factorio-render-pipeline/test_vanilla_inner_fin_proportions_r35.py",
+    "tools/factorio-render-pipeline/test_vanilla_legacy_bell_trim_r42.py",
+    "tools/factorio-render-pipeline/test_vanilla_master_fin_r21.py",
+    "tools/factorio-render-pipeline/test_vanilla_open_drum_r20.py",
+    "tools/factorio-render-pipeline/test_vanilla_open_liner_flutes_r39.py",
+    "tools/factorio-render-pipeline/test_vanilla_outer_skid_covers_r25.py",
+    "tools/factorio-render-pipeline/test_vanilla_refractory_depth_r38.py",
+    "tools/factorio-render-pipeline/test_vanilla_refractory_visibility_r37.py",
+    "tools/factorio-render-pipeline/test_vanilla_source_guard_motion_r36.py",
+    "tools/factorio-render-pipeline/test_vanilla_source_tail_profile_r33.py",
+    "tools/factorio-render-pipeline/test_vanilla_throat_mounts_r45.py",
+    "tools/factorio-render-pipeline/test_vanilla_underslung_clamshell_r28.py",
+    "tools/factorio-render-pipeline/thruster_entity_layers_r17.py",
+    "tools/factorio-render-pipeline/thruster_motion_audit_r14.py",
+    "tools/factorio-render-pipeline/thruster_profile_r06.py",
+    "tools/factorio-render-pipeline/upper_hull_loadpath_candidate_r64.py",
+    "tools/factorio-render-pipeline/upper_real_mesh_ownership_r104.py",
+    "tools/factorio-render-pipeline/validate_spec.py",
+    "tools/factorio-render-pipeline/vane_layout_r22.py",
+    "tools/factorio-render-pipeline/vanilla_afterburner_r11.py",
+    "tools/factorio-render-pipeline/vanilla_animation_cycle_r32.py",
+    "tools/factorio-render-pipeline/vanilla_animation_cycle_report_r32.py",
+    "tools/factorio-render-pipeline/vanilla_axial_patina_r44.py",
+    "tools/factorio-render-pipeline/vanilla_beige_radial_skids_r29.py",
+    "tools/factorio-render-pipeline/vanilla_benchmark_r07.py",
+    "tools/factorio-render-pipeline/vanilla_bespoke_fin_mounts_r49.py",
+    "tools/factorio-render-pipeline/vanilla_broader_fins_rearward_collar_r48.py",
+    "tools/factorio-render-pipeline/vanilla_cone_interior_r19.py",
+    "tools/factorio-render-pipeline/vanilla_cupped_radial_skids_r31.py",
+    "tools/factorio-render-pipeline/vanilla_deep_aperture_and_long_fins_r47.py",
+    "tools/factorio-render-pipeline/vanilla_depth_patina_r43.py",
+    "tools/factorio-render-pipeline/vanilla_distal_motion_r18.py",
+    "tools/factorio-render-pipeline/vanilla_evidence_prune_r27.py",
+    "tools/factorio-render-pipeline/vanilla_inner_fin_proportions_r35.py",
+    "tools/factorio-render-pipeline/vanilla_legacy_bell_trim_r42.py",
+    "tools/factorio-render-pipeline/vanilla_master_fin_r21.py",
+    "tools/factorio-render-pipeline/vanilla_mechanical_r13.py",
+    "tools/factorio-render-pipeline/vanilla_open_drum_r20.py",
+    "tools/factorio-render-pipeline/vanilla_open_liner_flutes_r39.py",
+    "tools/factorio-render-pipeline/vanilla_outer_skid_covers_r25.py",
+    "tools/factorio-render-pipeline/vanilla_pipe_overlays_r07.py",
+    "tools/factorio-render-pipeline/vanilla_refractory_depth_r38.py",
+    "tools/factorio-render-pipeline/vanilla_refractory_visibility_r37.py",
+    "tools/factorio-render-pipeline/vanilla_shell_short_return_r42.py",
+    "tools/factorio-render-pipeline/vanilla_source_guard_motion_r36.py",
+    "tools/factorio-render-pipeline/vanilla_source_tail_profile_r33.py",
+    "tools/factorio-render-pipeline/vanilla_static_mechanisms_r15.py",
+    "tools/factorio-render-pipeline/vanilla_throat_mounts_r45.py",
+    "tools/factorio-render-pipeline/vanilla_underslung_clamshell_r28.py",
+    "tools/factorio-render-pipeline/vanilla_vane_supports_r16.py",
+    "tools/factorio-render-pipeline/vanilla_visual_refinement_r08.py",
+    "tools/factorio-render-pipeline/verify_official_geometry_integrity.py"
+  ],
+  "unresolved_requested_assets": [
+    "lumberyard",
+    "metallic-hydrogen pellet production chain",
+    "large plasma reactor"
+  ],
+  "no_automatic_done_claims": true
+}
