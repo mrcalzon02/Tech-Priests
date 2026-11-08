@@ -134,6 +134,22 @@ local function damaged_chain_receipt(route)
       phase="complete",built_entity=sites[12]}}
   return p,obj
 end
+-- A completed pre-upgrade ADMIN CREATIVE 0338 rail can survive a save,
+-- but its physical entity was never paid for. The current live 0338 guard
+-- only sees active tasks, so 0836 must refuse this persisted terminal receipt.
+local creative_pair,creative_mission=damaged_chain_receipt({
+  segment=0,direction=4,start_position={x=12,y=0},built_units={}})
+creative_pair.construction_last_task_0338.creative_build=true
+local creative_accepted,creative_why=Track.verify_pending(creative_pair)
+assert(not creative_accepted
+  and creative_why=="physical-rail-creative-receipt-forbidden"
+  and creative_mission.status=="rail-track-blocked"
+  and creative_mission.rail_frontier_0836.segment==0
+  and #creative_mission.rail_frontier_0836.built_units==0
+  and creative_mission.pending_rail_0836
+  and sites[12] and sites[12].unit_number==2101
+  and item_count==699,
+  "persisted creative-built rail was credited as a counted 0338 item debit")
 local missing_ledger,missing_ledger_mission=damaged_chain_receipt({
   segment=0,direction=4,start_position={x=12,y=0}})
 local missing_ok,missing_why=Track.verify_pending(missing_ledger)

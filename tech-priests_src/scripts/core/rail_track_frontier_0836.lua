@@ -267,6 +267,13 @@ function M.verify_pending(pair)
     return false,"physical-builder-in-progress"
   end
   local previous=pair.construction_last_task_0338
+  -- A saved terminal 0338 receipt can predate the live creative-build guard.
+  -- An admin-built rail is a real entity but NOT a physical item debit;
+  -- never import that old completion as counted railway after reload.
+  if previous and previous.request_value==pending.request
+      and previous.phase=="complete" and previous.creative_build==true then
+    return reject(m,"physical-rail-creative-receipt-forbidden")
+  end
   if not(previous and previous.request_value==pending.request
       and previous.phase=="complete" and valid(previous.built_entity)
       and previous.built_entity.name=="straight-rail"
