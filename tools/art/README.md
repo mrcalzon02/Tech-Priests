@@ -57,3 +57,7 @@ The exporter records per-size layer measurements in its production receipt and c
 The boiler job's `boiler_circuit_attachment` binds a measured stationary source object, model-space mount, prepared-native SHA-256, case scale and tint. `boiler_circuit_attachment.py` projects the mount and its ground shadow through the same camera, yaw permutation and per-direction sprite registration as the body. It emits the inline `boiler_circuit_attachment.lua` template; no runtime Python or extra game script is needed. Native case sprites, wire pins, LED offsets and wire shadows move/scale together, while native variants, connectivity IDs and wire reach remain unchanged.
 
 Keep both helper files beside the producer. Packaging rejects a capture from a different source hash before creating output: reopen/remeasure the fixed source mount and update its evidence before changing that binding. Changing only camera or sprite registration automatically reprojects the connector. The actual packaging pilot, stale-source rejection and four connected/disconnected native orientations are documented in `docs/art/boiler-v08-wire-attachments/`.
+
+## Boiler cold-pose model interchange
+
+`boiler_interchange/` contains the exercised hash-guarded static branch builder, raw GLB audit, independent reimport/source comparison, actual mating-plane/socket checks and CPU render review. See `docs/art/boiler-v08-glb/README.md` for full commands and limitations. This branch does not replace the production animation or installed sprites; runtime ports and directional placement remain fixed.

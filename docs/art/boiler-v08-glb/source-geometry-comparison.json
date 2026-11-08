@@ -1,0 +1,1857 @@
+{
+  "status": "PASS_SOURCE_TO_STATIC_INTERCHANGE_GEOMETRY",
+  "scope": "All 264 visible source meshes at cold frame 0; exact surviving vertex-index/material triangle multisets and full indexed world-space vertex arrays within 1e-6 model units. Microscopic invalid/sliver triangles explicitly excluded by area < 1e-10 or minimum edge < 1e-6 model units. UV repairs are intentional and independently audited; hidden reference pipes and steam are excluded.",
+  "parts": [
+    {
+      "name": "Boiler continuous foundation",
+      "retained_triangles": 268,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Boiler left continuous frame rail",
+      "retained_triangles": 276,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Boiler right continuous frame rail",
+      "retained_triangles": 276,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Boiler central load bearing chassis",
+      "retained_triangles": 518,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Boiler right machinery deck",
+      "retained_triangles": 220,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Main vessel front rolled rim",
+      "retained_triangles": 1728,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Main vessel saddle 0",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Main vessel saddle 1",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Auxiliary vessel lower retaining band",
+      "retained_triangles": 1536,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Auxiliary vessel ground foot",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 0 / V32 cover screw 16 dark se",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 0 / V32 cover screw 16 low slo",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 1 / V32 cover screw 16 dark se",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 1 / V32 cover screw 16 low slo",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 2 / V32 cover screw 16 dark se",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 2 / V32 cover screw 16 low slo",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 3 / V32 cover screw 16 dark se",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 3 / V32 cover screw 16 low slo",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 4 / V32 cover screw 16 dark se",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 4 / V32 cover screw 16 low slo",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 5 / V32 cover screw 16 dark se",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 5 / V32 cover screw 16 low slo",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head lens protection bar -0.012",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head lens protection bar 0",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head lens protection bar 0.012",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right crown rim fastener 0 / V32 cover screw 16 dark seat",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right crown rim fastener 0 / V32 cover screw 16 low slotted hea",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right crown rim fastener 1 / V32 cover screw 16 dark seat",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right crown rim fastener 1 / V32 cover screw 16 low slotted hea",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right crown rim fastener 2 / V32 cover screw 16 dark seat",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right crown rim fastener 2 / V32 cover screw 16 low slotted hea",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right crown rim fastener 3 / V32 cover screw 16 dark seat",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right crown rim fastener 3 / V32 cover screw 16 low slotted hea",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right pressure glass dark frame",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right pressure amber glass",
+      "retained_triangles": 84,
+      "removed_numerical_triangles": 24,
+      "removed_surface_area_model_units_squared": 0.0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right pressure sight glass side rail -0.014",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right pressure sight glass side rail 0.014",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right pressure sight glass end rail -0.045",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right pressure sight glass end rail 0.045",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Small chamber encircling rim 0.006",
+      "retained_triangles": 1536,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Small chamber encircling rim 0.13",
+      "retained_triangles": 1536,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Small chamber top longitudinal strap",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Small chamber strap fastener 0.016 / V32 cover screw 16 dark se",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Small chamber strap fastener 0.016 / V32 cover screw 16 low slo",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Small chamber strap fastener 0.145 / V32 cover screw 16 dark se",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Small chamber strap fastener 0.145 / V32 cover screw 16 low slo",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Middle cap thin dark seam",
+      "retained_triangles": 1536,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right lower gauge grounded mount",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right lower gauge supporting stem",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Gauge foot fastener -0.027 / V32 cover screw 16 dark seat",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Gauge foot fastener -0.027 / V32 cover screw 16 low slotted hea",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Gauge foot fastener 0.027 / V32 cover screw 16 dark seat",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Gauge foot fastener 0.027 / V32 cover screw 16 low slotted head",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Gauge rear elbow housing",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Gauge rear top fastener / V32 cover screw 16 dark seat",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Gauge rear top fastener / V32 cover screw 16 low slotted head",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Tank rear to central head continuous feed",
+      "retained_triangles": 616,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central to right chamber interconnect",
+      "retained_triangles": 616,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Left long return into auxiliary sphere",
+      "retained_triangles": 616,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Left return coupling 0",
+      "retained_triangles": 768,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Left return coupling 1",
+      "retained_triangles": 768,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Middle cap to right lower gauge",
+      "retained_triangles": 616,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Boiler inclined front control housing",
+      "retained_triangles": 300,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Boiler LCD perimeter plate",
+      "retained_triangles": 160,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Boiler LCD recessed black back",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Boiler recessed LCD glass",
+      "retained_triangles": 84,
+      "removed_numerical_triangles": 24,
+      "removed_surface_area_model_units_squared": 2.7653026289708546e-08,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console indicator 0 shaft",
+      "retained_triangles": 960,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console indicator 1 shaft",
+      "retained_triangles": 960,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console square button 0 dark bezel",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console square button 0 inset face",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console square button 1 dark bezel",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console square button 1 inset face",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console square button 2 dark bezel",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console square button 2 inset face",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console square button 3 dark bezel",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console square button 3 inset face",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console square button 4 dark bezel",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console square button 4 inset face",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console mounting screw 0 / V32 cover screw 16 dark seat",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Console mounting screw 0 / V32 cover screw 16 low slotted head",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Console mounting screw 1 / V32 cover screw 16 dark seat",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Console mounting screw 1 / V32 cover screw 16 low slotted head",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Console mounting screw 2 / V32 cover screw 16 dark seat",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Console mounting screw 2 / V32 cover screw 16 low slotted head",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Console mounting screw 3 / V32 cover screw 16 dark seat",
+      "retained_triangles": 252,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Console mounting screw 3 / V32 cover screw 16 low slotted head",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Boiler left front ground-depth retaining strap",
+      "retained_triangles": 220,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Boiler right front ground-depth retaining strap",
+      "retained_triangles": 220,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Boiler front exposed crossmember",
+      "retained_triangles": 220,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 main vessel rolled band 0",
+      "retained_triangles": 3456,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 main vessel rolled band 1",
+      "retained_triangles": 3456,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 main vessel rolled band 2",
+      "retained_triangles": 3456,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 main vessel rolled band 3",
+      "retained_triangles": 3456,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 main vessel longitudinal retaining strap",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 main vessel dished front cap",
+      "retained_triangles": 2448,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 main cap inner rolled seam",
+      "retained_triangles": 1728,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 central head deep rounded optical hood",
+      "retained_triangles": 2160,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 small chamber arched visor hood",
+      "retained_triangles": 336,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 small chamber recessed green pane",
+      "retained_triangles": 84,
+      "removed_numerical_triangles": 24,
+      "removed_surface_area_model_units_squared": 2.587634666341688e-10,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 small visor protection bar 0",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 small visor protection bar 1",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 small visor bolted ear 0",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 small visor bolted ear 1",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 right chamber casing stiffener 0",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 right chamber casing stiffener 1",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 right chamber casing stiffener 2",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 right chamber casing stiffener 3",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 right lower gauge front collar",
+      "retained_triangles": 1152,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 main tank to small chamber lateral connection",
+      "retained_triangles": 256,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 console lower return pipe",
+      "retained_triangles": 736,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 console return frame receiver",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 console return seated union 0",
+      "retained_triangles": 768,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 console return seated union 1",
+      "retained_triangles": 768,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 raised front service plinth",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 plinth narrow rolled edge segment 00",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 plinth narrow rolled edge segment 01",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 plinth narrow rolled edge segment 02",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 plinth narrow rolled edge segment 03",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Boiler main horizontal vessel",
+      "retained_triangles": 1148,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Boiler front spherical auxiliary vessel",
+      "retained_triangles": 2208,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head deck support pedestal",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head lower mounting foot",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head bottom vessel flange",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head upright valve body",
+      "retained_triangles": 1178,
+      "removed_numerical_triangles": 2,
+      "removed_surface_area_model_units_squared": 0.0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head upper shoulder band",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head upper valve crown",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head stepped crown rim",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head central crown plate",
+      "retained_triangles": 1412,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head recessed green optic",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right sight chamber deck foot",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right sight chamber mounting foot",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right sight chamber foot to shell neck",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right sight chamber lower ring",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right sight chamber pressure body",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right sight chamber upper flange",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right sight chamber crown plate",
+      "retained_triangles": 1276,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right chamber top center fastener",
+      "retained_triangles": 140,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Front small horizontal chamber",
+      "retained_triangles": 1202,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Middle right lower body",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Middle right lower rim",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Middle right upper service flange",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Middle right recessed circular cover",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Right lower gauge front coupling",
+      "retained_triangles": 572,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Right lower gauge orange glass core",
+      "retained_triangles": 572,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Right lower gauge rear union",
+      "retained_triangles": 572,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Right lower gauge rear metal pipe",
+      "retained_triangles": 572,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Right lower gauge glass guard 0",
+      "retained_triangles": 188,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Right lower gauge glass guard 1.5707963267948966",
+      "retained_triangles": 188,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Right lower gauge glass guard 3.141592653589793",
+      "retained_triangles": 188,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 2.9802322387695312e-08
+    },
+    {
+      "name": "Right lower gauge glass guard 4.71238898038469",
+      "retained_triangles": 188,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Rear feed seated union 0",
+      "retained_triangles": 140,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Rear feed seated union 1",
+      "retained_triangles": 140,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Chamber interconnect union 0",
+      "retained_triangles": 140,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Chamber interconnect union 1",
+      "retained_triangles": 140,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Left return vessel receiver",
+      "retained_triangles": 380,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console indicator 0 rounded cover",
+      "retained_triangles": 960,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Console indicator 1 rounded cover",
+      "retained_triangles": 960,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 large vessel strap screw 0 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 large vessel strap screw 0 low slotted head",
+      "retained_triangles": 396,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 large vessel strap screw 1 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 large vessel strap screw 1 low slotted head",
+      "retained_triangles": 396,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 front band crown fastener flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 front band crown fastener low slotted head",
+      "retained_triangles": 396,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 crown recessed inner plate",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 crown bolt washer",
+      "retained_triangles": 572,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 crown center hex nut",
+      "retained_triangles": 284,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 right cap inset center",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 visor ear fastener 0 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 visor ear fastener 0 low slotted head",
+      "retained_triangles": 396,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 visor ear fastener 1 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 visor ear fastener 1 low slotted head",
+      "retained_triangles": 396,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cap mounting ear 0",
+      "retained_triangles": 220,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 0 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 0 low slotted head",
+      "retained_triangles": 396,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cap mounting ear 1",
+      "retained_triangles": 220,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 1 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 1 low slotted head",
+      "retained_triangles": 396,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cap mounting ear 2",
+      "retained_triangles": 220,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 2 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 2 low slotted head",
+      "retained_triangles": 396,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cap mounting ear 3",
+      "retained_triangles": 220,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 3 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 3 low slotted head",
+      "retained_triangles": 396,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cap mounting ear 4",
+      "retained_triangles": 220,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 4 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 4 low slotted head",
+      "retained_triangles": 396,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cap mounting ear 5",
+      "retained_triangles": 220,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 5 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 middle cover slotted screw 5 low slotted head",
+      "retained_triangles": 396,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 pressure window bezel screw -0.043 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 pressure window bezel screw -0.043 low slotted head",
+      "retained_triangles": 400,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 pressure window bezel screw 0.043 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 pressure window bezel screw 0.043 low slotted head",
+      "retained_triangles": 400,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 lower gauge inset end cover",
+      "retained_triangles": 572,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "V02 small chamber feed coupling 0",
+      "retained_triangles": 140,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 small chamber feed coupling 1",
+      "retained_triangles": 140,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 plinth source fastener 0 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 plinth source fastener 0 low slotted head",
+      "retained_triangles": 400,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 plinth source fastener 1 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 plinth source fastener 1 low slotted head",
+      "retained_triangles": 400,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 plinth source fastener 2 flanged seat",
+      "retained_triangles": 476,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 plinth source fastener 2 low slotted head",
+      "retained_triangles": 400,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 crown recessed inner plate.001",
+      "retained_triangles": 6524,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head upright valve body.001",
+      "retained_triangles": 1178,
+      "removed_numerical_triangles": 2,
+      "removed_surface_area_model_units_squared": 0.0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head upper valve crown.001",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head upper shoulder band.001",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head stepped crown rim.001",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head lower mounting foot.001",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head deck support pedestal.001",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 1.1920928955078125e-07
+    },
+    {
+      "name": "Central head central crown plate.001",
+      "retained_triangles": 1412,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head bottom vessel flange.001",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 5 / V32 cover screw 16 low slo.001",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 4 / V32 cover screw 16 low slo.001",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 3 / V32 cover screw 16 low slo.001",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 2 / V32 cover screw 16 low slo.001",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 1 / V32 cover screw 16 low slo.001",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central crown perimeter fastener 0 / V32 cover screw 16 low slo.001",
+      "retained_triangles": 1260,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "V02 main tank to small chamber lateral connection.001",
+      "retained_triangles": 256,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 1.4901161193847656e-08
+    },
+    {
+      "name": "V02 central head deep rounded optical hood.001",
+      "retained_triangles": 2160,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Central head recessed green optic.001",
+      "retained_triangles": 764,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water seated vessel receiver",
+      "retained_triangles": 2048,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water vessel union rim",
+      "retained_triangles": 2048,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam seated vessel receiver",
+      "retained_triangles": 2048,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam vessel union rim",
+      "retained_triangles": 2048,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water circular interface manifold",
+      "retained_triangles": 32755,
+      "removed_numerical_triangles": 649,
+      "removed_surface_area_model_units_squared": 1.5567083264605412e-07,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water full-size bolted inlet flange",
+      "retained_triangles": 2048,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water circular bolted face cover",
+      "retained_triangles": 2048,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water circumferential support strap",
+      "retained_triangles": 2048,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water circular cover bolt 0",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water circular cover bolt 1",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water circular cover bolt 2",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water circular cover bolt 3",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water circular cover bolt 4",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water circular cover bolt 5",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 7.450580596923828e-09
+    },
+    {
+      "name": "Water circular cover bolt 6",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 7.450580596923828e-09
+    },
+    {
+      "name": "Water circular cover bolt 7",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam circular interface manifold",
+      "retained_triangles": 25100,
+      "removed_numerical_triangles": 284,
+      "removed_surface_area_model_units_squared": 3.3308303610833386e-08,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam full-size bolted inlet flange",
+      "retained_triangles": 2048,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam circular bolted face cover",
+      "retained_triangles": 2048,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam circumferential support strap",
+      "retained_triangles": 2048,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam circular cover bolt 0",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam circular cover bolt 1",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam circular cover bolt 2",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam circular cover bolt 3",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam circular cover bolt 4",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam circular cover bolt 5",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 7.450580596923828e-09
+    },
+    {
+      "name": "Steam circular cover bolt 6",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 7.450580596923828e-09
+    },
+    {
+      "name": "Steam circular cover bolt 7",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water rear cage upright",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water rear cage anchor foot",
+      "retained_triangles": 12,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Water upper manifold diagonal support",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Water lower manifold diagonal support",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam rear cage upright",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam rear cage anchor foot",
+      "retained_triangles": 12,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Steam upper manifold diagonal support",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Steam lower manifold diagonal support",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Rear cage upper crossmember",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Rear cage lower crossmember",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Rear cage diagonal brace rising",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 1.1920928955078125e-07
+    },
+    {
+      "name": "Rear cage diagonal brace falling",
+      "retained_triangles": 108,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 5.960464477539063e-08
+    },
+    {
+      "name": "Rear cage corner fastener",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Rear cage corner fastener.001",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Rear cage corner fastener.002",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    },
+    {
+      "name": "Rear cage corner fastener.003",
+      "retained_triangles": 20,
+      "removed_numerical_triangles": 0,
+      "removed_surface_area_model_units_squared": 0,
+      "max_world_vertex_delta": 0.0
+    }
+  ],
+  "max_world_vertex_delta": 1.1920928955078125e-07,
+  "removed_numerical_triangles": 1009,
+  "removed_surface_area_model_units_squared": 2.1689092601323023e-07
+}

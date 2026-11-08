@@ -1,0 +1,2184 @@
+{
+  "status": "CANDIDATE_EXPORTED_REQUIRES_INDEPENDENT_INSPECTION",
+  "source_sha256": "eb6aad420f04d7ca3b13933fb0323228252d569233690bac5b2c87bb3751a93d",
+  "builder_sha256": "fab9af93648e32dd736613b49cdf966d898896e70fdefb6e76f89a0da4350182",
+  "scope": "Static cold-pose interchange branch, not replacement sprite/animation authority. Existing animation/render source stays untouched.",
+  "parts": [
+    {
+      "name": "Boiler continuous foundation",
+      "triangles": 268,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 6.578190249175961,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Boiler left continuous frame rail",
+      "triangles": 276,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.6651766264500842,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Boiler right continuous frame rail",
+      "triangles": 276,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.6455265052044388,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Boiler central load bearing chassis",
+      "triangles": 518,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 3.9279250433162303,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 65
+    },
+    {
+      "name": "Boiler right machinery deck",
+      "triangles": 220,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 1.3641193662207196,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Main vessel front rolled rim",
+      "triangles": 1728,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.16584977037818174,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Main vessel saddle 0",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.20534673794566577,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Main vessel saddle 1",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.20534665701122212,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Auxiliary vessel lower retaining band",
+      "triangles": 1536,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.05776263806643313,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Auxiliary vessel ground foot",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.10774125291835274,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central crown perimeter fastener 0 / V32 cover screw 16 dark se",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0003461431210603549,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central crown perimeter fastener 0 / V32 cover screw 16 low slo",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0004253856245449319,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Central crown perimeter fastener 1 / V32 cover screw 16 dark se",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00034614321278431256,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central crown perimeter fastener 1 / V32 cover screw 16 low slo",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00042538562558566527,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Central crown perimeter fastener 2 / V32 cover screw 16 dark se",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00034614314165386316,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central crown perimeter fastener 2 / V32 cover screw 16 low slo",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0004253856276236716,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Central crown perimeter fastener 3 / V32 cover screw 16 dark se",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00034614314019090276,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central crown perimeter fastener 3 / V32 cover screw 16 low slo",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0004253856416690496,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Central crown perimeter fastener 4 / V32 cover screw 16 dark se",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0003461430987963237,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central crown perimeter fastener 4 / V32 cover screw 16 low slo",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0004253856831973535,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Central crown perimeter fastener 5 / V32 cover screw 16 dark se",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00034614316866060527,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central crown perimeter fastener 5 / V32 cover screw 16 low slo",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00042538567672615474,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Central head lens protection bar -0.012",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0016897984316600987,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head lens protection bar 0",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0020028352269685066,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head lens protection bar 0.012",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.001689797351963125,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right crown rim fastener 0 / V32 cover screw 16 dark seat",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.000384935235659386,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right crown rim fastener 0 / V32 cover screw 16 low slotted hea",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0004730573170588158,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Right crown rim fastener 1 / V32 cover screw 16 dark seat",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00038493550836542174,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right crown rim fastener 1 / V32 cover screw 16 low slotted hea",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00047305756687068573,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Right crown rim fastener 2 / V32 cover screw 16 dark seat",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.000384935530800019,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right crown rim fastener 2 / V32 cover screw 16 low slotted hea",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00047305752999995504,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Right crown rim fastener 3 / V32 cover screw 16 dark seat",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0003849352482339306,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right crown rim fastener 3 / V32 cover screw 16 low slotted hea",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00047305728194098204,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Right pressure glass dark frame",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.035200646154778886,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right pressure amber glass",
+      "triangles": 84,
+      "collapsed_or_numerical_sliver_triangles_removed": 24,
+      "surviving_surface_area": 0.008222177162069431,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right pressure sight glass side rail -0.014",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.007772409134840294,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right pressure sight glass side rail 0.014",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0077724168719673185,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right pressure sight glass end rail -0.045",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0026397259687938827,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right pressure sight glass end rail 0.045",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0026397125071698376,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Small chamber encircling rim 0.006",
+      "triangles": 1536,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.04980862378940404,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Small chamber encircling rim 0.13",
+      "triangles": 1536,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.04980862375873707,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Small chamber top longitudinal strap",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.013249312779339965,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Small chamber strap fastener 0.016 / V32 cover screw 16 dark se",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0005931925878460319,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Small chamber strap fastener 0.016 / V32 cover screw 16 low slo",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0007289919973678529,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Small chamber strap fastener 0.145 / V32 cover screw 16 dark se",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0005931926484405859,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Small chamber strap fastener 0.145 / V32 cover screw 16 low slo",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.000728992007875318,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Middle cap thin dark seam",
+      "triangles": 1536,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.007934793076272963,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right lower gauge grounded mount",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.05166960551495754,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right lower gauge supporting stem",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.05193014113448228,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Gauge foot fastener -0.027 / V32 cover screw 16 dark seat",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0005291142469611054,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Gauge foot fastener -0.027 / V32 cover screw 16 low slotted hea",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0006502428464072906,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Gauge foot fastener 0.027 / V32 cover screw 16 dark seat",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0005291142607942733,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Gauge foot fastener 0.027 / V32 cover screw 16 low slotted head",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0006502428701420067,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Gauge rear elbow housing",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0672178240528261,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Gauge rear top fastener / V32 cover screw 16 dark seat",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0009268660781094642,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Gauge rear top fastener / V32 cover screw 16 low slotted head",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0011390493086892506,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Tank rear to central head continuous feed",
+      "triangles": 616,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.05159320799950585,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central to right chamber interconnect",
+      "triangles": 616,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.02554968207594381,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Left long return into auxiliary sphere",
+      "triangles": 616,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.1009459876642811,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Left return coupling 0",
+      "triangles": 768,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00779320670298039,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Left return coupling 1",
+      "triangles": 768,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.007793224439225744,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Middle cap to right lower gauge",
+      "triangles": 616,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.04451389694042877,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Boiler inclined front control housing",
+      "triangles": 300,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.6408955350885934,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Boiler LCD perimeter plate",
+      "triangles": 160,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0750168346543828,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Boiler LCD recessed black back",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.09038059972943162,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Boiler recessed LCD glass",
+      "triangles": 84,
+      "collapsed_or_numerical_sliver_triangles_removed": 24,
+      "surviving_surface_area": 0.0673216395465181,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 6
+    },
+    {
+      "name": "Console indicator 0 shaft",
+      "triangles": 960,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0026266808268907613,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console indicator 1 shaft",
+      "triangles": 960,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.002626680023690444,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console square button 0 dark bezel",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00913554638877595,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console square button 0 inset face",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0033020886886775567,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console square button 1 dark bezel",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00913554619329149,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console square button 1 inset face",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00330208784166631,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console square button 2 dark bezel",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.009135544141679372,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console square button 2 inset face",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.003302088398775176,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console square button 3 dark bezel",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.009135545564357741,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console square button 3 inset face",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.003302088310939499,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console square button 4 dark bezel",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00913554245190718,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console square button 4 inset face",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0033020861274075672,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console mounting screw 0 / V32 cover screw 16 dark seat",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0006436562343587136,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console mounting screw 0 / V32 cover screw 16 low slotted head",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0007910062360782277,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Console mounting screw 1 / V32 cover screw 16 dark seat",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0006436563277221341,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console mounting screw 1 / V32 cover screw 16 low slotted head",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.000791006129716021,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Console mounting screw 2 / V32 cover screw 16 dark seat",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0006436564526769666,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console mounting screw 2 / V32 cover screw 16 low slotted head",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0007910062905704331,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Console mounting screw 3 / V32 cover screw 16 dark seat",
+      "triangles": 252,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0006436565541516127,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console mounting screw 3 / V32 cover screw 16 low slotted head",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0007910061884779909,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Boiler left front ground-depth retaining strap",
+      "triangles": 220,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.12222897225640265,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Boiler right front ground-depth retaining strap",
+      "triangles": 220,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.11638206374023576,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Boiler front exposed crossmember",
+      "triangles": 220,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.17934187578131988,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 main vessel rolled band 0",
+      "triangles": 3456,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.14411631121348759,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 main vessel rolled band 1",
+      "triangles": 3456,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.14411618588487438,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 main vessel rolled band 2",
+      "triangles": 3456,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.14411613100463555,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 main vessel rolled band 3",
+      "triangles": 3456,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.14411611727458032,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 main vessel longitudinal retaining strap",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.028025164366194573,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 main vessel dished front cap",
+      "triangles": 2448,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.22435587564316703,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 main cap inner rolled seam",
+      "triangles": 1728,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.011016077083710683,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 central head deep rounded optical hood",
+      "triangles": 2160,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.045625036334019334,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 small chamber arched visor hood",
+      "triangles": 336,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.037381199831469494,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 4
+    },
+    {
+      "name": "V02 small chamber recessed green pane",
+      "triangles": 84,
+      "collapsed_or_numerical_sliver_triangles_removed": 24,
+      "surviving_surface_area": 0.008250546497788721,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 small visor protection bar 0",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0014153397446782273,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 small visor protection bar 1",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0014153405463091793,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 small visor bolted ear 0",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.007214835562509542,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 small visor bolted ear 1",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00721483911932471,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 right chamber casing stiffener 0",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.019467035394462245,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 right chamber casing stiffener 1",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.019467071519341465,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 right chamber casing stiffener 2",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.01946705922797607,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 right chamber casing stiffener 3",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.01946705655696331,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 right lower gauge front collar",
+      "triangles": 1152,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.01182315829436783,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 main tank to small chamber lateral connection",
+      "triangles": 256,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.009329184487130127,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 console lower return pipe",
+      "triangles": 736,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.022524165279956085,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 console return frame receiver",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.011140099566156953,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 console return seated union 0",
+      "triangles": 768,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.007389441785497678,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 console return seated union 1",
+      "triangles": 768,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00738944733939332,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 raised front service plinth",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.26838125778680677,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 plinth narrow rolled edge segment 00",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.014172743845717744,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 plinth narrow rolled edge segment 01",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0035293581640933962,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 plinth narrow rolled edge segment 02",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.014172752553051495,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 plinth narrow rolled edge segment 03",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0035293325229989536,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Boiler main horizontal vessel",
+      "triangles": 1148,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 1.5462699088457885,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Boiler front spherical auxiliary vessel",
+      "triangles": 2208,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.2572890643718883,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head deck support pedestal",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.19991769192127076,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head lower mounting foot",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.20805174813467167,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head bottom vessel flange",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.19023681325086095,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head upright valve body",
+      "triangles": 1178,
+      "collapsed_or_numerical_sliver_triangles_removed": 2,
+      "surviving_surface_area": 0.3773300321369357,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head upper shoulder band",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.17925002676203627,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head upper valve crown",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.16648602727905856,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head stepped crown rim",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.1097251108536607,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head central crown plate",
+      "triangles": 1412,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.08361661013047232,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head recessed green optic",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.011256299615175344,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right sight chamber deck foot",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.14327971680982443,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right sight chamber mounting foot",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.1914256418999034,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right sight chamber foot to shell neck",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.10749786605996306,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right sight chamber lower ring",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.17191160184653842,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right sight chamber pressure body",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.38038722908239686,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right sight chamber upper flange",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.16847529400787536,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right sight chamber crown plate",
+      "triangles": 1276,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.10177659435926757,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right chamber top center fastener",
+      "triangles": 140,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0070086230407077855,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Front small horizontal chamber",
+      "triangles": 1202,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.3233200116076562,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Middle right lower body",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.2260077085941382,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Middle right lower rim",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.1572776970359046,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Middle right upper service flange",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.18387864578552723,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Middle right recessed circular cover",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.09197076828038661,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right lower gauge front coupling",
+      "triangles": 572,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.03745898158474541,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right lower gauge orange glass core",
+      "triangles": 572,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.04437933158456295,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right lower gauge rear union",
+      "triangles": 572,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.02914652378651136,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right lower gauge rear metal pipe",
+      "triangles": 572,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.10997713407425316,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right lower gauge glass guard 0",
+      "triangles": 188,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.007086768137977662,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right lower gauge glass guard 1.5707963267948966",
+      "triangles": 188,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.007086768137977662,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right lower gauge glass guard 3.141592653589793",
+      "triangles": 188,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.007086773837196546,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Right lower gauge glass guard 4.71238898038469",
+      "triangles": 188,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.007086225608657058,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Rear feed seated union 0",
+      "triangles": 140,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.01693977133712543,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Rear feed seated union 1",
+      "triangles": 140,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.01693436925441019,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Chamber interconnect union 0",
+      "triangles": 140,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.01613894238539822,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Chamber interconnect union 1",
+      "triangles": 140,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.01613326195700153,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Left return vessel receiver",
+      "triangles": 380,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.015276228659435715,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console indicator 0 rounded cover",
+      "triangles": 960,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00225090892688914,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Console indicator 1 rounded cover",
+      "triangles": 960,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0022509097563453593,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 large vessel strap screw 0 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.005799303048876178,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 large vessel strap screw 0 low slotted head",
+      "triangles": 396,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.003934288243698946,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 large vessel strap screw 1 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.005799302940906406,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 large vessel strap screw 1 low slotted head",
+      "triangles": 396,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.003934288467528141,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 front band crown fastener flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.004890284188702912,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 front band crown fastener low slotted head",
+      "triangles": 396,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0033704696246233557,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 crown recessed inner plate",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.02794285323076042,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 crown bolt washer",
+      "triangles": 572,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.011709684861199526,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 crown center hex nut",
+      "triangles": 284,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.008148588464622509,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 right cap inset center",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.039756360469209516,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 visor ear fastener 0 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0026254126065725584,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 visor ear fastener 0 low slotted head",
+      "triangles": 396,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0019320269942353081,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 visor ear fastener 1 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0026254128051303497,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 visor ear fastener 1 low slotted head",
+      "triangles": 396,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0019320269186754214,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cap mounting ear 0",
+      "triangles": 220,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.005030823142081627,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 0 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.002315337834142329,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 0 low slotted head",
+      "triangles": 396,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0017291808083082518,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cap mounting ear 1",
+      "triangles": 220,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.005030823276175244,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 1 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0023153378538277028,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 1 low slotted head",
+      "triangles": 396,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0017291811574883722,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cap mounting ear 2",
+      "triangles": 220,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.005030823256965495,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 2 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0023153380911521693,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 2 low slotted head",
+      "triangles": 396,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0017291813144444054,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cap mounting ear 3",
+      "triangles": 220,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.005030822971013399,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 3 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00231533832452508,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 3 low slotted head",
+      "triangles": 396,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.001729180855019757,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cap mounting ear 4",
+      "triangles": 220,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.005030823377833806,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 4 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0023153376207405486,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 4 low slotted head",
+      "triangles": 396,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0017291811176215828,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cap mounting ear 5",
+      "triangles": 220,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0050308234278685325,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 5 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0023153373714478722,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 middle cover slotted screw 5 low slotted head",
+      "triangles": 396,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0017291809612277535,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 pressure window bezel screw -0.043 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0010538178738844731,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 pressure window bezel screw -0.043 low slotted head",
+      "triangles": 400,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0008730972595218855,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 pressure window bezel screw 0.043 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0010538178738844731,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 pressure window bezel screw 0.043 low slotted head",
+      "triangles": 400,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0008730972595218855,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 lower gauge inset end cover",
+      "triangles": 572,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.012241065979737422,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 small chamber feed coupling 0",
+      "triangles": 140,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.010606528477431858,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 small chamber feed coupling 1",
+      "triangles": 140,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.010606526469255582,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 plinth source fastener 0 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0015006529932507615,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 plinth source fastener 0 low slotted head",
+      "triangles": 400,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.001183902305503634,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 plinth source fastener 1 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0015006529426667158,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 plinth source fastener 1 low slotted head",
+      "triangles": 400,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0011839021123170024,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 plinth source fastener 2 flanged seat",
+      "triangles": 476,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0015006530569007359,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 plinth source fastener 2 low slotted head",
+      "triangles": 400,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0011839022142091904,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 crown recessed inner plate.001",
+      "triangles": 6524,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.13173253215701997,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 2591
+    },
+    {
+      "name": "Central head upright valve body.001",
+      "triangles": 1178,
+      "collapsed_or_numerical_sliver_triangles_removed": 2,
+      "surviving_surface_area": 0.798460106355363,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head upper valve crown.001",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.35229761607203014,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head upper shoulder band.001",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.37930718481447756,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head stepped crown rim.001",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.23218694457629896,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head lower mounting foot.001",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.7469464976783671,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head deck support pedestal.001",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.8959906523794068,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head central crown plate.001",
+      "triangles": 1412,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.17693931445909997,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head bottom vessel flange.001",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.40255613290423153,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central crown perimeter fastener 5 / V32 cover screw 16 low slo.001",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0009001477214574628,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Central crown perimeter fastener 4 / V32 cover screw 16 low slo.001",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0009001477834692442,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Central crown perimeter fastener 3 / V32 cover screw 16 low slo.001",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0009001477558757433,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Central crown perimeter fastener 2 / V32 cover screw 16 low slo.001",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0009001477834692442,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Central crown perimeter fastener 1 / V32 cover screw 16 low slo.001",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0009001477214574628,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "Central crown perimeter fastener 0 / V32 cover screw 16 low slo.001",
+      "triangles": 1260,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0009001477214574628,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 8
+    },
+    {
+      "name": "V02 main tank to small chamber lateral connection.001",
+      "triangles": 256,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.009329190962152378,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "V02 central head deep rounded optical hood.001",
+      "triangles": 2160,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.051752270497882225,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Central head recessed green optic.001",
+      "triangles": 764,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.01276796918260247,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water seated vessel receiver",
+      "triangles": 2048,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.12757963570072317,
+      "new_axial_uv": true,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water vessel union rim",
+      "triangles": 2048,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.06534850128598964,
+      "new_axial_uv": true,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam seated vessel receiver",
+      "triangles": 2048,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.1275796055564124,
+      "new_axial_uv": true,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam vessel union rim",
+      "triangles": 2048,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.06534843070519367,
+      "new_axial_uv": true,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water circular interface manifold",
+      "triangles": 32755,
+      "collapsed_or_numerical_sliver_triangles_removed": 649,
+      "surviving_surface_area": 1.8979495431406226,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 27576
+    },
+    {
+      "name": "Water full-size bolted inlet flange",
+      "triangles": 2048,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.6143352584084929,
+      "new_axial_uv": true,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water circular bolted face cover",
+      "triangles": 2048,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.4694194427957157,
+      "new_axial_uv": true,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water circumferential support strap",
+      "triangles": 2048,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.20562122184389833,
+      "new_axial_uv": true,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water circular cover bolt 0",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944534673541552,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water circular cover bolt 1",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944534673541552,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water circular cover bolt 2",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944511000869383,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water circular cover bolt 3",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944511000869383,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water circular cover bolt 4",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944511000869383,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water circular cover bolt 5",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.002194450629129712,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water circular cover bolt 6",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00219445290482764,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water circular cover bolt 7",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944534673541552,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam circular interface manifold",
+      "triangles": 25100,
+      "collapsed_or_numerical_sliver_triangles_removed": 284,
+      "surviving_surface_area": 1.823013005957229,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 19338
+    },
+    {
+      "name": "Steam full-size bolted inlet flange",
+      "triangles": 2048,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.6143352584084929,
+      "new_axial_uv": true,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam circular bolted face cover",
+      "triangles": 2048,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.4694194427957157,
+      "new_axial_uv": true,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam circumferential support strap",
+      "triangles": 2048,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.20562122184389833,
+      "new_axial_uv": true,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam circular cover bolt 0",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944534673541552,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam circular cover bolt 1",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944534673541552,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam circular cover bolt 2",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944511000869383,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam circular cover bolt 3",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944511000869383,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam circular cover bolt 4",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944511000869383,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam circular cover bolt 5",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.002194450629129712,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam circular cover bolt 6",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.00219445290482764,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam circular cover bolt 7",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0021944534673541552,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water rear cage upright",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.09708936216388843,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water rear cage anchor foot",
+      "triangles": 12,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.10676998446751651,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water upper manifold diagonal support",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.027238076664251726,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Water lower manifold diagonal support",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.020137859409319336,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam rear cage upright",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.09708936216388843,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam rear cage anchor foot",
+      "triangles": 12,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.10676998446751651,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam upper manifold diagonal support",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.027238076435699064,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Steam lower manifold diagonal support",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.02013785927994872,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Rear cage upper crossmember",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.19425016377497417,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Rear cage lower crossmember",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.1942500990777963,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Rear cage diagonal brace rising",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.11405015250978262,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Rear cage diagonal brace falling",
+      "triangles": 108,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.11405010230381005,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Rear cage corner fastener",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0025226149317813403,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Rear cage corner fastener.001",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0025226149317813403,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Rear cage corner fastener.002",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0025226149317813403,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    },
+    {
+      "name": "Rear cage corner fastener.003",
+      "triangles": 20,
+      "collapsed_or_numerical_sliver_triangles_removed": 0,
+      "surviving_surface_area": 0.0025226149317813403,
+      "new_axial_uv": false,
+      "collapsed_uv_triangles_reprojected": 0
+    }
+  ],
+  "excluded_hidden_reference_and_effect_objects": [
+    "Water reference one-tile barrel",
+    "Water reference near collar",
+    "Water reference far collar",
+    "Steam reference one-tile barrel",
+    "Steam reference near collar",
+    "Steam reference far collar",
+    "V08 nozzle steam puff 00",
+    "V08 nozzle steam puff 01",
+    "V08 nozzle steam puff 02",
+    "V08 nozzle steam puff 03",
+    "V08 nozzle steam puff 04",
+    "V08 nozzle steam puff 05",
+    "V08 nozzle steam puff 06",
+    "V08 nozzle steam puff 07",
+    "V08 nozzle steam puff 08",
+    "V08 nozzle steam puff 09",
+    "V08 nozzle steam puff 10",
+    "V08 nozzle steam puff 11",
+    "V08 nozzle steam puff 12",
+    "V08 nozzle steam puff 13",
+    "V08 nozzle steam puff 14",
+    "V08 nozzle steam puff 15"
+  ],
+  "sockets": {
+    "water": {
+      "position": [
+        -1,
+        0.5,
+        0.36
+      ],
+      "outward": [
+        -1,
+        0,
+        0
+      ]
+    },
+    "steam": {
+      "position": [
+        1,
+        0.5,
+        0.36
+      ],
+      "outward": [
+        1,
+        0,
+        0
+      ]
+    },
+    "circuit_mount": {
+      "position": [
+        0.6671270728111267,
+        0.9216609597206116,
+        0.8431828022003174
+      ],
+      "outward": [
+        0,
+        0,
+        1
+      ]
+    }
+  },
+  "native_sha256": "2757de80d2d4df47b307eda96151dfb3aec9e0318e6e8e5a3208849944e7b71e",
+  "glb_sha256": "a5045873dbb1c969998c02b661358b09de649904d36dc01c7b534258f460cf48"
+}

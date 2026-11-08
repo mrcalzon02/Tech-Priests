@@ -1,0 +1,120 @@
+{
+  "status": "ALL_EIGHT_RGBA_RENDERS_DECODED_NO_CLIPPING",
+  "images": [
+    {
+      "file": "approved-source-front.png",
+      "sha256": "3b3d4d382d8185704efc2708ecf9270cc2b3f5aae212f34809b3526803f2b9c3",
+      "alpha_bbox": [
+        32,
+        126,
+        613,
+        578
+      ],
+      "alpha_pixels": 163815
+    },
+    {
+      "file": "glb-front.png",
+      "sha256": "a8e8eeca5272d0580c0972442d36c5b7fe883867ac37095a556085880a07902c",
+      "alpha_bbox": [
+        32,
+        126,
+        613,
+        578
+      ],
+      "alpha_pixels": 163815
+    },
+    {
+      "file": "approved-source-rear.png",
+      "sha256": "b7e16f3f8c750cf4222bf8b3733e0370d08b31e23babe391401193cdfeaaa7b7",
+      "alpha_bbox": [
+        26,
+        213,
+        610,
+        559
+      ],
+      "alpha_pixels": 145235
+    },
+    {
+      "file": "glb-rear.png",
+      "sha256": "6cf567dfdd0fa48c3e2b095ca9f80816f62b2cd9ccd97a5020c030ab8656efb5",
+      "alpha_bbox": [
+        26,
+        213,
+        610,
+        559
+      ],
+      "alpha_pixels": 145235
+    },
+    {
+      "file": "glb-left.png",
+      "sha256": "65fa4a4846e3579e4d078ecd91cc4bb69d5a5b417fe0f780c7afcd04fa5520cf",
+      "alpha_bbox": [
+        30,
+        125,
+        621,
+        581
+      ],
+      "alpha_pixels": 158142
+    },
+    {
+      "file": "glb-right.png",
+      "sha256": "3e5559360620be0c09a91f502ce0d20f4e0e0506979eaad57ae9292b4aefdb40",
+      "alpha_bbox": [
+        17,
+        175,
+        608,
+        562
+      ],
+      "alpha_pixels": 148004
+    },
+    {
+      "file": "glb-clay-front.png",
+      "sha256": "f5014a08ffa22d67b9cf6f4d09ac4add33bff77a6da4c9a0bd251f9899e6f7b7",
+      "alpha_bbox": [
+        32,
+        126,
+        613,
+        578
+      ],
+      "alpha_pixels": 163815
+    },
+    {
+      "file": "glb-clay-rear.png",
+      "sha256": "55701765089e06cd9c1771beb707686c4bb4ca9a7a102df51a2de6a3f16a2fab",
+      "alpha_bbox": [
+        26,
+        213,
+        610,
+        559
+      ],
+      "alpha_pixels": 145235
+    }
+  ],
+  "source_to_glb_native_render_difference": [
+    {
+      "view": "front",
+      "background": 0,
+      "mean_abs_code_delta_foreground": 0.09129665039412586,
+      "max_code_delta": 23.000000000000004
+    },
+    {
+      "view": "front",
+      "background": 1,
+      "mean_abs_code_delta_foreground": 0.09129665039412585,
+      "max_code_delta": 23.000000000000004
+    },
+    {
+      "view": "rear",
+      "background": 0,
+      "mean_abs_code_delta_foreground": 0.1311774673950782,
+      "max_code_delta": 22.000000000000007
+    },
+    {
+      "view": "rear",
+      "background": 1,
+      "mean_abs_code_delta_foreground": 0.1311774673950782,
+      "max_code_delta": 22.000000000000007
+    }
+  ],
+  "pixel_identity_claimed": false
+}

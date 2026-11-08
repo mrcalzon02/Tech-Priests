@@ -702,3 +702,7 @@ Review failed real run 40250345448: `reversal-carrying-real-leaf-item-to-magos` 
 ## 2026-11-08 — Graphics-only optional sprite import check
 
 The model-completion lane verified fresh Factorio 2.1.24 graphical fixtures with Mechanicus Reborn physically absent and version 0.0.3 enabled. Five byte-identical licensed sheets in the local namespace replace the failing optional namespace; the 10 priest and 5 corpse graphic definitions match between profiles. Source image/notice hashes, load receipts, frozen-unit views and the source map are in `docs/art/priest-sprite-import/`. This evidence covers resource/prototype graphics loading only. It does not execute or satisfy the behavioral goals above, migration/save tests, profiler gates or release authorization, and does not approve final priest 3D/animation art.
+
+### Boiler static model interchange — graphics-only acceptance
+
+The separate cold-pose native/GLB branch passes raw geometry/UV/normal/image inspection, indexed source-geometry preservation, independent reopen/reimport, fixed mating planes and cage-mount bounds, and all four existing sprite draw projections. Eight source/GLB/clay CPU renders were viewed. See `docs/art/boiler-v08-glb/`. Production animation source, sprites, physical ports, recipes and behavior are untouched. No GLB animation, behavior/regression suite, release readiness or full model-family completion is claimed.

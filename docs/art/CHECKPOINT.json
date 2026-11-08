@@ -17,7 +17,8 @@
     "Recovered editable boiler V08 locally from exact approved V07b and unchanged authoring scripts; 270 mesh hashes, packed textures, prepared motion/loop gates and eight local pilot renders verified",
     "Boiler native cold/working state layers: all 768 source working composites checked, native filtering defect repaired, four-way cold/working/stopped views and 30-sample native loop reviewed; physical registrations unchanged",
     "Boiler circuit mounts derived from a fixed cage-top point: 98 static source frames, 24 native sprite transforms, red/green pins and wire shadows checked; four connected/disconnected native directions reviewed",
-    "Mechanicus-independent priest sprite loading: five exact MIT PNG copies with attribution; both absent/enabled native profiles loaded, 10 unit and 5 corpse graphic definitions identical; all 203 entity PNGs verified"
+    "Mechanicus-independent priest sprite loading: five exact MIT PNG copies with attribution; both absent/enabled native profiles loaded, 10 unit and 5 corpse graphic definitions identical; all 203 entity PNGs verified",
+    "Boiler G5 static cold-pose interchange: 264 meshes / 224311 triangles, source geometry preservation, 13 embedded images / 29 materials, native reopen + actual GLB reimport, fixed sockets/bounds and eight viewed local CPU renders"
   ],
   "verification": {
     "graphical_client": "Targeted native Factorio 2.1.24 attachment/placement slice reviewed: four custom thrusters + vanilla control, connected/disconnected caps, four boiler directions; other assets and working-state/wire gates remain open",
@@ -31,17 +32,17 @@
     "boiler_editable_source": "docs/art/boiler-v08-source-recovery: new reconstructed native at profile path, independently reopened; not historical Library binary identity or complete atlas equivalence",
     "boiler_cold_working": "docs/art/boiler-v08-state-layers: reviewed static cold + conditional full-pose activity; 768 source cell composites within 2/255, native module and loop bound to hashes; wires remain open",
     "boiler_circuit_attachments": "docs/art/boiler-v08-wire-attachments: native four-way connected/disconnected review, exact module binding, Blender projection, native geometry readback and actual exporter/stale-source guard pass",
-    "priest_sprite_import": "docs/art/priest-sprite-import: verified native 2.1.24 loading with package physically absent and version 0.0.3 enabled; source PNGs exact, artwork/model quality not reclassified"
+    "priest_sprite_import": "docs/art/priest-sprite-import: verified native 2.1.24 loading with package physically absent and version 0.0.3 enabled; source PNGs exact, artwork/model quality not reclassified",
+    "boiler_static_interchange": "docs/art/boiler-v08-glb/validation.json: source/GLB/native hashes, raw geometry/UV/normal/image audit, source geometry preservation, independent reimport and four directional draw projections; no animated GLB claim"
   },
   "open_defects": [
     "Condenser V21 native source remains Library-linked and unlocated locally",
     "Lumberyard/intermediate pellet-chain designs unlocated; reactor chats located but native v14 bytes unrecovered",
     "A02 full 64-heading capture, final atlases and native graphics integration still incomplete",
     "Energy dish V03 final surfacing/fidelity and firing/emission/shadow/native prototype integration open",
-    "Thruster authored 3D bodies, model exports and final visual acceptance unfinished",
-    "Boiler G5 current-model GLB export/reimport, PBR and socket/bounds inspection is not yet evidenced; native pipe/state/wire review does not close it"
+    "Thruster authored 3D bodies, model exports and final visual acceptance unfinished"
   ],
-  "next_slice": "Continue existing A02 workers without duplication. Complete the current boiler G5 GLB export/reimport/PBR/bounds/socket inspection, then continue authored thruster bodies and the remaining workbench/condenser/bunker/reactor-family ledger gates.",
+  "next_slice": "Preserve the existing A02 workers and verify new chunks; advance the hydrogen thruster authored body against measured native attachment/cap and platform-edge contracts, then remaining thruster/workbench/condenser/bunker/reactor family gates. Boiler cold static GLB does not replace the working animation source.",
   "automation": "tech-priests-local-model-completion, every four hours",
   "publication": "Read exact delivered SHA and status from issue #13; never infer publication from local commit",
   "local_work": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work",
@@ -55,7 +56,7 @@
     "further_artifact_recovery": "Second import completed: 1482 additional PNGs; 48 cached chunks plus four local chunks. 62/68 bundles complete; remaining missing frames render locally.",
     "new_local_profile": "OPTIX / CPU compositor; source and render settings unchanged; numerical differences measured",
     "live_process_claim": "Read actual local-capture-state.json and verify process commands; this committed snapshot is not proof of current liveness",
-    "last_independently_verified_chunks": 229,
+    "last_independently_verified_chunks": 239,
     "packaging": "Use package_local_lobber_capture.py, never the destructive legacy assembler directly on capture cache. Incomplete-cache refusal verified; full packaging pending.",
     "evidence": "docs/art/lobber-a02-latest-progress.json: completed local receipts have all frame hashes rechecked"
   },

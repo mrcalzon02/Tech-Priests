@@ -1,0 +1,351 @@
+{
+  "status": "PASS_ACTUAL_GLB_BOUNDS_MATING_PLANES_FIXED_MOUNT_AND_DIRECTIONAL_DRAW",
+  "glb_sha256": "a5045873dbb1c969998c02b661358b09de649904d36dc01c7b534258f460cf48",
+  "bounds_blender_model_space": [
+    [
+      -1.0,
+      -0.9566717147827148,
+      0.0
+    ],
+    [
+      1.0,
+      0.957518994808197,
+      1.2217613458633423
+    ]
+  ],
+  "ground_z": 0.0,
+  "pipe_flange_contacts": [
+    {
+      "identity": "water",
+      "flange_bounds": [
+        [
+          -1.0,
+          0.1600000262260437,
+          0.020000042393803596
+        ],
+        [
+          -0.9249999523162842,
+          0.8399999737739563,
+          0.699999988079071
+        ]
+      ],
+      "socket_position": [
+        -1.0,
+        0.5,
+        0.36000001430511475
+      ],
+      "plane_error": 0.0
+    },
+    {
+      "identity": "steam",
+      "flange_bounds": [
+        [
+          0.9249999523162842,
+          0.1600000262260437,
+          0.020000042393803596
+        ],
+        [
+          1.0,
+          0.8399999737739563,
+          0.699999988079071
+        ]
+      ],
+      "socket_position": [
+        1.0,
+        0.5,
+        0.36000001430511475
+      ],
+      "plane_error": 0.0
+    }
+  ],
+  "circuit_mount": {
+    "position": [
+      0.6671270728111267,
+      0.9216609597206116,
+      0.8431828022003174
+    ],
+    "support_bounds": [
+      [
+        0.6483641266822815,
+        0.9028980135917664,
+        0.18439480662345886
+      ],
+      [
+        0.6858900189399719,
+        0.9404239058494568,
+        0.8431828022003174
+      ]
+    ]
+  },
+  "directions": [
+    {
+      "native_direction": "north",
+      "source_yaw_degrees": 0,
+      "sockets": {
+        "water": {
+          "rotated_model_position": [
+            -1.0,
+            0.5,
+            0.36000001430511475
+          ],
+          "rotated_outward": [
+            -1.0,
+            0.0,
+            -2.220446049250313e-16
+          ],
+          "source_pixel": [
+            51.582088470458984,
+            127.45957946777344
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            -31.999999999999996,
+            -18.0
+          ]
+        },
+        "steam": {
+          "rotated_model_position": [
+            1.0,
+            0.5,
+            0.36000001430511475
+          ],
+          "rotated_outward": [
+            1.0,
+            0.0,
+            -2.220446049250313e-16
+          ],
+          "source_pixel": [
+            204.41790771484375,
+            127.45957946777344
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            32.0,
+            -18.0
+          ]
+        },
+        "circuit_mount": {
+          "rotated_model_position": [
+            0.6671270728111267,
+            0.9216609597206116,
+            0.8431828022003174
+          ],
+          "rotated_outward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_pixel": [
+            178.98045349121094,
+            78.56578063964844
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            21.348065928777274,
+            -38.47427848046797
+          ]
+        }
+      },
+      "max_mouth_draw_residual_px": 3.552713678800501e-15
+    },
+    {
+      "native_direction": "east",
+      "source_yaw_degrees": 270,
+      "sockets": {
+        "water": {
+          "rotated_model_position": [
+            0.49999991059303284,
+            1.0,
+            0.36000001430511475
+          ],
+          "rotated_outward": [
+            -7.549790126404332e-08,
+            1.0,
+            -2.220446049250313e-16
+          ],
+          "source_pixel": [
+            166.20895385742188,
+            100.44175720214844
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            16.0,
+            -32.0
+          ]
+        },
+        "steam": {
+          "rotated_model_position": [
+            0.5000000596046448,
+            -0.9999999403953552,
+            0.36000001430511475
+          ],
+          "rotated_outward": [
+            7.549790126404332e-08,
+            -1.0,
+            -2.220446049250313e-16
+          ],
+          "source_pixel": [
+            166.20895385742188,
+            208.5130157470703
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            16.0,
+            31.999999999999993
+          ]
+        },
+        "circuit_mount": {
+          "rotated_model_position": [
+            0.9216610193252563,
+            -0.6671270132064819,
+            0.8431828022003174
+          ],
+          "rotated_outward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_pixel": [
+            198.43141174316406,
+            164.41693878173828
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            35.082199397449344,
+            5.886221334156387
+          ]
+        }
+      },
+      "max_mouth_draw_residual_px": 7.105427357601002e-15
+    },
+    {
+      "native_direction": "south",
+      "source_yaw_degrees": 180,
+      "sockets": {
+        "water": {
+          "rotated_model_position": [
+            0.9999999403953552,
+            -0.5000000596046448,
+            0.36000001430511475
+          ],
+          "rotated_outward": [
+            1.0,
+            -8.742277657347586e-08,
+            -2.220446049250313e-16
+          ],
+          "source_pixel": [
+            204.41790771484375,
+            181.49520874023438
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            31.99999999999996,
+            14.000001597404498
+          ]
+        },
+        "steam": {
+          "rotated_model_position": [
+            -1.0,
+            -0.49999991059303284,
+            0.36000001430511475
+          ],
+          "rotated_outward": [
+            -1.0,
+            8.742277657347586e-08,
+            -2.220446049250313e-16
+          ],
+          "source_pixel": [
+            51.582088470458984,
+            181.49520111083984
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            -31.99999999999996,
+            13.999998402595505
+          ]
+        },
+        "circuit_mount": {
+          "rotated_model_position": [
+            -0.6671271324157715,
+            -0.9216609001159668,
+            0.8431828022003174
+          ],
+          "rotated_outward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_pixel": [
+            77.01953887939453,
+            178.17083740234375
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            -21.348067526181744,
+            12.60792108462368
+          ]
+        }
+      },
+      "max_mouth_draw_residual_px": 1.5974044984545803e-06
+    },
+    {
+      "native_direction": "west",
+      "source_yaw_degrees": 90,
+      "sockets": {
+        "water": {
+          "rotated_model_position": [
+            -0.5000000596046448,
+            -0.9999999403953552,
+            0.36000001430511475
+          ],
+          "rotated_outward": [
+            -7.549790126404332e-08,
+            -1.0,
+            -2.220446049250313e-16
+          ],
+          "source_pixel": [
+            89.7910385131836,
+            208.5130157470703
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            -16.00000451814161,
+            31.99999999999968
+          ]
+        },
+        "steam": {
+          "rotated_model_position": [
+            -0.49999991059303284,
+            1.0,
+            0.36000001430511475
+          ],
+          "rotated_outward": [
+            7.549790126404332e-08,
+            1.0,
+            -2.220446049250313e-16
+          ],
+          "source_pixel": [
+            89.79105377197266,
+            100.44175720214844
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            -15.999995481858388,
+            -31.99999999999968
+          ]
+        },
+        "circuit_mount": {
+          "rotated_model_position": [
+            -0.9216609001159668,
+            0.6671271324157715,
+            0.8431828022003174
+          ],
+          "rotated_outward": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "source_pixel": [
+            57.568599700927734,
+            92.31967163085938
+          ],
+          "native_draw_pixel_relative_entity_origin": [
+            -35.08219262023673,
+            -36.8099141581329
+          ]
+        }
+      },
+      "max_mouth_draw_residual_px": 4.518141611953308e-06
+    }
+  ],
+  "mapping_note": "These are source-model sockets and current sprite draw projections. Factorio fluidbox declarations are unchanged; model metres are not claimed to map directly to native grid tiles."
+}

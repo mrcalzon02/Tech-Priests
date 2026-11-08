@@ -1,0 +1,65 @@
+{
+  "status": "PASS_BOILER_G5_STATIC_COLD_INTERCHANGE",
+  "scope": "Static cold-pose model interchange only; production animation source, all eight boiler atlases, generated sprite module, physical ports and native per-direction registration are unchanged. No GLB animation, behavior/regression test, release package or full-goal completion claim.",
+  "source_main_before_slice": "5a0857478fff1c3f2958cc73eb4f9913cca75b7c",
+  "mesh_count": 264,
+  "triangle_count": 224311,
+  "removed_numerical_triangles": 1009,
+  "removed_surface_area_model_units_squared": 2.1689092601323023e-07,
+  "new_axial_uv_fittings": 10,
+  "collapsed_or_numerically_unstable_uv_triangles_reprojected": 49780,
+  "glb_embedded_images": 13,
+  "glb_materials": 29,
+  "max_source_world_vertex_delta": 1.1920928955078125e-07,
+  "max_reimport_world_position_delta": 2.086162567138672e-07,
+  "max_reimport_uv_delta": 4.76837158203125e-07,
+  "max_directional_mouth_draw_error_px": 4.518141611953308e-06,
+  "bounds": [
+    [
+      -1.0,
+      -0.9566717147827148,
+      0.0
+    ],
+    [
+      1.0,
+      0.957518994808197,
+      1.2217613458633423
+    ]
+  ],
+  "eight_real_cpu_renders_viewed": true,
+  "all_render_pngs_decoded_and_unclipped": true,
+  "existing_output_guard": "Exercised: Blender Python exit 12 / FileExistsError before loading or writing; accepted native/GLB hashes remained identical.",
+  "first_builder_failure": "Dependency-graph access violation corrected by snapshotting all evaluated meshes before scene mutation. Failed exports retained locally and compact rejected audits published.",
+  "canonical_git_content_sha256": {
+    "art/source-to-3d/boiler-v08/interchange/boiler-v08-cold-interchange.blend": "2757de80d2d4df47b307eda96151dfb3aec9e0318e6e8e5a3208849944e7b71e",
+    "art/source-to-3d/boiler-v08/interchange/boiler-v08-cold.glb": "a5045873dbb1c969998c02b661358b09de649904d36dc01c7b534258f460cf48",
+    "tools/art/boiler_interchange/audit_glb.py": "5fe9fca5b04a871938ae8f9799fb4ed48467ce4c9cdf9e84d7d5cf2e5fbca54b",
+    "tools/art/boiler_interchange/build.py": "fab9af93648e32dd736613b49cdf966d898896e70fdefb6e76f89a0da4350182",
+    "tools/art/boiler_interchange/compare_source_geometry.py": "593cffaab10353a3d37d81ba2737a578f5bbc8d6f820517d82dfe92c8c827671",
+    "tools/art/boiler_interchange/render_review.py": "c1c8fabe6f6de9a5b4e3bf062b263b4402828ae4aac1b73124bbbba09afcf5b4",
+    "tools/art/boiler_interchange/verify_roundtrip.py": "dc2a06afaa9d63d4b0fc7a62f51e62c09b9b81d3304f17fac5458541ef1afce0",
+    "tools/art/boiler_interchange/verify_sockets.py": "6716fc0354b59668a958fc13b45e83ecd3793ea77ca1f2e35284c55a513da1fc",
+    "art/source-to-3d/boiler-v08/production-source.blend": "eb6aad420f04d7ca3b13933fb0323228252d569233690bac5b2c87bb3751a93d",
+    "tools/art/jobs/boiler-v08.json": "3763a966d527f2ed60417f428d8b26a389a3d22ad19172b97fecd0d7165cec19",
+    "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua": "500cea38944fc2d5b03d35010dcbb21bf84229cb60a276e38a500ddad2bde483",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-idle.png": "64797f650c3787ac08962b94ac284412889f0b53293b18e12603b552e6864d84",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-idle-128.png": "ae8c29a017002376e4fd8f8a303b59288ffc52dad479c7e604b28a0b561ba93f",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-working.png": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-working-128.png": "c1a5fc8df5c6bcef6543b47cf38dbc1c8f7a83d8781c9dca467b35dac9fe9d2b",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-cold.png": "2e45849e38c7e100ed7003ed8169890a63905b5745a248a3d0c1bd27bed2c8dc",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-cold-128.png": "eb811c5aa5b083b4cc501992c5743a6073a76afa1d48b7e0d34169bb393fbd8d",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-activity.png": "2bb3545a99030ea9b4fbb07ea44f23b61573372236a77efee07f545ca967f80f",
+    "tech-priests_src/graphics/entity/emergency-boiler-v08-activity-128.png": "71c3cc082fdfa7b9158d66fdd321fad2ac0d2985f281be62068e7d04318642b8",
+    "tech-priests_src/prototypes/entity.lua": "5e6a9676b2052fc87714c733c8ade8f8bae25026f0c02b0086bd9c7ac68f63cc",
+    "tech-priests_src/prototypes/compatibility/thruster-mounting-visuals.lua": "f10fa6817c5d54991b2a3ccfa9e66faafd5362fc14eb6c497197a3fbbb6156c6",
+    "tech-priests_src/data-final-fixes.lua": "c569acf70db6e1b273c7a5bfeefbd45605e49290cf18189f98516b166c699c3f",
+    "tech-priests_src/info.json": "830f86e119a20eb5c23fd5ea60753271b84bdbaab8ba6f66514a93408d2fe5b3"
+  },
+  "remaining": [
+    "Full A02 capture and prototype integration",
+    "Authored thruster bodies and other model-family gates in the ledger",
+    "No animated GLB was produced; native animated source and existing runtime animation remain their current authorities."
+  ],
+  "reconciled_main_before_publication": "9b1a85fc36dfdd0bdb907fde7eb2ea748fdbf488",
+  "concurrent_changes_preserved": "9b1a85fc rail source-travel repair fast-forwarded; no rail behavior tests run."
+}
