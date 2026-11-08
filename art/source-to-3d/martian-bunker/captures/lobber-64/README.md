@@ -23,10 +23,12 @@ The GitHub workflow `.github/workflows/lobber-bunker-capture.yml` first runs fou
 
 Video encoding streams frames directly to ffmpeg. Raw assembly working copies are removed only after their sheets are written; sheet PNG working copies are removed after their delivery ZIP passes CRC verification, keeping disk use bounded. Raw frames remain available in individual capture-job artifacts.
 
-The assembler requires every expected image, consistent identities, correct RGBA dimensions and clear alpha margins. It writes six 32-frame cycle sheets per heading/pass, separate entry/settle sheets, rotation sheets, a 360° GIF, an all-heading firing movie, eight-heading contact sheet, registration metadata and SHA-256 checksums. Release ZIPs are split by pass below a conservative payload budget. A complete verified batch publishes a prerelease and commits its delivery record; incomplete captures cannot reach that job.
+The assembler requires every expected image, consistent identities, correct RGBA dimensions and clear alpha margins. It writes six 32-frame colour/emission sheets and twelve 16-frame shadow sheets per heading, separate entry/settle sheets, rotation sheets (four pages for shadow; one for colour/emission), a 360° GIF, an all-heading firing movie, eight-heading contact sheet, registration metadata and SHA-256 checksums. Release ZIPs are split by pass below a conservative payload budget. A complete verified batch publishes a prerelease and commits its delivery record; incomplete captures cannot reach that job.
 
 ## Reproduction
 
 Restore source, then run Blender with the saved scene and `validate_scene.py`. Run `render_capture.py -- --direction 0 --chunk 0 --out rendered`, varying direction 0–63 and chunk 0–5. `--pilot` captures idle plus firing/flex samples. Run `verify_pilot.py` after the pilot and `assemble_capture.py --input rendered --output delivery` only after all chunks complete.
 
 `prepare_capture.py` is the provenance/rebuild step and takes `LOBBER_SOURCE` and `BUNKER_CAPTURE_REFERENCE` paths. The original bunker reference SHA-256 is fixed in that script. All textures are packed in the reconstructed source; Python auto-execution is unnecessary for ordinary native playback.
+
+Every delivered sprite sheet is at most 5120 pixels on either axis, below the engine's 8192-pixel input-width limit. The initial capture run is repacked by `lobber-initial-delivery-repack.yml` with the corrected engine-safe layouts; raw render frames and capture identities are unchanged.

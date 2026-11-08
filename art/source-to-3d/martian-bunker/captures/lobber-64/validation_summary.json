@@ -5,5 +5,7 @@
   "workflow_coverage": "PASS: 384 unique direction/chunk jobs in two pilot-gated matrices",
   "local_render_pilot": "PASS: north idle, firing and flex poses; all three passes valid and unclipped",
   "local_pilot_max_chunk_minutes": 115.80298317520064,
-  "full_capture_status": "NOT_STARTED_AT_COMMIT"
+  "full_capture_status": "RUNNING",
+  "engine_sheet_bounds": "PASS: actual pilot shadow packed in a 5120x5120 sixteen-cell sheet; ZIP readback verified",
+  "capture_run_url": "https://github.com/mrcalzon02/Tech-Priests/actions/runs/42429529804"
 }

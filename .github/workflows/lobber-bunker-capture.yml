@@ -4,7 +4,14 @@ name: Alternate bunker lobber rotation and firing capture
     branches:
     - main
     paths:
-    - art/source-to-3d/martian-bunker/captures/lobber-64/**
+    - art/source-to-3d/martian-bunker/captures/lobber-64/source_parts/**
+    - art/source-to-3d/martian-bunker/captures/lobber-64/source_manifest.json
+    - art/source-to-3d/martian-bunker/captures/lobber-64/capture_config.json
+    - art/source-to-3d/martian-bunker/captures/lobber-64/render_capture.py
+    - art/source-to-3d/martian-bunker/captures/lobber-64/capture_common.py
+    - art/source-to-3d/martian-bunker/captures/lobber-64/validate_scene.py
+    - art/source-to-3d/martian-bunker/captures/lobber-64/verify_pilot.py
+    - art/source-to-3d/martian-bunker/captures/lobber-64/restore_source.py
     - .github/workflows/lobber-bunker-capture.yml
   workflow_dispatch: {}
 permissions:
@@ -61,6 +68,7 @@ jobs:
           rendered/'
         if-no-files-found: error
         retention-days: 30
+    if: ${{ !contains(github.event.head_commit.message, '[delivery-only]') }}
   capture_north_half:
     needs: pilot
     runs-on: ubuntu-24.04

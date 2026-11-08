@@ -1,0 +1,78 @@
+name: Repack initial lobber capture with engine-safe sheets
+'on':
+  workflow_run:
+    workflows:
+    - Alternate bunker lobber rotation and firing capture
+    types:
+    - completed
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: lobber-initial-delivery-repack
+  cancel-in-progress: false
+env:
+  CAPTURE: art/source-to-3d/martian-bunker/captures/lobber-64
+jobs:
+  repack:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    permissions:
+      contents: write
+      actions: read
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: art/source-to-3d/martian-bunker/captures/lobber-64
+        filter: blob:none
+        ref: main
+    - name: Restore verified native scene
+      run: python3 "$CAPTURE/restore_source.py"
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install atlas/video tools
+      run: 'python -m pip install Pillow
+
+        sudo apt-get update -qq
+
+        sudo apt-get install -y -qq ffmpeg'
+    - uses: actions/download-artifact@v4
+      with:
+        pattern: lobber-heading-*-chunk-*
+        merge-multiple: true
+        path: rendered
+        run-id: ${{ github.event.workflow_run.id }}
+        github-token: ${{ github.token }}
+    - name: Validate every image and assemble delivery
+      run: python3 "$CAPTURE/assemble_capture.py" --input rendered --output delivery
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Lobber-64-Direction-Verified-Delivery
+        path: 'delivery/*.zip
+
+          delivery/*.gif
+
+          delivery/*.mp4
+
+          delivery/*Contact_Sheet.png
+
+          delivery/*manifest.json
+
+          delivery/checksums.json'
+        if-no-files-found: error
+        retention-days: 90
+    - name: Publish verified capture and record delivery
+      env:
+        GH_TOKEN: ${{ github.token }}
+        RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        SOURCE_COMMIT: ${{ github.event.workflow_run.head_sha }}
+      run: "tag=\"lobber-capture-${GITHUB_RUN_ID}\"\ngh release create \"$tag\" --target \"$GITHUB_SHA\" --title 'Alternate\
+        \ bunker lobber \u2014 64 headings and complete firing cycles' --prerelease --notes \"Verified 64 resting headings,\
+        \ 192-frame eight-second firing cycles, clean entry/settle clips, registered colour/emission/shadow layers, source\
+        \ and checksums. Run: $RUN_URL\" delivery/*.zip delivery/*.gif delivery/*.mp4 delivery/*Contact_Sheet.png delivery/*manifest.json\
+        \ delivery/checksums.json\npython3 \"$CAPTURE/record_delivery.py\"\ngit config user.name 'github-actions[bot]'\ngit\
+        \ config user.email '41898282+github-actions[bot]@users.noreply.github.com'\ngit add \"$CAPTURE/DELIVERY.json\"\n\
+        git commit -m 'Record verified alternate bunker lobber capture delivery'\nfor attempt in 1 2 3; do\n  git fetch origin\
+        \ main\n  git rebase origin/main\n  if git push origin HEAD:main; then exit 0; fi\ndone\nexit 1"
+    if: ${{ github.event.workflow_run.id == 42429529804 && github.event.workflow_run.conclusion != 'cancelled' }}

@@ -44,24 +44,31 @@ def assemble(I,D):
   for f in range(C['entry_frames'],192):add(src/f'cycle_{f:03}.png')
   for f in range(C['settle_frames']):add(src/f'settle_{f:03}.png')
  encoder.stdin.close();assert encoder.wait()==0,'Review video encoding failed'
- directions=[];raw=0
+ directions=[{'direction':d,'orientation':d/64,'yaw_degrees':180-d*5.625,'passes':{}} for d in range(64)];raw=0
  for pas in C['passes']:
-  size=C['shadow_size'] if pas=='shadow' else C['beauty_size'];P=D/pas;P.mkdir(exist_ok=True);rot=Image.new('RGBA',(8*size,8*size))
+  size=C['shadow_size'] if pas=='shadow' else C['beauty_size'];columns=4 if pas=='shadow' else 8;capacity=columns*4;rotation_side=4 if pas=='shadow' else 8;rotation_capacity=rotation_side**2;P=D/pas;P.mkdir(exist_ok=True);rot=None
   for d in range(64):
-   src=I/f'd{d:02}'/pas;idle=image(src/'idle_000.png',size,pas!='emission');raw+=1;rot.paste(idle,((d%8)*size,(d//8)*size));idle.close()
+   src=I/f'd{d:02}'/pas
+   if d%rotation_capacity==0:rot=Image.new('RGBA',(rotation_side*size,rotation_side*size))
+   idle=image(src/'idle_000.png',size,pas!='emission');raw+=1;cell=d%rotation_capacity;rot.paste(idle,((cell%rotation_side)*size,(cell//rotation_side)*size));idle.close()
    for mode,count in [('cycle',192),('entry',C['entry_frames']),('settle',C['settle_frames'])]:
-    for start in range(0,count,32):
-     sheet=Image.new('RGBA',(8*size,4*size));n=min(32,count-start)
+    for start in range(0,count,capacity):
+     sheet=Image.new('RGBA',(columns*size,4*size));n=min(capacity,count-start)
      for j in range(n):
-      im=image(src/f'{mode}_{start+j:03}.png',size,pas!='emission');raw+=1;sheet.paste(im,((j%8)*size,(j//8)*size));im.close()
-     sheet.save(P/f'd{d:02}_{mode}_{start//32:02}.png');sheet.close()
+      im=image(src/f'{mode}_{start+j:03}.png',size,pas!='emission');raw+=1;sheet.paste(im,((j%columns)*size,(j//columns)*size));im.close()
+     assert max(sheet.size)<=8192
+     sheet.save(P/f'd{d:02}_{mode}_{start//capacity:02}.png');sheet.close()
    # Per-heading raw frames remain in the capture job artifacts. Remove
    # assembly working copies once their registered sheets are written.
    for raw_path in src.glob('*.png'):raw_path.unlink()
-   if pas=='beauty':directions.append({'direction':d,'orientation':d/64,'yaw_degrees':180-d*5.625,'cycle':[f'beauty/d{d:02}_cycle_{j:02}.png' for j in range(6)],'entry':f'beauty/d{d:02}_entry_00.png','settle':f'beauty/d{d:02}_settle_00.png'})
-  rot.save(P/'rotation_64.png');rot.close()
+   rotation_file='rotation_64.png' if rotation_capacity==64 else f'rotation_{d//rotation_capacity:02}.png'
+   directions[d]['passes'][pas]={'cycle':[f'{pas}/d{d:02}_cycle_{j:02}.png' for j in range(192//capacity)],'entry':f'{pas}/d{d:02}_entry_00.png','settle':f'{pas}/d{d:02}_settle_00.png','idle_sheet':f'{pas}/{rotation_file}','idle_cell':[cell%rotation_side,cell//rotation_side],'cell_size':[size,size],'columns':columns,'rows':4,'sheet_capacity':capacity}
+   if cell==rotation_capacity-1 or d==63:
+    assert max(rot.size)<=8192
+    rot.save(P/rotation_file);rot.close();rot=None
+
  expected=64*(1+192+C['entry_frames']+C['settle_frames'])*3;assert raw==expected
- meta={'status':'VERIFIED_CAPTURE','source_identity':identities[0],'direction_count':64,'direction_mapping':'north0_clockwise','fps':24,'frame_index_base':0,'shot_events':[{'station':sid,'cycle_frame':i*32,'seconds':i*4/3} for i,sid in enumerate(['TOP_R','TOP_L','MID_R','MID_L','BOT_R','BOT_L'])],'cycle_frames_per_heading':192,'entry_frames_per_heading':C['entry_frames'],'settle_frames_per_heading':C['settle_frames'],'rendered_images':raw,'passes':C['passes'],'sheet_columns':8,'sheet_rows':4,'sheet_capacity':32,'idle_rotation_grid':[8,8],'beauty_emission_cell':[640,640],'shadow_cell':[1280,1280],'shadow_offset_pixels':C['shadow_pixel_offset_from_beauty'],'pixels_per_world_unit':640/C['ortho_scale'],'registration':json.loads((O/'scene_validation.json').read_text()),'directions':directions,'base_included':False}
+ meta={'status':'VERIFIED_CAPTURE','source_identity':identities[0],'direction_count':64,'direction_mapping':'north0_clockwise','fps':24,'frame_index_base':0,'shot_events':[{'station':sid,'cycle_frame':i*32,'seconds':i*4/3} for i,sid in enumerate(['TOP_R','TOP_L','MID_R','MID_L','BOT_R','BOT_L'])],'cycle_frames_per_heading':192,'entry_frames_per_heading':C['entry_frames'],'settle_frames_per_heading':C['settle_frames'],'rendered_images':raw,'passes':C['passes'],'sheet_layouts':{'beauty':{'columns':8,'rows':4,'capacity':32},'emission':{'columns':8,'rows':4,'capacity':32},'shadow':{'columns':4,'rows':4,'capacity':16}},'maximum_sheet_dimension':5120,'idle_rotation_layouts':{'beauty':[8,8,1],'emission':[8,8,1],'shadow':[4,4,4]},'beauty_emission_cell':[640,640],'shadow_cell':[1280,1280],'shadow_offset_pixels':C['shadow_pixel_offset_from_beauty'],'pixels_per_world_unit':640/C['ortho_scale'],'registration':json.loads((O/'scene_validation.json').read_text()),'directions':directions,'base_included':False}
  (D/'capture_manifest.json').write_text(json.dumps(meta,indent=2))
  # Keep individual release archives below a conservative file-size budget.
  files=sorted(p for p in D.rglob('*') if p.is_file());(D/'checksums.json').write_text(json.dumps({str(p.relative_to(D)):hashlib.sha256(p.read_bytes()).hexdigest() for p in files},indent=2))
