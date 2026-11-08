@@ -17,17 +17,25 @@ local force={index=1,technologies={
     railway={researched=true},
     ["automated-rail-transportation"]={researched=true}}}
 force.is_chunk_charted=function(_,sector)
-  return intel and sector.x==16 and sector.y==0
+  return intel and sector.y==0 and (sector.x==8 or sector.x==16)
 end
 local ore={valid=true,name="iron-ore",unit_number=991,
   type="resource",surface=surface,position={x=512,y=0},amount=10000}
+local off_corridor={valid=true,name="iron-ore",unit_number=992,
+  type="resource",surface=surface,position={x=256,y=16},amount=10000}
+local remote_entities={ore}
 surface.find_entities_filtered=function(args)
   assert(args.type=="resource" and args.name=="iron-ore",
     "rail observer searched unrelated entities")
   if args.position then
     return nearby and {{valid=true,amount=10}} or {}
   end
-  return remote and {ore} or {}
+  assert(args.area and args.area[1][1]==192
+      and args.area[1][2]==-6
+      and args.area[2][1]==1024
+      and args.area[2][2]==6,
+    "rail observer did not bound its resource scan to the buildable corridor")
+  return remote and remote_entities or {}
 end
 _G.TechPriestsScanRouting0610={
   find_entities=function(scanned_surface,filters,context)
@@ -52,7 +60,7 @@ local function blocked(want)
 end
 
 intel=false
-blocked("no-charted-remote-ore")
+blocked("no-charted-rail-corridor-ore")
 intel=true
 nearby=true
 blocked("local-patch-available")
@@ -67,8 +75,19 @@ force.technologies.railway.researched=false
 blocked("railway-technology-locked")
 force.technologies.railway.researched=true
 remote=false
-blocked("no-charted-remote-ore")
+blocked("no-charted-rail-corridor-ore")
 remote=true
+-- A closer, charted ore deposit above the eastbound rail corridor must
+-- not permanently divert 0836 into "terrain-route-planner-required".
+remote_entities={off_corridor,ore}
+local corridor_decision,corridor_reason=Rail.assess(pair)
+assert(corridor_reason=="starved-charted-patch"
+    and corridor_decision and corridor_decision.position.x==512
+    and corridor_decision.position.y==0,
+  "nearest off-corridor ore stole the only currently buildable rail mission")
+remote_entities={off_corridor}
+blocked("no-charted-rail-corridor-ore")
+remote_entities={ore}
 local decision,why=Rail.assess(pair)
 assert(why=="starved-charted-patch" and decision and
     decision.item=="iron-ore" and decision.position.x==512

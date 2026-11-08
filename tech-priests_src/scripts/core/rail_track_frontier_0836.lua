@@ -3,7 +3,7 @@
 -- Never build remotely, spawn stock, bypass the dispatcher or use an uncharted
 -- railway destination. Terrain-routing and a runnable railway remain later gates.
 local M={version="0.1.676.0836",start_offset=12,segment_step=2,
-  destination_clearance=16,max_segments=320}
+  destination_clearance=16,max_segments=320,max_lateral_error=6}
 local function valid(e)return e and e.valid==true end
 local function now()return game and game.tick or 0 end
 local function pos(x,y)return{x=x,y=y}end
@@ -78,7 +78,8 @@ function M.plan_next(pair)
   end
   local start=pair.station.position
   local target=m.target
-  if math.abs(target.y-start.y)>6 or target.x<=start.x+M.start_offset
+  if math.abs(target.y-start.y)>M.max_lateral_error
+      or target.x<=start.x+M.start_offset
       or math.abs(start.x-math.floor(start.x/2)*2)>0.01 then
     -- The first corridor is deliberately straight and eastbound.
     -- Do not silently place disconnected or diagonal track while claiming

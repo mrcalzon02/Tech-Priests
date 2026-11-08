@@ -89,26 +89,38 @@ function M.assess(pair)
       return nil,"missing-physical-rail-supplies:"..name
     end
   end
+  -- The current 0836 constructor only builds a straight eastbound railway.
+  -- Bound discovery to that physically buildable corridor; otherwise the
+  -- nearest charted ore can create a permanently unbuildable rail mission.
+  -- Share the construction owner's exact lateral constraint and keep
+  -- canonical, budget-limited scans. No terrain or items are fabricated.
   local at=pair.station.position
-  local r=M.remote_max
+  local lateral=Frontier.max_lateral_error
+  if type(lateral)~="number" or lateral<0 then
+    return nil,"rail-corridor-geometry-unavailable"
+  end
   local resources,why=scan_resources(surface,{
     type="resource",name=item,
-    area={{at.x-r,at.y-r},{at.x+r,at.y+r}},limit=512})
+    area={{at.x+M.remote_min,at.y-lateral},
+          {at.x+M.remote_max,at.y+lateral}},limit=512})
   if not resources then return nil,why end
   local best,best_distance
   for _,entity in pairs(resources) do
     if valid(entity) and (tonumber(entity.amount) or 0)>0
         and entity.surface==surface then
       local d=dist2(entity.position,at)
-      if d>=M.remote_min*M.remote_min
-          and d<=r*r
+      if entity.position.x>=at.x+M.remote_min
+          and entity.position.x<=at.x+M.remote_max
+          and math.abs(entity.position.y-at.y)<=lateral
+          and d>=M.remote_min*M.remote_min
+          and d<=M.remote_max*M.remote_max
           and charted(force,surface,entity.position)
           and (not best_distance or d<best_distance) then
         best=entity;best_distance=d
       end
     end
   end
-  if not best then return nil,"no-charted-remote-ore" end
+  if not best then return nil,"no-charted-rail-corridor-ore" end
   return {item=item,position={x=best.position.x,y=best.position.y},
     resource_unit=best.unit_number,resource_name=best.name,
     distance=math.sqrt(best_distance),
