@@ -1,7 +1,7 @@
 {
   "status": "verified_progress_not_complete",
-  "observed_utc": "2026-11-08T16:02:01.277125+00:00",
-  "complete_chunks": 163,
+  "observed_utc": "2026-11-08T17:11:41.883660+00:00",
+  "complete_chunks": 186,
   "target_chunks": 384,
   "chunk_keys": [
     "d00-c00",
@@ -18,6 +18,7 @@
     "d01-c05",
     "d02-c00",
     "d02-c01",
+    "d02-c02",
     "d02-c03",
     "d02-c05",
     "d03-c00",
@@ -45,6 +46,7 @@
     "d06-c05",
     "d07-c00",
     "d07-c01",
+    "d07-c02",
     "d07-c05",
     "d08-c00",
     "d08-c01",
@@ -52,48 +54,67 @@
     "d08-c03",
     "d09-c00",
     "d09-c01",
+    "d09-c02",
     "d10-c00",
     "d10-c01",
+    "d10-c02",
     "d11-c00",
     "d11-c01",
+    "d11-c02",
     "d12-c00",
     "d12-c01",
+    "d12-c02",
     "d13-c00",
     "d13-c01",
+    "d13-c02",
     "d14-c00",
     "d14-c01",
+    "d14-c02",
     "d15-c00",
     "d15-c01",
+    "d15-c02",
     "d16-c00",
     "d16-c01",
     "d16-c02",
     "d17-c00",
     "d17-c01",
+    "d17-c02",
     "d18-c00",
     "d18-c01",
+    "d18-c02",
     "d19-c00",
     "d19-c01",
+    "d19-c02",
     "d20-c00",
     "d20-c01",
+    "d20-c02",
     "d21-c00",
     "d21-c01",
+    "d21-c02",
     "d22-c00",
     "d22-c01",
+    "d22-c02",
     "d23-c00",
     "d23-c01",
+    "d23-c02",
     "d24-c00",
     "d24-c01",
     "d24-c02",
     "d25-c00",
     "d25-c01",
+    "d25-c02",
     "d26-c00",
     "d26-c01",
+    "d26-c02",
     "d27-c00",
     "d27-c01",
+    "d27-c02",
     "d28-c00",
     "d28-c01",
+    "d28-c02",
     "d29-c00",
     "d29-c01",
+    "d29-c02",
     "d30-c00",
     "d30-c01",
     "d31-c00",
@@ -120,6 +141,7 @@
     "d39-c01",
     "d40-c00",
     "d40-c01",
+    "d40-c02",
     "d41-c00",
     "d41-c01",
     "d42-c00",
@@ -153,6 +175,7 @@
     "d55-c01",
     "d56-c00",
     "d56-c01",
+    "d56-c02",
     "d57-c00",
     "d57-c01",
     "d58-c00",
@@ -176,8 +199,16 @@
   "evidence": "48 cached chunks fully decoded in second import, plus completed local full-PNG verification receipts with all frame hashes rechecked now; overlapping chunks deduplicated",
   "local_receipts": [
     {
+      "path": "d02/local-verified-chunk-02.json",
+      "sha256": "cecb018ce4fcc89079e94e461f56556f1c1ff987f90b17b8b5b93d76994a36f2"
+    },
+    {
       "path": "d04/local-verified-chunk-01.json",
       "sha256": "f9581854dd54f2a947d58cd821c336b04888adb9271b1509dd6e060b802d8337"
+    },
+    {
+      "path": "d07/local-verified-chunk-02.json",
+      "sha256": "2312cdc3c77749aa891ed7142c12f217db7a918554860401d7c5817a7723944b"
     },
     {
       "path": "d08/local-verified-chunk-00.json",
@@ -196,12 +227,20 @@
       "sha256": "6e3fdc5cdfb4346fffc6efeb2ca61d1e04308ef5dc205267b2aba5fc5579190b"
     },
     {
+      "path": "d09/local-verified-chunk-02.json",
+      "sha256": "329264e5926318d34bced60bceabade1b5240c0271ac59734e0a9ca321a2b964"
+    },
+    {
       "path": "d10/local-verified-chunk-00.json",
       "sha256": "f2ff2190368bc53d01536aebcf39ff94481c337107dea76cb86b579c1f509c68"
     },
     {
       "path": "d10/local-verified-chunk-01.json",
       "sha256": "2cfd4a9ff5a5625e229ae46baa42f963702bb38daf246a070d28c6a1e09f7cf5"
+    },
+    {
+      "path": "d10/local-verified-chunk-02.json",
+      "sha256": "da6e4996c94c9f6a567b253d0b5de9129b3a340662c3b6a291b7ea6ad81c4d33"
     },
     {
       "path": "d11/local-verified-chunk-00.json",
@@ -212,12 +251,20 @@
       "sha256": "0634a59ca5eec0ee56db08526c82e7b9f6c81677ff7c76b73ca63f59b9792af3"
     },
     {
+      "path": "d11/local-verified-chunk-02.json",
+      "sha256": "230a690ade46cda1e9ae68b590c652d053196a155ed27cb1f6d2d2c64b3cd1e9"
+    },
+    {
       "path": "d12/local-verified-chunk-00.json",
       "sha256": "db3b9d23bf3dfad9d7028bc44ca6844bbf334101164c7f94c3ed3ef99c3c77b0"
     },
     {
       "path": "d12/local-verified-chunk-01.json",
       "sha256": "99bc76e199c2aa0578b3f580412c9a279c0661c7750041fd91336869b434c6c8"
+    },
+    {
+      "path": "d12/local-verified-chunk-02.json",
+      "sha256": "4f17f1f5b651ff1fd316069a48bb19d3d8eaae906549318be2a7051a28dca9fc"
     },
     {
       "path": "d13/local-verified-chunk-00.json",
@@ -228,6 +275,10 @@
       "sha256": "54108a985fdbf5987c0605b874673fc758d050b650f1cffd8681990602194a65"
     },
     {
+      "path": "d13/local-verified-chunk-02.json",
+      "sha256": "df87a9faf3c489b3e372a134ee6141ae3e7ce4644c118abb64c5607346da6e74"
+    },
+    {
       "path": "d14/local-verified-chunk-00.json",
       "sha256": "6f2066c73f341a8cf5d74f032f71a16c8c6f22ddbcc2098c496b3e5f0235024a"
     },
@@ -236,12 +287,20 @@
       "sha256": "de7897272afaf6659e6c0df1ef0b93b81d64d457d44091be29f7e54a2669ee12"
     },
     {
+      "path": "d14/local-verified-chunk-02.json",
+      "sha256": "aeefb2f2be01b7ce41d528736d7753d97c83389009b70080658b96c0ccf61efd"
+    },
+    {
       "path": "d15/local-verified-chunk-00.json",
       "sha256": "5e76bd4441149a9d5693ff4e28602464daa05d2e48c8c1adcc9db273819bfd60"
     },
     {
       "path": "d15/local-verified-chunk-01.json",
       "sha256": "fb36de34cb8e9aa71a0bd773b21f25d994eaf4939436c981d6edcacc0489219a"
+    },
+    {
+      "path": "d15/local-verified-chunk-02.json",
+      "sha256": "1f8dab2ab47efb3387c42705cd549683f85289362e143ba6d7ecd321f6fb255f"
     },
     {
       "path": "d16/local-verified-chunk-00.json",
@@ -264,12 +323,20 @@
       "sha256": "cb745c73ae94156f49106c310935bbae2ade8814d1430da292a88cac2c2181ff"
     },
     {
+      "path": "d17/local-verified-chunk-02.json",
+      "sha256": "988dabbebcc921e24157ae9a04becc1ced16e635b613556300b1e692009194b5"
+    },
+    {
       "path": "d18/local-verified-chunk-00.json",
       "sha256": "719c2dca45a4d8eebbeae1694fa4a0463cef31615caa6e5fb2f7eb15a8dd1811"
     },
     {
       "path": "d18/local-verified-chunk-01.json",
       "sha256": "9588c1f377a544c067067e7bc3c8dd8ede76b5167015f5ebe9268f3be2ffae72"
+    },
+    {
+      "path": "d18/local-verified-chunk-02.json",
+      "sha256": "d422c8c7c68ecb2cb50834f6345f11d95a3f5e8e61ea8cdae3183dd65e4410e8"
     },
     {
       "path": "d19/local-verified-chunk-00.json",
@@ -280,12 +347,20 @@
       "sha256": "a0ffaab2a0f7512b855c8b17515d1d902ec454294d08f53bff2ca985b8db0155"
     },
     {
+      "path": "d19/local-verified-chunk-02.json",
+      "sha256": "64e6e63daee32600aa660a57fb72c3607354d827c65b8fa98f2ef45fae6c0c5d"
+    },
+    {
       "path": "d20/local-verified-chunk-00.json",
       "sha256": "a3757248b34aa0854d22c714ec041780cb1e24469e252b71a820dfef29942996"
     },
     {
       "path": "d20/local-verified-chunk-01.json",
       "sha256": "76a314d0eba7935afd90a4443bc1735afdfe2ff70696d8bdcfb49f3e2a9190c7"
+    },
+    {
+      "path": "d20/local-verified-chunk-02.json",
+      "sha256": "bf94ceaee897e5020348da31eab9491f56016313fc80c5944b6a3da039b3fee4"
     },
     {
       "path": "d21/local-verified-chunk-00.json",
@@ -296,6 +371,10 @@
       "sha256": "b1d8a2fb91eb5758643b019aef5732c55fac7ff62fde79a66f6f099c29eb276a"
     },
     {
+      "path": "d21/local-verified-chunk-02.json",
+      "sha256": "4920d147b3bba208f17457ce46cb8179f564db14e5b3abed6854c2dba58a1c87"
+    },
+    {
       "path": "d22/local-verified-chunk-00.json",
       "sha256": "7b0009e3cb31c9957f347ab89183a52d3b2c4c1591d9d7a60267c41e059b7519"
     },
@@ -304,12 +383,20 @@
       "sha256": "07d8652127a088a312f950cba1513412ed41ae719c99738c724a284b0b4c0aa0"
     },
     {
+      "path": "d22/local-verified-chunk-02.json",
+      "sha256": "85ee855306daf3e3dc66cebc170dd9e5c0da140fdd4fe4f5645bf7394a2c254e"
+    },
+    {
       "path": "d23/local-verified-chunk-00.json",
       "sha256": "249370022a3319195f36f8a7d07f5dca818dc8734fd9effea50950567c37990f"
     },
     {
       "path": "d23/local-verified-chunk-01.json",
       "sha256": "0c3d669d27224c635fc5f6698945da5456951cb5dd77120909b18ab6c6ff994b"
+    },
+    {
+      "path": "d23/local-verified-chunk-02.json",
+      "sha256": "f171bc90b036c7553dab32e18601baeff49fbd21ee5f237253bbe31ad758c10d"
     },
     {
       "path": "d24/local-verified-chunk-00.json",
@@ -332,12 +419,20 @@
       "sha256": "8cb22fc2c1b3eafc7256dbae256725269d0560291e12f8affeb91cd296b12b0b"
     },
     {
+      "path": "d25/local-verified-chunk-02.json",
+      "sha256": "a16179a7c7973c06093b8bad6a1b01215086dab84907f5bf4d3bae76507361b2"
+    },
+    {
       "path": "d26/local-verified-chunk-00.json",
       "sha256": "65ce952776c75dd0086b55197f37dfd17bec88ea9ff4b6af60138123637d197b"
     },
     {
       "path": "d26/local-verified-chunk-01.json",
       "sha256": "f617fd7978e3e2f73cd9d253224e8039a56d70159982c658c32a46dddaad164b"
+    },
+    {
+      "path": "d26/local-verified-chunk-02.json",
+      "sha256": "2ab3018a00ed54042a246fcf86aa11c8cfd22483dcbb7d8e93f799d2713470f0"
     },
     {
       "path": "d27/local-verified-chunk-00.json",
@@ -348,6 +443,10 @@
       "sha256": "a385f66e917c8b23e32dad1add56d28f8945db74310e462099bacd08d17c9563"
     },
     {
+      "path": "d27/local-verified-chunk-02.json",
+      "sha256": "6623c5e140c1bb91b040e9c6533da9b8c6fe9db8189219ae919057088171f576"
+    },
+    {
       "path": "d28/local-verified-chunk-00.json",
       "sha256": "13e02b7f43cb50625180ee9872ce3bba2e541b554901cae0ad5ecb5ba324c553"
     },
@@ -356,12 +455,20 @@
       "sha256": "989cc71a65f222a4189d978511d440eab6424961f5dc3cbe659c582e24392bd0"
     },
     {
+      "path": "d28/local-verified-chunk-02.json",
+      "sha256": "dc9a065b5994af350e64be8b14dd79f40ecb27a9b8c39920a3e75e63a4a1503b"
+    },
+    {
       "path": "d29/local-verified-chunk-00.json",
       "sha256": "b5d7ea15a4c12dfa11f85f21e20fe22790f93e447a694283aee58997cf2b8dc3"
     },
     {
       "path": "d29/local-verified-chunk-01.json",
       "sha256": "c5a4283a196630171853a8c3c82b80bb1034f818492e2c775fe83bbdea8d237d"
+    },
+    {
+      "path": "d29/local-verified-chunk-02.json",
+      "sha256": "5acca47b8e940401c39f4545970a3e54dd833260cb5e0b2e8b74a64d56f9e3d6"
     },
     {
       "path": "d30/local-verified-chunk-00.json",
@@ -446,6 +553,10 @@
     {
       "path": "d40/local-verified-chunk-01.json",
       "sha256": "1cd6bac3fa2a798802b925f4540ea47106e549bce1b96848279c607718b10dc8"
+    },
+    {
+      "path": "d40/local-verified-chunk-02.json",
+      "sha256": "e5d0e2ef4b41a1c127a24416761fd05b38500662ab2d51d91d30f931e021616c"
     },
     {
       "path": "d41/local-verified-chunk-00.json",
@@ -578,6 +689,10 @@
     {
       "path": "d56/local-verified-chunk-01.json",
       "sha256": "e2a14773de73773fea576a705fe61b4a08a564bfded86755b85cabed3385d7cc"
+    },
+    {
+      "path": "d56/local-verified-chunk-02.json",
+      "sha256": "fbee3b28e29fe7d4f83f0ddc83e0f830ea491b2e9fe1a77d6eef6ad933fa78b7"
     },
     {
       "path": "d57/local-verified-chunk-00.json",

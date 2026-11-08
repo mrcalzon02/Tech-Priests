@@ -5,6 +5,7 @@
   "snapshot_kind": "Tracked working-tree bytes, including staged asset changes; HEAD values identify the reconciled base, not a claim that every staged file already belongs to that commit.",
   "working_tree_delta": [
     "art/source-to-3d/boiler-v08/README.md",
+    "art/source-to-3d/boiler-v08/production-source.blend",
     "docs/art/CHECKPOINT.json",
     "docs/art/MODEL_COMPLETION_LEDGER.md",
     "docs/art/boiler-v08-visual-alignment/README.md",
@@ -30,7 +31,9 @@
     "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
     "tools/art/README.md",
     "tools/art/jobs/boiler-v08.json",
-    "tools/art/produce_factorio_asset.py"
+    "tools/art/produce_factorio_asset.py",
+    "tools/art/rebuild_boiler_source.py",
+    "tools/art/verify_rebuilt_boiler_source.py"
   ],
   "scope": "All tracked entity PNGs and authored model/package files; excludes repeated dist/version snapshots, effects, GUI and third-party character replacements.",
   "sprites": [
@@ -2378,6 +2381,13 @@
       "path": "art/source-to-3d/workbench-v5-animation/Workbench_V5_Animated_Source.zip",
       "bytes": 353361,
       "sha256": "98f834f7719d21c99838d09f53f122cbb6212f3c21e0c1180fd9a71c0924a6d7"
+    },
+    {
+      "path": "art/source-to-3d/boiler-v08/production-source.blend",
+      "bytes": 61058254,
+      "sha256": "eb6aad420f04d7ca3b13933fb0323228252d569233690bac5b2c87bb3751a93d",
+      "acceptance": "reconstructed_source_reopened_and_pilot_reviewed_not_full_asset_completion",
+      "evidence": "docs/art/boiler-v08-source-recovery/README.md"
     }
   ],
   "segmented_model_sources": [
@@ -3077,7 +3087,9 @@
     "tools/art/verify_installed_model_sprites.py",
     "tools/art/verify_lobber_clean_geometry.py",
     "tools/art/verify_lobber_station_rig.py",
-    "tools/art/verify_sprite_master.py"
+    "tools/art/verify_sprite_master.py",
+    "tools/art/rebuild_boiler_source.py",
+    "tools/art/verify_rebuilt_boiler_source.py"
   ],
   "capture_records": [
     "art/source-to-3d/martian-bunker/captures/base-four-directions-2048/DELIVERY.json",

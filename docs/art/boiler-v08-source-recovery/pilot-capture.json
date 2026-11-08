@@ -1,0 +1,287 @@
+{
+  "schema": 1,
+  "source_sha256": "eb6aad420f04d7ca3b13933fb0323228252d569233690bac5b2c87bb3751a93d",
+  "source_file": "production-source.blend",
+  "blender": "5.0.1",
+  "config": {
+    "schema": 1,
+    "asset": "emergency-boiler-v08",
+    "source": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\boiler-source-rebuild\\production-source.blend",
+    "source_size": 256,
+    "sizes": [
+      128,
+      256
+    ],
+    "samples": 24,
+    "seed": 5855,
+    "columns": 16,
+    "fps": 24,
+    "directions": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "camera_override": {
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 8.485281374,
+      "target": [
+        0,
+        0,
+        0.85
+      ],
+      "ortho_scale": 3.35
+    },
+    "states": {
+      "idle": [
+        0
+      ],
+      "working": [
+        25
+      ]
+    },
+    "threads": 4,
+    "workers": 1
+  },
+  "camera": {
+    "name": "BOILER_FACTORIO_EXPORT_45",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        -0.7071067690849304,
+        -5.999999523162842
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        0.7071067690849304,
+        6.84999942779541
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 3.3499999046325684,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      256,
+      256
+    ]
+  },
+  "daylight": [
+    {
+      "name": "Cool workshop large fill",
+      "type": "AREA",
+      "energy": 405.27935791015625,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          -1.1764997243881226,
+          -1.0729804039001465,
+          0.9175451397895813,
+          3.3151302337646484
+        ],
+        [
+          1.4117989540100098,
+          -0.8941507935523987,
+          0.7646214962005615,
+          2.863058090209961
+        ],
+        [
+          -9.282764068530014e-08,
+          1.1943763494491577,
+          1.3967078924179077,
+          5.461795330047607
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Top lateral fill",
+      "type": "AREA",
+      "energy": 219.5263214111328,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          -1.615919589996338,
+          0.5696948766708374,
+          -0.6645146012306213,
+          -2.381897211074829
+        ],
+        [
+          -0.8752896189689636,
+          -1.0517445802688599,
+          1.2267963886260986,
+          4.51703405380249
+        ],
+        [
+          1.8196503859257973e-08,
+          1.3952093124389648,
+          1.1961265802383423,
+          4.7266950607299805
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Warm studio keylight",
+      "type": "AREA",
+      "energy": 996.311767578125,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          1.2011903524398804,
+          1.0868170261383057,
+          -0.8679276704788208,
+          -4.035872936248779
+        ],
+        [
+          -1.3908522129058838,
+          0.938614547252655,
+          -0.749573826789856,
+          -3.3852944374084473
+        ],
+        [
+          -1.92694358247536e-08,
+          1.1468039751052856,
+          1.4360252618789673,
+          7.115771293640137
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "world": {
+    "name": "Industrial neutral workshop world",
+    "color_management": {
+      "view_transform": "Standard",
+      "look": "None",
+      "exposure": 0.0,
+      "gamma": 1.0
+    }
+  },
+  "material_changes": [],
+  "mesh_count": 286,
+  "master_sha256": "494b4561066d3c84d46057aa831fd30a4f44174b1384970f2ff6e271661f8802",
+  "frames": [
+    {
+      "state": "idle",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d00/f000.png",
+      "sha256": "09530aaddd96ab608029f42841f4413f6a668f785d26af8658ed80c7ca16f566"
+    },
+    {
+      "state": "idle",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d01/f000.png",
+      "sha256": "1f90f686c5347aa31e46c171ec7690910ad1dc890a674c3760d7078e0dfc191e"
+    },
+    {
+      "state": "idle",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d02/f000.png",
+      "sha256": "a779d254ec4feb376a9440b4851167469516b7c81249a1f7c31408e4623f924a"
+    },
+    {
+      "state": "idle",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d03/f000.png",
+      "sha256": "cdd32d6aa4da23bcff27adc64fae1497d6be3338e7709b93e8815abc6d471f95"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 25,
+      "path": "frames/working/d00/f000.png",
+      "sha256": "4fe45e2e23597bbefc908c800b1f8917c3115ccd0a6af57b6493c905bce9038a"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 25,
+      "path": "frames/working/d01/f000.png",
+      "sha256": "0665200c2c84d31d62dd7b42fb79240231cc647ab5dc3b39cb47b0c7f999f9fc"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 25,
+      "path": "frames/working/d02/f000.png",
+      "sha256": "d7f771d3ceb74ea626d0494a0c1bbf997e2ba554b076b66df879bef8c787b320"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 25,
+      "path": "frames/working/d03/f000.png",
+      "sha256": "4cb80c3f491d071b2eae3b22154fe613187c70edb843762a49ac8f0c1a0cca86"
+    }
+  ],
+  "art_accepted": false,
+  "engine_integration": "outside Blender-only scope"
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "path": "emergency-boiler-v08-working.png",
+    "source_sha256": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2",
+    "candidate_sha256": "8df14e5c911c3b9586f255599b4ebd6ba6a1ad908177d9b023d3da3dca16f5f2",
+    "columns": 12,
+    "rows_per_direction": 8,
+    "changed_cells": "Only first cell of each direction is replaced with its authored idle pose; 95 working cells remain exact."
+  },
+  {
+    "path": "emergency-boiler-v08-working-128.png",
+    "source_sha256": "c1a5fc8df5c6bcef6543b47cf38dbc1c8f7a83d8781c9dca467b35dac9fe9d2b",
+    "candidate_sha256": "3713b24f182306bed19f93453429285a49687d428ee6773e6e4c32884a3000ad",
+    "columns": 8,
+    "rows_per_direction": 12,
+    "changed_cells": "Only first cell of each direction is replaced with its authored idle pose; 95 working cells remain exact."
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "native_reopened": true,
+  "camera_count": 1,
+  "all_source_mesh_vertices_preserved": true,
+  "loop_endpoint_error": 1.1759085768001554e-16,
+  "emissive_target_count": 11,
+  "emission_strength_sample_ranges": [
+    0.6709967255592346,
+    0.2654486894607544,
+    0.5545696169137955,
+    0.5369459390640259,
+    0.7846216112375259,
+    1.6102626323699951,
+    1.6369892954826355,
+    0.3708394765853882,
+    0.14975634217262268,
+    0.30068880319595337,
+    0.3658860921859741
+  ],
+  "rattle_rig_translation_sample_ranges": {
+    "V08 RATTLE central": 0.006999999284744263,
+    "V08 RATTLE right": 0.006000012159347534,
+    "V08 RATTLE small": 0.00599999725818634
+  },
+  "steam_puffs": 16,
+  "nozzle_object": "V02 crown recessed inner plate.001",
+  "nozzle_exit": [
+    0.06268371641635895,
+    0.6522631645202637,
+    1.2237613201141357
+  ],
+  "pass": true
+}

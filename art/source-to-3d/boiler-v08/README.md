@@ -33,8 +33,10 @@ appearance remains a diagnostic that has not been reviewed.
 
 ## Repeat the established export
 
-Extract the prepared native source from the package at its declared relative path
-in this repository, then use Blender 5.0.1 or newer:
+The reconstructed prepared source is now checked in at `production-source.blend`.
+Its [recovery evidence](../../../docs/art/boiler-v08-source-recovery/README.md) includes independent native reopen checks and eight actual local pilot renders.
+It is a newly reconstructed binary, not the historical Library download.
+Use Blender 5.0.1 or newer:
 
 ```sh
 python3 tools/art/produce_factorio_asset.py --job tools/art/jobs/boiler-v08.json --blender /path/to/blender
@@ -45,3 +47,5 @@ The prior low-resolution Eevee previews are obsolete timing drafts; this export 
 Cycles with the authored scene lights, world and packed materials.
 
 The earlier common native shift/scale was visually rejected even though the pipe systems connected. The subsequent four-way sprite-only registration is recorded in the linked native visual review. Do not infer visual alignment from the historical fluid connectivity probe above.
+
+To reconstruct again from the exact approved V07b file, use `tools/art/rebuild_boiler_source.py` as documented in the recovery evidence. Existing production sprite replacement still requires full capture and visual-state acceptance.

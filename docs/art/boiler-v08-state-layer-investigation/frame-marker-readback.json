@@ -1,0 +1,74 @@
+[
+  {
+    "tick": 120,
+    "direction": "north",
+    "red_active_marker_pixels": 1600,
+    "green_rest_marker_pixels": 0
+  },
+  {
+    "tick": 120,
+    "direction": "east",
+    "red_active_marker_pixels": 3249,
+    "green_rest_marker_pixels": 0
+  },
+  {
+    "tick": 120,
+    "direction": "south",
+    "red_active_marker_pixels": 1600,
+    "green_rest_marker_pixels": 0
+  },
+  {
+    "tick": 120,
+    "direction": "west",
+    "red_active_marker_pixels": 3249,
+    "green_rest_marker_pixels": 0
+  },
+  {
+    "tick": 420,
+    "direction": "north",
+    "red_active_marker_pixels": 799,
+    "green_rest_marker_pixels": 0
+  },
+  {
+    "tick": 420,
+    "direction": "east",
+    "red_active_marker_pixels": 3249,
+    "green_rest_marker_pixels": 0
+  },
+  {
+    "tick": 420,
+    "direction": "south",
+    "red_active_marker_pixels": 1600,
+    "green_rest_marker_pixels": 0
+  },
+  {
+    "tick": 420,
+    "direction": "west",
+    "red_active_marker_pixels": 0,
+    "green_rest_marker_pixels": 0
+  },
+  {
+    "tick": 780,
+    "direction": "north",
+    "red_active_marker_pixels": 1600,
+    "green_rest_marker_pixels": 0
+  },
+  {
+    "tick": 780,
+    "direction": "east",
+    "red_active_marker_pixels": 3249,
+    "green_rest_marker_pixels": 0
+  },
+  {
+    "tick": 780,
+    "direction": "south",
+    "red_active_marker_pixels": 1600,
+    "green_rest_marker_pixels": 0
+  },
+  {
+    "tick": 780,
+    "direction": "west",
+    "red_active_marker_pixels": 3249,
+    "green_rest_marker_pixels": 0
+  }
+]

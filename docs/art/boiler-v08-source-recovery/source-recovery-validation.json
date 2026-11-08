@@ -1,0 +1,433 @@
+{
+  "status": "REBUILT_SOURCE_REOPENED_AND_VERIFIED_NOT_HISTORICAL_BINARY_IDENTITY",
+  "approved_v07b_sha256": "0fae930858a9f8c92a5f85e2cfb1e8bd08317542470a09f6fc049de9c39306f4",
+  "source_meshes_exact": 270,
+  "historical_authoring_record_fields_exact": [
+    "source_sha256",
+    "source_mesh_count",
+    "source_mesh_vertex_hashes",
+    "emissive_animations",
+    "rattle_rigs",
+    "steam_nozzle_object",
+    "steam_exit_world",
+    "steam_puffs"
+  ],
+  "packed_images": [
+    {
+      "name": "black_steel_color.png.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "black_steel_color.png.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "black_steel_color.png.003",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "black_steel_color.png.004",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "black_steel_metal_rough.png.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "black_steel_metal_rough.png.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "black_steel_metal_rough.png.003",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "black_steel_metal_rough.png.004",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "black_steel_metal_rough.png.005",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "black_steel_metal_rough.png.006",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "edge_steel_color.png",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "edge_steel_color.png.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "edge_steel_color.png.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "edge_steel_color.png.003",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "edge_steel_metal_rough.png",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "edge_steel_metal_rough.png.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "edge_steel_metal_rough.png.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "edge_steel_metal_rough.png.003",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "iron_color.png.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "iron_color.png.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "iron_metal_rough.png.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "iron_metal_rough.png.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "lcd_source.png.001",
+      "packed": true,
+      "size": [
+        183,
+        53
+      ]
+    },
+    {
+      "name": "metal_micro_normal.png.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "metal_micro_normal.png.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "metal_micro_normal.png.003",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "metal_micro_normal.png.004",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "metal_micro_normal.png.005",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "metal_micro_normal.png.006",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "metal_micro_normal.png.007",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "metal_micro_normal.png.008",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "old_gold_color.png.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "old_gold_color.png.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "old_gold_color.png.003",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "old_gold_metal_rough.png.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "old_gold_metal_rough.png.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "old_gold_metal_rough.png.003",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "V30 tab steel darkened color",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "V30 tab steel darkened color.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "V32 dark steel cover head color",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "V32 dark steel cover head color.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "V32 dark steel cover head color.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "V32 dark steel cover head color.003",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "worn_steel_color.png.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "worn_steel_color.png.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "worn_steel_color.png.003",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "worn_steel_metal_rough.png.001",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "worn_steel_metal_rough.png.002",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "worn_steel_metal_rough.png.003",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "worn_steel_metal_rough.png.004",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "name": "worn_steel_metal_rough.png.005",
+      "packed": true,
+      "size": [
+        1024,
+        1024
+      ]
+    }
+  ],
+  "cold_frame_zero_puffs_hidden": true,
+  "working_frame_25_has_visible_puffs": true,
+  "camera_count": 1,
+  "native_sha256": "eb6aad420f04d7ca3b13933fb0323228252d569233690bac5b2c87bb3751a93d",
+  "prepared_animation_endpoint_error": 1.1759085768001554e-16,
+  "prepared_rig_and_emission_sample_ranges_pass": true,
+  "native_bytes": 61058254,
+  "installed_atlas_equivalence": "Unproven; source reconstruction does not authorize production atlas replacement."
+}
