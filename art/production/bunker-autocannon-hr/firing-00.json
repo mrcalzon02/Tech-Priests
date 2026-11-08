@@ -1,0 +1,18 @@
+{
+  "file": "firing-00.png",
+  "directions": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "frames_per_direction": 32,
+  "columns": 8,
+  "rows": 16,
+  "cell": 400,
+  "pixels_per_tile": 64,
+  "sha256": "41482b86379ed5e3d7dd3f9ae7c101ff8111377bf6c7e5156da43b033a6c3070",
+  "git_blob_sha": "b81b29319f0d8cf7c19fd1a7598880ecfa9cc64e",
+  "bytes": 3139461,
+  "verified_frames": 128
+}
