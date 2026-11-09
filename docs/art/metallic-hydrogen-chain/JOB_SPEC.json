@@ -1,0 +1,421 @@
+{
+  "schema": "tech-priests.metallic-hydrogen-precursor-work-order.v1",
+  "order_id": "TP-MH7-2026-11-09",
+  "date_utc": "2026-11-09",
+  "repo": "mrcalzon02/Tech-Priests",
+  "branch": "main",
+  "game_target": "Factorio 2.1",
+  "operating_constraints": {
+    "agent_harness_required": true,
+    "preferred_model": "locally installed Qwen Coder (discover actual model and context capacity; do not download)",
+    "single_model_worker": true,
+    "render_process_concurrency": 1,
+    "suggested_render_cpu_threads_max": 6,
+    "prototype_modifications_authorized": false,
+    "no_CI_or_workflow_edits": true,
+    "workflow_dispatch_authorized_by_this_packet": false,
+    "max_refine_rounds_per_machine_before_checkpoint": 2,
+    "repo_branch_policy": "main-only; no force push; checkpointed safe fast-forward; [skip ci]",
+    "test_policy": "Model/render/art QA only; no unrelated game mechanics or release checks",
+    "source_modification_policy": "Non-destructive; retain recovered original scenes; new revisions only",
+    "progress": "checkpoint after each source save, GLB, render, QA; log local process, exact hashes, errors and next step",
+    "hidden_geometry": "do not model unseen internals irrelevant to Factorio camera",
+    "labels_signs_text": "forbidden on every authored machine image or machine mesh"
+  },
+  "reference": {
+    "path": "docs/art/metallic-hydrogen-chain/references/metallic_hydrogen_seven_precursor_style_board.jpg",
+    "mime_type": "image/jpeg",
+    "dimensions_pixels": [
+      1774,
+      887
+    ],
+    "sha256": "b01eb8526b5825865e7f8b6d848b529dfda9aaa469cb2b0ce0307e74b0e01e94",
+    "original_preconversion_png_sha256": "c609d4141a13a67edf64aff021f38cd078ec4a8d6b7b59a0133199dbc4b8c03f",
+    "type": "user-approved conceptual design language only, NOT blueprint, final sprite, or native model",
+    "controls_authority": "Tech-Priests cogitator station and emergency equipment sprites from actual repository"
+  },
+  "legacy_native_sources": {
+    "primary_filename": "tech_priests_plasma_blockouts_v03.zip",
+    "note": "v03 retains seven upstream v02 GLBs unchanged; zip not in current public repo",
+    "source_package_available_in_repo": false,
+    "existing_reactor_family": "Minoris 4x4, Majoris 6x6, Maximus 8x8; all explicitly out of scope for this order"
+  },
+  "physical_interface_reference": {
+    "source_files": [
+      "art/source-to-3d/condenser-v19/build_condenser_v19.py",
+      "art/source-to-3d/condenser-v21/README.md",
+      "docs/art/attachment-contracts.json"
+    ],
+    "condenser_v21_reference_mouth_xyz_tiles": [
+      1,
+      -0.5,
+      0.36
+    ],
+    "pipe_visual_calibration_only_diameters_tiles": {
+      "body_outer": 0.57,
+      "flange_outer": 0.68,
+      "bore_inner": 0.49
+    },
+    "caution": "Do NOT copy these XYZ values across new machines; derive each from real native port + rotation/connected-cap jig."
+  },
+  "existing_control_references": [
+    "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-miner.png",
+    "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-assembler.png",
+    "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-laboratorium.png",
+    "tech-priests_src/graphics/entity/cogitator-station/junior-cogitator-station.png",
+    "tech-priests_src/graphics/entity/cogitator-station/planetary-magos-cogitator-station.png"
+  ],
+  "camera": "reuse established fixed Wube-like 45 degree Factorio camera; direction map measured, not assumed from reactor concept",
+  "build_dir": "art/source-to-3d/metallic-hydrogen-chain/",
+  "ignored_runtime_capture_dir": "build/model-completion/metallic-hydrogen-chain/",
+  "tasks": [
+    {
+      "stage": 1,
+      "id": "water-purifier",
+      "name": "Water Purifier",
+      "planned_footprint_tiles": [
+        3,
+        3
+      ],
+      "source_status": "legacy_v02_geometry_known_but_native_bytes_unrecovered",
+      "model_provenance_on_build": null,
+      "target_native_prototype": null,
+      "prototype_kind": null,
+      "prototype_footprint_verified": false,
+      "symbolic_fluid_ports": [
+        {
+          "id": "raw_water_input",
+          "fluid_id": null,
+          "native_position": null,
+          "native_direction": null,
+          "model_mouth_center": null,
+          "model_outward_normal": null,
+          "verified": false
+        },
+        {
+          "id": "purified_water_output",
+          "fluid_id": null,
+          "native_position": null,
+          "native_direction": null,
+          "model_mouth_center": null,
+          "model_outward_normal": null,
+          "verified": false
+        }
+      ],
+      "item_access_edges": [],
+      "must_have_visible_assemblies": [
+        "sump",
+        "replaceable_filter_cartridges",
+        "pump_motor",
+        "sealed_tank",
+        "supported_process_manifolds"
+      ],
+      "specific_design_hazards": [
+        "Keep the raw water input distinct from purified output; do not invent a waste stream unless supported."
+      ],
+      "style_board_crop_pixels": [
+        0,
+        0,
+        480,
+        444
+      ],
+      "deliverable_status": "not_started",
+      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review"
+    },
+    {
+      "stage": 2,
+      "id": "electrolyzer",
+      "name": "Electrolyzer",
+      "planned_footprint_tiles": [
+        3,
+        4
+      ],
+      "source_status": "legacy_v02_geometry_known_but_native_bytes_unrecovered",
+      "model_provenance_on_build": null,
+      "target_native_prototype": null,
+      "prototype_kind": null,
+      "prototype_footprint_verified": false,
+      "symbolic_fluid_ports": [
+        {
+          "id": "water_input",
+          "fluid_id": null,
+          "native_position": null,
+          "native_direction": null,
+          "model_mouth_center": null,
+          "model_outward_normal": null,
+          "verified": false
+        },
+        {
+          "id": "hydrogen_output",
+          "fluid_id": null,
+          "native_position": null,
+          "native_direction": null,
+          "model_mouth_center": null,
+          "model_outward_normal": null,
+          "verified": false
+        },
+        {
+          "id": "oxygen_output",
+          "fluid_id": null,
+          "native_position": null,
+          "native_direction": null,
+          "model_mouth_center": null,
+          "model_outward_normal": null,
+          "verified": false
+        }
+      ],
+      "item_access_edges": [],
+      "must_have_visible_assemblies": [
+        "two_electrolytic_cells",
+        "separate_h2_o2_headers",
+        "power_bus",
+        "actual_supported_upper_bridge"
+      ],
+      "specific_design_hazards": [
+        "Do not join hydrogen and oxygen outputs into a single decorative manifold."
+      ],
+      "style_board_crop_pixels": [
+        432,
+        0,
+        916,
+        444
+      ],
+      "deliverable_status": "not_started",
+      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review"
+    },
+    {
+      "stage": 3,
+      "id": "hydrogen-compressor",
+      "name": "H2 Compressor",
+      "planned_footprint_tiles": [
+        3,
+        4
+      ],
+      "source_status": "legacy_v02_geometry_known_but_native_bytes_unrecovered",
+      "model_provenance_on_build": null,
+      "target_native_prototype": null,
+      "prototype_kind": null,
+      "prototype_footprint_verified": false,
+      "symbolic_fluid_ports": [
+        {
+          "id": "hydrogen_suction",
+          "fluid_id": null,
+          "native_position": null,
+          "native_direction": null,
+          "model_mouth_center": null,
+          "model_outward_normal": null,
+          "verified": false
+        },
+        {
+          "id": "hydrogen_discharge",
+          "fluid_id": null,
+          "native_position": null,
+          "native_direction": null,
+          "model_mouth_center": null,
+          "model_outward_normal": null,
+          "verified": false
+        }
+      ],
+      "item_access_edges": [],
+      "must_have_visible_assemblies": [
+        "three_parallel_cylinders",
+        "protected_drive",
+        "bearing_supported_flywheel",
+        "suction_and_pressure_manifolds"
+      ],
+      "specific_design_hazards": [
+        "Crank shafts and pressure headers must not intersect or terminate unsupported."
+      ],
+      "style_board_crop_pixels": [
+        855,
+        0,
+        1360,
+        444
+      ],
+      "deliverable_status": "not_started",
+      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review"
+    },
+    {
+      "stage": 4,
+      "id": "metallization-crucible",
+      "name": "Metallization Crucible",
+      "planned_footprint_tiles": [
+        5,
+        5
+      ],
+      "source_status": "legacy_v02_geometry_known_but_native_bytes_unrecovered",
+      "model_provenance_on_build": null,
+      "target_native_prototype": null,
+      "prototype_kind": null,
+      "prototype_footprint_verified": false,
+      "symbolic_fluid_ports": [
+        {
+          "id": "conditioned_hydrogen_input",
+          "fluid_id": null,
+          "native_position": null,
+          "native_direction": null,
+          "model_mouth_center": null,
+          "model_outward_normal": null,
+          "verified": false
+        },
+        {
+          "id": "metallicized_intermediate_output",
+          "fluid_id": null,
+          "native_position": null,
+          "native_direction": null,
+          "model_mouth_center": null,
+          "model_outward_normal": null,
+          "verified": false
+        }
+      ],
+      "item_access_edges": [],
+      "must_have_visible_assemblies": [
+        "thick_walled_pressure_chamber",
+        "seated_pressure_bands",
+        "four_tapered_haunches",
+        "hatch",
+        "injector",
+        "protected_transfer_housing"
+      ],
+      "specific_design_hazards": [
+        "This is a speculative pressure/metallization machine, not a fourth power reactor."
+      ],
+      "style_board_crop_pixels": [
+        1300,
+        0,
+        1774,
+        444
+      ],
+      "deliverable_status": "not_started",
+      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review"
+    },
+    {
+      "stage": 5,
+      "id": "pelletization-forge",
+      "name": "Pelletization Forge",
+      "planned_footprint_tiles": [
+        3,
+        3
+      ],
+      "source_status": "legacy_v02_geometry_known_but_native_bytes_unrecovered",
+      "model_provenance_on_build": null,
+      "target_native_prototype": null,
+      "prototype_kind": null,
+      "prototype_footprint_verified": false,
+      "symbolic_fluid_ports": [],
+      "item_access_edges": [],
+      "must_have_visible_assemblies": [
+        "material_hopper_or_sealed_feed_chute",
+        "short_auger",
+        "guided_vertical_press",
+        "die",
+        "product_tray"
+      ],
+      "specific_design_hazards": [
+        "Input and output are solid items; hopper raw ore in concept illustration is not authoritative."
+      ],
+      "style_board_crop_pixels": [
+        0,
+        352,
+        610,
+        887
+      ],
+      "deliverable_status": "not_started",
+      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review"
+    },
+    {
+      "stage": 6,
+      "id": "pressure-vessel-fabricator",
+      "name": "Pressure Vessel Fabricator",
+      "planned_footprint_tiles": [
+        4,
+        4
+      ],
+      "source_status": "legacy_v02_geometry_known_but_native_bytes_unrecovered",
+      "model_provenance_on_build": null,
+      "target_native_prototype": null,
+      "prototype_kind": null,
+      "prototype_footprint_verified": false,
+      "symbolic_fluid_ports": [],
+      "item_access_edges": [],
+      "must_have_visible_assemblies": [
+        "tube_blank_on_rollers",
+        "driven_rotation",
+        "on_axis_welding_seam_head",
+        "gantry_rail",
+        "endcap_fixture"
+      ],
+      "specific_design_hazards": [
+        "Seam head must align with actual tube seam and be supported on its guide."
+      ],
+      "style_board_crop_pixels": [
+        550,
+        352,
+        1215,
+        887
+      ],
+      "deliverable_status": "not_started",
+      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review"
+    },
+    {
+      "stage": 7,
+      "id": "canister-assembler",
+      "name": "Canister Assembler",
+      "planned_footprint_tiles": [
+        4,
+        4
+      ],
+      "source_status": "legacy_v02_geometry_known_but_native_bytes_unrecovered",
+      "model_provenance_on_build": null,
+      "target_native_prototype": null,
+      "prototype_kind": null,
+      "prototype_footprint_verified": false,
+      "symbolic_fluid_ports": [],
+      "item_access_edges": [],
+      "must_have_visible_assemblies": [
+        "three_indexed_canister_stations",
+        "metered_pellet_feed",
+        "guided_sealing_head",
+        "caps_and_loading",
+        "output_pickup"
+      ],
+      "specific_design_hazards": [
+        "Use three primary canisters from rough v0.2 unless original source says otherwise; do not blindly copy concept count."
+      ],
+      "style_board_crop_pixels": [
+        1150,
+        352,
+        1774,
+        887
+      ],
+      "deliverable_status": "not_started",
+      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review"
+    }
+  ],
+  "stages": [
+    "preflight",
+    "source_census",
+    "pilot_01",
+    "sequential_02_to_07",
+    "independent_reopen_and_export",
+    "visual_comparison",
+    "checkpoint_and_handoff"
+  ],
+  "allowed_result_states": [
+    "not_started",
+    "blocked",
+    "candidate_native",
+    "candidate_exported",
+    "visual_reviewed",
+    "integrated"
+  ],
+  "required_final_artifacts": [
+    "a distinct editable .blend and corresponding build script per stage",
+    "per-stage port manifest with null for unknown native cells",
+    "real Blender perspective preview per stage",
+    "verified source image hash and model output hashes",
+    "GLB roundtrip when possible; honest failure reason otherwise",
+    "run-level atomic CHECKPOINT.json and real RESULTS.md",
+    "a seven-stage gallery composed from actual Blender renders, no substituted generated art"
+  ]
+}

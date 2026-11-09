@@ -1,0 +1,129 @@
+# Metalized-hydrogen precursor refinery — autonomous Blender construction order
+
+**Order ID:** TP-MH7-2026-11-09  
+**Target:** `mrcalzon02/Tech-Priests`, `main`, Factorio **2.1** artwork (not the game's vanilla fusion machinery).  
+**Executor:** a local *agentic* coding environment backed by Qwen Coder or another installed model, with real file read/write, command execution, and Blender. A bare text-only Ollama chat is **not** an execution agent.  
+**Status on issue:** **proposed/authorized construction study**. The seven existing v0.2 blockouts were previously accepted as rough blockouts, NOT final geometry. The adjacent Minoris/Majoris/Maximus plasma reactor artwork establishes the style family, NOT a mechanically accurate blueprint.
+
+## Non-negotiable objective
+
+Build **seven distinct, editable, physically plausible Factorio machinery models** in order, starting from recovered rough `.blend`/`.glb`/generator sources if available. Use the attached seven-machine reference sheet as **style and broad silhouette direction**, never as permission to invent thousands of unsupported decorative objects. One machine must communicate its *actual assigned process* through visible, supported mechanical structure. Produce real saved `.blend`, parametric source `.py`, model-space socket manifest, independent GLB reimport where feasible, and actual rendered proof images. A polished 2D reinterpretation, image-generation-only art, a pile of written audits, or a renamed copy of an older model does **not** count as construction.
+
+**No signs, no nameplates, no lettering, no alphanumeric decals, no arrows, no generic dashboard graphics.** Machine UI belongs to the established Tech-Priests **cogitator/emergency equipment** family: inset rectangular green monochrome CRT, tactile round red/amber/green/dark buttons, guarded knife/selector switches where warranted, dark cast-iron case, restrained brass retaining edges, short physically routed cable bundles. No cyan text dashboards. Cyan is reserved for process visibility, glowing containment sections and fittings *only where they represent a real function*. Keep all protrusions connected to load-bearing bodies.
+
+The source of truth precedence is: **user's corrected requirements > present native Blender model/rough blockout > current Factorio Lua/prototype interfaces > approved reference sheet > plausible design inference**. The reference sheet is *seven speculative images, not seven final blueprints*. Preserve valid existing parts and previous decisions; do not silently overwrite them. Include a source-or-guess classification for every visible assembly that materially changes the silhouette.
+
+## Inputs, provenance, and model/reference lookup
+
+1. `docs/art/metallic-hydrogen-chain/references/metallic_hydrogen_seven_precursor_style_board.jpg` is the exact delivered seven-image concept board, with SHA-256 in `JOB_SPEC.json`. Its **top row (left to right)**: purifier, electrolyzer, compressor, metallization crucible; **bottom row (left to right)**: pelletization forge, pressure vessel fabricator, canister assembler. Color/style/approximate silhouette only. Do not trust its decorative wiring, canister count, engraved glyphs, or impossible connections.
+2. Historical **rough machine package**: `tech_priests_plasma_blockouts_v03.zip` (Library), which explicitly retains **the seven v0.2 upstream GLBs unchanged**; v0.3 altered the *reactors* only. Historical earlier packages: `..._v02.zip`, `..._v01.zip`. These exact native bytes are not presently published in the current GitHub tree. Search the user's pre-existing, permitted local asset folders and extracted workspaces; log candidates/hashes. Do not pretend a path exists. If unavailable, reconstruct a new **v0.2-inspired candidate** with provenance `new_reconstruction_from_reference`, never tag it `v0.2-edited` or claim preservation of unseen geometry. Do not overwrite the historical package.
+3. Reactor geometry/style refs: linked `docs/art/external-model-sources.json`, `REFERENCE_ASSESSMENT.md` (Library), and optional recovered `reactor_refinement_v14/*`. v14 is a **reported** checkpoint, not an accepted complete 3D source unless actual bytes are recovered and hashed. Keep the existing reactor families out of this construction task.
+4. Exact **in-repository reference art** for controls: `tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-miner.png`, `.../tech-priests-emergency-assembler.png`, `.../tech-priests-emergency-laboratorium.png`, and `tech-priests_src/graphics/entity/cogitator-station/{junior-cogitator-station,planetary-magos-cogitator-station}.png`; study real screens/buttons/chassis, not generic video game UI. Browse **read-only**. Do not copy whole machines onto the new build.
+5. **Pipe geometry reference**: `art/source-to-3d/condenser-v19/build_condenser_v19.py`, `art/source-to-3d/condenser-v21/README.md`, `docs/art/attachment-contracts.json`, and the actual boiler V08/Factorio 2.1 graphical pipe cap. The condenser's calibrated 2×2 east mouth is Blender `(1, -0.5, 0.36)` at its boundary plane. Study its *full-size manifold* reference: outer tube ~0.57 tile diameter, flange ~0.68 tile, bore ~0.49 tile, Z center ~0.36 tile. **These are visual reference/jig dimensions, not hard-coded coordinates or Wube measurements for the seven new machines.** Every new mouth must coincide with its own actual effective Factorio 2.1 pipe connection plane. An engine `pipe_connection` cell is *not* automatically identical to the modeled face plane. Use a native placement jig to resolve the mapping before declaring an interface proven.
+6. Reusable code/parts: inspect `art/source-to-3d/`, `tools/art/`, `tools/art/produce_factorio_asset.py`, `tools/art/export_sprites.py` and the separate, existing `mrcalzon02/HB-TTRPG-tools/tools/factorio-render-pipeline/` utilities. Reuse *verified procedural mesh operators, calibrated camera, robust exporters, textures, fit references and actual suitable parts*. Do not import unverified animation state, arbitrary piping, or old thruster-reconstruction hypotheses.
+
+**Do not download new AI models, run GitHub Actions matrix jobs, modify release workflows, install software globally, or alter the real game mod/economy just to make the artwork easier.** Record missing dependencies and continue with local, already-working tools.
+
+## Seven authoritative footprint slots and construction plans
+
+For all, **1 Blender unit = 1 tile** in the modeling fixture. The footprints below are the accepted *planning* sizes: before runtime integration, compare the exact intended target entity with actual native prototype data and record whether a new prototype would be required. The footprint may not be quietly changed. Reserve insertion clearance and pipe mouth space; the visible foundation fits the declared rectangle. Animate only real movable parts and do not spend this first cycle on full atlases.
+
+### 01 — Water Purifier — **3×3**
+
+**Purpose:** incoming raw water -> purified process water; any reject stream exists only if a real recipe/prototype specifies it.
+
+Structure: squat pump/motor assembly supported near the lower platform; central sealed cylindrical purification vessel with distinct top flange, removable head and accessible lower sump; at least two separate replaceable filter cartridges/manifold branches supported on the side; short actual pipes joining input through filter path to vessel then cleaned-water output. Pair pressure gauge or sightglass with *functional* process ports, not decorative loops. Four stout tapered red supports from base to main structural collar, not floating roof columns. Put a modest standardized cogitator control housing at human service height, separate from process pipes.
+
+**Functional proof:** a continuous raw-water path and clean-water path can be traced by sight, the cartridges have accessible removal clearance, the vessel and pump are supported, both modeled mouths meet their named tile-edge port planes with unobstructed adjacent pipe. No fake floating drain/outlet.
+
+### 02 — Electrolyzer — **3×4**
+
+**Purpose:** water input -> separate hydrogen and oxygen streams; electrical work feeds the cells.
+
+Structure: two visually distinct vertical electrolytic cell assemblies in braced mounts, below or behind an actual power rectifier/busbar casing. A low common water feed physically splits into the cells; **two separate high gas outlets**, hydrogen and oxygen, each routed on independent side manifolds without crossing through each other. Short visible top service bridge supported by four uprights, with electrical insulators and real cable clamps. Indicate fluid motion with restrained illuminated inspection sections, not huge impossible liquid-filled open towers. Controls follow green CRT style.
+
+**Functional proof:** three named flows with disjoint exit ports, no gas merged by a decorative tee; all manifolds join cells; bridge has an actual load path; electricity is not represented as an invented coolant pipe.
+
+### 03 — Hydrogen Compressor — **3×4**
+
+**Purpose:** hydrogen gas feed -> compressed hydrogen feed to high-pressure stage.
+
+Structure: three horizontal, parallel compressor cylinder castings in a narrow bed (as in rough blockout), each with caps, rods, protected crank links and short check-valve manifolds. One motor/drive and visible flywheel/gear case supported by shaft bearings, *not* a random unattached giant gear. Structural base supports all cylinders and isolates moving geometry. Suction header enters the correct near-side manifold; discharge header exits a separately supported pressure line. Small physical gauge and relief arrangement distinct from real gameplay fluid ports. Minimal controls.
+
+**Functional proof:** inlet -> cylinders -> discharge can be traced; no pipe terminating in empty space; crank/rod pivots won't penetrate casing; cylinder pitch clear at all four views.
+
+### 04 — Metallization Crucible — **5×5**
+
+**Purpose:** receive conditioned hydrogen and fictionally produce high-density metallicized-hydrogen stock. This is speculative process machinery, *not* real-world engineering advice.
+
+Structure: one dominant thick-walled central cylindrical pressure/containment chamber on a robust plinth, graded concentric pressure/thermal bands seated onto the vessel (not floating hula-hoop rings), four heavy diagonal red haunches with shoes and back braces, pressure hatch with real hinge/latch, a process injector and separate product transfer housing, and visible service/cooling architecture where justified. Add protective split covers and a reachable maintenance corridor, not excessive roof bars. The main chamber is visually distinct from the finished power reactor's containment ring—an industrial **refinery** precursor, not a fourth reactor.
+
+**Functional proof:** load path into four shoes, input and output terminate at actual vessel nozzles, rings connect to a power or thermal bus, room remains for neighboring pipe; no giant unshielded glowing liquid jar unless internally documented as inspection glass.
+
+### 05 — Pelletization Forge — **3×3**
+
+**Purpose:** convert metallicized intermediate stock into discrete solid pellets.
+
+Structure: **open, readable feed hopper** or sealed feeder chute from metallizer; short auger/feed throat, supported vertical guided press ram and die, separate pellet collection/extraction tray. The compact overhead crossbeam must sit on two grounded side supports. Pellets exit toward a clear item-transfer edge suitable for a Factorio inserter. Add a sensible catch tray/guard, and only add a reject chute if a recipe requires it. Existing rough hopper/press proportions are the starting point; the concept's raw gravel pile is **not** proof metallic hydrogen is loose ore.
+
+**Functional proof:** physical feed path reaches die, press head hits die on-axis, product falls into a tray without clipping the base or adjacent tile, item edge remains accessible.
+
+### 06 — Pressure Vessel Fabricator — **4×4**
+
+**Purpose:** fabricate the strong empty canister/vessel shells and fittings; material input/output are solid items.
+
+Structure: a supported long horizontal hollow vessel blank on paired rolling saddles with a motor/turning drive; an overhead **welding/seam tool centered directly over the barrel seam** carried on a rigid spanning transverse rail, with tool travel clearance and a grounded gantry. Include endcap/neck placement fixtures, tool leads mounted to the moving carriage, an inspectable loading/unloading path. Do not clutter the vessel opening with decorative control ornaments.
+
+**Functional proof:** seam tool reaches the tube on-axis, tool carriage is mechanically guided, rollers support the workpiece and can rotate without intersection; no unrealistically unsupported welding head.
+
+### 07 — Canister Assembler — **4×4**
+
+**Purpose:** combine fabricated pressure shells, pelletized fuel and closure fittings into filled plasma fuel canisters.
+
+Structure: a compact indexed table or carousel carrying distinct upright canisters; preserve the historical rough model's **three visible primary canisters unless native source shows otherwise** (the concept-sheet's larger number is an illustration, not authority). One accessible loading station, a pellet metering head, a vertically guided filling/sealing ram **above an actual indexed canister**, cap supply, and a distinct product exit/pickup position. Short restrained service piping only where an actual process calls for it; pellets and filled canisters are item-handling interfaces, not fluid pipes by default. Gantry load-bearing and motor drives must be credible.
+
+**Functional proof:** index position under sealing head, reachable cap and pellet feed, removal path with inserter access, no conveyor/belt clipping and no press striking empty space.
+
+## Shared interface and modeling protocol
+
+- **Structure first.** Draw main volume, supports, deck, working path, then process pipes, then service controls; **no ornaments until every core subsystem is physically supported**. Make simple reusable meshes (cast foot/shoe, beveled plate, channeled beam, retaining ring, pressure neck, T/elbow, inspection lens, cogitator box, cable clamp, handwheel) in a named parts library. Reuse dimensions/UV scale where justified; avoid identical silhouettes across all seven.
+- **Clearance.** Preserve full footprints, origin, collision/selection rectangles, and item reach as read from exact prototypes; default *provisional visual shell margin* 0.15 tile from tile boundary except foundation, measured pipe collars, or sanctioned connectors. Do not treat provisional margin as an engine rule. Record each collision/selection value and whether verified or proposed.
+- **Fluid ports.** Every real fluid interface has a unique symbolic ID, fluid name, flow direction, native declared connection cell/direction *or null*, model-space 3D mouth center, outward normal, ring diameters, and a no-obstruction fixture. Correctly transform to all four cardinal rotations. Leave numeric `native_position` **null** until retrieved from the actual prototype. Never fake connectivity by ending a pipe 5 pixels from a real adjacent pipe. Screenshots must compare connected and disconnected cap states once an engine prototype exists.
+- **Items and power.** Item entrances/exits are accessible to Factorio's actual inserter/belt rules, not magic sockets or giant conveyor extensions; a circuit connector/wire attachment exists only if a prototype actually declares it. Electrical motor housings can be visible without inventing gameplay wire-port coordinates.
+- **Visible geometry only.** Factorio's approved camera prioritizes silhouette, normals, functional controls, attachment contacts, and readable large forms. Avoid unseen machinery under the foundation, hidden internals, random bolts, floating conduit bridges, free-standing decorations, or costly high-poly details below 1–2 pixels at target view.
+- **Material specification.** Heavy oxidized-red cast braces; charcoal/dark gunmetal structural castings; tarnished brass mechanical trim; tempered iron pipe mouths; smoky steel moving cylinders; green CRT and small green/red/amber indicators; cyan only for physically luminous fluid/process sections; optional low warm glow around active die/heating. Distress follows plausible exposed edges and foot plates. The existing cogitator equipment reference controls UI; the image board merely controls family mood.
+- **Camera.** Keep the project's verified Wube-like **45° fixed game export camera**, one origin and scale per machine, plus four directions. If a separate oblique *inspection* view is helpful, explicitly label it non-production and preserve both camera matrices. Do not borrow the v14 reactor's approximate artistic inspection yaw as the Factorio camera. Shadow/emission separate from beauty when later production export is authorized.
+- **Out-of-scope.** No edits to Minoris/Majoris/Maximus reactors, gameplay recipes, technology unlocks, economy, existing unit tests unrelated to this build, releases, runner workflows, or user machine installations. No final sprite atlas/game-load claim without a verified prototype and G1–G8 acceptance. The deliverable of this run is robust **construction and visual QA**; integration remains gated.
+
+## Execution schedule (one worker, checkpointed, no uncontrolled loops)
+
+The agent should run **one asset at a time** from a local queue manifest. If this job occupies multiple hours, run it as a **local persistent process**, not repeated 30-minute GitHub Actions. Do **not** extend or dispatch the current `Homebrew local worker` workflow without an explicitly implemented and tested `refinery` mode: it currently accepts only `blender`, `full`, `workbench`, `status`, and has `timeout-minutes: 30`. Do not claim it can invoke Qwen. This packet does not start a job.
+
+**Phase 0 — bounded preflight:** read git status/HEAD for both repos; confirm only `main`, preserve dirty files, no force push. Verify model binary versions, Blender executable and `--version`, available tools/threads, writable output directory, any available model API/Ollama daemon *and* the presence of an agent that can execute tools. Check GitHub queue and current local worker activity; if another renderer is active, do not start a second. Check reference SHA and old source availability, inspect real Factorio 2.1 prototypes/versions. Write `CHECKPOINT.json` before heavy work. **Do not launch any CI workflow** from an unverified process.
+
+**Phase 1 — input/source census (bounded):** find `.blend`/`.glb`/generator from historical v0.2/v0.3; record exact names and SHA-256; enumerate *actual* usable parts from existing repos. Build a 7-row source/footprint/prototype/port matrix; fill unknowns with `null` plus reason. Do not spend the whole session writing reports—move on to one real model after a bounded source search. If original machine sources are inaccessible, explicitly switch to `new_reconstruction_from_reference` rather than inventing success.
+
+**Phase 2 — pilot build (01 Water Purifier):** copy original into a new revision or generate a new candidate; build real physically connected meshes; save source script and `.blend` **before rendering**. Pilot one 640–900px low-sample CPU inspection frame; inspect it. Fix at most two clear mechanical flaws per pass. Save and independently reopen. Record a one-page before/after proof, part count, actual bounds, hash and socket coordinates. **Do not render 96 animation frames for an unapproved shape.**
+
+**Phase 3 — machines 02–07:** for each, read its machine-specific requirements; reuse only suitable validated parts; produce actual native source and perspective image; render a source/current side-by-side candidate if an old image is available. Reopen saved file and check GLB round-trip when resources permit. Update checkpoint after each machine. Do not replace an already successful result with a gratuitous rewrite to improve an arbitrary score.
+
+**Phase 4 — batch QA and handoff:** one seven-tile model gallery using actual Blender renders (not AI-generated previews), seven full-size individual 3/4 views, an optional top-down alignment layout, real per-machine socket/clearance table, and a concise defect register. Export **only accepted/verified files**; keep speculative changes as marked candidates. Report missing sources honestly. No automatic prototype/game deployment.
+
+**Checkpoint discipline:** Write atomic JSON (temp file then rename) at every machine's source save, GLB export, first render, and QA result. Also log a compact progress heartbeat no more often than every ~30–60 seconds: current asset/stage, completed candidate count, last hash, last output file, process status/error and next step. Human-facing report every finished machine or durable blocker, not endless “still thinking”. On Windows/NAS congestion, downloads use 3 bounded retries (e.g., 2s/5s/15s); do not poll GitHub endlessly or reset long-running work on telemetry failure. Respect any existing authoring/render process; preserve evidence and resume only from a hash-verified checkpoint. Never use force-kill on another workflow's child or disable scheduled tasks.
+
+## Required artifacts and truth-in-reporting
+
+For each `01`–`07` create under `art/source-to-3d/metallic-hydrogen-chain/<machine-id>/`:
+
+- `build_<id>.py` or preserved edited procedural source; `<id>-candidate-v01.blend` with logically named collections (`FRAME`, `PROCESS`, `PIPING`, `CONTROLS`, `PORT_MARKERS`), identifiable transforms and linked materials; a `REFERENCE_ONLY_NOT_EXPORT` collection for sockets/grid/neighbor jigs.
+- `<id>-candidate-v01.glb` after an independent native export and reimport (or mark `blocked` with actual reason), `port_manifest.json`, `part_provenance.json`, `model_audit.json` (real bounds, mesh/triangle count, nonfinite/degenerate check, actual source hashes).
+- At least one actual `inspection_3quarter.png`, plus `inspection_top.png` if meaningful; one real `before_after.png` when the source before-view is available. The images must reveal the physical structure, not just stylized 2D concept art.
+- Put heavy temporary captures under ignored `build/model-completion/metallic-hydrogen-chain/`; write an atomic run-level `CHECKPOINT.json` and a short `RESULTS.md` linking actual images and stating each machine status as `blocked | candidate_native | candidate_exported | visual_reviewed | integrated` (never self-declare human visual approval).
+
+A complete successful initial construction task means **seven different saved editable machine assets and seven actual rendered views**, with footprints and physics-free process routes checked. **Passing render/mesh tests is NOT proof of visual acceptance or Factorio in-game connection.** For published GitHub work, use one `main` branch, preserve concurrent work and unrelated files, commit `[skip ci]`, safe fast-forward push, then remote commit SHA/changed-path/image readback. If remote push or artifact publication fails, say **local only**, give exact local paths and checksums, and do not call it published.
+
+## Stop/continue conditions
+
+Pause the **affected asset only**, with checkpoint, when a required socket/prototype is unknown, an old model source is missing, a structural contradiction exists, or Blender cannot reopen the scene. Continue independent assets from the same queue without faking that blocked component's completion. Halt entirely for source corruption, unsafe repo state, untrusted task command, invalid output directory, conflicting active worker, or resource exhaustion. Do not request user approval to perform routine bounded construction; collect reviewable images and explicitly call out unresolved design choices.
+
+**First action to perform:** inspect the repo/runner, validate `JOB_SPEC.json` and its reference SHA, recover as many real v0.2 blockouts and existing shared mesh components as possible, and produce a verifiable **Water Purifier** saved Blender scene and one real perspective render. This is an instruction to construct, not a request for another research memo.
