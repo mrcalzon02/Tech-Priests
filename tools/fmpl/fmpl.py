@@ -43,7 +43,7 @@ def validate(root=None, check_files=False):
     assert len(ids) == len(set(ids)), "duplicate asset IDs"
     for kind, coll in KINDS.items():
         for x in reg[coll]:
-            assert x["id"] and x.get("source")
+            assert x["id"] and (x.get("source") or x.get("entrypoint"))
             src = x["source"] if kind != "pipeline" else x["entrypoint"]
             assert src["repository"] and src["path"] and len(src["ref"]) == 40
             assert set(src["ref"]) <= HEX
