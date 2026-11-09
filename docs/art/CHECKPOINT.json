@@ -41,7 +41,8 @@
     "hydrogen_v01": "docs/art/hydrogen-thruster-v01/validation.json: actual target source graphics, cap preservation, seven frozen source rectangles and night glow; powered native working-clock/behavior not tested.",
     "thetazine_candidate": "docs/art/thetazine-thruster-v01/validation.json: static technical interchange only, final surface 3/5 and state 2/5 below required 4/5; no runtime import",
     "thruster_segment_parity": "docs/art/thruster-segment-parity/validation.json: working pilot only; source/native body clock passes, full model/shadow/exhaust/glow-phase/refinement gates open",
-    "thetazine_v03": "docs/art/thetazine-thruster-v03: technical source/export and full local rendered loop pass; no V03 native integration/final appearance claim."
+    "thetazine_v03": "docs/art/thetazine-thruster-v03: technical source/export and full local rendered loop pass; no V03 native integration/final appearance claim.",
+    "thetazine_v04_safety": "Source/GLB/pose/seated-route checks and complete local captures; glow reduction, final atlas/native review and V04 publication pending."
   },
   "open_defects": [
     "Condenser V21 native source remains Library-linked and unlocated locally",
@@ -50,7 +51,7 @@
     "Energy dish V03 final surfacing/fidelity and firing/emission/shadow/native prototype integration open",
     "Thetazine, narrow fusion and large fusion authored bodies/model exports/visual integration unfinished; hydrogen V01 graphics lane now reviewed"
   ],
-  "next_slice": "Resume source-export-plan.json. Pilot V03 at actual game scale before full separated-layer captures; keep ports/mounting fixed. Full source capture is complete: do not duplicate it. No V03 render currently needs resuming.",
+  "next_slice": "Safety checkpoint: resume localpilot20; owner requests lower white-hot intensity while keeping full flame and subtle independently moving core inside rigid mount. See V04 checkpoint. V04 art/native promotion is not published.",
   "automation": "tech-priests-local-model-completion, every four hours",
   "publication": "Read exact delivered SHA and status from issue #13; never infer publication from local commit",
   "local_work": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work",
@@ -69,5 +70,5 @@
     "evidence": "docs/art/lobber-a02-latest-progress.json: completed local receipts have all frame hashes rechecked"
   },
   "external_model_sources": "docs/art/external-model-sources.json; v14 reactor chats located, package bytes unrecovered",
-  "active_thetazine_checkpoint": "docs/art/thetazine-thruster-v03/CHECKPOINT.json"
+  "active_thetazine_checkpoint": "docs/art/thetazine-thruster-v04/CHECKPOINT.json"
 }

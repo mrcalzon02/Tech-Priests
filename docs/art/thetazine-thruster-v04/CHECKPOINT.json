@@ -1,0 +1,77 @@
+{
+  "status": "SAFETY_CHECKPOINT_OWNER_GLOW_REDUCTION_PENDING",
+  "saved_at": "2026-11-09T04:15:46.628377+00:00",
+  "goal_open": true,
+  "published_art": "V03 commit4dca9659f115189b2be7b9531e77c4aece24300e; no V04 art committed/pushed yet",
+  "reconciled_main": "77aef30208fbbbc6ce3edf0a7d4fcf990862c2ce",
+  "pipeline_main": "d16c14579de9f7c13ab0d1accdb65eea9a434456",
+  "candidate_directory": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\thruster-v04\\pilot-20",
+  "native_sha256": "22b7b3abe91ed0cd5d6ad7ce2b716660aa72841d899f88d47dbd31ac29300e00",
+  "glb_sha256": "e768c8b6ab58a4b46d92c29f6f69d4b17341d1ff38ed14bb601c07182e6e92af",
+  "owner_latest": "White-hot emission is a bit much. Reduce peak bell/core radiance while retaining broad full-throated flame, metal/char detail, rigid outer frame and noticeable subtle occasional internal-core jolts/twists. This intensity correction is NOT yet applied.",
+  "owner_motion": "Main body carrying piston mounts jerks sideways and twists occasionally INSIDE mounting frame. Frame/feet/tank mounts/external ports remain fixed. Do not restore whole-sprite wobble or freeze the core.",
+  "owner_light": "Full incandescent bell/full-width blue flame in separate heat/light map, like supplied thruster-light-1.png. No skinny filaments, solid surface gas shell or native flame painted over front bell.",
+  "source_features": [
+    "1910 physical meshes/332280 triangles; render-only 3D volume intentionally excluded from GLB and baked to light sprites",
+    "12rams/primarypetals/exposed actual-axis hinges, down-feeding rotating Archimedes screws",
+    "Parallel cold bulk tank injection and heated regenerative turbo-pump/pre-injector lanes retained",
+    "Independent suspended core with occasional compact pulse windows; host-following fittings and flexible hoses/cradle links",
+    "46 distinct exterior routes; duplicated pump/gauge twin identities corrected; all92pipe ends measured over66poses"
+  ],
+  "checks": {
+    "raw-glb-audit.json": {
+      "status": "RAW_GLB_GEOMETRY_UV_NORMAL_IMAGE_AUDIT_PASS",
+      "sha256": "1dcfaa4123faf9ab925c95c603c45bfaf7f0a8c35942b1730da87306ad0c60c2"
+    },
+    "roundtrip-validation.json": {
+      "status": "PASS_ACTUAL_NATIVE_GLB_TRIANGLE_UV_MATERIAL_WINDING_AND_SOCKET_REIMPORT",
+      "sha256": "58a4f6d0f1801df9f847c2e17190c6764ec19b8de7fa0109a114c0b00cbf9551"
+    },
+    "animation-validation.json": {
+      "status": "PASS_ACTUAL_GLB_ALL_MESHES_64_POSES_MORPHS_FIXED_SOCKETS_CLOSED_LEAVES",
+      "sha256": "c53b66934f3c1a8ad3eb1a1b232f7d3586219c8e24b63433fcd6c17d1d66ad3d"
+    },
+    "design-validation.json": {
+      "status": "PASS_ACTUAL_AUGERS_12_RAM_HINGE_PETAL_MAPPING_CURVE_92_PIPE_ENDS_TANK_FRAME_SEATS_AND_ANCHORED_FLEX",
+      "sha256": "c01c1b27398d1290de1ada3f83c91ddd31a9708a0624f8234c9bfbbcc58f4e7b"
+    },
+    "fixed-mount-validation.json": {
+      "status": "PASS_RIGID_MOUNT_LOCAL_MECHANISM_MOTION",
+      "sha256": "a02a698618251a0fb52a33301802ed2faa68b5aada02bab40d37b79407e38eed"
+    },
+    "core-seat-validation.json": {
+      "status": "PASS_46_DISTINCT_PIPE_ROUTES_92_ENDS_ALL66_CORE_POSES",
+      "sha256": "b955d32623d5f08c19d3e754cc0c1b1b46e5deb664585a222cacc94fa85dea03"
+    },
+    "route-clearance-validation.json": {
+      "status": "PASS_NO_UNDECLARED_PRINCIPAL_PIPE_ROUTE_INTERSECTIONS_66_POSES",
+      "sha256": "dc858e94d93debedf81420dcea1f778aad93af9869cd4f78efdc72cb5bd4bbb5"
+    },
+    "preview-validation.json": {
+      "status": "PASS_66_ACTUAL_SOURCE_PNGS_64_UNIQUE_WORKING_POSES_AND_ARCHIVE",
+      "sha256": "a5bbb1e16ca71c93bb1aaf3d75a298146e5f2089c6e24e3ad43e90e904ca392a"
+    }
+  },
+  "capture_state": {
+    "combined_source": "66/66 complete, verified and archived; outputs/thetazine-v04-containment-loop.gif is pilot20",
+    "separate_body_light": "132/132 source PNGs complete. Separate atlas packaging/validation NOT yet run for20. Existing profile atlases are rejected pilot14.",
+    "underlay": "pilot20/source-package/underlay.png rendered; receipt bound to current source",
+    "export_views": "7 current GLB images complete; upper/bell views inspected. Remaining front/rear/clay/fuel/hinge review still needed.",
+    "thruster_render_active": false,
+    "native_profile": "work/thruster-v04/native-review currently displays rejected pilot14; NOT native evidence for20. Idle repeat_count64 load fix already verified.",
+    "a02_workers": "Observed at checkpoint directions55,57,58,59 chunk5; preserve these separate workers. No updated chunk-completion count inferred."
+  },
+  "next": [
+    "First reduce light intensity in NEW candidate frompilot20, source-only material revision. Do not redo core geometry or restore rejected variants.",
+    "Pilot updated emission before costly full capture. Preserve all earlier candidates and receipts.",
+    "Complete exact body/light atlases, source-bound GLB/pose/seat/clearance checks and remaining actual view review.",
+    "Native prepare now supports measured light-plume join; body-loop camera1700px and unchanged counter coordinates. Native game effect joins downstream of broad light plume. Reload isolated profile, decode both64clocks and inspect occlusion/mixture/night.",
+    "Update authoring plan and publishing helpers for latest candidate before running them. publish_slice.py and verify_publication.py are draft helpers, NOT completed publication; currently target20 but wording/rebuild/receipt details need final reconciliation.",
+    "Publish scoped art/integration candidate onmain with skip-CI only after honest review. Remote SHA+every changed blob readback; updateissue13. No normal-mod promotion before remaining gates."
+  ],
+  "constraints": [
+    "No Actions/workflow edits, behavior/regression tests, gameplay changes or releases",
+    "No vanilla PNG/shader redistribution; use installed references",
+    "Keep broader goal/ledger/automation open; other source recovery remains unfinished"
+  ]
+}

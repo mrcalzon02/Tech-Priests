@@ -1,3 +1,7 @@
+## Latest safety handoff — V04 local candidate, glow reduction pending
+
+[Current checkpoint](thetazine-thruster-v04/CHECKPOINT.json) · [Safety handoff](thetazine-thruster-v04/SAFETY_CHECKPOINT.md). Owner wants subtle occasional movement of the piston-bearing core inside a rigid frame, a full-throated separate light-map flame, and **less white-hot intensity**. Localpilot20 and completed captures are preserved; intensity correction, current native review and V04 art publication are pending. Do not promote rejected pilot14 native graphics or repeat completed capture. Broader goal stays open.
+
 # Tech-Priests model completion ledger
 
 Goal opened 2026-11-07 (America/Anchorage). **Open: no blanket model-completion claim.**
