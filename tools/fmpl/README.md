@@ -82,3 +82,19 @@ Private Google Drive Greebles.blend is indexed as greebles-drive-2026-10 in FMPL
 ### Emergency-machine component harvest
 
 The FMPL candidate registry now indexes 12 specific boiler V08 meshes (cage, valve, flange, gauge, manifold and support parts), the V21 fused condenser outlet, and five Emergency Miner Blender generator operators. Their names come from actual committed source/roundtrip evidence; all 18 are **candidates**, not independently extracted and approved physical parts. The emergency assembler remains a sprite-only reference until its correct native source is recovered.
+
+## FMPL v0.2 geometry-first donor pipeline
+
+The Greebles source has 320 individually indexed **unclassified** mesh
+candidates; staged scripts support resumable geometry-only Blender
+extraction, exact SHA-256 checkpointing, independent native reopen checks
+and labeled two-view contact sheets. The original nine materials are
+placeholder references, not replacements for approved FMPL PBR presets.
+See [greebles/DEATLASE_PLAN.md](greebles/DEATLASE_PLAN.md).
+
+[external_sources.json](external_sources.json) distinguishes actual native
+mesh donors, third-party 2D render catalogs, published Wube 3D printable
+meshes and official rendering/geometry methods. Every external import must
+pass [asset_source_gate.py](asset_source_gate.py) at an individual-file
+rights and source-format level. No binaries or additional workflows are
+added to Git.

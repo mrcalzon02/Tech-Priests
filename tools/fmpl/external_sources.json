@@ -1,0 +1,141 @@
+{
+  "schema": "fmpl.external-sources.v1",
+  "purpose": "Track provenance and rights, not a blanket permission to redistribute geometry",
+  "sources": [
+    {
+      "source_id": "greebles-drive-2026-10",
+      "origin": "private-drive",
+      "title": "Greebles.blend",
+      "source_uri": "google-drive-file:1Id2QlV-4B8LyjXNilXa4M2tL7G2Pq4Jy",
+      "state": "candidate",
+      "rights": "owner-controlled",
+      "license_evidence": null,
+      "scope": "Private runner-side scene parsing and internal visual reference; no public binary distribution",
+      "source_sha256": "b7938b171edc0bf1e3daeb410029b0f5978a65df34b466fdd0fe209a71848123",
+      "source_medium": "native-blender-scene"
+    },
+    {
+      "source_id": "tech-priests-existing-machines",
+      "origin": "self-authored-repository",
+      "title": "Tech-Priests machine and parts sources",
+      "source_uri": "https://github.com/mrcalzon02/Tech-Priests",
+      "state": "candidate",
+      "rights": "owner-controlled",
+      "license_evidence": null,
+      "scope": "Refer to exact machine source, approved materials and proven transforms; component licensing checked at promotion",
+      "source_medium": "mixed-source-and-code"
+    },
+    {
+      "source_id": "tanks-for-bob-art-pipeline",
+      "origin": "self-authored-repository",
+      "title": "Tanks-for-bob-Fork model and sprite tools",
+      "source_uri": "https://github.com/mrcalzon02/Tanks-for-bob-Fork",
+      "state": "candidate",
+      "rights": "owner-controlled",
+      "license_evidence": null,
+      "scope": "Render/export tooling and own model sources; third-party textures or original mod content are separately gated",
+      "source_medium": "mixed-source-and-code"
+    },
+    {
+      "source_id": "snouz-factorio-free-graphics",
+      "origin": "third-party-website",
+      "title": "snouz/factorio_free_graphics_for_modders",
+      "source_uri": "https://github.com/snouz/factorio_free_graphics_for_modders",
+      "state": "reference-only",
+      "rights": "third-party",
+      "license_evidence": null,
+      "source_medium": "mixed-owner-preview-sprites",
+      "scope": "Mixed third-party mod graphics licenses; review item credits and license before reproduction. The \u03a8 3D models folder contains PNGs and text links, not original editable 3D donor files.",
+      "approved_for_3d_import": false,
+      "approved_for_redistribution": false,
+      "pinned_revision": "1207acbfd49aa577142f1a03b7851112f8981b99"
+    },
+    {
+      "source_id": "malcolmriley-unused-renders",
+      "origin": "third-party-website",
+      "title": "malcolmriley/unused-renders",
+      "source_uri": "https://github.com/malcolmriley/unused-renders",
+      "state": "reference-only",
+      "rights": "third-party",
+      "license_evidence": {
+        "license_name": "CC-BY-4.0",
+        "evidence_uri": "https://github.com/malcolmriley/unused-renders/blob/main/LICENSE"
+      },
+      "source_medium": "finished-png-render-reference",
+      "scope": "CC BY 4.0 for repository render assets; the images are not original Blender geometry. Attribute when distributing adapted images.",
+      "approved_for_3d_import": false,
+      "approved_for_redistribution": false,
+      "pinned_revision": "0d2c456803dbdf1f10dd282b1fb9356526feb276"
+    },
+    {
+      "source_id": "malcolmriley-production-wiki",
+      "origin": "third-party-website",
+      "title": "Malcolm Riley Blender rendering notes",
+      "source_uri": "https://github.com/malcolmriley/unused-renders/wiki",
+      "state": "reference-only",
+      "rights": "third-party",
+      "license_evidence": null,
+      "source_medium": "technique-and-render-reference",
+      "scope": "Production guidance rather than imported assets. Check separate rights and original source of any linked sample .blend.",
+      "approved_for_3d_import": false,
+      "approved_for_redistribution": false
+    },
+    {
+      "source_id": "wube-fff-146",
+      "origin": "third-party-website",
+      "title": "Wube Factorio GFX workflow",
+      "source_uri": "https://www.factorio.com/blog/post/fff-146",
+      "state": "reference-only",
+      "rights": "third-party",
+      "license_evidence": null,
+      "source_medium": "official-production-process-reference",
+      "scope": "Useful for model/render scene split, compositing passes, postprocess, PNG layers and native sprite packaging; the article does not grant general redistribution rights.",
+      "approved_for_3d_import": false,
+      "approved_for_redistribution": false
+    },
+    {
+      "source_id": "wube-fff-447",
+      "origin": "third-party-website",
+      "title": "Wube Factorio printable models announcement",
+      "source_uri": "https://www.factorio.com/blog/post/fff-447",
+      "state": "reference-only",
+      "rights": "third-party",
+      "license_evidence": null,
+      "source_medium": "official-design-and-printable-geometry-reference",
+      "scope": "Official discussion of geometry/intent; paper and print-design meshes are adapted from game models. No blanket public redistribution of Factorio graphics.",
+      "approved_for_3d_import": false,
+      "approved_for_redistribution": false
+    },
+    {
+      "source_id": "wube-printables",
+      "origin": "third-party-website",
+      "title": "Wube Software printable Factorio models",
+      "source_uri": "https://www.printables.com/@WubeSoftware/models",
+      "state": "reference-only",
+      "rights": "third-party",
+      "license_evidence": null,
+      "source_medium": "downloadable-stl-adaptations-reference",
+      "scope": "Verify each downloadable STL model file and individual license. Print-ready physical objects are not source-ready animated Blender production models.",
+      "approved_for_3d_import": false,
+      "approved_for_redistribution": false
+    }
+  ],
+  "third_party_website_queue": [
+    "snouz-factorio-free-graphics",
+    "malcolmriley-unused-renders",
+    "malcolmriley-production-wiki",
+    "wube-fff-146",
+    "wube-fff-447",
+    "wube-printables"
+  ],
+  "warning": "Third-party references are never automatically approved for importing or redistributing geometry; per-file source format and licensing review are mandatory.",
+  "pending_unresolved_assets": [
+    {
+      "source_id": "near-vanilla-tank-model-unresolved",
+      "description": "User-mentioned near-production-ready non-Wube tank 3D donor",
+      "source_uri": null,
+      "status": "awaiting-exact-file-or-link",
+      "policy": "Do not guess source or rights; preserve attribution and assess provenance before decomposition."
+    }
+  ]
+}

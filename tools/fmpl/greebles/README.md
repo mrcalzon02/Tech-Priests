@@ -39,3 +39,23 @@ acceptance should a donor be promoted to an interchangeable part.
 Decorative greebles must NEVER be used as a substitute for checked native
 Factorio fluid ports, pipe mouth transforms, anchors, collision or attachment
 hardware. Those remain separately measured interface contracts in FMPL.
+
+## Geometry-first de-atlasing and visual classification
+
+See [DEATLASE_PLAN.md](DEATLASE_PLAN.md) and the 320-entry
+[stage0_candidates.csv](stage0_candidates.csv). IDs are binary-source-derived
+mesh-object candidates, **not confirmed mechanical components**. The nine
+original generic materials are placeholders: `deatlas.py` strips them
+from extracted evaluated-mesh copies, keeping original names in per-part
+receipts. The original Google Drive source remains private and untouched.
+
+Run `run_batches.py` with a default eight-object batch, verify separate
+native Blender reopens via `verify_one.py`, then render front/rear views
+with `render_previews.py` and assemble contact sheets with
+`contact_sheet.py` before assigning semantic names and design-language
+tags. All output is generated into a local runner-only cache; it must not
+be committed to public Git or treated as Factorio-ready geometry.
+
+References from Snouz, Malcolm Riley and Wube are tracked separately
+in ../external_sources.json. No mixed-license sprite set or printable STL
+is automatically an approved native editable Blender donor.

@@ -2,7 +2,7 @@
   "schema": "fmpl.module.v1",
   "module": "Factorio Modeling Production Library",
   "short_name": "FMPL",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "canonical_repo": "mrcalzon02/Tech-Priests",
   "source_commit": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
   "external_refs": {
@@ -28,7 +28,9 @@
     "pipeline_records": 4,
     "external_blender_libraries": 1,
     "component_candidates_total": 39,
-    "emergency_component_candidates": 18
+    "emergency_component_candidates": 18,
+    "greebles_unclassified_mesh_candidates": 320,
+    "external_references": 9
   },
   "models": [
     {
@@ -524,5 +526,21 @@
       },
       "purpose": "Editable greeble donor for design language, not verified pipe or mechanical connections"
     }
-  ]
+  ],
+  "external_source_registry": "tools/fmpl/external_sources.json",
+  "external_asset_rights_gate": "tools/fmpl/asset_source_gate.py",
+  "style_taxonomy": "tools/fmpl/greebles/design_taxonomy.json",
+  "greebles_deatlas": {
+    "source_id": "greebles-drive-2026-10",
+    "source_candidate_index": "tools/fmpl/greebles/stage0_candidates.csv",
+    "candidate_count": 320,
+    "candidate_status": "source-name-only-unclassified",
+    "material_policy": "Original nine placeholder materials are not promoted; derived meshes strip slots and retain source material names in receipts",
+    "blender_extractor": "tools/fmpl/greebles/deatlas.py",
+    "bounded_driver": "tools/fmpl/greebles/run_batches.py",
+    "native_reopen": "tools/fmpl/greebles/verify_one.py",
+    "previews": "tools/fmpl/greebles/render_previews.py",
+    "contact_sheet": "tools/fmpl/greebles/contact_sheet.py",
+    "production_proof": "pending-independent-Blender-runner-check"
+  }
 }

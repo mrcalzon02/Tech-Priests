@@ -1,0 +1,67 @@
+{
+  "schema": "fmpl.design-taxonomy.v1",
+  "purpose": "Tag appearance and suitability independently of structural/functional verification",
+  "vocabulary": {
+    "shape_roles": [
+      "cast_housing",
+      "rib",
+      "grille",
+      "panel",
+      "collar",
+      "flange",
+      "ring",
+      "vent",
+      "cable_gland",
+      "pipe_detail",
+      "fastener",
+      "instrument",
+      "structural_brace",
+      "other"
+    ],
+    "visual_weight": [
+      "silhouette",
+      "secondary_detail",
+      "micro_greeble"
+    ],
+    "design_families": [
+      "martian_weathered_industrial",
+      "emergency_survival_machinery",
+      "generic_kitbash",
+      "unclassified"
+    ],
+    "fit_methods": [
+      "uniform_scale",
+      "controlled_nonuniform_scale",
+      "deform",
+      "retopologize",
+      "rebuild_from_reference"
+    ],
+    "purposes": [
+      "reference_only",
+      "decorative_surface",
+      "structural_donor",
+      "functional_interface"
+    ],
+    "stages": [
+      "source_name_only",
+      "visual_classified",
+      "measured",
+      "editable_candidate",
+      "verified_reusable",
+      "owner_approved"
+    ]
+  },
+  "rules": [
+    "Names alone never establish semantic roles or approved design families.",
+    "One mesh may contain disconnected components; grouping and splitting require visual topology review.",
+    "All donor transforms and material maps retain original source identity.",
+    "Never treat greeble decorative geometry as validated Factorio fluid ports or collision interfaces.",
+    "Evaluate visual benefit at the actual projected sprite resolution and view angle.",
+    "Keep original asset unchanged; fit-to-purpose edits are derived revisions with their own hashes."
+  ],
+  "material_policy": {
+    "source_materials": "placeholder-reference-only",
+    "asset_conversion": "geometry-first, strip placeholders from derived .blend candidate",
+    "retargeting": "approved FMPL material profiles assigned after visual classification and shading review"
+  }
+}
