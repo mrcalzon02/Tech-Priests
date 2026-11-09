@@ -4,6 +4,7 @@ import argparse
 import array
 import hashlib
 import json
+import math
 from pathlib import Path
 import struct
 import sys
@@ -123,6 +124,66 @@ def main():
             bpy.data.images.remove(image)
     idle_alpha=verify_png_alpha(a.idle_preview,report["idle_render_sha256"])
     active_alpha=verify_png_alpha(a.active_preview,report["active_render_sha256"])
+
+    # Single source-model camera, matching the proven boiler's canonical
+    # 45 degree elevation and 0 degree azimuth, not diagonal item art.
+    camera_objects=[o for o in scene.objects if o.type=="CAMERA"]
+    camera=scene.camera
+    if camera is None or len(camera_objects)!=1 or camera is not camera_objects[0]:
+        raise RuntimeError("Only one Factorio production camera is permitted")
+    expected_camera=(0.0,-6.0,7.65)
+    if (max(abs(float(camera.location[i])-expected_camera[i]) for i in range(3))>.002
+            or abs(float(camera.data.ortho_scale)-5.8)>.002):
+        raise RuntimeError("Machine-wide camera deviates from boiler export orientation")
+    if report.get("grid_aligned_model_ports") is not True:
+        raise RuntimeError("Model did not declare two centered tile-edge joints")
+    receipts=report.get("canonical_pipe_interfaces",[])
+    if len(receipts)!=2:
+        raise RuntimeError("Missing full machine inlet and outlet references")
+    join_checks=[]
+    from mathutils import Vector
+    bpy.context.view_layer.update()
+    for role,side in (("raw-water-in",-1),("purified-water-out",1)):
+        group=[c for c in refs if c.name.startswith("FMPL QA reference | "+role)]
+        if len(group)!=1:
+            raise RuntimeError("Missing independent reference group: "+role)
+        candidate=[o for o in process if o.name==("FMPL_PROCESS | "+role+" / reusable machine collar")]
+        throat=[o for o in process if o.name==("FMPL_PROCESS | "+role+" / reusable machine throat")]
+        adjacent=[o for o in group[0].all_objects if o is not None and
+                  o.get("interface_role")=="reference_near_collar"]
+        if len(candidate)!=1 or len(throat)!=1 or len(adjacent)!=1:
+            raise RuntimeError("Full-size original collar/throat mesh was not actually copied for "+role)
+        def surface_ring(obj):
+            return [obj.matrix_world @ v.co for v in obj.data.vertices
+                    if abs(float((obj.matrix_world @ v.co).x)-side*1.5)<.000005]
+        face=surface_ring(candidate[0])
+        near=surface_ring(adjacent[0])
+        if len(face)<64 or len(near)<64:
+            raise RuntimeError("External pipe mouth is not a real annular surface: "+role)
+        residual=max(min((v-w).length for w in near) for v in face)
+        if residual>1e-5:
+            raise RuntimeError("Canonical boiler/condenser pipe ring does not mate at actual plane: "+role+" "+str(residual))
+        values=[math.hypot(v.y,v.z-.36) for v in face]
+        outer=max(values)
+        bore=min(values)
+        if abs(outer-.34)>.002 or abs(bore-.245)>.002:
+            raise RuntimeError("Real pipe mouth has the wrong open bore/outer collar: "+role)
+        fasteners=[o for o in process if o.name.startswith("FMPL_PROCESS | "+role+" / actual flange bolt ")]
+        if len(fasteners)!=8:
+            raise RuntimeError("Model lacks boiler-pattern mechanical flange fixtures for "+role)
+        cast=[o for o in process if
+              (role=="raw-water-in" and "raw inlet cast receiving manifold" in o.name) or
+              (role=="purified-water-out" and "clarified water outlet casting" in o.name)]
+        if len(cast)!=1:
+            raise RuntimeError("A full bore must reduce into physically supported machinery: "+role)
+        join_checks.append({
+           "role":role,"joint_xyz":[side*1.5,0.0,.36],
+           "open_bore_diameter":.49,"collar_outer_diameter":.68,
+           "mating_ring_vertices":len(face),"near_pipe_ring_vertices":len(near),
+           "max_contact_residual_tiles":residual,
+           "fastener_count":len(fasteners),
+           "native_factorio_fluidbox_verified":False
+        })
     intended=report["source_parts_rendered"]+len(process)
     source_count=len(originals)
     # Verify actual GLB imports independently; no reference guides are allowed.
@@ -143,6 +204,9 @@ def main():
       "steam_activity_changed":idle!=active,
       "packed_pbr_images":packed,
       "structural_concrete_and_paving":True,
+      "one_canonical_factorio_camera":True,
+      "centered_mating_faces":join_checks,
+      "native_water_purifier_fluidbox_declared":False,
       "actual_png_alpha":{"idle":idle_alpha,"working":active_alpha},
       "native_pipe_cell_verified":False,
       "game_integrated":False,
