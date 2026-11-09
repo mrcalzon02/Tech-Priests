@@ -134,14 +134,14 @@ def main():
     for size in cfg["sizes"]:
         scaled=[scale_frame_nearest(frame,source_size,size) for frame in source]
         target=root/("idle-"+str(size)+".png")
-        save_rgba(target,size,4*size,atlas(scaled,size))
+        save_rgba(target,size,direction_count*size,atlas(scaled,size))
         if not target.is_file() or target.stat().st_size<100:
             raise RuntimeError("Atlas image missing or empty")
         rows=[{"direction":d,"rect":[0,d*size,size,size]} for d in range(direction_count)]
         sheets.append({"path":target.name,"sha256":sha(target),"cell_size":size,
                        "direction_count":direction_count,"frame_count":1,"dimensions":[size,direction_count*size],"cells":rows})
     proof=root/"contact-sheet.png"
-    save_rgba(proof,source_size*4,source_size,contact(source,source_size))
+    save_rgba(proof,source_size*direction_count,source_size,contact(source,source_size))
     qa={"passed":True,"capture_count":direction_count,"atlas_count":3,"sheets":sheets,
         "direction_count":direction_count,
         "production_camera_count":1,
