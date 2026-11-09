@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "asset": "example-item",
+  "source": "item.blend",
+  "capture_kind": "item",
+  "camera_policy": "fmpl.factorio45.v1",
+  "source_size": 256,
+  "sizes": [
+    64,
+    256
+  ],
+  "samples": 16,
+  "seed": 5855,
+  "columns": 1,
+  "fps": 24,
+  "directions": [
+    0
+  ],
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "camera_override": {
+    "type": "ORTHO",
+    "elevation_deg": 45,
+    "azimuth_deg": 0,
+    "distance": 8.485281374,
+    "target": [
+      0,
+      0,
+      0.65
+    ],
+    "ortho_scale": 2.2
+  },
+  "states": {
+    "icon": [
+      0
+    ]
+  },
+  "threads": 4,
+  "workers": 1
+}
