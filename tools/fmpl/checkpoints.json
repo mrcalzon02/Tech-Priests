@@ -1,4 +1,37 @@
 {
   "schema": "fmpl.checkpoints.v1",
-  "events": []
+  "events": [
+    {
+      "event_id": "hb-mh7-water-purifier-42698350899-1",
+      "asset_id": "water-purifier-mh7",
+      "asset_kind": "model",
+      "revision": "goal-pilot-2026-11-09-four-goals",
+      "state": "candidate",
+      "source_sha256": "3090f184375644a7a004f544c1a776e327e16ef44a3d7d6cab45794489bce80a",
+      "evidence": {
+        "source_artifact_sha256": "3090f184375644a7a004f544c1a776e327e16ef44a3d7d6cab45794489bce80a",
+        "original_baseline_sha256": "fdbb4db50ad7911328c4abc79d8060af3c9a1af97a7243393ec00c15d3aace2e",
+        "glb_sha256": "ecbe531ef02a085d3147d37263fb36f64be3917ad1ab35d124577e44295ced34",
+        "render_sha256": "a4deaf4e58bacd3ac8c40ae788c395dea180340e30cb6e021130d7c07af0ca35",
+        "native_reopen_verified": true,
+        "mesh_count_original": 38,
+        "additional_meshes": 12,
+        "source_geometry_preserved": true,
+        "local_inference_model": "qwen2.5-coder:7b",
+        "completed_goals": [
+          "load_path",
+          "filter_pump_path",
+          "pipe_interfaces",
+          "controls_service"
+        ],
+        "github_run": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42698350899",
+        "github_artifact_id": 13710392252,
+        "github_artifact_expires_utc": "2026-11-23",
+        "owner_visual_approval": false,
+        "factorio_runtime_verified": false,
+        "native_port_alignment_verified": false,
+        "visual_note": "actual renders show minimal externally visible change; functional/mechanical detail and PBR pass remain open"
+      }
+    }
+  ]
 }
