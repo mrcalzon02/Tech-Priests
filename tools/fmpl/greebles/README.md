@@ -50,8 +50,8 @@ from extracted evaluated-mesh copies, keeping original names in per-part
 receipts. The original Google Drive source remains private and untouched.
 
 Run `run_batches.py` with a default eight-object batch, verify separate
-native Blender reopens via `verify_one.py`, then render front/rear views
-with `render_previews.py` and assemble contact sheets with
+native Blender reopens via `verify_one.py`, then render ONLY one fixed
+45-degree grid-aligned icon view with `render_previews.py` and assemble contact sheets with
 `contact_sheet.py` before assigning semantic names and design-language
 tags. All output is generated into a local runner-only cache; it must not
 be committed to public Git or treated as Factorio-ready geometry.
