@@ -551,14 +551,14 @@
         "visible dirty-to-filtered fluid route",
         "windowed agitator and steam animation",
         "independent source/GLB checks",
-        "four static cardinal sprite captures"
+        "one fixed 45-degree/0-azimuth static model proof (native entity directional requirements remain separate)"
       ],
       "entrypoint": {
         "repository": "mrcalzon02/Tech-Priests",
         "ref": "c0be708eec7a3a798b1945017eae58c2147e407a",
         "path": "tools/fmpl/production_smoke/refine_process.py"
       },
-      "status": "technical-candidate-verified-four-static-directions-native-game-pending",
+      "status": "technical-candidate-verified-one-static-camera-mating-prototype-pending",
       "gate": "Native Factorio pipe cells and user visual approval remain unverified after Blender export"
     }
   ],
