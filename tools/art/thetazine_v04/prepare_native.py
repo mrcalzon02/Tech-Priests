@@ -43,6 +43,18 @@ p.graphics_set.flame_position={{{mouth[0]},{mouth[1]}-offset+{a.flame_y_adjust}}
 p.drawing_box={{{{-4,-5}},{{4,42}}}}
 data:extend({{p}})
 '''+helper+"\nlog('THETAZINE_V04_NATIVE_JSON '..json({graphics=p.graphics_set,plumes=p.plumes,ports={fuel=p.fuel_fluid_box,oxidizer=p.oxidizer_fluid_box},collision=p.collision_box,donor={flame_position=donor.graphics_set.flame_position,body=a,lip_row="+str(donor_lip_row)+"},scope='Review-only actual native flame effect plus separate V04 body/heat sprites; gameplay preserved'}))\n"
-(m/'data-final-fixes.lua').write_text(lua,encoding='utf-8',newline='\n');shutil.copy2(W/'native-control.lua',m/'scenarios/model-placement/control.lua')
+shadow=None
+if (study/'projected-shadow-validation.json').exists():
+ shadow=json.loads((study/'projected-shadow-validation.json').read_text());assert shadow['native_sha256']==model['native_sha256'] and shadow['status'].startswith('PASS')
+ for name in ['shadow-1.png','shadow-2.png','idle-shadow.png']:shutil.copy2(study/'source-package'/name,gfx/name)
+ sw,sh=shadow['cell'];ss='{'+','.join(map(str,shadow['shift']))+'}'
+ shadow_lua=f'''local projectedShadow={{filenames={{base..'shadow-1.png',base..'shadow-2.png'}},width={sw},height={sh},line_length=8,lines_per_file=4,frame_count=64,animation_speed=.5,scale={scale},shift={ss},draw_as_shadow=true}}
+table.insert(p.graphics_set.animation.north.layers,projectedShadow)
+table.insert(p.graphics_set.animation.north.layers,marker(0.0))
+local coldBody=p.graphics_set.idle_animation.north
+p.graphics_set.idle_animation.north={{layers={{coldBody,{{filename=base..'idle-shadow.png',width={sw},height={sh},frame_count=1,repeat_count=64,scale={scale},shift={ss},draw_as_shadow=true}}}}}}
+'''
+ lua=lua.replace('data:extend({p})',shadow_lua+'\ndata:extend({p})')
+(m/'data-final-fixes.lua').write_text(lua,encoding='utf-8',newline='\n');(m/'scenarios/model-placement/control.lua').write_text((W/'native-control.lua').read_text().replace('REVIEW_SOURCE_NATIVE_SHA256',model['native_sha256']),encoding='utf-8',newline='\n')
 receipt={'status':'ISOLATED_V04_NATIVE_PREPARED_REQUIRES_LOAD_AND_VISUAL_READBACK','native_sha256':model['native_sha256'],'registration_sha256':hashlib.sha256((study/'native-jet-registration.json').read_bytes()).hexdigest(),'data_sha256':hashlib.sha256((m/'data-final-fixes.lua').read_bytes()).hexdigest(),'control_sha256':hashlib.sha256((m/'scenarios/model-placement/control.lua').read_bytes()).hexdigest(),'donor_cell':[width,height],'donor_alpha_lip_row':donor_lip_row,'flame_y_adjust':a.flame_y_adjust,'graphics_files':[{'file':p.name,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in gfx.glob('*.png')],'effect_is_native':True,'native_colour_thrust_response_not_yet_reviewed':True}
-(profile/'v04-preparation-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8',newline='\n');print('V04_NATIVE_READY',profile,donor_lip_row)
+receipt['shadow_contract']=shadow;receipt['native_visual_state_plan']=['working-connected','idle-connected','idle-disconnected','restart-disconnected'];(profile/'v04-preparation-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8',newline='\n');print('V04_NATIVE_READY',profile,donor_lip_row)

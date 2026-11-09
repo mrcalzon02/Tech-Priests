@@ -1,7 +1,7 @@
 {
   "status": "PASS_ACTUAL_NATIVE_GLB_TRIANGLE_UV_MATERIAL_WINDING_AND_SOCKET_REIMPORT",
-  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
-  "glb_sha256": "fa7ee3a5885a7e2bb0f65d27756b1326cbb42b84768a6ef084be1c6a2127c30a",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "glb_sha256": "c63deaf26877005cf2cff55dfa75428bdd5ab5a0d78107e901f689b14a9b0946",
   "method": "One-to-one oriented triangle correspondence, including all three world positions, UVs and material. Bipartite matching resolves coincident triangles without trusting vertex deduplication or raw float uniqueness. Threshold 1e-5, area threshold 1e-5.",
   "mesh_count": 3022,
   "triangle_count_each": 533304,
@@ -214,6 +214,14 @@
       "packed": true
     },
     {
+      "name": "refractory-regenerative-heat.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "packed": true
+    },
+    {
       "name": "steel-basecolor.png",
       "size": [
         1024,
@@ -344,14 +352,6 @@
       "packed": true
     },
     {
-      "name": "full-bell-refractory-emission",
-      "size": [
-        512,
-        512
-      ],
-      "packed": true
-    },
-    {
       "name": "gentle-leaf-edge-heat-fringe",
       "size": [
         1024,
@@ -409,6 +409,14 @@
     },
     {
       "name": "refractory-normal",
+      "size": [
+        1024,
+        1024
+      ],
+      "packed": true
+    },
+    {
+      "name": "refractory-regenerative-heat",
       "size": [
         1024,
         1024

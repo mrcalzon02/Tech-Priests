@@ -1,40 +1,40 @@
 {
-  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
-  "glb_sha256": "fa7ee3a5885a7e2bb0f65d27756b1326cbb42b84768a6ef084be1c6a2127c30a",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "glb_sha256": "c63deaf26877005cf2cff55dfa75428bdd5ab5a0d78107e901f689b14a9b0946",
   "files": [
     {
       "file": "export-front.png",
-      "sha256": "6e85f16195a22f1a90343c524c893d5ee7094aaeed19f21cea675deb4462579f",
+      "sha256": "79d4e3689d7c1759af2888f989ce265d95c04c04991b964dfbe8b171f83a5715",
       "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
     },
     {
       "file": "export-upper.png",
-      "sha256": "4749d3e9005cd0c932b6fc227533fa20602472d2d97e986237a9a52010e8a9cc",
+      "sha256": "6f2d646b674d102215f835de18e81fbdcb6317865bfe54037d54842dd8ca9b62",
       "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
     },
     {
       "file": "export-fuel-screw.png",
-      "sha256": "5ea8441a721eff62a687b26cd02481b18f07576dc54cf277600edd4b423594cc",
+      "sha256": "c38ed0a8490d8e263fec400f2ec568ac8c5d829e0ba9be424d4384728d80eca0",
       "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
     },
     {
       "file": "export-bell-rams.png",
-      "sha256": "e70876c314baf52d55b68275606cafc87413a4e80ae055630d0d6a6a91b72942",
+      "sha256": "d4f94f0d53e0fd7cb01e71056c321d51c18dd3657164681224d0b01d7b784a52",
       "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
     },
     {
       "file": "export-hinges.png",
-      "sha256": "4a31bdf8050191148b0e9b3d9f45ff26891fca5d02202dcdc52f71102868b8be",
+      "sha256": "1e6126c74c3639cf8c815511de67110ffc0f086c45a514963ccd6565948deae4",
       "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
     },
     {
       "file": "export-rear.png",
-      "sha256": "1f67455bbeace9971c734c33266d70d2ee6dc62d2750087b407fc259ac995118",
+      "sha256": "dbc6fb3bd890226e7fa4dbfd243d260a077214b579b1fd7b188f00f2a0becd98",
       "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
     },
     {
       "file": "export-rear-clay.png",
-      "sha256": "a8483712118c27bc7b5726a156a0e8e285eff293f617ebb55143d977e5e67ca6",
+      "sha256": "e43d4484455016181bead63693df0e775762e5a3b203cb0e11510afd79b4c7c7",
       "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
     }
   ]

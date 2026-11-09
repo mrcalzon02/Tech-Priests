@@ -1,6 +1,6 @@
 {
   "status": "PASS_SEPARATE_NOHEAT_BODY_AND_HEAT_ONLY_132_PNGS_128_EXACT_ATLAS_CELLS",
-  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
   "capture_renderer_sha256": "781920c0dd797b06917fa229ae79a5af3130d053f3c84abc908b5a8ff95de40f",
   "source_pngs": 132,
   "working_cells": 128,
@@ -51,7 +51,7 @@
         1280
       ],
       "exact_cells_verified": 32,
-      "sha256": "0efdfd3c3c881d8d12913bf9750d800a01255b112ddee3ca63ffb79c51eb741a"
+      "sha256": "91ae265e583f1598418075dd5571c69307284a6e913efa08a895c5576f810b8c"
     },
     {
       "path": "body-2.png",
@@ -99,7 +99,7 @@
         1280
       ],
       "exact_cells_verified": 32,
-      "sha256": "f0bc19d0d53670c3c93e1019079f67c864ac305c05b24a2fc61fdb16ab9f4a7e"
+      "sha256": "d9216415aa0d4bc18e8ccc38fd544bbe54f7cbb5144740f37bfb3a7231d90550"
     },
     {
       "path": "heat-glow-1.png",
@@ -147,7 +147,7 @@
         1280
       ],
       "exact_cells_verified": 32,
-      "sha256": "332547279437505b33bff7bb208b4a837df68bbf1c639d811db27c96704db5bd"
+      "sha256": "33cc847ee0af5d96d044ff3ffacc520dd56dea98a6c530fe64985796511cc5fe"
     },
     {
       "path": "heat-glow-2.png",
@@ -195,14 +195,14 @@
         1280
       ],
       "exact_cells_verified": 32,
-      "sha256": "a1ce0952025594ff938e7f75b9c7236aa07e7d864b745bf3394e66468dbd50d6"
+      "sha256": "11ceca5e64abc886de5e845312580a667640fcfd463018530fc2f0d8ed798cdb"
     }
   ],
-  "source_archive_sha256": "47a1ccb4cc20a6d677afac8e9187e4297fe463cea45aad4e0df6012cc4c3c9d1",
-  "source_archive_bytes": 49915050,
+  "source_archive_sha256": "49756e3b0a553797add2acb059dd27fef5f010175753c23bfe06a049f845fa74",
+  "source_archive_bytes": 49961660,
   "cold_heat_rgb_zero": true,
-  "body_hotspot_mean_max_rgb_byte": 3.209813402764863,
-  "heat_hotspot_mean_max_rgb_byte": 244.23953877626928,
+  "body_hotspot_mean_max_rgb_byte": 2.1910612158441007,
+  "heat_hotspot_mean_max_rgb_byte": 230.42014403728024,
   "heat_effectively_absent_from_body": true,
   "heat_mask_scope": "Mapped bell/refractory plus full-throated render-only volume; no fuel-window glow or chamber-head emission.",
   "heat_statistics": [
@@ -215,9 +215,9 @@
     },
     {
       "frame": 1,
-      "heat_rgb_nonzero_pixels": 41954,
+      "heat_rgb_nonzero_pixels": 41919,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.651465861002604,
+      "heat_mean_byte": 9.402369689941406,
       "rgb_bounds": [
         158,
         664,
@@ -227,9 +227,9 @@
     },
     {
       "frame": 2,
-      "heat_rgb_nonzero_pixels": 42075,
+      "heat_rgb_nonzero_pixels": 42047,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.673208618164063,
+      "heat_mean_byte": 9.38910369873047,
       "rgb_bounds": [
         159,
         663,
@@ -239,9 +239,9 @@
     },
     {
       "frame": 3,
-      "heat_rgb_nonzero_pixels": 42125,
+      "heat_rgb_nonzero_pixels": 42091,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.67298075358073,
+      "heat_mean_byte": 9.383050028483073,
       "rgb_bounds": [
         159,
         663,
@@ -251,9 +251,9 @@
     },
     {
       "frame": 4,
-      "heat_rgb_nonzero_pixels": 42123,
+      "heat_rgb_nonzero_pixels": 42085,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.671888732910157,
+      "heat_mean_byte": 9.394863382975261,
       "rgb_bounds": [
         159,
         664,
@@ -263,9 +263,9 @@
     },
     {
       "frame": 5,
-      "heat_rgb_nonzero_pixels": 42074,
+      "heat_rgb_nonzero_pixels": 42039,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.644011433919271,
+      "heat_mean_byte": 9.377451070149739,
       "rgb_bounds": [
         159,
         663,
@@ -275,9 +275,9 @@
     },
     {
       "frame": 6,
-      "heat_rgb_nonzero_pixels": 41980,
+      "heat_rgb_nonzero_pixels": 41947,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.580269877115885,
+      "heat_mean_byte": 9.297624206542968,
       "rgb_bounds": [
         159,
         663,
@@ -287,9 +287,9 @@
     },
     {
       "frame": 7,
-      "heat_rgb_nonzero_pixels": 41863,
+      "heat_rgb_nonzero_pixels": 41829,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.549147542317709,
+      "heat_mean_byte": 9.259031677246094,
       "rgb_bounds": [
         160,
         663,
@@ -299,9 +299,9 @@
     },
     {
       "frame": 8,
-      "heat_rgb_nonzero_pixels": 41860,
+      "heat_rgb_nonzero_pixels": 41829,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.57499745686849,
+      "heat_mean_byte": 9.284561157226562,
       "rgb_bounds": [
         160,
         663,
@@ -311,9 +311,9 @@
     },
     {
       "frame": 9,
-      "heat_rgb_nonzero_pixels": 41904,
+      "heat_rgb_nonzero_pixels": 41874,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.620554097493489,
+      "heat_mean_byte": 9.350624593098958,
       "rgb_bounds": [
         159,
         664,
@@ -323,9 +323,9 @@
     },
     {
       "frame": 10,
-      "heat_rgb_nonzero_pixels": 41969,
+      "heat_rgb_nonzero_pixels": 41941,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.6870849609375,
+      "heat_mean_byte": 9.467372131347656,
       "rgb_bounds": [
         160,
         665,
@@ -335,9 +335,9 @@
     },
     {
       "frame": 11,
-      "heat_rgb_nonzero_pixels": 42100,
+      "heat_rgb_nonzero_pixels": 42072,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.75370585123698,
+      "heat_mean_byte": 9.524328104654948,
       "rgb_bounds": [
         159,
         664,
@@ -347,9 +347,9 @@
     },
     {
       "frame": 12,
-      "heat_rgb_nonzero_pixels": 42259,
+      "heat_rgb_nonzero_pixels": 42223,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.798121643066406,
+      "heat_mean_byte": 9.572109476725261,
       "rgb_bounds": [
         154,
         664,
@@ -359,9 +359,9 @@
     },
     {
       "frame": 13,
-      "heat_rgb_nonzero_pixels": 42383,
+      "heat_rgb_nonzero_pixels": 42356,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.82226104736328,
+      "heat_mean_byte": 9.52134755452474,
       "rgb_bounds": [
         157,
         662,
@@ -371,9 +371,9 @@
     },
     {
       "frame": 14,
-      "heat_rgb_nonzero_pixels": 42494,
+      "heat_rgb_nonzero_pixels": 42460,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.815505981445312,
+      "heat_mean_byte": 9.463276672363282,
       "rgb_bounds": [
         160,
         660,
@@ -383,9 +383,9 @@
     },
     {
       "frame": 15,
-      "heat_rgb_nonzero_pixels": 42569,
+      "heat_rgb_nonzero_pixels": 42525,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.789819844563802,
+      "heat_mean_byte": 9.433597819010417,
       "rgb_bounds": [
         156,
         664,
@@ -395,9 +395,9 @@
     },
     {
       "frame": 16,
-      "heat_rgb_nonzero_pixels": 42566,
+      "heat_rgb_nonzero_pixels": 42522,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.745034790039062,
+      "heat_mean_byte": 9.339730326334635,
       "rgb_bounds": [
         155,
         661,
@@ -407,9 +407,9 @@
     },
     {
       "frame": 17,
-      "heat_rgb_nonzero_pixels": 42531,
+      "heat_rgb_nonzero_pixels": 42491,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.72115478515625,
+      "heat_mean_byte": 9.31501719156901,
       "rgb_bounds": [
         157,
         663,
@@ -419,9 +419,9 @@
     },
     {
       "frame": 18,
-      "heat_rgb_nonzero_pixels": 42436,
+      "heat_rgb_nonzero_pixels": 42399,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.709400431315105,
+      "heat_mean_byte": 9.307931518554687,
       "rgb_bounds": [
         157,
         663,
@@ -431,9 +431,9 @@
     },
     {
       "frame": 19,
-      "heat_rgb_nonzero_pixels": 42230,
+      "heat_rgb_nonzero_pixels": 42199,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.649483744303385,
+      "heat_mean_byte": 9.235667419433593,
       "rgb_bounds": [
         158,
         663,
@@ -443,9 +443,9 @@
     },
     {
       "frame": 20,
-      "heat_rgb_nonzero_pixels": 42090,
+      "heat_rgb_nonzero_pixels": 42060,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.578011576334635,
+      "heat_mean_byte": 9.210126241048178,
       "rgb_bounds": [
         158,
         663,
@@ -455,9 +455,9 @@
     },
     {
       "frame": 21,
-      "heat_rgb_nonzero_pixels": 41942,
+      "heat_rgb_nonzero_pixels": 41919,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.547351582845051,
+      "heat_mean_byte": 9.23985087076823,
       "rgb_bounds": [
         158,
         663,
@@ -467,9 +467,9 @@
     },
     {
       "frame": 22,
-      "heat_rgb_nonzero_pixels": 41913,
+      "heat_rgb_nonzero_pixels": 41882,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.59703877766927,
+      "heat_mean_byte": 9.363331095377605,
       "rgb_bounds": [
         158,
         664,
@@ -479,9 +479,9 @@
     },
     {
       "frame": 23,
-      "heat_rgb_nonzero_pixels": 41993,
+      "heat_rgb_nonzero_pixels": 41963,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.640443420410156,
+      "heat_mean_byte": 9.47508036295573,
       "rgb_bounds": [
         157,
         665,
@@ -491,9 +491,9 @@
     },
     {
       "frame": 24,
-      "heat_rgb_nonzero_pixels": 42157,
+      "heat_rgb_nonzero_pixels": 42122,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.695720926920574,
+      "heat_mean_byte": 9.477457173665364,
       "rgb_bounds": [
         157,
         663,
@@ -503,9 +503,9 @@
     },
     {
       "frame": 25,
-      "heat_rgb_nonzero_pixels": 42268,
+      "heat_rgb_nonzero_pixels": 42238,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.749190775553386,
+      "heat_mean_byte": 9.477590433756511,
       "rgb_bounds": [
         157,
         664,
@@ -515,9 +515,9 @@
     },
     {
       "frame": 26,
-      "heat_rgb_nonzero_pixels": 42346,
+      "heat_rgb_nonzero_pixels": 42306,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.787967936197917,
+      "heat_mean_byte": 9.518468729654948,
       "rgb_bounds": [
         156,
         663,
@@ -527,9 +527,9 @@
     },
     {
       "frame": 27,
-      "heat_rgb_nonzero_pixels": 42426,
+      "heat_rgb_nonzero_pixels": 42384,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.81097666422526,
+      "heat_mean_byte": 9.542293294270833,
       "rgb_bounds": [
         156,
         663,
@@ -539,9 +539,9 @@
     },
     {
       "frame": 28,
-      "heat_rgb_nonzero_pixels": 42501,
+      "heat_rgb_nonzero_pixels": 42464,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.850209554036459,
+      "heat_mean_byte": 9.572676595052084,
       "rgb_bounds": [
         156,
         664,
@@ -551,9 +551,9 @@
     },
     {
       "frame": 29,
-      "heat_rgb_nonzero_pixels": 42450,
+      "heat_rgb_nonzero_pixels": 42412,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.853885904947917,
+      "heat_mean_byte": 9.58433837890625,
       "rgb_bounds": [
         157,
         664,
@@ -563,9 +563,9 @@
     },
     {
       "frame": 30,
-      "heat_rgb_nonzero_pixels": 42361,
+      "heat_rgb_nonzero_pixels": 42324,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.818275960286458,
+      "heat_mean_byte": 9.575239562988282,
       "rgb_bounds": [
         158,
         664,
@@ -575,9 +575,9 @@
     },
     {
       "frame": 31,
-      "heat_rgb_nonzero_pixels": 42237,
+      "heat_rgb_nonzero_pixels": 42200,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.776690165201822,
+      "heat_mean_byte": 9.554561360677083,
       "rgb_bounds": [
         159,
         664,
@@ -587,9 +587,9 @@
     },
     {
       "frame": 32,
-      "heat_rgb_nonzero_pixels": 42039,
+      "heat_rgb_nonzero_pixels": 42006,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.733096822102864,
+      "heat_mean_byte": 9.536735534667969,
       "rgb_bounds": [
         159,
         664,
@@ -599,9 +599,9 @@
     },
     {
       "frame": 33,
-      "heat_rgb_nonzero_pixels": 41888,
+      "heat_rgb_nonzero_pixels": 41853,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.696604410807291,
+      "heat_mean_byte": 9.551259867350261,
       "rgb_bounds": [
         160,
         664,
@@ -611,9 +611,9 @@
     },
     {
       "frame": 34,
-      "heat_rgb_nonzero_pixels": 41733,
+      "heat_rgb_nonzero_pixels": 41702,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.669834899902344,
+      "heat_mean_byte": 9.570809427897135,
       "rgb_bounds": [
         160,
         664,
@@ -623,9 +623,9 @@
     },
     {
       "frame": 35,
-      "heat_rgb_nonzero_pixels": 41653,
+      "heat_rgb_nonzero_pixels": 41623,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.644751993815104,
+      "heat_mean_byte": 9.558851114908855,
       "rgb_bounds": [
         160,
         664,
@@ -635,9 +635,9 @@
     },
     {
       "frame": 36,
-      "heat_rgb_nonzero_pixels": 41600,
+      "heat_rgb_nonzero_pixels": 41568,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.624966939290365,
+      "heat_mean_byte": 9.504919942220052,
       "rgb_bounds": [
         160,
         667,
@@ -647,9 +647,9 @@
     },
     {
       "frame": 37,
-      "heat_rgb_nonzero_pixels": 41601,
+      "heat_rgb_nonzero_pixels": 41565,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.613212585449219,
+      "heat_mean_byte": 9.431306457519531,
       "rgb_bounds": [
         160,
         664,
@@ -659,9 +659,9 @@
     },
     {
       "frame": 38,
-      "heat_rgb_nonzero_pixels": 41649,
+      "heat_rgb_nonzero_pixels": 41613,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.60333251953125,
+      "heat_mean_byte": 9.375096638997396,
       "rgb_bounds": [
         160,
         664,
@@ -671,9 +671,9 @@
     },
     {
       "frame": 39,
-      "heat_rgb_nonzero_pixels": 41652,
+      "heat_rgb_nonzero_pixels": 41618,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.559795633951824,
+      "heat_mean_byte": 9.316765848795573,
       "rgb_bounds": [
         160,
         667,
@@ -683,9 +683,9 @@
     },
     {
       "frame": 40,
-      "heat_rgb_nonzero_pixels": 41694,
+      "heat_rgb_nonzero_pixels": 41651,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.537948608398438,
+      "heat_mean_byte": 9.294214375813802,
       "rgb_bounds": [
         159,
         664,
@@ -695,9 +695,9 @@
     },
     {
       "frame": 41,
-      "heat_rgb_nonzero_pixels": 41650,
+      "heat_rgb_nonzero_pixels": 41614,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.54084981282552,
+      "heat_mean_byte": 9.314292399088542,
       "rgb_bounds": [
         160,
         664,
@@ -707,9 +707,9 @@
     },
     {
       "frame": 42,
-      "heat_rgb_nonzero_pixels": 41551,
+      "heat_rgb_nonzero_pixels": 41512,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.537533569335938,
+      "heat_mean_byte": 9.344784545898438,
       "rgb_bounds": [
         161,
         664,
@@ -719,9 +719,9 @@
     },
     {
       "frame": 43,
-      "heat_rgb_nonzero_pixels": 41430,
+      "heat_rgb_nonzero_pixels": 41389,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.517803955078126,
+      "heat_mean_byte": 9.363060506184896,
       "rgb_bounds": [
         161,
         664,
@@ -731,9 +731,9 @@
     },
     {
       "frame": 44,
-      "heat_rgb_nonzero_pixels": 41309,
+      "heat_rgb_nonzero_pixels": 41268,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.495960998535157,
+      "heat_mean_byte": 9.348939514160156,
       "rgb_bounds": [
         160,
         664,
@@ -743,9 +743,9 @@
     },
     {
       "frame": 45,
-      "heat_rgb_nonzero_pixels": 41259,
+      "heat_rgb_nonzero_pixels": 41222,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.558303833007812,
+      "heat_mean_byte": 9.431153869628906,
       "rgb_bounds": [
         162,
         664,
@@ -755,9 +755,9 @@
     },
     {
       "frame": 46,
-      "heat_rgb_nonzero_pixels": 41141,
+      "heat_rgb_nonzero_pixels": 41102,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.575262959798177,
+      "heat_mean_byte": 9.527134704589844,
       "rgb_bounds": [
         165,
         665,
@@ -767,9 +767,9 @@
     },
     {
       "frame": 47,
-      "heat_rgb_nonzero_pixels": 40934,
+      "heat_rgb_nonzero_pixels": 40903,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.525775146484374,
+      "heat_mean_byte": 9.549517313639322,
       "rgb_bounds": [
         162,
         667,
@@ -779,9 +779,9 @@
     },
     {
       "frame": 48,
-      "heat_rgb_nonzero_pixels": 40948,
+      "heat_rgb_nonzero_pixels": 40905,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.514660135904949,
+      "heat_mean_byte": 9.585357157389323,
       "rgb_bounds": [
         159,
         664,
@@ -791,9 +791,9 @@
     },
     {
       "frame": 49,
-      "heat_rgb_nonzero_pixels": 40995,
+      "heat_rgb_nonzero_pixels": 40959,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.552916971842448,
+      "heat_mean_byte": 9.665248616536458,
       "rgb_bounds": [
         161,
         667,
@@ -803,9 +803,9 @@
     },
     {
       "frame": 50,
-      "heat_rgb_nonzero_pixels": 41007,
+      "heat_rgb_nonzero_pixels": 40965,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.494028727213541,
+      "heat_mean_byte": 9.624544779459635,
       "rgb_bounds": [
         163,
         663,
@@ -815,9 +815,9 @@
     },
     {
       "frame": 51,
-      "heat_rgb_nonzero_pixels": 41072,
+      "heat_rgb_nonzero_pixels": 41036,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.475757853190105,
+      "heat_mean_byte": 9.571690368652344,
       "rgb_bounds": [
         161,
         664,
@@ -827,9 +827,9 @@
     },
     {
       "frame": 52,
-      "heat_rgb_nonzero_pixels": 41205,
+      "heat_rgb_nonzero_pixels": 41169,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.506290181477864,
+      "heat_mean_byte": 9.580917358398438,
       "rgb_bounds": [
         159,
         666,
@@ -839,9 +839,9 @@
     },
     {
       "frame": 53,
-      "heat_rgb_nonzero_pixels": 41322,
+      "heat_rgb_nonzero_pixels": 41280,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.542572530110677,
+      "heat_mean_byte": 9.632564290364583,
       "rgb_bounds": [
         160,
         667,
@@ -851,9 +851,9 @@
     },
     {
       "frame": 54,
-      "heat_rgb_nonzero_pixels": 41506,
+      "heat_rgb_nonzero_pixels": 41470,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.587998453776041,
+      "heat_mean_byte": 9.654018656412761,
       "rgb_bounds": [
         160,
         666,
@@ -863,9 +863,9 @@
     },
     {
       "frame": 55,
-      "heat_rgb_nonzero_pixels": 41585,
+      "heat_rgb_nonzero_pixels": 41547,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.628707885742188,
+      "heat_mean_byte": 9.63576405843099,
       "rgb_bounds": [
         160,
         664,
@@ -875,9 +875,9 @@
     },
     {
       "frame": 56,
-      "heat_rgb_nonzero_pixels": 41525,
+      "heat_rgb_nonzero_pixels": 41490,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.615307108561199,
+      "heat_mean_byte": 9.560418701171875,
       "rgb_bounds": [
         161,
         666,
@@ -887,9 +887,9 @@
     },
     {
       "frame": 57,
-      "heat_rgb_nonzero_pixels": 41462,
+      "heat_rgb_nonzero_pixels": 41429,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.560965983072917,
+      "heat_mean_byte": 9.471077982584635,
       "rgb_bounds": [
         161,
         666,
@@ -899,9 +899,9 @@
     },
     {
       "frame": 58,
-      "heat_rgb_nonzero_pixels": 41343,
+      "heat_rgb_nonzero_pixels": 41310,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.521066284179687,
+      "heat_mean_byte": 9.406833902994792,
       "rgb_bounds": [
         161,
         664,
@@ -911,9 +911,9 @@
     },
     {
       "frame": 59,
-      "heat_rgb_nonzero_pixels": 41254,
+      "heat_rgb_nonzero_pixels": 41223,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.471820068359374,
+      "heat_mean_byte": 9.330712890625,
       "rgb_bounds": [
         161,
         667,
@@ -923,9 +923,9 @@
     },
     {
       "frame": 60,
-      "heat_rgb_nonzero_pixels": 41277,
+      "heat_rgb_nonzero_pixels": 41247,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.461117553710938,
+      "heat_mean_byte": 9.314471944173176,
       "rgb_bounds": [
         161,
         664,
@@ -935,9 +935,9 @@
     },
     {
       "frame": 61,
-      "heat_rgb_nonzero_pixels": 41358,
+      "heat_rgb_nonzero_pixels": 41325,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.460576883951823,
+      "heat_mean_byte": 9.317234802246094,
       "rgb_bounds": [
         161,
         664,
@@ -947,9 +947,9 @@
     },
     {
       "frame": 62,
-      "heat_rgb_nonzero_pixels": 41395,
+      "heat_rgb_nonzero_pixels": 41366,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.489856974283855,
+      "heat_mean_byte": 9.329502360026042,
       "rgb_bounds": [
         160,
         666,
@@ -959,9 +959,9 @@
     },
     {
       "frame": 63,
-      "heat_rgb_nonzero_pixels": 41582,
+      "heat_rgb_nonzero_pixels": 41545,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.544688924153645,
+      "heat_mean_byte": 9.366155497233073,
       "rgb_bounds": [
         159,
         664,
@@ -971,9 +971,9 @@
     },
     {
       "frame": 64,
-      "heat_rgb_nonzero_pixels": 41751,
+      "heat_rgb_nonzero_pixels": 41716,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.606344604492188,
+      "heat_mean_byte": 9.40309092203776,
       "rgb_bounds": [
         159,
         664,
@@ -983,9 +983,9 @@
     },
     {
       "frame": 65,
-      "heat_rgb_nonzero_pixels": 41954,
+      "heat_rgb_nonzero_pixels": 41919,
       "heat_peak_byte": 255,
-      "heat_mean_byte": 10.651465861002604,
+      "heat_mean_byte": 9.402369689941406,
       "rgb_bounds": [
         158,
         664,
@@ -994,7 +994,7 @@
       ]
     }
   ],
-  "preview_sha256": "ffaca60d43f9f2de17f3e680cd7fe8165c90d560e9fcafb00fc171f7dd29bf73",
+  "preview_sha256": "7bbcd4c425d43b73f7bcc35eb8a977a1525e133acc86f8444ec6d6e0b7d9e15e",
   "registration": {
     "scale": 0.46875,
     "shift": [

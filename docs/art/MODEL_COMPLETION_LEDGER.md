@@ -1,5 +1,9 @@
 ## Latest safety handoff — V04 local candidate, glow reduction pending
 
+**Latest integrated iteration (2026-11-09):** Thetazine V04 source35 now has a normal-prototype import: 64-frame body, separate heat and projected shadow, cold states, native caps and underlay. Actual ordinary working/idle/disconnected/restart views and data-stage readback pass. All 33 nonvisual root fields are unchanged. [Current source, evidence and remaining gates](thetazine-thruster-v04/LEAF_COOLING_CANDIDATE.md).
+
+**Historical correction:** earlier entries calling V03 the ordinary runtime were mistaken. V03 was a source study; the actual before-import prototype used the legacy two-frame sheets. The current import is verified from resolved data and actual ordinary-entity images. Owner final approval and the wider model goal remain open.
+
 [Current checkpoint](thetazine-thruster-v04/CHECKPOINT.json) · [Safety handoff](thetazine-thruster-v04/SAFETY_CHECKPOINT.md). Owner wants subtle occasional movement of the piston-bearing core inside a rigid frame, a full-throated separate light-map flame, and **less white-hot intensity**. Localpilot20 and completed captures are preserved; intensity correction, current native review and V04 art publication are pending. Do not promote rejected pilot14 native graphics or repeat completed capture. Broader goal stays open.
 
 # Tech-Priests model completion ledger
@@ -207,3 +211,14 @@ Current32 atlas/native visuals, contrail boundary isolation, owner acceptance an
 Corrected24closed bell shells with inconsistent cap winding, preserving their exact positions/UV/materials and all66pose geometry/transforms. Actual source/GLB orientation,3022part/533304triangle surface correspondence, animation,58fixed mount/interface parts and seated pipe endpoints pass. All84routes/66poses now PASS evaluated clearance,204858pairs, zero violations/ambiguities. Historical31failures are retained, not waived.
 
 Current33source captures/132separate layer PNGs,128exact atlas cells and generated package are preserved. Actual native64body/light clocks and connected ports pass. Separate source-light/native-jet/smoke/vanilla controls expose the+2tile gap; zero adjustment overlaps the native jet beneath the bell. Source-bound captures and all mixture/night visuals are reviewed in the [current candidate](thetazine-thruster-v04/LEAF_COOLING_CANDIDATE.md). Normal art remainsV03; owner/final visual score, shadow/segmentation parity and final runtime promotion remain open. Entire model goal stays active.
+
+
+## Thetazine V04 source35 — ordinary import, warm lining and animated shadow
+
+The uniform pink lining was replaced by UV-authored dark warm refractory heat while preserving the broad flame, gentle exterior fringe and exact source33 geometry/motion at all 66 poses. Actual exported front/rear/clay/closeup renders and ordinary native views were inspected; agent review reaches 4/5 for this iteration, with no claim of owner approval.
+
+All 66 evaluated deck-clipped shadow poses were rendered locally. The cropped 398×394 shadow has 64 alpha-exact atlas cells and a separately compensated shift; 51 working images differ and the wrap is exact. Current 132 body/light captures and 128 exact atlas cells are preserved. All 64 body/light/shadow clocks match and advance sequentially. Dedicated stopped/connected/disconnected/restart views pass.
+
+The late generated module now loads nine V04 PNGs on the actual ordinary entity. Its real before/after prototype snapshots change only graphics and drawing bounds; all 33 nonvisual root fields and both cap tables remain exact. Eight additional ordinary-entity images were viewed with a read-only review data stage, without cloned graphics or counters. Source35 normal import, raw source/export archives, registration, alpha conventions and gate scopes are in the current per-asset export plan.
+
+Source-specific wreck/remnant/icon refinement and owner feedback remain final family gates. Other thrusters, workbench/condenser/bunker/A02 and the remaining global inventory are still open. No behavior/regression suite, workflow edit or release is part of this slice.

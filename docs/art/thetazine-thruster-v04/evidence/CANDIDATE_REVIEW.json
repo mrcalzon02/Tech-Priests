@@ -1,42 +1,103 @@
 {
-  "status": "REVIEWED_OVERLAP_CANDIDATE_OWNER_ACCEPTANCE_OPEN",
-  "reviewed_at": "2026-11-09T11:08:56.092629+00:00",
-  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
-  "glb_sha256": "fa7ee3a5885a7e2bb0f65d27756b1326cbb42b84768a6ef084be1c6a2127c30a",
-  "native_validation_sha256": "c6f866fc67f4d20bd6a10ae28f6e2046756605a8efaae03b56b054bff6bbea1c",
-  "reviewed_previews": [
-    {
-      "file": "thetazine-v04-native-join-comparison.png",
-      "sha256": "a43318ce92709f398da6e6664060582919d706d12516b81ec814e3e3626f2d08"
-    },
-    {
-      "file": "thetazine-v04-native-join-all-samples.png",
-      "sha256": "01321afb3654b01d922c154447deae73bf841da060d1f90d225560f19ec8fa2f"
-    },
-    {
-      "file": "thetazine-v04-native-fuel-light.png",
-      "sha256": "d767a9c45f7974d81ee38685d29880ab7dd70be721eea6889e766e1866706c17"
-    },
-    {
-      "file": "thetazine-v04-exhaust-layer-isolation.png",
-      "sha256": "bee4afc10a181423782aabdcd60281cecbe3d76566d6031ed3684ac98935cd04"
-    },
-    {
-      "file": "thetazine-v04-native-bell-mouth.png",
-      "sha256": "7b733225d14c7bb909af0c290717e0e099ef7881ec70b8066deca81cd668b704"
-    }
-  ],
-  "observations": [
-    "The +2-tile native registration begins the native jet downstream of the fading baked light, leaving a separate transition. Zero adjustment moves only that native effect upstream into the light volume.",
-    "In all 32 inspected full-jet samples (8 each balanced/fuel-heavy/water-heavy/night), the native emission overlaps the baked plume, without an empty horizontal gap or an obvious rectangular join. This is a visual result for these captured conditions, not every possible thrust/fuel state.",
-    "The native jet stays below the visible bell mouth in the inspected views; piston rods, external pipes and dark plate faces remain visible above it. Bright pink inner emission still reads as a relatively uniform disk and merits further material/flame refinement.",
-    "Native downstream colours visibly differ under fuel-heavy and water-heavy review inputs; the source light remains a fixed baked blue/pink layer. Actual vanilla shader and plumes are reused; no chemical or performance calibration is claimed.",
-    "Closed-shell winding repair removed all14ambiguous poses without changing clearances or lowering the auditor threshold. Current84route/66pose direct audit passes."
-  ],
-  "visual_score": 3,
+  "status": "REVIEWED_NORMAL_PROTOTYPE_INTEGRATED_ITERATION_4_OF_5_OWNER_FEEDBACK_OPEN",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "glb_sha256": "c63deaf26877005cf2cff55dfa75428bdd5ab5a0d78107e901f689b14a9b0946",
+  "visual_score": 4,
   "required_visual_score": 4,
   "scale": 5,
-  "score_reason": "Supported cooling construction, export and native overlap are improved and technically verified. Uniform inner radiance, final shadow/segmentation parity, idle/stopped native review and owner appearance acceptance remain open; do not promote to final art.",
-  "normal_runtime": "V03 remains installed. Current33 source/atlases are a review candidate.",
-  "reference_scope": "Owner-supplied vanilla light reference informs the full-throated light-map target; actual unmodified vanilla control is visible in the isolation scene. No source reference PNG was copied into distributable assets."
+  "reviewed_actual_glb_images": [
+    {
+      "file": "export-front.png",
+      "sha256": "79d4e3689d7c1759af2888f989ce265d95c04c04991b964dfbe8b171f83a5715",
+      "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
+    },
+    {
+      "file": "export-upper.png",
+      "sha256": "6f2d646b674d102215f835de18e81fbdcb6317865bfe54037d54842dd8ca9b62",
+      "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
+    },
+    {
+      "file": "export-fuel-screw.png",
+      "sha256": "c38ed0a8490d8e263fec400f2ec568ac8c5d829e0ba9be424d4384728d80eca0",
+      "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
+    },
+    {
+      "file": "export-bell-rams.png",
+      "sha256": "d4f94f0d53e0fd7cb01e71056c321d51c18dd3657164681224d0b01d7b784a52",
+      "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
+    },
+    {
+      "file": "export-hinges.png",
+      "sha256": "1e6126c74c3639cf8c815511de67110ffc0f086c45a514963ccd6565948deae4",
+      "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
+    },
+    {
+      "file": "export-rear.png",
+      "sha256": "dbc6fb3bd890226e7fa4dbfd243d260a077214b579b1fd7b188f00f2a0becd98",
+      "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
+    },
+    {
+      "file": "export-rear-clay.png",
+      "sha256": "e43d4484455016181bead63693df0e775762e5a3b203cb0e11510afd79b4c7c7",
+      "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
+    }
+  ],
+  "reviewed_native_states_sha256": "1634603ea2e714c450e8e772709366e4a009fe3c59519cb836d76d24fbd80b12",
+  "reviewed_native_working_sha256": "588e86731d811ba99b62aaf8a9a0dfc456d973c7a9e9f572b328564232d8cb31",
+  "rationale": "Actual exported front/rear/clay/closeup views inspected. Pipe flow and all supported connections remain coherent, exterior metal/edge fringe restrained, uniform pink liner replaced by dark warm mottling, broad combustion retained. Actual native cold/stopped, connected/disconnected/restart states and body/light/shadow timing reviewed. Adequate visual fitness for the requested game integration iteration; owner final appearance approval is not asserted.",
+  "open_refinement": "Owner feedback and wider asset-family completion remain open. Optical flame remains stylized, not a simulation.",
+  "baseline_correction": "Prior ledger labels calling V03 the ordinary runtime were incorrect. The actual before snapshot resolves legacy256x512two-frame idle/run sheets; V03 was a source study.",
+  "runtime_module": "tech-priests_src/prototypes/generated_graphics/thetazine-thruster-v04.lua",
+  "module_sha256": "c0f83f99cb8f27b2c1093deef3c8ef94e0717ad83b577268661b663478897659",
+  "runtime_images": [
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/body-1.png",
+      "sha256": "91ae265e583f1598418075dd5571c69307284a6e913efa08a895c5576f810b8c"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/body-2.png",
+      "sha256": "d9216415aa0d4bc18e8ccc38fd544bbe54f7cbb5144740f37bfb3a7231d90550"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/heat-glow-1.png",
+      "sha256": "33cc847ee0af5d96d044ff3ffacc520dd56dea98a6c530fe64985796511cc5fe"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/heat-glow-2.png",
+      "sha256": "11ceca5e64abc886de5e845312580a667640fcfd463018530fc2f0d8ed798cdb"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/shadow-1.png",
+      "sha256": "be98cd781b0c0d3a88c76ce83e628e154de29955fc1f65b5188cbc156f81f4eb"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/shadow-2.png",
+      "sha256": "b3a71fb78a914c6343a5b703a25d0fe1057c38b9baa77910c7522d7130ed4083"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/idle-body.png",
+      "sha256": "0480cbb665e5e5eaa425d9f6b6e98e13678bac97f42817780d0264e59b3cbd3b"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/idle-shadow.png",
+      "sha256": "e25d582975a02da93afe99e716e86ca2528d724d4817e70d148eaf4fa02b101f"
+    },
+    {
+      "path": "tech-priests_src/graphics/entity/thetazine-thruster-v04/underlay.png",
+      "sha256": "7f060236d5330d83ae7b0eb522fd771417f95e34a81c7c0124ad9159d920dae9"
+    }
+  ],
+  "source_render_pipeline": "Local Blender5.0.1 only; source35 prepared with fixed interfaces and no workflow changes.",
+  "normal_readback_status": "PASS actual data-stage graph/nonvisual preservation and actual ordinary-prototype 8-state images viewed",
+  "normal_native_validation_sha256": "cce4eac8364dbacb1b82ba19efc8937d1b50e7f301762f3009f3bca1b6bb1c81",
+  "normal_graph_validation_sha256": "922309c33c4e3637531451ce9da5680fb6be1ce01bec23606f78fecb4bbe5cb3",
+  "actual_game_log_sha256": "934528aca9dca080ba0efa10c47cd217e0e7d919ed73361f57f2709f842a5225",
+  "actual_game_graph_max_json_difference": 1.9539925233402755e-14,
+  "observations": [
+    "Normal working/restart view shows full flame with dark warm lining rather than flat pink disk. Exterior leaf centers stay dark with gentle edge fringing.",
+    "Cold/idle normal view selects the authored closed/stationary machinery, with heat and exhaust absent; projected shadow and platform mounting remain visible.",
+    "Connected and disconnected ordinary views show the expected native conditional join changes at fixed flanges; both original cap definitions are byte-equivalent data tables.",
+    "No debug frame counters or cloned graphics prototype are present in this ordinary view. The read-only review data stage only logs the normal prototype.",
+    "Agent visual review reaches4of5 for this integrated design iteration; owner approval is not asserted and broader asset-family work stays open."
+  ]
 }

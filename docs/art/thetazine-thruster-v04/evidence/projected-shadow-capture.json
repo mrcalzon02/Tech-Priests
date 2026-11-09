@@ -1,0 +1,1344 @@
+{
+  "status": "COMPLETE_66_SHADOW_POSES_REQUIRES_ALPHA_AND_REGISTRATION_CHECK",
+  "pid": 15776,
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "renderer_sha256": "7fb7211ea2d8b158cb5442a8d996907eb2eb98b120d20cdc81786335a9d0945f",
+  "frames": [
+    {
+      "frame": 0,
+      "file": "projected-shadow-frames/00.png",
+      "sha256": "ef733e99429ac7fbdf4eccee9657aca496441119504184231ec87fcafdffb080",
+      "active_caster_meshes": 734,
+      "projected_faces": 98491,
+      "deck_crossing_faces": 5938,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 17,
+      "file": "projected-shadow-frames/17.png",
+      "sha256": "76cedadff36281bcb123eebe9baa784e6111eefd7869e93593a6cfcc370d3aa7",
+      "active_caster_meshes": 733,
+      "projected_faces": 98403,
+      "deck_crossing_faces": 5932,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 1,
+      "file": "projected-shadow-frames/01.png",
+      "sha256": "5d8bf5c7d8402156bfb2b2db81a2792ad72074c9212f52f49275308028c7c0e3",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 2,
+      "file": "projected-shadow-frames/02.png",
+      "sha256": "804be2248ab3ad91563e5fa6ea4326adc24b053075b6c3e7bdbfd1d80127006c",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 3,
+      "file": "projected-shadow-frames/03.png",
+      "sha256": "97cdce449cb3c17316dd04f05a2efcc99fb6a2f7020f63e2fc103d215e4474c8",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 4,
+      "file": "projected-shadow-frames/04.png",
+      "sha256": "8003268e22f363d7311d3fccf5e30628cd22feeb2c376fc554b6deb5c8a8d6c0",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 5,
+      "file": "projected-shadow-frames/05.png",
+      "sha256": "95d07f074adf0905711370c4766060135383ace1b559652f952057052378bc2d",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 6,
+      "file": "projected-shadow-frames/06.png",
+      "sha256": "ea9a6a08ba3b9fc3e743d6f916db7dfe588540702af3b15e12bd46bca49d6f85",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 7,
+      "file": "projected-shadow-frames/07.png",
+      "sha256": "8f3d5221bb8c8a5b5128b22d2fd81ea6d56f88de9c93b47925cea2a167f96078",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 8,
+      "file": "projected-shadow-frames/08.png",
+      "sha256": "2beb2e85a50b37fbda31ad9bb6bdc71b0bfc03499ed7f6be449d9d8bfdf52583",
+      "active_caster_meshes": 734,
+      "projected_faces": 98476,
+      "deck_crossing_faces": 5932,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 9,
+      "file": "projected-shadow-frames/09.png",
+      "sha256": "61682b63a3a0a5849704d0c1d7af81923f0c7a95d152101408cb12f07a997eb9",
+      "active_caster_meshes": 733,
+      "projected_faces": 98438,
+      "deck_crossing_faces": 5921,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 10,
+      "file": "projected-shadow-frames/10.png",
+      "sha256": "6935ab1f01dab43948299e314861b134f05d0c1feb26b76ea8e28cd38f7bdc62",
+      "active_caster_meshes": 734,
+      "projected_faces": 98604,
+      "deck_crossing_faces": 5923,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 11,
+      "file": "projected-shadow-frames/11.png",
+      "sha256": "15442dd2e3054480819843eaaf4e1f150c81fcc469118b66d3efffe18fe5f9d7",
+      "active_caster_meshes": 733,
+      "projected_faces": 98261,
+      "deck_crossing_faces": 5865,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 12,
+      "file": "projected-shadow-frames/12.png",
+      "sha256": "e60467ec826087b2830a832bbcda8eb7dcae1d5934432de91434c25871467ac6",
+      "active_caster_meshes": 734,
+      "projected_faces": 98520,
+      "deck_crossing_faces": 5915,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 13,
+      "file": "projected-shadow-frames/13.png",
+      "sha256": "8b77d34d65d06c5445e1781337752d0cf5f5bff0c56845a26287e0d401088cda",
+      "active_caster_meshes": 734,
+      "projected_faces": 98645,
+      "deck_crossing_faces": 5929,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 14,
+      "file": "projected-shadow-frames/14.png",
+      "sha256": "4c902beb1372631eacae8cb4f44ec1c9b90e29f1eec1dc86c34b5761b31c88d0",
+      "active_caster_meshes": 729,
+      "projected_faces": 98154,
+      "deck_crossing_faces": 5860,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 15,
+      "file": "projected-shadow-frames/15.png",
+      "sha256": "1572f6395e402caac693d5e83bfc5d7a098af227345535dd55a6eed46b2ae010",
+      "active_caster_meshes": 734,
+      "projected_faces": 98618,
+      "deck_crossing_faces": 5919,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 16,
+      "file": "projected-shadow-frames/16.png",
+      "sha256": "546ace0c8407f3aed0449edc74a7b18a725c42067c057e2b3b14b74750cc3299",
+      "active_caster_meshes": 734,
+      "projected_faces": 98503,
+      "deck_crossing_faces": 5934,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 18,
+      "file": "projected-shadow-frames/18.png",
+      "sha256": "97898ed5ca48e209b81ceb4df439f60b7ad6a86c86677622bd7599b3ebec1d22",
+      "active_caster_meshes": 734,
+      "projected_faces": 98510,
+      "deck_crossing_faces": 5923,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 19,
+      "file": "projected-shadow-frames/19.png",
+      "sha256": "6ec8c45534c90a21a0bb2577effc3c1cc156843ef27f36cdbaac49222f89dab1",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 20,
+      "file": "projected-shadow-frames/20.png",
+      "sha256": "c110fbe9864472974a21b55bc3917d99428ff22756cf2810124550e7c95a648d",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 21,
+      "file": "projected-shadow-frames/21.png",
+      "sha256": "805f6511fe60031036d55558eba9a8e3859128c0dc3f9a6f6f81fb7fe0d288c0",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 22,
+      "file": "projected-shadow-frames/22.png",
+      "sha256": "529b6e632c3a2078ab7fed06886174019e1d1ff03301222b8bc5277e4378840a",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 23,
+      "file": "projected-shadow-frames/23.png",
+      "sha256": "6dcdb9164ba4365e24d8f8e71c2e698380379b9812ab2f21160f08b225cf1aef",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 24,
+      "file": "projected-shadow-frames/24.png",
+      "sha256": "a53bd2a33753fe536c564e26e2d8c648281f80f1b0044c20d644049aed297aaf",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 25,
+      "file": "projected-shadow-frames/25.png",
+      "sha256": "ccc65425c45912e357e29a18dc6d21da73706ab33ec7bdbe10d7c16abf0d0acd",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 26,
+      "file": "projected-shadow-frames/26.png",
+      "sha256": "7245a52370f255b20f35b073676bdd7fa5c25b3d0d0cc19ffb458b60616544a8",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 27,
+      "file": "projected-shadow-frames/27.png",
+      "sha256": "45411a0e8ca6fa0f8bc084de90fd0a8c276133eeb709c26081bdf6820b503bd8",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 28,
+      "file": "projected-shadow-frames/28.png",
+      "sha256": "aca7e3bd5c457ede6479c9a470d459147ce97642c0d5cee1d97ca9c23e09ce11",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 29,
+      "file": "projected-shadow-frames/29.png",
+      "sha256": "4d5c2fb98b59cfaedea43571814cf1786be4f8b9340515f82c1fa7c3d00b11f1",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 30,
+      "file": "projected-shadow-frames/30.png",
+      "sha256": "a52d020790c05b95afae5e356a313cc289301a6aa974c4be2d0310f1ee1e7c8a",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 31,
+      "file": "projected-shadow-frames/31.png",
+      "sha256": "482ac0357fec2f7f7cc4fc37ed1202d7039c58f38b9a482b53647b5c5124a404",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 32,
+      "file": "projected-shadow-frames/32.png",
+      "sha256": "3eeead228e05937bed2d7af8dfec8ac7d6406d647955a7b4ad047befe380defd",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 33,
+      "file": "projected-shadow-frames/33.png",
+      "sha256": "1894c52a326af424b3431882c1dffe91f6cb57a48a0099a2d5f4d4fbdf40612f",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 34,
+      "file": "projected-shadow-frames/34.png",
+      "sha256": "bcd14623debd5bb477bd35517286247b56b4bcfa3c8bac7b12957b2d4d7ee8e8",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 35,
+      "file": "projected-shadow-frames/35.png",
+      "sha256": "4aad3ddb359af5c017669465b3a2b2dada814a3bd103af44b700c9563dcf80f5",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 36,
+      "file": "projected-shadow-frames/36.png",
+      "sha256": "199abcc3d34386ef9f844109bd995a8ff3099d0af52774d1c4da05ec77303ef8",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 37,
+      "file": "projected-shadow-frames/37.png",
+      "sha256": "eddf46290e17010936fba64d8f841c76d609f03bf07164482bcaf661a0c45227",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 38,
+      "file": "projected-shadow-frames/38.png",
+      "sha256": "966d2c280724905e7b38a8a0b5cb915f798425ac75b6c600874579c9302a4df1",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 39,
+      "file": "projected-shadow-frames/39.png",
+      "sha256": "37c6a93ca7c82c89c415b6b04a07c3e5d2f66a118dbf93e193d27f6314a82067",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 40,
+      "file": "projected-shadow-frames/40.png",
+      "sha256": "d35184bd4faa69ba35f069d4c0521e0b8dd186877fa251689600fc327a2fdbbd",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 41,
+      "file": "projected-shadow-frames/41.png",
+      "sha256": "0f8163745b2cb335ccc044d97093b95d0abcf53c0333f99ccf850a1a73c89b93",
+      "active_caster_meshes": 734,
+      "projected_faces": 98473,
+      "deck_crossing_faces": 5932,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 42,
+      "file": "projected-shadow-frames/42.png",
+      "sha256": "1bff56b538e31a0a7f85b3672127af99997397cf7fdc0c01945887153ae45e6d",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5938,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 43,
+      "file": "projected-shadow-frames/43.png",
+      "sha256": "2c09944f4fa5e440706d93c1b5b78bb86a3dc099fc261dceb6b5bdbe1b8be8a5",
+      "active_caster_meshes": 734,
+      "projected_faces": 98558,
+      "deck_crossing_faces": 5927,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 44,
+      "file": "projected-shadow-frames/44.png",
+      "sha256": "5cb4215685b380a3316008023d239c9ce2841f6d71a7eb65417fa5ab6c2b54e5",
+      "active_caster_meshes": 733,
+      "projected_faces": 98272,
+      "deck_crossing_faces": 5872,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 45,
+      "file": "projected-shadow-frames/45.png",
+      "sha256": "9acaa41c795cbabb81ab6701779db87d82502dac331c83bcd474c1804098e678",
+      "active_caster_meshes": 734,
+      "projected_faces": 98605,
+      "deck_crossing_faces": 5913,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 46,
+      "file": "projected-shadow-frames/46.png",
+      "sha256": "e518a3f63cf6fffdbc8b4159f1a5aecdde68db892c6e396a9050486ca6291015",
+      "active_caster_meshes": 734,
+      "projected_faces": 98520,
+      "deck_crossing_faces": 5915,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 47,
+      "file": "projected-shadow-frames/47.png",
+      "sha256": "66d1f625c862b90974ac96b10fd09719390bd3ee6e3c62dd1fbacdcba6b7ca87",
+      "active_caster_meshes": 731,
+      "projected_faces": 98175,
+      "deck_crossing_faces": 5863,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 48,
+      "file": "projected-shadow-frames/48.png",
+      "sha256": "9e67b420c2adcf0b1b4cd56a5b7ca95f0bd3a4f14d352071e0bc938d4b567e24",
+      "active_caster_meshes": 734,
+      "projected_faces": 98732,
+      "deck_crossing_faces": 5946,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 49,
+      "file": "projected-shadow-frames/49.png",
+      "sha256": "227f6bd0d812976bae5c41a8cf0d499ff58924fc5e62f33f352644f56efd3d08",
+      "active_caster_meshes": 733,
+      "projected_faces": 98343,
+      "deck_crossing_faces": 5909,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 50,
+      "file": "projected-shadow-frames/50.png",
+      "sha256": "92dc3487bf71b59d4952f8004fd0c9c7b0c60a5e8ebb407fa9dbfc1e291278d4",
+      "active_caster_meshes": 733,
+      "projected_faces": 98376,
+      "deck_crossing_faces": 5915,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 51,
+      "file": "projected-shadow-frames/51.png",
+      "sha256": "963f6eb1b98c791a46165f91de22b20f10c285faa487bb323c54710de5b43406",
+      "active_caster_meshes": 734,
+      "projected_faces": 98578,
+      "deck_crossing_faces": 5923,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 52,
+      "file": "projected-shadow-frames/52.png",
+      "sha256": "c0a8d079d4bfcd68350cfb6ab81a450225b4f1b001c114f5fc5b6a3f6bb39ea6",
+      "active_caster_meshes": 733,
+      "projected_faces": 98416,
+      "deck_crossing_faces": 5927,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 53,
+      "file": "projected-shadow-frames/53.png",
+      "sha256": "c7311add51273e0d1a460845f862f4058d7c2d1342aa6b2ff0b285fb4b3afaec",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5938,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 54,
+      "file": "projected-shadow-frames/54.png",
+      "sha256": "06e1c246915d086d745e274b7dca794e967a5dc8446d141c8ec81a063382581e",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 55,
+      "file": "projected-shadow-frames/55.png",
+      "sha256": "211e8da27b8e85b02b0b5fc4c2b232e011c6d2d4b23890cc23919e370d7c5837",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 56,
+      "file": "projected-shadow-frames/56.png",
+      "sha256": "5243fc985515cc3f99dcf1539f1d32474b9607554a937335f603e5ea4713b610",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 57,
+      "file": "projected-shadow-frames/57.png",
+      "sha256": "110da51bdaac9624cee25730fd214e301c04b8de3244751e0de654264c318320",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 58,
+      "file": "projected-shadow-frames/58.png",
+      "sha256": "60aed7f38617eab8319c4f56beec9db218a3a850c5d2be3814f7fe6c6386af4b",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 59,
+      "file": "projected-shadow-frames/59.png",
+      "sha256": "f5417fcd862430b172b0aa7e705f40fb2bc68250caf8d65ae0be2458bfc6e09c",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 60,
+      "file": "projected-shadow-frames/60.png",
+      "sha256": "e80e3703c96a6a03d01ad21b90df0a77cd25384955af1e8fed2cf95af47a4ce4",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 61,
+      "file": "projected-shadow-frames/61.png",
+      "sha256": "837bd7230414e6fb875e1d62ab721f4d0aaaf88bd37a1282a403d10e83be6b11",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 62,
+      "file": "projected-shadow-frames/62.png",
+      "sha256": "4db9902a61a02543b2e79fcc0b2994c120576a330353b0b709eb8b43627c0c39",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 63,
+      "file": "projected-shadow-frames/63.png",
+      "sha256": "6396dc795b64a49a3af0eb1d2234e8a6d7aa79ba1bbd571c7f8f549815984cec",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 64,
+      "file": "projected-shadow-frames/64.png",
+      "sha256": "2e4998b5598a1095111436674b717b98d424e04fb57d20540cade3ae8ea5b9a3",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    },
+    {
+      "frame": 65,
+      "file": "projected-shadow-frames/65.png",
+      "sha256": "07a8a807eaceb369edd4cbfd9233a0301cd7804558d73c7a1b68410640a27b92",
+      "active_caster_meshes": 734,
+      "projected_faces": 98495,
+      "deck_crossing_faces": 5942,
+      "world_shadow_bounds": [
+        [
+          -2.473145556718111,
+          -3.6574142175118207,
+          -0.0010000000000000009
+        ],
+        [
+          3.1869105453938946,
+          4.275910193443298,
+          -0.0009999999999998899
+        ]
+      ]
+    }
+  ],
+  "full_cell": [
+    768,
+    1280
+  ],
+  "body_cell": [
+    512,
+    1280
+  ],
+  "light_travel_direction": [
+    4.0,
+    6.0,
+    -8.0
+  ],
+  "platform_plane_z": -0.001,
+  "camera_contract": "Same optical axis, vertical orthographic scale and pixels per model unit as body. Wider transparent canvas; common occupied bounds will be cropped with exact shift compensation.",
+  "method": "Actual evaluated physical triangles including morphs; clip to deck z>=-.001, then parallel-project onto deck. No painted ellipse; render-only flame excluded. Opaque silhouette method matches existing hydrogen pipeline."
+}

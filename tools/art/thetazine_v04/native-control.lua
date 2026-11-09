@@ -1,5 +1,6 @@
 local function supplied_levels(fuel,water)
  local e=storage.entity
+ if fuel<=0 or water<=0 then e.clear_fluid_inside();return end
  e.set_fluid(1,{name='thetazine-fuel',amount=e.get_fluid_capacity(1)*fuel})
  e.set_fluid(2,{name='water',amount=e.get_fluid_capacity(2)*water})
 end
@@ -8,8 +9,8 @@ script.on_init(function()
  local tiles={};for x=-8,24 do for y=-12,8 do tiles[#tiles+1]={name='space-platform-foundation',position={x,y}} end end;s.set_tiles(tiles)
  local void={};for x=14,18 do for y=1,100 do void[#void+1]={name='empty-space',position={x,y}} end end;s.set_tiles(void)
  local pos={16.5,.5};assert(s.can_place_entity{name='thetazine-v04-visual-pilot',position=pos,direction=defines.direction.north,force='player'},'V04 native site illegal')
- local e=assert(s.create_entity{name='thetazine-v04-visual-pilot',position=pos,direction=defines.direction.north,force='player',create_build_effect_smoke=false});storage.entity=e
- for i in ipairs(e.prototype.fluidbox_prototypes) do for _,c in ipairs(e.get_fluid_box_pipe_connections(i) or {}) do local t=c.target_position;local sign=t.x>e.position.x and 1 or -1;for j=0,1 do s.create_entity{name='pipe',position={t.x+j*sign,t.y},force='player',create_build_effect_smoke=false} end end end
+ local e=assert(s.create_entity{name='thetazine-v04-visual-pilot',position=pos,direction=defines.direction.north,force='player',create_build_effect_smoke=false});storage.entity=e;e.destructible=false;storage.review_pipes={};storage.visual_states={}
+ for i in ipairs(e.prototype.fluidbox_prototypes) do for _,c in ipairs(e.get_fluid_box_pipe_connections(i) or {}) do local t=c.target_position;local sign=t.x>e.position.x and 1 or -1;for j=0,1 do local pipe=assert(s.create_entity{name='pipe',position={t.x+j*sign,t.y},force='player',create_build_effect_smoke=false});pipe.destructible=false;storage.review_pipes[#storage.review_pipes+1]=pipe end end end
  supplied_levels(.85,.85);game.forces.player.unlock_space_location('vulcanus');p.schedule={current=1,records={{station='vulcanus',wait_conditions={{type='time',ticks=3600}}}}};p.paused=false
  storage.samples={};rendering.draw_text{text='Thetazine V04 - joined pipes / real native flame',surface=s,target={16.5,-4.5},color={1,1,1},alignment='center',scale=.6}
 end)
@@ -19,8 +20,12 @@ end)
 script.on_event(defines.events.on_tick,function(event)
  local tick=event.tick;local fuel,water=.85,.85;local label='balanced'
  if tick>=360 and tick<480 then fuel=.85;water=.25;label='fuel-heavy' elseif tick>=480 and tick<600 then fuel=.25;water=.85;label='water-heavy' elseif tick>=600 then label='night';storage.surface.daytime=.5 end
+ if tick>=680 and tick<940 then fuel=0;water=0;label='idle';storage.surface.daytime=0 end
+ if tick>=940 then fuel=.85;water=.85;label='restart';storage.surface.daytime=0 end
+ if tick==680 then storage.surface.platform.paused=true end
+ if tick==940 then storage.surface.platform.paused=false end
  supplied_levels(fuel,water)
- if tick==55 then storage.surface.platform.destroy_asteroid_chunks{};for _,e in pairs(storage.surface.find_entities_filtered{type='asteroid'}) do e.destroy() end end
+ if tick==55 or tick%30==0 then storage.surface.platform.destroy_asteroid_chunks{};for _,e in pairs(storage.surface.find_entities_filtered{type='asteroid'}) do e.destroy() end end
  if tick>=180 and tick<=306 and tick%2==0 then game.take_screenshot{player=game.players[1],surface=storage.surface,position={16.5,3.583333333333},resolution={1000,1700},zoom=3,daytime=0,show_gui=false,force_render=true,path='thetazine-v04-native/body-loop/frame-'..string.format('%03d',tick)..'.png'} end
  if (tick>=320 and tick<=334 or tick>=420 and tick<=434 or tick>=540 and tick<=554 or tick>=650 and tick<=664) and tick%2==0 then
   game.take_screenshot{player=game.players[1],surface=storage.surface,position={16.5,12.5},resolution={1100,1800},zoom=1.1,daytime=label=='night' and .5 or 0,show_gui=false,force_render=true,path='thetazine-v04-native/'..label..'/frame-'..string.format('%03d',tick)..'.png'}
@@ -28,6 +33,13 @@ script.on_event(defines.events.on_tick,function(event)
  end
  if tick==670 then
   local e=storage.entity;local ports={};for i in ipairs(e.prototype.fluidbox_prototypes) do for _,c in ipairs(e.get_fluid_box_pipe_connections(i) or {}) do ports[#ports+1]={position=c.position,target_position=c.target_position,connected=c.target and c.target.name or false,connected_position=c.target and c.target.position or false} end end
-  helpers.write_file('thetazine-v04-native/receipt.json',helpers.table_to_json({ports=ports,position=e.position,samples=storage.samples,scope='Isolated visual review only. Native shader receives actual game thrust/fuel/oxidizer uniforms; source fluid levels supplied solely to view colours. No force, consumption, performance or behavior assertions. Body/glow counters must be independently decoded.'}));game.tick_paused=true
+  helpers.write_file('thetazine-v04-native/receipt.json',helpers.table_to_json({source_native_sha256='REVIEW_SOURCE_NATIVE_SHA256',ports=ports,position=e.position,samples=storage.samples,scope='Isolated visual review only. Native shader receives actual game thrust/fuel/oxidizer uniforms; source fluid levels supplied solely to view colours. No force, consumption, performance or behavior assertions. Body/glow/shadow counters must be independently decoded.'}))
  end
+ if tick==850 then for _,pipe in ipairs(storage.review_pipes) do if pipe.valid then pipe.destroy() end end end
+ local states={[820]='idle-connected',[830]='idle-connected',[900]='idle-disconnected',[920]='idle-disconnected',[1080]='restart-disconnected',[1100]='restart-disconnected'}
+ if states[tick] then
+  local name=states[tick];local e=storage.entity;local ports={};for i in ipairs(e.prototype.fluidbox_prototypes) do for _,c in ipairs(e.get_fluid_box_pipe_connections(i) or {}) do ports[#ports+1]={position=c.position,target_position=c.target_position,connected=c.target and c.target.name or false} end end
+  local path='thetazine-v04-native/states/'..name..'-'..tick..'.png';game.take_screenshot{player=game.players[1],surface=storage.surface,position={16.5,3.583333333333},resolution={1000,1700},zoom=3,daytime=0,show_gui=false,force_render=true,path=path};storage.visual_states[#storage.visual_states+1]={tick=tick,label=name,file=path,entity_status=e.status,ports=ports,fluid1=e.get_fluid(1),fluid2=e.get_fluid(2)}
+ end
+ if tick==1130 then helpers.write_file('thetazine-v04-native/state-receipt.json',helpers.table_to_json({source_native_sha256='REVIEW_SOURCE_NATIVE_SHA256',states=storage.visual_states,scope='Disposable graphics fixture: cold/idle body, stopped heat/exhaust, connected/disconnected cap appearance and restart display. No performance, consumption or behavior assertions.'}));game.tick_paused=true end
 end)

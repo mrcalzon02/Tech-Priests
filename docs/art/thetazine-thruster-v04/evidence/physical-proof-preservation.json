@@ -1,0 +1,8 @@
+{
+  "status": "PASS_SOURCE33_PHYSICAL_PROOFS_PRESERVED_EXACTLY_AT_66_POSES_SOURCE35",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "baseline_native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "geometry_preservation_sha256": "f06e75f22802f104113817eb34e36d5c27a8784c86de5130989f203c7acd9c7e",
+  "source33_clearance_sha256": "d64b33329ed0866b50f55bd00d20be64ed9c2b3ede94e7c1caa1360382535164",
+  "scope": "Source35 changes only refractory emission material. Every evaluated mesh vertex and object transform at66poses is identical to33, including hoses/core/render volume. Existing33direct route, endpoint and rigid-frame measurements remain tied to33 and are preserved; not relabelled as rerun35tests."
+}

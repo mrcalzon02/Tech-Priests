@@ -1,7 +1,7 @@
 {
   "status": "RAW_GLB_GEOMETRY_UV_NORMAL_IMAGE_AUDIT_PASS",
   "failures": [],
-  "glb_sha256": "fa7ee3a5885a7e2bb0f65d27756b1326cbb42b84768a6ef084be1c6a2127c30a",
+  "glb_sha256": "c63deaf26877005cf2cff55dfa75428bdd5ab5a0d78107e901f689b14a9b0946",
   "mesh_count": 3022,
   "triangle_count": 533304,
   "parts": [
@@ -21306,13 +21306,13 @@
       "sha256": "f2d681b516f3407fa783572dcf8c63a336487c837b889e2bf1d04c77bf21993b"
     },
     {
-      "name": "full-bell-refractory-emission",
-      "bytes": 158626,
+      "name": "refractory-regenerative-heat",
+      "bytes": 761907,
       "size": [
-        512,
-        512
+        1024,
+        1024
       ],
-      "sha256": "5f4d1292eecc27f9b82dd112fef4c23d43e02d3da4809bac2a0d05bf16945eee"
+      "sha256": "f7cce25915977c9a74cbd7d6e68a08bdebe0b9c8f58a8416e788bcdb2e755890"
     },
     {
       "name": "refractory-normal",
@@ -21495,9 +21495,7 @@
         "index": 16
       },
       "alpha_mode": "OPAQUE",
-      "extensions": [
-        "KHR_materials_emissive_strength"
-      ]
+      "extensions": []
     },
     {
       "name": "Hydrogen tank",

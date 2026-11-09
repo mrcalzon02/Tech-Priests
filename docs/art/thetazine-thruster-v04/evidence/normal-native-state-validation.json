@@ -1,0 +1,592 @@
+{
+  "status": "PASS_SOURCE_BOUND_8_NATIVE_WORK_IDLE_CAP_RESTART_CAPTURES_REQUIRES_VISUAL_REVIEW",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "preparation_sha256": "3f9d94632837d55de918ef1c4cf081bb148174982f95472e81ce77c2e351095a",
+  "prototype": "thetazine-thruster",
+  "source_receipt": {
+    "source_native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+    "states": [
+      {
+        "label": "working-connected",
+        "tick": 120,
+        "file": "thetazine-v04-states/working-connected-120.png",
+        "entity_status": 1,
+        "ports": [
+          {
+            "position": {
+              "y": -0.5,
+              "x": 14.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 13.5
+            },
+            "connected": "pipe"
+          },
+          {
+            "position": {
+              "y": -0.5,
+              "x": 18.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 19.5
+            },
+            "connected": "pipe"
+          }
+        ],
+        "fluid1": {
+          "name": "thetazine-fuel",
+          "amount": 850,
+          "temperature": 15
+        },
+        "fluid2": {
+          "name": "water",
+          "amount": 850,
+          "temperature": 15
+        }
+      },
+      {
+        "label": "working-connected",
+        "tick": 140,
+        "file": "thetazine-v04-states/working-connected-140.png",
+        "entity_status": 1,
+        "ports": [
+          {
+            "position": {
+              "y": -0.5,
+              "x": 14.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 13.5
+            },
+            "connected": "pipe"
+          },
+          {
+            "position": {
+              "y": -0.5,
+              "x": 18.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 19.5
+            },
+            "connected": "pipe"
+          }
+        ],
+        "fluid1": {
+          "name": "thetazine-fuel",
+          "amount": 850,
+          "temperature": 15
+        },
+        "fluid2": {
+          "name": "water",
+          "amount": 850,
+          "temperature": 15
+        }
+      },
+      {
+        "label": "idle-connected",
+        "tick": 300,
+        "file": "thetazine-v04-states/idle-connected-300.png",
+        "entity_status": 43,
+        "ports": [
+          {
+            "position": {
+              "y": -0.5,
+              "x": 14.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 13.5
+            },
+            "connected": "pipe"
+          },
+          {
+            "position": {
+              "y": -0.5,
+              "x": 18.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 19.5
+            },
+            "connected": "pipe"
+          }
+        ]
+      },
+      {
+        "label": "idle-connected",
+        "tick": 320,
+        "file": "thetazine-v04-states/idle-connected-320.png",
+        "entity_status": 43,
+        "ports": [
+          {
+            "position": {
+              "y": -0.5,
+              "x": 14.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 13.5
+            },
+            "connected": "pipe"
+          },
+          {
+            "position": {
+              "y": -0.5,
+              "x": 18.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 19.5
+            },
+            "connected": "pipe"
+          }
+        ]
+      },
+      {
+        "label": "idle-disconnected",
+        "tick": 360,
+        "file": "thetazine-v04-states/idle-disconnected-360.png",
+        "entity_status": 43,
+        "ports": [
+          {
+            "position": {
+              "y": -0.5,
+              "x": 14.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 13.5
+            },
+            "connected": false
+          },
+          {
+            "position": {
+              "y": -0.5,
+              "x": 18.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 19.5
+            },
+            "connected": false
+          }
+        ]
+      },
+      {
+        "label": "idle-disconnected",
+        "tick": 380,
+        "file": "thetazine-v04-states/idle-disconnected-380.png",
+        "entity_status": 43,
+        "ports": [
+          {
+            "position": {
+              "y": -0.5,
+              "x": 14.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 13.5
+            },
+            "connected": false
+          },
+          {
+            "position": {
+              "y": -0.5,
+              "x": 18.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 19.5
+            },
+            "connected": false
+          }
+        ]
+      },
+      {
+        "label": "restart-disconnected",
+        "tick": 540,
+        "file": "thetazine-v04-states/restart-disconnected-540.png",
+        "entity_status": 1,
+        "ports": [
+          {
+            "position": {
+              "y": -0.5,
+              "x": 14.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 13.5
+            },
+            "connected": false
+          },
+          {
+            "position": {
+              "y": -0.5,
+              "x": 18.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 19.5
+            },
+            "connected": false
+          }
+        ],
+        "fluid1": {
+          "name": "thetazine-fuel",
+          "amount": 850,
+          "temperature": 15
+        },
+        "fluid2": {
+          "name": "water",
+          "amount": 850,
+          "temperature": 15
+        }
+      },
+      {
+        "label": "restart-disconnected",
+        "tick": 560,
+        "file": "thetazine-v04-states/restart-disconnected-560.png",
+        "entity_status": 1,
+        "ports": [
+          {
+            "position": {
+              "y": -0.5,
+              "x": 14.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 13.5
+            },
+            "connected": false
+          },
+          {
+            "position": {
+              "y": -0.5,
+              "x": 18.5
+            },
+            "target_position": {
+              "y": -0.5,
+              "x": 19.5
+            },
+            "connected": false
+          }
+        ],
+        "fluid1": {
+          "name": "thetazine-fuel",
+          "amount": 850,
+          "temperature": 15
+        },
+        "fluid2": {
+          "name": "water",
+          "amount": 850,
+          "temperature": 15
+        }
+      }
+    ],
+    "scope": "Graphics-only current source: working, stopped/idle, disconnected caps and restart appearance. Review route/fluids are display stimuli, no performance/consumption/behavior assertions."
+  },
+  "captures": [
+    {
+      "label": "working-connected",
+      "tick": 120,
+      "file": "thetazine-v04-states/working-connected-120.png",
+      "entity_status": 1,
+      "ports": [
+        {
+          "position": {
+            "y": -0.5,
+            "x": 14.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 13.5
+          },
+          "connected": "pipe"
+        },
+        {
+          "position": {
+            "y": -0.5,
+            "x": 18.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 19.5
+          },
+          "connected": "pipe"
+        }
+      ],
+      "fluid1": {
+        "name": "thetazine-fuel",
+        "amount": 850,
+        "temperature": 15
+      },
+      "fluid2": {
+        "name": "water",
+        "amount": 850,
+        "temperature": 15
+      },
+      "sha256": "923caa6765d9b5686779470d59742d199ba0e36741aa867dc87bd818d97408cd",
+      "flame_window_mean_rgb": 161.00702614379085
+    },
+    {
+      "label": "working-connected",
+      "tick": 140,
+      "file": "thetazine-v04-states/working-connected-140.png",
+      "entity_status": 1,
+      "ports": [
+        {
+          "position": {
+            "y": -0.5,
+            "x": 14.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 13.5
+          },
+          "connected": "pipe"
+        },
+        {
+          "position": {
+            "y": -0.5,
+            "x": 18.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 19.5
+          },
+          "connected": "pipe"
+        }
+      ],
+      "fluid1": {
+        "name": "thetazine-fuel",
+        "amount": 850,
+        "temperature": 15
+      },
+      "fluid2": {
+        "name": "water",
+        "amount": 850,
+        "temperature": 15
+      },
+      "sha256": "f70938d45d4bc635771742266bf4381654658a7fd16d4da922e081678609e5b7",
+      "flame_window_mean_rgb": 165.49058006535947
+    },
+    {
+      "label": "idle-connected",
+      "tick": 300,
+      "file": "thetazine-v04-states/idle-connected-300.png",
+      "entity_status": 43,
+      "ports": [
+        {
+          "position": {
+            "y": -0.5,
+            "x": 14.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 13.5
+          },
+          "connected": "pipe"
+        },
+        {
+          "position": {
+            "y": -0.5,
+            "x": 18.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 19.5
+          },
+          "connected": "pipe"
+        }
+      ],
+      "sha256": "5a7d9e80bf676a29cae1a97b8d612f22f42013397959d68d9d01a47d4a9299be",
+      "flame_window_mean_rgb": 6.649272875816994
+    },
+    {
+      "label": "idle-connected",
+      "tick": 320,
+      "file": "thetazine-v04-states/idle-connected-320.png",
+      "entity_status": 43,
+      "ports": [
+        {
+          "position": {
+            "y": -0.5,
+            "x": 14.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 13.5
+          },
+          "connected": "pipe"
+        },
+        {
+          "position": {
+            "y": -0.5,
+            "x": 18.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 19.5
+          },
+          "connected": "pipe"
+        }
+      ],
+      "sha256": "3d534055c50798f68ec31498a06ecdb86a80d6e2a3a96a261ccd4d29613f36f0",
+      "flame_window_mean_rgb": 5.479599673202614
+    },
+    {
+      "label": "idle-disconnected",
+      "tick": 360,
+      "file": "thetazine-v04-states/idle-disconnected-360.png",
+      "entity_status": 43,
+      "ports": [
+        {
+          "position": {
+            "y": -0.5,
+            "x": 14.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 13.5
+          },
+          "connected": false
+        },
+        {
+          "position": {
+            "y": -0.5,
+            "x": 18.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 19.5
+          },
+          "connected": false
+        }
+      ],
+      "sha256": "bd1c4546dcdd6c1c1078d032ff90eda5986aabaaeedc04ea3073dd22b9357fd8",
+      "flame_window_mean_rgb": 7.363333333333333
+    },
+    {
+      "label": "idle-disconnected",
+      "tick": 380,
+      "file": "thetazine-v04-states/idle-disconnected-380.png",
+      "entity_status": 43,
+      "ports": [
+        {
+          "position": {
+            "y": -0.5,
+            "x": 14.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 13.5
+          },
+          "connected": false
+        },
+        {
+          "position": {
+            "y": -0.5,
+            "x": 18.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 19.5
+          },
+          "connected": false
+        }
+      ],
+      "sha256": "718c96543c4e8c92b12e5cb204b794df33cce6ec8cf87fd387bdec398ce04697",
+      "flame_window_mean_rgb": 5.139591503267974
+    },
+    {
+      "label": "restart-disconnected",
+      "tick": 540,
+      "file": "thetazine-v04-states/restart-disconnected-540.png",
+      "entity_status": 1,
+      "ports": [
+        {
+          "position": {
+            "y": -0.5,
+            "x": 14.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 13.5
+          },
+          "connected": false
+        },
+        {
+          "position": {
+            "y": -0.5,
+            "x": 18.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 19.5
+          },
+          "connected": false
+        }
+      ],
+      "fluid1": {
+        "name": "thetazine-fuel",
+        "amount": 850,
+        "temperature": 15
+      },
+      "fluid2": {
+        "name": "water",
+        "amount": 850,
+        "temperature": 15
+      },
+      "sha256": "8c0ba62e674c42e0691dcff1729adc73e7d02e848c901dc74ac6c857e52eac02",
+      "flame_window_mean_rgb": 151.85472222222222
+    },
+    {
+      "label": "restart-disconnected",
+      "tick": 560,
+      "file": "thetazine-v04-states/restart-disconnected-560.png",
+      "entity_status": 1,
+      "ports": [
+        {
+          "position": {
+            "y": -0.5,
+            "x": 14.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 13.5
+          },
+          "connected": false
+        },
+        {
+          "position": {
+            "y": -0.5,
+            "x": 18.5
+          },
+          "target_position": {
+            "y": -0.5,
+            "x": 19.5
+          },
+          "connected": false
+        }
+      ],
+      "fluid1": {
+        "name": "thetazine-fuel",
+        "amount": 850,
+        "temperature": 15
+      },
+      "fluid2": {
+        "name": "water",
+        "amount": 850,
+        "temperature": 15
+      },
+      "sha256": "31d3d1c87f1c800bf04d98dae201fe88f5e932d22257427d0ce1e3ed5ef5f59b",
+      "flame_window_mean_rgb": 161.75521241830066
+    }
+  ],
+  "preview_sha256": "ed27c5f64b9920ca4f1fddcf21b1ce3497362cd45546413e11df02096d15bdd6",
+  "scope": "File/source/control provenance, actual fixture connection states and visual captures only. Brightness is diagnostic, not a performance or behavior assertion; idle/heat/shadow appearance needs image review."
+}

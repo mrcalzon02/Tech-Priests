@@ -1,13 +1,13 @@
 {
   "status": "PASS_66_ACTUAL_SOURCE_PNGS_64_UNIQUE_WORKING_POSES_AND_ARCHIVE",
-  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
-  "source_archive_sha256": "255bce09597e1ccc68f4e44283372504449b88238d3751a4f409b395ea2778fe",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "source_archive_sha256": "c40f28e9480fde6259ec543196bf54db426d0d8d925d8fb0cb4416910e2b0342",
   "source_pngs": 66,
   "working_unique_rgba": 64,
   "wrap_image_comparison": {
     "rgba_exact": false,
     "max_byte_delta": 1,
-    "mean_byte_delta": 2.6702880859375e-06,
+    "mean_byte_delta": 3.4332275390625e-06,
     "note": "Source transforms and morphs have exact wrap; a render mismatch would remain explicitly reported."
   },
   "frames": [
@@ -609,15 +609,15 @@
   "preview_files": [
     {
       "file": "thetazine-v04-keyposes.png",
-      "sha256": "2e649a3b67168f341537080ce9d4129d4063df45a5e4aea6ec65313419e24963"
+      "sha256": "ff88bdb06d31400212f8dae5092de0705003c2264dff832fc5065de853bbd819"
     },
     {
       "file": "thetazine-v04-cold-thrust.png",
-      "sha256": "279385f79331ac4cd62107216d6c19982ba7fdff496f25211ba1fdef1af0b516"
+      "sha256": "56b94b0658ae91396182d7960c836eeadf34bc51d3556c484c1346628cd50d97"
     },
     {
       "file": "thetazine-v04-containment-loop.gif",
-      "sha256": "abb5c6933fd4f0b10994e3a838a07bb7016d48e3f4652aaecc1f8b1cc21bacbb"
+      "sha256": "e44800335f0c7b16df919b998c43055d3158e16b0b031f89ffbd27ef580cc448"
     }
   ],
   "gif_frame_count": 64,

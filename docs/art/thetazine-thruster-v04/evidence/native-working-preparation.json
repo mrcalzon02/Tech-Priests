@@ -1,0 +1,198 @@
+{
+  "status": "ISOLATED_V04_NATIVE_PREPARED_REQUIRES_LOAD_AND_VISUAL_READBACK",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "registration_sha256": "383cdc689fa87c80336cddfcee021d7ab5f128f90cfa6d5e27b7c8534485025a",
+  "data_sha256": "2fcc9a7c897afd2055185a158a5c49d4f0823402976a103ca7dd0d0083a254eb",
+  "control_sha256": "4d00b695c664fa0e73acce94a96d8a0c3e37bd61b68ee7f0c1e0037913199a18",
+  "donor_cell": [
+    264,
+    542
+  ],
+  "donor_alpha_lip_row": 531,
+  "flame_y_adjust": 0.0,
+  "graphics_files": [
+    {
+      "file": "body-1.png",
+      "sha256": "91ae265e583f1598418075dd5571c69307284a6e913efa08a895c5576f810b8c"
+    },
+    {
+      "file": "body-2.png",
+      "sha256": "d9216415aa0d4bc18e8ccc38fd544bbe54f7cbb5144740f37bfb3a7231d90550"
+    },
+    {
+      "file": "frame-counter.png",
+      "sha256": "627ee96423333ac8e73a93b14f4b913d0f3f73d8cc64d2dd0ae1f4a704070a0e"
+    },
+    {
+      "file": "heat-glow-1.png",
+      "sha256": "33cc847ee0af5d96d044ff3ffacc520dd56dea98a6c530fe64985796511cc5fe"
+    },
+    {
+      "file": "heat-glow-2.png",
+      "sha256": "11ceca5e64abc886de5e845312580a667640fcfd463018530fc2f0d8ed798cdb"
+    },
+    {
+      "file": "idle-body.png",
+      "sha256": "0480cbb665e5e5eaa425d9f6b6e98e13678bac97f42817780d0264e59b3cbd3b"
+    },
+    {
+      "file": "idle-heat-glow.png",
+      "sha256": "c423905bac86efd940e4bccc3bf1c1995621e91b73f9cf836c0f29c74ee234af"
+    },
+    {
+      "file": "idle-shadow.png",
+      "sha256": "e25d582975a02da93afe99e716e86ca2528d724d4817e70d148eaf4fa02b101f"
+    },
+    {
+      "file": "shadow-1.png",
+      "sha256": "be98cd781b0c0d3a88c76ce83e628e154de29955fc1f65b5188cbc156f81f4eb"
+    },
+    {
+      "file": "shadow-2.png",
+      "sha256": "b3a71fb78a914c6343a5b703a25d0fe1057c38b9baa77910c7522d7130ed4083"
+    },
+    {
+      "file": "underlay.png",
+      "sha256": "7f060236d5330d83ae7b0eb522fd771417f95e34a81c7c0124ad9159d920dae9"
+    }
+  ],
+  "effect_is_native": true,
+  "native_colour_thrust_response_not_yet_reviewed": true,
+  "shadow_contract": {
+    "status": "PASS_66_ACTUAL_PROJECTED_SHADOWS_64_EXACT_CELLS_AND_CROP_REGISTRATION",
+    "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+    "source_capture_sha256": "9bd2656cbd4ccab938a88a2002c1462c05628478fee4880c1fe8a696c389a75e",
+    "poses": 66,
+    "full_cell": [
+      768,
+      1280
+    ],
+    "crop": [
+      210,
+      224,
+      608,
+      618
+    ],
+    "cell": [
+      398,
+      394
+    ],
+    "scale": 0.46875,
+    "shift": [
+      0.366210900247097,
+      -0.31785261631011963
+    ],
+    "original_body_shift": [
+      -3.725290298461914e-08,
+      2.8901551961898804
+    ],
+    "common_pixel_registration": [
+      {
+        "full_pixel": [
+          384,
+          640
+        ],
+        "native_point": [
+          -3.725290298461914e-08,
+          2.8901551961898804
+        ],
+        "cropped_native_point": [
+          -3.725290298461914e-08,
+          2.8901551961898804
+        ]
+      },
+      {
+        "full_pixel": [
+          210,
+          224
+        ],
+        "native_point": [
+          -2.548828162252903,
+          -3.2035948038101196
+        ],
+        "cropped_native_point": [
+          -2.548828162252903,
+          -3.2035948038101196
+        ]
+      },
+      {
+        "full_pixel": [
+          608,
+          618
+        ],
+        "native_point": [
+          3.281249962747097,
+          2.5678895711898804
+        ],
+        "cropped_native_point": [
+          3.281249962747097,
+          2.5678895711898804
+        ]
+      },
+      {
+        "full_pixel": [
+          214,
+          228
+        ],
+        "native_point": [
+          -2.490234412252903,
+          -3.1450010538101196
+        ],
+        "cropped_native_point": [
+          -2.490234412252903,
+          -3.1450010538101196
+        ]
+      },
+      {
+        "full_pixel": [
+          603,
+          614
+        ],
+        "native_point": [
+          3.208007775247097,
+          2.5092958211898804
+        ],
+        "cropped_native_point": [
+          3.208007775247097,
+          2.5092958211898804
+        ]
+      }
+    ],
+    "atlas": [
+      {
+        "file": "shadow-1.png",
+        "sha256": "be98cd781b0c0d3a88c76ce83e628e154de29955fc1f65b5188cbc156f81f4eb",
+        "size": [
+          3184,
+          1576
+        ]
+      },
+      {
+        "file": "shadow-2.png",
+        "sha256": "b3a71fb78a914c6343a5b703a25d0fe1057c38b9baa77910c7522d7130ed4083",
+        "size": [
+          3184,
+          1576
+        ]
+      }
+    ],
+    "idle_shadow_sha256": "e25d582975a02da93afe99e716e86ca2528d724d4817e70d148eaf4fa02b101f",
+    "unique_working_rgba": 51,
+    "wrap_max_byte_delta": 0,
+    "scope": "Actual evaluated source geometry clipped at deck and parallel-projected. Source render and exact atlas/registration proof; native shadow phase and appearance still require review. Opaque silhouette, not a physically simulated transparent-glass shadow."
+  },
+  "native_visual_state_plan": [
+    "working-connected",
+    "idle-connected",
+    "idle-disconnected",
+    "restart-disconnected"
+  ],
+  "isolation_layers": [
+    "integrated",
+    "source-light",
+    "native-jet",
+    "smoke",
+    "vanilla"
+  ],
+  "isolation_scope": "Review-only scene and prototype copies; no normal-mod or gameplay edits. Actual installed vanilla is the control; source light/native jet/smoke shown separately."
+}

@@ -1,11 +1,11 @@
 {
-  "status": "V04_REGENERATIVE_AUGER_AND_CURVED_BELL_CANDIDATE_REQUIRES_INDEPENDENT_REVIEW",
+  "status": "V04_SOURCE35_NORMAL_GRAPHICS_INTEGRATED_REVIEWED_ITERATION",
   "input_native_sha256": "61f419d9c9c37dc74f02ecf5fb824461bb3bae11a52c8f9005575b4d4c8b4e74",
   "design_predecessor_commit": "4dca9659f115189b2be7b9531e77c4aece24300e",
   "design_predecessor_native_sha256": "536d872643b4d6d1a953bc118ad9db0937c17f4c1f05dd04a95e8033815fb0e9",
   "builder_sha256": "66cbba8a450f05234103a59afad9c336ce807896aaad35fadfb42ba9f245c319",
-  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
-  "glb_sha256": "fa7ee3a5885a7e2bb0f65d27756b1326cbb42b84768a6ef084be1c6a2127c30a",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "glb_sha256": "c63deaf26877005cf2cff55dfa75428bdd5ab5a0d78107e901f689b14a9b0946",
   "source_model_units": "Blender X east, +Y fore, +Z up; unchanged actual native pipe and ground frame",
   "requested_features": [
     "raised platform gantry and pressure machinery retained",
@@ -15260,7 +15260,7 @@
     ]
   },
   "runtime_interfaces_changed": false,
-  "native_game_integrated": false,
+  "native_game_integrated": true,
   "material_animation_scope": "Heat emission strengths authored for separate native Blender heat-glow renders; GLB transforms/morphs and packed PBR inspected independently.",
   "exhaust_component": "Rejected wobbly cone meshes removed. V04 native jet effect origin records the bell mouth; actual game flame_effect reuses the installed Space Age texture/shader driven by native fuel/oxidizer/thrust ratios. No shader/vanilla PNG redistribution.",
   "mechanical_refinement": {
@@ -28097,8 +28097,8 @@
     "edge_heat_texture_sha256": "7611b89e12b0cfc50fc9e18bb2a9ceb44df4fcfdecc98aab4abf5bd0d78bc860",
     "flow": "Existing independent supply half -> radial takeoff between ram stations -> flexible root inlet -> four longitudinal serpentine runs per primary leaf -> flexible return -> matching welded core return collector -> existing separated warm-return half. Six leaves per coolant stream; no mixed circuits.",
     "owner_contract": "Independent pipes on each of twelve external moving primary plates, supported and clear of piston/hinge/neighbouring leaves; gentle warm edge/lip fringing with dark metal centers. Twelve internal overlap seals remain passive.",
-    "status": "AUTHORED_CANDIDATE_REQUIRES_NEW_CLEARANCE_AND_POSE_INSPECTION",
-    "validation_scope": "Existing46route audits do not cover these38new paths. Actual evaluated-mesh all-pose pipe/ram/hinge/leaf/pipe clearance and all new endpoint seats must be measured before promotion.",
+    "status": "SOURCE33_CLEARANCE_PASS_EXACT_66_POSE_GEOMETRY_PRESERVED_SOURCE35",
+    "validation_scope": "Source33 direct84route/66pose clearance PASS, linked by exact evaluated geometry/transforms preservation to35. No behavior or thermal simulation claim.",
     "repair_basis": "Cold-state overlaps require narrower inset lanes; saddle roofs align with pipe tangent. Radial supply takeoffs avoid retaining band. Clevis cheeks and chamber-mounted standoffs/sleeve now belong to moving core rather than rigid outer frame."
   },
   "leaf_header_packing_repair": {
@@ -28467,5 +28467,22 @@
         "faces": 626
       }
     ]
+  },
+  "refractory_thermal_refinement": {
+    "status": "SOURCE_AND_ACTUAL_GLB_AND_ORDINARY_NATIVE_VISUALLY_REVIEWED",
+    "input_native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+    "script_sha256": "92b7d923d0bf0eb551f506521a6385ad744b8dc2468ca4d9b0d20842f90710c5",
+    "texture_sha256": "f7cce25915977c9a74cbd7d6e68a08bdebe0b9c8f58a8416e788bcdb2e755890",
+    "strength_multiplier": 0.38,
+    "mapping": "12leaf angular repeats, four cooler regenerative lanes, axial/mottled warm refractory. No physical thermal claim.",
+    "preserved": "All geometry/rig/socket frames, exterior edge heat and render-only full-throated volume untouched."
+  },
+  "native_game_integration_scope": "Normal repository prototype import and exact tracked isolated-copy graphics viewed; no release or personal game profile installation.",
+  "normal_integration": {
+    "module": "tech-priests_src/prototypes/generated_graphics/thetazine-thruster-v04.lua",
+    "import": "tech-priests_src/data-final-fixes.lua after legacy rescaling",
+    "runtime_sprite_directory": "tech-priests_src/graphics/entity/thetazine-thruster-v04",
+    "review": "docs/art/thetazine-thruster-v04/evidence/CANDIDATE_REVIEW.json",
+    "owner_final_approval_asserted": false
   }
 }

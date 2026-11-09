@@ -1,0 +1,11 @@
+{
+  "status": "NORMAL_ENTITY_GRAPHICS_PREPARED_REQUIRES_NATIVE_CAPTURE",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "mode": "normal-prototype-states",
+  "prototype": "thetazine-thruster",
+  "data_sha256": "b7a595ee35dbad48a636ad48a02c42bd1864f22650fd36babf5d4838ef6330ed",
+  "control_sha256": "e38680b0d71957dfdfa2b5e62f7f4b75ceecef05274550382b9b20acecce43e7",
+  "tracked_source_checkpoint_sha256": "5680c7cb462a2876c7cf0f7696e55db0ca1dc311fee59d11be1a8bd05d2df70a",
+  "normal_graph_readback_sha256": "922309c33c4e3637531451ce9da5680fb6be1ce01bec23606f78fecb4bbe5cb3",
+  "scope": "Exact tracked normal mod copy. Review data stage logs only; it does not replace graphics or create a cloned prototype. Runtime scenario supplies display states on the actual entity."
+}

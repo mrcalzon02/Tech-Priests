@@ -1,7 +1,7 @@
 {
   "status": "PASS_ACTUAL_GLB_ALL_MESHES_64_POSES_MORPHS_FIXED_SOCKETS_CLOSED_LEAVES",
-  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
-  "glb_sha256": "fa7ee3a5885a7e2bb0f65d27756b1326cbb42b84768a6ef084be1c6a2127c30a",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "glb_sha256": "c63deaf26877005cf2cff55dfa75428bdd5ab5a0d78107e901f689b14a9b0946",
   "sampled_cycle_frames": 64,
   "wrap_frame": 65,
   "source_fps": 30,

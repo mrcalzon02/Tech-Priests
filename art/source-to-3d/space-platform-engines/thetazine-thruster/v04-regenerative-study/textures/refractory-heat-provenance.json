@@ -1,0 +1,10 @@
+{
+  "status": "AUTHORED_MODEL_UV_REFRACTORY_HEAT_REQUIRES_SOURCE_RENDER",
+  "sha256": "f7cce25915977c9a74cbd7d6e68a08bdebe0b9c8f58a8416e788bcdb2e755890",
+  "size": [
+    1024,
+    1024
+  ],
+  "mapping": "Global circumferential U, axial throat-to-lip V. Twelve leaf repeats; cooler lanes aligned approximately behind four regenerative runs per leaf. This is authored appearance, not thermal simulation.",
+  "surface_target": "Dark charred refractory with broken warm incandescence; no uniform pink/white face. Existing cold basecolor/metalrough/normal textures, exterior leaf fringe and full volumetric blue combustion preserved."
+}

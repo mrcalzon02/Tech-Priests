@@ -1,0 +1,126 @@
+{
+  "status": "PASS_66_ACTUAL_PROJECTED_SHADOWS_64_EXACT_CELLS_AND_CROP_REGISTRATION",
+  "native_sha256": "539d6cef7d8e00d5e13967d26817578c1d654ad1cdb7df373dabbe352f659583",
+  "source_capture_sha256": "9bd2656cbd4ccab938a88a2002c1462c05628478fee4880c1fe8a696c389a75e",
+  "poses": 66,
+  "full_cell": [
+    768,
+    1280
+  ],
+  "crop": [
+    210,
+    224,
+    608,
+    618
+  ],
+  "cell": [
+    398,
+    394
+  ],
+  "scale": 0.46875,
+  "shift": [
+    0.366210900247097,
+    -0.31785261631011963
+  ],
+  "original_body_shift": [
+    -3.725290298461914e-08,
+    2.8901551961898804
+  ],
+  "common_pixel_registration": [
+    {
+      "full_pixel": [
+        384,
+        640
+      ],
+      "native_point": [
+        -3.725290298461914e-08,
+        2.8901551961898804
+      ],
+      "cropped_native_point": [
+        -3.725290298461914e-08,
+        2.8901551961898804
+      ]
+    },
+    {
+      "full_pixel": [
+        210,
+        224
+      ],
+      "native_point": [
+        -2.548828162252903,
+        -3.2035948038101196
+      ],
+      "cropped_native_point": [
+        -2.548828162252903,
+        -3.2035948038101196
+      ]
+    },
+    {
+      "full_pixel": [
+        608,
+        618
+      ],
+      "native_point": [
+        3.281249962747097,
+        2.5678895711898804
+      ],
+      "cropped_native_point": [
+        3.281249962747097,
+        2.5678895711898804
+      ]
+    },
+    {
+      "full_pixel": [
+        214,
+        228
+      ],
+      "native_point": [
+        -2.490234412252903,
+        -3.1450010538101196
+      ],
+      "cropped_native_point": [
+        -2.490234412252903,
+        -3.1450010538101196
+      ]
+    },
+    {
+      "full_pixel": [
+        603,
+        614
+      ],
+      "native_point": [
+        3.208007775247097,
+        2.5092958211898804
+      ],
+      "cropped_native_point": [
+        3.208007775247097,
+        2.5092958211898804
+      ]
+    }
+  ],
+  "atlas": [
+    {
+      "file": "shadow-1.png",
+      "sha256": "be98cd781b0c0d3a88c76ce83e628e154de29955fc1f65b5188cbc156f81f4eb",
+      "size": [
+        3184,
+        1576
+      ]
+    },
+    {
+      "file": "shadow-2.png",
+      "sha256": "b3a71fb78a914c6343a5b703a25d0fe1057c38b9baa77910c7522d7130ed4083",
+      "size": [
+        3184,
+        1576
+      ]
+    }
+  ],
+  "idle_shadow_sha256": "e25d582975a02da93afe99e716e86ca2528d724d4817e70d148eaf4fa02b101f",
+  "unique_working_rgba": 51,
+  "wrap_max_byte_delta": 0,
+  "scope": "Actual evaluated source geometry clipped at deck and parallel-projected. Source render and exact atlas/registration proof; native shadow phase and appearance still require review. Opaque silhouette, not a physically simulated transparent-glass shadow.",
+  "source_archive_sha256": "35211b694f9b8c2d6ce38ac4398f903d84954f71ca999069e8ed3a7c8dfa14e9",
+  "source_archive_bytes": 16880316,
+  "pixel_contract": "Original shadow PNG RGB dithering is limited to0/1byte. Runtime shadow atlas RGB is canonical black0; every alpha byte is preserved exactly through the common crop. Exact original RGBA captures remain archived."
+}

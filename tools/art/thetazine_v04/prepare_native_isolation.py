@@ -26,7 +26,7 @@ c=c.replace('storage.entity=e','storage.entity=e;'+spawn)
 c=c.replace(' supplied_levels(.85,.85);'," for _,fixture in pairs(s.find_entities_filtered{area={{-8,-12},{96,12}}}) do if fixture.type=='thruster' or fixture.type=='pipe' then fixture.destructible=false end end\n supplied_levels(.85,.85);")
 c=c.replace('if tick==55 then','if tick==55 or tick%30==0 then')
 # Replace only the tick-body invocation; the function definition stays intact.
-c=c.replace(' supplied_levels(fuel,water)\n'," supplied_levels(fuel,water)\n for _,r in ipairs(storage.isolation or {}) do local v=r.entity;v.set_fluid(1,{name=r.name=='vanilla' and 'thruster-fuel' or 'thetazine-fuel',amount=v.get_fluid_capacity(1)*fuel});v.set_fluid(2,{name=r.name=='vanilla' and 'thruster-oxidizer' or 'water',amount=v.get_fluid_capacity(2)*water}) end\n")
+c=c.replace(' supplied_levels(fuel,water)\n'," supplied_levels(fuel,water)\n for _,r in ipairs(storage.isolation or {}) do local v=r.entity;if fuel<=0 or water<=0 then v.clear_fluid_inside() else v.set_fluid(1,{name=r.name=='vanilla' and 'thruster-fuel' or 'thetazine-fuel',amount=v.get_fluid_capacity(1)*fuel});v.set_fluid(2,{name=r.name=='vanilla' and 'thruster-oxidizer' or 'water',amount=v.get_fluid_capacity(2)*water}) end end\n")
 c=c.replace('helpers.table_to_json({ports=ports',"helpers.table_to_json({source_native_sha256='"+json.loads((a.study/'source-manifest.json').read_text())['native_sha256']+"',ports=ports")
 capture='''
  if tick==338 or tick==342 then
