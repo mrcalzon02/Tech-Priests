@@ -1,4 +1,4 @@
-# FMPL v0.1.0 — Asset Catalog
+# FMPL v0.3.0 — Asset Catalog
 
 Source-indexed asset tabulation. **Not every model is game-ready; not every component is an approved interchangeable part.**
 
@@ -6,7 +6,7 @@ Source-indexed asset tabulation. **Not every model is game-ready; not every comp
 
 | PBR presets | Texture maps | Bunker part candidates | Verified shared parts | Models | Programs | Pipelines |
 |---:|---:|---:|---:|---:|---:|---:|
-| 23 | 69 | 21 | 0 | 9 | 17 | 4 |
+| 23 | 69 | 21 | 0 | 9 | 19 | 5 |
 
 ## Complete machine records and source state
 
@@ -116,7 +116,9 @@ Source-indexed asset tabulation. **Not every model is game-ready; not every comp
 | `tanks-pipe-jig` | calibration | [models/reference/factorio-fluid-interface/append_reference.py](https://github.com/mrcalzon02/Tanks-for-bob-Fork/blob/3f38f801631a88460bca5599616edb0173f4a970/models/reference/factorio-fluid-interface/append_reference.py) |
 | `hb-factorio-render` | render | [tools/factorio-render-pipeline/README.md](https://github.com/mrcalzon02/HB-TTRPG-tools/blob/5942590d944cd5aef03a973fdd941e03fd10d833/tools/factorio-render-pipeline/README.md) |
 | `hb-local-runner` | orchestration | [.github/workflows/homebrew-local-worker.yml](https://github.com/mrcalzon02/HB-TTRPG-tools/blob/5942590d944cd5aef03a973fdd941e03fd10d833/.github/workflows/homebrew-local-worker.yml) |
-| `hb-qwen-pilot` | inference | [tools/refinery-agent/goal_water_purifier.py](https://github.com/mrcalzon02/HB-TTRPG-tools/blob/5942590d944cd5aef03a973fdd941e03fd10d833/tools/refinery-agent/goal_water_purifier.py) |
+| `hb-qwen-pilot` | inference | [tools/refinery-agent/goal_water_purifier.py](https://github.com/mrcalzon02/HB-TTRPG-tools/blob/5942590d944cd5aef03a973fdd941e03fd10d833/tools/refinery-agent/goal_water_purifier.py) || FMPL visible process refinement | geometry-animation | [source code](https://github.com/mrcalzon02/Tech-Priests/blob/c0be708eec7a3a798b1945017eae58c2147e407a/tools/fmpl/production_smoke/refine_process.py) |
+| FMPL independent process verifier | verification | [source code](https://github.com/mrcalzon02/Tech-Priests/blob/c0be708eec7a3a798b1945017eae58c2147e407a/tools/fmpl/production_smoke/verify_process.py) |
+
 
 ## Production paths
 

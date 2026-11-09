@@ -98,3 +98,7 @@ meshes and official rendering/geometry methods. Every external import must
 pass [asset_source_gate.py](asset_source_gate.py) at an individual-file
 rights and source-format level. No binaries or additional workflows are
 added to Git.
+
+## Process machinery foundation and flow standard (v0.3.0)
+
+See [PROCESS_MACHINERY_STANDARD.md](PROCESS_MACHINERY_STANDARD.md). Actual modeled parts, glass agitator, steam keys, concrete and service-paving PBR, real inlet-to-outlet connections and independent native/GLB validation now have standalone scripts under production_smoke. Approval requires actual runner evidence and visual review; the original machine and Factorio prototypes are immutable.

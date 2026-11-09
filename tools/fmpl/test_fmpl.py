@@ -21,9 +21,11 @@ class FmplTests(unittest.TestCase):
         self.assertEqual(doc["inventory"]["component_candidates_total"], 39)
         self.assertEqual(doc["inventory"]["emergency_component_candidates"], 18)
         self.assertEqual(len(doc["models"]), 9)
-        self.assertEqual(len(doc["programs"]), 17)
-        self.assertEqual(len(doc["pipelines"]), 4)
+        self.assertEqual(len(doc["programs"]), 19)
+        self.assertEqual(len(doc["pipelines"]), 5)
         self.assertEqual(doc["inventory"]["verified_shared_components"], 0)
+        self.assertTrue(doc["process_machinery_standard"]["input_process_output_visible_required"])
+        self.assertTrue(doc["policy"]["concrete_foundation_language"])
 
     def test_candidate_event_and_optimistic_conflict(self):
         with tempfile.TemporaryDirectory() as d:

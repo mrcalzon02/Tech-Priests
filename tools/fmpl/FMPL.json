@@ -2,7 +2,7 @@
   "schema": "fmpl.module.v1",
   "module": "Factorio Modeling Production Library",
   "short_name": "FMPL",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "canonical_repo": "mrcalzon02/Tech-Priests",
   "source_commit": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
   "external_refs": {
@@ -24,8 +24,8 @@
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
     "model_records": 9,
-    "program_records": 17,
-    "pipeline_records": 4,
+    "program_records": 19,
+    "pipeline_records": 5,
     "external_blender_libraries": 1,
     "component_candidates_total": 39,
     "emergency_component_candidates": 18,
@@ -407,6 +407,26 @@
         "path": "tools/refinery-agent/goal_water_purifier.py"
       },
       "purpose": "schema-validated local Qwen geometry with Blender ownership"
+    },
+    {
+      "id": "fmpl-visible-process-refinement",
+      "kind": "geometry-animation",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "c0be708eec7a3a798b1945017eae58c2147e407a",
+        "path": "tools/fmpl/production_smoke/refine_process.py"
+      },
+      "purpose": "Open glass treatment vessel, keyed shaft/impeller/steam, physically connected filter/pump paths, reused concrete PBR base"
+    },
+    {
+      "id": "fmpl-process-independent-verification",
+      "kind": "verification",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "c0be708eec7a3a798b1945017eae58c2147e407a",
+        "path": "tools/fmpl/production_smoke/verify_process.py"
+      },
+      "purpose": "Independent native Blender and GLB checks for process, animation, transmitted glass and packed concrete materials"
     }
   ],
   "pipelines": [
@@ -484,6 +504,25 @@
       },
       "status": "four-goal-water-purifier-construction-candidate-not-visually-approved",
       "gate": "inference suggestions are untrusted, independent human visual approval required"
+    },
+    {
+      "id": "process-readable-machine-rebuild",
+      "stages": [
+        "immutable source hash",
+        "first-laid concrete foundation and pavers",
+        "anchored process piping",
+        "visible dirty-to-filtered fluid route",
+        "windowed agitator and steam animation",
+        "independent source/GLB checks",
+        "four static cardinal sprite captures"
+      ],
+      "entrypoint": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "c0be708eec7a3a798b1945017eae58c2147e407a",
+        "path": "tools/fmpl/production_smoke/refine_process.py"
+      },
+      "status": "source-committed-remote-runner-proof-pending",
+      "gate": "Native Factorio pipe cells and user visual approval remain unverified after Blender export"
     }
   ],
   "status_vocabulary": [
@@ -507,7 +546,11 @@
     "source_sha_pins": true,
     "no_extra_workflows": true,
     "one_renderer_per_runner": true,
-    "export_four_directions": true
+    "export_four_directions": true,
+    "visible_input_process_output_required": true,
+    "concrete_foundation_language": true,
+    "visible_keyframed_agitator_required": true,
+    "no_fake_fluid_flow": true
   },
   "external_blender_libraries": [
     {
@@ -542,5 +585,21 @@
     "previews": "tools/fmpl/greebles/render_previews.py",
     "contact_sheet": "tools/fmpl/greebles/contact_sheet.py",
     "production_proof": "pending-independent-Blender-runner-check"
+  },
+  "process_machinery_standard": {
+    "version": "v1",
+    "document": "tools/fmpl/PROCESS_MACHINERY_STANDARD.md",
+    "input_process_output_visible_required": true,
+    "construction_pad_materials": [
+      "ferrocrete",
+      "ferrocrete_light",
+      "ferrocrete_dark"
+    ],
+    "verified_paving_brick_bitmap_present": false,
+    "paving_strategy": "Physical brick geometry shaded using existing FMPL ferrocrete PBR",
+    "physical_mating": "Check true mesh contact against target supports and fluid pipes",
+    "animation": "Glass lid, supported mechanical agitator and keyed steam",
+    "game_ports": "Never infer Lua pipe cell coordinates from Blender boundary planes",
+    "constraints": "No original geometry deletion, 3x3 tile footprint, Wube-style 45-degree proof, independent native/GLB readback, four static directions"
   }
 }
