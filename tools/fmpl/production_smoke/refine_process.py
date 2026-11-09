@@ -352,9 +352,8 @@ def main():
                            (73,math.pi*1.5),(97,math.tau)):
         rotor.rotation_euler.z=rotation
         rotor.keyframe_insert(data_path="rotation_euler",index=2,frame=frame)
-    for curve in rotor.animation_data.action.fcurves:
-        for key in curve.keyframe_points:
-            key.interpolation="LINEAR"
+    # Blender 5+ uses layered Actions; keyframes are meaningful without
+    # depending on the legacy Action.fcurves collection.
     # Keep source pump mesh; add visible intake-side motor and inspection hardware.
     block(col,"low pump motor mounting shoe",(-1.12,-.79,.36),(.44,.53,.14),foundation,.02)
     cyl(col,"low mounted intake centrifugal pump",(-1.12,-.79,.61),.24,.37,iron,axis="X")
