@@ -1,0 +1,1131 @@
+{
+  "schema": "tp-industrial-asset-catalog.v1",
+  "description": "Source-indexed visual/mechanical donor library; not an automatically approved set of physically interchangeable parts.",
+  "source_repo": "mrcalzon02/Tech-Priests",
+  "source_commit": "8eaf8f95765c45af54627a2ec1894be394284898",
+  "coordinate_convention": "+Z up, Blender unit = Factorio tile; canonical pivots must be measured",
+  "material_count": 23,
+  "map_count": 69,
+  "materials": [
+    {
+      "material_id": "ferrocrete",
+      "family": "weathered_ferrocrete",
+      "source_color_hex": "#706e65",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_albedo.png",
+          "git_blob_sha": "e1a06e81086b1228188e1e47bca236aaada1394c",
+          "size_bytes": 305443
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_orm.png",
+          "git_blob_sha": "379af05909cd028194b5f38a74f19c7911ff9eb1",
+          "size_bytes": 247024
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_normal.png",
+          "git_blob_sha": "8cbbf97beb1866109df97124901fefad66e137b5",
+          "size_bytes": 513745
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "ferrocrete_light",
+      "family": "weathered_ferrocrete",
+      "source_color_hex": "#89877e",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_light_albedo.png",
+          "git_blob_sha": "5b55f1d65239b26414c1b1c3fb2c753c71a2d57a",
+          "size_bytes": 318676
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_light_orm.png",
+          "git_blob_sha": "0fc9b82aed03c7d67cad7b54b18ced015338c478",
+          "size_bytes": 246523
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_light_normal.png",
+          "git_blob_sha": "c780abfed613dd5d582f473ffd5822255ba5fd6b",
+          "size_bytes": 514162
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "ferrocrete_dark",
+      "family": "weathered_ferrocrete",
+      "source_color_hex": "#50514b",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_dark_albedo.png",
+          "git_blob_sha": "5799f0d161f15fac48c8307a02369e4c89f28f2a",
+          "size_bytes": 280860
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_dark_orm.png",
+          "git_blob_sha": "77a971618c9104389dd600cbc601b94f3ace74f9",
+          "size_bytes": 246807
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/ferrocrete_dark_normal.png",
+          "git_blob_sha": "a95f3b28e5dc09300bb37c3e91c7a8ec73f744a9",
+          "size_bytes": 514683
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "martian_red",
+      "family": "battleworn_martian_red_paint",
+      "source_color_hex": "#842921",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_albedo.png",
+          "git_blob_sha": "c8d06b4677401a1e880872a5b01eac3ee14ba859",
+          "size_bytes": 360315
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_orm.png",
+          "git_blob_sha": "14d866dbdacfed2992334f8b79c29b00378e624e",
+          "size_bytes": 254431
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_normal.png",
+          "git_blob_sha": "b3fd5a4b6a364dd89872993ba7053017bf180867",
+          "size_bytes": 396416
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "red_highlight",
+      "family": "battleworn_martian_red_paint",
+      "source_color_hex": "#a83a2b",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/red_highlight_albedo.png",
+          "git_blob_sha": "5dbee75067a09f50cde5ded6349035361bb37d9c",
+          "size_bytes": 380820
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/red_highlight_orm.png",
+          "git_blob_sha": "8b2cd936cef2c9544709d02ee7d37a35bbe25dae",
+          "size_bytes": 253961
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/red_highlight_normal.png",
+          "git_blob_sha": "393cba0c66bb0367d83377cc81301c08a25abb2e",
+          "size_bytes": 395886
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "red_dark",
+      "family": "battleworn_martian_red_paint",
+      "source_color_hex": "#541d1b",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/red_dark_albedo.png",
+          "git_blob_sha": "a52ebabef826f0339424b841b7909fb976d848fb",
+          "size_bytes": 334718
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/red_dark_orm.png",
+          "git_blob_sha": "7374655138c7e26126c407e5d0c97334beb39d31",
+          "size_bytes": 254329
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/red_dark_normal.png",
+          "git_blob_sha": "b295b3ca86a5c9b56cc432a84d9c8036fbc663a8",
+          "size_bytes": 396758
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "iron",
+      "family": "turned_gunmetal_steel",
+      "source_color_hex": "#363938",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/iron_albedo.png",
+          "git_blob_sha": "48a6e43d56d32b504d84f3206ec0dc773430e546",
+          "size_bytes": 219913
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/iron_orm.png",
+          "git_blob_sha": "12a971cde7dbb9205918f9c06e7686c30b830a99",
+          "size_bytes": 228623
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/iron_normal.png",
+          "git_blob_sha": "e2101d61497c1b243fffe17abd687e57f409ab7a",
+          "size_bytes": 244165
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "machine_steel",
+      "family": "turned_gunmetal_steel",
+      "source_color_hex": "#666b68",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_albedo.png",
+          "git_blob_sha": "be1d406ed9a2c3822521422a7389515342f50aea",
+          "size_bytes": 265380
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_orm.png",
+          "git_blob_sha": "143533c884e893362b1557efd2deb0e98c4e5d7c",
+          "size_bytes": 228709
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_normal.png",
+          "git_blob_sha": "5c517292babc6a46b6abb22aa2295df3911da040",
+          "size_bytes": 243897
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "dark_recess",
+      "family": "oiled_dark_recess",
+      "source_color_hex": "#222626",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/dark_recess_albedo.png",
+          "git_blob_sha": "a34f4725a32b85f57a3c4e4148e4f75abdc17ef6",
+          "size_bytes": 207929
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/dark_recess_orm.png",
+          "git_blob_sha": "526252b087e9ffc18a457ba974f8f5796a723ee1",
+          "size_bytes": 227146
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/dark_recess_normal.png",
+          "git_blob_sha": "6471dfdd1d63a944fa4b7a09bbf6ebbafacd11a6",
+          "size_bytes": 245673
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "brass",
+      "family": "oiled_machined_brass",
+      "source_color_hex": "#a38a58",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_albedo.png",
+          "git_blob_sha": "b8f291ab3d0ff419c83e60d805a5c2728ff9753c",
+          "size_bytes": 339995
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_orm.png",
+          "git_blob_sha": "a74e7f5ffcc591a7e895d10367282a0bd51748fe",
+          "size_bytes": 184756
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_normal.png",
+          "git_blob_sha": "11a3babbf0a2ce80efdefff190a7873742054de9",
+          "size_bytes": 261651
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "glass",
+      "family": "coated_sensor_optics",
+      "source_color_hex": "#244949",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/glass_albedo.png",
+          "git_blob_sha": "b45dda3e27c9dc0dced22dde72ddcc4f97535612",
+          "size_bytes": 22460
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/glass_orm.png",
+          "git_blob_sha": "946228b4e8e4c07d93970c25a89606c6d1ef85b3",
+          "size_bytes": 233022
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/glass_normal.png",
+          "git_blob_sha": "c44451b9a273dd95aa3e2bc92288a8feed800df5",
+          "size_bytes": 196353
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "alert",
+      "family": "ceramic_and_fittings",
+      "source_color_hex": "#db973e",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/alert_albedo.png",
+          "git_blob_sha": "b001d0b499e7f557afef5aa453967c17f903aeb1",
+          "size_bytes": 364880
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/alert_orm.png",
+          "git_blob_sha": "d7dda2425cc73a2092d1364421d17934c7a55b27",
+          "size_bytes": 233031
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/alert_normal.png",
+          "git_blob_sha": "84bf9f4f1d1a78c1c0d35d8d2a0daab0d5214a93",
+          "size_bytes": 260575
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "parchment",
+      "family": "ceramic_and_fittings",
+      "source_color_hex": "#c3aa79",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/parchment_albedo.png",
+          "git_blob_sha": "81ab81057bbe2600e3a3b3ff2ff9e55d4a6998ac",
+          "size_bytes": 366620
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/parchment_orm.png",
+          "git_blob_sha": "24057d84aadde2459c3433a791721fe82cbe9521",
+          "size_bytes": 232931
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/parchment_normal.png",
+          "git_blob_sha": "893a34268549639d51316a3cf7813dd520126315",
+          "size_bytes": 260674
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "grease",
+      "family": "oiled_dark_recess",
+      "source_color_hex": "#252522",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/grease_albedo.png",
+          "git_blob_sha": "529ebe59cb97be1c47092e6abedb07080dbcbf60",
+          "size_bytes": 202602
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/grease_orm.png",
+          "git_blob_sha": "37d618102a3ae3c1310b56f0fd21f6a8d7fc24a0",
+          "size_bytes": 227313
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/grease_normal.png",
+          "git_blob_sha": "9b2d7141930b93c21c5e0331c7a295b8c05b7303",
+          "size_bytes": 244852
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "heat_blues",
+      "family": "heat_tempered_crown_steel",
+      "source_color_hex": "#344247",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/heat_blues_albedo.png",
+          "git_blob_sha": "54c3973b545a103f4e65e789be8def8324f4ea0e",
+          "size_bytes": 239580
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/heat_blues_orm.png",
+          "git_blob_sha": "549e18764891a0160810775281c7c6479c641f43",
+          "size_bytes": 228973
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/heat_blues_normal.png",
+          "git_blob_sha": "8aa8dfd4958a54fd80c8da8960a2c7f4cd324740",
+          "size_bytes": 244577
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "gunmetal_dark",
+      "family": "turned_gunmetal_steel",
+      "source_color_hex": "#383c3c",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/gunmetal_dark_albedo.png",
+          "git_blob_sha": "6ff855c2fe3653400785f6d8257eef6cf8e6c5e3",
+          "size_bytes": 216728
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/gunmetal_dark_orm.png",
+          "git_blob_sha": "a51acc6238b2562db812d77098be599afc0398af",
+          "size_bytes": 228444
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/gunmetal_dark_normal.png",
+          "git_blob_sha": "53421b2b7f74da76bfc5da46e14aaf45494cab0b",
+          "size_bytes": 244199
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "oxide_red",
+      "family": "battleworn_martian_red_paint",
+      "source_color_hex": "#713025",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/oxide_red_albedo.png",
+          "git_blob_sha": "ac7cfa2ed843a2314c84ce666127d1831537edd8",
+          "size_bytes": 351512
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/oxide_red_orm.png",
+          "git_blob_sha": "c94154e8caad29ba10c6cc3f5c6d54d55645f33a",
+          "size_bytes": 253864
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/oxide_red_normal.png",
+          "git_blob_sha": "addcccb653366475c51ee62e44a612f45aa1feab",
+          "size_bytes": 396090
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "machined_bright",
+      "family": "turned_gunmetal_steel",
+      "source_color_hex": "#8c9390",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machined_bright_albedo.png",
+          "git_blob_sha": "9f15374ad94236a4786f6c220773243f4c1120d4",
+          "size_bytes": 287976
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machined_bright_orm.png",
+          "git_blob_sha": "bc7f9022e2c11060745e56d1836a026ed95aee7f",
+          "size_bytes": 228732
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machined_bright_normal.png",
+          "git_blob_sha": "07b159a59235ea10140b19a1e0595f9692961198",
+          "size_bytes": 244083
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "insulator",
+      "family": "ceramic_and_fittings",
+      "source_color_hex": "#777267",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_albedo.png",
+          "git_blob_sha": "e716c5a16816af1fe9b14542bf1cbab24571b10d",
+          "size_bytes": 340577
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_orm.png",
+          "git_blob_sha": "b2b35e9f712ce67717023b980a80064b1852da61",
+          "size_bytes": 232475
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_normal.png",
+          "git_blob_sha": "fb0c46415572105b2a5438384fd935f9eb3ead60",
+          "size_bytes": 259910
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "bore_shadow",
+      "family": "oiled_dark_recess",
+      "source_color_hex": "#15191a",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/bore_shadow_albedo.png",
+          "git_blob_sha": "34de221ab7fb6c8816cfb32ed115310a9fe70dcc",
+          "size_bytes": 196421
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/bore_shadow_orm.png",
+          "git_blob_sha": "bad0ecd13d6cd53bf05fa0184acf7129c147a5b9",
+          "size_bytes": 227417
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/bore_shadow_normal.png",
+          "git_blob_sha": "3249c40127cd7df980bdd855851fee09d07101e0",
+          "size_bytes": 245423
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "indicator_green",
+      "family": "ceramic_and_fittings",
+      "source_color_hex": "#54ed52",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_albedo.png",
+          "git_blob_sha": "20a4092be509b142629bc88e2bb7570e3c08e8f5",
+          "size_bytes": 366918
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_orm.png",
+          "git_blob_sha": "5a30eef9b9380805bb1799cbf878ba8591461e9c",
+          "size_bytes": 232820
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_normal.png",
+          "git_blob_sha": "380761d58aa6833359c7552e64bb2cd9256b259d",
+          "size_bytes": 260112
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "stencil_white",
+      "family": "ceramic_and_fittings",
+      "source_color_hex": "#c9c7b6",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/stencil_white_albedo.png",
+          "git_blob_sha": "37011bbf17da535e4447fead73ba8d6dea313fe0",
+          "size_bytes": 359093
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/stencil_white_orm.png",
+          "git_blob_sha": "385c0e86250a908eae552a418449be7677a1a210",
+          "size_bytes": 232822
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/stencil_white_normal.png",
+          "git_blob_sha": "afc52db2c9c4eb5326d01dab5a31975ead581943",
+          "size_bytes": 260274
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    },
+    {
+      "material_id": "primer_black",
+      "family": "ceramic_and_fittings",
+      "source_color_hex": "#252826",
+      "uv_repeat_per_tile_unit": 1.25,
+      "maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/primer_black_albedo.png",
+          "git_blob_sha": "1c9fda629fde6f5159b2341d75df7488794db2d6",
+          "size_bytes": 240043
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/primer_black_orm.png",
+          "git_blob_sha": "e54f7cc49941b1d33714e7bc5df44e123d7e9dff",
+          "size_bytes": 232858
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/primer_black_normal.png",
+          "git_blob_sha": "ed03fd882b5b71eaa3d85a947eafc52ab351338e",
+          "size_bytes": 259837
+        }
+      },
+      "source_generator": "art/source-to-3d/martian-bunker/src/v10/make_textures.py",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "committed_original": true,
+      "copy_policy": "Use in-place; pack into consuming .blend. Don't duplicate source PNGs.",
+      "render_approval": "reference-source; not blanket approval for every consuming machine"
+    }
+  ],
+  "candidates": [
+    {
+      "part_id": "bunker-09-steel-service-hatch",
+      "source_object": "09_steel_service_hatch",
+      "source_material": "martian_red",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "service",
+      "source_purpose": "Armor closure follows tapered concrete wall without air gap",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-13-ring-lower-bearing-seat",
+      "source_object": "13_ring_lower_bearing_seat",
+      "source_material": "machine_steel",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "traverse",
+      "source_purpose": "Bolted structural lower bearing seat",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-19-machined-barrel-socket",
+      "source_object": "19_machined_barrel_socket",
+      "source_material": "machine_steel",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "weapon",
+      "source_purpose": "Bolted sleeved annular gun-bearing socket with true clear bore",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-19-socket-flexible-dust-seal",
+      "source_object": "19_socket_flexible_dust_seal",
+      "source_material": "dark_recess",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "weapon",
+      "source_purpose": "Replaceable inner seal supports gun shroud without obscuring gun bore",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-21-jacket-socket-locking-flange",
+      "source_object": "21_jacket_socket_locking_flange",
+      "source_material": "machine_steel",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "weapon",
+      "source_purpose": "Bolted coupling bridges round jacket OD to actual annular bearing socket",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-29-rear-control-cabinet",
+      "source_object": "29_rear_control_cabinet",
+      "source_material": "iron",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "control",
+      "source_purpose": "Remote-fire electronics housed behind the southward-inclined north wall",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-30-controller-access-panel",
+      "source_object": "30_controller_access_panel",
+      "source_material": "red_highlight",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "control",
+      "source_purpose": "Controller service panel follows rear wall taper beneath roof chamfer",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-31-antenna-mount-angled-rear",
+      "source_object": "31_antenna_mount_angled_rear",
+      "source_material": "machine_steel",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "comms",
+      "source_purpose": "Rear casing bolted standoff; rotates with turret and clears barrel",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-36-controller-to-slipring-elbow-1",
+      "source_object": "36_controller_to_slipring_elbow_1",
+      "source_material": "machine_steel",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "power_signal",
+      "source_purpose": "Low stationary controller cable to protected rotating slip ring",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-36-controller-to-slipring-segment-1",
+      "source_object": "36_controller_to_slipring_segment_1",
+      "source_material": "machine_steel",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "power_signal",
+      "source_purpose": "Low stationary controller cable to protected rotating slip ring",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-38-primary-optic-mount",
+      "source_object": "38_primary_optic_mount",
+      "source_material": "iron",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "sensing",
+      "source_purpose": "Protected co-traversing thermal/visible sight head mount",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-44-rear-vent-guard",
+      "source_object": "44_rear_vent_guard",
+      "source_material": "iron",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "thermal",
+      "source_purpose": "Rear heat aperture backed by real concrete face",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-45-vent-louver-1",
+      "source_object": "45_vent_louver_1",
+      "source_material": "machine_steel",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "thermal",
+      "source_purpose": "Actual mounted intake louvers over rear cooling duct",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-59-exterior-supply-breaker",
+      "source_object": "59_exterior_supply_breaker",
+      "source_material": "iron",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "control",
+      "source_purpose": "Power breaker physically fastened to east wall and source conduit",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-66-bunker-condition-gauge",
+      "source_object": "66_bunker_condition_gauge",
+      "source_material": "iron",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "sensing",
+      "source_purpose": "Condition-monitoring gauge actually touching left tapered shell",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-68-trunnion-bearing-cap-w",
+      "source_object": "68_trunnion_bearing_cap_W",
+      "source_material": "machine_steel",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "weapon",
+      "source_purpose": "Accessible pivot housing bolted to the gun cheek",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-75-elevation-travel-indicator-mount",
+      "source_object": "75_elevation_travel_indicator_mount",
+      "source_material": "iron",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "sensing",
+      "source_purpose": "Welded elevation-angle index support fixed into right cheek",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-78-barrel-service-clamp-3",
+      "source_object": "78_barrel_service_clamp_3",
+      "source_material": "machine_steel",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "weapon",
+      "source_purpose": "Replaceable external barrel support collar anchored to pressure tube",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-81-mantlet-heavy-outer-armor",
+      "source_object": "81_mantlet_heavy_outer_armor",
+      "source_material": "machine_steel",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "armor",
+      "source_purpose": "Single removable spall-shield ring supported by the original gun bearing",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-85-w-rangefinder-socket",
+      "source_object": "85_W_rangefinder_socket",
+      "source_material": "iron",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "sensing",
+      "source_purpose": "Single structural optical well sunk into turret cheek",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    },
+    {
+      "part_id": "bunker-85-w-rangefinder-recessed-lens",
+      "source_object": "85_W_rangefinder_recessed_lens",
+      "source_material": "glass",
+      "origin": "martian-heavy-weapon-bunker-v10",
+      "system": "fasteners",
+      "source_purpose": "Functional optical/thermal aperture seated inside well",
+      "source_scene": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "source_manifest": "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
+      "source_geometry_version": "v10",
+      "status": "candidate",
+      "measured_anchors": null,
+      "normalized_part_master": null,
+      "standalone_reopen_verified": false,
+      "interface_verified": false,
+      "port_cells_verified": false,
+      "use_policy": "Append exact object to inspection scene; never call a source mesh a verified reusable part before local anchor, contact and roundtrip checks."
+    }
+  ],
+  "source_donors": [
+    {
+      "id": "martian-bunker-v10",
+      "kind": "native_blend",
+      "path": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend",
+      "usable_for": "measured cast iron, weapon fittings, controls, fasteners and material references",
+      "parts_indexed": 21
+    },
+    {
+      "id": "emergency-boiler-v08",
+      "kind": "native_blend",
+      "path": "art/source-to-3d/boiler-v08/production-source.blend",
+      "source_script": "art/source-to-3d/boiler-v08/animate_boiler_v08.py",
+      "usable_for": "real steam nozzle, circular pipe adapters, rear cage, valves, canister seats, wire mount",
+      "part_extraction": "requires exact Blender object naming and measured anchors; source contains approximately 270 authored meshes"
+    },
+    {
+      "id": "condenser-v21",
+      "kind": "builder_and_validation",
+      "path": "art/source-to-3d/condenser-v21/build_condenser_v21.py",
+      "validation": "art/source-to-3d/condenser-v21/Condenser_V21_Validation.json",
+      "usable_for": "welded hollow side neck, cast receiver, pipe-to-housing transition, flanges",
+      "native_model_access": "V21 authored source archive lives in external Library, not checked-in here",
+      "reference_socket": {
+        "xyz_tiles": [
+          1,
+          -0.5,
+          0.36
+        ],
+        "pipe_outer_diameter_tiles": 0.57,
+        "flange_outer_diameter_tiles": 0.68,
+        "bore_diameter_tiles": 0.49,
+        "authority": "visual calibration only; native prototype cell not established"
+      }
+    },
+    {
+      "id": "emergency-miner-v16",
+      "kind": "blender_generator",
+      "path": "art/source-to-3d/emergency-miner/build_model.py",
+      "usable_for": "cable_gland, routed_cable, lofted_cast_chassis, octagonal_case, frame_ring, connector shoes and source-seated fasteners",
+      "visible_only": true,
+      "sprite_reference": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-miner.png",
+      "part_extraction": "requires separate collection and pivot measurement"
+    },
+    {
+      "id": "emergency-assembler",
+      "kind": "sprite_reference_only",
+      "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-assembler.png",
+      "native_model_access": "No independently verified matching editable assembler source found in checked folders; do not relabel the workbench as the assembler"
+    },
+    {
+      "id": "timber-workbench-v05",
+      "kind": "native_source_zip",
+      "path": "art/source-to-3d/workbench-v5-animation/Workbench_V5_Animated_Source.zip",
+      "usable_for": "crude metal-plate bench, hammer cycle, small stationary industrial assembly references",
+      "identity": "separate from emergency assembler"
+    },
+    {
+      "id": "boiler-v08-interchange",
+      "kind": "native_blend_glb",
+      "path": "art/source-to-3d/boiler-v08/interchange/boiler-v08-cold-interchange.blend",
+      "glb": "art/source-to-3d/boiler-v08/interchange/boiler-v08-cold.glb",
+      "usable_for": "production-pipe and mechanical reference; source has independent static reimport evidence"
+    }
+  ],
+  "limits": {
+    "source_immutable": true,
+    "verified_reusable_parts": 0,
+    "meshes_not_cloned_into_library": true,
+    "template_parts_registry_separate": true,
+    "in_game_pipe_connection_not_claimed": true,
+    "visual_acceptance_required": true
+  }
+}
