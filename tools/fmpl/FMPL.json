@@ -2,7 +2,7 @@
   "schema": "fmpl.module.v1",
   "module": "Factorio Modeling Production Library",
   "short_name": "FMPL",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "canonical_repo": "mrcalzon02/Tech-Priests",
   "source_commit": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
   "external_refs": {
@@ -565,11 +565,14 @@
     "source_sha_pins": true,
     "no_extra_workflows": true,
     "one_renderer_per_runner": true,
-    "export_four_directions": true,
+    "export_four_directions": false,
     "visible_input_process_output_required": true,
     "concrete_foundation_language": true,
     "visible_keyframed_agitator_required": true,
-    "no_fake_fluid_flow": true
+    "no_fake_fluid_flow": true,
+    "stationary_machine_single_fixed_export_view": true,
+    "rotatable_entity_four_direction_exports": true,
+    "grid_aligned_pipe_mouth_required": true
   },
   "external_blender_libraries": [
     {
@@ -619,6 +622,45 @@
     "physical_mating": "Check true mesh contact against target supports and fluid pipes",
     "animation": "Glass lid, supported mechanical agitator and keyed steam",
     "game_ports": "Never infer Lua pipe cell coordinates from Blender boundary planes",
-    "constraints": "No original geometry deletion, 3x3 tile footprint, Wube-style 45-degree proof, independent native/GLB readback, four static directions"
+    "constraints": "No original geometry deletion, 3x3 tile footprint, Wube-style 45-degree proof, independent native/GLB readback, four static directions",
+    "camera": {
+      "name": "BOILER_FACTORIO_EXPORT_45",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "view_count": 1,
+      "ortho_scale": "asset-specific",
+      "reference": "art/source-to-3d/boiler-v08/production/production-receipt.json"
+    },
+    "fluid_mating": {
+      "reference": "factorio-fluid-interface-v1",
+      "source_repository": "mrcalzon02/Tanks-for-bob-Fork",
+      "drawing_rule": "full hollow machine-side collar and throat, signed cardinal face, cast reducing manifold, 8 fasteners and load-bearing mount",
+      "outer_pipe_diameter_tiles": 0.57,
+      "inner_bore_diameter_tiles": 0.49,
+      "collar_diameter_tiles": 0.68,
+      "feet_ground_z": 0,
+      "socket_height_tiles": 0.36,
+      "water_purifier_provisional": [
+        {
+          "name": "raw-water-in",
+          "grid_edge_xyz": [
+            -1.5,
+            0,
+            0.36
+          ],
+          "facing": "west"
+        },
+        {
+          "name": "purified-water-out",
+          "grid_edge_xyz": [
+            1.5,
+            0,
+            0.36
+          ],
+          "facing": "east"
+        }
+      ],
+      "native_prototype_ports_verified": false
+    }
   }
 }

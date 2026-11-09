@@ -26,6 +26,10 @@ class FmplTests(unittest.TestCase):
         self.assertEqual(doc["inventory"]["verified_shared_components"], 0)
         self.assertTrue(doc["process_machinery_standard"]["input_process_output_visible_required"])
         self.assertTrue(doc["policy"]["concrete_foundation_language"])
+        self.assertTrue(doc["policy"]["stationary_machine_single_fixed_export_view"])
+        self.assertTrue(doc["policy"]["grid_aligned_pipe_mouth_required"])
+        self.assertEqual(doc["process_machinery_standard"]["camera"]["azimuth_deg"],0)
+        self.assertEqual(doc["process_machinery_standard"]["camera"]["view_count"],1)
 
     def test_candidate_event_and_optimistic_conflict(self):
         with tempfile.TemporaryDirectory() as d:
