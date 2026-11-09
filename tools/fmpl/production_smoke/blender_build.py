@@ -165,7 +165,10 @@ def main():
         error = math.dist(position, expected)
         if error > 0.0002:
             raise RuntimeError("Physical reference fixture misaligned: " + str(error))
-        for ob in collection.all_objects:
+        fixture_objects=[ob for ob in list(collection.all_objects) if ob is not None]
+        if len(fixture_objects) < 9:
+            raise RuntimeError("Expected all nine actual fluid-interface reference objects")
+        for ob in fixture_objects:
             ob.hide_render = True
         interface_receipts.append({"name": name,"socket_world_xyz": list(position),
           "facing":direction,"root_scale":list(root.scale),

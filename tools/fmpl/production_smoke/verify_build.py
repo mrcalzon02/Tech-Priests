@@ -58,7 +58,7 @@ def main():
     if len(refs)!=2:
         raise RuntimeError("Missing isolated fluid interface test references")
     for c in refs:
-        if any(x.type=="MESH" and not x.hide_render for x in c.all_objects):
+        if any(x is not None and x.type=="MESH" and not x.hide_render for x in c.all_objects):
             raise RuntimeError("A pipe calibration guide would leak into production sprite")
     main_count=len(source)
     # Fresh scene, not a cached append: glTF importer must reproduce the model.

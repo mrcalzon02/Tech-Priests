@@ -94,7 +94,7 @@ def main():
     if packed<21:
         raise RuntimeError("FMPL metal and concrete PBR textures not packed")
     refs=[col for col in bpy.data.collections if col.name.startswith("FMPL QA reference |")]
-    if len(refs)!=2 or any(o.type=="MESH" and not o.hide_render for col in refs for o in col.all_objects):
+    if len(refs)!=2 or any(o is not None and o.type=="MESH" and not o.hide_render for col in refs for o in col.all_objects):
         raise RuntimeError("Calibrated reference must be retained but not drawn")
     intended=report["source_parts_rendered"]+len(process)
     source_count=len(originals)
