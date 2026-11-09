@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Fresh Blender readback of FMPL V02 process machine and keyed state."""
 import argparse
+import array
 import hashlib
 import json
 from pathlib import Path
@@ -31,7 +32,7 @@ def geometry_sha(objs):
 
 def main():
     parser=argparse.ArgumentParser()
-    for arg in ("blend","glb","build-report","out"):
+    for arg in ("blend","glb","build-report","idle-preview","active-preview","out"):
         parser.add_argument("--"+arg,required=True)
     a=parser.parse_args(sys.argv[sys.argv.index("--")+1:])
     report=json.loads(Path(a.build_report).read_text(encoding="utf-8-sig"))
@@ -99,8 +100,29 @@ def main():
     extras=[o for o in scene.objects if o.type=="MESH" and
             not o.name.startswith("MH7_") and
             not o.name.startswith("FMPL_PROCESS |")]
-    if any(not o.hide_render for o in extras) or scene.use_nodes:
-        raise RuntimeError("Nonproduction meshes or source compositor would destroy RGBA transparency")
+    unhidden=[o.name for o in extras if not o.hide_render]
+    if unhidden:
+        raise RuntimeError("Nonproduction environment geometry remains visible: "+str(unhidden))
+    # In Blender 5.2 Scene.use_nodes is deprecated, and may read back as true
+    # after reopening even when the saved output is transparent. Test the
+    # actual Cycles pixel alpha instead of guessing from legacy compositor flags.
+    def verify_png_alpha(path, expected_hash):
+        if sha(path)!=expected_hash:
+            raise RuntimeError("Rendered process proof hash changed")
+        image=bpy.data.images.load(str(Path(path).resolve()),check_existing=False)
+        try:
+            if image.channels!=4:
+                raise RuntimeError("PNG image lacks an alpha channel")
+            pixels=array.array("f",[0.0])*(image.size[0]*image.size[1]*4)
+            image.pixels.foreach_get(pixels)
+            minimum=min(pixels[3::4]);maximum=max(pixels[3::4])
+            if minimum>.05 or maximum<.95:
+                raise RuntimeError("Actual Blender process PNG is not transparent and nonempty")
+            return {"minimum":round(minimum,4),"maximum":round(maximum,4)}
+        finally:
+            bpy.data.images.remove(image)
+    idle_alpha=verify_png_alpha(a.idle_preview,report["idle_render_sha256"])
+    active_alpha=verify_png_alpha(a.active_preview,report["active_render_sha256"])
     intended=report["source_parts_rendered"]+len(process)
     source_count=len(originals)
     # Verify actual GLB imports independently; no reference guides are allowed.
@@ -121,6 +143,7 @@ def main():
       "steam_activity_changed":idle!=active,
       "packed_pbr_images":packed,
       "structural_concrete_and_paving":True,
+      "actual_png_alpha":{"idle":idle_alpha,"working":active_alpha},
       "native_pipe_cell_verified":False,
       "game_integrated":False,
       "owner_visual_approval":False
