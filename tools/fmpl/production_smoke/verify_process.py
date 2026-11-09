@@ -71,6 +71,7 @@ def main():
     transmission=shader.inputs.get("Transmission Weight")
     if transmission is None or transmission.default_value<.7:
         raise RuntimeError("Glass-topped chamber did not preserve real shader transmission")
+    glass_transmission=float(transmission.default_value)
     rotor=[x for x in scene.objects if x.name=="FMPL_PROCESS | keyframed central agitator rotor"]
     if len(rotor)!=1 or rotor[0].animation_data is None:
         raise RuntimeError("Agitator does not have an editable animation")
@@ -110,7 +111,7 @@ def main():
       "passed":True,"native_blend_sha256":sha(a.blend),"exported_glb_sha256":sha(a.glb),
       "preserved_original_meshes":source_count,"new_process_meshes":len(process),
       "reimported_glb_meshes":len(imported),
-      "glass_transmission":float(transmission.default_value),
+      "glass_transmission":glass_transmission,
       "keyed_agitator_frames":[1,25,49,73,97],
       "steam_activity_changed":idle!=active,
       "packed_pbr_images":packed,
