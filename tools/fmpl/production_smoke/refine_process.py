@@ -419,7 +419,7 @@ def main():
         raise RuntimeError("Original Water Purifier mesh transforms or source geometry changed")
     parts=[o for o in col.objects if o.type=="MESH"]
     bounds=full_bounds(parts)
-    if any(abs(bounds[k][j])>1.59 for k in (0,1) for j in (0,1)):
+    if any(abs(bounds[edge][axis])>1.59 for edge in ("min","max") for axis in (0,1)):
         raise RuntimeError("Process geometry exceeds 3x3 modelling envelope: "+str(bounds))
     if bounds["min"][2]<-.015 or bounds["max"][2]>3.60:
         raise RuntimeError("Process detail height exceeds constrained envelope: "+str(bounds))
