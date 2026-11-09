@@ -1,0 +1,36 @@
+{
+  "schema": "fmpl.external-blender-source.v1",
+  "id": "greebles-drive-2026-10",
+  "source_name": "Greebles.blend",
+  "role": "editable-design-language-kitbash",
+  "provider": "google_drive",
+  "privacy": "private; no public binary",
+  "drive_file_id": "1Id2QlV-4B8LyjXNilXa4M2tL7G2Pq4Jy",
+  "drive_folder_id": "15ZRoVp6x2btdG3q9h_fFnwbNoqpwxsOA",
+  "payload_bytes": 133802272,
+  "sha256": "b7938b171edc0bf1e3daeb410029b0f5978a65df34b466fdd0fe209a71848123",
+  "container": "zstd-compressed-blend",
+  "decompressed_header": "BLENDER17-01v0500",
+  "blender_version": "5.0",
+  "observed_datablocks": {
+    "objects": 322,
+    "meshes": 320,
+    "materials": 9,
+    "collections": 1
+  },
+  "naming_examples": [
+    "Body003",
+    "Mega_Kitbash_Detail_514",
+    "Box002"
+  ],
+  "status": "source-verified; components unclassified",
+  "local_path_environment": "FMPL_GREEBLES_BLEND",
+  "validation_gates": [
+    "Blender inventory",
+    "contact-sheet classification",
+    "measured local bounds",
+    "visual fitness review",
+    "roundtrip verification"
+  ],
+  "non_claims": "Not approved as fluid pipes, ports, mechanical sockets, collision, or Factorio-ready geometry."
+}

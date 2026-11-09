@@ -10,7 +10,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 MODULE = HERE / "FMPL.json"
 EVENTS = HERE / "checkpoints.json"
-KINDS = {"model": "models", "program": "programs", "pipeline": "pipelines"}
+KINDS = {"model": "models", "program": "programs", "pipeline": "pipelines", "library": "external_blender_libraries"}
 EVENT_KINDS = {"model", "part", "material", "sprite", "prototype", "pipeline", "program"}
 EVENT_STATES = {"candidate", "verified", "approved", "installed"}
 HEX = set("0123456789abcdef")
@@ -44,6 +44,11 @@ def validate(root=None, check_files=False):
     for kind, coll in KINDS.items():
         for x in reg[coll]:
             assert x["id"] and (x.get("source") or x.get("entrypoint"))
+            if kind == "library":
+                assert x["provider"] == "google_drive"
+                assert x["registry"] and x["indexer"] and x["append_adapter"]
+                assert len(x["source"]["original_sha256"]) == 64
+                continue
             src = x["source"] if kind != "pipeline" else x["entrypoint"]
             assert src["repository"] and src["path"] and len(src["ref"]) == 40
             assert set(src["ref"]) <= HEX
@@ -52,6 +57,7 @@ def validate(root=None, check_files=False):
                 assert "purpose" in x
             if kind == "pipeline":
                 assert x["stages"] and x["gate"]
+    assert len(reg.get("external_blender_libraries", [])) == reg["inventory"].get("external_blender_libraries", 0)
     for field, coll in (("model_records", "models"), ("program_records", "programs"), ("pipeline_records", "pipelines")):
         assert len(reg[coll]) == reg["inventory"][field]
     if root is not None:
@@ -143,12 +149,13 @@ def main(argv=None):
         print("RECORDED", add_event(load_json(a.file), a.expected_sha256));return 0
     reg = validate(a.root if a.command == "validate" else None, bool(getattr(a, "check_files", False)))
     if a.command == "summary":
-        print("FMPL", reg["version"], "| models",len(reg["models"]),"| programs",len(reg["programs"]),
+        print("FMPL", reg["version"], "| libraries",len(reg.get("external_blender_libraries", [])), "| models",len(reg["models"]),"| programs",len(reg["programs"]),
               "| pipelines",len(reg["pipelines"]),"| PBR materials",reg["inventory"]["materials"],
               "| PBR maps",reg["inventory"]["pbr_maps"],"| verified shared parts",reg["inventory"]["verified_shared_components"])
     elif a.command == "list":
         for x in records(reg, a.kind):
-            print(x["id"], x.get("status",x.get("kind","pipeline")), x.get("source",x.get("entrypoint"))["repository"])
+            src=x.get("source",x.get("entrypoint",{}))
+            print(x["id"], x.get("status",x.get("kind","pipeline")), src.get("repository",src.get("provider","unknown")) )
     elif a.command == "show":
         hits = [x for x in records(reg) if x["id"] == a.id]
         if not hits:

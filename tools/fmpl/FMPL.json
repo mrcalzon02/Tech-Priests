@@ -25,7 +25,8 @@
     "verified_shared_components": 0,
     "model_records": 9,
     "program_records": 17,
-    "pipeline_records": 4
+    "pipeline_records": 4,
+    "external_blender_libraries": 1
   },
   "models": [
     {
@@ -497,5 +498,23 @@
     "no_extra_workflows": true,
     "one_renderer_per_runner": true,
     "export_four_directions": true
-  }
+  },
+  "external_blender_libraries": [
+    {
+      "id": "greebles-drive-2026-10",
+      "status": "source-verified-geometry-unclassified",
+      "kind": "private-external-blender-design-library",
+      "provider": "google_drive",
+      "registry": "tools/fmpl/greebles/source.json",
+      "indexer": "tools/fmpl/greebles/index.py",
+      "append_adapter": "tools/fmpl/greebles/append.py",
+      "local_env": "FMPL_GREEBLES_BLEND",
+      "source": {
+        "provider": "google_drive",
+        "file_id": "1Id2QlV-4B8LyjXNilXa4M2tL7G2Pq4Jy",
+        "original_sha256": "b7938b171edc0bf1e3daeb410029b0f5978a65df34b466fdd0fe209a71848123"
+      },
+      "purpose": "Editable greeble donor for design language, not verified pipe or mechanical connections"
+    }
+  ]
 }

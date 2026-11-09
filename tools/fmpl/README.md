@@ -74,3 +74,7 @@ The register command uses temp-file atomic rename, rejects duplicate events, val
 ## Next step
 
 Use `FMPL.json` to select existing source, PBR and named parts before proposing new hardware, then produce, checkpoint, audit and register the exact artifact. Add actual next-machine and exporter records after each verified run. No giant matrix of tasks; reuse existing single self-hosted worker.
+
+## External Blender design-language donors
+
+Private Google Drive Greebles.blend is indexed as greebles-drive-2026-10 in FMPL.json. See tools/fmpl/greebles/README.md for the pinned source, local runner cache, source probe, Blender index and non-destructive append adapter. Discovery: python tools/fmpl/fmpl.py list --kind library. No binary is copied into public Git, no extra workflow is created, and no donor is automatically approved for mechanical connections.

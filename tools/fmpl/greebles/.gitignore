@@ -1,0 +1,6 @@
+*.blend
+*.blend1
+*.blend.bin
+cache/
+previews/
+inventory.local.json
