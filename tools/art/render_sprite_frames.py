@@ -9,6 +9,12 @@ import sys
 import bpy
 from mathutils import Matrix, Vector
 
+FMPL_ROOT = Path(__file__).resolve().parents[1] / 'fmpl'
+if str(FMPL_ROOT) not in sys.path:
+    sys.path.insert(0, str(FMPL_ROOT))
+from capture_policy import validate_capture_profile, verify_camera_receipt
+from blender_camera_guard import install_canonical_camera, assert_clean
+
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -63,6 +69,7 @@ def main():
     parser.add_argument('--partition-count', type=int, default=1)
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:])
     cfg = json.loads(args.config.read_text())
+    validate_capture_profile(cfg)
     out = args.out.resolve()
     out.mkdir(parents=True, exist_ok=True)
     source = Path(bpy.data.filepath)
@@ -75,8 +82,9 @@ def main():
             raise ValueError('Resume source/configuration differs')
         cached = {r['path']: r for r in receipt['frames']}
     model = bpy.context.scene
-    if not model.camera or model.camera.data.type != 'ORTHO':
-        raise ValueError('Source must provide an authored orthographic camera')
+    # Drop every legacy or forgotten inspection camera in this in-memory export
+    # derivative BEFORE scene copy. The source .blend on disk is never rewritten.
+    camera_cleanup = install_canonical_camera(model, cfg, bpy)
     if model.render.engine != 'CYCLES':
         raise ValueError('This adapter requires a Cycles source scene')
     for image in bpy.data.images:
@@ -152,7 +160,9 @@ def main():
         actual = math.degrees(math.asin((scene.camera.location-target).normalized().z))
         if abs(actual-float(override['elevation_deg'])) > 0.01:
             raise ValueError(f'Camera pitch mismatch: {actual}')
+    assert_clean(scene, cfg, bpy)
     camera = camera_record(scene)
+    verify_camera_receipt(camera, cfg)
     daylight = daylight_record(scene, cfg.get('animated_lights', []))
     world = {'name': scene.world.name if scene.world else None,
              'color_management': {'view_transform': scene.view_settings.view_transform,
@@ -207,9 +217,12 @@ def main():
     model.frame_set(scene.frame_current)
     bpy.context.view_layer.update()
     scene.render.filepath = '//frames/'
+    assert_clean(scene, cfg, bpy)
     if args.partition == 0:
         bpy.ops.wm.save_as_mainfile(filepath=str(out / 'master.blend'), check_existing=False)
     manifest = {'schema': 1, 'source_sha256': source_hash, 'source_file': source.name,
+                'camera_policy': cfg['camera_policy'],
+                'persistent_camera_count': 1, 'camera_cleanup': camera_cleanup,
                 'blender': bpy.app.version_string, 'config': cfg, 'camera': camera,
                 'daylight': daylight, 'world': world, 'material_changes': changes,
                 'mesh_count': sum(o.type == 'MESH' for o in scene.objects),

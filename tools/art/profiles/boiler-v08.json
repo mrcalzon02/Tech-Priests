@@ -31,7 +31,8 @@
       0,
       0.85
     ],
-    "ortho_scale": 3.35
+    "ortho_scale": 3.35,
+    "type": "ORTHO"
   },
   "states": {
     "idle": [
@@ -137,5 +138,7 @@
     ]
   },
   "threads": 8,
-  "workers": 4
+  "workers": 4,
+  "capture_kind": "entity",
+  "camera_policy": "fmpl.factorio45.v1"
 }

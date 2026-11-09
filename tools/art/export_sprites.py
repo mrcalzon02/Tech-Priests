@@ -15,6 +15,12 @@ from concurrent.futures import ThreadPoolExecutor
 
 from PIL import Image, ImageChops, ImageDraw
 
+# Central FMPL camera authority is shared with every production Blender worker.
+FMPL_ROOT = Path(__file__).resolve().parents[1] / 'fmpl'
+if str(FMPL_ROOT) not in sys.path:
+    sys.path.insert(0, str(FMPL_ROOT))
+from capture_policy import validate_capture_profile, verify_camera_receipt
+
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -41,6 +47,7 @@ def validate_config(cfg):
             raise ValueError('Unsafe state name')
         if not frames or len(set(frames)) != len(frames) or any(type(f) is not int for f in frames):
             raise ValueError('State frames must be unique timeline integers')
+    validate_capture_profile(cfg)
 
 
 def rgba(path, size):
@@ -62,6 +69,9 @@ def pack(out):
     manifest = json.loads((out / 'capture.json').read_text())
     cfg = manifest['config']
     validate_config(cfg)
+    if manifest.get('camera_policy') != cfg['camera_policy'] or manifest.get('persistent_camera_count') != 1:
+        raise ValueError('Missing verified FMPL camera policy / clean master camera count')
+    verify_camera_receipt(manifest['camera'], cfg)
     if digest(out / 'master.blend') != manifest['master_sha256']:
         raise ValueError('Saved master checksum mismatch')
     expected = [(state, d, i, f) for state, frames in cfg['states'].items()
@@ -210,7 +220,8 @@ def main():
             parts = [json.loads((out/f'capture-partition-{i}.json').read_text()) for i in range(workers)]
             primary = parts[0]
             for part in parts[1:]:
-                for key in ('source_sha256','config','camera','daylight','world','mesh_count'):
+                for key in ('source_sha256','config','camera','daylight','world','mesh_count',
+                            'camera_policy','persistent_camera_count','camera_cleanup'):
                     if part[key] != primary[key]:
                         raise ValueError('Parallel capture differs: '+key)
             order = {state:i for i,state in enumerate(cfg['states'])}
