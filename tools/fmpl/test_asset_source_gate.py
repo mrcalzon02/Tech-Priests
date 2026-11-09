@@ -14,7 +14,11 @@ class Tests(unittest.TestCase):
     def test_current_registry_unapproved(self):
         report=gate.validate_registry(ROOT/"external_sources.json")
         self.assertEqual(report["approved_imports"],0)
-        self.assertEqual(report["sources"],9)
+        registry=json.loads((ROOT/"external_sources.json").read_text(encoding="utf-8"))
+        source_ids={source["source_id"] for source in registry["sources"]}
+        self.assertEqual(report["sources"],len(source_ids))
+        self.assertGreaterEqual(report["sources"],9)
+        self.assertIn("user-tank-chaffe-3d-model",source_ids)
 
     def test_private_user_archive_is_intake_only(self):
         entry={
