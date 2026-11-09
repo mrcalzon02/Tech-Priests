@@ -83,6 +83,93 @@
         "game_integrated": false,
         "source_note": "Technically verified source candidate; no native Factorio fluid or visual acceptance"
       }
+    },
+    {
+      "event_id": "fmpl-water-purifier-pipe-camera-42722511833-1",
+      "asset_id": "water-purifier-mh7",
+      "asset_kind": "model",
+      "revision": "v04-grid-aligned-full-bore-single-view",
+      "state": "verified",
+      "source_sha256": "5d03419b7861278ed21f89cb08686d79d5ebb80d886d42ed265d866ea7f08c30",
+      "evidence": {
+        "source_artifact_sha256": "5d03419b7861278ed21f89cb08686d79d5ebb80d886d42ed265d866ea7f08c30",
+        "glb_sha256": "394b88e22c3f2deddd18c9e13578a1c4fdc892e1015fb7a0df6a80cb8e1e0868",
+        "native_reopen_verified": true,
+        "glb_reimported": true,
+        "original_meshes_preserved": 50,
+        "added_process_meshes": 136,
+        "reimported_glb_meshes": 175,
+        "pbr_images_packed": 30,
+        "camera_policy": "fmpl.factorio45.v1",
+        "camera_elevation_deg": 45,
+        "camera_azimuth_deg": 0,
+        "saved_camera_count": 1,
+        "rendered_static_directions": 1,
+        "rendered_direction_angles": [
+          0
+        ],
+        "atlas_images": {
+          "64": {
+            "size": [
+              64,
+              64
+            ],
+            "sha256": "a4b2a9e327d7419e19f9d8904edad505abb2494efb635cefc84a6d2314b68f46"
+          },
+          "128": {
+            "size": [
+              128,
+              128
+            ],
+            "sha256": "ad9976fb47a2aa8e13dd402673b42be18045044abe64ed6e9d1aa086cd7a687e"
+          },
+          "256": {
+            "size": [
+              256,
+              256
+            ],
+            "sha256": "b995a8e51340f8bcdb75fa60883706b609effcf31c38de87033057ca3435168d"
+          }
+        },
+        "model_mating_joints": [
+          {
+            "role": "raw-water-in",
+            "xyz": [
+              -1.5,
+              0,
+              0.36
+            ],
+            "facing": "W",
+            "bore_diameter": 0.49,
+            "collar_diameter": 0.68,
+            "fasteners": 8,
+            "ring_vertices": 128,
+            "contact_residual_tiles": 6.143906154658885e-8
+          },
+          {
+            "role": "purified-water-out",
+            "xyz": [
+              1.5,
+              0,
+              0.36
+            ],
+            "facing": "E",
+            "bore_diameter": 0.49,
+            "collar_diameter": 0.68,
+            "fasteners": 8,
+            "ring_vertices": 128,
+            "contact_residual_tiles": 6.143906154658885e-8
+          }
+        ],
+        "github_build_run_url": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42721689714",
+        "github_pack_run_url": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42722511833",
+        "github_artifact_id": 13720187552,
+        "github_artifact_retention_days": 14,
+        "owner_visual_approval": false,
+        "native_factorio_fluidbox_verified": false,
+        "game_integrated": false,
+        "note": "Single fixed-camera static QA produced, not a working-entity sprite set or approved item icon. User visual approval and Lua fluidbox mapping pending."
+      }
     }
   ]
 }

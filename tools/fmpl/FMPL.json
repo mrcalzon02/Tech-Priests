@@ -207,7 +207,7 @@
     },
     {
       "id": "water-purifier-mh7",
-      "status": "process-pbr-technically-verified-unapproved",
+      "status": "fixed-camera-grid-pipe-fit-technically-verified-unapproved",
       "source": {
         "repository": "mrcalzon02/HB-TTRPG-tools",
         "ref": "a953f083412c9e67481d31ebc8b5fb242cf0cf69",
@@ -250,6 +250,25 @@
         "glb_sha256": "d6cfdc31d6e4b9f174afffd4ee05077d37fd927e614aa4679a3e0aead6517042",
         "native_source_reopened": true,
         "glb_reimported": true,
+        "owner_approved": false,
+        "game_integrated": false
+      },
+      "latest_production_evidence": {
+        "event_id": "fmpl-water-purifier-pipe-camera-42722511833-1",
+        "blend_sha256": "5d03419b7861278ed21f89cb08686d79d5ebb80d886d42ed265d866ea7f08c30",
+        "glb_sha256": "394b88e22c3f2deddd18c9e13578a1c4fdc892e1015fb7a0df6a80cb8e1e0868",
+        "model_meshes": 50,
+        "process_meshes": 136,
+        "model_space_connections": "±X 1.5 / Y0 / Z.36",
+        "native_fluidbox_verified": false,
+        "camera": "45deg zero-azimuth orthographic single-view",
+        "static_sizes": [
+          64,
+          128,
+          256
+        ],
+        "pack_run": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42722511833",
+        "artifact_id": 13720187552,
         "owner_approved": false,
         "game_integrated": false
       }
@@ -554,7 +573,8 @@
     "game-sprites-installed-with-specific-native-checks",
     "runner-two-of-four-goals-verified-not-accepted",
     "four-goal-runner-candidate-unapproved",
-    "process-pbr-technically-verified-unapproved"
+    "process-pbr-technically-verified-unapproved",
+    "fixed-camera-grid-pipe-fit-technically-verified-unapproved"
   ],
   "policy": {
     "no_unreviewed_promotion": true,
