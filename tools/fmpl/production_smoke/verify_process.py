@@ -96,6 +96,11 @@ def main():
     refs=[col for col in bpy.data.collections if col.name.startswith("FMPL QA reference |")]
     if len(refs)!=2 or any(o is not None and o.type=="MESH" and not o.hide_render for col in refs for o in col.all_objects):
         raise RuntimeError("Calibrated reference must be retained but not drawn")
+    extras=[o for o in scene.objects if o.type=="MESH" and
+            not o.name.startswith("MH7_") and
+            not o.name.startswith("FMPL_PROCESS |")]
+    if any(not o.hide_render for o in extras) or scene.use_nodes:
+        raise RuntimeError("Nonproduction meshes or source compositor would destroy RGBA transparency")
     intended=report["source_parts_rendered"]+len(process)
     source_count=len(originals)
     # Verify actual GLB imports independently; no reference guides are allowed.

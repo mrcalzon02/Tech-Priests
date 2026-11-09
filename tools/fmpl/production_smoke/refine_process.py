@@ -360,7 +360,7 @@ def main():
     torus(col,"pump inspection seal ring",(-.92,-.79,.61),.205,.031,brass,axis="X")
     cyl(col,"pump drive casing",(-1.11,-.50,.61),.13,.35,dark,axis="Y")
     # Two actual cartridge houses, each braced to the foundation and removable.
-    for i,(x,y,fluid) in enumerate(((-1.11,-.45,amber),(-.84,-.59,teal)),1):
+    for i,(x,y,fluid) in enumerate(((-.92,-1.00,amber),(-.50,-1.03,teal)),1):
         block(col,"filter %d replaceable lower shoe"%i,(x,y,.51),
               (.34,.34,.11),iron,.014)
         cyl(col,"filter %d cartridge body"%i,(x,y,1.04),.145,.91,iron)
@@ -380,11 +380,11 @@ def main():
     open_hollow_tube(col,"dirty inlet fluid seen through glass",
                (-1.42,-.78,.36),(-1.27,-.78,.36),.076,amber)
     pipe_route(col,"pump to first vertical filter",
-       [(-1.12,-.63,.61),(-1.11,-.45,.67)],.091,iron,brass)
+       [(-1.12,-.63,.61),(-.92,-1.00,.67)],.091,iron,brass)
     pipe_route(col,"first filter to second filter",
-       [(-1.11,-.45,1.55),(-.84,-.59,.71)],.075,steel,brass)
+       [(-.92,-1.00,1.55),(-.50,-1.03,.71)],.075,steel,brass)
     pipe_route(col,"second filter to central treatment inlet",
-       [(-.84,-.59,1.55),(-.68,-.33,1.90)],.079,steel,brass)
+       [(-.50,-1.03,1.55),(-.40,-.53,1.90)],.079,steel,brass)
     pipe_route(col,"treated chamber to clean water outlet",
        [(.69,-.18,.79),(.99,-.62,.48),(1.45,-.62,.36)],
        .109,iron,steel)
@@ -415,6 +415,19 @@ def main():
         cloud.keyframe_insert(data_path="scale",frame=25)
         cloud.scale=(.16,.16,.16)
         cloud.keyframe_insert(data_path="scale",frame=49)
+    # The historical scene includes staging/ground meshes whose opaque gray
+    # render defeated alpha atlas packing despite film_transparent=True.
+    # Only the authored machine and its hidden calibration fixtures belong in
+    # production; unrelated environment geometry stays intact but is hidden.
+    hidden_environment=[]
+    for obj in scene.objects:
+        if (obj.type=="MESH" and
+            not obj.name.startswith("MH7_") and
+            not obj.name.startswith("FMPL_PROCESS |")):
+            obj.hide_render=True
+            hidden_environment.append(obj.name)
+    scene.use_nodes=False
+    scene.render.film_transparent=True
     if hash_original_meshes(originals)!=base_hash:
         raise RuntimeError("Original Water Purifier mesh transforms or source geometry changed")
     parts=[o for o in col.objects if o.type=="MESH"]
@@ -466,6 +479,8 @@ def main():
       "process_meshes_added":len(parts),
       "process_bounds":bounds,
       "source_parts_rendered":len(export)-len(parts),
+      "nonproduction_environment_meshes_hidden":hidden_environment,
+      "compositor_disabled_for_transparent_alpha":True,
       "materials_from_fmpl":["ferrocrete","ferrocrete_light","ferrocrete_dark",
           "machine_steel","iron","brass","martian_red","gunmetal_dark","glass"],
       "foundation_language":"poured structural concrete plinth, paver service apron, visible steel anchors",
