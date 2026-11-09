@@ -114,3 +114,7 @@ The `greebles/native_bridge` directory holds a pinned, read-only Blender 5.0 bin
 ## FMPL v0.3.1 camera and pipe-coupling correction
 
 Fixed (nonrotating) machinery now exports one actual boiler-derived 45-degree/zero-azimuth orthographic camera. The Water Purifier has two model-grid-centred exposed mouths at X±1.5/Y0, not arbitrary offsets, using copied canonical hollow collar/throat meshes with bolted seats and cast reducing manifolds. Four directional views are reserved for rotatable prototypes only. Native Lua pipe-cell positions still require the actual entity prototype and real Factorio validation. See [PROCESS_MACHINERY_STANDARD.md](PROCESS_MACHINERY_STANDARD.md).
+
+## Required view and camera discipline (FMPL v0.4.0)
+
+The single authority is [CAMERA_CAPTURE_STANDARD.md](CAMERA_CAPTURE_STANDARD.md). Entities render from one fixed 45-degree orthographic camera with four object rotations; items render exactly one icon frame. Temporary inspection cameras are discarded in-memory before saving and cannot appear as alternate outputs. The production render worker saves a one-camera derivative and records the removed legacy camera names without changing the input scene on disk. The Greebles visual index now also uses one canonical icon-view render per part.

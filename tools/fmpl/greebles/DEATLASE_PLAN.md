@@ -37,7 +37,7 @@ For a deliberate full pass, invoke `run_batches.py` with `--batch-size 8 --batch
 
 ## Stage 2 — visual identification and component grouping (not yet executed)
 
-- Render contact sheets with at least two view angles and known orthographic framing; retain in-chat visual proof before calling a visual model pass accepted.
+- Render one canonical grid-aligned 45-degree icon view per extracted candidate, with no front/rear or oblique render; only contact sheets of these approved stills are allowed. Keep direct visual proof before claiming acceptance.
 - Label real surface forms and separate *visible geometry* from unsupported decorative noise.
 - Detect mesh islands, shared material dependencies, parenting and mixed assemblies. **Do not automatically split disconnected islands:** bolts plus a panel may be a single useful module.
 - Record mesh name, part-source hash, rendering, topology bounds, material, source transform, semantic tag, likely attachment surface, visibility and licensing status. Preserve raw previews and source references.

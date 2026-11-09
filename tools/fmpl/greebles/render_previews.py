@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Blender 5.x two-view low-cost diagnostic previews of geometry-only candidates.
+"""Blender 5.x SINGLE canonical 45-degree item preview of geometry-only candidates.
 
 Not production sprites; no source materials or donor files are modified.
 Run with blender --background --factory-startup --python render_previews.py -- --root PRIVATE_PARTS --limit 8
@@ -12,7 +12,9 @@ import sys
 from pathlib import Path
 
 import bpy
-from mathutils import Vector
+FMPL = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(FMPL))
+from blender_camera_guard import install_canonical_camera, assert_clean
 
 
 def args_from_blender():
@@ -50,15 +52,15 @@ def setup_scene():
         bsdf.inputs['Base Color'].default_value=(0.52,0.56,0.58,1)
         bsdf.inputs['Metallic'].default_value=0.18
         bsdf.inputs['Roughness'].default_value=0.63
-    camera_data=bpy.data.cameras.new('FMPL_diagnostic_camera')
-    camera=bpy.data.objects.new('FMPL_diagnostic_camera',camera_data)
-    scene.collection.objects.link(camera)
-    scene.camera=camera
-    camera.data.type='ORTHO'
-    camera.location=(4.5,-5.2,5)
-    direction=Vector((0,0,0))-camera.location
-    camera.rotation_euler=direction.to_track_quat('-Z','Y').to_euler()
-    camera.data.ortho_scale=2.5
+    # Exactly one production-view icon camera; never write closeup/rear rigs.
+    capture = {
+        'capture_kind':'item', 'camera_policy':'fmpl.factorio45.v1',
+        'directions':[0], 'states':{'icon':[0]}, 'source_size':256,
+        'camera_override':{'type':'ORTHO','elevation_deg':45,'azimuth_deg':0,
+                           'distance':7.0,'target':[0,0,0],'ortho_scale':2.5}
+    }
+    install_canonical_camera(scene, capture, bpy)
+    assert_clean(scene, capture, bpy)
     for name,location,energy,size in [
         ('key',(1.0,-3.0,4.0),600,3.0),
         ('fill',(-3.0,2.0,3.0),350,4.0)]:
@@ -115,13 +117,13 @@ def main():
         mid=[(mins[i]+maxs[i])*0.5 for i in range(3)]
         obj.location=tuple(-mid[i]*obj.scale[i] for i in range(3))
         obj.rotation_mode='XYZ'
-        for suffix,yaw in [('front',0.0),('rear',math.pi)]:
-            png=previews/(data['id']+'_'+suffix+'.png')
-            if png.exists() and not a.overwrite:continue
-            obj.rotation_euler[2]=yaw
+        png=previews/(data['id']+'_icon.png')
+        if not png.exists() or a.overwrite:
+            obj.rotation_euler[2]=0.0
+            assert_clean(scene, capture, bpy)
             scene.render.filepath=str(png)
             bpy.ops.render.render(write_still=True)
-            print('FMPL_GREEBLE_PREVIEW',str(png),flush=True)
+            print('FMPL_GREEBLE_SINGLE_ICON_PREVIEW',str(png),flush=True)
         bpy.data.objects.remove(obj,do_unlink=True)
     print('FMPL_PREVIEW_BATCH_COMPLETE',json.dumps({'parts':len(chosen),'engine':engine}),flush=True)
 

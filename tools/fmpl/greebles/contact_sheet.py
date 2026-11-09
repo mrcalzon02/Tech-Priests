@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assemble private two-view diagnostic greeble previews into labeled review pages.
+"""Arrange canonical single-view Factorio 45deg item previews into labeled review pages.
 Requires Pillow in the local runner environment. Never claims semantic recognition.
 """
 import argparse
@@ -23,34 +23,30 @@ def main():
     entries=[]
     for file in sorted(root.glob('parts/*/receipt.json')):
         data=json.loads(file.read_text(encoding='utf-8'))
-        front=root/'previews'/(data['id']+'_front.png')
-        rear=root/'previews'/(data['id']+'_rear.png')
-        if front.is_file() and rear.is_file():
-            entries.append((data,front,rear))
+        icon=root/'previews'/(data['id']+'_icon.png')
+        if icon.is_file():
+            entries.append((data,icon))
     if not entries:
-        raise SystemExit('No paired previews yet; render previews before classification')
+        raise SystemExit('No canonical 45-degree icon previews yet; render single-view previews first')
     target=root/'contact_sheets'
     target.mkdir(parents=True,exist_ok=True)
-    cell_width=560
-    cell_height=338
+    cell_width=300
+    cell_height=332
     page_size=a.columns*a.rows
     font=ImageFont.load_default()
     for n,start in enumerate(range(0,len(entries),page_size),1):
         data=entries[start:start+page_size]
         sheet=Image.new('RGB',(a.columns*cell_width,a.rows*cell_height),(35,38,40))
         draw=ImageDraw.Draw(sheet)
-        for index,(record,front,rear) in enumerate(data):
+        for index,(record,icon) in enumerate(data):
             x=(index%a.columns)*cell_width
             y=(index//a.columns)*cell_height
-            with Image.open(front) as f,Image.open(rear) as r:
-                f=f.convert('RGBA').resize((256,256))
-                r=r.convert('RGBA').resize((256,256))
-                sheet.paste(f,(x+12,y+44),f)
-                sheet.paste(r,(x+276,y+44),r)
+            with Image.open(icon) as source_image:
+                single=source_image.convert('RGBA').resize((256,256))
+                sheet.paste(single,(x+22,y+44),single)
             draw.text((x+12,y+8),record['id'],fill=(240,240,240),font=font)
             draw.text((x+12,y+25),'Source: '+record['source_object']+'  |  UNCLASSIFIED',fill=(190,190,190),font=font)
-            draw.text((x+12,y+308),'Front',fill=(225,225,225),font=font)
-            draw.text((x+276,y+308),'Rear',fill=(225,225,225),font=font)
+            draw.text((x+22,y+308),'Canonical 45 degree icon view',fill=(225,225,225),font=font)
         out=target/f'greebles_contact_{n:03d}.png'
         sheet.save(out)
         print('FMPL_CONTACT_SHEET',out,flush=True)
