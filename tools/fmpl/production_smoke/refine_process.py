@@ -240,6 +240,132 @@ def full_bounds(objects):
     return {"min":lows,"max":highs}
 
 
+
+def canonical_machine_ports(scene,collection,iron,steel,brass,foundation):
+    """Adopt the exact local Blender reference's full-size machine throat/collar.
+
+    Both source fittings are duplicated, not stretched. The source fixture and
+    adjacent pipe remain hidden for review. The large 0.57/0.49 bore and 0.68
+    collar are reused at the actual square-grid 3x3 side boundary.
+    """
+    bpy.context.view_layer.update()
+    out=[]
+    for role,center,facing,side in (
+        ("raw-water-in",(-1.5,0.0,.36),"W",-1),
+        ("purified-water-out",(1.5,0.0,.36),"E",1),
+    ):
+        groups=[c for c in bpy.data.collections
+            if c.name.startswith("FMPL QA reference | "+role)]
+        if len(groups)!=1:
+            raise RuntimeError("Missing verified complete fluid reference for "+role)
+        group=groups[0]
+        socket=[o for o in group.all_objects if o is not None
+            and o.get("interface_role")=="socket_marker"]
+        if len(socket)!=1:
+            raise RuntimeError("Missing native model-space joint marker: "+role)
+        actual=tuple(float(v) for v in socket[0].matrix_world.translation)
+        error=max(abs(actual[i]-center[i]) for i in range(3))
+        if error>1e-5:
+            raise RuntimeError("Port not centered on cardinal 3x3 tile edge: "+role)
+        installed=[]
+        for part_role in ("machine_collar","machine_throat"):
+            originals=[o for o in group.all_objects if o is not None
+                and o.get("interface_role")==part_role and o.type=="MESH"]
+            if len(originals)!=1:
+                raise RuntimeError("Expected one canonical mesh for "+part_role)
+            source=originals[0]
+            matrix=source.matrix_world.copy()
+            clone=source.copy()
+            clone.data=source.data.copy()
+            clone.parent=None
+            collection.objects.link(clone)
+            clone.matrix_world=matrix
+            clone.hide_render=False
+            clone.hide_viewport=False
+            clone.name=name_of(role+" / reusable "+part_role.replace("_"," "))
+            clone.data.materials.clear()
+            clone.data.materials.append(steel if part_role=="machine_collar" else iron)
+            if "interface_role" in clone: del clone["interface_role"]
+            clone["fmpl_reference_provenance"]="factorio-fluid-interface-v1"
+            clone["fmpl_process_role"]="dimension-matched "+part_role
+            clone["nominal_barrel_outer_diameter_tiles"]=.57
+            clone["nominal_open_bore_diameter_tiles"]=.49
+            clone["nominal_collar_outer_diameter_tiles"]=.68
+            installed.append(clone)
+        # Boiler-pattern mechanical flange fixation, not a brass-only ring.
+        # Fastener placement stays within the source's full-radius collar.
+        for i in range(8):
+            theta=i*math.tau/8
+            y=.292*math.cos(theta)
+            z=.36+.292*math.sin(theta)
+            cyl(collection,role+" / actual flange bolt %02d"%i,
+                (side*1.461,y,z),.026,.040,brass,axis="X",vertices=12)
+        block(collection,role+" / cast footing", (side*1.19,0,.29),
+              (.24,.40,.17),foundation,.014)
+        block(collection,role+" / braced manifold shoe", (side*1.23,0,.43),
+              (.11,.18,.18),iron,.013)
+        out.append({"role":role,"facing":facing,"joint_model_xyz":list(actual),
+             "boundary_x":float(side)*1.5,"joint_ground_y":0.0,
+             "machine_meshes":[o.name for o in installed],
+             "boiler_style_fasteners":8,"full_bore":.49,
+             "collar_outer_diameter":.68,
+             "model_alignment_error_tiles":error,
+             "native_factorio_pipe_cell_verified":False})
+    return out
+
+
+def cast_reducing_manifold(collection,label,start,end,outer_a,outer_b,material,
+                           face_normal_at_start=None,face_normal_at_end=None):
+    """Hollow taper from exact 0.57 OD/0.49 ID pipe throat into machine housing.
+
+    Both ends are genuinely open. Its first/last ring may be oriented to match
+    the canonical mounting plane, rather than approximating a flange with a
+    free-floating torus. Each ring has 64 divisions.
+    """
+    first,last=Vector(start),Vector(end)
+    travel=(last-first).normalized()
+    if (last-first).length<.12:
+        raise RuntimeError("Degenerate reducing manifold")
+    normals=[
+        Vector(face_normal_at_start) if face_normal_at_start else travel,
+        Vector(face_normal_at_end) if face_normal_at_end else travel
+    ]
+    faces=[]
+    verts=[]
+    n=64
+    # The radius ratios follow the same 0.49/0.57 annulus of the boiler's
+    # fully open pipe and preserve that bore at the external machine mouth.
+    for channel in (0,1):
+        for idx,(c,outer) in enumerate(((first,outer_a),(last,outer_b))):
+            normal=normals[idx].normalized()
+            across=normal.cross(Vector((0,0,1)))
+            if across.length<1e-5:
+                across=normal.cross(Vector((0,1,0)))
+            across.normalize()
+            upward=normal.cross(across).normalized()
+            radius=outer*(1.0 if channel==0 else (.49/.57))
+            for i in range(n):
+                angle=math.tau*i/n
+                v=c+radius*(across*math.cos(angle)+upward*math.sin(angle))
+                verts.append(tuple(v))
+    for i in range(n):
+        j=(i+1)%n
+        faces.extend(((i,j,n+j,n+i),
+                      (2*n+i,3*n+i,3*n+j,2*n+j),
+                      (i,2*n+i,2*n+j,j),
+                      (n+i,n+j,3*n+j,3*n+i)))
+    mesh=bpy.data.meshes.new(name_of(label)+" sealed wall")
+    mesh.from_pydata(verts,[],faces)
+    mesh.update()
+    obj=bpy.data.objects.new(name_of(label),mesh)
+    collection.objects.link(obj)
+    mesh.materials.append(material)
+    obj["fmpl_process_role"]="hollow cast bore reducer, physical pipe-to-pump contact"
+    obj["nominal_input_bore_diameter_tiles"]=2*outer_a*.49/.57
+    obj["nominal_output_bore_diameter_tiles"]=2*outer_b*.49/.57
+    return obj
+
+
 def main():
     parser=argparse.ArgumentParser()
     for param in ("input","fmpl-root","out","glb","report","idle-preview","active-preview"):
@@ -304,7 +430,8 @@ def main():
     old_replaced=("MH7_central sealed purifier vessel",
                   "MH7_domed vessel neck","MH7_vessel crown",
                   "MH7_replaceable filter cartridge",
-                  "MH7_filter retaining bracket","MH7_filter cartridge collar")
+                  "MH7_filter retaining bracket","MH7_filter cartridge collar",
+                  "MH7_raw_water_input_mouth","MH7_purified_water_output_mouth")
     for o in originals:
         if any(o.name.startswith(prefix) for prefix in old_replaced):
             o.hide_render=True
@@ -371,32 +498,41 @@ def main():
               (.09,.08,1.03),steel,.009)
         cyl(col,"filter %d vertical cartridge pressure crown"%i,
             (x,y,1.55),.18,.12,red)
-    # Model-space input/output planes follow the PREEXISTING 3x3 prototype
-    # geometry. They remain independent of native Lua pipe-connection cells.
-    raw=[(-1.48,-.78,.36),(-1.24,-.78,.36),(-1.12,-.78,.61)]
-    pipe_route(col,"raw water inlet to pump",raw,.113,iron,steel)
+    # The 3x3 model has no current native water-purifier fluidbox prototype.
+    # Model both mouth planes on actual GRID-ALIGNED centre edges X +/- 1.5,
+    # Y=0; native Factorio pipe-cell testing remains a separate release gate.
+    factory_ports=canonical_machine_ports(scene,col,iron,steel,brass,foundation)
+    # Do not substitute small tubes or a decorative brass ring for the
+    # identical full-size 0.57 OD / 0.49 bore boiler/condenser interface.
+    # Cast reduction begins at the canonical throat's INNER face.
+    cast_reducing_manifold(col,"raw inlet cast receiving manifold",
+        (-1.21,0,.36),(-1.12,-.51,.61),.285,.13,iron,
+        face_normal_at_start=(1,0,0))
+    pipe_route(col,"manifold to mounted intake pump",
+        [(-1.12,-.51,.61),(-1.12,-.79,.61)],.13,iron,steel)
     open_hollow_tube(col,"dirty inlet visible sight glass",
-               (-1.42,-.78,.36),(-1.27,-.78,.36),.115,glass)
+        (-1.12,-.27,.50),(-1.12,-.42,.57),.135,glass)
     open_hollow_tube(col,"dirty inlet fluid seen through glass",
-               (-1.42,-.78,.36),(-1.27,-.78,.36),.076,amber)
+        (-1.12,-.27,.50),(-1.12,-.42,.57),.086,amber)
     pipe_route(col,"pump to first vertical filter",
-       [(-1.12,-.63,.61),(-.92,-1.00,.67)],.091,iron,brass)
+        [(-1.12,-.63,.61),(-.92,-1.00,.67)],.091,iron,brass)
     pipe_route(col,"first filter to second filter",
-       [(-.92,-1.00,1.55),(-.50,-1.03,.71)],.075,steel,brass)
+        [(-.92,-1.00,1.55),(-.50,-1.03,.71)],.075,steel,brass)
     pipe_route(col,"second filter to central treatment inlet",
-       [(-.50,-1.03,1.55),(-.40,-.53,1.90)],.079,steel,brass)
-    pipe_route(col,"treated chamber to clean water outlet",
-       [(.69,-.18,.79),(.99,-.62,.48),(1.45,-.62,.36)],
-       .109,iron,steel)
+        [(-.50,-1.03,1.55),(-.40,-.53,1.90)],.079,steel,brass)
+    pipe_route(col,"treatment outlet to clean discharge reducer",
+        [(.69,-.18,.79),(.88,-.18,.66)],.13,iron,steel)
+    cast_reducing_manifold(col,"clarified water outlet casting",
+        (.88,-.18,.66),(1.21,0,.36),.13,.285,iron,
+        face_normal_at_end=(1,0,0))
     open_hollow_tube(col,"clean discharge visible sight glass",
-       (1.12,-.62,.43),(1.36,-.62,.383),.115,glass)
+        (.96,-.135,.59),(1.10,-.053,.48),.135,glass)
     open_hollow_tube(col,"clarified water seen at discharge",
-       (1.12,-.62,.43),(1.36,-.62,.383),.076,teal)
-    for i,(position,axis) in enumerate((
-        ((-1.30,-.78,.36),"X"),((1.29,-.62,.386),"X")),1):
-        cyl(col,"sight glass bolted pressure adapter %d"%i,
-            position,.152,.053,brass,axis)
-    # Thermal outlet, check valve and pressure relief: physically seated on the
+        (.96,-.135,.59),(1.10,-.053,.48),.086,teal)
+    for i,(pos,axis) in enumerate((
+        ((-1.12,-.31,.51),"Y"),((1.04,-.09,.52),"X")),1):
+        cyl(col,"sight glass pressure connector %d"%i,
+            pos,.165,.051,steel,axis)    # Thermal outlet, check valve and pressure relief: physically seated on the
     # upper rear side of treatment vessel; steam originates at actual nozzle.
     pipe_route(col,"pressure relief to exhaust elbow",
         [(.61,.48,2.35),(.94,.60,2.55),(.94,.60,2.77)],
@@ -479,6 +615,12 @@ def main():
       "process_meshes_added":len(parts),
       "process_bounds":bounds,
       "source_parts_rendered":len(export)-len(parts),
+      "canonical_pipe_interfaces":factory_ports,
+      "external_pipe_bore_diameter":.49,
+      "external_pipe_collar_diameter":.68,
+      "grid_aligned_model_ports":True,
+      "native_water_purifier_prototype_present":False,
+      "camera_model_direction_count":1,
       "nonproduction_environment_meshes_hidden":hidden_environment,
       "compositor_disabled_for_transparent_alpha":True,
       "materials_from_fmpl":["ferrocrete","ferrocrete_light","ferrocrete_dark",
