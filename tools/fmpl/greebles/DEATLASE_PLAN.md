@@ -69,3 +69,7 @@ Failure to build or import Blender sources blocks *this asset step*. Appearance,
 ## Pending independently supplied tank geometry
 
 A separate near-vanilla tank model was mentioned but no asset URL or file bytes are present in this conversation. Record it as an **unresolved donor**, not Wube-authored. When its exact file is available: preserve source, inspect license, detect native mesh/rig/texture state, then perform the same measured bounded extraction independently of the Greebles scene. Do not infer or fabricate its URI.
+
+## Internal workspace execution checkpoint — 2026-11-09
+
+All 320 source meshes were parsed and actually exported to per-object OBJ and GLB files using the pinned Blender 5.0 native-file binary bridge in `native_bridge`. Each interchange has a SHA-256 receipt; every GLB received geometry readback; full independent audit reports no errors. Two-angle previews exist for all 320 candidates (16 contact sheets, 80 appearance-only labels). This is a stored-mesh geometry extraction, not Blender-evaluated modifiers, rigging, or native standalone `.blend` exports. Native Blender reopen and Factorio-specific fit acceptance remain pending. No binaries/workflows were added to Git.

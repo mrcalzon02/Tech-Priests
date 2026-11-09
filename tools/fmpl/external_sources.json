@@ -45,7 +45,7 @@
       "rights": "third-party",
       "license_evidence": null,
       "source_medium": "mixed-owner-preview-sprites",
-      "scope": "Mixed third-party mod graphics licenses; review item credits and license before reproduction. The \u03a8 3D models folder contains PNGs and text links, not original editable 3D donor files.",
+      "scope": "Mixed third-party mod graphics licenses; review item credits and license before reproduction. The Ψ 3D models folder contains PNGs and text links, not original editable 3D donor files.",
       "approved_for_3d_import": false,
       "approved_for_redistribution": false,
       "pinned_revision": "1207acbfd49aa577142f1a03b7851112f8981b99"
@@ -118,6 +118,23 @@
       "scope": "Verify each downloadable STL model file and individual license. Print-ready physical objects are not source-ready animated Blender production models.",
       "approved_for_3d_import": false,
       "approved_for_redistribution": false
+    },
+    {
+      "source_id": "user-tank-chaffe-3d-model",
+      "origin": "user-supplied-archive",
+      "title": "factorio-tank-chaffe.zip — independent Blender tank donor",
+      "source_uri": "conversation-upload:factorio-tank-chaffe.zip",
+      "state": "private-source-intake",
+      "rights": "third-party-provenance-not-established",
+      "license_evidence": null,
+      "source_medium": "Blender-3.03-3D-plus-PBR-textures",
+      "archive_sha256": "bfe43e3d966ba06a1292b2b7773a5a3860777e7babb8a25f5c7a956e47df0c6d",
+      "internal_blend_sha256": "089be701826edb7fe212e06bd75bf2040a6db29e32e7d9a08918e6f16253cf42",
+      "mesh_datablocks": 87,
+      "object_datablocks": 98,
+      "approved_for_redistribution": false,
+      "approved_for_fmpl_3d_module_promotion": false,
+      "scope": "Source audit only; 16 PNG textures and no embedded license. Not Wube authored. Attribution and editing rights unresolved."
     }
   ],
   "third_party_website_queue": [
@@ -134,8 +151,9 @@
       "source_id": "near-vanilla-tank-model-unresolved",
       "description": "User-mentioned near-production-ready non-Wube tank 3D donor",
       "source_uri": null,
-      "status": "awaiting-exact-file-or-link",
-      "policy": "Do not guess source or rights; preserve attribution and assess provenance before decomposition."
+      "status": "archive-received-native-source-audited-license-not-established",
+      "policy": "Do not guess source or rights; preserve attribution and assess provenance before decomposition.",
+      "exact_source_id": "user-tank-chaffe-3d-model"
     }
   ]
 }

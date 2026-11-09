@@ -102,3 +102,7 @@ added to Git.
 ## Process machinery foundation and flow standard (v0.3.0)
 
 See [PROCESS_MACHINERY_STANDARD.md](PROCESS_MACHINERY_STANDARD.md). Actual modeled parts, glass agitator, steam keys, concrete and service-paving PBR, real inlet-to-outlet connections and independent native/GLB validation now have standalone scripts under production_smoke. Approval requires actual runner evidence and visual review; the original machine and Factorio prototypes are immutable.
+
+## Native-geometry fallback bridge (workspace exercised)
+
+The `greebles/native_bridge` directory holds a pinned, read-only Blender 5.0 binary geometry extractor and OBJ/GLB verifier, exercised against the private Drive source in an internal workspace: 320 meshes, 2,828,171 vertices and 5,610,509 original polygons. The companion private geometry package has receipts, GLB readbacks, 640 geometry previews and 16 contact sheets. No private source or extracted binary is publicly committed. Native Blender `.blend` conversion/reopen and native Factorio port integration are still separate gates. The independently supplied `factorio-tank-chaffe.zip` is now indexed but its redistribution rights are unresolved.

@@ -1,0 +1,23 @@
+{
+  "schema": "fmpl.greebles.extraction-audit.v1",
+  "source_original_sha256": "b7938b171edc0bf1e3daeb410029b0f5978a65df34b466fdd0fe209a71848123",
+  "source_decompressed_sha256": "d46d896a146792eadad0a8822a3fc7eb311c6557bd154652ce1dfe7523ebcdc1",
+  "expected_objects": 320,
+  "found_objects": 320,
+  "validation": "Independent file hash reread for every GLB/OBJ, manifest crosscheck, and no extra receipts",
+  "geometry_totals": {
+    "objects": 320,
+    "vertices": 2828171,
+    "polygons": 5610509,
+    "triangles": 5646243
+  },
+  "individual_obj_glb_payload_bytes": 296356983,
+  "errors": [],
+  "status": "passed-interchange-only",
+  "native_blend_files": "not generated; Blender required",
+  "placeholder_materials": "excluded from each interchange",
+  "asset_promotion": "candidates only; visual/fit/native Blender checks pending",
+  "visual_previews": 640,
+  "contact_sheets": 16,
+  "provisional_appearance_labels": 80
+}

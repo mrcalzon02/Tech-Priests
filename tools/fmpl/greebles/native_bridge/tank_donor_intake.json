@@ -1,0 +1,31 @@
+{
+  "source_archive": "factorio-tank-chaffe.zip",
+  "archive_bytes": 129436563,
+  "source_contribution": "user-supplied; not claimed Wube authored",
+  "status": "source-intake-pending-license-and-native-reopen",
+  "files": 17,
+  "blend_files": [
+    {
+      "name": "source/Sketchfab_2022_10_10_15_32_07.blend",
+      "size_bytes": 82209129
+    }
+  ],
+  "texture_png_count": 16,
+  "contains_license_or_rights_document": false,
+  "blend_header": "(\u00b5/\u00fd\u00a0\u00f4\u0004\u0001\u0000\u00152\u0002\u001e'\u00c4\u00ad\rV0\u00d0",
+  "redistribution": "not approved without confirming file-level license and attribution",
+  "next_stage": "inspect internal mesh/rig hierarchy, compare Factorio scale, then physicalize approved geometry",
+  "archive_sha256": "bfe43e3d966ba06a1292b2b7773a5a3860777e7babb8a25f5c7a956e47df0c6d",
+  "internal_compressed_blend_sha256": "089be701826edb7fe212e06bd75bf2040a6db29e32e7d9a08918e6f16253cf42",
+  "source_file_format": "Zstd compressed Blender 3.03",
+  "decompressed_blend_bytes": 86674888,
+  "native_blender_datablocks_read_only": {
+    "objects": 98,
+    "meshes": 87,
+    "materials": 7,
+    "images": 22,
+    "curves": 6,
+    "collections": 3
+  },
+  "native_import_or_visual_approval": "not performed"
+}
