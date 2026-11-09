@@ -64,7 +64,9 @@ def validate(root=None, check_files=False):
         root = Path(root).resolve()
         catalog = load_json(root / reg["material_catalog"])
         assert len(catalog["materials"]) == reg["inventory"]["materials"] == 23
-        assert len(catalog["candidates"]) == reg["inventory"]["bunker_component_candidates"] == 21
+        assert len(catalog["candidates"]) == reg["inventory"]["component_candidates_total"] == 39
+        assert sum(p["origin"].startswith("martian-heavy") for p in catalog["candidates"]) == reg["inventory"]["bunker_component_candidates"] == 21
+        assert reg["inventory"]["emergency_component_candidates"] == 18
         assert catalog["map_count"] == reg["inventory"]["pbr_maps"] == 69
         parts = load_json(root / reg["parts_registry"])
         assert len(parts.get("parts", [])) == reg["inventory"]["verified_shared_components"] == 0

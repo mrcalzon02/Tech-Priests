@@ -25,7 +25,8 @@ def validate(repo_root):
     assert len(set(map_paths)) == len(map_paths)
     for p in manifest["candidates"]:
         assert p["status"] == "candidate" and p["measured_anchors"] is None
-        assert (root / p["source_scene"]).is_file(), "missing native scene"
+        src = p.get("source_scene") or p.get("source_generator")
+        assert src and (root / src).is_file(), "missing source " + str(src)
     for donor in manifest["source_donors"]:
         assert (root / donor["path"]).is_file(), "missing donor: " + donor["path"]
     assert manifest["limits"]["verified_reusable_parts"] == 0
