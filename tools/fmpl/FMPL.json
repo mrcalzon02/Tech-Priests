@@ -205,29 +205,34 @@
     },
     {
       "id": "water-purifier-mh7",
-      "status": "runner-two-of-four-goals-verified-not-accepted",
+      "status": "four-goal-runner-candidate-unapproved",
       "source": {
         "repository": "mrcalzon02/HB-TTRPG-tools",
-        "ref": "5942590d944cd5aef03a973fdd941e03fd10d833",
+        "ref": "a953f083412c9e67481d31ebc8b5fb242cf0cf69",
         "path": "tools/refinery-agent/goal_water_purifier.py"
       },
       "evidence": [
         {
           "repository": "mrcalzon02/HB-TTRPG-tools",
-          "ref": "5942590d944cd5aef03a973fdd941e03fd10d833",
-          "path": ".github/workflows/homebrew-local-worker.yml",
-          "run_url": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42683235972",
+          "ref": "a953f083412c9e67481d31ebc8b5fb242cf0cf69",
+          "path": "tools/refinery-agent/goal_water_purifier.py",
+          "run_url": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42698350899",
           "checkpoint_goals": [
             "load_path",
-            "filter_pump_path"
-          ]
+            "filter_pump_path",
+            "pipe_interfaces",
+            "controls_service"
+          ],
+          "source_sha256": "3090f184375644a7a004f544c1a776e327e16ef44a3d7d6cab45794489bce80a",
+          "owner_approved": false,
+          "game_integrated": false
         }
       ],
       "footprint": [
         3,
         3
       ],
-      "purpose": "ongoing physically joined water purifier candidate on self-hosted runner; not game-ready"
+      "purpose": "Four-goal Qwen-guided Water Purifier candidate saved and independently GLB reimported; visual mechanical/PBR detail and native Factorio port mating still open"
     }
   ],
   "programs": [
@@ -396,7 +401,7 @@
       "kind": "inference",
       "source": {
         "repository": "mrcalzon02/HB-TTRPG-tools",
-        "ref": "5942590d944cd5aef03a973fdd941e03fd10d833",
+        "ref": "a953f083412c9e67481d31ebc8b5fb242cf0cf69",
         "path": "tools/refinery-agent/goal_water_purifier.py"
       },
       "purpose": "schema-validated local Qwen geometry with Blender ownership"
@@ -475,7 +480,7 @@
         "ref": "5942590d944cd5aef03a973fdd941e03fd10d833",
         "path": "tools/refinery-agent/goal_water_purifier.py"
       },
-      "status": "partial-water-purifier-pilot",
+      "status": "four-goal-water-purifier-construction-candidate-not-visually-approved",
       "gate": "inference suggestions are untrusted, independent human visual approval required"
     }
   ],
@@ -488,7 +493,8 @@
     "editable-reference-bound-candidate",
     "four-direction-sprite-export-candidate",
     "game-sprites-installed-with-specific-native-checks",
-    "runner-two-of-four-goals-verified-not-accepted"
+    "runner-two-of-four-goals-verified-not-accepted",
+    "four-goal-runner-candidate-unapproved"
   ],
   "policy": {
     "no_unreviewed_promotion": true,
