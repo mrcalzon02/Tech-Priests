@@ -146,7 +146,7 @@ def main():
         "direction_count":direction_count,
         "production_camera_count":1,
         "source_frame_bounds":bounds,"material_reconstruction":"Blender-packed source",
-        "checks":["exact source and master SHA","four cardinal frames","nonblank transparent alpha",
+        "checks":["exact source and master SHA","validated authored direction count and frame order","nonblank transparent alpha",
                   "no clipping","saved PNG dimensions","native Blender image composition"],
         "native_factorio_port_verified":False,
         "owner_visual_approval":False,"game_integrated":False,
