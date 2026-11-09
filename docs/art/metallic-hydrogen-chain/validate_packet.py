@@ -33,6 +33,19 @@ def main():
         for port in task['symbolic_fluid_ports']:
             assert port['native_position'] is None and port['model_mouth_center'] is None
             assert not port['verified']
+    lib = j.get('parts_library') or {}
+    assert lib.get('required') is True
+    assert lib.get('registry_template') == 'PARTS_REGISTRY_TEMPLATE.json'
+    assert lib.get('registry_target') == 'art/source-to-3d/shared-parts/metallic-hydrogen/registry.json'
+    assert 'reuse_or_adapt_only_compatible_components' in lib.get('reuse_cycle', [])
+    assert j['operating_constraints'].get('single_model_worker') is True
+    assert 'incremental_parts_library' in j['operating_constraints']
+    template = json.loads((here / lib['registry_template']).read_text(encoding='utf-8'))
+    assert template['schema'] == 'tech-priests.shared-blender-parts.v1'
+    assert template['parts'] == [] and template['instances_by_machine'] == {}
+    assert template['coordinate_system']['blender_units_per_tile'] == 1
+    assert (here / lib['instruction_document']).is_file()
+    assert len(j['required_final_artifacts']) >= 10
     board = here / 'references' / Path(j['reference']['path']).name
     assert board.is_file(), f'Missing exact reference image: {board}'
     actual = hashlib.sha256(board.read_bytes()).hexdigest()
@@ -40,7 +53,7 @@ def main():
     assert j['operating_constraints']['workflow_dispatch_authorized_by_this_packet'] is False
     assert j['operating_constraints']['prototype_modifications_authorized'] is False
     assert j['operating_constraints']['render_process_concurrency'] == 1
-    print('PACKET_VALID: seven distinct planning footprints, no fake native port positions, reference SHA256=' + actual)
+    print('PACKET_VALID: seven planning footprints; cumulative parts library defined with empty validated registry; no fabricated native ports; reference SHA256=' + actual)
     return 0
 
 if __name__ == '__main__':

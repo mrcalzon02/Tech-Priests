@@ -1,0 +1,16 @@
+{
+  "schema": "tech-priests.shared-blender-parts.v1",
+  "library_id": "tp-metallic-hydrogen-shared-components",
+  "source_of_truth": "Tech-Priests authored .blend/.py, native sources immutable; concept board only visual reference",
+  "coordinate_system": {
+    "unit": "Factorio tile",
+    "blender_units_per_tile": 1,
+    "axes": "+Z up; local +X/+Y in modeling grid; machine direction mapping must be measured",
+    "local_pivot": "explicit per part"
+  },
+  "parts_root": "art/source-to-3d/shared-parts/metallic-hydrogen/components/",
+  "validation_policy": "No verified entry without actual Blender source, hashed files, anchor measurements and independent reopen/import evidence",
+  "parts": [],
+  "instances_by_machine": {},
+  "last_checkpoint_sha256": null
+}

@@ -20,7 +20,8 @@
     "source_modification_policy": "Non-destructive; retain recovered original scenes; new revisions only",
     "progress": "checkpoint after each source save, GLB, render, QA; log local process, exact hashes, errors and next step",
     "hidden_geometry": "do not model unseen internals irrelevant to Factorio camera",
-    "labels_signs_text": "forbidden on every authored machine image or machine mesh"
+    "labels_signs_text": "forbidden on every authored machine image or machine mesh",
+    "incremental_parts_library": "mandatory cumulative registry; reusable source-backed parts after each completed machine; bounded extraction; no modification of earlier model revisions"
   },
   "reference": {
     "path": "docs/art/metallic-hydrogen-chain/references/metallic_hydrogen_seven_precursor_style_board.jpg",
@@ -395,8 +396,10 @@
   "stages": [
     "preflight",
     "source_census",
+    "initialize_shared_parts_library",
     "pilot_01",
     "sequential_02_to_07",
+    "harvest_verify_and_reuse_parts_sequentially",
     "independent_reopen_and_export",
     "visual_comparison",
     "checkpoint_and_handoff"
@@ -416,6 +419,44 @@
     "verified source image hash and model output hashes",
     "GLB roundtrip when possible; honest failure reason otherwise",
     "run-level atomic CHECKPOINT.json and real RESULTS.md",
-    "a seven-stage gallery composed from actual Blender renders, no substituted generated art"
-  ]
+    "a seven-stage gallery composed from actual Blender renders, no substituted generated art",
+    "cumulative shared-parts registry.json and source-backed Blender components with revision/provenance records",
+    "machine-to-part reuse lineage and clean-scene append/rebuild verification",
+    "real component thumbnails and per-machine library checkpoint SHA256"
+  ],
+  "parts_library": {
+    "required": true,
+    "instruction_document": "PARTS_LIBRARY_CONTRACT.md",
+    "registry_template": "PARTS_REGISTRY_TEMPLATE.json",
+    "registry_target": "art/source-to-3d/shared-parts/metallic-hydrogen/registry.json",
+    "parts_root": "art/source-to-3d/shared-parts/metallic-hydrogen/",
+    "staging_dir": "build/model-completion/metallic-hydrogen-chain/library-staging/",
+    "model_assembly_provenance_filename": "part_provenance.json",
+    "source_policy": "never overwrite or destroy existing native source/reusable masters; append/copy or new revision with derives_from",
+    "unmeasured_port_policy": "null/provisional; no fabricated Factorio native port coordinates or nonuniform scaling of mating fittings",
+    "promotion_gate": [
+      "real source and immutable source hash",
+      "explicit local origin dimensions and named anchors",
+      "one real machine usage",
+      "actual clean-scene Blender reopen/append/rebuild test",
+      "real preview and structural/contact QA",
+      "consumer provenance and revision tracking"
+    ],
+    "checkpoint_fields": [
+      "library_registry_sha256",
+      "last_verified_part_id",
+      "latest_part_revision",
+      "part_lineage_by_machine"
+    ],
+    "reuse_cycle": [
+      "inspect_existing_parts_before_each_machine",
+      "reuse_or_adapt_only_compatible_components",
+      "save_and_render_real_machine",
+      "extract_candidates",
+      "verify_and_promote_reusable_parts",
+      "record_machine_consumers_and_registry_hash"
+    ],
+    "minimum_validation": "bootstrap valid empty registry in stage 1, demonstrate one real reusable part if possible, independently reopen a registered part in a new Blender scene before final handoff",
+    "performance_policy": "limit extraction; do not let part harvesting replace actual seven-model construction"
+  }
 }
