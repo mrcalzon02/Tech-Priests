@@ -109,14 +109,16 @@ def main():
     root=Path(a.out).resolve()
     capture=json.loads((root/"capture.json").read_text(encoding="utf-8"))
     cfg=capture["config"]
-    if capture.get("schema")!=1 or len(cfg["directions"])!=4 or list(cfg["directions"])!=[0,90,180,270]:
-        raise RuntimeError("FMPL packer requires exact N/E/S/W authored capture")
+    rotations=list(cfg["directions"])
+    if capture.get("schema")!=1 or rotations not in ([0],[0,90,180,270]):
+        raise RuntimeError("FMPL packer requires single production angle 0, or explicitly opted-in four cardinal views")
+    direction_count=len(rotations)
     if cfg.get("states")!={"idle":[1]}:
         raise RuntimeError("FMPL smoke expected exactly one static idle frame")
     if sha(root/"master.blend") != capture["master_sha256"]:
         raise RuntimeError("Saved native master SHA mismatch")
     records=capture["frames"]
-    if len(records)!=4 or [(x["direction"],x["index"],x["timeline_frame"]) for x in records]!=[(d,0,1) for d in range(4)]:
+    if len(records)!=direction_count or [(x["direction"],x["index"],x["timeline_frame"]) for x in records]!=[(d,0,1) for d in range(direction_count)]:
         raise RuntimeError("Incorrect Blender frame order")
     source_size=cfg["source_size"]
     source=[]
@@ -135,12 +137,14 @@ def main():
         save_rgba(target,size,4*size,atlas(scaled,size))
         if not target.is_file() or target.stat().st_size<100:
             raise RuntimeError("Atlas image missing or empty")
-        rows=[{"direction":d,"rect":[0,d*size,size,size]} for d in range(4)]
+        rows=[{"direction":d,"rect":[0,d*size,size,size]} for d in range(direction_count)]
         sheets.append({"path":target.name,"sha256":sha(target),"cell_size":size,
-                       "direction_count":4,"frame_count":1,"dimensions":[size,4*size],"cells":rows})
+                       "direction_count":direction_count,"frame_count":1,"dimensions":[size,direction_count*size],"cells":rows})
     proof=root/"contact-sheet.png"
     save_rgba(proof,source_size*4,source_size,contact(source,source_size))
-    qa={"passed":True,"capture_count":4,"atlas_count":3,"sheets":sheets,
+    qa={"passed":True,"capture_count":direction_count,"atlas_count":3,"sheets":sheets,
+        "direction_count":direction_count,
+        "production_camera_count":1,
         "source_frame_bounds":bounds,"material_reconstruction":"Blender-packed source",
         "checks":["exact source and master SHA","four cardinal frames","nonblank transparent alpha",
                   "no clipping","saved PNG dimensions","native Blender image composition"],
@@ -148,7 +152,7 @@ def main():
         "owner_visual_approval":False,"game_integrated":False,
         "resampling":"nearest-neighbor; diagnostic static production candidate"}
     (root/"qa.json").write_text(json.dumps(qa,indent=2)+"\n",encoding="utf-8")
-    print("FMPL_NATIVE_ATLAS_PASS 4 real Blender frames, 3 RGBA atlases, no Pillow",flush=True)
+    print("FMPL_NATIVE_ATLAS_PASS "+str(direction_count)+" fixed-camera Blender frame(s), 3 RGBA atlases, no Pillow",flush=True)
 
 
 if __name__=="__main__":
