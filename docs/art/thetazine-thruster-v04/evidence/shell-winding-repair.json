@@ -1,0 +1,343 @@
+{
+  "status": "PASS_24_OUTWARD_CLOSED_SHELLS_EXACT_POSITIONS_UV_MATERIALS",
+  "script_sha256": "9dedfdeceaff8e0220e899c73dcac2d283b6d63b87e6191501d0f05f2f1c3a98",
+  "input_native_sha256": "a801a46fe96732599926e69d8b7818d978477a15e3c27682b7d9ea52c7a82494",
+  "parts": [
+    {
+      "mesh": "Nozzle articulated petal 00",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.08003772936007268,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "Nozzle articulated petal 01",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.08003773158382439,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "Nozzle articulated petal 02",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.08003772516856889,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "Nozzle articulated petal 03",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.08003774410992008,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "Nozzle articulated petal 04",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.08003773420819348,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "Nozzle articulated petal 05",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.0800377425302864,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "Nozzle articulated petal 06",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.08003773857598437,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "Nozzle articulated petal 07",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.08003773356086448,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "Nozzle articulated petal 08",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.08003773434885715,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "Nozzle articulated petal 09",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.08003773010775442,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "Nozzle articulated petal 10",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.08003773653271315,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "Nozzle articulated petal 11",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.08003772400459191,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 00",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.07598658097110124,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 01",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.0759865981696987,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 02",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.0759865994985579,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 03",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.07598661304684293,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 04",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.07598659313045993,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 05",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.07598661177863124,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 06",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.07598657665707835,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 07",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.07598658845850298,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 08",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.07598656708142122,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 09",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.0759865828121712,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 10",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.0759866271951777,
+      "vertices": 315,
+      "faces": 626
+    },
+    {
+      "mesh": "V04 interleaved containment seal 11",
+      "before": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 70
+      },
+      "after": {
+        "non_two_use_edges": 0,
+        "inconsistent_edges": 0
+      },
+      "positive_local_volume": 0.07598656941752811,
+      "vertices": 315,
+      "faces": 626
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "status": "RAW_GLB_GEOMETRY_UV_NORMAL_IMAGE_AUDIT_PASS",
   "failures": [],
-  "glb_sha256": "d656e07e2f722ebb33c8990349823b0ef1e2b03c0e3563df8bec6bbec08605ca",
+  "glb_sha256": "fa7ee3a5885a7e2bb0f65d27756b1326cbb42b84768a6ef084be1c6a2127c30a",
   "mesh_count": 3022,
   "triangle_count": 533304,
   "parts": [

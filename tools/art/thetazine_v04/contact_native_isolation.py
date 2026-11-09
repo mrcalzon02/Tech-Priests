@@ -1,0 +1,7 @@
+"""Preserve actual exhaust-layer screenshots with source/preparation provenance."""
+from PIL import Image,ImageDraw
+import pathlib,json,hashlib
+W=pathlib.Path(__file__).parent;R=W/'pilot-33';P=W/'native-review';src=P/'userdata/script-output/thetazine-v04-native/isolation';out=W.parents[1]/'outputs/thetazine-v04-exhaust-layer-isolation.png';names=['integrated','source-light','native-jet','smoke','vanilla'];panel=Image.new('RGB',(1500,1110),'#101317');d=ImageDraw.Draw(panel);records=[];sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+for i,name in enumerate(names):
+ p=src/f'{name}-338.png';im=Image.open(p).convert('RGB');assert im.size==(1100,1800);im=im.crop((300,0,800,1800));im.thumbnail((300,1080));panel.paste(im,(i*300,30));d.text((i*300+8,8),name,fill='white');records.append({'file':p.name,'sha256':sha(p)})
+panel.save(out);m=json.loads((R/'source-manifest.json').read_text());receipt={'status':'ACTUAL_NATIVE_LAYER_ISOLATION_REQUIRES_IMAGE_REVIEW','native_sha256':m['native_sha256'],'preparation_sha256':sha(P/'v04-preparation-receipt.json'),'screenshots':records,'panel_sha256':sha(out),'scope':'Actual isolated native screenshots: integrated, source body+light, native jet only with body, smoke only with body, unmodified vanilla control. No proprietary vanilla source sprites copied or published.'};(R/'native-layer-isolation.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8',newline='\n');print(out)

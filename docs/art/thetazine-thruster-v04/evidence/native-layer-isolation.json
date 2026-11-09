@@ -1,0 +1,29 @@
+{
+  "status": "ACTUAL_NATIVE_LAYER_ISOLATION_REQUIRES_IMAGE_REVIEW",
+  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "preparation_sha256": "aada43b941e55f0b04641058e99fcc5357a8f44a00ee37908d161da1742434b9",
+  "screenshots": [
+    {
+      "file": "integrated-338.png",
+      "sha256": "633955a2e56644278da7837f31bb33f55dd9d40ebde551de9157d69ca20e4b90"
+    },
+    {
+      "file": "source-light-338.png",
+      "sha256": "c652b409c03b0e0731571a7839febd397f82dd4b090e70a24daf37d470a60f7b"
+    },
+    {
+      "file": "native-jet-338.png",
+      "sha256": "c860f1c5ab031a978f2d29777a1852ba5b396f1ce212873bf56b9fb392d3b6a2"
+    },
+    {
+      "file": "smoke-338.png",
+      "sha256": "12a84bc04465eb04a70bd789ff4099e6ac506af574d31b5c983df30aa6be99f3"
+    },
+    {
+      "file": "vanilla-338.png",
+      "sha256": "f807a069fc9d8a948f07fba8fd38086b1eaf18a778ff973d1feb1208b0994dd9"
+    }
+  ],
+  "panel_sha256": "bee4afc10a181423782aabdcd60281cecbe3d76566d6031ed3684ac98935cd04",
+  "scope": "Actual isolated native screenshots: integrated, source body+light, native jet only with body, smoke only with body, unmodified vanilla control. No proprietary vanilla source sprites copied or published."
+}

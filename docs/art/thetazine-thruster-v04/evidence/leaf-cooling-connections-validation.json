@@ -1,0 +1,13 @@
+{
+  "status": "PASS_12_FOUR_PASS_LEAF_CIRCUITS_24_FLEX_LINKS_66_POSES",
+  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "circuits": 12,
+  "longitudinal_passes_per_leaf": 4,
+  "saddles": 144,
+  "flexible_links": 24,
+  "poses": 66,
+  "flex_endpoint_checks": 3168,
+  "static_leaf_port_checks": 1584,
+  "maximum_endpoint_error": 7.251217997429632e-07,
+  "scope": "Actual evaluated flexible mesh ring centers follow independent core/leaf socket frames; each four-pass pipe end is measured against the leaf port frame. Separate six-leaf fuel/water lanes. No coolant-flow/thermal/gameplay claim."
+}

@@ -1,0 +1,1472 @@
+{
+  "status": "COMPLETE_132_LAYER_PNGS_REQUIRES_PACKAGING_REVIEW",
+  "pid": 25888,
+  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "renderer_sha256": "781920c0dd797b06917fa229ae79a5af3130d053f3c84abc908b5a8ff95de40f",
+  "renderer": "Blender5.0.1 Eevee",
+  "target_pngs": 132,
+  "working_frames": 64,
+  "cell": [
+    512,
+    1280
+  ],
+  "frame_contract": "cold0, working1..64, wrap65,30fps",
+  "passes": {
+    "body": "Original PBR materials with both bell heat emission strengths forced to0; exhaust and underlay excluded.",
+    "heat-glow": "Actual authored bell emission maps and pose-specific source strengths on emission-only shaders; all other surfaces black occluders, no FX/fuel emission. Black nonemitting regions, body-coverage alpha; intended additive light layer."
+  },
+  "files": [
+    {
+      "frame": 0,
+      "pass": "body",
+      "file": "separated-body-heat/00-body.png",
+      "sha256": "33b6fb30ed9ce172c1c780dab4554a308b4902bac1560afa09df0e5a8ed15a46",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.0,
+        "V04 charred inner refractory heat": 0.0
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 0,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/00-heat-glow.png",
+      "sha256": "0fd659df7082ca63dd69598fd64905e79517da35dd9f7d34b32bf90829c15626",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.0,
+        "V04 charred inner refractory heat": 0.0
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 1,
+      "pass": "body",
+      "file": "separated-body-heat/01-body.png",
+      "sha256": "52fbef36f781e04c53207cf46abe712a12b3e3c34c968db0b7768d40cea99ca9",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6499999761581421,
+        "V04 charred inner refractory heat": 2.18399977684021
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 1,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/01-heat-glow.png",
+      "sha256": "ffcdf55617a8e1d17fa488acd5eec18c577aace1d691447e751f9a7fe987fc55",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6499999761581421,
+        "V04 charred inner refractory heat": 2.18399977684021
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 2,
+      "pass": "body",
+      "file": "separated-body-heat/02-body.png",
+      "sha256": "bd13cc211c9f976988858deee51b275039423762b06bd813db1d3bc46cdf3504",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.653822660446167,
+        "V04 charred inner refractory heat": 2.1989848613739014
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 2,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/02-heat-glow.png",
+      "sha256": "d03f501480b3afeb98da0f5343eccb1c71c77190c498313c8f23e65d110c711c",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.653822660446167,
+        "V04 charred inner refractory heat": 2.1989848613739014
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 3,
+      "pass": "body",
+      "file": "separated-body-heat/03-body.png",
+      "sha256": "da6ce192ad3a0a89e6706ca4d39827ca25f033c66b83fc60dffbfff5a7567e38",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6576085090637207,
+        "V04 charred inner refractory heat": 2.2138257026672363
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 3,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/03-heat-glow.png",
+      "sha256": "05734d4d8fae88db253dfd8b1eb78987c0811ec70723b081379829684a54969f",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6576085090637207,
+        "V04 charred inner refractory heat": 2.2138257026672363
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 4,
+      "pass": "body",
+      "file": "separated-body-heat/04-body.png",
+      "sha256": "d3cc04a0e8e6d300e3c55bc968bdcf6b5bc6f30a7b0041ee6a5573d3434ce25e",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6613211035728455,
+        "V04 charred inner refractory heat": 2.2283787727355957
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 4,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/04-heat-glow.png",
+      "sha256": "9a791f7e71debe41990927b7c278b410cd03931c09a783023ddc088966fd03db",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6613211035728455,
+        "V04 charred inner refractory heat": 2.2283787727355957
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 5,
+      "pass": "body",
+      "file": "separated-body-heat/05-body.png",
+      "sha256": "85045885dde37ed2a6bde16fbd40e03dad03fb4739efd154edaa834c93a344c8",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.664924681186676,
+        "V04 charred inner refractory heat": 2.242504835128784
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 5,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/05-heat-glow.png",
+      "sha256": "d0338fdbf834d969418cbf1d4bcb5976e01f6a7c958f2a7ca8d42bd97d19ec2e",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.664924681186676,
+        "V04 charred inner refractory heat": 2.242504835128784
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 6,
+      "pass": "body",
+      "file": "separated-body-heat/06-body.png",
+      "sha256": "68f357a786990a3d3a12cba6209afe1d77971028a2a7278687d904570190b6ff",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6683844923973083,
+        "V04 charred inner refractory heat": 2.2560672760009766
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 6,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/06-heat-glow.png",
+      "sha256": "58386999ccffc94d98cb83531008c0f1dd644c76ac12db209f3b46805f859304",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6683844923973083,
+        "V04 charred inner refractory heat": 2.2560672760009766
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 7,
+      "pass": "body",
+      "file": "separated-body-heat/07-body.png",
+      "sha256": "a8f347fed6dd34e40cb0e1f4dd1204ddfdbf1656fcd733c7a3725329b5360649",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.671667218208313,
+        "V04 charred inner refractory heat": 2.2689356803894043
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 7,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/07-heat-glow.png",
+      "sha256": "0eebcde41f30c6cf5ec1d10620d24e87d6f84aab4761313b83e9a0c3b2f4fa8b",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.671667218208313,
+        "V04 charred inner refractory heat": 2.2689356803894043
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 8,
+      "pass": "body",
+      "file": "separated-body-heat/08-body.png",
+      "sha256": "50b04231ee5e4a3b5f17f65d41b9e8387cc2793266d7f918cd991035bf045bf6",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6747413277626038,
+        "V04 charred inner refractory heat": 2.2809863090515137
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 8,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/08-heat-glow.png",
+      "sha256": "c5a9bb7a86d61a16da2ed47f633e9c0256e6f4bc3c0b7f992981a83a864f8e53",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6747413277626038,
+        "V04 charred inner refractory heat": 2.2809863090515137
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 9,
+      "pass": "body",
+      "file": "separated-body-heat/09-body.png",
+      "sha256": "fad0b167ee955589a92cb6a0cc9f434d045443de499e01a9a2567ef5ce0f1377",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6775771379470825,
+        "V04 charred inner refractory heat": 2.292102813720703
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 9,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/09-heat-glow.png",
+      "sha256": "f67ded4df5a5916840e1f714636721a73a7e7aaf812285e178d9c0b4aee46ff4",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6775771379470825,
+        "V04 charred inner refractory heat": 2.292102813720703
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 10,
+      "pass": "body",
+      "file": "separated-body-heat/10-body.png",
+      "sha256": "ae5ec1e27f628b75851dd821cbdcaa6d25ce9b73a3471e34d4199037d8efd174",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6801474094390869,
+        "V04 charred inner refractory heat": 2.302177667617798
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 10,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/10-heat-glow.png",
+      "sha256": "219564e2e647fdc558731d70e1b351e2d3dd98261d24393fe90eb680a9b939ea",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6801474094390869,
+        "V04 charred inner refractory heat": 2.302177667617798
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 11,
+      "pass": "body",
+      "file": "separated-body-heat/11-body.png",
+      "sha256": "730eed226f16244f60ff34da32faa9134f94b40a13c4ce30e621326925be84d4",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6824272871017456,
+        "V04 charred inner refractory heat": 2.311115264892578
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 11,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/11-heat-glow.png",
+      "sha256": "91e3457bce92f20095799ab8ee7e47e5c113e2d1d441f9000783bf4940b70e2f",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6824272871017456,
+        "V04 charred inner refractory heat": 2.311115264892578
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 12,
+      "pass": "body",
+      "file": "separated-body-heat/12-body.png",
+      "sha256": "bed146bd4dc9a952855ec1f411b77f49675ab0a7814de5e61194e1c3ba4322d8",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6843949556350708,
+        "V04 charred inner refractory heat": 2.3188278675079346
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 12,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/12-heat-glow.png",
+      "sha256": "7ea2215a63232e48778f4a51d221148625c35fdab703c46b85edc90612e0a1a0",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6843949556350708,
+        "V04 charred inner refractory heat": 2.3188278675079346
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 13,
+      "pass": "body",
+      "file": "separated-body-heat/13-body.png",
+      "sha256": "88fa08ed712dcdea8d2005ebc035c34c60bab24ae1bcae1fe0c00ed4a03fb382",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6860312819480896,
+        "V04 charred inner refractory heat": 2.3252432346343994
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 13,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/13-heat-glow.png",
+      "sha256": "caee0311e70c6f7e79b7b5b3eedf6cb26e131653f7219e120489bde459670190",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6860312819480896,
+        "V04 charred inner refractory heat": 2.3252432346343994
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 14,
+      "pass": "body",
+      "file": "separated-body-heat/14-body.png",
+      "sha256": "fb3aeff0fa6ce6554c80ad6f091f738d60a88f62717a0fda2f5a5f8c356b0820",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6873206496238708,
+        "V04 charred inner refractory heat": 2.3302972316741943
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 14,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/14-heat-glow.png",
+      "sha256": "2e142ca2958350d4873d9ca0e7a129a491ccbfa7bfa80304d19d11394436312d",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6873206496238708,
+        "V04 charred inner refractory heat": 2.3302972316741943
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 15,
+      "pass": "body",
+      "file": "separated-body-heat/15-body.png",
+      "sha256": "57f90bd14daa02762aea97f1144942e956ee21d95e6f4966ddbf923e518cea1b",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6882506012916565,
+        "V04 charred inner refractory heat": 2.333942174911499
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 15,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/15-heat-glow.png",
+      "sha256": "e44d2feeb945e14fb1aca8e0e35ce3e959535f51dd6f4a4768545758386b21f2",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6882506012916565,
+        "V04 charred inner refractory heat": 2.333942174911499
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 16,
+      "pass": "body",
+      "file": "separated-body-heat/16-body.png",
+      "sha256": "eb102a043acfc473f1d7e65fbd44c9441aba1455b9a8a6c0f07a8a6a055fbfb6",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6888121962547302,
+        "V04 charred inner refractory heat": 2.336143970489502
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 16,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/16-heat-glow.png",
+      "sha256": "51770a00b17d011b2f13083d75bca43064cb88e0aa086736e46a369dad112b67",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6888121962547302,
+        "V04 charred inner refractory heat": 2.336143970489502
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 17,
+      "pass": "body",
+      "file": "separated-body-heat/17-body.png",
+      "sha256": "d7bb8c560465133274b2eb65b9491d24ea18194bfef0e63f635e67b4a40b0a2a",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6890000104904175,
+        "V04 charred inner refractory heat": 2.3368797302246094
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 17,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/17-heat-glow.png",
+      "sha256": "1beccaa772f8a06c7ff8c306eeca05f49ff08ab30c15f0ff86c0892ae2ee1927",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6890000104904175,
+        "V04 charred inner refractory heat": 2.3368797302246094
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 18,
+      "pass": "body",
+      "file": "separated-body-heat/18-body.png",
+      "sha256": "2cb8b61c1b977eef54e4d41de5956807166953c83e025172be25eecae6ea8c3c",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6888121962547302,
+        "V04 charred inner refractory heat": 2.336143970489502
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 18,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/18-heat-glow.png",
+      "sha256": "8d398c07938f2a7d958c56de83f0dffb9c301f079eb69ffc3cd914466ee1067c",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6888121962547302,
+        "V04 charred inner refractory heat": 2.336143970489502
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 19,
+      "pass": "body",
+      "file": "separated-body-heat/19-body.png",
+      "sha256": "4bd9c2e199b338fa178f9aa0a140b75d4f4131c975ec7491592933e1364588b8",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6882506012916565,
+        "V04 charred inner refractory heat": 2.333942174911499
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 19,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/19-heat-glow.png",
+      "sha256": "88909efeca6122d01a18a16e16e8eac59789b7fd56924950c9547c35d37e752b",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6882506012916565,
+        "V04 charred inner refractory heat": 2.333942174911499
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 20,
+      "pass": "body",
+      "file": "separated-body-heat/20-body.png",
+      "sha256": "f08cd4487bd5516ce357241369c62e64be96cc5b67d84053da3e3565c606f7b8",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6873206496238708,
+        "V04 charred inner refractory heat": 2.3302972316741943
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 20,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/20-heat-glow.png",
+      "sha256": "81a47a0f9bc2492025889888ae9bcf81130be30bce7bb1396ca9ce0bdf31f978",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6873206496238708,
+        "V04 charred inner refractory heat": 2.3302972316741943
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 21,
+      "pass": "body",
+      "file": "separated-body-heat/21-body.png",
+      "sha256": "e52e2318379f6b16273d7c5e2f00fb09444fe8e0c18fcd8ed3e8d53993be8701",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6860312819480896,
+        "V04 charred inner refractory heat": 2.3252432346343994
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 21,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/21-heat-glow.png",
+      "sha256": "ffebddb75eefc0407ee1e14e4b0e6cf1eaf302f3be3bcefca2cf79e9a9286c9a",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6860312819480896,
+        "V04 charred inner refractory heat": 2.3252432346343994
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 22,
+      "pass": "body",
+      "file": "separated-body-heat/22-body.png",
+      "sha256": "8e7b3d4e663df129b9731207fff82fd1fa9ebf5f1d4b9b0dd01036dea7735ddd",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6843949556350708,
+        "V04 charred inner refractory heat": 2.3188278675079346
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 22,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/22-heat-glow.png",
+      "sha256": "712f232af66286257436363e953e16f842e7ef353d338f0a5d45419b53b8b8ea",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6843949556350708,
+        "V04 charred inner refractory heat": 2.3188278675079346
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 23,
+      "pass": "body",
+      "file": "separated-body-heat/23-body.png",
+      "sha256": "88a03bb3edff005e6fa0886572c287974505665a3ea4f22aa28b73fb632acbd4",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6824272871017456,
+        "V04 charred inner refractory heat": 2.311115264892578
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 23,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/23-heat-glow.png",
+      "sha256": "6c30f9937cc7360dbc2712b23cc7c858d8af0ab47a8f46651d2e4c8a6889c491",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6824272871017456,
+        "V04 charred inner refractory heat": 2.311115264892578
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 24,
+      "pass": "body",
+      "file": "separated-body-heat/24-body.png",
+      "sha256": "e57647b9749beb9d759c60ca975ce4b8a419e6b12d5c42f9fd87ada953a21b6c",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6801474094390869,
+        "V04 charred inner refractory heat": 2.302177667617798
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 24,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/24-heat-glow.png",
+      "sha256": "596664913c2ed0866c2adf8c2a059cf4233b78e7c074ce6aa64325c41b6703df",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6801474094390869,
+        "V04 charred inner refractory heat": 2.302177667617798
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 25,
+      "pass": "body",
+      "file": "separated-body-heat/25-body.png",
+      "sha256": "446f9e207d37c5c2c977479394f131ccb97da82312229e0e8fe6b2e3b50d15b8",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6775771379470825,
+        "V04 charred inner refractory heat": 2.292102813720703
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 25,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/25-heat-glow.png",
+      "sha256": "9e86b7dfbbf886d4cd5e52d202f0fc74f1e350eaca46e7ee0480f205f358121f",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6775771379470825,
+        "V04 charred inner refractory heat": 2.292102813720703
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 26,
+      "pass": "body",
+      "file": "separated-body-heat/26-body.png",
+      "sha256": "7704cc06e64b7c129868659dc1e6bf23085f0be15a3d9a3519d059b94e2f2e06",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6747413277626038,
+        "V04 charred inner refractory heat": 2.2809863090515137
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 26,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/26-heat-glow.png",
+      "sha256": "c5326082474e1e54c9900fb9bef2984ab7a6eb6ed1b1f4dc8805ee2ab0f4c488",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6747413277626038,
+        "V04 charred inner refractory heat": 2.2809863090515137
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 27,
+      "pass": "body",
+      "file": "separated-body-heat/27-body.png",
+      "sha256": "97af03b64b8dda6f9ec52c531f5328cf26434082723593bd3cc37b0e68ce61fd",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.671667218208313,
+        "V04 charred inner refractory heat": 2.2689356803894043
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 27,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/27-heat-glow.png",
+      "sha256": "14bdd0f7335897a7e6bf206ae7d3cb54b79c5a6bbf978856a7db89de10807935",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.671667218208313,
+        "V04 charred inner refractory heat": 2.2689356803894043
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 28,
+      "pass": "body",
+      "file": "separated-body-heat/28-body.png",
+      "sha256": "9c62f50f35c10777687082e5e0591157c125e786320a52218462b772ba2d5b6a",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6683844923973083,
+        "V04 charred inner refractory heat": 2.2560672760009766
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 28,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/28-heat-glow.png",
+      "sha256": "b960938de58a470dddc6d5556f4cbe4df2a45d1236ead5190d602a096ef4ced6",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6683844923973083,
+        "V04 charred inner refractory heat": 2.2560672760009766
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 29,
+      "pass": "body",
+      "file": "separated-body-heat/29-body.png",
+      "sha256": "49ea32168de114d60c6d49e5f0df032ff6ce546ec5319c7fc3d9de393144ea06",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.664924681186676,
+        "V04 charred inner refractory heat": 2.242504835128784
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 29,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/29-heat-glow.png",
+      "sha256": "398c39aa3c090a97920eed57ebfca3f177b90be18e599e4f96c84b51b8c9f723",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.664924681186676,
+        "V04 charred inner refractory heat": 2.242504835128784
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 30,
+      "pass": "body",
+      "file": "separated-body-heat/30-body.png",
+      "sha256": "1c563aa44207c7ba99a065a932f6f1d63320aac963abd5cd0d8547880e9903b0",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6613211035728455,
+        "V04 charred inner refractory heat": 2.2283787727355957
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 30,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/30-heat-glow.png",
+      "sha256": "f33a0ea7eb60c5ada6cb6ea9eebe69859f4ccee72686f391b6b0435b41a42e08",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6613211035728455,
+        "V04 charred inner refractory heat": 2.2283787727355957
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 31,
+      "pass": "body",
+      "file": "separated-body-heat/31-body.png",
+      "sha256": "23279640ece3ce0583241fb45d63dc6e753f3005dc550108772e90b99ed41fb0",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6576085090637207,
+        "V04 charred inner refractory heat": 2.2138257026672363
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 31,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/31-heat-glow.png",
+      "sha256": "67bf11c6398a107b4749c83ea8cf7c74f507a5a08ff3e1484ccec3e7de20a621",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6576085090637207,
+        "V04 charred inner refractory heat": 2.2138257026672363
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 32,
+      "pass": "body",
+      "file": "separated-body-heat/32-body.png",
+      "sha256": "73e96c01b913a9ce9b7a4b6c5e09d6e9b79777274bc2eb11f83cce374d46f9f0",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.653822660446167,
+        "V04 charred inner refractory heat": 2.1989848613739014
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 32,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/32-heat-glow.png",
+      "sha256": "4c0557bd732351b60ec4e76e3aad66bf4847b210b886b5fb862c4353fdfbb641",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.653822660446167,
+        "V04 charred inner refractory heat": 2.1989848613739014
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 33,
+      "pass": "body",
+      "file": "separated-body-heat/33-body.png",
+      "sha256": "f00277c951b7823b79dd35c841cc72885d94e0c83a5a2c0a1b5501f4b47866a3",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6499999761581421,
+        "V04 charred inner refractory heat": 2.18399977684021
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 33,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/33-heat-glow.png",
+      "sha256": "3a2cba160695f523398e8caf49b9d06cb0254f0592f19e293d04f33aed9d9851",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6499999761581421,
+        "V04 charred inner refractory heat": 2.18399977684021
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 34,
+      "pass": "body",
+      "file": "separated-body-heat/34-body.png",
+      "sha256": "806fd8ed7f3107fa90e3d9736eec23f714ea00d035f6550cc1d348a7a2f361df",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.646177351474762,
+        "V04 charred inner refractory heat": 2.1690151691436768
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 34,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/34-heat-glow.png",
+      "sha256": "e889a6753872b3f0b99a2139e1a70b3577bdbd7a14d92a02f078c334f9a9e5af",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.646177351474762,
+        "V04 charred inner refractory heat": 2.1690151691436768
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 35,
+      "pass": "body",
+      "file": "separated-body-heat/35-body.png",
+      "sha256": "1b1b0ee5b7fe57271b861d8dd48cfdb24ef5107b0b7db244f457a401ec251b43",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6423915028572083,
+        "V04 charred inner refractory heat": 2.154174566268921
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 35,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/35-heat-glow.png",
+      "sha256": "0e9d3d221ec7e1cc22aade387f585788c905a05bedfce5d6b3bdbb09c2a69a46",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6423915028572083,
+        "V04 charred inner refractory heat": 2.154174566268921
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 36,
+      "pass": "body",
+      "file": "separated-body-heat/36-body.png",
+      "sha256": "f143877c7ec6624aa61528ad5a19e57fd8bd5e86e9f808c2b57c68593d5272bf",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6386789083480835,
+        "V04 charred inner refractory heat": 2.1396212577819824
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 36,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/36-heat-glow.png",
+      "sha256": "c3a5cf860da066220b48c7a05371ddef0b4665657be420b6dbe9c5ebe716b8cd",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6386789083480835,
+        "V04 charred inner refractory heat": 2.1396212577819824
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 37,
+      "pass": "body",
+      "file": "separated-body-heat/37-body.png",
+      "sha256": "534bea7d207b5b2e59351feed69399bb67852f5e7d3f83a3ef9ad3ecad37e217",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6350753307342529,
+        "V04 charred inner refractory heat": 2.125495433807373
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 37,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/37-heat-glow.png",
+      "sha256": "1dbc3fc00c85a4443506e3204092fe7fe73a1a75b57318d32c240a3e379db7a8",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6350753307342529,
+        "V04 charred inner refractory heat": 2.125495433807373
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 38,
+      "pass": "body",
+      "file": "separated-body-heat/38-body.png",
+      "sha256": "048628131fd0bc6d95b4a1ae721f0a7bfcac7132466a321c872a0f189d728bd4",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6316155195236206,
+        "V04 charred inner refractory heat": 2.1119327545166016
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 38,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/38-heat-glow.png",
+      "sha256": "07caa771406851ce54251af8fdf2cc56aa44e64ac4397e28aa7ebe0bdcd40381",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6316155195236206,
+        "V04 charred inner refractory heat": 2.1119327545166016
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 39,
+      "pass": "body",
+      "file": "separated-body-heat/39-body.png",
+      "sha256": "a490a747fe17673e111060111a73d3dbe1a3dd0228f28776a45a236f7497e0be",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6283327341079712,
+        "V04 charred inner refractory heat": 2.099064588546753
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 39,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/39-heat-glow.png",
+      "sha256": "8ad6acccbc4427e774ab23f47241e36a6bb0480beb6713bab445e1a9dd6939db",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6283327341079712,
+        "V04 charred inner refractory heat": 2.099064588546753
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 40,
+      "pass": "body",
+      "file": "separated-body-heat/40-body.png",
+      "sha256": "bab44870943e1997597faebc60865d609a748cd0313020713b88208aed6273ff",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6252586841583252,
+        "V04 charred inner refractory heat": 2.0870139598846436
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 40,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/40-heat-glow.png",
+      "sha256": "5ed9400fac8965308567c453bb10852b331aa9a84176d4fade1fa823a4d32c9c",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6252586841583252,
+        "V04 charred inner refractory heat": 2.0870139598846436
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 41,
+      "pass": "body",
+      "file": "separated-body-heat/41-body.png",
+      "sha256": "e7beb5a4ce2027424cd4103a2567e66ba5f0a598e67e9b710e54697b3716c430",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6224228143692017,
+        "V04 charred inner refractory heat": 2.075897455215454
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 41,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/41-heat-glow.png",
+      "sha256": "d969eca8932f156ffeac26621f5df0aeb949bdb2ee8582101c4feb1fe7e3b9f5",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6224228143692017,
+        "V04 charred inner refractory heat": 2.075897455215454
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 42,
+      "pass": "body",
+      "file": "separated-body-heat/42-body.png",
+      "sha256": "5535d96cfa35e95814568faf0682bd48710222d8b6e8dcf7bd9ae8da2ce17de6",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.619852602481842,
+        "V04 charred inner refractory heat": 2.065821886062622
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 42,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/42-heat-glow.png",
+      "sha256": "1599d6cccf35787f732979d7a0d91254cec58b6a99436f4f3efcf2b9e09d2e9f",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.619852602481842,
+        "V04 charred inner refractory heat": 2.065821886062622
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 43,
+      "pass": "body",
+      "file": "separated-body-heat/43-body.png",
+      "sha256": "e635fee58003e8fae1051337dc9e284e1d2c4342dbdbef921d6f6ec1edceb285",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6175726652145386,
+        "V04 charred inner refractory heat": 2.056884765625
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 43,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/43-heat-glow.png",
+      "sha256": "792a95451e03c0e1dd15d02be1b9caead4ae7ec99057d0f47cd8ccc5984b7b82",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6175726652145386,
+        "V04 charred inner refractory heat": 2.056884765625
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 44,
+      "pass": "body",
+      "file": "separated-body-heat/44-body.png",
+      "sha256": "a56770d7c2275747fbb4486ae60def3d6fb98717758a77b496decd774807c491",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6156050562858582,
+        "V04 charred inner refractory heat": 2.0491716861724854
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 44,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/44-heat-glow.png",
+      "sha256": "284e74d3e096b0d449ae5df4f38491fc4fad46a75928a034c6c97a2617426fb3",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6156050562858582,
+        "V04 charred inner refractory heat": 2.0491716861724854
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 45,
+      "pass": "body",
+      "file": "separated-body-heat/45-body.png",
+      "sha256": "64fe24fdbcfaa7914ac72f62191c945ec011389a2a87ab872bc050a7818cc99b",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6139686703681946,
+        "V04 charred inner refractory heat": 2.042757034301758
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 45,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/45-heat-glow.png",
+      "sha256": "9577e9c99f49a645efda88516c1c6b49d411af6e2d7c2d5c4dc7f99469e9a3db",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6139686703681946,
+        "V04 charred inner refractory heat": 2.042757034301758
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 46,
+      "pass": "body",
+      "file": "separated-body-heat/46-body.png",
+      "sha256": "57efe8420b12eaecf6db11a643733b56f84d8ab23c982947abf2fd0fb9e19412",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6126793026924133,
+        "V04 charred inner refractory heat": 2.037703037261963
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 46,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/46-heat-glow.png",
+      "sha256": "bc8bb4c9c792fd5f654a99797351528686e0865d61a9b0b9916e0b04e093f7e9",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6126793026924133,
+        "V04 charred inner refractory heat": 2.037703037261963
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 47,
+      "pass": "body",
+      "file": "separated-body-heat/47-body.png",
+      "sha256": "fdde80fd37540aa852faf4feae5891a92f6c6f9b37e0f9bf799e9076598b659f",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6117493510246277,
+        "V04 charred inner refractory heat": 2.034057378768921
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 47,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/47-heat-glow.png",
+      "sha256": "8fe08e2667be7f087434d39e0728241d4edebe7b962ccb6dd5f771406aa46cc0",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6117493510246277,
+        "V04 charred inner refractory heat": 2.034057378768921
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 48,
+      "pass": "body",
+      "file": "separated-body-heat/48-body.png",
+      "sha256": "a003388727649c8cbc097fd5093c8abbaca28664b0335c54ec57fef78f8deb49",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6111878156661987,
+        "V04 charred inner refractory heat": 2.0318562984466553
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 48,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/48-heat-glow.png",
+      "sha256": "9b707e57023b80b653e2c6cf81c8f2d1cb53bf071fd556b6f83ee5b466b8cd2d",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6111878156661987,
+        "V04 charred inner refractory heat": 2.0318562984466553
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 49,
+      "pass": "body",
+      "file": "separated-body-heat/49-body.png",
+      "sha256": "776caaed3220b2d07da946229692e262cd7008dbde26218ecc105fa450310319",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6110000014305115,
+        "V04 charred inner refractory heat": 2.0311198234558105
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 49,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/49-heat-glow.png",
+      "sha256": "ea77b57add8554233eb88e8b47ee3ab77802f7bf727665a36feba109fc7f49ed",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6110000014305115,
+        "V04 charred inner refractory heat": 2.0311198234558105
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 50,
+      "pass": "body",
+      "file": "separated-body-heat/50-body.png",
+      "sha256": "132c1db3e274b70308db8660e5d3fa9a5a32e8ccbb1feb0c880c020596d1518d",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6111878156661987,
+        "V04 charred inner refractory heat": 2.0318562984466553
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 50,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/50-heat-glow.png",
+      "sha256": "02c1f5eb026d446af33b8bfa46d2448aaea57804b7e4f0906f6ae324f11cda77",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6111878156661987,
+        "V04 charred inner refractory heat": 2.0318562984466553
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 51,
+      "pass": "body",
+      "file": "separated-body-heat/51-body.png",
+      "sha256": "c5132e4cb2265a9d72acad78c5b7de16d5efa0f352b90266bc6b76664e5eb531",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6117493510246277,
+        "V04 charred inner refractory heat": 2.034057378768921
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 51,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/51-heat-glow.png",
+      "sha256": "c2c21c024951e15d3930d4e85dea73522a05030edd9cbb970719c30b7bd2b4b0",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6117493510246277,
+        "V04 charred inner refractory heat": 2.034057378768921
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 52,
+      "pass": "body",
+      "file": "separated-body-heat/52-body.png",
+      "sha256": "1d7751513199d53ed1fda453b287169190e12773435e99df888093450df7e085",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6126793026924133,
+        "V04 charred inner refractory heat": 2.037703037261963
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 52,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/52-heat-glow.png",
+      "sha256": "5129f3af3f661d83b733fe743a79518ac510eb4d46efd4bc3d01499d04b0b0ea",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6126793026924133,
+        "V04 charred inner refractory heat": 2.037703037261963
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 53,
+      "pass": "body",
+      "file": "separated-body-heat/53-body.png",
+      "sha256": "7a4a181e36fdc8d1ec110346f05c05057e7f1a2504f4e449ac92e0deb046aef4",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6139686703681946,
+        "V04 charred inner refractory heat": 2.042757034301758
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 53,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/53-heat-glow.png",
+      "sha256": "42a45ceb55ab941c5c53dd8499eb30cbfe54bb52d3cc4ae9e32b8f5304c5e4cb",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6139686703681946,
+        "V04 charred inner refractory heat": 2.042757034301758
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 54,
+      "pass": "body",
+      "file": "separated-body-heat/54-body.png",
+      "sha256": "513c11b1777b5bfbcbd9200b0e5d15ef7ef7d0c7d6078edec490df71a129f305",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6156050562858582,
+        "V04 charred inner refractory heat": 2.0491716861724854
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 54,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/54-heat-glow.png",
+      "sha256": "642904d0b1e4935a7fc884b9846f7fc8788352f6c0d4903181ae2e511e83ba32",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6156050562858582,
+        "V04 charred inner refractory heat": 2.0491716861724854
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 55,
+      "pass": "body",
+      "file": "separated-body-heat/55-body.png",
+      "sha256": "2a34c4ea27d680c49547466e4eac22052668f3d49e19f337b37f101d87f15150",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6175726652145386,
+        "V04 charred inner refractory heat": 2.056884765625
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 55,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/55-heat-glow.png",
+      "sha256": "73c9a592edcade9425ed4ab51d4ccaa9bf12ac25ed722f7616e5fcaeb410a3b4",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6175726652145386,
+        "V04 charred inner refractory heat": 2.056884765625
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 56,
+      "pass": "body",
+      "file": "separated-body-heat/56-body.png",
+      "sha256": "903b8b489a39c3f676ae30b22d788815225fb0df94a4421bf5310c587f736455",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.619852602481842,
+        "V04 charred inner refractory heat": 2.065821886062622
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 56,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/56-heat-glow.png",
+      "sha256": "3bb96b17d207a69bdf155a1045bb5fc504b7017e4795131879b1f096d135be0e",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.619852602481842,
+        "V04 charred inner refractory heat": 2.065821886062622
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 57,
+      "pass": "body",
+      "file": "separated-body-heat/57-body.png",
+      "sha256": "0ea77cfbfdca7b2358faa8628d5d0fe1e528822018cac8200523073ce54a485a",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6224228143692017,
+        "V04 charred inner refractory heat": 2.075897455215454
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 57,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/57-heat-glow.png",
+      "sha256": "eeb262b286c3e1931c7f3ae0aa3bd930043bbf74ba408e4b20b68ada82a11009",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6224228143692017,
+        "V04 charred inner refractory heat": 2.075897455215454
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 58,
+      "pass": "body",
+      "file": "separated-body-heat/58-body.png",
+      "sha256": "b9627a4f8b6a0d3c3f54e9a6ede317a5400519e7a3ace60184af8d335cffe6bb",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6252586841583252,
+        "V04 charred inner refractory heat": 2.0870139598846436
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 58,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/58-heat-glow.png",
+      "sha256": "2dce3e0cdd2506d9fec1d34cd524a43ad85c7dcee7b2c1001621065c2bae026d",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6252586841583252,
+        "V04 charred inner refractory heat": 2.0870139598846436
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 59,
+      "pass": "body",
+      "file": "separated-body-heat/59-body.png",
+      "sha256": "86d1d41c3676694b5b22bac7432161eaf8bbdfbfb4d6fdc0e1c6e368280da216",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6283327341079712,
+        "V04 charred inner refractory heat": 2.099064588546753
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 59,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/59-heat-glow.png",
+      "sha256": "e92db084e8b26b1c670c74450cf6ed67a8a4e5d8185d7dd0d7441d9818146f82",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6283327341079712,
+        "V04 charred inner refractory heat": 2.099064588546753
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 60,
+      "pass": "body",
+      "file": "separated-body-heat/60-body.png",
+      "sha256": "1e8e403f1e20126093e3886256f3d605ecf66f0cc5dc4c1009d3df1509f67663",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6316155195236206,
+        "V04 charred inner refractory heat": 2.1119327545166016
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 60,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/60-heat-glow.png",
+      "sha256": "7e685382d89d0dc8f5e588c7e4a331448581339ca2bbce1f4493e18f4b95ddb8",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6316155195236206,
+        "V04 charred inner refractory heat": 2.1119327545166016
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 61,
+      "pass": "body",
+      "file": "separated-body-heat/61-body.png",
+      "sha256": "f9cf85fef3801b1a2be0402164a0cb323598116f3f622b80323c9ef029c3b689",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6350753307342529,
+        "V04 charred inner refractory heat": 2.125495433807373
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 61,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/61-heat-glow.png",
+      "sha256": "2c580838149337cd1ff45e010eddad896828e657064ae0e22f2b8c1d57d4ee52",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6350753307342529,
+        "V04 charred inner refractory heat": 2.125495433807373
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 62,
+      "pass": "body",
+      "file": "separated-body-heat/62-body.png",
+      "sha256": "337ebf23db2006ecba7b9e54e327b1a28f536d6261a8c24d17421680cd13945c",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6386789083480835,
+        "V04 charred inner refractory heat": 2.1396212577819824
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 62,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/62-heat-glow.png",
+      "sha256": "4c7b36175795fd3e85cdbf5e17f696a700c96400a49e3c4b9ce41cc17436d80e",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6386789083480835,
+        "V04 charred inner refractory heat": 2.1396212577819824
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 63,
+      "pass": "body",
+      "file": "separated-body-heat/63-body.png",
+      "sha256": "1ed6e3bfeb14535a27eeab65143aac30928fbabc472b06378da0927c222228a1",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6423915028572083,
+        "V04 charred inner refractory heat": 2.154174566268921
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 63,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/63-heat-glow.png",
+      "sha256": "22c01ae91452e0a93d662ce3c89b610f68e0506cde714750b2822ad8516aaa94",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6423915028572083,
+        "V04 charred inner refractory heat": 2.154174566268921
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 64,
+      "pass": "body",
+      "file": "separated-body-heat/64-body.png",
+      "sha256": "06aacc92d11a67e8543833ce600d3ceb46b32e686d2381019c30b16516d81753",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.646177351474762,
+        "V04 charred inner refractory heat": 2.1690151691436768
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 64,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/64-heat-glow.png",
+      "sha256": "2131e0fc86598840f7b009b209cb2ac81dd13809ac30c0923828f25deefb33d9",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.646177351474762,
+        "V04 charred inner refractory heat": 2.1690151691436768
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 65,
+      "pass": "body",
+      "file": "separated-body-heat/65-body.png",
+      "sha256": "1fb34f032622d5b0f55eca485ebf2aaa037fc911ab10d0ee71f64e9a11a00c67",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6499999761581421,
+        "V04 charred inner refractory heat": 2.18399977684021
+      },
+      "body_thermal_materials_unanimated": true
+    },
+    {
+      "frame": 65,
+      "pass": "heat-glow",
+      "file": "separated-body-heat/65-heat-glow.png",
+      "sha256": "8988a8e2ee6ab2e640bd9292f3a149b6b7412e517755071b4aec182bd7cbb20f",
+      "source_heat_strengths": {
+        "V04 axial temper and charred bell petals": 0.6499999761581421,
+        "V04 charred inner refractory heat": 2.18399977684021
+      },
+      "body_thermal_materials_unanimated": true
+    }
+  ]
+}

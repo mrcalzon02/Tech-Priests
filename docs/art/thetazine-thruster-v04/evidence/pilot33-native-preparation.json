@@ -1,0 +1,57 @@
+{
+  "status": "ISOLATED_V04_NATIVE_PREPARED_REQUIRES_LOAD_AND_VISUAL_READBACK",
+  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "registration_sha256": "de8852dfb0c9b9bda6fff9ca3761d220cbcd8737af198ffb7a2c51a65614e1ab",
+  "data_sha256": "9b202dd9f3ea8a3b7f2161a24aac4616ebc92e2d2f1ad5f52e945503e36bb705",
+  "control_sha256": "dd2ced0d3bc80345baa8f70538d72a1b9ab053f3c12fa5d61ba8e5d3656418e9",
+  "donor_cell": [
+    264,
+    542
+  ],
+  "donor_alpha_lip_row": 531,
+  "flame_y_adjust": 0.0,
+  "graphics_files": [
+    {
+      "file": "body-1.png",
+      "sha256": "0efdfd3c3c881d8d12913bf9750d800a01255b112ddee3ca63ffb79c51eb741a"
+    },
+    {
+      "file": "body-2.png",
+      "sha256": "f0bc19d0d53670c3c93e1019079f67c864ac305c05b24a2fc61fdb16ab9f4a7e"
+    },
+    {
+      "file": "frame-counter.png",
+      "sha256": "627ee96423333ac8e73a93b14f4b913d0f3f73d8cc64d2dd0ae1f4a704070a0e"
+    },
+    {
+      "file": "heat-glow-1.png",
+      "sha256": "332547279437505b33bff7bb208b4a837df68bbf1c639d811db27c96704db5bd"
+    },
+    {
+      "file": "heat-glow-2.png",
+      "sha256": "a1ce0952025594ff938e7f75b9c7236aa07e7d864b745bf3394e66468dbd50d6"
+    },
+    {
+      "file": "idle-body.png",
+      "sha256": "95c69e762c0c5554e281e5278c429b78baeeb9d902bb581258ee3d58b6c49930"
+    },
+    {
+      "file": "idle-heat-glow.png",
+      "sha256": "c423905bac86efd940e4bccc3bf1c1995621e91b73f9cf836c0f29c74ee234af"
+    },
+    {
+      "file": "underlay.png",
+      "sha256": "d5de21d12fe2579cd893664cd7bb2f5f19b225fdc3ec45489bfa31e27aaf3800"
+    }
+  ],
+  "effect_is_native": true,
+  "native_colour_thrust_response_not_yet_reviewed": true,
+  "isolation_layers": [
+    "integrated",
+    "source-light",
+    "native-jet",
+    "smoke",
+    "vanilla"
+  ],
+  "isolation_scope": "Review-only scene and prototype copies; no normal-mod or gameplay edits. Actual installed vanilla is the control; source light/native jet/smoke shown separately."
+}

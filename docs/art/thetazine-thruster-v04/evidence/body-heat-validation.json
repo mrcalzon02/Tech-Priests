@@ -1,0 +1,1057 @@
+{
+  "status": "PASS_SEPARATE_NOHEAT_BODY_AND_HEAT_ONLY_132_PNGS_128_EXACT_ATLAS_CELLS",
+  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "capture_renderer_sha256": "781920c0dd797b06917fa229ae79a5af3130d053f3c84abc908b5a8ff95de40f",
+  "source_pngs": 132,
+  "working_cells": 128,
+  "atlas": [
+    {
+      "path": "body-1.png",
+      "pass": "body",
+      "frames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "size": [
+        4096,
+        5120
+      ],
+      "cell": [
+        512,
+        1280
+      ],
+      "exact_cells_verified": 32,
+      "sha256": "0efdfd3c3c881d8d12913bf9750d800a01255b112ddee3ca63ffb79c51eb741a"
+    },
+    {
+      "path": "body-2.png",
+      "pass": "body",
+      "frames": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64
+      ],
+      "size": [
+        4096,
+        5120
+      ],
+      "cell": [
+        512,
+        1280
+      ],
+      "exact_cells_verified": 32,
+      "sha256": "f0bc19d0d53670c3c93e1019079f67c864ac305c05b24a2fc61fdb16ab9f4a7e"
+    },
+    {
+      "path": "heat-glow-1.png",
+      "pass": "heat-glow",
+      "frames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "size": [
+        4096,
+        5120
+      ],
+      "cell": [
+        512,
+        1280
+      ],
+      "exact_cells_verified": 32,
+      "sha256": "332547279437505b33bff7bb208b4a837df68bbf1c639d811db27c96704db5bd"
+    },
+    {
+      "path": "heat-glow-2.png",
+      "pass": "heat-glow",
+      "frames": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64
+      ],
+      "size": [
+        4096,
+        5120
+      ],
+      "cell": [
+        512,
+        1280
+      ],
+      "exact_cells_verified": 32,
+      "sha256": "a1ce0952025594ff938e7f75b9c7236aa07e7d864b745bf3394e66468dbd50d6"
+    }
+  ],
+  "source_archive_sha256": "47a1ccb4cc20a6d677afac8e9187e4297fe463cea45aad4e0df6012cc4c3c9d1",
+  "source_archive_bytes": 49915050,
+  "cold_heat_rgb_zero": true,
+  "body_hotspot_mean_max_rgb_byte": 3.209813402764863,
+  "heat_hotspot_mean_max_rgb_byte": 244.23953877626928,
+  "heat_effectively_absent_from_body": true,
+  "heat_mask_scope": "Mapped bell/refractory plus full-throated render-only volume; no fuel-window glow or chamber-head emission.",
+  "heat_statistics": [
+    {
+      "frame": 0,
+      "heat_rgb_nonzero_pixels": 0,
+      "heat_peak_byte": 1,
+      "heat_mean_byte": 0.08238372802734376,
+      "rgb_bounds": null
+    },
+    {
+      "frame": 1,
+      "heat_rgb_nonzero_pixels": 41954,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.651465861002604,
+      "rgb_bounds": [
+        158,
+        664,
+        353,
+        1086
+      ]
+    },
+    {
+      "frame": 2,
+      "heat_rgb_nonzero_pixels": 42075,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.673208618164063,
+      "rgb_bounds": [
+        159,
+        663,
+        354,
+        1086
+      ]
+    },
+    {
+      "frame": 3,
+      "heat_rgb_nonzero_pixels": 42125,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.67298075358073,
+      "rgb_bounds": [
+        159,
+        663,
+        354,
+        1087
+      ]
+    },
+    {
+      "frame": 4,
+      "heat_rgb_nonzero_pixels": 42123,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.671888732910157,
+      "rgb_bounds": [
+        159,
+        664,
+        354,
+        1087
+      ]
+    },
+    {
+      "frame": 5,
+      "heat_rgb_nonzero_pixels": 42074,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.644011433919271,
+      "rgb_bounds": [
+        159,
+        663,
+        354,
+        1086
+      ]
+    },
+    {
+      "frame": 6,
+      "heat_rgb_nonzero_pixels": 41980,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.580269877115885,
+      "rgb_bounds": [
+        159,
+        663,
+        354,
+        1086
+      ]
+    },
+    {
+      "frame": 7,
+      "heat_rgb_nonzero_pixels": 41863,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.549147542317709,
+      "rgb_bounds": [
+        160,
+        663,
+        354,
+        1086
+      ]
+    },
+    {
+      "frame": 8,
+      "heat_rgb_nonzero_pixels": 41860,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.57499745686849,
+      "rgb_bounds": [
+        160,
+        663,
+        354,
+        1086
+      ]
+    },
+    {
+      "frame": 9,
+      "heat_rgb_nonzero_pixels": 41904,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.620554097493489,
+      "rgb_bounds": [
+        159,
+        664,
+        354,
+        1087
+      ]
+    },
+    {
+      "frame": 10,
+      "heat_rgb_nonzero_pixels": 41969,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.6870849609375,
+      "rgb_bounds": [
+        160,
+        665,
+        355,
+        1087
+      ]
+    },
+    {
+      "frame": 11,
+      "heat_rgb_nonzero_pixels": 42100,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.75370585123698,
+      "rgb_bounds": [
+        159,
+        664,
+        354,
+        1088
+      ]
+    },
+    {
+      "frame": 12,
+      "heat_rgb_nonzero_pixels": 42259,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.798121643066406,
+      "rgb_bounds": [
+        154,
+        664,
+        351,
+        1088
+      ]
+    },
+    {
+      "frame": 13,
+      "heat_rgb_nonzero_pixels": 42383,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.82226104736328,
+      "rgb_bounds": [
+        157,
+        662,
+        355,
+        1087
+      ]
+    },
+    {
+      "frame": 14,
+      "heat_rgb_nonzero_pixels": 42494,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.815505981445312,
+      "rgb_bounds": [
+        160,
+        660,
+        359,
+        1087
+      ]
+    },
+    {
+      "frame": 15,
+      "heat_rgb_nonzero_pixels": 42569,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.789819844563802,
+      "rgb_bounds": [
+        156,
+        664,
+        355,
+        1088
+      ]
+    },
+    {
+      "frame": 16,
+      "heat_rgb_nonzero_pixels": 42566,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.745034790039062,
+      "rgb_bounds": [
+        155,
+        661,
+        354,
+        1089
+      ]
+    },
+    {
+      "frame": 17,
+      "heat_rgb_nonzero_pixels": 42531,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.72115478515625,
+      "rgb_bounds": [
+        157,
+        663,
+        356,
+        1089
+      ]
+    },
+    {
+      "frame": 18,
+      "heat_rgb_nonzero_pixels": 42436,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.709400431315105,
+      "rgb_bounds": [
+        157,
+        663,
+        356,
+        1089
+      ]
+    },
+    {
+      "frame": 19,
+      "heat_rgb_nonzero_pixels": 42230,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.649483744303385,
+      "rgb_bounds": [
+        158,
+        663,
+        355,
+        1088
+      ]
+    },
+    {
+      "frame": 20,
+      "heat_rgb_nonzero_pixels": 42090,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.578011576334635,
+      "rgb_bounds": [
+        158,
+        663,
+        355,
+        1088
+      ]
+    },
+    {
+      "frame": 21,
+      "heat_rgb_nonzero_pixels": 41942,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.547351582845051,
+      "rgb_bounds": [
+        158,
+        663,
+        354,
+        1087
+      ]
+    },
+    {
+      "frame": 22,
+      "heat_rgb_nonzero_pixels": 41913,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.59703877766927,
+      "rgb_bounds": [
+        158,
+        664,
+        353,
+        1088
+      ]
+    },
+    {
+      "frame": 23,
+      "heat_rgb_nonzero_pixels": 41993,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.640443420410156,
+      "rgb_bounds": [
+        157,
+        665,
+        353,
+        1088
+      ]
+    },
+    {
+      "frame": 24,
+      "heat_rgb_nonzero_pixels": 42157,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.695720926920574,
+      "rgb_bounds": [
+        157,
+        663,
+        353,
+        1090
+      ]
+    },
+    {
+      "frame": 25,
+      "heat_rgb_nonzero_pixels": 42268,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.749190775553386,
+      "rgb_bounds": [
+        157,
+        664,
+        354,
+        1089
+      ]
+    },
+    {
+      "frame": 26,
+      "heat_rgb_nonzero_pixels": 42346,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.787967936197917,
+      "rgb_bounds": [
+        156,
+        663,
+        354,
+        1088
+      ]
+    },
+    {
+      "frame": 27,
+      "heat_rgb_nonzero_pixels": 42426,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.81097666422526,
+      "rgb_bounds": [
+        156,
+        663,
+        354,
+        1088
+      ]
+    },
+    {
+      "frame": 28,
+      "heat_rgb_nonzero_pixels": 42501,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.850209554036459,
+      "rgb_bounds": [
+        156,
+        664,
+        354,
+        1088
+      ]
+    },
+    {
+      "frame": 29,
+      "heat_rgb_nonzero_pixels": 42450,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.853885904947917,
+      "rgb_bounds": [
+        157,
+        664,
+        354,
+        1089
+      ]
+    },
+    {
+      "frame": 30,
+      "heat_rgb_nonzero_pixels": 42361,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.818275960286458,
+      "rgb_bounds": [
+        158,
+        664,
+        354,
+        1089
+      ]
+    },
+    {
+      "frame": 31,
+      "heat_rgb_nonzero_pixels": 42237,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.776690165201822,
+      "rgb_bounds": [
+        159,
+        664,
+        354,
+        1089
+      ]
+    },
+    {
+      "frame": 32,
+      "heat_rgb_nonzero_pixels": 42039,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.733096822102864,
+      "rgb_bounds": [
+        159,
+        664,
+        354,
+        1088
+      ]
+    },
+    {
+      "frame": 33,
+      "heat_rgb_nonzero_pixels": 41888,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.696604410807291,
+      "rgb_bounds": [
+        160,
+        664,
+        353,
+        1088
+      ]
+    },
+    {
+      "frame": 34,
+      "heat_rgb_nonzero_pixels": 41733,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.669834899902344,
+      "rgb_bounds": [
+        160,
+        664,
+        352,
+        1087
+      ]
+    },
+    {
+      "frame": 35,
+      "heat_rgb_nonzero_pixels": 41653,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.644751993815104,
+      "rgb_bounds": [
+        160,
+        664,
+        352,
+        1087
+      ]
+    },
+    {
+      "frame": 36,
+      "heat_rgb_nonzero_pixels": 41600,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.624966939290365,
+      "rgb_bounds": [
+        160,
+        667,
+        352,
+        1087
+      ]
+    },
+    {
+      "frame": 37,
+      "heat_rgb_nonzero_pixels": 41601,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.613212585449219,
+      "rgb_bounds": [
+        160,
+        664,
+        352,
+        1086
+      ]
+    },
+    {
+      "frame": 38,
+      "heat_rgb_nonzero_pixels": 41649,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.60333251953125,
+      "rgb_bounds": [
+        160,
+        664,
+        352,
+        1086
+      ]
+    },
+    {
+      "frame": 39,
+      "heat_rgb_nonzero_pixels": 41652,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.559795633951824,
+      "rgb_bounds": [
+        160,
+        667,
+        352,
+        1087
+      ]
+    },
+    {
+      "frame": 40,
+      "heat_rgb_nonzero_pixels": 41694,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.537948608398438,
+      "rgb_bounds": [
+        159,
+        664,
+        352,
+        1087
+      ]
+    },
+    {
+      "frame": 41,
+      "heat_rgb_nonzero_pixels": 41650,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.54084981282552,
+      "rgb_bounds": [
+        160,
+        664,
+        353,
+        1086
+      ]
+    },
+    {
+      "frame": 42,
+      "heat_rgb_nonzero_pixels": 41551,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.537533569335938,
+      "rgb_bounds": [
+        161,
+        664,
+        353,
+        1085
+      ]
+    },
+    {
+      "frame": 43,
+      "heat_rgb_nonzero_pixels": 41430,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.517803955078126,
+      "rgb_bounds": [
+        161,
+        664,
+        353,
+        1085
+      ]
+    },
+    {
+      "frame": 44,
+      "heat_rgb_nonzero_pixels": 41309,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.495960998535157,
+      "rgb_bounds": [
+        160,
+        664,
+        351,
+        1086
+      ]
+    },
+    {
+      "frame": 45,
+      "heat_rgb_nonzero_pixels": 41259,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.558303833007812,
+      "rgb_bounds": [
+        162,
+        664,
+        352,
+        1086
+      ]
+    },
+    {
+      "frame": 46,
+      "heat_rgb_nonzero_pixels": 41141,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.575262959798177,
+      "rgb_bounds": [
+        165,
+        665,
+        354,
+        1087
+      ]
+    },
+    {
+      "frame": 47,
+      "heat_rgb_nonzero_pixels": 40934,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.525775146484374,
+      "rgb_bounds": [
+        162,
+        667,
+        350,
+        1086
+      ]
+    },
+    {
+      "frame": 48,
+      "heat_rgb_nonzero_pixels": 40948,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.514660135904949,
+      "rgb_bounds": [
+        159,
+        664,
+        348,
+        1085
+      ]
+    },
+    {
+      "frame": 49,
+      "heat_rgb_nonzero_pixels": 40995,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.552916971842448,
+      "rgb_bounds": [
+        161,
+        667,
+        350,
+        1085
+      ]
+    },
+    {
+      "frame": 50,
+      "heat_rgb_nonzero_pixels": 41007,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.494028727213541,
+      "rgb_bounds": [
+        163,
+        663,
+        352,
+        1084
+      ]
+    },
+    {
+      "frame": 51,
+      "heat_rgb_nonzero_pixels": 41072,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.475757853190105,
+      "rgb_bounds": [
+        161,
+        664,
+        350,
+        1085
+      ]
+    },
+    {
+      "frame": 52,
+      "heat_rgb_nonzero_pixels": 41205,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.506290181477864,
+      "rgb_bounds": [
+        159,
+        666,
+        350,
+        1084
+      ]
+    },
+    {
+      "frame": 53,
+      "heat_rgb_nonzero_pixels": 41322,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.542572530110677,
+      "rgb_bounds": [
+        160,
+        667,
+        351,
+        1085
+      ]
+    },
+    {
+      "frame": 54,
+      "heat_rgb_nonzero_pixels": 41506,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.587998453776041,
+      "rgb_bounds": [
+        160,
+        666,
+        351,
+        1086
+      ]
+    },
+    {
+      "frame": 55,
+      "heat_rgb_nonzero_pixels": 41585,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.628707885742188,
+      "rgb_bounds": [
+        160,
+        664,
+        352,
+        1086
+      ]
+    },
+    {
+      "frame": 56,
+      "heat_rgb_nonzero_pixels": 41525,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.615307108561199,
+      "rgb_bounds": [
+        161,
+        666,
+        352,
+        1085
+      ]
+    },
+    {
+      "frame": 57,
+      "heat_rgb_nonzero_pixels": 41462,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.560965983072917,
+      "rgb_bounds": [
+        161,
+        666,
+        351,
+        1086
+      ]
+    },
+    {
+      "frame": 58,
+      "heat_rgb_nonzero_pixels": 41343,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.521066284179687,
+      "rgb_bounds": [
+        161,
+        664,
+        351,
+        1086
+      ]
+    },
+    {
+      "frame": 59,
+      "heat_rgb_nonzero_pixels": 41254,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.471820068359374,
+      "rgb_bounds": [
+        161,
+        667,
+        351,
+        1085
+      ]
+    },
+    {
+      "frame": 60,
+      "heat_rgb_nonzero_pixels": 41277,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.461117553710938,
+      "rgb_bounds": [
+        161,
+        664,
+        351,
+        1085
+      ]
+    },
+    {
+      "frame": 61,
+      "heat_rgb_nonzero_pixels": 41358,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.460576883951823,
+      "rgb_bounds": [
+        161,
+        664,
+        351,
+        1085
+      ]
+    },
+    {
+      "frame": 62,
+      "heat_rgb_nonzero_pixels": 41395,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.489856974283855,
+      "rgb_bounds": [
+        160,
+        666,
+        351,
+        1085
+      ]
+    },
+    {
+      "frame": 63,
+      "heat_rgb_nonzero_pixels": 41582,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.544688924153645,
+      "rgb_bounds": [
+        159,
+        664,
+        351,
+        1085
+      ]
+    },
+    {
+      "frame": 64,
+      "heat_rgb_nonzero_pixels": 41751,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.606344604492188,
+      "rgb_bounds": [
+        159,
+        664,
+        352,
+        1085
+      ]
+    },
+    {
+      "frame": 65,
+      "heat_rgb_nonzero_pixels": 41954,
+      "heat_peak_byte": 255,
+      "heat_mean_byte": 10.651465861002604,
+      "rgb_bounds": [
+        158,
+        664,
+        353,
+        1086
+      ]
+    }
+  ],
+  "preview_sha256": "ffaca60d43f9f2de17f3e680cd7fe8165c90d560e9fcafb00fc171f7dd29bf73",
+  "registration": {
+    "scale": 0.46875,
+    "shift": [
+      -3.725290298461914e-08,
+      2.8901551961898804
+    ],
+    "cell": [
+      512,
+      1280
+    ],
+    "points": [
+      {
+        "name": "fuel",
+        "position": [
+          -2.5,
+          1.0,
+          0.36000001430511475
+        ],
+        "pixel": [
+          85.33333587646484,
+          370.1654052734375
+        ],
+        "shift": [
+          -3.725290298461914e-08,
+          2.8901551961898804
+        ]
+      },
+      {
+        "name": "oxidizer",
+        "position": [
+          2.5,
+          1.0,
+          0.36000001430511475
+        ],
+        "pixel": [
+          426.6666564941406,
+          370.1654052734375
+        ],
+        "shift": [
+          1.4901161193847656e-07,
+          2.8901551961898804
+        ]
+      }
+    ]
+  },
+  "native_layer_contract": {
+    "same_64_source_poses": true,
+    "body_bell_emission_strength": 0,
+    "heat_blend_mode": "additive",
+    "heat_draw_as_glow": true,
+    "scale": 0.46875,
+    "shift": [
+      -3.725290298461914e-08,
+      2.8901551961898804
+    ],
+    "cold_heat": "idle-heat-glow.png contains zero RGB; do not draw a hot working frame on idle"
+  },
+  "scope": "Actual local Blender source export and atlas/registration checks only. Native working clock, day/night balance and additive occlusion remain untested for V04.",
+  "atlas_pixel_contract": "64body RGBA cells exact;64heat RGB cells exact with alpha255 for native additive emission. Original132RGBA source captures retained in archive. Black additive pixels contribute zero."
+}

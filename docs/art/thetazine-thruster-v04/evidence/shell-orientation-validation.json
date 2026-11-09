@@ -1,0 +1,354 @@
+{
+  "status": "PASS_24_NATIVE_AND_ACTUAL_GLB_OUTWARD_CLOSED_BELL_SHELLS",
+  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "glb_sha256": "fa7ee3a5885a7e2bb0f65d27756b1326cbb42b84768a6ef084be1c6a2127c30a",
+  "records": [
+    {
+      "kind": "source",
+      "shells": [
+        {
+          "mesh": "Nozzle articulated petal 00",
+          "positive_local_volume": 0.08003772936007268,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "Nozzle articulated petal 01",
+          "positive_local_volume": 0.08003773158382439,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "Nozzle articulated petal 02",
+          "positive_local_volume": 0.08003772516856889,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "Nozzle articulated petal 03",
+          "positive_local_volume": 0.08003774410992008,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "Nozzle articulated petal 04",
+          "positive_local_volume": 0.08003773420819348,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "Nozzle articulated petal 05",
+          "positive_local_volume": 0.0800377425302864,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "Nozzle articulated petal 06",
+          "positive_local_volume": 0.08003773857598437,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "Nozzle articulated petal 07",
+          "positive_local_volume": 0.08003773356086448,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "Nozzle articulated petal 08",
+          "positive_local_volume": 0.08003773434885715,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "Nozzle articulated petal 09",
+          "positive_local_volume": 0.08003773010775442,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "Nozzle articulated petal 10",
+          "positive_local_volume": 0.08003773653271315,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "Nozzle articulated petal 11",
+          "positive_local_volume": 0.08003772400459191,
+          "edge_count": 939,
+          "world_transform_determinant": 0.9999999403953552,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 00",
+          "positive_local_volume": 0.07598658097110124,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 01",
+          "positive_local_volume": 0.0759865981696987,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 02",
+          "positive_local_volume": 0.0759865994985579,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 03",
+          "positive_local_volume": 0.07598661304684293,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 04",
+          "positive_local_volume": 0.07598659313045993,
+          "edge_count": 939,
+          "world_transform_determinant": 0.9999998807907104,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 05",
+          "positive_local_volume": 0.07598661177863124,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0000001192092896,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 06",
+          "positive_local_volume": 0.07598657665707835,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 07",
+          "positive_local_volume": 0.07598658845850298,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 08",
+          "positive_local_volume": 0.07598656708142122,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 09",
+          "positive_local_volume": 0.0759865828121712,
+          "edge_count": 939,
+          "world_transform_determinant": 0.9999999403953552,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 10",
+          "positive_local_volume": 0.0759866271951777,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0000001192092896,
+          "import_attribute_seam_weld_tolerance": 0
+        },
+        {
+          "mesh": "V04 interleaved containment seal 11",
+          "positive_local_volume": 0.07598656941752811,
+          "edge_count": 939,
+          "world_transform_determinant": 0.9999999403953552,
+          "import_attribute_seam_weld_tolerance": 0
+        }
+      ]
+    },
+    {
+      "kind": "actual_glb",
+      "shells": [
+        {
+          "mesh": "Nozzle articulated petal 00",
+          "positive_local_volume": 0.08003772936007268,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "Nozzle articulated petal 01",
+          "positive_local_volume": 0.08003773158382439,
+          "edge_count": 939,
+          "world_transform_determinant": 0.9999999403953552,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "Nozzle articulated petal 02",
+          "positive_local_volume": 0.08003772516856889,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "Nozzle articulated petal 03",
+          "positive_local_volume": 0.08003774410992008,
+          "edge_count": 939,
+          "world_transform_determinant": 0.9999999403953552,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "Nozzle articulated petal 04",
+          "positive_local_volume": 0.08003773420819348,
+          "edge_count": 939,
+          "world_transform_determinant": 0.9999999403953552,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "Nozzle articulated petal 05",
+          "positive_local_volume": 0.0800377425302864,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "Nozzle articulated petal 06",
+          "positive_local_volume": 0.08003773857598437,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "Nozzle articulated petal 07",
+          "positive_local_volume": 0.08003773356086448,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0000001192092896,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "Nozzle articulated petal 08",
+          "positive_local_volume": 0.08003773434885715,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0000001192092896,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "Nozzle articulated petal 09",
+          "positive_local_volume": 0.08003773010775442,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "Nozzle articulated petal 10",
+          "positive_local_volume": 0.08003773653271315,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0000001192092896,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "Nozzle articulated petal 11",
+          "positive_local_volume": 0.08003772400459191,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 00",
+          "positive_local_volume": 0.07598658097110124,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 01",
+          "positive_local_volume": 0.0759865981696987,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 02",
+          "positive_local_volume": 0.0759865994985579,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 03",
+          "positive_local_volume": 0.07598661304684293,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 04",
+          "positive_local_volume": 0.07598659313045993,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0000001192092896,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 05",
+          "positive_local_volume": 0.07598661177863124,
+          "edge_count": 939,
+          "world_transform_determinant": 0.9999999403953552,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 06",
+          "positive_local_volume": 0.07598657665707835,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 07",
+          "positive_local_volume": 0.07598658845850298,
+          "edge_count": 939,
+          "world_transform_determinant": 0.9999999403953552,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 08",
+          "positive_local_volume": 0.07598656708142122,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0000001192092896,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 09",
+          "positive_local_volume": 0.0759865828121712,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 10",
+          "positive_local_volume": 0.0759866271951777,
+          "edge_count": 939,
+          "world_transform_determinant": 1.0,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        },
+        {
+          "mesh": "V04 interleaved containment seal 11",
+          "positive_local_volume": 0.07598656941752811,
+          "edge_count": 939,
+          "world_transform_determinant": 0.9999999403953552,
+          "import_attribute_seam_weld_tolerance": 1e-06
+        }
+      ]
+    }
+  ],
+  "scope": "Every edge has two opposing directed uses, positive closed local volume and positive world transform determinant, actual evaluated source and imported GLB at17. Pose66 exact-surface preservation and full route clearance are separate receipts."
+}

@@ -1,0 +1,6 @@
+from PIL import Image,ImageDraw
+import pathlib,json,hashlib
+W=pathlib.Path(__file__).parent;P=W/'native-review';R=W/'pilot-33';root=P/'userdata/script-output';paths=[root/'thetazine-v04-native-pilot33-join-plus2-rejected/isolation/integrated-338.png',root/'thetazine-v04-native/isolation/integrated-338.png'];out=W.parents[1]/'outputs/thetazine-v04-native-join-comparison.png';panel=Image.new('RGB',(840,560),'#11151a');d=ImageDraw.Draw(panel);records=[]
+for i,(label,p) in enumerate(zip(['REJECTED: JET BELOW LIGHT TAIL','CANDIDATE: JET OVERLAPS LIGHT'],paths)):
+ im=Image.open(p).convert('RGB');panel.paste(im.crop((340,550,760,1050)),(420*i,35));d.text((420*i+8,10),label,fill='white');records.append({'file':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+panel.save(out);(R/'native-join-comparison-provenance.json').write_text(json.dumps({'status':'ACTUAL_NATIVE_COMPARISON_REQUIRES_VIEW','native_sha256':json.loads((R/'source-manifest.json').read_text())['native_sha256'],'change':'Same source33/atlases, native flame adjustment+2to0; smoke unchanged. No source recapture or gameplay edits.','screenshots':records,'preview_sha256':hashlib.sha256(out.read_bytes()).hexdigest()},indent=2)+'\n',encoding='utf-8',newline='\n');print(out)

@@ -1,7 +1,7 @@
 {
   "status": "PASS_ACTUAL_NATIVE_GLB_TRIANGLE_UV_MATERIAL_WINDING_AND_SOCKET_REIMPORT",
-  "native_sha256": "a801a46fe96732599926e69d8b7818d978477a15e3c27682b7d9ea52c7a82494",
-  "glb_sha256": "d656e07e2f722ebb33c8990349823b0ef1e2b03c0e3563df8bec6bbec08605ca",
+  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "glb_sha256": "fa7ee3a5885a7e2bb0f65d27756b1326cbb42b84768a6ef084be1c6a2127c30a",
   "method": "One-to-one oriented triangle correspondence, including all three world positions, UVs and material. Bipartite matching resolves coincident triangles without trusting vertex deduplication or raw float uniqueness. Threshold 1e-5, area threshold 1e-5.",
   "mesh_count": 3022,
   "triangle_count_each": 533304,

@@ -1,0 +1,16 @@
+{
+  "status": "ACTUAL_NATIVE_COMPARISON_REQUIRES_VIEW",
+  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "change": "Same source33/atlases, native flame adjustment+2to0; smoke unchanged. No source recapture or gameplay edits.",
+  "screenshots": [
+    {
+      "file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\thruster-v04\\native-review\\userdata\\script-output\\thetazine-v04-native-pilot33-join-plus2-rejected\\isolation\\integrated-338.png",
+      "sha256": "26fb47477c4416a25b9df8f7887c45aad9cbb4a64e6a761072036016a17a061c"
+    },
+    {
+      "file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\thruster-v04\\native-review\\userdata\\script-output\\thetazine-v04-native\\isolation\\integrated-338.png",
+      "sha256": "633955a2e56644278da7837f31bb33f55dd9d40ebde551de9157d69ca20e4b90"
+    }
+  ],
+  "preview_sha256": "a43318ce92709f398da6e6664060582919d706d12516b81ec814e3e3626f2d08"
+}

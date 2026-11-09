@@ -1,0 +1,25 @@
+{
+  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "files": [
+    {
+      "file": "thrust-front.png",
+      "frame": 17,
+      "sha256": "5d1e744292ae1de5973f2647c98b5350ed1aeba4fa94acf9d921e3dbc3a706b5"
+    },
+    {
+      "file": "cold-front.png",
+      "frame": 0,
+      "sha256": "5a52f8ac0f15cc19f6dfd023d167fb99138d18457658c58fd18b8cc7dd26f243"
+    },
+    {
+      "file": "screw-pumps.png",
+      "frame": 17,
+      "sha256": "7440b3942141664c149237bd58b6618a1978573bf14c4e5ed5ae1b9672243703"
+    },
+    {
+      "file": "curved-bell-rams.png",
+      "frame": 17,
+      "sha256": "58f4f00f7045ba1b0b3fa6581b4c3efe2655e08db45a065b336fdb4669722f5d"
+    }
+  ]
+}

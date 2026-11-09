@@ -1,0 +1,105 @@
+{
+  "status": "PASS_RIGID_MOUNT_LOCAL_MECHANISM_MOTION",
+  "native_sha256": "5fb7ea027349720b45585d968a4938c20b5a58c2cec78af9a8de79a0c18d1c3e",
+  "poses": 66,
+  "fixed_parts": [
+    "socket_fuel",
+    "socket_oxidizer",
+    "Upper mounting beam",
+    "Lower mounting crossmember",
+    "Platform saddle foot -1.35",
+    "Platform saddle foot 1.35",
+    "Diagonal shoulder -1",
+    "Diagonal shoulder 1",
+    "Paired canister -1",
+    "Paired canister 1",
+    "V04 anchored platform pedestal -1",
+    "V04 deck anchor stud",
+    "V04 deck anchor stud.001",
+    "V04 deck anchor stud.002",
+    "V04 deck anchor stud.003",
+    "V04 deep gantry upright -1",
+    "V04 raised stanchion crown -1",
+    "V04 upright reinforcing collar",
+    "V04 upright side keeper",
+    "V04 upright reinforcing collar.001",
+    "V04 upright side keeper.001",
+    "V04 upright reinforcing collar.002",
+    "V04 upright side keeper.002",
+    "V04 upright reinforcing collar.003",
+    "V04 upright side keeper.003",
+    "V04 triangulated gantry cheek",
+    "V04 anchored platform pedestal 1",
+    "V04 deck anchor stud.004",
+    "V04 deck anchor stud.005",
+    "V04 deck anchor stud.006",
+    "V04 deck anchor stud.007",
+    "V04 deep gantry upright 1",
+    "V04 raised stanchion crown 1",
+    "V04 upright reinforcing collar.004",
+    "V04 upright side keeper.004",
+    "V04 upright reinforcing collar.005",
+    "V04 upright side keeper.005",
+    "V04 upright reinforcing collar.006",
+    "V04 upright side keeper.006",
+    "V04 upright reinforcing collar.007",
+    "V04 upright side keeper.007",
+    "V04 triangulated gantry cheek.001",
+    "V04 overhead three-dimensional service bridge",
+    "V04 recessed bridge face",
+    "V04 bridge face fastening",
+    "V04 bridge face fastening.001",
+    "V04 bridge face fastening.002",
+    "V04 bridge face fastening.003",
+    "V04 bridge face fastening.004",
+    "V04 bridge face fastening.005",
+    "V04 straight structural tension rod -1",
+    "V04 straight structural tension rod 1",
+    "V04 tank rear load rail fuel",
+    "V04 tank fore-rail frame bracket fuel",
+    "V04 tank rear-rail outrigger fuel",
+    "V04 tank rear load rail water",
+    "V04 tank fore-rail frame bracket water",
+    "V04 tank rear-rail outrigger water"
+  ],
+  "max_fixed_transform_error": 0,
+  "local_motion_bounds": {
+    "V04 sliding bell containment carrier": [
+      [
+        -0.0488060787320137,
+        -0.1158020868897438,
+        -0.0539994016289711
+      ],
+      [
+        0.050229135900735855,
+        0.0,
+        0.0
+      ]
+    ],
+    "V04 animated pump plunger -1": [
+      [
+        -0.925000011920929,
+        -0.8678848743438721,
+        1.1439874172210693
+      ],
+      [
+        -0.925000011920929,
+        -0.8482832908630371,
+        1.1860231161117554
+      ]
+    ],
+    "V04 animated pump plunger 1": [
+      [
+        0.925000011920929,
+        -0.8688951730728149,
+        1.1424480676651
+      ],
+      [
+        0.925000011920929,
+        -0.8475654721260071,
+        1.1881896257400513
+      ]
+    ]
+  },
+  "scope": "Mount, frame, tanks and fixed interfaces stay rigid. Local pump/auger/carrier/petal/ram animation remains; no whole-sprite wobble."
+}
