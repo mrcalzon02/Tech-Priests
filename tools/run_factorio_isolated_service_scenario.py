@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run exactly one independent Tech-Priests Factorio 2.0 scenario.
+"""Run exactly one independent Tech-Priests Factorio engine scenario.
 
 Never modifies the live mod folder, gameplay saves, or the shared 108k
 endurance harness. Requires a locally installed headless Factorio executable
@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import pathlib
+import re
 import shutil
 import subprocess
 import sys
@@ -64,11 +65,22 @@ def rail_connected_smoke_verdict(exit_code: int, log: str) -> bool:
             and first in log and connected in log)
 
 
+def factorio_runtime_compatible(version_line: str, required_series: str) -> bool:
+    """Reject wrong game series; retain the archived 2.0.77 acceptance pin."""
+    if required_series not in ("2.0", "2.1"):
+        return False
+    match = re.search(r"\b(\d+)\.(\d+)\.(\d+)\b", version_line)
+    if match is None:
+        return False
+    major, minor, patch = map(int, match.groups())
+    return f"{major}.{minor}" == required_series and (required_series != "2.0" or patch == 77)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--scenario", choices=tuple(CASES), required=True)
     ap.add_argument("--factorio", default=shutil.which("factorio"),
-                    help="Factorio 2.0.77 headless executable")
+                    help="Headless executable matching tech-priests_src/info.json")
     ap.add_argument("--dependency-mods", type=pathlib.Path,
                     help="Existing folder of external required mod ZIP files")
     ap.add_argument("--output-dir", type=pathlib.Path,
@@ -88,7 +100,7 @@ def main() -> int:
     scenario = CASES[args.scenario]
     factorio = pathlib.Path(args.factorio) if args.factorio else None
     if not (factorio and factorio.is_file()):
-        ap.error("Specify --factorio /path/to/factorio (Factorio 2.0.77)")
+        ap.error("Specify --factorio /path/to/factorio for the active mod version")
     if args.midgame_smoke and args.scenario != "midgame-science":
         ap.error("--midgame-smoke is available only for midgame-science")
     if args.rail_connected_smoke and args.scenario != "remote-rail-acquisition":
@@ -104,12 +116,22 @@ def main() -> int:
     if args.rail_connected_smoke and not 36060 <= tick_count < 90000:
         ap.error("--rail-connected-smoke requires the native 36k checkpoint "
                  "and cannot credit the full 90k train expedition")
+    # The active mod's declared engine series is the acceptance target.
+    # Legacy Factorio 2.0 acceptance remains pinned to exact 2.0.77.
+    try:
+        mod_info = json.loads(
+            (ROOT / "tech-priests_src" / "info.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError) as error:
+        ap.error("Cannot read active mod compatibility metadata: " + str(error))
+    required_series = mod_info.get("factorio_version")
     version = subprocess.run([str(factorio), "--version"],
                              capture_output=True, text=True, check=False)
     version_line = (version.stdout or version.stderr).splitlines()[0:1]
-    if not version_line or "2.0.77" not in version_line[0]:
-        ap.error("Acceptance requires Factorio 2.0.77; found " +
-                 (version_line[0] if version_line else "unidentified executable"))
+    engine_version = version_line[0] if version_line else "unidentified executable"
+    if version.returncode != 0 or not factorio_runtime_compatible(
+            engine_version, required_series):
+        ap.error("Factorio version incompatible with mod factorio_version=" +
+                 str(required_series) + "; found " + engine_version)
 
     output = args.output_dir.resolve() / args.scenario
     output.mkdir(parents=True, exist_ok=True)
@@ -172,6 +194,8 @@ def main() -> int:
             "gate": "two-original-connected-item-debited-rails-only",
             "ticks_requested": tick_count,
             "engine_exit_code": benchmark,
+            "engine_version": engine_version,
+            "required_mod_factorio_series": required_series,
             "first_paid_rail": prefix + "PASS first physical rail built and exact stock debited" in contents,
             "native_connected_pair": prefix + "PASS two distinct 0338-debited native-connected rails" in contents,
             "fixture_failed": prefix + "FAIL " in contents,
