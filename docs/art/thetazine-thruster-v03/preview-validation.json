@@ -1,0 +1,626 @@
+{
+  "status": "PASS_66_ACTUAL_SOURCE_PNGS_64_UNIQUE_WORKING_POSES_AND_ARCHIVE",
+  "native_sha256": "536d872643b4d6d1a953bc118ad9db0937c17f4c1f05dd04a95e8033815fb0e9",
+  "source_archive_sha256": "4fe96211e44e99ae5545309c9ec52ae0d14df57fea1151b64e9e3b5b00f88196",
+  "source_pngs": 66,
+  "working_unique_rgba": 64,
+  "wrap_image_comparison": {
+    "rgba_exact": false,
+    "max_byte_delta": 1,
+    "mean_byte_delta": 3.814697265625e-07,
+    "note": "Source transforms and morphs have exact wrap; a render mismatch would remain explicitly reported."
+  },
+  "frames": [
+    {
+      "frame": 0,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        851
+      ]
+    },
+    {
+      "frame": 1,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1107
+      ]
+    },
+    {
+      "frame": 2,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1108
+      ]
+    },
+    {
+      "frame": 3,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1110
+      ]
+    },
+    {
+      "frame": 4,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1111
+      ]
+    },
+    {
+      "frame": 5,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1113
+      ]
+    },
+    {
+      "frame": 6,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1115
+      ]
+    },
+    {
+      "frame": 7,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1116
+      ]
+    },
+    {
+      "frame": 8,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1117
+      ]
+    },
+    {
+      "frame": 9,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1117
+      ]
+    },
+    {
+      "frame": 10,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1116
+      ]
+    },
+    {
+      "frame": 11,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1115
+      ]
+    },
+    {
+      "frame": 12,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1113
+      ]
+    },
+    {
+      "frame": 13,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1112
+      ]
+    },
+    {
+      "frame": 14,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1111
+      ]
+    },
+    {
+      "frame": 15,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1111
+      ]
+    },
+    {
+      "frame": 16,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1112
+      ]
+    },
+    {
+      "frame": 17,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1113
+      ]
+    },
+    {
+      "frame": 18,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1116
+      ]
+    },
+    {
+      "frame": 19,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1118
+      ]
+    },
+    {
+      "frame": 20,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1121
+      ]
+    },
+    {
+      "frame": 21,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1123
+      ]
+    },
+    {
+      "frame": 22,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1124
+      ]
+    },
+    {
+      "frame": 23,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1125
+      ]
+    },
+    {
+      "frame": 24,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1124
+      ]
+    },
+    {
+      "frame": 25,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1122
+      ]
+    },
+    {
+      "frame": 26,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1119
+      ]
+    },
+    {
+      "frame": 27,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1117
+      ]
+    },
+    {
+      "frame": 28,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1114
+      ]
+    },
+    {
+      "frame": 29,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1112
+      ]
+    },
+    {
+      "frame": 30,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1111
+      ]
+    },
+    {
+      "frame": 31,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1110
+      ]
+    },
+    {
+      "frame": 32,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1110
+      ]
+    },
+    {
+      "frame": 33,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1109
+      ]
+    },
+    {
+      "frame": 34,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1109
+      ]
+    },
+    {
+      "frame": 35,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1108
+      ]
+    },
+    {
+      "frame": 36,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1107
+      ]
+    },
+    {
+      "frame": 37,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1106
+      ]
+    },
+    {
+      "frame": 38,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1104
+      ]
+    },
+    {
+      "frame": 39,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1102
+      ]
+    },
+    {
+      "frame": 40,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1101
+      ]
+    },
+    {
+      "frame": 41,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1099
+      ]
+    },
+    {
+      "frame": 42,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1099
+      ]
+    },
+    {
+      "frame": 43,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1099
+      ]
+    },
+    {
+      "frame": 44,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1100
+      ]
+    },
+    {
+      "frame": 45,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1101
+      ]
+    },
+    {
+      "frame": 46,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1102
+      ]
+    },
+    {
+      "frame": 47,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1103
+      ]
+    },
+    {
+      "frame": 48,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1103
+      ]
+    },
+    {
+      "frame": 49,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1103
+      ]
+    },
+    {
+      "frame": 50,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1102
+      ]
+    },
+    {
+      "frame": 51,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1100
+      ]
+    },
+    {
+      "frame": 52,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1098
+      ]
+    },
+    {
+      "frame": 53,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1097
+      ]
+    },
+    {
+      "frame": 54,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1095
+      ]
+    },
+    {
+      "frame": 55,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1094
+      ]
+    },
+    {
+      "frame": 56,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1094
+      ]
+    },
+    {
+      "frame": 57,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1094
+      ]
+    },
+    {
+      "frame": 58,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1095
+      ]
+    },
+    {
+      "frame": 59,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1097
+      ]
+    },
+    {
+      "frame": 60,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1098
+      ]
+    },
+    {
+      "frame": 61,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1100
+      ]
+    },
+    {
+      "frame": 62,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1102
+      ]
+    },
+    {
+      "frame": 63,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1104
+      ]
+    },
+    {
+      "frame": 64,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1105
+      ]
+    },
+    {
+      "frame": 65,
+      "alpha_bounds": [
+        82,
+        193,
+        430,
+        1107
+      ]
+    }
+  ],
+  "preview_files": [
+    {
+      "file": "thetazine-v03-cold-thrust.png",
+      "sha256": "66e225ed213fb60cbfc29faf3ac395f1cc39ca68664036585a220c5c28a81cc9"
+    },
+    {
+      "file": "thetazine-v03-keyposes.png",
+      "sha256": "f8469d49a0afa422180870053274f0d1f7c805c8398c2e1454d4e09a4443755b"
+    },
+    {
+      "file": "thetazine-v03-containment-loop.gif",
+      "sha256": "5013dd2bf631aeb330ce224c1f332b0ae7d57efa7935c7cab082e215d89454b9"
+    }
+  ],
+  "gif_frame_count": 64,
+  "gif_duration_ms": 2130,
+  "scope": "Combined body and FX source proof only; no segmented atlas, shadow pass, native visual import or performance/behavior assertion."
+}

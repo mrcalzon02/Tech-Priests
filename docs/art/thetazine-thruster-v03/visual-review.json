@@ -1,0 +1,50 @@
+{
+  "status": "TECHNICAL_INTERCHANGE_PASS_VISUAL_REFINEMENT_CANDIDATE",
+  "owner_approval": false,
+  "final_acceptance_threshold": 4,
+  "scale": "0..5; current art-review judgment, not owner acceptance",
+  "native_sha256": "536d872643b4d6d1a953bc118ad9db0937c17f4c1f05dd04a95e8033815fb0e9",
+  "glb_sha256": "267a96b7cf1e64131b221fbec34ae5d1eee8a4fcccb9337f1da32312660acda8",
+  "reference_source_sha256": "61f419d9c9c37dc74f02ecf5fb824461bb3bae11a52c8f9005575b4d4c8b4e74",
+  "reference_package_sha256": "0670bc10c11800e89beb4d39dd692dc32a4d3ea4b967b742559b54a8d7967791",
+  "viewed": [
+    "export-front.png",
+    "export-upper.png",
+    "export-rear.png",
+    "export-rear-clay.png",
+    "thetazine-v03-keyposes.png",
+    "thetazine-v03-cold-thrust.png"
+  ],
+  "scores": {
+    "construction_and_verticality": {
+      "score": 4,
+      "reason": "Raised bridge, braced pedestals, pump bridge, seated regulator routes and visible supported ram cylinders read in front/rear/clay."
+    },
+    "requested_mechanical_readability": {
+      "score": 4,
+      "reason": "Six true telescoping shafts retain gland overlap and follow moving pins, with overlapping inner bell leaves, pressure fronts and gauges."
+    },
+    "surface_and_exhaust_finish": {
+      "score": 3,
+      "reason": "Axial temper, dark cold char and heated lip are present. Cone density corrected against actual dark-background alpha; gas still uses stylized layered surfaces and discrete shock diamonds. Further owner refinement required."
+    },
+    "runtime_visual_integration": {
+      "score": 1,
+      "reason": "V03 local source/export only. Prior V02/native mounting proof remains valid for that revision; no V03 native acceptance inherited."
+    }
+  },
+  "review_scope": "Local rendered source and independently reimported artifact; not full visual acceptance, material animation interchange or runtime promotion.",
+  "rejected_local_studies": [
+    "01/02 builder failures retained in work logs",
+    "03/04/05 pipe end and bell seal repairs",
+    "06 rejected exported narrow-face UV collapse",
+    "07 technical pass but alpha-composited cone too faint; 08 repairs gas density without geometry/socket changes"
+  ],
+  "remaining": [
+    "Appearance refinement/owner review",
+    "Actual-scale native V03 placement and plume occlusion",
+    "Separate body/emission/shadow/FX exports and exact atlases",
+    "Independent native glow and plume phases",
+    "Final normal-mod graphics import after local visual evidence"
+  ]
+}

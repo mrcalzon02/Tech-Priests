@@ -1,0 +1,50 @@
+{
+  "status": "AUTHORED_V03_REGION_MAPS",
+  "uv_contract": "Petal/refractory U circumferential, V axial throat0/lip1. Temper at V~.69, char from V~.77, heat emission toward lip; glass fuel color derives from native Thetazine fluid.",
+  "files": [
+    {
+      "file": "petal-basecolor.png",
+      "sha256": "45558d5a2a75a394103a2da9f8e6d0f80da4052c1dfda60345da4c124f13b43b"
+    },
+    {
+      "file": "petal-metalrough.png",
+      "sha256": "f2d681b516f3407fa783572dcf8c63a336487c837b889e2bf1d04c77bf21993b"
+    },
+    {
+      "file": "petal-normal.png",
+      "sha256": "d0b5a1e9f22ecaa356791d9b5182f4af13bb17e545012cf23051852c8989bc0a"
+    },
+    {
+      "file": "petal-emission.png",
+      "sha256": "3d1709ad5c9b04b382085b03b33727b91f32576315e142bd24995c4a08b78c4d"
+    },
+    {
+      "file": "refractory-basecolor.png",
+      "sha256": "d680000aacf5041ffe3f5722cd723267f53e68f1db1a1596500e58ad37ed3d63"
+    },
+    {
+      "file": "refractory-metalrough.png",
+      "sha256": "1954117ded820ba56e755fa7b284acbbb7f0a99c99c26cccc8376583fd5a02f8"
+    },
+    {
+      "file": "refractory-normal.png",
+      "sha256": "d0b5a1e9f22ecaa356791d9b5182f4af13bb17e545012cf23051852c8989bc0a"
+    },
+    {
+      "file": "refractory-emission.png",
+      "sha256": "9e4f0e531424b748cc3da22a3115f452c74e56fe6cbf37d6b00cd15ce9d83452"
+    },
+    {
+      "file": "exhaust-envelope.png",
+      "sha256": "a0222d0a90a06fa4b84e2a9892bb9de469a4bd7f2f2f3022f80596aa960e7992"
+    },
+    {
+      "file": "exhaust-core.png",
+      "sha256": "25c4c3683a153a0b6f8d0122923558acae4e1c92275543299c53b5a56c60fc6d"
+    },
+    {
+      "file": "pressure-gauge.png",
+      "sha256": "fd9cd2af69e7c52e55342329f49a81418b7c632fa16f05553d444e96a8ec1c11"
+    }
+  ]
+}

@@ -1,0 +1,4991 @@
+{
+  "status": "V03_PRESSURE_AND_CONTAINMENT_CANDIDATE_REQUIRES_INDEPENDENT_EXPORT_AND_RENDER_REVIEW",
+  "input_native_sha256": "61f419d9c9c37dc74f02ecf5fb824461bb3bae11a52c8f9005575b4d4c8b4e74",
+  "builder_sha256": "7a48bb0df22c2aab3f9afcb954045aea73584c4992da58e401ee527096cc999c",
+  "native_sha256": "536d872643b4d6d1a953bc118ad9db0937c17f4c1f05dd04a95e8033815fb0e9",
+  "glb_sha256": "267a96b7cf1e64131b221fbec34ae5d1eee8a4fcccb9337f1da32312660acda8",
+  "source_model_units": "Blender X east, +Y fore, +Z up; unchanged actual native pipe and ground frame",
+  "requested_features": [
+    "raised three-dimensional platform gantry and anchored pedestals",
+    "vertically layered pumps, manifolds and moving pressure gauges",
+    "hollow transparent pressure sight pipes with native magenta fuel and moving density fronts",
+    "six heavy telescoping containment rams with glands, shafts, clevises and pins",
+    "closed cold bell; extended/open oscillating bell under load",
+    "axial temper, persistent lip char, dynamic heated refractory",
+    "large separate violet/white thrust cone with animated shape keys and shock diamonds"
+  ],
+  "mesh_count": 671,
+  "new_source_geometry": [
+    {
+      "part": "V03 anchored platform pedestal -1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 deck anchor stud",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 deck anchor stud.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 deck anchor stud.002",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 deck anchor stud.003",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 deep gantry upright -1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 raised stanchion crown -1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright reinforcing collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright side keeper",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright reinforcing collar.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright side keeper.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright reinforcing collar.002",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright side keeper.002",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright reinforcing collar.003",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright side keeper.003",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 triangulated gantry cheek",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 anchored platform pedestal 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 deck anchor stud.004",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 deck anchor stud.005",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 deck anchor stud.006",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 deck anchor stud.007",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 deep gantry upright 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 raised stanchion crown 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright reinforcing collar.004",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright side keeper.004",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright reinforcing collar.005",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright side keeper.005",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright reinforcing collar.006",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright side keeper.006",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright reinforcing collar.007",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 upright side keeper.007",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 triangulated gantry cheek.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 overhead three-dimensional service bridge",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 recessed bridge face",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 bridge face fastening",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 bridge face fastening.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 bridge face fastening.002",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 bridge face fastening.003",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 bridge face fastening.004",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 bridge face fastening.005",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 overhead regulator seat",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 overhead regulator cap",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 overhead routed distribution",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 overhead regulator seat.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 overhead regulator cap.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 overhead routed distribution.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 injector bridge support -1 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 injector bridge support -1 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 injector bridge support 1 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 injector bridge support 1 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 elevated injector distribution plenum",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 raised pump load rail -1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pump bed front seat -1 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pump bed front seat -1 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 raised pump load rail 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pump bed front seat 1 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pump bed front seat 1 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 vertical pressure intensifier -1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier bolted head",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier bolted head.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier bolted head.002",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier bolted head.003",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier tie rod",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier tie rod.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 animated pump plunger -1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pump support pedestal",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pump injector outlet",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 transparent fuel pressure sight",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 visible pressurized fuel",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight bolted metal collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.002",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.003",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.004",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.005",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight bolted metal collar.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.006",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.007",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.008",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.009",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.010",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.011",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight protective stay",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight protective stay.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight supply branch fuel",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 sight injector return fuel",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 fuel pressure front 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fuel pressure front 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fuel pressure front 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fuel pressure front 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fuel pressure front 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 side-mounted pressure instrument case",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 seated gauge takeoff",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 pressure dial face -1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 instrument bronze bezel",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving containment gauge needle -1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 gauge spindle",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 vertical pressure intensifier 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier bolted head.004",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier bolted head.005",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier bolted head.006",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier bolted head.007",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier tie rod.002",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 intensifier tie rod.003",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 animated pump plunger 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pump support pedestal.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pump injector outlet.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 transparent water pressure sight",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 visible pressurized water",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight bolted metal collar.002",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.012",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.013",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.014",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.015",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.016",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.017",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight bolted metal collar.003",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.018",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.019",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.020",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.021",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.022",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight collar fastener.023",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight protective stay.002",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight protective stay.003",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 sight supply branch water",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 sight injector return water",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 water pressure front 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 water pressure front 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 water pressure front 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 water pressure front 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 water pressure front 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 side-mounted pressure instrument case.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 seated gauge takeoff.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 pressure dial face 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 instrument bronze bezel.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving containment gauge needle 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 gauge spindle.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 interleaved containment seal 00",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 39
+    },
+    {
+      "part": "V03 interleaved containment seal 01",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 40
+    },
+    {
+      "part": "V03 interleaved containment seal 02",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 44
+    },
+    {
+      "part": "V03 interleaved containment seal 03",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 44
+    },
+    {
+      "part": "V03 interleaved containment seal 04",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 44
+    },
+    {
+      "part": "V03 interleaved containment seal 05",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 38
+    },
+    {
+      "part": "V03 interleaved containment seal 06",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 40
+    },
+    {
+      "part": "V03 interleaved containment seal 07",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 38
+    },
+    {
+      "part": "V03 interleaved containment seal 08",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 41
+    },
+    {
+      "part": "V03 interleaved containment seal 09",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 42
+    },
+    {
+      "part": "V03 interleaved containment seal 10",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 43
+    },
+    {
+      "part": "V03 interleaved containment seal 11",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 40
+    },
+    {
+      "part": "Nozzle articulated petal 00",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 42
+    },
+    {
+      "part": "Nozzle articulated petal 01",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 43
+    },
+    {
+      "part": "Nozzle articulated petal 02",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 43
+    },
+    {
+      "part": "Nozzle articulated petal 03",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 44
+    },
+    {
+      "part": "Nozzle articulated petal 04",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 44
+    },
+    {
+      "part": "Nozzle articulated petal 05",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 44
+    },
+    {
+      "part": "Nozzle articulated petal 06",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 39
+    },
+    {
+      "part": "Nozzle articulated petal 07",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 42
+    },
+    {
+      "part": "Nozzle articulated petal 08",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 40
+    },
+    {
+      "part": "Nozzle articulated petal 09",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 44
+    },
+    {
+      "part": "Nozzle articulated petal 10",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 39
+    },
+    {
+      "part": "Nozzle articulated petal 11",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 41
+    },
+    {
+      "part": "V03 fixed chrome telescoping throat sleeve",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 floating containment carrier collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 supported hydraulic distribution ring",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint ram seated saddle 0 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint ram seated saddle 0 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 petal restraint lug neck 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving ram clevis eye 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving restraint pin 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed spherical restraint pin",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pressure barrel 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear pressure cap 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 forward gland 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 gland seal 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear reinforcement 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 front reinforcement 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 telescoping chrome piston shaft 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 0 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 0 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint hydraulic feed 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 restraint ram seated saddle 1 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint ram seated saddle 1 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 petal restraint lug neck 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving ram clevis eye 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving restraint pin 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek.002",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek.003",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed spherical restraint pin.001",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pressure barrel 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear pressure cap 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 forward gland 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 gland seal 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear reinforcement 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 front reinforcement 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 telescoping chrome piston shaft 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 1 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 1 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint hydraulic feed 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 restraint ram seated saddle 2 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint ram seated saddle 2 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 petal restraint lug neck 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving ram clevis eye 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving restraint pin 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek.004",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek.005",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed spherical restraint pin.002",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pressure barrel 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear pressure cap 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 forward gland 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 gland seal 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear reinforcement 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 front reinforcement 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 telescoping chrome piston shaft 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 2 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 2 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint hydraulic feed 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 restraint ram seated saddle 3 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint ram seated saddle 3 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 petal restraint lug neck 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving ram clevis eye 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving restraint pin 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek.006",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek.007",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed spherical restraint pin.003",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pressure barrel 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear pressure cap 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 forward gland 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 gland seal 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear reinforcement 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 front reinforcement 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 telescoping chrome piston shaft 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 3 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 3 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint hydraulic feed 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 restraint ram seated saddle 4 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint ram seated saddle 4 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 petal restraint lug neck 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving ram clevis eye 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving restraint pin 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek.008",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek.009",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed spherical restraint pin.004",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pressure barrel 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear pressure cap 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 forward gland 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 gland seal 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear reinforcement 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 front reinforcement 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 telescoping chrome piston shaft 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 4 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 4 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint hydraulic feed 4",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 restraint ram seated saddle 5 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint ram seated saddle 5 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 petal restraint lug neck 5",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving ram clevis eye 5",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 moving restraint pin 5",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek.010",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed ram clevis cheek.011",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 fixed spherical restraint pin.005",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pressure barrel 5",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear pressure cap 5",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 forward gland 5",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 gland seal 5",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 rear reinforcement 5",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 front reinforcement 5",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 telescoping chrome piston shaft 5",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 5 actual seated riser",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 hydraulic manifold standoff 5 seated weld collar",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 restraint hydraulic feed 5",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 16
+    },
+    {
+      "part": "V03 shaped violet thrust envelope",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 white-hot thrust core",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pressure shock diamond 0",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pressure shock diamond 1",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pressure shock diamond 2",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    },
+    {
+      "part": "V03 pressure shock diamond 3",
+      "numerical_triangles_removed": 0,
+      "uv_triangles_repaired": 0
+    }
+  ],
+  "removed_placeholder_parts": [
+    "Petal thermal liner 00",
+    "Actuator fixed shoulder 00",
+    "Articulated actuator rod 00",
+    "Petal thermal liner 01",
+    "Actuator fixed shoulder 01",
+    "Articulated actuator rod 01",
+    "Petal thermal liner 02",
+    "Actuator fixed shoulder 02",
+    "Articulated actuator rod 02",
+    "Petal thermal liner 03",
+    "Actuator fixed shoulder 03",
+    "Articulated actuator rod 03",
+    "Petal thermal liner 04",
+    "Actuator fixed shoulder 04",
+    "Articulated actuator rod 04",
+    "Petal thermal liner 05",
+    "Actuator fixed shoulder 05",
+    "Articulated actuator rod 05",
+    "Petal thermal liner 06",
+    "Actuator fixed shoulder 06",
+    "Articulated actuator rod 06",
+    "Petal thermal liner 07",
+    "Actuator fixed shoulder 07",
+    "Articulated actuator rod 07",
+    "Petal thermal liner 08",
+    "Actuator fixed shoulder 08",
+    "Articulated actuator rod 08",
+    "Petal thermal liner 09",
+    "Actuator fixed shoulder 09",
+    "Articulated actuator rod 09",
+    "Petal thermal liner 10",
+    "Actuator fixed shoulder 10",
+    "Articulated actuator rod 10",
+    "Petal thermal liner 11",
+    "Actuator fixed shoulder 11",
+    "Articulated actuator rod 11"
+  ],
+  "seated_support_contacts": [
+    {
+      "name": "V03 injector bridge support -1",
+      "support": "Pressure chamber retaining band",
+      "surface_point": [
+        -0.502676248550415,
+        -2.146634340286255,
+        -0.27169740200042725
+      ],
+      "normal": [
+        -0.659345269203186,
+        -0.317741721868515,
+        0.6813985109329224
+      ],
+      "tip": [
+        -0.875,
+        -1.6278011798858643,
+        0.39031222462654114
+      ]
+    },
+    {
+      "name": "V03 injector bridge support 1",
+      "support": "Pressure chamber retaining band",
+      "surface_point": [
+        0.5026761889457703,
+        -2.146634340286255,
+        -0.27169734239578247
+      ],
+      "normal": [
+        0.6593459844589233,
+        -0.3177414536476135,
+        0.6813979744911194
+      ],
+      "tip": [
+        0.875,
+        -1.6278011798858643,
+        0.39031222462654114
+      ]
+    },
+    {
+      "name": "V03 pump bed front seat -1",
+      "support": "Diagonal shoulder -1",
+      "surface_point": [
+        -1.2697659730911255,
+        -0.03598135709762573,
+        -0.09813997149467468
+      ],
+      "normal": [
+        -0.2112390697002411,
+        0.2752057909965515,
+        -0.9378911852836609
+      ],
+      "tip": [
+        -0.925000011920929,
+        -0.336434543132782,
+        0.5787196159362793
+      ]
+    },
+    {
+      "name": "V03 pump bed front seat 1",
+      "support": "Diagonal shoulder 1",
+      "surface_point": [
+        1.269765853881836,
+        -0.035981208086013794,
+        -0.09813989698886871
+      ],
+      "normal": [
+        0.2112390697002411,
+        0.2752057909965515,
+        -0.9378911852836609
+      ],
+      "tip": [
+        0.925000011920929,
+        -0.336434543132782,
+        0.5787196159362793
+      ]
+    },
+    {
+      "name": "V03 restraint ram seated saddle 0",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        0.7987499833106995,
+        -2.4513561725616455,
+        -1.0970956087112427
+      ],
+      "normal": [
+        0.9978589415550232,
+        -0.02764040231704712,
+        0.05927498638629913
+      ],
+      "tip": [
+        1.024999976158142,
+        -2.4513561725616455,
+        -1.0970957279205322
+      ]
+    },
+    {
+      "name": "V03 hydraulic manifold standoff 0",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        0.7987499833106995,
+        -2.4513561725616455,
+        -1.0970956087112427
+      ],
+      "normal": [
+        0.9978589415550232,
+        -0.02764040231704712,
+        0.05927498638629913
+      ],
+      "tip": [
+        1.0125000476837158,
+        -2.258765935897827,
+        -1.0072894096374512
+      ]
+    },
+    {
+      "name": "V03 restraint ram seated saddle 1",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        0.39937499165534973,
+        -2.743697166442871,
+        -0.47016823291778564
+      ],
+      "normal": [
+        0.5555702447891235,
+        -0.35139358043670654,
+        0.7535676956176758
+      ],
+      "tip": [
+        0.512499988079071,
+        -2.8265042304992676,
+        -0.2925879955291748
+      ]
+    },
+    {
+      "name": "V03 hydraulic manifold standoff 1",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        0.39937499165534973,
+        -2.743697166442871,
+        -0.47016823291778564
+      ],
+      "normal": [
+        0.5555702447891235,
+        -0.35139358043670654,
+        0.7535676956176758
+      ],
+      "tip": [
+        0.5062500238418579,
+        -2.6293389797210693,
+        -0.2125927209854126
+      ]
+    },
+    {
+      "name": "V03 restraint ram seated saddle 2",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        -0.39937499165534973,
+        -2.743697166442871,
+        -0.47016823291778564
+      ],
+      "normal": [
+        -0.4422888159751892,
+        -0.3790340721607208,
+        0.8128430843353271
+      ],
+      "tip": [
+        -0.512499988079071,
+        -2.8265042304992676,
+        -0.2925879955291748
+      ]
+    },
+    {
+      "name": "V03 hydraulic manifold standoff 2",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        -0.39937499165534973,
+        -2.743697166442871,
+        -0.47016823291778564
+      ],
+      "normal": [
+        -0.4422888159751892,
+        -0.3790340721607208,
+        0.8128430843353271
+      ],
+      "tip": [
+        -0.5062500238418579,
+        -2.6293389797210693,
+        -0.2125927209854126
+      ]
+    },
+    {
+      "name": "V03 restraint ram seated saddle 3",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        -0.7987499833106995,
+        -2.4513561725616455,
+        -1.0970956087112427
+      ],
+      "normal": [
+        -0.9978588819503784,
+        -0.027640413492918015,
+        0.059275008738040924
+      ],
+      "tip": [
+        -1.024999976158142,
+        -2.4513561725616455,
+        -1.0970957279205322
+      ]
+    },
+    {
+      "name": "V03 hydraulic manifold standoff 3",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        -0.7987499833106995,
+        -2.4513561725616455,
+        -1.0970956087112427
+      ],
+      "normal": [
+        -0.9978588819503784,
+        -0.027640413492918015,
+        0.059275008738040924
+      ],
+      "tip": [
+        -1.0125000476837158,
+        -2.258765935897827,
+        -1.0072894096374512
+      ]
+    },
+    {
+      "name": "V03 restraint ram seated saddle 4",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        -0.39937499165534973,
+        -2.15901517868042,
+        -1.7240231037139893
+      ],
+      "normal": [
+        -0.4422866106033325,
+        0.379036009311676,
+        -0.8128433227539062
+      ],
+      "tip": [
+        -0.512499988079071,
+        -2.0762081146240234,
+        -1.9016034603118896
+      ]
+    },
+    {
+      "name": "V03 hydraulic manifold standoff 4",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        -0.39937499165534973,
+        -2.15901517868042,
+        -1.7240231037139893
+      ],
+      "normal": [
+        -0.4422866106033325,
+        0.379036009311676,
+        -0.8128433227539062
+      ],
+      "tip": [
+        -0.5062500238418579,
+        -1.8881927728652954,
+        -1.8019860982894897
+      ]
+    },
+    {
+      "name": "V03 restraint ram seated saddle 5",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        0.39937499165534973,
+        -2.15901517868042,
+        -1.7240231037139893
+      ],
+      "normal": [
+        0.555571436882019,
+        0.3513945937156677,
+        -0.753566324710846
+      ],
+      "tip": [
+        0.512499988079071,
+        -2.0762081146240234,
+        -1.9016034603118896
+      ]
+    },
+    {
+      "name": "V03 hydraulic manifold standoff 5",
+      "support": "Pressure chamber retaining band.001",
+      "surface_point": [
+        0.39937499165534973,
+        -2.15901517868042,
+        -1.7240231037139893
+      ],
+      "normal": [
+        0.555571436882019,
+        0.3513945937156677,
+        -0.753566324710846
+      ],
+      "tip": [
+        0.5062500238418579,
+        -1.8881927728652954,
+        -1.8019860982894897
+      ]
+    }
+  ],
+  "ram_pose_rows": [
+    {
+      "frame": 0,
+      "ram": 0,
+      "pin_to_pin": 2.0905668560721735,
+      "exposed_shaft": 0.8905668560721733,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 0,
+      "ram": 1,
+      "pin_to_pin": 2.0905670079557535,
+      "exposed_shaft": 0.8905670079557533,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 0,
+      "ram": 2,
+      "pin_to_pin": 2.0905670079557535,
+      "exposed_shaft": 0.8905670079557533,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 0,
+      "ram": 3,
+      "pin_to_pin": 2.0905668560721735,
+      "exposed_shaft": 0.8905668560721733,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 0,
+      "ram": 4,
+      "pin_to_pin": 2.0905672645568423,
+      "exposed_shaft": 0.8905672645568421,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 0,
+      "ram": 5,
+      "pin_to_pin": 2.0905672645568423,
+      "exposed_shaft": 0.8905672645568421,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 1,
+      "ram": 0,
+      "pin_to_pin": 2.230827065596066,
+      "exposed_shaft": 1.0308270655960659,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 1,
+      "ram": 1,
+      "pin_to_pin": 2.224371404647643,
+      "exposed_shaft": 1.0243714046476429,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 1,
+      "ram": 2,
+      "pin_to_pin": 2.2219736786613113,
+      "exposed_shaft": 1.0219736786613112,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 1,
+      "ram": 3,
+      "pin_to_pin": 2.2240930318894083,
+      "exposed_shaft": 1.0240930318894081,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 1,
+      "ram": 4,
+      "pin_to_pin": 2.2273714436468905,
+      "exposed_shaft": 1.0273714436468904,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 1,
+      "ram": 5,
+      "pin_to_pin": 2.2282808108660697,
+      "exposed_shaft": 1.0282808108660695,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 2,
+      "ram": 0,
+      "pin_to_pin": 2.2418309899838684,
+      "exposed_shaft": 1.0418309899838682,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 2,
+      "ram": 1,
+      "pin_to_pin": 2.236427232157916,
+      "exposed_shaft": 1.0364272321579158,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 2,
+      "ram": 2,
+      "pin_to_pin": 2.2359416309104603,
+      "exposed_shaft": 1.03594163091046,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 2,
+      "ram": 3,
+      "pin_to_pin": 2.239797517661428,
+      "exposed_shaft": 1.039797517661428,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 2,
+      "ram": 4,
+      "pin_to_pin": 2.244030665068379,
+      "exposed_shaft": 1.0440306650683788,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 2,
+      "ram": 5,
+      "pin_to_pin": 2.2453474768364536,
+      "exposed_shaft": 1.0453474768364535,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 3,
+      "ram": 0,
+      "pin_to_pin": 2.2524966310271886,
+      "exposed_shaft": 1.0524966310271884,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 3,
+      "ram": 1,
+      "pin_to_pin": 2.248833263260314,
+      "exposed_shaft": 1.0488332632603137,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 3,
+      "ram": 2,
+      "pin_to_pin": 2.250559319864543,
+      "exposed_shaft": 1.0505593198645427,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 3,
+      "ram": 3,
+      "pin_to_pin": 2.25602082143366,
+      "exposed_shaft": 1.05602082143366,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 3,
+      "ram": 4,
+      "pin_to_pin": 2.2608177625576267,
+      "exposed_shaft": 1.0608177625576265,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 3,
+      "ram": 5,
+      "pin_to_pin": 2.2620692050568953,
+      "exposed_shaft": 1.0620692050568952,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 4,
+      "ram": 0,
+      "pin_to_pin": 2.2621994213978303,
+      "exposed_shaft": 1.06219942139783,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 4,
+      "ram": 1,
+      "pin_to_pin": 2.260668448683329,
+      "exposed_shaft": 1.0606684486833289,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 4,
+      "ram": 2,
+      "pin_to_pin": 2.2645232946175464,
+      "exposed_shaft": 1.0645232946175462,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 4,
+      "ram": 3,
+      "pin_to_pin": 2.271107386415083,
+      "exposed_shaft": 1.0711073864150826,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 4,
+      "ram": 4,
+      "pin_to_pin": 2.2758258525360486,
+      "exposed_shaft": 1.0758258525360485,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 4,
+      "ram": 5,
+      "pin_to_pin": 2.2764053102706607,
+      "exposed_shaft": 1.0764053102706606,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 5,
+      "ram": 0,
+      "pin_to_pin": 2.270391719475315,
+      "exposed_shaft": 1.0703917194753148,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 5,
+      "ram": 1,
+      "pin_to_pin": 2.27100400414788,
+      "exposed_shaft": 1.0710040041478797,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 5,
+      "ram": 2,
+      "pin_to_pin": 2.2765299584622896,
+      "exposed_shaft": 1.0765299584622894,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 5,
+      "ram": 3,
+      "pin_to_pin": 2.2834911987644735,
+      "exposed_shaft": 1.0834911987644733,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 5,
+      "ram": 4,
+      "pin_to_pin": 2.287379200661167,
+      "exposed_shaft": 1.0873792006611667,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 5,
+      "ram": 5,
+      "pin_to_pin": 2.2866998230155255,
+      "exposed_shaft": 1.0866998230155254,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 6,
+      "ram": 0,
+      "pin_to_pin": 2.2766441070814993,
+      "exposed_shaft": 1.0766441070814992,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 6,
+      "ram": 1,
+      "pin_to_pin": 2.279039000708336,
+      "exposed_shaft": 1.079039000708336,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 6,
+      "ram": 2,
+      "pin_to_pin": 2.2855043438806293,
+      "exposed_shaft": 1.085504343880629,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 6,
+      "ram": 3,
+      "pin_to_pin": 2.2919905280166946,
+      "exposed_shaft": 1.0919905280166944,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 6,
+      "ram": 4,
+      "pin_to_pin": 2.2943487336606125,
+      "exposed_shaft": 1.0943487336606124,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 6,
+      "ram": 5,
+      "pin_to_pin": 2.291994886621228,
+      "exposed_shaft": 1.0919948866212277,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 7,
+      "ram": 0,
+      "pin_to_pin": 2.280709895119122,
+      "exposed_shaft": 1.0807098951191216,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 7,
+      "ram": 1,
+      "pin_to_pin": 2.284258995925906,
+      "exposed_shaft": 1.084258995925906,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 7,
+      "ram": 2,
+      "pin_to_pin": 2.2908183438566803,
+      "exposed_shaft": 1.09081834385668,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 7,
+      "ram": 3,
+      "pin_to_pin": 2.2960434897831874,
+      "exposed_shaft": 1.0960434897831872,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 7,
+      "ram": 4,
+      "pin_to_pin": 2.296376662639903,
+      "exposed_shaft": 1.0963766626399027,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 7,
+      "ram": 5,
+      "pin_to_pin": 2.292214935156995,
+      "exposed_shaft": 1.0922149351569947,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 8,
+      "ram": 0,
+      "pin_to_pin": 2.2826098161902975,
+      "exposed_shaft": 1.0826098161902973,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 8,
+      "ram": 1,
+      "pin_to_pin": 2.286577192999445,
+      "exposed_shaft": 1.086577192999445,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 8,
+      "ram": 2,
+      "pin_to_pin": 2.2924516340885934,
+      "exposed_shaft": 1.0924516340885932,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 8,
+      "ram": 3,
+      "pin_to_pin": 2.29584511417512,
+      "exposed_shaft": 1.0958451141751198,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 8,
+      "ram": 4,
+      "pin_to_pin": 2.293963653884737,
+      "exposed_shaft": 1.093963653884737,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 8,
+      "ram": 5,
+      "pin_to_pin": 2.2881980661240853,
+      "exposed_shaft": 1.088198066124085,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 9,
+      "ram": 0,
+      "pin_to_pin": 2.2826914479081815,
+      "exposed_shaft": 1.0826914479081813,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 9,
+      "ram": 1,
+      "pin_to_pin": 2.2864100903942206,
+      "exposed_shaft": 1.0864100903942204,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 9,
+      "ram": 2,
+      "pin_to_pin": 2.2910331125193615,
+      "exposed_shaft": 1.0910331125193613,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 9,
+      "ram": 3,
+      "pin_to_pin": 2.2923391353440343,
+      "exposed_shaft": 1.0923391353440342,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 9,
+      "ram": 4,
+      "pin_to_pin": 2.2884041040014313,
+      "exposed_shaft": 1.0884041040014312,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 9,
+      "ram": 5,
+      "pin_to_pin": 2.281563208306596,
+      "exposed_shaft": 1.081563208306596,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 10,
+      "ram": 0,
+      "pin_to_pin": 2.2816426881422616,
+      "exposed_shaft": 1.0816426881422614,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 10,
+      "ram": 1,
+      "pin_to_pin": 2.2846556804531963,
+      "exposed_shaft": 1.0846556804531962,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 10,
+      "ram": 2,
+      "pin_to_pin": 2.2877682997772726,
+      "exposed_shaft": 1.0877682997772724,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 10,
+      "ram": 3,
+      "pin_to_pin": 2.2870786452651832,
+      "exposed_shaft": 1.087078645265183,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 10,
+      "ram": 4,
+      "pin_to_pin": 2.281580444222137,
+      "exposed_shaft": 1.0815804442221366,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 10,
+      "ram": 5,
+      "pin_to_pin": 2.2744356040131017,
+      "exposed_shaft": 1.0744356040131016,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 11,
+      "ram": 0,
+      "pin_to_pin": 2.2804291284003386,
+      "exposed_shaft": 1.0804291284003384,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 11,
+      "ram": 1,
+      "pin_to_pin": 2.2825762877003353,
+      "exposed_shaft": 1.082576287700335,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 11,
+      "ram": 2,
+      "pin_to_pin": 2.284250193023926,
+      "exposed_shaft": 1.0842501930239257,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 11,
+      "ram": 3,
+      "pin_to_pin": 2.2819729173535195,
+      "exposed_shaft": 1.0819729173535193,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 11,
+      "ram": 4,
+      "pin_to_pin": 2.275642035832541,
+      "exposed_shaft": 1.0756420358325407,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 11,
+      "ram": 5,
+      "pin_to_pin": 2.2690673782791584,
+      "exposed_shaft": 1.0690673782791582,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 12,
+      "ram": 0,
+      "pin_to_pin": 2.2801668238170834,
+      "exposed_shaft": 1.0801668238170832,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 12,
+      "ram": 1,
+      "pin_to_pin": 2.2815985790941076,
+      "exposed_shaft": 1.0815985790941074,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 12,
+      "ram": 2,
+      "pin_to_pin": 2.282194265174613,
+      "exposed_shaft": 1.0821942651746128,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 12,
+      "ram": 3,
+      "pin_to_pin": 2.278955642438255,
+      "exposed_shaft": 1.0789556424382547,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 12,
+      "ram": 4,
+      "pin_to_pin": 2.2726226705235417,
+      "exposed_shaft": 1.0726226705235415,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 12,
+      "ram": 5,
+      "pin_to_pin": 2.2674171355079045,
+      "exposed_shaft": 1.0674171355079043,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 13,
+      "ram": 0,
+      "pin_to_pin": 2.281945693435813,
+      "exposed_shaft": 1.081945693435813,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 13,
+      "ram": 1,
+      "pin_to_pin": 2.283068099151127,
+      "exposed_shaft": 1.0830680991511268,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 13,
+      "ram": 2,
+      "pin_to_pin": 2.283127122510216,
+      "exposed_shaft": 1.083127122510216,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 13,
+      "ram": 3,
+      "pin_to_pin": 2.279630162053668,
+      "exposed_shaft": 1.0796301620536677,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 13,
+      "ram": 4,
+      "pin_to_pin": 2.27405169553891,
+      "exposed_shaft": 1.07405169553891,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 13,
+      "ram": 5,
+      "pin_to_pin": 2.2707711006631155,
+      "exposed_shaft": 1.0707711006631153,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 14,
+      "ram": 0,
+      "pin_to_pin": 2.286633417559398,
+      "exposed_shaft": 1.0866334175593977,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 14,
+      "ram": 1,
+      "pin_to_pin": 2.287989678781965,
+      "exposed_shaft": 1.0879896787819647,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 14,
+      "ram": 2,
+      "pin_to_pin": 2.2880862214043085,
+      "exposed_shaft": 1.0880862214043083,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 14,
+      "ram": 3,
+      "pin_to_pin": 2.2849457635692785,
+      "exposed_shaft": 1.0849457635692783,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 14,
+      "ram": 4,
+      "pin_to_pin": 2.2806458045620346,
+      "exposed_shaft": 1.0806458045620344,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 14,
+      "ram": 5,
+      "pin_to_pin": 2.2794836293866294,
+      "exposed_shaft": 1.0794836293866292,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 15,
+      "ram": 0,
+      "pin_to_pin": 2.2946865726125814,
+      "exposed_shaft": 1.0946865726125812,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 15,
+      "ram": 1,
+      "pin_to_pin": 2.296801698244475,
+      "exposed_shaft": 1.0968016982444748,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 15,
+      "ram": 2,
+      "pin_to_pin": 2.297382505916137,
+      "exposed_shaft": 1.0973825059161366,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 15,
+      "ram": 3,
+      "pin_to_pin": 2.29497758513664,
+      "exposed_shaft": 1.0949775851366397,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 15,
+      "ram": 4,
+      "pin_to_pin": 2.292144869654668,
+      "exposed_shaft": 1.0921448696546676,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 15,
+      "ram": 5,
+      "pin_to_pin": 2.292906772821395,
+      "exposed_shaft": 1.092906772821395,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 16,
+      "ram": 0,
+      "pin_to_pin": 2.3060063892016323,
+      "exposed_shaft": 1.106006389201632,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 16,
+      "ram": 1,
+      "pin_to_pin": 2.3092222801860585,
+      "exposed_shaft": 1.1092222801860583,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 16,
+      "ram": 2,
+      "pin_to_pin": 2.3104751767552476,
+      "exposed_shaft": 1.1104751767552474,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 16,
+      "ram": 3,
+      "pin_to_pin": 2.3088682474611537,
+      "exposed_shaft": 1.1088682474611535,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 16,
+      "ram": 4,
+      "pin_to_pin": 2.307336878611646,
+      "exposed_shaft": 1.1073368786116458,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 16,
+      "ram": 5,
+      "pin_to_pin": 2.3095100385389973,
+      "exposed_shaft": 1.109510038538997,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 17,
+      "ram": 0,
+      "pin_to_pin": 2.3198657259944317,
+      "exposed_shaft": 1.1198657259944316,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 17,
+      "ram": 1,
+      "pin_to_pin": 2.324221786078305,
+      "exposed_shaft": 1.124221786078305,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 17,
+      "ram": 2,
+      "pin_to_pin": 2.32601332134142,
+      "exposed_shaft": 1.1260133213414196,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 17,
+      "ram": 3,
+      "pin_to_pin": 2.324950982602236,
+      "exposed_shaft": 1.1249509826022357,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 17,
+      "ram": 4,
+      "pin_to_pin": 2.3242786742848067,
+      "exposed_shaft": 1.1242786742848065,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 17,
+      "ram": 5,
+      "pin_to_pin": 2.327174459296704,
+      "exposed_shaft": 1.127174459296704,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 18,
+      "ram": 0,
+      "pin_to_pin": 2.3349471712045644,
+      "exposed_shaft": 1.1349471712045642,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 18,
+      "ram": 1,
+      "pin_to_pin": 2.3401380499735827,
+      "exposed_shaft": 1.1401380499735825,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 18,
+      "ram": 2,
+      "pin_to_pin": 2.3420401387474974,
+      "exposed_shaft": 1.1420401387474972,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 18,
+      "ram": 3,
+      "pin_to_pin": 2.341041345429559,
+      "exposed_shaft": 1.1410413454295587,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 18,
+      "ram": 4,
+      "pin_to_pin": 2.340651708933641,
+      "exposed_shaft": 1.1406517089336408,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 18,
+      "ram": 5,
+      "pin_to_pin": 2.3435839504290215,
+      "exposed_shaft": 1.1435839504290213,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 19,
+      "ram": 0,
+      "pin_to_pin": 2.349513624900762,
+      "exposed_shaft": 1.149513624900762,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 19,
+      "ram": 1,
+      "pin_to_pin": 2.3549347459699495,
+      "exposed_shaft": 1.1549347459699493,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 19,
+      "ram": 2,
+      "pin_to_pin": 2.356333234823406,
+      "exposed_shaft": 1.1563332348234057,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 19,
+      "ram": 3,
+      "pin_to_pin": 2.354839043876102,
+      "exposed_shaft": 1.1548390438761018,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 19,
+      "ram": 4,
+      "pin_to_pin": 2.3541894014541276,
+      "exposed_shaft": 1.1541894014541274,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 19,
+      "ram": 5,
+      "pin_to_pin": 2.3566344480597183,
+      "exposed_shaft": 1.1566344480597182,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 20,
+      "ram": 0,
+      "pin_to_pin": 2.361683985341967,
+      "exposed_shaft": 1.1616839853419667,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 20,
+      "ram": 1,
+      "pin_to_pin": 2.366563096616918,
+      "exposed_shaft": 1.166563096616918,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 20,
+      "ram": 2,
+      "pin_to_pin": 2.3668140202420056,
+      "exposed_shaft": 1.1668140202420054,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 20,
+      "ram": 3,
+      "pin_to_pin": 2.3643496602671545,
+      "exposed_shaft": 1.1643496602671544,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 20,
+      "ram": 4,
+      "pin_to_pin": 2.3630825749345057,
+      "exposed_shaft": 1.1630825749345055,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 20,
+      "ram": 5,
+      "pin_to_pin": 2.364790706747338,
+      "exposed_shaft": 1.164790706747338,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 21,
+      "ram": 0,
+      "pin_to_pin": 2.3697742252135945,
+      "exposed_shaft": 1.1697742252135943,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 21,
+      "ram": 1,
+      "pin_to_pin": 2.373341206166155,
+      "exposed_shaft": 1.173341206166155,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 21,
+      "ram": 2,
+      "pin_to_pin": 2.3719330214357153,
+      "exposed_shaft": 1.171933021435715,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 21,
+      "ram": 3,
+      "pin_to_pin": 2.3682456100817038,
+      "exposed_shaft": 1.1682456100817036,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 21,
+      "ram": 4,
+      "pin_to_pin": 2.366288168853533,
+      "exposed_shaft": 1.1662881688535327,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 21,
+      "ram": 5,
+      "pin_to_pin": 2.367325010216384,
+      "exposed_shaft": 1.1673250102163837,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 22,
+      "ram": 0,
+      "pin_to_pin": 2.3726260891436515,
+      "exposed_shaft": 1.1726260891436513,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 22,
+      "ram": 1,
+      "pin_to_pin": 2.374275282869365,
+      "exposed_shaft": 1.174275282869365,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 22,
+      "ram": 2,
+      "pin_to_pin": 2.3709590517057473,
+      "exposed_shaft": 1.170959051705747,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 22,
+      "ram": 3,
+      "pin_to_pin": 2.366105378591298,
+      "exposed_shaft": 1.1661053785912978,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 22,
+      "ram": 4,
+      "pin_to_pin": 2.3636974614008657,
+      "exposed_shaft": 1.1636974614008655,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 22,
+      "ram": 5,
+      "pin_to_pin": 2.3644115414957594,
+      "exposed_shaft": 1.1644115414957592,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 23,
+      "ram": 0,
+      "pin_to_pin": 2.3698444486554635,
+      "exposed_shaft": 1.1698444486554633,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 23,
+      "ram": 1,
+      "pin_to_pin": 2.369259565220527,
+      "exposed_shaft": 1.1692595652205267,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 23,
+      "ram": 2,
+      "pin_to_pin": 2.3641215629426213,
+      "exposed_shaft": 1.1641215629426211,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 23,
+      "ram": 3,
+      "pin_to_pin": 2.3584851851216375,
+      "exposed_shaft": 1.1584851851216373,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 23,
+      "ram": 4,
+      "pin_to_pin": 2.3561370090562384,
+      "exposed_shaft": 1.1561370090562382,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 23,
+      "ram": 5,
+      "pin_to_pin": 2.3570596808608175,
+      "exposed_shaft": 1.1570596808608173,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 24,
+      "ram": 0,
+      "pin_to_pin": 2.3618971719353175,
+      "exposed_shaft": 1.1618971719353173,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 24,
+      "ram": 1,
+      "pin_to_pin": 2.359111788229575,
+      "exposed_shaft": 1.1591117882295747,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 24,
+      "ram": 2,
+      "pin_to_pin": 2.352580696705867,
+      "exposed_shaft": 1.1525806967058667,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 24,
+      "ram": 3,
+      "pin_to_pin": 2.3468181832759365,
+      "exposed_shaft": 1.1468181832759363,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 24,
+      "ram": 4,
+      "pin_to_pin": 2.3451969493820255,
+      "exposed_shaft": 1.1451969493820253,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 24,
+      "ram": 5,
+      "pin_to_pin": 2.346892380967523,
+      "exposed_shaft": 1.1468923809675227,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 25,
+      "ram": 0,
+      "pin_to_pin": 2.3500557322500684,
+      "exposed_shaft": 1.1500557322500682,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 25,
+      "ram": 1,
+      "pin_to_pin": 2.3454518314592794,
+      "exposed_shaft": 1.1454518314592792,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 25,
+      "ram": 2,
+      "pin_to_pin": 2.338237666930486,
+      "exposed_shaft": 1.1382376669304857,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 25,
+      "ram": 3,
+      "pin_to_pin": 2.333156972534365,
+      "exposed_shaft": 1.1331569725343646,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 25,
+      "ram": 4,
+      "pin_to_pin": 2.3329254526464553,
+      "exposed_shaft": 1.1329254526464552,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 25,
+      "ram": 5,
+      "pin_to_pin": 2.3358222470907934,
+      "exposed_shaft": 1.1358222470907933,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 26,
+      "ram": 0,
+      "pin_to_pin": 2.3361990074192307,
+      "exposed_shaft": 1.1361990074192305,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 26,
+      "ram": 1,
+      "pin_to_pin": 2.3304342390867454,
+      "exposed_shaft": 1.1304342390867452,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 26,
+      "ram": 2,
+      "pin_to_pin": 2.3234008347151422,
+      "exposed_shaft": 1.123400834715142,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 26,
+      "ram": 3,
+      "pin_to_pin": 2.319792292621518,
+      "exposed_shaft": 1.119792292621518,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 26,
+      "ram": 4,
+      "pin_to_pin": 2.321433709564326,
+      "exposed_shaft": 1.1214337095643256,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 26,
+      "ram": 5,
+      "pin_to_pin": 2.3256855010477944,
+      "exposed_shaft": 1.1256855010477942,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 27,
+      "ram": 0,
+      "pin_to_pin": 2.322496565323434,
+      "exposed_shaft": 1.1224965653234338,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 27,
+      "ram": 1,
+      "pin_to_pin": 2.3163775587295214,
+      "exposed_shaft": 1.1163775587295213,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 27,
+      "ram": 2,
+      "pin_to_pin": 2.310373596137454,
+      "exposed_shaft": 1.1103735961374537,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 27,
+      "ram": 3,
+      "pin_to_pin": 2.3088306762898845,
+      "exposed_shaft": 1.1088306762898843,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 27,
+      "ram": 4,
+      "pin_to_pin": 2.3125077309209403,
+      "exposed_shaft": 1.1125077309209401,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 27,
+      "ram": 5,
+      "pin_to_pin": 2.317918343742457,
+      "exposed_shaft": 1.1179183437424567,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 28,
+      "ram": 0,
+      "pin_to_pin": 2.311033214847951,
+      "exposed_shaft": 1.111033214847951,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 28,
+      "ram": 1,
+      "pin_to_pin": 2.30534840948261,
+      "exposed_shaft": 1.1053484094826098,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 28,
+      "ram": 2,
+      "pin_to_pin": 2.301030144825686,
+      "exposed_shaft": 1.1010301448256858,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 28,
+      "ram": 3,
+      "pin_to_pin": 2.3018075306830936,
+      "exposed_shaft": 1.1018075306830935,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 28,
+      "ram": 4,
+      "pin_to_pin": 2.307299006564474,
+      "exposed_shaft": 1.1072990065644737,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 28,
+      "ram": 5,
+      "pin_to_pin": 2.3133450130952635,
+      "exposed_shaft": 1.1133450130952633,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 29,
+      "ram": 0,
+      "pin_to_pin": 2.3034260781089966,
+      "exposed_shaft": 1.1034260781089964,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 29,
+      "ram": 1,
+      "pin_to_pin": 2.298780110197256,
+      "exposed_shaft": 1.0987801101972559,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 29,
+      "ram": 2,
+      "pin_to_pin": 2.2964758784704222,
+      "exposed_shaft": 1.096475878470422,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 29,
+      "ram": 3,
+      "pin_to_pin": 2.299427110004273,
+      "exposed_shaft": 1.0994271100042727,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 29,
+      "ram": 4,
+      "pin_to_pin": 2.3061601638459437,
+      "exposed_shaft": 1.1061601638459435,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 29,
+      "ram": 5,
+      "pin_to_pin": 2.31209506030158,
+      "exposed_shaft": 1.1120950603015798,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 30,
+      "ram": 0,
+      "pin_to_pin": 2.3005136624088385,
+      "exposed_shaft": 1.1005136624088383,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 30,
+      "ram": 1,
+      "pin_to_pin": 2.2972038320124084,
+      "exposed_shaft": 1.0972038320124082,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 30,
+      "ram": 2,
+      "pin_to_pin": 2.2968558122419744,
+      "exposed_shaft": 1.0968558122419743,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 30,
+      "ram": 3,
+      "pin_to_pin": 2.3014729861322087,
+      "exposed_shaft": 1.1014729861322086,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 30,
+      "ram": 4,
+      "pin_to_pin": 2.308641621891877,
+      "exposed_shaft": 1.1086416218918766,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 30,
+      "ram": 5,
+      "pin_to_pin": 2.313657857679992,
+      "exposed_shaft": 1.1136578576799918,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 31,
+      "ram": 0,
+      "pin_to_pin": 2.3021842669116976,
+      "exposed_shaft": 1.1021842669116975,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 31,
+      "ram": 1,
+      "pin_to_pin": 2.300158328203329,
+      "exposed_shaft": 1.100158328203329,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 31,
+      "ram": 2,
+      "pin_to_pin": 2.3013645467056687,
+      "exposed_shaft": 1.1013645467056685,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 31,
+      "ram": 3,
+      "pin_to_pin": 2.306900742364779,
+      "exposed_shaft": 1.106900742364779,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 31,
+      "ram": 4,
+      "pin_to_pin": 2.3136378854386406,
+      "exposed_shaft": 1.1136378854386404,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 31,
+      "ram": 5,
+      "pin_to_pin": 2.3170320562501723,
+      "exposed_shaft": 1.117032056250172,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 32,
+      "ram": 0,
+      "pin_to_pin": 2.307388627707364,
+      "exposed_shaft": 1.1073886277073637,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 32,
+      "ram": 1,
+      "pin_to_pin": 2.3062906577143427,
+      "exposed_shaft": 1.1062906577143425,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 32,
+      "ram": 2,
+      "pin_to_pin": 2.3084292141882146,
+      "exposed_shaft": 1.1084292141882144,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 32,
+      "ram": 3,
+      "pin_to_pin": 2.3140721892882317,
+      "exposed_shaft": 1.1140721892882315,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 32,
+      "ram": 4,
+      "pin_to_pin": 2.3196215827118687,
+      "exposed_shaft": 1.1196215827118685,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 32,
+      "ram": 5,
+      "pin_to_pin": 2.320934131431185,
+      "exposed_shaft": 1.1209341314311847,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 33,
+      "ram": 0,
+      "pin_to_pin": 2.3143401725988224,
+      "exposed_shaft": 1.1143401725988222,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 33,
+      "ram": 1,
+      "pin_to_pin": 2.313638422748683,
+      "exposed_shaft": 1.1136384227486826,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 33,
+      "ram": 2,
+      "pin_to_pin": 2.3160328672174666,
+      "exposed_shaft": 1.1160328672174664,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 33,
+      "ram": 3,
+      "pin_to_pin": 2.321078419907584,
+      "exposed_shaft": 1.1210784199075836,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 33,
+      "ram": 4,
+      "pin_to_pin": 2.3249315816866503,
+      "exposed_shaft": 1.12493158168665,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 33,
+      "ram": 5,
+      "pin_to_pin": 2.3240315130742895,
+      "exposed_shaft": 1.1240315130742893,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 34,
+      "ram": 0,
+      "pin_to_pin": 2.3208610054130063,
+      "exposed_shaft": 1.1208610054130062,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 34,
+      "ram": 1,
+      "pin_to_pin": 2.3200069022897707,
+      "exposed_shaft": 1.1200069022897705,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 34,
+      "ram": 2,
+      "pin_to_pin": 2.3220953259294794,
+      "exposed_shaft": 1.1220953259294792,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 34,
+      "ram": 3,
+      "pin_to_pin": 2.3260781117510834,
+      "exposed_shaft": 1.1260781117510832,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 34,
+      "ram": 4,
+      "pin_to_pin": 2.32805264266212,
+      "exposed_shaft": 1.1280526426621198,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 34,
+      "ram": 5,
+      "pin_to_pin": 2.325154868231384,
+      "exposed_shaft": 1.1251548682313839,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 35,
+      "ram": 0,
+      "pin_to_pin": 2.324795966238979,
+      "exposed_shaft": 1.1247959662389788,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 35,
+      "ram": 1,
+      "pin_to_pin": 2.3233803137883497,
+      "exposed_shaft": 1.1233803137883496,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 35,
+      "ram": 2,
+      "pin_to_pin": 2.3248372087064375,
+      "exposed_shaft": 1.1248372087064373,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 35,
+      "ram": 3,
+      "pin_to_pin": 2.3276051829154127,
+      "exposed_shaft": 1.1276051829154126,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 35,
+      "ram": 4,
+      "pin_to_pin": 2.3278532447512283,
+      "exposed_shaft": 1.1278532447512282,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 35,
+      "ram": 5,
+      "pin_to_pin": 2.3234744260797173,
+      "exposed_shaft": 1.1234744260797171,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 36,
+      "ram": 0,
+      "pin_to_pin": 2.3244149685224778,
+      "exposed_shaft": 1.1244149685224776,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 36,
+      "ram": 1,
+      "pin_to_pin": 2.322279145890811,
+      "exposed_shaft": 1.1222791458908108,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 36,
+      "ram": 2,
+      "pin_to_pin": 2.3230794009357436,
+      "exposed_shaft": 1.1230794009357434,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 36,
+      "ram": 3,
+      "pin_to_pin": 2.3247911946898556,
+      "exposed_shaft": 1.1247911946898554,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 36,
+      "ram": 4,
+      "pin_to_pin": 2.3237449859863837,
+      "exposed_shaft": 1.1237449859863835,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 36,
+      "ram": 5,
+      "pin_to_pin": 2.3185992612917206,
+      "exposed_shaft": 1.1185992612917204,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 37,
+      "ram": 0,
+      "pin_to_pin": 2.3187234055643655,
+      "exposed_shaft": 1.1187234055643653,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 37,
+      "ram": 1,
+      "pin_to_pin": 2.316011369116885,
+      "exposed_shaft": 1.116011369116885,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 37,
+      "ram": 2,
+      "pin_to_pin": 2.3164185880532244,
+      "exposed_shaft": 1.1164185880532242,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 37,
+      "ram": 3,
+      "pin_to_pin": 2.3174802102198937,
+      "exposed_shaft": 1.1174802102198935,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 37,
+      "ram": 4,
+      "pin_to_pin": 2.3157400739853533,
+      "exposed_shaft": 1.1157400739853531,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 37,
+      "ram": 5,
+      "pin_to_pin": 2.3105915605429272,
+      "exposed_shaft": 1.110591560542927,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 38,
+      "ram": 0,
+      "pin_to_pin": 2.3076411550514577,
+      "exposed_shaft": 1.1076411550514575,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 38,
+      "ram": 1,
+      "pin_to_pin": 2.304778854758837,
+      "exposed_shaft": 1.1047788547588366,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 38,
+      "ram": 2,
+      "pin_to_pin": 2.305270787227411,
+      "exposed_shaft": 1.1052707872274108,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 38,
+      "ram": 3,
+      "pin_to_pin": 2.3062129770934554,
+      "exposed_shaft": 1.1062129770934552,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 38,
+      "ram": 4,
+      "pin_to_pin": 2.304399486983531,
+      "exposed_shaft": 1.1043994869835307,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 38,
+      "ram": 5,
+      "pin_to_pin": 2.2998966615502696,
+      "exposed_shaft": 1.0998966615502694,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 39,
+      "ram": 0,
+      "pin_to_pin": 2.292016826764571,
+      "exposed_shaft": 1.0920168267645707,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 39,
+      "ram": 1,
+      "pin_to_pin": 2.289625210415616,
+      "exposed_shaft": 1.0896252104156159,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 39,
+      "ram": 2,
+      "pin_to_pin": 2.29076225445996,
+      "exposed_shaft": 1.09076225445996,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 39,
+      "ram": 3,
+      "pin_to_pin": 2.29208906821855,
+      "exposed_shaft": 1.09208906821855,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 39,
+      "ram": 4,
+      "pin_to_pin": 2.290685990852395,
+      "exposed_shaft": 1.090685990852395,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 39,
+      "ram": 5,
+      "pin_to_pin": 2.2872246566906256,
+      "exposed_shaft": 1.0872246566906254,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 40,
+      "ram": 0,
+      "pin_to_pin": 2.2734801635188338,
+      "exposed_shaft": 1.0734801635188336,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 40,
+      "ram": 1,
+      "pin_to_pin": 2.272233697095326,
+      "exposed_shaft": 1.0722336970953257,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 40,
+      "ram": 2,
+      "pin_to_pin": 2.2744978577675177,
+      "exposed_shaft": 1.0744978577675175,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 40,
+      "ram": 3,
+      "pin_to_pin": 2.2765367626629924,
+      "exposed_shaft": 1.0765367626629923,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 40,
+      "ram": 4,
+      "pin_to_pin": 2.275771422457846,
+      "exposed_shaft": 1.0757714224578456,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 40,
+      "ram": 5,
+      "pin_to_pin": 2.2734190089407385,
+      "exposed_shaft": 1.0734190089407383,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 41,
+      "ram": 0,
+      "pin_to_pin": 2.2541463430057007,
+      "exposed_shaft": 1.0541463430057005,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 41,
+      "ram": 1,
+      "pin_to_pin": 2.2546068396332304,
+      "exposed_shaft": 1.0546068396332302,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 41,
+      "ram": 2,
+      "pin_to_pin": 2.2582539995348307,
+      "exposed_shaft": 1.0582539995348306,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 41,
+      "ram": 3,
+      "pin_to_pin": 2.261049512825324,
+      "exposed_shaft": 1.0610495128253237,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 41,
+      "ram": 4,
+      "pin_to_pin": 2.260840002836802,
+      "exposed_shaft": 1.0608400028368017,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 41,
+      "ram": 5,
+      "pin_to_pin": 2.259351459151721,
+      "exposed_shaft": 1.059351459151721,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 42,
+      "ram": 0,
+      "pin_to_pin": 2.2362400914235088,
+      "exposed_shaft": 1.0362400914235086,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 42,
+      "ram": 1,
+      "pin_to_pin": 2.2387018769669558,
+      "exposed_shaft": 1.0387018769669556,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 42,
+      "ram": 2,
+      "pin_to_pin": 2.2436661207603183,
+      "exposed_shaft": 1.0436661207603182,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 42,
+      "ram": 3,
+      "pin_to_pin": 2.246950181502322,
+      "exposed_shaft": 1.0469501815023219,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 42,
+      "ram": 4,
+      "pin_to_pin": 2.2469396155036274,
+      "exposed_shaft": 1.0469396155036272,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 42,
+      "ram": 5,
+      "pin_to_pin": 2.245852978463626,
+      "exposed_shaft": 1.0458529784636257,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 43,
+      "ram": 0,
+      "pin_to_pin": 2.221692592143214,
+      "exposed_shaft": 1.0216925921432138,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 43,
+      "ram": 1,
+      "pin_to_pin": 2.2260943113733087,
+      "exposed_shaft": 1.0260943113733085,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 43,
+      "ram": 2,
+      "pin_to_pin": 2.2319731502416955,
+      "exposed_shaft": 1.0319731502416953,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 43,
+      "ram": 3,
+      "pin_to_pin": 2.2352209369140916,
+      "exposed_shaft": 1.0352209369140914,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 43,
+      "ram": 4,
+      "pin_to_pin": 2.2348851723127017,
+      "exposed_shaft": 1.0348851723127015,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 43,
+      "ram": 5,
+      "pin_to_pin": 2.2336690130357106,
+      "exposed_shaft": 1.0336690130357105,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 44,
+      "ram": 0,
+      "pin_to_pin": 2.2118205157028776,
+      "exposed_shaft": 1.0118205157028775,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 44,
+      "ram": 1,
+      "pin_to_pin": 2.2177371759790807,
+      "exposed_shaft": 1.0177371759790805,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 44,
+      "ram": 2,
+      "pin_to_pin": 2.2238684503088817,
+      "exposed_shaft": 1.0238684503088815,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 44,
+      "ram": 3,
+      "pin_to_pin": 2.226421133764355,
+      "exposed_shaft": 1.0264211337643547,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 44,
+      "ram": 4,
+      "pin_to_pin": 2.2252158626191374,
+      "exposed_shaft": 1.0252158626191372,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 44,
+      "ram": 5,
+      "pin_to_pin": 2.2234238502227086,
+      "exposed_shaft": 1.0234238502227084,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 45,
+      "ram": 0,
+      "pin_to_pin": 2.2071284467364074,
+      "exposed_shaft": 1.0071284467364072,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 45,
+      "ram": 1,
+      "pin_to_pin": 2.213860813034358,
+      "exposed_shaft": 1.0138608130343578,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 45,
+      "ram": 2,
+      "pin_to_pin": 2.2194599051473394,
+      "exposed_shaft": 1.0194599051473392,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 45,
+      "ram": 3,
+      "pin_to_pin": 2.220679386589423,
+      "exposed_shaft": 1.020679386589423,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 45,
+      "ram": 4,
+      "pin_to_pin": 2.218188696196916,
+      "exposed_shaft": 1.018188696196916,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 45,
+      "ram": 5,
+      "pin_to_pin": 2.215585850649834,
+      "exposed_shaft": 1.0155858506498339,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 46,
+      "ram": 0,
+      "pin_to_pin": 2.2072849225480935,
+      "exposed_shaft": 1.0072849225480933,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 46,
+      "ram": 1,
+      "pin_to_pin": 2.214006237446804,
+      "exposed_shaft": 1.0140062374468037,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 46,
+      "ram": 2,
+      "pin_to_pin": 2.2183286539923714,
+      "exposed_shaft": 1.0183286539923713,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 46,
+      "ram": 3,
+      "pin_to_pin": 2.217742553995208,
+      "exposed_shaft": 1.0177425539952076,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 46,
+      "ram": 4,
+      "pin_to_pin": 2.213795876611265,
+      "exposed_shaft": 1.013795876611265,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 46,
+      "ram": 5,
+      "pin_to_pin": 2.2104326442582583,
+      "exposed_shaft": 1.010432644258258,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 47,
+      "ram": 0,
+      "pin_to_pin": 2.2112404826108962,
+      "exposed_shaft": 1.011240482610896,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 47,
+      "ram": 1,
+      "pin_to_pin": 2.217167232048203,
+      "exposed_shaft": 1.017167232048203,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 47,
+      "ram": 2,
+      "pin_to_pin": 2.219654935214001,
+      "exposed_shaft": 1.019654935214001,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 47,
+      "ram": 3,
+      "pin_to_pin": 2.217064056648521,
+      "exposed_shaft": 1.017064056648521,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 47,
+      "ram": 4,
+      "pin_to_pin": 2.211798629396031,
+      "exposed_shaft": 1.0117986293960306,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 47,
+      "ram": 5,
+      "pin_to_pin": 2.2080203547144173,
+      "exposed_shaft": 1.008020354714417,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 48,
+      "ram": 0,
+      "pin_to_pin": 2.2174657352849225,
+      "exposed_shaft": 1.0174657352849223,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 48,
+      "ram": 1,
+      "pin_to_pin": 2.2220023978146872,
+      "exposed_shaft": 1.022002397814687,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 48,
+      "ram": 2,
+      "pin_to_pin": 2.222386625219799,
+      "exposed_shaft": 1.0223866252197986,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 48,
+      "ram": 3,
+      "pin_to_pin": 2.217919427277773,
+      "exposed_shaft": 1.0179194272777727,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 48,
+      "ram": 4,
+      "pin_to_pin": 2.2117796394875975,
+      "exposed_shaft": 1.0117796394875973,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 48,
+      "ram": 5,
+      "pin_to_pin": 2.208168210932163,
+      "exposed_shaft": 1.0081682109321628,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 49,
+      "ram": 0,
+      "pin_to_pin": 2.2242381253134913,
+      "exposed_shaft": 1.0242381253134911,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 49,
+      "ram": 1,
+      "pin_to_pin": 2.2270768946419013,
+      "exposed_shaft": 1.027076894641901,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 49,
+      "ram": 2,
+      "pin_to_pin": 2.2254215297324533,
+      "exposed_shaft": 1.0254215297324532,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 49,
+      "ram": 3,
+      "pin_to_pin": 2.219522572816059,
+      "exposed_shaft": 1.0195225728160588,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 49,
+      "ram": 4,
+      "pin_to_pin": 2.2131959694975154,
+      "exposed_shaft": 1.0131959694975152,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 49,
+      "ram": 5,
+      "pin_to_pin": 2.210452410802228,
+      "exposed_shaft": 1.0104524108022277,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 50,
+      "ram": 0,
+      "pin_to_pin": 2.2299377317449185,
+      "exposed_shaft": 1.0299377317449183,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 50,
+      "ram": 1,
+      "pin_to_pin": 2.231095844515162,
+      "exposed_shaft": 1.031095844515162,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 50,
+      "ram": 2,
+      "pin_to_pin": 2.2277774433753925,
+      "exposed_shaft": 1.0277774433753923,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 50,
+      "ram": 3,
+      "pin_to_pin": 2.2211385072774688,
+      "exposed_shaft": 1.0211385072774686,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 50,
+      "ram": 4,
+      "pin_to_pin": 2.2154314908952544,
+      "exposed_shaft": 1.0154314908952542,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 50,
+      "ram": 5,
+      "pin_to_pin": 2.214216350188214,
+      "exposed_shaft": 1.0142163501882138,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 51,
+      "ram": 0,
+      "pin_to_pin": 2.233306962721374,
+      "exposed_shaft": 1.0333069627213738,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 51,
+      "ram": 1,
+      "pin_to_pin": 2.2330950050435563,
+      "exposed_shaft": 1.0330950050435561,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 51,
+      "ram": 2,
+      "pin_to_pin": 2.2287259840692935,
+      "exposed_shaft": 1.0287259840692933,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 51,
+      "ram": 3,
+      "pin_to_pin": 2.222159304619757,
+      "exposed_shaft": 1.0221593046197568,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 51,
+      "ram": 4,
+      "pin_to_pin": 2.2178348919637405,
+      "exposed_shaft": 1.0178348919637403,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 51,
+      "ram": 5,
+      "pin_to_pin": 2.218605418661689,
+      "exposed_shaft": 1.0186054186616889,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 52,
+      "ram": 0,
+      "pin_to_pin": 2.233629708019007,
+      "exposed_shaft": 1.0336297080190069,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 52,
+      "ram": 1,
+      "pin_to_pin": 2.2325661648318778,
+      "exposed_shaft": 1.0325661648318776,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 52,
+      "ram": 2,
+      "pin_to_pin": 2.227866797982116,
+      "exposed_shaft": 1.0278667979821159,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 52,
+      "ram": 3,
+      "pin_to_pin": 2.2221455160082524,
+      "exposed_shaft": 1.0221455160082522,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 52,
+      "ram": 4,
+      "pin_to_pin": 2.2197575541028653,
+      "exposed_shaft": 1.0197575541028652,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 52,
+      "ram": 5,
+      "pin_to_pin": 2.222643362841345,
+      "exposed_shaft": 1.022643362841345,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 53,
+      "ram": 0,
+      "pin_to_pin": 2.2308080448504657,
+      "exposed_shaft": 1.0308080448504655,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 53,
+      "ram": 1,
+      "pin_to_pin": 2.2294877725681026,
+      "exposed_shaft": 1.0294877725681024,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 53,
+      "ram": 2,
+      "pin_to_pin": 2.2251315274662664,
+      "exposed_shaft": 1.0251315274662662,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 53,
+      "ram": 3,
+      "pin_to_pin": 2.2208286076323818,
+      "exposed_shaft": 1.0208286076323816,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 53,
+      "ram": 4,
+      "pin_to_pin": 2.220598961435155,
+      "exposed_shaft": 1.0205989614351547,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 53,
+      "ram": 5,
+      "pin_to_pin": 2.225353492367615,
+      "exposed_shaft": 1.0253534923676146,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 54,
+      "ram": 0,
+      "pin_to_pin": 2.225327792884761,
+      "exposed_shaft": 1.0253277928847608,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 54,
+      "ram": 1,
+      "pin_to_pin": 2.224269448531653,
+      "exposed_shaft": 1.024269448531653,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 54,
+      "ram": 2,
+      "pin_to_pin": 2.2207336249774348,
+      "exposed_shaft": 1.0207336249774346,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 54,
+      "ram": 3,
+      "pin_to_pin": 2.218106870370747,
+      "exposed_shaft": 1.018106870370747,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 54,
+      "ram": 4,
+      "pin_to_pin": 2.2198790628777205,
+      "exposed_shaft": 1.0198790628777203,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 54,
+      "ram": 5,
+      "pin_to_pin": 2.2259277540626936,
+      "exposed_shaft": 1.0259277540626934,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 55,
+      "ram": 0,
+      "pin_to_pin": 2.2181164288576904,
+      "exposed_shaft": 1.0181164288576903,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 55,
+      "ram": 1,
+      "pin_to_pin": 2.217626484111714,
+      "exposed_shaft": 1.0176264841117137,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 55,
+      "ram": 2,
+      "pin_to_pin": 2.2150923236478612,
+      "exposed_shaft": 1.015092323647861,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 55,
+      "ram": 3,
+      "pin_to_pin": 2.2140464237423823,
+      "exposed_shaft": 1.014046423742382,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 55,
+      "ram": 4,
+      "pin_to_pin": 2.2173374175536793,
+      "exposed_shaft": 1.0173374175536791,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 55,
+      "ram": 5,
+      "pin_to_pin": 2.223903187284935,
+      "exposed_shaft": 1.023903187284935,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 56,
+      "ram": 0,
+      "pin_to_pin": 2.2103400257157046,
+      "exposed_shaft": 1.0103400257157045,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 56,
+      "ram": 1,
+      "pin_to_pin": 2.2104323433558823,
+      "exposed_shaft": 1.0104323433558822,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 56,
+      "ram": 2,
+      "pin_to_pin": 2.2087632070464935,
+      "exposed_shaft": 1.0087632070464934,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 56,
+      "ram": 3,
+      "pin_to_pin": 2.2089045278914927,
+      "exposed_shaft": 1.0089045278914925,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 56,
+      "ram": 4,
+      "pin_to_pin": 2.2130291931880497,
+      "exposed_shaft": 1.0130291931880495,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 56,
+      "ram": 5,
+      "pin_to_pin": 2.2192980649067056,
+      "exposed_shaft": 1.0192980649067054,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 57,
+      "ram": 0,
+      "pin_to_pin": 2.203187805966817,
+      "exposed_shaft": 1.003187805966817,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 57,
+      "ram": 1,
+      "pin_to_pin": 2.203582374024027,
+      "exposed_shaft": 1.0035823740240266,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 57,
+      "ram": 2,
+      "pin_to_pin": 2.2023877752447496,
+      "exposed_shaft": 1.0023877752447494,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 57,
+      "ram": 3,
+      "pin_to_pin": 2.203149156076573,
+      "exposed_shaft": 1.0031491560765726,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 57,
+      "ram": 4,
+      "pin_to_pin": 2.207388554338176,
+      "exposed_shaft": 1.007388554338176,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 57,
+      "ram": 5,
+      "pin_to_pin": 2.2126709152652517,
+      "exposed_shaft": 1.0126709152652515,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 58,
+      "ram": 0,
+      "pin_to_pin": 2.1976937532297347,
+      "exposed_shaft": 0.9976937532297345,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 58,
+      "ram": 1,
+      "pin_to_pin": 2.1978984304593134,
+      "exposed_shaft": 0.9978984304593133,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 58,
+      "ram": 2,
+      "pin_to_pin": 2.1966613519303064,
+      "exposed_shaft": 0.9966613519303062,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 58,
+      "ram": 3,
+      "pin_to_pin": 2.1974622474752454,
+      "exposed_shaft": 0.9974622474752453,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 58,
+      "ram": 4,
+      "pin_to_pin": 2.201220507225212,
+      "exposed_shaft": 1.0012205072252116,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 58,
+      "ram": 5,
+      "pin_to_pin": 2.205076453950946,
+      "exposed_shaft": 1.005076453950946,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 59,
+      "ram": 0,
+      "pin_to_pin": 2.1946217210398093,
+      "exposed_shaft": 0.9946217210398092,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 59,
+      "ram": 1,
+      "pin_to_pin": 2.194066059130688,
+      "exposed_shaft": 0.994066059130688,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 59,
+      "ram": 2,
+      "pin_to_pin": 2.192297287366133,
+      "exposed_shaft": 0.9922972873661329,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 59,
+      "ram": 3,
+      "pin_to_pin": 2.1926940695426778,
+      "exposed_shaft": 0.9926940695426776,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 59,
+      "ram": 4,
+      "pin_to_pin": 2.195616848430913,
+      "exposed_shaft": 0.9956168484309127,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 59,
+      "ram": 5,
+      "pin_to_pin": 2.1979175830378654,
+      "exposed_shaft": 0.9979175830378653,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 60,
+      "ram": 0,
+      "pin_to_pin": 2.1944081646999334,
+      "exposed_shaft": 0.9944081646999332,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 60,
+      "ram": 1,
+      "pin_to_pin": 2.192596891258919,
+      "exposed_shaft": 0.9925968912589189,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 60,
+      "ram": 2,
+      "pin_to_pin": 2.1899761783934197,
+      "exposed_shaft": 0.9899761783934196,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 60,
+      "ram": 3,
+      "pin_to_pin": 2.1897718523936707,
+      "exposed_shaft": 0.9897718523936705,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 60,
+      "ram": 4,
+      "pin_to_pin": 2.191803607955721,
+      "exposed_shaft": 0.9918036079557209,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 60,
+      "ram": 5,
+      "pin_to_pin": 2.1927317662670394,
+      "exposed_shaft": 0.9927317662670392,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 61,
+      "ram": 0,
+      "pin_to_pin": 2.1971605778326158,
+      "exposed_shaft": 0.9971605778326156,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 61,
+      "ram": 1,
+      "pin_to_pin": 2.1938059036679545,
+      "exposed_shaft": 0.9938059036679543,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 61,
+      "ram": 2,
+      "pin_to_pin": 2.1902809460609594,
+      "exposed_shaft": 0.9902809460609592,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 61,
+      "ram": 3,
+      "pin_to_pin": 2.1895718433868923,
+      "exposed_shaft": 0.9895718433868921,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 61,
+      "ram": 4,
+      "pin_to_pin": 2.1909458653926084,
+      "exposed_shaft": 0.9909458653926082,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 61,
+      "ram": 5,
+      "pin_to_pin": 2.190931453359402,
+      "exposed_shaft": 0.9909314533594018,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 62,
+      "ram": 0,
+      "pin_to_pin": 2.2026878159732814,
+      "exposed_shaft": 1.0026878159732813,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 62,
+      "ram": 1,
+      "pin_to_pin": 2.1977977931315484,
+      "exposed_shaft": 0.9977977931315483,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 62,
+      "ram": 2,
+      "pin_to_pin": 2.193622073480845,
+      "exposed_shaft": 0.9936220734808447,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 62,
+      "ram": 3,
+      "pin_to_pin": 2.192778723849588,
+      "exposed_shaft": 0.9927787238495878,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 62,
+      "ram": 4,
+      "pin_to_pin": 2.193939568388141,
+      "exposed_shaft": 0.9939395683881407,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 62,
+      "ram": 5,
+      "pin_to_pin": 2.193542664760685,
+      "exposed_shaft": 0.9935426647606849,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 63,
+      "ram": 0,
+      "pin_to_pin": 2.210556330507268,
+      "exposed_shaft": 1.010556330507268,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 63,
+      "ram": 1,
+      "pin_to_pin": 2.2044647638217048,
+      "exposed_shaft": 1.0044647638217046,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 63,
+      "ram": 2,
+      "pin_to_pin": 2.200164991622568,
+      "exposed_shaft": 1.000164991622568,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 63,
+      "ram": 3,
+      "pin_to_pin": 2.199744366594643,
+      "exposed_shaft": 0.9997443665946428,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 63,
+      "ram": 4,
+      "pin_to_pin": 2.2012230846048766,
+      "exposed_shaft": 1.0012230846048764,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 63,
+      "ram": 5,
+      "pin_to_pin": 2.2009826914589996,
+      "exposed_shaft": 1.0009826914589994,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 64,
+      "ram": 0,
+      "pin_to_pin": 2.220166104679206,
+      "exposed_shaft": 1.0201661046792059,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 64,
+      "ram": 1,
+      "pin_to_pin": 2.2134908545379455,
+      "exposed_shaft": 1.0134908545379453,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 64,
+      "ram": 2,
+      "pin_to_pin": 2.2097742191290957,
+      "exposed_shaft": 1.0097742191290955,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 64,
+      "ram": 3,
+      "pin_to_pin": 2.2103799956993124,
+      "exposed_shaft": 1.0103799956993122,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 64,
+      "ram": 4,
+      "pin_to_pin": 2.212636274574966,
+      "exposed_shaft": 1.012636274574966,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 64,
+      "ram": 5,
+      "pin_to_pin": 2.2129238949525885,
+      "exposed_shaft": 1.0129238949525883,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 65,
+      "ram": 0,
+      "pin_to_pin": 2.230827065596066,
+      "exposed_shaft": 1.0308270655960659,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 65,
+      "ram": 1,
+      "pin_to_pin": 2.224371404647643,
+      "exposed_shaft": 1.0243714046476429,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 65,
+      "ram": 2,
+      "pin_to_pin": 2.2219736786613113,
+      "exposed_shaft": 1.0219736786613112,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 65,
+      "ram": 3,
+      "pin_to_pin": 2.2240930318894083,
+      "exposed_shaft": 1.0240930318894081,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 65,
+      "ram": 4,
+      "pin_to_pin": 2.2273714436468905,
+      "exposed_shaft": 1.0273714436468904,
+      "barrel_overlap": 0.22
+    },
+    {
+      "frame": 65,
+      "ram": 5,
+      "pin_to_pin": 2.2282808108660697,
+      "exposed_shaft": 1.0282808108660695,
+      "barrel_overlap": 0.22
+    }
+  ],
+  "visual_states": [
+    {
+      "frame": 0,
+      "running": false,
+      "pressure_visual": 0,
+      "carrier_extension": 0
+    },
+    {
+      "frame": 1,
+      "running": true,
+      "pressure_visual": 0.767994610238578,
+      "carrier_extension": 0.20557158554089397
+    },
+    {
+      "frame": 2,
+      "running": true,
+      "pressure_visual": 0.8029553863121235,
+      "carrier_extension": 0.22245537764477608
+    },
+    {
+      "frame": 3,
+      "running": true,
+      "pressure_visual": 0.8320466262014775,
+      "carrier_extension": 0.2382400736970134
+    },
+    {
+      "frame": 4,
+      "running": true,
+      "pressure_visual": 0.8540252634625725,
+      "carrier_extension": 0.25161700495192796
+    },
+    {
+      "frame": 5,
+      "running": true,
+      "pressure_visual": 0.8682363336589409,
+      "carrier_extension": 0.2616844930928603
+    },
+    {
+      "frame": 6,
+      "running": true,
+      "pressure_visual": 0.8746574585658577,
+      "carrier_extension": 0.26807419346986916
+    },
+    {
+      "frame": 7,
+      "running": true,
+      "pressure_visual": 0.8738892025590064,
+      "carrier_extension": 0.2709959590110536
+    },
+    {
+      "frame": 8,
+      "running": true,
+      "pressure_visual": 0.8670922431222123,
+      "carrier_extension": 0.27119450267315276
+    },
+    {
+      "frame": 9,
+      "running": true,
+      "pressure_visual": 0.8558768732964885,
+      "carrier_extension": 0.2698245658660679
+    },
+    {
+      "frame": 10,
+      "running": true,
+      "pressure_visual": 0.8421544535588016,
+      "carrier_extension": 0.26826370765248275
+    },
+    {
+      "frame": 11,
+      "running": true,
+      "pressure_visual": 0.8279637010558945,
+      "carrier_extension": 0.26789132577259384
+    },
+    {
+      "frame": 12,
+      "running": true,
+      "pressure_visual": 0.8152868637404276,
+      "carrier_extension": 0.26986765996137146
+    },
+    {
+      "frame": 13,
+      "running": true,
+      "pressure_visual": 0.8058716898494629,
+      "carrier_extension": 0.2749465281963038
+    },
+    {
+      "frame": 14,
+      "running": true,
+      "pressure_visual": 0.8010745950962038,
+      "carrier_extension": 0.2833504074355917
+    },
+    {
+      "frame": 15,
+      "running": true,
+      "pressure_visual": 0.8017385947560005,
+      "carrier_extension": 0.29472697449243807
+    },
+    {
+      "frame": 16,
+      "running": true,
+      "pressure_visual": 0.8081165636552237,
+      "carrier_extension": 0.30819381565092113
+    },
+    {
+      "frame": 17,
+      "running": true,
+      "pressure_visual": 0.8198464727326773,
+      "carrier_extension": 0.322464584375058
+    },
+    {
+      "frame": 18,
+      "running": true,
+      "pressure_visual": 0.8359807635413423,
+      "carrier_extension": 0.3360374795384917
+    },
+    {
+      "frame": 19,
+      "running": true,
+      "pressure_visual": 0.855067348343864,
+      "carrier_extension": 0.3474174209187515
+    },
+    {
+      "frame": 20,
+      "running": true,
+      "pressure_visual": 0.8752752659351858,
+      "carrier_extension": 0.3553381599655342
+    },
+    {
+      "frame": 21,
+      "running": true,
+      "pressure_visual": 0.8945541659900206,
+      "carrier_extension": 0.35895056447580276
+    },
+    {
+      "frame": 22,
+      "running": true,
+      "pressure_visual": 0.9108138698844634,
+      "carrier_extension": 0.35794845578368695
+    },
+    {
+      "frame": 23,
+      "running": true,
+      "pressure_visual": 0.9221085155772694,
+      "carrier_extension": 0.3526128739793953
+    },
+    {
+      "frame": 24,
+      "running": true,
+      "pressure_visual": 0.926809388245828,
+      "carrier_extension": 0.343768054788529
+    },
+    {
+      "frame": 25,
+      "running": true,
+      "pressure_visual": 0.9237515020166962,
+      "carrier_extension": 0.33265583214886857
+    },
+    {
+      "frame": 26,
+      "running": true,
+      "pressure_visual": 0.9123412484256149,
+      "carrier_extension": 0.3207475886613405
+    },
+    {
+      "frame": 27,
+      "running": true,
+      "pressure_visual": 0.8926157704919718,
+      "carrier_extension": 0.30952237304278557
+    },
+    {
+      "frame": 28,
+      "running": true,
+      "pressure_visual": 0.8652488696722235,
+      "carrier_extension": 0.3002449437498399
+    },
+    {
+      "frame": 29,
+      "running": true,
+      "pressure_visual": 0.8315028492966935,
+      "carrier_extension": 0.2937774986542534
+    },
+    {
+      "frame": 30,
+      "running": true,
+      "pressure_visual": 0.7931303466397612,
+      "carrier_extension": 0.29045371202345693
+    },
+    {
+      "frame": 31,
+      "running": true,
+      "pressure_visual": 0.7522345062661132,
+      "carrier_extension": 0.2900342045039765
+    },
+    {
+      "frame": 32,
+      "running": true,
+      "pressure_visual": 0.711099429442041,
+      "carrier_extension": 0.2917501650264507
+    },
+    {
+      "frame": 33,
+      "running": true,
+      "pressure_visual": 0.672005389761422,
+      "carrier_extension": 0.29442841445910606
+    },
+    {
+      "frame": 34,
+      "running": true,
+      "pressure_visual": 0.6370446136878765,
+      "carrier_extension": 0.2966787939734784
+    },
+    {
+      "frame": 35,
+      "running": true,
+      "pressure_visual": 0.6079533737985224,
+      "carrier_extension": 0.297115265362314
+    },
+    {
+      "frame": 36,
+      "running": true,
+      "pressure_visual": 0.5859747365374276,
+      "carrier_extension": 0.2945769716736364
+    },
+    {
+      "frame": 37,
+      "running": true,
+      "pressure_visual": 0.5717636663410591,
+      "carrier_extension": 0.2883155069071398
+    },
+    {
+      "frame": 38,
+      "running": true,
+      "pressure_visual": 0.5653425414341421,
+      "carrier_extension": 0.2781197831556952
+    },
+    {
+      "frame": 39,
+      "running": true,
+      "pressure_visual": 0.5661107974409936,
+      "carrier_extension": 0.2643593800482738
+    },
+    {
+      "frame": 40,
+      "running": true,
+      "pressure_visual": 0.5729077568777875,
+      "carrier_extension": 0.2479396689451018
+    },
+    {
+      "frame": 41,
+      "running": true,
+      "pressure_visual": 0.5841231267035114,
+      "carrier_extension": 0.23017543413393213
+    },
+    {
+      "frame": 42,
+      "running": true,
+      "pressure_visual": 0.5978455464411983,
+      "carrier_extension": 0.21260212072926282
+    },
+    {
+      "frame": 43,
+      "running": true,
+      "pressure_visual": 0.6120362989441055,
+      "carrier_extension": 0.19675333516807877
+    },
+    {
+      "frame": 44,
+      "running": true,
+      "pressure_visual": 0.6247131362595723,
+      "carrier_extension": 0.1839383634130642
+    },
+    {
+      "frame": 45,
+      "running": true,
+      "pressure_visual": 0.634128310150537,
+      "carrier_extension": 0.17505347180369624
+    },
+    {
+      "frame": 46,
+      "running": true,
+      "pressure_visual": 0.6389254049037962,
+      "carrier_extension": 0.17045561593884392
+    },
+    {
+      "frame": 47,
+      "running": true,
+      "pressure_visual": 0.6382614052439994,
+      "carrier_extension": 0.16991768644823452
+    },
+    {
+      "frame": 48,
+      "running": true,
+      "pressure_visual": 0.6318834363447763,
+      "carrier_extension": 0.1726720127308244
+    },
+    {
+      "frame": 49,
+      "running": true,
+      "pressure_visual": 0.6201535272673226,
+      "carrier_extension": 0.177535415624942
+    },
+    {
+      "frame": 50,
+      "running": true,
+      "pressure_visual": 0.6040192364586577,
+      "carrier_extension": 0.1830966920797627
+    },
+    {
+      "frame": 51,
+      "running": true,
+      "pressure_visual": 0.584932651656136,
+      "carrier_extension": 0.18793791814057587
+    },
+    {
+      "frame": 52,
+      "running": true,
+      "pressure_visual": 0.5647247340648143,
+      "carrier_extension": 0.1908558166600301
+    },
+    {
+      "frame": 53,
+      "running": true,
+      "pressure_visual": 0.5454458340099793,
+      "carrier_extension": 0.19104943552419726
+    },
+    {
+      "frame": 54,
+      "running": true,
+      "pressure_visual": 0.5291861301155364,
+      "carrier_extension": 0.18824552084187743
+    },
+    {
+      "frame": 55,
+      "running": true,
+      "pressure_visual": 0.5178914844227305,
+      "carrier_extension": 0.18274246507993216
+    },
+    {
+      "frame": 56,
+      "running": true,
+      "pressure_visual": 0.5131906117541718,
+      "carrier_extension": 0.17536611682972547
+    },
+    {
+      "frame": 57,
+      "running": true,
+      "pressure_visual": 0.5162484979833037,
+      "carrier_extension": 0.16734416785113146
+    },
+    {
+      "frame": 58,
+      "running": true,
+      "pressure_visual": 0.5276587515743849,
+      "carrier_extension": 0.16011823972040504
+    },
+    {
+      "frame": 59,
+      "running": true,
+      "pressure_visual": 0.5473842295080281,
+      "carrier_extension": 0.15512228789788704
+    },
+    {
+      "frame": 60,
+      "running": true,
+      "pressure_visual": 0.5747511303277767,
+      "carrier_extension": 0.15356107962459575
+    },
+    {
+      "frame": 61,
+      "running": true,
+      "pressure_visual": 0.6084971507033063,
+      "carrier_extension": 0.15622250134574656
+    },
+    {
+      "frame": 62,
+      "running": true,
+      "pressure_visual": 0.6468696533602388,
+      "carrier_extension": 0.16335231135097872
+    },
+    {
+      "frame": 63,
+      "running": true,
+      "pressure_visual": 0.6877654937338868,
+      "carrier_extension": 0.17461045643669607
+    },
+    {
+      "frame": 64,
+      "running": true,
+      "pressure_visual": 0.7289005705579593,
+      "carrier_extension": 0.18911566335529492
+    },
+    {
+      "frame": 65,
+      "running": true,
+      "pressure_visual": 0.767994610238578,
+      "carrier_extension": 0.20557158554089397
+    }
+  ],
+  "frame_contract": {
+    "idle": 0,
+    "working": "1..64",
+    "wrap": 65,
+    "fps": 30
+  },
+  "draw_registration": {
+    "scale": 0.46875,
+    "shift": [
+      -3.725290298461914e-08,
+      2.8901551961898804
+    ],
+    "cell": [
+      512,
+      1280
+    ],
+    "points": [
+      {
+        "name": "fuel",
+        "position": [
+          -2.5,
+          1.0,
+          0.36000001430511475
+        ],
+        "pixel": [
+          85.33333587646484,
+          370.1654052734375
+        ],
+        "shift": [
+          -3.725290298461914e-08,
+          2.8901551961898804
+        ]
+      },
+      {
+        "name": "oxidizer",
+        "position": [
+          2.5,
+          1.0,
+          0.36000001430511475
+        ],
+        "pixel": [
+          426.6666564941406,
+          370.1654052734375
+        ],
+        "shift": [
+          1.4901161193847656e-07,
+          2.8901551961898804
+        ]
+      }
+    ]
+  },
+  "runtime_interfaces_changed": false,
+  "native_game_integrated": false,
+  "material_animation_scope": "Heat emission strengths authored for source renders; GLB transform/morph animation and packed PBR inspect independently.",
+  "exhaust_component": "EXHAUST_FX_SEPARATE collection; gas surfaces/morphs are an authored visual effect, not a fluid/thrust simulation."
+}

@@ -1,0 +1,151 @@
+{
+  "stage": "V03_LOCAL_AUTHORED_REFINEMENT_STUDY_NOT_RUNTIME_PROMOTED",
+  "target_prototype": "thetazine-thruster",
+  "native_game_integrated": false,
+  "source_asset": "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study",
+  "tool_directory": "tools/art/thetazine_v03",
+  "source_native_sha256": "536d872643b4d6d1a953bc118ad9db0937c17f4c1f05dd04a95e8033815fb0e9",
+  "source_glb_sha256": "267a96b7cf1e64131b221fbec34ae5d1eee8a4fcccb9337f1da32312660acda8",
+  "prior_v02_native_sha256": "61f419d9c9c37dc74f02ecf5fb824461bb3bae11a52c8f9005575b4d4c8b4e74",
+  "direction_policy": "Existing fixed not-rotatable thruster; one platform-facing body. Do not invent four rotations. Independently retain west/east cap connected/disconnected states.",
+  "ports": {
+    "fuel": {
+      "model_position": [
+        -2.5,
+        1,
+        0.36
+      ],
+      "model_outward": [
+        -1,
+        0,
+        0
+      ],
+      "native_declared_cell": [
+        -2,
+        -1
+      ],
+      "native_expected_pixel": [
+        -80,
+        -34
+      ]
+    },
+    "water": {
+      "model_position": [
+        2.5,
+        1,
+        0.36
+      ],
+      "model_outward": [
+        1,
+        0,
+        0
+      ],
+      "native_declared_cell": [
+        2,
+        -1
+      ],
+      "native_expected_pixel": [
+        80,
+        -34
+      ]
+    }
+  },
+  "draw_registration": {
+    "scale": 0.46875,
+    "shift": [
+      -3.725290298461914e-08,
+      2.8901551961898804
+    ],
+    "cell": [
+      512,
+      1280
+    ],
+    "points": [
+      {
+        "name": "fuel",
+        "position": [
+          -2.5,
+          1.0,
+          0.36000001430511475
+        ],
+        "pixel": [
+          85.33333587646484,
+          370.1654052734375
+        ],
+        "shift": [
+          -3.725290298461914e-08,
+          2.8901551961898804
+        ]
+      },
+      {
+        "name": "oxidizer",
+        "position": [
+          2.5,
+          1.0,
+          0.36000001430511475
+        ],
+        "pixel": [
+          426.6666564941406,
+          370.1654052734375
+        ],
+        "shift": [
+          1.4901161193847656e-07,
+          2.8901551961898804
+        ]
+      }
+    ]
+  },
+  "runtime_preservation": "Keep current origin-containing collision, legal notch footprint, cap gates, pipe positions, platform tile variations, consumption, thrust, version and recipes unchanged. No new wire interface introduced.",
+  "source_states": {
+    "cold": 0,
+    "working": "1..64",
+    "wrap": 65,
+    "fps": 30,
+    "cycle_seconds": 2.1333333333333333
+  },
+  "rendered_now": "66 combined body+FX 512x1280 transparent source PNGs, actual local Eevee; 64-pose GIF with cold reference. Four independently imported GLB CPU Cycles geometry views.",
+  "next_local_export": {
+    "first_gate": "Review the V03 raised head, glass pressure charge, heavy rams, interleaved leaves, char and visible tinted cone at actual platform scale. This is an open refinement gate, not user approval.",
+    "layers": [
+      "body beauty with EXHAUST_FX_SEPARATE hidden",
+      "body emission/heat pass driven by native Blender material keys",
+      "animated body shadow; cold/static source frame0 separately",
+      "separate tinted envelope/core and shock-diamond FX with own alpha/emission, occlusion and native additive blending pilot",
+      "static platform-service-underlay and existing pipe covers retained independently"
+    ],
+    "atlas_candidate": {
+      "body_cell": [
+        512,
+        1280
+      ],
+      "per_32_frames": [
+        4096,
+        5120
+      ],
+      "sheets_per_64_frame_layer": 2,
+      "status": "Bounded proposed packing; no V03 runtime atlas currently produced."
+    },
+    "registration": "Start from exact measured scale .46875 and shift in manifest; validate socket pixels in every source state. Crop FX only if its compensated origin/shift is independently checked. Do not recenter body or physical ports by eye.",
+    "production_paths": {
+      "sprites": "tech-priests_src/graphics/entity/thetazine-thruster/<versioned-layer-sheets>",
+      "module": "tech-priests_src/prototypes/generated_graphics/thetazine-thruster-v03.lua",
+      "import": "exact-target thruster compatibility registration after legacy resizing; retain mounting-visuals module and donor pipe caps"
+    },
+    "native_visual_only": [
+      "Use isolated high-quality local Factorio profile, clearly label V03 candidate.",
+      "Read final prototype graphics dimensions/layers and connect actual west/east pipes.",
+      "Review idle, start, steady oscillation, stop, dark scene, platform notch/underlay/edge variation and long plume culling.",
+      "Decode all 64 native body and independently registered glow/FX phases.",
+      "Check shadow alignment, cap occlusion, plasma drawn behind bell rim, and fixed port pixels.",
+      "No behavior, fuel-performance, thrust, combat or regression assertions."
+    ],
+    "done_criteria": "Independent source/export and full-pose geometry passes plus source-faithful owner appearance gate >=4/5, segmented exact cells/source hashes, native visual proof and scoped verified main publication. All remain separate gates."
+  },
+  "explicit_limits": [
+    "Source has procedural heat-strength keys; GLB validates transforms/morphs and packed PBR, not dynamic material-strength animation.",
+    "Cold0 is authored in native Blender; the GLB clip contains working1..65 only.",
+    "Large exhaust cone is an authored gas-surface visual study, not a fluid solver. Shock diamonds and heat finish remain stylized.",
+    "Full V03 shadow, glow/FX-native phase, startup/shutdown, final atlases and normal-mod import are unfinished.",
+    "No vanilla proprietary PNGs or reference ZIP redistributed."
+  ]
+}

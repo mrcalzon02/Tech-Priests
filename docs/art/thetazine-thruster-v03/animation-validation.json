@@ -1,0 +1,123 @@
+{
+  "status": "PASS_ACTUAL_GLB_ALL_MESHES_64_POSES_MORPHS_FIXED_SOCKETS_CLOSED_LEAVES",
+  "native_sha256": "536d872643b4d6d1a953bc118ad9db0937c17f4c1f05dd04a95e8033815fb0e9",
+  "glb_sha256": "267a96b7cf1e64131b221fbec34ae5d1eee8a4fcccb9337f1da32312660acda8",
+  "sampled_cycle_frames": 64,
+  "wrap_frame": 65,
+  "source_fps": 30,
+  "all_meshes_each_pose": 671,
+  "max_world_bounds_delta": 3.337860107421875e-06,
+  "worst": [
+    21,
+    "V03 shaped violet thrust envelope"
+  ],
+  "motion_by_family": {
+    "Nozzle articulated petal": 0.13971376419067383,
+    "V03 interleaved containment seal": 0.1401228904724121,
+    "V03 telescoping chrome piston shaft": 0.13825702667236328,
+    "V03 animated pump plunger": 0.06987649202346802,
+    "V03 moving containment gauge needle": 0.08520662784576416,
+    "V03 shaped violet thrust envelope": 0.2031102180480957
+  },
+  "closed_petal_topology": [
+    {
+      "name": "Nozzle articulated petal 00",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 01",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 02",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 03",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 04",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 05",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 06",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 07",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 08",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 09",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 10",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 11",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 00",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 01",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 02",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 03",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 04",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 05",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 06",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 07",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 08",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 09",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 10",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V03 interleaved containment seal 11",
+      "nonmanifold_edges": 0
+    }
+  ],
+  "native_wrap_exact": true,
+  "actual_shaft_tip_and_pin_measurement": "6 shafts x65 poses x2 artifacts; .08 pin-center inset and .22 gland overlap, tolerance2e-5",
+  "scope": "Local Blender mechanical/morph interchange only. Cold frame 0 and material heat-strength animation remain native Blender source states; no game import or behavior acceptance."
+}

@@ -1,90 +1,57 @@
 {
   "schema": 1,
-  "tech_priests_head": "522ac5080d7348cd8d99d3332e8127bd8505be3a",
+  "tech_priests_head": "be29dd3f6b3f4b17ff42de82e044648a8c11194e",
   "pipeline_head": "b02cf5a8d94ebd1714ed3eb83f6bd6d12b6b59ad",
-  "snapshot_kind": "Tracked working-tree snapshot including staged liquid mount/high-quality fixes and Thetazine V02 working animation study; base main hashes are not completion claims",
+  "snapshot_kind": "Tracked working-tree bytes, including staged asset changes; HEAD values identify the reconciled base, not a claim that every staged file already belongs to that commit.",
   "working_tree_delta": [
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/README.md",
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/build_model.py",
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/source-export-plan.json",
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/source-manifest.json",
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/source-package/body-beauty-1.png",
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/source-package/body-beauty-2.png",
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/source-package/body-emission-1.png",
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/source-package/body-emission-2.png",
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/source-package/source-captures.zip",
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/source-package/underlay.png",
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/thetazine-animation-study.blend",
-    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/thetazine-animation-study.glb",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/README.md",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/build_model.py",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/make_textures.py",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/source-captures.zip",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/source-export-plan.json",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/source-manifest.json",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/exhaust-core.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/exhaust-envelope.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/manifest.json",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/petal-basecolor.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/petal-emission.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/petal-metalrough.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/petal-normal.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/pressure-gauge.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/refractory-basecolor.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/refractory-emission.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/refractory-metalrough.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/refractory-normal.png",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/thetazine-v03-pressure-study.blend",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/thetazine-v03-pressure-study.glb",
     "docs/art/CHECKPOINT.json",
     "docs/art/MODEL_COMPLETION_LEDGER.md",
     "docs/art/lobber-a02-latest-progress.json",
-    "docs/art/model-inventory.json",
-    "docs/art/native-attachment-review/README.md",
+    "docs/art/thetazine-thruster-v03/CHECKPOINT.json",
+    "docs/art/thetazine-thruster-v03/README.md",
+    "docs/art/thetazine-thruster-v03/animation-validation.json",
+    "docs/art/thetazine-thruster-v03/export-front.png",
+    "docs/art/thetazine-thruster-v03/export-rear-clay.png",
+    "docs/art/thetazine-thruster-v03/export-rear.png",
+    "docs/art/thetazine-thruster-v03/export-render-receipt.json",
+    "docs/art/thetazine-thruster-v03/export-upper.png",
+    "docs/art/thetazine-thruster-v03/full-preview-capture.json",
+    "docs/art/thetazine-thruster-v03/preview-validation.json",
+    "docs/art/thetazine-thruster-v03/raw-glb-audit.json",
+    "docs/art/thetazine-thruster-v03/roundtrip-validation.json",
+    "docs/art/thetazine-thruster-v03/thetazine-v03-cold-thrust.png",
+    "docs/art/thetazine-thruster-v03/thetazine-v03-containment-loop.gif",
+    "docs/art/thetazine-thruster-v03/thetazine-v03-keyposes.png",
+    "docs/art/thetazine-thruster-v03/visual-review.json",
     "docs/art/thruster-segment-parity/CHECKPOINT.json",
-    "docs/art/thruster-segment-parity/README.md",
-    "docs/art/thruster-segment-parity/animation-validation.json",
-    "docs/art/thruster-segment-parity/baseline-prototypes.json",
-    "docs/art/thruster-segment-parity/capture-receipt.json",
-    "docs/art/thruster-segment-parity/cold-clock-rejected.json",
-    "docs/art/thruster-segment-parity/front.png",
-    "docs/art/thruster-segment-parity/graphics-context.json",
-    "docs/art/thruster-segment-parity/mechanical-source-loop.gif",
-    "docs/art/thruster-segment-parity/native-cutaway-comparison.png",
-    "docs/art/thruster-segment-parity/native-cutaway/connected-readback.json",
-    "docs/art/thruster-segment-parity/native-cutaway/cutaway-baseline-hydrogen-thruster-connected.png",
-    "docs/art/thruster-segment-parity/native-cutaway/cutaway-baseline-hydrogen-thruster-disconnected.png",
-    "docs/art/thruster-segment-parity/native-cutaway/cutaway-baseline-thetazine-thruster-connected.png",
-    "docs/art/thruster-segment-parity/native-cutaway/cutaway-baseline-thetazine-thruster-disconnected.png",
-    "docs/art/thruster-segment-parity/native-cutaway/disconnected-readback.json",
-    "docs/art/thruster-segment-parity/native-cutaway/hydrogen-thruster-connected.png",
-    "docs/art/thruster-segment-parity/native-cutaway/hydrogen-thruster-disconnected.png",
-    "docs/art/thruster-segment-parity/native-cutaway/placement-probes.json",
-    "docs/art/thruster-segment-parity/native-cutaway/thetazine-thruster-connected.png",
-    "docs/art/thruster-segment-parity/native-cutaway/thetazine-thruster-disconnected.png",
-    "docs/art/thruster-segment-parity/native-cutaway/whole-deck.png",
-    "docs/art/thruster-segment-parity/native-tested-working-tree.json",
-    "docs/art/thruster-segment-parity/native-validation.json",
-    "docs/art/thruster-segment-parity/native-working-keyposes.png",
-    "docs/art/thruster-segment-parity/native-working-loop.gif",
-    "docs/art/thruster-segment-parity/native-working-validation.json",
-    "docs/art/thruster-segment-parity/native-working/frame-192.png",
-    "docs/art/thruster-segment-parity/native-working/frame-208.png",
-    "docs/art/thruster-segment-parity/native-working/frame-224.png",
-    "docs/art/thruster-segment-parity/native-working/frame-240.png",
-    "docs/art/thruster-segment-parity/native-working/frame-256.png",
-    "docs/art/thruster-segment-parity/native-working/frame-272.png",
-    "docs/art/thruster-segment-parity/native-working/frame-288.png",
-    "docs/art/thruster-segment-parity/native-working/frame-304.png",
-    "docs/art/thruster-segment-parity/native-working/receipt.json",
-    "docs/art/thruster-segment-parity/oblique.png",
-    "docs/art/thruster-segment-parity/package-validation.json",
-    "docs/art/thruster-segment-parity/raw-glb-audit.json",
-    "docs/art/thruster-segment-parity/rear-clay.png",
-    "docs/art/thruster-segment-parity/rear.png",
-    "docs/art/thruster-segment-parity/reference-package-audit.json",
-    "docs/art/thruster-segment-parity/review-render-receipt.json",
-    "docs/art/thruster-segment-parity/roundtrip-validation.json",
-    "docs/art/thruster-segment-parity/validation.json",
-    "docs/art/thruster-segment-parity/visual-review.json",
-    "tech-priests_src/prototypes/compatibility/thruster-mounting-visuals.lua",
-    "tools/art/native_visual_review/launch.ps1",
-    "tools/art/thruster_segment_parity/animation-native-control.lua",
-    "tools/art/thruster_segment_parity/audit_animation_glb.py",
-    "tools/art/thruster_segment_parity/audit_package.py",
-    "tools/art/thruster_segment_parity/capture_animation.py",
-    "tools/art/thruster_segment_parity/check_native.py",
-    "tools/art/thruster_segment_parity/check_working_animation.py",
-    "tools/art/thruster_segment_parity/cutaway-control.lua",
-    "tools/art/thruster_segment_parity/package_capture.py",
-    "tools/art/thruster_segment_parity/prepare_animation_native.py",
-    "tools/art/thruster_segment_parity/prepare_review.py",
-    "tools/art/thruster_segment_parity/render_study_export.py",
-    "tools/art/thruster_segment_parity/verify_animation.py",
-    "tools/art/thruster_segment_parity/verify_study_geometry.py",
-    "tools/art/thruster_segment_parity/working-animation-native-control.lua"
+    "tools/art/thetazine_v03/audit_animation_glb.py",
+    "tools/art/thetazine_v03/capture_full_preview.py",
+    "tools/art/thetazine_v03/package_preview.py",
+    "tools/art/thetazine_v03/render_export.py",
+    "tools/art/thetazine_v03/verify_animation.py",
+    "tools/art/thetazine_v03/verify_study_geometry.py"
   ],
-  "scope": "All tracked entity PNGs and authored model/package files, including licensed priest sheets in the local namespace; excludes repeated dist/version snapshots, effects and GUI.",
+  "scope": "All tracked entity PNGs and authored model/package files; excludes repeated dist/version snapshots, effects, GUI and third-party character replacements.",
   "sprites": [
     {
       "path": "tech-priests_src/graphics/entity/bunker-autocannon/base-east-glow.png",
@@ -960,63 +927,73 @@
     },
     {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-activity-128.png",
+      "family": "emergency-boiler-v08",
       "bytes": 2362241,
       "sha256": "71c3cc082fdfa7b9158d66fdd321fad2ac0d2985f281be62068e7d04318642b8",
-      "dimensions": [
-        1024,
-        6144
-      ],
-      "mode": "RGBA",
-      "family": "emergency-boiler-v08",
       "literal_lua_references": [],
-      "reference_limit": "128px alternate export is retained; primary runtime module uses 256px.",
-      "acceptance": "native_state_layer_gate_reviewed_wire_gate_open"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-activity.png",
+      "family": "emergency-boiler-v08",
       "bytes": 6679358,
       "sha256": "2bb3545a99030ea9b4fbb07ea44f23b61573372236a77efee07f545ca967f80f",
-      "dimensions": [
-        3072,
-        8192
-      ],
-      "mode": "RGBA",
-      "family": "emergency-boiler-v08",
       "literal_lua_references": [
-        "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua"
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 7
+        },
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 8
+        },
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 9
+        },
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 10
+        }
       ],
-      "reference_limit": "128px alternate export is retained; primary runtime module uses 256px.",
-      "acceptance": "native_state_layer_gate_reviewed_wire_gate_open"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-cold-128.png",
+      "family": "emergency-boiler-v08",
       "bytes": 43481,
       "sha256": "eb811c5aa5b083b4cc501992c5743a6073a76afa1d48b7e0d34169bb393fbd8d",
-      "dimensions": [
-        128,
-        512
-      ],
-      "mode": "RGBA",
-      "family": "emergency-boiler-v08",
       "literal_lua_references": [],
-      "reference_limit": "128px alternate export is retained; primary runtime module uses 256px.",
-      "acceptance": "native_state_layer_gate_reviewed_wire_gate_open"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-cold.png",
+      "family": "emergency-boiler-v08",
       "bytes": 129382,
       "sha256": "2e45849e38c7e100ed7003ed8169890a63905b5745a248a3d0c1bd27bed2c8dc",
-      "dimensions": [
-        256,
-        1024
-      ],
-      "mode": "RGBA",
-      "family": "emergency-boiler-v08",
       "literal_lua_references": [
-        "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua"
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 7
+        },
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 8
+        },
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 9
+        },
+        {
+          "path": "tech-priests_src/prototypes/generated_graphics/emergency-boiler-v08.lua",
+          "line": 10
+        }
       ],
-      "reference_limit": "128px alternate export is retained; primary runtime module uses 256px.",
-      "acceptance": "native_state_layer_gate_reviewed_wire_gate_open"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-idle-128.png",
@@ -1025,7 +1002,7 @@
       "sha256": "ae8c29a017002376e4fd8f8a303b59288ffc52dad479c7e604b28a0b561ba93f",
       "literal_lua_references": [],
       "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
-      "acceptance": "original_source_export_preserved_runtime_uses_derived_cold_activity"
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-idle.png",
@@ -1034,7 +1011,7 @@
       "sha256": "64797f650c3787ac08962b94ac284412889f0b53293b18e12603b552e6864d84",
       "literal_lua_references": [],
       "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
-      "acceptance": "original_source_export_preserved_runtime_uses_derived_cold_activity"
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-working-128.png",
@@ -1043,7 +1020,7 @@
       "sha256": "c1a5fc8df5c6bcef6543b47cf38dbc1c8f7a83d8781c9dca467b35dac9fe9d2b",
       "literal_lua_references": [],
       "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
-      "acceptance": "original_source_export_preserved_runtime_uses_derived_cold_activity"
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/emergency-boiler-v08-working.png",
@@ -1052,7 +1029,7 @@
       "sha256": "cfd6f03f7c033cc1f123d5e415b70b7137c5c0d7562b382dd8685513a93a8cf2",
       "literal_lua_references": [],
       "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
-      "acceptance": "original_source_export_preserved_runtime_uses_derived_cold_activity"
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/entropic-extractor/entropic-extractor-active-1.png",
@@ -1246,67 +1223,39 @@
     },
     {
       "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-idle.png",
+      "family": "hydrogen-thruster-v01",
       "bytes": 472260,
       "sha256": "6769eac7b445da20856fb723c9ac4cc0fd4621824a4579e79c7f261b14b8b7ac",
-      "size": [
-        3584,
-        768
-      ],
-      "mode": "RGBA",
-      "family": "hydrogen-thruster",
       "literal_lua_references": [],
-      "resolved_native_reference_source": "tech-priests_src/prototypes/generated_graphics/hydrogen-thruster-v01.lua",
-      "source_kind": "local authored 3D capture",
-      "acceptance": "model_render_and_native_frozen_pose_graphics_verified_not_propulsion_test",
-      "evidence": "docs/art/hydrogen-thruster-v01/validation.json"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run-emission.png",
+      "family": "hydrogen-thruster-v01",
       "bytes": 230868,
       "sha256": "0b429230f52a9823ce8f58dea6e4f52d6a533975f4e7e6dc831297fa827e410e",
-      "size": [
-        3584,
-        768
-      ],
-      "mode": "RGBA",
-      "family": "hydrogen-thruster",
       "literal_lua_references": [],
-      "resolved_native_reference_source": "tech-priests_src/prototypes/generated_graphics/hydrogen-thruster-v01.lua",
-      "source_kind": "local authored 3D capture",
-      "acceptance": "model_render_and_native_frozen_pose_graphics_verified_not_propulsion_test",
-      "evidence": "docs/art/hydrogen-thruster-v01/validation.json"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-run.png",
+      "family": "hydrogen-thruster-v01",
       "bytes": 682963,
       "sha256": "2dd51726ec5ee193546696bd2c4d58d73134c8778b72128446878d4e023eaa73",
-      "size": [
-        3584,
-        768
-      ],
-      "mode": "RGBA",
-      "family": "hydrogen-thruster",
       "literal_lua_references": [],
-      "resolved_native_reference_source": "tech-priests_src/prototypes/generated_graphics/hydrogen-thruster-v01.lua",
-      "source_kind": "local authored 3D capture",
-      "acceptance": "model_render_and_native_frozen_pose_graphics_verified_not_propulsion_test",
-      "evidence": "docs/art/hydrogen-thruster-v01/validation.json"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/hydrogen-thruster-v01/hydrogen-thruster-v01-shadow.png",
+      "family": "hydrogen-thruster-v01",
       "bytes": 186783,
       "sha256": "eea192d313ac7394d6bcfcbfbc975fee6ffdc16823b6be1e68b53992f7e1b139",
-      "size": [
-        768,
-        1024
-      ],
-      "mode": "RGBA",
-      "family": "hydrogen-thruster",
       "literal_lua_references": [],
-      "resolved_native_reference_source": "tech-priests_src/prototypes/generated_graphics/hydrogen-thruster-v01.lua",
-      "source_kind": "local authored 3D capture",
-      "acceptance": "model_render_and_native_frozen_pose_graphics_verified_not_propulsion_test",
-      "evidence": "docs/art/hydrogen-thruster-v01/validation.json"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/hydrogen-thruster/hydrogen-thruster-idle.png",
@@ -1320,8 +1269,7 @@
         }
       ],
       "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
-      "acceptance": "unreviewed_in_this_audit",
-      "runtime_binding_state": "Original retained for rollback/reference; late V01 graphics override is current."
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/hydrogen-thruster/hydrogen-thruster-run.png",
@@ -1335,8 +1283,7 @@
         }
       ],
       "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
-      "acceptance": "unreviewed_in_this_audit",
-      "runtime_binding_state": "Original retained for rollback/reference; late V01 graphics override is current."
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/martian-micro/future/emm11.png",
@@ -1877,88 +1824,48 @@
     },
     {
       "path": "tech-priests_src/graphics/entity/tech-priest/level1_dead.png",
-      "sha256": "d36769aa131ae288b0ea4f5eef9aae60dfbeb5e0d9c3393480acab408b28a58a",
-      "bytes": 24909,
-      "dimensions": [
-        300,
-        160
-      ],
-      "mode": "RGBA",
       "family": "tech-priest",
+      "bytes": 24909,
+      "sha256": "d36769aa131ae288b0ea4f5eef9aae60dfbeb5e0d9c3393480acab408b28a58a",
       "literal_lua_references": [],
-      "reference_limit": "Constructed local prefix; resolved native bindings are in priest-sprite-import/native-graphics-without.json.",
-      "resolved_native_reference_source": "tech-priests_src/prototypes/entity.lua",
-      "source_kind": "unchanged licensed bitmap sheet from official Mechanicus Reborn 0.0.3 archive",
-      "acceptance": "asset_import_load_gate_verified_not_authored_3d_model_completion",
-      "source_provenance": "docs/art/priest-sprite-import/asset-provenance.json"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/tech-priest/level1_idle_gun.png",
-      "sha256": "8ccdef468c32fd8f3e69061c95ec152927dd71660fae269c01caef80e986d272",
-      "bytes": 1840241,
-      "dimensions": [
-        3300,
-        1280
-      ],
-      "mode": "RGBA",
       "family": "tech-priest",
+      "bytes": 1840241,
+      "sha256": "8ccdef468c32fd8f3e69061c95ec152927dd71660fae269c01caef80e986d272",
       "literal_lua_references": [],
-      "reference_limit": "Constructed local prefix; resolved native bindings are in priest-sprite-import/native-graphics-without.json.",
-      "resolved_native_reference_source": "tech-priests_src/prototypes/entity.lua",
-      "source_kind": "unchanged licensed bitmap sheet from official Mechanicus Reborn 0.0.3 archive",
-      "acceptance": "asset_import_load_gate_verified_not_authored_3d_model_completion",
-      "source_provenance": "docs/art/priest-sprite-import/asset-provenance.json"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/tech-priest/level1_idle_gun_shadow.png",
-      "sha256": "e28e04874fd68e5c10f775154c4aaffaedbb01c9ec01baec79979621dbdccc38",
-      "bytes": 328289,
-      "dimensions": [
-        3300,
-        1280
-      ],
-      "mode": "RGBA",
       "family": "tech-priest",
+      "bytes": 328289,
+      "sha256": "e28e04874fd68e5c10f775154c4aaffaedbb01c9ec01baec79979621dbdccc38",
       "literal_lua_references": [],
-      "reference_limit": "Constructed local prefix; resolved native bindings are in priest-sprite-import/native-graphics-without.json.",
-      "resolved_native_reference_source": "tech-priests_src/prototypes/entity.lua",
-      "source_kind": "unchanged licensed bitmap sheet from official Mechanicus Reborn 0.0.3 archive",
-      "acceptance": "asset_import_load_gate_verified_not_authored_3d_model_completion",
-      "source_provenance": "docs/art/priest-sprite-import/asset-provenance.json"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/tech-priest/level1_running.png",
-      "sha256": "376be34a7f000cef8bd70bcdec8a0a66d87aa1560549dc8c04e073517481270d",
-      "bytes": 1863839,
-      "dimensions": [
-        3300,
-        1280
-      ],
-      "mode": "RGBA",
       "family": "tech-priest",
+      "bytes": 1863839,
+      "sha256": "376be34a7f000cef8bd70bcdec8a0a66d87aa1560549dc8c04e073517481270d",
       "literal_lua_references": [],
-      "reference_limit": "Constructed local prefix; resolved native bindings are in priest-sprite-import/native-graphics-without.json.",
-      "resolved_native_reference_source": "tech-priests_src/prototypes/entity.lua",
-      "source_kind": "unchanged licensed bitmap sheet from official Mechanicus Reborn 0.0.3 archive",
-      "acceptance": "asset_import_load_gate_verified_not_authored_3d_model_completion",
-      "source_provenance": "docs/art/priest-sprite-import/asset-provenance.json"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/tech-priest/level1_running_shadow.png",
-      "sha256": "edc1c4b1215b957694d469fed3c857ca4eb86af26a1db612e609024f9205f1ea",
-      "bytes": 320649,
-      "dimensions": [
-        3300,
-        1280
-      ],
-      "mode": "RGBA",
       "family": "tech-priest",
+      "bytes": 320649,
+      "sha256": "edc1c4b1215b957694d469fed3c857ca4eb86af26a1db612e609024f9205f1ea",
       "literal_lua_references": [],
-      "reference_limit": "Constructed local prefix; resolved native bindings are in priest-sprite-import/native-graphics-without.json.",
-      "resolved_native_reference_source": "tech-priests_src/prototypes/entity.lua",
-      "source_kind": "unchanged licensed bitmap sheet from official Mechanicus Reborn 0.0.3 archive",
-      "acceptance": "asset_import_load_gate_verified_not_authored_3d_model_completion",
-      "source_provenance": "docs/art/priest-sprite-import/asset-provenance.json"
+      "reference_limit": "Dynamic Lua paths and inherited fields require prototype readback; an empty list is not proof of orphaning.",
+      "acceptance": "unreviewed_in_this_audit"
     },
     {
       "path": "tech-priests_src/graphics/entity/thetazine-thruster/thetazine-thruster-idle.png",
@@ -2666,6 +2573,21 @@
       "sha256": "1ae5b945ebb71f4cabcb7de24fd8b37249766fe3d3b85289a28c4888e55130ab"
     },
     {
+      "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/source-captures.zip",
+      "bytes": 36179624,
+      "sha256": "4fe96211e44e99ae5545309c9ec52ae0d14df57fea1151b64e9e3b5b00f88196"
+    },
+    {
+      "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/thetazine-v03-pressure-study.blend",
+      "bytes": 11621239,
+      "sha256": "536d872643b4d6d1a953bc118ad9db0937c17f4c1f05dd04a95e8033815fb0e9"
+    },
+    {
+      "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/thetazine-v03-pressure-study.glb",
+      "bytes": 13479204,
+      "sha256": "267a96b7cf1e64131b221fbec34ae5d1eee8a4fcccb9337f1da32312660acda8"
+    },
+    {
       "path": "art/source-to-3d/workbench-v4/rough_timber_workbench_v4_source.zip",
       "bytes": 185026,
       "sha256": "26f1402a2aa1920cdaaa8e8e15399250a86e6a6aa9bb9a00c832a76068d6c2cb"
@@ -3351,6 +3273,8 @@
     "art/source-to-3d/space-platform-engines/thetazine-thruster/v01-candidate/build_model.py",
     "art/source-to-3d/space-platform-engines/thetazine-thruster/v01-candidate/prepare_contract.py",
     "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/build_model.py",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/build_model.py",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/make_textures.py",
     "art/source-to-3d/workbench-v4/build_workbench_v4.py",
     "art/source-to-3d/workbench-v5-animation/animate_workbench.py",
     "art/source-to-3d/workbench-v6-game/assemble_sheets.py",
@@ -3360,6 +3284,7 @@
     "tools/art/audit_png_decode.py",
     "tools/art/boiler_circuit_attachment.lua",
     "tools/art/boiler_circuit_attachment.py",
+    "tools/art/boiler_interchange/README.md",
     "tools/art/boiler_interchange/audit_glb.py",
     "tools/art/boiler_interchange/build.py",
     "tools/art/boiler_interchange/compare_source_geometry.py",
@@ -3371,8 +3296,11 @@
     "tools/art/clean_lobber_degenerate_geometry.py",
     "tools/art/enable_local_optix.py",
     "tools/art/export_sprites.py",
+    "tools/art/hydrogen_thruster_v01/README.md",
     "tools/art/hydrogen_thruster_v01/audit_glb.py",
     "tools/art/hydrogen_thruster_v01/capture.py",
+    "tools/art/hydrogen_thruster_v01/native_review/control.lua",
+    "tools/art/hydrogen_thruster_v01/native_review/json.lua",
     "tools/art/hydrogen_thruster_v01/native_review/prepare.py",
     "tools/art/hydrogen_thruster_v01/native_review/review.py",
     "tools/art/hydrogen_thruster_v01/package_candidate.py",
@@ -3398,6 +3326,12 @@
     "tools/art/thetazine_thruster_v01/render_review.py",
     "tools/art/thetazine_thruster_v01/verify_export.py",
     "tools/art/thetazine_thruster_v01/verify_interfaces.py",
+    "tools/art/thetazine_v03/audit_animation_glb.py",
+    "tools/art/thetazine_v03/capture_full_preview.py",
+    "tools/art/thetazine_v03/package_preview.py",
+    "tools/art/thetazine_v03/render_export.py",
+    "tools/art/thetazine_v03/verify_animation.py",
+    "tools/art/thetazine_v03/verify_study_geometry.py",
     "tools/art/thruster_segment_parity/animation-native-control.lua",
     "tools/art/thruster_segment_parity/audit_animation_glb.py",
     "tools/art/thruster_segment_parity/audit_package.py",
@@ -3448,7 +3382,12 @@
     "art/source-to-3d/martian-bunker/src/v09/textures/texture_manifest.json",
     "art/source-to-3d/martian-bunker/src/v10/component_manifest_v10.json",
     "art/source-to-3d/martian-bunker/src/v10/textures/texture_manifest.json",
-    "docs/art/thruster-segment-parity/capture-receipt.json"
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/source-manifest.json",
+    "art/source-to-3d/space-platform-engines/hydrogen-thruster/v01/textures/manifest.json",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v01-candidate/source-manifest.json",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v02-animation-study/source-manifest.json",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/source-manifest.json",
+    "art/source-to-3d/space-platform-engines/thetazine-thruster/v03-pressure-study/textures/manifest.json"
   ],
   "pipeline_scripts": [
     "tools/factorio-render-pipeline/CALIBRATION_FINDINGS.md",
@@ -3722,27 +3661,5 @@
     "path": "docs/art/external-model-sources.json",
     "sha256": "aa477a46a67ac8e44b1eda01db6803a1eab9df93c2ab1b362475b458bd2f769d",
     "status": "chat_design_sources_located_native_package_bytes_not_recovered"
-  },
-  "boiler_wire_gate_evidence": "docs/art/boiler-v08-wire-attachments/validation.json",
-  "known_sprite_import_gate": {
-    "source": "tech-priests_src/prototypes/entity.lua",
-    "namespace": "__tech-priests__/graphics/entity/tech-priest/",
-    "status": "native graphics loading verified with dependency absent and enabled; preserved licensed sprites",
-    "evidence": "docs/art/priest-sprite-import/validation.json"
-  },
-  "boiler_static_interchange_evidence": "docs/art/boiler-v08-glb/validation.json",
-  "hydrogen_model_evidence": "docs/art/hydrogen-thruster-v01/validation.json",
-  "thetazine_model_evidence": {
-    "path": "docs/art/thetazine-thruster-v01/validation.json",
-    "stage": "Candidate static interchange passes; final surface/state/native graphical integration not accepted",
-    "native_sha256": "f3ecc524e9b484b136914f8bab2ff8588941f53e678a642a8f030d9dbabf91ac",
-    "glb_sha256": "05d1fbf4f214bdcafba7aad603a724895f48a844179784562aa6ec1fb55f331a"
-  },
-  "thruster_segment_parity_evidence": {
-    "path": "docs/art/thruster-segment-parity/validation.json",
-    "acceptance": "working pilot; owner requires further model/refinement; full shadow/glow-phase/exhaust/native-production gates open",
-    "native_body_clock_all_64_frames": true,
-    "runtime_changed": "Liquid fore collision/support notch and separate native service underlay only; actual pipe interfaces/performance preserved",
-    "review_quality_correction": "Default launcher high; earlier --low-vram captures reported medium and are not final high-quality appearance proof"
   }
 }

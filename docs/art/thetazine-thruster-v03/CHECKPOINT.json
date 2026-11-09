@@ -1,0 +1,25 @@
+{
+  "status": "V03_LOCAL_REFINEMENT_DELIVERED_RUNTIME_GATES_OPEN",
+  "native_sha256": "536d872643b4d6d1a953bc118ad9db0937c17f4c1f05dd04a95e8033815fb0e9",
+  "glb_sha256": "267a96b7cf1e64131b221fbec34ae5d1eee8a4fcccb9337f1da32312660acda8",
+  "local_candidate": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\thruster-v03\\pilot-08",
+  "capture_receipt": "full-preview-capture.json",
+  "local_render_active": false,
+  "completed": [
+    "Editable raised gantry/pressure machinery and transparent charged sight pipes",
+    "Six actual telescoping rams, 24 closed overlapping bell shells, cold and oscillating working states",
+    "Packed authored PBR maps and separate morphing tinted exhaust collection",
+    "Raw GLB geometry/UV/normal/image audit and 671-part triangle/material roundtrip",
+    "All671 meshes in64working poses plus wrap: actual GLB bounds/morphs/fixed sockets and physical shaft/pin/gland measurements",
+    "Four actual imported GLB renders viewed; 66 transparent source PNGs checked and archived; 64-pose real loop"
+  ],
+  "next": "Resume source-export-plan.json. Pilot V03 at actual game scale before full separated-layer captures; keep ports/mounting fixed. Full source capture is complete: do not duplicate it. No V03 render currently needs resuming.",
+  "not_done": [
+    "Appearance refinement/owner review",
+    "Actual-scale native V03 placement and plume occlusion",
+    "Separate body/emission/shadow/FX exports and exact atlases",
+    "Independent native glow and plume phases",
+    "Final normal-mod graphics import after local visual evidence"
+  ],
+  "goal_open": true
+}

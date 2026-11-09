@@ -1,0 +1,26 @@
+{
+  "native_sha256": "536d872643b4d6d1a953bc118ad9db0937c17f4c1f05dd04a95e8033815fb0e9",
+  "glb_sha256": "267a96b7cf1e64131b221fbec34ae5d1eee8a4fcccb9337f1da32312660acda8",
+  "files": [
+    {
+      "file": "export-front.png",
+      "sha256": "d057d3fb291bd814c74ee7732202e8a6df8e450364a1523299da8fa8608e66d2",
+      "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
+    },
+    {
+      "file": "export-upper.png",
+      "sha256": "53c4e555a7e5f3ff7e562a32f86c7fdade64008bac0a6a302d47b9cee5802aa8",
+      "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
+    },
+    {
+      "file": "export-rear.png",
+      "sha256": "4b2bbf96c58660fb6a38d80eb85426d8381457384048d2c0b0af4c4f1a756e4d",
+      "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
+    },
+    {
+      "file": "export-rear-clay.png",
+      "sha256": "8897a238af52c09340f326768e729bcf38a588a28ba98630cd905aa7c4dce42e",
+      "scope": "Actual imported GLB at frame17; FX hidden to inspect support geometry."
+    }
+  ]
+}

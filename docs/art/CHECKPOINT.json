@@ -21,7 +21,8 @@
     "Boiler G5 static cold-pose interchange: 264 meshes / 224311 triangles, source geometry preservation, 13 embedded images / 29 materials, native reopen + actual GLB reimport, fixed sockets/bounds and eight viewed local CPU renders",
     "Hydrogen V01 authored body: 291 meshes / 92996 triangles / 18 PBR maps; actual GLB reimport, 82 mounting-head contacts, fixed flanges, 7+7 rendered poses and exact atlas cells, registered shadow, exact-source native caps/night/frozen-pose graphics integration",
     "Thetazine V01 editable interface-fit candidate: shared source construction provenance, new 5x5 supply necks, 291 meshes / 93236 triangles, actual triangle/UV/PBR/socket reimport and four viewed GLB renders; final surface/state/native gates remain open",
-    "Liquid mount cutouts / origin-containing collision / static service underlay and high-quality launcher; Thetazine V02 439-mesh 64-frame working body pilot, actual animated GLB, 128 exact source cells and all 64 native body frames decoded; owner refinement and final parity remain open"
+    "Liquid mount cutouts / origin-containing collision / static service underlay and high-quality launcher; Thetazine V02 439-mesh 64-frame working body pilot, actual animated GLB, 128 exact source cells and all 64 native body frames decoded; owner refinement and final parity remain open",
+    "Thetazine V03 raised platform gantry, transparent charged sight pipes, six constrained rams, interleaved cold/hot bell and tinted morphing exhaust; actual671-part GLB/64pose roundtrip and66local source renders. Refinement and runtime gates remain open."
   ],
   "verification": {
     "graphical_client": "Targeted native Factorio 2.1.24 attachment/placement slice reviewed: four custom thrusters + vanilla control, connected/disconnected caps, four boiler directions; other assets and working-state/wire gates remain open",
@@ -39,7 +40,8 @@
     "boiler_static_interchange": "docs/art/boiler-v08-glb/validation.json: source/GLB/native hashes, raw geometry/UV/normal/image audit, source geometry preservation, independent reimport and four directional draw projections; no animated GLB claim",
     "hydrogen_v01": "docs/art/hydrogen-thruster-v01/validation.json: actual target source graphics, cap preservation, seven frozen source rectangles and night glow; powered native working-clock/behavior not tested.",
     "thetazine_candidate": "docs/art/thetazine-thruster-v01/validation.json: static technical interchange only, final surface 3/5 and state 2/5 below required 4/5; no runtime import",
-    "thruster_segment_parity": "docs/art/thruster-segment-parity/validation.json: working pilot only; source/native body clock passes, full model/shadow/exhaust/glow-phase/refinement gates open"
+    "thruster_segment_parity": "docs/art/thruster-segment-parity/validation.json: working pilot only; source/native body clock passes, full model/shadow/exhaust/glow-phase/refinement gates open",
+    "thetazine_v03": "docs/art/thetazine-thruster-v03: technical source/export and full local rendered loop pass; no V03 native integration/final appearance claim."
   },
   "open_defects": [
     "Condenser V21 native source remains Library-linked and unlocated locally",
@@ -48,7 +50,7 @@
     "Energy dish V03 final surfacing/fidelity and firing/emission/shadow/native prototype integration open",
     "Thetazine, narrow fusion and large fusion authored bodies/model exports/visual integration unfinished; hydrogen V01 graphics lane now reviewed"
   ],
-  "next_slice": "Owner-requested shape/material/mechanical refinement; then shadow/idle, glow-phase, separate flame/plume registration and final conditional runtime import. Maintain fixed ports and origin-containing mount collision. Preserve A02 workers and other source-recovery/family gates. Original namespace/boiler geometry evidence retained; earlier reduced-mode images do not establish high-quality final appearance.",
+  "next_slice": "Resume source-export-plan.json. Pilot V03 at actual game scale before full separated-layer captures; keep ports/mounting fixed. Full source capture is complete: do not duplicate it. No V03 render currently needs resuming.",
   "automation": "tech-priests-local-model-completion, every four hours",
   "publication": "Read exact delivered SHA and status from issue #13; never infer publication from local commit",
   "local_work": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work",
@@ -62,9 +64,10 @@
     "further_artifact_recovery": "Second import completed: 1482 additional PNGs; 48 cached chunks plus four local chunks. 62/68 bundles complete; remaining missing frames render locally.",
     "new_local_profile": "OPTIX / CPU compositor; source and render settings unchanged; numerical differences measured",
     "live_process_claim": "Read actual local-capture-state.json and verify process commands; this committed snapshot is not proof of current liveness",
-    "last_independently_verified_chunks": 305,
+    "last_independently_verified_chunks": 335,
     "packaging": "Use package_local_lobber_capture.py, never the destructive legacy assembler directly on capture cache. Incomplete-cache refusal verified; full packaging pending.",
     "evidence": "docs/art/lobber-a02-latest-progress.json: completed local receipts have all frame hashes rechecked"
   },
-  "external_model_sources": "docs/art/external-model-sources.json; v14 reactor chats located, package bytes unrecovered"
+  "external_model_sources": "docs/art/external-model-sources.json; v14 reactor chats located, package bytes unrecovered",
+  "active_thetazine_checkpoint": "docs/art/thetazine-thruster-v03/CHECKPOINT.json"
 }
