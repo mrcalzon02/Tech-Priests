@@ -207,7 +207,7 @@
     },
     {
       "id": "water-purifier-mh7",
-      "status": "four-goal-runner-candidate-unapproved",
+      "status": "process-pbr-technically-verified-unapproved",
       "source": {
         "repository": "mrcalzon02/HB-TTRPG-tools",
         "ref": "a953f083412c9e67481d31ebc8b5fb242cf0cf69",
@@ -228,13 +228,31 @@
           "source_sha256": "3090f184375644a7a004f544c1a776e327e16ef44a3d7d6cab45794489bce80a",
           "owner_approved": false,
           "game_integrated": false
+        },
+        {
+          "repository": "mrcalzon02/HB-TTRPG-tools",
+          "ref": "d90857d19d6d8e9c6df3206cf210a6e33de9012f",
+          "path": "tools/local-worker/run_fmpl_production.ps1",
+          "run_url": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42715980695",
+          "artifact_id": 13717104705
         }
       ],
       "footprint": [
         3,
         3
       ],
-      "purpose": "Four-goal Qwen-guided Water Purifier candidate saved and independently GLB reimported; visual mechanical/PBR detail and native Factorio port mating still open"
+      "purpose": "Open glass-topped keyed Water Purifier with concrete PBR pad, staged filtration, connected in/out pipes and steam. Technical Blender/GLB/four-view proof passed; owner visual and native Factorio connection approval pending.",
+      "production_candidate": {
+        "run_url": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42715980695",
+        "artifact_id": 13717104705,
+        "artifact_relative_blend": "fmpl-production/water-purifier-fmpl-process.blend",
+        "source_sha256": "2b365b9e5c153dc915bab2f91e47beb15f247498908de4583c876bc5a514fe4e",
+        "glb_sha256": "d6cfdc31d6e4b9f174afffd4ee05077d37fd927e614aa4679a3e0aead6517042",
+        "native_source_reopened": true,
+        "glb_reimported": true,
+        "owner_approved": false,
+        "game_integrated": false
+      }
     }
   ],
   "programs": [
@@ -521,7 +539,7 @@
         "ref": "c0be708eec7a3a798b1945017eae58c2147e407a",
         "path": "tools/fmpl/production_smoke/refine_process.py"
       },
-      "status": "source-committed-remote-runner-proof-pending",
+      "status": "technical-candidate-verified-four-static-directions-native-game-pending",
       "gate": "Native Factorio pipe cells and user visual approval remain unverified after Blender export"
     }
   ],
@@ -535,7 +553,8 @@
     "four-direction-sprite-export-candidate",
     "game-sprites-installed-with-specific-native-checks",
     "runner-two-of-four-goals-verified-not-accepted",
-    "four-goal-runner-candidate-unapproved"
+    "four-goal-runner-candidate-unapproved",
+    "process-pbr-technically-verified-unapproved"
   ],
   "policy": {
     "no_unreviewed_promotion": true,

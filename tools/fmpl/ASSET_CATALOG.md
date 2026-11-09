@@ -20,7 +20,7 @@ Source-indexed asset tabulation. **Not every model is game-ready; not every comp
 | `timber-workbench-v05` | editable-animation-source | [art/source-to-3d/workbench-v5-animation/Workbench_V5_Animated_Source.zip](https://github.com/mrcalzon02/Tech-Priests/blob/b16f98c6e62d0a82697fd01eaa3fc6953c35ccde/art/source-to-3d/workbench-v5-animation/Workbench_V5_Animated_Source.zip) |
 | `tanks-campfire-v11` | four-direction-sprite-export-candidate | [models/island-survival/blender/build_campfire_scene.py](https://github.com/mrcalzon02/Tanks-for-bob-Fork/blob/3f38f801631a88460bca5599616edb0173f4a970/models/island-survival/blender/build_campfire_scene.py) |
 | `tanks-fluid-connector-jig` | committed-editable-reference | [models/reference/factorio-fluid-interface/factorio-fluid-interface-reference.blend](https://github.com/mrcalzon02/Tanks-for-bob-Fork/blob/3f38f801631a88460bca5599616edb0173f4a970/models/reference/factorio-fluid-interface/factorio-fluid-interface-reference.blend) |
-| `water-purifier-mh7` | runner-two-of-four-goals-verified-not-accepted | [tools/refinery-agent/goal_water_purifier.py](https://github.com/mrcalzon02/HB-TTRPG-tools/blob/5942590d944cd5aef03a973fdd941e03fd10d833/tools/refinery-agent/goal_water_purifier.py) |
+| `water-purifier-mh7` | process-pbr-technically-verified-unapproved | [tools/refinery-agent/goal_water_purifier.py](https://github.com/mrcalzon02/HB-TTRPG-tools/blob/5942590d944cd5aef03a973fdd941e03fd10d833/tools/refinery-agent/goal_water_purifier.py) |
 
 ## Existing PBR materials
 

@@ -106,3 +106,7 @@ See [PROCESS_MACHINERY_STANDARD.md](PROCESS_MACHINERY_STANDARD.md). Actual model
 ## Native-geometry fallback bridge (workspace exercised)
 
 The `greebles/native_bridge` directory holds a pinned, read-only Blender 5.0 binary geometry extractor and OBJ/GLB verifier, exercised against the private Drive source in an internal workspace: 320 meshes, 2,828,171 vertices and 5,610,509 original polygons. The companion private geometry package has receipts, GLB readbacks, 640 geometry previews and 16 contact sheets. No private source or extracted binary is publicly committed. Native Blender `.blend` conversion/reopen and native Factorio port integration are still separate gates. The independently supplied `factorio-tank-chaffe.zip` is now indexed but its redistribution rights are unresolved.
+
+## Water Purifier v03 technical validation
+
+[OLD-CORE30 run #42715980695](https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42715980695) passed. 50 source meshes were preserved, 114 process meshes built, 155 reimported in GLB, 30 packed PBR textures, and four N/E/S/W static frames produced in 64/128/256 RGBA atlases. The glass agitator and steam are keyed, but animated sprite atlases, visual acceptance, and native Factorio pipe connections are NOT yet proven. See `tools/fmpl/checkpoints.json` event `fmpl-water-purifier-42715980695-1` for exact hashes. The runner artifact has 14-day retention; the native binary is not yet permanently committed.

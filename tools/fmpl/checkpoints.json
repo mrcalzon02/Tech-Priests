@@ -32,6 +32,57 @@
         "native_port_alignment_verified": false,
         "visual_note": "actual renders show minimal externally visible change; functional/mechanical detail and PBR pass remain open"
       }
+    },
+    {
+      "event_id": "fmpl-water-purifier-42715980695-1",
+      "asset_id": "water-purifier-mh7",
+      "asset_kind": "model",
+      "revision": "v03-glass-agitator-concrete-process",
+      "state": "verified",
+      "source_sha256": "2b365b9e5c153dc915bab2f91e47beb15f247498908de4583c876bc5a514fe4e",
+      "evidence": {
+        "source_artifact_sha256": "2b365b9e5c153dc915bab2f91e47beb15f247498908de4583c876bc5a514fe4e",
+        "native_reopen_verified": true,
+        "glb_reimported": true,
+        "glb_sha256": "d6cfdc31d6e4b9f174afffd4ee05077d37fd927e614aa4679a3e0aead6517042",
+        "source_original_meshes_preserved": 50,
+        "added_process_meshes": 114,
+        "independent_glb_meshes": 155,
+        "packed_PBR_images": 30,
+        "paving_PBR_materials": [
+          "ferrocrete",
+          "ferrocrete_light",
+          "ferrocrete_dark"
+        ],
+        "glass_transmission": 0.93,
+        "agitator_keyframes": [
+          1,
+          25,
+          49,
+          73,
+          97
+        ],
+        "steam_keys_checked": true,
+        "source_png_alpha_valid": true,
+        "four_static_orientations": 4,
+        "atlas_sha256": {
+          "idle_64": "503056763951d9ef3a964e5392b5fe50eb81f3e17741f10949ec63aa01c0691d",
+          "idle_128": "9858a3b0cf814bba0b927c16a257a0dcac8f84b59b0ab8dfdca8746376d5653c",
+          "idle_256": "18dad131824623c27c5103e8cc2ee9b7b60c85cb7a0632a97a373a728e143ca8"
+        },
+        "preview_idle_sha256": "a69cf768ddc0ee2fa1542e1b1e1320897e345382ffd10ce3dd884bb415f91681",
+        "preview_working_sha256": "e2d212cd237501cd82dd7c713e9a212bd17c6a8c108a8f05f1ac3b4b826e73f5",
+        "github_run": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42715980695",
+        "github_runner_commit": "d90857d19d6d8e9c6df3206cf210a6e33de9012f",
+        "github_artifact_id": 13717104705,
+        "artifact_relative_blend": "fmpl-production/water-purifier-fmpl-process.blend",
+        "artifact_retention_days": 14,
+        "owner_visual_approval": false,
+        "native_factorio_ports_verified": false,
+        "factorio_runtime_verified": false,
+        "game_integrated": false,
+        "source_note": "Technically verified source candidate; no native Factorio fluid or visual acceptance"
+      }
     }
   ]
 }
