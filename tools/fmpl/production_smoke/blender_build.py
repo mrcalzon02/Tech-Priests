@@ -65,28 +65,44 @@ def material_key(name):
 
 
 def prepare_camera(scene):
-    camera_data = bpy.data.cameras.new("FMPL | 45 degree orthographic lens")
-    camera_data.type = "ORTHO"
-    camera_data.ortho_scale = 6.6
-    camera = bpy.data.objects.new("FMPL | 45 degree camera", camera_data)
-    scene.collection.objects.link(camera)
-    target = Vector((0, 0, 1.35))
-    camera.location = target + Vector((7.0, -7.0, 8.0))
-    camera.rotation_euler = (target - camera.location).to_track_quat("-Z", "Y").to_euler()
-    scene.camera = camera
-    scene.render.engine = "CYCLES"
-    scene.cycles.samples = 12
-    scene.cycles.device = "CPU"
-    scene.render.film_transparent = True
-    scene.render.image_settings.file_format = "PNG"
-    scene.render.image_settings.color_mode = "RGBA"
-    scene.render.resolution_percentage = 100
-    if not any(o.type == "LIGHT" for o in scene.objects):
-        sun_data = bpy.data.lights.new("FMPL | daylight", "SUN")
-        sun_data.energy = 2.0
-        sunlight = bpy.data.objects.new("FMPL | daylight", sun_data)
-        scene.collection.objects.link(sunlight)
-        sunlight.rotation_euler = (math.radians(33), math.radians(-25), math.radians(21))
+    """Reuse the actual machine camera, matching Boiler V08's fixed Factorio
+    45-degree elevation and zero azimuth. Never create four inspection cameras.
+    """
+    camera=scene.camera
+    if camera is None or camera.type != "CAMERA":
+        cam_data=bpy.data.cameras.new("FMPL | boiler 45 export lens")
+        camera=bpy.data.objects.new("FMPL | Factorio production camera",cam_data)
+        scene.collection.objects.link(camera)
+    for ob in list(scene.objects):
+        if ob.type=="CAMERA" and ob!=camera:
+            bpy.data.objects.remove(ob,do_unlink=True)
+    camera.name="FMPL | Factorio 45 export (single direction)"
+    camera.data.type="ORTHO"
+    camera.data.ortho_scale=5.8
+    target=Vector((0.0,0.0,1.65))
+    camera.location=target+Vector((0.0,-6.0,6.0))
+    camera.rotation_euler=(target-camera.location).to_track_quat("-Z","Y").to_euler()
+    camera.data.shift_x=0.0
+    camera.data.shift_y=0.0
+    scene.camera=camera
+    scene.render.engine="CYCLES"
+    scene.cycles.samples=12
+    scene.cycles.device="CPU"
+    scene.render.film_transparent=True
+    scene.render.image_settings.file_format="PNG"
+    scene.render.image_settings.color_mode="RGBA"
+    scene.render.resolution_percentage=100
+    if not any(o.type=="LIGHT" for o in scene.objects):
+        sun_data=bpy.data.lights.new("FMPL | boiler-style daylight","SUN")
+        sun_data.energy=2.0
+        daylight=bpy.data.objects.new("FMPL | boiler-style daylight",sun_data)
+        scene.collection.objects.link(daylight)
+        daylight.rotation_euler=(math.radians(33),math.radians(-25),math.radians(21))
+    bpy.context.view_layer.update()
+    if abs((camera.location-target).normalized().z-2**-.5)>0.0001:
+        raise RuntimeError("Factorio export pitch is not 45 degrees")
+    if abs(camera.location.x)>1e-7:
+        raise RuntimeError("Factorio export yaw is not zero")
     return camera
 
 
@@ -149,8 +165,8 @@ def main():
     helper = load_module(Path(args.pipe_helper).resolve(), "fmpl_pipe_append")
     interface_receipts = []
     for name, coordinates, direction in (
-        ("raw-water-in", (-1.5, -.78, 0.0), "W"),
-        ("purified-water-out", (1.5, -.62, 0.0), "E"),
+        ("raw-water-in", (-1.5, 0.0, 0.0), "W"),
+        ("purified-water-out", (1.5, 0.0, 0.0), "E"),
     ):
         collection, root = helper.append_interface(
             jigfile, joint_ground=coordinates, facing=direction,
@@ -204,6 +220,7 @@ def main():
       "packed_file_images":sum(bool(img.packed_file) for img in bpy.data.images if img.source=="FILE"),
       "calibration_reference_sha256":jig_hash,
       "pipe_references":interface_receipts,
+      "fixed_factorio_camera":{"elevation_deg":45,"azimuth_deg":0,"target":[0,0,1.65],"ortho_scale":5.8,"direction_count":1},
       "source_preserved":True,
       "human_visual_approval":False,
       "factorio_native_port_verified":False,

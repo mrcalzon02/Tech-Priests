@@ -45,6 +45,16 @@ def main():
         raise RuntimeError("The derivative altered the source machine geometry")
     if not scene.camera or scene.camera.data.type!="ORTHO" or scene.render.engine!="CYCLES":
         raise RuntimeError("The source camera or Cycles render configuration was lost")
+    cameras=[o for o in scene.objects if o.type=="CAMERA"]
+    expected=(0.0,-6.0,7.65)
+    if (len(cameras)!=1 or scene.camera != cameras[0] or
+        max(abs(float(scene.camera.location[i])-expected[i]) for i in range(3))>0.001 or
+        abs(scene.camera.data.ortho_scale-5.8)>0.001):
+        raise RuntimeError("One canonical zero-azimuth 45-degree camera required")
+    for name,xyz in (("raw-water-in",(-1.5,0.0,0.36)),("purified-water-out",(1.5,0.0,0.36))):
+        records=[e for e in build["pipe_references"] if e["name"]==name]
+        if len(records)!=1 or max(abs(records[0]["socket_world_xyz"][i]-xyz[i]) for i in range(3))>0.0002:
+            raise RuntimeError("Provisional centred edge-port plane is off grid: "+name)
     mats=set()
     for obj in source:
         mats.update(m.name for m in obj.data.materials if m.name.startswith("TP Library |"))
