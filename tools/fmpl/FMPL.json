@@ -2,7 +2,7 @@
   "schema": "fmpl.module.v1",
   "module": "Factorio Modeling Production Library",
   "short_name": "FMPL",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "canonical_repo": "mrcalzon02/Tech-Priests",
   "source_commit": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
   "external_refs": {
@@ -572,7 +572,9 @@
     "no_fake_fluid_flow": true,
     "stationary_machine_single_fixed_export_view": true,
     "rotatable_entity_four_direction_exports": true,
-    "grid_aligned_pipe_mouth_required": true
+    "grid_aligned_pipe_mouth_required": true,
+    "strict_capture_policy": true,
+    "remove_temporary_cameras_in_derived_scene": true
   },
   "external_blender_libraries": [
     {
@@ -662,5 +664,28 @@
       ],
       "native_prototype_ports_verified": false
     }
+  },
+  "capture_contract": {
+    "id": "fmpl.factorio45.v1",
+    "policy_file": "tools/fmpl/CAMERA_CAPTURE_STANDARD.md",
+    "validator": "tools/fmpl/capture_policy.py",
+    "camera_guard": "tools/fmpl/blender_camera_guard.py",
+    "cleanup_script": "tools/fmpl/camera_cleanup_scene.py",
+    "camera": "FMPL_CAPTURE_CAMERA",
+    "pitch_deg": 45,
+    "grid_azimuth_deg": 0,
+    "projection": "ORTHO",
+    "entity_angles": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "item_angles": [
+      0
+    ],
+    "item_frame_count": 1,
+    "persistent_cameras": 1,
+    "temporary_camera_policy": "remove in finally, never save"
   }
 }

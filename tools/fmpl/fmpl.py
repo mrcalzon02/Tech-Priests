@@ -39,6 +39,13 @@ def validate(root=None, check_files=False):
     assert reg["asset_units"]["one_blender_unit"] == "one Factorio tile"
     assert reg["policy"]["no_unreviewed_promotion"] is True
     assert reg["policy"]["no_extra_workflows"] is True
+    assert reg["policy"]["strict_capture_policy"] is True
+    capture = reg["capture_contract"]
+    assert capture["id"] == "fmpl.factorio45.v1"
+    assert capture["pitch_deg"] == 45 and capture["grid_azimuth_deg"] == 0
+    assert capture["entity_angles"] == [0,90,180,270]
+    assert capture["item_angles"] == [0] and capture["item_frame_count"] == 1
+    assert capture["persistent_cameras"] == 1
     assert len(reg["source_commit"]) == 40 and set(reg["source_commit"]) <= HEX
     all_records = records(reg)
     ids = [x["id"] for x in all_records]
@@ -64,6 +71,9 @@ def validate(root=None, check_files=False):
         assert len(reg[coll]) == reg["inventory"][field]
     if root is not None:
         root = Path(root).resolve()
+        assert (root / capture["validator"]).is_file()
+        assert (root / capture["camera_guard"]).is_file()
+        assert (root / capture["policy_file"]).is_file()
         catalog = load_json(root / reg["material_catalog"])
         assert len(catalog["materials"]) == reg["inventory"]["materials"] == 23
         assert len(catalog["candidates"]) == reg["inventory"]["component_candidates_total"] == 39
