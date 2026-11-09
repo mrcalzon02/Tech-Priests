@@ -6,17 +6,17 @@ import json
 from pathlib import Path
 
 REQUIRED = {"source_id", "origin", "title", "source_uri", "state", "rights", "license_evidence", "source_medium"}
-STATES = {"reference-only", "candidate", "approved-import"}
+STATES = {"reference-only", "candidate", "private-source-intake", "approved-import"}
 
 
 def validate(entry: dict) -> None:
     if not isinstance(entry, dict) or not REQUIRED.issubset(entry):
         raise ValueError("Missing required source provenance fields")
-    if entry["origin"] not in {"self-authored-repository", "private-drive", "third-party-website"}:
+    if entry["origin"] not in {"self-authored-repository", "private-drive", "third-party-website", "user-supplied-archive"}:
         raise ValueError("Invalid origin")
     if entry["state"] not in STATES:
         raise ValueError("Invalid source state")
-    if entry["rights"] not in {"owner-controlled", "third-party", "unknown"}:
+    if entry["rights"] not in {"owner-controlled", "third-party", "unknown", "third-party-provenance-not-established"}:
         raise ValueError("Invalid rights class")
     if not all(isinstance(entry[k], str) and entry[k] for k in ("source_id", "title", "source_uri", "source_medium")):
         raise ValueError("Blank source metadata")
@@ -28,7 +28,7 @@ def validate(entry: dict) -> None:
             raise ValueError("Import requires explicit derivative/redistribution review")
         if entry.get("reviewer") in (None, ""):
             raise ValueError("Approved import requires a named reviewer")
-        if entry.get("rights") == "unknown":
+        if entry.get("rights") in {"unknown", "third-party-provenance-not-established"}:
             raise ValueError("Unknown rights cannot be approved")
         if not entry.get("asset_file_or_component_id"):
             raise ValueError("Approval must apply to one exact source file or component")
