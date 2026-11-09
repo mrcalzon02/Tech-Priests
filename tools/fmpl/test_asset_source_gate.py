@@ -16,6 +16,28 @@ class Tests(unittest.TestCase):
         self.assertEqual(report["approved_imports"],0)
         self.assertEqual(report["sources"],9)
 
+    def test_private_user_archive_is_intake_only(self):
+        entry={
+          "source_id":"unlicensed-user-upload",
+          "origin":"user-supplied-archive","title":"Unlicensed model donor",
+          "source_uri":"conversation-upload:donor.zip",
+          "state":"private-source-intake",
+          "rights":"third-party-provenance-not-established",
+          "license_evidence":None,
+          "source_medium":"native-blender-plus-textures"
+        }
+        gate.validate(entry)
+        entry["state"]="approved-import"
+        entry["asset_file_or_component_id"]="donor.blend"
+        entry["asset_medium"]="3d-blend"
+        entry["import_medium"]="3d-blend"
+        entry["license_evidence"]={"license_name":"unknown","evidence_uri":"conversation"}
+        entry["derivative_use_reviewed"]=True
+        entry["redistribution_reviewed"]=True
+        entry["reviewer"]="owner"
+        with self.assertRaises(ValueError):
+            gate.validate(entry)
+
     def test_2d_cannot_be_claimed_3d(self):
         record={"source_id":"third-party","origin":"third-party-website","title":"Render","source_uri":"https://example.org", "state":"approved-import", "rights":"third-party", "license_evidence":{"license_name":"CC-BY-4.0", "evidence_uri":"https://example.org/LICENSE"}, "source_medium":"finished-png", "asset_file_or_component_id":"example.png", "asset_medium":"2d-render", "import_medium":"3d-blend", "derivative_use_reviewed":True, "redistribution_reviewed":True, "reviewer":"owner"}
         with self.assertRaises(ValueError):gate.validate(record)
