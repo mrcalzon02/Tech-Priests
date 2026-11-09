@@ -1,0 +1,373 @@
+{
+  "status": "PASS_64_CACHED_IDLE_HEADINGS_FIXED_BASE_PIXEL_COMPOSITION_REQUIRES_VISUAL_REVIEW",
+  "source_identity": {
+    "source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+    "config_sha256": "9dd6aac249aa44f10f6ab2bb7a03873b6dc251ba0924f1d0164c9ddf56d2fb7e",
+    "renderer_sha256": "cdc81d50fb6aa35bb8b7b5db06ceb0076b329a255f6aa043332da01941530923"
+  },
+  "source_draw_scale": 0.3099999904632568,
+  "draw_shift": [
+    0,
+    -1.1109065190928504
+  ],
+  "base_scale": 0.315463840961,
+  "base_shift": [
+    0,
+    -1.110906552544
+  ],
+  "base_sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48",
+  "source_registration": {
+    "status": "PASS",
+    "directions": 64,
+    "fps": 24,
+    "frames_per_direction": 192,
+    "cycle_frames": 12288,
+    "idle_frames": 64,
+    "entry_frames_per_direction": 15,
+    "settle_frames_per_direction": 15,
+    "camera": "original bunker 45 degree orthographic",
+    "pixels_per_world_unit": 103.22580962721946,
+    "entity_origin_pixel": [
+      320.0,
+      434.6742248535156
+    ],
+    "mount_pixel": [
+      320.0,
+      310.58837890625
+    ],
+    "all_idle_hatches_closed": true,
+    "idle_effects_disabled": true,
+    "six_independent_shots_verified": true,
+    "entry_joins_cycle": true,
+    "tail_returns_to_idle": true,
+    "textures_packed": true,
+    "base_excluded": true,
+    "eight_heading_extreme_bounds_checked": true,
+    "camera_and_area_lights_fixed_at_all_64_headings": true
+  },
+  "heading_records": [
+    {
+      "heading": 0,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d00\\beauty\\idle_000.png",
+      "sha256": "c23b1891ca79ee17f37ebd2282d9565aedf26cc8d6dd98303672fb5c994b39a3"
+    },
+    {
+      "heading": 1,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d01\\beauty\\idle_000.png",
+      "sha256": "b556cec982e83b8a3fb4cab28442f16007d5a73c516f793da4b44d83aaa9494a"
+    },
+    {
+      "heading": 2,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d02\\beauty\\idle_000.png",
+      "sha256": "ebbca71378806935d32cfc91576fa0740240d4f70b9e2e30f686c3a48468fc11"
+    },
+    {
+      "heading": 3,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d03\\beauty\\idle_000.png",
+      "sha256": "d7b6e77a2833088b0f879f482e76ce24a7e23ec98caa89797f5f395662695897"
+    },
+    {
+      "heading": 4,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d04\\beauty\\idle_000.png",
+      "sha256": "7a5be18705c2fe2fb2c1c2b66f97411e42a6fe0fe4ff047c776f839a1a616958"
+    },
+    {
+      "heading": 5,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d05\\beauty\\idle_000.png",
+      "sha256": "2cad73e218dcac6c0374ce6e89ed0f8acbd29ed14f69af2e4c8b01fd7bcf50ed"
+    },
+    {
+      "heading": 6,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d06\\beauty\\idle_000.png",
+      "sha256": "7f7724cb39446612a5b5ef13c0b88db99d39ffe0c2a0d52faffd2a433467dc41"
+    },
+    {
+      "heading": 7,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d07\\beauty\\idle_000.png",
+      "sha256": "39ceee43dc90ca6eca07d0683f7f080ead021e4ea0d8c35f2a3370f75c5a883e"
+    },
+    {
+      "heading": 8,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d08\\beauty\\idle_000.png",
+      "sha256": "d7a5f19888056ffd9172ad269454509949ecdcf4185d9bd267fd97356f0c5bb7"
+    },
+    {
+      "heading": 9,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d09\\beauty\\idle_000.png",
+      "sha256": "4a2d881383f571cb377f8cb47c370c9ed8808d61ce4e580805b23ffb8d42178a"
+    },
+    {
+      "heading": 10,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d10\\beauty\\idle_000.png",
+      "sha256": "af81f3c0bc0b299b5536bc433853a69f5050cbff21871f4da7ab3efb373dd4e0"
+    },
+    {
+      "heading": 11,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d11\\beauty\\idle_000.png",
+      "sha256": "657a12292d803af59473757de4dda8be0c370ba53b4a2c0245d393eed673cc93"
+    },
+    {
+      "heading": 12,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d12\\beauty\\idle_000.png",
+      "sha256": "4f105751058c07ef1fd78b2af01961882cad1614b00f6014f6636d4230fd1df9"
+    },
+    {
+      "heading": 13,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d13\\beauty\\idle_000.png",
+      "sha256": "d6cc0cf2da5cdf5710a8cf3186188b052162da360df4a5224f06dadea128a404"
+    },
+    {
+      "heading": 14,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d14\\beauty\\idle_000.png",
+      "sha256": "941c6562ca8efc87ca3e0c5a6ac0e37f3fbe9f561b9db3919207074aef4835fc"
+    },
+    {
+      "heading": 15,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d15\\beauty\\idle_000.png",
+      "sha256": "c8c3ac12fbf4949fa7345f6f248b947901628a881f63267e351d4e77f89e7fe9"
+    },
+    {
+      "heading": 16,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d16\\beauty\\idle_000.png",
+      "sha256": "9a13e38192850a4869b4ee57db495d55b7d6413aef70def7d6e028a8927160ab"
+    },
+    {
+      "heading": 17,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d17\\beauty\\idle_000.png",
+      "sha256": "bdd4cae074be1bc62b7f8379ebf2788adda73a79ca83ad352522cdfa9438ef6c"
+    },
+    {
+      "heading": 18,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d18\\beauty\\idle_000.png",
+      "sha256": "c8c8f317c156750e600499a195b1363446bf525cdd432e93971810c2cc6f9b8f"
+    },
+    {
+      "heading": 19,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d19\\beauty\\idle_000.png",
+      "sha256": "391f0a2e8f08eb363830cdcf160edbbe962e81b97536087b753036538d43e69f"
+    },
+    {
+      "heading": 20,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d20\\beauty\\idle_000.png",
+      "sha256": "0d39725d5bcdd3bb3a2df1c005ad854de4e6955360ad0470ad4a2cb31cfd59a4"
+    },
+    {
+      "heading": 21,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d21\\beauty\\idle_000.png",
+      "sha256": "bb194175cca01de08c370e70c688fd83360bcbb5d263c6cea7602713e60a6d2d"
+    },
+    {
+      "heading": 22,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d22\\beauty\\idle_000.png",
+      "sha256": "8881af82f22c450288a198be94b1018cd4da0c525493e46c0aa50db44d7c754d"
+    },
+    {
+      "heading": 23,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d23\\beauty\\idle_000.png",
+      "sha256": "5a8927a11e48fa07365c6aa6b026881da42a5beba5d316ecc712a5eb8867bea6"
+    },
+    {
+      "heading": 24,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d24\\beauty\\idle_000.png",
+      "sha256": "8008d9539a370b3e93cc606df6b134495a25934305b479eec835544d5e5a802a"
+    },
+    {
+      "heading": 25,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d25\\beauty\\idle_000.png",
+      "sha256": "a43c71c74a9f41ab755fc02520925e42659180b21c6d06b383e5806ccbff7af0"
+    },
+    {
+      "heading": 26,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d26\\beauty\\idle_000.png",
+      "sha256": "b1fa0e8ceb9477cb3959b947648eeec9ca35f6dcec8c12db6e16589ce433e90a"
+    },
+    {
+      "heading": 27,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d27\\beauty\\idle_000.png",
+      "sha256": "311b06d52c422ee66ae430bc9578bb4c309987f7e1bf3e41f155d1b912c14542"
+    },
+    {
+      "heading": 28,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d28\\beauty\\idle_000.png",
+      "sha256": "ed1f24f3efff7b54b22042d76699974227e9991800886b42e34087aefeb412b5"
+    },
+    {
+      "heading": 29,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d29\\beauty\\idle_000.png",
+      "sha256": "314dbf26a5bb0ec39876df449f263a7300c284bbc7762f9e4b7b97675ea837cb"
+    },
+    {
+      "heading": 30,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d30\\beauty\\idle_000.png",
+      "sha256": "bf309e0556e2e209799230bc3034b5cd3c84ff8f47291b7735aa2902ef0e6a60"
+    },
+    {
+      "heading": 31,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d31\\beauty\\idle_000.png",
+      "sha256": "e4f280f3d4d160a5fe6506fff46d44853ec10d73b20f421caaa3b861b8bf32e6"
+    },
+    {
+      "heading": 32,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d32\\beauty\\idle_000.png",
+      "sha256": "eae3f37feb58c56ab46b9129e319acca5e6662ff69e9e3f5880e16b4090bf5b2"
+    },
+    {
+      "heading": 33,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d33\\beauty\\idle_000.png",
+      "sha256": "96db97e460dd01a9f3b38b5bf4ae5efe00856d4b7bc40c88a588d2a5cc18df53"
+    },
+    {
+      "heading": 34,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d34\\beauty\\idle_000.png",
+      "sha256": "5bc49f3cd4465463a36ba74cdffb2b9cff60fa4e1f3a5f8897862a5df62cc72d"
+    },
+    {
+      "heading": 35,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d35\\beauty\\idle_000.png",
+      "sha256": "40a6c9fd2da7c79d4e29dc3d82c0ca781d5722c092004d3020ddf49645b68215"
+    },
+    {
+      "heading": 36,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d36\\beauty\\idle_000.png",
+      "sha256": "2eb60617a101ea78e8e2507f998c42a7aab2061ee0737a5bb622a1f097c892d0"
+    },
+    {
+      "heading": 37,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d37\\beauty\\idle_000.png",
+      "sha256": "d12bb0a04caf3f394c7443046f01428d2c96d45fc5a63ce114225fe5433336fc"
+    },
+    {
+      "heading": 38,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d38\\beauty\\idle_000.png",
+      "sha256": "4763b4e131c05f7a7f98fad9939240c244c897e3e46e4851dc799d327a5d2b00"
+    },
+    {
+      "heading": 39,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d39\\beauty\\idle_000.png",
+      "sha256": "176a3e6a02e4c5ae2a964198101087ed3ba0758d21c002c55abd8dfe077d7686"
+    },
+    {
+      "heading": 40,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d40\\beauty\\idle_000.png",
+      "sha256": "471b49709f627f2907454e4b81dc1efbce2f93d4c8f3935ddaf8a195120480eb"
+    },
+    {
+      "heading": 41,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d41\\beauty\\idle_000.png",
+      "sha256": "0d0cef01fb7c0ecd801792c8e33a4949f7edbf883212cd991a6bcd0dc88080f4"
+    },
+    {
+      "heading": 42,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d42\\beauty\\idle_000.png",
+      "sha256": "478c7b9253bc668c6769d96d2e64e483bdd4a79fdaca0eec898556c6b6198e03"
+    },
+    {
+      "heading": 43,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d43\\beauty\\idle_000.png",
+      "sha256": "4c3039c9af488775299db2bf884be56cd53089a4dc4807c6d3eca21c2ea5c7eb"
+    },
+    {
+      "heading": 44,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d44\\beauty\\idle_000.png",
+      "sha256": "1d51709bfe496533ef3a5f543c26b8d0ec67066893f2f66508ae70cf910f9b58"
+    },
+    {
+      "heading": 45,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d45\\beauty\\idle_000.png",
+      "sha256": "3179a3c9f57d5475f56e11bce085b09e25d0dfcf6f7ebd64a5af08d74ec87e60"
+    },
+    {
+      "heading": 46,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d46\\beauty\\idle_000.png",
+      "sha256": "edcc4d0b881618c68a9370c0bb9ecb50f796dcf77513a10c856dc2c6f7542872"
+    },
+    {
+      "heading": 47,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d47\\beauty\\idle_000.png",
+      "sha256": "57c8b88894be67b2048947a9f6ac9d1ce43e13293be49890c85055ecc8f18972"
+    },
+    {
+      "heading": 48,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d48\\beauty\\idle_000.png",
+      "sha256": "8b75248873d4cfffac5e77054e238a5f6c03c2a89c9d1be04c3b8dc5419d5723"
+    },
+    {
+      "heading": 49,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d49\\beauty\\idle_000.png",
+      "sha256": "2d9a95bb3577f383b962dba3fce24e893c590eaac4901d177af6405844c16bf5"
+    },
+    {
+      "heading": 50,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d50\\beauty\\idle_000.png",
+      "sha256": "87a073dda362fbcfd510385c2d8be40cf35b5a8188aa5e75929bf1b5a25aeb6f"
+    },
+    {
+      "heading": 51,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d51\\beauty\\idle_000.png",
+      "sha256": "31bc5aa244815cd7fa088586708eb7f2184623d7964a08e30e13555496e7be7c"
+    },
+    {
+      "heading": 52,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d52\\beauty\\idle_000.png",
+      "sha256": "0f385f85bb30d91e5f7d38d3b0ec245e955ddfc60dda82c3ef216b28e9d5fc3d"
+    },
+    {
+      "heading": 53,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d53\\beauty\\idle_000.png",
+      "sha256": "c6386a811b6a1a54026b7ddcb53ceb5316fcd5437a2452072ffecde57987e4e2"
+    },
+    {
+      "heading": 54,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d54\\beauty\\idle_000.png",
+      "sha256": "2de3e92fca9b362c6aecbbcfde8f54f7519180b8c5b3edfba4f5f779269e5fbb"
+    },
+    {
+      "heading": 55,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d55\\beauty\\idle_000.png",
+      "sha256": "ddb0f4a897e2967a427f49d2163d523b269c1cbd74031b357a1068389293b8af"
+    },
+    {
+      "heading": 56,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d56\\beauty\\idle_000.png",
+      "sha256": "381f4a95c1059beeea24083be9199dd3dd496e5d151134a2ca8078214c73be71"
+    },
+    {
+      "heading": 57,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d57\\beauty\\idle_000.png",
+      "sha256": "e275c777c427c360516692f1c6e2d2fdeefa208ac30045c5f4bf16535c0eb0dc"
+    },
+    {
+      "heading": 58,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d58\\beauty\\idle_000.png",
+      "sha256": "61b8060df1faad6b8962f07c5720b1ee7f26a1e0a3a731d9de4497521af5964f"
+    },
+    {
+      "heading": 59,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d59\\beauty\\idle_000.png",
+      "sha256": "769e6b59aac70ce29c62df006e5a741d668b5c9a1fe3226f37f1699f56cda9ff"
+    },
+    {
+      "heading": 60,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d60\\beauty\\idle_000.png",
+      "sha256": "d7f45999956d5dfa64bb9da9b1fa85b17a3a531042546eab3a8316ca8dcd1bb7"
+    },
+    {
+      "heading": 61,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d61\\beauty\\idle_000.png",
+      "sha256": "51b151fcdb1b150742792e949f909b528166de047db86afce3f721410adb582f"
+    },
+    {
+      "heading": 62,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d62\\beauty\\idle_000.png",
+      "sha256": "5ce61e058c9bc253545d94cb29b4aa5b31a780e7d3097d8af5444f1e8fbb5dfc"
+    },
+    {
+      "heading": 63,
+      "source_file": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-rendered\\d63\\beauty\\idle_000.png",
+      "sha256": "7a7380aa4955fd77a1fd29aa1bf7066ea9203682f1bf07781636abffad7bdd22"
+    }
+  ],
+  "preview_sha256": "76a92e55c1ee6cabbe83dec1385aec26409efe40a84935628c8f9b4f7c3feaac",
+  "rotation_sha256": "83182367fb9d2b57b5ae85336015046c8ba5b26f1bb779cd48772570a43953f3",
+  "scope": "Actual cached source beauty + unchanged native north-base raster, projected with the approved camera/world-origin records. Base does not rotate. This is a source pixel composition, not native-game import or complete shadow/firing acceptance."
+}

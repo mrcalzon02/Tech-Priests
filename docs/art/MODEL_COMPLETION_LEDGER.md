@@ -1,10 +1,10 @@
-## Latest safety handoff — V04 local candidate, glow reduction pending
+## Current handoff — source35 integrated; A02 capture verified
 
 **Latest integrated iteration (2026-11-09):** Thetazine V04 source35 now has a normal-prototype import: 64-frame body, separate heat and projected shadow, cold states, native caps and underlay. Actual ordinary working/idle/disconnected/restart views and data-stage readback pass. All 33 nonvisual root fields are unchanged. [Current source, evidence and remaining gates](thetazine-thruster-v04/LEAF_COOLING_CANDIDATE.md).
 
 **Historical correction:** earlier entries calling V03 the ordinary runtime were mistaken. V03 was a source study; the actual before-import prototype used the legacy two-frame sheets. The current import is verified from resolved data and actual ordinary-entity images. Owner final approval and the wider model goal remain open.
 
-[Current checkpoint](thetazine-thruster-v04/CHECKPOINT.json) · [Safety handoff](thetazine-thruster-v04/SAFETY_CHECKPOINT.md). Owner wants subtle occasional movement of the piston-bearing core inside a rigid frame, a full-throated separate light-map flame, and **less white-hot intensity**. Localpilot20 and completed captures are preserved; intensity correction, current native review and V04 art publication are pending. Do not promote rejected pilot14 native graphics or repeat completed capture. Broader goal stays open.
+[Current Thetazine checkpoint](thetazine-thruster-v04/CHECKPOINT.json). Source35 is published; earlier localpilot20/glow-pending notes are historical. Resume the existing A02 assembly before selecting another render.
 
 # Tech-Priests model completion ledger
 
@@ -15,7 +15,7 @@ Authority: the owner requested local Blender production, source-faithful structu
 
 Current inventory: **207 entity PNGs / 109 direct model/export/package files**, plus the two verified segmented source packages. The optional Mechanicus sprite namespace load gate is native-verified absent/enabled. Boiler sprite placement, cold/working state and wire-mount slices retain their prior evidence; **G5 static cold-pose interchange now passes** with 264 meshes / 224,311 triangles, 13 embedded images and independently verified bounds/sockets. See [actual export review](boiler-v08-glb/README.md). Native working animation/sprites are retained; no animated GLB or full-goal completion is claimed.
 
-A02 latest independently rehashed checkpoint is **335/384 chunks** in `lobber-a02-latest-progress.json`. Historical counts below are snapshots, not the current total. Full A02 capture/packaging/native integration and the authored thruster bodies remain priorities; other family rows still require their individual gates.
+A02 now has **384/384 chunks and 42,816/42,816 source PNGs fully decoded**, across all64headings with beauty/emission/shadow and idle/cycle/entry/settle states. Four interrupted chunks recovered319missing files without replacing valid originals. [Full SHA-bound receipts, real mounted preview and remaining gates](lobber-a02-full-capture/README.md). Atlas assembly runs from disposable staging; full atlas/native integration is not yet certified. Historical counts below are snapshots.
 
 The latest liquid-thruster slice adds legal inner platform notches, an origin-containing fore collision mount and a separate service-machinery underlay. Thetazine V02 is a **working refinement candidate**: actual native body screenshots decode all 64 frames in sequence. Its new body is review-only; ordinary runtime receives mounting/underlay corrections. Full shadow/exhaust/glow-phase/final-surface gates remain open. The owner explicitly requested further development/refinement. See [current evidence and commands](thruster-segment-parity/README.md). Native review now defaults to actual high quality; older --low-vram images do not establish high-quality final appearance acceptance.
 
@@ -23,7 +23,7 @@ V03 now implements the owner-requested raised gantry, transparent charged sight 
 
 ## Current source authority — A02 restored
 
-The initial audit missed two segmented native sources stored as manifest-checked binary parts. Both have now been restored and hash-verified. The lobber already has the repository-designated approved A02 animation, including six independent loader/firing stations. Native SHA-256: 0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed. V15/V16 below are historical static studies and must not supersede A02. The local 64-heading scene checks and a new three-pass heading-16 pilot pass. Four bounded local workers are rendering missing frames while existing valid artifacts are recovered. Full target remains 64 headings / 384 chunks / 42,816 PNGs; completion and prototype integration are still open. See LOCAL_BLENDER_CAPTURE.md for precise authority, recovery paths and commands. The old independently running Actions recovery run 42459758206 was cancelled and read back completed/cancelled. No new Actions were dispatched.
+The initial audit missed two segmented native sources stored as manifest-checked binary parts. Both have now been restored and hash-verified. The lobber already has the repository-designated approved A02 animation, including six independent loader/firing stations. Native SHA-256: 0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed. V15/V16 below are historical static studies and must not supersede A02. The local 64-heading scene checks and a new three-pass heading-16 pilot pass. Capture has completed and passed full decode verification:64headings /384chunks /42,816PNGs. No duplicate renders are required; assembly and prototype integration remain open. See LOCAL_BLENDER_CAPTURE.md for precise authority, recovery paths and commands. The old independently running Actions recovery run 42459758206 was cancelled and read back completed/cancelled. No new Actions were dispatched.
 
 ## A02 recovery checkpoint
 
