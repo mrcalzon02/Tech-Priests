@@ -20,8 +20,10 @@ def load_json(path):
     return json.loads(Path(path).read_text(encoding="utf-8-sig"))
 
 
-def digest(path=EVENTS):
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def digest(path=None):
+    # Resolve the default at call time so temporary-file and alternate-ledger
+    # tests cannot accidentally hash the module's original checkpoint file.
+    return hashlib.sha256(Path(EVENTS if path is None else path).read_bytes()).hexdigest()
 
 
 def records(reg, kind=None):
