@@ -1,0 +1,501 @@
+{
+  "schema": "fmpl.module.v1",
+  "module": "Factorio Modeling Production Library",
+  "short_name": "FMPL",
+  "version": "0.1.0",
+  "canonical_repo": "mrcalzon02/Tech-Priests",
+  "source_commit": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+  "external_refs": {
+    "Tanks-for-bob-Fork": "3f38f801631a88460bca5599616edb0173f4a970",
+    "HB-TTRPG-tools": "5942590d944cd5aef03a973fdd941e03fd10d833"
+  },
+  "asset_units": {
+    "one_blender_unit": "one Factorio tile",
+    "up_axis": "+Z",
+    "pivots": "per-asset explicit measured",
+    "port_rule": "native Factorio prototype pipe positions must be mapped and tested; Blender mouth is not the native connection cell"
+  },
+  "material_catalog": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
+  "parts_registry": "art/source-to-3d/shared-parts/metallic-hydrogen/registry.json",
+  "library_importer": "art/source-to-3d/shared-parts/industrial-asset-library/import_materials.py",
+  "inventory": {
+    "materials": 23,
+    "pbr_maps": 69,
+    "bunker_component_candidates": 21,
+    "verified_shared_components": 0,
+    "model_records": 9,
+    "program_records": 17,
+    "pipeline_records": 4
+  },
+  "models": [
+    {
+      "id": "martian-heavy-bunker-v10",
+      "status": "editable-reference-bound-candidate",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured.blend"
+      },
+      "exports": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+          "path": "art/source-to-3d/martian-bunker/src/v10/martian_heavy_weapon_bunker_v10_textured_export.glb"
+        }
+      ],
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+          "path": "art/source-to-3d/martian-bunker/src/v10/validation_report_v10.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "texture and physical fittings donor; no blanket approval for all machines"
+    },
+    {
+      "id": "emergency-boiler-v08",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "art/source-to-3d/boiler-v08/production-source.blend"
+      },
+      "exports": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+          "path": "art/source-to-3d/boiler-v08/interchange/boiler-v08-cold.glb"
+        }
+      ],
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+          "path": "docs/art/boiler-v08-glb/README.md"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+          "path": "art/source-to-3d/boiler-v08/production/production-receipt.json"
+        }
+      ],
+      "footprint": [
+        2,
+        2
+      ],
+      "purpose": "circular pipe mouth, steam nozzle, containment hardware, support cage and canister fixtures; visual placement must use actual registration"
+    },
+    {
+      "id": "emergency-condenser-v21",
+      "status": "model-source-external-and-builder-committed",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "art/source-to-3d/condenser-v21/build_condenser_v21.py"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+          "path": "art/source-to-3d/condenser-v21/Condenser_V21_Validation.json"
+        }
+      ],
+      "footprint": [
+        2,
+        2
+      ],
+      "purpose": "hollow cast pipe neck and exact fitting reference at (1,-.5,.36); native entity grid still requires independent mapping"
+    },
+    {
+      "id": "emergency-miner-v16",
+      "status": "generator-work-in-progress",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "art/source-to-3d/emergency-miner/build_model.py"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+          "path": "art/source-to-3d/emergency-miner/SPRITE_LOCKED_FEATURE_REGISTER.md"
+        }
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "purpose": "source-visible cast housing, wiring and connector fixture donor; no hidden internals"
+    },
+    {
+      "id": "emergency-assembler",
+      "status": "sprite-only-no-verified-native-model",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-assembler.png"
+      },
+      "evidence": [],
+      "footprint": null,
+      "purpose": "artwork reference only; do not substitute workbench"
+    },
+    {
+      "id": "timber-workbench-v05",
+      "status": "editable-animation-source",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "art/source-to-3d/workbench-v5-animation/Workbench_V5_Animated_Source.zip"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+          "path": "art/source-to-3d/workbench-v5-animation/README.md"
+        }
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "purpose": "hammer animation and small rough assembly donor; separate from emergency assembler"
+    },
+    {
+      "id": "tanks-campfire-v11",
+      "status": "four-direction-sprite-export-candidate",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "3f38f801631a88460bca5599616edb0173f4a970",
+        "path": "models/island-survival/blender/build_campfire_scene.py"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "3f38f801631a88460bca5599616edb0173f4a970",
+          "path": "tools/art/SPRITE_EXPORT.md"
+        }
+      ],
+      "footprint": null,
+      "purpose": "fully reconstructed animated construction and static/working sprite process; game integration separately checked"
+    },
+    {
+      "id": "tanks-fluid-connector-jig",
+      "status": "committed-editable-reference",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "3f38f801631a88460bca5599616edb0173f4a970",
+        "path": "models/reference/factorio-fluid-interface/factorio-fluid-interface-reference.blend"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "3f38f801631a88460bca5599616edb0173f4a970",
+          "path": "models/reference/factorio-fluid-interface/append-verification.json"
+        }
+      ],
+      "footprint": null,
+      "purpose": "calibrated port cap, collar and tube mating reference; native prototype port requires independent measurement"
+    },
+    {
+      "id": "water-purifier-mh7",
+      "status": "runner-two-of-four-goals-verified-not-accepted",
+      "source": {
+        "repository": "mrcalzon02/HB-TTRPG-tools",
+        "ref": "5942590d944cd5aef03a973fdd941e03fd10d833",
+        "path": "tools/refinery-agent/goal_water_purifier.py"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/HB-TTRPG-tools",
+          "ref": "5942590d944cd5aef03a973fdd941e03fd10d833",
+          "path": ".github/workflows/homebrew-local-worker.yml",
+          "run_url": "https://github.com/mrcalzon02/HB-TTRPG-tools/actions/runs/42683235972",
+          "checkpoint_goals": [
+            "load_path",
+            "filter_pump_path"
+          ]
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "ongoing physically joined water purifier candidate on self-hosted runner; not game-ready"
+    }
+  ],
+  "programs": [
+    {
+      "id": "pbr-texture-generator",
+      "kind": "materials",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "art/source-to-3d/martian-bunker/src/v10/make_textures.py"
+      },
+      "purpose": "original deterministic weathered albedo/ORM/normal triplets"
+    },
+    {
+      "id": "pbr-blender-material-nodes",
+      "kind": "materials",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "art/source-to-3d/martian-bunker/src/v10/setup_blender.py"
+      },
+      "purpose": "packed Blender PBR materials and UV"
+    },
+    {
+      "id": "fmpl-material-importer",
+      "kind": "materials",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "art/source-to-3d/shared-parts/industrial-asset-library/import_materials.py"
+      },
+      "purpose": "reuse existing source PBR material triplets without regenerating"
+    },
+    {
+      "id": "emergency-miner-generator",
+      "kind": "geometry",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "art/source-to-3d/emergency-miner/build_model.py"
+      },
+      "purpose": "source-bound castings, grooves, fasteners, cable glands and hoses"
+    },
+    {
+      "id": "boiler-v08-animation",
+      "kind": "animation",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "art/source-to-3d/boiler-v08/animate_boiler_v08.py"
+      },
+      "purpose": "canisters, steam and status lighting"
+    },
+    {
+      "id": "condenser-v21-builder",
+      "kind": "geometry",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "art/source-to-3d/condenser-v21/build_condenser_v21.py"
+      },
+      "purpose": "boolean-manifold-to-body and 2x2 socket calibration"
+    },
+    {
+      "id": "tp-production-pipeline",
+      "kind": "export",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "tools/art/produce_factorio_asset.py"
+      },
+      "purpose": "checked build, capture and package with checkpointing"
+    },
+    {
+      "id": "tp-sprite-export",
+      "kind": "sprite",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "tools/art/export_sprites.py"
+      },
+      "purpose": "four direction capture and atlas packaging"
+    },
+    {
+      "id": "tp-model-prototype-attach",
+      "kind": "integration",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "tools/art/attach_factorio_prototype.py"
+      },
+      "purpose": "attach generated exact-prototype assets without replacing unrelated fields"
+    },
+    {
+      "id": "tp-graphics-validation",
+      "kind": "verification",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "tools/art/verify_installed_model_sprites.py"
+      },
+      "purpose": "readback graphics inventory and sprite format"
+    },
+    {
+      "id": "tanks-sprite-export",
+      "kind": "sprite",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "3f38f801631a88460bca5599616edb0173f4a970",
+        "path": "tools/art/export_sprites.py"
+      },
+      "purpose": "animated/static four view fixed camera Blender capture"
+    },
+    {
+      "id": "tanks-production-pipeline",
+      "kind": "export",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "3f38f801631a88460bca5599616edb0173f4a970",
+        "path": "tools/art/produce_factorio_asset.py"
+      },
+      "purpose": "reproducible sprites and source artifacts"
+    },
+    {
+      "id": "tanks-prototype-attach",
+      "kind": "integration",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "3f38f801631a88460bca5599616edb0173f4a970",
+        "path": "tools/art/attach_factorio_prototype.py"
+      },
+      "purpose": "Factorio entity graphics attachment"
+    },
+    {
+      "id": "tanks-pipe-jig",
+      "kind": "calibration",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "3f38f801631a88460bca5599616edb0173f4a970",
+        "path": "models/reference/factorio-fluid-interface/append_reference.py"
+      },
+      "purpose": "append reference pipe and collar to editable Blender model"
+    },
+    {
+      "id": "hb-factorio-render",
+      "kind": "render",
+      "source": {
+        "repository": "mrcalzon02/HB-TTRPG-tools",
+        "ref": "5942590d944cd5aef03a973fdd941e03fd10d833",
+        "path": "tools/factorio-render-pipeline/README.md"
+      },
+      "purpose": "camera/registration and engine-shaped reconstruction workbench"
+    },
+    {
+      "id": "hb-local-runner",
+      "kind": "orchestration",
+      "source": {
+        "repository": "mrcalzon02/HB-TTRPG-tools",
+        "ref": "5942590d944cd5aef03a973fdd941e03fd10d833",
+        "path": ".github/workflows/homebrew-local-worker.yml"
+      },
+      "purpose": "one self-hosted job with bounded log and evidence upload"
+    },
+    {
+      "id": "hb-qwen-pilot",
+      "kind": "inference",
+      "source": {
+        "repository": "mrcalzon02/HB-TTRPG-tools",
+        "ref": "5942590d944cd5aef03a973fdd941e03fd10d833",
+        "path": "tools/refinery-agent/goal_water_purifier.py"
+      },
+      "purpose": "schema-validated local Qwen geometry with Blender ownership"
+    }
+  ],
+  "pipelines": [
+    {
+      "id": "model-editable-source",
+      "stages": [
+        "source audit",
+        "visible geometry",
+        "materials",
+        "native .blend save",
+        "independent reopen",
+        "GLB export and reimport",
+        "true Blender preview"
+      ],
+      "entrypoint": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "tools/art/produce_factorio_asset.py"
+      },
+      "status": "implemented-in-existing-art-tools",
+      "gate": "model source evidence only, not automatic game acceptance"
+    },
+    {
+      "id": "sprites-four-orientations",
+      "stages": [
+        "native asset",
+        "fixed orthographic camera",
+        "four rotations",
+        "idle and animated states",
+        "RGBA capture",
+        "atlas QA",
+        "source hash checkpoint"
+      ],
+      "entrypoint": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "3f38f801631a88460bca5599616edb0173f4a970",
+        "path": "tools/art/export_sprites.py"
+      },
+      "status": "implemented-campfire-workflow",
+      "gate": "native sprite placement and owner visual review separate"
+    },
+    {
+      "id": "factorio-prototype-integration",
+      "stages": [
+        "source sprite",
+        "generated atlas",
+        "Lua graphic registration",
+        "asset decode",
+        "Factorio startup",
+        "pipe/selection/circuit attachment review"
+      ],
+      "entrypoint": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
+        "path": "tools/art/attach_factorio_prototype.py"
+      },
+      "status": "requires-exact-prototype-and-native-check",
+      "gate": "do not claim native pipe correctness from Blender alone"
+    },
+    {
+      "id": "local-inference-refinement",
+      "stages": [
+        "pinned model source",
+        "isolated Ollama smoke",
+        "bounded JSON geometry",
+        "trusted Blender execution",
+        "save/checkpoint",
+        "reopen/GLB",
+        "review"
+      ],
+      "entrypoint": {
+        "repository": "mrcalzon02/HB-TTRPG-tools",
+        "ref": "5942590d944cd5aef03a973fdd941e03fd10d833",
+        "path": "tools/refinery-agent/goal_water_purifier.py"
+      },
+      "status": "partial-water-purifier-pilot",
+      "gate": "inference suggestions are untrusted, independent human visual approval required"
+    }
+  ],
+  "status_vocabulary": [
+    "sprite-only-no-verified-native-model",
+    "generator-work-in-progress",
+    "model-source-external-and-builder-committed",
+    "editable-animation-source",
+    "committed-editable-reference",
+    "editable-reference-bound-candidate",
+    "four-direction-sprite-export-candidate",
+    "game-sprites-installed-with-specific-native-checks",
+    "runner-two-of-four-goals-verified-not-accepted"
+  ],
+  "policy": {
+    "no_unreviewed_promotion": true,
+    "no_hidden_internals": true,
+    "verified_requires_native_reopen": true,
+    "acceptance_not_implied_by_render": true,
+    "original_files_immutable": true,
+    "source_sha_pins": true,
+    "no_extra_workflows": true,
+    "one_renderer_per_runner": true,
+    "export_four_directions": true
+  }
+}
