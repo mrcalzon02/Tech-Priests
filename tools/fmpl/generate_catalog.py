@@ -46,7 +46,7 @@ def build():
               for k in ("albedo","orm","normal")]
         arr.append("| `%s` | %s | `%s` | %s |" % (escape(x["material_id"]),escape(x["family"]),
                   x["source_color_hex"]," · ".join(refs)))
-    arr.extend(["","## Small reusable component candidates (not yet promoted)","","| Candidate component | Donor machine | Existing source material | Source system |","|---|---|---|---|"])
+    arr.extend(["","## Small reusable component candidates (not yet promoted)","","**39 candidates: 21 Martian Bunker + 12 Emergency Boiler + 1 Condenser + 5 Emergency Miner procedural components.**","","| Candidate component | Donor machine | Existing source material | Source system |","|---|---|---|---|"])
     for x in c["candidates"]:
         arr.append("| `%s` | %s | `%s` | %s |" % (
             escape(x["source_object"]),escape(x["origin"]),escape(x["source_material"]),escape(x["system"])))

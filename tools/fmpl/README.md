@@ -4,7 +4,7 @@ A **versioned, shared, source-indexed production module** for Tech-Priests, Tank
 
 ## Contents
 
-- `FMPL.json`: canonical index of complete machine source states, 23 PBR presets / 69 maps, 21 bunker part candidates, 17 existing programs and four real pipeline recipes.
+- `FMPL.json`: canonical index of complete machine source states, 23 PBR presets / 69 maps, 39 component candidates (21 bunker plus 18 emergency-machine donor candidates), 17 existing programs and four real pipeline recipes.
 - `art/source-to-3d/shared-parts/industrial-asset-library/catalog.json`: provenance, original texture blob identities, material families, donor assemblies and source references. Its `import_materials.py` imports packed Blender nodes and textures from committed source files.
 - `art/source-to-3d/shared-parts/metallic-hydrogen/registry.json`: **empty verified** component registry (versioned future candidate promotions). Proposed parts stay in the candidate inventory until measured.
 - `checkpoints.json`: append-only versioned evidence ledger for future iterative runs, guarded by optimistic SHA-256 readback.
@@ -78,3 +78,7 @@ Use `FMPL.json` to select existing source, PBR and named parts before proposing 
 ## External Blender design-language donors
 
 Private Google Drive Greebles.blend is indexed as greebles-drive-2026-10 in FMPL.json. See tools/fmpl/greebles/README.md for the pinned source, local runner cache, source probe, Blender index and non-destructive append adapter. Discovery: python tools/fmpl/fmpl.py list --kind library. No binary is copied into public Git, no extra workflow is created, and no donor is automatically approved for mechanical connections.
+
+### Emergency-machine component harvest
+
+The FMPL candidate registry now indexes 12 specific boiler V08 meshes (cage, valve, flange, gauge, manifold and support parts), the V21 fused condenser outlet, and five Emergency Miner Blender generator operators. Their names come from actual committed source/roundtrip evidence; all 18 are **candidates**, not independently extracted and approved physical parts. The emergency assembler remains a sprite-only reference until its correct native source is recovered.

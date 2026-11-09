@@ -52,6 +52,8 @@ Source-indexed asset tabulation. **Not every model is game-ready; not every comp
 
 ## Small reusable component candidates (not yet promoted)
 
+**39 candidates: 21 Martian Bunker + 12 Emergency Boiler + 1 Condenser + 5 Emergency Miner procedural components.**
+
 | Candidate component | Donor machine | Existing source material | Source system |
 |---|---|---|---|
 | `09_steel_service_hatch` | martian-heavy-weapon-bunker-v10 | `martian_red` | service |
@@ -75,6 +77,24 @@ Source-indexed asset tabulation. **Not every model is game-ready; not every comp
 | `81_mantlet_heavy_outer_armor` | martian-heavy-weapon-bunker-v10 | `machine_steel` | armor |
 | `85_W_rangefinder_socket` | martian-heavy-weapon-bunker-v10 | `iron` | sensing |
 | `85_W_rangefinder_recessed_lens` | martian-heavy-weapon-bunker-v10 | `glass` | fasteners |
+| `Main vessel saddle 0` | emergency-boiler-v08 | `unmeasured` | structural |
+| `Right lower gauge grounded mount` | emergency-boiler-v08 | `unmeasured` | service-control |
+| `Gauge rear elbow housing` | emergency-boiler-v08 | `unmeasured` | service-control |
+| `Boiler inclined front control housing` | emergency-boiler-v08 | `unmeasured` | service-control |
+| `Central head upright valve body` | emergency-boiler-v08 | `unmeasured` | fluid |
+| `Central head bottom vessel flange` | emergency-boiler-v08 | `unmeasured` | fluid |
+| `Right lower gauge front coupling` | emergency-boiler-v08 | `unmeasured` | fluid |
+| `Water full-size bolted inlet flange` | emergency-boiler-v08 | `unmeasured` | fluid |
+| `Steam full-size bolted inlet flange` | emergency-boiler-v08 | `unmeasured` | fluid |
+| `Water upper manifold diagonal support` | emergency-boiler-v08 | `unmeasured` | fluid |
+| `Steam rear cage anchor foot` | emergency-boiler-v08 | `unmeasured` | structural |
+| `Rear cage upper crossmember` | emergency-boiler-v08 | `unmeasured` | structural |
+| `Condenser right continuous side cheek` | emergency-condenser-v21 | `unmeasured` | fluid |
+| `cable_gland()` | emergency-miner-v16 | `unmeasured` | electrical-control |
+| `routed_cable()` | emergency-miner-v16 | `unmeasured` | electrical-control |
+| `lofted_cast_chassis()` | emergency-miner-v16 | `unmeasured` | structural |
+| `octagonal_case()` | emergency-miner-v16 | `unmeasured` | structural |
+| `frame_ring()` | emergency-miner-v16 | `unmeasured` | structural |
 
 ## Reusable programs
 

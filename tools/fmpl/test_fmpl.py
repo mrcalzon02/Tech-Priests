@@ -18,6 +18,8 @@ class FmplTests(unittest.TestCase):
         doc = fmpl.validate()
         self.assertEqual(doc["inventory"]["materials"], 23)
         self.assertEqual(doc["inventory"]["bunker_component_candidates"], 21)
+        self.assertEqual(doc["inventory"]["component_candidates_total"], 39)
+        self.assertEqual(doc["inventory"]["emergency_component_candidates"], 18)
         self.assertEqual(len(doc["models"]), 9)
         self.assertEqual(len(doc["programs"]), 17)
         self.assertEqual(len(doc["pipelines"]), 4)
