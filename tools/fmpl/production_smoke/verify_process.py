@@ -53,7 +53,7 @@ def main():
     expected=[
       "concrete raised plinth","paving brick","column anchor",
       "open double-wall","observation lid","keyframed","pump",
-      "filter 1","filter 2","raw water","clean discharge",
+      "filter 1","filter 2","raw inlet","clean discharge",
       "pressure relief","vent nozzle","impeller paddle",
     ]
     # Rig empty is not a mesh; inspect that component by its saved object.
