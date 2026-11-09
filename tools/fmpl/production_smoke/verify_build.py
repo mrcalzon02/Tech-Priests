@@ -51,7 +51,8 @@ def main():
     if len(mats)<3:
         raise RuntimeError("FMPL material slots missing on saved source geometry")
     images=[i for i in bpy.data.images if i.source=="FILE"]
-    if len([i for i in images if i.packed_file])<10:
+    packed_count=len([i for i in images if i.packed_file])
+    if packed_count<10:
         raise RuntimeError("FMPL PBR textures were not packed into Blender derivative")
     refs=[c for c in bpy.data.collections if c.name.startswith("FMPL QA reference |")]
     if len(refs)!=2:
@@ -72,7 +73,7 @@ def main():
       "schema":"fmpl.production-smoke.verify.v1","passed":True,
       "saved_blend_sha256":sha(a.blend),"glb_sha256":sha(a.glb),
       "source_meshes_reopened":main_count,"glb_meshes_reimported":len(imported),
-      "pbr_materials_in_source":sorted(mats),"packed_images":len([i for i in images if i.packed_file]),
+      "pbr_materials_in_source":sorted(mats),"packed_images":packed_count,
       "calibration_fixtures_hidden":2,
       "source_geometry_preserved":True,
       "native_factorio_port_verified":False,
