@@ -1,77 +1,533 @@
 {
-  "status": "SAFETY_CHECKPOINT_OWNER_GLOW_REDUCTION_PENDING",
-  "saved_at": "2026-11-09T04:15:46.628377+00:00",
+  "status": "EDITABLE_LEAF_COOLING_CANDIDATE_OPEN_CLEARANCE_AND_NATIVE_GATES",
+  "saved_at": "2026-11-09T10:41:34.266204+00:00",
   "goal_open": true,
-  "published_art": "V03 commit4dca9659f115189b2be7b9531e77c4aece24300e; no V04 art committed/pushed yet",
-  "reconciled_main": "77aef30208fbbbc6ce3edf0a7d4fcf990862c2ce",
-  "pipeline_main": "d16c14579de9f7c13ab0d1accdb65eea9a434456",
-  "candidate_directory": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\thruster-v04\\pilot-20",
-  "native_sha256": "22b7b3abe91ed0cd5d6ad7ce2b716660aa72841d899f88d47dbd31ac29300e00",
-  "glb_sha256": "e768c8b6ab58a4b46d92c29f6f69d4b17341d1ff38ed14bb601c07182e6e92af",
-  "owner_latest": "White-hot emission is a bit much. Reduce peak bell/core radiance while retaining broad full-throated flame, metal/char detail, rigid outer frame and noticeable subtle occasional internal-core jolts/twists. This intensity correction is NOT yet applied.",
-  "owner_motion": "Main body carrying piston mounts jerks sideways and twists occasionally INSIDE mounting frame. Frame/feet/tank mounts/external ports remain fixed. Do not restore whole-sprite wobble or freeze the core.",
-  "owner_light": "Full incandescent bell/full-width blue flame in separate heat/light map, like supplied thruster-light-1.png. No skinny filaments, solid surface gas shell or native flame painted over front bell.",
-  "source_features": [
-    "1910 physical meshes/332280 triangles; render-only 3D volume intentionally excluded from GLB and baked to light sprites",
-    "12rams/primarypetals/exposed actual-axis hinges, down-feeding rotating Archimedes screws",
-    "Parallel cold bulk tank injection and heated regenerative turbo-pump/pre-injector lanes retained",
-    "Independent suspended core with occasional compact pulse windows; host-following fittings and flexible hoses/cradle links",
-    "46 distinct exterior routes; duplicated pump/gauge twin identities corrected; all92pipe ends measured over66poses"
-  ],
+  "candidate_directory": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\thruster-v04\\pilot-32",
+  "source_path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study",
+  "native_sha256": "a801a46fe96732599926e69d8b7818d978477a15e3c27682b7d9ea52c7a82494",
+  "glb_sha256": "d656e07e2f722ebb33c8990349823b0ef1e2b03c0e3563df8bec6bbec08605ca",
+  "reconciled_main": "23204d88d55cb22314e56ba962fe3ce3f357dfa3",
+  "pipeline_main": "c874051d1dd170d848a93bbb720a9fcf37af9fd7",
+  "runtime_status": "Ordinary mod remains published V03. This is candidate source/export only; no V04 sprite/prototype promotion.",
+  "construction": "12 primary articulated plates each have four longitudinal serpentine runs, 12 supported saddles and two flexible root connections. Six independent fuel and six water circuits. 12 passive inner seals. Cold bulk injection remains parallel to turbo-pump regenerative pre-injection. Rigid platform frame; chamber fittings follow subtly jolting/twisting core. Dark external plate centers, gentle edge/lip fringe.",
   "checks": {
-    "raw-glb-audit.json": {
-      "status": "RAW_GLB_GEOMETRY_UV_NORMAL_IMAGE_AUDIT_PASS",
-      "sha256": "1dcfaa4123faf9ab925c95c603c45bfaf7f0a8c35942b1730da87306ad0c60c2"
-    },
-    "roundtrip-validation.json": {
-      "status": "PASS_ACTUAL_NATIVE_GLB_TRIANGLE_UV_MATERIAL_WINDING_AND_SOCKET_REIMPORT",
-      "sha256": "58a4f6d0f1801df9f847c2e17190c6764ec19b8de7fa0109a114c0b00cbf9551"
-    },
-    "animation-validation.json": {
-      "status": "PASS_ACTUAL_GLB_ALL_MESHES_64_POSES_MORPHS_FIXED_SOCKETS_CLOSED_LEAVES",
-      "sha256": "c53b66934f3c1a8ad3eb1a1b232f7d3586219c8e24b63433fcd6c17d1d66ad3d"
-    },
-    "design-validation.json": {
-      "status": "PASS_ACTUAL_AUGERS_12_RAM_HINGE_PETAL_MAPPING_CURVE_92_PIPE_ENDS_TANK_FRAME_SEATS_AND_ANCHORED_FLEX",
-      "sha256": "c01c1b27398d1290de1ada3f83c91ddd31a9708a0624f8234c9bfbbcc58f4e7b"
-    },
-    "fixed-mount-validation.json": {
-      "status": "PASS_RIGID_MOUNT_LOCAL_MECHANISM_MOTION",
-      "sha256": "a02a698618251a0fb52a33301802ed2faa68b5aada02bab40d37b79407e38eed"
-    },
-    "core-seat-validation.json": {
-      "status": "PASS_46_DISTINCT_PIPE_ROUTES_92_ENDS_ALL66_CORE_POSES",
-      "sha256": "b955d32623d5f08c19d3e754cc0c1b1b46e5deb664585a222cacc94fa85dea03"
-    },
-    "route-clearance-validation.json": {
-      "status": "PASS_NO_UNDECLARED_PRINCIPAL_PIPE_ROUTE_INTERSECTIONS_66_POSES",
-      "sha256": "dc858e94d93debedf81420dcea1f778aad93af9869cd4f78efdc72cb5bd4bbb5"
-    },
-    "preview-validation.json": {
-      "status": "PASS_66_ACTUAL_SOURCE_PNGS_64_UNIQUE_WORKING_POSES_AND_ARCHIVE",
-      "sha256": "a5bbb1e16ca71c93bb1aaf3d75a298146e5f2089c6e24e3ad43e90e904ca392a"
-    }
+    "actual_glb_static": "PASS 3022 meshes / 533304 triangles, oriented triangle/UV/material/socket correspondence",
+    "actual_glb_animation": "PASS; see SHA-bound receipt",
+    "basis_export_repair": "Edited mesh base buffers synchronized with Basis; exact evaluated geometry/transforms preserved across66poses from31to32",
+    "connections": "Pilot31: 12circuits/24flexlinks/144saddles all66poses; max endpoint error in receipt. Geometry identical32.",
+    "clearance": "Pilot31: 204858 evaluated pairs /84fluid routes /66poses; zero surface-crossing/inside violations.14poses have unresolved closed-solid containment near inner seal; FAIL overall, retained.32geometry exactly preserved.",
+    "preview_provenance": "Source preview is31, whose evaluated geometry is exactly preserved32; current seven independent imported GLB views belong to32. Volumetric flame is native-Blender render-only, intentionally absent from physical GLB."
   },
-  "capture_state": {
-    "combined_source": "66/66 complete, verified and archived; outputs/thetazine-v04-containment-loop.gif is pilot20",
-    "separate_body_light": "132/132 source PNGs complete. Separate atlas packaging/validation NOT yet run for20. Existing profile atlases are rejected pilot14.",
-    "underlay": "pilot20/source-package/underlay.png rendered; receipt bound to current source",
-    "export_views": "7 current GLB images complete; upper/bell views inspected. Remaining front/rear/clay/fuel/hinge review still needed.",
-    "thruster_render_active": false,
-    "native_profile": "work/thruster-v04/native-review currently displays rejected pilot14; NOT native evidence for20. Idle repeat_count64 load fix already verified.",
-    "a02_workers": "Observed at checkpoint directions55,57,58,59 chunk5; preserve these separate workers. No updated chunk-completion count inferred."
-  },
-  "next": [
-    "First reduce light intensity in NEW candidate frompilot20, source-only material revision. Do not redo core geometry or restore rejected variants.",
-    "Pilot updated emission before costly full capture. Preserve all earlier candidates and receipts.",
-    "Complete exact body/light atlases, source-bound GLB/pose/seat/clearance checks and remaining actual view review.",
-    "Native prepare now supports measured light-plume join; body-loop camera1700px and unchanged counter coordinates. Native game effect joins downstream of broad light plume. Reload isolated profile, decode both64clocks and inspect occlusion/mixture/night.",
-    "Update authoring plan and publishing helpers for latest candidate before running them. publish_slice.py and verify_publication.py are draft helpers, NOT completed publication; currently target20 but wording/rebuild/receipt details need final reconciliation.",
-    "Publish scoped art/integration candidate onmain with skip-CI only after honest review. Remote SHA+every changed blob readback; updateissue13. No normal-mod promotion before remaining gates."
+  "open_gates": [
+    "Resolve14pose inner-seal containment ambiguity without waiving real defects",
+    "Owner visual review: cooling pipes, restrained outside heat, subtle internal motion",
+    "Current source32 full body/light capture, exact atlas cells, registration and native clocks/visuals",
+    "Isolate and verify flat contrail join across baked light/native jet/smoke; not fixed yet",
+    "Final per-asset visual acceptance and ordinary runtime integration"
   ],
-  "constraints": [
-    "No Actions/workflow edits, behavior/regression tests, gameplay changes or releases",
-    "No vanilla PNG/shader redistribution; use installed references",
-    "Keep broader goal/ledger/automation open; other source recovery remains unfinished"
-  ]
+  "continuation": "Resume32. Do not rerun rejected earlier designs or duplicate expensive captures. Source31 receipts retain their own hashes; exact66pose preservation links32. New upstream metallic-hydrogen design packet exists: preserve and consult it before further chat recovery.",
+  "publication_files": [
+    {
+      "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/thetazine-v04-regenerative-study.blend",
+      "sha256": "a801a46fe96732599926e69d8b7818d978477a15e3c27682b7d9ea52c7a82494",
+      "bytes": 21463412
+    },
+    {
+      "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/thetazine-v04-regenerative-study.glb",
+      "sha256": "d656e07e2f722ebb33c8990349823b0ef1e2b03c0e3563df8bec6bbec08605ca",
+      "bytes": 51093312
+    },
+    {
+      "path": "art/source-to-3d/space-platform-engines/thetazine-thruster/v04-regenerative-study/source-manifest.json",
+      "sha256": "153af22d4d60dbca23177ac4de8bb55bfa4b7a147ab46d4c94887b53a840beb3",
+      "bytes": 801981
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/roundtrip-validation.json",
+      "sha256": "5d71fd59be0220739cd10ceb71a6b9b3e9e2d157c2e74252ef0e364371dfa204",
+      "bytes": 2050654
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/animation-validation.json",
+      "sha256": "e034837a2e1da866ce1835cdaa350c0f8286cf42c7c7d326e504e1e17430239e",
+      "bytes": 4487
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/raw-glb-audit.json",
+      "sha256": "8f3cd1f6e81bb7745ce54a03b105c155671ec29710d0dbf4644b50d9b82ad53c",
+      "bytes": 1600628
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/material-only-preservation.json",
+      "sha256": "19fed5089a24000f669b55a614a154f21984205dc0fbfe5030b0efde7725d498",
+      "bytes": 13363
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/export-render-receipt.json",
+      "sha256": "f022e5baaf81e893afeb7914715238447e7ef8000329002d5c166ab74853777d",
+      "bytes": 1737
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-validation.json",
+      "sha256": "e36ac5ce1435046c2b546d0d013a9727bf9d0ccf199631b64596d599572f74f6",
+      "bytes": 19322
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-connections-validation.json",
+      "sha256": "382e7bd3b9a5e5020582e469aa229f1126eee7c4afe8294f1591ea275ab5d2ec",
+      "bytes": 633
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-source-manifest.json",
+      "sha256": "4f9ee89b5a4b9945cc7c85fadfb8efc30816030a2848100896f10666aa619f5b",
+      "bytes": 801478
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-00.json",
+      "sha256": "d565944f150bb56c9686969e4e8943359f2f1082370759db73885c8fbc7e8b67",
+      "bytes": 4005
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-01.json",
+      "sha256": "dc8e467cd84d10ab206a8c1d8664088ff50dbfffe518c710220da775c958a1f4",
+      "bytes": 4044
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-02.json",
+      "sha256": "d399928d392082d015c990aa045fd97d89714a8def142b1622a9714b4d1c9121",
+      "bytes": 4044
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-03.json",
+      "sha256": "f997249e8d1ff20134de7df0b75e7466d63484b3a49f9929f9af2fea2409bb89",
+      "bytes": 4044
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-04.json",
+      "sha256": "800c90af2ad5cbb80356e0f76d9539317ad5a80224f31b307f1058d6d7a75804",
+      "bytes": 4044
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-05.json",
+      "sha256": "de2f2535dcb24dab86dce2672cd8ce3e26a435ccdc65ca3eb2d116298b121024",
+      "bytes": 4044
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-06.json",
+      "sha256": "d6902a8c675fb11be75f6bf01e503bb8bddb5337e0b8721567d35ae2cf07bb96",
+      "bytes": 4044
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-07.json",
+      "sha256": "97a20baec3524c178d3afc6d496aa5cf4326495148b378260d33908c3d4ea7a5",
+      "bytes": 4044
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-08.json",
+      "sha256": "5a3e3ccfa73ea2f1b8a82187865005016f97173fcbebb01f79fe3007e16b9687",
+      "bytes": 4043
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-09.json",
+      "sha256": "7c8b1a627427e4dd16848077ad5437083e0c161f47eefcb7c7abc8b1e08f9bbf",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-10.json",
+      "sha256": "ba2988a3c0c1639689ab9b96c1da32bd63c32d472f1455c63c39057851ed313c",
+      "bytes": 4046
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-11.json",
+      "sha256": "b5c11088a2e5ece3d2b0045ae809ddc270502db0717330553abca8c3c0ff70a5",
+      "bytes": 4047
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-12.json",
+      "sha256": "0700807d3c6fbff50a48a96d6a6552f9255256b29ddc138b1327627ca800d7a4",
+      "bytes": 4047
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-13.json",
+      "sha256": "1c6ca42e669b4d838c38b4c9cc122e07551a6d27063a06bac3b97036b49ef3c8",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-14.json",
+      "sha256": "fde013e0b5bc85e2d309045fc3227286ec53d87c2261f98e2afb8641d2b86cfa",
+      "bytes": 4394
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-15.json",
+      "sha256": "a4cf8c581b92caea898b1c1bb8b02af0ce1671ff571df3a292d03ce2f09003a4",
+      "bytes": 4047
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-16.json",
+      "sha256": "1e1012482b080c4e0f68541a74a4aae393146ccc693c8ad57386105d93ae5c8d",
+      "bytes": 4046
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-17.json",
+      "sha256": "3367b41e47c581ea4876cedd69e33375eb4c8afa337955218be3c04e041f419e",
+      "bytes": 4046
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-18.json",
+      "sha256": "703265555ce8785519cb5f600eff9d962e78a8f0d85d41bd74b620a0bd798c33",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-19.json",
+      "sha256": "0d36c49188dc7b6190950df7a2b90414f21b4562084614fa02fe8503e3838a58",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-20.json",
+      "sha256": "10d054571960547a648343f079f904895f2d87c5b7af3c4b701b822297f3b94c",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-21.json",
+      "sha256": "8865a3e49ebc0cd1c6b792f44bce8aae8627d474dfec3a52012bfea6a4355972",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-22.json",
+      "sha256": "081d0b51ad91f7058dcd357e873af4a7f0d08e03e0a6e8af826926923c7aedac",
+      "bytes": 4385
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-23.json",
+      "sha256": "b0209206db766af3a8805e936e026fcb6a93990ad4253a5ff4c704d5ad0556dc",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-24.json",
+      "sha256": "8ca21c57c71e0f051565d3a9c6b588e22007882b1dcd79bcb70db7ecdd0d031d",
+      "bytes": 4389
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-25.json",
+      "sha256": "3776c78ba5a80ec4f0e4791df2d3331d41a851483625b808a758382ab6a8f7ec",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-26.json",
+      "sha256": "684c2cb94ed8f3fb91fa8a16f95d36c5c6233524c9a4f122248ec33b876e64f4",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-27.json",
+      "sha256": "c5ac50005c5713d19cf2be8058a77ab2b96b37b14d3224a6b5c564ae61912d95",
+      "bytes": 4382
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-28.json",
+      "sha256": "767e2445c9474c952cfeba56cf66f7fa0c94c34a26b73bd029d4aea332b418d4",
+      "bytes": 4386
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-29.json",
+      "sha256": "155194a8527290a3f1fb98497a90b56bf106077860a0935a50fb10ca8d63d4e3",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-30.json",
+      "sha256": "6ba8fe9e88363d59a966c0299f4201532eee014b878999b7ad55d70adb601002",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-31.json",
+      "sha256": "56f03fb57845409da058898aab30bfcc5a68e7f0a5a3aef18f3d2fe2ac8bbc24",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-32.json",
+      "sha256": "9ecfc53bb9f3c5a6924cd30af886bbbaaa4b31fbf4ce4dfb283c3f27b219b64f",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-33.json",
+      "sha256": "f8df01e364c536407d9817f5d11faa49dcf01d1a88e486b591aead297eac1507",
+      "bytes": 4387
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-34.json",
+      "sha256": "0561695dbe145d019fb8e3c16730db442a84c1c9c2498dee1d7b6d6c9c6bb5eb",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-35.json",
+      "sha256": "96997e6403df741e4302c383f46a4e7d05452008ce22a450de3743c29eb625ec",
+      "bytes": 4392
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-36.json",
+      "sha256": "bd5b86fbea7ac9736b8b6db3cf061e0df476c53d83b2faf133f1d3f847616474",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-37.json",
+      "sha256": "511aeafc4d06710c22bd24d31eb1f627e9f9bfdf2483713a6ce2556a77f41489",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-38.json",
+      "sha256": "199c2edad1a66cceefe363b716af6844c3fe451690f9a42429b85950052c8331",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-39.json",
+      "sha256": "a66d0018e881165a3bd57e59305f6bf04c4e888618803f55302653d970c3d63e",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-40.json",
+      "sha256": "ba55ec7916a0fd25307af8fe43f67fa8d5a5f61e92144c9d4db7d5a2faf460f0",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-41.json",
+      "sha256": "4931e6993970f47812392cc5a658cd7e467c1eb6cf15bcd199a1951ce9105e67",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-42.json",
+      "sha256": "d5fa398cfead40a942111f5e4de8d2856c897c20b0c734c3ead5a4349b022160",
+      "bytes": 4048
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-43.json",
+      "sha256": "1c97aa5667f57e7d77a59b01e5a1895d25b9273121473181359dd6baf033157c",
+      "bytes": 4389
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-44.json",
+      "sha256": "43b37864b2f6c6b0e3e4e0803104ef349ed4c1b8d6f3792a6b5b80dad022baf3",
+      "bytes": 4046
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-45.json",
+      "sha256": "28685e5efbfcb3ee00af41d18e1097ff923b75e6c2206feb321c8a2710fe86c0",
+      "bytes": 4048
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-46.json",
+      "sha256": "1eb1b3f412e7c4c5d1c0005f502d6c603e1bcb9acc60bc474b29f574bd25e03d",
+      "bytes": 4046
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-47.json",
+      "sha256": "a1d38f2cbf60f9add4e0bafab18035d86dd7efe4ff801473a951ed574fac3143",
+      "bytes": 4726
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-48.json",
+      "sha256": "9a8551373105c31f5e7645da92600f2545edfff8425e40197fd00d8a3935357e",
+      "bytes": 4046
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-49.json",
+      "sha256": "2ee17c7950a92aeb749a55c3c468b3c796ecd3e35ce345921bc8cac34d84940b",
+      "bytes": 4047
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-50.json",
+      "sha256": "4dedae57b1ef8040bb038f02d4990053c36905d2b0890778a7ebb079319bcc2f",
+      "bytes": 4397
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-51.json",
+      "sha256": "24d69386f21cc33a99cfbfcf49812858bd27c835e17e41da4c1802ebb088ee5f",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-52.json",
+      "sha256": "9d9b7af6649411406f417e14b3ba8d79c527934a3d6ae20acea960bfeb2c0ed9",
+      "bytes": 4048
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-53.json",
+      "sha256": "2c729316726e0e42e5ba064f15f3895314e9ca9a9d505ae1bcdbbace39c333e7",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-54.json",
+      "sha256": "3cd131e5a6e0526dc9f1cad23c43325156115238e4574e1cbe1ffeb71ad82d69",
+      "bytes": 4393
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-55.json",
+      "sha256": "4158e39495042b37f7ec3cec1a80849b61542f16c89ca798358225924561e70f",
+      "bytes": 4738
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-56.json",
+      "sha256": "dbc82c596c61eabe7aa0b51878cbcb9753e5298f23a270149eb912ffc8cf95c0",
+      "bytes": 4388
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-57.json",
+      "sha256": "0a465811d80566d25a819c08644e6db4c39466a17b6add9875f1817fd20c091f",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-58.json",
+      "sha256": "0a60275cb41191a2e90a75f6375d09f27a26b06f9e8760d05990eb201ec237cd",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-59.json",
+      "sha256": "dfb1fa9da035cf0156aa5e06bf9633d92299496ff46b2107e1bab3e72a081360",
+      "bytes": 4395
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-60.json",
+      "sha256": "2891a4bf0c687688af35c94b3f1e153edc190f2ea81c4c86619a348990583e64",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-61.json",
+      "sha256": "ecd924a63d2382870a6eb25fb755b9b9a8b7cbc0fe68a7484093d233f427bebd",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-62.json",
+      "sha256": "661c9bdfc4a7771e50393bc217a713b791f62c076f033954c49db056015d904d",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-63.json",
+      "sha256": "595a6df66b9e4e93123d4edaddb6ec9f2ea2ebbfe2ca8a29e95bb7177f5a2d6b",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-64.json",
+      "sha256": "3cbadd923552746adbdfe752b4e4f9ca3fc33dd1763cfacc357d1bf88ee3f0c4",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-leaf-cooling-clearance-frame-65.json",
+      "sha256": "1ce5efb3f2b79549492095fbabb16eddc45aaa6d9fdc0339a461803a82dbbb51",
+      "bytes": 4045
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/previews/source-pilot31-bell-cooling.png",
+      "sha256": "150de7c65a0a22084ee4a82070401d2ce0937517713376fee4f9d60b19747a2b",
+      "bytes": 830595
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/evidence/pilot31-pilot-render-receipt.json",
+      "sha256": "1774eceffe1bf2917f6771f68acc0366b8e707b223cd155c688e467537ca7ff7",
+      "bytes": 703
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/previews/export-bell-rams.png",
+      "sha256": "88598a7a98bfae16c1219dbba4f60931c7eabdfc6183c9d4ad831f787b34fe68",
+      "bytes": 706287
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/previews/export-front.png",
+      "sha256": "f0eeb9f66a504808daf5dab078ba896fdc39abdada68d824530aa4d9fa942f9e",
+      "bytes": 557205
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/previews/export-fuel-screw.png",
+      "sha256": "bb3a516ee11ca2c23074c724d1653ef70351fc48cb6f0343ace654b253139a84",
+      "bytes": 868215
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/previews/export-hinges.png",
+      "sha256": "8fd24e642e173a11f9dba72baeb8acb3aa7ce5650a5e672b93e33a67990c44eb",
+      "bytes": 1066390
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/previews/export-rear-clay.png",
+      "sha256": "a6b3bab0b96c9f58935a6c5528cd1695916917b3abcc357b291b606998b835e4",
+      "bytes": 357964
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/previews/export-rear.png",
+      "sha256": "26a9da5c0d8939e9eded219e3cf329be53e00f623ab25a33d639cf616b5a9980",
+      "bytes": 386859
+    },
+    {
+      "path": "docs/art/thetazine-thruster-v04/previews/export-upper.png",
+      "sha256": "5e943db346edd22ffea4ef8b689c3b3e53fe41c6ea65302e6f548f9477004284",
+      "bytes": 925412
+    },
+    {
+      "path": "tools/art/thetazine_v04/add_leaf_regenerative_cooling.py",
+      "sha256": "d7951a76882d742d3078ed52178be49fea4222398d1724adfce4cd8bcd915794",
+      "bytes": 15550
+    },
+    {
+      "path": "tools/art/thetazine_v04/add_leaf_regenerative_cooling_v2.py",
+      "sha256": "1f49c6b1d552b798892b987eb97665ca49695adebdcaf8080dfa178fb0646543",
+      "bytes": 18088
+    },
+    {
+      "path": "tools/art/thetazine_v04/pack_leaf_header_ports.py",
+      "sha256": "9d95f54fb696a9651461e67b2355bfbe3881547ddbd792a4dec4740e8ef65c0c",
+      "bytes": 5598
+    },
+    {
+      "path": "tools/art/thetazine_v04/pack_leaf_header_ports_radius130.py",
+      "sha256": "f9fd79cab7bc7cb7f5dc81404593fabde6cf12518a6fc83031b6350e952fa379",
+      "bytes": 5601
+    },
+    {
+      "path": "tools/art/thetazine_v04/sync_flex_basis_export.py",
+      "sha256": "750dec8113a10c19af8d7682b6e69bfdc8d7a21b5f0e6e8973b67b3d6bbd0de7",
+      "bytes": 1956
+    },
+    {
+      "path": "tools/art/thetazine_v04/audit_leaf_cooling_clearance.py",
+      "sha256": "54891df9352b9b37fd80e2266f90008a1e94d440cce703c07358acfef94cc986",
+      "bytes": 9613
+    },
+    {
+      "path": "tools/art/thetazine_v04/audit_leaf_cooling_all_poses.py",
+      "sha256": "b2cc6b4b2e8d547b6b88d006be111f92d7da03e3c20849213a39f74dd0bef22d",
+      "bytes": 2262
+    },
+    {
+      "path": "tools/art/thetazine_v04/verify_leaf_cooling_connections.py",
+      "sha256": "051fa140a9291a7525b2839ba91289b4f82fa6daef4921b48a179a1ad6e55e30",
+      "bytes": 2878
+    },
+    {
+      "path": "tools/art/thetazine_v04/verify_material_only_preservation.py",
+      "sha256": "9d04749e514924d3b4fb3d505f02c66a8f7e8570da227189fdea0e58d702d58b",
+      "bytes": 1921
+    },
+    {
+      "path": "tools/art/thetazine_v04/verify_study_geometry.py",
+      "sha256": "53057c8c5559576401961aa301e174d6102c1e4691c441d69f529a8cfb661aa1",
+      "bytes": 4844
+    },
+    {
+      "path": "tools/art/thetazine_v04/verify_animation.py",
+      "sha256": "169c6e7dbee38f2d4904e12df52f77e53415fb5d8ae854efa505f88a514e27ed",
+      "bytes": 6453
+    },
+    {
+      "path": "tools/art/thetazine_v04/audit_animation_glb.py",
+      "sha256": "8d18d54bfbbf17fe5fae292cc59ee01aeb5c83584d6270be251510a5cd2a9aba",
+      "bytes": 3873
+    },
+    {
+      "path": "tools/art/thetazine_v04/render_pilot.py",
+      "sha256": "30ae1f973b0da1a33ccc51438df483a792a4e48710006af94d5f5f9840949339",
+      "bytes": 1559
+    },
+    {
+      "path": "tools/art/thetazine_v04/render_export.py",
+      "sha256": "2929c388d4e6054a75505f56451582ef441d39d5f3ccf0916c3e6045bb66e097",
+      "bytes": 2302
+    }
+  ],
+  "candidate_review": "evidence/CANDIDATE_REVIEW.json",
+  "inventory": "207sprite records/16families/111models_and_packages after staging candidate source and GLB; no ordinary sprites modified"
 }

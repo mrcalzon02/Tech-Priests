@@ -1,0 +1,574 @@
+{
+  "status": "FAIL_EVALUATED_COOLING_CLEARANCE",
+  "pid": 27912,
+  "native_sha256": "782a908b6dcf8e4c9177dfaa5ea9710c8347cf644c9b1db1d9c6007ccf4a7414",
+  "auditor_sha256": "54891df9352b9b37fd80e2266f90008a1e94d440cce703c07358acfef94cc986",
+  "poses": [
+    {
+      "frame": 0,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "d565944f150bb56c9686969e4e8943359f2f1082370759db73885c8fbc7e8b67"
+    },
+    {
+      "frame": 1,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "dc8e467cd84d10ab206a8c1d8664088ff50dbfffe518c710220da775c958a1f4"
+    },
+    {
+      "frame": 2,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "d399928d392082d015c990aa045fd97d89714a8def142b1622a9714b4d1c9121"
+    },
+    {
+      "frame": 3,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "f997249e8d1ff20134de7df0b75e7466d63484b3a49f9929f9af2fea2409bb89"
+    },
+    {
+      "frame": 4,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "800c90af2ad5cbb80356e0f76d9539317ad5a80224f31b307f1058d6d7a75804"
+    },
+    {
+      "frame": 5,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "de2f2535dcb24dab86dce2672cd8ce3e26a435ccdc65ca3eb2d116298b121024"
+    },
+    {
+      "frame": 6,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "d6902a8c675fb11be75f6bf01e503bb8bddb5337e0b8721567d35ae2cf07bb96"
+    },
+    {
+      "frame": 7,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "97a20baec3524c178d3afc6d496aa5cf4326495148b378260d33908c3d4ea7a5"
+    },
+    {
+      "frame": 8,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "5a3e3ccfa73ea2f1b8a82187865005016f97173fcbebb01f79fe3007e16b9687"
+    },
+    {
+      "frame": 9,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "7c8b1a627427e4dd16848077ad5437083e0c161f47eefcb7c7abc8b1e08f9bbf"
+    },
+    {
+      "frame": 10,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "ba2988a3c0c1639689ab9b96c1da32bd63c32d472f1455c63c39057851ed313c"
+    },
+    {
+      "frame": 11,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "b5c11088a2e5ece3d2b0045ae809ddc270502db0717330553abca8c3c0ff70a5"
+    },
+    {
+      "frame": 12,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "0700807d3c6fbff50a48a96d6a6552f9255256b29ddc138b1327627ca800d7a4"
+    },
+    {
+      "frame": 13,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "1c6ca42e669b4d838c38b4c9cc122e07551a6d27063a06bac3b97036b49ef3c8"
+    },
+    {
+      "frame": 14,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "fde013e0b5bc85e2d309045fc3227286ec53d87c2261f98e2afb8641d2b86cfa"
+    },
+    {
+      "frame": 15,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "a4cf8c581b92caea898b1c1bb8b02af0ce1671ff571df3a292d03ce2f09003a4"
+    },
+    {
+      "frame": 16,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "1e1012482b080c4e0f68541a74a4aae393146ccc693c8ad57386105d93ae5c8d"
+    },
+    {
+      "frame": 17,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "3367b41e47c581ea4876cedd69e33375eb4c8afa337955218be3c04e041f419e"
+    },
+    {
+      "frame": 18,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "703265555ce8785519cb5f600eff9d962e78a8f0d85d41bd74b620a0bd798c33"
+    },
+    {
+      "frame": 19,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "0d36c49188dc7b6190950df7a2b90414f21b4562084614fa02fe8503e3838a58"
+    },
+    {
+      "frame": 20,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "10d054571960547a648343f079f904895f2d87c5b7af3c4b701b822297f3b94c"
+    },
+    {
+      "frame": 21,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "8865a3e49ebc0cd1c6b792f44bce8aae8627d474dfec3a52012bfea6a4355972"
+    },
+    {
+      "frame": 22,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "081d0b51ad91f7058dcd357e873af4a7f0d08e03e0a6e8af826926923c7aedac"
+    },
+    {
+      "frame": 23,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "b0209206db766af3a8805e936e026fcb6a93990ad4253a5ff4c704d5ad0556dc"
+    },
+    {
+      "frame": 24,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "8ca21c57c71e0f051565d3a9c6b588e22007882b1dcd79bcb70db7ecdd0d031d"
+    },
+    {
+      "frame": 25,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "3776c78ba5a80ec4f0e4791df2d3331d41a851483625b808a758382ab6a8f7ec"
+    },
+    {
+      "frame": 26,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "684c2cb94ed8f3fb91fa8a16f95d36c5c6233524c9a4f122248ec33b876e64f4"
+    },
+    {
+      "frame": 27,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "c5ac50005c5713d19cf2be8058a77ab2b96b37b14d3224a6b5c564ae61912d95"
+    },
+    {
+      "frame": 28,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "767e2445c9474c952cfeba56cf66f7fa0c94c34a26b73bd029d4aea332b418d4"
+    },
+    {
+      "frame": 29,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "155194a8527290a3f1fb98497a90b56bf106077860a0935a50fb10ca8d63d4e3"
+    },
+    {
+      "frame": 30,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "6ba8fe9e88363d59a966c0299f4201532eee014b878999b7ad55d70adb601002"
+    },
+    {
+      "frame": 31,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "56f03fb57845409da058898aab30bfcc5a68e7f0a5a3aef18f3d2fe2ac8bbc24"
+    },
+    {
+      "frame": 32,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "9ecfc53bb9f3c5a6924cd30af886bbbaaa4b31fbf4ce4dfb283c3f27b219b64f"
+    },
+    {
+      "frame": 33,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "f8df01e364c536407d9817f5d11faa49dcf01d1a88e486b591aead297eac1507"
+    },
+    {
+      "frame": 34,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "0561695dbe145d019fb8e3c16730db442a84c1c9c2498dee1d7b6d6c9c6bb5eb"
+    },
+    {
+      "frame": 35,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "96997e6403df741e4302c383f46a4e7d05452008ce22a450de3743c29eb625ec"
+    },
+    {
+      "frame": 36,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "bd5b86fbea7ac9736b8b6db3cf061e0df476c53d83b2faf133f1d3f847616474"
+    },
+    {
+      "frame": 37,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "511aeafc4d06710c22bd24d31eb1f627e9f9bfdf2483713a6ce2556a77f41489"
+    },
+    {
+      "frame": 38,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "199c2edad1a66cceefe363b716af6844c3fe451690f9a42429b85950052c8331"
+    },
+    {
+      "frame": 39,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "a66d0018e881165a3bd57e59305f6bf04c4e888618803f55302653d970c3d63e"
+    },
+    {
+      "frame": 40,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "ba55ec7916a0fd25307af8fe43f67fa8d5a5f61e92144c9d4db7d5a2faf460f0"
+    },
+    {
+      "frame": 41,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "4931e6993970f47812392cc5a658cd7e467c1eb6cf15bcd199a1951ce9105e67"
+    },
+    {
+      "frame": 42,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "d5fa398cfead40a942111f5e4de8d2856c897c20b0c734c3ead5a4349b022160"
+    },
+    {
+      "frame": 43,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "1c97aa5667f57e7d77a59b01e5a1895d25b9273121473181359dd6baf033157c"
+    },
+    {
+      "frame": 44,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "43b37864b2f6c6b0e3e4e0803104ef349ed4c1b8d6f3792a6b5b80dad022baf3"
+    },
+    {
+      "frame": 45,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "28685e5efbfcb3ee00af41d18e1097ff923b75e6c2206feb321c8a2710fe86c0"
+    },
+    {
+      "frame": 46,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "1eb1b3f412e7c4c5d1c0005f502d6c603e1bcb9acc60bc474b29f574bd25e03d"
+    },
+    {
+      "frame": 47,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 2,
+      "receipt_sha256": "a1d38f2cbf60f9add4e0bafab18035d86dd7efe4ff801473a951ed574fac3143"
+    },
+    {
+      "frame": 48,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "9a8551373105c31f5e7645da92600f2545edfff8425e40197fd00d8a3935357e"
+    },
+    {
+      "frame": 49,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "2ee17c7950a92aeb749a55c3c468b3c796ecd3e35ce345921bc8cac34d84940b"
+    },
+    {
+      "frame": 50,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "4dedae57b1ef8040bb038f02d4990053c36905d2b0890778a7ebb079319bcc2f"
+    },
+    {
+      "frame": 51,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "24d69386f21cc33a99cfbfcf49812858bd27c835e17e41da4c1802ebb088ee5f"
+    },
+    {
+      "frame": 52,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "9d9b7af6649411406f417e14b3ba8d79c527934a3d6ae20acea960bfeb2c0ed9"
+    },
+    {
+      "frame": 53,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "2c729316726e0e42e5ba064f15f3895314e9ca9a9d505ae1bcdbbace39c333e7"
+    },
+    {
+      "frame": 54,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "3cd131e5a6e0526dc9f1cad23c43325156115238e4574e1cbe1ffeb71ad82d69"
+    },
+    {
+      "frame": 55,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 2,
+      "receipt_sha256": "4158e39495042b37f7ec3cec1a80849b61542f16c89ca798358225924561e70f"
+    },
+    {
+      "frame": 56,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "dbc82c596c61eabe7aa0b51878cbcb9753e5298f23a270149eb912ffc8cf95c0"
+    },
+    {
+      "frame": 57,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "0a465811d80566d25a819c08644e6db4c39466a17b6add9875f1817fd20c091f"
+    },
+    {
+      "frame": 58,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "0a60275cb41191a2e90a75f6375d09f27a26b06f9e8760d05990eb201ec237cd"
+    },
+    {
+      "frame": 59,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "dfb1fa9da035cf0156aa5e06bf9633d92299496ff46b2107e1bab3e72a081360"
+    },
+    {
+      "frame": 60,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "2891a4bf0c687688af35c94b3f1e153edc190f2ea81c4c86619a348990583e64"
+    },
+    {
+      "frame": 61,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "ecd924a63d2382870a6eb25fb755b9b9a8b7cbc0fe68a7484093d233f427bebd"
+    },
+    {
+      "frame": 62,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "661c9bdfc4a7771e50393bc217a713b791f62c076f033954c49db056015d904d"
+    },
+    {
+      "frame": 63,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "595a6df66b9e4e93123d4edaddb6ec9f2ea2ebbfe2ca8a29e95bb7177f5a2d6b"
+    },
+    {
+      "frame": 64,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "3cbadd923552746adbdfe752b4e4f9ca3fc33dd1763cfacc357d1bf88ee3f0c4"
+    },
+    {
+      "frame": 65,
+      "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 0,
+      "receipt_sha256": "1ce5efb3f2b79549492095fbabb16eddc45aaa6d9fdc0339a461803a82dbbb51"
+    }
+  ],
+  "failed_poses": [
+    {
+      "frame": 14,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "fde013e0b5bc85e2d309045fc3227286ec53d87c2261f98e2afb8641d2b86cfa"
+    },
+    {
+      "frame": 22,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "081d0b51ad91f7058dcd357e873af4a7f0d08e03e0a6e8af826926923c7aedac"
+    },
+    {
+      "frame": 24,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "8ca21c57c71e0f051565d3a9c6b588e22007882b1dcd79bcb70db7ecdd0d031d"
+    },
+    {
+      "frame": 27,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "c5ac50005c5713d19cf2be8058a77ab2b96b37b14d3224a6b5c564ae61912d95"
+    },
+    {
+      "frame": 28,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "767e2445c9474c952cfeba56cf66f7fa0c94c34a26b73bd029d4aea332b418d4"
+    },
+    {
+      "frame": 33,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "f8df01e364c536407d9817f5d11faa49dcf01d1a88e486b591aead297eac1507"
+    },
+    {
+      "frame": 35,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "96997e6403df741e4302c383f46a4e7d05452008ce22a450de3743c29eb625ec"
+    },
+    {
+      "frame": 43,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "1c97aa5667f57e7d77a59b01e5a1895d25b9273121473181359dd6baf033157c"
+    },
+    {
+      "frame": 47,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 2,
+      "receipt_sha256": "a1d38f2cbf60f9add4e0bafab18035d86dd7efe4ff801473a951ed574fac3143"
+    },
+    {
+      "frame": 50,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "4dedae57b1ef8040bb038f02d4990053c36905d2b0890778a7ebb079319bcc2f"
+    },
+    {
+      "frame": 54,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "3cd131e5a6e0526dc9f1cad23c43325156115238e4574e1cbe1ffeb71ad82d69"
+    },
+    {
+      "frame": 55,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 2,
+      "receipt_sha256": "4158e39495042b37f7ec3cec1a80849b61542f16c89ca798358225924561e70f"
+    },
+    {
+      "frame": 56,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "dbc82c596c61eabe7aa0b51878cbcb9753e5298f23a270149eb912ffc8cf95c0"
+    },
+    {
+      "frame": 59,
+      "status": "FAIL_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+      "violations": 0,
+      "ambiguous": 1,
+      "receipt_sha256": "dfb1fa9da035cf0156aa5e06bf9633d92299496ff46b2107e1bab3e72a081360"
+    }
+  ],
+  "all_fluid_routes": 84,
+  "new_cooling_routes": 38,
+  "mesh_pairs_checked": 204858,
+  "scope": "Actual evaluated mesh vertices, including flexible morphs. New38paths against all physical fixtures except render volume; original46against principal machinery plus every new cooling component. All84fluid paths pairwise. Declared terminal contacts only near actual moving ports. Closed solids use multi-ray parity with float64 solid-angle winding for grazing disagreements; open chamber uses actual lathe envelope. Not an every-solid-pair engineering or behavior test."
+}

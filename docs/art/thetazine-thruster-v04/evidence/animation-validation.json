@@ -1,0 +1,143 @@
+{
+  "status": "PASS_ACTUAL_GLB_ALL_MESHES_64_POSES_MORPHS_FIXED_SOCKETS_CLOSED_LEAVES",
+  "native_sha256": "a801a46fe96732599926e69d8b7818d978477a15e3c27682b7d9ea52c7a82494",
+  "glb_sha256": "d656e07e2f722ebb33c8990349823b0ef1e2b03c0e3563df8bec6bbec08605ca",
+  "sampled_cycle_frames": 64,
+  "wrap_frame": 65,
+  "source_fps": 30,
+  "all_meshes_each_pose": 3022,
+  "max_world_bounds_delta": 3.220699727535248e-05,
+  "worst": [
+    11,
+    "V04 curved petal reinforcing spine 9"
+  ],
+  "motion_by_family": {
+    "Nozzle articulated petal": 0.08975827693939209,
+    "V04 interleaved containment seal": 0.09028112888336182,
+    "V04 telescoping chrome piston shaft": 0.06832301616668701,
+    "V04 animated pump plunger": 0.03386455774307251,
+    "V04 moving containment gauge needle": 0.08520662784576416,
+    "V04 Archimedes helical flight": 0.07677567005157471,
+    "V04 flexible socket bellows": 0.0,
+    "V04 overhead three-dimensional service bridge": 0.0
+  },
+  "closed_petal_topology": [
+    {
+      "name": "Nozzle articulated petal 00",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 01",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 02",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 03",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 04",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 05",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 06",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 07",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 08",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 09",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 10",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "Nozzle articulated petal 11",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 00",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 01",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 02",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 03",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 04",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 05",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 06",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 07",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 08",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 09",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 10",
+      "nonmanifold_edges": 0
+    },
+    {
+      "name": "V04 interleaved containment seal 11",
+      "nonmanifold_edges": 0
+    }
+  ],
+  "native_wrap_exact": true,
+  "stationary_regenerative_parts": [
+    "V04 stationary regenerative supply half fuel",
+    "V04 stationary regenerative return half fuel",
+    "V04 stationary chamber regenerative channel fuel 0",
+    "V04 stationary chamber regenerative channel fuel 1",
+    "V04 stationary chamber regenerative channel fuel 2",
+    "V04 stationary chamber regenerative channel fuel 3",
+    "V04 stationary chamber regenerative channel fuel 4",
+    "V04 stationary chamber regenerative channel fuel 5",
+    "V04 stationary regenerative supply half water",
+    "V04 stationary regenerative return half water",
+    "V04 stationary chamber regenerative channel water 0",
+    "V04 stationary chamber regenerative channel water 1",
+    "V04 stationary chamber regenerative channel water 2",
+    "V04 stationary chamber regenerative channel water 3",
+    "V04 stationary chamber regenerative channel water 4",
+    "V04 stationary chamber regenerative channel water 5"
+  ],
+  "actual_shaft_tip_and_pin_measurement": "12 shafts x65 poses x2 artifacts; .08 pin-center inset and .22 gland overlap, tolerance2e-5",
+  "scope": "Local Blender mechanical/morph interchange only. Cold frame 0 and material heat-strength animation remain native Blender source states; no game import or behavior acceptance."
+}

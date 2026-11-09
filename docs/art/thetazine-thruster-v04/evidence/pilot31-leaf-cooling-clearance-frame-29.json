@@ -1,0 +1,103 @@
+{
+  "status": "PASS_EVALUATED_COOLING_ROUTE_CLEARANCE_POSE",
+  "native_sha256": "782a908b6dcf8e4c9177dfaa5ea9710c8347cf644c9b1db1d9c6007ccf4a7414",
+  "auditor_sha256": "54891df9352b9b37fd80e2266f90008a1e94d440cce703c07358acfef94cc986",
+  "frame": 29,
+  "all_fluid_routes": 84,
+  "new_cooling_routes": 38,
+  "mesh_pairs_checked": 3108,
+  "violations": [],
+  "ambiguous_closed_solid_samples": [],
+  "solid_angle_resolutions": 0,
+  "open_obstacles_surface_tested": [
+    "Main pressure chamber",
+    "Pressure casing axial panel seam",
+    "Pressure casing axial panel seam.002",
+    "Pressure casing axial panel seam.004",
+    "Source actuator helical thread -1",
+    "Source actuator helical thread 1",
+    "V04 auger fixed motor pressure line fuel",
+    "V04 auger fixed motor pressure line water",
+    "V04 cold bulk radial feed fuel 0",
+    "V04 cold bulk radial feed fuel 1",
+    "V04 cold bulk radial feed fuel 2",
+    "V04 cold bulk radial feed water 0",
+    "V04 cold bulk radial feed water 1",
+    "V04 cold bulk radial feed water 2",
+    "V04 curved petal reinforcing spine 0",
+    "V04 curved petal reinforcing spine 1",
+    "V04 curved petal reinforcing spine 10",
+    "V04 curved petal reinforcing spine 11",
+    "V04 curved petal reinforcing spine 2",
+    "V04 curved petal reinforcing spine 3",
+    "V04 curved petal reinforcing spine 4",
+    "V04 curved petal reinforcing spine 5",
+    "V04 curved petal reinforcing spine 6",
+    "V04 curved petal reinforcing spine 7",
+    "V04 curved petal reinforcing spine 8",
+    "V04 curved petal reinforcing spine 9",
+    "V04 heated regenerative central return fuel",
+    "V04 heated regenerative central return water",
+    "V04 main moving canister supply fuel",
+    "V04 main moving canister supply water",
+    "V04 pump injector outlet",
+    "V04 pump injector outlet.001",
+    "V04 regenerative turbo supply fuel",
+    "V04 regenerative turbo supply water",
+    "V04 restraint hydraulic feed 0",
+    "V04 restraint hydraulic feed 1",
+    "V04 restraint hydraulic feed 10",
+    "V04 restraint hydraulic feed 11",
+    "V04 restraint hydraulic feed 2",
+    "V04 restraint hydraulic feed 4",
+    "V04 restraint hydraulic feed 5",
+    "V04 restraint hydraulic feed 6",
+    "V04 restraint hydraulic feed 7",
+    "V04 restraint hydraulic feed 8",
+    "V04 seated gauge takeoff",
+    "V04 seated gauge takeoff.001",
+    "V04 sight injector return fuel",
+    "V04 sight injector return water",
+    "V04 sight supply branch fuel",
+    "V04 sight supply branch water",
+    "V04 stationary chamber regenerative channel fuel 0",
+    "V04 stationary chamber regenerative channel fuel 1",
+    "V04 stationary chamber regenerative channel fuel 2",
+    "V04 stationary chamber regenerative channel fuel 3",
+    "V04 stationary chamber regenerative channel fuel 4",
+    "V04 stationary chamber regenerative channel fuel 5",
+    "V04 stationary chamber regenerative channel water 0",
+    "V04 stationary chamber regenerative channel water 1",
+    "V04 stationary chamber regenerative channel water 2",
+    "V04 stationary chamber regenerative channel water 3",
+    "V04 stationary chamber regenerative channel water 4",
+    "V04 stationary chamber regenerative channel water 5"
+  ],
+  "chamber_actual_lathe_profile": [
+    [
+      1.75,
+      0.4800000026284482
+    ],
+    [
+      1.87,
+      0.5700000101173913
+    ],
+    [
+      2.07,
+      0.6100000362087336
+    ],
+    [
+      3.0,
+      0.6100000259254725
+    ],
+    [
+      3.2,
+      0.4700000279856178
+    ],
+    [
+      3.27,
+      0.4199999986988752
+    ]
+  ],
+  "scope": "Actual evaluated mesh vertices, including flexible morphs. New38paths against all physical fixtures except render volume; original46against principal machinery plus every new cooling component. All84fluid paths pairwise. Declared terminal contacts only near actual moving ports. Closed solids use multi-ray parity with float64 solid-angle winding for grazing disagreements; open chamber uses actual lathe envelope. Not an every-solid-pair engineering or behavior test."
+}
