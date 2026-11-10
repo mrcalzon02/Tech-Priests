@@ -345,6 +345,7 @@ def main():
     # remain untouched. This additional condensate trap has its own moving valve.
     trap=cylinder(col,"relief condensate trap",(1.04,.53,1.57),.105,.18,iron)
     ring(col,"relief condensate trap gasket",(1.04,.53,1.68),.112,.022,brass)
+    nozzle_counts=fx.add_relief_nozzle(col,p,mats)
     steam_counts=fx.add_relief_steam(col,p,mats)
     # Legacy Water Purifier steam plumes were literally 20-sided hard-surface
     # cones. Retain every original vertex and keyframe in the editable .blend,
@@ -360,6 +361,13 @@ def main():
         old_cone["fmpl_steam_replacement"]="preserved but hidden; replaced by soft layered real-mesh steam"
     steam_counts["legacy_cones_hidden"]=len(legacy_steam)
     steam_counts["legacy_cone_names"]=[ob.name for ob in legacy_steam]
+    solid_nozzle=[ob for ob in process
+                  if ob.name=="FMPL_PROCESS | vent nozzle anchored through pressure pipe"]
+    if len(solid_nozzle)!=1:
+        raise RuntimeError("Actual historical solid vent cap was not found")
+    solid_nozzle[0].hide_render=True
+    solid_nozzle[0]["fmpl_vent_replacement"]="geometry preserved; hollow nozzle replaces opaque cap"
+    nozzle_counts["solid_source_caps_hidden"]=1
     # Guard against accidental opaque camera backgrounds or polluting the port planes.
     newmeshes=[ob for ob in col.objects if ob.type=="MESH"]
     bpy.context.view_layer.update()
@@ -433,6 +441,7 @@ def main():
                        "witness_fluid_fx_frames":list(fx.FRAMES)},
       "fluid_fx":fx_counts,
       "steam_fx":steam_counts,
+      "vent_nozzle":nozzle_counts,
       "fmpl_effects_native_blend_sha256":fx_library_hash,
       "private_greebles_source":greebles,
       "source_camera_unchanged":True,
