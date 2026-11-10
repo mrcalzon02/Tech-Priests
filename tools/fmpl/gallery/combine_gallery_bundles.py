@@ -25,6 +25,14 @@ def load(zipobj):
             raise ValueError("Unsafe archive member: "+item.filename)
         if norm in files:raise ValueError("Archive path collision: "+norm)
         files[norm]=zipobj.read(item.filename)
+    # Dens Mortis packages model runs with a one-folder base name. Normalize it
+    # without changing source bytes or allowing arbitrary path traversal.
+    if "models/models_report.json" not in files:
+        roots={name.split("/",1)[0] for name in files if "/" in name}
+        if len(roots)==1 and next(iter(roots)).startswith("fmpl-models-batch-"):
+            root=next(iter(roots))+"/"
+            if all(name.startswith(root) for name in files):
+                files={name[len(root):]:blob for name,blob in files.items()}
     return files
 def read_json(blob):
     return json.loads(blob.decode("utf-8"))
@@ -62,8 +70,13 @@ def verify_models(files,seen):
         raise RuntimeError("Model batch hides incomplete/blocked models")
     for row in report["rows"]:
         blob=row["source"]["git_blob_sha"]
-        if blob in seen:raise RuntimeError("Model source rendered twice across batches")
-        seen.add(blob)
+        prior=seen.get(blob)
+        if prior=="rendered":
+            raise RuntimeError("Model source already had a genuine rendered preview")
+        if prior=="blocked" and row["status"]!="rendered":
+            raise RuntimeError("Repeated blocked source without a verified recovery render")
+        if prior is None or row["status"]=="rendered":
+            seen[blob]=row["status"]
         if row["status"]=="rendered":
             rel="models/"+row["file"]
             if rel not in files or sha(files[rel])!=row["render_sha256"]:
@@ -90,7 +103,7 @@ def main():
     bundled={}
     provenance=[]
     seen_texture=set()
-    seen_models=set()
+    seen_models={}
     with zipfile.ZipFile(args.base) as zipped:
         files=load(zipped)
     baseline=verify_base(files)
@@ -114,6 +127,8 @@ def main():
                       f"{proof['rendered']} real Blender previews; {proof['blocked']} documented blockers"))
         provenance.append({"kind":"model-continuation","source":Path(entry).name,"sha256":sha(Path(entry).read_bytes()),"result":proof})
         nmod+=proof["rendered"];nblocked+=proof["blocked"]
+    # A verified targeted retry can resolve prior documented size blockers.
+    nblocked=sum(1 for status in seen_models.values() if status=="blocked")
     parts=["<!doctype html><html lang='en'><head><meta charset='utf-8'>",
            "<title>FMPL complete verified render gallery</title>",
            "<style>body{background:#131b22;color:#f4f4ef;font-family:system-ui;margin:4% auto;max-width:920px;padding:20px}a{color:#92dfe4}article{padding:18px;margin:12px 0;background:#263442;border-radius:12px}small{color:#bcc9d0}</style>",
