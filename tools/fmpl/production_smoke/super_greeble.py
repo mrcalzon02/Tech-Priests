@@ -38,6 +38,19 @@ def load_fluid_fx():
 
 fx=load_fluid_fx()
 
+def load_bore_clearance():
+    spec=importlib.util.spec_from_file_location(
+        "fmpl_pipe_bore_clearance",HERE/"pipe_bore_clearance.py")
+    if not spec.origin or not Path(spec.origin).is_file():
+        raise RuntimeError("FMPL genuine bore clearance builder missing")
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+bore_tools=load_bore_clearance()
+
+
+
 def import_effect_library(library_path):
     """Use the canonical read-only FMPL Effects asset importer, not ad-hoc shaders."""
     if not library_path:
@@ -368,6 +381,11 @@ def main():
     solid_nozzle[0].hide_render=True
     solid_nozzle[0]["fmpl_vent_replacement"]="geometry preserved; hollow nozzle replaces opaque cap"
     nozzle_counts["solid_source_caps_hidden"]=1
+    # Both side ports must be physically clear. Source rails, manifold shoes
+    # and original bed may not project into the open 0.49-tile bores. Create
+    # mesh-carved derivatives and external replacement supports only; original
+    # 50 MH7 / 136 process meshes remain untouched and recoverable.
+    bore_counts=bore_tools.build_port_clearance(scene,col,p,original,process,mats)
     # Guard against accidental opaque camera backgrounds or polluting the port planes.
     newmeshes=[ob for ob in col.objects if ob.type=="MESH"]
     bpy.context.view_layer.update()
@@ -442,6 +460,7 @@ def main():
       "fluid_fx":fx_counts,
       "steam_fx":steam_counts,
       "vent_nozzle":nozzle_counts,
+      "port_bore_clearance":bore_counts,
       "fmpl_effects_native_blend_sha256":fx_library_hash,
       "private_greebles_source":greebles,
       "source_camera_unchanged":True,
