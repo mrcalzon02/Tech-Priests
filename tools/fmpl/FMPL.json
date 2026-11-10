@@ -207,7 +207,7 @@
     },
     {
       "id": "water-purifier-mh7",
-      "status": "fixed-camera-grid-pipe-fit-technically-verified-unapproved",
+      "status": "super-greeble-technical-v01-complete-unapproved",
       "source": {
         "repository": "mrcalzon02/HB-TTRPG-tools",
         "ref": "a953f083412c9e67481d31ebc8b5fb242cf0cf69",
@@ -271,6 +271,22 @@
         "artifact_id": 13720187552,
         "owner_approved": false,
         "game_integrated": false
+      },
+      "super_greeble_evidence": {
+        "event_id": "fmpl-super-greeble-v041-dens-42739292638-1",
+        "github_run": "https://github.com/mrcalzon02/Dens-Mortis/actions/runs/42739292638",
+        "artifact_id": 13727559949,
+        "source_sha256": "cd6ec0c5f22cacea1d3da396308d3a8ef52be87eec2302dbed816507bc8a7019",
+        "glb_sha256": "588cb6b219caef96f71c7c4460032ffd0fb1b4d7918a6f85f11f70f892bb77aa",
+        "new_meshes": 177,
+        "original_meshes_preserved": 50,
+        "process_meshes_preserved": 136,
+        "single_angle": true,
+        "working_frames": 8,
+        "static_frames": 1,
+        "imported_private_greebles": false,
+        "owner_approved": false,
+        "factorio_runtime_verified": false
       }
     }
   ],
@@ -609,7 +625,7 @@
         "ref": "4e731c1805600c81c56750d7778bcdde57cd89d9",
         "path": "tools/fmpl/production_smoke/super_greeble.py"
       },
-      "status": "builder-tests-authored-runner-proof-pending",
+      "status": "passed-actual-blender-GLB-animated-atlas-private-runner; owner-and-factorio-runtime-gates-open",
       "gate": "Do not add unclassified donor geometry to public assets; actual Greebles source must be hash verified and human shape-reviewed. Render and gameplay gates separate."
     }
   ],
@@ -625,7 +641,8 @@
     "runner-two-of-four-goals-verified-not-accepted",
     "four-goal-runner-candidate-unapproved",
     "process-pbr-technically-verified-unapproved",
-    "fixed-camera-grid-pipe-fit-technically-verified-unapproved"
+    "fixed-camera-grid-pipe-fit-technically-verified-unapproved",
+    "super-greeble-technical-v01-complete-unapproved"
   ],
   "policy": {
     "no_unreviewed_promotion": true,
@@ -814,6 +831,22 @@
     },
     "model_approval": "unapproved technical candidate",
     "actual_factorio_ports_verified": false,
-    "native_runner_status": "not-yet-executed"
+    "native_runner_status": "passed-native-blender-glb-and-single-angle-animated-sprites",
+    "runtime_evidence": {
+      "event_id": "fmpl-super-greeble-v041-dens-42739292638-1",
+      "github_run": "https://github.com/mrcalzon02/Dens-Mortis/actions/runs/42739292638",
+      "artifact_id": 13727559949,
+      "source_sha256": "cd6ec0c5f22cacea1d3da396308d3a8ef52be87eec2302dbed816507bc8a7019",
+      "glb_sha256": "588cb6b219caef96f71c7c4460032ffd0fb1b4d7918a6f85f11f70f892bb77aa",
+      "new_meshes": 177,
+      "original_meshes_preserved": 50,
+      "process_meshes_preserved": 136,
+      "single_angle": true,
+      "working_frames": 8,
+      "static_frames": 1,
+      "imported_private_greebles": false,
+      "owner_approved": false,
+      "factorio_runtime_verified": false
+    }
   }
 }

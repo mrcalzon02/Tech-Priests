@@ -138,3 +138,7 @@ Source-indexed asset tabulation. **Not every model is game-ready; not every comp
 - Use the append-only `checkpoints.json` protocol to record results from iterative runs without erasing earlier revisions.
 
 Generated from `tools/fmpl/FMPL.json` and the existing industrial asset catalog. Rebuild with `python tools/fmpl/generate_catalog.py`.
+
+## Super Greeble V01 technical result
+
+The actual Dens Mortis production [run 42739292638](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/42739292638) built a derivative with 177 extra process-detail meshes, 352 meshes verified in GLB, 27 packed maps, and six single-angle static/working animation atlases. Model geometry, PBR, camera and V04 pipe annuli were preserved. The private donor is not publicly licensed or approved, so none of its 320 raw meshes was imported. This is a verified technical candidate, **not approved** for in-game Factorio yet.

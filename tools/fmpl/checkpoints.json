@@ -170,6 +170,70 @@
         "game_integrated": false,
         "note": "Single fixed-camera static QA produced, not a working-entity sprite set or approved item icon. User visual approval and Lua fluidbox mapping pending."
       }
+    },
+    {
+      "event_id": "fmpl-super-greeble-v041-dens-42739292638-1",
+      "asset_id": "water-purifier-mh7",
+      "asset_kind": "model",
+      "revision": "super-greeble-v01-den-mortis-animated-technical",
+      "state": "verified",
+      "source_sha256": "cd6ec0c5f22cacea1d3da396308d3a8ef52be87eec2302dbed816507bc8a7019",
+      "evidence": {
+        "source_artifact_sha256": "cd6ec0c5f22cacea1d3da396308d3a8ef52be87eec2302dbed816507bc8a7019",
+        "native_reopen_verified": true,
+        "glb_reimported": true,
+        "glb_sha256": "588cb6b219caef96f71c7c4460032ffd0fb1b4d7918a6f85f11f70f892bb77aa",
+        "previous_native_source_sha256": "5d03419b7861278ed21f89cb08686d79d5ebb80d886d42ed265d866ea7f08c30",
+        "original_meshes_preserved": 50,
+        "previous_process_meshes_preserved": 136,
+        "new_mechanical_meshes": 177,
+        "glb_reimported_meshes": 352,
+        "camera_preserved": true,
+        "canonical_pipe_mating_faces_unchanged": true,
+        "keyed_pump_rotation_samples": [
+          0,
+          3.142,
+          6.283
+        ],
+        "animated_gauge_needles": 2,
+        "animated_treatment_bubbles": 12,
+        "packed_PBR_images": 27,
+        "actual_png_alpha_valid": true,
+        "one_canonical_camera_direction": true,
+        "static_directions": 1,
+        "animation_working_frames": [
+          1,
+          13,
+          25,
+          37,
+          49,
+          61,
+          73,
+          85
+        ],
+        "sprite_atlases": {
+          "idle_64": "8eda7d1df125be0371f4d5ee875c772bae62f1c5b80832f8d77840349a26da2a",
+          "working_64": "10bc4b02e940f75d66ff9b94e3468d42be8517017a56ef001cad2e065a19675e",
+          "idle_128": "77b90b8d8ffc6444b53f517ca9043c1ba9509ee9e792be650156f62872f2b720",
+          "working_128": "132587f1323d68589cd437b785d5683a9f8ccf346bce96cf94e47112c5aad5af",
+          "idle_256": "8b4237f8b5de26f51b0a04a8b91987de1e7c76226fc0611bdfc940361662114a",
+          "working_256": "1eb7407ef1c79276a88153d8595dce33be9ab18be2eb0780e793520cea1ddbc8"
+        },
+        "proof_idle_png_sha256": "775c8e19c383a820a35e29dc23df25f099c50b3688564717c1fd6dde6c4ccef3",
+        "proof_working_png_sha256": "20c66ec3b4f3e4fe2ad85c300dd284b7d917ca657023374ab55f35f29616c78f",
+        "github_runner_repo": "mrcalzon02/Dens-Mortis",
+        "github_run": "https://github.com/mrcalzon02/Dens-Mortis/actions/runs/42739292638",
+        "github_runner_commit": "7f15774711e3600939de3175ee74bd14fa17edc4",
+        "github_artifact_id": 13727559949,
+        "github_artifact_retention_days": 14,
+        "archived_private_donor_available": false,
+        "private_greebles_meshes_imported": 0,
+        "private_donor_reason": "Private Greebles.blend not cached on runner and individual parts unapproved",
+        "owner_visual_approval": false,
+        "native_factorio_port_verified": false,
+        "game_integrated": false,
+        "note": "Saved native Blender/GLB and six real RGBA atlases passed; result is technical candidate, not approved game sprite or Factorio entity."
+      }
     }
   ]
 }
