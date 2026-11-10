@@ -1,4 +1,4 @@
-"""V21: carve source-observed foot faces, actual vent openings and seated front screws.
+"""V22: source-observed construction with raised console and camera-facing capacitor mouths.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -1304,17 +1304,18 @@ def main(out):
     true_vents=cut_three_true_maintenance_vents()
     foot_faces=carve_source_corner_foot_faces()
     seated_screws=seat_original_front_face_screws()
+    v22_correction=apply_owner_v22_geometry()
     save_render(scene,top,OUTPUT/"01_source_view_real_mesh.png")
     save_render(scene,iso,OUTPUT/"02_game_candidate_full_miner.png")
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V21 two tall dark cast source-corner feet with integrated shoulders and real bolt heights"
+    scene["asset_revision"]="V22 raised operator console and camera-facing original capacitors"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v21.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v22.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -1339,15 +1340,15 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v21.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v22.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V21 SOURCE-VISIBLE TALL CORNER SUPPORTS; VISUAL REVIEW PENDING",
-        "candidate_revision":"V21",
+        "state":"V22 OWNER-CONSOLE/CAPACITOR REFINEMENT; VISUAL REVIEW PENDING",
+        "candidate_revision":"V22",
         "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
         "middle_chassis_physical_cross_sections":reopened_casting.get("cross_sections"),
         "upper_machine_physical_cross_sections":reopened_upper.get("cross_sections"),
@@ -1395,12 +1396,13 @@ def main(out):
         "foundation_plate_corner_bolts":6,
         "chassis_front_armor_bolts":2,
         "capacitor_ends_read_forward":True,
+        "owner_v22_geometry_correction":v22_correction,
         "upper_wiring_seated_to_machinery":True,
         "owner_layer_map":{"uncolored":"foundation_perimeter",
                            "blue":"middle_chassis_lip_and_front",
                            "red":"raised_machinery_and_control_deck"},
         "front_control_slope_degrees":11,
-        "capacitor_axis":"HORIZONTAL_FRONT_CIRCULAR_ENDS",
+        "capacitor_axis":"CAMERA_FACING_UP_45_DEGREES",
         "coolant_entries":"LATERAL_INTO_UPPER_MACHINERY",
         "perimeter_hoses_visible_on_chassis_shoulders":True,
         "control_deck_width_reference_units":486,
