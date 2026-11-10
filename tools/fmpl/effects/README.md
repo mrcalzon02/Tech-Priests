@@ -46,3 +46,7 @@ collection, root = import_effects.append_rig(
 ```
 
 The API fails on missing/mismatched assets or name collisions. An import does not prove correct in-game scale, pipe hookups, sprite anchoring, translucent sorting or user visual approval. `test_import_adapter.py` validates the source contract without a Blender installation.
+
+### Production revisions
+
+1.0.0: first native Blender 5.2.3 build and independent reopen, 16/16 captures; gas swatches too faint at native proof scale. 1.0.1: gas optical-depth and sample-label readability adjustments; **new native verification required** before visual readiness. Both remain source-derived candidates until actual render review.

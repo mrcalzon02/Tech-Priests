@@ -851,7 +851,7 @@
   },
   "effects_materials_extension": {
     "id": "fmpl-effect-material-library",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "registry": "tools/fmpl/effects/presets.json",
     "standard": "tools/fmpl/effects/EFFECTS_STANDARD.md",
     "builder": "tools/fmpl/effects/build_library.py",
@@ -859,7 +859,7 @@
     "tests": "tools/fmpl/effects/test_presets.py",
     "material_presets": 28,
     "animated_rig_collections": 5,
-    "status": "source-committed-native-production-and-review-pending",
+    "status": "v1.0.0-native-verified-v1.0.1-visual-refinement-awaits-native-production",
     "independent_from_existing_pbr_maps": true,
     "source_pdf_sha256": "b256e188919ace7804ff958cbf2eee052cc47519529a70e61da7d2270c93d27d"
   }

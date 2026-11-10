@@ -8,7 +8,7 @@ from __future__ import annotations
 import hashlib
 from pathlib import Path
 
-LIBRARY_VERSION="1.0.0"
+LIBRARY_VERSION="1.0.1"
 PREFIX="FMPL FX | "
 RIG_PREFIX="FMPL FX RIG | "
 ROOT_PREFIX="FMPL FX ROOT | "

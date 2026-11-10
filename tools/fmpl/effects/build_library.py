@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FMPL Effects v1.0: deterministic native Blender materials and animated FX rigs.
+"""FMPL Effects v1.0.1: deterministic native Blender materials and animated FX rigs.
 
 No external material files, generators, downloads, game edits or simulations.
 Requires bpy in Blender 4.3+ / Blender 5.2. Never overwrites an output folder.
@@ -241,10 +241,11 @@ def torus_mesh(bpy,collection,name,location,material,major=.24,minor=.035):
 def label(bpy,collection,name,position,material):
     data=bpy.data.curves.new("FMPL | swatch label","FONT")
     data.body=name
-    data.size=.115
+    data.size=.145
     ob=bpy.data.objects.new("LABEL | "+name,data)
     collection.objects.link(ob)
     ob.location=position
+    ob.rotation_euler.x=math.radians(45)  # face the fixed 45-degree preview camera
     data.materials.append(material)
     return ob
 
@@ -315,7 +316,10 @@ def make_gallery(bpy,scene,materials,records):
     text=bpy.data.materials.new("GALLERY ONLY | labels")
     text.diffuse_color=(.85,.83,.75,1)
     text.use_nodes=True
-    text.node_tree.nodes.get("Principled BSDF").inputs["Base Color"].default_value=(.85,.83,.75,1)
+    text_shader=text.node_tree.nodes.get("Principled BSDF")
+    text_shader.inputs["Base Color"].default_value=(.85,.83,.75,1)
+    text_shader.inputs["Emission Color"].default_value=(.85,.83,.75,1)
+    text_shader.inputs["Emission Strength"].default_value=.45
     cube(bpy,col,"GALLERY | support floor",(3.5,-3.13,-.11),(9.5,8.0,.12),back)
     for idx,item in enumerate(records):
         c=idx%7;r=idx//7
@@ -325,7 +329,8 @@ def make_gallery(bpy,scene,materials,records):
         else:
             sample=sphere(bpy,col,"SWATCH | "+item["id"],(x,y,.40),(.34,.34,.34),materials[item["id"]])
         sample["fmpl_swatch_id"]=item["id"]
-        label(bpy,col,item["id"].replace("-"," ")[:19],(x-.42,y-.56,.04),text)
+        out_label=item["id"].replace("-"," ")[:19]
+        label(bpy,col,out_label,(x-.42,y-.59,.09),text)
 
 def set_camera(bpy,scene,size,samples):
     from mathutils import Vector

@@ -6,7 +6,7 @@ from pathlib import Path
 def main():
     root=Path(__file__).resolve().parent
     data=json.loads((root/"presets.json").read_text(encoding="utf-8"))
-    assert data["schema"]=="fmpl.effects.v1" and data["version"]=="1.0.0"
+    assert data["schema"]=="fmpl.effects.v1" and data["version"]=="1.0.1"
     p=data["presets"];r=data["rigs"]
     assert len(p)==28 and len(r)==5, (len(p),len(r))
     ids=[x["id"] for x in p];assert len(set(ids))==len(ids)

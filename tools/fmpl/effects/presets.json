@@ -1,7 +1,7 @@
 {
   "schema": "fmpl.effects.v1",
   "library_id": "fmpl-effect-material-library",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "original procedural graphs; no imported artwork",
   "source_guide": {
     "name": "To create effects in blender.pdf",
@@ -433,11 +433,11 @@
         0.1
       ],
       "emission_strength": 0,
-      "density": 0.075,
+      "density": 1,
       "noise_scale": 2.2,
       "bump_distance": 0,
       "performance": "advanced-preview",
-      "notes": "Small volume proxy only; real domain simulation is a separate gated task."
+      "notes": "Dense, editable bounded-preview gas volume for native-size legibility; physically scaled production domains require independent review."
     },
     {
       "id": "steam-exhaust",
@@ -459,11 +459,11 @@
         0.1
       ],
       "emission_strength": 0,
-      "density": 0.13,
+      "density": 1.15,
       "noise_scale": 2.2,
       "bump_distance": 0,
       "performance": "advanced-preview",
-      "notes": "Small volume proxy only; real domain simulation is a separate gated task."
+      "notes": "Dense, editable bounded-preview gas volume for native-size legibility; physically scaled production domains require independent review."
     },
     {
       "id": "smoke-soot",
@@ -485,11 +485,11 @@
         0.1
       ],
       "emission_strength": 0,
-      "density": 0.17,
+      "density": 1.75,
       "noise_scale": 2.2,
       "bump_distance": 0,
       "performance": "advanced-preview",
-      "notes": "Small volume proxy only; real domain simulation is a separate gated task."
+      "notes": "Dense, editable bounded-preview gas volume for native-size legibility; physically scaled production domains require independent review."
     },
     {
       "id": "chemical-fumes",
@@ -511,11 +511,11 @@
         0.1
       ],
       "emission_strength": 0,
-      "density": 0.11,
+      "density": 1.15,
       "noise_scale": 2.2,
       "bump_distance": 0,
       "performance": "advanced-preview",
-      "notes": "Small volume proxy only; real domain simulation is a separate gated task."
+      "notes": "Dense, editable bounded-preview gas volume for native-size legibility; physically scaled production domains require independent review."
     },
     {
       "id": "fire-core",

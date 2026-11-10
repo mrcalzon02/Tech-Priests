@@ -1,4 +1,4 @@
-# FMPL Effects and Materials Standard v1.0
+# FMPL Effects and Materials Standard v1.0.1
 
 This **additive** library extends the existing 23 image-backed PBR presets; it never renames, overwrites or silently promotes the existing bunker/boiler/condenser materials. It provides **28 named original procedural effect materials** and **five reusable animated demonstration rig collections**. Materials, rig geometry, preview frames, the saved native Blender library, a verified reopened library, a user-approved visual design, and a Factorio in-game sprite are distinct acceptance states.
 
@@ -46,3 +46,7 @@ Derived from the user's 13-page `To create effects in blender.pdf` (SHA-256 `b25
 Only the existing **Dens Mortis private Windows runner controller** is permitted to perform the full build; do not create another GitHub workflow or enable a recurring schedule. Run the new `fmpl-effects` mode through its authorized request file, pin the complete Tech-Priests commit, check free D: scratch space and archive genuine native outputs, logs, hashes and images. Heavy per-machine rendering never starts merely because a library file changes.
 
 The library is for future Fish Pond water, steam condensers, boilers, compressors, plasma machinery and other project models. Import by exact ID from the native library via `bpy.data.libraries.load(..., link=False)`; do not duplicate raw shader definitions in each machine builder.
+
+## v1.0.1 visual-readability revision
+
+The first full Dens Mortis run (42743646586, Blender 5.2.3 LTS) genuinely built and reopened all 28 assets and five rigs and produced 16 frame screenshots. Its actual gas-volume previews were too faint to read at the preview camera. The subsequent revision deliberately increases preset small-volume density values and improves Blender-native gallery-label facing/lighting, without enabling any physical simulation bake. This is a visual legibility correction, not a claim that the presets are already physically calibrated for every scene scale. Existing 1.0.0 native output and SHA receipts remain preserved in the original runner artifact.
