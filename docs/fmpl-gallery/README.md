@@ -7,8 +7,8 @@ The images are genuine render previews verified against source receipts; **not**
 | Family | Verified previews |
 |---|---:|
 | Canonical FMPL materials | 76 |
-| 3D source model renders | 72 |
-| Raw texture-map sphere previews | 64 |
+| 3D source model renders | 180 |
+| Raw texture-map sphere previews | 192 |
 
 ## Canonical FMPL materials
 

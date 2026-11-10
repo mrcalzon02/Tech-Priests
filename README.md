@@ -31,7 +31,7 @@ Source implementation, source validation, Factorio loading, migration, behaviora
 
 ## Browse FMPL visual proofs on GitHub
 
-[**FMPL gallery — materials, models and raw-map previews**](docs/fmpl-gallery/README.md) displays 212 verified Blender previews directly in GitHub without downloading ZIPs. The searchable static page lives in `docs/fmpl-gallery/index.html` and can be served by GitHub Pages from `main:/docs`.
+[**FMPL gallery — materials, models and raw-map previews**](docs/fmpl-gallery/README.md) displays 448 verified Blender previews directly in GitHub without downloading ZIPs. The searchable static page lives in `docs/fmpl-gallery/index.html` and can be served by GitHub Pages from `main:/docs`.
 
 <a href="docs/fmpl-gallery/README.md"><img src="docs/fmpl-gallery/assets/materials.webp" width="720" alt="76 canonical FMPL material sample renders, inline on GitHub"></a>
 

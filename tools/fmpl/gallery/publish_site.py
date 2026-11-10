@@ -226,6 +226,14 @@ def main():
     records=[];provenance=[]
     add_materials(args.baseline,records,provenance)
     for src in args.models+args.textures:add_external(src,records,provenance)
+    seen_source={}
+    for item in records:
+        unique=(item['type'],item['source'],item['name']) if item['type']=='materials' else (item['type'],item['source'])
+        if unique in seen_source:
+            raise ValueError('Previously rendered pinned source included in multiple verified batches: '
+                             +item['source']+' (current '+item['render_sha256']
+                             +', earlier '+seen_source[unique]+')')
+        seen_source[unique]=item['render_sha256']
     atlas={}
     for typ,_,cols in OUT_SETS:
         nr=image_atlas(records,typ,cols,output/'assets'/f'{typ}.webp')
