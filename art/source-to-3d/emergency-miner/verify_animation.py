@@ -41,6 +41,8 @@ def main(folder, variant):
         },
     }
     assert_clean(scene,profile,bpy)
+    if scene.get("emergency_miner_v22_applied") is not True:
+        raise RuntimeError("Owner V22 console/capacitor geometry was not applied")
     if scene.get("study_variant") != variant:
         raise RuntimeError("Saved variant identity mismatch")
     if scene.get("visual_approval") != "PENDING":
@@ -82,9 +84,25 @@ def main(folder, variant):
                  "miner_motion_"+variant+"_native43.png"):
         if (folder/name).stat().st_size < 1000:
             raise RuntimeError("Missing APNG/native43 render "+name)
-    seam=[o for o in rig.objects if o.name.startswith("FX ONLY |") and "light leak" in o.name]
-    if len(seam)!=2:
-        raise RuntimeError("Expected exactly two light leaks")
+    vent_lights=[o for o in rig.objects if o.name.startswith("FX ONLY | vent aperture laser glow")]
+    if len(vent_lights)!=3 or {x.get("vent_source_index") for x in vent_lights}!={0,1,2}:
+        raise RuntimeError("Laser emission must originate in each of the exactly 3 source vent openings")
+    if any("movable light leak" in ob.name or "front chassis light leak" in ob.name
+           or "upper service seam" in ob.name for ob in rig.objects):
+        raise RuntimeError("Surface panning laser has reappeared")
+    from mathutils import Vector
+    eye=Vector((0,-0.70710678,0.70710678))
+    scene.frame_set(1)
+    cap_alignment=[]
+    for idx in range(3):
+        ob=bpy.data.objects.get("Capacitor %d horizontal supported shell"%idx)
+        if ob is None:
+            raise RuntimeError("Missing original source capacitor %d"%idx)
+        axis=(ob.matrix_world.to_3x3() @ Vector((0,0,1))).normalized()
+        dot=axis.dot(eye)
+        if dot<.94:
+            raise RuntimeError("Capacitor %d not pointed toward camera, dot=%s"%(idx,dot))
+        cap_alignment.append(round(dot,4))
     steam=[o for o in rig.objects if o.name.startswith("FX ONLY | steam")]
     if len(steam)!=9:
         raise RuntimeError("Expected exactly nine source-anchored steam wisps")
@@ -94,7 +112,8 @@ def main(folder, variant):
         "rendered_frames":len(frames),
         "foundation_stationary":True,"rig_loop_closed":True,
         "live_original_art_changed":False,"owner_approved":False,
-        "steam_wisps":len(steam),"seam_emitters":len(seam),
+        "steam_wisps":len(steam),"vent_aperture_emitters":len(vent_lights),
+        "surface_panning_lights":0,"capacitor_camera_alignments":cap_alignment,
         "saved_blend_sha256":sha(master),
     }
     (folder/("verify_motion_"+variant+".json")).write_text(json.dumps(result,indent=2)+"\n")
