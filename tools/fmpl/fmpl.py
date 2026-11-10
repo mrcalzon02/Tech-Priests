@@ -37,6 +37,13 @@ def validate(root=None, check_files=False):
     assert reg["schema"] == "fmpl.module.v1"
     assert reg["short_name"] == "FMPL"
     assert reg["asset_units"]["one_blender_unit"] == "one Factorio tile"
+    units=reg["asset_units"]
+    assert units["default_scene_units_per_tile"] == 1
+    assert units["scene_scope_schema"] == "fmpl.scene-scope.v1"
+    assert units["scene_scale_registry"] == "tools/fmpl/scene_scale_registry.json"
+    assert units["scene_scale_helper"] == "tools/fmpl/scene_scale.py"
+    assert units["standard_pipe_interface"] == "factorio-fluid-interface-v1"
+    assert units["real_world_scale_conversion"] is False
     assert reg["policy"]["no_unreviewed_promotion"] is True
     assert reg["policy"]["no_extra_workflows"] is True
     assert reg["policy"]["strict_capture_policy"] is True
