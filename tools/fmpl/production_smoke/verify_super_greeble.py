@@ -123,6 +123,68 @@ def main():
     after=[b.location.z for b in bubbles]
     if max(abs(x-y) for x,y in zip(before,after))<.07:
         raise RuntimeError("Working fluid animation not visible")
+    # Reopen the actual saved Blender derivative and independently cast rays
+    # through each exterior pipe bore; an AABB alone cannot certify a passage.
+    spec=importlib.util.spec_from_file_location(
+        "fmpl_bore_verifier",HERE/"pipe_bore_clearance.py")
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    bore_native=module.verify_bores(scene,original,saved_process,details)
+    if not bore_native["passed"] or bore_native["probed_rays"]<45:
+        raise RuntimeError("External side port openings have structural obstructions: "+
+                           json.dumps(bore_native["hits"][:15]))
+    clearance=receipt.get("port_bore_clearance",{})
+    if (clearance.get("replaced_originals_hidden")!=8 or
+        clearance.get("repaired_foundation_layers")!=2 or
+        clearance.get("split_rail_segments")!=4 or
+        clearance.get("redirected_supports")!=8):
+        raise RuntimeError("Incomplete non-destructive side-port rail/shoe/base refit")
+    hidden_names=clearance.get("hidden_original_object_names",[])
+    if len(hidden_names)!=8:
+        raise RuntimeError("Missing exact source-preservation/visibility receipts")
+    for name in hidden_names:
+        obj=bpy.data.objects.get(name)
+        if obj is None or not obj.hide_render:
+            raise RuntimeError("Obstructing original must be preserved but hidden: "+name)
+    for role in ("raw-water-in","purified-water-out"):
+        for part in ("reusable machine throat","reusable machine collar"):
+            original_part=bpy.data.objects.get("FMPL_PROCESS | "+role+" / "+part)
+            if original_part is None or original_part.hide_render:
+                raise RuntimeError("Do not hide or shrink real canonical joint: "+role+" "+part)
+    # Inspect the actual physical dimensions and shader graphs of BOTH front
+    # tanks, not merely user-written metadata in a receipt.
+    target_width=.426
+    target_height=.712
+    columns_by_role={}
+    for index,role in ((1,"RAW"),(2,"CLEAN")):
+        tank=[o for o in details if "sample station %d enlarged transparent vessel"%index in o.name]
+        liquid=[o for o in details if "sample station %d enlarged visible liquid column"%index in o.name]
+        if len(tank)!=1 or len(liquid)!=1:
+            raise RuntimeError("Missing large separate modelled RAW/CLEAN glass tank")
+        vessel=tank[0]
+        if (vessel.get("fmpl_witness_tank_role")!=role or
+            float(vessel.get("fmpl_witness_tank_outer_diameter_tiles",0))<target_width-.003 or
+            float(vessel.get("fmpl_witness_tank_body_height_tiles",0))<target_height-.003 or
+            vessel.dimensions.x<.422 or vessel.dimensions.z<.705):
+            raise RuntimeError("Front witness canister is not physically enlarged "+role)
+        if not liquid[0].data.materials:
+            raise RuntimeError("No real liquid material on "+role+" witness tank")
+        columns_by_role[role]=liquid[0].data.materials[0]
+    raw_mat,clean_mat=columns_by_role["RAW"],columns_by_role["CLEAN"]
+    if (raw_mat.name!="FMPL | purifier raw-water olive-amber V11" or
+        clean_mat.name!="FMPL | purifier clean-water luminous cyan V11"):
+        raise RuntimeError("Raw vs clean water PBR colorway is not correctly applied")
+    if any(mat.get("fmpl_not_canonical_fx_asset") is not True for mat in (raw_mat,clean_mat)):
+        raise RuntimeError("Custom tank colorways must be derivatives, never mutated canonical FX assets")
+    def rgb_from_ramp(mat):
+        ramp=mat.node_tree.nodes.get("FMPL | Broken Albedo")
+        if ramp is None:
+            raise RuntimeError("Missing actual FMPL procedural color-ramp for "+mat.name)
+        return list(ramp.color_ramp.elements[1].color)[:3]
+    raw_rgb,clean_rgb=rgb_from_ramp(raw_mat),rgb_from_ramp(clean_mat)
+    if (raw_rgb[0]<raw_rgb[2]*4 or raw_rgb[1]<raw_rgb[2]*2 or
+        clean_rgb[2]<clean_rgb[0]*6 or clean_rgb[1]<clean_rgb[0]*4):
+        raise RuntimeError("Physically assigned shader colors insufficiently warm/cool")
     # FMPL physical effects: inspect real native meshes and animation data,
     # not merely render filenames or decorative materials.
     vessels=[o for o in details if "enlarged transparent vessel" in o.name]
@@ -297,6 +359,16 @@ def main():
        "glb_meshes_reimported":len(imported),
        "source_camera_preserved":True,
        "source_pipe_annuli_preserved":True,
+       "side_pipe_bores_verified_clear":bore_native["passed"],
+       "side_pipe_probed_rays":bore_native["probed_rays"],
+       "side_pipe_bore_structural_hits":len(bore_native["hits"]),
+       "side_ports_original_members_hidden":len(hidden_names),
+       "front_tanks_enlarged":2,
+       "front_tank_outer_diameter_tiles":target_width,
+       "front_tank_height_tiles":target_height,
+       "front_raw_amber_rgb":raw_rgb,
+       "front_clean_cyan_rgb":clean_rgb,
+       "front_colorway_contrast_verified":True,
        "moving_pump_rotor_samples":seen,
        "gauge_needles_keyed":len(needles),
        "process_bubbles_keyed":len(bubbles),
