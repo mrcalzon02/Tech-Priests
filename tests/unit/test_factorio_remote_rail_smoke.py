@@ -302,6 +302,11 @@ class NativeRailUnfundedCandidateAdmissionTests(unittest.TestCase):
                    / "tests/scenarios/remote-rail-acquisition/fixture.lua")
         source = fixture.read_text(encoding="utf-8")
         self.assertIn("RAIL_ADMISSION_DIAG elapsed=", source)
+        self.assertIn("authority.can_yield_uncommitted_rail_0836,p,pending.request", source)
+        self.assertIn("queue_yield_allowed=", source)
+        self.assertIn("queue_yield_reason=", source)
+        self.assertIn("active_supply_source=", source)
+        self.assertIn("active_supply_target=", source)
         for key in ("request_matches=", "candidate=", "builder_phase=",
                     "active_task=", "current_task=", "machine_custody=",
                     "last_builder_detail=", "source_rail="):
