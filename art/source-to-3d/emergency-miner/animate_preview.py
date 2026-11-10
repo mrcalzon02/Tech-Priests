@@ -464,11 +464,16 @@ def diagnostic_render(scene, out, name, sample_frame=1, pixels=128):
     return target
 
 
-def main(out,diagnostic=False):
+def main(out,diagnostic=False,quick_review=False):
     out.mkdir(parents=True,exist_ok=True)
     print('MINER_TRACE 01 begin source V22 build',flush=True)
     profile = build_v21()
     print('MINER_TRACE 02 V22 source built',flush=True)
+    if quick_review:
+        # Preview only: 16 true samples remain, same camera/motion keys;
+        # reduce internal Cycles work without changing geometry or axis.
+        bpy.context.scene.cycles.samples=8
+        bpy.context.scene.render.resolution_percentage=70
     base = out/"v22_study_static_master.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(base))
     print('MINER_TRACE 03 base saved',flush=True)
@@ -478,7 +483,11 @@ def main(out,diagnostic=False):
               "builder_sha256":sha(HERE/"build_model.py"), "preview_script_sha256":sha(__file__),
               "camera_policy":POLICY_ID, "directions_rendered":[0], "fps":FPS,
               "source_model_unchanged":True,"in_game_art_unchanged":True,
-              "owner_visual_approved":False,"frames":FRAMES,"variants":{}}
+              "owner_visual_approved":False,"frames":FRAMES,
+              "quick_review":bool(quick_review),
+              "v22_console_and_camera_facing_caps":True,
+              "laser_light_sites":"THREE_REAL_VENT_HOLES_ONLY",
+              "variants":{}}
     for label in ("A","B"):
         print('MINER_TRACE 10 reopen base '+label,flush=True)
         bpy.ops.wm.open_mainfile(filepath=str(base))
@@ -553,6 +562,7 @@ def main(out,diagnostic=False):
         animation=out/("miner_motion_%s.png"%label)
         dims=pack_apng(rendered,animation)
         scene.render.resolution_x=scene.render.resolution_y=43
+        scene.render.resolution_percentage=100
         scene.frame_set(25)
         native=out/("miner_motion_%s_native43.png"%label)
         scene.render.filepath=str(native)
@@ -577,6 +587,7 @@ if __name__ == "__main__":
     parser=argparse.ArgumentParser()
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--diagnostic",action='store_true')
+    parser.add_argument("--quick-review",action='store_true')
     argv=sys.argv[sys.argv.index("--")+1:] if "--" in sys.argv else sys.argv[1:]
     args=parser.parse_args(argv)
-    main(args.out.resolve(),diagnostic=args.diagnostic)
+    main(args.out.resolve(),diagnostic=args.diagnostic,quick_review=args.quick_review)
