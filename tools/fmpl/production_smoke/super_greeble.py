@@ -39,6 +39,10 @@ def component_bounds(objs):
     return p.full_bounds(objs)
 
 def own(col,obj,name,material=None):
+    # Blender primitives are named Sphere/Cube by default. Preserve the
+    # requested semantic identity before the FMPL rehouse wrapper adds its
+    # namespace, or the native animation verifier cannot identify the rig.
+    obj.name=name
     return p.rehouse(obj,col,material)
 
 def bar(col,tag,a,b,radius,metal):
@@ -331,6 +335,9 @@ def main():
         raise RuntimeError("Frozen V04 source transformed/modified during detailed pass")
     if len(newmeshes)<85:
         raise RuntimeError("Too little meaningful structural and process detail authored")
+    if len([ob for ob in newmeshes if "treatment chamber aeration bubble " in ob.name])!=12:
+        raise RuntimeError("Twelve semantically named animated process bubbles required")
+
     # Optional private donor is an intake-only provenance test, never a randomly
     # grafted and possibly unlicensed/anatomically incorrect working interface.
     greebles=check_donor(opts.greebles_source,fmpl)
