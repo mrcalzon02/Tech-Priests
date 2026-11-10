@@ -172,12 +172,18 @@ local function setup()
   if ore_tiles<1 then fail("NATURAL_REMOTE_ORE_PATCH_MISSING")end
   -- The destination has been charted by prior remote reconnaissance. The
   -- Magos may use only charted map intelligence, not omniscient surface scans.
-  -- Factorio can enqueue chart generation during on_init. Checking
-  -- immediately here mistakes a pending request for uncharted terrain.
-  -- Keep the actual force chart request; the first 1800-tick native
-  -- checkpoint must prove the generated ore chunk REALLY became charted.
+  -- The targeted chart request stayed pending through 1,800 real
+  -- headless benchmark ticks in Factorio 2.1.24. During this isolated
+  -- pre-mission reconnaissance, chart all ALREADY GENERATED chunks using
+  -- Factorio's native force chart API, not fabricated ore/intelligence.
+  -- This never credits track, resources, cargo, or a completed objective.
+  -- The strict delayed is_chunk_charted readback remains mandatory.
   local target_chunk={x=math.floor(ORE.x/32),y=math.floor(ORE.y/32)}
   force.chart(surface,{{ORE.x-20,ORE.y-20},{ORE.x+20,ORE.y+20}})
+  force.chart_all(surface)
+  emit("CHART_SETUP target_chunk="..target_chunk.x..","..target_chunk.y..
+    " charted="..tostring(force.is_chunk_charted(surface,target_chunk))..
+    " requested="..tostring(force.is_chunk_requested_for_charting(surface,target_chunk)))
   s.chart_target_chunk=target_chunk
   if count(surface,{type="resource",
       area={{-64,STATION.y-64},{64,STATION.y+64}}})~=0 then

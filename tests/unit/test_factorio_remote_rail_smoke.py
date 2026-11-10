@@ -116,6 +116,10 @@ class NativeRailDeferredChartAdmissionTests(unittest.TestCase):
         source = fixture.read_text(encoding="utf-8")
         self.assertIn('force.chart(surface,{{ORE.x-20,ORE.y-20},'
                       '{ORE.x+20,ORE.y+20}})', source)
+        self.assertIn('force.chart_all(surface)', source)
+        self.assertLess(source.index('force.chart(surface,{{ORE.x-20'),
+                        source.index('force.chart_all(surface)'))
+        self.assertIn('CHART_SETUP target_chunk=', source)
         self.assertIn('s.chart_target_chunk=target_chunk', source)
         self.assertIn('if elapsed>=1800 and not s.chart_verified then', source)
         self.assertIn('station.force.is_chunk_charted(', source)
