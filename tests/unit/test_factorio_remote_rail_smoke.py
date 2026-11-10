@@ -164,6 +164,30 @@ class NativeRailChartLifecycleDiagnosticsTests(unittest.TestCase):
         self.assertNotIn("surface.create_entity{name=\"straight-rail\"", source)
 
 
+class NativeRailPoweredChartingTests(unittest.TestCase):
+    def test_real_radar_and_solar_power_without_intelligence_bypass(self):
+        fixture = (pathlib.Path(__file__).resolve().parents[2]
+                   / "tests/scenarios/remote-rail-acquisition/fixture.lua")
+        source = fixture.read_text(encoding="utf-8")
+        self.assertIn("seed_native_radar_chart_infrastructure", source)
+        self.assertIn('entries={{name="radar",position=base}', source)
+        self.assertIn('{name="substation",position={x=base.x+6,y=base.y}}', source)
+        self.assertIn('entries[#entries+1]={name="solar-panel"', source)
+        self.assertIn("surface.can_place_entity{", source)
+        self.assertIn("surface.create_entity{", source)
+        self.assertIn('count(surface,{type="resource",area=area})==0', source)
+        self.assertIn('surface.daytime=0.85', source)
+        self.assertNotIn("surface.freeze_daytime=true", source)
+        self.assertIn('CHART_RADAR_NATIVE_DIAG elapsed=', source)
+        self.assertIn('radar.energy', source)
+        self.assertIn('radar.electric_network_id', source)
+        self.assertIn('if elapsed>=1800 and not s.chart_verified then', source)
+        self.assertIn('station.force.is_chunk_charted(', source)
+        self.assertIn('fail("REMOTE_ORE_NOT_CHARTED_AFTER_TICKS="', source)
+        self.assertNotIn('force.set_chunk_charted', source)
+        self.assertNotIn('surface.create_entity{name="iron-ore"', source)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', source)
+
 class NativeRailPhysicalSupplyCapacityTests(unittest.TestCase):
     def test_full_manifest_uses_real_seven_slot_station_and_nearby_depot(self):
         fixture = (pathlib.Path(__file__).resolve().parents[2]
