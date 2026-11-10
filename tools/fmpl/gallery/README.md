@@ -32,3 +32,29 @@ blender -b --factory-startup --python-exit-code 1 --python tools/fmpl/gallery/re
 Batches never overwrite one another. `batch-index` advances by 1 for the next slice. The material-map preview is labeled **raw-map-on-sphere**, not an approved PBR preset, because normal/ORM/height data are not interchangeable with albedo. Full sprite/frame/icon histories remain indexed but do not consume a separate physical-material render per animation frame.
 
 No scheduled jobs, no workflow matrices, and no automatic GitHub publication of external image binaries. For historical/duplicate models, future batches should reuse previously verified source hashes rather than rerendering identical geometry needlessly.
+
+## Cumulative verified gallery
+
+[merge_verified_batches.py](merge_verified_batches.py) takes the previously verified
+canonical gallery ZIP plus subsequent **genuine** Dens Mortis model/texture job artifacts.
+It validates the original 76 material PNGs and .blend, every new image SHA-256, each
+batch's independent verification receipt, and exact pinned Git blob identities. It
+deduplicates models and raw-map previews by source blob identity, removes size-blockers
+only when the matching source is actually rendered, and emits one self-contained,
+searchable offline `index.html`, a machine-readable `manifest.json`, preserved
+inventory reports and all genuine proof PNGs.
+
+Example after downloading the authorized runner artifacts:
+
+```sh
+python tools/fmpl/gallery/merge_verified_batches.py \
+  --baseline FMPL_Combined_Library_76_Materials_63_Models_64_Textures.zip \
+  --batch FMPL-gallery-nine-recovered-42760825381.zip \
+  --batch FMPL-gallery-model-batch01-run42887345055.zip \
+  --output FMPL_Cumulative_76_Materials_100_Models_64_Textures.zip
+```
+
+The command refuses to overwrite an existing destination or include unverifiable
+images. It uses Python's standard library, never downloads from the web, and does not
+run Blender or alter source repositories. New batches are explicit arguments; the
+library is not claimed complete merely because its source census is complete.
