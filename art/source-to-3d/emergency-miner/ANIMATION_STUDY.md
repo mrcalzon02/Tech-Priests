@@ -1,4 +1,4 @@
-# Emergency Miner V21 — one-camera motion study (review-only)
+# Emergency Miner — V21 baseline and V22 owner-directed motion refinement
 
 **Approval state: not rendered or visually approved until a native Blender receipt is attached.** The unmodified original Factorio art and prototypes remain the active rollback; no gameplay changes are permitted in this study.
 
@@ -56,3 +56,16 @@ Per-variant deliverables:
 7. Only then: four model rotations under one stationary FMPL camera; HR/standard atlases, alpha/shadow/emission layers, native prototype frame/direction/speed mapping, in-game startup/runtime validation and fallback preservation.
 
 **No workflow sprawl.** Target the already-authorized Dens Mortis single-job local Blender controller and pin the Tech-Priests commit. An Actions-success receipt is not visual acceptance.
+
+## V22 — owner-directed console, laser and capacitor correction (2026-11-10)
+
+The owner reviewed the first actual fixed-view animated samples and directed three concrete changes:
+1. Raise **only the original console bank and its real supporting front upper casting** by 0.014 Blender units, allowing a little more of the middle chassis edge to be read. Do not add a new fascia/false intermediate plate, move the foundation or alter component counts.
+2. The three existing recessed capacitor mouths must face **up toward the fixed 45-degree Factorio camera**, not lie horizontally. Rotate their real shells, lips and inset ends together about physically retained rear supports. Validate a camera-axis dot product at least 0.94 in reopened Blender, and preserve precisely three mouths.
+3. **Remove BOTH former roaming laser highlight surfaces** from the upper service cover/console and front chassis. Replace with just THREE small emissive inserts underneath the three Boolean-cut original vent apertures. A hidden scanning energy source may animate their brightness in sequence, but no light bar, tracking glow or invented laser mechanism may appear on any solid panel or across the middle chassis.
+
+The dedicated code authority is `build_model.py:apply_owner_v22_geometry()`, called by the V22 master build and `animate_preview.py`. The source sprite and playable prototype remain unaltered. `verify_animation.py` separately reopens each keyed Blender file, checks the original three capacitor axes and all three vent-only emitters, and forbids the earlier surface-panning lights.
+
+Render first from ONE FMPL 45-degree orthographic camera using A/B review cycles. A bounded `--quick-review` run retains the complete 16 authored motion samples at eight samples per second but reduces preview-only Cycles cost and resolution percentage; it does not change the camera, permanent mesh geometry or source registration. Human visual approval is required before any directional atlas, HR/SD sprites or in-game replacement.
+
+**Revision history discipline:** V21 remains available in Git history and the V21 runner artifact. V22 is a new, unapproved candidate; no previous accepted source asset is overwritten.
