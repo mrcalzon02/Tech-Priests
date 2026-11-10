@@ -21,3 +21,14 @@ V9 refines tools/fmpl/effects/fluid_steam_fx.py with actual 24x16-segment inters
 - If run fails: diagnose first actual stack trace, repair minimally, re-pin the source by full SHA, dispatch once through the existing authorized request file, and avoid unnecessary concurrent jobs.
 - If run passes: visually inspect full native render and alpha-aware dark/light backgrounds; create true-source before/after crop and real-frame GIF if worthwhile. Reject hollow bright rims, visible cones and invisible vapor even if technical tests pass.
 - Retain source .blend, GLB, 64/128/256 RGBA atlases and SHA/QA receipts with final GitHub run and artifact. Do not claim native Factorio fluidbox integration or owner approval before game and owner checks.
+
+## V9 outcome and V10 follow-up
+
+V9 native run [#42759037920](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/42759037920) produced a real editable scene and passed independent original/GLB geometry checks but correctly failed the new steam-visibility stage. Artifact `13736658901` reports 201 idle/128 working visible steam pixels above the metal lip. Its high-rise subregion was miscalibrated (upper crop at Y91..106 above the actual rendered plume): only 1/0 qualifying pixels. The genuine 512px working PNG shows steam that is finally readable but too axisymmetric, resembling a short white cone; it is not owner-approved.
+
+**V10 model correction** uses irregular overlapping x/y/z offsets across four main and eight secondary wisps, decreases surface intensity and density-linked light, and moves the upper QA region to the actual plume (Y102..117), still excluding the nozzle metal. The pre-V9 near-invisible render fails that corrected region, while the V9 frame had 159 idle/92 working visible pixels within it. The source code continues to preserve original 50+136 meshes, one camera, two fluid ports, and the hollow metal throat without generating textures or using imagegen.
+
+- Pinned V10 Tech-Priests source commit: `6b8ed60bd7cbad68b1a454770fedb036adbc5c51`.
+- Dens Mortis dispatch: [run #42759960059](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/42759960059), commit `fc4703c425daf059c026b863bd55316792a808fc`.
+- V10 acceptance: actual Blender Cycles idle/active 512px steam QA; sideways/asymmetric lobe geometry; independently reopened .blend+GLB; no legacy hard cones, preserved hollow bore; real 64/128/256 RGBA atlas; full-size inline before/after proof and measured alpha visible above nozzle. Final owner visual approval is separate.
+- Running constraint: V10 queued behind existing FMPL 36-model gallery batch on the single OLD-CORE30 Windows worker; do not cancel unrelated successful model rendering or create another workflow simply to advance this test.
