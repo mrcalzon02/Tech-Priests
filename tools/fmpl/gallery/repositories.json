@@ -1,0 +1,197 @@
+{
+  "schema": "fmpl.account-gallery.sources.v1",
+  "intent": "inventory all public owner-controlled repository textures/images/3d source and render versioned proof batches",
+  "scope": "all-current-public-owner-repositories",
+  "private_repositories_exported": 0,
+  "pinning": "resolve each ref to full Git commit SHA during inventory; record it; never substitute moving HEAD in a renderer",
+  "sources": [
+    {
+      "repo": "mrcalzon02/TerraGov-Marine-Corps",
+      "ref": "master",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/DFWW2",
+      "ref": "main",
+      "visibility": "public",
+      "status": "empty-repository"
+    },
+    {
+      "repo": "mrcalzon02/Pirates-of-the-western-Rim-WIP-",
+      "ref": "main",
+      "visibility": "public",
+      "status": "empty-repository"
+    },
+    {
+      "repo": "mrcalzon02/Depth-Detective",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/Tanks-for-bob-Fork",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/ImperiumOfMan",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/sam-3d-objects-fork",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/open_llama",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/mechanicist-factorio",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/TheMechanist",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/Tech-Priests",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/Fleet-designer",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/HB-TTRPG-tools",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/powerpong",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/ImperialERA",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/Infinite-Domain",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/Continuity-Works",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/Alfheim-Reclaimed",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/Magenheim",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/ReverieVR",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/The-Beckenburg-Project",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/The-Malefic-Veil",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/NUTBUSTER-R",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/Catastrophic-Diplomacy",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    },
+    {
+      "repo": "mrcalzon02/Jewel_Brook",
+      "ref": "main",
+      "visibility": "public",
+      "status": "scan-requested"
+    }
+  ],
+  "formats": {
+    "models": [
+      "blend",
+      "blend1",
+      "obj",
+      "fbx",
+      "glb",
+      "gltf",
+      "stl",
+      "ply"
+    ],
+    "images": [
+      "png",
+      "jpg",
+      "jpeg",
+      "webp",
+      "tga",
+      "tif",
+      "tiff",
+      "dds",
+      "exr",
+      "hdr",
+      "bmp",
+      "ktx",
+      "ktx2"
+    ]
+  },
+  "policies": {
+    "retain_every_source_path": true,
+    "dedupe_by_git_blob_sha": true,
+    "do_not_call_sprite_frames_independent_materials": true,
+    "read_only_pinned_sources": true,
+    "never_rerender_silent_historical_versions": true,
+    "blocked_licensed_external_assets_stay_unrendered": true,
+    "do_not_publish_private_controller_state": true,
+    "limits_are_per_run": true,
+    "no_new_actions_workflow": true
+  }
+}

@@ -1,0 +1,21 @@
+# FMPL GitHub-wide rendered asset library
+
+This gallery inventories **all public mrcalzon02 repositories** as source records, not just the FMPL register. Its first native production pass uses a bounded number of Blender scenes and renders; the JSONL inventory includes every found 3D file and image, even those **not yet rendered**. Private Dens Mortis runner files, unverified private Drive donor binaries and unaudited external CC0 source packages do not get published here.
+
+## Output families
+
+- `materials/`: editable 3D material swatches, canonical 45-degree Cycles gallery, source IDs and explicit library version (existing 23 texture-map PBR, 28 FX, 25 procedural surfaces).
+- `models/`: real Blender renders for each processed `.blend`, `.obj`, `.glb`, `.fbx`, `.gltf` donor or finished model, with historical and blockout status preserved.
+- `parts/`: source-indexed shared parts and Greebles candidates; only license- and source-verified geometry can be included as rendered geometry. Candidates without available 3D files remain visibly pending.
+- `inventory/`: one JSONL file per source repository plus `summary.json`; exact source path, full commit, Git blob SHA, size, role, clone/release duplicate classification, first-pass render availability.
+- `index.html`: offline gallery with linked real PNGs and source URLs, no fake thumbnails for missing assets.
+
+## Production and review gates
+
+All source repositories are read-only. Store source commit and raw blob SHA; detect exact binary duplicates across version folders and distribution directories. Never confuse 10,000 sequential animation frames with 10,000 unique material presets.
+
+The initial batch targets canonical FMPL **76 material definitions** and the legacy **Tanks-for-Bob 21 survival OBJ blockouts**, with progressively scheduled, bounded extensions to the other thousands of files. Lack of a Blender-compatible source, oversized binary, license uncertainty, truncated tree or render failure is recorded as pending/blocked, not claimed as completed.
+
+No new GitHub workflow. The private Dens Mortis controller runs one job on OLD-CORE30; every run saves an immutable native report, proofs and a new artifact. The indexed library is not a Factorio installation or a replacement for user visual approval.
+
+See `repositories.json` for repository scope and `inventory.py` for deterministic inventory. Rerun an explicit batch to extend coverage without deleting previous versioned proof artifacts.
