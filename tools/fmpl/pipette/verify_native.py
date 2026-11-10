@@ -95,9 +95,6 @@ def _verify_standard_ports(scene,objs,record):
     u=float(scope["scene_units_per_tile"])
     rays=0
     for terminal,interface in interfaces.items():
-        candidates=[o for o in objs
-                    if o.get("pipette_standard_interface_id")=="factorio-fluid-interface-v1"
-                    and o.get("pipette_socket_id")==record.get("route_id")+".invalid"]
         # The selected candidate count comes from exact source interface
         # and typed terminal mesh roles, not an inferred random neighbor.
         prefix=" | "+terminal+" factorio-fluid-interface-v1 "
