@@ -1,0 +1,79 @@
+{
+  "id": "segmented-fluid-tube-example",
+  "family": "segmented_conduit",
+  "payload": "fluid",
+  "size": {
+    "outer_diameter": 0.095,
+    "wall_fraction": 0.2
+  },
+  "material_id": "TP Library | iron",
+  "fitting_material_id": "TP Library | brass",
+  "path": {
+    "kind": "waypoints",
+    "points": [
+      [
+        0,
+        0,
+        0.9
+      ],
+      [
+        0.6,
+        0,
+        0.9
+      ]
+    ]
+  },
+  "joint_pitch": 0.16,
+  "start_socket": {
+    "id": "pump.pressure-out",
+    "xyz": [
+      0,
+      0,
+      0.9
+    ],
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "role": "source",
+    "payloads": [
+      "fluid"
+    ],
+    "parent_mesh": "Pump discharge casting"
+  },
+  "end_socket": {
+    "id": "filter.pressure-in",
+    "xyz": [
+      0.6,
+      0,
+      0.9
+    ],
+    "normal": [
+      -1,
+      0,
+      0
+    ],
+    "role": "sink",
+    "payloads": [
+      "fluid"
+    ],
+    "parent_mesh": "Filter receiving union"
+  },
+  "fittings": {
+    "start": "flange",
+    "end": "compression"
+  },
+  "supports": {
+    "pitch": 0.28,
+    "anchor_ids": [
+      "pump_mount",
+      "filter_mount"
+    ]
+  },
+  "behavior": {
+    "future_fluid_network_id": "pump-filter-service",
+    "live_binding_implemented": false
+  },
+  "keep_outs": []
+}
