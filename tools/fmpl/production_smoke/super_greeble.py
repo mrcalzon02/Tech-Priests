@@ -27,6 +27,40 @@ def load_helper():
 
 p=load_helper()
 
+def load_fluid_fx():
+    spec=importlib.util.spec_from_file_location(
+        "fmpl_fluid_steam_fx", HERE.parent/"effects"/"fluid_steam_fx.py")
+    if not spec.origin or not Path(spec.origin).is_file():
+        raise RuntimeError("Pinned FMPL real-mesh fluid FX helper absent")
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+fx=load_fluid_fx()
+
+def import_effect_library(library_path):
+    """Append exact named, source-tracked FMPL effect materials; never remake shaders."""
+    if not library_path:
+        return {}, None
+    path=Path(library_path).resolve()
+    if not path.is_file():
+        raise FileNotFoundError("Pinned FMPL effects native library missing: "+str(path))
+    ids={"fx_raw":"water-murky","fx_clear":"water-clear",
+         "fx_glass":"glass-clear","fx_steam":"steam-clean"}
+    wanted=["FMPL FX | "+key for key in ids.values()]
+    with bpy.data.libraries.load(str(path),link=False) as (src,dst):
+        absent=[s for s in wanted if s not in src.materials]
+        if absent:
+            raise RuntimeError("FMPL native effects library lacks "+str(absent))
+        dst.materials=wanted
+    loaded={}
+    for key,material_id in ids.items():
+        asset=bpy.data.materials.get("FMPL FX | "+material_id)
+        if asset is None or asset.get("fmpl_effect_id")!=material_id:
+            raise RuntimeError("Unverified material identity for "+material_id)
+        loaded[key]=asset
+    return loaded, sha(path)
+
 def sha(file):
     h=hashlib.sha256()
     with Path(file).open("rb") as f:
@@ -128,6 +162,7 @@ def main():
                 "idle-preview","working-preview","report"):
         ap.add_argument("--"+key,required=True)
     ap.add_argument("--greebles-source",default="")
+    ap.add_argument("--fx-library",default="")
     opts=ap.parse_args(sys.argv[sys.argv.index("--")+1:])
     source=Path(opts.source).resolve()
     out=Path(opts.out).resolve()
@@ -178,6 +213,8 @@ def main():
     missing=[name for name,mat in mats.items() if mat is None]
     if missing:
         raise RuntimeError("Saved FMPL source has missing real PBR/glass materials: "+str(missing))
+    imported_fx, fx_library_hash=import_effect_library(opts.fx_library)
+    mats.update(imported_fx)
     # New artwork is stored as one removable derivative-only collection.
     col=bpy.data.collections.new("FMPL | SUPER GREEBLE V01")
     scene.collection.children.link(col)
@@ -237,20 +274,9 @@ def main():
         joined(col,"filter %d pressure impulse tube"%(index),
                [(x,y,1.57),(x,y-.08,1.71),(x+.09,y-.15,1.73)],
                .028,iron,steel)
-    # A BEFORE / AFTER treatment witness bank visible from the camera.
-    # Pressure gauges and glass standpipes mount to the front retaining rail.
-    for idx,(x,fluid) in enumerate(((-.30,material["amber"]),(.22,material["teal"])),1):
-        shoe(col,"sample station %d structural console shoe"%idx,
-             (x,-1.27,.51),(.30,.19,.19),dark)
-        cylinder(col,"sample station %d sight glass"%idx,
-                 (x,-1.30,.83),.076,.32,material["glass"])
-        cylinder(col,"sample station %d visible liquid core"%idx,
-                 (x,-1.30,.78),.055,.19,fluid)
-        ring(col,"sample station %d removable glass retainer"%idx,
-             (x,-1.30,1.01),.091,.021,brass)
-        joined(col,"sample station %d real feed capillary"%idx,
-               [(x,-1.25,.65),(x+.07,-1.08,.68),(x+.07,-.90,.80)],
-               .025,steel,iron)
+    # New native FMPL fluid fixture replaces narrow witness tubes with
+    # larger transparent canisters, actual sloshing and connected sample flow.
+    fx_counts=fx.build_witness_canisters(col,p,mats)
     # Return gauge uses a supported pressure sender on the right frame.
     shoe(col,"instrument rack mounting leg",(1.17,-.98,.92),
          (.14,.20,.79),dark)
@@ -323,6 +349,7 @@ def main():
     # remain untouched. This additional condensate trap has its own moving valve.
     trap=cylinder(col,"relief condensate trap",(1.04,.53,1.57),.105,.18,iron)
     ring(col,"relief condensate trap gasket",(1.04,.53,1.68),.112,.022,brass)
+    steam_counts=fx.add_relief_steam(col,p,mats)
     # Guard against accidental opaque camera backgrounds or polluting the port planes.
     newmeshes=[ob for ob in col.objects if ob.type=="MESH"]
     bpy.context.view_layer.update()
@@ -392,7 +419,11 @@ def main():
       ],
       "staged_motion":{"pump_rotor_frames":[1,25,49,73,97],
                        "filter_needles":[1,25,49,73,97],
-                       "treatment_bubbles":[1,25,49,73,97]},
+                       "treatment_bubbles":[1,25,49,73,97],
+                       "witness_fluid_fx_frames":list(fx.FRAMES)},
+      "fluid_fx":fx_counts,
+      "steam_fx":steam_counts,
+      "fmpl_effects_native_blend_sha256":fx_library_hash,
       "private_greebles_source":greebles,
       "source_camera_unchanged":True,
       "canonical_mating_faces_unchanged":True,
