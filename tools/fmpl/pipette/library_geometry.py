@@ -458,7 +458,11 @@ def build_demo(architecture_id, topology="wye", *, nominal_od=None):
     points={p["id"]:tuple(p["xyz_bu"]) for p in topo["ports"]}
     points.update({p["id"]:tuple(p["xyz_bu"]) for p in topo["junctions"]})
     result=[]
-    for a,b in topo["connection_graph"]:
+    # A two-port inline specimen is a single physical free span, not two
+    # artificial dips on either side of a purely diagrammatic HUB marker.
+    # This is essential for believable natural hanging wires and hoses.
+    edges=[("A","B")] if topology=="straight" else topo["connection_graph"]
+    for a,b in edges:
         result.extend(line_segment(points[a],points[b],architecture_id,
                                    nominal_od=diameter,topology=topology))
     # Distinct geometry with explicit provenance; no invented functional join.
