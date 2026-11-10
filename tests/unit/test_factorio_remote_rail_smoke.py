@@ -87,8 +87,9 @@ class NativeRailFixtureSyntaxTests(unittest.TestCase):
         source = fixture.read_text(encoding="utf-8")
         compact = "".join(source.split())
         self.assertIn(
-            'ifcount(surface,{type="resource",area={{-64,-64},{64,64}}})'
-            '~=0thenfail("UNEXPECTED_NEARBY_ORE")', compact)
+            'ifcount(surface,{type="resource",area={{-64,STATION.y-64},'
+            '{64,STATION.y+64}}})~=0thenfail("UNEXPECTED_NEARBY_ORE")',
+            compact)
 
 
 class NativeRailNaturalOreAdmissionTests(unittest.TestCase):
@@ -106,6 +107,30 @@ class NativeRailNaturalOreAdmissionTests(unittest.TestCase):
         self.assertIn('NATURAL_ORE_SOURCE_DAMAGED_DURING_FIXTURE_ISOLATION', source)
         self.assertIn('NO_NATURALLY_GENERATED_EASTBOUND_IRON_PATCH', source)
         self.assertNotIn('surface.create_entity{name="iron-ore"', source)
+
+
+class NativeRailPhysicalSupplyCapacityTests(unittest.TestCase):
+    def test_full_manifest_uses_real_seven_slot_station_and_nearby_depot(self):
+        fixture = (pathlib.Path(__file__).resolve().parents[2]
+                   / "tests/scenarios/remote-rail-acquisition/fixture.lua")
+        source = fixture.read_text(encoding="utf-8")
+        self.assertIn('name="steel-chest",position={x=-8,y=STATION.y+8}', source)
+        self.assertIn('local station_quantity=item[1]=="rail" and 600 or 0', source)
+        self.assertIn('local depot_quantity=item[2]-station_quantity', source)
+        self.assertIn('inventory.insert{name=item[1],count=station_quantity}', source)
+        self.assertIn('depot_inventory.insert{name=item[1],count=depot_quantity}', source)
+        self.assertIn('STATION_PRESTOCK_CAPACITY', source)
+        self.assertIn('DEPOT_PRESTOCK_CAPACITY', source)
+        self.assertIn('PHYSICAL_PRESTOCK_RECONCILIATION', source)
+        self.assertIn('{"rail",700},{"locomotive",2},{"cargo-wagon",3}', source)
+        self.assertIn('{"steel-chest",19}', source)
+        self.assertIn('s.start_rail=inventory.get_item_count("rail")', source)
+        self.assertIn('s.depot_unit=depot.unit_number', source)
+        self.assertIn('s.start_rail-current_rail>=2', source)
+        self.assertIn('neighbor==second', source)
+        self.assertNotIn('inventory.resize(', source)
+        self.assertNotIn('surface.create_entity{name="iron-ore"', source)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', source)
 
 
 class FactorioRuntimeCompatibilityTests(unittest.TestCase):

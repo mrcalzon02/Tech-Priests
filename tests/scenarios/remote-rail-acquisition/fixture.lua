@@ -120,22 +120,51 @@ local function setup()
     local tech=force.technologies[name]
     if tech and tech.enabled~=false then tech.researched=true end
   end
-  -- Supplies are items in actual station storage: no railway is prebuilt.
+  -- Planetary Magos has seven actual chest slots. Keep 600 rails in
+  -- six native stacks plus one free slot. Other physical supplies live in
+  -- a nearby steel chest, reachable by the canonical 0686/0338 builder.
+  -- The fixture supplies this chest, NEVER rails or rolling stock as entities.
+  -- It consumes one of the original 20 steel-chest items in the manifest.
+  local depot=surface.create_entity{
+    name="steel-chest",position={x=-8,y=STATION.y+8},
+    force=force,raise_built=true}
+  if not(depot and depot.valid)then fail("SUPPLY_DEPOT_PLACEMENT")end
+  local depot_inventory=depot.get_inventory(defines.inventory.chest)
+  if not(depot_inventory and depot_inventory.valid)then
+    fail("SUPPLY_DEPOT_INVENTORY_MISSING")
+  end
+  -- Preserve all original rail, fuel, train, drill and auxiliary supply
+  -- quantities; every item must fit a REAL engine-managed inventory.
   local stock={{"rail",700},{"locomotive",2},{"cargo-wagon",3},
     {"train-stop",4},{"rail-signal",50},{"rail-chain-signal",30},
     {"burner-mining-drill",12},{"electric-mining-drill",12},
     {"transport-belt",300},{"inserter",40},{"iron-chest",30},
-    {"steel-chest",20},{"coal",300},{"solid-fuel",100},
+    {"steel-chest",19},{"coal",300},{"solid-fuel",100},
     {"stone-furnace",8},{"iron-plate",400},{"copper-plate",200},
     {"repair-pack",30},{"firearm-magazine",30}}
   for _,item in ipairs(stock) do
     if not prototypes.item[item[1]] then
       fail("REQUIRED_RAIL_SUPPLY_MISSING "..item[1])
     end
-    local accepted=inventory.insert{name=item[1],count=item[2]}
-    if accepted~=item[2] then
-      fail("STATION_PRESTOCK_CAPACITY "..item[1].." inserted="..accepted)
+    local station_quantity=item[1]=="rail" and 600 or 0
+    local depot_quantity=item[2]-station_quantity
+    if station_quantity>0 then
+      local accepted=inventory.insert{name=item[1],count=station_quantity}
+      if accepted~=station_quantity then
+        fail("STATION_PRESTOCK_CAPACITY "..item[1].." inserted="..accepted)
+      end
     end
+    if depot_quantity>0 then
+      local accepted=depot_inventory.insert{name=item[1],count=depot_quantity}
+      if accepted~=depot_quantity then
+        fail("DEPOT_PRESTOCK_CAPACITY "..item[1].." inserted="..accepted)
+      end
+    end
+  end
+  if inventory.get_item_count("rail")~=600
+      or depot_inventory.get_item_count("rail")~=100
+      or depot_inventory.get_item_count("steel-chest")~=19 then
+    fail("PHYSICAL_PRESTOCK_RECONCILIATION")
   end
   -- Do not credit test-script materialization of ore as native mining.
   local ore_tiles=count(surface,{type="resource",name="iron-ore",
@@ -158,6 +187,7 @@ local function setup()
         area=area})~=0 then
     fail("FIXTURE_PREBUILT_TRAIN_OR_RAIL")
   end
+  s.depot_unit=depot.unit_number
   s.station_unit=station.unit_number
   s.station_y=STATION.y
   s.started=game.tick
@@ -171,7 +201,8 @@ local function setup()
     " station_y="..STATION.y..
     " native_ore_amount="..original_amount..
     " target_x="..ORE.x.." target_y="..ORE.y..
-    " rails=700 locomotives=2 wagons=3"..
+    " rails=700 rails_station=600 rails_depot=100"..
+    " locomotives=2 wagons=3"..
     " tech_preset=true track_prebuilt=0 initial_iron="..s.start_ore)
 end
 local function inspect(s,elapsed)
