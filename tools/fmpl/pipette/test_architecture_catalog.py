@@ -19,6 +19,12 @@ ARCH = load("architecture_catalog.v1.json")
 JOINTS = load("joint_catalog.v1.json")
 STIFF = load("stiffness_profiles.v1.json")
 RIG = load("comparison_fixture.v1.json")
+recipe_spec = importlib.util.spec_from_file_location(
+    "pipette_library_geometry_index", HERE / "library_geometry.py")
+recipe_module = importlib.util.module_from_spec(recipe_spec)
+recipe_spec.loader.exec_module(recipe_module)
+GEOMETRY_RECIPES = set(recipe_module.RECIPES)
+
 spec = importlib.util.spec_from_file_location("pipette_catalog_core", HERE / "core.py")
 core = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(core)
@@ -39,12 +45,25 @@ class PipetteArchitectureIndexTests(unittest.TestCase):
         self.assertEqual(len(ARCH["groups"]), 9)
         self.assertGreater(len({item["section_architecture"] for item in items}), 45)
 
+    def test_implemented_recipes_are_a_strict_subset_of_full_index(self):
+        entries={item["id"]:item for item in ARCH["architecture_types"]}
+        self.assertEqual(len(GEOMETRY_RECIPES),19)
+        self.assertLess(len(GEOMETRY_RECIPES),len(entries))
+        self.assertEqual(ARCH["current_implementation"]["remaining_unimplemented_types"],
+                         len(entries)-len(GEOMETRY_RECIPES))
+        self.assertTrue(GEOMETRY_RECIPES.issubset(entries))
+        for key in GEOMETRY_RECIPES:
+            self.assertEqual(entries[key]["geometry_module"],"library_geometry.py")
+
     def test_existing_base_family_compatibility(self):
         for item in ARCH["architecture_types"]:
             with self.subTest(type=item["id"]):
                 self.assertIn(item["base_family"], core.FAMILY_PAYLOADS)
                 self.assertIn(item["group"], ARCH["groups"])
-                self.assertEqual(item["implementation"], "indexed_pending_distinct_native_mesh")
+                expected=("implemented_procedural_mesh_native_proof_pending"
+                          if item["id"] in GEOMETRY_RECIPES else
+                          "indexed_pending_distinct_native_mesh")
+                self.assertEqual(item["implementation"], expected)
                 self.assertTrue(item["visible_architecture"])
 
     def test_all_referenced_joint_types_exist(self):
