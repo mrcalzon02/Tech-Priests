@@ -288,7 +288,7 @@ def main():
         obj.select_set(True)
     bpy.context.view_layer.objects.active=objects[0]
     bpy.ops.export_scene.gltf(filepath=str(outputs[1]),export_format="GLB",
-                              use_selection=True,export_apply=True)
+                              use_selection=True)
     add_preview_camera_lights(bpy.context.scene,objects)
     scene=bpy.context.scene
     scene.render.engine="CYCLES"
