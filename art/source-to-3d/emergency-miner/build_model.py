@@ -1115,6 +1115,81 @@ def create_materials():
     MATERIALS["green"] = MATERIALS["green_wire"]
 
 
+
+def apply_owner_v22_geometry():
+    """Lift existing console, physically reprofile its support, tilt THREE capacitor mouths toward the camera."""
+    scene=bpy.context.scene
+    if scene.get("emergency_miner_v22_applied"):
+        raise RuntimeError("Do not apply V22 geometry twice")
+    bpy.context.view_layer.update()
+    base=bpy.data.objects["LAYER_1 Foundation perimeter steel slab"]
+    frozen=[(base.matrix_world @ v.co).copy() for v in base.data.vertices]
+    lift=0.014
+    prefixes=("Upper controller shared sloped mount","Left LCD and diagnostics faceplate",
+              "Right knife-switch faceplate","Real module separating seam",
+              "Computer bezel thick raised enclosure","Bezel reflective inner steel rim",
+              "Recessed luminous green computer glass","Green readout wire track",
+              "Screen luminous controller glyph","Status lamp ","Knife switch ","Lower console_")
+    moved=[]
+    for obj in VISIBLE.objects:
+        if obj.name.startswith(prefixes):
+            obj.location.z+=lift
+            moved.append(obj.name)
+    if len(moved)<40 or "Upper controller shared sloped mount" not in moved:
+        raise RuntimeError("Console is not fully attached to the moved controls")
+    # Extend the TOP FRONT portion of the same physical upper casting.
+    shell=bpy.data.objects["LAYER_3 Elevated control deck structural body"]
+    matrix=shell.matrix_world.copy()
+    inverse=matrix.inverted()
+    world=[matrix @ vertex.co for vertex in shell.data.vertices]
+    lowest=min(v.z for v in world)
+    highest=max(v.z for v in world)
+    changed=0
+    for vertex,position in zip(shell.data.vertices,world):
+        front=max(0.,min(1.,(0.23-position.y)/0.15))
+        top=max(0.,min(1.,(position.z-lowest)/((highest-lowest)*0.83)))
+        if front*top>0.:
+            raised=position.copy()
+            raised.z+=lift*front*top
+            vertex.co=inverse @ raised
+            changed+=1
+    shell.data.update()
+    if changed<4:
+        raise RuntimeError("Top console support casting was not raised")
+    cap_record=[]
+    direction=Vector((0.,-math.sqrt(.5),math.sqrt(.5)))
+    tilt=Matrix.Rotation(-math.pi/4,4,"X")
+    for index in range(3):
+        names=[f"Capacitor {index} horizontal supported shell",
+               f"Capacitor {index} forward round steel lip",
+               f"Capacitor {index} recessed dark mouth"]
+        parts=[bpy.data.objects.get(n) for n in names]
+        if any(x is None for x in parts):
+            raise RuntimeError("Missing original capacitor "+str(index))
+        shell_obj=parts[0]
+        bpy.context.view_layer.update()
+        coords=[shell_obj.matrix_world @ v.co for v in shell_obj.data.vertices]
+        center=sum(coords,Vector((0.,0.,0.)))/len(coords)
+        pivot=center+Vector((0.,0.014,-0.014))
+        correction=Matrix.Translation(pivot) @ tilt @ Matrix.Translation(-pivot)
+        for obj in parts:
+            obj.matrix_world=correction @ obj.matrix_world
+        bpy.context.view_layer.update()
+        axis=(shell_obj.matrix_world.to_3x3() @ Vector((0,0,1))).normalized()
+        match=axis.dot(direction)
+        if match<.96:
+            raise RuntimeError("Capacitor mouths still point sideways: "+str(match))
+        cap_record.append({"index":index,"camera_alignment":round(match,5),
+                           "axis":[round(v,5) for v in axis],"existing_parts":3})
+    bpy.context.view_layer.update()
+    if any(((base.matrix_world @ v.co)-old).length>1e-6 for v,old in zip(base.data.vertices,frozen)):
+        raise RuntimeError("Foundation moved during V22 surface refinement")
+    scene["emergency_miner_v22_applied"]=True
+    return {"revision":"V22","console_lift_blender_units":lift,
+            "console_objects_moved":len(moved),"upper_cast_vertices_reprofiled":changed,
+            "capacitor_mouths":cap_record,"new_visible_model_parts":0,"foundation_static":True}
+
+
 def main(out):
     global OUTPUT,COLLECTION,VISIBLE
     if hashlib.sha256(SOURCE.read_bytes()).hexdigest() != SOURCE_SHA256:
