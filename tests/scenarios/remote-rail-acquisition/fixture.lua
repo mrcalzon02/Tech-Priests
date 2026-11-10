@@ -32,39 +32,55 @@ local function setup()
   for _,n in ipairs(necessary) do
     if not prototypes.entity[n] then fail("MISSING_PROTOTYPE "..n) end
   end
-  -- The fixture may generate world chunks, never fabricate an ore entity.
+  -- A random map seed need not put natural iron on the arbitrary y=0
+  -- latitude. Locate a real generated patch FIRST; center the empty test
+  -- station on its railway-compatible latitude, without changing the ore.
+  -- The 0835/0836 physical item, chart and rail-graph gates remain intact.
+  local function find_natural_patch(min_y,max_y)
+    local candidates=surface.find_entities_filtered{
+      type="resource",name="iron-ore",
+      area={{192,min_y},{MAX_NATIVE_TARGET_X,max_y}}}
+    table.sort(candidates,function(a,b)
+      return a.position.x<b.position.x or
+        (a.position.x==b.position.x
+          and math.abs(a.position.y)<math.abs(b.position.y))
+    end)
+    for _,e in ipairs(candidates) do
+      if e.valid and (tonumber(e.amount)or 0)>0 then
+        -- The original builder uses an even-tile eastbound rail axis.
+        local origin={x=0,y=math.floor(e.position.y/2)*2}
+        local needed=Frontier.required_segments_for_target(origin,e.position)
+        if needed and needed<=Frontier.max_segments then
+          return e,origin
+        end
+      end
+    end
+  end
+  -- Prefer the original generated band; expand only when it lacks a
+  -- reachable natural patch. Chunk requests never manufacture ore entities.
   for x=0,960,64 do surface.request_to_generate_chunks({x=x,y=0},3) end
   surface.force_generate_chunk_requests()
-  -- 0836 accepts only the buildable eastbound corridor AND a finite
-  -- number of individually debited rail segments. Keep the world ore
-  -- natural and refuse seeds with no reachable generated patch.
-  local candidates=surface.find_entities_filtered{
-    type="resource",name="iron-ore",
-    area={{192,-5},{MAX_NATIVE_TARGET_X,5}}}
-  table.sort(candidates,function(a,b)
-    return a.position.x<b.position.x or
-      (a.position.x==b.position.x
-        and math.abs(a.position.y)<math.abs(b.position.y))
-  end)
-  local natural
-  for _,e in ipairs(candidates) do
-    -- The native fixture must choose a patch 0835/0836 can ACTUALLY
-    -- reach with 320 original item-debited rails. X-only eligibility can
-    -- choose an off-axis patch outside the terminal 16-tile clearance.
-    local needed=Frontier.required_segments_for_target(STATION,e.position)
-    if e.valid and (tonumber(e.amount)or 0)>0
-        and needed and needed<=Frontier.max_segments then
-      natural=e;break
+  local natural,origin=find_natural_patch(-96,96)
+  if not natural then
+    for _,latitude in ipairs({192,-192,384,-384,576,-576}) do
+      for x=0,576,192 do
+        surface.request_to_generate_chunks({x=x,y=latitude},3)
+      end
+      surface.force_generate_chunk_requests()
+      natural,origin=find_natural_patch(latitude-96,latitude+96)
+      if natural then break end
     end
   end
   if not natural then
     fail("NO_NATURALLY_GENERATED_EASTBOUND_IRON_PATCH seed_requires_reselection"..
-      " max_reachable_x="..MAX_NATIVE_TARGET_X)
+      " max_reachable_x="..MAX_NATIVE_TARGET_X..
+      " searched_generated_latitudes=0,+/-192,+/-384,+/-576")
   end
+  STATION.y=origin.y
   ORE={x=natural.position.x,y=natural.position.y}
   local original_amount=natural.amount
   local tiles={}
-  for x=-25,ORE.x+28 do for y=-16,16 do
+  for x=-25,ORE.x+28 do for y=STATION.y-16,STATION.y+16 do
     tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
   end end
   surface.set_tiles(tiles,true)
@@ -74,8 +90,8 @@ local function setup()
   -- Exclude the ENTIRE Magos short-range acquisition footprint; clearing
   -- only the rail corridor left naturally generated ore 20 tiles north
   -- of the station and incorrectly defeated genuine starvation detection.
-  local exclusion={{-96,-80},{math.max(576,ORE.x+64),80}}
-  local area={{-25,-16},{ORE.x+28,17}}
+  local exclusion={{-96,STATION.y-80},{math.max(576,ORE.x+64),STATION.y+80}}
+  local area={{-25,STATION.y-16},{ORE.x+28,STATION.y+17}}
   for _,e in ipairs(surface.find_entities_filtered{area=exclusion}) do
     -- Preserve naturally generated target ore, including its surrounding
     -- patch. Other resources here are fixture obstacles, never delivery.
@@ -133,7 +149,7 @@ local function setup()
     fail("REMOTE_ORE_NOT_CHARTED")
   end
   if count(surface,{type="resource",
-      area={{-64,-64},{64,64}}})~=0 then
+      area={{-64,STATION.y-64},{64,STATION.y+64}}})~=0 then
     fail("UNEXPECTED_NEARBY_ORE")
   end
   local rails=count(surface,{type={"straight-rail","half-diagonal-rail",
@@ -143,6 +159,7 @@ local function setup()
     fail("FIXTURE_PREBUILT_TRAIN_OR_RAIL")
   end
   s.station_unit=station.unit_number
+  s.station_y=STATION.y
   s.started=game.tick
   s.start_ore=inventory.get_item_count("iron-ore")
   s.start_rail=inventory.get_item_count("rail")
@@ -151,6 +168,7 @@ local function setup()
   s.natural_ore_amount=original_amount
   s.outbound=false;s.returned=false;s.ride_proof=false
   emit("SETUP no_biters=true local_resources=0 natural_iron=true"..
+    " station_y="..STATION.y..
     " native_ore_amount="..original_amount..
     " target_x="..ORE.x.." target_y="..ORE.y..
     " rails=700 locomotives=2 wagons=3"..
@@ -160,7 +178,8 @@ local function inspect(s,elapsed)
   local surface=game.surfaces[1]
   local station=surface.find_entities_filtered{
     name="planetary-magos-cogitator-station",
-    position=STATION,radius=2,force=game.forces.player}[1]
+    position={x=0,y=s.station_y or 0},radius=2,
+    force=game.forces.player}[1]
   local p=storage.tech_priests.pairs_by_station
       and storage.tech_priests.pairs_by_station[s.station_unit]
   if not(station and station.valid and p and p.priest
@@ -186,7 +205,8 @@ local function inspect(s,elapsed)
   local rails=surface.find_entities_filtered{
     type={"straight-rail","half-diagonal-rail",
       "curved-rail-a","curved-rail-b"},
-    area={{-25,-16},{s.natural_ore_x+28,17}},
+    area={{-25,(s.station_y or 0)-16},
+          {s.natural_ore_x+28,(s.station_y or 0)+17}},
     force=station.force}
   local near,far=0,0
   for _,e in ipairs(rails) do
@@ -265,10 +285,12 @@ local function inspect(s,elapsed)
       " station_rail_delta="..(s.start_rail-current_rail))
   end
   local locomotives=surface.find_entities_filtered{
-    name="locomotive",area={{-25,-16},{s.natural_ore_x+28,17}},
+    name="locomotive",area={{-25,(s.station_y or 0)-16},
+          {s.natural_ore_x+28,(s.station_y or 0)+17}},
     force=station.force}
   local wagons=count(surface,{name="cargo-wagon",
-    area={{-25,-16},{s.natural_ore_x+28,17}},force=station.force})
+    area={{-25,(s.station_y or 0)-16},
+          {s.natural_ore_x+28,(s.station_y or 0)+17}},force=station.force})
   local drills=surface.find_entities_filtered{
     type="mining-drill",
     area={{s.natural_ore_x-32,s.natural_ore_y-24},

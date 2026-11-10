@@ -91,6 +91,23 @@ class NativeRailFixtureSyntaxTests(unittest.TestCase):
             '~=0thenfail("UNEXPECTED_NEARBY_ORE")', compact)
 
 
+class NativeRailNaturalOreAdmissionTests(unittest.TestCase):
+    def test_generated_patch_on_a_rebased_even_latitude_remains_physical(self):
+        fixture = (pathlib.Path(__file__).resolve().parents[2]
+                   / "tests/scenarios/remote-rail-acquisition/fixture.lua")
+        source = fixture.read_text(encoding="utf-8")
+        self.assertIn('find_natural_patch(-96,96)', source)
+        self.assertIn('surface.request_to_generate_chunks({x=x,y=latitude},3)', source)
+        self.assertIn('local origin={x=0,y=math.floor(e.position.y/2)*2}', source)
+        self.assertIn('Frontier.required_segments_for_target(origin,e.position)', source)
+        self.assertIn('s.station_y=STATION.y', source)
+        self.assertIn('position={x=0,y=s.station_y or 0}', source)
+        self.assertIn('area={{-64,STATION.y-64},{64,STATION.y+64}}', source)
+        self.assertIn('NATURAL_ORE_SOURCE_DAMAGED_DURING_FIXTURE_ISOLATION', source)
+        self.assertIn('NO_NATURALLY_GENERATED_EASTBOUND_IRON_PATCH', source)
+        self.assertNotIn('surface.create_entity{name="iron-ore"', source)
+
+
 class FactorioRuntimeCompatibilityTests(unittest.TestCase):
     def test_current_21_mod_accepts_matching_native_engine(self):
         self.assertTrue(factorio_runtime_compatible(
