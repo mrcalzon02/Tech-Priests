@@ -346,6 +346,20 @@ def main():
     trap=cylinder(col,"relief condensate trap",(1.04,.53,1.57),.105,.18,iron)
     ring(col,"relief condensate trap gasket",(1.04,.53,1.68),.112,.022,brass)
     steam_counts=fx.add_relief_steam(col,p,mats)
+    # Legacy Water Purifier steam plumes were literally 20-sided hard-surface
+    # cones. Retain every original vertex and keyframe in the editable .blend,
+    # but suppress only these two rendered instances in this new derivative.
+    # The physically nozzle-anchored soft surface lobes above replace their
+    # visual contribution without changing 50 MH7 or 136 process mesh hashes.
+    legacy_steam=[ob for ob in process
+                  if ob.name.startswith("FMPL_PROCESS | service steam plume ")]
+    if len(legacy_steam)!=2:
+        raise RuntimeError("Expected exactly two original cone-shaped service steam plumes")
+    for old_cone in legacy_steam:
+        old_cone.hide_render=True
+        old_cone["fmpl_steam_replacement"]="preserved but hidden; replaced by soft layered real-mesh steam"
+    steam_counts["legacy_cones_hidden"]=len(legacy_steam)
+    steam_counts["legacy_cone_names"]=[ob.name for ob in legacy_steam]
     # Guard against accidental opaque camera backgrounds or polluting the port planes.
     newmeshes=[ob for ob in col.objects if ob.type=="MESH"]
     bpy.context.view_layer.update()
