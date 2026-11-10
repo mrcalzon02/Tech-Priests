@@ -220,21 +220,20 @@ def build_witness_canisters(col, p, mats):
 
 
 def _feathered_steam_material():
-    """Soft volumetric-looking surface shader on real overlapping Blender meshes.
+    """True lightweight volumetric steam inside real Blender sphere meshes.
 
-    The radial generated-coordinate mask removes hard polygon silhouettes; a
-    separate object-space noise scrambles the feather. No camera-facing planes,
-    image-generated cards, baked particle textures or destructive fluid solves.
+    Procedural local-space dither and smooth radial density suppress surface
+    rims and silhouetted facets. No billboard cards or simulation/cache baking.
     """
-    name="FMPL | relief steam soft radial feather v02"
+    name="FMPL | relief steam noise-feathered volume v03"
     existing=bpy.data.materials.get(name)
     if existing:
         return existing
     mat=bpy.data.materials.new(name)
     mat.use_nodes=True
-    mat.diffuse_color=(.76,.83,.84,.28)
-    mat["fmpl_fx_role"]="physically nozzle-anchored feathered steam surface"
-    mat["fmpl_fx_source"]="FMPL steam-clean; derivative real-mesh optical feather"
+    mat.diffuse_color=(.76,.83,.84,.035)
+    mat["fmpl_fx_role"]="physically nozzle-anchored 3D variable-density steam volume"
+    mat["fmpl_fx_source"]="FMPL steam-clean; true Blender volume + radial-noise feather"
     mat["fmpl_fx_not_game_approved"]=True
     if hasattr(mat,"surface_render_method"):
         try:
@@ -288,10 +287,25 @@ def _feathered_steam_material():
     feather.interpolation_type="SMOOTHSTEP"
     feather.inputs["From Min"].default_value=.14
     feather.inputs["From Max"].default_value=.49
-    feather.inputs["To Min"].default_value=.285
+    feather.inputs["To Min"].default_value=.025
     feather.inputs["To Max"].default_value=0.0
     links.new(perturbed.outputs[0],feather.inputs["Value"])
     links.new(feather.outputs["Result"],mix.inputs[0])
+    volume=nodes.new("ShaderNodeVolumePrincipled")
+    volume.name="FMPL STEAM | true variable density volume"
+    volume.inputs["Color"].default_value=(.80,.86,.88,1.)
+    volume.inputs["Anisotropy"].default_value=.20
+    density=nodes.new("ShaderNodeMapRange")
+    density.name="FMPL STEAM | noise-dithered radial density"
+    density.clamp=True
+    density.interpolation_type="SMOOTHSTEP"
+    density.inputs["From Min"].default_value=.095
+    density.inputs["From Max"].default_value=.51
+    density.inputs["To Min"].default_value=1.65
+    density.inputs["To Max"].default_value=0.
+    links.new(perturbed.outputs[0],density.inputs["Value"])
+    links.new(density.outputs["Result"],volume.inputs["Density"])
+    links.new(volume.outputs["Volume"],output.inputs["Volume"])
     return mat
 
 
@@ -332,6 +346,8 @@ def add_relief_steam(col,p,mats):
         "soft_surface_lobes":12,
         "secondary_feather_veils":8,
         "soft_edge_shader":soft.name,
+        "true_volumetric_density":True,
+        "hard_surface_opacity_at_core":0.025,
         "root_nozzle_xyz":list(origin),
         "animation_samples":len(FRAMES),
         "legacy_cone_geometry_preserved":True
