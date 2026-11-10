@@ -144,3 +144,22 @@ A committed builder is **not** a finished native asset: the real `.blend`, image
 The source includes a techniques-only adaptation of [Sam Bowman's procedural cracked mud with rocks](https://www.youtube.com/watch?v=iuaZuDiMv6s). Its documented stages map to explicit Voronoi edge darkening, masked rock distribution and bounded bump relief. Neither its copyrighted video nor external Patreon files are reproduced.
 
 BlendSwap CC0 pages are **candidates**, not downloaded assets; license declarations are uploader-provided and old Blender version/source dependences need manual inspection. The [quarantine gate](surfaces/source_gate.py) only checks local file magic, hash, CC0 listing and size. No unseen third-party materials are promoted or uploaded automatically. Native output is intended to be produced by the existing private Dens Mortis Windows runner; visual acceptance, actual source permanence and Factorio game placement remain separately gated.
+
+## GitHub-wide rendered asset gallery
+
+The [source-verified account gallery](gallery/README.md) inventories all 25
+public mrcalzon02 repositories and records every discovered 3D model,
+texture/map, historical sprite and proof with an immutable Git commit/blob SHA.
+Its [initial verified production checkpoint](gallery/VERIFIED_BASELINE_2026-11-09.md)
+documents 95,993 indexed asset paths, all **76 canonical materials** rendered,
+and the first **36 genuine 3D models**. Follow-up
+[raw texture batch 00](gallery/VERIFIED_TEXTURE_BATCH_00_2026-11-09.md)
+added 64 independently verified Blender map previews; later
+[model batch 00](gallery/VERIFIED_MODEL_BATCH_00_2026-11-09.md)
+added 27 model renders, with nine size-limited assets explicitly marked blocked.
+
+The galleries run via the existing single private Dens Mortis Windows worker.
+Additional source files are indexed but **not implied rendered or approved**.
+Download the offline index and native Blender proof receipts from each actual
+Dens Mortis workflow artifact; do not create additional Actions workflows or
+treat its 14-day artifact retention as permanent distribution.
