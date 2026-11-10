@@ -39,7 +39,7 @@ def main():
     ap.add_argument("--root",required=True)
     ap.add_argument("--fmpl",required=True)
     ap.add_argument("--fmpl-commit",required=True)
-    args=ap.parse_args(sys.argv[sys.argv.index("--")+1:])
+    args=ap.parse_args(sys.argv[sys.argv.index("--")+1:] if "--" in sys.argv else sys.argv[1:])
     root=Path(args.root).resolve()
     invent=read(root/"inventory/summary.json")
     mats=read(root/"materials/materials_report.json")
