@@ -365,11 +365,35 @@ local function funded_fluid_pipe_1258(pair)
    and source_for_item(pair,"pipe"))then return nil end
  return req,item
 end
+-- An exact original 0836 rail segment may proceed after the ORIGINAL
+-- 0338 site planner has failed this very same remote drill request because
+-- there is no reachable natural mining site at the current station. The
+-- request itself remains untouched for later service. Never borrow a live
+-- builder/cargo/robot task or an unfunded/foreign rail; retry miner discovery
+-- after a bounded interval so changing physical conditions are rechecked.
+local function blocked_local_remote_site_yields_rail_0836(pair,remote)
+ local rec=pair and pair.construction_site_refusal_0338
+ local original=pair and pair.construction_request
+ local tick=rec and tonumber(rec.tick)
+ return type(remote)=="table" and remote.position==nil
+   and type(rec)=="table" and rec.field=="remote_drill_request_1011"
+   and rec.request==remote and rec.reason=="no-miner-site"
+   and tick and tick<=now() and now()-tick<=600
+   and owned_pending_rail_0836(pair,original)
+   and source_for_item(pair,"rail")~=nil
+   and not(pair.construction_task_0338
+     or pair.construction_custody_0338 or pair.construction_task_0340
+     or pair.robot_network_task_0338 or pair.robot_network_request_0338
+     or pair.construction_task or pair.direct_acquisition_custody_0513
+     or pair.machine_logistics_custody_0528)
+end
 local function construction_request(pair)
  -- Remote ore demand takes priority over UNSTARTED routine construction.
- -- The original request and station ghost remain queued for later.
+ -- If its exact local mining site was refused by this same 0338 planner,
+ -- allow one already-issued, physically stocked original 0836 rail first.
+ -- The remote drill request remains pending for bounded re-evaluation.
  local remote=pair.remote_drill_request_1011
- if remote~=nil then
+ if remote~=nil and not blocked_local_remote_site_yields_rail_0836(pair,remote) then
   local p=normalize_placeable(remote)
   if not(type(remote)=="table" and p
     and remote.remote_drill_terminal_1011==station_unit(pair)
@@ -513,7 +537,17 @@ function M.discover_pair(pair,force)
  if not force and now()<(tonumber(pair.construction_cooldown_0338)or 0)then return pair.construction_candidate_0338 end
  local request=construction_request(pair);if not request then pair.construction_candidate_0338=nil;return nil end
  if retire_unclaimed_starter_request_1205(pair,request) then return nil end
- local pos,why,effect=plan_request(pair,request);if not pos then pair.construction_candidate_0338=nil;pair.construction_blocked_reason_0338=why;pair.construction_cooldown_0338=now()+180;record(pair,"site-blocked",why);return nil end
+ local pos,why,effect=plan_request(pair,request)
+ if not pos then
+  pair.construction_candidate_0338=nil
+  pair.construction_blocked_reason_0338=why
+  pair.construction_site_refusal_0338={
+    tick=now(),field=request.field,request=request.value,reason=why}
+  pair.construction_cooldown_0338=now()+180
+  record(pair,"site-blocked",why)
+  return nil
+ end
+ pair.construction_site_refusal_0338=nil
  local c={version=M.version,tick=now(),item_name=request.placeable.item_name,entity_name=request.placeable.entity_name,category=request.placeable.category,position={x=pos.x,y=pos.y},direction=request.placeable.direction,site_reason=why,effectiveness=effect,request_field=request.field,request_value=request.value,ghost=request.ghost,source="construction-planner-0338"};pair.construction_candidate_0338=c;pair.construction_blocked_reason_0338=nil;stat("candidates-discovered");return c
 end
 -- Method II: 0338 submits one real ghost to Factorio's construction
