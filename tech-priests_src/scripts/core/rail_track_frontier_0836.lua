@@ -147,6 +147,21 @@ function M.plan_next(pair)
     return false,"not-in-track-phase"
   end
   if m.pending_rail_0836 then return true,"pending-physical-builder"end
+  -- A previous 0338 discovery may have cached a purely UNFUNDED,
+  -- UNSTARTED bootstrap candidate. It owns no material and no site. Ask
+  -- the original 0338 owner to yield only that candidate before evaluating
+  -- the physically stocked rail writ. Funded candidates, live tasks,
+  -- requests, robot work and any physical custody remain untouched.
+  if pair.construction_candidate_0338
+      and not (pair.construction_task_0338
+        or pair.construction_custody_0338 or pair.construction_request) then
+    local builder=rawget(_G,"TechPriestsConstructionPlanner0338")
+    if builder and type(builder.yield_unfunded_frontier_candidate_0338)
+        =="function" then
+      local ok=pcall(builder.yield_unfunded_frontier_candidate_0338,pair)
+      if not ok then return false,"rail-unfunded-candidate-yield-error" end
+    end
+  end
   if pair.construction_task_0338 or pair.construction_custody_0338
       or pair.construction_candidate_0338 or pair.construction_request then
     return false,"other-physical-construction-active"

@@ -337,6 +337,37 @@ local function inspect(s,elapsed)
     if e.position.x<=24 then near=near+1 end
     if e.position.x>=s.natural_ore_x-32 then far=far+1 end
   end
+  -- Observe the exact 0835 -> 0836 -> 0338 admission state at
+  -- existing native checkpoints. No scheduler, inventory or gate changes.
+  -- Persist nothing new: this is an immutable evidence readback only.
+  local frontier=objective and objective.rail_frontier_0836
+  local pending=objective and objective.pending_rail_0836
+  local candidate=p.construction_candidate_0338
+  local builder=p.construction_task_0338
+  local receipt=p.construction_last_task_0338
+  local event=p.construction_last_event_0338
+  emit("RAIL_ADMISSION_DIAG elapsed="..elapsed..
+    " stage="..tostring(objective and objective.stage)..
+    " reason="..tostring(objective and objective.last_blocker)..
+    " segment="..tostring(frontier and frontier.segment)..
+    " pending="..tostring(pending~=nil)..
+    " request_matches="..tostring(pending and
+      p.construction_request==pending.request)..
+    " candidate="..tostring(candidate and candidate.item_name)..
+    " candidate_site="..tostring(candidate and candidate.site_reason)..
+    " builder_phase="..tostring(builder and builder.phase)..
+    " builder_item="..tostring(builder and builder.item_name)..
+    " custody="..tostring(p.construction_custody_0338~=nil)..
+    " active_task="..tostring(p.active_task~=nil)..
+    " current_task="..tostring(p.current_task~=nil)..
+    " active_order="..tostring(p.active_order_0469~=nil)..
+    " machine_custody="..tostring(p.machine_logistics_custody_0528~=nil)..
+    " receipt_phase="..tostring(receipt and receipt.phase)..
+    " receipt_result="..tostring(receipt and receipt.result)..
+    " last_builder_event="..tostring(event and event.action)..
+    " last_builder_detail="..tostring(event and event.detail)..
+    " source_rail="..station.get_inventory(defines.inventory.chest)
+      .get_item_count("rail"))
   -- A route objective and even a ghost are not physically placed rail.
   -- The first acceptance requires a real segment with the exact unit
   -- recorded by the 0836 frontier AFTER canonical 0338 construction.

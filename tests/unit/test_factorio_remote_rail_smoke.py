@@ -239,6 +239,32 @@ class NativeRailPhysicalSupplyCapacityTests(unittest.TestCase):
         self.assertNotIn('surface.create_entity{name="straight-rail"', source)
 
 
+class NativeRailUnfundedCandidateAdmissionTests(unittest.TestCase):
+    def test_original_0338_only_yields_unfunded_unstarted_candidate(self):
+        path = (pathlib.Path(__file__).resolve().parents[2]
+                / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua")
+        source = path.read_text(encoding="utf-8")
+        self.assertIn("builder.yield_unfunded_frontier_candidate_0338,pair", source)
+        self.assertIn("not (pair.construction_task_0338", source)
+        self.assertIn("or pair.construction_custody_0338 or pair.construction_request", source)
+        self.assertIn('return false,"other-physical-construction-active"', source)
+        self.assertIn('return false,"rail-unfunded-candidate-yield-error"', source)
+        self.assertNotIn("pair.construction_candidate_0338=nil", source)
+
+    def test_existing_native_gate_reports_actual_admission_without_weakening_proof(self):
+        fixture = (pathlib.Path(__file__).resolve().parents[2]
+                   / "tests/scenarios/remote-rail-acquisition/fixture.lua")
+        source = fixture.read_text(encoding="utf-8")
+        self.assertIn("RAIL_ADMISSION_DIAG elapsed=", source)
+        for key in ("request_matches=", "candidate=", "builder_phase=",
+                    "active_task=", "current_task=", "machine_custody=",
+                    "last_builder_detail=", "source_rail="):
+            self.assertIn(key, source)
+        self.assertIn('fail("RAIL_FIRST_ENGINE_CONSTRUCTION_NOT_PROVEN"', source)
+        self.assertIn('fail("TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN"', source)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', source)
+
+
 class FactorioRuntimeCompatibilityTests(unittest.TestCase):
     def test_current_21_mod_accepts_matching_native_engine(self):
         self.assertTrue(factorio_runtime_compatible(
