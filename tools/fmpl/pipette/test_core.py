@@ -238,6 +238,83 @@ class PipetteCoreTests(unittest.TestCase):
         with self.assertRaises(core.PipetteError):
             core.plan(req)
 
+    def test_default_freeform_blender_sizing_has_no_footprint(self):
+        out=core.plan(sample(diameter=.081))
+        self.assertIsNone(out["scene_scope"])
+        self.assertEqual(out["tile_interfaces"],{})
+        self.assertAlmostEqual(out["size"]["outer_diameter"],.081)
+
+    def test_2x2_standard_pipe_at_scene_boundary(self):
+        req=sample(begin=(-1,0,.36),end=(-.4,0,.36),diameter=.09)
+        req["scene_scope"]={
+            "schema":"fmpl.scene-scope.v1","id":"2x2-example",
+            "scene_units_per_tile":1.,"footprint_tiles":[2,2],
+            "origin_bu":[0,0,0],"up_axis":"+Z"}
+        req["start_socket"]["normal"]=[-1,0,0]
+        req["tile_interfaces"]={"start":{
+            "standard_id":"factorio-fluid-interface-v1",
+            "face":"west","transverse_offset_tiles":0,
+            "elevation_tiles":.36}}
+        p=core.plan(req)
+        self.assertEqual(p["scene_scope"]["XY_min_bu"],(-1.,-1.))
+        self.assertEqual(p["tile_interfaces"]["start"]["dimensions"]["barrel_outer_diameter_bu"],.57)
+        self.assertEqual(p["tile_interfaces"]["start"]["dimensions"]["open_bore_diameter_bu"],.49)
+        self.assertEqual(p["tile_interfaces"]["start"]["dimensions"]["mounting_collar_outer_diameter_bu"],.68)
+        self.assertEqual(p["size"]["outer_diameter"],.09)
+        self.assertFalse(p["tile_interfaces"]["start"]["native_factorio_fluidbox_verified"])
+
+    def test_3x3_standard_pipe_with_nondefault_scene_scale(self):
+        req=sample(begin=(-3,0,.72),end=(-2,0,.72),diameter=.12)
+        req["scene_scope"]={
+            "schema":"fmpl.scene-scope.v1","id":"3x3-example",
+            "scene_units_per_tile":2.,"footprint_tiles":[3,3],
+            "origin_bu":[0,0,0],"up_axis":"+Z"}
+        req["start_socket"]["normal"]=[-1,0,0]
+        req["tile_interfaces"]={"start":{
+            "standard_id":"factorio-fluid-interface-v1",
+            "face":"west","transverse_offset_tiles":0,
+            "elevation_tiles":.36}}
+        p=core.plan(req)
+        self.assertAlmostEqual(p["tile_interfaces"]["start"]["dimensions"]["barrel_outer_diameter_bu"],1.14)
+        self.assertAlmostEqual(p["tile_interfaces"]["start"]["dimensions"]["open_bore_diameter_bu"],.98)
+        self.assertAlmostEqual(p["tile_interfaces"]["start"]["dimensions"]["mounting_collar_outer_diameter_bu"],1.36)
+        self.assertAlmostEqual(p["size"]["outer_diameter"],.12)
+
+    def test_tile_interface_without_scope_is_rejected(self):
+        req=sample()
+        req["tile_interfaces"]={"start":{
+            "standard_id":"factorio-fluid-interface-v1",
+            "face":"west","transverse_offset_tiles":0,
+            "elevation_tiles":.36}}
+        with self.assertRaises(core.PipetteError):
+            core.plan(req)
+
+    def test_nonfluid_cannot_fake_standard_pipe_port(self):
+        req=sample("wire_bundle","signal",begin=(-1,0,.36),end=(-.4,0,.36))
+        req["size"]["conductor_count"]=8
+        req["scene_scope"]={
+            "schema":"fmpl.scene-scope.v1","id":"2x2",
+            "scene_units_per_tile":1.,"footprint_tiles":[2,2],"origin_bu":[0,0,0]}
+        req["tile_interfaces"]={"start":{
+            "standard_id":"factorio-fluid-interface-v1",
+            "face":"west","transverse_offset_tiles":0,
+            "elevation_tiles":.36}}
+        with self.assertRaises(core.PipetteError):
+            core.plan(req)
+
+    def test_standard_port_rejects_misaligned_socket(self):
+        req=sample(begin=(-1.25,0,.36),end=(-.4,0,.36))
+        req["scene_scope"]={
+            "schema":"fmpl.scene-scope.v1","id":"2x2",
+            "scene_units_per_tile":1.,"footprint_tiles":[2,2],"origin_bu":[0,0,0]}
+        req["start_socket"]["normal"]=[-1,0,0]
+        req["tile_interfaces"]={"start":{
+            "standard_id":"factorio-fluid-interface-v1",
+            "face":"west","transverse_offset_tiles":0,
+            "elevation_tiles":.36}}
+        with self.assertRaises(core.PipetteError):
+            core.plan(req)
+
     def test_unknown_material_requires_name(self):
         req=sample()
         req["material_id"]=""
