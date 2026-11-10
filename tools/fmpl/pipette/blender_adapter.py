@@ -229,6 +229,115 @@ def _connector(collection,root,terminal,kind,socket,direction,diameter,
     return members
 
 
+def _tapered_reducer(collection,name,begin,end,outer_start,inner_start,
+                     outer_end,inner_end,material,route):
+    """Real variable-radius hollow section joining canonical port to line."""
+    a,b=Vector(begin),Vector(end)
+    axis=b-a
+    if axis.length<.04:
+        raise RuntimeError("Pipette standard reducer is too short")
+    u,v=_orient(axis)
+    sides=32
+    verts=[]
+    faces=[]
+    for pos,outer,inner in ((a,outer_start,inner_start),
+                            (b,outer_end,inner_end)):
+        if not 0<inner<outer:
+            raise RuntimeError("Invalid reducer bore wall")
+        for radius in (outer,inner):
+            for k in range(sides):
+                theta=math.tau*k/sides
+                verts.append(tuple(pos+(u*math.cos(theta)+v*math.sin(theta))*radius))
+    for k in range(sides):
+        j=(k+1)%sides
+        faces.extend((
+            (k,j,2*sides+j,2*sides+k),
+            (sides+k,3*sides+k,3*sides+j,sides+j),
+            (k,sides+k,sides+j,j),
+            (2*sides+k,2*sides+j,3*sides+j,3*sides+k)
+        ))
+    obj=_owned(collection,name,verts,faces,material,"standard-port-hollow-reducer",route)
+    obj["pipette_true_hollow_mesh"]=True
+    obj["pipette_outer_diameter_bu"]=outer_start*2
+    obj["pipette_bore_diameter_bu"]=inner_start*2
+    return obj
+
+
+def _canonical_port_fixture(collection,root,terminal,plan,body_start,
+                             body_end,material):
+    """Proportion-matched fitted pipe/annulus from explicit tile-scoped port.
+
+    A dimension-matching candidate, not an approved imported source fixture
+    and not native Factorio fluidbox mapping.
+    """
+    interface=plan["tile_interfaces"].get(terminal)
+    if interface is None:
+        return []
+    scope=plan["scene_scope"]
+    dims=interface["dimensions"]
+    p=Vector(plan["sockets"][terminal]["xyz"])
+    b=Vector(body_start if terminal=="start" else body_end)
+    inward=b-p
+    if inward.length<.20*scope["scene_units_per_tile"]:
+        raise RuntimeError("No clearance for canonical pipe barrel and reducer")
+    inward.normalize()
+    bu=scope["scene_units_per_tile"]
+    barrel_od=dims["barrel_outer_diameter_bu"]
+    bore=dims["open_bore_diameter_bu"]
+    collar_od=dims["mounting_collar_outer_diameter_bu"]
+    collar_len=dims["mounting_collar_axial_thickness_bu"]
+    if not 0<bore<barrel_od<collar_od:
+        raise RuntimeError("FMPL canonical pipe diameters are inconsistent")
+    tubing_diameter=plan["size"]["outer_diameter"]
+    tubing_bore=plan["size"]["bore_diameter"]
+    if tubing_bore is None or tubing_bore>=bore:
+        raise RuntimeError("Inner fluid tube bore must be smaller than standard port")
+    prefix=root+" | "+terminal+" factorio-fluid-interface-v1 "
+    members=[]
+    members.append(_make_tube(
+        collection,prefix+"hollow machine throat",
+        [p,p+inward*.155*bu],
+        barrel_od,1-bore/barrel_od,material,plan,
+        role="standard-open-throat"))
+    members.append(_make_tube(
+        collection,prefix+"full machine collar",
+        [p-inward*collar_len*.5,p+inward*collar_len*.5],
+        collar_od,1-bore/collar_od,material,plan,
+        role="standard-collar"))
+    members.append(_tapered_reducer(
+        collection,prefix+"hollow internal reducer",
+        p+inward*.155*bu,b,
+        barrel_od/2,bore/2,tubing_diameter/2,tubing_bore/2,
+        material,plan))
+    for obj in members:
+        obj["pipette_standard_interface_id"]="factorio-fluid-interface-v1"
+        obj["pipette_native_fluidbox_verified"]=False
+        obj["pipette_standard_fixture_source"]="dimension-matching candidate; not cloned FMPL donor"
+        obj["pipette_socket_id"]=plan["sockets"][terminal]["id"]
+        obj["pipette_expected_port_xyz_bu"]=list(interface["expected_xyz_bu"])
+    return members
+
+
+def _inner_body_path(plan):
+    """Protect the actual face bore from a smaller inner service tube."""
+    points=[Vector(p) for p in plan["centerline"]]
+    canonical=plan.get("tile_interfaces",{})
+    if not canonical:
+        return [tuple(p) for p in points]
+    u=plan["scene_scope"]["scene_units_per_tile"]
+    for terminal in ("start","end"):
+        if terminal not in canonical:
+            continue
+        i,j=(0,1) if terminal=="start" else (-1,-2)
+        direction=points[j]-points[i]
+        if direction.length<.35*u:
+            raise RuntimeError("First/last route leg too short for standard fitting")
+        points[i]=points[i]+direction.normalized()*.235*u
+    if any((b-a).length<1e-5 for a,b in zip(points,points[1:])):
+        raise RuntimeError("Port reducer leaves degenerate internal pipe")
+    return [tuple(p) for p in points]
+
+
 def _cores(collection,root,plan,material,points):
     if not plan["expose_cores"]:
         return []
@@ -261,8 +370,12 @@ def build(plan,material,fit_material=None):
     col=bpy.data.collections.new(target_name)
     bpy.context.scene.collection.children.link(col)
     objects=[]
-    sections=plan["segments"]
+    body_points=_inner_body_path(plan)
     family=plan["family"]
+    sections=(core._split(body_points,
+              max(.001,float(plan["segments"][0]["length"])))
+              if family=="segmented_conduit" and plan.get("tile_interfaces")
+              else plan["segments"])
     width=plan["size"]["outer_diameter"]
     wall=plan["size"]["wall_fraction"]
     profile=plan.get("surface_profile") or {}
@@ -288,17 +401,22 @@ def build(plan,material,fit_material=None):
     else:
         objects.append(_make_tube(
             col,target_name+" | continuous visible route",
-            plan["centerline"],width,wall,material,plan,
+            body_points,width,wall,material,plan,
             profile=profile,role="continuous-route"))
     a,b=plan["sockets"]["start"],plan["sockets"]["end"]
     p0,pn=plan["centerline"][0],plan["centerline"][-1]
-    objects+=_connector(col,target_name,"start",plan["fittings"]["start"],
-                        a,_unit(_vec(p0,plan["centerline"][1])),
-                        width,wall,fit_material or material,plan)
-    objects+=_connector(col,target_name,"end",plan["fittings"]["end"],
-                        b,_unit(_vec(plan["centerline"][-2],pn)),
-                        width,wall,fit_material or material,plan)
-    objects+=_cores(col,target_name,plan,material,plan["centerline"])
+    for terminal,socket,direction in (
+        ("start",a,_unit(_vec(p0,plan["centerline"][1]))),
+        ("end",b,_unit(_vec(plan["centerline"][-2],pn)))):
+        if terminal in plan.get("tile_interfaces",{}):
+            objects+=_canonical_port_fixture(
+                col,target_name,terminal,plan,
+                body_points[0],body_points[-1],fit_material or material)
+        else:
+            objects+=_connector(
+                col,target_name,terminal,plan["fittings"][terminal],
+                socket,direction,width,wall,fit_material or material,plan)
+    objects+=_cores(col,target_name,plan,material,body_points)
     return col,objects
 
 
@@ -369,6 +487,8 @@ def main():
         "geometric_meshes_constructed":len(objects),
         "connector_specs":planned["fittings"],
         "outer_diameter_blender_units":planned["size"]["outer_diameter"],
+        "scene_scope":planned.get("scene_scope"),
+        "standard_tile_interfaces":planned.get("tile_interfaces",{}),
         "material_id":mat.name,
         "preview_material_only":bool(args.preview_only),
         "source_camera_preserved":bool(args.source_blend),
