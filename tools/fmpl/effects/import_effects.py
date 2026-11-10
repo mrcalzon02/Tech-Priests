@@ -23,10 +23,16 @@ def _check_source(file, expected_sha256=None):
             raise RuntimeError("FMPL Effects source hash mismatch")
     return path
 
-def import_materials(blend_file, material_ids, *, expected_sha256=None):
+def import_materials(blend_file, material_ids, *, expected_sha256=None, expected_version=None):
     """Return {id: material}; no replacement of existing sources and no silent rename."""
     import bpy
     source=_check_source(blend_file,expected_sha256)
+    # An immutable native material library can remain in use while FMPL itself
+    # evolves. Strictly validate the explicitly chosen version on every asset.
+    version=LIBRARY_VERSION if expected_version is None else expected_version
+    if not isinstance(version,str) or not version or len(version)>32 or not all(
+            piece.isdigit() for piece in version.split(".")) or len(version.split("."))!=3:
+        raise ValueError("Require an explicit three-part FMPL FX version")
     names=list(material_ids)
     if not names or len(names)!=len(set(names)):
         raise ValueError("Require unique nonempty FMPL material identifiers")
@@ -38,7 +44,7 @@ def import_materials(blend_file, material_ids, *, expected_sha256=None):
     for identifier in names:
         material=bpy.data.materials.get(PREFIX+identifier)
         if material is not None:
-            if material.get("fmpl_effect_id")!=identifier or material.get("fmpl_effect_version")!=LIBRARY_VERSION:
+            if material.get("fmpl_effect_id")!=identifier or material.get("fmpl_effect_version")!=version:
                 raise RuntimeError("Existing material name conflicts with canonical FX asset: "+identifier)
             existing[identifier]=material
         else:
@@ -52,7 +58,7 @@ def import_materials(blend_file, material_ids, *, expected_sha256=None):
     result={}
     for identifier in names:
         material=bpy.data.materials.get(PREFIX+identifier)
-        if material is None or material.get("fmpl_effect_id")!=identifier or material.get("fmpl_effect_version")!=LIBRARY_VERSION:
+        if material is None or material.get("fmpl_effect_id")!=identifier or material.get("fmpl_effect_version")!=version:
             raise RuntimeError("FMPL native material append/readback failed: "+identifier)
         result[identifier]=material
     return result
