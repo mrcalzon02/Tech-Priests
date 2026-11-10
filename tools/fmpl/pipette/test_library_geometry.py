@@ -49,7 +49,9 @@ class LibraryGeometryTests(unittest.TestCase):
         # An annular ring has equal radii around each circular ring; a
         # helically phase-shifted ring does NOT.
         def radii(mesh):
-            ring=mesh["vertices"][:20]
+            # Manufactured profile waves deliberately fade at public ports.
+            start=(mesh["sample_rings"]//2)*40
+            ring=mesh["vertices"][start:start+20]
             return [math.hypot(x[1],x[2]-.65) for x in ring]
         self.assertLess(max(radii(smooth))-min(radii(smooth)),1e-7)
         self.assertLess(max(radii(annular))-min(radii(annular)),1e-7)
@@ -160,6 +162,33 @@ class LibraryGeometryTests(unittest.TestCase):
             lib.build_demo("unimplemented_holographic_pipe","straight")
         with self.assertRaises(ValueError):
             lib.build_demo("conduit_pvc_rigid","invented-topology")
+
+    def test_steel_1x7_has_one_core_plus_six_helix_strands(self):
+        parts=lib.line_segment(self.a,self.b,"cable_steel_1x7")
+        self.assertEqual(len(parts),7)
+        self.assertEqual(parts[0]["role"],"solid-rope-core")
+        self.assertTrue(all(p["role"]=="helically-wound-rope-strand"
+                            for p in parts[1:]))
+
+    def test_ringed_tubes_meet_identical_nominal_port_diameter(self):
+        for profile in ("smooth","annular_polymer","interlocked_metal","split_annular"):
+            with self.subTest(profile=profile):
+                part=lib.tube([self.a,self.b],.12,.2,profile,"section",
+                              "conduit_ent_corrugated")
+                self.assertAlmostEqual(part["outer_diameter_bu"],.12)
+                self.assertEqual(part["centerline_start"],list(self.a))
+                self.assertEqual(part["centerline_end"],list(self.b))
+                n=21 if profile=="split_annular" else 20
+                distances=[math.dist(v,self.a) for v in part["vertices"][:n]]
+                self.assertLess(max(abs(d-.06) for d in distances),1e-7)
+
+    def test_single_wire_inline_has_one_natural_hanging_span(self):
+        model=lib.build_demo("wire_single_insulated_solid","straight")
+        self.assertEqual(len(model["meshes"]),1)
+        part=model["meshes"][0]
+        self.assertEqual(part["centerline_start"][:2],list(self.a[:2]))
+        self.assertEqual(part["centerline_end"][:2],list(self.b[:2]))
+        self.assertGreater(part["sag_blender_units"],.25)
 
 
 if __name__=="__main__":
