@@ -100,11 +100,15 @@ def _bubbles(p, col, index, x, y, material):
     objects = []
     for k in range(12):
         angle = math.tau*k/12 + .17*index
-        r = .052 + .025*(k%3)
+        # Let the chamber's near-inner wall act as a physical observation face.
+        # The bubble stays in the modeled fluid, not behind its opaque volume.
+        r = .066 + .016*(k%3)
+        dx = r*math.cos(angle)
+        dy = -math.sqrt(max(.001, .148**2-dx**2)) + .012
         base = .800 + .036*(k%6)
         ob = _orb(p, col, "sample station %d liquid bubble %02d"%(index,k),
-                  (x+r*math.cos(angle), y+r*math.sin(angle), base),
-                  .018 + .002*(k%3), material)
+                  (x+dx, y+dy, base),
+                  .027 + .004*(k%3), material)
         for frame in FRAMES:
             # Bounded, individually phase-shifted 16-sample rise with exact seam.
             phase = math.tau * (frame - 1)/96.
@@ -116,6 +120,41 @@ def _bubbles(p, col, index, x, y, material):
     return objects
 
 
+def _foam_crest(p, col, idx, x, y, z, material):
+    """Front-side physical waterline foam. It follows keyed slosh, not a decal."""
+    count=20
+    verts=[]
+    faces=[]
+    radius=.151
+    for k in range(count+1):
+        angle=math.pi * k/count
+        # Front semicircle sits just inside the glass, on the actual waterline.
+        dx=radius*math.cos(angle)
+        dy=-radius*math.sin(angle)
+        verts.extend(((dx,dy,-.015),(dx,dy,.015)))
+        if k:
+            a=2*(k-1)
+            b=2*k
+            faces.append((a,b,b+1,a+1))
+    mesh=bpy.data.meshes.new("FMPL fluid | witness crest %02d"%idx)
+    mesh.from_pydata(verts,[],faces)
+    mesh.update()
+    obj=bpy.data.objects.new(
+        p.name_of("sample station %d animated waterline foam crest"%idx),mesh)
+    col.objects.link(obj)
+    obj.location=(x,y,z)
+    obj.data.materials.append(material)
+    obj["fmpl_fluid_role"]="keyed foam crest following slosh at real transparent tank wall"
+    obj["fmpl_candidate_not_game_approved"]=True
+    for frame in FRAMES:
+        phase=math.tau*(frame-1)/96.
+        obj.location.z=z+.065*math.sin(phase)
+        obj.rotation_euler.y=.17*math.sin(phase+.6)
+        obj.keyframe_insert(data_path="location",frame=frame)
+        obj.keyframe_insert(data_path="rotation_euler",frame=frame)
+    return obj
+
+
 def build_witness_canisters(col, p, mats):
     """Physically larger front RAW and CLEAN canisters with inlet/exit flow."""
     glass, iron, brass, steel = (
@@ -123,7 +162,7 @@ def build_witness_canisters(col, p, mats):
     dark, foam = mats["gunmetal"], mats["foam"]
     specs = ((1, -.36, mats["amber"], mats.get("fx_raw", mats["amber"])),
              (2, .24, mats["teal"], mats.get("fx_clear", mats["teal"])))
-    out = {"vessels": 0, "moving_surfaces": 0,
+    out = {"vessels": 0, "moving_surfaces": 0, "visible_foam_crests": 0,
            "liquid_bubbles": 0, "flow_tracers": 0, "glass_flows": 0}
     for idx, x, liquid, surface_mat in specs:
         y = -1.272
@@ -134,7 +173,7 @@ def build_witness_canisters(col, p, mats):
         p.open_hollow_tube(col,"sample station %d enlarged transparent vessel"%idx,
             (x,y,.659),(x,y,1.27),.176,glass)
         p.cyl(col,"sample station %d enlarged visible liquid column"%idx,
-              (x,y,.916), .157, .540, liquid)
+              (x,y,.895), .157, .518, surface_mat)
         for height in (.659, 1.270):
             p.torus(col,"sample station %d pressure retainer %.3f"%(idx,height),
                     (x,y,height),.182,.018,brass)
@@ -143,12 +182,12 @@ def build_witness_canisters(col, p, mats):
                   (x+side*.158,y-.075,.96),.014,.63,steel,vertices=12)
         p.cyl(col,"sample station %d transparent pressure observation lid"%idx,
               (x,y,1.277),.165,.019,glass)
-        p.torus(col,"sample station %d visible waterline highlight"%idx,
-                (x,y,1.189),.154,.008,foam)
-        _meniscus(p,col,idx,(x,y,1.189),.154,surface_mat)
+        _meniscus(p,col,idx,(x,y,1.158),.154,surface_mat)
+        _foam_crest(p,col,idx,x,y,1.158,foam)
         out["liquid_bubbles"] += len(_bubbles(p,col,idx,x,y,foam))
         out["vessels"] += 1
         out["moving_surfaces"] += 1
+        out["visible_foam_crests"] += 1
     # These are visible witness/sample branches connecting the EXISTING pump,
     # filter and discharge routes: they do not change the two engine fluidbox
     # openings at X+/-1.5 Y0 Z.36.
