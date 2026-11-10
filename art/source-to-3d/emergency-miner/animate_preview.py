@@ -269,7 +269,9 @@ def make_steam(upper, collection):
                 coll.objects.unlink(ob)
             collection.objects.link(ob)
             ob.data.materials.append(steam)
-            ob.scale = (.014, .012, .014)
+            # Volume remains fixed-size: 2–3 native pixels across rather
+            # than a subpixel mist that vanishes at 43px.
+            ob.scale = (.035, .027, .045)
             preserve_parent(ob, upper)
             lobes.append((ob, ob.location.copy(), j, vent))
     assert_steam_bounds(lobes, "prekey")
@@ -318,22 +320,22 @@ def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
             scan_x = -.15 + .31 * (((phase * 2.0) + .15) % 1.0)
             steam_power = 1.2 * wrap_bell(phase, .31, .055) + .9 * wrap_bell(phase, .75, .055)
         if "mechanics" in enabled:
-            bx = force * (.0010 * math.sin(7*wave) + .00035 * math.sin(13*wave))
-            by = force * .0006 * math.sin(9*wave + .35)
-            bz = force * .00038 * math.sin(11*wave)
+            bx = force * (.0035 * math.sin(7*wave) + .0012 * math.sin(13*wave))
+            by = force * .0019 * math.sin(9*wave + .35)
+            bz = force * .00115 * math.sin(11*wave)
             body.location = body0 + Vector((bx, by, bz))
-            body.rotation_euler = (math.radians(.11) * math.sin(6*wave),
-                                   math.radians(.14) * math.sin(5*wave),
-                                   math.radians(.13) * math.sin(8*wave))
+            body.rotation_euler = (math.radians(.24) * math.sin(6*wave),
+                                   math.radians(.28) * math.sin(5*wave),
+                                   math.radians(.25) * math.sin(8*wave))
             upper.location = upper0 + Vector((
-                force * .0012 * math.sin(9*wave + .8),
-                force * .0006 * math.sin(7*wave - .4),
-                force * .0005 * math.sin(11*wave + .5)))
-            upper.rotation_euler = (math.radians(.16) * force * math.sin(8*wave + .5),
-                                    math.radians(.19) * force * math.sin(6*wave - .4),
-                                    math.radians(.21) * force * math.sin(7*wave + .25))
-            cover.location = cover0 + Vector((0, 0, .00065 * math.sin(13*wave + .3)))
-            cover.rotation_euler.z = math.radians(.055) * math.sin(11*wave)
+                force * .0028 * math.sin(9*wave + .8),
+                force * .0015 * math.sin(7*wave - .4),
+                force * .0013 * math.sin(11*wave + .5)))
+            upper.rotation_euler = (math.radians(.26) * force * math.sin(8*wave + .5),
+                                    math.radians(.31) * force * math.sin(6*wave - .4),
+                                    math.radians(.34) * force * math.sin(7*wave + .25))
+            cover.location = cover0 + Vector((0, 0, .0014 * math.sin(13*wave + .3)))
+            cover.rotation_euler.z = math.radians(.13) * math.sin(11*wave)
             for obj in (body, upper, cover):
                 obj.keyframe_insert(data_path="location", frame=frame)
                 obj.keyframe_insert(data_path="rotation_euler", frame=frame)
@@ -367,11 +369,13 @@ def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
                 # the lip on pressure rise, then retreats beneath the armor.
                 # Never animate its scale, parent inverse or clipping shape.
                 ejection = max(0.0, min(1.0, (active - .10) / .90))
-                rise = -.048 * (1.0-ejection) + .036 * ejection
+                # Fully occluded when dormant; a legible 3–4px puff
+                # emerges from the source cut/open cover seam on burst.
+                rise = -.090 * (1.0-ejection) + .076 * ejection
                 obj.location = rest + Vector((
-                    .006 * index * math.sin(wave) * ejection,
-                    -.004 * ejection,
-                    rise + .005 * index * ejection))
+                    .010 * index * math.sin(wave) * ejection,
+                    -.012 * ejection,
+                    rise + .008 * index * ejection))
                 obj.keyframe_insert(data_path="location", frame=frame)
     for inspect_frame in (1,25,49,73,97):
         bpy.context.scene.frame_set(inspect_frame)
