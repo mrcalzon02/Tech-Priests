@@ -171,8 +171,17 @@ function M.can_yield_uncommitted_rail_0836(p,request)
   if not(o and p.active_order_0469==o and o.status=="active"
     and o.kind=="logistics" and o.source=="emergency_acquire"
     and o.item=="firearm-magazine"
-    and o.target==nil and o.task==nil and o.request==nil
-    and o.reservation_key_0515==nil)then
+    -- 0469's own emergency-acquire wrapper retains an inert source-less
+    -- task DESCRIPTOR on the order; that is not a live priest task.
+    -- Match its exact originating kind/item/count and absence of any
+    -- physical target rather than demanding that metadata be nil.
+    and o.target==nil and o.request==nil
+    and o.reservation_key_0515==nil and o.count==1
+    and type(o.task)=="table" and o.task.type=="logistics"
+    and o.task.item==o.item and tonumber(o.task.count)==1
+    and o.task.target==nil and o.task.entity==nil
+    and o.task.source==nil and o.task.position==nil
+    and o.task.destination==nil)then
     return false,"order-not-source-less-automatic-ammo"
   end
   -- The original 0497 emergency supply candidate is not a held item.
