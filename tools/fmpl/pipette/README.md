@@ -1,5 +1,9 @@
 # Pipette — Blender-unit typed tubing, wiring and coupling planner
 
+## Architecture expansion index (catalog stage)
+
+The **[GitHub-readable architecture index](ARCHITECTURE_INDEX.md)** contains **140 construction profiles across nine groups**, **77 joint/termination architectures**, **20 visual stiffness profiles**, and a [fixed XYZ port comparison fixture](comparison_fixture.v1.json) shared by Y/tee/elbow examples. These are **indexed future build targets**, *not* 140 implemented meshes. The [catalog JSON](architecture_catalog.v1.json), [joint library](joint_catalog.v1.json), [stiffness models](stiffness_profiles.v1.json) and [regression contracts](test_architecture_catalog.py) form the new source-of-truth baseline; existing v0.1 executable line types are not silently expanded.
+
 **Current state: V0.1 source-level prototype.** The [authoritative design and development stages](PIPETTE_STANDARD.md) define the planned typed Blender construction subsystem. This is not yet a visually approved 3D asset library or a fluid/electrical/force simulation.
 
 ## The size rule
