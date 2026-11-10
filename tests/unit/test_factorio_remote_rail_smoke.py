@@ -363,7 +363,9 @@ class NativeRailTerminalReceiptHandoffTests(unittest.TestCase):
         frontier = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
                     ).read_text(encoding="utf-8")
         receipt = builder.index("pair.construction_last_task_0338=task")
-        handoff = builder.index('if built and marked_rail_request_0836(task)', receipt)
+        handoff = builder.index(
+            'if built and marked_rail_request_0836(task)',
+            builder.index('record(pair,built and "built" or "aborted",reason)', receipt))
         self.assertLess(receipt, handoff)
         self.assertIn("pending.request==task.request_value", builder[handoff:handoff+700])
         self.assertIn('type(rail.verify_pending)=="function"', builder[handoff:handoff+700])
