@@ -1,0 +1,570 @@
+{
+  "schema": "fmpl.pipette.types.v0.1",
+  "status": "prototype-definitions-only-no-native-approval",
+  "units": {
+    "geometry": "Blender scene units",
+    "real_world_conversions": false,
+    "units_tied_to_realworld": false,
+    "preset_scopes": "purely visual and author-adjustable",
+    "global_scene_scale": "caller-owned"
+  },
+  "relative_sizes": {
+    "hairline": 0.012,
+    "thin": 0.025,
+    "regular": 0.06,
+    "heavy": 0.12,
+    "massive": 0.25
+  },
+  "parameters": {
+    "section": [
+      "outer_diameter",
+      "wall_fraction",
+      "visual_gauge",
+      "conductor_count",
+      "strand_diameter"
+    ],
+    "path": [
+      "kind",
+      "points",
+      "sag",
+      "samples",
+      "joint_pitch",
+      "keep_outs"
+    ],
+    "appearance": [
+      "material_id",
+      "fitting_material_id",
+      "surface_profile",
+      "expose_cores"
+    ],
+    "surfaces": [
+      "corrugation_pitch",
+      "corrugation_depth_ratio",
+      "rib_pitch",
+      "rib_height_ratio"
+    ],
+    "fitting": [
+      "start",
+      "end",
+      "at_joints",
+      "junction"
+    ],
+    "behavior_hooks": [
+      "binding",
+      "fluid_network_id",
+      "electric_network_id",
+      "mechanical_anchor_id"
+    ],
+    "quality": [
+      "source_hash",
+      "connector_gap",
+      "camera_visibility_pixels",
+      "bore_clearance",
+      "collision_result",
+      "owner_approved"
+    ]
+  },
+  "type_categories": [
+    {
+      "id": "rigid_pipe",
+      "label": "Rigid hardline / process pipe",
+      "payloads": [
+        "fluid",
+        "coolant",
+        "air",
+        "gas",
+        "steam",
+        "empty"
+      ],
+      "section": "hollow",
+      "forms": [
+        "straight",
+        "orthogonal",
+        "waypoints"
+      ],
+      "surface": [
+        "cast_iron",
+        "galvanized",
+        "machined_steel",
+        "copper",
+        "aluminum",
+        "glass"
+      ],
+      "connector": [
+        "flange",
+        "compression"
+      ],
+      "affordances": [
+        "service_union",
+        "valve_boss",
+        "sight_glass",
+        "threaded_boss",
+        "support_saddle"
+      ],
+      "ask": [
+        "outer_diameter Blender units?",
+        "wall fraction?",
+        "cast/machined/galvanized/glass appearance?",
+        "flange or compression at each socket?",
+        "elbow/bend constraints?"
+      ]
+    },
+    {
+      "id": "segmented_conduit",
+      "label": "Articulated or assembled conduit",
+      "payloads": [
+        "fluid",
+        "coolant",
+        "air",
+        "gas",
+        "steam",
+        "wires",
+        "signal",
+        "power",
+        "empty"
+      ],
+      "section": "hollow-and-jointed",
+      "forms": [
+        "straight",
+        "waypoints",
+        "orthogonal"
+      ],
+      "surface": [
+        "steel",
+        "rubber_armored",
+        "polyethylene",
+        "polymer_flex"
+      ],
+      "connector": [
+        "compression",
+        "flange",
+        "cable_gland",
+        "articulated_sleeve"
+      ],
+      "affordances": [
+        "joint_sleeve",
+        "corrugation",
+        "interval_clamp",
+        "strain_relief"
+      ],
+      "ask": [
+        "outside diameter?",
+        "what is carried?",
+        "section pitch?",
+        "how much articulation per joint?",
+        "rigid metal or flexible polymer sheath?"
+      ]
+    },
+    {
+      "id": "flex_hose",
+      "label": "Hose for air, gas or fluid",
+      "payloads": [
+        "fluid",
+        "coolant",
+        "air",
+        "gas",
+        "steam",
+        "empty"
+      ],
+      "section": "hollow-flexible",
+      "forms": [
+        "straight",
+        "waypoints",
+        "hanging"
+      ],
+      "surface": [
+        "rubber",
+        "polyethylene",
+        "PTFE",
+        "braided_rubber"
+      ],
+      "connector": [
+        "hose_tail",
+        "compression"
+      ],
+      "affordances": [
+        "barb",
+        "crimp",
+        "clamp_band",
+        "bend_sleeve",
+        "wear_guard"
+      ],
+      "ask": [
+        "hose OD and wall fraction?",
+        "slack or taut?",
+        "corrugated or smooth?",
+        "bend radius?",
+        "clamp/ferrule at each end?"
+      ]
+    },
+    {
+      "id": "single_wire",
+      "label": "One electrical conductor",
+      "payloads": [
+        "wires",
+        "signal",
+        "power"
+      ],
+      "section": "solid-insulated",
+      "forms": [
+        "straight",
+        "waypoints",
+        "hanging"
+      ],
+      "surface": [
+        "copper_insulated",
+        "rubber_insulated",
+        "polyethylene_insulated",
+        "bare_copper"
+      ],
+      "connector": [
+        "lug",
+        "cable_gland"
+      ],
+      "affordances": [
+        "terminal_lug",
+        "strain_relief",
+        "insulation_break",
+        "service_loop"
+      ],
+      "ask": [
+        "thin/regular/heavy visual gauge or numeric diameter?",
+        "exposed or jacketed?",
+        "slack?",
+        "terminal lug or gland?"
+      ]
+    },
+    {
+      "id": "wire_bundle",
+      "label": "Cable loom of several conductors",
+      "payloads": [
+        "wires",
+        "signal",
+        "power"
+      ],
+      "section": "bundled",
+      "forms": [
+        "straight",
+        "waypoints",
+        "hanging"
+      ],
+      "surface": [
+        "rubber_jacket",
+        "polymer_jacket",
+        "braid",
+        "armored_cable"
+      ],
+      "connector": [
+        "lug",
+        "cable_gland"
+      ],
+      "affordances": [
+        "loom_clamp",
+        "fanout",
+        "connector_block",
+        "strain_relief",
+        "junction_box"
+      ],
+      "ask": [
+        "1, 2, 8, or custom conductors?",
+        "strand appearance gauge?",
+        "loose, bundled or sheathed?",
+        "colored cores visible at the ends?",
+        "service loop/slack?"
+      ]
+    },
+    {
+      "id": "conduit",
+      "label": "Protective sheath for wires or fluids",
+      "payloads": [
+        "wires",
+        "signal",
+        "power",
+        "fluid",
+        "coolant",
+        "air",
+        "gas",
+        "steam",
+        "empty"
+      ],
+      "section": "hollow-outer",
+      "forms": [
+        "straight",
+        "waypoints",
+        "orthogonal"
+      ],
+      "surface": [
+        "rigid_steel",
+        "galvanized",
+        "PVC",
+        "polyethylene",
+        "corrugated_rubber"
+      ],
+      "connector": [
+        "cable_gland",
+        "compression",
+        "flange"
+      ],
+      "affordances": [
+        "inspection_hatch",
+        "junction_box",
+        "coupling_sleeve",
+        "bushings",
+        "service_band"
+      ],
+      "ask": [
+        "outer shell OD?",
+        "what is inside: 0/1/2/8+ cores or fluid?",
+        "metal vs flexible polymer?",
+        "rigid elbows or segmented joints?",
+        "terminal fittings?"
+      ]
+    },
+    {
+      "id": "tension_cable",
+      "label": "Load-bearing cable, rope or bridle",
+      "payloads": [
+        "mechanical_tension"
+      ],
+      "section": "solid-stranded",
+      "forms": [
+        "straight",
+        "hanging",
+        "waypoints"
+      ],
+      "surface": [
+        "braided_steel",
+        "synthetic_braid",
+        "coated_steel"
+      ],
+      "connector": [
+        "eye",
+        "clevis"
+      ],
+      "affordances": [
+        "thimble",
+        "turnbuckle",
+        "clamp",
+        "anchor_saddle",
+        "spool"
+      ],
+      "ask": [
+        "cable OD?",
+        "sag amount or taut?",
+        "eye, clevis or turnbuckle at ends?",
+        "stranded/coated appearance?"
+      ]
+    },
+    {
+      "id": "rebar",
+      "label": "Solid steel reinforcing bar",
+      "payloads": [
+        "reinforcement"
+      ],
+      "section": "solid-ribbed",
+      "forms": [
+        "straight",
+        "waypoints"
+      ],
+      "surface": [
+        "deformed_steel",
+        "oxidized_iron",
+        "painted_rebar"
+      ],
+      "connector": [
+        "rebar_coupler",
+        "lap"
+      ],
+      "affordances": [
+        "rib_profile",
+        "splice",
+        "bend_schedule",
+        "anchoring_foot"
+      ],
+      "ask": [
+        "bar OD?",
+        "rib pitch/depth?",
+        "straight or bent?",
+        "overlap or threaded coupler?"
+      ]
+    }
+  ],
+  "supported_fittings": {
+    "flange": {
+      "payloads": [
+        "fluid",
+        "coolant",
+        "air",
+        "gas",
+        "steam"
+      ],
+      "physical_parts": [
+        "hollow barrel",
+        "mating flange",
+        "gasket seat",
+        "anchored fasteners"
+      ],
+      "not_approved_until": "Blender source fixture verified"
+    },
+    "compression": {
+      "payloads": [
+        "fluid",
+        "coolant",
+        "air",
+        "gas",
+        "steam",
+        "empty"
+      ],
+      "physical_parts": [
+        "hollow barrel",
+        "nut",
+        "receiving boss"
+      ],
+      "not_approved_until": "socket contact measured"
+    },
+    "hose_tail": {
+      "payloads": [
+        "fluid",
+        "coolant",
+        "air",
+        "gas",
+        "steam"
+      ],
+      "physical_parts": [
+        "barbed tail",
+        "crimp or clamp",
+        "receiving socket"
+      ],
+      "not_approved_until": "fitting geometry reopened"
+    },
+    "cable_gland": {
+      "payloads": [
+        "wires",
+        "signal",
+        "power",
+        "empty"
+      ],
+      "physical_parts": [
+        "grommet",
+        "retaining gland",
+        "strain relief"
+      ],
+      "not_approved_until": "cable and panel mounted"
+    },
+    "lug": {
+      "payloads": [
+        "wires",
+        "signal",
+        "power"
+      ],
+      "physical_parts": [
+        "conductive terminal",
+        "seated eye or bolt"
+      ],
+      "not_approved_until": "receiving terminal verified"
+    },
+    "eye": {
+      "payloads": [
+        "mechanical_tension"
+      ],
+      "physical_parts": [
+        "cable thimble",
+        "secured anchor"
+      ],
+      "not_approved_until": "anchor and eye contact verified"
+    },
+    "clevis": {
+      "payloads": [
+        "mechanical_tension"
+      ],
+      "physical_parts": [
+        "bearing pin",
+        "clevis yoke",
+        "cable termination"
+      ],
+      "not_approved_until": "axis/anchor verified"
+    },
+    "rebar_coupler": {
+      "payloads": [
+        "reinforcement"
+      ],
+      "physical_parts": [
+        "solid rebar coupling sleeve"
+      ],
+      "not_approved_until": "embed/lap verified"
+    },
+    "lap": {
+      "payloads": [
+        "reinforcement"
+      ],
+      "physical_parts": [
+        "bar overlap",
+        "bearing/rebar anchors"
+      ],
+      "not_approved_until": "actual reinforcement geometry verified"
+    },
+    "none": {
+      "payloads": [
+        "fluid",
+        "coolant",
+        "air",
+        "gas",
+        "steam",
+        "wires",
+        "signal",
+        "power",
+        "mechanical_tension",
+        "reinforcement",
+        "empty"
+      ],
+      "requires": "explicit allow_unterminated"
+    }
+  },
+  "decision_prompts": {
+    "base": [
+      "What is carried?",
+      "Choose line family",
+      "From which named socket to which?",
+      "Set diameter as Blender units or relative visual gauge",
+      "Choose approved surface",
+      "Any keep-out volumes?"
+    ],
+    "wire": [
+      "How many conductors: 1, 2, 8 or custom?",
+      "Loose, bundled or jacketed?",
+      "Visible fanout?",
+      "Sag/slack?",
+      "Lug or cable gland?"
+    ],
+    "pipe": [
+      "Hollow wall fraction?",
+      "Continuous or segmented?",
+      "Rigid metal/polymer/glass appearance?",
+      "Flanged or compression union?",
+      "Service viewport or valve?"
+    ],
+    "hose": [
+      "Smooth or corrugated?",
+      "Relative sag?",
+      "Crimp/band style?"
+    ],
+    "cable": [
+      "Sag/tension appearance?",
+      "Eye/clevis hardware?"
+    ],
+    "rebar": [
+      "Visual rib pitch/depth?",
+      "Splice/coupler?"
+    ]
+  },
+  "constraints": {
+    "source_preserved": true,
+    "refuse_socket_ambiguity": true,
+    "do_not_place_unverified_fittings": true,
+    "never_assume_native_factorio_fluidbox": true,
+    "do_not_build_unseen_cores_by_default": true,
+    "maximum_sections": 256,
+    "maximum_visible_conductors": 64,
+    "no_new_workflow": true
+  }
+}
