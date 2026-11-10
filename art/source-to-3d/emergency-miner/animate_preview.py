@@ -392,22 +392,37 @@ def pack_apng(frames, dest):
 
 def main(out):
     out.mkdir(parents=True,exist_ok=True)
+    print('MINER_TRACE 01 begin source V21 build',flush=True)
     profile = build_v21()
+    print('MINER_TRACE 02 V21 source built',flush=True)
     base = out/"v21_study_static_master.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(base))
+    print('MINER_TRACE 03 base saved',flush=True)
     result = {"source":"tech-priests-emergency-miner", "source_sha256":miner.SOURCE_SHA256,
               "builder_sha256":sha(HERE/"build_model.py"), "preview_script_sha256":sha(__file__),
               "camera_policy":POLICY_ID, "directions_rendered":[0], "fps":FPS,
               "source_model_unchanged":True,"in_game_art_unchanged":True,
               "owner_visual_approved":False,"frames":FRAMES,"variants":{}}
     for label in ("A","B"):
+        print('MINER_TRACE 10 reopen base '+label,flush=True)
         bpy.ops.wm.open_mainfile(filepath=str(base))
+        print('MINER_TRACE 11 base reopened '+label,flush=True)
         scene=bpy.context.scene
+        print('MINER_TRACE 12 begin camera audit '+label,flush=True)
         assert_clean(scene,profile,bpy)
+        print('MINER_TRACE 13 camera audited '+label,flush=True)
+        print('MINER_TRACE 14 begin physical rig '+label,flush=True)
         collection, body, upper, cover, still, nb, nu = rig()
+        print('MINER_TRACE 15 physical rig ready '+label,flush=True)
+        print('MINER_TRACE 16 begin scan FX '+label,flush=True)
         parts = make_scan_effects(upper,collection)
+        print('MINER_TRACE 17 scan FX ready '+label,flush=True)
+        print('MINER_TRACE 18 begin FMPL steam '+label,flush=True)
         steam = make_steam(upper,collection)
+        print('MINER_TRACE 19 FMPL steam ready '+label,flush=True)
+        print('MINER_TRACE 20 begin keyed motion '+label,flush=True)
         apply_motion(label,body,upper,cover,parts,steam)
+        print('MINER_TRACE 21 keyed motion ready '+label,flush=True)
         blend=out/("miner_motion_%s.blend"%label)
         scene["study_variant"]=label
         scene["game_integration_status"]="NOT_INTEGRATED_REVIEW_ONLY"
@@ -415,8 +430,11 @@ def main(out):
         # Blender 5.2.3 crashed with C0000409 at inline open_mainfile(A).
         # A and B reopen independently in fresh Blender processes via
         # verify_animation.py; no output is accepted without that gate.
+        print('MINER_TRACE 22 begin saving animated source '+label,flush=True)
         bpy.ops.wm.save_as_mainfile(filepath=str(blend))
+        print('MINER_TRACE 23 saved animated source '+label,flush=True)
         assert_clean(scene,profile,bpy)
+        print('MINER_TRACE 24 begin foundation stationary check '+label,flush=True)
         fixed_bone=bpy.data.objects["LAYER_1 Foundation perimeter steel slab"]
         scene.frame_set(1)
         fixed_start=tuple(tuple(row) for row in fixed_bone.matrix_world)
@@ -426,14 +444,17 @@ def main(out):
         fixed_end=tuple(tuple(row) for row in fixed_bone.matrix_world)
         if not (fixed_start==fixed_mid==fixed_end):
             raise RuntimeError("Foundation moved in preview variant "+label)
+        print('MINER_TRACE 25 foundation stationary check passed '+label,flush=True)
         folder=out/label
         folder.mkdir(exist_ok=True)
         rendered=[]
         for f in FRAMES:
+            print('MINER_TRACE 30 frame '+str(f)+' '+label,flush=True)
             scene.frame_set(f)
             dest=folder/("frame_%03d.png"%f)
             scene.render.filepath=str(dest)
             bpy.ops.render.render(write_still=True)
+            print('MINER_TRACE 31 frame rendered '+str(f)+' '+label,flush=True)
             if not dest.exists() or dest.stat().st_size < 3000:
                 raise RuntimeError("Missing native render: "+str(dest))
             rendered.append(dest)
