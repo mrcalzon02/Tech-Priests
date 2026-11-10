@@ -225,6 +225,87 @@ def main():
     for o,z in zip(froth,froth_start):
         if abs(o.location.z-z)>.0001:
             raise RuntimeError("Physical foam bead motion did not loop at frame 97")
+    # V13: inspect actual heavy mixer speed, central scene and front-right
+    # green CRT displacement, not just user-written build metadata.
+    mixer=bpy.data.objects.get("FMPL_PROCESS | keyframed central agitator rotor")
+    if mixer is None or mixer.animation_data is None:
+        raise RuntimeError("Missing physically driven central stirrer")
+    if abs(float(mixer.get("fmpl_v13_rate_ratio_vs_v12",0))-.25)>.001:
+        raise RuntimeError("Central mixer has not been slowed to quarter speed")
+    scene.frame_set(1)
+    a1=float(mixer.rotation_euler.z)
+    scene.frame_set(25)
+    a25=float(mixer.rotation_euler.z)
+    scene.frame_set(97)
+    a97=float(mixer.rotation_euler.z)
+    if (abs(a1)>.01 or abs(a25-math.pi/8)>.015 or
+        abs(a97-math.pi/2)>.015):
+        raise RuntimeError("Central mixing arms did not actually slow 75%")
+    center_top=[o for o in details if "central real animated agitator liquid top" in o.name]
+    current_ribbons=[o for o in details if "central stirring current ribbon" in o.name]
+    center_bubbles=[o for o in details if "central recirculating bubble" in o.name]
+    center_foam=[o for o in details if "central floating foam clump" in o.name]
+    path_foam=[o for o in details if "central impeller turbulence froth" in o.name]
+    if (len(center_top)!=1 or len(current_ribbons)!=4 or
+        len(center_bubbles)!=24 or len(center_foam)!=24 or len(path_foam)!=12):
+        raise RuntimeError("No physically authored central foam, bubbles, swirl or surface geometry")
+    if any(o.animation_data is None for o in center_bubbles+center_foam+path_foam):
+        raise RuntimeError("Central liquid/foam/bubble objects missing actual animation")
+    wave_keys=center_top[0].data.shape_keys
+    expected_keys={"Clockwise paddle swirl","Return pressure surge",
+                   "Agitator chopping wakes","Outer tank shoulder lift"}
+    if (not wave_keys or not wave_keys.animation_data or
+        not expected_keys.issubset(set(wave_keys.key_blocks.keys()))):
+        raise RuntimeError("Missing four real central liquid wave shape keys")
+    swirl=bpy.data.objects.get("FMPL_PROCESS | central visible spiral flow rig")
+    if swirl is None or swirl.animation_data is None:
+        raise RuntimeError("Moving central swirl stripes lack a rotation parent")
+    originals_console=[
+        "MH7_service inset CRT","MH7_service interface casting",
+        "MH7_control push button","MH7_control push button.001",
+        "MH7_control push button.002","MH7_control push button.003"
+    ]
+    original_clones=[
+        o for o in details if "angled service console / " in o.name
+    ]
+    readout_bars=[
+        o for o in details if "angled CRT live green readout bar " in o.name
+    ]
+    if (len(original_clones)!=6 or len(readout_bars)!=5 or
+        any(o.animation_data is None for o in readout_bars)):
+        raise RuntimeError("Source-preserving angled console and 5 green moving readout bars missing")
+    for name in originals_console:
+        obj=bpy.data.objects.get(name)
+        if obj is None or not obj.hide_render:
+            raise RuntimeError("Old CRT source was not preserved and render-hidden: "+name)
+    tilted_screen=bpy.data.objects.get(
+        "FMPL_PROCESS | angled service console / service inset CRT")
+    clean_sample=bpy.data.objects.get(
+        "FMPL_PROCESS | sample station 2 enlarged transparent vessel")
+    if tilted_screen is None or clean_sample is None:
+        raise RuntimeError("Cannot compare actual CRT screen against enlarged cyan sample")
+    bpy.context.view_layer.update()
+    screen_left=min((tilted_screen.matrix_world@Vector(vertex)).x
+                    for vertex in tilted_screen.bound_box)
+    sample_right=max((clean_sample.matrix_world@Vector(vertex)).x
+                     for vertex in clean_sample.bound_box)
+    screen_yaw=math.degrees(tilted_screen.matrix_world.to_euler().z)
+    if (screen_left<sample_right+.01 or
+        abs(screen_yaw-12.)>.55):
+        raise RuntimeError(
+            "Green CRT still intersects cyan tank or is not tilted: "+
+            str((screen_left,sample_right,screen_yaw)))
+    v13_receipt=receipt.get("v13_central_agitation_console",{})
+    if (abs(float(v13_receipt.get("slowed_mixer",{}).get("rate_ratio",0))-.25)>.001 or
+        v13_receipt.get("central_water",{}).get("suspended_orbiting_bubbles")!=24 or
+        v13_receipt.get("angled_green_console",{}).get("animated_readout_bars")!=5):
+        raise RuntimeError("V13 native build receipt missing physical motion and tilted CRT details")
+    # Retain primitive, immutable scalars before Blender factory reset for GLB
+    # reimport, because old scene object pointers are invalid after reset.
+    central_mixer_angles=[round(a1,5),round(a25,5),round(a97,5)]
+    console_screen_left_x=float(screen_left)
+    clean_sample_right_x=float(sample_right)
+    console_screen_yaw=float(screen_yaw)
     # FMPL physical effects: inspect real native meshes and animation data,
     # not merely render filenames or decorative materials.
     vessels=[o for o in details if "enlarged transparent vessel" in o.name]
@@ -413,6 +494,20 @@ def main():
        "front_raw_amber_rgb":raw_rgb,
        "front_clean_cyan_rgb":clean_rgb,
        "front_colorway_contrast_verified":True,
+       "v13_central_mixer_speed_ratio":.25,
+       "v13_central_rotor_rad_samples":central_mixer_angles,
+       "v13_central_surface_shape_keys":4,
+       "v13_central_current_ribbons":len(current_ribbons),
+       "v13_central_orbit_bubbles":len(center_bubbles),
+       "v13_central_foam_clumps":len(center_foam),
+       "v13_central_impeller_froth":len(path_foam),
+       "v13_console_source_originals_hidden":len(originals_console),
+       "v13_console_screen_clones":len(original_clones),
+       "v13_console_animated_green_readout_bars":len(readout_bars),
+       "v13_console_yaw_degrees":round(console_screen_yaw,3),
+       "v13_console_left_x":round(console_screen_left_x,4),
+       "v13_sample_tank_right_x":round(clean_sample_right_x,4),
+       "v13_console_clearance_proven":console_screen_left_x>clean_sample_right_x+.01,
        "visible_rising_bubble_meshes":len(bubbly),
        "visible_waterline_froth_bead_meshes":len(froth),
        "v12_raw_water_transmission":round(verified_raw_transmission,3),
