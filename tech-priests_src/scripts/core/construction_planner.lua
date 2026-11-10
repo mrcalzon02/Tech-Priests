@@ -1003,6 +1003,42 @@ local function finish(pair,task,built,reason)
  task.result=reason
  task.built_entity=built
  pair.construction_last_task_0338=task
+ -- The generic terminal slot is overwritten by unrelated subsequent work.
+ -- Preserve THIS exact original paid 0836 completion inside its pending writ
+ -- so a later native scan can verify it after indexed scans catch up. This
+ -- records only a real 0338 source debit and actual built LuaEntity, never
+ -- creates either. Missing/ambiguous source evidence cannot be accepted.
+ if built and marked_rail_request_0836(task) then
+  local mission=pair.remote_rail_outpost_0835
+  local pending=mission and mission.pending_rail_0836
+  local debit=task.original_rail_source_debit_0836
+  if pending and pending.request==task.request_value
+    and task.request_field=="construction_request"
+    and task.item_name=="rail" and task.entity_name=="straight-rail"
+    and task.creative_build~=true
+    and debit and debit.item=="rail" and debit.source_unit
+    and type(debit.before)=="number" and type(debit.after)=="number"
+    and debit.before>=1 and debit.before-debit.after==1
+    and valid(built) and built.name=="straight-rail"
+    and built.unit_number
+    and built.force==pair.station.force
+    and built.surface==pair.station.surface then
+   pending.original_paid_completion_0836={
+    request_value=task.request_value,phase="complete",
+    built_entity=built,built_unit=built.unit_number,
+    item_name="rail",creative_build=false,
+    source_unit=debit.source_unit,source_before=debit.before,
+    source_after=debit.after,source_debit_tick=debit.tick,
+    completed_tick=now(),native_0338_paid=true}
+   record(pair,"original-paid-rail-receipt-preserved-0836",
+     "source="..safe(debit.source_unit)..
+     " before="..safe(debit.before).." after="..safe(debit.after)..
+     " built="..safe(built.unit_number))
+  else
+   record(pair,"original-rail-receipt-unproven-0836",
+     "missing-original-native-debit-or-entity")
+  end
+ end
  record(pair,built and "built" or "aborted",reason)
  -- The last-task slot is shared with routine 0338 work. Reconcile an
  -- ORIGINAL paid, physically placed 0836 rail while this exact terminal
@@ -1774,7 +1810,30 @@ function M.service_pair(pair,reason)
   task.phase="move-source"
  end
  if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if not within_entity_reach(pair.priest.position,task.source_entity,M.pickup_reach_sq) then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
- if task.phase=="pickup"then local removed=remove_item(task.source_inv,task.item_name,1);if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end;task.carried={item_name=task.item_name,count=1};sync_custody(pair,task,"removed-source");task.phase="move-site"end
+ if task.phase=="pickup"then
+  -- A durable original 0836 rail receipt must originate with a measured
+  -- native 0338 source debit, not a counter, source-unit guess or ghost.
+  local original_rail=marked_rail_request_0836(task)
+    and authorized_rail_candidate_0836(pair,task)
+  local before=original_rail and item_count(task.source_inv,task.item_name) or nil
+  local removed=remove_item(task.source_inv,task.item_name,1)
+  if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end
+  task.carried={item_name=task.item_name,count=1}
+  if original_rail then
+   local after=item_count(task.source_inv,task.item_name)
+   if not(before and before>=1 and before-after==1
+       and valid(task.source_entity) and task.source_entity.unit_number) then
+    -- The single removed rail remains under the original 0338 cargo lease.
+    -- Return it physically; never manufacture or credit ambiguous stock.
+    return M.abort_pair(pair,"rail-native-source-debit-unreconciled")
+   end
+   task.original_rail_source_debit_0836={
+    source_unit=task.source_entity.unit_number,
+    before=before,after=after,tick=now(),item="rail"}
+  end
+  sync_custody(pair,task,"removed-source")
+  task.phase="move-site"
+ end
  if task.phase=="move-site"then
   -- Native 2.0.77 run 41189829595: dropped drill output blocked the
   -- receiver tile while the builder was still outside build reach.

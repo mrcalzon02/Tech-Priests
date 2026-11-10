@@ -282,6 +282,25 @@ function M.verify_pending(pair)
     return false,"physical-builder-in-progress"
   end
   local previous=pair.construction_last_task_0338
+  -- The generic last-task slot is shared with normal construction. A prior
+  -- ORIGINAL paid rail completion can survive its replacement only if 0338
+  -- itself captured the exact native source decrement and built LuaEntity.
+  -- The ledger remains attached to this ONE pending request, not global.
+  local saved=pending.original_paid_completion_0836
+  local saved_matches=not(previous and previous.request_value==pending.request)
+    and type(saved)=="table" and saved.request_value==pending.request
+    and saved.phase=="complete" and saved.native_0338_paid==true
+    and saved.item_name=="rail" and saved.creative_build==false
+    and type(saved.source_unit)=="number"
+    and type(saved.source_before)=="number"
+    and type(saved.source_after)=="number"
+    and saved.source_before>=1
+    and saved.source_before-saved.source_after==1
+    and valid(saved.built_entity)
+    and saved.built_entity.unit_number==saved.built_unit
+    and saved.built_entity.force==pair.station.force
+    and saved.built_entity.surface==pair.station.surface
+  if saved_matches then previous=saved end
   -- A saved terminal 0338 receipt can predate the live creative-build guard.
   -- An admin-built rail is a real entity but NOT a physical item debit;
   -- never import that old completion as counted railway after reload.
@@ -294,7 +313,11 @@ function M.verify_pending(pair)
       and previous.built_entity.name=="straight-rail"
       and close(previous.built_entity.position,pending.position)
       and previous.built_entity.direction==pending.direction
-      and pair.construction_request==nil)then
+      -- Normal last-task proof still requires the original request cleared.
+      -- A source-debited saved completion may coexist with a NEW unrelated
+      -- request; never rewrite, borrow or erase that request/custody.
+      and (pair.construction_request==nil
+        or (saved_matches and pair.construction_request~=pending.request)))then
     -- A builder that failed or dropped its request has not laid track.
     if previous and previous.request_value==pending.request
         and previous.phase=="aborted"then

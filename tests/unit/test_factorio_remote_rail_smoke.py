@@ -321,6 +321,40 @@ class NativeRailBlockedLocalMineAdmissionTests(unittest.TestCase):
 
 
 
+
+class NativeRailDurablePaidReceiptTests(unittest.TestCase):
+    def test_only_measured_engine_debit_and_exact_original_paid_build_are_retained(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        source = (root / "tech-priests_src/scripts/core/construction_planner.lua"
+                  ).read_text(encoding="utf-8")
+        self.assertIn("before=original_rail and item_count(task.source_inv,task.item_name)", source)
+        self.assertIn("before-after==1", source)
+        self.assertIn('M.abort_pair(pair,"rail-native-source-debit-unreconciled")', source)
+        self.assertIn("pending.request==task.request_value", source)
+        self.assertIn('task.request_field=="construction_request"', source)
+        self.assertIn("task.creative_build~=true", source)
+        self.assertIn("pending.original_paid_completion_0836={", source)
+        self.assertIn("built_entity=built,built_unit=built.unit_number", source)
+        self.assertIn("native_0338_paid=true", source)
+        self.assertNotIn("pending.original_paid_completion_0836={\n    phase", source)
+
+    def test_saved_receipt_requires_original_request_entity_and_counted_source(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        source = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
+                  ).read_text(encoding="utf-8")
+        self.assertIn("saved.request_value==pending.request", source)
+        self.assertIn("saved.native_0338_paid==true", source)
+        self.assertIn("saved.source_before-saved.source_after==1", source)
+        self.assertIn("saved.built_entity.unit_number==saved.built_unit", source)
+        self.assertIn("if saved_matches then previous=saved end", source)
+        self.assertIn("saved_matches and pair.construction_request~=pending.request", source)
+        self.assertIn("local actual=track_at(pair,pending.position,pending.direction)", source)
+        self.assertIn("if not (actual and actual==previous.built_entity)", source)
+        self.assertIn("connected_straight_rails(predecessor,actual)", source)
+        self.assertIn('return reject(m,"pending-original-rail-request-lost")', source)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', source)
+
+
 class NativeRailTerminalReceiptHandoffTests(unittest.TestCase):
     def test_original_paid_rail_receipt_reconciled_before_0338_overwrites_it(self):
         root = pathlib.Path(__file__).resolve().parents[2]
