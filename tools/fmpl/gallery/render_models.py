@@ -64,13 +64,20 @@ def import_model(bpy,file):
         bpy.ops.import_scene.gltf(filepath=str(file))
     elif ext==".fbx":
         bpy.ops.import_scene.fbx(filepath=str(file))
+    elif ext==".blend":
+        # Read in a fresh Blender instance, with autoexec disabled by the
+        # production worker. Only the disposable downloaded copy is opened.
+        bpy.ops.wm.open_mainfile(filepath=str(file),load_ui=False)
+        for old in tuple(bpy.context.scene.objects):
+            if old.type in ("CAMERA","LIGHT"):
+                bpy.data.objects.remove(old,do_unlink=True)
     elif ext==".stl":
         bpy.ops.wm.stl_import(filepath=str(file))
     elif ext==".ply":
         bpy.ops.wm.ply_import(filepath=str(file))
     else:
         raise RuntimeError("Direct model preview format unsupported: "+ext)
-    visible=[o for o in bpy.context.scene.objects if o.type in ("MESH","CURVE","SURFACE")]
+    visible=[o for o in bpy.context.scene.objects if o.type in ("MESH","CURVE","SURFACE") and not o.hide_render and not o.hide_viewport]
     if not visible:raise RuntimeError("No real Blender geometry imported")
     return visible
 
@@ -152,8 +159,8 @@ def render_one(bpy,rec,root,max_bytes):
                 donor["git_blob_sha"]=rec["mtl_blob_sha"]
                 download_verified(donor,scratch/"survival-materials.mtl",max_bytes)
         bpy.ops.wm.read_factory_settings(use_empty=True)
-        scene=bpy.context.scene
         objects=import_model(bpy,src)
+        scene=bpy.context.scene
         measurements=set_scene(bpy,scene,objects)
         scene.frame_set(1)
         dest=root/"renders"/(tag+".png")
