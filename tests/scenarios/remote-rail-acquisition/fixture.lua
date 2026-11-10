@@ -176,6 +176,13 @@ local function setup()
   -- The independent native is_chunk_charted gate at 1800 ticks remains.
   local target_chunk={x=math.floor(ORE.x/32),y=math.floor(ORE.y/32)}
   s.chart_target_chunk=target_chunk
+  -- A native control chunk near the original Magos distinguishes a blocked
+  -- chart processor/force from a distant-target-specific chart request.
+  -- Both areas are genuinely generated; neither is a synthetic chart flag.
+  s.chart_control_chunk={x=0,y=math.floor(STATION.y/32)}
+  s.chart_events_total=0
+  s.chart_events_target=0
+  s.chart_events_control=0
   emit("CHART_PREPARED target_chunk="..target_chunk.x..","..target_chunk.y..
     " generated="..tostring(surface.is_chunk_generated(target_chunk))..
     " charted="..tostring(force.is_chunk_charted(surface,target_chunk))..
@@ -404,13 +411,47 @@ local function pulse()
       end
       force.chart(surface,{{target_chunk.x*32,target_chunk.y*32},
         {target_chunk.x*32+31,target_chunk.y*32+31}})
+      local control=s.chart_control_chunk
+      local control_generated=control and surface.is_chunk_generated(control)
+      if control_generated then
+        force.chart(surface,{{control.x*32,control.y*32},
+          {control.x*32+31,control.y*32+31}})
+      end
       s.chart_live_request_issued=true
       s.chart_live_request_tick=game.tick
       emit("CHART_LIVE_REQUEST elapsed="..elapsed..
+        " control_generated="..tostring(control_generated)..
+        " connected_players="..#force.connected_players..
         " generated=true charted="..
           tostring(force.is_chunk_charted(surface,target_chunk))..
         " requested="..
           tostring(force.is_chunk_requested_for_charting(surface,target_chunk)))
+    end
+    -- Three bounded native snapshots, before the unchanged 1,800-tick
+    -- charted-state gate. A requested chunk is NEVER treated as charted.
+    for _,mark in ipairs({300,900,1800}) do
+      if elapsed>=mark and not s["chart_diag_"..mark] then
+        local surface,force=game.surfaces[1],game.forces.player
+        local target,control=s.chart_target_chunk,s.chart_control_chunk
+        emit("CHART_NATIVE_DIAG elapsed="..elapsed..
+          " force="..force.name..
+          " connected_players="..#force.connected_players..
+          " total_players="..#game.players..
+          " events_total="..tostring(s.chart_events_total or 0)..
+          " events_target="..tostring(s.chart_events_target or 0)..
+          " events_control="..tostring(s.chart_events_control or 0)..
+          " target_generated="..tostring(surface.is_chunk_generated(target))..
+          " target_requested="..tostring(
+            force.is_chunk_requested_for_charting(surface,target))..
+          " target_charted="..tostring(force.is_chunk_charted(surface,target))..
+          " target_raw_chart="..tostring(force.get_chunk_chart(surface,target)~=nil)..
+          " control_generated="..tostring(surface.is_chunk_generated(control))..
+          " control_requested="..tostring(
+            force.is_chunk_requested_for_charting(surface,control))..
+          " control_charted="..tostring(force.is_chunk_charted(surface,control))..
+          " control_raw_chart="..tostring(force.get_chunk_chart(surface,control)~=nil))
+        s["chart_diag_"..mark]=true
+      end
     end
     for _,mark in ipairs({1800,9000,18000,36000,60000,90000}) do
       if elapsed>=mark and not s["checked_"..mark] then
@@ -428,6 +469,26 @@ function M.install()
       and broker.register_service)then
     error(PREFIX.."FAIL canonical test-only lifecycle unavailable")
   end
+  -- Observe the engine's actual chart-completion event through the original
+  -- event registry; failure to install this diagnostic never blocks gameplay.
+  local observed=registry.on_event(defines.events.on_chunk_charted,function(event)
+    local s=root()
+    if not s.started or s.failed or s.finished
+        or not event.force or event.force.index~=game.forces.player.index
+        or event.surface_index~=game.surfaces[1].index then return end
+    s.chart_events_total=(s.chart_events_total or 0)+1
+    local pos,target,control=event.position,s.chart_target_chunk,s.chart_control_chunk
+    if target and pos.x==target.x and pos.y==target.y then
+      s.chart_events_target=(s.chart_events_target or 0)+1
+      emit("CHART_NATIVE_EVENT target tick="..tostring(event.tick))
+    end
+    if control and pos.x==control.x and pos.y==control.y then
+      s.chart_events_control=(s.chart_events_control or 0)+1
+      emit("CHART_NATIVE_EVENT control tick="..tostring(event.tick))
+    end
+  end,nil,{owner="ci_remote_rail_acquisition",route="native-chart-observer",
+    category="diagnostics",priority="last"})
+  emit("CHART_NATIVE_EVENT_OBSERVER registered="..tostring(not not observed))
   assert(registry.on_init(setup,{owner="ci_remote_rail_acquisition",
     route="initialize",category="diagnostics",priority="last"}))
   assert(broker.register_service{name="ci_remote_rail_acquisition",

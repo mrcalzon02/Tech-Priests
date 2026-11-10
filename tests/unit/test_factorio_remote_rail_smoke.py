@@ -140,6 +140,30 @@ class NativeRailDeferredChartAdmissionTests(unittest.TestCase):
         self.assertNotIn('surface.create_entity{name="straight-rail"', source)
 
 
+class NativeRailChartLifecycleDiagnosticsTests(unittest.TestCase):
+    def test_native_chart_control_is_observed_without_bypassing_target_gate(self):
+        fixture = (pathlib.Path(__file__).resolve().parents[2]
+                   / "tests/scenarios/remote-rail-acquisition/fixture.lua")
+        source = fixture.read_text(encoding="utf-8")
+        self.assertIn("s.chart_control_chunk={x=0,y=math.floor(STATION.y/32)}", source)
+        self.assertIn("force.chart(surface,{{control.x*32,control.y*32},", source)
+        self.assertIn("registry.on_event(defines.events.on_chunk_charted", source)
+        self.assertIn('route="native-chart-observer"', source)
+        self.assertIn("CHART_NATIVE_DIAG elapsed=", source)
+        self.assertIn("events_target=", source)
+        self.assertIn("events_control=", source)
+        self.assertIn("target_raw_chart=", source)
+        self.assertIn("control_raw_chart=", source)
+        self.assertIn("connected_players=", source)
+        self.assertIn("CHART_NATIVE_EVENT_OBSERVER registered=", source)
+        self.assertLess(source.index("CHART_NATIVE_DIAG elapsed="),
+                        source.index("for _,mark in ipairs({1800,9000,18000"))
+        self.assertIn("if elapsed>=1800 and not s.chart_verified then", source)
+        self.assertIn('fail("REMOTE_ORE_NOT_CHARTED_AFTER_TICKS="', source)
+        self.assertNotIn("surface.create_entity{name=\"iron-ore\"", source)
+        self.assertNotIn("surface.create_entity{name=\"straight-rail\"", source)
+
+
 class NativeRailPhysicalSupplyCapacityTests(unittest.TestCase):
     def test_full_manifest_uses_real_seven_slot_station_and_nearby_depot(self):
         fixture = (pathlib.Path(__file__).resolve().parents[2]
