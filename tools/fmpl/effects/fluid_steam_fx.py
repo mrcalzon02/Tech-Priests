@@ -259,15 +259,15 @@ def _feathered_steam_material():
     Procedural local-space dither and smooth radial density suppress surface
     rims and silhouetted facets. No billboard cards or simulation/cache baking.
     """
-    name="FMPL | relief steam noise-feathered volume v03"
+    name="FMPL | relief steam readable soft volume v04"
     existing=bpy.data.materials.get(name)
     if existing:
         return existing
     mat=bpy.data.materials.new(name)
     mat.use_nodes=True
-    mat.diffuse_color=(.76,.83,.84,.035)
+    mat.diffuse_color=(.86,.91,.93,.045)
     mat["fmpl_fx_role"]="physically nozzle-anchored 3D variable-density steam volume"
-    mat["fmpl_fx_source"]="FMPL steam-clean; true Blender volume + radial-noise feather"
+    mat["fmpl_fx_source"]="FMPL steam-clean; expanded low-contrast scattered true volume with bounded density-aware lift"
     mat["fmpl_fx_not_game_approved"]=True
     if hasattr(mat,"surface_render_method"):
         try:
@@ -283,7 +283,7 @@ def _feathered_steam_material():
     transparent.name="FMPL STEAM | transparent exterior"
     surface=nodes.new("ShaderNodeBsdfPrincipled")
     surface.name="FMPL STEAM | pale vapor surface"
-    surface.inputs["Base Color"].default_value=(.80,.86,.87,1.)
+    surface.inputs["Base Color"].default_value=(.89,.92,.94,1.)
     surface.inputs["Roughness"].default_value=.94
     mix=nodes.new("ShaderNodeMixShader")
     mix.name="FMPL STEAM | radial-dither alpha mix"
@@ -321,13 +321,13 @@ def _feathered_steam_material():
     feather.interpolation_type="SMOOTHSTEP"
     feather.inputs["From Min"].default_value=.14
     feather.inputs["From Max"].default_value=.49
-    feather.inputs["To Min"].default_value=.025
+    feather.inputs["To Min"].default_value=.038
     feather.inputs["To Max"].default_value=0.0
     links.new(perturbed.outputs[0],feather.inputs["Value"])
     links.new(feather.outputs["Result"],mix.inputs[0])
     volume=nodes.new("ShaderNodeVolumePrincipled")
     volume.name="FMPL STEAM | true variable density volume"
-    volume.inputs["Color"].default_value=(.80,.86,.88,1.)
+    volume.inputs["Color"].default_value=(.89,.93,.96,1.)
     volume.inputs["Anisotropy"].default_value=.20
     density=nodes.new("ShaderNodeMapRange")
     density.name="FMPL STEAM | noise-dithered radial density"
@@ -335,10 +335,23 @@ def _feathered_steam_material():
     density.interpolation_type="SMOOTHSTEP"
     density.inputs["From Min"].default_value=.095
     density.inputs["From Max"].default_value=.51
-    density.inputs["To Min"].default_value=2.35
+    density.inputs["To Min"].default_value=3.10
     density.inputs["To Max"].default_value=0.
     links.new(perturbed.outputs[0],density.inputs["Value"])
     links.new(density.outputs["Result"],volume.inputs["Density"])
+    # The first true-volume proof was nearly invisible because the top relief
+    # receives little scene illumination. A restrained density-coupled emission
+    # makes real scattering vapor readable against industrial dark backgrounds.
+    # It necessarily decays to ZERO with radial density at every sphere edge.
+    lift=nodes.new("ShaderNodeMath")
+    lift.name="FMPL STEAM | bounded core lift linked to density"
+    lift.operation="MULTIPLY"
+    lift.inputs[1].default_value=.165
+    links.new(density.outputs["Result"],lift.inputs[0])
+    if volume.inputs.get("Emission Strength") is None or volume.inputs.get("Emission Color") is None:
+        raise RuntimeError("Native Blender volume node is missing emissive fog sockets")
+    volume.inputs["Emission Color"].default_value=(.78,.87,.92,1.)
+    links.new(lift.outputs[0],volume.inputs["Emission Strength"])
     links.new(volume.outputs["Volume"],output.inputs["Volume"])
     return mat
 
@@ -357,34 +370,48 @@ def add_relief_steam(col,p,mats):
     for k in range(12):
         primary=k<4
         layer=k if primary else k-4
-        x0=.94+.034*math.sin(k*2.17)
-        y0=.60+.028*math.cos(k*1.83)
-        z0=2.941+.048*(layer%4)+(.010 if not primary else 0)
+        x0=.94+.035*math.sin(k*2.17)
+        y0=.60+.030*math.cos(k*1.83)
+        # Core steam passes through the real Z2.913 outlet and rises. Companion
+        # wisps are offset, avoiding the previous tiny dark button-shaped puff.
+        z0=(2.948+.075*layer if primary
+            else 2.971+.033*layer)
+        radius=(.125+.011*layer if primary
+                else .100+.007*(layer%4))
         name=("relief nozzle keyed condensed steam %02d"%k if primary
               else "steam veil layered feather %02d"%(k-4))
-        ob=_orb(p,col,name,(x0,y0,z0),.103 if primary else .083,soft)
+        # More geometric samples allow soft volumes without octagonal corners;
+        # they remain actual editable meshes, not sprites or textured planes.
+        bpy.ops.mesh.primitive_uv_sphere_add(
+            segments=24,ring_count=16,radius=radius,
+            location=(x0,y0,z0))
+        ob=_own(p,col,name,bpy.context.object,soft)
+        for face in ob.data.polygons:
+            face.use_smooth=True
         for frame in FRAMES:
             phase=math.tau*(frame-1)/96.
-            swell=0.76+.23*math.sin(phase+.41*k)
-            ob.scale=(.82*swell,.77*swell,(1.13+.05*(k%3))*swell)
-            ob.location=(x0+.016*math.sin(phase+.53*k),
-                         y0+.014*math.cos(phase+.39*k),
-                         z0+.019*math.sin(phase+.61*k))
+            swell=.90+.12*math.sin(phase+.41*k)
+            ob.scale=(.86*swell,.83*swell,(1.24+.05*(k%3))*swell)
+            ob.location=(x0+.023*math.sin(phase+.53*k),
+                         y0+.019*math.cos(phase+.39*k),
+                         z0+.030*math.sin(phase+.61*k))
             ob.keyframe_insert(data_path="scale",frame=frame)
             ob.keyframe_insert(data_path="location",frame=frame)
-        ob["fmpl_fx_origin"]="relief nozzle (.94,.60,2.80)"
-        ob["fmpl_fx_surface"]="smooth radial alpha, dither noise, overlapping UV spheres"
+        ob["fmpl_fx_origin"]="open relief nozzle lip (.94,.60,2.913)"
+        ob["fmpl_fx_surface"]="radially feathered noise density; bounded low-emission vapor lift"
         ob["fmpl_fx_mesh_role"]="core" if primary else "silhouette feather veil"
     return {
         "relief_steam_puffs":4,
         "soft_surface_lobes":12,
+        "emission_coupled_to_density":True,
+        "density_lift_multiplication":.165,
         "secondary_feather_veils":8,
         "soft_edge_shader":soft.name,
         "true_volumetric_density":True,
-        "hard_surface_opacity_at_core":0.025,
+        "hard_surface_opacity_at_core":0.038,
         "root_nozzle_xyz":list(origin),
         "physical_emitter_lip_z":2.913,
-        "volume_density_core":2.35,
+        "volume_density_core":3.10,
         "animation_samples":len(FRAMES),
         "legacy_cone_geometry_preserved":True
     }
