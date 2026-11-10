@@ -179,6 +179,18 @@ def free_loopback_udp_port() -> int:
         return int(probe.getsockname()[1])
 
 
+def rail_native_player_test_command(factorio: pathlib.Path, mods: pathlib.Path,
+                                    save: pathlib.Path, ticks: int) -> list[str]:
+    """Real headless Factorio test-save with one native engine-created player.
+
+    The Steam executable's graphical --mp-connect client relaunches through
+    Steam in the runner and never joins. Factorio --test-save is the native
+    headless-with-player mode; its tick limit is NOT an acceptance condition.
+    """
+    return [str(factorio), "--mod-directory", str(mods),
+            "--test-save", str(save), "--test-ticks", str(ticks)]
+
+
 def rail_connected_smoke_verdict(exit_code: int, log: str) -> bool:
     """Accept ONLY two original physical counted connected rails, never a plan."""
     prefix = "[TP-REMOTE-RAIL-TEST] "
@@ -363,38 +375,30 @@ def main() -> int:
         print("FAIL headless save creation; see " + str(output / "create.log"))
         return 1
     if args.rail_connected_smoke:
-        # The isolated charted-natural-ore gate requires a normal Factorio
-        # simulation. Repeated --benchmark runs advanced game.tick but never
-        # processed the target chunk's native chart queue in 2.1.24.
-        # No public registration, network-facing listener, extra workflow
-        # or parallel scheduler; this process uses a loopback UDP socket.
-        settings = private_rail_server_settings(output)
-        port = free_loopback_udp_port()
-        engine_mode = "live-headless-server"
-        native_log = output / "native-server.log"
-        client_log = output / "rail-loopback-client.log"
-        engine_status, stop_reason = run_rail_live_server(
-            [str(factorio), "--mod-directory", str(mods),
-             "--start-server", str(save), "--server-settings", str(settings),
-             "--bind", f"127.0.0.1:{port}",
-             "--server-id", str(output / "rail-server-id.json")],
-            native_log, args.timeout_seconds,
-            client_argv=[str(factorio), "--mod-directory", str(mods),
-                         "--mp-connect", f"127.0.0.1:{port}"],
-            client_log_file=client_log)
-        print("Loopback client log: " + str(client_log))
+        # Use Factorio's native headless test-save mode with an actual player.
+        # The Steam graphical --mp-connect client restarted before joining;
+        # its auto-paused server could never process chart requests. This
+        # mode exercises native charting without any synthetic player, map
+        # credit, public listener, Steam restart or second controller.
+        engine_mode = "native-player-test-save"
+        native_log = output / "native-test-save.log"
+        engine_status = run(
+            rail_native_player_test_command(factorio, mods, save, tick_count),
+            native_log, args.timeout_seconds)
         contents = native_log.read_text(encoding="utf-8", errors="replace")
         for line in contents.splitlines():
             if scenario["prefix"] in line:
                 print(line[:1200])
+        # A clean --test-ticks exit alone never establishes a functional gate:
+        # BOTH physically debited originals and their native graph edge must
+        # have been independently observed by the original Lua fixture.
         evidence = rail_smoke_evidence(
             0, engine_status, contents, engine_version, required_series,
-            tick_count, engine_mode=engine_mode,
-            driver_stop_reason=stop_reason)
+            tick_count, engine_mode=engine_mode)
         rail_result_path.write_text(
             json.dumps(evidence, indent=2, sort_keys=True), encoding="utf-8")
         if not evidence["accepted"]:
-            print("FAIL native server physical rail gate; train/ore UNTESTED")
+            print("FAIL native player test-save physical rail gate; train/ore UNTESTED")
             print("Engine logs: " + str(native_log))
             return 1
         print("PASS two original item-debited native-connected rails ONLY; "
