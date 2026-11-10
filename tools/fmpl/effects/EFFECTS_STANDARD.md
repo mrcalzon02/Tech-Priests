@@ -93,3 +93,19 @@ Review images must be **real Blender renders of the complete machine** at idle
 and active frames, plus a close-up crop for subtle steam edges. If edges still
 show as faceted cones, the pass fails visual review even if other numeric checks
 pass. Prefer small sharply feathered exhaust over enlarging bright white cones.
+
+### Visible nozzle-to-vapor mating (Water Purifier follow-up)
+
+A steam plume needs a **visible mechanical origin**. The Water Purifier's original
+`FMPL_PROCESS | vent nozzle anchored through pressure pipe` is a solid cylinder
+at Blender `(0.94, 0.60, 2.80)`: it cannot serve as a convincing open emitter
+on its own. Preserve the historical object's vertices/keyframes but hide its
+render and fit a real hollow steel throat centered at `(0.94, 0.60)`,
+from `Z2.760` through `Z2.913` with a measured `0.15576`-tile bore.
+Physically seat the base on the unchanged pressure-relief pipe and add a
+restrained machined retaining lip at the mouth. Begin the overlapping, true
+3D feathered vapor lobes **inside/just above that open bore**, not as a
+floating cloud or a disk of opaque white mesh. Render both the lip and vapor
+at the one canonical Factorio camera; verify source preservation, cap
+suppression, actual mesh topology, vent-to-plume proximity, and independent
+GLB readback. The exact fluidbox mapping remains a separate native gate.
