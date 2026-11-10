@@ -1,5 +1,7 @@
 # FMPL GitHub-wide rendered asset library
 
+**[Open the live GitHub-native visual contact sheets](../../../docs/fmpl-gallery/README.md)** (76 canonical materials, 72 source models, 64 raw texture-map previews). Searchable GitHub Pages source: [gallery/index.html](../../../docs/fmpl-gallery/index.html). Full-resolution original Blender proofs remain in independently verified runner artifacts.
+
 This gallery inventories **all public mrcalzon02 repositories** as source records, not just the FMPL register. Its first native production pass uses a bounded number of Blender scenes and renders; the JSONL inventory includes every found 3D file and image, even those **not yet rendered**. Private Dens Mortis runner files, unverified private Drive donor binaries and unaudited external CC0 source packages do not get published here.
 
 ## Output families

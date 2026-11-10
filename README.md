@@ -28,3 +28,11 @@ Source implementation, source validation, Factorio loading, migration, behaviora
 ## Visual and Asset Construction Doctrine
 
 - **[Red Tech Priests of Mars — Construction and Defensive Architecture Doctrine](docs/RED_TECH_PRIESTS_CONSTRUCTION_DOCTRINE.md)** — canonical style guide for original Tech Priests fortifications, heavy-weapon emplacements, sensors, conduits, functional gothic reinforcements, ritual machine sanctification, and one-asset-at-a-time 3D modeling reviews. This art guide does not supersede the recovery work order or engineering/release standards.
+
+## Browse FMPL visual proofs on GitHub
+
+[**FMPL gallery — materials, models and raw-map previews**](docs/fmpl-gallery/README.md) displays 212 verified Blender previews directly in GitHub without downloading ZIPs. The searchable static page lives in `docs/fmpl-gallery/index.html` and can be served by GitHub Pages from `main:/docs`.
+
+<a href="docs/fmpl-gallery/README.md"><img src="docs/fmpl-gallery/assets/materials.webp" width="720" alt="76 canonical FMPL material sample renders, inline on GitHub"></a>
+
+Review proofs are not final modeling approval or game integration.
