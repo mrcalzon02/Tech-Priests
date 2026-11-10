@@ -14,10 +14,37 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "tools"))
 from run_factorio_isolated_service_scenario import (
     factorio_runtime_compatible, rail_connected_smoke_verdict,
     rail_smoke_evidence, reset_rail_smoke_diagnostics,
-    run_rail_live_server, private_rail_server_settings)
+    run_rail_live_server, private_rail_server_settings,
+    rail_native_player_test_command)
 P = "[TP-REMOTE-RAIL-TEST] "
 A = P + "PASS first physical rail built and exact stock debited"
 B = P + "PASS two distinct 0338-debited native-connected rails"
+
+class NativePlayerTestSaveSelectionTests(unittest.TestCase):
+    def test_native_headless_player_does_not_restart_graphical_steam_client(self):
+        argv = rail_native_player_test_command(
+            pathlib.Path("Factorio.exe"), pathlib.Path("physical-mods"),
+            pathlib.Path("original-save.zip"), 36060)
+        self.assertEqual(argv, ["Factorio.exe", "--mod-directory", "physical-mods",
+                                "--test-save", "original-save.zip",
+                                "--test-ticks", "36060"])
+        self.assertNotIn("--mp-connect", argv)
+        self.assertNotIn("--start-server", argv)
+        self.assertNotIn("--benchmark", argv)
+
+    def test_native_player_test_save_requires_actual_engine_receipts(self):
+        base = dict(engine_version="2.1.24", required_series="2.1",
+                    ticks_requested=36060, engine_mode="native-player-test-save")
+        self.assertFalse(rail_smoke_evidence(0, 0, "Test ticks finished", **base)["accepted"])
+        self.assertFalse(rail_smoke_evidence(0, 0, A, **base)["accepted"])
+        self.assertFalse(rail_smoke_evidence(0, 1, A + "\n" + B, **base)["accepted"])
+        self.assertFalse(rail_smoke_evidence(0, 0, A + "\n" + B + "\n" + P +
+                                             "FAIL native graph", **base)["accepted"])
+        accepted = rail_smoke_evidence(0, 0, A + "\n" + B, **base)
+        self.assertTrue(accepted["accepted"])
+        self.assertTrue(accepted["first_paid_rail"])
+        self.assertTrue(accepted["native_connected_pair"])
+        self.assertEqual(accepted["simulation_mode"], "native-player-test-save")
 
 class NativeRailSmokeVerdictTests(unittest.TestCase):
     def test_accept_both_native_receipts_only(self):
