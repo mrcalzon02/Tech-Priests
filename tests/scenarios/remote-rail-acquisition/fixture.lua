@@ -23,6 +23,66 @@ end
 local function count(surface,opts)
   return #surface.find_entities_filtered(opts)
 end
+-- A no-player headless force may retain queued LuaForce.chart requests.
+-- Give it a REAL powered vanilla radar close enough for native nearby scans.
+-- This is isolated test-world *initial scouting infrastructure*, never a
+-- robot/rail builder, resource source, or acceptance credit. Its electricity
+-- comes from ordinary engine-operated solar panels on the same copper network.
+local function seed_native_radar_chart_infrastructure(surface,force,ore)
+  local offsets={{48,48},{72,48},{48,-48},{72,-48},
+    {48,72},{72,72},{96,0},{96,48}}
+  local panels={{-2,-6},{2,-6},{6,-6},{10,-6},
+    {-2,6},{2,6},{6,6},{10,6}}
+  for _,offset in ipairs(offsets) do
+    local base={x=math.floor(ore.x)+offset[1],
+      y=math.floor(ore.y)+offset[2]}
+    local area={{base.x-12,base.y-12},{base.x+15,base.y+12}}
+    surface.request_to_generate_chunks(base,2)
+    surface.force_generate_chunk_requests()
+    -- NEVER erase another natural resource as a side effect of choosing a
+    -- chart observer. If this pad has ore, try another existing world site.
+    if count(surface,{type="resource",area=area})==0 then
+      local tiles={}
+      for xx=base.x-12,base.x+14 do
+        for yy=base.y-12,base.y+11 do
+          tiles[#tiles+1]={name="grass-1",position={xx,yy}}
+        end
+      end
+      surface.set_tiles(tiles,true)
+      for _,entity in ipairs(surface.find_entities_filtered{area=area}) do
+        if entity.valid and (entity.type=="tree" or entity.type=="cliff"
+            or entity.type=="simple-entity") then entity.destroy() end
+      end
+      local entries={{name="radar",position=base},
+        {name="substation",position={x=base.x+6,y=base.y}}}
+      for _,p in ipairs(panels) do
+        entries[#entries+1]={name="solar-panel",
+          position={x=base.x+p[1],y=base.y+p[2]}}
+      end
+      local clear=true
+      for _,entry in ipairs(entries) do
+        if not surface.can_place_entity{
+            name=entry.name,position=entry.position,force=force} then
+          clear=false;break
+        end
+      end
+      if clear then
+        local radar
+        for _,entry in ipairs(entries) do
+          local entity=surface.create_entity{
+            name=entry.name,position=entry.position,
+            force=force,raise_built=true}
+          if not (entity and entity.valid) then
+            fail("CHART_RADAR_PHYSICAL_INFRASTRUCTURE_PLACEMENT "..entry.name)
+          end
+          if entry.name=="radar" then radar=entity end
+        end
+        return radar,base,#panels
+      end
+    end
+  end
+  fail("CHART_NATIVE_POWERED_RADAR_SITE_UNAVAILABLE")
+end
 local function setup()
   local s=root()
   if s.started then return end
@@ -180,6 +240,17 @@ local function setup()
   -- chart processor/force from a distant-target-specific chart request.
   -- Both areas are genuinely generated; neither is a synthetic chart flag.
   s.chart_control_chunk={x=0,y=math.floor(STATION.y/32)}
+  -- Start at ordinary daylight so the solar array supplies real power
+  -- during this bounded 1,800-tick chart-lifecycle gate; time still advances.
+  surface.daytime=0.85
+  local radar,radar_position,solar_panels=
+    seed_native_radar_chart_infrastructure(surface,force,ORE)
+  s.chart_radar_position=radar_position
+  s.chart_radar_unit=radar.unit_number
+  emit("CHART_NATIVE_RADAR_SETUP radar_unit="..radar.unit_number..
+    " solar_panels="..solar_panels..
+    " x="..radar_position.x.." y="..radar_position.y..
+    " daytime="..surface.daytime)
   s.chart_events_total=0
   s.chart_events_target=0
   s.chart_events_control=0
@@ -433,6 +504,19 @@ local function pulse()
       if elapsed>=mark and not s["chart_diag_"..mark] then
         local surface,force=game.surfaces[1],game.forces.player
         local target,control=s.chart_target_chunk,s.chart_control_chunk
+        local radar=surface.find_entities_filtered{
+          name="radar",position=s.chart_radar_position,
+          radius=2,force=force}[1]
+        local radar_energy=radar and radar.valid and radar.energy or 0
+        local radar_network=radar and radar.valid
+          and radar.electric_network_id or nil
+        if radar_energy>0 then s.chart_radar_power_observed=true end
+        emit("CHART_RADAR_NATIVE_DIAG elapsed="..elapsed..
+          " radar_valid="..tostring(not not (radar and radar.valid))..
+          " energy_j="..tostring(radar_energy)..
+          " electric_network_id="..tostring(radar_network)..
+          " ever_powered="..tostring(s.chart_radar_power_observed or false)..
+          " daytime="..tostring(surface.daytime))
         emit("CHART_NATIVE_DIAG elapsed="..elapsed..
           " force="..force.name..
           " connected_players="..#force.connected_players..
