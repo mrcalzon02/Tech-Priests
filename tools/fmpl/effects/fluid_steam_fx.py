@@ -219,6 +219,40 @@ def build_witness_canisters(col, p, mats):
     return out
 
 
+def add_relief_nozzle(col, p, mats):
+    """Replace an opaque cap with a visible, actually hollow vertical exhaust.
+
+    The verified V04 source has a solid cylindrical nozzle near (.94,.60,2.80).
+    Never modify its mesh; the caller hides only that source object's render.
+    These new machine-side pieces sit exactly on the existing relief pipe end.
+    """
+    center=(.94,.60)
+    steel=mats["steel"]
+    iron=mats["iron"]
+    brass=mats["brass"]
+    throat=p.open_hollow_tube(
+        col,"relief vent emitter / open steel throat",
+        (center[0],center[1],2.760),
+        (center[0],center[1],2.913),
+        .118,steel,bore_ratio=.66)
+    throat["fmpl_nozzle_role"]="open, actually hollow steam outlet"
+    throat["fmpl_nozzle_bore_diameter_tiles"]=round(2*.118*.66,5)
+    throat["fmpl_nozzle_lip_plane_z"]=2.913
+    p.torus(col,"relief vent emitter / seated root ferrule",
+            (center[0],center[1],2.785),.123,.018,iron)
+    p.torus(col,"relief vent emitter / visible open mouth retaining lip",
+            (center[0],center[1],2.910),.124,.014,brass)
+    return {
+        "emitter_center_xyz":[.94,.60,2.913],
+        "outer_diameter_tiles":.236,
+        "inner_bore_diameter_tiles":round(2*.118*.66,5),
+        "mating_pipe_top_z":2.77,
+        "source_solid_cap_preserved":True,
+        "visible_open_throat":True,
+        "rendered_mesh_parts":3
+    }
+
+
 def _feathered_steam_material():
     """True lightweight volumetric steam inside real Blender sphere meshes.
 
@@ -301,7 +335,7 @@ def _feathered_steam_material():
     density.interpolation_type="SMOOTHSTEP"
     density.inputs["From Min"].default_value=.095
     density.inputs["From Max"].default_value=.51
-    density.inputs["To Min"].default_value=1.65
+    density.inputs["To Min"].default_value=2.35
     density.inputs["To Max"].default_value=0.
     links.new(perturbed.outputs[0],density.inputs["Value"])
     links.new(density.outputs["Result"],volume.inputs["Density"])
@@ -325,7 +359,7 @@ def add_relief_steam(col,p,mats):
         layer=k if primary else k-4
         x0=.94+.034*math.sin(k*2.17)
         y0=.60+.028*math.cos(k*1.83)
-        z0=2.854+.047*(layer%4)+(.035 if not primary else 0)
+        z0=2.941+.048*(layer%4)+(.010 if not primary else 0)
         name=("relief nozzle keyed condensed steam %02d"%k if primary
               else "steam veil layered feather %02d"%(k-4))
         ob=_orb(p,col,name,(x0,y0,z0),.103 if primary else .083,soft)
@@ -349,6 +383,8 @@ def add_relief_steam(col,p,mats):
         "true_volumetric_density":True,
         "hard_surface_opacity_at_core":0.025,
         "root_nozzle_xyz":list(origin),
+        "physical_emitter_lip_z":2.913,
+        "volume_density_core":2.35,
         "animation_samples":len(FRAMES),
         "legacy_cone_geometry_preserved":True
     }
