@@ -259,7 +259,7 @@ def _feathered_steam_material():
     Procedural local-space dither and smooth radial density suppress surface
     rims and silhouetted facets. No billboard cards or simulation/cache baking.
     """
-    name="FMPL | relief steam readable soft volume v04"
+    name="FMPL | relief steam irregular feathered wisps v05"
     existing=bpy.data.materials.get(name)
     if existing:
         return existing
@@ -321,7 +321,7 @@ def _feathered_steam_material():
     feather.interpolation_type="SMOOTHSTEP"
     feather.inputs["From Min"].default_value=.14
     feather.inputs["From Max"].default_value=.49
-    feather.inputs["To Min"].default_value=.038
+    feather.inputs["To Min"].default_value=.021
     feather.inputs["To Max"].default_value=0.0
     links.new(perturbed.outputs[0],feather.inputs["Value"])
     links.new(feather.outputs["Result"],mix.inputs[0])
@@ -346,7 +346,7 @@ def _feathered_steam_material():
     lift=nodes.new("ShaderNodeMath")
     lift.name="FMPL STEAM | bounded core lift linked to density"
     lift.operation="MULTIPLY"
-    lift.inputs[1].default_value=.165
+    lift.inputs[1].default_value=.112
     links.new(density.outputs["Result"],lift.inputs[0])
     if volume.inputs.get("Emission Strength") is None or volume.inputs.get("Emission Color") is None:
         raise RuntimeError("Native Blender volume node is missing emissive fog sockets")
@@ -367,17 +367,22 @@ def add_relief_steam(col,p,mats):
         raise RuntimeError("Pinned FMPL native steam-clean material is missing")
     soft=_feathered_steam_material()
     origin=(.94,.60,2.80)
-    for k in range(12):
+    # Four overlapping core lobes, eight asymmetric drifting wisps. Explicit
+    # measured origins break the previous perfectly stacked conical silhouette.
+    # The first two cores intersect the open lip, and every later lobe
+    # overlaps another; these are not disconnected decorative clouds.
+    wisps=(
+        (.000,.000,2.949,.125),(.015,-.012,3.016,.130),
+        (-.048,.024,3.087,.116),(-.080,.040,3.164,.083),
+        (.039,-.029,2.969,.088),(-.028,.036,3.017,.086),
+        (.063,.010,3.052,.079),(-.061,-.014,3.103,.090),
+        (-.099,.037,3.147,.072),(.045,.046,3.172,.075),
+        (-.047,.059,3.207,.070),(-.079,-.016,3.068,.068)
+    )
+    for k,(dx,dy,z0,radius) in enumerate(wisps):
         primary=k<4
-        layer=k if primary else k-4
-        x0=.94+.035*math.sin(k*2.17)
-        y0=.60+.030*math.cos(k*1.83)
-        # Core steam passes through the real Z2.913 outlet and rises. Companion
-        # wisps are offset, avoiding the previous tiny dark button-shaped puff.
-        z0=(2.948+.075*layer if primary
-            else 2.971+.033*layer)
-        radius=(.125+.011*layer if primary
-                else .100+.007*(layer%4))
+        x0=.94+dx
+        y0=.60+dy
         name=("relief nozzle keyed condensed steam %02d"%k if primary
               else "steam veil layered feather %02d"%(k-4))
         # More geometric samples allow soft volumes without octagonal corners;
@@ -390,25 +395,25 @@ def add_relief_steam(col,p,mats):
             face.use_smooth=True
         for frame in FRAMES:
             phase=math.tau*(frame-1)/96.
-            swell=.90+.12*math.sin(phase+.41*k)
-            ob.scale=(.86*swell,.83*swell,(1.24+.05*(k%3))*swell)
-            ob.location=(x0+.023*math.sin(phase+.53*k),
-                         y0+.019*math.cos(phase+.39*k),
+            swell=.92+.10*math.sin(phase+.41*k)
+            ob.scale=(.93*swell,.80*swell,(1.28+.04*(k%3))*swell)
+            ob.location=(x0+.018*math.sin(phase+.53*k),
+                         y0+.013*math.cos(phase+.39*k),
                          z0+.030*math.sin(phase+.61*k))
             ob.keyframe_insert(data_path="scale",frame=frame)
             ob.keyframe_insert(data_path="location",frame=frame)
         ob["fmpl_fx_origin"]="open relief nozzle lip (.94,.60,2.913)"
-        ob["fmpl_fx_surface"]="radially feathered noise density; bounded low-emission vapor lift"
+        ob["fmpl_fx_surface"]="irregular lobe geometry, radial noise density, sparse density-coupled visibility"
         ob["fmpl_fx_mesh_role"]="core" if primary else "silhouette feather veil"
     return {
         "relief_steam_puffs":4,
         "soft_surface_lobes":12,
         "emission_coupled_to_density":True,
-        "density_lift_multiplication":.165,
+        "density_lift_multiplication":.112,
         "secondary_feather_veils":8,
         "soft_edge_shader":soft.name,
         "true_volumetric_density":True,
-        "hard_surface_opacity_at_core":0.038,
+        "hard_surface_opacity_at_core":0.021,
         "root_nozzle_xyz":list(origin),
         "physical_emitter_lip_z":2.913,
         "volume_density_core":3.10,
