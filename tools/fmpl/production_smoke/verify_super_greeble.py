@@ -185,6 +185,40 @@ def main():
     if (raw_rgb[0]<raw_rgb[2]*4 or raw_rgb[1]<raw_rgb[2]*2 or
         clean_rgb[2]<clean_rgb[0]*6 or clean_rgb[1]<clean_rgb[0]*4):
         raise RuntimeError("Physically assigned shader colors insufficiently warm/cool")
+    # V12: the V11 bubbles and foam were still present but completely buried
+    # behind enlarged tinted water. Require actual raised near-window bubbles,
+    # readable edge froth, and visibly transmissive physical fluid materials.
+    bubbly=[o for o in details if "sample station " in o.name and "liquid bubble" in o.name]
+    froth=[o for o in details if "sample station " in o.name and "waterline froth bead" in o.name]
+    if len(bubbly)!=24 or len(froth)!=24 or any(o.animation_data is None for o in bubbly+froth):
+        raise RuntimeError("Missing 24 keyed near-glass bubbles or 24 keyed surface foam beads")
+    if any(o.get("fmpl_witness_visibility_repair") is None for o in bubbly):
+        raise RuntimeError("Actual V12 near-observation-surface bubble build not present")
+    if receipt.get("fluid_fx",{}).get("waterline_froth_beads")!=24:
+        raise RuntimeError("The real Blender foam bead count was not recorded correctly")
+    raw_surface=columns_by_role["RAW"].node_tree.nodes.get("FMPL | Surface")
+    clean_surface=columns_by_role["CLEAN"].node_tree.nodes.get("FMPL | Surface")
+    if (raw_surface is None or clean_surface is None or
+        raw_surface.inputs["Transmission Weight"].default_value<.60 or
+        clean_surface.inputs["Transmission Weight"].default_value<.75):
+        raise RuntimeError("Tinted water is too opaque to reveal visible interior bubbling")
+    scene.frame_set(1)
+    bubble_start=[o.location.z for o in bubbly]
+    froth_start=[o.location.z for o in froth]
+    scene.frame_set(25)
+    bubble_active=[o.location.z for o in bubbly]
+    froth_active=[o.location.z for o in froth]
+    if max(abs(a-b) for a,b in zip(bubble_start,bubble_active))<.085:
+        raise RuntimeError("Visible witness bubbles still do not actually rise")
+    if max(abs(a-b) for a,b in zip(froth_start,froth_active))<.008:
+        raise RuntimeError("Waterline froth lacks physical motion")
+    scene.frame_set(97)
+    for o,z in zip(bubbly,bubble_start):
+        if abs(o.location.z-z)>.0001:
+            raise RuntimeError("Physical bubble rise did not loop at frame 97")
+    for o,z in zip(froth,froth_start):
+        if abs(o.location.z-z)>.0001:
+            raise RuntimeError("Physical foam bead motion did not loop at frame 97")
     # FMPL physical effects: inspect real native meshes and animation data,
     # not merely render filenames or decorative materials.
     vessels=[o for o in details if "enlarged transparent vessel" in o.name]
@@ -369,6 +403,11 @@ def main():
        "front_raw_amber_rgb":raw_rgb,
        "front_clean_cyan_rgb":clean_rgb,
        "front_colorway_contrast_verified":True,
+       "visible_rising_bubble_meshes":len(bubbly),
+       "visible_waterline_froth_bead_meshes":len(froth),
+       "v12_raw_water_transmission":round(float(raw_surface.inputs["Transmission Weight"].default_value),3),
+       "v12_clean_water_transmission":round(float(clean_surface.inputs["Transmission Weight"].default_value),3),
+       "v12_bubbles_and_foam_motion_looped":True,
        "moving_pump_rotor_samples":seen,
        "gauge_needles_keyed":len(needles),
        "process_bubbles_keyed":len(bubbles),
