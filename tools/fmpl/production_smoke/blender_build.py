@@ -15,6 +15,10 @@ import sys
 
 import bpy
 from mathutils import Vector
+# Blender --python execution need not insert this directory into sys.path.
+HERE=Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0,str(HERE))
 
 
 def sha(path):
@@ -65,45 +69,24 @@ def material_key(name):
 
 
 def prepare_camera(scene):
-    """Reuse the actual machine camera, matching Boiler V08's fixed Factorio
-    45-degree elevation and zero azimuth. Never create four inspection cameras.
-    """
-    camera=scene.camera
-    if camera is None or camera.type != "CAMERA":
-        cam_data=bpy.data.cameras.new("FMPL | boiler 45 export lens")
-        camera=bpy.data.objects.new("FMPL | Factorio production camera",cam_data)
-        scene.collection.objects.link(camera)
-    for ob in list(scene.objects):
-        if ob.type=="CAMERA" and ob!=camera:
-            bpy.data.objects.remove(ob,do_unlink=True)
-    camera.name="FMPL | Factorio 45 export (single direction)"
-    camera.data.type="ORTHO"
-    camera.data.ortho_scale=5.8
-    target=Vector((0.0,0.0,1.65))
-    camera.location=target+Vector((0.0,-6.0,6.0))
-    camera.rotation_euler=(target-camera.location).to_track_quat("-Z","Y").to_euler()
-    camera.data.shift_x=0.0
-    camera.data.shift_y=0.0
-    scene.camera=camera
+    """Use the *one* FMPL 45-degree camera on a derived scene, not authoring rigs."""
+    from camera_profile import clean_scene, audit_scene
     scene.render.engine="CYCLES"
     scene.cycles.samples=12
     scene.cycles.device="CPU"
     scene.render.film_transparent=True
     scene.render.image_settings.file_format="PNG"
     scene.render.image_settings.color_mode="RGBA"
-    scene.render.resolution_percentage=100
+    # Keep approved lighting. Never add extra camera viewpoints.
     if not any(o.type=="LIGHT" for o in scene.objects):
         sun_data=bpy.data.lights.new("FMPL | boiler-style daylight","SUN")
         sun_data.energy=2.0
         daylight=bpy.data.objects.new("FMPL | boiler-style daylight",sun_data)
         scene.collection.objects.link(daylight)
         daylight.rotation_euler=(math.radians(33),math.radians(-25),math.radians(21))
-    bpy.context.view_layer.update()
-    if abs((camera.location-target).normalized().z-2**-.5)>0.0001:
-        raise RuntimeError("Factorio export pitch is not 45 degrees")
-    if abs(camera.location.x)>1e-7:
-        raise RuntimeError("Factorio export yaw is not zero")
-    return camera
+    removed=clean_scene(scene,bpy,512)
+    audit_scene(scene,bpy,512)
+    return removed
 
 
 def load_module(filepath, name):
@@ -192,7 +175,7 @@ def main():
           "native_factorio_port_verified":False})
     if source_geometry_hash(source_objects) != original_geometry:
         raise RuntimeError("The fluid reference appendix changed source geometry")
-    prepare_camera(scene)
+    camera_cleanup=prepare_camera(scene)
     bpy.ops.file.pack_all()
     bpy.ops.wm.save_as_mainfile(filepath=str(out), compress=True, check_existing=False)
     # Export ONLY authored machine parts. Calibration aids never enter game art.
@@ -204,6 +187,8 @@ def main():
                               use_selection=True, export_apply=True)
     scene.render.resolution_x = 420
     scene.render.resolution_y = 420
+    from camera_profile import audit_scene
+    audit_scene(scene,bpy,420)
     scene.render.filepath = str(preview)
     bpy.ops.render.render(write_still=True)
     actual = {
@@ -221,6 +206,8 @@ def main():
       "calibration_reference_sha256":jig_hash,
       "pipe_references":interface_receipts,
       "fixed_factorio_camera":{"elevation_deg":45,"azimuth_deg":0,"target":[0,0,1.65],"ortho_scale":5.8,"direction_count":1},
+      "camera_policy":"fmpl.factorio45.v1",
+      "camera_cleanup":camera_cleanup,
       "source_preserved":True,
       "human_visual_approval":False,
       "factorio_native_port_verified":False,
