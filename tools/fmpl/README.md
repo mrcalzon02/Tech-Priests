@@ -1,5 +1,9 @@
 # FMPL — Factorio Modeling Production Library
 
+### Pipette architecture and connector library expansion
+
+The [Pipette architecture index](pipette/ARCHITECTURE_INDEX.md) tracks 140 planned pipe/tube/conduit/wire/housing/reinforcement constructions with 77 typed joints, 20 stiffness policies, and frozen comparison-port coordinates. **Catalog only:** the four previously verified pilot Blender examples remain separate from production approval of new types.
+
 A **versioned, shared, source-indexed production module** for Tech-Priests, Tanks-for-bob-Fork, HB-TTRPG-tools and future Factorio projects. This is a working *inventory and standards API*, not a new GitHub Actions workflow, third-party asset dump or replacement for existing validated art tooling.
 
 ## Contents
