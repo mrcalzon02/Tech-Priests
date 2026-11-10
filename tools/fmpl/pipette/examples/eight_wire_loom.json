@@ -1,0 +1,69 @@
+{
+  "id": "wire-loom-eight-sample",
+  "family": "wire_bundle",
+  "payload": "signal",
+  "size": {
+    "visual_gauge": "regular",
+    "outer_diameter": 0.07,
+    "conductor_count": 8,
+    "strand_diameter": 0.012
+  },
+  "material_id": "TP Library | gunmetal_dark",
+  "path": {
+    "kind": "hanging",
+    "samples": 24,
+    "sag": 0.1
+  },
+  "start_socket": {
+    "id": "controller.signal-out",
+    "xyz": [
+      0,
+      0,
+      1.2
+    ],
+    "normal": [
+      1,
+      0,
+      0
+    ],
+    "role": "source",
+    "payloads": [
+      "signal"
+    ],
+    "parent_mesh": "control terminal block"
+  },
+  "end_socket": {
+    "id": "sensor.signal-in",
+    "xyz": [
+      0.9,
+      0,
+      1.1
+    ],
+    "normal": [
+      -1,
+      0,
+      0
+    ],
+    "role": "sink",
+    "payloads": [
+      "signal"
+    ],
+    "parent_mesh": "sensor cable gland"
+  },
+  "fittings": {
+    "start": "lug",
+    "end": "lug"
+  },
+  "expose_cores": true,
+  "supports": {
+    "anchor_ids": [
+      "controller.signal-out",
+      "sensor.signal-in"
+    ]
+  },
+  "behavior": {
+    "suggested_binding": "signal-wire-loom",
+    "live_binding_implemented": false
+  },
+  "keep_outs": []
+}
