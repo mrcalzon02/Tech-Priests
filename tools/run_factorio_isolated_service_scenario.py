@@ -58,7 +58,9 @@ def run(argv: list[str], log_file: pathlib.Path, timeout: int) -> int:
 
 
 def run_rail_live_server(argv: list[str], log_file: pathlib.Path,
-                         timeout: int, poll_interval: float = 1.0
+                         timeout: int, poll_interval: float = 1.0,
+                         client_argv: list[str] | None = None,
+                         client_log_file: pathlib.Path | None = None
                          ) -> tuple[int, str]:
     """Run real headless simulation, stopping only at an observed native gate.
 
@@ -73,6 +75,12 @@ def run_rail_live_server(argv: list[str], log_file: pathlib.Path,
     offset = 0
     deadline = time.monotonic() + timeout
     reason = "timeout"
+    if client_argv is not None and client_log_file is None:
+        raise ValueError("A loopback client requires its own diagnostic log")
+    client_process = None
+    client_output = None
+    client_attempted = False
+    host_seen_at = None
     with log_file.open("w", encoding="utf-8") as output:
         try:
             process = subprocess.Popen(argv, stdin=subprocess.DEVNULL,
@@ -88,17 +96,55 @@ def run_rail_live_server(argv: list[str], log_file: pathlib.Path,
                     reader.seek(offset)
                     observed += reader.read()
                     offset = reader.tell()
+                # Launch exactly one genuine Factorio client only after the
+                # private native host is ready. No player or chart fabrication.
+                if "Hosting game at IP ADDR:" in observed and host_seen_at is None:
+                    host_seen_at = time.monotonic()
+                if client_argv and host_seen_at is not None and not client_attempted:
+                    client_attempted = True
+                    try:
+                        client_output = client_log_file.open("w", encoding="utf-8")
+                        client_process = subprocess.Popen(
+                            client_argv, stdin=subprocess.DEVNULL,
+                            stdout=client_output, stderr=subprocess.STDOUT)
+                    except OSError as error:
+                        if client_output is not None:
+                            client_output.close()
+                            client_output = None
+                        client_log_file.write_text(
+                            f"CLIENT_START_FAILED: {error}\n", encoding="utf-8")
                 if prefix + "FAIL " in observed:
                     reason = "fixture_failure"
                     break
                 if connected in observed:
                     reason = "native_gate_observed"
                     break
+                # A disconnected client must not consume the full 30-minute
+                # engine budget while an auto-paused server advances no ticks.
+                if (client_argv and host_seen_at is not None
+                        and "CHART_LIVE_REQUEST elapsed=" not in observed
+                        and time.monotonic() - host_seen_at >= 120):
+                    reason = "client_join_timeout"
+                    break
                 if process.poll() is not None:
                     reason = "unexpected_server_exit"
                     break
                 time.sleep(poll_interval)
         finally:
+            # Preserve both partial logs, but never leave the genuine local
+            # client running after a failed fixture, timeout or accepted gate.
+            if client_process is not None and client_process.poll() is None:
+                client_process.terminate()
+                try:
+                    client_process.wait(timeout=15)
+                except subprocess.TimeoutExpired:
+                    client_process.kill()
+                    client_process.wait(timeout=15)
+            if client_output is not None:
+                client_output.close()
+            if client_argv and not client_attempted:
+                client_log_file.write_text(
+                    "CLIENT_NOT_LAUNCHED_NO_HOST\n", encoding="utf-8")
             if process.poll() is None:
                 process.terminate()
                 try:
@@ -111,7 +157,7 @@ def run_rail_live_server(argv: list[str], log_file: pathlib.Path,
 
 
 def private_rail_server_settings(output: pathlib.Path) -> pathlib.Path:
-    """Write private, no-player-pause, no-near-term-autosave test settings."""
+    """Private native server; advance only while a real client is connected."""
     path = output / "rail-server-settings.json"
     path.write_text(json.dumps({
         "name": "Tech Priests isolated rail engine acceptance",
@@ -119,7 +165,7 @@ def private_rail_server_settings(output: pathlib.Path) -> pathlib.Path:
         "visibility": {"public": False, "lan": False},
         "max_players": 1,
         "require_user_verification": False,
-        "auto_pause": False,
+        "auto_pause": True,
         "autosave_interval": 1000,
     }, indent=2), encoding="utf-8")
     return path
@@ -149,7 +195,8 @@ def reset_rail_smoke_diagnostics(output: pathlib.Path) -> None:
     # Remove it before launching the engine, alongside stale verdict/logs.
     # Failure to remove a file aborts rather than reusing unverified state.
     for name in ("rail-connected-smoke-result.json", "benchmark.log",
-                 "native-server.log", "rail-server-settings.json",
+                 "native-server.log", "rail-loopback-client.log",
+                 "rail-server-settings.json",
                  "create.log", "scenario-initial.zip"):
         (output / name).unlink(missing_ok=True)
 
@@ -325,12 +372,17 @@ def main() -> int:
         port = free_loopback_udp_port()
         engine_mode = "live-headless-server"
         native_log = output / "native-server.log"
+        client_log = output / "rail-loopback-client.log"
         engine_status, stop_reason = run_rail_live_server(
             [str(factorio), "--mod-directory", str(mods),
              "--start-server", str(save), "--server-settings", str(settings),
              "--bind", f"127.0.0.1:{port}",
              "--server-id", str(output / "rail-server-id.json")],
-            native_log, args.timeout_seconds)
+            native_log, args.timeout_seconds,
+            client_argv=[str(factorio), "--mod-directory", str(mods),
+                         "--mp-connect", f"127.0.0.1:{port}"],
+            client_log_file=client_log)
+        print("Loopback client log: " + str(client_log))
         contents = native_log.read_text(encoding="utf-8", errors="replace")
         for line in contents.splitlines():
             if scenario["prefix"] in line:

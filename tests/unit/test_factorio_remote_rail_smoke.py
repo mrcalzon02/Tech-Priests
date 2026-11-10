@@ -41,7 +41,7 @@ class NativeRailPartialDiagnosticsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as root:
             output = pathlib.Path(root)
             stale = ("rail-connected-smoke-result.json", "benchmark.log",
-                     "create.log", "scenario-initial.zip")
+                     "rail-loopback-client.log", "create.log", "scenario-initial.zip")
             for name in stale:
                 (output / name).write_text("STALE PASS", encoding="utf-8")
             # Reset must not destroy unrelated fixture settings or logs.
@@ -282,7 +282,7 @@ class NativeRailLiveServerTests(unittest.TestCase):
             cfg = json.loads(private_rail_server_settings(
                 pathlib.Path(dirname)).read_text(encoding="utf-8"))
             self.assertEqual(cfg["visibility"], {"public": False, "lan": False})
-            self.assertFalse(cfg["auto_pause"])
+            self.assertTrue(cfg["auto_pause"])  # Real connected client required.
             self.assertNotIn("token", cfg)
             self.assertNotIn("rcon_port", cfg)
 
@@ -298,3 +298,42 @@ class NativeRailLiveServerTests(unittest.TestCase):
             "2.1.24", "2.1", 36060, engine_mode="live-headless-server",
             driver_stop_reason="native_gate_observed")
         self.assertFalse(failure["accepted"])
+
+    def test_real_local_client_launches_once_after_private_server_host(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root = pathlib.Path(dirname)
+            server_log, client_log = root / "server.log", root / "client.log"
+            host = ("import time; "
+                    "print('Hosting game at IP ADDR:({127.0.0.1:61670})', flush=True); "
+                    "time.sleep(0.8); "
+                    "print('[TP-REMOTE-RAIL-TEST] FAIL pending_chart', flush=True); "
+                    "time.sleep(10)")
+            client = ("import time; print('CLIENT_PROCESS_STARTED', flush=True); "
+                      "time.sleep(10)")
+            code, reason = run_rail_live_server(
+                [sys.executable, "-u", "-c", host], server_log, timeout=5,
+                poll_interval=0.02,
+                client_argv=[sys.executable, "-u", "-c", client],
+                client_log_file=client_log)
+            self.assertEqual(reason, "fixture_failure")
+            self.assertNotEqual(code, 0)
+            self.assertIn("CLIENT_PROCESS_STARTED",
+                          client_log.read_text(encoding="utf-8"))
+            self.assertNotIn("PASS two distinct",
+                             server_log.read_text(encoding="utf-8"))
+
+    def test_does_not_launch_client_if_native_server_never_hosts(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root = pathlib.Path(dirname)
+            server_log, client_log = root / "server.log", root / "client.log"
+            code, reason = run_rail_live_server(
+                [sys.executable, "-u", "-c",
+                 "print('[TP-REMOTE-RAIL-TEST] FAIL host_absent', flush=True)"],
+                server_log, timeout=5, poll_interval=0.02,
+                client_argv=[sys.executable, "-u", "-c",
+                             "print('NEVER_START')"],
+                client_log_file=client_log)
+            self.assertEqual(reason, "fixture_failure")
+            self.assertEqual(client_log.read_text(encoding="utf-8"),
+                             "CLIENT_NOT_LAUNCHED_NO_HOST\n")
+            self.assertNotEqual(code, 0)
