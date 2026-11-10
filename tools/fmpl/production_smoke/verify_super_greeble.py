@@ -123,6 +123,52 @@ def main():
     after=[b.location.z for b in bubbles]
     if max(abs(x-y) for x,y in zip(before,after))<.07:
         raise RuntimeError("Working fluid animation not visible")
+    # FMPL physical effects: inspect real native meshes and animation data,
+    # not merely render filenames or decorative materials.
+    vessels=[o for o in details if "enlarged transparent vessel" in o.name]
+    columns=[o for o in details if "enlarged visible liquid column" in o.name]
+    surfaces=[o for o in details if "moving liquid meniscus" in o.name]
+    liquid_bubbles=[o for o in details if "sample station " in o.name and "liquid bubble" in o.name]
+    flow_tracers=[o for o in details if "flow tracer" in o.name]
+    glass_flow=[o for o in details if "transparent tube" in o.name and "canister" in o.name]
+    vapor=[o for o in details if "relief nozzle keyed condensed steam" in o.name]
+    if len(vessels)!=2 or len(columns)!=2 or len(surfaces)!=2:
+        raise RuntimeError("Forward purifier inlet/outlet fluid canisters missing")
+    if any(o.dimensions.x < .33 or o.dimensions.z < .60 for o in vessels):
+        raise RuntimeError("Physical front canisters not enlarged to readable scale")
+    if len(liquid_bubbles)!=24 or len(flow_tracers)!=8 or len(glass_flow)!=4 or len(vapor)!=4:
+        raise RuntimeError("Real water bubble, glass flow or relief vapor meshes missing")
+    if any(o.animation_data is None for o in liquid_bubbles+flow_tracers+vapor):
+        raise RuntimeError("Fluid bubble, port flow or steam objects are not actually keyed")
+    for o in surfaces:
+        keys=o.data.shape_keys
+        if not keys or not keys.animation_data or not {"Inlet surge","Return wash"}.issubset(keys.key_blocks.keys()):
+            raise RuntimeError("Missing Blender-native animated fluid surface shape keys")
+    surface=surfaces[0].data.shape_keys.key_blocks["Inlet surge"]
+    scene.frame_set(1)
+    first_level=surface.value
+    original_bubble=liquid_bubbles[0].location.z
+    first_vapor=vapor[0].scale.z
+    scene.frame_set(25)
+    if abs(surface.value-first_level)<.20:
+        raise RuntimeError("Liquid meniscus not physically sloshing in the saved Blender")
+    if abs(liquid_bubbles[0].location.z-original_bubble)<.012:
+        raise RuntimeError("Visible liquid bubbles have no measurable rise")
+    if abs(vapor[0].scale.z-first_vapor)<.04:
+        raise RuntimeError("Steam plume is motionless despite real keyed geometry")
+    scene.frame_set(97)
+    end_level=surface.value
+    scene.frame_set(1)
+    if abs(end_level-surface.value)>1e-5:
+        raise RuntimeError("16-sample water animation has non-looping frame 97")
+    if receipt.get("fluid_fx",{}).get("vessels")!=2 or receipt.get("steam_fx",{}).get("relief_steam_puffs")!=4:
+        raise RuntimeError("Fluid/steam construction receipt does not match native scene")
+    if receipt.get("fmpl_effects_native_blend_sha256"):
+        for name in ("FMPL FX | water-murky","FMPL FX | water-clear",
+                     "FMPL FX | glass-clear","FMPL FX | steam-clean"):
+            material=bpy.data.materials.get(name)
+            if material is None or not material.get("fmpl_effect_id"):
+                raise RuntimeError("Unverified imported FMPL procedural FX material: "+name)
     material_names={m.name for o in details for m in o.data.materials if m}
     if not any(name.startswith("TP Library |") for name in material_names):
         raise RuntimeError("Super Greebles did not use real FMPL weathered PBR")
@@ -154,6 +200,14 @@ def main():
        "moving_pump_rotor_samples":seen,
        "gauge_needles_keyed":len(needles),
        "process_bubbles_keyed":len(bubbles),
+       "front_fluid_canisters":len(vessels),
+       "water_meniscus_shape_keys":len(surfaces),
+       "forward_liquid_bubbles":len(liquid_bubbles),
+       "moving_glass_flow_tracers":len(flow_tracers),
+       "connected_transparent_flow_lines":len(glass_flow),
+       "keyed_relief_steam_puffs":len(vapor),
+       "native_fmpl_effects_blend_sha256":receipt.get("fmpl_effects_native_blend_sha256"),
+       "water_fx_loop_frames":17,
        "packed_pbr_images":packed,
        "proof_alpha_idle":alpha_idle,
        "proof_alpha_working":alpha_work,
