@@ -106,7 +106,7 @@ def main():
     scene.render.use_file_extension=True
     scene.render.image_settings.color_depth="8"
     scene.render.image_settings.compression=22
-    scene.render.seed=4359
+    scene.cycles.seed=4359
     fullfile=dest/"all-effects.png"
     bubblefile=dest/"no-bubbles.png"
     foamfile=dest/"no-foam.png"
