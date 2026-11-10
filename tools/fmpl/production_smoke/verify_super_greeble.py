@@ -139,6 +139,32 @@ def main():
     legacy_cones=[o for o in saved_process if o.name.startswith("FMPL_PROCESS | service steam plume ")]
     if len(legacy_cones)!=2 or any(not cone.hide_render for cone in legacy_cones):
         raise RuntimeError("Two hard-edged legacy cone steam surfaces remain visible")
+    # Historical vent was a *solid* cylinder, not an open nozzle; preserve it,
+    # but require an actually hollow, camera-visible metal throat on the derivative.
+    solid_caps=[o for o in saved_process
+                if o.name=="FMPL_PROCESS | vent nozzle anchored through pressure pipe"]
+    if len(solid_caps)!=1 or not solid_caps[0].hide_render:
+        raise RuntimeError("Original solid vent cap was not hidden/replaced")
+    nozzle_throats=[o for o in details
+                    if "relief vent emitter / open steel throat" in o.name]
+    nozzle_lips=[o for o in details
+                 if "relief vent emitter / visible open mouth retaining lip" in o.name]
+    if len(nozzle_throats)!=1 or len(nozzle_lips)!=1:
+        raise RuntimeError("Missing actually modeled hollow vent nozzle and metal lip")
+    throat=nozzle_throats[0]
+    if (len(throat.data.vertices)<128 or
+        abs(float(throat.get("fmpl_nozzle_bore_diameter_tiles",0))-.15576)>.001 or
+        abs(float(throat.get("fmpl_nozzle_lip_plane_z",0))-2.913)>.002):
+        raise RuntimeError("New vent throat has no dimension-verified open bore")
+    nozzle_spec=receipt.get("vent_nozzle",{})
+    if (nozzle_spec.get("visible_open_throat") is not True or
+        nozzle_spec.get("solid_source_caps_hidden")!=1 or
+        nozzle_spec.get("rendered_mesh_parts")!=3):
+        raise RuntimeError("Nozzle visual/physical replacement receipt missing")
+
+    if any(abs(float(v.location.x)-.94)>.15 or abs(float(v.location.y)-.60)>.15 or
+           not (2.80<float(v.location.z)<3.30) for v in vapor):
+        raise RuntimeError("Steam does not emerge near the actual vent nozzle")
     if len(soft_veils)!=8 or any(v.animation_data is None for v in soft_veils):
         raise RuntimeError("Layered feather steam requires eight real keyed Blender meshes")
     if any(not ob.data.vertices or not ob.data.polygons for ob in vapor+soft_veils):
@@ -233,6 +259,7 @@ def main():
     # All Blender object references become invalid after read_factory_settings.
     # Preserve just immutable scalar QA values before unloading the native scene.
     rendered_legacy_cones=sum(not ob.hide_render for ob in legacy_cones)
+    rendered_legacy_solid_caps=sum(not ob.hide_render for ob in solid_caps)
     total_expected=(len([ob for ob in original if not ob.hide_render])+
                     len([ob for ob in saved_process if not ob.hide_render])+
                     len([ob for ob in details if not ob.hide_render]))
@@ -266,6 +293,11 @@ def main():
        "layered_soft_steam_veils":len(soft_veils),
        "legacy_cone_meshes_preserved":len(legacy_cones),
        "legacy_cone_meshes_rendered":rendered_legacy_cones,
+       "vent_nozzle_hollow_throat_verified":True,
+       "vent_nozzle_source_solid_caps_hidden":len(solid_caps),
+       "vent_nozzle_original_solid_caps_rendered":rendered_legacy_solid_caps,
+       "vent_open_bore_diameter_tiles":float(throat.get("fmpl_nozzle_bore_diameter_tiles")),
+
        "true_volumetric_steam_density_verified":True,
        "procedural_steam_edge_feather_verified":True,
        "steam_animation_closed_loop_verified":True,
