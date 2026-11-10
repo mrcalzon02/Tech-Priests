@@ -19,3 +19,16 @@ The initial batch targets canonical FMPL **76 material definitions** and the leg
 No new GitHub workflow. The private Dens Mortis controller runs one job on OLD-CORE30; every run saves an immutable native report, proofs and a new artifact. The indexed library is not a Factorio installation or a replacement for user visual approval.
 
 See `repositories.json` for repository scope and `inventory.py` for deterministic inventory. Rerun an explicit batch to extend coverage without deleting previous versioned proof artifacts.
+
+## Raw texture-map continuation
+
+The one-time first gallery build renders the 76 canonical FMPL material definitions. Other GitHub images are **indexed**, not automatically repurposed as physical surfaces. Run `render_texture_batch.py` against the preserved inventory to obtain actual Blender sphere previews for unique `material-map` and `texture-image` source files. It verifies the complete Git blob SHA before opening each original source; unsupported or oversized images are recorded as blocked.
+
+```sh
+blender -b --factory-startup --python-exit-code 1 --python tools/fmpl/gallery/render_texture_batch.py -- \
+  --inventory /path/gallery/inventory --out /path/new-batch-0000 --batch-index 0 --batch-size 64
+```
+
+Batches never overwrite one another. `batch-index` advances by 1 for the next slice. The material-map preview is labeled **raw-map-on-sphere**, not an approved PBR preset, because normal/ORM/height data are not interchangeable with albedo. Full sprite/frame/icon histories remain indexed but do not consume a separate physical-material render per animation frame.
+
+No scheduled jobs, no workflow matrices, and no automatic GitHub publication of external image binaries. For historical/duplicate models, future batches should reuse previously verified source hashes rather than rerendering identical geometry needlessly.
