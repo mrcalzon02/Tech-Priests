@@ -326,7 +326,20 @@ def plan(request):
     mat=request.get("material_id")
     if not isinstance(mat,str) or not mat.strip():
         raise PipetteError("material_id must refer to a specific approved Blender material")
-    size=_profile(request.get("size",{}),family)
+    raw_size=request.get("size",{})
+    if any(k in raw_size for k in ("diameter_mm","radius_mm","awg","gauge_awg","scale_mm_per_tile")):
+        raise PipetteError("Pipette sizes must be Blender units, never real-world converted")
+    size=_profile(raw_size,family)
+    profile=request.get("surface_profile",{})
+    if not isinstance(profile,dict):
+        raise PipetteError("surface_profile must be a mapping")
+    allowed_profile={"corrugation_pitch","corrugation_depth_ratio","rib_pitch","rib_height_ratio"}
+    if any(k not in allowed_profile for k in profile):
+        raise PipetteError("unknown surface_profile parameter")
+    for k,v in profile.items():
+        value=_number(v,"surface_profile."+k,positive=(k.endswith("_pitch")))
+        if k.endswith("_ratio") and not 0.0<=value<=.25:
+            raise PipetteError(k+" must be in relative range 0..0.25")
     a=_socket(request.get("start_socket"),"start_socket",payload)
     b=_socket(request.get("end_socket"),"end_socket",payload)
     if a["id"]==b["id"] or _dist(a["xyz"],b["xyz"])<1e-6:
@@ -370,6 +383,7 @@ def plan(request):
         "schema":PLAN_SCHEMA, "id":name, "family":family,"payload":payload,
         "units":"Blender scene units only; no real-world conversion",
         "size":size,"material_id":mat,"material_resolved_in_blender":False,
+        "surface_profile":profile,
         "sockets":{"start":a,"end":b},
         "centerline":points, "segments":segments,
         "fittings":fits,
