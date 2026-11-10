@@ -62,3 +62,12 @@ blender -b --python tools/fmpl/effects/register_library.py -- \
 ```
 
 Add `--install` only when authorizing registration of that directory in the **current Blender account's Asset Browser**. This does not copy the asset to a shared network drive, make a private runner artifact permanent, approve its appearance, or modify any Factorio prototype.
+
+
+## Water Purifier native moving-water fixture
+
+[`fluid_steam_fx.py`](fluid_steam_fx.py) is the reusable geometry/animation consumer for FMPL water-processing machinery. It is invoked by [`production_smoke/super_greeble.py`](../production_smoke/super_greeble.py) on an immutable Water Purifier source. It constructs two **physically enlarged front glass sample canisters** with separately routed dirty-water input, clean-water output, and actual 3D flow channels, plus sloshing shape-key menisci, independent rising bubbles and nozzle-mounted condensed steam. The effect animation is 16 keyed samples at 8 fps with a frame-97 seam, while the Factorio proof packs one fixed-camera static state and eight working samples at 64/128/256 pixels.
+
+**Material authority:** the consumer uses [`import_effects.py`](import_effects.py) to append water-murky, water-clear, glass-clear and steam-clean from an independently verified, hash-pinned native `.blend` library. It must not regenerate these shaders or change prior 23 PBR materials. No source scene, canonical pipe collar, game prototype or external donor is rewritten.
+
+**Verification:** [`verify_super_greeble.py`](../production_smoke/verify_super_greeble.py) reopens real Blender/GLB derivatives, checks original machine and process mesh preservation, measured canister size, shape-key slosh, 24 moving liquid bubbles, 8 visible glass flow tracers, 4 active sight-flow pipes, 4 relief steam puffs, and native FX material IDs. This is a technical/visual-review candidate; user approval and Factorio native fluidbox connections remain separate.
