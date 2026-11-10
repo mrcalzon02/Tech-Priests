@@ -111,7 +111,7 @@
         "union"
       ],
       "visible_architecture": "Threaded service nipples and gray zinc finish",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -122,7 +122,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "pipe_black_iron_threaded",
@@ -397,7 +399,7 @@
         "bell_spigot"
       ],
       "visible_architecture": "Cast or wiped lead Y joints, visual history only",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -408,7 +410,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "pipe_jacketed_double_wall",
@@ -1203,7 +1207,7 @@
         "hose_crimp"
       ],
       "visible_architecture": "Soft draped tubing with distinct band clamps",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1214,7 +1218,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "hose_molded_radiator",
@@ -1385,7 +1391,7 @@
         "hose_crimp"
       ],
       "visible_architecture": "Concentric rings perpendicular to path",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1396,7 +1402,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "hose_metal_helical",
@@ -1411,7 +1419,7 @@
         "hose_crimp"
       ],
       "visible_architecture": "Continuous spiral ridge along line",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1422,7 +1430,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "hose_layflat",
@@ -1619,7 +1629,7 @@
         "locknut_bushing"
       ],
       "visible_architecture": "Light thin-wall tubing and compression joint",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1630,7 +1640,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "conduit_fmc_interlocked",
@@ -1645,7 +1657,7 @@
         "compression_conduit"
       ],
       "visible_architecture": "Real square-lock or interlocked helical spiral",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1656,7 +1668,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "conduit_fmt_light_flex",
@@ -1723,7 +1737,7 @@
         "locknut_bushing"
       ],
       "visible_architecture": "Rigid polymer electrical fittings",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1734,7 +1748,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "conduit_ent_corrugated",
@@ -1749,7 +1765,7 @@
         "locknut_bushing"
       ],
       "visible_architecture": "Separate transverse polymer rings; no metal helix",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1760,7 +1776,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "conduit_lfnc_layered",
@@ -1879,7 +1897,7 @@
         "panel_grommet"
       ],
       "visible_architecture": "Accessible lengthwise seam and annular outer rings",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1890,7 +1908,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "conduit_unsplit_corrugated_loom",
@@ -1931,7 +1951,7 @@
         "split_loom_clip"
       ],
       "visible_architecture": "Helical wrap with visible spaces between coils",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1942,7 +1962,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "conduit_squarelock_metal",
@@ -1957,7 +1979,7 @@
         "cable_gland"
       ],
       "visible_architecture": "Distinct square-cut interlock profile",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1968,7 +1990,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "conduit_articulated_segmented",
@@ -1983,7 +2007,7 @@
         "cable_gland"
       ],
       "visible_architecture": "Actual articulated ring sections with joint limits",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1994,7 +2018,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "conduit_ball_joint_armored",
@@ -2061,7 +2087,7 @@
         "ring_lug"
       ],
       "visible_architecture": "Insulated cable and stripped end",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -2072,7 +2098,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "wire_single_insulated_stranded",
@@ -2347,7 +2375,7 @@
         "terminal_block"
       ],
       "visible_architecture": "Individual deterministic sag; coherent array not spaghetti",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -2358,7 +2386,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "wire_eight_laced_loom",
@@ -2373,7 +2403,7 @@
         "plug_socket"
       ],
       "visible_architecture": "Eight strands with periodic tied harness",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -2384,7 +2414,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "wire_eight_sheathed",
@@ -3075,7 +3107,7 @@
         "panel_grommet"
       ],
       "visible_architecture": "Spring coil surrounding internal protected line",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -3086,7 +3118,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "cable_steel_1x7",
@@ -3101,12 +3135,14 @@
         "thimble_eye"
       ],
       "visible_architecture": "One straight core and six winding strands",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "cable_steel_7x19",
@@ -3341,12 +3377,14 @@
         "rebar_threaded_coupler"
       ],
       "visible_architecture": "Longitudinal and transverse raised ribs",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_90"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_geometry.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "rebar_twisted_legacy",
@@ -3614,5 +3652,15 @@
     "D-stiffness and bundle comparison proof",
     "E-native blend/glb reopen and cycles preview",
     "F-source verified production materials and Factorio connection verification"
-  ]
+  ],
+  "current_implementation": {
+    "recipe_count": 19,
+    "implementation_status": "editable_mesh_builders_committed_native_proof_pending",
+    "current_geometry_module": "library_geometry.py",
+    "native_builder": "library_blender.py",
+    "independent_native_validator": "library_verify.py",
+    "batch_exporter": "build_library.py",
+    "remaining_unimplemented_types": 121,
+    "scope_note": "distinct procedural mesh code exists for selected types, not all 77 joints, not production-approved"
+  }
 }
