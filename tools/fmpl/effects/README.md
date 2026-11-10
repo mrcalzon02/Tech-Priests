@@ -24,3 +24,25 @@ with bpy.data.libraries.load("/path/FMPL_effects_materials_v1.blend", link=False
 To append animated rig geometry, append its named `FMPL FX RIG | ...` collection instead of manually copying render pixels. Transform imported rig roots to the target machine's physically appropriate emitter points, then align the native Factorio camera and game sprite export independently.
 
 The standard is source-only until a native Blender runner produces, saves and independently reopens the actual library. No release or asset acceptance is implied.
+
+## Verified native import API
+
+The [non-destructive import adapter](import_effects.py) takes the **verified saved .blend**, not a JSON-only material guess. Pin SHA-256 when reusing a cached library:
+
+```python
+import import_effects
+mats = import_effects.import_materials(
+    "/safe/local/path/FMPL_effects_materials_v1.blend",
+    ["water-clear", "crude-oil", "heated-steel-red"],
+    expected_sha256="SHA256_FROM_VERIFICATION",
+)
+target_object.data.materials.clear()
+target_object.data.materials.append(mats["water-clear"])
+collection, root = import_effects.append_rig(
+    "/safe/local/path/FMPL_effects_materials_v1.blend",
+    "steam-plume", anchor=(0.0, 0.0, 0.36),
+    expected_sha256="SHA256_FROM_VERIFICATION",
+)
+```
+
+The API fails on missing/mismatched assets or name collisions. An import does not prove correct in-game scale, pipe hookups, sprite anchoring, translucent sorting or user visual approval. `test_import_adapter.py` validates the source contract without a Blender installation.
