@@ -97,28 +97,34 @@ def _meniscus(p, col, index, center, radius, material):
 
 
 def _bubbles(p, col, index, x, y, material):
-    objects = []
+    """Actual visible air pockets rise near the inner glass observation face.
+
+    V11 mistake: bubbles stayed deep behind a strongly tinted solid fluid
+    cylinder, and oscillated only a few millimeters. Keep every bubble inside
+    the physical liquid core, put them near the viewer-facing fluid interface,
+    and move them upwards through the actual water column in a cyclic sequence.
+    """
+    objects=[]
     for k in range(12):
-        angle = math.tau*k/12 + .17*index
-        # Let the chamber's near-inner wall act as a physical observation face.
-        # The bubble stays in the modeled fluid, not behind its opaque volume.
-        r = .066 + .016*(k%3)
-        dx = r*math.cos(angle)
-        dy = -math.sqrt(max(.001, .148**2-dx**2)) + .012
-        base = .800 + .036*(k%6)
-        ob = _orb(p, col, "sample station %d liquid bubble %02d"%(index,k),
-                  (x+dx, y+dy, base),
-                  .027 + .004*(k%3), material)
+        dx=.108*math.cos(math.tau*k/12)
+        near=-math.sqrt(max(.001,.166**2-dx**2))
+        z0=.765+.032*(k%4)
+        bubble_radius=.022+.003*(k%3)
+        ob=_orb(p,col,"sample station %d liquid bubble %02d"%(index,k),
+                (x+dx,y+near,z0),bubble_radius,material)
+        ob["fmpl_fluid_role"]="visible actual rising bubble behind inner observation face"
+        ob["fmpl_witness_visibility_repair"]="V12 near-glass bubbles, not hidden beneath opaque fluid"
         for frame in FRAMES:
-            # Bounded, individually phase-shifted 16-sample rise with exact seam.
-            phase = math.tau * (frame - 1)/96.
-            dz = .050 + .050*math.sin(phase + .41*k)
-            ob.location.z = base + dz*(.78+.055*(k%4))
-            ob.keyframe_insert(data_path="location", index=2, frame=frame)
-        ob["fmpl_fluid_role"] = "rising process bubble in transparent fluid"
+            # Modulated rise. Every bubble loops at frame 97 exactly back to 1.
+            progress=((frame-1)/96. + ((k%8)/8.))%1.
+            ob.location=(x+dx+.007*math.sin(math.tau*progress+.4*k),
+                         y+near,
+                         .770+.437*progress)
+            ob.scale=(.86+.23*math.sin(math.tau*progress)**2,)*3
+            ob.keyframe_insert(data_path="location",frame=frame)
+            ob.keyframe_insert(data_path="scale",frame=frame)
         objects.append(ob)
     return objects
-
 
 def _foam_crest(p, col, idx, x, y, z, material):
     """Front-side physical waterline foam. It follows keyed slosh, not a decal."""
@@ -153,6 +159,38 @@ def _foam_crest(p, col, idx, x, y, z, material):
         obj.keyframe_insert(data_path="location",frame=frame)
         obj.keyframe_insert(data_path="rotation_euler",frame=frame)
     return obj
+
+
+def _foam_beads(p,col,idx,x,y,z,material):
+    """Physical bubbly froth along the front liquid surface, not a flat decal.
+
+    The V11 front foam crest was a 0.03-tile vertical strip hidden inside the
+    top glass/colored fluid. Beads cross the actual meniscus and have enough
+    projected surface area to remain visible from the Factorio 45deg camera.
+    """
+    result=[]
+    for j in range(12):
+        ang=math.pi*(j+.5)/12
+        r=.170-.009*(j%3)
+        dx=r*math.cos(ang)
+        dy=-r*math.sin(ang)
+        z0=z+.005*(j%3)-.006
+        radius=.015+.004*(j%3)
+        bpy.ops.mesh.primitive_uv_sphere_add(
+            segments=16,ring_count=10,radius=radius,
+            location=(x+dx,y+dy,z0))
+        ob=_own(p,col,"sample station %d waterline froth bead %02d"%(idx,j),
+                bpy.context.object,material)
+        for poly in ob.data.polygons:
+            poly.use_smooth=True
+        ob["fmpl_waterline_role"]="colored, real 3D froth at the moving liquid surface"
+        for frame in FRAMES:
+            phase=math.tau*(frame-1)/96.
+            ob.location.z=z0+.018*math.sin(phase+.39*j)
+            ob.location.x=x+dx+.008*math.sin(phase+.23*j)
+            ob.keyframe_insert(data_path="location",frame=frame)
+        result.append(ob)
+    return result
 
 
 def _watertone_copy(source, name, rgb, transmission, light):
@@ -195,7 +233,13 @@ def _foam_color_copy(source, name, rgb):
         raise RuntimeError("Original FMPL foam has no visible Principled BSDF")
     principled.inputs["Base Color"].default_value=(*rgb,1.)
     if principled.inputs.get("Alpha") is not None:
-        principled.inputs["Alpha"].default_value=.90
+        principled.inputs["Alpha"].default_value=.96
+    # Controlled local luminance ensures cream/raw and white/cyan bubbles
+    # remain readable against their water, without altering FMPL base assets.
+    if principled.inputs.get("Emission Color") is not None:
+        principled.inputs["Emission Color"].default_value=(*rgb,1.)
+    if principled.inputs.get("Emission Strength") is not None:
+        principled.inputs["Emission Strength"].default_value=.17
     return mat
 
 
@@ -203,16 +247,16 @@ def _witness_palette(mats):
     return {
         "raw":_watertone_copy(
             mats["fx_raw"],"FMPL | purifier raw-water olive-amber V11",
-            (.48,.275,.047),.22,0.),
+            (.48,.275,.047),.66,0.),
         "clean":_watertone_copy(
             mats["fx_clear"],"FMPL | purifier clean-water luminous cyan V11",
-            (.035,.58,.92),.45,.15),
+            (.035,.58,.92),.82,.15),
         "raw_foam":_foam_color_copy(
             mats["foam"],"FMPL | purifier raw olive-ochre foam V11",
-            (.77,.53,.17)),
+            (.96,.83,.42)),
         "clean_foam":_foam_color_copy(
             mats["foam"],"FMPL | purifier clean cyan-white foam V11",
-            (.43,.94,1.0)),
+            (.88,.98,1.0)),
     }
 
 
@@ -227,7 +271,9 @@ def build_witness_canisters(col, p, mats):
         (2, .53,palette["clean"],palette["clean_foam"]),
     )
     out = {"vessels": 0, "moving_surfaces": 0, "visible_foam_crests": 0,
-           "liquid_bubbles": 0, "flow_tracers": 0, "glass_flows": 0,
+           "liquid_bubbles": 0, "waterline_froth_beads": 0,
+           "flow_tracers": 0, "glass_flows": 0,
+           "front_water_visibility_repair": "v12 genuine visible bubbling and foam",
            "vessel_outer_diameter_tiles":.426,
            "vessel_height_tiles":.712,
            "vessel_centers_x_tiles":[-.17,.53],
@@ -244,7 +290,7 @@ def build_witness_canisters(col, p, mats):
         vessel["fmpl_witness_tank_body_height_tiles"]=.712
         vessel["fmpl_witness_tank_role"]="RAW" if idx==1 else "CLEAN"
         p.cyl(col,"sample station %d enlarged visible liquid column"%idx,
-              (x,y,.935), .190, .552, liquid)
+              (x,y,.939), .190, .564, liquid)
         for height in (.651, 1.352):
             p.torus(col,"sample station %d pressure retainer %.3f"%(idx,height),
                     (x,y,height),.226,.018,brass)
@@ -255,7 +301,10 @@ def build_witness_canisters(col, p, mats):
               (x,y,1.36),.202,.020,glass)
         _meniscus(p,col,idx,(x,y,1.225),.188,liquid)
         _foam_crest(p,col,idx,x,y,1.225,bubble_color)
-        out["liquid_bubbles"] += len(_bubbles(p,col,idx,x,y,bubble_color))
+        out["waterline_froth_beads"] += len(_foam_beads(
+            p,col,idx,x,y,1.225,bubble_color))
+        out["liquid_bubbles"] = out.get("liquid_bubbles",0) + len(
+            _bubbles(p,col,idx,x,y,bubble_color))
         out["vessels"] += 1
         out["moving_surfaces"] += 1
         out["visible_foam_crests"] += 1
