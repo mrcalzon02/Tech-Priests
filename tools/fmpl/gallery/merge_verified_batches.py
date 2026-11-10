@@ -50,15 +50,29 @@ def h(x) -> str:
     return html.escape(str(x), quote=True)
 
 
+def stage_for_model(source: dict) -> str:
+    """Conservative source-stage classification; never infer user approval."""
+    p = source.get('path', '').lower().replace('\\', '/')
+    if '/obj/' in p and p.endswith('.obj'):
+        return 'rough OBJ blockout'
+    if 'generated-v' in p or '/alternatives/' in p:
+        return 'historical editable/iteration source'
+    if '/production-' in p or '/production-source' in p:
+        return 'production source candidate'
+    if p.endswith('.blend'):
+        return 'native Blender source'
+    return 'interchange 3D source'
+
+
 def gallery_html(manifest):
     def card(r, kind):
         image = r['file']
         title = r.get('name') or r['id']
-        subtitle = r.get('family', '')
+        subtitle = r.get('stage') or r.get('family', '')
         extra = f'<small>{h(r.get("repository", ""))}</small>'
         link = r.get('source_url')
         source = f'<a href="{h(link)}" target="_blank" rel="noopener">Source</a>' if link else ''
-        return (f'<article data-kind="{kind}" data-text="{h(" ".join(map(str, (title, subtitle, r.get("repository", ""), r.get("status", "")))))}">'
+        return (f'<article data-kind="{kind}" data-text="{h(" ".join(map(str, (title, subtitle, r.get("repository", ""), r.get("status", ""),r.get("stage", "")))))}">'
                 f'<a href="{h(image)}"><img loading="lazy" src="{h(image)}" alt="{h(title)}"></a>'
                 f'<strong>{h(title)}</strong><small>{h(subtitle)}</small>{extra}{source}</article>')
     materials = ''.join(card(r, 'material') for r in manifest['materials'])
@@ -111,6 +125,10 @@ def build(baseline: Path, additionals: list[Path], output: Path):
             contact=z.read(original+'materials/'+mr['contact_file'])
             if sha256(contact)!=mr['contact_sha256']:raise ValueError('Material contact sheet mismatch')
             put('materials/'+mr['contact_file'],contact)
+            fmpl_catalog=asjson(z,original+'catalog.json')
+            pin=fmpl_catalog.get('source_fmpl_commit')
+            if not isinstance(pin,str) or not re.fullmatch(r'[0-9a-f]{40}',pin):
+                raise ValueError('Missing immutable FMPL material source commit')
             for row in mr['individuals']:
                 p=original+'materials/'+row['native_render']
                 data=verify_image(z,p,row['render_sha256'])
@@ -118,7 +136,9 @@ def build(baseline: Path, additionals: list[Path], output: Path):
                 put(target,data)
                 materials.append({'id':row['id'],'name':row['id'],'family':row['family'],
                                   'status':'rendered-unapproved','kind':row['kind'], 'file':target,
-                                  'sha256':row['render_sha256'],'source_url':None})
+                                  'sha256':row['render_sha256'],
+                                  'source_path':row['source'],
+                                  'source_url':'https://github.com/mrcalzon02/Tech-Priests/blob/'+pin+'/'+row['source']})
             # Preserve source model receipt; all thumbnails link to pinned GitHub source.
             base_report=asjson(z,original+'models/models_report.json')
             if base_report.get('rendered')!=36: raise ValueError('Original model proof report no longer matches verified baseline')
@@ -137,6 +157,7 @@ def build(baseline: Path, additionals: list[Path], output: Path):
                         target='models/renders/'+blob+'.png'
                         put(target,data)
                         models[blob]={'id':blob,'name':Path(rec['path']).stem,'family':'3D model',
+                                      'stage':stage_for_model(rec),
                                       'repository':rec['repository'],'status':'rendered-unapproved',
                                       'file':target,'sha256':row['render_sha256'],
                                       'source_url':rec.get('source_url'), 'source':rec,
