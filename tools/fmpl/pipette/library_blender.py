@@ -167,8 +167,8 @@ def build_fluid_branch(collection, model, approved_material):
         drill=cylinder(collection,"pipe actual open bore "+p["id"],
                        h-d*.038,q+d*.045,inner)
         root=boolean(root,drill,"DIFFERENCE")
-    root.name="PIPETTE | "+model["architecture_id"]+" | hollow CSG "+
-              model["topology"]+" manifold"
+    root.name=("PIPETTE | "+model["architecture_id"]+
+               " | hollow CSG "+model["topology"]+" manifold")
     root.data.materials.append(approved_material)
     for poly in root.data.polygons:
         poly.use_smooth=True
