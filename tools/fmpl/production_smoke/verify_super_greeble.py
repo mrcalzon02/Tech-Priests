@@ -143,19 +143,28 @@ def main():
         raise RuntimeError("Layered feather steam requires eight real keyed Blender meshes")
     if any(not ob.data.vertices or not ob.data.polygons for ob in vapor+soft_veils):
         raise RuntimeError("New steam components must contain actual editable mesh geometry")
-    softmat=bpy.data.materials.get("FMPL | relief steam soft radial feather v02")
+    softmat=bpy.data.materials.get("FMPL | relief steam noise-feathered volume v03")
     if softmat is None or not softmat.use_nodes:
         raise RuntimeError("Soft surface steam material was not saved to native Blender")
     for name in ("FMPL STEAM | actual sphere radial distance",
                  "FMPL STEAM | multi-surface dither breakup",
                  "FMPL STEAM | steep smooth radial feather",
                  "FMPL STEAM | radial-dither alpha mix",
-                 "FMPL STEAM | transparent exterior"):
+                 "FMPL STEAM | transparent exterior",
+                 "FMPL STEAM | true variable density volume",
+                 "FMPL STEAM | noise-dithered radial density"):
         if softmat.node_tree.nodes.get(name) is None:
             raise RuntimeError("No actual procedural steam feather/alpha node: "+name)
     alpha=softmat.node_tree.nodes.get("FMPL STEAM | steep smooth radial feather")
-    if alpha.inputs["To Max"].default_value!=0.0 or alpha.inputs["From Max"].default_value>.50:
-        raise RuntimeError("Steam soft mask has hard/unfeathered exterior")
+    density=softmat.node_tree.nodes.get("FMPL STEAM | noise-dithered radial density")
+    if (alpha.inputs["To Max"].default_value!=0.0 or
+        alpha.inputs["To Min"].default_value>.05 or
+        density.inputs["To Max"].default_value!=0.0 or
+        density.inputs["From Max"].default_value>.52 or
+        not softmat.node_tree.nodes.get("FMPL STEAM | true variable density volume").inputs["Density"].is_linked):
+        raise RuntimeError("True volumetric steam density has hard or hollow edges")
+    if receipt.get("steam_fx",{}).get("true_volumetric_density") is not True:
+        raise RuntimeError("Blender steam must be true radial-volume, not white surface rings")
     if receipt.get("steam_fx",{}).get("soft_surface_lobes")!=12 or receipt.get("steam_fx",{}).get("legacy_cones_hidden")!=2:
         raise RuntimeError("Steam source replacement/feather receipt inconsistent")
     scene.frame_set(1)
@@ -221,6 +230,9 @@ def main():
     alpha_work=inspect_alpha(a.working_preview,receipt["working_png_sha256"])
     if receipt["idle_png_sha256"]==receipt["working_png_sha256"]:
         raise RuntimeError("Idle/working proof images are identical")
+    # All Blender object references become invalid after read_factory_settings.
+    # Preserve just immutable scalar QA values before unloading the native scene.
+    rendered_legacy_cones=sum(not ob.hide_render for ob in legacy_cones)
     total_expected=(len([ob for ob in original if not ob.hide_render])+
                     len([ob for ob in saved_process if not ob.hide_render])+
                     len([ob for ob in details if not ob.hide_render]))
@@ -253,7 +265,8 @@ def main():
        "keyed_relief_steam_puffs":len(vapor),
        "layered_soft_steam_veils":len(soft_veils),
        "legacy_cone_meshes_preserved":len(legacy_cones),
-       "legacy_cone_meshes_rendered":sum(not ob.hide_render for ob in legacy_cones),
+       "legacy_cone_meshes_rendered":rendered_legacy_cones,
+       "true_volumetric_steam_density_verified":True,
        "procedural_steam_edge_feather_verified":True,
        "steam_animation_closed_loop_verified":True,
        "native_fmpl_effects_blend_sha256":receipt.get("fmpl_effects_native_blend_sha256"),
