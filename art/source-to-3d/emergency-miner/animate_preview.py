@@ -434,14 +434,14 @@ def pack_apng(frames, dest):
 
 
 
-def diagnostic_render(scene, out, name):
+def diagnostic_render(scene, out, name, sample_frame=1, pixels=128):
     """Bounded Cycles stage-isolation render, never claimed as production proof."""
     old_size=(scene.render.resolution_x, scene.render.resolution_y)
     old_samples=scene.cycles.samples
     old_path=scene.render.filepath
-    scene.render.resolution_x=scene.render.resolution_y=128
+    scene.render.resolution_x=scene.render.resolution_y=pixels
     scene.cycles.samples=8
-    scene.frame_set(1)
+    scene.frame_set(sample_frame)
     target=out/("diag_"+name+".png")
     scene.render.filepath=str(target)
     print("MINER_DIAG_RENDER_BEGIN "+name,flush=True)
@@ -500,6 +500,9 @@ def main(out,diagnostic=False):
                 apply_motion(label,body,upper,cover,parts,steam,enabled={channel})
                 print("MINER_CHANNEL_KEYED "+label+" "+channel,flush=True)
                 diagnostic_render(scene,out,label+"_04_"+channel)
+            # Separate actual peak steam proof. A frame-1 still is NOT
+            # evidence of steam because the pressure valve is closed.
+            diagnostic_render(scene,out,label+"_05_steam_burst",sample_frame=25,pixels=256)
         else:
             apply_motion(label,body,upper,cover,parts,steam)
         print('MINER_TRACE 21 keyed motion ready '+label,flush=True)
