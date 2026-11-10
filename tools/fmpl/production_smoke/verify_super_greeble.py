@@ -260,6 +260,7 @@ def main():
     # Preserve just immutable scalar QA values before unloading the native scene.
     rendered_legacy_cones=sum(not ob.hide_render for ob in legacy_cones)
     rendered_legacy_solid_caps=sum(not ob.hide_render for ob in solid_caps)
+    verified_throat_bore_diameter=float(throat.get("fmpl_nozzle_bore_diameter_tiles"))
     total_expected=(len([ob for ob in original if not ob.hide_render])+
                     len([ob for ob in saved_process if not ob.hide_render])+
                     len([ob for ob in details if not ob.hide_render]))
@@ -296,7 +297,7 @@ def main():
        "vent_nozzle_hollow_throat_verified":True,
        "vent_nozzle_source_solid_caps_hidden":len(solid_caps),
        "vent_nozzle_original_solid_caps_rendered":rendered_legacy_solid_caps,
-       "vent_open_bore_diameter_tiles":float(throat.get("fmpl_nozzle_bore_diameter_tiles")),
+       "vent_open_bore_diameter_tiles":verified_throat_bore_diameter,
 
        "true_volumetric_steam_density_verified":True,
        "procedural_steam_edge_feather_verified":True,
