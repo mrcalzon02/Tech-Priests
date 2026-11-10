@@ -135,6 +135,39 @@ def main():
     flow_tracers=[o for o in details if "flow tracer" in o.name]
     glass_flow=[o for o in details if "transparent tube" in o.name and "canister" in o.name]
     vapor=[o for o in details if "relief nozzle keyed condensed steam" in o.name]
+    soft_veils=[o for o in details if "steam veil layered feather" in o.name]
+    legacy_cones=[o for o in saved_process if o.name.startswith("FMPL_PROCESS | service steam plume ")]
+    if len(legacy_cones)!=2 or any(not cone.hide_render for cone in legacy_cones):
+        raise RuntimeError("Two hard-edged legacy cone steam surfaces remain visible")
+    if len(soft_veils)!=8 or any(v.animation_data is None for v in soft_veils):
+        raise RuntimeError("Layered feather steam requires eight real keyed Blender meshes")
+    if any(not ob.data.vertices or not ob.data.polygons for ob in vapor+soft_veils):
+        raise RuntimeError("New steam components must contain actual editable mesh geometry")
+    softmat=bpy.data.materials.get("FMPL | relief steam soft radial feather v02")
+    if softmat is None or not softmat.use_nodes:
+        raise RuntimeError("Soft surface steam material was not saved to native Blender")
+    for name in ("FMPL STEAM | actual sphere radial distance",
+                 "FMPL STEAM | multi-surface dither breakup",
+                 "FMPL STEAM | steep smooth radial feather",
+                 "FMPL STEAM | radial-dither alpha mix",
+                 "FMPL STEAM | transparent exterior"):
+        if softmat.node_tree.nodes.get(name) is None:
+            raise RuntimeError("No actual procedural steam feather/alpha node: "+name)
+    alpha=softmat.node_tree.nodes.get("FMPL STEAM | steep smooth radial feather")
+    if alpha.inputs["To Max"].default_value!=0.0 or alpha.inputs["From Max"].default_value>.50:
+        raise RuntimeError("Steam soft mask has hard/unfeathered exterior")
+    if receipt.get("steam_fx",{}).get("soft_surface_lobes")!=12 or receipt.get("steam_fx",{}).get("legacy_cones_hidden")!=2:
+        raise RuntimeError("Steam source replacement/feather receipt inconsistent")
+    scene.frame_set(1)
+    steam_first=[(tuple(o.location),tuple(o.scale)) for o in vapor+soft_veils]
+    scene.frame_set(25)
+    if max(abs(o.location.z-before[0][2]) for o,before in zip(vapor+soft_veils,steam_first))<.005:
+        raise RuntimeError("Soft steam layers are not spatially animated")
+    scene.frame_set(97)
+    if any(max(abs(x-y) for x,y in zip(o.location, before[0]))>1e-5 or
+           max(abs(x-y) for x,y in zip(o.scale, before[1]))>1e-5
+           for o,before in zip(vapor+soft_veils,steam_first)):
+        raise RuntimeError("Steam surface loop does not close precisely at frame 97")
     if len(vessels)!=2 or len(columns)!=2 or len(surfaces)!=2:
         raise RuntimeError("Forward purifier inlet/outlet fluid canisters missing")
     if any(o.dimensions.x < .33 or o.dimensions.z < .60 for o in vessels):
@@ -188,7 +221,9 @@ def main():
     alpha_work=inspect_alpha(a.working_preview,receipt["working_png_sha256"])
     if receipt["idle_png_sha256"]==receipt["working_png_sha256"]:
         raise RuntimeError("Idle/working proof images are identical")
-    total_expected=len([ob for ob in original if not ob.hide_render])+len(saved_process)+len(details)
+    total_expected=(len([ob for ob in original if not ob.hide_render])+
+                    len([ob for ob in saved_process if not ob.hide_render])+
+                    len([ob for ob in details if not ob.hide_render]))
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=str(Path(a.glb).resolve()))
     imported=[o for o in bpy.context.scene.objects if o.type=="MESH"]
@@ -216,6 +251,11 @@ def main():
        "moving_glass_flow_tracers":len(flow_tracers),
        "connected_transparent_flow_lines":len(glass_flow),
        "keyed_relief_steam_puffs":len(vapor),
+       "layered_soft_steam_veils":len(soft_veils),
+       "legacy_cone_meshes_preserved":len(legacy_cones),
+       "legacy_cone_meshes_rendered":sum(not ob.hide_render for ob in legacy_cones),
+       "procedural_steam_edge_feather_verified":True,
+       "steam_animation_closed_loop_verified":True,
        "native_fmpl_effects_blend_sha256":receipt.get("fmpl_effects_native_blend_sha256"),
        "water_fx_loop_frames":17,
        "packed_pbr_images":packed,
