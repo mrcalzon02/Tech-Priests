@@ -383,9 +383,27 @@ function M.service_pair(pair)
   local original_builder=pending and (
     (task and task.request_value==pending.request)
     or (custody and custody.request_value==pending.request))
+  -- The 0469 queue alone can recognize an uncommitted, source-less
+  -- automatic emergency order. Preserve it unchanged while the EXISTING
+  -- 0510->0338 physical dispatcher receives the original pending rail.
+  -- Any live task, movement, cargo or nonmatching request still blocks.
+  local order_authority=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+  local yielding=false
+  if pending and order_authority
+    and type(order_authority.can_yield_uncommitted_rail_0836)=="function"then
+    local ok,allowed=pcall(
+      order_authority.can_yield_uncommitted_rail_0836,pair,pending.request)
+    yielding=ok and allowed==true
+    if yielding and not pair.rail_order_yield_observed_0836 then
+      pair.rail_order_yield_observed_0836={
+        tick=now(),request_segment=pending.segment,
+        kind="uncommitted-automatic-ammo",queue_owner="0469",
+      }
+    end
+  end
   local incumbent=pair.active_task or pair.current_task
-    or pair.active_order_0469
-    or (pair.order_queue_0469 and pair.order_queue_0469.current)
+    or (not yielding and (pair.active_order_0469
+      or (pair.order_queue_0469 and pair.order_queue_0469.current)))
     or pair.active_acquisition_0333 or pair.direct_acquisition_task_0336
     or pair.direct_acquisition_custody_0513
     or pair.machine_logistics_custody_0528

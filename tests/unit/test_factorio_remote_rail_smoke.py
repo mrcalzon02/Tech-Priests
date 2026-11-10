@@ -21,6 +21,29 @@ A = P + "PASS first physical rail built and exact stock debited"
 B = P + "PASS two distinct 0338-debited native-connected rails"
 
 
+
+class QueueOwnedOriginalRailYieldTests(unittest.TestCase):
+    def test_exact_ammo_wait_only_preserves_0469_order_and_0338_custody(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        q = (root / "tech-priests_src/scripts/core/order_queue_0469.lua"
+             ).read_text(encoding="utf-8")
+        f = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
+             ).read_text(encoding="utf-8")
+        self.assertIn('function M.can_yield_uncommitted_rail_0836(p,request)', q)
+        self.assertIn('o.source=="emergency_acquire"', q)
+        self.assertIn('o.item=="firearm-magazine"', q)
+        self.assertIn('o.target==nil and o.task==nil and o.request==nil', q)
+        self.assertIn('not passive_supply_request_1038(p)', q)
+        self.assertIn('p.construction_task_0338 or p.construction_custody_0338', q)
+        self.assertIn('p.direct_acquisition_custody_0513', q)
+        self.assertIn('p.movement_request_0418', q)
+        self.assertNotIn('q.current=nil', q[q.index('function M.can_yield_uncommitted_rail_0836'):q.index('function M.can_pause_uncommitted_relay_0974')])
+        self.assertIn('order_authority.can_yield_uncommitted_rail_0836', f)
+        self.assertIn('not yielding and (pair.active_order_0469', f)
+        self.assertIn('pair.rail_order_yield_observed_0836={', f)
+        self.assertIn('return false,"original-magos-incumbent-duty"', f)
+
+
 class CanonicalRailAdmissionRefusalTraceTests(unittest.TestCase):
     def test_pending_exact_rail_records_original_order_without_preemption(self):
         root = pathlib.Path(__file__).resolve().parents[2]

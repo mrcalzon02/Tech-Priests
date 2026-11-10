@@ -144,6 +144,63 @@ local function passive_supply_request_1038(p)
   end
   return true
 end
+-- An exact 0836 rail request may receive one original 0338 dispatch pulse
+-- while an automatic, SOURCE-LESS emergency magazine order is waiting.
+-- This is queue-owned READ-ONLY arbitration, not a cancellation/pause or a
+-- new worker: preserve the very same 0469 order, its queue place and timeout.
+-- Never yield physical cargo, a target, a live task/movement, real supply,
+-- combat, or an explicit user order. Construction still belongs to 0338.
+function M.can_yield_uncommitted_rail_0836(p,request)
+  if not valid_pair(p) or p.station.name~="planetary-magos-cogitator-station"
+    or type(request)~="table"
+    or request.site_reason~="remote-rail-physical-frontier-0836"
+    or request.item_name~="rail" or request.entity_name~="straight-rail"
+    or p.construction_request~=request then
+    return false,"not-original-rail-request"
+  end
+  local mission=p.remote_rail_outpost_0835
+  local pending=mission and mission.pending_rail_0836
+  if not (pending and pending.request==request
+    and mission.root_station_unit==p.station.unit_number
+    and mission.surface_index==p.station.surface.index
+    and mission.force_index==p.station.force.index) then
+    return false,"rail-mission-identity-mismatch"
+  end
+  local q=p.order_queue_0469
+  local o=q and q.current
+  if not(o and p.active_order_0469==o and o.status=="active"
+    and o.kind=="logistics" and o.source=="emergency_acquire"
+    and o.item=="firearm-magazine"
+    and o.target==nil and o.task==nil and o.request==nil
+    and o.reservation_key_0515==nil)then
+    return false,"order-not-source-less-automatic-ammo"
+  end
+  -- The original 0497 emergency supply candidate is not a held item.
+  -- Even its passive requester pointer must be confirmed by its owner.
+  if not passive_supply_request_1038(p) then
+    return false,"live-supply-request"
+  end
+  if p.active_task or p.active_task_0285 or p.current_task
+    or p.active_acquisition_0333 or p.direct_acquisition_task_0336
+    or p.direct_acquisition_custody_0513
+    or p.construction_task_0338 or p.construction_custody_0338
+    or p.construction_task_0340
+    or p.machine_logistics_custody_0528
+    or p.inventory_transfer_custody_0687
+    or p.emergency_facility_feed_custody_0357
+    or p.item_family_custody_0702 or p.energy_family_custody_0707
+    or p.rocket_silo_custody_0710 or p.artillery_custody_0713
+    or p.roboport_repair_custody_0715 or p.station_cargo_custody_0824
+    or p.emergency_craft or p.active_craft_0479
+    or p.defense_task_0259 or p.combat_target or p.repair_target
+    or p.consecration_target or p.movement_request_0418
+    or p.station_expansion_0256
+      and p.station_expansion_0256.status=="active" then
+    return false,"physical-or-incumbent-duty"
+  end
+  return true,"uncommitted-automatic-ammo-can-yield-original-rail"
+end
+
 function M.can_pause_uncommitted_relay_0974(p,request)
   if not valid_pair(p) or (p.mode~="travelling-to-direct-acquisition"
       and p.mode~="assignment"
