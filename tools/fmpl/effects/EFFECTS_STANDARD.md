@@ -70,9 +70,11 @@ camera. **A cone-shaped steam shader is not a pass, even if animated.**
 The accepted construction direction for compact pipe relief steam is a **small
 nozzle-anchored, twelve-lobe physical mesh assembly** with four principal
 animated steam wisps and eight intersecting thinner veil shells. Use native
-Blender noise to perturb the generated-coordinate radial-alpha falloff and
-smoothstep feather to full transparency *before* each mesh silhouette, with
-light surface opacity (<0.3 at the core per layer) and no billboard planes,
+Blender noise to perturb both the generated-coordinate radial-volume-density
+falloff and the almost-transparent surface feather, so the *interior* is
+soft scattering vapor instead of a hollow translucent shell. The layer surface
+opacity must remain below 0.05 at the core; 3D volume density falls smoothly
+to zero *before* each mesh silhouette. No billboard planes,
 cone caps, sudden opacity thresholds, hard white borders, or fake texture cards.
 The layered mesh shader may enable Blender dithered material evaluation; its
 actual Cycles renderer output is the authority. This is cheap geometry, not a
