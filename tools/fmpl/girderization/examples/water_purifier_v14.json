@@ -1,0 +1,273 @@
+{
+  "schema": "fmpl.girderization.pilot-plan.v0",
+  "status": "design-only-not-executed",
+  "pilot": "water-purifier-mh7-v14",
+  "source": {
+    "repository": "mrcalzon02/Tech-Priests",
+    "baseline_commit": "a89de584fe85176d56dd6787c2886e2d7b3eb36c",
+    "baseline_verified_dens_mortis_run": 42854827403,
+    "baseline_artifact_id": 13781794050,
+    "manifest_version": "0.4.2",
+    "original_MH7_meshes": 50,
+    "original_process_meshes": 136,
+    "canonical_camera": "fmpl.factorio45.v1",
+    "machine_footprint_tiles": [
+      3,
+      3
+    ],
+    "canonical_bores": [
+      {
+        "role": "raw-water-in",
+        "center": [
+          -1.5,
+          0,
+          0.36
+        ],
+        "bore_ID_tiles": 0.49
+      },
+      {
+        "role": "purified-water-out",
+        "center": [
+          1.5,
+          0,
+          0.36
+        ],
+        "bore_ID_tiles": 0.49
+      }
+    ]
+  },
+  "policy": {
+    "no_runner_dispatch": true,
+    "no_source_mesh_overwrite": true,
+    "no_new_workflow": true,
+    "no_extra_cameras": true,
+    "no_hidden_internals": true,
+    "no_unapproved_private_donors": true,
+    "no_random_bolts": true,
+    "no_native_fluidbox_claims": true,
+    "preserve_V12_V13_animation": true,
+    "support_contact_gap_max_tiles": 0.015,
+    "console_inner_margin_min_tiles": 0.025,
+    "protected_bore_ray_test_min": 74,
+    "allowed_operations": [
+      "section_profile",
+      "edge_flange",
+      "inset_panel",
+      "joint_gusset",
+      "foot_plate",
+      "bearing_saddle",
+      "flanged_union",
+      "compression_fitting",
+      "hose_tail",
+      "cable_gland",
+      "bolt_pattern"
+    ]
+  },
+  "phase_order": [
+    "G0-annotate",
+    "G1-rebuild-console",
+    "G2-support-top-drive",
+    "G3-audit-all-couplings",
+    "G4-selective-girderization",
+    "G5-render-native-readback",
+    "G6-produce-existing-atlases"
+  ],
+  "objects": [
+    {
+      "id": "console",
+      "priority": 0,
+      "source_names": [
+        "MH7_service inset CRT",
+        "MH7_service interface casting",
+        "MH7_control push button",
+        "MH7_control push button.001",
+        "MH7_control push button.002",
+        "MH7_control push button.003"
+      ],
+      "current_defect": "V13 constructor applies 70% X and 74% Y scaling to housing alone; CRT and four switches protrude outside cropped panel.",
+      "documented_approx_GLTF_world_X": {
+        "housing": [
+          0.791,
+          1.34
+        ],
+        "crt": [
+          0.775,
+          1.201
+        ],
+        "rightmost_buttons_max": 1.358
+      },
+      "operations": [
+        "restore 100% source backing size",
+        "single coherent rigid assembly tilt",
+        "house five live green bars inside inset CRT",
+        "seat four buttons in panel face",
+        "wedge-mount full panel to chassis"
+      ],
+      "acceptance": [
+        "project screen/bezel/buttons onto local tilted 2D panel face",
+        "all controls inside useful housing with >=0.025 tile border",
+        "no screen/casting/tank intersection",
+        "screen bar pixel delta against no-bars render",
+        "screen/button face normals aligned",
+        "button cavities real rather than hovering"
+      ]
+    },
+    {
+      "id": "upper_motor_support",
+      "priority": 1,
+      "sources": [
+        {
+          "name": "FMPL_PROCESS | gearbox load-bearing overhead bridge",
+          "nominal_xyz": [
+            0,
+            0.1,
+            3.108
+          ],
+          "nominal_dimensions": [
+            1.83,
+            0.22,
+            0.13
+          ]
+        },
+        {
+          "name": "FMPL_PROCESS | gearbox crossbeam pedestal -0.84",
+          "nominal_xyz": [
+            -0.84,
+            0.1,
+            2.92
+          ]
+        },
+        {
+          "name": "FMPL_PROCESS | gearbox crossbeam pedestal 0.84",
+          "nominal_xyz": [
+            0.84,
+            0.1,
+            2.92
+          ]
+        }
+      ],
+      "required_load_path": [
+        "gearbox",
+        "bearing-saddle",
+        "bridge",
+        "pedestal/gusset",
+        "metal vessel collar or chassis upright",
+        "structural foot/plinth"
+      ],
+      "operations": [
+        "section_profile",
+        "bearing_saddle",
+        "joint_gusset",
+        "foot_plate",
+        "bolt_pattern"
+      ],
+      "forbidden_anchors": [
+        "transparent glass lid",
+        "open space below red pedestal nubs",
+        "central spinning stirrer swept volume"
+      ],
+      "acceptance": [
+        "all load path graph nodes are connected",
+        "support gap <=0.015 tile",
+        "real contact into metal not glass",
+        "no dynamic collisions",
+        "retains sightglass view"
+      ]
+    },
+    {
+      "id": "pipe_and_hose_coupling_audit",
+      "priority": 2,
+      "source_route_name_seeds": [
+        "manifold to mounted intake pump",
+        "pump to first vertical filter",
+        "first filter to second filter",
+        "second filter to central treatment inlet",
+        "treatment outlet to clean discharge reducer",
+        "raw witness feed from pump",
+        "raw witness return to first filter",
+        "clean witness feed from treatment outlet",
+        "clean witness return to discharge casting",
+        "filter * pressure impulse tube",
+        "pressure gauge * hardline",
+        "pump metal pressure bleeder",
+        "return condensate pipe from working relief",
+        "process sump gravity return",
+        "control panel motor power armored conduit",
+        "raw-canister inlet",
+        "raw-canister outlet",
+        "clean-canister inlet",
+        "clean-canister outlet"
+      ],
+      "match_rules": [
+        "audit every real visible source and derivative endpoint; route seeds are not exhaustive",
+        "classify physical fluid, flexible hose, or electrical"
+      ],
+      "operations": [
+        "flanged_union",
+        "compression_fitting",
+        "hose_tail",
+        "cable_gland"
+      ],
+      "acceptance": [
+        "zero unclassified/unsupported ends",
+        "every coupling seated to receiving socket with correct axis",
+        "no ring-only pretend union",
+        "74+ side bore rays without collisions",
+        "no fabricated native Factorio ports"
+      ]
+    },
+    {
+      "id": "selected_member_girderization",
+      "priority": 3,
+      "approved_pilot_roles": [
+        "upper bridge load carrier",
+        "two red pedestal landing nodes",
+        "console wedge frame",
+        "obvious flat pump/radiator bracket requiring physical mount"
+      ],
+      "operations": [
+        "section_profile",
+        "edge_flange",
+        "inset_panel",
+        "joint_gusset",
+        "foot_plate",
+        "bolt_pattern"
+      ],
+      "exclusion": [
+        "random studs",
+        "unrelated panel plating",
+        "hidden internals",
+        "new control overlays",
+        "obstruction of flow bores or water visibility",
+        "large mesh-count-only effort"
+      ]
+    }
+  ],
+  "release_gates": {
+    "native_source_hash": true,
+    "blender_reopen": true,
+    "glb_reimport": true,
+    "physical_clearance": true,
+    "contact_graph": true,
+    "console_face_containment": true,
+    "render_effect_isolation": true,
+    "source_camera_unchanged": true,
+    "sprite_directions": 1,
+    "working_frames": 8,
+    "sprite_sizes": [
+      64,
+      128,
+      256
+    ],
+    "sprite_sheets": 6,
+    "actual_factorio_2_1_integration": false,
+    "owner_visual_approval": false
+  },
+  "external_worker": {
+    "repository": "mrcalzon02/Dens-Mortis",
+    "existing_runner": "OLD-CORE30-homebrew",
+    "existing_mode": "fmpl-super-greeble",
+    "dispatch_status": "not requested; design only",
+    "required_when_dispatched": "pin fresh V14 exact Tech-Priests commit and run one authorized source-pinned job"
+  }
+}
