@@ -1,0 +1,137 @@
+{
+  "schema": "fmpl.scene-scale-registry.v1",
+  "status": "defined-reference-proportions-not-native-fluidbox-verified",
+  "units": {
+    "scene": "Blender scene units",
+    "tile": "Factorio tile reference",
+    "real_world_conversion": false
+  },
+  "presets": {
+    "factorio-2x2-v1": {
+      "schema": "fmpl.scene-scope.v1",
+      "id": "factorio-2x2-v1",
+      "scene_units_per_tile": 1,
+      "footprint_tiles": [
+        2,
+        2
+      ],
+      "origin_bu": [
+        0,
+        0,
+        0
+      ],
+      "up_axis": "+Z"
+    },
+    "factorio-3x3-v1": {
+      "schema": "fmpl.scene-scope.v1",
+      "id": "factorio-3x3-v1",
+      "scene_units_per_tile": 1,
+      "footprint_tiles": [
+        3,
+        3
+      ],
+      "origin_bu": [
+        0,
+        0,
+        0
+      ],
+      "up_axis": "+Z"
+    }
+  },
+  "canonical_interface": {
+    "id": "factorio-fluid-interface-v1",
+    "status": "existing-tested-model-geometry-proportions-not-game-cell-approved",
+    "dimensions_in_tiles": {
+      "barrel_outer_diameter": 0.57,
+      "open_bore_diameter": 0.49,
+      "mounting_collar_outer_diameter": 0.68,
+      "mounting_collar_axial_thickness": 0.075
+    },
+    "valid_faces": [
+      "west",
+      "east",
+      "north",
+      "south"
+    ],
+    "transverse_offset_tiles": "explicit",
+    "elevation_tiles": "explicit",
+    "normal_rule": "face outward",
+    "socket_location_rule": "center on declared footprint boundary",
+    "native_factorio_pipe_cell_verified": false,
+    "approved_native_mesh_policy": "reuse measured actual source collar/throat when available; parametric adapter only a dimension-matching candidate"
+  },
+  "examples": {
+    "water-purifier-3x3": {
+      "scene_scope": "factorio-3x3-v1",
+      "model_only_interfaces": [
+        {
+          "face": "west",
+          "transverse_offset_tiles": 0,
+          "elevation_tiles": 0.36,
+          "center_xyz_bu": [
+            -1.5,
+            0,
+            0.36
+          ],
+          "normal": [
+            -1,
+            0,
+            0
+          ]
+        },
+        {
+          "face": "east",
+          "transverse_offset_tiles": 0,
+          "elevation_tiles": 0.36,
+          "center_xyz_bu": [
+            1.5,
+            0,
+            0.36
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "native_factorio_connection_unverified": true
+    },
+    "example-2x2": {
+      "scene_scope": "factorio-2x2-v1",
+      "model_only_interfaces": [
+        {
+          "face": "west",
+          "transverse_offset_tiles": 0,
+          "elevation_tiles": 0.36,
+          "center_xyz_bu": [
+            -1,
+            0,
+            0.36
+          ],
+          "normal": [
+            -1,
+            0,
+            0
+          ]
+        },
+        {
+          "face": "east",
+          "transverse_offset_tiles": 0,
+          "elevation_tiles": 0.36,
+          "center_xyz_bu": [
+            1,
+            0,
+            0.36
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "native_factorio_connection_unverified": true
+    }
+  }
+}
