@@ -125,7 +125,7 @@ def _foam_crest(p, col, idx, x, y, z, material):
     count=20
     verts=[]
     faces=[]
-    radius=.151
+    radius=.181  # enlarged front liquid column meniscus, previous .151
     for k in range(count+1):
         angle=math.pi * k/count
         # Front semicircle sits just inside the glass, on the actual waterline.
@@ -159,7 +159,7 @@ def _watertone_copy(source, name, rgb, transmission, light):
     """Derive a real per-machine material, keeping the canonical FX asset intact."""
     mat=source.copy()
     mat.name=name
-    if hasattr(mat,"asset_clear"):
+    if getattr(mat,"asset_data",None) is not None:
         mat.asset_clear()
     if "fmpl_effect_id" in mat:
         del mat["fmpl_effect_id"]
