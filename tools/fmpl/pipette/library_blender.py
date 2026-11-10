@@ -187,8 +187,11 @@ def add_preview_camera_lights(scene, objects):
         raise RuntimeError("No actual geometry for Pipette Cycles proof")
     lo=Vector(tuple(min(p[i] for p in points) for i in range(3)))
     hi=Vector(tuple(max(p[i] for p in points) for i in range(3)))
-    center=(lo+hi)*.5
-    span=max((hi-lo).x,(hi-lo).y,(hi-lo).z,.5)
+    # Comparison rig camera and lights remain IDENTICAL for every material:
+    # no implicit scaling based on how widely a particular hose happens to sag.
+    fixture=lib.source_json("comparison_fixture.v1.json")
+    center=Vector(fixture["workspace"]["center_xyz_bu"])
+    span=max(fixture["workspace"]["nominal_display_footprint_bu"])
     world=bpy.data.worlds.new("Pipette proof-only ambient")
     world.use_nodes=True
     world.node_tree.nodes["Background"].inputs["Color"].default_value=(.40,.48,.58,1.)
@@ -200,7 +203,7 @@ def add_preview_camera_lights(scene, objects):
     camera.location=center+Vector((1.75,-1.75,1.85))*span
     camera.rotation_euler=(center-camera.location).to_track_quat("-Z","Y").to_euler()
     data.type="ORTHO"
-    data.ortho_scale=span*1.8
+    data.ortho_scale=span*1.45
     scene.camera=camera
     for i,(x,y,z,energy) in enumerate(((1.,-1.3,2.2,450.),
                                        (-1.5,.5,1.4,300.))):
