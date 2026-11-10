@@ -21,7 +21,7 @@ from urllib.request import urlopen, Request
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 def gitblob(data):
-    return hashlib.sha1(("blob "+str(len(data))+"\\0").encode()+data).hexdigest()
+    return hashlib.sha1(("blob "+str(len(data))+"\0").encode()+data).hexdigest()
 
 def download_verified(record,dest,max_bytes):
     repo=record["repository"]
