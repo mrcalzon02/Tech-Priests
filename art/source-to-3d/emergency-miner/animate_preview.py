@@ -390,7 +390,30 @@ def pack_apng(frames, dest):
     return (w,h,len(frames))
 
 
-def main(out):
+
+
+def diagnostic_render(scene, out, name):
+    """Bounded Cycles stage-isolation render, never claimed as production proof."""
+    old_size=(scene.render.resolution_x, scene.render.resolution_y)
+    old_samples=scene.cycles.samples
+    old_path=scene.render.filepath
+    scene.render.resolution_x=scene.render.resolution_y=128
+    scene.cycles.samples=8
+    scene.frame_set(1)
+    target=out/("diag_"+name+".png")
+    scene.render.filepath=str(target)
+    print("MINER_DIAG_RENDER_BEGIN "+name,flush=True)
+    bpy.ops.render.render(write_still=True)
+    print("MINER_DIAG_RENDER_END "+name,flush=True)
+    if not target.is_file() or target.stat().st_size < 3000:
+        raise RuntimeError("No Blender Cycles stage proof: "+name)
+    scene.render.resolution_x,scene.render.resolution_y=old_size
+    scene.cycles.samples=old_samples
+    scene.render.filepath=old_path
+    return target
+
+
+def main(out,diagnostic=False):
     out.mkdir(parents=True,exist_ok=True)
     print('MINER_TRACE 01 begin source V21 build',flush=True)
     profile = build_v21()
@@ -398,6 +421,8 @@ def main(out):
     base = out/"v21_study_static_master.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(base))
     print('MINER_TRACE 03 base saved',flush=True)
+    if diagnostic:
+        diagnostic_render(bpy.context.scene,out,'00_base_before_rig')
     result = {"source":"tech-priests-emergency-miner", "source_sha256":miner.SOURCE_SHA256,
               "builder_sha256":sha(HERE/"build_model.py"), "preview_script_sha256":sha(__file__),
               "camera_policy":POLICY_ID, "directions_rendered":[0], "fps":FPS,
@@ -414,15 +439,23 @@ def main(out):
         print('MINER_TRACE 14 begin physical rig '+label,flush=True)
         collection, body, upper, cover, still, nb, nu = rig()
         print('MINER_TRACE 15 physical rig ready '+label,flush=True)
+        if diagnostic:
+            diagnostic_render(scene,out,label+'_01_rig_no_fx')
         print('MINER_TRACE 16 begin scan FX '+label,flush=True)
         parts = make_scan_effects(upper,collection)
         print('MINER_TRACE 17 scan FX ready '+label,flush=True)
+        if diagnostic:
+            diagnostic_render(scene,out,label+'_02_scan_no_steam')
         print('MINER_TRACE 18 begin FMPL steam '+label,flush=True)
         steam = make_steam(upper,collection)
         print('MINER_TRACE 19 FMPL steam ready '+label,flush=True)
+        if diagnostic:
+            diagnostic_render(scene,out,label+'_03_steam_unkeyed')
         print('MINER_TRACE 20 begin keyed motion '+label,flush=True)
         apply_motion(label,body,upper,cover,parts,steam)
         print('MINER_TRACE 21 keyed motion ready '+label,flush=True)
+        if diagnostic:
+            diagnostic_render(scene,out,label+'_04_full_keyed')
         blend=out/("miner_motion_%s.blend"%label)
         scene["study_variant"]=label
         scene["game_integration_status"]="NOT_INTEGRATED_REVIEW_ONLY"
@@ -482,5 +515,7 @@ def main(out):
 if __name__ == "__main__":
     parser=argparse.ArgumentParser()
     parser.add_argument("--out",type=Path,required=True)
+    parser.add_argument("--diagnostic",action='store_true')
     argv=sys.argv[sys.argv.index("--")+1:] if "--" in sys.argv else sys.argv[1:]
-    main(parser.parse_args(argv).out.resolve())
+    args=parser.parse_args(argv)
+    main(args.out.resolve(),diagnostic=args.diagnostic)
