@@ -109,6 +109,28 @@ class NativeRailNaturalOreAdmissionTests(unittest.TestCase):
         self.assertNotIn('surface.create_entity{name="iron-ore"', source)
 
 
+class NativeRailDeferredChartAdmissionTests(unittest.TestCase):
+    def test_chart_requested_on_init_and_verified_after_engine_ticks(self):
+        fixture = (pathlib.Path(__file__).resolve().parents[2]
+                   / "tests/scenarios/remote-rail-acquisition/fixture.lua")
+        source = fixture.read_text(encoding="utf-8")
+        self.assertIn('force.chart(surface,{{ORE.x-20,ORE.y-20},'
+                      '{ORE.x+20,ORE.y+20}})', source)
+        self.assertIn('s.chart_target_chunk=target_chunk', source)
+        self.assertIn('if elapsed>=1800 and not s.chart_verified then', source)
+        self.assertIn('station.force.is_chunk_charted(', source)
+        self.assertIn('station.force.is_chunk_requested_for_charting(', source)
+        self.assertIn('fail("REMOTE_ORE_NOT_CHARTED_AFTER_TICKS="', source)
+        self.assertIn('s.chart_verified=true', source)
+        self.assertLess(source.index('s.chart_target_chunk=target_chunk'),
+                        source.index('s.started=game.tick'))
+        self.assertGreater(source.index('if elapsed>=1800 and not s.chart_verified'),
+                           source.index('local function inspect(s,elapsed)'))
+        self.assertNotIn('fail("REMOTE_ORE_NOT_CHARTED")', source)
+        self.assertNotIn('surface.create_entity{name="iron-ore"', source)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', source)
+
+
 class NativeRailPhysicalSupplyCapacityTests(unittest.TestCase):
     def test_full_manifest_uses_real_seven_slot_station_and_nearby_depot(self):
         fixture = (pathlib.Path(__file__).resolve().parents[2]

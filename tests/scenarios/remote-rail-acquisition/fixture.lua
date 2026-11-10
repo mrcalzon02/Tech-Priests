@@ -172,11 +172,13 @@ local function setup()
   if ore_tiles<1 then fail("NATURAL_REMOTE_ORE_PATCH_MISSING")end
   -- The destination has been charted by prior remote reconnaissance. The
   -- Magos may use only charted map intelligence, not omniscient surface scans.
+  -- Factorio can enqueue chart generation during on_init. Checking
+  -- immediately here mistakes a pending request for uncharted terrain.
+  -- Keep the actual force chart request; the first 1800-tick native
+  -- checkpoint must prove the generated ore chunk REALLY became charted.
+  local target_chunk={x=math.floor(ORE.x/32),y=math.floor(ORE.y/32)}
   force.chart(surface,{{ORE.x-20,ORE.y-20},{ORE.x+20,ORE.y+20}})
-  if not force.is_chunk_charted(surface,{
-      x=math.floor(ORE.x/32),y=math.floor(ORE.y/32)}) then
-    fail("REMOTE_ORE_NOT_CHARTED")
-  end
+  s.chart_target_chunk=target_chunk
   if count(surface,{type="resource",
       area={{-64,STATION.y-64},{64,STATION.y+64}}})~=0 then
     fail("UNEXPECTED_NEARBY_ORE")
@@ -216,6 +218,18 @@ local function inspect(s,elapsed)
   if not(station and station.valid and p and p.priest
       and p.priest.valid) then fail("PLANETARY_MAGOS_PAIR_LOST") end
   local objective=p.remote_rail_outpost_0835
+  if elapsed>=1800 and not s.chart_verified then
+    local target_chunk=s.chart_target_chunk
+    if not (target_chunk and station.force.is_chunk_charted(
+        surface,target_chunk)) then
+      local pending=target_chunk and
+        station.force.is_chunk_requested_for_charting(surface,target_chunk)
+      fail("REMOTE_ORE_NOT_CHARTED_AFTER_TICKS="..elapsed..
+        " requested="..tostring(pending))
+    end
+    s.chart_verified=true
+    emit("PASS naturally generated ore chunk charted before rail objective")
+  end
   if elapsed>=1800 and not (objective
       and (objective.status=="starvation-confirmed"
         or objective.status=="building-physical-rail"
