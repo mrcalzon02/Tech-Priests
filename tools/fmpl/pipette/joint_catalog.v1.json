@@ -1,0 +1,635 @@
+{
+  "schema": "fmpl.pipette.joints.v1",
+  "status": "joint_taxonomy_not_generator_approval",
+  "description": "Shared physical fitting and termination types. Branch topology is separate: a Y wire splice and Y lead-pipe fitting have the same public port coordinates but different fittings and bores.",
+  "units": "Blender scene units; connection dimensions sourced per source fixture",
+  "joint_types": {
+    "flange": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "bolted_gasketed_faces",
+      "required_visible_feature": "Pipe walls remain hollow; bore clear through gasket",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "union": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "service_union",
+      "required_visible_feature": "Two coaxial mating halves and service nut",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "threaded": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "male_female_threaded_boss",
+      "required_visible_feature": "Matched male and female threaded shoulders",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "butt_weld": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "beveled_weld_join",
+      "required_visible_feature": "Aligned hollow pipe annuli and visible weld bead",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "socket_weld": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "tube_inserted_in_socket",
+      "required_visible_feature": "Real socket insertion and external fillet",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "grooved_coupling": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "groove_clamp_gasket",
+      "required_visible_feature": "Two grooved pipe ends and gasketed clamp",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "bell_spigot": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "spigot_in_bell_with_gasket",
+      "required_visible_feature": "Enlarged socket and seated spigot",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "caulked_hub": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "packed_historical_hub",
+      "required_visible_feature": "Historic lead-style packed hub visual only",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "compression": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "compression_ferrule_nut",
+      "required_visible_feature": "Ferrule around inserted tube, not decorative ring",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "bite_ferrule": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "double_ferrule_compression",
+      "required_visible_feature": "Two ferrules with receiving boss",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "sanitary_clamp": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "sanitary_gasket_ferrules",
+      "required_visible_feature": "Pair of ferrules and clamp",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "solder": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "sweat_cup_joint",
+      "required_visible_feature": "Copper cup and discrete solder line",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "braze": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "brazed_tube_fillet",
+      "required_visible_feature": "Joint brazing ring and continuous hollow bore",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "lead_wiped_joint": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "historical_wiped_lead_branch",
+      "required_visible_feature": "Historically representative bulged solder seam, not installation advice",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "solvent_weld": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "solvent_bonded_hub",
+      "required_visible_feature": "Molded polymer socket and inserted pipe",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "heat_fusion": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "fused_polymer_bead",
+      "required_visible_feature": "Fused thermoplastic hollow wall",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "electrofusion": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "electrofusion_ring",
+      "required_visible_feature": "Fused pipe sleeves, optional electrotab",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "pex_crimp": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "barb_and_crimp_ring",
+      "required_visible_feature": "Inside barb and outside retained crimp",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "push_fit": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "collet_push_socket",
+      "required_visible_feature": "Push-in collet and positive socket stop",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "flare": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "flared_tube_and_cone",
+      "required_visible_feature": "Conical tube flare and compression nut",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "hose_barb_clamp": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "hose_barb_and_band",
+      "required_visible_feature": "Barbed insertion and band/clamp hardware",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "hose_crimp": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "hose_insert_crimp_ferrule",
+      "required_visible_feature": "Crimp metal ferrule and inserted tail",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "camlock": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "cam_lever_coupler",
+      "required_visible_feature": "Real paired grooves, cam handles and seal",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "quick_fluid_disconnect": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "quick_release_coupler",
+      "required_visible_feature": "Locking collar with positive stop",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "bellows_flange": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "bellows_terminal_flange",
+      "required_visible_feature": "Bellows corrugation seats inside flange",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "expansion_joint": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "concertina_expansion_hardware",
+      "required_visible_feature": "Axial movement allowance between fixed flanges",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "glass_ground_joint": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "glass_taper_and_socket",
+      "required_visible_feature": "Mating glass tapered ends",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "ceramic_gasket": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "ceramic_hub_gasket",
+      "required_visible_feature": "Thick ceramic annular socket",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "slip_coupler": {
+      "domains": [
+        "fluid"
+      ],
+      "geometry_recipe": "overlap_sleeve",
+      "required_visible_feature": "Overlapping tubular sleeve",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "rigid_threaded_hub": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "threaded_conduit_hub",
+      "required_visible_feature": "Receiving metal hub and locknut",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "compression_conduit": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "emt_compression_coupler",
+      "required_visible_feature": "Compression raceway gland not fluid hardware",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "locknut_bushing": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "insulated_locknut_bushing",
+      "required_visible_feature": "Insulated entry lip and thread locknut",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "flex_conduit_connector": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "helical_conduit_grip",
+      "required_visible_feature": "Terminator captures conduit winding",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "liquidtight_connector": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "liquidtight_hub_gland",
+      "required_visible_feature": "Gasketed raceway entry and strain relief",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "cable_gland": {
+      "domains": [
+        "enclosure",
+        "electrical"
+      ],
+      "geometry_recipe": "gland_nut_grommet",
+      "required_visible_feature": "Cable diameter-matched grommet with compression shell",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "solvent_conduit_coupler": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "pvc_conduit_coupler",
+      "required_visible_feature": "Rigid polymer receiving socket",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "snap_conduit": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "conduit_cover_snap",
+      "required_visible_feature": "Real latching lip and receiving slot",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "split_loom_clip": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "split_lip_bridge",
+      "required_visible_feature": "Clips retain accessible split loom seam",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "sleeve_overlap": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "protective_sheath_overlap",
+      "required_visible_feature": "Sleeve overlaps underlying protected line",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "panel_grommet": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "panel_grommet_ring",
+      "required_visible_feature": "Grommet seats in declared panel thickness",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "heatshrink_breakout": {
+      "domains": [
+        "enclosure",
+        "electrical"
+      ],
+      "geometry_recipe": "multi_lobe_shrink_boot",
+      "required_visible_feature": "Branch boot surrounds separate insulated members",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "lacing": {
+      "domains": [
+        "enclosure",
+        "electrical"
+      ],
+      "geometry_recipe": "harness_lacing",
+      "required_visible_feature": "Deterministic ties at interval",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "strap_bracket": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "host_saddle_clamp",
+      "required_visible_feature": "Support attached to declared host object",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "drag_chain_link": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "hinged_link_with_pin",
+      "required_visible_feature": "Rigid articulated cable carrier links with known hinges",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "tray_splice": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "tray_side_splice",
+      "required_visible_feature": "Bolted plate joins open tray rails",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "wireway_hinge": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "hinged_wireway_lid",
+      "required_visible_feature": "Separate hinged or removable lid",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "conduit_junction_box": {
+      "domains": [
+        "enclosure"
+      ],
+      "geometry_recipe": "junction_box_seated_ports",
+      "required_visible_feature": "Enclosed body with distinct socket openings",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "crimp_butt": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "conductive_crimp_barrel",
+      "required_visible_feature": "Two conductors enter opposed crimp barrel",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "wire_solder_splice": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "insulated_solder_splice",
+      "required_visible_feature": "Stripped localized copper joint and insulating shell",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "lever_terminal": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "lever_contact_block",
+      "required_visible_feature": "Lever and inserted wire contact",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "terminal_block": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "screw_terminal_block",
+      "required_visible_feature": "Electrical screw and contact seat",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "ring_lug": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "flat_eyes_and_crimp",
+      "required_visible_feature": "Flat terminal eye with barrel",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "spade_lug": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "fork_spade_terminal",
+      "required_visible_feature": "Flat fork terminal",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "crimp_ferrule": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "wire_end_ferrule",
+      "required_visible_feature": "Crimp barrel at wire end",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "insulation_displacement": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "idc_blade_slot",
+      "required_visible_feature": "Blade slot aligned with insulated core",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "plug_socket": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "keyed_multi_pin_plug",
+      "required_visible_feature": "Multiple pins and keyed housing",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "coax_connector": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "coaxial_pin_and_shield",
+      "required_visible_feature": "Concentric signal core and shield at contact",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "fiber_splice": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "optical_fiber_sleeve",
+      "required_visible_feature": "Precision optical alignment, no ad-hoc Y of bare glass",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "fiber_bulkhead": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "optical_panel_ferrule",
+      "required_visible_feature": "Fiber ferrule seated in panel",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "shield_termination": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "shield_braid_contact",
+      "required_visible_feature": "Braided shield electrically terminated to rim",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "busbar_bolt": {
+      "domains": [
+        "electrical"
+      ],
+      "geometry_recipe": "stacked_busbar_with_bolt",
+      "required_visible_feature": "Solid flat busbars and retained bolt",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "mechanical_wedge": {
+      "domains": [
+        "mechanical"
+      ],
+      "geometry_recipe": "wedged_strand_anchor",
+      "required_visible_feature": "Solid cable secured in tapered wedge",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "swaged_eye": {
+      "domains": [
+        "mechanical"
+      ],
+      "geometry_recipe": "swaged_cable_eye",
+      "required_visible_feature": "Return loop and swaged crimp sleeve",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "thimble_eye": {
+      "domains": [
+        "mechanical"
+      ],
+      "geometry_recipe": "eye_with_thimble",
+      "required_visible_feature": "Return cable around visible thimble",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "wire_rope_clip": {
+      "domains": [
+        "mechanical"
+      ],
+      "geometry_recipe": "wire_rope_u_bolt_clip",
+      "required_visible_feature": "True U-bolt and saddled returning cable",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "clevis": {
+      "domains": [
+        "mechanical"
+      ],
+      "geometry_recipe": "clevis_yoke_pin",
+      "required_visible_feature": "Load pin through matching eye",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "turnbuckle": {
+      "domains": [
+        "mechanical"
+      ],
+      "geometry_recipe": "opposed_thread_turnbuckle",
+      "required_visible_feature": "Tension adjustment with opposing threads",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "chain_shackle": {
+      "domains": [
+        "mechanical"
+      ],
+      "geometry_recipe": "pinned_chain_shackle",
+      "required_visible_feature": "Pinned link attachment for steel chain",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "rope_knot": {
+      "domains": [
+        "mechanical"
+      ],
+      "geometry_recipe": "visible_bounded_rope_knot",
+      "required_visible_feature": "Recognizable tied rope geometry",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "bowden_end": {
+      "domains": [
+        "mechanical"
+      ],
+      "geometry_recipe": "bowden_inner_cable_outer_stop",
+      "required_visible_feature": "Sleeve termination while inner cable continues",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "harness_sewn_loop": {
+      "domains": [
+        "mechanical"
+      ],
+      "geometry_recipe": "flat_woven_loop_and_stitch",
+      "required_visible_feature": "Folded webbing with load-stitch pattern",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "rebar_lap": {
+      "domains": [
+        "reinforcement"
+      ],
+      "geometry_recipe": "overlapping_solid_rebar",
+      "required_visible_feature": "Two solid bars with designed overlap",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "rebar_threaded_coupler": {
+      "domains": [
+        "reinforcement"
+      ],
+      "geometry_recipe": "threaded_solid_bar_sleeve",
+      "required_visible_feature": "Mechanical thread sleeve around solid rebar",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "rebar_mechanical_coupler": {
+      "domains": [
+        "reinforcement"
+      ],
+      "geometry_recipe": "gripping_rebar_sleeve",
+      "required_visible_feature": "No hollow fluid bore; solid bar seating",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "welded_mesh": {
+      "domains": [
+        "reinforcement"
+      ],
+      "geometry_recipe": "welded_bar_crossings",
+      "required_visible_feature": "Solid transverse bars and contact welds",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "rebar_hook": {
+      "domains": [
+        "reinforcement"
+      ],
+      "geometry_recipe": "bent_anchorage_hook",
+      "required_visible_feature": "Continuous bent solid bar",
+      "implementation_status": "indexed_not_yet_native_verified"
+    },
+    "tie_wire": {
+      "domains": [
+        "reinforcement"
+      ],
+      "geometry_recipe": "wire_wrap_rebar_ties",
+      "required_visible_feature": "Fine loops around rebar joint",
+      "implementation_status": "indexed_not_yet_native_verified"
+    }
+  },
+  "branch_policy": {
+    "fluid": "branch uses a hollow sealed 3-port Y or T with material-appropriate union",
+    "electrical": "branch uses rated-looking terminal block or insulated crimp splice; NOT hollow pipe fitting",
+    "enclosure": "branch uses a real protective boot or junction box; non-contact visual shell is not automatically an electrical join",
+    "mechanical": "branch requires separate designed node/anchor, not implicit load transfer",
+    "reinforcement": "branch requires declared lap/weld/tie/coupler and solid bars"
+  },
+  "comparison_fixture": "comparison_fixture.v1.json"
+}
