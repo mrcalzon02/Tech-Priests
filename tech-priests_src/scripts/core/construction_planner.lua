@@ -365,21 +365,26 @@ local function funded_fluid_pipe_1258(pair)
    and source_for_item(pair,"pipe"))then return nil end
  return req,item
 end
--- An exact original 0836 rail segment may proceed after the ORIGINAL
--- 0338 site planner has failed this very same remote drill request because
--- there is no reachable natural mining site at the current station. The
--- request itself remains untouched for later service. Never borrow a live
--- builder/cargo/robot task or an unfunded/foreign rail; retry miner discovery
--- after a bounded interval so changing physical conditions are rechecked.
-local function blocked_local_remote_site_yields_rail_0836(pair,remote)
- local rec=pair and pair.construction_site_refusal_0338
- local original=pair and pair.construction_request
- local tick=rec and tonumber(rec.tick)
- return type(remote)=="table" and remote.position==nil
-   and type(rec)=="table" and rec.field=="remote_drill_request_1011"
-   and rec.request==remote and rec.reason=="no-miner-site"
-   and tick and tick<=now() and now()-tick<=600
-   and owned_pending_rail_0836(pair,original)
+-- An EXACT unfunded/unplaceable local miner cannot indefinitely block an
+-- already-issued original 0836 paid rail. Consult ONLY the original 0338
+-- failed physical site receipt for the SAME original construction request.
+-- Its real inventory, order and future retry remain untouched. No active
+-- builder, returned item, robot task or foreign mission may be displaced.
+local function blocked_local_miner_yields_to_rail_0836(pair,field,value)
+ local refusal=pair and pair.construction_site_refusal_0338
+ local rail=pair and pair.construction_request
+ local at=refusal and tonumber(refusal.tick)
+ local item=value and normalize_placeable(value)
+ local explicit_site=type(value)=="table"
+   and (value.position or value.site_position)
+ return field=="construction_requested_item" and value~=nil
+   and type(refusal)=="table"
+   and refusal.field==field and refusal.request==value
+   and refusal.reason=="no-miner-site"
+   and at and at<=now() and now()-at<=600
+   and not explicit_site and item
+   and entity_type(item.entity_name)=="mining-drill"
+   and owned_pending_rail_0836(pair,rail)
    and source_for_item(pair,"rail")~=nil
    and not(pair.construction_task_0338
      or pair.construction_custody_0338 or pair.construction_task_0340
@@ -393,7 +398,7 @@ local function construction_request(pair)
  -- allow one already-issued, physically stocked original 0836 rail first.
  -- The remote drill request remains pending for bounded re-evaluation.
  local remote=pair.remote_drill_request_1011
- if remote~=nil and not blocked_local_remote_site_yields_rail_0836(pair,remote) then
+ if remote~=nil then
   local p=normalize_placeable(remote)
   if not(type(remote)=="table" and p
     and remote.remote_drill_terminal_1011==station_unit(pair)
@@ -427,6 +432,8 @@ local function construction_request(pair)
  end
  local b=bootstrap_request(pair)
  local frontier=pair.construction_request
+ local blocked_miner=blocked_local_miner_yields_to_rail_0836(
+   pair,"construction_requested_item",pair.construction_requested_item)
  if type(frontier)=="table"
    and frontier_owned_by_pair_0338(pair,frontier)
    -- Only the exact pending 0836 request can pass a still UNSTARTED
@@ -438,7 +445,10 @@ local function construction_request(pair)
       "construction_requested_item"}) do
    local value=pair[field]
    local p=value and normalize_placeable(value)
-   if p and source_for_item(pair,p.item_name) then earlier_funded=true end
+   if p and source_for_item(pair,p.item_name)
+     and not (blocked_miner and field=="construction_requested_item") then
+     earlier_funded=true
+   end
   end
   if not earlier_funded then
    local p=normalize_placeable(frontier)
@@ -455,7 +465,8 @@ local function construction_request(pair)
       "construction_requested_item"})do
    local value=pair[field]
    local p=value and normalize_placeable(value)
-   if p and source_for_item(pair,p.item_name) then
+   if p and source_for_item(pair,p.item_name)
+      and not (blocked_miner and field=="construction_requested_item") then
     return{field=field,value=value,placeable=p,
       position=type(value)=="table"and(value.position or value.site_position)or nil,
       site_reason=type(value)=="table"and value.site_reason or nil}
