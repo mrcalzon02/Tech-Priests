@@ -188,7 +188,7 @@ def build_agitation(scene,col,p,mats):
     froth_mat=_material(foam_source,"FMPL | central broken foam V13",
                          (.87,.96,.86),emission=.15)
     bubble_mat=_material(foam_source,"FMPL | central recirculating aeration V13",
-                         (.80,.95,.89),emission=.12)
+                         (.85,.97,.91),emission=.30)
     water=_water_surface(p,col,surface_mat)
     ribbons=[_swirl_ribbon(p,col,tracer_mat,k) for k in range(4)]
     # The ribbon group makes one quarter-turn, matching the fourfold
@@ -204,19 +204,23 @@ def build_agitation(scene,col,p,mats):
             data_path="rotation_euler",index=2,frame=frame)
     bubbles=[]
     for k in range(24):
-        radius=.32+.033*(k%7)
+        # V13 initial proof showed only SIX affected pixels: the bubbles
+        # were physically buried under the denser top fluid and did not read
+        # through the fixed 45 degree camera. Keep them in the working
+        # surface's aerated interface, just above the moving water meniscus.
+        radius=.25+.043*(k%7)
         phase0=math.tau*k/24
-        z0=2.158+.028*(k%4)
+        z0=SURFACE_Z+.028+.013*(k%4)
         xyz=(radius*math.cos(phase0),.1+radius*math.sin(phase0),z0)
         ob=_sphere(p,col,"central recirculating bubble %02d"%k,xyz,
-                   .016+.003*(k%3),bubble_mat)
+                   .028+.004*(k%3),bubble_mat)
         for frame in SAMPLE_FRAMES:
             phase=math.tau*(frame-1)/96.
             angle=phase0+phase
             rr=radius+.018*math.sin(phase+.4*k)
             ob.location=(rr*math.cos(angle),
                          .1+rr*math.sin(angle),
-                         z0+.032*math.sin(phase+.51*k))
+                         z0+.025*math.sin(phase+.51*k))
             ob.keyframe_insert(data_path="location",frame=frame)
         bubbles.append(ob)
     froth=[]
