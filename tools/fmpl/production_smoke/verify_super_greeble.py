@@ -12,6 +12,9 @@ import sys
 import bpy
 
 HERE=Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0,str(HERE))
+from camera_profile import audit_scene
 
 def sha(path):
     h=hashlib.sha256()
@@ -57,6 +60,9 @@ def main():
         raise RuntimeError("Exported GLB differs from saved source receipt")
     bpy.ops.wm.open_mainfile(filepath=str(Path(a.blend).resolve()))
     scene=bpy.context.scene
+    if receipt.get("camera_policy")!="fmpl.factorio45.v1" or receipt.get("camera_cleanup",{}).get("persistent_camera_count")!=1:
+        raise RuntimeError("Super Greeble model lacks FMPL camera sanitation evidence")
+    audit_scene(scene,bpy,512)
     original=[x for x in scene.objects if x.type=="MESH" and x.name.startswith("MH7_")]
     process=[x for x in scene.objects if x.type=="MESH" and x.name.startswith("FMPL_PROCESS |")]
     detail=[x for x in scene.objects if x.type=="MESH" and x.name.startswith("FMPL_PROCESS |") and

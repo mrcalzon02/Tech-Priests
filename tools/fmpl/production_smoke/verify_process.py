@@ -10,6 +10,10 @@ import struct
 import sys
 import bpy
 
+HERE=Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0,str(HERE))
+from camera_profile import audit_scene
 
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -41,6 +45,9 @@ def main():
         raise RuntimeError("FMPL process source/export hash mismatch")
     bpy.ops.wm.open_mainfile(filepath=str(Path(a.blend).resolve()))
     scene=bpy.context.scene
+    if report.get("camera_policy")!="fmpl.factorio45.v1" or report.get("camera_cleanup",{}).get("persistent_camera_count")!=1:
+        raise RuntimeError("Process scene has no approved camera cleanup receipt")
+    audit_scene(scene,bpy,512)
     originals=[o for o in scene.objects if o.type=="MESH" and o.name.startswith("MH7_")]
     process=[o for o in scene.objects if o.type=="MESH" and o.name.startswith("FMPL_PROCESS |")]
     if len(originals)!=50 or len(process)!=report["process_meshes_added"]:

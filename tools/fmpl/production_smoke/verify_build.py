@@ -9,6 +9,10 @@ import sys
 
 import bpy
 
+HERE=Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0,str(HERE))
+from camera_profile import audit_scene
 
 def sha(file):
     return hashlib.sha256(Path(file).read_bytes()).hexdigest()
@@ -40,6 +44,9 @@ def main():
         raise RuntimeError("FMPL native/GLB hash changed before independent reopening")
     bpy.ops.wm.open_mainfile(filepath=str(Path(a.blend).resolve()))
     scene=bpy.context.scene
+    if build.get("camera_policy")!="fmpl.factorio45.v1" or build.get("camera_cleanup",{}).get("persistent_camera_count")!=1:
+        raise RuntimeError("Blender build lacked FMPL camera sanitation proof")
+    audit_scene(scene,bpy,512)
     source=[x for x in scene.objects if x.type=="MESH" and x.name.startswith("MH7_")]
     if len(source)!=build["source_mesh_count"] or geometry_hash(source)!=build["source_geometry_digest"]:
         raise RuntimeError("The derivative altered the source machine geometry")
