@@ -38,11 +38,17 @@ class NativeRailPartialDiagnosticsTests(unittest.TestCase):
     def test_failed_save_creation_overwrites_stale_rail_proof(self):
         with tempfile.TemporaryDirectory() as root:
             output = pathlib.Path(root)
-            for name in ("rail-connected-smoke-result.json", "benchmark.log"):
+            stale = ("rail-connected-smoke-result.json", "benchmark.log",
+                     "create.log", "scenario-initial.zip")
+            for name in stale:
                 (output / name).write_text("STALE PASS", encoding="utf-8")
+            # Reset must not destroy unrelated fixture settings or logs.
+            (output / "keep-this.json").write_text("keep", encoding="utf-8")
             reset_rail_smoke_diagnostics(output)
-            self.assertFalse((output / "benchmark.log").exists())
-            self.assertFalse((output / "rail-connected-smoke-result.json").exists())
+            for name in stale:
+                self.assertFalse((output / name).exists(), name)
+            self.assertEqual((output / "keep-this.json").read_text(
+                encoding="utf-8"), "keep")
             evidence = rail_smoke_evidence(1, None, None, "2.1.24", "2.1", 36060)
             result = output / "rail-connected-smoke-result.json"
             result.write_text(json.dumps(evidence), encoding="utf-8")

@@ -66,8 +66,13 @@ def rail_connected_smoke_verdict(exit_code: int, log: str) -> bool:
 
 
 def reset_rail_smoke_diagnostics(output: pathlib.Path) -> None:
-    """A failed retry must not inherit a previous successful rail receipt."""
-    for name in ("rail-connected-smoke-result.json", "benchmark.log"):
+    """Start from a fresh native save and evidence, never a prior attempt."""
+    # --create targets a stable path. An older scenario-initial.zip can cause
+    # the new save creation to fail or be mistaken for the current fixture.
+    # Remove it before launching the engine, alongside stale verdict/logs.
+    # Failure to remove a file aborts rather than reusing unverified state.
+    for name in ("rail-connected-smoke-result.json", "benchmark.log",
+                 "create.log", "scenario-initial.zip"):
         (output / name).unlink(missing_ok=True)
 
 
