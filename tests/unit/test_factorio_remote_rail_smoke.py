@@ -285,6 +285,36 @@ class NativeRailPhysicalSupplyCapacityTests(unittest.TestCase):
         self.assertNotIn('surface.create_entity{name="straight-rail"', source)
 
 
+class NativeRailBlockedLocalMineAdmissionTests(unittest.TestCase):
+    def test_original_0338_yields_only_exact_failed_local_miner_site(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        source = (root / "tech-priests_src/scripts/core/construction_planner.lua").read_text(
+            encoding="utf-8")
+        self.assertIn("blocked_local_remote_site_yields_rail_0836(pair,remote)", source)
+        self.assertIn('rec.field=="remote_drill_request_1011"', source)
+        self.assertIn('rec.request==remote and rec.reason=="no-miner-site"', source)
+        self.assertIn("tick<=now() and now()-tick<=600", source)
+        self.assertIn("owned_pending_rail_0836(pair,original)", source)
+        self.assertIn('source_for_item(pair,"rail")~=nil', source)
+        self.assertIn("or pair.construction_custody_0338", source)
+        self.assertIn("or pair.robot_network_task_0338", source)
+        self.assertIn("pair.construction_site_refusal_0338={", source)
+        self.assertIn("field=request.field,request=request.value,reason=why", source)
+        self.assertIn("pair.construction_site_refusal_0338=nil", source)
+
+    def test_native_fixture_retains_hard_rail_gate_and_reports_miner_owner(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        source = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(
+            encoding="utf-8")
+        for evidence in ("remote_drill_present=", "remote_drill_positioned=",
+                         "blocked_site_field=", "blocked_site_reason=",
+                         "blocked_site_matches_remote="):
+            self.assertIn(evidence, source)
+        self.assertIn('fail("RAIL_FIRST_ENGINE_CONSTRUCTION_NOT_PROVEN"', source)
+        self.assertIn('fail("TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN"', source)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', source)
+
+
 class NativeRailUnfundedCandidateAdmissionTests(unittest.TestCase):
     def test_original_0338_only_yields_unfunded_unstarted_candidate(self):
         path = (pathlib.Path(__file__).resolve().parents[2]
