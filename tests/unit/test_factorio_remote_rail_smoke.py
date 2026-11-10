@@ -38,7 +38,7 @@ class CanonicalRailAdmissionRefusalTraceTests(unittest.TestCase):
         self.assertIn('" order_kind="..tostring(order and order.kind)', fixture)
         self.assertIn('" order_queue_current="..tostring(queue and queue.current~=nil)', fixture)
         self.assertIn('RAIL_FIRST_ENGINE_CONSTRUCTION_NOT_PROVEN', fixture)
-        self.assertIn('RAIL_SECOND_ENGINE_CONNECTIVITY_NOT_PROVEN', fixture)
+        self.assertIn('TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN', fixture)
 
 class NativePlayerTestSaveSelectionTests(unittest.TestCase):
     def test_native_headless_player_does_not_restart_graphical_steam_client(self):
