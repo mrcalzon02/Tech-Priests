@@ -373,6 +373,10 @@ def main():
     rendered_legacy_cones=sum(not ob.hide_render for ob in legacy_cones)
     rendered_legacy_solid_caps=sum(not ob.hide_render for ob in solid_caps)
     verified_throat_bore_diameter=float(throat.get("fmpl_nozzle_bore_diameter_tiles"))
+    # Never dereference Blender material/RNA objects after read_factory_settings:
+    # V12 initial verifier failed here despite a correct native Blender build.
+    verified_raw_transmission=float(raw_surface.inputs["Transmission Weight"].default_value)
+    verified_clean_transmission=float(clean_surface.inputs["Transmission Weight"].default_value)
     total_expected=(len([ob for ob in original if not ob.hide_render])+
                     len([ob for ob in saved_process if not ob.hide_render])+
                     len([ob for ob in details if not ob.hide_render]))
@@ -405,8 +409,8 @@ def main():
        "front_colorway_contrast_verified":True,
        "visible_rising_bubble_meshes":len(bubbly),
        "visible_waterline_froth_bead_meshes":len(froth),
-       "v12_raw_water_transmission":round(float(raw_surface.inputs["Transmission Weight"].default_value),3),
-       "v12_clean_water_transmission":round(float(clean_surface.inputs["Transmission Weight"].default_value),3),
+       "v12_raw_water_transmission":round(verified_raw_transmission,3),
+       "v12_clean_water_transmission":round(verified_clean_transmission,3),
        "v12_bubbles_and_foam_motion_looped":True,
        "moving_pump_rotor_samples":seen,
        "gauge_needles_keyed":len(needles),
