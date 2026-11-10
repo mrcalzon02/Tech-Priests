@@ -170,21 +170,16 @@ local function setup()
   local ore_tiles=count(surface,{type="resource",name="iron-ore",
     position=ORE,radius=16})
   if ore_tiles<1 then fail("NATURAL_REMOTE_ORE_PATCH_MISSING")end
-  -- The destination has been charted by prior remote reconnaissance. The
-  -- Magos may use only charted map intelligence, not omniscient surface scans.
-  -- The targeted chart request stayed pending through 1,800 real
-  -- headless benchmark ticks in Factorio 2.1.24. During this isolated
-  -- pre-mission reconnaissance, chart all ALREADY GENERATED chunks using
-  -- Factorio's native force chart API, not fabricated ore/intelligence.
-  -- This never credits track, resources, cargo, or a completed objective.
-  -- The strict delayed is_chunk_charted readback remains mandatory.
+  -- A fresh --create/on_init chart request can remain pending throughout
+  -- benchmark execution. Request only the genuine generated target chunk
+  -- from a live simulation pulse; never credit a merely pending request.
+  -- The independent native is_chunk_charted gate at 1800 ticks remains.
   local target_chunk={x=math.floor(ORE.x/32),y=math.floor(ORE.y/32)}
-  force.chart(surface,{{ORE.x-20,ORE.y-20},{ORE.x+20,ORE.y+20}})
-  force.chart_all(surface)
-  emit("CHART_SETUP target_chunk="..target_chunk.x..","..target_chunk.y..
+  s.chart_target_chunk=target_chunk
+  emit("CHART_PREPARED target_chunk="..target_chunk.x..","..target_chunk.y..
+    " generated="..tostring(surface.is_chunk_generated(target_chunk))..
     " charted="..tostring(force.is_chunk_charted(surface,target_chunk))..
     " requested="..tostring(force.is_chunk_requested_for_charting(surface,target_chunk)))
-  s.chart_target_chunk=target_chunk
   if count(surface,{type="resource",
       area={{-64,STATION.y-64},{64,STATION.y+64}}})~=0 then
     fail("UNEXPECTED_NEARBY_ORE")
@@ -399,6 +394,24 @@ local function pulse()
   local ok,why=pcall(function()
     if not s.started then fail("fixture did not initialize") end
     local elapsed=game.tick-s.started
+    -- Start the native chart request only after --benchmark begins ticking.
+    -- No map-wide chart backlog; no ghost or artificial intelligence credit.
+    if elapsed>=60 and not s.chart_live_request_issued then
+      local surface,force=game.surfaces[1],game.forces.player
+      local target_chunk=s.chart_target_chunk
+      if not (target_chunk and surface.is_chunk_generated(target_chunk)) then
+        fail("NATURAL_TARGET_CHUNK_NOT_GENERATED_ON_LIVE_CHART")
+      end
+      force.chart(surface,{{target_chunk.x*32,target_chunk.y*32},
+        {target_chunk.x*32+31,target_chunk.y*32+31}})
+      s.chart_live_request_issued=true
+      s.chart_live_request_tick=game.tick
+      emit("CHART_LIVE_REQUEST elapsed="..elapsed..
+        " generated=true charted="..
+          tostring(force.is_chunk_charted(surface,target_chunk))..
+        " requested="..
+          tostring(force.is_chunk_requested_for_charting(surface,target_chunk)))
+    end
     for _,mark in ipairs({1800,9000,18000,36000,60000,90000}) do
       if elapsed>=mark and not s["checked_"..mark] then
         inspect(s,mark);s["checked_"..mark]=true

@@ -110,17 +110,19 @@ class NativeRailNaturalOreAdmissionTests(unittest.TestCase):
 
 
 class NativeRailDeferredChartAdmissionTests(unittest.TestCase):
-    def test_chart_requested_on_init_and_verified_after_engine_ticks(self):
+    def test_live_broker_chart_request_requires_completed_native_chunk(self):
         fixture = (pathlib.Path(__file__).resolve().parents[2]
                    / "tests/scenarios/remote-rail-acquisition/fixture.lua")
         source = fixture.read_text(encoding="utf-8")
-        self.assertIn('force.chart(surface,{{ORE.x-20,ORE.y-20},'
-                      '{ORE.x+20,ORE.y+20}})', source)
-        self.assertIn('force.chart_all(surface)', source)
-        self.assertLess(source.index('force.chart(surface,{{ORE.x-20'),
-                        source.index('force.chart_all(surface)'))
-        self.assertIn('CHART_SETUP target_chunk=', source)
+        self.assertIn('CHART_PREPARED target_chunk=', source)
         self.assertIn('s.chart_target_chunk=target_chunk', source)
+        self.assertIn('if elapsed>=60 and not s.chart_live_request_issued then', source)
+        self.assertIn('surface.is_chunk_generated(target_chunk)', source)
+        self.assertIn('force.chart(surface,{{target_chunk.x*32,target_chunk.y*32},', source)
+        self.assertIn('{target_chunk.x*32+31,target_chunk.y*32+31}})', source)
+        self.assertIn('s.chart_live_request_issued=true', source)
+        self.assertIn('CHART_LIVE_REQUEST elapsed=', source)
+        self.assertNotIn('force.chart_all(surface)', source)
         self.assertIn('if elapsed>=1800 and not s.chart_verified then', source)
         self.assertIn('station.force.is_chunk_charted(', source)
         self.assertIn('station.force.is_chunk_requested_for_charting(', source)
@@ -128,9 +130,10 @@ class NativeRailDeferredChartAdmissionTests(unittest.TestCase):
         self.assertIn('s.chart_verified=true', source)
         self.assertLess(source.index('s.chart_target_chunk=target_chunk'),
                         source.index('s.started=game.tick'))
+        self.assertGreater(source.index('if elapsed>=60 and not s.chart_live_request_issued'),
+                           source.index('local function pulse()'))
         self.assertGreater(source.index('if elapsed>=1800 and not s.chart_verified'),
                            source.index('local function inspect(s,elapsed)'))
-        self.assertNotIn('fail("REMOTE_ORE_NOT_CHARTED")', source)
         self.assertNotIn('surface.create_entity{name="iron-ore"', source)
         self.assertNotIn('surface.create_entity{name="straight-rail"', source)
 
