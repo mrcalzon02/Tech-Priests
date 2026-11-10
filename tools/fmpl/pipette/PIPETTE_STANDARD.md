@@ -8,6 +8,16 @@
 
 No `mm`, `AWG`, gauge conversion, psi, bar, force, ampacity or tensile-strength formula is applied by default. Such fields can be optional future simulation metadata, but **never drive geometry without an explicitly authored scene-relative mapping**.
 
+## Optional Factorio tile reference scope
+
+Pipette's normal `size.outer_diameter`, strand thickness, corrugation pitch and hose sag **remain absolute Blender scene units**, not measurements in millimeters or guessed engineering gauge.
+
+For FMPL machines that must connect to Factorio standard pipe hardware, add the explicit `scene_scope` (`schema: fmpl.scene-scope.v1`, `scene_units_per_tile`, `footprint_tiles` such as `[2,2]` or `[3,3]`, `origin_bu`, `up_axis: +Z`). Optionally tag individual external fluid endpoints under `tile_interfaces.start` or `tile_interfaces.end` with the `factorio-fluid-interface-v1` reference, named face, `transverse_offset_tiles`, and `elevation_tiles`.
+
+The canonical open pipe fixture retains tile-relative dimensions **barrel OD 0.57, bore ID 0.49, collar OD 0.68 and collar axial thickness 0.075**, multiplied by that model's explicitly authored Blender-units-per-tile factor. A 2×2 and 3×3 fixture have the **same pipe proportions** but different horizontal side-boundary coordinates. A 3×3 scope with two Blender units per tile makes the canonical barrel 1.14 Blender units in OD while an independently declared small service line `diameter=0.08` stays exactly 0.08 Blender units.
+
+The Pipette Blender adapter builds a real hollow, dimension-matching **candidate** throat/collar and reducer where declared. This candidate does not replace a verified FMPL source pipe fixture or establish the native Factorio fluidbox connection cell. See `../SCENE_SCALE_STANDARD.md` and `../scene_scale_registry.json`. Standard fitting data is only applied when a specific external socket and tile interface are explicitly requested—**never** to every small wire or tube by inference.
+
 ## Orthogonal classification
 
 Pipette's type is more than “pipe or wire”. Describe each member across independent fields:
