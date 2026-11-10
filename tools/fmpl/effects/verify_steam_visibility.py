@@ -24,7 +24,7 @@ def digest(p):
 def inspect(path):
     im=bpy.data.images.load(str(path.resolve()),check_existing=False)
     try:
-        if im.size[:]!= (512,512) or im.channels!=4:
+        if tuple(im.size)!=(512,512) or im.channels!=4:
             raise RuntimeError("Expected actual native 512x512 RGBA Cycles proof")
         pixels=array.array("f",[0.])* (512*512*4)
         im.pixels.foreach_get(pixels)
