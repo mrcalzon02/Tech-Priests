@@ -53,6 +53,17 @@ def load_bore_clearance():
 
 bore_tools=load_bore_clearance()
 
+def load_central_console():
+    spec=importlib.util.spec_from_file_location(
+        "fmpl_central_agitation_console",HERE/"central_agitation_console.py")
+    if not spec.origin or not Path(spec.origin).is_file():
+        raise RuntimeError("FMPL central agitation and CRT geometry module missing")
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+central_console=load_central_console()
+
 
 
 def import_effect_library(library_path):
@@ -390,6 +401,7 @@ def main():
     # mesh-carved derivatives and external replacement supports only; original
     # 50 MH7 / 136 process meshes remain untouched and recoverable.
     bore_counts=bore_tools.build_port_clearance(scene,col,p,original,process,mats)
+    v13=central_console.build(scene,col,p,original,process,mats)
     # Guard against accidental opaque camera backgrounds or polluting the port planes.
     newmeshes=[ob for ob in col.objects if ob.type=="MESH"]
     bpy.context.view_layer.update()
@@ -429,7 +441,8 @@ def main():
         ob.select_set(True)
     rigs=[ob for ob in scene.objects if ob.type=="EMPTY" and (
         ob.name.startswith("FMPL_PROCESS | keyframed central agitator") or
-        ob.name.startswith("FMPL_PROCESS | powered inlet pump drive rotor")
+        ob.name.startswith("FMPL_PROCESS | powered inlet pump drive rotor") or
+        ob.name.startswith("FMPL_PROCESS | central visible spiral flow rig")
     )]
     for ob in rigs:
         ob.select_set(True)
@@ -469,6 +482,7 @@ def main():
       "steam_fx":steam_counts,
       "vent_nozzle":nozzle_counts,
       "port_bore_clearance":bore_counts,
+      "v13_central_agitation_console":v13,
       "fmpl_effects_native_blend_sha256":fx_library_hash,
       "private_greebles_source":greebles,
       "source_camera_pose_preserved":True,
