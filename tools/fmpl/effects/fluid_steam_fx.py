@@ -119,9 +119,10 @@ def _bubbles(p, col, index, x, y, material):
 def build_witness_canisters(col, p, mats):
     """Physically larger front RAW and CLEAN canisters with inlet/exit flow."""
     glass, iron, brass, steel = (
-        mats["glass"], mats["iron"], mats["brass"], mats["steel"])
+        mats.get("fx_glass", mats["glass"]), mats["iron"], mats["brass"], mats["steel"])
     dark, foam = mats["gunmetal"], mats["foam"]
-    specs = ((1, -.36, mats["amber"]), (2, .24, mats["teal"]))
+    specs = ((1, -.36, mats.get("fx_raw", mats["amber"])),
+             (2, .24, mats.get("fx_clear", mats["teal"])))
     out = {"vessels": 0, "moving_surfaces": 0,
            "liquid_bubbles": 0, "flow_tracers": 0, "glass_flows": 0}
     for idx, x, liquid in specs:
@@ -150,10 +151,10 @@ def build_witness_canisters(col, p, mats):
     # filter and discharge routes: they do not change the two engine fluidbox
     # openings at X+/-1.5 Y0 Z.36.
     channels = (
-        ("raw-canister inlet",(-.72,-1.118,1.122),(-.536,-1.272,1.122),mats["amber"]),
-        ("raw-canister outlet",(-.536,-1.272,.762),(-.72,-1.09,.762),mats["amber"]),
-        ("clean-canister inlet",(.590,-1.105,1.122),(.416,-1.272,1.122),mats["teal"]),
-        ("clean-canister outlet",(.416,-1.272,.762),(.590,-1.105,.762),mats["teal"])
+        ("raw-canister inlet",(-.72,-1.118,1.122),(-.536,-1.272,1.122),mats.get("fx_raw", mats["amber"])),
+        ("raw-canister outlet",(-.536,-1.272,.762),(-.72,-1.09,.762),mats.get("fx_raw", mats["amber"])),
+        ("clean-canister inlet",(.590,-1.105,1.122),(.416,-1.272,1.122),mats.get("fx_clear", mats["teal"])),
+        ("clean-canister outlet",(.416,-1.272,.762),(.590,-1.105,.762),mats.get("fx_clear", mats["teal"]))
     )
     for label, start, end, liquid in channels:
         _clear_flow(p,col,label,start,end,glass,liquid,foam)
@@ -179,7 +180,7 @@ def build_witness_canisters(col, p, mats):
 
 def add_relief_steam(col,p,mats):
     """Stepped, keyframed, restrained vapor from the REAL top relief nozzle."""
-    steam = bpy.data.materials.get("FMPL | vented condensed steam")
+    steam = mats.get("fx_steam") or bpy.data.materials.get("FMPL | vented condensed steam")
     if steam is None:
         raise RuntimeError("FMPL vented condensed steam material is missing")
     for k in range(4):
