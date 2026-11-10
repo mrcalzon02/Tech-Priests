@@ -335,6 +335,13 @@ def main():
                                planned["material_id"])
         mat=bpy.data.materials.new("PIPETTE PREVIEW ONLY | "+planned["material_id"])
         mat.diffuse_color=(.48,.5,.53,1.)
+        mat.use_nodes=True
+        bsdf=mat.node_tree.nodes.get("Principled BSDF")
+        if bsdf is None:
+            raise RuntimeError("Blender preview material has no editable Principled BSDF")
+        bsdf.inputs["Base Color"].default_value=(.48,.56,.64,1.)
+        bsdf.inputs["Roughness"].default_value=.55
+        bsdf.inputs["Metallic"].default_value=.15
         mat["pipette_unapproved_preview_material"]=True
     fitting_mat_name=request.get("fitting_material_id",planned["material_id"])
     fit_mat=bpy.data.materials.get(fitting_mat_name)
