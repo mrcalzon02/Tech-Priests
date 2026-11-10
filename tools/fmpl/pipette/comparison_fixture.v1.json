@@ -1,0 +1,686 @@
+{
+  "schema": "fmpl.pipette.comparison-fixture.v1",
+  "status": "authored-reference-fixture-not-yet-generated-geometry",
+  "scene_unit": "Blender scene unit, never automatically converted to real-world dimensions",
+  "coordinate_system": "+Z up; XY horizontal; center and all port positions fixed by topology",
+  "reference_id": "FMPL-PIPETTE-COMPARISON-RIG-01",
+  "workspace": {
+    "nominal_display_footprint_bu": [
+      3.2,
+      3.2,
+      1.7
+    ],
+    "center_xyz_bu": [
+      0,
+      0,
+      0.65
+    ],
+    "endpoint_radius_bu": 1.2,
+    "nominal_outer_diameter_bu": 0.12,
+    "nominal_wall_fraction": 0.2,
+    "zero_origin_ref_bu": [
+      0,
+      0,
+      0
+    ],
+    "port_position_tolerance_bu": 0.000001,
+    "normal_tolerance": 0.000001,
+    "non_port_features_allowed_to_extend": false
+  },
+  "topologies": {
+    "straight": {
+      "label": "Straight / inline coupling",
+      "ports": [
+        {
+          "id": "A",
+          "xyz_bu": [
+            -1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            -1,
+            0,
+            0
+          ],
+          "role": "trunk"
+        },
+        {
+          "id": "B",
+          "xyz_bu": [
+            1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "outlet"
+        }
+      ],
+      "junctions": [
+        {
+          "id": "HUB",
+          "xyz_bu": [
+            0,
+            0,
+            0.65
+          ]
+        }
+      ],
+      "connection_graph": [
+        [
+          "A",
+          "HUB"
+        ],
+        [
+          "HUB",
+          "B"
+        ]
+      ]
+    },
+    "elbow_45": {
+      "label": "45-degree elbow",
+      "ports": [
+        {
+          "id": "A",
+          "xyz_bu": [
+            -1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            -1,
+            0,
+            0
+          ],
+          "role": "trunk"
+        },
+        {
+          "id": "B",
+          "xyz_bu": [
+            0.848528137,
+            0.848528137,
+            0.65
+          ],
+          "outward_normal": [
+            0.707106781,
+            0.707106781,
+            0
+          ],
+          "role": "branch"
+        }
+      ],
+      "junctions": [
+        {
+          "id": "HUB",
+          "xyz_bu": [
+            0,
+            0,
+            0.65
+          ]
+        }
+      ],
+      "connection_graph": [
+        [
+          "A",
+          "HUB"
+        ],
+        [
+          "HUB",
+          "B"
+        ]
+      ]
+    },
+    "elbow_90": {
+      "label": "90-degree elbow",
+      "ports": [
+        {
+          "id": "A",
+          "xyz_bu": [
+            -1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            -1,
+            0,
+            0
+          ],
+          "role": "trunk"
+        },
+        {
+          "id": "B",
+          "xyz_bu": [
+            0,
+            1.2,
+            0.65
+          ],
+          "outward_normal": [
+            0,
+            1,
+            0
+          ],
+          "role": "outlet"
+        }
+      ],
+      "junctions": [
+        {
+          "id": "HUB",
+          "xyz_bu": [
+            0,
+            0,
+            0.65
+          ]
+        }
+      ],
+      "connection_graph": [
+        [
+          "A",
+          "HUB"
+        ],
+        [
+          "HUB",
+          "B"
+        ]
+      ]
+    },
+    "tee": {
+      "label": "Three-way orthogonal tee",
+      "ports": [
+        {
+          "id": "A",
+          "xyz_bu": [
+            -1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            -1,
+            0,
+            0
+          ],
+          "role": "trunk"
+        },
+        {
+          "id": "B",
+          "xyz_bu": [
+            1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "outlet"
+        },
+        {
+          "id": "C",
+          "xyz_bu": [
+            0,
+            1.2,
+            0.65
+          ],
+          "outward_normal": [
+            0,
+            1,
+            0
+          ],
+          "role": "branch"
+        }
+      ],
+      "junctions": [
+        {
+          "id": "HUB",
+          "xyz_bu": [
+            0,
+            0,
+            0.65
+          ]
+        }
+      ],
+      "connection_graph": [
+        [
+          "A",
+          "HUB"
+        ],
+        [
+          "HUB",
+          "B"
+        ],
+        [
+          "C",
+          "HUB"
+        ]
+      ]
+    },
+    "wye": {
+      "label": "Three-way symmetric Y / wye",
+      "ports": [
+        {
+          "id": "A",
+          "xyz_bu": [
+            -1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            -1,
+            0,
+            0
+          ],
+          "role": "trunk"
+        },
+        {
+          "id": "B",
+          "xyz_bu": [
+            0.848528137,
+            0.848528137,
+            0.65
+          ],
+          "outward_normal": [
+            0.707106781,
+            0.707106781,
+            0
+          ],
+          "role": "branch"
+        },
+        {
+          "id": "C",
+          "xyz_bu": [
+            0.848528137,
+            -0.848528137,
+            0.65
+          ],
+          "outward_normal": [
+            0.707106781,
+            -0.707106781,
+            0
+          ],
+          "role": "branch"
+        }
+      ],
+      "junctions": [
+        {
+          "id": "HUB",
+          "xyz_bu": [
+            0,
+            0,
+            0.65
+          ]
+        }
+      ],
+      "connection_graph": [
+        [
+          "A",
+          "HUB"
+        ],
+        [
+          "HUB",
+          "B"
+        ],
+        [
+          "HUB",
+          "C"
+        ]
+      ]
+    },
+    "cross_connected": {
+      "label": "Connected four-way cross",
+      "ports": [
+        {
+          "id": "A",
+          "xyz_bu": [
+            -1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            -1,
+            0,
+            0
+          ],
+          "role": "trunk"
+        },
+        {
+          "id": "B",
+          "xyz_bu": [
+            1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "outlet"
+        },
+        {
+          "id": "C",
+          "xyz_bu": [
+            0,
+            1.2,
+            0.65
+          ],
+          "outward_normal": [
+            0,
+            1,
+            0
+          ],
+          "role": "branch"
+        },
+        {
+          "id": "D",
+          "xyz_bu": [
+            0,
+            -1.2,
+            0.65
+          ],
+          "outward_normal": [
+            0,
+            -1,
+            0
+          ],
+          "role": "branch"
+        }
+      ],
+      "junctions": [
+        {
+          "id": "HUB",
+          "xyz_bu": [
+            0,
+            0,
+            0.65
+          ]
+        }
+      ],
+      "connection_graph": [
+        [
+          "A",
+          "HUB"
+        ],
+        [
+          "HUB",
+          "B"
+        ],
+        [
+          "C",
+          "HUB"
+        ],
+        [
+          "HUB",
+          "D"
+        ]
+      ]
+    },
+    "cross_isolated": {
+      "label": "Over-under physically separated crossing",
+      "ports": [
+        {
+          "id": "A",
+          "xyz_bu": [
+            -1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            -1,
+            0,
+            0
+          ],
+          "role": "trunk"
+        },
+        {
+          "id": "B",
+          "xyz_bu": [
+            1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "outlet"
+        },
+        {
+          "id": "C",
+          "xyz_bu": [
+            0,
+            1.2,
+            0.65
+          ],
+          "outward_normal": [
+            0,
+            1,
+            0
+          ],
+          "role": "branch"
+        },
+        {
+          "id": "D",
+          "xyz_bu": [
+            0,
+            -1.2,
+            0.65
+          ],
+          "outward_normal": [
+            0,
+            -1,
+            0
+          ],
+          "role": "branch"
+        }
+      ],
+      "junctions": [
+        {
+          "id": "UPPER_CLEARANCE",
+          "xyz_bu": [
+            0,
+            0,
+            0.79
+          ]
+        },
+        {
+          "id": "LOWER_CLEARANCE",
+          "xyz_bu": [
+            0,
+            0,
+            0.51
+          ]
+        }
+      ],
+      "connection_graph": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "C",
+          "D"
+        ]
+      ],
+      "no_electrical_or_fluid_contact_at_crossing": true
+    },
+    "reducer": {
+      "label": "Concentric/eccentric inline size transition",
+      "ports": [
+        {
+          "id": "A",
+          "xyz_bu": [
+            -1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            -1,
+            0,
+            0
+          ],
+          "role": "trunk"
+        },
+        {
+          "id": "B",
+          "xyz_bu": [
+            1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "outlet"
+        }
+      ],
+      "junctions": [
+        {
+          "id": "HUB",
+          "xyz_bu": [
+            0,
+            0,
+            0.65
+          ]
+        }
+      ],
+      "connection_graph": [
+        [
+          "A",
+          "HUB"
+        ],
+        [
+          "HUB",
+          "B"
+        ]
+      ],
+      "diameter_transition_only": true
+    },
+    "bulkhead": {
+      "label": "Bulkhead/panel pass-through",
+      "ports": [
+        {
+          "id": "A",
+          "xyz_bu": [
+            -1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            -1,
+            0,
+            0
+          ],
+          "role": "trunk"
+        },
+        {
+          "id": "B",
+          "xyz_bu": [
+            1.2,
+            0,
+            0.65
+          ],
+          "outward_normal": [
+            1,
+            0,
+            0
+          ],
+          "role": "outlet"
+        }
+      ],
+      "junctions": [
+        {
+          "id": "BULKHEAD",
+          "xyz_bu": [
+            0,
+            0,
+            0.65
+          ]
+        }
+      ],
+      "connection_graph": [
+        [
+          "A",
+          "B"
+        ]
+      ],
+      "panel_plane": "X=0",
+      "panel_geometry": "reference plane only, not a source geometry"
+    }
+  },
+  "invariants": [
+    "Each architecture demo MUST use ports directly from the named topology, not author-specific coordinates.",
+    "Identically named ports in a topology have EXACTLY identical XYZ and outward normals for lead pipe, individual wire, 8-core bundle, metal/plastic conduit and every other compatible carrier.",
+    "The junction origin and endpoint radius stay fixed while geometry, fittings, internal cores and stiffness differ.",
+    "Nominal reference outside diameter is the same for comparable one-skin sections; internally necessary multi-cores may adjust strands or envelopes only when stated explicitly.",
+    "Offsets of individual wires are INSIDE a common nominal socket envelope and cannot move the public connection point.",
+    "Non-Y-compatible profiles must report unsupported and must not silently counterfeit a functional split.",
+    "Do not turn wire splices into fluid Y pieces or vice versa; the same port arrangement is not interchangeable mating hardware.",
+    "Variant stiffness may bow or sag the segment BETWEEN ports, but no slack setting may move its endpoints.",
+    "Factorio 2x2/3x3 standard port hardware is an optional separate tile-scoped adapter, NEVER an implicit rescaling of this fixture."
+  ],
+  "demo_pairs": [
+    {
+      "left": "wire_single_insulated_solid",
+      "right": "pipe_lead_historical",
+      "topology": "wye",
+      "intent": "Compare electrically spliced wire Y against historical cast lead-pipe Y at identical XYZ ports"
+    },
+    {
+      "left": "wire_eight_loose_bundle",
+      "right": "pipe_galvanized_threaded",
+      "topology": "wye",
+      "intent": "Compare differential individual wire sag against a rigid three-port pipe fitting"
+    },
+    {
+      "left": "conduit_fmc_interlocked",
+      "right": "conduit_ent_corrugated",
+      "topology": "wye",
+      "intent": "Compare helically wound metal and annularly corrugated polymer sleeves at shared coordinates"
+    },
+    {
+      "left": "hose_rubber_coolant",
+      "right": "pipe_carbon_steel_seamless",
+      "topology": "elbow_90",
+      "intent": "Compare hose natural droop against fixed pipe elbow"
+    }
+  ],
+  "wire_bundle_display_policy": {
+    "count": 8,
+    "anchor": "one common public socket per branch; 8 independent local conductor termination offsets near the anchor",
+    "seed": 17021,
+    "base_sag_fraction_of_span": 0.1,
+    "per_core_sag_multipliers": [
+      0.71,
+      0.9,
+      1.12,
+      0.83,
+      1.25,
+      1.03,
+      1.36,
+      0.97
+    ],
+    "per_core_lateral_phase": [
+      0,
+      0.28,
+      -0.22,
+      0.13,
+      -0.31,
+      0.2,
+      -0.12,
+      0.35
+    ],
+    "lateral_limit_fraction_of_span": 0.035,
+    "group_coherence": true,
+    "segment_collisions": "future geometry verifier; must reject obvious self-intersections",
+    "rule": "deterministic nonuniform relaxed wire curves, NEVER eight coincident strands and NEVER random spaghetti"
+  },
+  "production_camera_policy": "Reuse FMPL canonical 45 degree review camera; may add closeups without changing canonical export",
+  "compatibility": "existing v0.1 two-terminal planner cannot natively build 3/4 port branches yet; these fixtures define future verified branch builder acceptance"
+}
