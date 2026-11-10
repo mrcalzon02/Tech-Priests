@@ -73,3 +73,5 @@ Add `--install` only when authorizing registration of that directory in the **cu
 **Verification:** [`verify_super_greeble.py`](../production_smoke/verify_super_greeble.py) reopens real Blender/GLB derivatives, checks original machine and process mesh preservation, measured canister size, shape-key slosh, 24 moving liquid bubbles, 8 visible glass flow tracers, 4 active sight-flow pipes, 4 relief steam puffs, and native FX material IDs. This is a technical/visual-review candidate; user approval and Factorio native fluidbox connections remain separate.
 
 1.0.2: correct plume-lobe scale preservation after v1.0.1 Blender visual proof exposed oversized vapor emitters. Build/test must verify spatial bounds as well as loop closure. Source-only until rerun.
+
+1.0.3: correct the Blender world/local parenting root cause of inflated vapor lobes; explicit chemical liquid translucency reduced for readability. Actual Blender runner validation required. 

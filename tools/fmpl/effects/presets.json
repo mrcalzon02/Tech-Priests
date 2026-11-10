@@ -1,7 +1,7 @@
 {
   "schema": "fmpl.effects.v1",
   "library_id": "fmpl-effect-material-library",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "original procedural graphs; no imported artwork",
   "source_guide": {
     "name": "To create effects in blender.pdf",
@@ -243,7 +243,7 @@
       ],
       "roughness": 0.14,
       "metallic": 0,
-      "transmission": 0.33,
+      "transmission": 0.06,
       "ior": 1.35,
       "emission_color": [
         0.08,
@@ -255,7 +255,7 @@
       "noise_scale": 5.6,
       "bump_distance": 0.008,
       "performance": "sprite-safe",
-      "notes": "Local-space procedural surface; tile-scale authoring controls."
+      "notes": "Local-space procedural surface; tile-scale authoring controls. 1.0.3: color body opacity prioritized at Factorio scale."
     },
     {
       "id": "chemical-coolant-blue",
@@ -269,7 +269,7 @@
       ],
       "roughness": 0.12,
       "metallic": 0,
-      "transmission": 0.48,
+      "transmission": 0.1,
       "ior": 1.34,
       "emission_color": [
         0.1,
@@ -281,7 +281,7 @@
       "noise_scale": 5.6,
       "bump_distance": 0.008,
       "performance": "sprite-safe",
-      "notes": "Local-space procedural surface; tile-scale authoring controls."
+      "notes": "Local-space procedural surface; tile-scale authoring controls. 1.0.3: color body opacity prioritized at Factorio scale."
     },
     {
       "id": "chemical-slurry",
@@ -307,7 +307,7 @@
       "noise_scale": 5.6,
       "bump_distance": 0.008,
       "performance": "sprite-safe",
-      "notes": "Local-space procedural surface; tile-scale authoring controls."
+      "notes": "Local-space procedural surface; tile-scale authoring controls. 1.0.3: color body opacity prioritized at Factorio scale."
     },
     {
       "id": "glass-clear",
@@ -515,7 +515,7 @@
       "noise_scale": 2.2,
       "bump_distance": 0,
       "performance": "advanced-preview",
-      "notes": "Dense, editable bounded-preview gas volume for native-size legibility; physically scaled production domains require independent review."
+      "notes": "Dense, editable bounded-preview gas volume for native-size legibility; physically scaled production domains require independent review. 1.0.3: color body opacity prioritized at Factorio scale."
     },
     {
       "id": "fire-core",

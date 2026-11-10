@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FMPL Effects v1.0.2: deterministic native Blender materials and animated FX rigs.
+"""FMPL Effects v1.0.3: deterministic native Blender materials and animated FX rigs.
 
 No external material files, generators, downloads, game edits or simulations.
 Requires bpy in Blender 4.3+ / Blender 5.2. Never overwrites an output folder.
@@ -224,8 +224,8 @@ def torus_mesh(bpy,collection,name,location,material,major=.24,minor=.035):
     n=36
     verts=[];faces=[]
     for radius,z in ((major-minor,-.003),(major+minor,-.003)):
-        verts.extend([(location[0]+radius*math.cos(2*math.pi*i/n),
-                       location[1]+radius*math.sin(2*math.pi*i/n),location[2]+z)
+        verts.extend([(radius*math.cos(2*math.pi*i/n),
+                       radius*math.sin(2*math.pi*i/n),z)
                      for i in range(n)])
     for i in range(n):
         nxt=(i+1)%n
@@ -235,6 +235,7 @@ def torus_mesh(bpy,collection,name,location,material,major=.24,minor=.035):
     mesh.update()
     obj=bpy.data.objects.new(name,mesh)
     collection.objects.link(obj)
+    obj.location=location  # mesh vertices stay local, rig root alone sets gallery position
     mesh.materials.append(material)
     return obj
 
@@ -279,7 +280,19 @@ def build_animated_rigs(bpy,scene,materials,defs):
                 ob=torus_mesh(bpy,col,"FX | bounded-ring-%d"%j,(x,y,.19),mat,major=.16+j*.065)
             else:
                 raise RuntimeError("Unknown rig type: "+rig["kind"])
-            attach_to(ob,root)
+            # Blender creates primitives with world-space transforms. The old
+            # matrix_world re-parent caused deferred-depsgraph scale readback:
+            # small (.22,.19,.30) vapor spheres became unit-sized after linking.
+            # Parent in *local coordinates*, preserving original scale explicitly.
+            local_scale=tuple(ob.scale)
+            ob.parent=root
+            ob.matrix_parent_inverse.identity()
+            ob.location=(.13*j-.16,.07*j-.12,.44 if rig["kind"] in ("flame","cloud") else .19)
+            ob.rotation_euler=(0,0,0)
+            ob.scale=local_scale
+            bpy.context.view_layer.update()
+            if rig["kind"]=="cloud" and max(ob.scale.x,ob.scale.y)>.4:
+                raise RuntimeError("Emitter changed scale during parenting: "+ob.name)
             items.append(ob)
         # Preserve true native dimensions: a vapor lobe must stay a small lobe, not inflate to a full unit sphere.
         base_scales=[tuple(ob.scale) for ob in items]

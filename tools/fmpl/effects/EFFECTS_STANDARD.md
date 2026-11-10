@@ -1,4 +1,4 @@
-# FMPL Effects and Materials Standard v1.0.2
+# FMPL Effects and Materials Standard v1.0.3
 
 This **additive** library extends the existing 23 image-backed PBR presets; it never renames, overwrites or silently promotes the existing bunker/boiler/condenser materials. It provides **28 named original procedural effect materials** and **five reusable animated demonstration rig collections**. Materials, rig geometry, preview frames, the saved native Blender library, a verified reopened library, a user-approved visual design, and a Factorio in-game sprite are distinct acceptance states.
 
@@ -54,3 +54,9 @@ The first full Dens Mortis run (42743646586, Blender 5.2.3 LTS) genuinely built 
 ## v1.0.2 bounded-lobe correction
 
 The second Blender 5.2.3 production run #42745250083 passed all native reopening tests, but direct proof inspection revealed that the animated plume logic reset tiny gas-sphere scales to 1.0, creating huge visual occlusion. V1.0.2 captures and restores original axis scales during every animation phase, and verifies gas lobes remain <=0.40 units in X/Y. This is a real animation-geometry repair, separate from the v1.0.1 gas-density improvement. Verification still requires actual new runner renders and user visual acceptance.
+
+## v1.0.3 — geometry and chemical-opacity correction
+
+Blender V1.0.2 failed the native spatial-scale gate at [Dens Mortis run 42746275215](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/42746275215). Scene parenting had reinterpreted the initial world-space transforms, creating unit-sized gas spheres. V1.0.3 parents new emitter meshes with explicit local offsets and restores the authored scale, fixes local-space ring vertices and validates the gas envelope at initial, middle and final frames. A test failure is a real defect, not evidence to weaken QA.
+
+Chemical acid, blue coolant and slurry are intentionally less transmissive for clearer color at 64px. Gas effect density remains separate. This does not affect ordinary transparent water and glass; no physical-fluid solver is invoked. User approval and game sprite integration remain independent.
