@@ -20,6 +20,26 @@ P = "[TP-REMOTE-RAIL-TEST] "
 A = P + "PASS first physical rail built and exact stock debited"
 B = P + "PASS two distinct 0338-debited native-connected rails"
 
+
+class CanonicalRailAdmissionRefusalTraceTests(unittest.TestCase):
+    def test_pending_exact_rail_records_original_order_without_preemption(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        dispatcher = (root / "tech-priests_src/scripts/core/"
+                      "single_dispatcher_0510.lua").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/"
+                   "fixture.lua").read_text(encoding="utf-8")
+        self.assertIn('pair.construction_request==pending.request and not active', dispatcher)
+        self.assertIn('pair.remote_rail_admission_refusal_0510={', dispatcher)
+        self.assertIn('order_kind=safe(o and o.kind)', dispatcher)
+        self.assertIn('order_source=safe(o and o.source)', dispatcher)
+        self.assertIn('construction_custody=pair.construction_custody_0338~=nil', dispatcher)
+        self.assertIn('movement_owner=safe(pair.movement_request_0418', dispatcher)
+        self.assertIn('" rail_refusal="..tostring(refusal and refusal.reason)', fixture)
+        self.assertIn('" order_kind="..tostring(order and order.kind)', fixture)
+        self.assertIn('" order_queue_current="..tostring(queue and queue.current~=nil)', fixture)
+        self.assertIn('RAIL_FIRST_ENGINE_CONSTRUCTION_NOT_PROVEN', fixture)
+        self.assertIn('RAIL_SECOND_ENGINE_CONNECTIVITY_NOT_PROVEN', fixture)
+
 class NativePlayerTestSaveSelectionTests(unittest.TestCase):
     def test_native_headless_player_does_not_restart_graphical_steam_client(self):
         argv = rail_native_player_test_command(

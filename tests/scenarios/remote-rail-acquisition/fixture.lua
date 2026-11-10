@@ -346,6 +346,10 @@ local function inspect(s,elapsed)
   local builder=p.construction_task_0338
   local receipt=p.construction_last_task_0338
   local event=p.construction_last_event_0338
+  local queue=p.order_queue_0469
+  local order=(queue and queue.current)or p.active_order_0469
+  local refusal=p.remote_rail_admission_refusal_0510
+  local dispatch=p.canonical_action_0744
   emit("RAIL_ADMISSION_DIAG elapsed="..elapsed..
     " stage="..tostring(objective and objective.stage)..
     " reason="..tostring(objective and objective.last_blocker)..
@@ -366,6 +370,22 @@ local function inspect(s,elapsed)
     " receipt_result="..tostring(receipt and receipt.result)..
     " last_builder_event="..tostring(event and event.action)..
     " last_builder_detail="..tostring(event and event.detail)..
+    " order_kind="..tostring(order and order.kind)..
+    " order_source="..tostring(order and order.source)..
+    " order_status="..tostring(order and order.status)..
+    " order_reason="..tostring(order and order.reason)..
+    " order_key="..tostring(order and order.key)..
+    " order_queue_current="..tostring(queue and queue.current~=nil)..
+    " dispatch_family="..tostring(dispatch and dispatch.family)..
+    " dispatch_detail="..tostring(dispatch and dispatch.detail)..
+    " rail_refusal="..tostring(refusal and refusal.reason)..
+    " rail_refusal_tick="..tostring(refusal and refusal.tick)..
+    " rail_refusal_order_kind="..tostring(refusal and refusal.order_kind)..
+    " rail_refusal_order_source="..tostring(refusal and refusal.order_source)..
+    " rail_refusal_action="..tostring(refusal and refusal.action_family)..
+    " planning_blocker="..tostring(p.construction_blocked_reason_0338)..
+    " movement_owner="..tostring(p.movement_request_0418
+      and p.movement_request_0418.owner)..
     " source_rail="..station.get_inventory(defines.inventory.chest)
       .get_item_count("rail"))
   -- A route objective and even a ghost are not physically placed rail.

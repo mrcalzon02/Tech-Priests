@@ -372,6 +372,34 @@ function M.service_pair(pair,reason)
   end
   local m=pair.remote_rail_outpost_0835
   local pending=m and m.pending_rail_0836
+  -- Record the EXACT canonical admission refusal for a still-original
+  -- rail request. A bare "active_order=true" obscures the order identity.
+  -- This is a bounded read-only diagnostic: never mutate an order, yield
+  -- its ownership, preempt real cargo, or issue an independent executor.
+  if pending and pair.construction_request==pending.request and not active then
+   local last=pair.remote_rail_admission_refusal_0510
+   local refusal=safe(why)
+   if not last or last.reason~=refusal
+       or now()-(tonumber(last.tick)or 0)>=300 then
+    local q=pair.order_queue_0469
+    local o=(q and q.current)or pair.active_order_0469
+    local selection=pair.canonical_action_0744
+    pair.remote_rail_admission_refusal_0510={
+     tick=now(),reason=refusal,
+     order_kind=safe(o and o.kind),order_source=safe(o and o.source),
+     order_status=safe(o and o.status),order_key=safe(o and o.key),
+     action_family=safe(selection and selection.family),
+     action_detail=safe(selection and selection.detail),
+     active_task=pair.active_task~=nil,
+     current_task=pair.current_task~=nil,
+     construction_task=pair.construction_task_0338~=nil,
+     construction_custody=pair.construction_custody_0338~=nil,
+     movement_owner=safe(pair.movement_request_0418
+       and pair.movement_request_0418.owner),
+     builder_blocker=safe(pair.construction_blocked_reason_0338),
+    }
+   end
+  end
   if active and pending and pair.construction_request==pending.request then
    local planner=rawget(_G,"TechPriestsConstructionPlanner0338")
    if not(planner and type(planner.discover_pair)=="function")then
