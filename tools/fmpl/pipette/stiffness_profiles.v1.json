@@ -1,0 +1,204 @@
+{
+  "schema": "fmpl.pipette.stiffness-profiles.v1",
+  "status": "authored_visual_behaviors_pending_native_mesh_approval",
+  "scope": "Natural relative Blender-unit bending and sag for indexed line families",
+  "presets": {
+    "fixed": {
+      "normalized_sag_fraction_of_span": 0,
+      "minimum_bend_radius_in_OD": 0,
+      "shape_rule": "formed rigid, no drape",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "formed_metal": {
+      "normalized_sag_fraction_of_span": 0.012,
+      "minimum_bend_radius_in_OD": 3,
+      "shape_rule": "retains bent metal shape, tiny unsupported bow",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "semi_rigid": {
+      "normalized_sag_fraction_of_span": 0.03,
+      "minimum_bend_radius_in_OD": 5,
+      "shape_rule": "curved polymer or annealed tube remembers a shape",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "spring_metal_flex": {
+      "normalized_sag_fraction_of_span": 0.055,
+      "minimum_bend_radius_in_OD": 4,
+      "shape_rule": "metal interlocking helix retains visible spring stiffness",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "corrugated_polymer": {
+      "normalized_sag_fraction_of_span": 0.095,
+      "minimum_bend_radius_in_OD": 3,
+      "shape_rule": "distributed polymer corrugation bends, not a sharp elbow",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "flex_polymer": {
+      "normalized_sag_fraction_of_span": 0.11,
+      "minimum_bend_radius_in_OD": 3,
+      "shape_rule": "flex sheath with drooping centerline",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "soft_hose": {
+      "normalized_sag_fraction_of_span": 0.145,
+      "minimum_bend_radius_in_OD": 3,
+      "shape_rule": "soft drape; centerline cannot collapse bore",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "reinforced_hose": {
+      "normalized_sag_fraction_of_span": 0.08,
+      "minimum_bend_radius_in_OD": 5,
+      "shape_rule": "reinforcement limits tight bends and droop",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "spring_guarded": {
+      "normalized_sag_fraction_of_span": 0.065,
+      "minimum_bend_radius_in_OD": 4,
+      "shape_rule": "coiled reinforcement pitch independent of path shape",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "loose_wire": {
+      "normalized_sag_fraction_of_span": 0.165,
+      "minimum_bend_radius_in_OD": 2,
+      "shape_rule": "small wire hangs naturally between fixed terminals",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "loose_bundle": {
+      "normalized_sag_fraction_of_span": 0.11,
+      "minimum_bend_radius_in_OD": 2,
+      "shape_rule": "independent core sag from shared coherent bundle frame",
+      "core_variation": "eight_core_unbound",
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "flex_bundle": {
+      "normalized_sag_fraction_of_span": 0.1,
+      "minimum_bend_radius_in_OD": 3,
+      "shape_rule": "moderate group sag with independent core slack between ties",
+      "core_variation": "eight_core_tied",
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "twisted_bundle": {
+      "normalized_sag_fraction_of_span": 0.11,
+      "minimum_bend_radius_in_OD": 3,
+      "shape_rule": "group droop plus continuous twisted-pair lay",
+      "core_variation": "twisted",
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "jacketed_cable": {
+      "normalized_sag_fraction_of_span": 0.095,
+      "minimum_bend_radius_in_OD": 4,
+      "shape_rule": "cable jacket bows as a coherent tube; inner cores fan only at terminals",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "high_flex_cord": {
+      "normalized_sag_fraction_of_span": 0.18,
+      "minimum_bend_radius_in_OD": 2,
+      "shape_rule": "soft gravity-like drape, fixed terminal seats",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "ribbon_flex": {
+      "normalized_sag_fraction_of_span": 0.075,
+      "minimum_bend_radius_in_OD": 3,
+      "shape_rule": "main bending around flat ribbon preferred axis",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "tensioned": {
+      "normalized_sag_fraction_of_span": 0.012,
+      "minimum_bend_radius_in_OD": null,
+      "shape_rule": "near-straight taut line with no hose-like catenary",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "rope_soft": {
+      "normalized_sag_fraction_of_span": 0.16,
+      "minimum_bend_radius_in_OD": 2,
+      "shape_rule": "soft drape in braided rope/webbing",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "segmented_joint": {
+      "normalized_sag_fraction_of_span": 0.045,
+      "minimum_bend_radius_in_OD": 4,
+      "shape_rule": "bending occurs at constrained articulated joints",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    },
+    "formed_rebar": {
+      "normalized_sag_fraction_of_span": 0,
+      "minimum_bend_radius_in_OD": 3,
+      "shape_rule": "solid bar, no unsupported sag; explicitly authored bends only",
+      "core_variation": null,
+      "units": "dimensionless visual controls; not real-world stiffness",
+      "physical_verification": "not a structural simulation"
+    }
+  },
+  "wire_bundle_variation": {
+    "deterministic_seed": 17021,
+    "per_core_sag_multiplier": [
+      0.71,
+      0.9,
+      1.12,
+      0.83,
+      1.25,
+      1.03,
+      1.36,
+      0.97
+    ],
+    "per_core_lateral_phase": [
+      0,
+      0.28,
+      -0.22,
+      0.13,
+      -0.31,
+      0.2,
+      -0.12,
+      0.35
+    ],
+    "sample_count": 32,
+    "near_end_anchor_falloff": "sin(pi*t)^2",
+    "sag_curve": "-4*sag*t*(1-t)",
+    "endpoint_invariant": "all public sockets exact; internal core exits may be offset INSIDE fixed outlet envelope",
+    "topology_invariant": "no wire may move shared public socket; no identical line overlays",
+    "collision_policy": "bound pair spacing and curvature; flag obvious core self-intersection, never random spaghetti"
+  },
+  "stiffness_selection": "architecture default may be overridden per sample; permission required for unsupported physical combinations",
+  "not_claimed": [
+    "real-world tensile force",
+    "gravity rigidbody simulation",
+    "certified pipe bend limits",
+    "electric load ratings",
+    "fluid pressure ratings"
+  ]
+}
