@@ -188,6 +188,11 @@ def tube(points, diameter, wall, kind, name, architecture_id,
         tangent = sub(path[min(i+1, count-1)],
                       path[max(0, i-1)])
         u, v = frame(tangent)
+        # The standard comparison port is ALWAYS the nominal pipe OD.
+        # Body ribs fade into a matching mouth instead of changing the
+        # socket diameter at different materials or connector families.
+        end_ramp=min(1., progress/max(diameter*1.5,.02),
+                     max(0.,length-progress)/max(diameter*1.5,.02))
         for ring in range(2 if bore else 1):
             for j in range(n):
                 if slit:
@@ -200,14 +205,14 @@ def tube(points, diameter, wall, kind, name, architecture_id,
                 if outer:
                     phase = TAU*progress/frequency
                     if kind in ("annular_polymer", "annular_metal", "split_annular"):
-                        rr *= 1+.115*math.cos(phase)
+                        rr *= 1+.115*end_ramp*math.cos(phase)
                     elif kind in ("interlocked_metal", "helical_metal"):
-                        rr *= 1+.11*math.cos(phase-theta)
-                        rr *= 1+.028*math.cos(2*(phase-theta))
+                        rr *= 1+.11*end_ramp*math.cos(phase-theta)
+                        rr *= 1+.028*end_ramp*math.cos(2*(phase-theta))
                     elif kind == "ribbed_rebar":
-                        rr *= 1+.065*max(0, math.cos(phase-theta*.5))**8
+                        rr *= 1+.065*end_ramp*max(0, math.cos(phase-theta*.5))**8
                     elif kind == "soft_cast_hollow":
-                        rr *= 1+.017*math.sin(progress*7+theta*2)
+                        rr *= 1+.017*end_ramp*math.sin(progress*7+theta*2)
                 direction = plus(mult(u, math.cos(theta)),
                                  mult(v, math.sin(theta)))
                 verts.append(plus(center, mult(direction, rr)))
