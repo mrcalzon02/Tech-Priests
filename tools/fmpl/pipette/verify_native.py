@@ -85,6 +85,54 @@ def _lit_pixel_count(path):
         bpy.data.images.remove(img)
 
 
+def _verify_standard_ports(scene,objs,record):
+    interfaces=record.get("standard_tile_interfaces") or {}
+    if not interfaces:
+        return {"count":0,"empty_bore_rays":0,"all_clear":True}
+    scope=record.get("scene_scope")
+    if not scope:
+        raise RuntimeError("Standard fitting without explicit Blender-to-tile scene scope")
+    u=float(scope["scene_units_per_tile"])
+    rays=0
+    for terminal,interface in interfaces.items():
+        candidates=[o for o in objs
+                    if o.get("pipette_standard_interface_id")=="factorio-fluid-interface-v1"
+                    and o.get("pipette_socket_id")==record.get("route_id")+".invalid"]
+        # The selected candidate count comes from exact source interface
+        # and typed terminal mesh roles, not an inferred random neighbor.
+        prefix=" | "+terminal+" factorio-fluid-interface-v1 "
+        parts=[o for o in objs if prefix in o.name]
+        roles={o.get("pipette_geometry_role") for o in parts}
+        if roles!={"standard-open-throat","standard-collar","standard-port-hollow-reducer"}:
+            raise RuntimeError("Canonical pipe has missing throat/collar/reducer at "+terminal)
+        dimensions=interface["dimensions"]
+        for role,field in (("standard-open-throat","barrel_outer_diameter_bu"),
+                           ("standard-collar","mounting_collar_outer_diameter_bu")):
+            obj=next(o for o in parts if o.get("pipette_geometry_role")==role)
+            if abs(float(obj.get("pipette_outer_diameter_bu",0))-float(dimensions[field]))>1e-5:
+                raise RuntimeError("Actual flange/throat OD differs from scoped reference")
+            if not obj.get("pipette_true_hollow_mesh"):
+                raise RuntimeError("Standard barrel or flange unexpectedly solid")
+            if abs(float(obj.get("pipette_bore_diameter_bu",0))-
+                   float(dimensions["open_bore_diameter_bu"]))>1e-5:
+                raise RuntimeError("Canonical port bore does not match 0.49 tile fraction")
+        p=Vector(interface["expected_xyz_bu"])
+        normal=Vector(interface["outer_normal"])
+        for y,z in ((0,0),(.10*u,0),(-.10*u,0),(0,.10*u),(0,-.10*u)):
+            pos=p+normal*.09*u+Vector((0,y,z))
+            direction=-normal
+            for obj in objs:
+                transform=obj.matrix_world.inverted_safe()
+                local_origin=transform@pos
+                local_direction=(transform.to_3x3()@direction).normalized()
+                hit,_,_,_=obj.ray_cast(local_origin,local_direction,distance=.13*u)
+                if hit:
+                    raise RuntimeError("Rendered geometry blocks protected external pipe bore: "+
+                                       obj.name+" "+terminal)
+            rays+=1
+    return {"count":len(interfaces),"empty_bore_rays":rays,"all_clear":True}
+
+
 def main():
     parser=argparse.ArgumentParser()
     for name in ("blend","glb","build-receipt","preview","report"):
@@ -118,6 +166,7 @@ def main():
         cores=[o for o in objs if o.get("pipette_geometry_role")=="visible-conductor"]
         if len(cores)!=8:
             raise RuntimeError("Eight visible pilot conductors were not authored")
+    standard_port_proof=_verify_standard_ports(scene,objs,record)
     original_cam_count=len([o for o in scene.objects if o.type=="CAMERA"])
     lo,hi=bounds(objs)
     make_camera(scene,lo,hi)
@@ -158,6 +207,7 @@ def main():
         "meshes_saved":len(objs),
         "glb_meshes_reimported":len(imported),
         "hollow_shell_meshes":len(hollow),
+        "tile_scoped_standard_pipe":standard_port_proof,
         "original_cameras_in_saved_source":original_cam_count,
         "visual_gauge_units":"Blender only; no real-world conversion",
         "preview_not_production":bool(record["preview_material_only"]),
