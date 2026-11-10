@@ -14,9 +14,9 @@ import sys
 import bpy
 
 NOZZLE_STEAM_ROI=(320,90,359,120)  # x0,y0,x1,y1; image top-left
-HIGH_RISE_ROI=(322,91,356,107)
+HIGH_RISE_ROI=(322,102,356,118)  # nozzle is at y≈129 in real fixed-camera proof
 MIN_VISIBLE_STEAM_PIXELS=75
-MIN_HIGH_RISE_STEAM_PIXELS=12
+MIN_HIGH_RISE_STEAM_PIXELS=20
 
 def digest(p):
     return hashlib.sha256(p.read_bytes()).hexdigest()
