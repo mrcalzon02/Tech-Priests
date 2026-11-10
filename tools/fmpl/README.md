@@ -180,3 +180,18 @@ are not overwritten. The static test
 contract; full native Blender acceptance still requires the authorized
 self-hosted Blender runner, with real .blend reopen proof and rendered screenshots.
 No additional GitHub workflow was created.
+
+## Girderization — planned structural submodule (not yet executed)
+
+The [Girderization specification](girderization/GIRDERIZATION_STANDARD.md) defines
+controlled upgrades from basic load-bearing bars, slabs and plates to visibly
+supported girders, gusseted brackets, inset frames, proper union fittings and
+electrical/hose glands. It is a **design-only plan**: do not claim a deployed
+Blender builder, randomly attach ornamental bolts, or add unknown donor parts.
+
+The first proposed pilot is the [Water Purifier V14 work order](../../docs/art/metallic-hydrogen-chain/WATER_PURIFIER_V14_GIRDERIZATION_CONSOLE_COUPLINGS_PLAN.md).
+It targets the full-sized embedded CRT/control panel (reversing V13's
+70%-width backing shrink), the supported agitator overhead drive,
+audited mechanically seated pipe/hose endpoints, and selective Girderization.
+Actual Blender/model changes and runner dispatch require a separate follow-up
+after the design is reviewed; current approved native asset baseline remains V13.
