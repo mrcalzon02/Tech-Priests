@@ -185,7 +185,7 @@ def main():
     ap.add_argument("--max-models",type=int,default=36)
     ap.add_argument("--max-source-bytes",type=int,default=15000000)
     a=ap.parse_args(sys.argv[sys.argv.index("--")+1:])
-    if not 1<=a.max_models<=100 or not 10000<=a.max_source_bytes<=25000000:
+    if not 1<=a.max_models<=100 or not 10000<=a.max_source_bytes<=60000000:
         raise ValueError("Bounded model render budget invalid")
     output=Path(a.out).resolve()
     if output.exists() and any(output.iterdir()):raise FileExistsError("Refusing to overwrite model gallery")
@@ -193,6 +193,27 @@ def main():
     queue=json.loads(Path(a.queue).read_text(encoding="utf-8"))
     if queue.get("schema")!="fmpl.gallery-render-queue.v1":
         raise ValueError("Unknown queued-model provenance")
+    if a.max_source_bytes>25000000:
+        # One exception for the eight size-blocked sources of Dens Mortis
+        # run 42887345055; the Windows worker separately verifies its original
+        # report SHA and size-limited retry request. This never enables 60MB
+        # downloads for arbitrary user-supplied queues.
+        eligible={
+            "559c91f3133be15c2b1810634153ef63a5aaa0a2",
+            "4b5062005cb52f30c711af3b62a5ff1413ac0eea",
+            "38c0e56531fd4929658206daeffd7a21a945a873",
+            "d520336340fbfe241a4bc270ccfc674eaaf03776",
+            "e7f584e7e9e09631998d47287931b934313d6469",
+            "b047531d6c5408b1f6ca4e21a3ca9b515befe3c9",
+            "712c28ab67bf8bc8cd0173bbc6885f9f3b67ebdb",
+            "7be4d5ad196d51aef030833a1bd95d9e1290e5df",
+        }
+        sources=queue.get("models",[])
+        if (a.max_source_bytes!=60000000 or a.max_models!=8 or
+            queue.get("initial_model_cap")!=8 or queue.get("batch_index")!=1 or
+            queue.get("status")!="retry-only-measured-size-blockers-no-prior-rerenders" or
+            len(sources)!=8 or {rec.get("git_blob_sha") for rec in sources}!=eligible):
+            raise ValueError("Oversize exception denied: exact eight verified model blobs required")
     inputs=queue["models"][:a.max_models]
     import bpy
     rows=[]
