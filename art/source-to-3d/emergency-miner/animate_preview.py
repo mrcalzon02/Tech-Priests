@@ -287,17 +287,21 @@ def wrap_bell(t, at, width):
     return math.exp(-.5 * (d / width) ** 2)
 
 
-def apply_motion(label, body, upper, cover, light_parts, steam):
+def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
     beam, beam_alpha, seam, seam_alpha, lights = light_parts
     body0, upper0, cover0 = body.location.copy(), upper.location.copy(), cover.location.copy()
     beam0, seam0 = beam.location.copy(), seam.location.copy()
-    colors = [lamp_material(i) for i in range(4)]
-    glass = bpy.data.objects["Recessed luminous green computer glass"]
-    screen_mat = glass.data.materials[0].copy()
-    screen_mat.name = "FX ONLY | independently flickering LCD"
-    glass.data.materials.clear()
-    glass.data.materials.append(screen_mat)
-    screen_power = screen_mat.node_tree.nodes.get("Principled BSDF").inputs["Emission Strength"]
+    enabled = set(enabled or ("mechanics", "scan", "lamps", "steam"))
+    colors = []
+    screen_power = None
+    if "lamps" in enabled:
+        colors = [lamp_material(i) for i in range(4)]
+        glass = bpy.data.objects["Recessed luminous green computer glass"]
+        screen_mat = glass.data.materials[0].copy()
+        screen_mat.name = "FX ONLY | independently flickering LCD"
+        glass.data.materials.clear()
+        glass.data.materials.append(screen_mat)
+        screen_power = screen_mat.node_tree.nodes.get("Principled BSDF").inputs["Emission Strength"]
     for frame in KEYS:
         phase = ((frame - 1) % 96) / 96.0
         wave = 2 * math.pi * phase
@@ -313,52 +317,56 @@ def apply_motion(label, body, upper, cover, light_parts, steam):
             scan = max(wrap_bell(phase, .26, .055), wrap_bell(phase, .69, .07))
             scan_x = -.15 + .31 * (((phase * 2.0) + .15) % 1.0)
             steam_power = 1.2 * wrap_bell(phase, .31, .055) + .9 * wrap_bell(phase, .75, .055)
-        bx = force * (.0010 * math.sin(7*wave) + .00035 * math.sin(13*wave))
-        by = force * .0006 * math.sin(9*wave + .35)
-        bz = force * .00038 * math.sin(11*wave)
-        body.location = body0 + Vector((bx, by, bz))
-        body.rotation_euler = (math.radians(.11) * math.sin(6*wave),
-                               math.radians(.14) * math.sin(5*wave),
-                               math.radians(.13) * math.sin(8*wave))
-        upper.location = upper0 + Vector((
-            force * .0012 * math.sin(9*wave + .8),
-            force * .0006 * math.sin(7*wave - .4),
-            force * .0005 * math.sin(11*wave + .5)))
-        upper.rotation_euler = (math.radians(.16) * force * math.sin(8*wave + .5),
-                                math.radians(.19) * force * math.sin(6*wave - .4),
-                                math.radians(.21) * force * math.sin(7*wave + .25))
-        cover.location = cover0 + Vector((0, 0, .00065 * math.sin(13*wave + .3)))
-        cover.rotation_euler.z = math.radians(.055) * math.sin(11*wave)
-        for obj in (body, upper, cover):
-            obj.keyframe_insert(data_path="location", frame=frame)
-            obj.keyframe_insert(data_path="rotation_euler", frame=frame)
-        beam.location = beam0 + Vector((scan_x, 0, 0))
-        beam.keyframe_insert(data_path="location", frame=frame)
-        seam.location = seam0 + Vector((.023 * math.sin(2*wave), 0, 0))
-        seam.keyframe_insert(data_path="location", frame=frame)
-        key_value(beam_alpha, frame, min(.96, .76 * scan))
-        key_value(seam_alpha, frame, min(.77, .37 * scan * (.55 + shock)))
-        lights[0].location = beam.location + Vector((0, -.018, .016))
-        lights[0].keyframe_insert(data_path="location", frame=frame)
-        lights[0].data.energy = 5.7 * scan
-        lights[1].data.energy = 2.4 * scan
-        for light in lights:
-            light.data.keyframe_insert(data_path="energy", frame=frame)
-        for i, socket in enumerate(colors):
-            trigger = ((frame - 1)//12 + i) % 4 == 0
-            key_value(socket, frame, (.2 + (2.2 if trigger else .0)) * (1.0 + .30 * shock))
-        key_value(screen_power, frame, .12 + .22 * abs(math.sin(5*wave)) + .35 * scan)
-        for obj, rest, index, vent in steam:
-            offset = index * .13 + (0 if "vent" in vent else .27)
-            p = (phase - offset) % 1.0
-            envelope = (wrap_bell(p, .31, .06) + .7 * wrap_bell(p, .75, .06))
-            active = min(1.0, envelope * (1.0 if label == "A" else 1.25))
-            obj.location = rest + Vector((.006 * index * math.sin(wave),
-                                          -.002 * active, .032 * active))
-            s = .00015 + .018 * active * (1 + index * .12)
-            obj.scale = (s, s * .78, s * 1.5)
-            obj.keyframe_insert(data_path="location", frame=frame)
-            obj.keyframe_insert(data_path="scale", frame=frame)
+        if "mechanics" in enabled:
+            bx = force * (.0010 * math.sin(7*wave) + .00035 * math.sin(13*wave))
+            by = force * .0006 * math.sin(9*wave + .35)
+            bz = force * .00038 * math.sin(11*wave)
+            body.location = body0 + Vector((bx, by, bz))
+            body.rotation_euler = (math.radians(.11) * math.sin(6*wave),
+                                   math.radians(.14) * math.sin(5*wave),
+                                   math.radians(.13) * math.sin(8*wave))
+            upper.location = upper0 + Vector((
+                force * .0012 * math.sin(9*wave + .8),
+                force * .0006 * math.sin(7*wave - .4),
+                force * .0005 * math.sin(11*wave + .5)))
+            upper.rotation_euler = (math.radians(.16) * force * math.sin(8*wave + .5),
+                                    math.radians(.19) * force * math.sin(6*wave - .4),
+                                    math.radians(.21) * force * math.sin(7*wave + .25))
+            cover.location = cover0 + Vector((0, 0, .00065 * math.sin(13*wave + .3)))
+            cover.rotation_euler.z = math.radians(.055) * math.sin(11*wave)
+            for obj in (body, upper, cover):
+                obj.keyframe_insert(data_path="location", frame=frame)
+                obj.keyframe_insert(data_path="rotation_euler", frame=frame)
+        if "scan" in enabled:
+            beam.location = beam0 + Vector((scan_x, 0, 0))
+            beam.keyframe_insert(data_path="location", frame=frame)
+            seam.location = seam0 + Vector((.023 * math.sin(2*wave), 0, 0))
+            seam.keyframe_insert(data_path="location", frame=frame)
+            key_value(beam_alpha, frame, min(.96, .76 * scan))
+            key_value(seam_alpha, frame, min(.77, .37 * scan * (.55 + shock)))
+            lights[0].location = beam.location + Vector((0, -.018, .016))
+            lights[0].keyframe_insert(data_path="location", frame=frame)
+            lights[0].data.energy = 5.7 * scan
+            lights[1].data.energy = 2.4 * scan
+            for light in lights:
+                light.data.keyframe_insert(data_path="energy", frame=frame)
+        if "lamps" in enabled:
+            for i, socket in enumerate(colors):
+                trigger = ((frame - 1)//12 + i) % 4 == 0
+                key_value(socket, frame, (.2 + (2.2 if trigger else .0)) * (1.0 + .30 * shock))
+            key_value(screen_power, frame, .12 + .22 * abs(math.sin(5*wave)) + .35 * scan)
+        if "steam" in enabled:
+            for obj, rest, index, vent in steam:
+                offset = index * .13 + (0 if "vent" in vent else .27)
+                p = (phase - offset) % 1.0
+                envelope = (wrap_bell(p, .31, .06) + .7 * wrap_bell(p, .75, .06))
+                active = min(1.0, envelope * (1.0 if label == "A" else 1.25))
+                obj.location = rest + Vector((.006 * index * math.sin(wave),
+                                              -.002 * active, .032 * active))
+                s = .00015 + .018 * active * (1 + index * .12)
+                obj.scale = (s, s * .78, s * 1.5)
+                obj.keyframe_insert(data_path="location", frame=frame)
+                obj.keyframe_insert(data_path="scale", frame=frame)
     for inspect_frame in (1,25,49,73,97):
         bpy.context.scene.frame_set(inspect_frame)
         assert_steam_bounds(steam, "keyframe-"+str(inspect_frame))
@@ -476,10 +484,15 @@ def main(out,diagnostic=False):
         if diagnostic:
             diagnostic_render(scene,out,label+'_03_steam_unkeyed')
         print('MINER_TRACE 20 begin keyed motion '+label,flush=True)
-        apply_motion(label,body,upper,cover,parts,steam)
-        print('MINER_TRACE 21 keyed motion ready '+label,flush=True)
         if diagnostic:
-            diagnostic_render(scene,out,label+'_04_full_keyed')
+            for channel in ("mechanics","scan","lamps","steam"):
+                print("MINER_CHANNEL_BEGIN "+label+" "+channel,flush=True)
+                apply_motion(label,body,upper,cover,parts,steam,enabled={channel})
+                print("MINER_CHANNEL_KEYED "+label+" "+channel,flush=True)
+                diagnostic_render(scene,out,label+"_04_"+channel)
+        else:
+            apply_motion(label,body,upper,cover,parts,steam)
+        print('MINER_TRACE 21 keyed motion ready '+label,flush=True)
         blend=out/("miner_motion_%s.blend"%label)
         scene["study_variant"]=label
         scene["game_integration_status"]="NOT_INTEGRATED_REVIEW_ONLY"
