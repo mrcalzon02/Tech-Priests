@@ -411,10 +411,11 @@ def main(out):
         blend=out/("miner_motion_%s.blend"%label)
         scene["study_variant"]=label
         scene["game_integration_status"]="NOT_INTEGRATED_REVIEW_ONLY"
+        # Keep this Blender process's native depsgraph alive after saving.
+        # Blender 5.2.3 crashed with C0000409 at inline open_mainfile(A).
+        # A and B reopen independently in fresh Blender processes via
+        # verify_animation.py; no output is accepted without that gate.
         bpy.ops.wm.save_as_mainfile(filepath=str(blend))
-        # Independently reopen the actual editable result before rendering.
-        bpy.ops.wm.open_mainfile(filepath=str(blend))
-        scene=bpy.context.scene
         assert_clean(scene,profile,bpy)
         fixed_bone=bpy.data.objects["LAYER_1 Foundation perimeter steel slab"]
         scene.frame_set(1)
