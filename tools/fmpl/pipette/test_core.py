@@ -217,6 +217,27 @@ class PipetteCoreTests(unittest.TestCase):
         req["allow_unterminated"]=True
         self.assertEqual(core.plan(req)["fittings"]["end"],"none")
 
+    def test_reject_realworld_gauge_conversion_fields(self):
+        for field in ("diameter_mm","radius_mm","awg","gauge_awg","scale_mm_per_tile"):
+            with self.subTest(field=field):
+                req=sample()
+                req["size"][field]=1
+                with self.assertRaises(core.PipetteError):
+                    core.plan(req)
+
+    def test_relative_surface_correlation_parameters(self):
+        req=sample("flex_hose","fluid")
+        req["surface_profile"]={"corrugation_pitch":.045,"corrugation_depth_ratio":.10}
+        out=core.plan(req)
+        self.assertEqual(out["surface_profile"]["corrugation_pitch"],.045)
+        self.assertEqual(out["surface_profile"]["corrugation_depth_ratio"],.10)
+
+    def test_unknown_profile_parameter_rejected(self):
+        req=sample()
+        req["surface_profile"]={"diameter_in_inches":.25}
+        with self.assertRaises(core.PipetteError):
+            core.plan(req)
+
     def test_unknown_material_requires_name(self):
         req=sample()
         req["material_id"]=""
