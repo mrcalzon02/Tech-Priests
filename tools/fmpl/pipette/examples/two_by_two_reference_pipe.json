@@ -1,0 +1,89 @@
+{
+  "id": "two_by_two_reference_pipe",
+  "family": "rigid_pipe",
+  "payload": "fluid",
+  "scene_scope": {
+    "schema": "fmpl.scene-scope.v1",
+    "id": "factorio-2x2-example",
+    "scene_units_per_tile": 1,
+    "footprint_tiles": [
+      2,
+      2
+    ],
+    "origin_bu": [
+      0,
+      0,
+      0
+    ],
+    "up_axis": "+Z"
+  },
+  "tile_interfaces": {
+    "start": {
+      "standard_id": "factorio-fluid-interface-v1",
+      "face": "west",
+      "transverse_offset_tiles": 0,
+      "elevation_tiles": 0.36
+    }
+  },
+  "size": {
+    "outer_diameter": 0.095,
+    "wall_fraction": 0.2
+  },
+  "material_id": "TP Library | iron",
+  "fitting_material_id": "TP Library | brass",
+  "path": {
+    "kind": "straight"
+  },
+  "start_socket": {
+    "id": "model.west.pipe",
+    "xyz": [
+      -1,
+      0,
+      0.36
+    ],
+    "normal": [
+      -1,
+      0,
+      0
+    ],
+    "role": "source",
+    "payloads": [
+      "fluid"
+    ],
+    "parent_mesh": "standard west pipe mouth"
+  },
+  "end_socket": {
+    "id": "machine.internal.filter",
+    "xyz": [
+      -0.4,
+      0,
+      0.36
+    ],
+    "normal": [
+      -1,
+      0,
+      0
+    ],
+    "role": "sink",
+    "payloads": [
+      "fluid"
+    ],
+    "parent_mesh": "internal filter receiving boss"
+  },
+  "fittings": {
+    "start": "flange",
+    "end": "compression"
+  },
+  "behavior": {
+    "future_native_fluidbox": "not declared",
+    "native_game_integrated": false
+  },
+  "supports": {
+    "anchor_ids": [
+      "port",
+      "filter"
+    ],
+    "pitch": 0.3
+  },
+  "keep_outs": []
+}
