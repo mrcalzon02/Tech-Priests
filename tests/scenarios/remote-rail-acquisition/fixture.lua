@@ -350,6 +350,7 @@ local function inspect(s,elapsed)
   local order=(queue and queue.current)or p.active_order_0469
   local refusal=p.remote_rail_admission_refusal_0510
   local dispatch=p.canonical_action_0744
+  local blocked_site=p.construction_site_refusal_0338
   -- Ask the incumbent 0469 owner for its exact READ-ONLY refusal. Do not
   -- clear, pause, mutate or promote a queue order, and do not accept a rail.
   local yield_allowed,yield_reason=false,"no-pending-original-rail"
@@ -407,6 +408,13 @@ local function inspect(s,elapsed)
     " rail_refusal_order_source="..tostring(refusal and refusal.order_source)..
     " rail_refusal_action="..tostring(refusal and refusal.action_family)..
     " planning_blocker="..tostring(p.construction_blocked_reason_0338)..
+    " remote_drill_present="..tostring(p.remote_drill_request_1011~=nil)..
+    " remote_drill_positioned="..tostring(p.remote_drill_request_1011
+      and p.remote_drill_request_1011.position~=nil)..
+    " blocked_site_field="..tostring(blocked_site and blocked_site.field)..
+    " blocked_site_reason="..tostring(blocked_site and blocked_site.reason)..
+    " blocked_site_matches_remote="..tostring(blocked_site
+      and blocked_site.request==p.remote_drill_request_1011)..
     " movement_owner="..tostring(p.movement_request_0418
       and p.movement_request_0418.owner)..
     " source_rail="..station.get_inventory(defines.inventory.chest)
