@@ -65,6 +65,42 @@ def rail_connected_smoke_verdict(exit_code: int, log: str) -> bool:
             and first in log and connected in log)
 
 
+def reset_rail_smoke_diagnostics(output: pathlib.Path) -> None:
+    """A failed retry must not inherit a previous successful rail receipt."""
+    for name in ("rail-connected-smoke-result.json", "benchmark.log"):
+        (output / name).unlink(missing_ok=True)
+
+
+def rail_smoke_evidence(create_exit_code: int, benchmark_exit_code: int | None,
+                        log: str | None, engine_version: str,
+                        required_series: str, ticks_requested: int) -> dict:
+    """Retain the real engine's partial observation, including create failures."""
+    prefix = "[TP-REMOTE-RAIL-TEST] "
+    attempted = benchmark_exit_code is not None
+    contents = log or ""
+    accepted = (create_exit_code == 0 and attempted and
+                rail_connected_smoke_verdict(benchmark_exit_code, contents))
+    return {
+        "scenario": "remote-rail-acquisition",
+        "gate": "two-original-connected-item-debited-rails-only",
+        "ticks_requested": ticks_requested,
+        "engine_version": engine_version,
+        "required_mod_factorio_series": required_series,
+        "create_exit_code": create_exit_code,
+        "benchmark_attempted": attempted,
+        "engine_exit_code": benchmark_exit_code,
+        "first_paid_rail": (prefix + "PASS first physical rail built and exact stock debited" in contents
+                            if attempted else None),
+        "native_connected_pair": (prefix + "PASS two distinct 0338-debited native-connected rails" in contents
+                                  if attempted else None),
+        "fixture_failed": (prefix + "FAIL " in contents if attempted else None),
+        "accepted": accepted,
+        "failure_stage": ("create" if create_exit_code != 0 else
+                          "benchmark" if not accepted else None),
+        "train_and_ore_delivery_accepted": False,
+    }
+
+
 def factorio_runtime_compatible(version_line: str, required_series: str) -> bool:
     """Reject wrong game series; retain the archived 2.0.77 acceptance pin."""
     if required_series not in ("2.0", "2.1"):
@@ -135,6 +171,9 @@ def main() -> int:
 
     output = args.output_dir.resolve() / args.scenario
     output.mkdir(parents=True, exist_ok=True)
+    rail_result_path = output / "rail-connected-smoke-result.json"
+    if args.rail_connected_smoke:
+        reset_rail_smoke_diagnostics(output)
     mods = output / "mods"
     if mods.exists():
         shutil.rmtree(mods)
@@ -174,6 +213,11 @@ def main() -> int:
                    str(map_settings)],
                   output / "create.log", args.timeout_seconds)
     if created:
+        if args.rail_connected_smoke:
+            evidence = rail_smoke_evidence(
+                created, None, None, engine_version, required_series, tick_count)
+            rail_result_path.write_text(
+                json.dumps(evidence, indent=2, sort_keys=True), encoding="utf-8")
         print("FAIL headless save creation; see " + str(output / "create.log"))
         return 1
     benchmark = run([str(factorio), "--mod-directory", str(mods),
@@ -186,24 +230,13 @@ def main() -> int:
         if scenario["prefix"] in line:
             print(line[:1200])
     if args.rail_connected_smoke:
-        # Save partial real-engine diagnostics even on a failed process.
-        passed = rail_connected_smoke_verdict(benchmark, contents)
-        prefix = "[TP-REMOTE-RAIL-TEST] "
-        evidence = {
-            "scenario": args.scenario,
-            "gate": "two-original-connected-item-debited-rails-only",
-            "ticks_requested": tick_count,
-            "engine_exit_code": benchmark,
-            "engine_version": engine_version,
-            "required_mod_factorio_series": required_series,
-            "first_paid_rail": prefix + "PASS first physical rail built and exact stock debited" in contents,
-            "native_connected_pair": prefix + "PASS two distinct 0338-debited native-connected rails" in contents,
-            "fixture_failed": prefix + "FAIL " in contents,
-            "accepted": passed,
-            "train_and_ore_delivery_accepted": False,
-        }
-        (output / "rail-connected-smoke-result.json").write_text(
+        # A failed native process retains the observations it actually made.
+        evidence = rail_smoke_evidence(
+            0, benchmark, contents, engine_version, required_series, tick_count)
+        passed = evidence["accepted"]
+        rail_result_path.write_text(
             json.dumps(evidence, indent=2, sort_keys=True), encoding="utf-8")
+
         if not passed:
             print("FAIL real-engine two-paid-rails smoke; train/ore UNTESTED")
             print("Engine logs: " + str(output / "benchmark.log"))
