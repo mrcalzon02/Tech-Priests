@@ -1,4 +1,4 @@
-"""V21 Emergency Miner: two source-bound, one-view motion candidates.
+"""V22 Emergency Miner: raised console, upward capacitor mouths, vent-only light.
 
 A: persistent rumble with one scanning cycle.
 B: intermittent high-energy scan, stronger transient pressure release.
@@ -37,7 +37,7 @@ KEYS = FRAMES + [97]
 FPS = 8
 RES = 384
 FIXED = ("LAYER_1 ", "SOURCE FOUNDATION ", "Foundation source anchor bolt ")
-SCENE_NAME = "EMERGENCY_MINER_V21_MOTION_CANDIDATE"
+SCENE_NAME = "EMERGENCY_MINER_V22_MOTION_CANDIDATE"
 
 
 def sha(path):
@@ -67,7 +67,7 @@ def build_v21():
     miner.MATERIALS.clear()
     miner.FEATURES.clear()
     miner.CABLE_ROUTES.clear()
-    miner.COLLECTION = bpy.data.collections.new("Emergency Miner V21 derivative")
+    miner.COLLECTION = bpy.data.collections.new("Emergency Miner V22 derivative")
     bpy.context.scene.collection.children.link(miner.COLLECTION)
     miner.VISIBLE = bpy.data.collections.new("SOURCE_VISIBLE_CONTROL_ENCLOSURE")
     miner.COLLECTION.children.link(miner.VISIBLE)
@@ -81,6 +81,8 @@ def build_v21():
     miner.cut_three_true_maintenance_vents()
     miner.carve_source_corner_foot_faces()
     miner.seat_original_front_face_screws()
+    v22=miner.apply_owner_v22_geometry()
+    bpy.context.scene["owner_v22_geometry_report"]=json.dumps(v22)
     if len(miner.CABLE_ROUTES) != 6:
         raise RuntimeError("V21 cable count changed")
     scene = bpy.context.scene
@@ -220,32 +222,43 @@ def make_flicker_surface(name, pos, size, upper, collection):
     return ob, mix.inputs[0]
 
 
+
 def make_scan_effects(upper, collection):
-    # Geometry-derived levels; two source-observed seams, not painted stripes.
-    svc = center("Mid-level split service cover")
-    ctrl = center("Upper controller shared sloped mount")
-    svc_top = ztop("Mid-level split service cover")
-    ctrl_top = ztop("Upper controller shared sloped mount")
-    beam, beam_alpha = make_flicker_surface(
-        "FX ONLY | movable light leak in upper service seam",
-        (svc.x, svc.y - .047, svc_top - .001),
-        (.058, .0028, .0015), upper, collection)
-    edge, edge_alpha = make_flicker_surface(
-        "FX ONLY | small front chassis light leak",
-        (ctrl.x, ctrl.y - .082, ctrl_top - .021),
-        (.039, .0023, .0015), upper, collection)
-    lamps = []
-    for idx, pos in enumerate((beam.matrix_world.translation, edge.matrix_world.translation)):
-        data = bpy.data.lights.new("FX ONLY | indirect scan leak %d" % idx, "POINT")
-        data.color = (.61, .84, 1.0)
-        data.energy = 0
-        data.shadow_soft_size = .036
-        lamp = bpy.data.objects.new(data.name, data)
-        collection.objects.link(lamp)
-        lamp.location = pos + Vector((0, -.018, .012))
-        preserve_parent(lamp, upper)
-        lamps.append(lamp)
-    return beam, beam_alpha, edge, edge_alpha, lamps
+    """Internal laser pulses are visible ONLY inside the three real vent cuts.
+
+    There is no panning light bar on a console, upper cover, chassis face or
+    any exterior surface. The three short 3D emissive inserts live BELOW
+    the measured steel cover and within the existing physical apertures.
+    """
+    cover=bpy.data.objects["Vented upper source-shaped maintenance plate"]
+    roof=ztop(cover.name)
+    lights=[]
+    for idx,(source_y,slot_width) in enumerate(((153,68),(177,67),(201,65))):
+        well=bpy.data.objects.get("Physical vent cavity dark well %d"%idx)
+        if well is None or cover.get("actual_source_cut_vents")!=3:
+            raise RuntimeError("Laser vent flash must have 3 real open holes")
+        at=center(well.name)
+        glow, alpha=make_flicker_surface(
+            "FX ONLY | vent aperture laser glow %d"%idx,
+            (at.x,at.y,roof-.0045),
+            (miner.width(slot_width-10),miner.width(4.0),.0008),
+            upper,collection)
+        alpha.default_value=0.0
+        glow["vent_source_index"]=idx
+        glow["source_geometry"]="Physical vent cavity dark well %d"%idx
+        glow["surface_light_forbidden"]=True
+        data=bpy.data.lights.new("FX ONLY | vent inside point light %d"%idx,"POINT")
+        data.color=(.70,.85,1.0)
+        data.energy=0
+        data.shadow_soft_size=.011
+        light=bpy.data.objects.new(data.name,data)
+        collection.objects.link(light)
+        light.location=at+Vector((0,0,.004))
+        preserve_parent(light,upper)
+        lights.append((glow,alpha,light))
+    if len(lights)!=3:
+        raise RuntimeError("Expected exactly three source vent light leak inserts")
+    return lights
 
 
 def make_steam(upper, collection):
@@ -290,9 +303,8 @@ def wrap_bell(t, at, width):
 
 
 def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
-    beam, beam_alpha, seam, seam_alpha, lights = light_parts
+    vent_lights = light_parts
     body0, upper0, cover0 = body.location.copy(), upper.location.copy(), cover.location.copy()
-    beam0, seam0 = beam.location.copy(), seam.location.copy()
     enabled = set(enabled or ("mechanics", "scan", "lamps", "steam"))
     colors = []
     screen_power = None
@@ -311,13 +323,11 @@ def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
             force = 1.0
             shock = 0.0
             scan = wrap_bell(phase, .44, .12)
-            scan_x = -.15 + .31 * max(0.0, min(1.0, (phase - .20) / .52))
             steam_power = wrap_bell(phase, .29, .08) + .7 * wrap_bell(phase, .73, .07)
         else:
             shock = wrap_bell(phase, .27, .035) + wrap_bell(phase, .71, .033)
             force = .68 + .58 * shock
             scan = max(wrap_bell(phase, .26, .055), wrap_bell(phase, .69, .07))
-            scan_x = -.15 + .31 * (((phase * 2.0) + .15) % 1.0)
             steam_power = 1.2 * wrap_bell(phase, .31, .055) + .9 * wrap_bell(phase, .75, .055)
         if "mechanics" in enabled:
             bx = force * (.0035 * math.sin(7*wave) + .0012 * math.sin(13*wave))
@@ -340,18 +350,17 @@ def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
                 obj.keyframe_insert(data_path="location", frame=frame)
                 obj.keyframe_insert(data_path="rotation_euler", frame=frame)
         if "scan" in enabled:
-            beam.location = beam0 + Vector((scan_x, 0, 0))
-            beam.keyframe_insert(data_path="location", frame=frame)
-            seam.location = seam0 + Vector((.023 * math.sin(2*wave), 0, 0))
-            seam.keyframe_insert(data_path="location", frame=frame)
-            key_value(beam_alpha, frame, min(.96, .76 * scan))
-            key_value(seam_alpha, frame, min(.77, .37 * scan * (.55 + shock)))
-            lights[0].location = beam.location + Vector((0, -.018, .016))
-            lights[0].keyframe_insert(data_path="location", frame=frame)
-            lights[0].data.energy = 5.7 * scan
-            lights[1].data.energy = 2.4 * scan
-            for light in lights:
-                light.data.keyframe_insert(data_path="energy", frame=frame)
+            # A hidden traveling scanner illuminates successive VENT HOLES.
+            # The light is never visible as a rectangle panning over steel.
+            # A faint sweep translates a few millimeters INSIDE each slot.
+            for i,(glow,alpha,light) in enumerate(vent_lights):
+                center_phase=(.35+.068*i) if label=="A" else (.27+.047*i)
+                first=wrap_bell(phase,center_phase,.074 if label=="A" else .043)
+                second=wrap_bell(phase,center_phase+.38,.051)
+                intensity=min(1.,first+.65*second)
+                key_value(alpha,frame,.87*intensity)
+                light.data.energy=3.0*intensity
+                light.data.keyframe_insert(data_path="energy",frame=frame)
         if "lamps" in enabled:
             for i, socket in enumerate(colors):
                 trigger = ((frame - 1)//12 + i) % 4 == 0
@@ -457,10 +466,10 @@ def diagnostic_render(scene, out, name, sample_frame=1, pixels=128):
 
 def main(out,diagnostic=False):
     out.mkdir(parents=True,exist_ok=True)
-    print('MINER_TRACE 01 begin source V21 build',flush=True)
+    print('MINER_TRACE 01 begin source V22 build',flush=True)
     profile = build_v21()
-    print('MINER_TRACE 02 V21 source built',flush=True)
-    base = out/"v21_study_static_master.blend"
+    print('MINER_TRACE 02 V22 source built',flush=True)
+    base = out/"v22_study_static_master.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(base))
     print('MINER_TRACE 03 base saved',flush=True)
     if diagnostic:
@@ -556,7 +565,9 @@ def main(out,diagnostic=False):
            "sample_count":dims[2],"image_pixels":dims[:2],
            "foundation_static":True,"visible_body_parts":nb,
            "visible_upper_parts":nu,"foundation_parts_fixed":len(still),
-           "steam_lobes":9,"scan_emission_sites":2,"actual_camera":camera_record(scene)}
+           "steam_lobes":9,"scan_emission_sites":3,
+           "scan_light_spill_locations":"ONLY_PHYSICAL_VENT_APERTURES",
+           "surface_panning_light_count":0,"actual_camera":camera_record(scene)}
     result["status"]="RENDERED_FOR_OWNER_REVIEW_NOT_GAME_READY"
     (out/"motion_manifest.json").write_text(json.dumps(result,indent=2)+"\n")
     print("EMERGENCY_MINER_MOTION_REVIEW "+json.dumps(result,separators=(",",":")),flush=True)
