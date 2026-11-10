@@ -65,7 +65,7 @@ def main():
                 image.suffix.lower()!=".png" or sha(image)!=row.get("render_sha256")):
                 raise RuntimeError("Missing/altered actual Blender frame: "+str(rel))
             with image.open("rb") as f:
-                if f.read(8)!=b"\\x89PNG\\r\\n\\x1a\\n":
+                if f.read(8)!=bytes((137,80,78,71,13,10,26,10)):
                     raise RuntimeError("Non-PNG despite report: "+rel)
             if row.get("rendered_with")!="Blender Cycles" or not row.get("source_sha256"):
                 raise RuntimeError("Model is not an authenticated Blender proof")
