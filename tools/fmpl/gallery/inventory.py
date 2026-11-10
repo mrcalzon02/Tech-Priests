@@ -28,7 +28,7 @@ MAP_MARKERS=("albedo","diffuse","roughness","metallic","metalness","normal","_or
 SPRITE_MARKERS=("graphics/","sprites/","/icons/","/frames/","/atlases/","/textures/gui/",
                 "/textures/ui/","/textures/icons/")
 PROOF_MARKERS=("proof","preview","contact-sheet","gallery","screenshot","render_","render-")
-SCAN_EXT=MODEL_EXT|IMAGE_EXT
+SCAN_EXT=MODEL_EXT|IMAGE_EXT|{".mtl"}
 MAX_TREE_REQUESTS=160
 
 def digest(path):
@@ -66,6 +66,7 @@ class Fetch:
 def role(path):
     name=path.lower().replace("\\","/")
     suffix=Path(name).suffix
+    if suffix==".mtl":return "material-definition"
     if suffix in MODEL_EXT:
         if suffix==".blend1":return "model-backup"
         if suffix==".blend":return "native-model"
@@ -173,6 +174,7 @@ def main():
     fetcher=Fetch(opts.max_calls)
     totals=collections.Counter()
     sha_occurrences=collections.Counter()
+    dependency_mtls={}
     summaries=[]
     renderable=[]
     for n,source_spec in enumerate(seeds["sources"],1):
@@ -204,6 +206,8 @@ def main():
                 if key in seen:continue
                 seen.add(key)
                 item_role=role(path)
+                if path=="models/island-survival/obj/survival-materials.mtl":
+                    dependency_mtls[repo]=item.get("sha")
                 entry={"repository":repo,"commit":commit,"path":path,"git_blob_sha":item.get("sha"),
                        "size_bytes":item.get("size",0),"role":item_role,
                        "render_status":"not-rendered","source_url":source_url(repo,commit,path)}
@@ -232,6 +236,9 @@ def main():
         print("FMPL_GALLERY_REPO_SCAN",n,len(seeds["sources"]),repo,info["status"],
               info.get("indexed_assets",0),flush=True)
     selections=select_models(renderable,opts.max_models)
+    for rec in selections:
+        if rec["repository"] in dependency_mtls and rec["path"].endswith(".obj"):
+            rec["mtl_blob_sha"]=dependency_mtls[rec["repository"]]
     render_queue={"schema":"fmpl.gallery-render-queue.v1","initial_model_cap":opts.max_models,
                   "models":selections,"all_model_files":len(renderable)}
     (root/"render_queue.json").write_text(json.dumps(render_queue,indent=2)+"\n",encoding="utf-8")
