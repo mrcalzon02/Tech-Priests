@@ -11,7 +11,9 @@ All sizes are **relative Blender scene units**: `size.outer_diameter: 0.08` make
 - `PIPETTE_STANDARD.md` — classification, parameterization, physical coupling rules and staged development gates.
 - `core.py` — **pure Python**, no Blender required. Rejects invalid family/payload/fittings/sizes/sockets, constructs bounded centerline/segment plans, flags unverified socket-facing and preserves source protections.
 - `blender_adapter.py` — isolated **prototype Blender mesh builder**. Consumes a validated plan and creates named editable visible tube, hose, cable and rebar geometry with terminal fitting meshes, without modifying source files. Actual native .blend/GLB reopening is a further gate.
-- `test_core.py` — 31+ pure Python regression cases for sizing, family compatibility, route keep-outs, fittings, wire counts and hanging/slack guides.
+- `test_core.py` and `test_registry.py` — pure Python regression cases for relative sizing, typed fittings, keep-outs, conductor counts and consistency with the authoritative type registry.
+- `type_registry.json` — machine-readable description of the eight line families, allowed payloads, typical fittings, visual presets, affordances and user prompts.
+- `verify_native.py` — independent Blender/GLB reopening and real Cycles preview, not just source-file existence.
 - `examples/` — reference requests for eight signal wires and a segmented fluid tube.
 
 ## Execute the pure planning stage
