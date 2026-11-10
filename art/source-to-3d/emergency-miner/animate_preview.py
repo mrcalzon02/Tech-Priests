@@ -361,12 +361,18 @@ def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
                 p = (phase - offset) % 1.0
                 envelope = (wrap_bell(p, .31, .06) + .7 * wrap_bell(p, .75, .06))
                 active = min(1.0, envelope * (1.0 if label == "A" else 1.25))
-                obj.location = rest + Vector((.006 * index * math.sin(wave),
-                                              -.002 * active, .032 * active))
-                s = .00015 + .018 * active * (1 + index * .12)
-                obj.scale = (s, s * .78, s * 1.5)
+                # Fixed-size true volume: Cycles 5.2.3 on Windows crashes
+                # on per-frame near-zero animated steam mesh scales.
+                # A puff starts below its actual service aperture, clears
+                # the lip on pressure rise, then retreats beneath the armor.
+                # Never animate its scale, parent inverse or clipping shape.
+                ejection = max(0.0, min(1.0, (active - .10) / .90))
+                rise = -.048 * (1.0-ejection) + .036 * ejection
+                obj.location = rest + Vector((
+                    .006 * index * math.sin(wave) * ejection,
+                    -.004 * ejection,
+                    rise + .005 * index * ejection))
                 obj.keyframe_insert(data_path="location", frame=frame)
-                obj.keyframe_insert(data_path="scale", frame=frame)
     for inspect_frame in (1,25,49,73,97):
         bpy.context.scene.frame_set(inspect_frame)
         assert_steam_bounds(steam, "keyframe-"+str(inspect_frame))
