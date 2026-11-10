@@ -128,6 +128,9 @@ def main():
     vessels=[o for o in details if "enlarged transparent vessel" in o.name]
     columns=[o for o in details if "enlarged visible liquid column" in o.name]
     surfaces=[o for o in details if "moving liquid meniscus" in o.name]
+    foam_crests=[o for o in details if "sample station " in o.name and "animated waterline foam crest" in o.name]
+    if len(foam_crests)!=2 or any(o.animation_data is None for o in foam_crests):
+        raise RuntimeError("Two real, physically keyed front-waterline foam crest meshes required")
     liquid_bubbles=[o for o in details if "sample station " in o.name and "liquid bubble" in o.name]
     flow_tracers=[o for o in details if "flow tracer" in o.name]
     glass_flow=[o for o in details if "transparent tube" in o.name and "canister" in o.name]
@@ -144,6 +147,12 @@ def main():
         keys=o.data.shape_keys
         if not keys or not keys.animation_data or not {"Inlet surge","Return wash"}.issubset(keys.key_blocks.keys()):
             raise RuntimeError("Missing Blender-native animated fluid surface shape keys")
+    scene.frame_set(1)
+    first_crest=[o.location.z for o in foam_crests]
+    scene.frame_set(25)
+    second_crest=[o.location.z for o in foam_crests]
+    if any(abs(a-b)<.045 for a,b in zip(first_crest,second_crest)):
+        raise RuntimeError("Waterline foam is keyed but has insufficient physical slosh travel")
     surface=surfaces[0].data.shape_keys.key_blocks["Inlet surge"]
     scene.frame_set(1)
     first_level=surface.value
@@ -202,6 +211,7 @@ def main():
        "process_bubbles_keyed":len(bubbles),
        "front_fluid_canisters":len(vessels),
        "water_meniscus_shape_keys":len(surfaces),
+       "animated_front_foam_crests":len(foam_crests),
        "forward_liquid_bubbles":len(liquid_bubbles),
        "moving_glass_flow_tracers":len(flow_tracers),
        "connected_transparent_flow_lines":len(glass_flow),
