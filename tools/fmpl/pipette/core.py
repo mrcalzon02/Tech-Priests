@@ -7,6 +7,7 @@ simulation. The Blender adapter (separate stage) consumes these plans.
 from __future__ import annotations
 import argparse
 import itertools
+import importlib.util
 import json
 import math
 import re
@@ -310,6 +311,40 @@ def infer_family_candidates(source_name,properties=None):
             "confidence":"name-hint-only", "requires_review":True}
 
 
+def _tile_reference(request, sockets, family, payload):
+    """Optional standard Factorio connection geometry on an explicit scene scope.
+
+    Routine wire/hose/pipe sizes remain in Blender units. A canonical machine
+    interface is a separate reference fixture with a tile-relative diameter,
+    verified external face and bounded footprint; it does not change the
+    intermediate line's requested diameter or create a game fluidbox.
+    """
+    raw_scope=request.get("scene_scope")
+    interfaces=request.get("tile_interfaces",{})
+    if raw_scope is None:
+        if interfaces:
+            raise PipetteError("tile_interfaces require an explicit scene_scope")
+        return None, {}
+    if not isinstance(interfaces,dict) or any(x not in ("start","end") for x in interfaces):
+        raise PipetteError("tile_interfaces must map start/end terminal names")
+    module_path=Path(__file__).resolve().parent.parent/"scene_scale.py"
+    spec=importlib.util.spec_from_file_location("fmpl_pipette_scene_scale",module_path)
+    if spec is None or spec.loader is None:
+        raise PipetteError("FMPL scene-to-tile reference module is absent")
+    sc=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(sc)
+    try:
+        scope=sc.resolve_scope(raw_scope)
+        matched={}
+        for terminal,interface in interfaces.items():
+            if family not in ("rigid_pipe","segmented_conduit","flex_hose","conduit") or payload not in FLUID:
+                raise PipetteError("standard Factorio pipe interface only applies to fluid/air/gas pipe carriers")
+            matched[terminal]=sc.verify_port(sockets[terminal],interface,scope)
+    except sc.SceneScaleError as err:
+        raise PipetteError(str(err)) from err
+    return scope,matched
+
+
 def plan(request):
     """Return geometry, terminals and behavior metadata without Blender side effects."""
     if not isinstance(request,dict):
@@ -348,6 +383,8 @@ def plan(request):
         raise PipetteError("start socket must be source, bidirectional or anchor")
     if b["role"] not in ("sink","bidirectional","anchor"):
         raise PipetteError("end socket must be sink, bidirectional or anchor")
+    scope,canonical_ports=_tile_reference(
+        request,{"start":a,"end":b},family,payload)
     protected=_protected(request.get("keep_outs",[]))
     points=_route(request.get("path",{}),a["xyz"],b["xyz"],protected,size["outer_radius"])
     pitch=request.get("joint_pitch")
@@ -384,6 +421,8 @@ def plan(request):
         "units":"Blender scene units only; no real-world conversion",
         "size":size,"material_id":mat,"material_resolved_in_blender":False,
         "surface_profile":profile,
+        "scene_scope":scope,
+        "tile_interfaces":canonical_ports,
         "sockets":{"start":a,"end":b},
         "centerline":points, "segments":segments,
         "fittings":fits,
