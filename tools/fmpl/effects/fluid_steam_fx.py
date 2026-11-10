@@ -101,7 +101,7 @@ def _bubbles(p, col, index, x, y, material):
     for k in range(12):
         angle = math.tau*k/12 + .17*index
         r = .052 + .025*(k%3)
-        base = .690 + .031*(k%6)
+        base = .800 + .036*(k%6)
         ob = _orb(p, col, "sample station %d liquid bubble %02d"%(index,k),
                   (x+r*math.cos(angle), y+r*math.sin(angle), base),
                   .018 + .002*(k%3), material)
@@ -121,29 +121,31 @@ def build_witness_canisters(col, p, mats):
     glass, iron, brass, steel = (
         mats.get("fx_glass", mats["glass"]), mats["iron"], mats["brass"], mats["steel"])
     dark, foam = mats["gunmetal"], mats["foam"]
-    specs = ((1, -.36, mats.get("fx_raw", mats["amber"])),
-             (2, .24, mats.get("fx_clear", mats["teal"])))
+    specs = ((1, -.36, mats["amber"], mats.get("fx_raw", mats["amber"])),
+             (2, .24, mats["teal"], mats.get("fx_clear", mats["teal"])))
     out = {"vessels": 0, "moving_surfaces": 0,
            "liquid_bubbles": 0, "flow_tracers": 0, "glass_flows": 0}
-    for idx, x, liquid in specs:
+    for idx, x, liquid, surface_mat in specs:
         y = -1.272
         p.block(col, "sample station %d foundation shoe"%idx,
                 (x,y+.04,.53), (.43,.27,.18), dark, .014)
-        p.cyl(col,"sample station %d enlarged transparent vessel"%idx,
-              (x,y,.96), .176, .632, glass)
+        # Open-ended physical glass wall; preserve a pressure observation lid.
+        # An opaque cylinder or iron cap would block the moving water entirely.
+        p.open_hollow_tube(col,"sample station %d enlarged transparent vessel"%idx,
+            (x,y,.659),(x,y,1.27),.176,glass)
         p.cyl(col,"sample station %d enlarged visible liquid column"%idx,
-              (x,y,.849), .157, .376, liquid)
+              (x,y,.916), .157, .540, liquid)
         for height in (.659, 1.270):
             p.torus(col,"sample station %d pressure retainer %.3f"%(idx,height),
                     (x,y,height),.182,.018,brass)
         for side in (-1,1):
             p.cyl(col,"sample station %d front sight support %d"%(idx,side),
                   (x+side*.158,y-.075,.96),.014,.63,steel,vertices=12)
-        p.cyl(col,"sample station %d tank sealed pressure cap"%idx,
-              (x,y,1.278),.178,.030,iron)
-        p.torus(col,"sample station %d glass waterline highlight"%idx,
-                (x,y,1.040),.154,.007,foam)
-        _meniscus(p,col,idx,(x,y,1.039),.154,liquid)
+        p.cyl(col,"sample station %d transparent pressure observation lid"%idx,
+              (x,y,1.277),.165,.019,glass)
+        p.torus(col,"sample station %d visible waterline highlight"%idx,
+                (x,y,1.189),.154,.008,foam)
+        _meniscus(p,col,idx,(x,y,1.189),.154,surface_mat)
         out["liquid_bubbles"] += len(_bubbles(p,col,idx,x,y,foam))
         out["vessels"] += 1
         out["moving_surfaces"] += 1
