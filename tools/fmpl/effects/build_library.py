@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FMPL Effects v1.0.1: deterministic native Blender materials and animated FX rigs.
+"""FMPL Effects v1.0.2: deterministic native Blender materials and animated FX rigs.
 
 No external material files, generators, downloads, game edits or simulations.
 Requires bpy in Blender 4.3+ / Blender 5.2. Never overwrites an output folder.
@@ -281,6 +281,8 @@ def build_animated_rigs(bpy,scene,materials,defs):
                 raise RuntimeError("Unknown rig type: "+rig["kind"])
             attach_to(ob,root)
             items.append(ob)
+        # Preserve true native dimensions: a vapor lobe must stay a small lobe, not inflate to a full unit sphere.
+        base_scales=[tuple(ob.scale) for ob in items]
         # Exact 16-sample cycle + one seam sample. Values are bounded in space and scale.
         first=None
         for idx,frame in enumerate(tuple(WORK_FRAMES)+(LOOP_END,)):
@@ -288,8 +290,9 @@ def build_animated_rigs(bpy,scene,materials,defs):
             for j,ob in enumerate(items):
                 ob.location.z=(.44 if rig["kind"] in ("flame","cloud") else .19)+.047*math.sin(phase+j*.8)
                 ob.rotation_euler.z=.18*math.sin(phase+j*.7)
-                ob.scale.x=1.0+.09*math.sin(phase+j*.9)
-                ob.scale.y=1.0+.05*math.cos(phase+j*.6)
+                ob.scale.x=base_scales[j][0]*(1.0+.09*math.sin(phase+j*.9))
+                ob.scale.y=base_scales[j][1]*(1.0+.05*math.cos(phase+j*.6))
+                ob.scale.z=base_scales[j][2]*(1.0+.04*math.sin(phase+j*.7))
                 ob.keyframe_insert(data_path="location",frame=frame)
                 ob.keyframe_insert(data_path="rotation_euler",frame=frame)
                 ob.keyframe_insert(data_path="scale",frame=frame)
@@ -392,6 +395,10 @@ def validate_loops(bpy,roots):
             if any(abs(left-right)>1e-5 for x,y in zip(a,b) for left,right in zip(x,y)):
                 raise RuntimeError("Effect rig doesn't close: "+o.name)
     scene.frame_set(49)
+    for root in roots:
+        for ob in root.children:
+            if "vapor-lobe" in ob.name and max(ob.scale.x,ob.scale.y)>.40:
+                raise RuntimeError("Gas volume emitter inflated beyond reusable native dimensions: "+ob.name)
     changes=0
     for root in roots:
         for o in root.children:

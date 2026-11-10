@@ -64,6 +64,10 @@ def main():
             raise RuntimeError("Emitter child not a real mesh: "+rig["id"])
         roots.append(obj)
     scene.frame_set(1)
+    for root in roots:
+        for child in root.children:
+            if "vapor-lobe" in child.name and max(child.scale.x,child.scale.y)>.40:
+                raise RuntimeError("Native gas emitter dimensions escaped intended bounds: "+child.name)
     before={o.name:[list(o.location),list(o.rotation_euler),list(o.scale)] for root in roots for o in root.children}
     scene.frame_set(97)
     for root in roots:

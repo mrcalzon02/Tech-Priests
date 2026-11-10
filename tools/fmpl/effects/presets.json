@@ -1,7 +1,7 @@
 {
   "schema": "fmpl.effects.v1",
   "library_id": "fmpl-effect-material-library",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "original procedural graphs; no imported artwork",
   "source_guide": {
     "name": "To create effects in blender.pdf",
