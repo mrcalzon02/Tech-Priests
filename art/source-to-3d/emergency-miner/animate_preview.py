@@ -122,9 +122,29 @@ def empty(name, location, collection):
 
 
 def preserve_parent(ob, parent):
+    """Flush scale to the world matrix BEFORE reparenting.
+
+    The first native Cycles proof exposed a recurrence of FMPL v1.0.2's
+    unit-sized steam-lobe bug: changing ob.scale without depsgraph update
+    left an old unscaled matrix_world for preserve_parent to capture.
+    """
+    bpy.context.view_layer.update()
     world = ob.matrix_world.copy()
     ob.parent = parent
     ob.matrix_world = world
+    bpy.context.view_layer.update()
+
+
+def assert_steam_bounds(lobes, tag):
+    """Measured world-space envelope; never render giant hidden FX spheres."""
+    bpy.context.view_layer.update()
+    for ob, _, _, _ in lobes:
+        corners=[ob.matrix_world @ Vector(corner) for corner in ob.bound_box]
+        extents=[max(p[i] for p in corners)-min(p[i] for p in corners)
+                 for i in range(3)]
+        if max(extents) > .15 or min(extents) <= 0:
+            raise RuntimeError("Nonphysical steam envelope "+tag+" "+
+                               ob.name+" measured="+str(extents))
 
 
 def rig():
@@ -252,6 +272,7 @@ def make_steam(upper, collection):
             ob.scale = (.014, .012, .014)
             preserve_parent(ob, upper)
             lobes.append((ob, ob.location.copy(), j, vent))
+    assert_steam_bounds(lobes, "prekey")
     return lobes
 
 
@@ -338,6 +359,9 @@ def apply_motion(label, body, upper, cover, light_parts, steam):
             obj.scale = (s, s * .78, s * 1.5)
             obj.keyframe_insert(data_path="location", frame=frame)
             obj.keyframe_insert(data_path="scale", frame=frame)
+    for inspect_frame in (1,25,49,73,97):
+        bpy.context.scene.frame_set(inspect_frame)
+        assert_steam_bounds(steam, "keyframe-"+str(inspect_frame))
     bpy.context.scene.frame_set(1)
 
 
