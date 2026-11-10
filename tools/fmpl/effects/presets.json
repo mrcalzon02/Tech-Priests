@@ -1,0 +1,818 @@
+{
+  "schema": "fmpl.effects.v1",
+  "library_id": "fmpl-effect-material-library",
+  "version": "1.0.0",
+  "license": "original procedural graphs; no imported artwork",
+  "source_guide": {
+    "name": "To create effects in blender.pdf",
+    "sha256": "b256e188919ace7804ff958cbf2eee052cc47519529a70e61da7d2270c93d27d",
+    "pages": 13
+  },
+  "capture": {
+    "pitch_degrees": 45,
+    "azimuth_degrees": 0,
+    "orthographic": true,
+    "preview_only": true,
+    "source_size": [
+      960,
+      640
+    ],
+    "fps": 8,
+    "frames": [
+      1,
+      7,
+      13,
+      19,
+      25,
+      31,
+      37,
+      43,
+      49,
+      55,
+      61,
+      67,
+      73,
+      79,
+      85,
+      91
+    ],
+    "loop_end_frame": 97,
+    "samples": 12
+  },
+  "limits": {
+    "default_no_simulation_bake": true,
+    "physical_simulations_require_explicit_opt_in": true,
+    "cache_not_on_boot_drive": true,
+    "cache_bytes_max": 2147483648,
+    "default_image_count_max": 16,
+    "render_on_self_hosted_worker": true,
+    "source_assets_immutable": true
+  },
+  "presets": [
+    {
+      "id": "water-clear",
+      "family": "liquid",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.04,
+        0.18,
+        0.24
+      ],
+      "roughness": 0.07,
+      "metallic": 0,
+      "transmission": 0.86,
+      "ior": 1.333,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "water-murky",
+      "family": "liquid",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.1,
+        0.16,
+        0.11
+      ],
+      "roughness": 0.18,
+      "metallic": 0,
+      "transmission": 0.38,
+      "ior": 1.333,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "crude-oil",
+      "family": "liquid",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.075,
+        0.055,
+        0.038
+      ],
+      "roughness": 0.085,
+      "metallic": 0,
+      "transmission": 0.26,
+      "ior": 1.46,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "lubricating-oil",
+      "family": "liquid",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.11,
+        0.115,
+        0.068
+      ],
+      "roughness": 0.055,
+      "metallic": 0,
+      "transmission": 0.45,
+      "ior": 1.47,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "refined-oil",
+      "family": "liquid",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.28,
+        0.23,
+        0.12
+      ],
+      "roughness": 0.06,
+      "metallic": 0,
+      "transmission": 0.7,
+      "ior": 1.46,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "lava-molten",
+      "family": "thermal-fluid",
+      "mode": "surface",
+      "effect": "molten",
+      "base_color": [
+        0.52,
+        0.075,
+        0.017
+      ],
+      "roughness": 0.37,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1.5,
+      "emission_color": [
+        0.95,
+        0.18,
+        0.025
+      ],
+      "emission_strength": 3,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Cooling/emission visual approximation, no molten liquid simulation."
+    },
+    {
+      "id": "lava-cooling-crust",
+      "family": "thermal-fluid",
+      "mode": "surface",
+      "effect": "molten",
+      "base_color": [
+        0.15,
+        0.105,
+        0.082
+      ],
+      "roughness": 0.75,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1.5,
+      "emission_color": [
+        0.91,
+        0.15,
+        0.02
+      ],
+      "emission_strength": 1.5,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Cooling/emission visual approximation, no molten liquid simulation."
+    },
+    {
+      "id": "chemical-acid-green",
+      "family": "chemical-liquid",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.18,
+        0.52,
+        0.07
+      ],
+      "roughness": 0.14,
+      "metallic": 0,
+      "transmission": 0.33,
+      "ior": 1.35,
+      "emission_color": [
+        0.08,
+        0.3,
+        0.02
+      ],
+      "emission_strength": 0.12,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "chemical-coolant-blue",
+      "family": "chemical-liquid",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.04,
+        0.31,
+        0.47
+      ],
+      "roughness": 0.12,
+      "metallic": 0,
+      "transmission": 0.48,
+      "ior": 1.34,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "chemical-slurry",
+      "family": "chemical-liquid",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.24,
+        0.22,
+        0.1
+      ],
+      "roughness": 0.72,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1.37,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "glass-clear",
+      "family": "glass",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.72,
+        0.83,
+        0.85
+      ],
+      "roughness": 0.025,
+      "metallic": 0,
+      "transmission": 1,
+      "ior": 1.46,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 14,
+      "bump_distance": 0.001,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "glass-frosted",
+      "family": "glass",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.62,
+        0.74,
+        0.76
+      ],
+      "roughness": 0.28,
+      "metallic": 0,
+      "transmission": 0.79,
+      "ior": 1.46,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 14,
+      "bump_distance": 0.001,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "glass-amber",
+      "family": "glass",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.63,
+        0.32,
+        0.085
+      ],
+      "roughness": 0.05,
+      "metallic": 0,
+      "transmission": 0.86,
+      "ior": 1.49,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 14,
+      "bump_distance": 0.001,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "glass-lab-green",
+      "family": "glass",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.28,
+        0.63,
+        0.45
+      ],
+      "roughness": 0.065,
+      "metallic": 0,
+      "transmission": 0.86,
+      "ior": 1.48,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 14,
+      "bump_distance": 0.001,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "steam-clean",
+      "family": "gas",
+      "mode": "volume",
+      "effect": "volume",
+      "base_color": [
+        0.69,
+        0.75,
+        0.77
+      ],
+      "roughness": 0.64,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0.075,
+      "noise_scale": 2.2,
+      "bump_distance": 0,
+      "performance": "advanced-preview",
+      "notes": "Small volume proxy only; real domain simulation is a separate gated task."
+    },
+    {
+      "id": "steam-exhaust",
+      "family": "gas",
+      "mode": "volume",
+      "effect": "volume",
+      "base_color": [
+        0.61,
+        0.65,
+        0.63
+      ],
+      "roughness": 0.68,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0.13,
+      "noise_scale": 2.2,
+      "bump_distance": 0,
+      "performance": "advanced-preview",
+      "notes": "Small volume proxy only; real domain simulation is a separate gated task."
+    },
+    {
+      "id": "smoke-soot",
+      "family": "gas",
+      "mode": "volume",
+      "effect": "volume",
+      "base_color": [
+        0.13,
+        0.13,
+        0.13
+      ],
+      "roughness": 0.72,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0.17,
+      "noise_scale": 2.2,
+      "bump_distance": 0,
+      "performance": "advanced-preview",
+      "notes": "Small volume proxy only; real domain simulation is a separate gated task."
+    },
+    {
+      "id": "chemical-fumes",
+      "family": "gas",
+      "mode": "volume",
+      "effect": "volume",
+      "base_color": [
+        0.34,
+        0.58,
+        0.19
+      ],
+      "roughness": 0.72,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0.11,
+      "noise_scale": 2.2,
+      "bump_distance": 0,
+      "performance": "advanced-preview",
+      "notes": "Small volume proxy only; real domain simulation is a separate gated task."
+    },
+    {
+      "id": "fire-core",
+      "family": "combustion",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.78,
+        0.31,
+        0.035
+      ],
+      "roughness": 0.65,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        1,
+        0.7,
+        0.12
+      ],
+      "emission_strength": 4,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "fire-outer",
+      "family": "combustion",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.65,
+        0.1,
+        0.025
+      ],
+      "roughness": 0.65,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        1,
+        0.19,
+        0.035
+      ],
+      "emission_strength": 1.35,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "plasma-blue",
+      "family": "combustion",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.08,
+        0.32,
+        0.65
+      ],
+      "roughness": 0.3,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        0.23,
+        0.67,
+        1
+      ],
+      "emission_strength": 3.1,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "heated-steel-red",
+      "family": "metal-thermal",
+      "mode": "surface",
+      "effect": "heat",
+      "base_color": [
+        0.28,
+        0.27,
+        0.26
+      ],
+      "roughness": 0.42,
+      "metallic": 1,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        1,
+        0.12,
+        0.018
+      ],
+      "emission_strength": 1.7,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Finite temperature-mask emission; no physical thermal expansion solve."
+    },
+    {
+      "id": "heated-steel-orange",
+      "family": "metal-thermal",
+      "mode": "surface",
+      "effect": "heat",
+      "base_color": [
+        0.33,
+        0.3,
+        0.27
+      ],
+      "roughness": 0.39,
+      "metallic": 1,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        1,
+        0.32,
+        0.05
+      ],
+      "emission_strength": 3.2,
+      "density": 0,
+      "noise_scale": 5.6,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Finite temperature-mask emission; no physical thermal expansion solve."
+    },
+    {
+      "id": "tempered-steel-blue",
+      "family": "metal-damage",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.17,
+        0.24,
+        0.31
+      ],
+      "roughness": 0.38,
+      "metallic": 1,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 18,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "fractured-steel",
+      "family": "metal-damage",
+      "mode": "surface",
+      "effect": "cracks",
+      "base_color": [
+        0.26,
+        0.29,
+        0.3
+      ],
+      "roughness": 0.63,
+      "metallic": 1,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 18,
+      "bump_distance": 0.014,
+      "performance": "sprite-safe",
+      "notes": "Shader crack relief, NOT fractured geometry."
+    },
+    {
+      "id": "oxidized-steel",
+      "family": "metal-damage",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.37,
+        0.19,
+        0.105
+      ],
+      "roughness": 0.83,
+      "metallic": 0.65,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 18,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    },
+    {
+      "id": "cracked-mud",
+      "family": "geological",
+      "mode": "surface",
+      "effect": "cracks",
+      "base_color": [
+        0.34,
+        0.24,
+        0.16
+      ],
+      "roughness": 0.96,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 18,
+      "bump_distance": 0.014,
+      "performance": "sprite-safe",
+      "notes": "Shader crack relief, NOT fractured geometry."
+    },
+    {
+      "id": "compacted-snow",
+      "family": "geological",
+      "mode": "surface",
+      "effect": "normal",
+      "base_color": [
+        0.78,
+        0.8,
+        0.82
+      ],
+      "roughness": 0.92,
+      "metallic": 0,
+      "transmission": 0,
+      "ior": 1.31,
+      "emission_color": [
+        0.1,
+        0.1,
+        0.1
+      ],
+      "emission_strength": 0,
+      "density": 0,
+      "noise_scale": 18,
+      "bump_distance": 0.008,
+      "performance": "sprite-safe",
+      "notes": "Local-space procedural surface; tile-scale authoring controls."
+    }
+  ],
+  "rigs": [
+    {
+      "id": "fire-tongues",
+      "material": "fire-core",
+      "kind": "flame",
+      "count": 4,
+      "loop_frames": 16
+    },
+    {
+      "id": "steam-plume",
+      "material": "steam-clean",
+      "kind": "cloud",
+      "count": 3,
+      "loop_frames": 16
+    },
+    {
+      "id": "chemical-plume",
+      "material": "chemical-fumes",
+      "kind": "cloud",
+      "count": 3,
+      "loop_frames": 16
+    },
+    {
+      "id": "heat-shimmer",
+      "material": "heated-steel-orange",
+      "kind": "heat",
+      "count": 3,
+      "loop_frames": 16
+    },
+    {
+      "id": "water-ripples",
+      "material": "water-clear",
+      "kind": "ripple",
+      "count": 3,
+      "loop_frames": 16
+    }
+  ]
+}
