@@ -13,7 +13,14 @@
     "one_blender_unit": "one Factorio tile",
     "up_axis": "+Z",
     "pivots": "per-asset explicit measured",
-    "port_rule": "native Factorio prototype pipe positions must be mapped and tested; Blender mouth is not the native connection cell"
+    "port_rule": "explicit scene-to-tile scope and face-relative nominal mouth may guide Blender geometry; native Factorio fluidbox requires independent game check",
+    "default_scene_units_per_tile": 1,
+    "scene_scope_schema": "fmpl.scene-scope.v1",
+    "scene_scale_registry": "tools/fmpl/scene_scale_registry.json",
+    "scene_scale_helper": "tools/fmpl/scene_scale.py",
+    "standard_pipe_interface": "factorio-fluid-interface-v1",
+    "machine_footprint_scope": "2D width/height Factorio tiles, explicit origin/scene_units_per_tile, +Z",
+    "real_world_scale_conversion": false
   },
   "material_catalog": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
   "parts_registry": "art/source-to-3d/shared-parts/metallic-hydrogen/registry.json",
