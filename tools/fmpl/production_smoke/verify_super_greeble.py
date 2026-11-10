@@ -165,11 +165,16 @@ def main():
     if any(abs(float(v.location.x)-.94)>.15 or abs(float(v.location.y)-.60)>.15 or
            not (2.80<float(v.location.z)<3.30) for v in vapor):
         raise RuntimeError("Steam does not emerge near the actual vent nozzle")
+    # Deliberate sideways offsets prevent the vapour from rebuilding a cone.
+    scene.frame_set(1)
+    lateral_span=max(o.location.x for o in vapor+soft_veils)-min(o.location.x for o in vapor+soft_veils)
+    if lateral_span<.100:
+        raise RuntimeError("Steam lobe arrangement is too axisymmetric / cone-like")
     if len(soft_veils)!=8 or any(v.animation_data is None for v in soft_veils):
         raise RuntimeError("Layered feather steam requires eight real keyed Blender meshes")
     if any(not ob.data.vertices or not ob.data.polygons for ob in vapor+soft_veils):
         raise RuntimeError("New steam components must contain actual editable mesh geometry")
-    softmat=bpy.data.materials.get("FMPL | relief steam readable soft volume v04")
+    softmat=bpy.data.materials.get("FMPL | relief steam irregular feathered wisps v05")
     if softmat is None or not softmat.use_nodes:
         raise RuntimeError("Soft surface steam material was not saved to native Blender")
     for name in ("FMPL STEAM | actual sphere radial distance",
@@ -193,12 +198,12 @@ def main():
     lift=softmat.node_tree.nodes.get("FMPL STEAM | bounded core lift linked to density")
     volume_node=softmat.node_tree.nodes.get("FMPL STEAM | true variable density volume")
     if (not lift or lift.operation!="MULTIPLY" or
-        abs(float(lift.inputs[1].default_value)-.165)>.001 or
+        abs(float(lift.inputs[1].default_value)-.112)>.001 or
         volume_node.inputs.get("Emission Strength") is None or
         not volume_node.inputs["Emission Strength"].is_linked):
         raise RuntimeError("Volume steam needs restrained density-linked light, not dark/invisible or edge-emitting shells")
     if (receipt.get("steam_fx",{}).get("emission_coupled_to_density") is not True or
-        abs(float(receipt.get("steam_fx",{}).get("density_lift_multiplication",0))-.165)>.001):
+        abs(float(receipt.get("steam_fx",{}).get("density_lift_multiplication",0))-.112)>.001):
         raise RuntimeError("Volume steam emission source not pinned to true density")
     if receipt.get("steam_fx",{}).get("true_volumetric_density") is not True:
         raise RuntimeError("Blender steam must be true radial-volume, not white surface rings")
@@ -311,6 +316,7 @@ def main():
        "vent_open_bore_diameter_tiles":verified_throat_bore_diameter,
 
        "true_volumetric_steam_density_verified":True,
+       "steam_wisp_lateral_spread_tiles":round(lateral_span,4),
        "steam_density_coupled_emission_verified":True,
        "procedural_steam_edge_feather_verified":True,
        "steam_animation_closed_loop_verified":True,
