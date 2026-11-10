@@ -1,0 +1,567 @@
+{
+  "schema": "fmpl.surfaces.v1",
+  "version": "1.0.0",
+  "candidate_count": 25,
+  "blender_target": "5.x",
+  "render": {
+    "camera_elevation": 45,
+    "azimuth": 0,
+    "orthographic": true,
+    "size": [
+      1200,
+      1200
+    ],
+    "samples": 12,
+    "render_state": "static",
+    "no_simulation_bake": true
+  },
+  "source_references": [
+    {
+      "id": "sam-bowman-procedural-nodes-32",
+      "video_url": "https://www.youtube.com/watch?v=iuaZuDiMv6s",
+      "title": "Procedural Nodes (part 32) - Procedural Cracked Mud with Rocks in Blender",
+      "creator": "Sam Bowman",
+      "published": "2020-10-28",
+      "stages": [
+        "cracked-mud-displacement",
+        "mud-color",
+        "rocks-displacement",
+        "masking-rocks",
+        "rock-color",
+        "darkened-cracks",
+        "mud-bump"
+      ],
+      "use": "procedural design reference only; no video frames or author assets copied; reimplemented original node networks"
+    }
+  ],
+  "namespace": "FMPL SURFACE | ",
+  "presets": [
+    {
+      "id": "cedar-rough",
+      "family": "wood",
+      "base_color": [
+        0.31,
+        0.18,
+        0.095
+      ],
+      "secondary_color": [
+        0.15,
+        0.075,
+        0.034
+      ],
+      "roughness": 0.88,
+      "metallic": 0,
+      "noise_scale": 5,
+      "bump_distance": 0.016,
+      "node_style": "wood",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "driftwood-salt",
+      "family": "wood",
+      "base_color": [
+        0.44,
+        0.43,
+        0.36
+      ],
+      "secondary_color": [
+        0.24,
+        0.27,
+        0.27
+      ],
+      "roughness": 0.92,
+      "metallic": 0,
+      "noise_scale": 7,
+      "bump_distance": 0.018,
+      "node_style": "wood",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "pine-sawn",
+      "family": "wood",
+      "base_color": [
+        0.66,
+        0.49,
+        0.27
+      ],
+      "secondary_color": [
+        0.37,
+        0.23,
+        0.12
+      ],
+      "roughness": 0.76,
+      "metallic": 0,
+      "noise_scale": 9,
+      "bump_distance": 0.01,
+      "node_style": "wood",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "charred-wood",
+      "family": "wood",
+      "base_color": [
+        0.12,
+        0.108,
+        0.102
+      ],
+      "secondary_color": [
+        0.24,
+        0.18,
+        0.15
+      ],
+      "roughness": 0.97,
+      "metallic": 0,
+      "noise_scale": 15,
+      "bump_distance": 0.022,
+      "node_style": "wood",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "shipwood-tar",
+      "family": "wood",
+      "base_color": [
+        0.19,
+        0.14,
+        0.105
+      ],
+      "secondary_color": [
+        0.09,
+        0.075,
+        0.06
+      ],
+      "roughness": 0.74,
+      "metallic": 0,
+      "noise_scale": 7,
+      "bump_distance": 0.012,
+      "node_style": "wood",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "limewash-plaster",
+      "family": "masonry",
+      "base_color": [
+        0.66,
+        0.64,
+        0.54
+      ],
+      "secondary_color": [
+        0.48,
+        0.45,
+        0.38
+      ],
+      "roughness": 0.87,
+      "metallic": 0,
+      "noise_scale": 15,
+      "bump_distance": 0.013,
+      "node_style": "granular",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "ferrocrete-raw",
+      "family": "masonry",
+      "base_color": [
+        0.42,
+        0.43,
+        0.43
+      ],
+      "secondary_color": [
+        0.28,
+        0.29,
+        0.3
+      ],
+      "roughness": 0.9,
+      "metallic": 0,
+      "noise_scale": 18,
+      "bump_distance": 0.011,
+      "node_style": "granular",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "ferrocrete-paving-bricks",
+      "family": "masonry",
+      "base_color": [
+        0.45,
+        0.46,
+        0.44
+      ],
+      "secondary_color": [
+        0.28,
+        0.29,
+        0.3
+      ],
+      "roughness": 0.88,
+      "metallic": 0,
+      "noise_scale": 16,
+      "bump_distance": 0.019,
+      "node_style": "paving",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "basalt-dark",
+      "family": "stone",
+      "base_color": [
+        0.18,
+        0.195,
+        0.2
+      ],
+      "secondary_color": [
+        0.105,
+        0.11,
+        0.12
+      ],
+      "roughness": 0.91,
+      "metallic": 0,
+      "noise_scale": 13,
+      "bump_distance": 0.02,
+      "node_style": "granular",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "sandstone-hewn",
+      "family": "stone",
+      "base_color": [
+        0.57,
+        0.43,
+        0.29
+      ],
+      "secondary_color": [
+        0.35,
+        0.27,
+        0.17
+      ],
+      "roughness": 0.86,
+      "metallic": 0,
+      "noise_scale": 11,
+      "bump_distance": 0.02,
+      "node_style": "granular",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "quarry-rock-cracked",
+      "family": "stone",
+      "base_color": [
+        0.35,
+        0.32,
+        0.29
+      ],
+      "secondary_color": [
+        0.18,
+        0.17,
+        0.16
+      ],
+      "roughness": 0.92,
+      "metallic": 0,
+      "noise_scale": 11,
+      "bump_distance": 0.024,
+      "node_style": "cracked-rock",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "river-pebbles",
+      "family": "stone",
+      "base_color": [
+        0.44,
+        0.43,
+        0.37
+      ],
+      "secondary_color": [
+        0.24,
+        0.25,
+        0.24
+      ],
+      "roughness": 0.81,
+      "metallic": 0,
+      "noise_scale": 8,
+      "bump_distance": 0.022,
+      "node_style": "pebbles",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "wet-clay",
+      "family": "soil",
+      "base_color": [
+        0.26,
+        0.14,
+        0.08
+      ],
+      "secondary_color": [
+        0.09,
+        0.053,
+        0.028
+      ],
+      "roughness": 0.93,
+      "metallic": 0,
+      "noise_scale": 9,
+      "bump_distance": 0.014,
+      "node_style": "granular",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "dried-cracked-mud",
+      "family": "soil",
+      "base_color": [
+        0.52,
+        0.32,
+        0.17
+      ],
+      "secondary_color": [
+        0.18,
+        0.1,
+        0.06
+      ],
+      "roughness": 0.96,
+      "metallic": 0,
+      "noise_scale": 11,
+      "bump_distance": 0.017,
+      "node_style": "cracked-mud",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "dried-cracked-mud-rocks",
+      "family": "soil",
+      "base_color": [
+        0.49,
+        0.31,
+        0.19
+      ],
+      "secondary_color": [
+        0.18,
+        0.11,
+        0.065
+      ],
+      "roughness": 0.97,
+      "metallic": 0,
+      "noise_scale": 10,
+      "bump_distance": 0.023,
+      "node_style": "cracked-mud-rocks",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "gravel-dust",
+      "family": "soil",
+      "base_color": [
+        0.48,
+        0.46,
+        0.39
+      ],
+      "secondary_color": [
+        0.29,
+        0.28,
+        0.25
+      ],
+      "roughness": 0.94,
+      "metallic": 0,
+      "noise_scale": 18,
+      "bump_distance": 0.016,
+      "node_style": "granular",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "steel-hammered",
+      "family": "metal",
+      "base_color": [
+        0.36,
+        0.38,
+        0.39
+      ],
+      "secondary_color": [
+        0.2,
+        0.23,
+        0.25
+      ],
+      "roughness": 0.4,
+      "metallic": 1,
+      "noise_scale": 18,
+      "bump_distance": 0.01,
+      "node_style": "metal",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "steel-pitted",
+      "family": "metal",
+      "base_color": [
+        0.29,
+        0.32,
+        0.34
+      ],
+      "secondary_color": [
+        0.12,
+        0.15,
+        0.17
+      ],
+      "roughness": 0.62,
+      "metallic": 0.9,
+      "noise_scale": 24,
+      "bump_distance": 0.014,
+      "node_style": "metal",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "steel-burnt",
+      "family": "metal",
+      "base_color": [
+        0.25,
+        0.24,
+        0.23
+      ],
+      "secondary_color": [
+        0.11,
+        0.12,
+        0.15
+      ],
+      "roughness": 0.66,
+      "metallic": 0.88,
+      "noise_scale": 17,
+      "bump_distance": 0.014,
+      "node_style": "metal",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "iron-rust",
+      "family": "metal",
+      "base_color": [
+        0.45,
+        0.23,
+        0.12
+      ],
+      "secondary_color": [
+        0.21,
+        0.12,
+        0.07
+      ],
+      "roughness": 0.91,
+      "metallic": 0.43,
+      "noise_scale": 17,
+      "bump_distance": 0.018,
+      "node_style": "metal",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "copper-patina",
+      "family": "metal",
+      "base_color": [
+        0.18,
+        0.36,
+        0.3
+      ],
+      "secondary_color": [
+        0.42,
+        0.21,
+        0.09
+      ],
+      "roughness": 0.66,
+      "metallic": 0.6,
+      "noise_scale": 12,
+      "bump_distance": 0.012,
+      "node_style": "metal",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "brass-machined",
+      "family": "metal",
+      "base_color": [
+        0.58,
+        0.43,
+        0.19
+      ],
+      "secondary_color": [
+        0.33,
+        0.25,
+        0.11
+      ],
+      "roughness": 0.32,
+      "metallic": 1,
+      "noise_scale": 15,
+      "bump_distance": 0.006,
+      "node_style": "metal",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "ceramic-tile",
+      "family": "masonry",
+      "base_color": [
+        0.69,
+        0.65,
+        0.53
+      ],
+      "secondary_color": [
+        0.42,
+        0.39,
+        0.34
+      ],
+      "roughness": 0.36,
+      "metallic": 0,
+      "noise_scale": 12,
+      "bump_distance": 0.006,
+      "node_style": "granular",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "leather-worn",
+      "family": "organic",
+      "base_color": [
+        0.37,
+        0.19,
+        0.105
+      ],
+      "secondary_color": [
+        0.19,
+        0.075,
+        0.04
+      ],
+      "roughness": 0.82,
+      "metallic": 0,
+      "noise_scale": 23,
+      "bump_distance": 0.014,
+      "node_style": "granular",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    },
+    {
+      "id": "rubber-industrial",
+      "family": "organic",
+      "base_color": [
+        0.13,
+        0.15,
+        0.16
+      ],
+      "secondary_color": [
+        0.075,
+        0.08,
+        0.085
+      ],
+      "roughness": 0.91,
+      "metallic": 0,
+      "noise_scale": 22,
+      "bump_distance": 0.009,
+      "node_style": "granular",
+      "source": "original-fmpl-parameterized-procedural",
+      "status": "candidate-native-not-yet-rendered"
+    }
+  ],
+  "license": "Original procedural implementations; independent shader construction, not copied .blend files",
+  "dependency": "existing FMPL 23 PBR materials remain authoritative and immutable"
+}
