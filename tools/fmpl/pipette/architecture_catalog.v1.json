@@ -1,0 +1,3618 @@
+{
+  "schema": "fmpl.pipette.architecture-catalog.v1",
+  "version": "1.0.0",
+  "status": "INDEX_ONLY_NOT_NATIVE_GENERATOR_OR_GAME_READY",
+  "existing_v01_family_compatibility": "base_family is an implementation target, not a claim that v0.1 already renders that sub-type",
+  "units": "Blender scene units, independent of real-world AWG/mm",
+  "comparison_fixture": "comparison_fixture.v1.json",
+  "joint_catalog": "joint_catalog.v1.json",
+  "stiffness_catalog": "stiffness_profiles.v1.json",
+  "groups": {
+    "metal_pipe": {
+      "label": "Metal process and legacy piping",
+      "domain": "fluid"
+    },
+    "polymer_pipe": {
+      "label": "Polymer, composite, glass and ceramic piping",
+      "domain": "fluid"
+    },
+    "tubing": {
+      "label": "Instrumentation and fine tubing",
+      "domain": "fluid"
+    },
+    "hose": {
+      "label": "Flexible fluid and process hoses",
+      "domain": "fluid"
+    },
+    "conduit": {
+      "label": "Electrical metal and polymer conduits",
+      "domain": "enclosure"
+    },
+    "wire": {
+      "label": "Individual wires and multicore cables",
+      "domain": "electrical"
+    },
+    "housing": {
+      "label": "Wiring housings, protection sleeves and open channels",
+      "domain": "enclosure"
+    },
+    "tension": {
+      "label": "Cables, ropes and mechanical tension members",
+      "domain": "mechanical"
+    },
+    "rebar": {
+      "label": "Reinforcing bars, meshes and cages",
+      "domain": "reinforcement"
+    }
+  },
+  "architecture_types": [
+    {
+      "id": "pipe_cast_iron_flanged",
+      "label": "Flanged cast-iron pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "cast_hollow_annulus",
+      "material_intent": "cast_iron",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "flange",
+        "union"
+      ],
+      "visible_architecture": "Bolted round flanges and heavy casting",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_cast_iron_bell_spigot",
+      "label": "Cast-iron bell-spigot line",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "bell_end_hollow",
+      "material_intent": "cast_iron",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "bell_spigot",
+        "caulked_hub"
+      ],
+      "visible_architecture": "Large bell mouth and seated inner spigot",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_galvanized_threaded",
+      "label": "Threaded galvanized-steel pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "threaded_hollow",
+      "material_intent": "galvanized_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "threaded",
+        "union"
+      ],
+      "visible_architecture": "Threaded service nipples and gray zinc finish",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_black_iron_threaded",
+      "label": "Threaded black iron pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "threaded_hollow",
+      "material_intent": "black_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "threaded",
+        "union"
+      ],
+      "visible_architecture": "Dark pipe and heavy iron couplers",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_carbon_steel_seamless",
+      "label": "Seamless carbon-steel process pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "carbon_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "butt_weld",
+        "flange"
+      ],
+      "visible_architecture": "Smooth wall with joined welded/elbow segments",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_carbon_steel_welded",
+      "label": "Seam-welded steel process pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "longitudinal_welded_hollow",
+      "material_intent": "carbon_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "butt_weld",
+        "flange"
+      ],
+      "visible_architecture": "Longitudinal seam where visible, hollow bore",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_stainless_process",
+      "label": "Stainless process piping",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "stainless_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "butt_weld",
+        "flange"
+      ],
+      "visible_architecture": "Stainless tube and flanged split hardware",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_stainless_sanitary",
+      "label": "Sanitary stainless process tube",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "polished_stainless",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "sanitary_clamp",
+        "union"
+      ],
+      "visible_architecture": "Clamp seats and gasket ferrules",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_copper_hard",
+      "label": "Rigid drawn copper pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "copper",
+      "stiffness_profile": "formed_metal",
+      "compatible_joint_ids": [
+        "solder",
+        "braze"
+      ],
+      "visible_architecture": "Sweated copper sockets and gentle bend fillets",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_copper_annealed",
+      "label": "Soft annealed copper pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "copper",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "flare",
+        "compression"
+      ],
+      "visible_architecture": "Softer long-radius bends without hard elbows",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_brass_hardline",
+      "label": "Brass small-bore hardline",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "small_smooth_hollow",
+      "material_intent": "brass",
+      "stiffness_profile": "formed_metal",
+      "compatible_joint_ids": [
+        "bite_ferrule",
+        "compression"
+      ],
+      "visible_architecture": "Brass ferrule nut and tube insert",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_aluminum_lightwall",
+      "label": "Lightwall aluminum tube",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "thin_hollow",
+      "material_intent": "aluminum",
+      "stiffness_profile": "formed_metal",
+      "compatible_joint_ids": [
+        "compression",
+        "flange"
+      ],
+      "visible_architecture": "Light thin-wall process tube with sockets",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_bronze_cast",
+      "label": "Bronze cast conduit-pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "cast_hollow_annulus",
+      "material_intent": "bronze",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "threaded",
+        "flange"
+      ],
+      "visible_architecture": "Cast raised shoulders and bronze patina",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_lead_historical",
+      "label": "Historical lead service pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "soft_deformed_hollow",
+      "material_intent": "aged_lead",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "lead_wiped_joint",
+        "bell_spigot"
+      ],
+      "visible_architecture": "Cast or wiped lead Y joints, visual history only",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_jacketed_double_wall",
+      "label": "Jacketed double-wall process pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "concentric_hollow_bores",
+      "material_intent": "steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "flange",
+        "butt_weld"
+      ],
+      "visible_architecture": "Inner process bore and outer cladding annulus",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_lined_chemical",
+      "label": "Lined process steel pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "liner_inside_steel_annulus",
+      "material_intent": "coated_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "flange",
+        "union"
+      ],
+      "visible_architecture": "Visible polymer liner at open ends",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_insulated_steam",
+      "label": "Lagged insulated steam pipe",
+      "group": "metal_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "insulation_over_hollow",
+      "material_intent": "lagged_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "flange",
+        "butt_weld"
+      ],
+      "visible_architecture": "Outer cladding and inner open process bore",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_metal_bellows",
+      "label": "Metal accordion expansion section",
+      "group": "metal_pipe",
+      "base_family": "segmented_conduit",
+      "section_architecture": "annular_corrugated_hollow",
+      "material_intent": "stainless_steel",
+      "stiffness_profile": "spring_metal_flex",
+      "compatible_joint_ids": [
+        "bellows_flange",
+        "expansion_joint"
+      ],
+      "visible_architecture": "Discrete concentric bellows waves with separate flanges",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_pvc_pressure",
+      "label": "PVC pressure pipe",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "pvc",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "solvent_weld",
+        "union"
+      ],
+      "visible_architecture": "Molded solvent-socket hub and pipe",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_cpvc",
+      "label": "CPVC process pipe",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "cpvc",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "solvent_weld",
+        "union"
+      ],
+      "visible_architecture": "Thick colored plastic slip connections",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_abs_drain",
+      "label": "ABS drain and vent pipe",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "abs",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "solvent_weld",
+        "bell_spigot"
+      ],
+      "visible_architecture": "Long-sweep drainage Y branches",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_hdpe_fused",
+      "label": "HDPE fused pipe",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "hdpe",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "heat_fusion",
+        "electrofusion"
+      ],
+      "visible_architecture": "Circular fusion bead and drawn polymer texture",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_hdpe_corrugated",
+      "label": "Corrugated HDPE drainage pipe",
+      "group": "polymer_pipe",
+      "base_family": "segmented_conduit",
+      "section_architecture": "annular_corrugated_hollow",
+      "material_intent": "hdpe",
+      "stiffness_profile": "corrugated_polymer",
+      "compatible_joint_ids": [
+        "bell_spigot",
+        "slip_coupler"
+      ],
+      "visible_architecture": "True annular ribs with smooth bore liner",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_pex_flexible",
+      "label": "PEX water supply tube",
+      "group": "polymer_pipe",
+      "base_family": "flex_hose",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "pex",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "pex_crimp",
+        "push_fit"
+      ],
+      "visible_architecture": "Flexible plastic with end crimp rings",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_pp_fused",
+      "label": "Polypropylene fusion pipe",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "polypropylene",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "heat_fusion",
+        "union"
+      ],
+      "visible_architecture": "Molded polypropylene branch and fusion rim",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_pvdf",
+      "label": "PVDF chemical pipe",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "pvdf",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "heat_fusion",
+        "flange"
+      ],
+      "visible_architecture": "Chemical polymer surface and seated flanges",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_fiber_reinforced",
+      "label": "Glass-fiber composite pipe",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "laminated_hollow",
+      "material_intent": "fiberglass",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "flange",
+        "bell_spigot"
+      ],
+      "visible_architecture": "Fiber-wound exterior and laminated cut face",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_pex_al_pex",
+      "label": "Multilayer PEX/aluminum tube",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "multilayer_hollow",
+      "material_intent": "multilayer_polymer",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "compression",
+        "pex_crimp"
+      ],
+      "visible_architecture": "Metal core ring sandwiched in plastic",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_transparent_acrylic",
+      "label": "Acrylic clear process pipe",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "transparent_hollow",
+      "material_intent": "acrylic",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "flange",
+        "compression"
+      ],
+      "visible_architecture": "Visible bore inside clear outer wall",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_borosilicate_glass",
+      "label": "Borosilicate glass pipe",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "transparent_hollow",
+      "material_intent": "borosilicate_glass",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "glass_ground_joint",
+        "compression"
+      ],
+      "visible_architecture": "Round open glass wall and real gasket seats",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_vitrified_clay",
+      "label": "Vitrified ceramic pipe",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "thick_bell_hollow",
+      "material_intent": "glazed_ceramic",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "ceramic_gasket",
+        "bell_spigot"
+      ],
+      "visible_architecture": "Glazed hollow ceramic and strong bell",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "pipe_concrete_culvert",
+      "label": "Reinforced concrete culvert",
+      "group": "polymer_pipe",
+      "base_family": "rigid_pipe",
+      "section_architecture": "thick_cast_hollow",
+      "material_intent": "concrete",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "bell_spigot",
+        "ceramic_gasket"
+      ],
+      "visible_architecture": "Heavy concrete pipe with gasket",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_stainless_capillary",
+      "label": "Stainless capillary tube",
+      "group": "tubing",
+      "base_family": "rigid_pipe",
+      "section_architecture": "fine_smooth_hollow",
+      "material_intent": "stainless_steel",
+      "stiffness_profile": "formed_metal",
+      "compatible_joint_ids": [
+        "bite_ferrule",
+        "compression"
+      ],
+      "visible_architecture": "Tiny round tube with ferrule",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_copper_capillary",
+      "label": "Copper capillary tube",
+      "group": "tubing",
+      "base_family": "rigid_pipe",
+      "section_architecture": "fine_smooth_hollow",
+      "material_intent": "copper",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "braze",
+        "compression"
+      ],
+      "visible_architecture": "Small annealed metallic tubing",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_brass_instrument",
+      "label": "Brass instrument tube",
+      "group": "tubing",
+      "base_family": "rigid_pipe",
+      "section_architecture": "fine_smooth_hollow",
+      "material_intent": "brass",
+      "stiffness_profile": "formed_metal",
+      "compatible_joint_ids": [
+        "compression",
+        "flare"
+      ],
+      "visible_architecture": "Small compression nuts and flare",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_nylon_pneumatic",
+      "label": "Nylon pneumatic tube",
+      "group": "tubing",
+      "base_family": "flex_hose",
+      "section_architecture": "fine_smooth_hollow",
+      "material_intent": "nylon",
+      "stiffness_profile": "flex_polymer",
+      "compatible_joint_ids": [
+        "push_fit",
+        "compression"
+      ],
+      "visible_architecture": "Semi-stiff air tube with push seats",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_pu_pneumatic",
+      "label": "Polyurethane pneumatic tube",
+      "group": "tubing",
+      "base_family": "flex_hose",
+      "section_architecture": "fine_smooth_hollow",
+      "material_intent": "polyurethane",
+      "stiffness_profile": "soft_hose",
+      "compatible_joint_ids": [
+        "push_fit",
+        "quick_fluid_disconnect"
+      ],
+      "visible_architecture": "Soft air line and quick coupler",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_ptfe_chemical",
+      "label": "PTFE chemical microtubing",
+      "group": "tubing",
+      "base_family": "flex_hose",
+      "section_architecture": "fine_smooth_hollow",
+      "material_intent": "ptfe",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "compression",
+        "flare"
+      ],
+      "visible_architecture": "Waxy translucent small bore",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_silicone_soft",
+      "label": "Soft silicone laboratory tubing",
+      "group": "tubing",
+      "base_family": "flex_hose",
+      "section_architecture": "translucent_hollow",
+      "material_intent": "silicone",
+      "stiffness_profile": "soft_hose",
+      "compatible_joint_ids": [
+        "hose_barb_clamp",
+        "hose_crimp"
+      ],
+      "visible_architecture": "Gravity droop and transparent bore",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_vinyl_clear",
+      "label": "Flexible clear vinyl tubing",
+      "group": "tubing",
+      "base_family": "flex_hose",
+      "section_architecture": "transparent_hollow",
+      "material_intent": "vinyl",
+      "stiffness_profile": "soft_hose",
+      "compatible_joint_ids": [
+        "hose_barb_clamp",
+        "push_fit"
+      ],
+      "visible_architecture": "Clear tube with visible wall thickness",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_multi_lumen",
+      "label": "Multi-lumen instrument tube",
+      "group": "tubing",
+      "base_family": "flex_hose",
+      "section_architecture": "multiple_parallel_bores",
+      "material_intent": "polyurethane",
+      "stiffness_profile": "flex_polymer",
+      "compatible_joint_ids": [
+        "push_fit",
+        "compression"
+      ],
+      "visible_architecture": "Several genuine isolated internal passages",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_retractile_coil",
+      "label": "Retractile helical pneumatic tube",
+      "group": "tubing",
+      "base_family": "flex_hose",
+      "section_architecture": "helical_coil_hollow",
+      "material_intent": "polyurethane",
+      "stiffness_profile": "spring_guarded",
+      "compatible_joint_ids": [
+        "quick_fluid_disconnect",
+        "push_fit"
+      ],
+      "visible_architecture": "Visible axial coil and straight end tails",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_glass_capillary",
+      "label": "Glass diagnostic capillary",
+      "group": "tubing",
+      "base_family": "rigid_pipe",
+      "section_architecture": "fine_transparent_hollow",
+      "material_intent": "borosilicate_glass",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "glass_ground_joint",
+        "compression"
+      ],
+      "visible_architecture": "Small optical-clear transport bore",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "tube_copper_manifold",
+      "label": "Formed copper instrument manifold",
+      "group": "tubing",
+      "base_family": "rigid_pipe",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "copper",
+      "stiffness_profile": "formed_metal",
+      "compatible_joint_ids": [
+        "braze",
+        "solder"
+      ],
+      "visible_architecture": "Multiple smooth bends joined by brazing",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_rubber_coolant",
+      "label": "Soft rubber coolant hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "smooth_hollow",
+      "material_intent": "rubber",
+      "stiffness_profile": "soft_hose",
+      "compatible_joint_ids": [
+        "hose_barb_clamp",
+        "hose_crimp"
+      ],
+      "visible_architecture": "Soft draped tubing with distinct band clamps",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_molded_radiator",
+      "label": "Preformed radiator hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "molded_elbow_hollow",
+      "material_intent": "rubber",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "hose_barb_clamp",
+        "hose_crimp"
+      ],
+      "visible_architecture": "Retained molded ninety-degree bend",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_hydraulic_braided",
+      "label": "Braided hydraulic hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "multi_layer_braided_hollow",
+      "material_intent": "reinforced_rubber",
+      "stiffness_profile": "reinforced_hose",
+      "compatible_joint_ids": [
+        "hose_crimp",
+        "flare"
+      ],
+      "visible_architecture": "Wire braid inside sheath at end",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_hydraulic_spiral",
+      "label": "Spiral-wire hydraulic hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "helical_wire_reinforced_hollow",
+      "material_intent": "reinforced_rubber",
+      "stiffness_profile": "reinforced_hose",
+      "compatible_joint_ids": [
+        "hose_crimp",
+        "flange"
+      ],
+      "visible_architecture": "Spiral reinforcement exposed in section",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_pvc_braided",
+      "label": "Transparent braided PVC hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "transparent_mesh_reinforced_hollow",
+      "material_intent": "clear_pvc",
+      "stiffness_profile": "soft_hose",
+      "compatible_joint_ids": [
+        "hose_barb_clamp",
+        "hose_crimp"
+      ],
+      "visible_architecture": "Diamond lattice embedded in clear wall",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_wire_suction",
+      "label": "Spring-reinforced suction hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "helical_wire_reinforced_hollow",
+      "material_intent": "rubber",
+      "stiffness_profile": "spring_guarded",
+      "compatible_joint_ids": [
+        "hose_barb_clamp",
+        "hose_crimp"
+      ],
+      "visible_architecture": "Pronounced metal spring ridges",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_stainless_braided",
+      "label": "Stainless braided flexible hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "braided_over_inner_hollow",
+      "material_intent": "stainless_braid",
+      "stiffness_profile": "spring_metal_flex",
+      "compatible_joint_ids": [
+        "flare",
+        "hose_crimp"
+      ],
+      "visible_architecture": "Metal braid over smooth inner tube",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_metal_annular",
+      "label": "Annular corrugated metal hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "annular_corrugated_hollow",
+      "material_intent": "stainless_steel",
+      "stiffness_profile": "spring_metal_flex",
+      "compatible_joint_ids": [
+        "bellows_flange",
+        "hose_crimp"
+      ],
+      "visible_architecture": "Concentric rings perpendicular to path",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_metal_helical",
+      "label": "Helical corrugated metal hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "helical_corrugated_hollow",
+      "material_intent": "stainless_steel",
+      "stiffness_profile": "spring_metal_flex",
+      "compatible_joint_ids": [
+        "bellows_flange",
+        "hose_crimp"
+      ],
+      "visible_architecture": "Continuous spiral ridge along line",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_layflat",
+      "label": "Layflat discharge hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "flattened_hollow_web",
+      "material_intent": "reinforced_fabric",
+      "stiffness_profile": "soft_hose",
+      "compatible_joint_ids": [
+        "camlock",
+        "hose_barb_clamp"
+      ],
+      "visible_architecture": "Floppy flat fabric body and round outlet",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_vacuum_corrugated",
+      "label": "Vacuum cleaner corrugated hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "annular_corrugated_hollow",
+      "material_intent": "rubber",
+      "stiffness_profile": "spring_guarded",
+      "compatible_joint_ids": [
+        "hose_barb_clamp",
+        "quick_fluid_disconnect"
+      ],
+      "visible_architecture": "Large soft accordion ribs and end cuffs",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_insulated_hot",
+      "label": "Insulated flexible hot hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "insulated_multilayer_hollow",
+      "material_intent": "lagged_rubber",
+      "stiffness_profile": "reinforced_hose",
+      "compatible_joint_ids": [
+        "hose_crimp",
+        "flange"
+      ],
+      "visible_architecture": "Thick outer insulation layer and clamped ends",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_fabric_expansion",
+      "label": "Fabric expansion bellows boot",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "fabric_accordion_hollow",
+      "material_intent": "reinforced_fabric",
+      "stiffness_profile": "soft_hose",
+      "compatible_joint_ids": [
+        "bellows_flange",
+        "expansion_joint"
+      ],
+      "visible_architecture": "Large square or round concertina folds",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "hose_twin_bonded",
+      "label": "Twin bonded fluid hose",
+      "group": "hose",
+      "base_family": "flex_hose",
+      "section_architecture": "parallel_dual_hollow",
+      "material_intent": "rubber",
+      "stiffness_profile": "reinforced_hose",
+      "compatible_joint_ids": [
+        "hose_barb_clamp",
+        "hose_crimp"
+      ],
+      "visible_architecture": "Two independent parallel hollow channels",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_rmc_threaded",
+      "label": "Rigid metal conduit RMC",
+      "group": "conduit",
+      "base_family": "conduit",
+      "section_architecture": "heavy_hollow_metal",
+      "material_intent": "galvanized_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "rigid_threaded_hub",
+        "locknut_bushing"
+      ],
+      "visible_architecture": "Thick rigid metal tube and threaded hub",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_imc_threaded",
+      "label": "Intermediate metal conduit IMC",
+      "group": "conduit",
+      "base_family": "conduit",
+      "section_architecture": "medium_hollow_metal",
+      "material_intent": "galvanized_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "rigid_threaded_hub",
+        "compression_conduit"
+      ],
+      "visible_architecture": "Moderate wall, same general conduit envelope",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_emt_thinwall",
+      "label": "Thinwall EMT electrical tubing",
+      "group": "conduit",
+      "base_family": "conduit",
+      "section_architecture": "thin_hollow_metal",
+      "material_intent": "galvanized_steel",
+      "stiffness_profile": "formed_metal",
+      "compatible_joint_ids": [
+        "compression_conduit",
+        "locknut_bushing"
+      ],
+      "visible_architecture": "Light thin-wall tubing and compression joint",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_fmc_interlocked",
+      "label": "FMC helical flexible metal conduit",
+      "group": "conduit",
+      "base_family": "segmented_conduit",
+      "section_architecture": "interlocked_helical_metal_strip",
+      "material_intent": "galvanized_steel",
+      "stiffness_profile": "spring_metal_flex",
+      "compatible_joint_ids": [
+        "flex_conduit_connector",
+        "compression_conduit"
+      ],
+      "visible_architecture": "Real square-lock or interlocked helical spiral",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_fmt_light_flex",
+      "label": "Flexible metallic tubing FMT",
+      "group": "conduit",
+      "base_family": "segmented_conduit",
+      "section_architecture": "thin_interlocked_helical_strip",
+      "material_intent": "aluminum",
+      "stiffness_profile": "spring_metal_flex",
+      "compatible_joint_ids": [
+        "flex_conduit_connector",
+        "compression_conduit"
+      ],
+      "visible_architecture": "Flexible light-gauge metal spiral",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_lfmc_jacketed",
+      "label": "LFMC liquidtight coated metal flex",
+      "group": "conduit",
+      "base_family": "segmented_conduit",
+      "section_architecture": "interlocked_metal_core_and_jacket",
+      "material_intent": "pvc_coated_steel",
+      "stiffness_profile": "flex_polymer",
+      "compatible_joint_ids": [
+        "liquidtight_connector",
+        "cable_gland"
+      ],
+      "visible_architecture": "Metal helical strip beneath continuous polymer jacket",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_pvc_rigid",
+      "label": "Rigid PVC electrical conduit",
+      "group": "conduit",
+      "base_family": "conduit",
+      "section_architecture": "smooth_hollow_polymer",
+      "material_intent": "pvc",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "solvent_conduit_coupler",
+        "locknut_bushing"
+      ],
+      "visible_architecture": "Rigid polymer electrical fittings",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_ent_corrugated",
+      "label": "ENT corrugated nonmetallic tubing",
+      "group": "conduit",
+      "base_family": "segmented_conduit",
+      "section_architecture": "annular_corrugated_polymer",
+      "material_intent": "polyethylene",
+      "stiffness_profile": "corrugated_polymer",
+      "compatible_joint_ids": [
+        "snap_conduit",
+        "locknut_bushing"
+      ],
+      "visible_architecture": "Separate transverse polymer rings; no metal helix",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_lfnc_layered",
+      "label": "Layered liquidtight nonmetallic flex",
+      "group": "conduit",
+      "base_family": "segmented_conduit",
+      "section_architecture": "smooth_jacket_reinforced_core",
+      "material_intent": "pvc",
+      "stiffness_profile": "corrugated_polymer",
+      "compatible_joint_ids": [
+        "liquidtight_connector",
+        "cable_gland"
+      ],
+      "visible_architecture": "Smooth jacket with underlying reinforcement",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_lfnc_integral",
+      "label": "Integral-rib nonmetallic flex conduit",
+      "group": "conduit",
+      "base_family": "segmented_conduit",
+      "section_architecture": "corrugated_outer_smooth_inner",
+      "material_intent": "pvc",
+      "stiffness_profile": "corrugated_polymer",
+      "compatible_joint_ids": [
+        "liquidtight_connector",
+        "flex_conduit_connector"
+      ],
+      "visible_architecture": "External ribs and smoother liner",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_lfnc_double",
+      "label": "Double-corrugated nonmetallic conduit",
+      "group": "conduit",
+      "base_family": "segmented_conduit",
+      "section_architecture": "corrugated_inner_outer",
+      "material_intent": "polyethylene",
+      "stiffness_profile": "corrugated_polymer",
+      "compatible_joint_ids": [
+        "liquidtight_connector",
+        "flex_conduit_connector"
+      ],
+      "visible_architecture": "Inner and outer continuous annular corrugation",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_hdpe_underground",
+      "label": "HDPE underground electrical duct",
+      "group": "conduit",
+      "base_family": "conduit",
+      "section_architecture": "smooth_hollow_polymer",
+      "material_intent": "hdpe",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "solvent_conduit_coupler",
+        "compression_conduit"
+      ],
+      "visible_architecture": "Semi-stiff extended plastic duct",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_split_corrugated_loom",
+      "label": "Corrugated split harness tubing",
+      "group": "conduit",
+      "base_family": "conduit",
+      "section_architecture": "slit_annular_corrugated_shell",
+      "material_intent": "polypropylene",
+      "stiffness_profile": "corrugated_polymer",
+      "compatible_joint_ids": [
+        "split_loom_clip",
+        "panel_grommet"
+      ],
+      "visible_architecture": "Accessible lengthwise seam and annular outer rings",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_unsplit_corrugated_loom",
+      "label": "Closed corrugated harness tubing",
+      "group": "conduit",
+      "base_family": "conduit",
+      "section_architecture": "annular_corrugated_closed_shell",
+      "material_intent": "polypropylene",
+      "stiffness_profile": "corrugated_polymer",
+      "compatible_joint_ids": [
+        "sleeve_overlap",
+        "panel_grommet"
+      ],
+      "visible_architecture": "Full non-slitted ribbed protective tube",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_helical_plastic_wrap",
+      "label": "Open spiral plastic tubing",
+      "group": "conduit",
+      "base_family": "conduit",
+      "section_architecture": "open_spiral_polymer_strip",
+      "material_intent": "polyethylene",
+      "stiffness_profile": "flex_polymer",
+      "compatible_joint_ids": [
+        "sleeve_overlap",
+        "split_loom_clip"
+      ],
+      "visible_architecture": "Helical wrap with visible spaces between coils",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_squarelock_metal",
+      "label": "Square-lock metal strip conduit",
+      "group": "conduit",
+      "base_family": "segmented_conduit",
+      "section_architecture": "squarelock_helical_strip",
+      "material_intent": "stainless_steel",
+      "stiffness_profile": "spring_metal_flex",
+      "compatible_joint_ids": [
+        "flex_conduit_connector",
+        "cable_gland"
+      ],
+      "visible_architecture": "Distinct square-cut interlock profile",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_articulated_segmented",
+      "label": "Jointed metal or polymer conduit",
+      "group": "conduit",
+      "base_family": "segmented_conduit",
+      "section_architecture": "discrete_socketed_rings",
+      "material_intent": "steel",
+      "stiffness_profile": "segmented_joint",
+      "compatible_joint_ids": [
+        "flex_conduit_connector",
+        "cable_gland"
+      ],
+      "visible_architecture": "Actual articulated ring sections with joint limits",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "conduit_ball_joint_armored",
+      "label": "Ball-link articulated protective sheath",
+      "group": "conduit",
+      "base_family": "segmented_conduit",
+      "section_architecture": "discrete_ball_socket_shells",
+      "material_intent": "steel",
+      "stiffness_profile": "segmented_joint",
+      "compatible_joint_ids": [
+        "flex_conduit_connector",
+        "panel_grommet"
+      ],
+      "visible_architecture": "Rigid shells with captured ball-and-socket necks",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_single_bare_copper",
+      "label": "Bare solid copper wire",
+      "group": "wire",
+      "base_family": "single_wire",
+      "section_architecture": "solid_round_conductor",
+      "material_intent": "bare_copper",
+      "stiffness_profile": "loose_wire",
+      "compatible_joint_ids": [
+        "wire_solder_splice",
+        "ring_lug"
+      ],
+      "visible_architecture": "Single uninterrupted copper strand",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_single_insulated_solid",
+      "label": "Insulated solid conductor",
+      "group": "wire",
+      "base_family": "single_wire",
+      "section_architecture": "solid_core_insulated",
+      "material_intent": "insulated_copper",
+      "stiffness_profile": "loose_wire",
+      "compatible_joint_ids": [
+        "crimp_butt",
+        "ring_lug"
+      ],
+      "visible_architecture": "Insulated cable and stripped end",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_single_insulated_stranded",
+      "label": "Insulated stranded copper wire",
+      "group": "wire",
+      "base_family": "single_wire",
+      "section_architecture": "multi_strand_insulated",
+      "material_intent": "insulated_copper",
+      "stiffness_profile": "high_flex_cord",
+      "compatible_joint_ids": [
+        "crimp_butt",
+        "spade_lug"
+      ],
+      "visible_architecture": "Strands visible only where exposed",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_tinsel_high_flex",
+      "label": "Fine tinsel high-flex lead",
+      "group": "wire",
+      "base_family": "single_wire",
+      "section_architecture": "tinsel_conductor_in_jacket",
+      "material_intent": "rubber_insulated_copper",
+      "stiffness_profile": "high_flex_cord",
+      "compatible_joint_ids": [
+        "crimp_butt",
+        "plug_socket"
+      ],
+      "visible_architecture": "Ultra-flexible thin insulated conductor",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_twisted_pair",
+      "label": "Twisted-pair cable",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "two_helically_twisted_cores",
+      "material_intent": "insulated_copper",
+      "stiffness_profile": "twisted_bundle",
+      "compatible_joint_ids": [
+        "crimp_ferrule",
+        "terminal_block"
+      ],
+      "visible_architecture": "Two wires with alternating twist and distinct colors",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_twisted_quad",
+      "label": "Four-core twisted quad",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "four_cores_helix",
+      "material_intent": "insulated_copper",
+      "stiffness_profile": "twisted_bundle",
+      "compatible_joint_ids": [
+        "plug_socket",
+        "crimp_ferrule"
+      ],
+      "visible_architecture": "Four helically twisted cores",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_four_pair_data",
+      "label": "Eight-core four-pair data cable",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "four_twisted_pairs_in_jacket",
+      "material_intent": "polymer_jacket",
+      "stiffness_profile": "jacketed_cable",
+      "compatible_joint_ids": [
+        "plug_socket",
+        "insulation_displacement"
+      ],
+      "visible_architecture": "Four pairs with separate internal twists",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_flat_ribbon",
+      "label": "Flat parallel ribbon cable",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "flat_parallel_cores",
+      "material_intent": "polymer_jacket",
+      "stiffness_profile": "ribbon_flex",
+      "compatible_joint_ids": [
+        "insulation_displacement",
+        "plug_socket"
+      ],
+      "visible_architecture": "Ribbon bends on preferred axis",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_zip_parallel",
+      "label": "Parallel zip flex cord",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "two_fused_parallel_jackets",
+      "material_intent": "rubber",
+      "stiffness_profile": "high_flex_cord",
+      "compatible_joint_ids": [
+        "crimp_butt",
+        "ring_lug"
+      ],
+      "visible_architecture": "Separated double cord line",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_coax",
+      "label": "Coaxial shielded RF cable",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "concentric_conductors_and_dielectric",
+      "material_intent": "shielded_cable",
+      "stiffness_profile": "jacketed_cable",
+      "compatible_joint_ids": [
+        "coax_connector",
+        "cable_gland"
+      ],
+      "visible_architecture": "Concentric outer braid and signal pin",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_triax",
+      "label": "Triaxial electrical cable",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "triple_coaxial_layer",
+      "material_intent": "shielded_cable",
+      "stiffness_profile": "jacketed_cable",
+      "compatible_joint_ids": [
+        "coax_connector",
+        "cable_gland"
+      ],
+      "visible_architecture": "Multiple concentric shields",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_multicore_jacketed",
+      "label": "Jacketed multicore control cable",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "jacketed_multi_core",
+      "material_intent": "polymer_jacket",
+      "stiffness_profile": "jacketed_cable",
+      "compatible_joint_ids": [
+        "cable_gland",
+        "plug_socket"
+      ],
+      "visible_architecture": "Colored conductor cores exposed near termination",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_eight_loose_bundle",
+      "label": "Eight-wire loose harness",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "eight_independent_curves",
+      "material_intent": "insulated_copper",
+      "stiffness_profile": "loose_bundle",
+      "compatible_joint_ids": [
+        "crimp_butt",
+        "terminal_block"
+      ],
+      "visible_architecture": "Individual deterministic sag; coherent array not spaghetti",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_eight_laced_loom",
+      "label": "Eight-wire periodically tied loom",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "eight_cores_periodic_ties",
+      "material_intent": "insulated_copper",
+      "stiffness_profile": "flex_bundle",
+      "compatible_joint_ids": [
+        "terminal_block",
+        "plug_socket"
+      ],
+      "visible_architecture": "Eight strands with periodic tied harness",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_eight_sheathed",
+      "label": "Eight-wire jacketed harness",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "eight_cores_under_jacket",
+      "material_intent": "polymer_jacket",
+      "stiffness_profile": "jacketed_cable",
+      "compatible_joint_ids": [
+        "cable_gland",
+        "plug_socket"
+      ],
+      "visible_architecture": "Smooth outer sheath and exposed end fanout",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_braided_shield",
+      "label": "Braided shield instrumentation cable",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "inner_cores_metal_braid_shield",
+      "material_intent": "shielded_cable",
+      "stiffness_profile": "jacketed_cable",
+      "compatible_joint_ids": [
+        "shield_termination",
+        "cable_gland"
+      ],
+      "visible_architecture": "Woven shield over insulation",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_mineral_insulated",
+      "label": "Mineral insulated metal sheath cable",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "metal_jacket_with_insulated_cores",
+      "material_intent": "stainless_steel",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "compression_conduit",
+        "cable_gland"
+      ],
+      "visible_architecture": "Rigid outer tube and individually insulated leads",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_hv_screened_power",
+      "label": "Heavy shielded power cable",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "insulated_metal_shielded_heavy_core",
+      "material_intent": "rubber_insulated_copper",
+      "stiffness_profile": "reinforced_hose",
+      "compatible_joint_ids": [
+        "ring_lug",
+        "shield_termination"
+      ],
+      "visible_architecture": "Thick jacket and stress boot",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_optical_single",
+      "label": "Single optical fiber",
+      "group": "wire",
+      "base_family": "single_wire",
+      "section_architecture": "glass_core_and_buffer",
+      "material_intent": "optical_glass",
+      "stiffness_profile": "high_flex_cord",
+      "compatible_joint_ids": [
+        "fiber_splice",
+        "fiber_bulkhead"
+      ],
+      "visible_architecture": "Light-diffusing glass core and protective buffer",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_optical_bundle",
+      "label": "Multifiber optical bundle",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "multiple_glass_cores_in_tube",
+      "material_intent": "optical_glass",
+      "stiffness_profile": "jacketed_cable",
+      "compatible_joint_ids": [
+        "fiber_splice",
+        "fiber_bulkhead"
+      ],
+      "visible_architecture": "Individual fiber breakout at end",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_flat_flex_pcb",
+      "label": "Flat flex film circuit",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "flat_film_conductor_traces",
+      "material_intent": "polyimide",
+      "stiffness_profile": "ribbon_flex",
+      "compatible_joint_ids": [
+        "plug_socket",
+        "insulation_displacement"
+      ],
+      "visible_architecture": "Gold traces in flat laminated sheet",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_ground_braid",
+      "label": "Flat braided earth strap",
+      "group": "wire",
+      "base_family": "wire_bundle",
+      "section_architecture": "flat_copper_braid",
+      "material_intent": "bare_copper",
+      "stiffness_profile": "high_flex_cord",
+      "compatible_joint_ids": [
+        "ring_lug",
+        "busbar_bolt"
+      ],
+      "visible_architecture": "Flat metallic weave and bolted eyes",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "wire_busbar_flat",
+      "label": "Flat copper busbar",
+      "group": "wire",
+      "base_family": "single_wire",
+      "section_architecture": "rigid_flat_metal_bar",
+      "material_intent": "bare_copper",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "busbar_bolt",
+        "terminal_block"
+      ],
+      "visible_architecture": "Rigid flat bar with bolted terminals",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_pet_braided_sleeve",
+      "label": "Expandable PET braided sleeving",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "open_diamond_braid_sleeve",
+      "material_intent": "woven_pet",
+      "stiffness_profile": "flex_polymer",
+      "compatible_joint_ids": [
+        "sleeve_overlap",
+        "heatshrink_breakout"
+      ],
+      "visible_architecture": "Diamond open weave visible around cable",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_metal_braided_sleeve",
+      "label": "Metal armored braid sleeve",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "woven_metal_armor_shell",
+      "material_intent": "stainless_steel",
+      "stiffness_profile": "flex_polymer",
+      "compatible_joint_ids": [
+        "shield_termination",
+        "cable_gland"
+      ],
+      "visible_architecture": "Interwoven metallic ribbons",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_mesh_guard",
+      "label": "Open expandable cable mesh",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "large_open_mesh_sleeve",
+      "material_intent": "nylon",
+      "stiffness_profile": "flex_polymer",
+      "compatible_joint_ids": [
+        "sleeve_overlap",
+        "heatshrink_breakout"
+      ],
+      "visible_architecture": "Large empty cells in mesh cover",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_heatshrink",
+      "label": "Heatshrink splice sleeve",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "form_fitted_smooth_sleeve",
+      "material_intent": "polyolefin",
+      "stiffness_profile": "semi_rigid",
+      "compatible_joint_ids": [
+        "heatshrink_breakout",
+        "panel_grommet"
+      ],
+      "visible_architecture": "Sleeve follows shape of covered join",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_split_loom",
+      "label": "Longitudinal split loom cover",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "slitted_annular_corrugated_shell",
+      "material_intent": "polypropylene",
+      "stiffness_profile": "corrugated_polymer",
+      "compatible_joint_ids": [
+        "split_loom_clip",
+        "sleeve_overlap"
+      ],
+      "visible_architecture": "Accessible split all along line",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_spiral_wrap",
+      "label": "Spiral harness wrap",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "open_helical_plastic_strip",
+      "material_intent": "polyethylene",
+      "stiffness_profile": "flex_polymer",
+      "compatible_joint_ids": [
+        "sleeve_overlap",
+        "split_loom_clip"
+      ],
+      "visible_architecture": "Visible spiral gaps and overlapping wind",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_harness_tape",
+      "label": "Fabric-wrapped cable loom",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "overlapping_helix_tape",
+      "material_intent": "woven_pet",
+      "stiffness_profile": "flex_bundle",
+      "compatible_joint_ids": [
+        "lacing",
+        "strap_bracket"
+      ],
+      "visible_architecture": "Continuous wrapped tape cross seams",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_laced_harness",
+      "label": "Traditional laced wire harness",
+      "group": "housing",
+      "base_family": "wire_bundle",
+      "section_architecture": "laced_separate_cable_cores",
+      "material_intent": "waxed_cord",
+      "stiffness_profile": "flex_bundle",
+      "compatible_joint_ids": [
+        "lacing",
+        "strap_bracket"
+      ],
+      "visible_architecture": "Periodic laces against individual strands",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_drag_chain",
+      "label": "Articulated drag-chain cable carrier",
+      "group": "housing",
+      "base_family": "segmented_conduit",
+      "section_architecture": "open_hinged_cable_track",
+      "material_intent": "reinforced_polymer",
+      "stiffness_profile": "segmented_joint",
+      "compatible_joint_ids": [
+        "drag_chain_link",
+        "strap_bracket"
+      ],
+      "visible_architecture": "Discrete rigid moving links and pivot pins",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_rigid_track",
+      "label": "Rigid enclosed wire track",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "closed_u_channel_and_lid",
+      "material_intent": "steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "tray_splice",
+        "strap_bracket"
+      ],
+      "visible_architecture": "Square long raceway with lid",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_ladder_tray",
+      "label": "Open ladder cable tray",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "parallel_rails_rung_tray",
+      "material_intent": "galvanized_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "tray_splice",
+        "strap_bracket"
+      ],
+      "visible_architecture": "Two rails and regular transverse rungs",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_perforated_tray",
+      "label": "Perforated metal cable tray",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "folded_perforated_sheet",
+      "material_intent": "galvanized_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "tray_splice",
+        "strap_bracket"
+      ],
+      "visible_architecture": "Open shallow tray and perforation holes",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_mesh_basket",
+      "label": "Welded wire cable basket",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "open_welded_wire_grid",
+      "material_intent": "galvanized_steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "tray_splice",
+        "strap_bracket"
+      ],
+      "visible_architecture": "Open steel lattice trough",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_metal_wireway",
+      "label": "Metal wireway with hinged lid",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "closed_rectangular_box",
+      "material_intent": "steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "wireway_hinge",
+        "locknut_bushing"
+      ],
+      "visible_architecture": "Hinged lid and real metal enclosed channel",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_slotted_duct",
+      "label": "Slotted panel wiring duct",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "u_channel_with_slotted_ribs",
+      "material_intent": "pvc",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "snap_conduit",
+        "wireway_hinge"
+      ],
+      "visible_architecture": "Comb-like wall fingers, snap top",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_rectangular_raceway",
+      "label": "Rectangular surface raceway",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "rectangular_snap_cover",
+      "material_intent": "pvc",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "snap_conduit",
+        "panel_grommet"
+      ],
+      "visible_architecture": "Flat boxy channel and removable cover",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_junction_box",
+      "label": "Multiport wiring junction box",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "closed_box_seated_cable_ports",
+      "material_intent": "steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "conduit_junction_box",
+        "locknut_bushing"
+      ],
+      "visible_architecture": "Real panel and glands for wire branch",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "housing_spring_guard",
+      "label": "Open helical metal cable guard",
+      "group": "housing",
+      "base_family": "conduit",
+      "section_architecture": "exposed_helical_spring",
+      "material_intent": "spring_steel",
+      "stiffness_profile": "spring_guarded",
+      "compatible_joint_ids": [
+        "sleeve_overlap",
+        "panel_grommet"
+      ],
+      "visible_architecture": "Spring coil surrounding internal protected line",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45",
+        "elbow_90",
+        "tee",
+        "wye",
+        "cross_connected",
+        "reducer",
+        "bulkhead"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "cable_steel_1x7",
+      "label": "Steel wire rope 1 by 7",
+      "group": "tension",
+      "base_family": "tension_cable",
+      "section_architecture": "seven_strand_rope",
+      "material_intent": "steel",
+      "stiffness_profile": "tensioned",
+      "compatible_joint_ids": [
+        "swaged_eye",
+        "thimble_eye"
+      ],
+      "visible_architecture": "One straight core and six winding strands",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "cable_steel_7x19",
+      "label": "Flexible steel wire rope 7 by 19",
+      "group": "tension",
+      "base_family": "tension_cable",
+      "section_architecture": "multi_strand_wire_rope",
+      "material_intent": "steel",
+      "stiffness_profile": "tensioned",
+      "compatible_joint_ids": [
+        "swaged_eye",
+        "wire_rope_clip"
+      ],
+      "visible_architecture": "Many nested strand helices",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "cable_guy_galvanized",
+      "label": "Galvanized guy-wire",
+      "group": "tension",
+      "base_family": "tension_cable",
+      "section_architecture": "galvanized_twisted_strand",
+      "material_intent": "galvanized_steel",
+      "stiffness_profile": "tensioned",
+      "compatible_joint_ids": [
+        "turnbuckle",
+        "swaged_eye"
+      ],
+      "visible_architecture": "Taut overhead support with hardware",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "cable_coated_steel",
+      "label": "Plastic-coated steel tension cable",
+      "group": "tension",
+      "base_family": "tension_cable",
+      "section_architecture": "steel_rope_jacket",
+      "material_intent": "coated_steel",
+      "stiffness_profile": "tensioned",
+      "compatible_joint_ids": [
+        "swaged_eye",
+        "turnbuckle"
+      ],
+      "visible_architecture": "Jacket with exposed rope at ends",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "cable_synthetic_braid",
+      "label": "Braided synthetic cord",
+      "group": "tension",
+      "base_family": "tension_cable",
+      "section_architecture": "fine_plant_or_synthetic_braid",
+      "material_intent": "synthetic_fiber",
+      "stiffness_profile": "rope_soft",
+      "compatible_joint_ids": [
+        "thimble_eye",
+        "rope_knot"
+      ],
+      "visible_architecture": "Interleaved braided flat fiber ribbons",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "cable_hemp_threeply",
+      "label": "Three-ply hemp rope",
+      "group": "tension",
+      "base_family": "tension_cable",
+      "section_architecture": "three_large_helical_strands",
+      "material_intent": "hemp",
+      "stiffness_profile": "rope_soft",
+      "compatible_joint_ids": [
+        "rope_knot",
+        "thimble_eye"
+      ],
+      "visible_architecture": "Distinct chunky natural twist",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "cable_steel_chain",
+      "label": "Linked steel chain",
+      "group": "tension",
+      "base_family": "tension_cable",
+      "section_architecture": "solid_interlocked_oval_links",
+      "material_intent": "steel",
+      "stiffness_profile": "segmented_joint",
+      "compatible_joint_ids": [
+        "chain_shackle",
+        "clevis"
+      ],
+      "visible_architecture": "Discrete rigid oval metal links",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "cable_turnbuckle_rod",
+      "label": "Adjustable steel tie rod",
+      "group": "tension",
+      "base_family": "tension_cable",
+      "section_architecture": "rod_two_ended_turnbuckle",
+      "material_intent": "steel",
+      "stiffness_profile": "tensioned",
+      "compatible_joint_ids": [
+        "turnbuckle",
+        "clevis"
+      ],
+      "visible_architecture": "Tension rods and central adjustment yoke",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "cable_bowden",
+      "label": "Bowden mechanical control cable",
+      "group": "tension",
+      "base_family": "tension_cable",
+      "section_architecture": "inner_cable_helical_sheath",
+      "material_intent": "steel_and_polymer",
+      "stiffness_profile": "flex_polymer",
+      "compatible_joint_ids": [
+        "bowden_end",
+        "swaged_eye"
+      ],
+      "visible_architecture": "Outer sleeve stops, inner core proceeds",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "cable_coiled_tether",
+      "label": "Spring-coiled tension tether",
+      "group": "tension",
+      "base_family": "tension_cable",
+      "section_architecture": "helical_solid_tether",
+      "material_intent": "polyurethane_coated_steel",
+      "stiffness_profile": "spring_guarded",
+      "compatible_joint_ids": [
+        "swaged_eye",
+        "thimble_eye"
+      ],
+      "visible_architecture": "Long axial coil and terminal tails",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "cable_flat_webbing",
+      "label": "Flat woven tension strap",
+      "group": "tension",
+      "base_family": "tension_cable",
+      "section_architecture": "flat_woven_web",
+      "material_intent": "reinforced_fabric",
+      "stiffness_profile": "rope_soft",
+      "compatible_joint_ids": [
+        "harness_sewn_loop",
+        "clevis"
+      ],
+      "visible_architecture": "Woven flat ribbon with sewn end loops",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_45"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_plain_round",
+      "label": "Plain round reinforcing bar",
+      "group": "rebar",
+      "base_family": "rebar",
+      "section_architecture": "solid_round_bar",
+      "material_intent": "steel",
+      "stiffness_profile": "formed_rebar",
+      "compatible_joint_ids": [
+        "rebar_lap",
+        "rebar_mechanical_coupler"
+      ],
+      "visible_architecture": "Plain cylindrical solid steel",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_deformed_ribbed",
+      "label": "Deformed ribbed reinforcing steel",
+      "group": "rebar",
+      "base_family": "rebar",
+      "section_architecture": "solid_deformed_ribbed",
+      "material_intent": "steel",
+      "stiffness_profile": "formed_rebar",
+      "compatible_joint_ids": [
+        "rebar_lap",
+        "rebar_threaded_coupler"
+      ],
+      "visible_architecture": "Longitudinal and transverse raised ribs",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_twisted_legacy",
+      "label": "Historical twisted deformed bar",
+      "group": "rebar",
+      "base_family": "rebar",
+      "section_architecture": "solid_twisted_nonround",
+      "material_intent": "steel",
+      "stiffness_profile": "formed_rebar",
+      "compatible_joint_ids": [
+        "rebar_lap",
+        "rebar_mechanical_coupler"
+      ],
+      "visible_architecture": "Entire non-circular steel bar twisted",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_stainless",
+      "label": "Stainless reinforcing bar",
+      "group": "rebar",
+      "base_family": "rebar",
+      "section_architecture": "solid_deformed_ribbed",
+      "material_intent": "stainless_steel",
+      "stiffness_profile": "formed_rebar",
+      "compatible_joint_ids": [
+        "rebar_threaded_coupler",
+        "rebar_lap"
+      ],
+      "visible_architecture": "Ribbed stainless finish",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_galvanized",
+      "label": "Galvanized reinforcing bar",
+      "group": "rebar",
+      "base_family": "rebar",
+      "section_architecture": "solid_deformed_ribbed",
+      "material_intent": "galvanized_steel",
+      "stiffness_profile": "formed_rebar",
+      "compatible_joint_ids": [
+        "rebar_mechanical_coupler",
+        "rebar_lap"
+      ],
+      "visible_architecture": "Ribbed zinc coated steel",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_epoxy",
+      "label": "Epoxy coated rebar",
+      "group": "rebar",
+      "base_family": "rebar",
+      "section_architecture": "solid_deformed_ribbed",
+      "material_intent": "epoxy_coated_steel",
+      "stiffness_profile": "formed_rebar",
+      "compatible_joint_ids": [
+        "rebar_mechanical_coupler",
+        "rebar_lap"
+      ],
+      "visible_architecture": "Colored coating over genuine rib geometry",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_fiber_glass",
+      "label": "Glass-fiber composite rebar",
+      "group": "rebar",
+      "base_family": "rebar",
+      "section_architecture": "solid_helical_composite_ribs",
+      "material_intent": "glass_fiber_composite",
+      "stiffness_profile": "formed_rebar",
+      "compatible_joint_ids": [
+        "rebar_lap",
+        "rebar_mechanical_coupler"
+      ],
+      "visible_architecture": "Textured composite with helical surface",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_stirrup",
+      "label": "Bent hooked rectangular stirrup",
+      "group": "rebar",
+      "base_family": "rebar",
+      "section_architecture": "bent_solid_rebar_loop",
+      "material_intent": "steel",
+      "stiffness_profile": "formed_rebar",
+      "compatible_joint_ids": [
+        "rebar_hook",
+        "tie_wire"
+      ],
+      "visible_architecture": "Continuously bent bar and hooked ends",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_welded_mesh",
+      "label": "Welded reinforcing mesh",
+      "group": "rebar",
+      "base_family": "rebar",
+      "section_architecture": "solid_grid_crossbars",
+      "material_intent": "steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "welded_mesh",
+        "tie_wire"
+      ],
+      "visible_architecture": "Welded contacting mesh bars",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_circular_cage",
+      "label": "Cylindrical rebar cage",
+      "group": "rebar",
+      "base_family": "rebar",
+      "section_architecture": "bars_and_ring_ties",
+      "material_intent": "steel",
+      "stiffness_profile": "fixed",
+      "compatible_joint_ids": [
+        "tie_wire",
+        "rebar_lap"
+      ],
+      "visible_architecture": "Repeated ring ties attached to vertical bars",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_threaded_splice",
+      "label": "Threaded reinforcement splice",
+      "group": "rebar",
+      "base_family": "rebar",
+      "section_architecture": "solid_ribs_threaded_coupler",
+      "material_intent": "steel",
+      "stiffness_profile": "formed_rebar",
+      "compatible_joint_ids": [
+        "rebar_threaded_coupler",
+        "rebar_mechanical_coupler"
+      ],
+      "visible_architecture": "True solid bar end and captive sleeve",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    },
+    {
+      "id": "rebar_prestress_tendon",
+      "label": "Steel prestress tendon",
+      "group": "rebar",
+      "base_family": "tension_cable",
+      "section_architecture": "solid_strand_tendon",
+      "material_intent": "high_tensile_steel",
+      "stiffness_profile": "tensioned",
+      "compatible_joint_ids": [
+        "mechanical_wedge",
+        "swaged_eye"
+      ],
+      "visible_architecture": "Wedge-anchored tensile strands, not fluid pipe",
+      "implementation": "indexed_pending_distinct_native_mesh",
+      "comparison_topologies": [
+        "straight",
+        "elbow_90"
+      ],
+      "branch_requires_typed_hardware": true
+    }
+  ],
+  "domain_crossings_for_later_connector_review": [
+    {
+      "type": "wire_mineral_insulated",
+      "joint": "compression_conduit",
+      "intent": "specialized termination at envelope/component interface; to be verified"
+    },
+    {
+      "type": "housing_metal_braided_sleeve",
+      "joint": "shield_termination",
+      "intent": "specialized termination at envelope/component interface; to be verified"
+    },
+    {
+      "type": "rebar_prestress_tendon",
+      "joint": "mechanical_wedge",
+      "intent": "specialized termination at envelope/component interface; to be verified"
+    },
+    {
+      "type": "rebar_prestress_tendon",
+      "joint": "swaged_eye",
+      "intent": "specialized termination at envelope/component interface; to be verified"
+    }
+  ],
+  "source_references": [
+    {
+      "url": "https://www.ecmweb.com/national-electrical-code/code-basics/article/55371892/nec-requirements-for-metal-raceways",
+      "purpose": "RMC IMC EMT FMC LFMC FMT construction types",
+      "license": "informational reference only; not CC0 geometry or photos"
+    },
+    {
+      "url": "https://www.electriflex.com/flexible-conduits/",
+      "purpose": "flexible metal and nonmetallic conduit forms",
+      "license": "reference photos only; not CC0"
+    },
+    {
+      "url": "https://www.sciencedirect.com/topics/engineering/pipe-fittings",
+      "purpose": "process pipe fittings and branch/reducer architecture",
+      "license": "technical reference only; do not copy proprietary illustrations"
+    },
+    {
+      "url": "https://polyhaven.com/license",
+      "purpose": "candidate asset surfaces, individually provenance-gated",
+      "license": "site declares assets CC0"
+    },
+    {
+      "url": "https://docs.ambientcg.com/license/",
+      "purpose": "candidate PBR materials, individually provenance-gated",
+      "license": "site declares assets CC0"
+    }
+  ],
+  "authoring_contract": [
+    "Each section architecture needs distinct cross-section and meaningful visible construction—not relabeled cylinders.",
+    "No normal wire is automatically routed into a fluid-branch hollow Y; connector geometry depends on typed payload.",
+    "8-wire harnesses share public sockets, but internal cores vary natural slack deterministically and stay grouped.",
+    "All equivalent topologies use identical fixed comparison fixture port coordinates and normals.",
+    "Not all materials support branch topology naturally (e.g. optical fiber requires splitter); compatibility must be refused or handled with explicit component.",
+    "Material IDs are intents only until exact source-approved FMPL PBR assets are resolved.",
+    "No new workflow or implicit native Factorio fluidbox hookup."
+  ],
+  "approval_gates": [
+    "A-index committed",
+    "B-distinct Blender profile generator",
+    "C-all joint geometries seated",
+    "D-stiffness and bundle comparison proof",
+    "E-native blend/glb reopen and cycles preview",
+    "F-source verified production materials and Factorio connection verification"
+  ]
+}
