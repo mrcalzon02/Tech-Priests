@@ -10,7 +10,7 @@ import math
 import bpy
 from mathutils import Vector
 
-FRAMES = (1, 13, 25, 37, 49, 61, 73, 85, 97)
+FRAMES = tuple(range(1, 92, 6)) + (97,)  # 16 authored 8fps samples + exact closing pose
 
 
 def _own(p, collection, label, obj, material):
@@ -47,8 +47,8 @@ def _clear_flow(p, col, label, a, b, glass, liquid, foam):
         t0 = .22 + .36 * k
         ob = _orb(p, col, label+" / flow tracer %02d"%k,
                   start.lerp(end, t0), .017 + .003 * k, foam)
-        for index, frame in enumerate(FRAMES):
-            phase = (t0 + index * .105) % .82 + .08
+        for frame in FRAMES:
+            phase = (t0 + .82*(frame-1)/96.) % .82 + .08
             ob.location = start.lerp(end, phase)
             ob.keyframe_insert(data_path="location", frame=frame)
         ob["fmpl_fluid_role"] = "keyed witness flow inside glass tube"
@@ -87,12 +87,11 @@ def _meniscus(p, col, index, center, radius, material):
         angle = math.atan2(y, x)
         surge.data[i].co.z = .052 * (x/radius) + .017*r*math.sin(3*angle)
         backwash.data[i].co.z = -.050*(x/radius) + .019*r*math.sin(3*angle + 1.4)
-    first = (0., 1., .12, .05, .95, .15, .75, .25, 0.)
-    second = (0., .12, 1., .62, .08, .90, .20, .70, 0.)
-    for frame, val1, val2 in zip(FRAMES, first, second):
-        surge.value = val1
+    for frame in FRAMES:
+        phase = math.tau * (frame - 1) / 96.
+        surge.value = .50 - .50 * math.cos(phase)
         surge.keyframe_insert(data_path="value", frame=frame)
-        backwash.value = val2
+        backwash.value = .50 - .50 * math.cos(phase + 1.35)
         backwash.keyframe_insert(data_path="value", frame=frame)
     return obj
 
@@ -106,9 +105,10 @@ def _bubbles(p, col, index, x, y, material):
         ob = _orb(p, col, "sample station %d liquid bubble %02d"%(index,k),
                   (x+r*math.cos(angle), y+r*math.sin(angle), base),
                   .018 + .002*(k%3), material)
-        for n, frame in enumerate(FRAMES):
-            # Staggered short rises with a return at the cycle boundary.
-            dz = (0., .046, .092, .027, .083, .039, .102, .064, 0.)[n]
+        for frame in FRAMES:
+            # Bounded, individually phase-shifted 16-sample rise with exact seam.
+            phase = math.tau * (frame - 1)/96.
+            dz = .050 + .050*math.sin(phase + .41*k)
             ob.location.z = base + dz*(.78+.055*(k%4))
             ob.keyframe_insert(data_path="location", index=2, frame=frame)
         ob["fmpl_fluid_role"] = "rising process bubble in transparent fluid"
@@ -189,8 +189,9 @@ def add_relief_steam(col,p,mats):
         z0=2.89 + .083 * k
         ob = _orb(p,col,"relief nozzle keyed condensed steam %02d"%k,
                   (x0,y0,z0),.088,steam)
-        for i, frame in enumerate(FRAMES):
-            s=(.18,.65,1.18,.34,.80,1.05,.40,.72,.18)[i]
+        for frame in FRAMES:
+            phase = math.tau * (frame - 1)/96.
+            s = .22 + .90 * (math.sin(phase + .48*k)**2)
             ob.scale=(.72*s,.62*s,1.20*s)
             ob.location=(x0+.018*s,y0+.015*s,z0+.09*s)
             ob.keyframe_insert(data_path="scale",frame=frame)
