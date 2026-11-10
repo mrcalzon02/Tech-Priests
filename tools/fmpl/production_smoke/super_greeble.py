@@ -17,6 +17,10 @@ import sys
 
 import bpy
 from mathutils import Vector
+HERE=Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0,str(HERE))
+from camera_profile import clean_scene, audit_scene
 
 HERE=Path(__file__).resolve().parent
 def load_helper():
@@ -195,7 +199,7 @@ def main():
     camera=scene.camera
     cameras=[x for x in scene.objects if x.type=="CAMERA"]
     expected=(0,-6,7.65)
-    if (camera is None or len(cameras)!=1 or cameras[0]!=camera or
+    if (camera is None or camera not in cameras or
         camera.data.type!="ORTHO" or
         max(abs(camera.location[i]-expected[i]) for i in range(3))>.002 or
         abs(camera.data.ortho_scale-5.8)>.002):
@@ -415,6 +419,8 @@ def main():
     scene.render.resolution_percentage=100
     scene.render.image_settings.file_format="PNG"
     scene.render.image_settings.color_mode="RGBA"
+    camera_cleanup=clean_scene(scene,bpy,512)
+    audit_scene(scene,bpy,512)
     bpy.ops.file.pack_all()
     bpy.ops.wm.save_as_mainfile(filepath=str(out),compress=True,check_existing=False)
     bpy.ops.object.select_all(action="DESELECT")
@@ -431,9 +437,11 @@ def main():
     bpy.ops.export_scene.gltf(filepath=str(Path(opts.glb).resolve()),export_format="GLB",
                                use_selection=True,export_apply=True,export_animations=True)
     scene.frame_set(1)
+    audit_scene(scene,bpy,512)
     scene.render.filepath=str(Path(opts.idle_preview).resolve())
     bpy.ops.render.render(write_still=True)
     scene.frame_set(25)
+    audit_scene(scene,bpy,512)
     scene.render.filepath=str(Path(opts.working_preview).resolve())
     bpy.ops.render.render(write_still=True)
     receipt={
@@ -463,7 +471,9 @@ def main():
       "port_bore_clearance":bore_counts,
       "fmpl_effects_native_blend_sha256":fx_library_hash,
       "private_greebles_source":greebles,
-      "source_camera_unchanged":True,
+      "source_camera_pose_preserved":True,
+      "camera_policy":"fmpl.factorio45.v1",
+      "camera_cleanup":camera_cleanup,
       "canonical_mating_faces_unchanged":True,
       "export_camera_count":len([ob for ob in scene.objects if ob.type=="CAMERA"]),
       "production_direction_count":1,
