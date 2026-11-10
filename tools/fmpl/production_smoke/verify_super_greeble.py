@@ -10,6 +10,7 @@ import math
 from pathlib import Path
 import sys
 import bpy
+from mathutils import Vector
 
 HERE=Path(__file__).resolve().parent
 if str(HERE) not in sys.path:
