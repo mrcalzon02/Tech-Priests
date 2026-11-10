@@ -862,5 +862,22 @@
     "status": "source-reviewed-v1.0.3-parent-space-and-chemical-opacity-repair-awaits-native-run",
     "independent_from_existing_pbr_maps": true,
     "source_pdf_sha256": "b256e188919ace7804ff958cbf2eee052cc47519529a70e61da7d2270c93d27d"
+  },
+  "surface_materials_extension": {
+    "id": "fmpl-procedural-surface-library",
+    "version": "1.0.0",
+    "source_registry": "tools/fmpl/surfaces/catalog.json",
+    "cc0_candidate_registry": "tools/fmpl/surfaces/blendswap_sources.json",
+    "blender_builder": "tools/fmpl/surfaces/build_library.py",
+    "independent_verify": "tools/fmpl/surfaces/verify_library.py",
+    "static_tests": "tools/fmpl/surfaces/test_surfaces.py",
+    "third_party_quarantine_gate": "tools/fmpl/surfaces/source_gate.py",
+    "material_presets": 25,
+    "cc0_candidate_pages": 11,
+    "imported_third_party_blend_files": 0,
+    "video_technique_reference": "https://www.youtube.com/watch?v=iuaZuDiMv6s",
+    "license_policy": "individual CC0 page claims are not verified file licenses; quarantine external inputs",
+    "status": "source-committed-native-production-dispatched-owner-visual-approval-pending",
+    "immutable_existing_pbr_presets": 23
   }
 }
