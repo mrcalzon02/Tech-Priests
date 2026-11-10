@@ -60,3 +60,34 @@ The second Blender 5.2.3 production run #42745250083 passed all native reopening
 Blender V1.0.2 failed the native spatial-scale gate at [Dens Mortis run 42746275215](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/42746275215). Scene parenting had reinterpreted the initial world-space transforms, creating unit-sized gas spheres. V1.0.3 parents new emitter meshes with explicit local offsets and restores the authored scale, fixes local-space ring vertices and validates the gas envelope at initial, middle and final frames. A test failure is a real defect, not evidence to weaken QA.
 
 Chemical acid, blue coolant and slurry are intentionally less transmissive for clearer color at 64px. Gas effect density remains separate. This does not affect ordinary transparent water and glass; no physical-fluid solver is invoked. User approval and game sprite integration remain independent.
+
+## Steam plume silhouettes — no visible cone edges (Water Purifier V6)
+
+The historic two `service steam plume` meshes are literal UV cones whose
+surface boundary was plainly readable in the actual 512px Water Purifier
+camera. **A cone-shaped steam shader is not a pass, even if animated.**
+
+The accepted construction direction for compact pipe relief steam is a **small
+nozzle-anchored, twelve-lobe physical mesh assembly** with four principal
+animated steam wisps and eight intersecting thinner veil shells. Use native
+Blender noise to perturb the generated-coordinate radial-alpha falloff and
+smoothstep feather to full transparency *before* each mesh silhouette, with
+light surface opacity (<0.3 at the core per layer) and no billboard planes,
+cone caps, sudden opacity thresholds, hard white borders, or fake texture cards.
+The layered mesh shader may enable Blender dithered material evaluation; its
+actual Cycles renderer output is the authority. This is cheap geometry, not a
+simulation cache.
+
+Keep the exact original cone source meshes and keyframes in the editable native
+Blender derivative but set `hide_render=True` for those two objects, *and*
+exclude them from production GLB/sprites. Do not rewrite or delete the
+verified process source. Four primary and eight secondary feather lobes must
+key their transform in the same 16-sample/97 closed loop, originate at the real
+Water Purifier exhaust nozzle, remain within the 3x3 footprint, and have
+independently verified saved material nodes, edge feather, animation seam,
+source mesh digests, and rendered cone suppression.
+
+Review images must be **real Blender renders of the complete machine** at idle
+and active frames, plus a close-up crop for subtle steam edges. If edges still
+show as faceted cones, the pass fails visual review even if other numeric checks
+pass. Prefer small sharply feathered exhaust over enlarging bright white cones.
