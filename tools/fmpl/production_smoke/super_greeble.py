@@ -53,7 +53,8 @@ def import_effect_library(library_path):
               "fx_glass":"glass-clear","fx_steam":"steam-clean"}
     digest=sha(path)
     imported=module.import_materials(
-        str(path),list(mappings.values()),expected_sha256=digest)
+        str(path),list(mappings.values()),expected_sha256=digest,
+        expected_version="1.0.1")  # immutable, independently reopened Dens Mortis library
     return {role:imported[asset_id] for role,asset_id in mappings.items()},digest
 
 def sha(file):
