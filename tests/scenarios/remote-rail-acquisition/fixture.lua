@@ -350,6 +350,21 @@ local function inspect(s,elapsed)
   local order=(queue and queue.current)or p.active_order_0469
   local refusal=p.remote_rail_admission_refusal_0510
   local dispatch=p.canonical_action_0744
+  -- Ask the incumbent 0469 owner for its exact READ-ONLY refusal. Do not
+  -- clear, pause, mutate or promote a queue order, and do not accept a rail.
+  local yield_allowed,yield_reason=false,"no-pending-original-rail"
+  if pending and p.construction_request==pending.request then
+    local authority=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+    if authority and type(authority.can_yield_uncommitted_rail_0836)
+        =="function" then
+      local ok,allowed,reason=pcall(
+        authority.can_yield_uncommitted_rail_0836,p,pending.request)
+      yield_allowed=ok and allowed==true
+      yield_reason=ok and tostring(reason) or "queue-yield-probe-error"
+    else
+      yield_reason="queue-owner-unavailable"
+    end
+  end
   emit("RAIL_ADMISSION_DIAG elapsed="..elapsed..
     " stage="..tostring(objective and objective.stage)..
     " reason="..tostring(objective and objective.last_blocker)..
@@ -376,6 +391,14 @@ local function inspect(s,elapsed)
     " order_reason="..tostring(order and order.reason)..
     " order_key="..tostring(order and order.key)..
     " order_queue_current="..tostring(queue and queue.current~=nil)..
+    " queue_yield_allowed="..tostring(yield_allowed)..
+    " queue_yield_reason="..tostring(yield_reason)..
+    " active_supply_source="..tostring(p.active_supply_request
+      and p.active_supply_request.source)..
+    " active_supply_target="..tostring(p.active_supply_request
+      and p.active_supply_request.target)..
+    " queue_task_kind="..tostring(order and order.task
+      and order.task.type)..
     " dispatch_family="..tostring(dispatch and dispatch.family)..
     " dispatch_detail="..tostring(dispatch and dispatch.detail)..
     " rail_refusal="..tostring(refusal and refusal.reason)..
