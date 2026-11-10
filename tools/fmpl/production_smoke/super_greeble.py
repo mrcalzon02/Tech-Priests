@@ -39,27 +39,22 @@ def load_fluid_fx():
 fx=load_fluid_fx()
 
 def import_effect_library(library_path):
-    """Append exact named, source-tracked FMPL effect materials; never remake shaders."""
+    """Use the canonical read-only FMPL Effects asset importer, not ad-hoc shaders."""
     if not library_path:
         return {}, None
     path=Path(library_path).resolve()
-    if not path.is_file():
-        raise FileNotFoundError("Pinned FMPL effects native library missing: "+str(path))
-    ids={"fx_raw":"water-murky","fx_clear":"water-clear",
-         "fx_glass":"glass-clear","fx_steam":"steam-clean"}
-    wanted=["FMPL FX | "+key for key in ids.values()]
-    with bpy.data.libraries.load(str(path),link=False) as (src,dst):
-        absent=[s for s in wanted if s not in src.materials]
-        if absent:
-            raise RuntimeError("FMPL native effects library lacks "+str(absent))
-        dst.materials=wanted
-    loaded={}
-    for key,material_id in ids.items():
-        asset=bpy.data.materials.get("FMPL FX | "+material_id)
-        if asset is None or asset.get("fmpl_effect_id")!=material_id:
-            raise RuntimeError("Unverified material identity for "+material_id)
-        loaded[key]=asset
-    return loaded, sha(path)
+    adapter=HERE.parent/"effects"/"import_effects.py"
+    spec=importlib.util.spec_from_file_location("fmpl_verified_fx_importer",adapter)
+    if not adapter.is_file():
+        raise FileNotFoundError("Canonical FMPL effects import API absent")
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    mappings={"fx_raw":"water-murky","fx_clear":"water-clear",
+              "fx_glass":"glass-clear","fx_steam":"steam-clean"}
+    digest=sha(path)
+    imported=module.import_materials(
+        str(path),list(mappings.values()),expected_sha256=digest)
+    return {role:imported[asset_id] for role,asset_id in mappings.items()},digest
 
 def sha(file):
     h=hashlib.sha256()
