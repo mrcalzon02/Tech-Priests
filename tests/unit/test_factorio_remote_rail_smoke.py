@@ -9,10 +9,12 @@ import pathlib
 import sys
 import tempfile
 import unittest
+import subprocess
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "tools"))
 from run_factorio_isolated_service_scenario import (
     factorio_runtime_compatible, rail_connected_smoke_verdict,
-    rail_smoke_evidence, reset_rail_smoke_diagnostics)
+    rail_smoke_evidence, reset_rail_smoke_diagnostics,
+    run_rail_live_server, private_rail_server_settings)
 P = "[TP-REMOTE-RAIL-TEST] "
 A = P + "PASS first physical rail built and exact stock debited"
 B = P + "PASS two distinct 0338-debited native-connected rails"
@@ -190,3 +192,61 @@ class FactorioRuntimeCompatibilityTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class NativeRailLiveServerTests(unittest.TestCase):
+    def test_gate_receipts_stop_live_process_without_faking_clean_exit(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            log = pathlib.Path(dirname) / "native-server.log"
+            command = [sys.executable, "-u", "-c",
+                       "import time; print(" + repr(A + "\\n" + B) +
+                       ", flush=True); time.sleep(20)"]
+            code, reason = run_rail_live_server(
+                command, log, timeout=5, poll_interval=0.05)
+            self.assertEqual(reason, "native_gate_observed")
+            self.assertNotEqual(code, 0)  # Driver terminated the live process.
+            contents = log.read_text(encoding="utf-8")
+            evidence = rail_smoke_evidence(
+                0, code, contents, "2.1.24", "2.1", 36060,
+                engine_mode="live-headless-server", driver_stop_reason=reason)
+            self.assertTrue(evidence["accepted"])
+            self.assertEqual(evidence["engine_exit_code"], code)
+            self.assertEqual(evidence["simulation_mode"], "live-headless-server")
+
+    def test_fixture_failure_retains_partial_server_diagnostics(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            log = pathlib.Path(dirname) / "native-server.log"
+            command = [sys.executable, "-u", "-c",
+                       "import time; print(" + repr(P + "FAIL chart_pending") +
+                       ", flush=True); time.sleep(20)"]
+            code, reason = run_rail_live_server(
+                command, log, timeout=5, poll_interval=0.05)
+            self.assertEqual(reason, "fixture_failure")
+            evidence = rail_smoke_evidence(
+                0, code, log.read_text(encoding="utf-8"),
+                "2.1.24", "2.1", 36060, engine_mode="live-headless-server",
+                driver_stop_reason=reason)
+            self.assertFalse(evidence["accepted"])
+            self.assertTrue(evidence["fixture_failed"])
+
+    def test_server_settings_private_and_unpaused_without_rcon(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            cfg = json.loads(private_rail_server_settings(
+                pathlib.Path(dirname)).read_text(encoding="utf-8"))
+            self.assertEqual(cfg["visibility"], {"public": False, "lan": False})
+            self.assertFalse(cfg["auto_pause"])
+            self.assertNotIn("token", cfg)
+            self.assertNotIn("rcon_port", cfg)
+
+    def test_server_gate_requires_explicit_driver_receipt(self):
+        content = A + "\\n" + B
+        proof = rail_smoke_evidence(
+            0, 1, content, "2.1.24", "2.1", 36060,
+            engine_mode="live-headless-server",
+            driver_stop_reason="unexpected_server_exit")
+        self.assertFalse(proof["accepted"])
+        failure = rail_smoke_evidence(
+            0, 1, content + "\\n" + P + "FAIL native_disconnected",
+            "2.1.24", "2.1", 36060, engine_mode="live-headless-server",
+            driver_stop_reason="native_gate_observed")
+        self.assertFalse(failure["accepted"])

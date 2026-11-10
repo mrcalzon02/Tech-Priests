@@ -56,6 +56,83 @@ def run(argv: list[str], log_file: pathlib.Path, timeout: int) -> int:
             return 124
 
 
+
+def run_rail_live_server(argv: list[str], log_file: pathlib.Path,
+                         timeout: int, poll_interval: float = 1.0
+                         ) -> tuple[int, str]:
+    """Run real headless simulation, stopping only at an observed native gate.
+
+    Factorio --benchmark can leave chart requests queued while game ticks
+    advance. A normal private headless server runs the real map/chart update
+    lifecycle. Its process is intentionally stopped after a native PASS/FAIL,
+    so keep its *actual* exit code separate from the driver stop reason.
+    """
+    prefix = "[TP-REMOTE-RAIL-TEST] "
+    connected = prefix + "PASS two distinct 0338-debited native-connected rails"
+    observed = ""
+    offset = 0
+    deadline = time.monotonic() + timeout
+    reason = "timeout"
+    with log_file.open("w", encoding="utf-8") as output:
+        try:
+            process = subprocess.Popen(argv, stdin=subprocess.DEVNULL,
+                                       stdout=output, stderr=subprocess.STDOUT)
+        except OSError as error:
+            output.write(f"SERVER_START_FAILED: {error}\n")
+            return 127, "launch_error"
+        try:
+            while time.monotonic() < deadline:
+                output.flush()
+                with log_file.open("r", encoding="utf-8",
+                                   errors="replace") as reader:
+                    reader.seek(offset)
+                    observed += reader.read()
+                    offset = reader.tell()
+                if prefix + "FAIL " in observed:
+                    reason = "fixture_failure"
+                    break
+                if connected in observed:
+                    reason = "native_gate_observed"
+                    break
+                if process.poll() is not None:
+                    reason = "unexpected_server_exit"
+                    break
+                time.sleep(poll_interval)
+        finally:
+            if process.poll() is None:
+                process.terminate()
+                try:
+                    process.wait(timeout=15)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    process.wait(timeout=15)
+        # Do not disguise a deliberate terminate() as a clean Factorio exit.
+        return process.returncode, reason
+
+
+def private_rail_server_settings(output: pathlib.Path) -> pathlib.Path:
+    """Write private, no-player-pause, no-near-term-autosave test settings."""
+    path = output / "rail-server-settings.json"
+    path.write_text(json.dumps({
+        "name": "Tech Priests isolated rail engine acceptance",
+        "description": "Private loopback-only functional test",
+        "visibility": {"public": False, "lan": False},
+        "max_players": 1,
+        "require_user_verification": False,
+        "auto_pause": False,
+        "autosave_interval": 1000,
+    }, indent=2), encoding="utf-8")
+    return path
+
+
+def free_loopback_udp_port() -> int:
+    """Avoid disturbing any already-running domestic Factorio session."""
+    import socket
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as probe:
+        probe.bind(("127.0.0.1", 0))
+        return int(probe.getsockname()[1])
+
+
 def rail_connected_smoke_verdict(exit_code: int, log: str) -> bool:
     """Accept ONLY two original physical counted connected rails, never a plan."""
     prefix = "[TP-REMOTE-RAIL-TEST] "
@@ -72,24 +149,37 @@ def reset_rail_smoke_diagnostics(output: pathlib.Path) -> None:
     # Remove it before launching the engine, alongside stale verdict/logs.
     # Failure to remove a file aborts rather than reusing unverified state.
     for name in ("rail-connected-smoke-result.json", "benchmark.log",
+                 "native-server.log", "rail-server-settings.json",
                  "create.log", "scenario-initial.zip"):
         (output / name).unlink(missing_ok=True)
 
 
 def rail_smoke_evidence(create_exit_code: int, benchmark_exit_code: int | None,
                         log: str | None, engine_version: str,
-                        required_series: str, ticks_requested: int) -> dict:
+                        required_series: str, ticks_requested: int,
+                        engine_mode: str = "benchmark",
+                        driver_stop_reason: str | None = None) -> dict:
     """Retain the real engine's partial observation, including create failures."""
     prefix = "[TP-REMOTE-RAIL-TEST] "
     attempted = benchmark_exit_code is not None
     contents = log or ""
-    accepted = (create_exit_code == 0 and attempted and
-                rail_connected_smoke_verdict(benchmark_exit_code, contents))
+    if engine_mode == "live-headless-server":
+        # A driver-requested server shutdown is not a Factorio exit=0.
+        # Accept only native PASS receipts, without any native FAIL, and
+        # an explicitly observed 36k rail-graph gate.
+        accepted = (create_exit_code == 0 and attempted
+                    and driver_stop_reason == "native_gate_observed"
+                    and rail_connected_smoke_verdict(0, contents))
+    else:
+        accepted = (create_exit_code == 0 and attempted
+                    and rail_connected_smoke_verdict(benchmark_exit_code, contents))
     return {
         "scenario": "remote-rail-acquisition",
         "gate": "two-original-connected-item-debited-rails-only",
         "ticks_requested": ticks_requested,
         "engine_version": engine_version,
+        "simulation_mode": engine_mode,
+        "driver_stop_reason": driver_stop_reason,
         "required_mod_factorio_series": required_series,
         "create_exit_code": create_exit_code,
         "benchmark_attempted": attempted,
@@ -101,7 +191,7 @@ def rail_smoke_evidence(create_exit_code: int, benchmark_exit_code: int | None,
         "fixture_failed": (prefix + "FAIL " in contents if attempted else None),
         "accepted": accepted,
         "failure_stage": ("create" if create_exit_code != 0 else
-                          "benchmark" if not accepted else None),
+                          engine_mode if not accepted else None),
         "train_and_ore_delivery_accepted": False,
     }
 
@@ -225,6 +315,40 @@ def main() -> int:
                 json.dumps(evidence, indent=2, sort_keys=True), encoding="utf-8")
         print("FAIL headless save creation; see " + str(output / "create.log"))
         return 1
+    if args.rail_connected_smoke:
+        # The isolated charted-natural-ore gate requires a normal Factorio
+        # simulation. Repeated --benchmark runs advanced game.tick but never
+        # processed the target chunk's native chart queue in 2.1.24.
+        # No public registration, network-facing listener, extra workflow
+        # or parallel scheduler; this process uses a loopback UDP socket.
+        settings = private_rail_server_settings(output)
+        port = free_loopback_udp_port()
+        engine_mode = "live-headless-server"
+        native_log = output / "native-server.log"
+        engine_status, stop_reason = run_rail_live_server(
+            [str(factorio), "--mod-directory", str(mods),
+             "--start-server", str(save), "--server-settings", str(settings),
+             "--bind", f"127.0.0.1:{port}",
+             "--server-id", str(output / "rail-server-id.json")],
+            native_log, args.timeout_seconds)
+        contents = native_log.read_text(encoding="utf-8", errors="replace")
+        for line in contents.splitlines():
+            if scenario["prefix"] in line:
+                print(line[:1200])
+        evidence = rail_smoke_evidence(
+            0, engine_status, contents, engine_version, required_series,
+            tick_count, engine_mode=engine_mode,
+            driver_stop_reason=stop_reason)
+        rail_result_path.write_text(
+            json.dumps(evidence, indent=2, sort_keys=True), encoding="utf-8")
+        if not evidence["accepted"]:
+            print("FAIL native server physical rail gate; train/ore UNTESTED")
+            print("Engine logs: " + str(native_log))
+            return 1
+        print("PASS two original item-debited native-connected rails ONLY; "
+              "train/Magos/ore return UNTESTED")
+        print("Engine logs: " + str(native_log))
+        return 0
     benchmark = run([str(factorio), "--mod-directory", str(mods),
                      "--benchmark", str(save), "--benchmark-ticks",
                      str(tick_count)], output / "benchmark.log",
