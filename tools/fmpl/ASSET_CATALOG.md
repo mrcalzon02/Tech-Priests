@@ -1,4 +1,4 @@
-# FMPL v0.3.0 — Asset Catalog
+# FMPL v0.4.1 — Asset Catalog
 
 Source-indexed asset tabulation. **Not every model is game-ready; not every component is an approved interchangeable part.**
 
@@ -6,7 +6,7 @@ Source-indexed asset tabulation. **Not every model is game-ready; not every comp
 
 | PBR presets | Texture maps | Bunker part candidates | Verified shared parts | Models | Programs | Pipelines |
 |---:|---:|---:|---:|---:|---:|---:|
-| 23 | 69 | 21 | 0 | 9 | 19 | 5 |
+| 23 | 69 | 21 | 0 | 9 | 22 | 6 |
 
 ## Complete machine records and source state
 

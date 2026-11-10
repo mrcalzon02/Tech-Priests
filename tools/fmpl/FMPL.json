@@ -2,7 +2,7 @@
   "schema": "fmpl.module.v1",
   "module": "Factorio Modeling Production Library",
   "short_name": "FMPL",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "canonical_repo": "mrcalzon02/Tech-Priests",
   "source_commit": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
   "external_refs": {
@@ -24,8 +24,8 @@
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
     "model_records": 9,
-    "program_records": 19,
-    "pipeline_records": 5,
+    "program_records": 22,
+    "pipeline_records": 6,
     "external_blender_libraries": 1,
     "component_candidates_total": 39,
     "emergency_component_candidates": 18,
@@ -464,6 +464,36 @@
         "path": "tools/fmpl/production_smoke/verify_process.py"
       },
       "purpose": "Independent native Blender and GLB checks for process, animation, transmitted glass and packed concrete materials"
+    },
+    {
+      "id": "fmpl-super-greeble-build",
+      "kind": "geometry-animation",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "4e731c1805600c81c56750d7778bcdde57cd89d9",
+        "path": "tools/fmpl/production_smoke/super_greeble.py"
+      },
+      "purpose": "Add physically mounted controls, pumps, mechanical details, wires and real keyed process activity to a frozen Water Purifier"
+    },
+    {
+      "id": "fmpl-super-greeble-verify",
+      "kind": "verification",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "4e731c1805600c81c56750d7778bcdde57cd89d9",
+        "path": "tools/fmpl/production_smoke/verify_super_greeble.py"
+      },
+      "purpose": "Independent Blender reopen and GLB roundtrip of greebled source, true PBR, unchanged camera and mating geometry"
+    },
+    {
+      "id": "fmpl-super-greeble-native-atlas",
+      "kind": "sprite",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "4e731c1805600c81c56750d7778bcdde57cd89d9",
+        "path": "tools/fmpl/production_smoke/pack_super_greeble.py"
+      },
+      "purpose": "Blender-only one-angle one-idle plus eight-working-frame RGBA export and proof"
     }
   ],
   "pipelines": [
@@ -560,6 +590,27 @@
       },
       "status": "technical-candidate-verified-one-static-camera-mating-prototype-pending",
       "gate": "Native Factorio pipe cells and user visual approval remain unverified after Blender export"
+    },
+    {
+      "id": "super-greeble-machine-detail-v01",
+      "stages": [
+        "freeze FMPL v04 source and SHA",
+        "verify usable material/pipe camera contracts",
+        "mechanically justified fixture/pump/filter detail",
+        "exposed motor and gauge animation",
+        "strict non-approval of unclassified private donors",
+        "native .blend save + real GLB+PNG",
+        "fresh Blender reopen and verify all original meshes",
+        "one-angle idle and working-frame RGBA sprites",
+        "visual acceptance and native fluidbox game checks later"
+      ],
+      "entrypoint": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "4e731c1805600c81c56750d7778bcdde57cd89d9",
+        "path": "tools/fmpl/production_smoke/super_greeble.py"
+      },
+      "status": "builder-tests-authored-runner-proof-pending",
+      "gate": "Do not add unclassified donor geometry to public assets; actual Greebles source must be hash verified and human shape-reviewed. Render and gameplay gates separate."
     }
   ],
   "status_vocabulary": [
@@ -594,7 +645,10 @@
     "rotatable_entity_four_direction_exports": true,
     "grid_aligned_pipe_mouth_required": true,
     "strict_capture_policy": true,
-    "remove_temporary_cameras_in_derived_scene": true
+    "remove_temporary_cameras_in_derived_scene": true,
+    "unclassified_private_donors_blocked_from_public_export": true,
+    "detailed_mechanical_parts_must_be_anchored": true,
+    "allow_one_view_animated_preview_without_prototype_installation": true
   },
   "external_blender_libraries": [
     {
@@ -707,5 +761,59 @@
     "item_frame_count": 1,
     "persistent_cameras": 1,
     "temporary_camera_policy": "remove in finally, never save"
+  },
+  "super_greeble": {
+    "revision": "v01",
+    "machine": "water-purifier-mh7",
+    "source_policy": "immutable-v04",
+    "reference_model_sha256": "5d03419b7861278ed21f89cb08686d79d5ebb80d886d42ed265d866ea7f08c30",
+    "source_checkpoint": "fmpl-water-purifier-pipe-camera-42722511833-1",
+    "source_owned_geometry": {
+      "mh7_originals": 50,
+      "process_mechanical_details": 136
+    },
+    "greebles_donor": {
+      "source_id": "greebles-drive-2026-10",
+      "source_available_if_runner_has_local_copy": true,
+      "visual_labelled_parts": 80,
+      "approved_machinery_parts": 0,
+      "public_donor_mesh_export": false
+    },
+    "detail_roles": [
+      "pump drive",
+      "cartridge purge and service",
+      "raw versus finished water sight",
+      "working pressure dial",
+      "armored power",
+      "glass tank bubbles",
+      "thermal relief",
+      "condensate drain"
+    ],
+    "animation_preview": {
+      "idle_frames": [
+        1
+      ],
+      "working_frames": [
+        1,
+        13,
+        25,
+        37,
+        49,
+        61,
+        73,
+        85
+      ],
+      "production_directions": [
+        0
+      ],
+      "sizes": [
+        64,
+        128,
+        256
+      ]
+    },
+    "model_approval": "unapproved technical candidate",
+    "actual_factorio_ports_verified": false,
+    "native_runner_status": "not-yet-executed"
   }
 }
