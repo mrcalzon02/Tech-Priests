@@ -49,6 +49,42 @@ def make_camera(scene,lo,hi):
     return obj
 
 
+def _add_preview_lighting(scene, lo, hi):
+    """Temporary proof-only key/fill lighting; never saved to source .blend."""
+    center=(lo+hi)/2
+    span=max((hi-lo).x,(hi-lo).y,(hi-lo).z,.30)
+    world=bpy.data.worlds.new("Pipette PROOF ambient")
+    world.use_nodes=True
+    bg=world.node_tree.nodes.get("Background")
+    bg.inputs["Color"].default_value=(.55,.60,.68,1.)
+    bg.inputs["Strength"].default_value=.7
+    scene.world=world
+    for n,pos in enumerate(((-1.5,-1.7,1.9),(1.0,.7,1.3))):
+        lamp=bpy.data.lights.new("Pipette PROOF area %d"%n,"AREA")
+        lamp.energy=(480. if n==0 else 280.)*span*span
+        lamp.shape="DISK"
+        lamp.size=span*1.5
+        ob=bpy.data.objects.new(lamp.name,lamp)
+        scene.collection.objects.link(ob)
+        ob.location=center+Vector(pos)*span
+        ob.rotation_euler=(center-ob.location).to_track_quat("-Z","Y").to_euler()
+
+
+def _lit_pixel_count(path):
+    """Nonblack actual RGBA pixels; file existence is not visual proof."""
+    import array
+    img=bpy.data.images.load(str(path),check_existing=False)
+    try:
+        if tuple(img.size)!=(512,512) or img.channels!=4:
+            raise RuntimeError("Native Pipette proof is not 512x512 RGBA")
+        values=array.array("f",[0.])*(512*512*4)
+        img.pixels.foreach_get(values)
+        return sum(1 for i in range(0,len(values),4)
+                   if values[i+3]>.2 and max(values[i:i+3])>.08)
+    finally:
+        bpy.data.images.remove(img)
+
+
 def main():
     parser=argparse.ArgumentParser()
     for name in ("blend","glb","build-receipt","preview","report"):
@@ -85,6 +121,7 @@ def main():
     original_cam_count=len([o for o in scene.objects if o.type=="CAMERA"])
     lo,hi=bounds(objs)
     make_camera(scene,lo,hi)
+    _add_preview_lighting(scene,lo,hi)
     scene.render.engine="CYCLES"
     scene.cycles.device="CPU"
     scene.cycles.samples=12
@@ -101,6 +138,9 @@ def main():
     bpy.ops.render.render(write_still=True)
     if not proof.exists() or proof.stat().st_size<2000:
         raise RuntimeError("Genuine Blender Cycles Pipette screenshot absent")
+    lit_pixels=_lit_pixel_count(proof)
+    if lit_pixels<120:
+        raise RuntimeError("Pipette Cycles screenshot is too dark or missing visible meshes")
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=str(files["glb"]))
     imported=[o for o in bpy.context.scene.objects if o.type=="MESH"]
@@ -114,6 +154,7 @@ def main():
         "editable_blend_sha256":sha(files["blend"]),
         "glb_sha256":sha(files["glb"]),
         "genuine_cycles_render_sha256":sha(proof),
+        "actual_lit_preview_pixels":lit_pixels,
         "meshes_saved":len(objs),
         "glb_meshes_reimported":len(imported),
         "hollow_shell_meshes":len(hollow),
