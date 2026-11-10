@@ -185,7 +185,7 @@ def main():
     ap.add_argument("--max-models",type=int,default=36)
     ap.add_argument("--max-source-bytes",type=int,default=15000000)
     a=ap.parse_args(sys.argv[sys.argv.index("--")+1:])
-    if not 1<=a.max_models<=100 or not 10000<=a.max_source_bytes<=60000000:
+    if not 1<=a.max_models<=100 or not 10000<=a.max_source_bytes<=75000000:
         raise ValueError("Bounded model render budget invalid")
     output=Path(a.out).resolve()
     if output.exists() and any(output.iterdir()):raise FileExistsError("Refusing to overwrite model gallery")
@@ -194,11 +194,10 @@ def main():
     if queue.get("schema")!="fmpl.gallery-render-queue.v1":
         raise ValueError("Unknown queued-model provenance")
     if a.max_source_bytes>25000000:
-        # One exception for the eight size-blocked sources of Dens Mortis
-        # run 42887345055; the Windows worker separately verifies its original
-        # report SHA and size-limited retry request. This never enables 60MB
-        # downloads for arbitrary user-supplied queues.
-        eligible={
+        # Only the two independently inspected eight-source receipts qualify for
+        # larger source downloads. All ordinary unreviewed queues retain 15 MB
+        # at the worker; this guard refuses any other 60/75 MB import request.
+        eligible_old={
             "559c91f3133be15c2b1810634153ef63a5aaa0a2",
             "4b5062005cb52f30c711af3b62a5ff1413ac0eea",
             "38c0e56531fd4929658206daeffd7a21a945a873",
@@ -206,13 +205,26 @@ def main():
             "e7f584e7e9e09631998d47287931b934313d6469",
             "b047531d6c5408b1f6ca4e21a3ca9b515befe3c9",
             "712c28ab67bf8bc8cd0173bbc6885f9f3b67ebdb",
-            "7be4d5ad196d51aef030833a1bd95d9e1290e5df",
+            "7be4d5ad196d51aef0308332a1bd95d9e1290e5df",
+        }
+        eligible_new={
+            "3cfaf664060777df2ac21aaa923a9668ab948a8f",
+            "82597f9620a04f614dc7e9cc306802f05055fc6f",
+            "9b3a098269c1f98e24a1e65cfba611afb623683a",
+            "f9e8ae9f59493c7f10fa14b2dc0f2cee31c41f43",
+            "3cace708a9fbe01aaa4a1d446c12b7c78b98f104",
+            "e62173a9697fbc0aaa16315ca858f490399ae123",
+            "1f6a76eaaa4334618704f7314b0d2de104cdcd73",
+            "ace9f09ecdd0018c1d30d2c6135fa5420262c2a2",
         }
         sources=queue.get("models",[])
-        if (a.max_source_bytes!=60000000 or a.max_models!=8 or
-            queue.get("initial_model_cap")!=8 or queue.get("batch_index")!=1 or
-            queue.get("status")!="retry-only-measured-size-blockers-no-prior-rerenders" or
-            len(sources)!=8 or {rec.get("git_blob_sha") for rec in sources}!=eligible):
+        blobs={rec.get("git_blob_sha") for rec in sources}
+        same_shape=(a.max_models==8 and queue.get("initial_model_cap")==8 and
+                    queue.get("status")=="retry-only-measured-size-blockers-no-prior-rerenders" and
+                    len(sources)==8 and len(blobs)==8)
+        old_allowed=(a.max_source_bytes==60000000 and queue.get("batch_index")==1 and blobs==eligible_old)
+        new_allowed=(a.max_source_bytes==75000000 and queue.get("batch_index")==2 and blobs==eligible_new)
+        if not (same_shape and (old_allowed or new_allowed)):
             raise ValueError("Oversize exception denied: exact eight verified model blobs required")
     inputs=queue["models"][:a.max_models]
     import bpy
