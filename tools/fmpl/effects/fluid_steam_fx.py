@@ -155,36 +155,107 @@ def _foam_crest(p, col, idx, x, y, z, material):
     return obj
 
 
+def _watertone_copy(source, name, rgb, transmission, light):
+    """Derive a real per-machine material, keeping the canonical FX asset intact."""
+    mat=source.copy()
+    mat.name=name
+    if hasattr(mat,"asset_clear"):
+        mat.asset_clear()
+    if "fmpl_effect_id" in mat:
+        del mat["fmpl_effect_id"]
+    mat["fmpl_machine_derivative_of"]=source.name
+    mat["fmpl_water_colorway"]="RAW warm olive amber" if "raw" in name else "CLEAN cyan blue"
+    mat["fmpl_not_canonical_fx_asset"]=True
+    mat.diffuse_color=(*rgb,1.)
+    if not mat.use_nodes:
+        raise RuntimeError("FMPL liquid source has no procedural PBR nodes")
+    surface=mat.node_tree.nodes.get("FMPL | Surface")
+    ramp=mat.node_tree.nodes.get("FMPL | Broken Albedo")
+    if surface is None or ramp is None:
+        raise RuntimeError("FMPL FX water source does not have approved broken-albedo graph")
+    surface.inputs["Transmission Weight"].default_value=transmission
+    surface.inputs["Base Color"].default_value=(*rgb,1.)
+    surface.inputs["Emission Color"].default_value=(*rgb,1.)
+    surface.inputs["Emission Strength"].default_value=light
+    ramp.color_ramp.elements[0].color=tuple(max(0.,min(1.,v*.73)) for v in rgb)+(1.,)
+    ramp.color_ramp.elements[1].color=tuple(max(0.,min(1.,v*1.15)) for v in rgb)+(1.,)
+    return mat
+
+
+def _foam_color_copy(source, name, rgb):
+    mat=source.copy()
+    mat.name=name
+    mat.diffuse_color=(*rgb,.95)
+    mat["fmpl_water_colorway"]="raw" if "raw" in name else "clean"
+    mat["fmpl_machine_derivative_of"]=source.name
+    if not mat.use_nodes:
+        raise RuntimeError("Original FMPL foam shader is absent")
+    principled=mat.node_tree.nodes.get("Principled BSDF")
+    if principled is None:
+        raise RuntimeError("Original FMPL foam has no visible Principled BSDF")
+    principled.inputs["Base Color"].default_value=(*rgb,1.)
+    if principled.inputs.get("Alpha") is not None:
+        principled.inputs["Alpha"].default_value=.90
+    return mat
+
+
+def _witness_palette(mats):
+    return {
+        "raw":_watertone_copy(
+            mats["fx_raw"],"FMPL | purifier raw-water olive-amber V11",
+            (.48,.275,.047),.22,0.),
+        "clean":_watertone_copy(
+            mats["fx_clear"],"FMPL | purifier clean-water luminous cyan V11",
+            (.035,.58,.92),.45,.15),
+        "raw_foam":_foam_color_copy(
+            mats["foam"],"FMPL | purifier raw olive-ochre foam V11",
+            (.77,.53,.17)),
+        "clean_foam":_foam_color_copy(
+            mats["foam"],"FMPL | purifier clean cyan-white foam V11",
+            (.43,.94,1.0)),
+    }
+
+
 def build_witness_canisters(col, p, mats):
     """Physically larger front RAW and CLEAN canisters with inlet/exit flow."""
     glass, iron, brass, steel = (
         mats.get("fx_glass", mats["glass"]), mats["iron"], mats["brass"], mats["steel"])
-    dark, foam = mats["gunmetal"], mats["foam"]
-    specs = ((1, -.36, mats["amber"], mats.get("fx_raw", mats["amber"])),
-             (2, .24, mats["teal"], mats.get("fx_clear", mats["teal"])))
+    dark=mats["gunmetal"]
+    palette=_witness_palette(mats)
+    specs = (
+        (1,-.17,palette["raw"],palette["raw_foam"]),
+        (2, .53,palette["clean"],palette["clean_foam"]),
+    )
     out = {"vessels": 0, "moving_surfaces": 0, "visible_foam_crests": 0,
-           "liquid_bubbles": 0, "flow_tracers": 0, "glass_flows": 0}
-    for idx, x, liquid, surface_mat in specs:
-        y = -1.272
+           "liquid_bubbles": 0, "flow_tracers": 0, "glass_flows": 0,
+           "vessel_outer_diameter_tiles":.426,
+           "vessel_height_tiles":.712,
+           "vessel_centers_x_tiles":[-.17,.53],
+           "color_material_ids":{k:v.name for k,v in palette.items()}}
+    for idx, x, liquid, bubble_color in specs:
+        y = -1.242
         p.block(col, "sample station %d foundation shoe"%idx,
-                (x,y+.04,.53), (.43,.27,.18), dark, .014)
+                (x,y+.04,.53), (.48,.26,.18), dark, .014)
         # Open-ended physical glass wall; preserve a pressure observation lid.
         # An opaque cylinder or iron cap would block the moving water entirely.
-        p.open_hollow_tube(col,"sample station %d enlarged transparent vessel"%idx,
-            (x,y,.659),(x,y,1.27),.176,glass)
+        vessel=p.open_hollow_tube(col,"sample station %d enlarged transparent vessel"%idx,
+            (x,y,.645),(x,y,1.357),.213,glass)
+        vessel["fmpl_witness_tank_outer_diameter_tiles"]=.426
+        vessel["fmpl_witness_tank_body_height_tiles"]=.712
+        vessel["fmpl_witness_tank_role"]="RAW" if idx==1 else "CLEAN"
         p.cyl(col,"sample station %d enlarged visible liquid column"%idx,
-              (x,y,.895), .157, .518, surface_mat)
-        for height in (.659, 1.270):
+              (x,y,.935), .190, .552, liquid)
+        for height in (.651, 1.352):
             p.torus(col,"sample station %d pressure retainer %.3f"%(idx,height),
-                    (x,y,height),.182,.018,brass)
+                    (x,y,height),.226,.018,brass)
         for side in (-1,1):
             p.cyl(col,"sample station %d front sight support %d"%(idx,side),
-                  (x+side*.158,y-.075,.96),.014,.63,steel,vertices=12)
+                  (x+side*.193,y-.073,1.0),.013,.70,steel,vertices=12)
         p.cyl(col,"sample station %d transparent pressure observation lid"%idx,
-              (x,y,1.277),.165,.019,glass)
-        _meniscus(p,col,idx,(x,y,1.158),.154,surface_mat)
-        _foam_crest(p,col,idx,x,y,1.158,foam)
-        out["liquid_bubbles"] += len(_bubbles(p,col,idx,x,y,foam))
+              (x,y,1.36),.202,.020,glass)
+        _meniscus(p,col,idx,(x,y,1.225),.188,liquid)
+        _foam_crest(p,col,idx,x,y,1.225,bubble_color)
+        out["liquid_bubbles"] += len(_bubbles(p,col,idx,x,y,bubble_color))
         out["vessels"] += 1
         out["moving_surfaces"] += 1
         out["visible_foam_crests"] += 1
@@ -192,28 +263,28 @@ def build_witness_canisters(col, p, mats):
     # filter and discharge routes: they do not change the two engine fluidbox
     # openings at X+/-1.5 Y0 Z.36.
     channels = (
-        ("raw-canister inlet",(-.72,-1.118,1.122),(-.536,-1.272,1.122),mats.get("fx_raw", mats["amber"])),
-        ("raw-canister outlet",(-.536,-1.272,.762),(-.72,-1.09,.762),mats.get("fx_raw", mats["amber"])),
-        ("clean-canister inlet",(.590,-1.105,1.122),(.416,-1.272,1.122),mats.get("fx_clear", mats["teal"])),
-        ("clean-canister outlet",(.416,-1.272,.762),(.590,-1.105,.762),mats.get("fx_clear", mats["teal"]))
+        ("raw-canister inlet",(-.74,-1.11,1.19),(-.383,-1.242,1.19),palette["raw"],palette["raw_foam"]),
+        ("raw-canister outlet",(-.383,-1.242,.79),(-.75,-1.09,.79),palette["raw"],palette["raw_foam"]),
+        ("clean-canister inlet",(.84,-1.08,1.19),(.743,-1.242,1.19),palette["clean"],palette["clean_foam"]),
+        ("clean-canister outlet",(.743,-1.242,.79),(.84,-1.05,.79),palette["clean"],palette["clean_foam"]),
     )
-    for label, start, end, liquid in channels:
-        _clear_flow(p,col,label,start,end,glass,liquid,foam)
+    for label, start, end, liquid, witness_foam in channels:
+        _clear_flow(p,col,label,start,end,glass,liquid,witness_foam)
         out["glass_flows"] += 1
         out["flow_tracers"] += 2
     p.pipe_route(col,"raw witness feed from pump",
-                 [(-1.12,-.79,.61),(-.94,-1.08,.94),(-.72,-1.118,1.122)],
+                 [(-1.12,-.79,.61),(-.98,-1.01,.98),(-.74,-1.11,1.19)],
                  .037,iron,brass)
     p.pipe_route(col,"raw witness return to first filter",
-                 [(-.72,-1.09,.762),(-.82,-1.05,.72),(-.92,-1.00,.67)],
+                 [(-.75,-1.09,.79),(-.82,-1.05,.72),(-.92,-1.00,.67)],
                  .037,steel,iron)
     p.pipe_route(col,"clean witness feed from treatment outlet",
-                 [(.69,-.18,.79),(.74,-.86,.94),(.590,-1.105,1.122)],
+                 [(.69,-.18,.79),(.84,-.85,1.03),(.84,-1.08,1.19)],
                  .037,steel,iron)
     p.pipe_route(col,"clean witness return to discharge casting",
-                 [(.590,-1.105,.762),(.82,-.87,.72),(.88,-.18,.66)],
+                 [(.84,-1.05,.79),(.92,-.88,.72),(.88,-.18,.66)],
                  .037,steel,brass)
-    for label, _, near, _ in channels:
+    for label, _, near, _, _ in channels:
         p.torus(col,label+" / seated vessel connector gland",
                 near,.060,.013,brass,axis="X")
     return out
