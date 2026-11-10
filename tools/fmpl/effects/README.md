@@ -50,3 +50,15 @@ The API fails on missing/mismatched assets or name collisions. An import does no
 ### Production revisions
 
 1.0.0: first native Blender 5.2.3 build and independent reopen, 16/16 captures; gas swatches too faint at native proof scale. 1.0.1: gas optical-depth and sample-label readability adjustments; **new native verification required** before visual readiness. Both remain source-derived candidates until actual render review.
+
+## Optional Blender Asset Browser registration
+
+The generated native .blend **marks the 28 materials and five rig collections as Blender assets**, but it does not silently modify interactive or service-account Blender preferences. The [registration utility](register_library.py) accepts a SHA-256 pinned, previously verified .blend and is dry-run by default:
+
+```sh
+blender -b --python tools/fmpl/effects/register_library.py -- \
+  --blend /path/to/FMPL_effects_materials_v1.blend \
+  --expected-sha256 SHA256_FROM_NATIVE_VERIFY
+```
+
+Add `--install` only when authorizing registration of that directory in the **current Blender account's Asset Browser**. This does not copy the asset to a shared network drive, make a private runner artifact permanent, approve its appearance, or modify any Factorio prototype.
