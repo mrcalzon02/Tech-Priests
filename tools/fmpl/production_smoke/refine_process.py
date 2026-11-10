@@ -18,6 +18,10 @@ import sys
 
 import bpy
 from mathutils import Vector
+HERE=Path(__file__).resolve().parent
+if str(HERE) not in sys.path:
+    sys.path.insert(0,str(HERE))
+from camera_profile import clean_scene, audit_scene
 
 
 def sha(path):
@@ -584,6 +588,11 @@ def main():
     scene.render.resolution_x=512
     scene.render.resolution_y=512
     scene.render.resolution_percentage=100
+    # Build a new derived .blend with exactly one canonical production camera.
+    # Any source/inspection cameras are removed from the in-memory derivative,
+    # and the original source .blend is never rewritten.
+    camera_cleanup=clean_scene(scene,bpy,512)
+    audit_scene(scene,bpy,512)
     bpy.ops.file.pack_all()
     bpy.ops.wm.save_as_mainfile(filepath=str(Path(args.out).resolve()),
                                 compress=True,check_existing=False)
@@ -597,9 +606,11 @@ def main():
     bpy.ops.export_scene.gltf(filepath=str(Path(args.glb).resolve()),
        export_format="GLB",use_selection=True,export_apply=True)
     scene.frame_set(1)
+    audit_scene(scene,bpy,512)
     scene.render.filepath=str(Path(args.idle_preview).resolve())
     bpy.ops.render.render(write_still=True)
     scene.frame_set(25)
+    audit_scene(scene,bpy,512)
     scene.render.filepath=str(Path(args.active_preview).resolve())
     bpy.ops.render.render(write_still=True)
     scene.frame_set(1)
@@ -621,6 +632,8 @@ def main():
       "grid_aligned_model_ports":True,
       "native_water_purifier_prototype_present":False,
       "camera_model_direction_count":1,
+      "camera_policy":"fmpl.factorio45.v1",
+      "camera_cleanup":camera_cleanup,
       "nonproduction_environment_meshes_hidden":hidden_environment,
       "compositor_disabled_for_transparent_alpha":True,
       "materials_from_fmpl":["ferrocrete","ferrocrete_light","ferrocrete_dark",
