@@ -169,7 +169,7 @@ def main():
         raise RuntimeError("Layered feather steam requires eight real keyed Blender meshes")
     if any(not ob.data.vertices or not ob.data.polygons for ob in vapor+soft_veils):
         raise RuntimeError("New steam components must contain actual editable mesh geometry")
-    softmat=bpy.data.materials.get("FMPL | relief steam noise-feathered volume v03")
+    softmat=bpy.data.materials.get("FMPL | relief steam readable soft volume v04")
     if softmat is None or not softmat.use_nodes:
         raise RuntimeError("Soft surface steam material was not saved to native Blender")
     for name in ("FMPL STEAM | actual sphere radial distance",
@@ -178,7 +178,8 @@ def main():
                  "FMPL STEAM | radial-dither alpha mix",
                  "FMPL STEAM | transparent exterior",
                  "FMPL STEAM | true variable density volume",
-                 "FMPL STEAM | noise-dithered radial density"):
+                 "FMPL STEAM | noise-dithered radial density",
+                 "FMPL STEAM | bounded core lift linked to density"):
         if softmat.node_tree.nodes.get(name) is None:
             raise RuntimeError("No actual procedural steam feather/alpha node: "+name)
     alpha=softmat.node_tree.nodes.get("FMPL STEAM | steep smooth radial feather")
@@ -189,6 +190,16 @@ def main():
         density.inputs["From Max"].default_value>.52 or
         not softmat.node_tree.nodes.get("FMPL STEAM | true variable density volume").inputs["Density"].is_linked):
         raise RuntimeError("True volumetric steam density has hard or hollow edges")
+    lift=softmat.node_tree.nodes.get("FMPL STEAM | bounded core lift linked to density")
+    volume_node=softmat.node_tree.nodes.get("FMPL STEAM | true variable density volume")
+    if (not lift or lift.operation!="MULTIPLY" or
+        abs(float(lift.inputs[1].default_value)-.165)>.001 or
+        volume_node.inputs.get("Emission Strength") is None or
+        not volume_node.inputs["Emission Strength"].is_linked):
+        raise RuntimeError("Volume steam needs restrained density-linked light, not dark/invisible or edge-emitting shells")
+    if (receipt.get("steam_fx",{}).get("emission_coupled_to_density") is not True or
+        abs(float(receipt.get("steam_fx",{}).get("density_lift_multiplication",0))-.165)>.001):
+        raise RuntimeError("Volume steam emission source not pinned to true density")
     if receipt.get("steam_fx",{}).get("true_volumetric_density") is not True:
         raise RuntimeError("Blender steam must be true radial-volume, not white surface rings")
     if receipt.get("steam_fx",{}).get("soft_surface_lobes")!=12 or receipt.get("steam_fx",{}).get("legacy_cones_hidden")!=2:
@@ -300,6 +311,7 @@ def main():
        "vent_open_bore_diameter_tiles":verified_throat_bore_diameter,
 
        "true_volumetric_steam_density_verified":True,
+       "steam_density_coupled_emission_verified":True,
        "procedural_steam_edge_feather_verified":True,
        "steam_animation_closed_loop_verified":True,
        "native_fmpl_effects_blend_sha256":receipt.get("fmpl_effects_native_blend_sha256"),
