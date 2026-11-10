@@ -1,0 +1,124 @@
+{
+  "schema": "fmpl.scene-scale-registry.v1",
+  "status": "defined-reference-profiles-not-game-fluidbox-approval",
+  "units": {
+    "authoring": "Blender scene units; arbitrary visual dimensions",
+    "tile_reference": "explicit scene_units_per_tile on each modeled asset",
+    "actual_world_measures": false,
+    "mm_awg_or_inch_conversion": false,
+    "note": "Tile-relative standards apply only when explicitly requested; ordinary tubes and wires remain Blender-unit parameters"
+  },
+  "canonical_factorio_pipe": {
+    "id": "factorio-fluid-interface-v1",
+    "dimensions_tiles": {
+      "barrel_outer_diameter": 0.57,
+      "open_bore_diameter": 0.49,
+      "mounting_collar_outer_diameter": 0.68,
+      "mounting_collar_axial_thickness": 0.075
+    },
+    "source": "FMPL verified boiler/condenser machine port collar and throat; keep native source geometry and test port placement",
+    "consistency": "Full-size collar and bore are unchanged for 2x2 vs 3x3; scene_units_per_tile converts fractions to Blender units",
+    "native_factorio_fluidbox_validated": false
+  },
+  "profiles": [
+    {
+      "schema": "fmpl.scene-scope.v1",
+      "id": "fmpl-factorio-2x2-oneBU",
+      "asset_role": "two-by-two-machine",
+      "scene_units_per_tile": 1,
+      "origin_bu": [
+        0,
+        0,
+        0
+      ],
+      "footprint_tiles": [
+        2,
+        2
+      ],
+      "up_axis": "+Z",
+      "explicit_ports_required": true,
+      "native_port_position_from_prototype": false
+    },
+    {
+      "schema": "fmpl.scene-scope.v1",
+      "id": "fmpl-factorio-3x3-oneBU",
+      "asset_role": "three-by-three-machine",
+      "scene_units_per_tile": 1,
+      "origin_bu": [
+        0,
+        0,
+        0
+      ],
+      "footprint_tiles": [
+        3,
+        3
+      ],
+      "up_axis": "+Z",
+      "explicit_ports_required": true,
+      "native_port_position_from_prototype": false
+    },
+    {
+      "schema": "fmpl.scene-scope.v1",
+      "id": "fmpl-factorio-2x2-doubleBU-example",
+      "asset_role": "scaled-scene-demonstration",
+      "scene_units_per_tile": 2,
+      "origin_bu": [
+        0,
+        0,
+        0
+      ],
+      "footprint_tiles": [
+        2,
+        2
+      ],
+      "up_axis": "+Z",
+      "explicit_ports_required": true,
+      "native_port_position_from_prototype": false
+    }
+  ],
+  "known_port_reference_examples": [
+    {
+      "scope_id": "fmpl-factorio-3x3-oneBU",
+      "label": "Water Purifier west raw model port",
+      "face": "west",
+      "transverse_offset_tiles": 0,
+      "elevation_tiles": 0.36,
+      "expected_xyz_bu": [
+        -1.5,
+        0,
+        0.36
+      ],
+      "facing_normal": [
+        -1,
+        0,
+        0
+      ],
+      "status": "model-space reference only"
+    },
+    {
+      "scope_id": "fmpl-factorio-3x3-oneBU",
+      "label": "Water Purifier east clean model port",
+      "face": "east",
+      "transverse_offset_tiles": 0,
+      "elevation_tiles": 0.36,
+      "expected_xyz_bu": [
+        1.5,
+        0,
+        0.36
+      ],
+      "facing_normal": [
+        1,
+        0,
+        0
+      ],
+      "status": "model-space reference only"
+    }
+  ],
+  "port_policy": {
+    "transverse_offset": "must be declared per machine; never assume half-cell/center",
+    "elevation": "must be declared per machine; source must be checked",
+    "native_cell_mapping": "separate Factorio prototype readback and actual in-game test",
+    "flange_size": "same tile-relative ratio across machine footprints",
+    "keep_out": "open bore and welded/reducing adapter must remain physically hollow"
+  }
+}
