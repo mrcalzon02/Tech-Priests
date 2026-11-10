@@ -78,6 +78,21 @@ class NativeRailPartialDiagnosticsTests(unittest.TestCase):
         self.assertFalse(failed["accepted"])
         self.assertTrue(failed["fixture_failed"])
 
+class NativeRailFixtureSyntaxTests(unittest.TestCase):
+    def test_native_local_ore_refusal_filter_is_well_formed(self):
+        # Factorio 2.1.24 --create previously failed to parse this filter:
+        # ci_remote_rail_acquisition.lua:136 expected '}' near ')'.
+        # Preserve the no-local-resource refusal; only close the Lua table.
+        fixture = (pathlib.Path(__file__).resolve().parents[2]
+                   / "tests/scenarios/remote-rail-acquisition/fixture.lua")
+        source = fixture.read_text(encoding="utf-8")
+        self.assertRegex(
+            source,
+            r'if count\(surface,\\{type="resource",\\s*'
+            r'area=\{\\{-64,-64\\},\\{64,64\\}\\}\\}\\)~=0 then\\s*'
+            r'fail\("UNEXPECTED_NEARBY_ORE"\\)')
+
+
 class FactorioRuntimeCompatibilityTests(unittest.TestCase):
     def test_current_21_mod_accepts_matching_native_engine(self):
         self.assertTrue(factorio_runtime_compatible(

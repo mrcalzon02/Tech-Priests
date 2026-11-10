@@ -133,7 +133,7 @@ local function setup()
     fail("REMOTE_ORE_NOT_CHARTED")
   end
   if count(surface,{type="resource",
-      area={{-64,-64},{64,64}})~=0 then
+      area={{-64,-64},{64,64}}})~=0 then
     fail("UNEXPECTED_NEARBY_ORE")
   end
   local rails=count(surface,{type={"straight-rail","half-diagonal-rail",
