@@ -62,3 +62,11 @@ For a new unknown source mesh, `infer_family_candidates()` returns tentative rol
 This repository stage deliberately **does not create a new GitHub workflow, modify Water Purifier V14, or assume a Factorio native port**. Before calling Pipette V0.1 physically verified, run the existing Dens Mortis `OLD-CORE30-homebrew` Windows Blender environment against pinned sources, independently reopen .blend/GLB, inspect a representative connector/bore up close, test the two canonical Water Purifier pipe clearances, and review actual fixed-camera rendered proof.
 
 Blender “one unit” is an authoring size: not real-world inches or millimeters. World gauge/pressure/force/ampacity claims are out of scope until an explicit independently verified simulator is commissioned.
+
+## Optional Factorio tile-scoped fittings
+
+Ordinary `outer_diameter` and visual wire gauges are **direct Blender-unit sizes**. Only an explicitly requested external `tile_interfaces` fitting uses the model's `scene_scope` (units-per-Factorio-tile, 2×2/3×3 footprint and origin), via the shared [FMPL scale standard](../SCENE_SCALE_STANDARD.md).
+
+See [2×2 sample](examples/two_by_two_reference_pipe.json) and [3×3 doubled-scale sample](examples/three_by_three_double_scale_pipe.json). Both use canonical `factorio-fluid-interface-v1` pipe fractions (0.57 outer barrel, 0.49 open bore, 0.68 collar, 0.075 axial thickness in tiles), while their connecting service pipe keeps its own numeric Blender-unit diameter.
+
+The builder creates a real hollow dimension-matched candidate throat/collar/reducer; it is **not** a certified clone of the authoritative FMPL source fixture, nor a proved Factorio fluidbox connection. Independent GLB/Blender geometry checks and real Cycles proof are required.
