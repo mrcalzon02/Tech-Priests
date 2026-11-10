@@ -342,6 +342,34 @@ def wire_cores(a, b, architecture_id, *, eight=True, tied=False, diameter=.12,
     return strands
 
 
+def steel_seven_strand(a, b, architecture_id, diameter=.12):
+    """True 1x7 cable: one central steel strand and six wound outer strands."""
+    axis = sub(b, a)
+    length = norm(axis)
+    tangent = unit(axis)
+    u, v = frame(tangent)
+    # One thick center strand + six physically distinct helical wires.
+    r = diameter*.24
+    small = diameter*.31
+    base = sample_centerline(a, b, sag=length*.012, samples=129)
+    meshes = [tube(base, small, 0., "single_wire", "Seven rope center",
+                   architecture_id, sides=12)]
+    meshes[0]["role"] = "solid-rope-core"
+    for k in range(6):
+        points = []
+        for i, p in enumerate(base):
+            phase = TAU*(k/6+2.8*i/(len(base)-1))
+            points.append(plus(p, plus(mult(u, r*math.cos(phase)),
+                                       mult(v, r*math.sin(phase)))))
+        part = tube(points, diameter*.25, 0., "single_wire",
+                    "Outer helical steel strand %d"%(k+1), architecture_id,
+                    sides=12)
+        part["role"] = "helically-wound-rope-strand"
+        part["conductor_index"] = k+1
+        meshes.append(part)
+    return meshes
+
+
 def terminal_ring(center, direction, diameter, architecture_id, *,
                   role="connector-sleeve", length_factor=.6, scale=1.12):
     a=plus(center, mult(unit(direction), -diameter*length_factor*.5))
@@ -367,9 +395,7 @@ def line_segment(a, b, architecture_id, *, nominal_od=.12, topology="straight"):
         return wire_cores(a,b,architecture_id,eight=False,
                           base_sag_fraction=sag_fraction)
     if kind=="seven_strand":
-        return wire_cores(a,b,architecture_id,eight=True,
-                          base_sag_fraction=sag_fraction,
-                          diameter=nominal_od*.75)
+        return steel_seven_strand(a,b,architecture_id,nominal_od)
     points=sample_centerline(a,b,sag=distance*sag_fraction)
     if kind=="open_spiral":
         return [helical_ribbon(points,nominal_od,pitch=nominal_od*.95,
