@@ -219,23 +219,120 @@ def build_witness_canisters(col, p, mats):
     return out
 
 
+def _feathered_steam_material():
+    """Soft volumetric-looking surface shader on real overlapping Blender meshes.
+
+    The radial generated-coordinate mask removes hard polygon silhouettes; a
+    separate object-space noise scrambles the feather. No camera-facing planes,
+    image-generated cards, baked particle textures or destructive fluid solves.
+    """
+    name="FMPL | relief steam soft radial feather v02"
+    existing=bpy.data.materials.get(name)
+    if existing:
+        return existing
+    mat=bpy.data.materials.new(name)
+    mat.use_nodes=True
+    mat.diffuse_color=(.76,.83,.84,.28)
+    mat["fmpl_fx_role"]="physically nozzle-anchored feathered steam surface"
+    mat["fmpl_fx_source"]="FMPL steam-clean; derivative real-mesh optical feather"
+    mat["fmpl_fx_not_game_approved"]=True
+    if hasattr(mat,"surface_render_method"):
+        try:
+            mat.surface_render_method="DITHERED"
+        except (TypeError,ValueError):
+            pass
+    nodes=mat.node_tree.nodes
+    nodes.clear()
+    links=mat.node_tree.links
+    output=nodes.new("ShaderNodeOutputMaterial")
+    output.name="FMPL STEAM | surface output"
+    transparent=nodes.new("ShaderNodeBsdfTransparent")
+    transparent.name="FMPL STEAM | transparent exterior"
+    surface=nodes.new("ShaderNodeBsdfPrincipled")
+    surface.name="FMPL STEAM | pale vapor surface"
+    surface.inputs["Base Color"].default_value=(.80,.86,.87,1.)
+    surface.inputs["Roughness"].default_value=.94
+    mix=nodes.new("ShaderNodeMixShader")
+    mix.name="FMPL STEAM | radial-dither alpha mix"
+    links.new(transparent.outputs["BSDF"],mix.inputs[1])
+    links.new(surface.outputs["BSDF"],mix.inputs[2])
+    links.new(mix.outputs["Shader"],output.inputs["Surface"])
+    coords=nodes.new("ShaderNodeTexCoord")
+    coords.name="FMPL STEAM | mesh-generated coords"
+    distance=nodes.new("ShaderNodeVectorMath")
+    distance.name="FMPL STEAM | actual sphere radial distance"
+    distance.operation="DISTANCE"
+    distance.inputs[1].default_value=(.5,.5,.5)
+    links.new(coords.outputs["Generated"],distance.inputs[0])
+    noise=nodes.new("ShaderNodeTexNoise")
+    noise.name="FMPL STEAM | multi-surface dither breakup"
+    noise.inputs["Scale"].default_value=15.0
+    noise.inputs["Detail"].default_value=3.2
+    noise.inputs["Roughness"].default_value=.67
+    links.new(coords.outputs["Generated"],noise.inputs["Vector"])
+    offset=nodes.new("ShaderNodeMath")
+    offset.operation="SUBTRACT"
+    offset.inputs[1].default_value=.5
+    links.new(noise.outputs["Fac"],offset.inputs[0])
+    jitter=nodes.new("ShaderNodeMath")
+    jitter.operation="MULTIPLY"
+    jitter.inputs[1].default_value=.105
+    links.new(offset.outputs[0],jitter.inputs[0])
+    perturbed=nodes.new("ShaderNodeMath")
+    perturbed.operation="ADD"
+    links.new(distance.outputs["Value"],perturbed.inputs[0])
+    links.new(jitter.outputs[0],perturbed.inputs[1])
+    feather=nodes.new("ShaderNodeMapRange")
+    feather.name="FMPL STEAM | steep smooth radial feather"
+    feather.clamp=True
+    feather.interpolation_type="SMOOTHSTEP"
+    feather.inputs["From Min"].default_value=.14
+    feather.inputs["From Max"].default_value=.49
+    feather.inputs["To Min"].default_value=.285
+    feather.inputs["To Max"].default_value=0.0
+    links.new(perturbed.outputs[0],feather.inputs["Value"])
+    links.new(feather.outputs["Result"],mix.inputs[0])
+    return mat
+
+
 def add_relief_steam(col,p,mats):
-    """Stepped, keyframed, restrained vapor from the REAL top relief nozzle."""
-    steam = mats.get("fx_steam") or bpy.data.materials.get("FMPL | vented condensed steam")
-    if steam is None:
-        raise RuntimeError("FMPL vented condensed steam material is missing")
-    for k in range(4):
-        x0=.94 + .045 * k
-        y0=.60 + .012 * (k%2)
-        z0=2.89 + .083 * k
-        ob = _orb(p,col,"relief nozzle keyed condensed steam %02d"%k,
-                  (x0,y0,z0),.088,steam)
+    """Layered small steam wisps at the true relief nozzle; no cones or hard rims.
+
+    Four core lobes retain the original QA identity, eight thin secondary lobes
+    break the surface silhouette. All meshes are editable, softly shader-faded,
+    and keyframed in closed 16-sample loops (frame 1 == frame 97).
+    """
+    if mats.get("fx_steam") is None:
+        raise RuntimeError("Pinned FMPL native steam-clean material is missing")
+    soft=_feathered_steam_material()
+    origin=(.94,.60,2.80)
+    for k in range(12):
+        primary=k<4
+        layer=k if primary else k-4
+        x0=.94+.034*math.sin(k*2.17)
+        y0=.60+.028*math.cos(k*1.83)
+        z0=2.854+.047*(layer%4)+(.035 if not primary else 0)
+        name=("relief nozzle keyed condensed steam %02d"%k if primary
+              else "steam veil layered feather %02d"%(k-4))
+        ob=_orb(p,col,name,(x0,y0,z0),.103 if primary else .083,soft)
         for frame in FRAMES:
-            phase = math.tau * (frame - 1)/96.
-            s = .22 + .90 * (math.sin(phase + .48*k)**2)
-            ob.scale=(.72*s,.62*s,1.20*s)
-            ob.location=(x0+.018*s,y0+.015*s,z0+.09*s)
+            phase=math.tau*(frame-1)/96.
+            swell=0.76+.23*math.sin(phase+.41*k)
+            ob.scale=(.82*swell,.77*swell,(1.13+.05*(k%3))*swell)
+            ob.location=(x0+.016*math.sin(phase+.53*k),
+                         y0+.014*math.cos(phase+.39*k),
+                         z0+.019*math.sin(phase+.61*k))
             ob.keyframe_insert(data_path="scale",frame=frame)
             ob.keyframe_insert(data_path="location",frame=frame)
-        ob["fmpl_fx_origin"] = "physical relief nozzle (.94,.60,2.80)"
-    return {"relief_steam_puffs":4,"origin_xyz":(.94,.60,2.80)}
+        ob["fmpl_fx_origin"]="relief nozzle (.94,.60,2.80)"
+        ob["fmpl_fx_surface"]="smooth radial alpha, dither noise, overlapping UV spheres"
+        ob["fmpl_fx_mesh_role"]="core" if primary else "silhouette feather veil"
+    return {
+        "relief_steam_puffs":4,
+        "soft_surface_lobes":12,
+        "secondary_feather_veils":8,
+        "soft_edge_shader":soft.name,
+        "root_nozzle_xyz":list(origin),
+        "animation_samples":len(FRAMES),
+        "legacy_cone_geometry_preserved":True
+    }
