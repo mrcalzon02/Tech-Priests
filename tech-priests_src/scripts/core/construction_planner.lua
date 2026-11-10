@@ -1004,6 +1004,23 @@ local function finish(pair,task,built,reason)
  task.built_entity=built
  pair.construction_last_task_0338=task
  record(pair,built and "built" or "aborted",reason)
+ -- The last-task slot is shared with routine 0338 work. Reconcile an
+ -- ORIGINAL paid, physically placed 0836 rail while this exact terminal
+ -- receipt still owns the slot, before another build can replace it.
+ -- 0836 itself verifies the native rail entity, exact request identity,
+ -- segment order and graph continuity; this does not mint a receipt.
+ if built and marked_rail_request_0836(task) then
+  local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+  local mission=pair.remote_rail_outpost_0835
+  local pending=mission and mission.pending_rail_0836
+  if pending and pending.request==task.request_value
+    and rail and type(rail.verify_pending)=="function" then
+   local ok,verified,why=pcall(rail.verify_pending,pair)
+   record(pair,ok and verified and "physical-rail-reconciled-0836"
+     or "physical-rail-reconciliation-refused-0836",
+     ok and safe(why) or ("verifier-error:"..safe(verified)))
+  end
+ end
  if not built and task.request_field=="construction_bootstrap_ghost_0645"
    and type(reason)=="string"
    and reason:find("^site%-invalid:occupied%-by%-physical%-entity:")

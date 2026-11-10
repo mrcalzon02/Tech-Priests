@@ -320,6 +320,31 @@ class NativeRailBlockedLocalMineAdmissionTests(unittest.TestCase):
         self.assertNotIn('surface.create_entity{name="straight-rail"', source)
 
 
+
+class NativeRailTerminalReceiptHandoffTests(unittest.TestCase):
+    def test_original_paid_rail_receipt_reconciled_before_0338_overwrites_it(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        builder = (root / "tech-priests_src/scripts/core/construction_planner.lua"
+                   ).read_text(encoding="utf-8")
+        frontier = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
+                    ).read_text(encoding="utf-8")
+        receipt = builder.index("pair.construction_last_task_0338=task")
+        handoff = builder.index('if built and marked_rail_request_0836(task)', receipt)
+        self.assertLess(receipt, handoff)
+        self.assertIn("pending.request==task.request_value", builder[handoff:handoff+700])
+        self.assertIn('type(rail.verify_pending)=="function"', builder[handoff:handoff+700])
+        self.assertIn("pcall(rail.verify_pending,pair)", builder[handoff:handoff+700])
+        self.assertIn('physical-rail-reconciliation-refused-0836', builder)
+        self.assertIn('previous.request_value==pending.request', frontier)
+        self.assertIn('valid(previous.built_entity)', frontier)
+        self.assertIn('previous.phase=="complete"', frontier)
+        self.assertIn('and pair.construction_request==nil', frontier)
+        self.assertIn('local actual=track_at(pair,pending.position,pending.direction)', frontier)
+        self.assertIn('connected_straight_rails(predecessor,actual)', frontier)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', frontier)
+
+
+
 class NativeRailUnfundedCandidateAdmissionTests(unittest.TestCase):
     def test_original_0338_only_yields_unfunded_unstarted_candidate(self):
         path = (pathlib.Path(__file__).resolve().parents[2]
