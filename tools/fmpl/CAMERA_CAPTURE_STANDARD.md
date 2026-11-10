@@ -36,3 +36,15 @@ Run offline camera-policy tests:
 Source models must be visually reviewed, and game-native ports/graphic
 offsets tested independently; a valid camera does not establish Factorio
 playable integration or human acceptance.
+
+## Direct scene builders (v0.4.2)
+
+Any builder saving Blender outside the general sprite exporter MUST call the
+same `blender_camera_guard.install_canonical_camera` through an explicit
+source-specific FMPL profile before saving a derived file. The Water Purifier
+fixture is `production_smoke/camera_profile.py` and is used in the initial
+build, process refinement and Super Greeble scripts. Independent reopen
+verifiers audit the actual camera name/matrix, reject extra cameras, and
+require the removal receipt. The direct idle/working renders are previews
+of the SAME fixed machine angle, not additional viewing angles or evidence
+of a complete four-orientation production atlas.

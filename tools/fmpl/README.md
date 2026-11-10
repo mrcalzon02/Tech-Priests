@@ -163,3 +163,20 @@ Additional source files are indexed but **not implied rendered or approved**.
 Download the offline index and native Blender proof receipts from each actual
 Dens Mortis workflow artifact; do not create additional Actions workflows or
 treat its 14-day artifact retention as permanent distribution.
+
+## FMPL v0.4.2 — Water Purifier camera-chain integration
+
+The three direct Blender authorship stages (initial build, process refinement,
+Super Greeble) now share `production_smoke/camera_profile.py`, which installs
+the canonical 45-degree orthographic camera in each **derived** scene before
+saving and audits its actual transform before the preview render. All three
+independent Blender reopen verifiers fail if any additional camera survives
+or if the cleanup receipt or camera transform is wrong.
+
+This closes the gap where direct Blender scenes could bypass the general
+`tools/art/render_sprite_frames.py` camera sanitizer. Original Blender sources
+are not overwritten. The static test
+`python -m unittest tools.fmpl.test_purifier_camera_chain` checks the cross-file
+contract; full native Blender acceptance still requires the authorized
+self-hosted Blender runner, with real .blend reopen proof and rendered screenshots.
+No additional GitHub workflow was created.

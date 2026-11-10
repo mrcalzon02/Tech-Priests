@@ -2,7 +2,7 @@
   "schema": "fmpl.module.v1",
   "module": "Factorio Modeling Production Library",
   "short_name": "FMPL",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "canonical_repo": "mrcalzon02/Tech-Priests",
   "source_commit": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
   "external_refs": {
@@ -777,7 +777,23 @@
     ],
     "item_frame_count": 1,
     "persistent_cameras": 1,
-    "temporary_camera_policy": "remove in finally, never save"
+    "temporary_camera_policy": "remove in finally, never save",
+    "production_smoke_camera_chain": {
+      "shared_fixture": "tools/fmpl/production_smoke/camera_profile.py",
+      "builders": [
+        "tools/fmpl/production_smoke/blender_build.py",
+        "tools/fmpl/production_smoke/refine_process.py",
+        "tools/fmpl/production_smoke/super_greeble.py"
+      ],
+      "verifiers": [
+        "tools/fmpl/production_smoke/verify_build.py",
+        "tools/fmpl/production_smoke/verify_process.py",
+        "tools/fmpl/production_smoke/verify_super_greeble.py"
+      ],
+      "offline_test": "tools/fmpl/test_purifier_camera_chain.py",
+      "status": "code-integrated; native Blender headless reopen and render still require runner proof",
+      "capture_rule": "Single canonical camera at 45 degrees, target (0,0,1.65); machine four direction export separately"
+    }
   },
   "super_greeble": {
     "revision": "v01",
