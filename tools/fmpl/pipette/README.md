@@ -1,5 +1,11 @@
 # Pipette — Blender-unit typed tubing, wiring and coupling planner
 
+### Executable geometry construction (19 recipes, current slice)
+
+**[Build instructions and explicit native verification gates](LIBRARY_BUILD.md)** describe the new independent `library_geometry.py` mesh kernel, `build_library.py` batch OBJ exporter, `library_blender.py` editable Blender/Cycles/GLB builder, and `library_verify.py` independent native readback. These have **19 physically distinct implemented geometry recipes** drawn from the [140-entry construction index](architecture_catalog.v1.json). Examples include metal helical interlocked conduit, annular polymer conduit, open spiral sleeve, split loom, naturally sagging eight-wire bundles, and a Boolean hollow lead-pipe Y using frozen comparison coordinates.
+
+The new source implementation and `test_library_geometry.py` mesh regressions are not automatic production approval: use the existing Dens Mortis opt-in `architecture_gallery` proof when scheduling a bounded, source-pinned Blender run. The standing v0.1 four-fixture script and existing models are preserved; no new workflow or add-on installation is necessary.
+
 ## Architecture expansion index (catalog stage)
 
 The **[GitHub-readable architecture index](ARCHITECTURE_INDEX.md)** contains **140 construction profiles across nine groups**, **77 joint/termination architectures**, **20 visual stiffness profiles**, and a [fixed XYZ port comparison fixture](comparison_fixture.v1.json) shared by Y/tee/elbow examples. These are **indexed future build targets**, *not* 140 implemented meshes. The [catalog JSON](architecture_catalog.v1.json), [joint library](joint_catalog.v1.json), [stiffness models](stiffness_profiles.v1.json) and [regression contracts](test_architecture_catalog.py) form the new source-of-truth baseline; existing v0.1 executable line types are not silently expanded.
