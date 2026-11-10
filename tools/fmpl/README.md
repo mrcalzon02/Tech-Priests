@@ -195,3 +195,9 @@ It targets the full-sized embedded CRT/control panel (reversing V13's
 audited mechanically seated pipe/hose endpoints, and selective Girderization.
 Actual Blender/model changes and runner dispatch require a separate follow-up
 after the design is reviewed; current approved native asset baseline remains V13.
+
+## Scene scale and Pipette subsystem
+
+[FMPL scene scale](SCENE_SCALE_STANDARD.md) provides explicit Blender-units-per-Factorio-tile scope for 2×2 and 3×3 machines and canonical real-model 0.57/0.49/0.68/0.075 tile-relative pipe fittings. The ordinary modeling dimensions are **direct Blender units**, not real-world measurements. The model's footprint declares where connection mouth planes are; actual installed Factorio fluidbox remains separately unverified.
+
+[Pipette](pipette/README.md) is the typed tube/wire/hose/rebar and fitting subsystem. It can use direct Blender sizes for internal lines and optional standard tile-scoped interfaces only at explicitly named exterior sockets. The current pure-Python planner and Blender adapter are independently testable prototypes; they do not silently convert gauges, install native game connections, or alter Water Purifier sources.
