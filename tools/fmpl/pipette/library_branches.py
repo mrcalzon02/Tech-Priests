@@ -42,17 +42,49 @@ def _mean(points):
 
 def _hollow_wrap(center,axis,diameter,length,architecture_id,label,
                  group_port,conductor_count,wrap_style):
-    """A small real hollow tube surrounding a grouped conductor run.
+    """Real tapered hollow polymer strain-relief boot following grouped wires.
 
-    Wall thickness, axial length, and port role are explicit; this is a
-    strain-relief/loom wrap, not a chunky electrical terminal block.
+    Axially substantial yet compact: round, softly tapered, with a positive
+    hollow bore throughout. A rectangular box or paper-thin toroidal ring is
+    never substituted for a physical wire-harness transition.
     """
-    direction=geom.unit(axis)
-    a=geom.plus(center,geom.mult(direction,-length*.5))
-    b=geom.plus(center,geom.mult(direction, length*.5))
-    part=geom.tube([a,b],diameter,.16,"smooth",label,architecture_id,
-                   sides=20)
-    part["role"]="branch-strain-relief-wrap"
+    if not 0<diameter<.5 or not 0<length<.5:
+        raise ValueError("Invalid taper-boot size")
+    tangent=geom.unit(axis)
+    u,v=geom.frame(tangent)
+    sections=[(-.50,.86),(-.43,.92),(-.25,1.0),
+              (0.,1.06),(.25,1.0),(.43,.92),(.50,.86)]
+    sides=24
+    verts=[]
+    for along,scale in sections:
+        origin=geom.plus(center,geom.mult(tangent,along*length))
+        for ring in (0,1):
+            radius=diameter*.5*scale*(1. if ring==0 else .82)
+            for k in range(sides):
+                phase=TAU*k/sides
+                offset=geom.plus(geom.mult(u,radius*math.cos(phase)),
+                                 geom.mult(v,radius*math.sin(phase)))
+                verts.append(geom.plus(origin,offset))
+    stride=sides*2
+    faces=[]
+    for section in range(len(sections)-1):
+        a,b=section*stride,(section+1)*stride
+        for k in range(sides):
+            nxt=(k+1)%sides
+            faces.append((a+k,a+nxt,b+nxt,b+k))
+            faces.append((a+sides+k,b+sides+k,b+sides+nxt,a+sides+nxt))
+    for base,is_start in ((0,True),((len(sections)-1)*stride,False)):
+        for k in range(sides):
+            nxt=(k+1)%sides
+            faces.append((base+k,base+sides+k,base+sides+nxt,base+nxt)
+                         if is_start else
+                         (base+k,base+nxt,base+sides+nxt,base+sides+k))
+    part=geom.mesh(label,"branch-strain-relief-wrap",
+                   verts,faces,architecture_id=architecture_id,bore=True,
+                   other={"profile_kind":"tapered-hollow-wire-breakout-boot",
+                          "outer_diameter_bu":diameter,
+                          "bore_diameter_bu":diameter*.86*.82,
+                          "axial_length_bu":length})
     part["branch_hardware_type"]=wrap_style
     part["branch_port_id"]=group_port
     part["gripped_conductor_count"]=conductor_count
@@ -186,7 +218,7 @@ def build_eight_wire_y(architecture_id, topology_record, nominal_od=.12):
                                "A",target,k,"output"))
     trunk_center=_mean(trunk_sites)
     meshes.append(_hollow_wrap(trunk_center,trunk_direction,
-        nominal_od*.94,nominal_od*.20,arch,
+        nominal_od*.94,nominal_od*1.15,arch,
         "Compact incoming eight-wire lacing sleeve","A",8,
         "eight-wire-laced-strain-relief"))
     for target in ("B","C"):
@@ -194,7 +226,7 @@ def build_eight_wire_y(architecture_id, topology_record, nominal_od=.12):
         direction=geom.unit(geom.sub(q,h))
         center=_mean(exit_sites[target])
         meshes.append(_hollow_wrap(center,direction,
-            nominal_od*.72,nominal_od*.17,arch,
+            nominal_od*.72,nominal_od*.88,arch,
             "Compact four-wire %s branch sleeve"%target,target,4,
             "four-wire-branch-heatshrink"))
     if laced:
