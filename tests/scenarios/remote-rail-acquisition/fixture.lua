@@ -291,6 +291,72 @@ local function setup()
     " locomotives=2 wagons=3"..
     " tech_preset=true track_prebuilt=0 initial_iron="..s.start_ore)
 end
+-- The last native run built 18 rails in 18k ticks, then only three in
+-- the next 24k. Identify the exact PRE-WRIT queue denial while no 0836
+-- request exists. Only the existing 0469 owner can answer this read-only
+-- question; a fallback "no-pending-original-rail" is NOT a denial receipt.
+-- Sample on the EXISTING fixture tick callback, with no new scheduler.
+local function trace_uncommitted_rail_gap(s,elapsed)
+  local p=storage.tech_priests.pairs_by_station
+      and storage.tech_priests.pairs_by_station[s.station_unit]
+  if not(p and p.station and p.station.valid)then return end
+  local mission=p.remote_rail_outpost_0835
+  local frontier=mission and mission.rail_frontier_0836
+  local pending=mission and mission.pending_rail_0836
+  local order=p.order_queue_0469 and p.order_queue_0469.current
+  local candidate=p.construction_candidate_0338
+  local authority=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+  local allowed,why=false,"queue-authority-unavailable"
+  if authority and type(authority.can_yield_uncommitted_rail_0836)
+      =="function" then
+    local request=pending and pending.request or nil
+    -- A nil request checks the authentic planning window, with unchanged
+    -- live-order, movement, funding and custody guards.
+    local ok,answer,reason=pcall(
+      authority.can_yield_uncommitted_rail_0836,p,request)
+    allowed=ok and answer==true
+    why=ok and tostring(reason) or "queue-read-only-probe-error"
+  end
+  local item=candidate and candidate.item_name
+  local stock=0
+  local inv=p.station.get_inventory(defines.inventory.chest)
+  if inv and inv.valid and type(item)=="string"then
+    stock=inv.get_item_count(item)
+  end
+  emit("RAIL_PREWRIT_GAP elapsed="..elapsed..
+    " segment="..tostring(frontier and frontier.segment)..
+    " mission="..tostring(mission and mission.status)..
+    " pending="..tostring(pending~=nil)..
+    " request="..tostring(p.construction_request~=nil)..
+    " queue_gate="..tostring(allowed)..
+    " queue_reason="..tostring(why)..
+    " order_kind="..tostring(order and order.kind)..
+    " order_source="..tostring(order and order.source)..
+    " order_item="..tostring(order and order.item)..
+    " order_status="..tostring(order and order.status)..
+    " active_order_matches="..tostring(order~=nil
+      and p.active_order_0469==order)..
+    " candidate="..tostring(item)..
+    " candidate_field="..tostring(candidate and candidate.request_field)..
+    " candidate_site="..tostring(candidate and candidate.site_reason)..
+    " candidate_station_count="..tostring(stock)..
+    " builder_phase="..tostring(p.construction_task_0338
+      and p.construction_task_0338.phase)..
+    " construction_custody="..tostring(p.construction_custody_0338~=nil)..
+    " active_task="..tostring(p.active_task~=nil)..
+    " active_task_0285="..tostring(p.active_task_0285~=nil)..
+    " direct_custody="..tostring(p.direct_acquisition_custody_0513~=nil)..
+    " machine_custody="..tostring(p.machine_logistics_custody_0528~=nil)..
+    " emergency_craft="..tostring(p.emergency_craft~=nil)..
+    " active_supply="..tostring(p.active_supply_request~=nil)..
+    " supply_source="..tostring(p.active_supply_request
+      and p.active_supply_request.source)..
+    " move_owner="..tostring(p.movement_request_0418
+      and p.movement_request_0418.owner)..
+    " blocked_site="..tostring(p.construction_blocked_reason_0338)..
+    " dispatcher_refusal="..tostring(p.remote_rail_admission_refusal_0510
+      and p.remote_rail_admission_refusal_0510.reason))
+end
 local function inspect(s,elapsed)
   local surface=game.surfaces[1]
   local station=surface.find_entities_filtered{
@@ -715,6 +781,11 @@ local function pulse()
           " control_raw_chart="..tostring(force.get_chunk_chart(surface,control)~=nil))
         s["chart_diag_"..mark]=true
       end
+    end
+    -- Read-only 0469/0338/0836 sampling around the observed 36k-60k stall.
+    -- Never plan, yield, cancel, debit or credit work from this diagnostic.
+    if elapsed>=36000 and elapsed<=60000 and elapsed%600==0 then
+      trace_uncommitted_rail_gap(s,elapsed)
     end
     for _,mark in ipairs({1800,9000,18000,36000,60000,90000}) do
       if elapsed>=mark and not s["checked_"..mark] then
