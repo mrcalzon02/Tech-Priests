@@ -17,7 +17,7 @@ class PipettePackageApiTests(unittest.TestCase):
         self.assertTrue(callable(pipette.build_demo))
         self.assertTrue(callable(pipette.build_fitting))
         self.assertTrue(callable(pipette.build_eight_wire_y))
-        self.assertEqual(len(pipette.RECIPES),25)
+        self.assertEqual(len(pipette.RECIPES),30)
         self.assertEqual(len(pipette.FITTING_RECIPES),25)
         self.assertIs(sys.modules.get("bpy"),original)
 
