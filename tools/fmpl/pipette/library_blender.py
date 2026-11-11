@@ -86,6 +86,11 @@ def make_obj(collection, part, material, architecture):
         obj["pipette_conductor_index"]=part["conductor_index"]
     if "public_port_centers_unchanged" in part:
         obj["pipette_port_centers_json"]=json.dumps(part["public_port_centers_unchanged"])
+    if "joint_type" in part:
+        obj["pipette_joint_type"]=part["joint_type"]
+        obj["pipette_socket_id"]=part["public_socket_id"]
+        obj["pipette_socket_xyz_json"]=json.dumps(part["public_socket_xyz_bu"])
+        obj["pipette_socket_seating_verified"]=False
     return obj
 
 
