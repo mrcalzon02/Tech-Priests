@@ -1131,7 +1131,7 @@
         "push_fit"
       ],
       "visible_architecture": "Visible axial coil and straight end tails",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1142,7 +1142,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_forms.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "tube_glass_capillary",
@@ -1451,7 +1453,7 @@
         "hose_barb_clamp"
       ],
       "visible_architecture": "Floppy flat fabric body and round outlet",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1462,7 +1464,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_forms.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "hose_vacuum_corrugated",
@@ -1555,7 +1559,7 @@
         "hose_crimp"
       ],
       "visible_architecture": "Two independent parallel hollow channels",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -1566,7 +1570,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_forms.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "conduit_rmc_threaded",
@@ -2937,7 +2943,7 @@
         "strap_bracket"
       ],
       "visible_architecture": "Two rails and regular transverse rungs",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -2948,7 +2954,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_forms.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "housing_perforated_tray",
@@ -3041,7 +3049,7 @@
         "wireway_hinge"
       ],
       "visible_architecture": "Comb-like wall fingers, snap top",
-      "implementation": "indexed_pending_distinct_native_mesh",
+      "implementation": "implemented_procedural_mesh_native_proof_pending",
       "comparison_topologies": [
         "straight",
         "elbow_45",
@@ -3052,7 +3060,9 @@
         "reducer",
         "bulkhead"
       ],
-      "branch_requires_typed_hardware": true
+      "branch_requires_typed_hardware": true,
+      "geometry_module": "library_forms.py",
+      "native_blender_builder": "library_blender.py"
     },
     {
       "id": "housing_rectangular_raceway",
@@ -3666,13 +3676,13 @@
     "F-source verified production materials and Factorio connection verification"
   ],
   "current_implementation": {
-    "recipe_count": 25,
+    "recipe_count": 30,
     "implementation_status": "editable_mesh_builders_committed_native_proof_pending",
     "current_geometry_module": "library_geometry.py",
     "native_builder": "library_blender.py",
     "independent_native_validator": "library_verify.py",
     "batch_exporter": "build_library.py",
-    "remaining_unimplemented_types": 115,
-    "scope_note": "25 procedural section builders from 140 catalog entries; fully compatible physical joining, native gallery reproof, and production-approved materials remain separate gates"
+    "remaining_unimplemented_types": 110,
+    "scope_note": "30 coded procedural geometry recipes, including five new distinct hose/tubing/housing shapes. Native Blender proof and real terminal mating remain separate gates."
   }
 }
