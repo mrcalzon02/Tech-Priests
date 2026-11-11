@@ -162,6 +162,8 @@ function M.can_yield_uncommitted_rail_0836(p,request)
   local pending=mission and mission.pending_rail_0836
   local loco=mission and mission.first_locomotive_0836
   local wagon=mission and mission.first_wagon_0836
+  local stop=mission and mission.first_stop_0836
+  local fuel=mission and mission.first_fuel_0836
   local route=mission and mission.rail_frontier_0836
   local same_root=mission
     and mission.root_station_unit==p.station.unit_number
@@ -186,6 +188,21 @@ function M.can_yield_uncommitted_rail_0836(p,request)
     and wagon.request==request and mission.status=="rail-track-established"
     and loco and loco.phase=="native-paid-locomotive-verified"
     and loco.built_unit and route and route.chain_audit_completed_tick_0836
+  -- A native stop may yield only the exact original 0836 paid writ,
+  -- after audited track, locomotive, coupled wagon and real fuel.
+  -- No arbitrary construction request acquires 0469 queue permission.
+  local stop_request=request and request.item_name=="train-stop"
+    and request.entity_name=="train-stop"
+    and request.site_reason=="original-first-train-stop-0836"
+    and request.rail_mission_station_unit_0836==p.station.unit_number
+    and stop and stop.phase=="awaiting-original-0338"
+    and stop.request==request and mission.status=="rail-track-established"
+    and route and route.chain_audit_completed_tick_0836
+    and type(route.built_units)=="table"
+    and route.segment==#route.built_units and route.segment>=24
+    and loco and loco.phase=="native-paid-locomotive-verified"
+    and wagon and wagon.phase=="native-paid-wagon-verified"
+    and fuel and fuel.phase=="native-paid-locomotive-fueled"
   if request==nil then
     -- Only the original mission may plan a new segment, or admit its
     -- first audited locomotive after track completion; never a foreign writ.
@@ -201,7 +218,8 @@ function M.can_yield_uncommitted_rail_0836(p,request)
             and loco.built_unit and wagon==nil))))) then
       return false,"rail-frontier-planning-not-uncommitted"
     end
-  elseif not(same_root and (rail_request or locomotive_request or wagon_request))then
+  elseif not(same_root and (rail_request or locomotive_request
+    or wagon_request or stop_request))then
     return false,"rail-mission-identity-mismatch"
   end
   local q=p.order_queue_0469

@@ -615,6 +615,8 @@ local function blocked_local_miner_yields_to_rail_0836(pair,field,value)
      and source_for_item(pair,"locomotive")~=nil)
    or (owned_pending_wagon_0836(pair,rail)
      and source_for_item(pair,"cargo-wagon")~=nil)
+   or (owned_pending_stop_0836(pair,rail)
+     and source_for_item(pair,"train-stop")~=nil)
  local at=refusal and tonumber(refusal.tick)
  local item=value and normalize_placeable(value)
  local explicit_site=type(value)=="table"
@@ -682,6 +684,7 @@ local function construction_request(pair)
    and (owned_pending_rail_0836(pair,frontier)
     or owned_pending_locomotive_0836(pair,frontier)
      or owned_pending_wagon_0836(pair,frontier)
+    or owned_pending_stop_0836(pair,frontier)
     or not b or not source_for_item(pair,b.placeable.item_name)) then
   local earlier_funded=false
   for _,field in ipairs({"structure_construction_requested_item",
@@ -792,6 +795,7 @@ local function refresh_unfunded_frontier_candidate(pair)
    and (owned_pending_rail_0836(pair,frontier)
      or owned_pending_locomotive_0836(pair,frontier)
      or owned_pending_wagon_0836(pair,frontier)
+     or owned_pending_stop_0836(pair,frontier)
      or not source_for_item(pair,c.item_name))) then return false end
  pair.construction_candidate_0338=nil
  return true

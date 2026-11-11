@@ -1229,6 +1229,53 @@ class NativeOriginalMagosBoarding0836ContractTests(unittest.TestCase):
 
 
 class NativePaidTrainStop0836ContractTests(unittest.TestCase):
+
+    def test_original_stop_receives_canonical_dispatch_without_stealing_real_orders(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        builder = (root / "tech-priests_src/scripts/core/construction_planner.lua"
+                   ).read_text(encoding="utf-8")
+        dispatcher = (root / "tech-priests_src/scripts/core/single_dispatcher_0510.lua"
+                      ).read_text(encoding="utf-8")
+        queue = (root / "tech-priests_src/scripts/core/order_queue_0469.lua"
+                 ).read_text(encoding="utf-8")
+        admission = queue.split(
+            "function M.can_yield_uncommitted_rail_0836(p,request)", 1
+        )[1].split("function M.can_pause_uncommitted_relay_0974", 1)[0]
+        for required in ('stop.request==request', 'stop.phase=="awaiting-original-0338"',
+                         'fuel.phase=="native-paid-locomotive-fueled"',
+                         'route.segment==#route.built_units',
+                         'or wagon_request or stop_request',
+                         'o.item=="firearm-magazine"',
+                         'p.construction_custody_0338', 'p.movement_request_0418'):
+            self.assertIn(required, admission)
+        self.assertNotIn("p.order_queue_0469.current=nil", admission)
+        self.assertNotIn("p.active_order_0469=nil", admission)
+        self.assertNotIn("p.construction_request=nil", admission)
+        self.assertIn('owned_pending_stop_0836(pair,rail)', builder)
+        self.assertIn('source_for_item(pair,"train-stop")~=nil', builder)
+        self.assertGreaterEqual(
+            builder.count("owned_pending_stop_0836(pair,frontier)"), 2)
+        stop = dispatcher.split(
+            "-- The exact original 0836 train-stop writ needs a 0338 dispatch pulse", 1
+        )[1].split("  local fuel=m and m.first_fuel_0836", 1)[0]
+        for required in ('pair.construction_request==stop_req',
+                         'task.request_value==stop_req',
+                         'carrying.request_value==stop_req',
+                         'owner.can_yield_uncommitted_rail_0836,pair,stop_req',
+                         'pair.direct_acquisition_custody_0513',
+                         'pair.machine_logistics_custody_0528',
+                         'pair.movement_request_0418',
+                         'candidate.request_field=="construction_request"',
+                         'candidate.request_value==stop_req',
+                         'candidate.item_name=="train-stop"',
+                         'execute(pair,"construction"',
+                         'dispatcher-0510:first-original-paid-train-stop-0836'):
+            self.assertIn(required, stop)
+        for forbidden in ('surface.create_entity', 'pair.active_order_0469=nil',
+                          'pair.construction_custody_0338=nil',
+                          'pair.construction_request=nil', 'teleport('):
+            self.assertNotIn(forbidden, stop)
+
     def test_stop_is_original_0338_paid_and_native_connected_before_boarding(self):
         root = pathlib.Path(__file__).resolve().parents[2]
         rail = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")

@@ -590,6 +590,80 @@ function M.service_pair(pair,reason)
    record("dispatch-first-native-wagon-0836",pair,result.detail)
    return result
   end
+  -- The exact original 0836 train-stop writ needs a 0338 dispatch pulse,
+  -- not a new construction owner. The original 0469 automatic-ammo yield
+  -- remains read-only; every real physical task/cargo/order retains priority.
+  local stop_state=m and m.first_stop_0836
+  local stop_req=stop_state and stop_state.phase=="awaiting-original-0338"
+    and stop_state.request
+  if stop_req and pair.construction_request==stop_req
+    and m.status=="rail-track-established"
+    and stop_req.item_name=="train-stop"
+    and stop_req.entity_name=="train-stop"
+    and stop_req.site_reason=="original-first-train-stop-0836"
+    and stop_req.rail_mission_station_unit_0836==station_unit(pair)
+    and m.rail_frontier_0836
+    and m.rail_frontier_0836.chain_audit_completed_tick_0836
+    and m.first_locomotive_0836
+    and m.first_locomotive_0836.phase=="native-paid-locomotive-verified"
+    and m.first_wagon_0836
+    and m.first_wagon_0836.phase=="native-paid-wagon-verified"
+    and m.first_fuel_0836
+    and m.first_fuel_0836.phase=="native-paid-locomotive-fueled" then
+   local task=pair.construction_task_0338
+   local carrying=pair.construction_custody_0338
+   local original=(task and task.request_value==stop_req)
+     or (carrying and carrying.request_value==stop_req)
+   if not original then
+    local q=pair.order_queue_0469
+    local order=pair.active_order_0469 or (q and q.current)
+    if order then
+     local owner=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+     local ok,allowed=false,false
+     if owner and type(owner.can_yield_uncommitted_rail_0836)=="function" then
+      ok,allowed=pcall(owner.can_yield_uncommitted_rail_0836,pair,stop_req)
+     end
+     if not(ok and allowed==true)then
+      return {processed=1,blocked=1,detail="train-stop-order-yield-refused"}
+     end
+    end
+    if pair.active_task or pair.current_task or pair.active_task_0285
+      or pair.defense_task_0259 or pair.construction_task_0338
+      or pair.construction_custody_0338 or pair.construction_task_0340
+      or pair.machine_logistics_custody_0528
+      or pair.inventory_transfer_custody_0687
+      or pair.direct_acquisition_custody_0513
+      or pair.robot_network_task_0338 or pair.robot_network_request_0338
+      or pair.movement_request_0418 then
+     return {processed=1,blocked=1,detail="train-stop-incumbent-physical-work"}
+    end
+   end
+   local planner=rawget(_G,"TechPriestsConstructionPlanner0338")
+     or package.loaded["scripts.core.construction_planner"]
+   if not(planner and type(planner.discover_pair)=="function")then
+    return {processed=1,blocked=1,detail="train-stop-builder-unavailable"}
+   end
+   if not original then
+    local ok,candidate=pcall(planner.discover_pair,pair,true)
+    if not ok or not(candidate
+      and candidate.request_field=="construction_request"
+      and candidate.request_value==stop_req
+      and candidate.item_name=="train-stop")then
+     return {processed=1,blocked=1,detail="train-stop-original-candidate-refused"}
+    end
+   end
+   local result=execute(pair,"construction",
+     "dispatcher-0510:first-original-paid-train-stop-0836")
+   local status=result.failed>0 and "failed" or result.acted>0
+     and "acted" or result.blocked>0 and "blocked"
+     or result.waiting>0 and "waiting" or "idle"
+   publish_action(pair,{kind="construction",source="first-paid-train-stop-0836",
+     item="train-stop",position=stop_state.position,
+     reason="native-paid-rail-route-stop"},"construction",status,result.detail)
+   stat("pairs_processed");stat("actions",result.acted);stat("failures",result.failed)
+   record("dispatch-first-native-train-stop-0836",pair,result.detail)
+   return result
+  end
   local fuel=m and m.first_fuel_0836
   local fueled_loco=m and m.first_locomotive_0836
   local fueled_wagon=m and m.first_wagon_0836
