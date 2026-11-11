@@ -52,8 +52,13 @@ class PipetteArchitectureIndexTests(unittest.TestCase):
         self.assertEqual(ARCH["current_implementation"]["remaining_unimplemented_types"],
                          len(entries)-len(GEOMETRY_RECIPES))
         self.assertTrue(GEOMETRY_RECIPES.issubset(entries))
+        delegated={"tube_retractile_coil","hose_layflat","hose_twin_bonded",
+                   "housing_ladder_tray","housing_slotted_duct"}
+        self.assertTrue(delegated.issubset(GEOMETRY_RECIPES))
         for key in GEOMETRY_RECIPES:
-            self.assertEqual(entries[key]["geometry_module"],"library_geometry.py")
+            expected=("library_forms.py" if key in delegated
+                      else "library_geometry.py")
+            self.assertEqual(entries[key]["geometry_module"],expected)
 
     def test_existing_base_family_compatibility(self):
         for item in ARCH["architecture_types"]:
