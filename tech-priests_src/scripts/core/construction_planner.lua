@@ -298,9 +298,15 @@ local function marked_rail_request_0836(candidate)
  return type(candidate)=="table" and (
    candidate.site_reason=="remote-rail-physical-frontier-0836"
    or (type(request)=="table" and (
-     request.rail_mission_station_unit_0836~=nil
-     or request.rail_segment_0836~=nil
-     or request.site_reason=="remote-rail-physical-frontier-0836")))
+     request.rail_segment_0836~=nil
+     or request.site_reason=="remote-rail-physical-frontier-0836"
+     -- A paid locomotive uses the same original Magos marker, but is
+     -- NOT a track segment. Every other forged 0836 marker still fails
+     -- the original pending-rail ownership check.
+     or (request.rail_mission_station_unit_0836~=nil
+       and not(request.site_reason=="original-first-locomotive-0836"
+         and request.item_name=="locomotive"
+         and request.entity_name=="locomotive")))))
 end
 local function authorized_rail_candidate_0836(pair,candidate)
  local request=candidate and candidate.request_value
@@ -1395,6 +1401,24 @@ local function begin_task(pair,c)
  if marked_rail_request_0836(c)
    and not authorized_rail_candidate_0836(pair,c) then
   return nil,"rail-original-physical-request-stale"
+ end
+ -- The first locomotive has its OWN post-audit, counted site and source
+ -- ownership. A station marker alone cannot authorize train construction.
+ local locomotive_writ=type(c.request_value)=="table"
+   and c.request_value.site_reason=="original-first-locomotive-0836"
+ if locomotive_writ or c.site_reason=="original-first-locomotive-0836" then
+  if not(c.request_field=="construction_request"
+    and c.item_name=="locomotive" and c.entity_name=="locomotive"
+    and c.site_reason=="original-first-locomotive-0836"
+    and type(c.position)=="table"
+    and type(c.request_value)=="table"
+    and type(c.request_value.position)=="table"
+    and c.position.x==c.request_value.position.x
+    and c.position.y==c.request_value.position.y
+    and c.direction==c.request_value.direction
+    and owned_pending_locomotive_0836(pair,c.request_value))then
+   return nil,"locomotive-original-physical-request-stale"
+  end
  end
  local task={version=M.version,phase="waiting-source",item_name=c.item_name,entity_name=c.entity_name,category=c.category,position={x=c.position.x,y=c.position.y},direction=c.direction,site_reason=c.site_reason,effectiveness=c.effectiveness,request_field=c.request_field,request_value=c.request_value,ghost=c.ghost,started_tick=now()};local ok,why=claim_site(pair,task);if not ok then return nil,why end;pair.construction_task_0338=task;return task
 end
