@@ -718,6 +718,61 @@ class NativeRailOriginalGuardPredicateTests(unittest.TestCase):
         self.assertNotIn('surface.create_entity{name="straight-rail"', source)
 
 
+
+class NativeRailOriginalContactAuthorityTests(unittest.TestCase):
+    def test_0574_only_accepts_next_physically_paid_original_rail_contact(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        frontier = (root / "tech-priests_src/scripts/core/"
+                    "rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        corridor = (root / "tech-priests_src/scripts/core/"
+                    "authority_corridor_pathing_0574.lua").read_text(encoding="utf-8")
+        predicate = frontier.split(
+            "function M.authorized_paid_rail_contact_0836", 1)[1].split(
+            "local function reject(objective,reason)", 1)[0]
+        for guard in ('reason~="construction-site-standoff-0338"',
+                      'opts.owner=="construction-planner-0338"',
+                      'mission.status~="building-physical-rail"',
+                      'pair.construction_request~=pending.request',
+                      'task.request_value~=pending.request',
+                      'task.phase~="move-site"',
+                      'task.carried.count==1',
+                      'task.source_inv and task.source_inv.valid',
+                      'debit.before-debit.after~=1',
+                      'pending.segment~=route.segment+1',
+                      '#route.built_units~=route.segment',
+                      'last.unit_number==route.built_units[route.segment]',
+                      'connected_straight_rails(before,last)',
+                      'site_dx*site_dx+site_dy*site_dy>9',
+                      'dx*dx+dy*dy>25'):
+            self.assertIn(guard, predicate)
+        self.assertIn('frontier.authorized_paid_rail_contact_0836,pair,pos,reason,opts',
+                      corridor)
+        self.assertIn('if checked and authorized==true then', corridor)
+        self.assertIn('role="physical-original-rail-0836"', corridor)
+        self.assertIn('or rec.role == "physical-original-rail-0836"', corridor)
+        self.assertIn('return false, best, source', corridor)
+        self.assertNotIn('surface.create_entity', predicate)
+        self.assertNotIn('bounds_exempt', predicate)
+
+    def test_0566_preserves_only_active_exact_rail_contact_and_normal_safety(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        movement = (root / "tech-priests_src/scripts/core/"
+                    "movement_controller.lua").read_text(encoding="utf-8")
+        enforce = movement.split("function M.enforce_pair(pair, reason)", 1)[1]
+        permitted = enforce.split(
+            'return false,"original-paid-rail-contact-owned-0836"', 1)[0]
+        self.assertIn('request.owner=="construction-planner-0338"', permitted)
+        self.assertIn('request.reason=="construction-site-standoff-0338"', permitted)
+        self.assertIn(
+            'frontier.authorized_paid_rail_contact_0836,pair,', permitted)
+        self.assertIn('pair.priest.position,request.reason,{owner=request.owner}',
+                      permitted)
+        self.assertIn('if checked and authorized==true then', permitted)
+        self.assertIn('M.stop(pair, "movement-overleash-0566")', enforce)
+        self.assertIn('M.request(pair, pair.station.position,', enforce)
+        self.assertIn('return moved == true, "overleash-return"', enforce)
+
+
 class NativeRailGridAlignedConstructionTests(unittest.TestCase):
     def test_original_request_uses_factorio_native_center_and_unchanged_physical_gates(self):
         root = pathlib.Path(__file__).resolve().parents[2]

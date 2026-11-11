@@ -1350,6 +1350,25 @@ function M.enforce_pair(pair, reason)
     and (tonumber(request.priority) or 0) >= 840
     and (dist_sq(request.ground_route_final_destination or request, pair.station.position) or math.huge) <= 0.04
   if distance > M.hard_leash(pair) then
+    -- 0836 original paid rail construction is a physically verified track
+    -- contact, not a general overleash exemption.  Require the same live
+    -- 0338 owner and authentic last connected rail that 0574 checked.
+    -- Revoked requests, completed tasks, foreign cargo and idle priests
+    -- continue through the ordinary 0566 safety return below.
+    local frontier=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if request and request.owner=="construction-planner-0338"
+      and request.reason=="construction-site-standoff-0338"
+      and frontier
+      and type(frontier.authorized_paid_rail_contact_0836)=="function"then
+      local checked,authorized=pcall(
+        frontier.authorized_paid_rail_contact_0836,pair,
+        pair.priest.position,request.reason,{owner=request.owner})
+      if checked and authorized==true then
+        root.stats.original_paid_rail_contacts_preserved_0836=
+          (root.stats.original_paid_rail_contacts_preserved_0836 or 0)+1
+        return false,"original-paid-rail-contact-owned-0836"
+      end
+    end
     local courier_ok,courier_authorized=pcall(
       ResourceReturnMovement0953.authorized,pair,request)
     if courier_ok and courier_authorized then

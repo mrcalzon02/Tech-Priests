@@ -108,6 +108,70 @@ local function connected_straight_rails(from,to)
   end
   return false
 end
+-- A physical railway has a narrow, temporary construction contact outside
+-- the stationary Magos' work sphere.  Only its ORIGINAL item-debited 0338
+-- builder may walk beside the LAST genuinely connected rail to place exactly
+-- the NEXT pending original rail.  0574/0566 remain the movement authorities;
+-- this read-only predicate supplies evidence, not a command or leash override.
+function M.authorized_paid_rail_contact_0836(pair,point,reason,opts)
+  if reason~="construction-site-standoff-0338"
+    or not(opts and opts.owner=="construction-planner-0338")
+    or not(eligible(pair,pair and pair.remote_rail_outpost_0835))
+    or type(point)~="table" or type(point.x)~="number"
+    or type(point.y)~="number" then return false end
+  local mission=pair.remote_rail_outpost_0835
+  local pending=mission.pending_rail_0836
+  local route=mission.rail_frontier_0836
+  local task=pair.construction_task_0338
+  local debit=task and task.original_rail_source_debit_0836
+  if mission.status~="building-physical-rail"
+    or not(pending and route and task and debit)
+    or task.request_field~="construction_request"
+    or task.request_value~=pending.request
+    or pair.construction_request~=pending.request
+    or task.site_reason~="remote-rail-physical-frontier-0836"
+    or task.item_name~="rail" or task.entity_name~="straight-rail"
+    or task.phase~="move-site"
+    or not(task.carried and task.carried.item_name=="rail"
+      and task.carried.count==1)
+    or not(task.source_inv and task.source_inv.valid)
+    or not(valid(task.source_entity)
+      and task.source_entity.unit_number==debit.source_unit)
+    or debit.item~="rail" or type(debit.before)~="number"
+    or type(debit.after)~="number" or debit.before-debit.after~=1
+    or task.position.x~=pending.position.x
+    or task.position.y~=pending.position.y
+    or task.direction~=pending.direction
+    or route.direction~=pending.direction
+    or type(route.segment)~="number" or route.segment<1
+    or route.segment~=math.floor(route.segment)
+    or pending.segment~=route.segment+1
+    or type(route.last_position)~="table"
+    or type(route.built_units)~="table"
+    or #route.built_units~=route.segment
+    or math.abs(point.x-pending.position.x)>3
+    or math.abs(point.y-pending.position.y)>3 then return false end
+  local site_dx=point.x-pending.position.x
+  local site_dy=point.y-pending.position.y
+  if site_dx*site_dx+site_dy*site_dy>9 then return false end
+  local last=track_at(pair,route.last_position,route.direction)
+  if not(last and last.unit_number
+    and last.unit_number==route.built_units[route.segment]) then
+    return false
+  end
+  local dx=point.x-last.position.x
+  local dy=point.y-last.position.y
+  if dx*dx+dy*dy>25 then return false end
+  if route.segment>1 then
+    local preceding=pos(
+      route.last_position.x-M.segment_step,route.last_position.y)
+    local before=track_at(pair,preceding,route.direction)
+    if not(before and before.unit_number
+      and before.unit_number==route.built_units[route.segment-1]
+      and connected_straight_rails(before,last)) then return false end
+  end
+  return true
+end
 local function reject(objective,reason)
   objective.status="rail-track-blocked"
   objective.stage="blocked"

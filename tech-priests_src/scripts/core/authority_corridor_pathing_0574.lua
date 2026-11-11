@@ -113,6 +113,18 @@ end
 function M.authorization_for_destination(pair, pos, reason, opts)
   if not (valid_pair(pair) and pos) then return true, nil, "invalid-or-no-pos" end
   if is_exempt_reason(reason, opts) then return true, {pair=pair, role="exempt", station_unit=station_unit(pair)}, "exempt" end
+  -- The original Magos may contact only the next item-paid 0836 rail,
+  -- through the original 0338 movement request and a live native connected
+  -- predecessor.  No station range, hierarchy or cargo authority is enlarged.
+  local frontier=rawget(_G,"TechPriestsRailTrackFrontier0836")
+  if frontier and type(frontier.authorized_paid_rail_contact_0836)=="function" then
+    local checked,authorized=pcall(
+      frontier.authorized_paid_rail_contact_0836,pair,pos,reason,opts)
+    if checked and authorized==true then
+      return true,{pair=pair,role="physical-original-rail-0836",
+        station_unit=station_unit(pair)},"native-paid-rail-contact-0836"
+    end
+  end
   local surface = destination_surface(pair, pos)
   local auth, order, source = authorized_pairs(pair)
   local best, best_d = nil, nil
@@ -137,7 +149,8 @@ function M.maybe_corridor_waypoint(pair, pos, reason, opts, rec)
   local r=M.root()
   if r.enabled == false or r.decompose_long_moves == false then return nil end
   if not (valid_pair(pair) and pos and rec and valid_pair(rec.pair)) then return nil end
-  if rec.role == "home" or rec.role == "exempt" then return nil end
+  if rec.role == "home" or rec.role == "exempt"
+    or rec.role == "physical-original-rail-0836" then return nil end
   if pair.priest.surface ~= rec.pair.station.surface then return nil end
   local pd = dist(pair.priest.position, pos) or 0
   local in_auth_now = (dist(pair.priest.position, rec.pair.station.position) or 0) <= runtime_radius(rec.pair)
