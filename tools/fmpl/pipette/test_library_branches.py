@@ -83,24 +83,39 @@ class WireBranchGeometryTests(unittest.TestCase):
         self.assertTrue(all(x["sag_blender_units"][0]>0 and
                             x["sag_blender_units"][1]>0 for x in wa))
 
-    def test_ends_have_sixteen_mini_ferrules_and_three_compact_wraps(self):
+    def test_loose_bundle_has_sixteen_end_ferrules_but_no_floating_wrappers(self):
         model=lib.build_demo("wire_eight_loose_bundle","wye")
         hardware=[p for p in model["meshes"] if
                   p["role"]=="individual-conductor-ferrule"]
         sleeves=[p for p in model["meshes"] if
                  p["role"]=="branch-strain-relief-wrap"]
         self.assertEqual(len(hardware),16)
-        self.assertEqual(len(sleeves),3)
+        self.assertEqual(len(sleeves),0)
         self.assertEqual(collections.Counter(
             p["ferrule_terminal_port"] for p in hardware),
             {"A":8,"B":4,"C":4})
-        self.assertEqual(collections.Counter(
-            p["gripped_conductor_count"] for p in sleeves),
-            {8:1,4:2})
+        self.assertEqual(model["branch_geometry"]["branch_strain_relief_wraps"],0)
+        self.assertEqual(model["branch_geometry"]["branch_hardware_type"],
+                         "eight-wire-Y-unbound-loose-split")
         self.assertTrue(all(p["true_open_bore"] for p in hardware+ sleeves))
         self.assertFalse(any(p["role"].endswith("box") for p in model["meshes"]))
         self.assertTrue(all(not p.get("native_socket_seating_verified",False)
                             for p in hardware))
+
+    def test_loose_wire_variant_has_no_unmounted_metal_ring_or_binding(self):
+        for topology in ("wye","tee"):
+            with self.subTest(topology=topology):
+                model=lib.build_demo("wire_eight_loose_bundle",topology)
+                unwanted={"branch-strain-relief-wrap",
+                          "junction-housing-preview",
+                          "terminal-band","terminal-stop"}
+                roles={part["role"] for part in model["meshes"]}
+                self.assertTrue(roles.isdisjoint(unwanted))
+                self.assertEqual(model["branch_geometry"]["branch_strain_relief_wraps"],0)
+                self.assertFalse(model["branch_geometry"]["branch_has_mounted_support"])
+                self.assertEqual(
+                    sum(x["role"]=="continuous-branched-conductor"
+                        for x in model["meshes"]),8)
 
     def test_ferrule_bore_clears_real_insulated_strand(self):
         model=lib.build_demo("wire_eight_loose_bundle","wye")
@@ -118,10 +133,10 @@ class WireBranchGeometryTests(unittest.TestCase):
                 self.assertLess(sleeve["outer_diameter_bu"],.12*.20)
 
     def test_three_breakout_boots_are_tapered_closed_walls_not_thin_rings(self):
-        model=lib.build_demo("wire_eight_loose_bundle","wye")
+        model=lib.build_demo("wire_eight_laced_loom","wye")
         wraps=[p for p in model["meshes"]
                if p["role"]=="branch-strain-relief-wrap"]
-        self.assertEqual(len(wraps),3)
+        self.assertEqual(len(wraps),5)
         for wrap in wraps:
             self.assertEqual(wrap["profile_kind"],
                              "tapered-hollow-wire-breakout-boot")
