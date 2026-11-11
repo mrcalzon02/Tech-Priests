@@ -89,8 +89,19 @@ class TypedFittingGeometryTests(unittest.TestCase):
     def test_ring_lug_has_metal_eye_and_crimp(self):
         parts=self.model("wire_single_insulated_solid","ring_lug")
         self.assertEqual({p["role"] for p in parts},
-                         {"flat-ring-lug","wire-crimp-barrel"})
+                         {"flat-ring-lug","wire-crimp-barrel",
+                          "solid-lug-bridge"})
         self.assertTrue(all(p["true_open_bore"] for p in parts))
+
+    def test_eight_terminal_contacts_are_outside_visible_housing_face(self):
+        parts=self.model("wire_eight_loose_bundle","terminal_block")
+        contacts=[x for x in parts if x["role"]=="individual-recessed-contact"]
+        housing=next(x for x in parts if x["role"]=="eight-way-connector-housing")
+        self.assertEqual(len(contacts),8)
+        # Port A normal is -X, so the public face is on the negative X side.
+        housing_front=min(v[0] for v in housing["vertices"])
+        self.assertTrue(all(min(v[0] for v in p["vertices"])<housing_front
+                            for p in contacts))
 
     def test_rebar_coupling_is_not_hollow_fluid_pipe(self):
         parts=self.model("rebar_deformed_ribbed","rebar_threaded_coupler")
