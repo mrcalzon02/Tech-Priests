@@ -548,10 +548,14 @@ function M.service_pair(pair)
   -- Any live task, movement, cargo or nonmatching request still blocks.
   local order_authority=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
   local yielding=false
-  if pending and order_authority
+  -- Ask the original 0469 owner for read-only permission even between
+  -- completed rails. This does not cancel an ammo order: it admits only a
+  -- genuine next 0836 planning writ with no current physical duty/cargo.
+  if order_authority
     and type(order_authority.can_yield_uncommitted_rail_0836)=="function"then
+    local original_request=pending and pending.request or nil
     local ok,allowed=pcall(
-      order_authority.can_yield_uncommitted_rail_0836,pair,pending.request)
+      order_authority.can_yield_uncommitted_rail_0836,pair,original_request)
     yielding=ok and allowed==true
     if yielding and not pair.rail_order_yield_observed_0836 then
       pair.rail_order_yield_observed_0836={

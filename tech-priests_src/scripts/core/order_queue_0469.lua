@@ -146,21 +146,38 @@ local function passive_supply_request_1038(p)
 end
 -- An exact 0836 rail request may receive one original 0338 dispatch pulse
 -- while an automatic, SOURCE-LESS emergency magazine order is waiting.
--- This is queue-owned READ-ONLY arbitration, not a cancellation/pause or a
--- new worker: preserve the very same 0469 order, its queue place and timeout.
+-- The same queue-owned, read-only permission can admit PLANNING the next
+-- original rail after the previous paid segment has finished. A permanent
+-- automatic ammo wait must not add a new incumbent gap between genuine rails.
+-- This never changes the 0469 order, its queue place, status or timeout.
 -- Never yield physical cargo, a target, a live task/movement, real supply,
 -- combat, or an explicit user order. Construction still belongs to 0338.
 function M.can_yield_uncommitted_rail_0836(p,request)
   if not valid_pair(p) or p.station.name~="planetary-magos-cogitator-station"
-    or type(request)~="table"
-    or request.site_reason~="remote-rail-physical-frontier-0836"
-    or request.item_name~="rail" or request.entity_name~="straight-rail"
-    or p.construction_request~=request then
+    or (request~=nil and (type(request)~="table"
+      or request.site_reason~="remote-rail-physical-frontier-0836"
+      or request.item_name~="rail" or request.entity_name~="straight-rail"
+      or p.construction_request~=request)) then
     return false,"not-original-rail-request"
   end
   local mission=p.remote_rail_outpost_0835
   local pending=mission and mission.pending_rail_0836
-  if not (pending and pending.request==request
+  if request==nil then
+    -- Only the already authorized, live Magos starvation objective may
+    -- PLAN another segment. A foreign construction writ or pending original
+    -- rail must use its own owner instead; no cargo/task gets reassigned.
+    if not (mission and mission.root_station_unit==p.station.unit_number
+      and mission.surface_index==p.station.surface.index
+      and mission.force_index==p.station.force.index
+      and (mission.status=="starvation-confirmed"
+        or mission.status=="building-physical-rail")
+      and type(mission.target)=="table"
+      and type(mission.target.x)=="number"
+      and type(mission.target.y)=="number"
+      and pending==nil and p.construction_request==nil) then
+      return false,"rail-frontier-planning-not-uncommitted"
+    end
+  elseif not (pending and pending.request==request
     and mission.root_station_unit==p.station.unit_number
     and mission.surface_index==p.station.surface.index
     and mission.force_index==p.station.force.index) then

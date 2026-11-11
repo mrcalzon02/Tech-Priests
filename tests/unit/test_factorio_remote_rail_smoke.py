@@ -47,6 +47,43 @@ class QueueOwnedOriginalRailYieldTests(unittest.TestCase):
         self.assertIn('return false,"original-magos-incumbent-duty"', f)
 
 
+    def test_queue_owned_pre_writ_yield_is_limited_to_source_less_ammo(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        queue = (root / "tech-priests_src/scripts/core/order_queue_0469.lua"
+                 ).read_text(encoding="utf-8")
+        frontier = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
+                    ).read_text(encoding="utf-8")
+        # No new queue owner or assignment mutation. A new rail writ may be
+        # PLANNED only between actual segments, under the same full 0469
+        # source-less automatic-ammo and physical-lease refusal predicate.
+        pre = queue.split('if request==nil then', 1)[1].split(
+            'elseif not (pending', 1)[0]
+        self.assertIn('mission.root_station_unit==p.station.unit_number', pre)
+        self.assertIn('mission.surface_index==p.station.surface.index', pre)
+        self.assertIn('mission.force_index==p.station.force.index', pre)
+        self.assertIn('mission.status=="starvation-confirmed"', pre)
+        self.assertIn('mission.status=="building-physical-rail"', pre)
+        self.assertIn('pending==nil and p.construction_request==nil', pre)
+        for required in (
+            'o.source=="emergency_acquire"',
+            'o.item=="firearm-magazine"',
+            'o.target==nil and o.request==nil',
+            'not passive_supply_request_1038(p)',
+            'p.construction_task_0338 or p.construction_custody_0338',
+            'p.direct_acquisition_custody_0513',
+            'p.movement_request_0418',
+        ):
+            self.assertIn(required, queue)
+        self.assertIn('local original_request=pending and pending.request or nil',
+                      frontier)
+        self.assertIn('pair,original_request)', frontier)
+        self.assertIn('not yielding and (pair.active_order_0469', frontier)
+        self.assertIn('return false,"original-magos-incumbent-duty"', frontier)
+        self.assertNotIn('q.current=nil', queue[queue.index(
+            'function M.can_yield_uncommitted_rail_0836'
+        ):queue.index('function M.can_pause_uncommitted_relay_0974')])
+
+
 class CanonicalRailAdmissionRefusalTraceTests(unittest.TestCase):
     def test_pending_exact_rail_records_original_order_without_preemption(self):
         root = pathlib.Path(__file__).resolve().parents[2]
