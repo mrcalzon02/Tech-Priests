@@ -1,8 +1,8 @@
-"""Independent Blender 5.2 reopen and on-disk proof for V24 four-view review.
+"""Independent Blender 5.2 reopen and on-disk proof for V25 four-view review.
 
 This verifier opens the derived preview .blend in a SEPARATE Blender process.
 Checks turntable parenting, canonical camera invariant and all 32 real
-directional PNG frames per animated A/B variant (8 frames x 4 headings).
+directional PNG frames for selected A variant (16 frames x 4 headings).
 Never asserts prototype N/E/S/W mapping or game integration.
 """
 import argparse
@@ -22,7 +22,7 @@ from blender_camera_guard import assert_clean,camera_record
 from capture_policy import POLICY_ID
 
 ANGLES=[0,90,180,270]
-SAMPLES=[1,13,25,37,49,61,73,85]
+SAMPLES=[1+6*i for i in range(16)]
 
 
 def digest(p):
@@ -37,14 +37,14 @@ def image_size(path):
 
 
 def run(out,variant):
-    expected=out/("V24_four_orientation_preview_%s.blend"%variant)
+    expected=out/("V25_four_orientation_preview_%s.blend"%variant)
     if not expected.is_file() or Path(bpy.data.filepath).resolve()!=expected.resolve():
         raise RuntimeError("Independent four-view verifier did not reopen native derivative")
     scene=bpy.context.scene
-    if scene.get("four_view_review")!="V24_DIRECTIONAL_ANIMATED_REVIEW_ONLY" or \
+    if scene.get("four_view_review")!="V25_DIRECTIONAL_ANIMATED_REVIEW_ONLY" or \
        scene.get("source_animation_variant")!=variant or \
        scene.get("four_view_prototype_mapping")!="NOT_VERIFIED":
-        raise RuntimeError("V24 owner-review derivative marked as an accepted game asset")
+        raise RuntimeError("V25 owner-review derivative marked as an accepted game asset")
     if scene.get("emergency_miner_v24_applied") is not True:
         raise RuntimeError("Lowered middle chassis correction missing from opened file")
     cfg={
@@ -68,7 +68,7 @@ def run(out,variant):
        foundation.parent!=pivot or body.parent!=pivot:
         raise RuntimeError("Full machine, floor and animation rig do not rotate together")
     recorded=json.loads((out/("four_orientation_preview_%s.json"%variant)).read_text())
-    if recorded["model_yaw_degrees"]!=ANGLES or recorded["samples_per_direction"]!=8 or \
+    if recorded["model_yaw_degrees"]!=ANGLES or recorded["samples_per_direction"]!=16 or \
        recorded["Factorio_direction_mapping"]!="PENDING_GAME_PROTOTYPE_ALIGNMENT":
         raise RuntimeError("Owner preview incorrect or confused with production directions")
     counts={}
@@ -92,7 +92,7 @@ def run(out,variant):
                 raise RuntimeError("Foundation animated during orientation "+key)
         group=out/key
         frames=sorted(group.glob("frame_*.png"))
-        if len(frames)!=8:
+        if len(frames)!=16:
             raise RuntimeError("Missing source-based directional Blender frames "+key)
         for fr in SAMPLES:
             p=group/("frame_%03d.png"%fr)
@@ -114,7 +114,7 @@ def run(out,variant):
         "blender_version":bpy.app.version_string,
         "capture_camera":anchor,
         "same_camera_four_model_rotations":True,
-        "directions":counts,"frames_total":32,
+        "directions":counts,"frames_total":64,
         "V24_middle_chassis_lowered":True,
         "red_laser_effects_from_source":True,
         "prototype_mapping_verified":False,"game_assets_changed":False,
