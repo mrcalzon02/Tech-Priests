@@ -219,5 +219,69 @@ class LibraryGeometryTests(unittest.TestCase):
 
 
 
+    def test_twisted_pair_is_two_distinct_helixes_with_common_public_ports(self):
+        parts=lib.line_segment(self.a,self.b,"wire_twisted_pair")
+        self.assertEqual(len(parts),2)
+        self.assertEqual({p["conductor_index"] for p in parts},{0,1})
+        self.assertTrue(all(p["role"]==
+            "individually-helically-twisted-conductor" for p in parts))
+        self.assertTrue(all(p["twist_turns"]>=2.0 for p in parts))
+        self.assertTrue(all(p["public_port_centers_unchanged"]==
+             [list(self.a),list(self.b)] for p in parts))
+        self.assertNotEqual(parts[0]["vertices"],parts[1]["vertices"])
+
+    def test_flat_ribbon_has_actual_sheet_and_eight_raised_tracks(self):
+        parts=lib.line_segment(self.a,self.b,"wire_flat_ribbon")
+        self.assertEqual(len(parts),9)
+        body=parts[0]
+        self.assertEqual(body["role"],"flat-cable-web")
+        self.assertEqual(body["profile_kind"],"flat-rectangular-extrusion")
+        self.assertAlmostEqual(body["flat_width_bu"],.12)
+        self.assertLess(body["flat_thickness_bu"],.12*.2)
+        self.assertEqual(sum(p["role"]=="ribbon-raised-insulated-trace"
+                             for p in parts),8)
+        self.assertEqual({p["conductor_index"] for p in parts[1:]},set(range(8)))
+
+    def test_coax_concentric_cross_sections_at_both_terminals(self):
+        parts=lib.line_segment(self.a,self.b,"wire_coax")
+        self.assertEqual(len(parts),5)
+        self.assertTrue(parts[0]["true_open_bore"])
+        self.assertEqual(sum(p["role"]=="visible-coax-center-conductor"
+                             for p in parts),2)
+        self.assertEqual(sum(p["true_open_bore"] for p in parts),3)
+
+    def test_braided_pet_sleeve_is_real_open_bidirectional_weave(self):
+        parts=lib.line_segment(self.a,self.b,"housing_pet_braided_sleeve")
+        self.assertEqual(len(parts),8)
+        self.assertEqual({p["braid_handedness"] for p in parts},{-1,1})
+        self.assertTrue(all(p["role"]=="open-woven-braid-ribbon" for p in parts))
+        self.assertTrue(all(p["profile_kind"]=="flat-rectangular-extrusion"
+                            for p in parts))
+        self.assertTrue(all(not p["true_open_bore"] for p in parts))
+
+    def test_suction_hose_has_hollow_wall_and_separate_spring(self):
+        parts=lib.line_segment(self.a,self.b,"hose_wire_suction")
+        self.assertEqual(len(parts),2)
+        self.assertTrue(parts[0]["true_open_bore"])
+        self.assertEqual(parts[1]["role"],"suction-reinforcing-spring")
+        self.assertEqual(parts[1]["profile_kind"],"true-helical-ribbon")
+
+    def test_jacketed_double_wall_is_two_actual_concentric_hollow_meshes(self):
+        parts=lib.line_segment(self.a,self.b,"pipe_jacketed_double_wall")
+        self.assertEqual(len(parts),2)
+        self.assertTrue(all(p["true_open_bore"] for p in parts))
+        self.assertEqual(parts[1]["role"],"true-inner-process-tube")
+        self.assertAlmostEqual(parts[0]["outer_diameter_bu"],.12)
+        self.assertAlmostEqual(parts[1]["outer_diameter_bu"],.12*.72)
+
+    def test_multicore_geometry_does_not_change_public_wye_coordinates(self):
+        keys=("wire_twisted_pair","wire_flat_ribbon","wire_coax",
+              "housing_pet_braided_sleeve","hose_wire_suction",
+              "pipe_jacketed_double_wall")
+        ports=[lib.build_demo(key,"wye")["public_ports"] for key in keys]
+        self.assertTrue(all(p==ports[0] for p in ports[1:]))
+
+
+
 if __name__=="__main__":
     unittest.main()
