@@ -102,6 +102,21 @@ class WireBranchGeometryTests(unittest.TestCase):
         self.assertTrue(all(not p.get("native_socket_seating_verified",False)
                             for p in hardware))
 
+    def test_ferrule_bore_clears_real_insulated_strand(self):
+        model=lib.build_demo("wire_eight_loose_bundle","wye")
+        strands=[p for p in model["meshes"]
+                 if p["role"]=="continuous-branched-conductor"]
+        ferrules=[p for p in model["meshes"]
+                  if p["role"]=="individual-conductor-ferrule"]
+        self.assertEqual(len(strands),8)
+        self.assertEqual(len(ferrules),16)
+        diameter={p["conductor_index"]:p["outer_diameter_bu"] for p in strands}
+        for sleeve in ferrules:
+            with self.subTest(core=sleeve["conductor_index"]):
+                self.assertGreater(sleeve["bore_diameter_bu"],
+                                   diameter[sleeve["conductor_index"]])
+                self.assertLess(sleeve["outer_diameter_bu"],.12*.20)
+
     def test_does_not_extend_ferrules_beyond_canonical_port_face(self):
         model=lib.build_demo("wire_eight_loose_bundle","wye")
         for p in model["meshes"]:
