@@ -1,6 +1,6 @@
 # Emergency Miner — V21 baseline and V22 owner-directed motion refinement
 
-**Approval state: not rendered or visually approved until a native Blender receipt is attached.** The unmodified original Factorio art and prototypes remain the active rollback; no gameplay changes are permitted in this study.
+**Current state (2026-11-11): OWNER-APPROVED V25 Variant A integrated into the Factorio source on main.** The original V21–V24 notes below are historical development checkpoints. V25 has 64 verified native Blender directional frames, exported HR/SD idle and working atlases and a Factorio assembling-machine graphics override at commit `743e1557c239f68eb819550a2d63bd3eba5dcefb`. The old Martian-micro sprite remains present as rollback. A packaged release/headless startup result is **not yet verified** because the existing GitHub Actions publisher is queued.
 
 ## What this machine is
 
@@ -110,3 +110,9 @@ The new A motion:
 - Only Variant A receives full four-direction preview production at this stage: all **16 actual native Blender frames at 8 fps per 0/90/180/270° view** beneath one fixed canonical 45° orthographic camera. The original separate A .blend also retains all 16 frames. The 4-direction .blends/APNGs are for approval, NOT in-game sprites.
 
 The original V24 four-angle review remains available by its verified release artifact. V25 requires fresh user visual acceptance before native 2.0 HR/standard sprites, Factorio frame mapping, and prototype integration.
+
+## V25 approved integration record
+
+The owner explicitly selected A (continuous rumble with one red traveling photocopier scan), then explicitly approved the reviewed four-angle animation for in-game integration. Native Blender preview run `mrcalzon02/Dens-Mortis` #43075845104 passed. Source export contains 16 sampled frames at 8fps for each of four fixed-camera model orientations. The actual 64 Blender frames were hash-verified and repacked as HR 256px and standard 128px sheets, 16 columns by 4 rows; an idle sheet preserves all direction entries while idle. The 1x1 assembling-machine prototype uses `prototypes/generated_graphics/emergency-miner-v25.lua` from `data-final-fixes.lua`; it is NOT a mining-drill and no recipes or fuel behavior were rewritten. Canonical direction map: north=d00, east=d03, south=d02, west=d01. Factorio source version advanced 0.1.678 -> 0.1.679. Integration binary/payload commit: `743e1557c239f68eb819550a2d63bd3eba5dcefb` on `main`, verified with GitHub commit file list and returned binary blob hashes. The original Martian-micro color and shadow PNGs are untouched.
+
+**Release gate outstanding:** the existing `Publish Factorio mod release` GitHub Actions job #43097494091 is still queued with zero jobs as of this note. Therefore no claim that the package, graphical game startup, or headless startup has been verified. The user-approved V25 modeling and art integration are complete at source level; CI release delivery is tracked separately. No additional job/workflow should be created simply to duplicate this work.
