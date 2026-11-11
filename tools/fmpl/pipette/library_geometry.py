@@ -639,9 +639,10 @@ def line_segment(a, b, architecture_id, *, nominal_od=.12, topology="straight"):
             name="Real helical suction reinforcement",
             architecture_id=architecture_id,role="suction-reinforcing-spring"))
     if kind=="double_wall_hollow":
-        result.append(tube(points,nominal_od*.72,.27,"smooth",
-            "Separate concentric internal process wall",
-            architecture_id,role="true-inner-process-tube"))
+        layer=tube(points,nominal_od*.72,.27,"smooth",
+                   "Separate concentric internal process wall",architecture_id)
+        layer["role"]="true-inner-process-tube"
+        result.append(layer)
     if kind=="articulated_rings":
         # Exposed manufactured sleeves, not simply a modified surface shader.
         for i in range(1,6):
