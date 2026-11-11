@@ -151,31 +151,40 @@ def build_fluid_branch(collection, model, approved_material):
         raise RuntimeError("CSG manifold requires positive genuine hollow wall")
     radius=od*.5
     inner=radius*(1-wall)
-    root=None
-    for i,p in enumerate(ports):
-        q=Vector(p["xyz_bu"])
-        obj=cylinder(collection,"pipe outer solid leg "+p["id"],h,q,radius)
-        if root is None:
-            root=obj
-        else:
-            root=boolean(root,obj,"UNION")
-    # Cast branch enlargement encloses the intersection without closing bore.
+    # FIRST make one solid central hub. Unioning three cylinders that touch
+    # only at their center caps is numerically degenerate in Exact Boolean:
+    # Blender previously DROPPED two complete legs. Each arm MUST overlap
+    # an already-existing, watertight volume by a deliberate positive depth.
     bpy.ops.object.select_all(action="DESELECT")
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=32,ring_count=16,
-                  radius=radius*(1.22 if kind=="soft_cast_hollow" else 1.08),location=h)
-    boss=bpy.context.object
-    boss.name="Pipe true-volume central junction boss"
-    for old in tuple(boss.users_collection):
-        old.objects.unlink(boss)
-    collection.objects.link(boss)
-    root=boolean(root,boss,"UNION")
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=48,ring_count=24,
+                  radius=radius*(1.45 if kind=="soft_cast_hollow" else 1.30),
+                  location=h)
+    root=bpy.context.object
+    root.name="Pipe overlapping central solid hub"
+    for old in tuple(root.users_collection):
+        old.objects.unlink(root)
+    collection.objects.link(root)
+    for p in ports:
+        q=Vector(p["xyz_bu"])
+        d=(q-h).normalized()
+        # Start INSIDE the central sphere, not at a coplanar cap.
+        inward=h-d*radius*.72
+        outer_arm=cylinder(collection,"Pipe true outer leg "+p["id"],
+                           inward,q,radius)
+        root=boolean(root,outer_arm,"UNION")
+        # Validate *after each union* that all already placed full-length
+        # arms remain present, not merely that a mesh is nonempty.
+        vertices=[root.matrix_world@v.co for v in root.data.vertices]
+        probe=h.lerp(q,.78)
+        if min((v-probe).length for v in vertices)>radius*1.8:
+            raise RuntimeError("CSG union lost a newly added pipe leg "+p["id"])
     for p in ports:
         q=Vector(p["xyz_bu"])
         d=(q-h).normalized()
         # Bore cylinder starts just behind center and leaves the mouth face:
         # sequential subtraction creates ONE connected hollow interior.
         drill=cylinder(collection,"pipe actual open bore "+p["id"],
-                       h-d*.038,q+d*.045,inner)
+                       h-d*radius*1.65,q+d*radius*.78,inner)
         root=boolean(root,drill,"DIFFERENCE")
     root.name=("PIPETTE | "+model["architecture_id"]+
                " | hollow CSG "+model["topology"]+" manifold")
