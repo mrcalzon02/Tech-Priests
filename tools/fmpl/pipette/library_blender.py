@@ -313,7 +313,7 @@ def add_preview_camera_lights(scene, objects):
     world=bpy.data.worlds.new("Pipette proof-only ambient")
     world.use_nodes=True
     world.node_tree.nodes["Background"].inputs["Color"].default_value=(.40,.48,.58,1.)
-    world.node_tree.nodes["Background"].inputs["Strength"].default_value=.75
+    world.node_tree.nodes["Background"].inputs["Strength"].default_value=.55
     scene.world=world
     data=bpy.data.cameras.new("Pipette proof 45 azimuth ortho")
     camera=bpy.data.objects.new(data.name,data)
@@ -321,10 +321,10 @@ def add_preview_camera_lights(scene, objects):
     camera.location=center+Vector((1.75,-1.75,1.85))*span
     camera.rotation_euler=(center-camera.location).to_track_quat("-Z","Y").to_euler()
     data.type="ORTHO"
-    data.ortho_scale=span*1.45
+    data.ortho_scale=span*1.08
     scene.camera=camera
-    for i,(x,y,z,energy) in enumerate(((1.,-1.3,2.2,450.),
-                                       (-1.5,.5,1.4,300.))):
+    for i,(x,y,z,energy) in enumerate(((1.,-1.3,2.2,160.),
+                                       (-1.5,.5,1.4,100.))):
         lamp=bpy.data.lights.new("Pipette proof light %d"%i,"AREA")
         lamp.energy=energy*span*span
         lamp.shape="DISK"
