@@ -52,14 +52,14 @@ def _hollow_wrap(center,axis,diameter,length,architecture_id,label,
         raise ValueError("Invalid taper-boot size")
     tangent=geom.unit(axis)
     u,v=geom.frame(tangent)
-    sections=[(-.50,.86),(-.43,.92),(-.25,1.0),
-              (0.,1.06),(.25,1.0),(.43,.92),(.50,.86)]
+    sections=[(-.50,.96),(-.43,.98),(-.25,1.0),
+              (0.,1.06),(.25,1.0),(.43,.98),(.50,.96)]
     sides=24
     verts=[]
     for along,scale in sections:
         origin=geom.plus(center,geom.mult(tangent,along*length))
         for ring in (0,1):
-            radius=diameter*.5*scale*(1. if ring==0 else .82)
+            radius=diameter*.5*scale*(1. if ring==0 else .87)
             for k in range(sides):
                 phase=TAU*k/sides
                 offset=geom.plus(geom.mult(u,radius*math.cos(phase)),
@@ -83,7 +83,7 @@ def _hollow_wrap(center,axis,diameter,length,architecture_id,label,
                    verts,faces,architecture_id=architecture_id,bore=True,
                    other={"profile_kind":"tapered-hollow-wire-breakout-boot",
                           "outer_diameter_bu":diameter,
-                          "bore_diameter_bu":diameter*.86*.82,
+                          "bore_diameter_bu":diameter*.96*.87,
                           "axial_length_bu":length})
     part["branch_hardware_type"]=wrap_style
     part["branch_port_id"]=group_port
@@ -160,37 +160,38 @@ def build_eight_wire_y(architecture_id, topology_record, nominal_od=.12):
     laced=(architecture_id=="wire_eight_laced_loom")
     arch=architecture_id
     strand_od=nominal_od*.115
-    trunk_radius=nominal_od*.27
-    exit_radius=nominal_od*.18
+    trunk_radius=nominal_od*.30
+    exit_radius=nominal_od*.27
     trunk_direction=geom.unit(geom.sub(h,a))
     meshes=[]
     paths={}
     trunk_sites=[]
     exit_sites={"B":[],"C":[]}
     for k in range(8):
-        target="B" if k<4 else "C"
+        # Partition by the physical upper/lower half of the incoming bundle.
+        # Alternating arbitrary IDs between exits creates crossing spaghetti.
+        upper="B" if b[1]>=c[1] else "C"
+        lower="C" if upper=="B" else "B"
+        target=upper if k in (2,3,4,5) else lower
         q=b if target=="B" else c
-        local=k%4
         branch_direction=geom.unit(geom.sub(q,h))
         start_offset=_offset(trunk_direction,k,8,trunk_radius,phase=.02)
-        finish_offset=_offset(branch_direction,local,4,exit_radius,phase=.04)
+        finish_offset=_offset(branch_direction,k,8,exit_radius,phase=.02)
         start=geom.plus(a,start_offset)
         end=geom.plus(q,finish_offset)
         # Each physical conductor passes through the junction exactly ONCE,
         # with a small lane-specific offset; no eight-to-sixteen cloning.
-        divider=(1 if target=="B" else -1)*nominal_od*.085
-        h_offset=geom.plus(
-            geom.mult(start_offset,.31),
-            (0.,divider,0.))
+        divider=(1 if target==upper else -1)*nominal_od*.10
+        h_offset=geom.plus(start_offset,(0.,divider,0.))
         passage=geom.plus(h,h_offset)
         length1=geom.norm(geom.sub(passage,start))
         length2=geom.norm(geom.sub(end,passage))
-        sag1=length1*behavior["base_sag_fraction_of_span"]*.58*multipliers[k]
-        sag2=length2*behavior["base_sag_fraction_of_span"]*.64*multipliers[k]
+        sag1=length1*behavior["base_sag_fraction_of_span"]*.60*(1+.15*(multipliers[k]-1))
+        sag2=length2*behavior["base_sag_fraction_of_span"]*.70*(1+.30*(multipliers[k]-1))
         p1=geom.sample_centerline(start,passage,sag=sag1,
-              lateral=nominal_od*.034*phases[k],samples=51)
+              lateral=nominal_od*.034*phases[k]*.20,samples=51)
         p2=geom.sample_centerline(passage,end,sag=sag2,
-              lateral=nominal_od*.025*phases[k],samples=51)
+              lateral=nominal_od*.025*phases[k]*.20,samples=51)
         # One continuous 101-sample route. A single tube mesh bridges the
         # central passage and has no internal disconnected cap at HUB.
         path=p1+p2[1:]
@@ -216,6 +217,30 @@ def build_eight_wire_y(architecture_id, topology_record, nominal_od=.12):
                                "A",target,k,"input"))
         meshes.append(_ferrule(end,branch_direction,nominal_od,arch,
                                "A",target,k,"output"))
+    # Prevent the physically impossible interpenetration that previously
+    # happened when eight wires were linearly compressed into a tiny knot.
+    # Compare real centerline samples across all eight trunk lanes and each
+    # four-wire exit group. This is a deterministic cross-section acceptance
+    # gate (not a full arbitrary 3D BVH cable-collision simulator).
+    from itertools import combinations
+    trunks=range(8)
+    b_ids=[k for k in range(8) if (
+        ("B" if b[1]>=c[1] else "C")=="B")==(k in (2,3,4,5))]
+    c_ids=[k for k in range(8) if k not in b_ids]
+    min_spacing=float("inf")
+    for leg,groups in ((0,(tuple(trunks),)),
+                       (1,(tuple(b_ids),tuple(c_ids)))):
+        for indices in groups:
+            for sample_index in range(51):
+                for i,j in combinations(indices,2):
+                    gap=geom.norm(geom.sub(
+                        paths[i][leg][sample_index],
+                        paths[j][leg][sample_index]))
+                    min_spacing=min(min_spacing,gap)
+    if min_spacing<=strand_od*1.08:
+        raise RuntimeError(
+            "Eight-wire breakout centerlines interpenetrate: "
+            "min %.5f BU for %.5f BU strands"%(min_spacing,strand_od))
     trunk_center=_mean(trunk_sites)
     meshes.append(_hollow_wrap(trunk_center,trunk_direction,
         nominal_od*.94,nominal_od*1.15,arch,
@@ -226,7 +251,7 @@ def build_eight_wire_y(architecture_id, topology_record, nominal_od=.12):
         direction=geom.unit(geom.sub(q,h))
         center=_mean(exit_sites[target])
         meshes.append(_hollow_wrap(center,direction,
-            nominal_od*.72,nominal_od*.88,arch,
+            nominal_od*.85,nominal_od*.88,arch,
             "Compact four-wire %s branch sleeve"%target,target,4,
             "four-wire-branch-heatshrink"))
     if laced:
@@ -245,6 +270,9 @@ def build_eight_wire_y(architecture_id, topology_record, nominal_od=.12):
         "branch_hardware_type":"eight-wire-Y-laced-breakout",
         "branch_port_conductor_counts":{"A":8,"B":4,"C":4},
         "branch_route_count":8,
+        "minimum_wire_center_spacing_bu":min_spacing,
+        "minimum_wire_surface_gap_bu":min_spacing-strand_od,
+        "cross_section_spacing_checked":True,
         "branch_continuity_constructed":True,
         "branch_splice_certified":False,
         "branch_strain_relief_verified":False,
