@@ -4,7 +4,7 @@
 
 ## Scope implemented now
 
-The catalog specifies **140 architectures**. The new `library_geometry.py` contains **19 currently coded geometric recipes**, not 140 approved Blender models. They cover: smooth rigid metal/polymer tubes; two distinct metal conduits (EMT and square-lock/FMC); annular polymer conduit; split corrugated loom; *open* spiral plastic wrap and metal spring guard; manually segmented articulated sleeves; annular and helical metal hose; soft rubber hose; historical soft-cast lead pipe; single and eight-wire harnesses; tied eight-wire loom; true 1×7 wound metal cable; and ridged rebar.
+The catalog specifies **140 architectures**. The new `library_geometry.py` contains **25 currently coded geometric recipes**, not 140 approved Blender models. They cover: smooth rigid metal/polymer tubes; two distinct metal conduits (EMT and square-lock/FMC); annular polymer conduit; split corrugated loom; *open* spiral plastic wrap and metal spring guard; manually segmented articulated sleeves; annular and helical metal hose; soft rubber hose; historical soft-cast lead pipe; single and eight-wire harnesses; tied eight-wire loom; true 1×7 wound metal cable; and ridged rebar.
 
 For every implemented shape, the construction logic returns actual indexed vertices/faces. `build_library.py` exports stand-alone editable **OBJ** geometry and JSON receipts. `library_blender.py` converts the same recipes into separately editable Blender objects, GLB, and a real Cycles proof PNG. `library_verify.py` independently reopens Blender and GLB in another Blender process and verifies pixels, mesh counts, and the fixed comparison ports.
 
@@ -25,7 +25,7 @@ python -m unittest discover -s tools/fmpl/pipette -p 'test_*.py' -v
 python tools/fmpl/pipette/build_library.py --output /tmp/pipette-first-library
 ```
 
-The builder rejects existing directories to avoid overwriting original assets. It generates all **19 currently implemented recipes** as distinct OBJ scenes plus explicit Y comparison demos and `manifest.json`. This program is *not* dependent on Blender.
+The builder rejects existing directories to avoid overwriting original assets. It generates all **25 currently implemented recipes** as distinct OBJ scenes plus explicit Y comparison demos and `manifest.json`. This program is *not* dependent on Blender.
 
 Generate a single sample without Blender:
 
@@ -76,4 +76,10 @@ The 14 checks in `test_library_fittings.py` inspect real fitting meshes, visibil
 
 `test_library_geometry.py` verifies actual topology, helical-versus-annular geometry, open spiral gaps, split-wall construction, natural single- and eight-wire sag, seven-strand winding, exact fixture socket positions, identical diameter at terminal mouths, and refusal to overwrite exports. These tests are pure-Python mesh tests, not substitutes for native Blender readback. The optional `architecture_gallery=true` request in the existing `Dens-Mortis` `fmpl-pipette` mode runs eight hardcoded Blender/Cycles cases and independent verification, without adding any workflow or accepting arbitrary executable parameters.
 
-**Still not complete:** automatic adapter generation for the remaining 121 catalog recipes, 77 individually measured/approved hardware fittings, BVH wire collision solver, true structural/pressure/electric behavior, and native Factorio fluidbox integration. Existing production models are not edited in this stage.
+**Still not complete:** automatic adapter generation for the remaining 115 catalog recipes, 77 individually measured/approved hardware fittings, BVH wire collision solver, true structural/pressure/electric behavior, and native Factorio fluidbox integration. Existing production models are not edited in this stage.
+
+## Second executable expansion (2026-11-10)
+
+The geometry kernel now includes six distinct section meshes beyond the original 19: `wire_twisted_pair`, `wire_flat_ribbon`, `wire_coax`, `housing_pet_braided_sleeve`, `hose_wire_suction`, and `pipe_jacketed_double_wall`. Each preserves the fixed public connection port positions. Physical conductor, sleeve, spring and coax layers are deliberately modeled where visible at review or termination; they are not interchangeable aliases for standard tubes. Updated tests exercise actual vertices, profile differences and fixed Y layouts. The native Blender gallery uses the existing Dens Mortis worker and a bounded 14-case set; source-level implementation is not visual approval without passing independent reopen checks.
+
+The Boolean fluid Y now has a mandatory surface-island/non-manifold audit. If exact Booleans cannot produce one contiguous watertight hollow body, native construction attempts a bounded weld/voxel repair and fails closed if topology remains invalid. No floating parts may be accepted solely because their Cycles image appears connected.
