@@ -221,6 +221,10 @@ def build(architecture_id, joint_id, port, diameter=.12):
     elif joint_id=="ring_lug":
         result.append(tube("Conductor crimp barrel",r*.74,r*.31,r*1.3,
                            role="wire-crimp-barrel",displacement=-r*.50))
+        result.append(block(g.plus(p,g.mult(axis,r*.47)),axis,
+                            r*.76,r*.48,r*.17,
+                            arch=architecture_id,label="Conductive lug tang bridge",
+                            role="solid-lug-bridge"))
         result.append(tube("Flat conductive bolt eye",r*1.23,r*.39,r*.22,
                            role="flat-ring-lug",displacement=r*.90))
     elif joint_id=="terminal_block":
@@ -230,8 +234,11 @@ def build(architecture_id, joint_id, port, diameter=.12):
         u,v=g.frame(axis)
         for i in range(8):
             alpha=TAU*i/8
-            spot=g.plus(p,g.plus(g.mult(u,r*.44*math.cos(alpha)),
-                                 g.mult(v,r*.44*math.sin(alpha))))
+            # Contacts sit on the outer face of the connector housing,
+            # not invisibly embedded at the block center.
+            spot=g.plus(g.plus(p,g.mult(axis,diameter*.39)),
+                        g.plus(g.mult(u,r*.44*math.cos(alpha)),
+                               g.mult(v,r*.44*math.sin(alpha))))
             result.append(annul(spot,axis,r*.14,r*.065,r*.11,
                                 arch=architecture_id,label="Conductive socket %d"%i,
                                 role="individual-recessed-contact"))
