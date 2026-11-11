@@ -36,17 +36,20 @@ FRAMES = [1 + 6 * i for i in range(16)]
 KEYS = FRAMES + [97]
 FPS = 8
 RES = 384
-# V23 owner-review light limits. No physical geometry or camera changes.
-VENT_ALPHA_MAX = .60
-GAP_ALPHA_MAX = .32
-GAP_CHASSIS_SPILL_ENERGY_MAX = .42
+# V25: ONE traversing scanner, not three independent lamps.
+# Laser effects stay tucked under the V24 console and in real source vents.
+VENT_ALPHA_MAX = .90
+GAP_ALPHA_MAX = .96
+GAP_CHASSIS_SPILL_ENERGY_MAX = 2.20
 LASER_RED_RGB = (1.0, .028, .008)
-VENT_POINT_ENERGY_MAX = .70
-FX_EMISSION_STRENGTH = 2.10
-SCAN_COVERAGE = .73
+VENT_POINT_ENERGY_MAX = 3.40
+FX_EMISSION_STRENGTH = 5.60
+SCAN_COVERAGE = .89
+COPIER_SCAN_START = .08
+COPIER_SCAN_FINISH = .81
 
 FIXED = ("LAYER_1 ", "SOURCE FOUNDATION ", "Foundation source anchor bolt ")
-SCENE_NAME = "EMERGENCY_MINER_V24_MOTION_CANDIDATE"
+SCENE_NAME = "EMERGENCY_MINER_V25_COPIER_SCAN_CANDIDATE"
 
 
 def sha(path):
@@ -235,57 +238,66 @@ def make_flicker_surface(name, pos, size, upper, collection):
 
 
 
-def make_scan_effects(upper, collection):
-    """Internal laser pulses are visible ONLY inside the three real vent cuts.
 
-    There is no panning light bar on a console, upper cover, chassis face or
-    any exterior surface. The three short 3D emissive inserts live BELOW
-    the measured steel cover and within the existing physical apertures.
+def make_scan_effects(upper, collection):
+    """Three REAL vent cavities: broad warm red leakage + ONE traversing hotspot.
+
+    All three vent hotspots share the SAME x position and laser scan phase;
+    no vent runs a separate flashing animation. Nothing sits atop steel.
     """
     cover=bpy.data.objects["Vented upper source-shaped maintenance plate"]
     roof=ztop(cover.name)
-    lights=[]
+    vents=[]
     for idx,(source_y,slot_width) in enumerate(((153,68),(177,67),(201,65))):
         well=bpy.data.objects.get("Physical vent cavity dark well %d"%idx)
         if well is None or cover.get("actual_source_cut_vents")!=3:
-            raise RuntimeError("Laser vent flash must have 3 real open holes")
+            raise RuntimeError("Photocopier laser requires exactly three real vent holes")
         at=center(well.name)
-        glow, alpha=make_flicker_surface(
+        slot_span=miner.width((slot_width-11)*SCAN_COVERAGE)
+        ambient,ambient_alpha=make_flicker_surface(
             "FX ONLY | vent aperture laser glow %d"%idx,
-            (at.x,at.y,roof-.0080),
-            (miner.width((slot_width-10)*SCAN_COVERAGE),miner.width(2.8),.0008),
-            upper,collection)
-        alpha.default_value=0.0
-        glow["vent_source_index"]=idx
-        glow["source_geometry"]="Physical vent cavity dark well %d"%idx
-        glow["surface_light_forbidden"]=True
-        glow["v23_effect_profile"]="BOUND_TO_EXISTING_VENT_DARK_WELL"
-        glow["max_alpha"]=VENT_ALPHA_MAX
-        glow["max_emission_strength"]=FX_EMISSION_STRENGTH
+            (at.x,at.y,roof-.0085),
+            (slot_span,miner.width(3.0),.0008),upper,collection)
+        ambient["vent_source_index"]=idx
+        ambient["source_geometry"]=well.name
+        ambient["surface_light_forbidden"]=True
+        ambient["v25_effect_profile"]="STRONG_RED_LEAK_INSIDE_REAL_VENT"
+        ambient["max_alpha"]=VENT_ALPHA_MAX
+        ambient_alpha.default_value=.15
+        hotspot,hot_alpha=make_flicker_surface(
+            "FX ONLY | moving vent scan hotspot %d"%idx,
+            (at.x,at.y,roof-.0062),
+            (min(.029,slot_span*.38),miner.width(4.0),.0010),upper,collection)
+        hotspot["vent_source_index"]=idx
+        hotspot["scan_group"]="ONE_SHARED_PHOTOCOPIER_X_PHASE"
+        hotspot["scan_span"]=slot_span-min(.029,slot_span*.38)
+        hotspot["below_original_roof"]=True
+        hotspot["max_alpha"]=.98
+        hot_alpha.default_value=0.0
         data=bpy.data.lights.new("FX ONLY | vent inside point light %d"%idx,"POINT")
         data.color=LASER_RED_RGB
-        data.energy=0
-        data.shadow_soft_size=.011
+        data.energy=0.0
+        data.shadow_soft_size=.012
         light=bpy.data.objects.new(data.name,data)
         collection.objects.link(light)
-        # Stay BELOW roof surface, including the light's local centroid.
-        light.location=at+Vector((0,0,.0008))
+        light.location=at+Vector((0,0,.0012))
         light["source_vent_index"]=idx
-        light["v23_energy_cap"]=VENT_POINT_ENERGY_MAX
+        light["v25_energy_cap"]=VENT_POINT_ENERGY_MAX
+        light["scan_group"]="ONE_SHARED_PHOTOCOPIER_X_PHASE"
         preserve_parent(light,upper)
-        lights.append((glow,alpha,light))
-    if len(lights)!=3:
-        raise RuntimeError("Expected exactly three source vent light leak inserts")
-    return lights
+        vents.append((ambient,ambient_alpha,hotspot,hot_alpha,light))
+    if len(vents)!=3:
+        raise RuntimeError("Three original source vents did not produce scanner effects")
+    return vents
 
 
 def make_console_chassis_gap_leak(upper, collection):
-    """Light leaks from the REAL space between raised operator console and chassis.
+    """A SINGLE moving photocopier band in the REAL console/chassis seam.
 
-    This is one narrow in-gap effect made from three independent short inserts
-    following the console's forward edge. It is NOT a surface light, new armor
-    trim, hidden machine mechanism, or a beam sweeping across the console.
-    Its owner is the moving upper rig, for all four future orientation exports.
+    One coherent light crosses continuously left-to-right. It travels inside
+    the V24 physical gap, illuminating the existing middle chassis top with
+    one red area light. There are NO three independently flashing seam LEDs,
+    no light decal on console steel and no extra visible machinery.
     """
     console=bpy.data.objects["Upper controller shared sloped mount"]
     chassis=bpy.data.objects["LAYER_2 Raised central machine chassis"]
@@ -294,63 +306,68 @@ def make_console_chassis_gap_leak(upper, collection):
     cpts=[console.matrix_world @ v.co for v in console.data.vertices]
     mpts=[chassis.matrix_world @ v.co for v in chassis.data.vertices]
     upts=[casing.matrix_world @ v.co for v in casing.data.vertices]
-    # The lower machine's physical surface is the lower bound. The other end
-    # is the bottom of the raised console; every light vertex stays between.
     chassis_top=max(v.z for v in mpts)
     console_bottom=min(v.z for v in cpts)
     clearance=console_bottom-chassis_top
-    if not .008 < clearance < .24:
-        raise RuntimeError("No measurable console-to-middle-chassis gap: "+str(clearance))
-    seam_z=chassis_top+min(.010,clearance*.35)
-    # Front toward the camera is world -Y; anchor just in front of the
-    # upper casting front edge and tucked BELOW the operator bank.
+    if not .015<clearance<.24:
+        raise RuntimeError("No V24 open console/middle chassis space: "+str(clearance))
+    seam_z=chassis_top+min(.012,clearance*.34)
     front_y=min(v.y for v in upts)
     console_y=min(v.y for v in cpts)
     seam_y=min(front_y,console_y)-.0018
-    left=max(min(p.x for p in cpts)+.045,-.245)
-    right=min(max(p.x for p in cpts)-.045,.245)
+    left=max(min(p.x for p in cpts)+.048,-.245)
+    right=min(max(p.x for p in cpts)-.048,.245)
     if right-left<.22:
-        raise RuntimeError("Actual front console seam is too short to emit light")
-    # One restrained, segmented glow line; visible only where armor meets
-    # the raised controls. No movement along X at any frame.
-    groups=[]
-    width=(right-left)/3
-    for idx in range(3):
-        x=left+(idx+.5)*width
-        glow,alpha=make_flicker_surface(
-            "FX ONLY | console-middle-chassis joint leakage %d"%idx,
-            (x,seam_y,seam_z),
-            (width*.76,.0012,.0010),upper,collection)
-        glow["emission_origin"]="PHYSICAL_GAP_BETWEEN_CONSOLE_AND_MIDDLE_CHASSIS"
-        glow["no_surface_panning"]=True
-        glow["shared_strobe_source"]="VENT_LASER_PHASE_%d"%idx
-        glow["v23_effect_profile"]="NARROW_RECESSED_JOINT_STROBE"
-        glow["v24_laser_color"]="SATURATED_RED"
-        glow["v24_illuminates_original_chassis_surface"]=True
-        glow["max_alpha"]=GAP_ALPHA_MAX
-        glow["gap_world_z"]=seam_z
-        glow["console_lower_z"]=console_bottom
-        glow["chassis_upper_z"]=chassis_top
-        alpha.default_value=0.0
-        # True 3D area light: shines downward onto the existing upper
-        # middle-chassis metal face. It sits INSIDE the open console gap,
-        # never as an animated colored decal or a bar on console steel.
-        data=bpy.data.lights.new("FX ONLY | middle chassis red spill %d"%idx,"AREA")
-        data.shape="DISK"
-        data.size=.065
-        data.color=LASER_RED_RGB
-        data.energy=0.0
-        lamp=bpy.data.objects.new(data.name,data)
-        collection.objects.link(lamp)
-        lamp.location=(x,seam_y+.013,
-                       max(chassis_top+.003,min(console_bottom-.003,seam_z+.004)))
-        lamp["v24_light_role"]="DOWNWARD_RED_SPILL_ON_EXISTING_MIDDLE_CHASSIS"
-        lamp["source_gap_segment"]=idx
-        lamp["max_energy"]=GAP_CHASSIS_SPILL_ENERGY_MAX
-        lamp["no_visible_surface_mesh"]=True
-        preserve_parent(lamp,upper)
-        groups.append((glow,alpha,lamp))
-    return groups
+        raise RuntimeError("Original front console seam is too short to scan")
+    center_x=(left+right)*.5
+    beam_width=.050
+    scan_span=(right-left)-beam_width
+    if scan_span<.16:
+        raise RuntimeError("No valid uninterrupted photocopier scan span")
+    beam,alpha=make_flicker_surface(
+        "FX ONLY | one continuous red photocopier scanner",
+        (center_x,seam_y,seam_z),
+        (beam_width,.0026,.0030),upper,collection)
+    beam["emission_origin"]="PHYSICAL_GAP_BETWEEN_CONSOLE_AND_MIDDLE_CHASSIS"
+    beam["scan_type"]="SINGLE_CONTINUOUS_TRAVERSE"
+    beam["has_independent_strobe_segments"]=False
+    beam["not_on_console_surface"]=True
+    beam["v25_scan_span"]=scan_span
+    beam["v25_scan_midpoint"]=center_x
+    beam["gap_world_z"]=seam_z
+    beam["chassis_upper_z"]=chassis_top
+    beam["console_lower_z"]=console_bottom
+    beam["max_alpha"]=GAP_ALPHA_MAX
+    alpha.default_value=0.0
+    data=bpy.data.lights.new("FX ONLY | one traveling red middle chassis spill","AREA")
+    data.shape="DISK"
+    data.size=.095
+    data.color=LASER_RED_RGB
+    data.energy=0
+    light=bpy.data.objects.new(data.name,data)
+    collection.objects.link(light)
+    light.location=(center_x,seam_y+.015,
+                    max(chassis_top+.003,min(console_bottom-.003,seam_z+.005)))
+    light["v25_light_role"]="ONE_TRAVELING_DOWNWARD_RED_SPILL"
+    light["no_visible_surface_mesh"]=True
+    light["max_energy"]=GAP_CHASSIS_SPILL_ENERGY_MAX
+    preserve_parent(light,upper)
+    return (beam,alpha,light)
+
+
+def copier_scan_profile(phase):
+    """One fully continuous outward sweep, followed by a dark fast return.
+
+    Position is monotone through the entire illuminated sweep; the lamp is
+    never an independently triggered trio of lights. Frame 97 == frame 1.
+    """
+    if phase<COPIER_SCAN_START:
+        return (0.0,0.0)
+    if phase<=COPIER_SCAN_FINISH:
+        t=(phase-COPIER_SCAN_START)/(COPIER_SCAN_FINISH-COPIER_SCAN_START)
+        fade=max(0.,min(1.,t/.10,(1.-t)/.085))
+        return (t,fade)
+    return (max(0.,1.-(phase-COPIER_SCAN_FINISH)/(1.-COPIER_SCAN_FINISH)),0.0)
 
 
 def make_steam(upper, collection):
@@ -395,7 +412,12 @@ def wrap_bell(t, at, width):
 
 
 def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
-    vent_lights, gap_lights = light_parts
+    vent_lights, gap_scan = light_parts
+    gap_beam,gap_alpha,gap_spill=gap_scan
+    gap_origin=gap_beam.location.copy()
+    spill_origin=gap_spill.location.copy()
+    vent_origins=[(hotspot.location.copy(),light.location.copy())
+                  for _,_,hotspot,_,light in vent_lights]
     body0, upper0, cover0 = body.location.copy(), upper.location.copy(), cover.location.copy()
     enabled = set(enabled or ("mechanics", "scan", "lamps", "steam"))
     colors = []
@@ -442,26 +464,31 @@ def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
                 obj.keyframe_insert(data_path="location", frame=frame)
                 obj.keyframe_insert(data_path="rotation_euler", frame=frame)
         if "scan" in enabled:
-            # A hidden traveling scanner illuminates successive VENT HOLES.
-            # The light is never visible as a rectangle panning over steel.
-            # A faint sweep translates a few millimeters INSIDE each slot.
-            for i,(glow,alpha,light) in enumerate(vent_lights):
-                # Deliberate left-to-right lamp sequencing WITHIN vent
-                # apertures: narrower, non-overlapping scan beats rather than
-                # three large simultaneous flares on the maintenance plate.
-                center_phase=(.30+.095*i) if label=="A" else (.25+.070*i)
-                first=wrap_bell(phase,center_phase,.050 if label=="A" else .035)
-                second=wrap_bell(phase,center_phase+(.40 if label=="A" else .36),.040)
-                intensity=min(1.,first+.38*second)
-                key_value(alpha,frame,VENT_ALPHA_MAX*intensity)
-                light.data.energy=VENT_POINT_ENERGY_MAX*intensity
+            # Exactly ONE photocopier scanning lamp. Every vent hotspot,
+            # the continuous seam core, and the REAL red spill move together.
+            # The line moves continuously LEFT -> RIGHT then returns DARK.
+            position,active=copier_scan_profile(phase)
+            scan_x=(position-.5)*float(gap_beam["v25_scan_span"])
+            gap_beam.location=gap_origin+Vector((scan_x,0,0))
+            gap_beam.keyframe_insert(data_path="location",frame=frame)
+            gap_spill.location=spill_origin+Vector((scan_x,0,0))
+            gap_spill.keyframe_insert(data_path="location",frame=frame)
+            key_value(gap_alpha,frame,GAP_ALPHA_MAX*active)
+            gap_spill.data.energy=GAP_CHASSIS_SPILL_ENERGY_MAX*active
+            gap_spill.data.keyframe_insert(data_path="energy",frame=frame)
+            for i,(ambient,ambient_alpha,hotspot,hot_alpha,light) in enumerate(vent_lights):
+                # All original slots glow warmly during the ONE scan, with
+                # a single shared moving bright stripe inside their openings.
+                vent_x=(position-.5)*float(hotspot["scan_span"])
+                rest_hot,rest_light=vent_origins[i]
+                hotspot.location=rest_hot+Vector((vent_x,0,0))
+                hotspot.keyframe_insert(data_path="location",frame=frame)
+                light.location=rest_light+Vector((vent_x,0,0))
+                light.keyframe_insert(data_path="location",frame=frame)
+                key_value(ambient_alpha,frame,.18+.70*active)
+                key_value(hot_alpha,frame,.98*active)
+                light.data.energy=(.34+3.0*active)
                 light.data.keyframe_insert(data_path="energy",frame=frame)
-                # Use EXACTLY the same original phase envelope as vent i,
-                # with reduced brightness; no independent chase, no sweep.
-                gap_glow,gap_alpha,spill=gap_lights[i]
-                key_value(gap_alpha,frame,GAP_ALPHA_MAX*intensity)
-                spill.data.energy=GAP_CHASSIS_SPILL_ENERGY_MAX*intensity
-                spill.data.keyframe_insert(data_path="energy",frame=frame)
         if "lamps" in enabled:
             for i, socket in enumerate(colors):
                 trigger = ((frame - 1)//12 + i) % 4 == 0
@@ -568,7 +595,7 @@ def diagnostic_render(scene, out, name, sample_frame=1, pixels=128):
     return target
 
 
-def main(out,diagnostic=False,quick_review=False):
+def main(out,diagnostic=False,quick_review=False,variant_a_only=False):
     out.mkdir(parents=True,exist_ok=True)
     print('MINER_TRACE 01 begin source V24 build',flush=True)
     profile = build_v21()
@@ -591,19 +618,25 @@ def main(out,diagnostic=False,quick_review=False):
               "quick_review":bool(quick_review),
               "v22_console_and_camera_facing_caps":True,
               "laser_light_sites":"THREE_VENTS_PLUS_CONSOLE_CHASSIS_GAP",
-              "laser_gap_strobe_sync":"SAME_THREE_VENT_PHASES",
-              "effect_revision":"V24 red laser and expanded physical chassis gap",
+              "laser_gap_strobe_sync":"ONE_CONTINUOUS_TRAVELING_SCAN_PHASE",
+              "effect_revision":"V25 stronger vents and one continuous traveling red photocopier line",
+              "selected_variant":"A",
+              "scanner_start_phase":COPIER_SCAN_START,
+              "scanner_end_phase":COPIER_SCAN_FINISH,
+              "single_traversing_gap_scan":True,
               "v24_lower_middle_chassis_top":True,
               "v24_laser_color_rgb":list(LASER_RED_RGB),
-              "v24_red_surface_spill_emitters":3,
+              "v24_red_surface_spill_emitters":1,
+              "separate_gap_strobe_bulbs":0,
               "effect_limits":{"vent_alpha":VENT_ALPHA_MAX,"joint_alpha":GAP_ALPHA_MAX,
                                "point_energy":VENT_POINT_ENERGY_MAX,
                                "emission_strength":FX_EMISSION_STRENGTH,
                                "vent_coverage":SCAN_COVERAGE,
                                "chassis_spill_energy":GAP_CHASSIS_SPILL_ENERGY_MAX},
               "surface_panning_light_count":0,
-              "variants":{}}
-    for label in ("A","B"):
+              "variants":{},
+              "rendered_variant_names":["A"] if variant_a_only else ["A","B"]}
+    for label in (("A",) if variant_a_only else ("A","B")):
         print('MINER_TRACE 10 reopen base '+label,flush=True)
         bpy.ops.wm.open_mainfile(filepath=str(base))
         print('MINER_TRACE 11 base reopened '+label,flush=True)
@@ -693,11 +726,12 @@ def main(out,diagnostic=False,quick_review=False):
            "sample_count":dims[2],"image_pixels":dims[:2],
            "foundation_static":True,"visible_body_parts":nb,
            "visible_upper_parts":nu,"foundation_parts_fixed":len(still),
-           "steam_lobes":9,"scan_emission_sites":6,
-           "vent_emitters":3,"console_chassis_gap_emitters":3,
-           "downward_red_chassis_spill_lights":3,
+           "steam_lobes":9,"scan_emission_sites":4,
+           "vent_emitters":3,"console_chassis_gap_emitters":1,
+           "downward_red_chassis_spill_lights":1,
            "scan_light_spill_locations":"VENTS_AND_CONSOLE_CHASSIS_GAP_ONLY",
            "gap_strobe_synchronized_to_vent_phase":True,
+           "gap_scan_style":"CONTINUOUS_LEFT_TO_RIGHT_SINGLE_SOURCE",
            "surface_panning_light_count":0,"actual_camera":camera_record(scene)}
     result["status"]="RENDERED_FOR_OWNER_REVIEW_NOT_GAME_READY"
     (out/"motion_manifest.json").write_text(json.dumps(result,indent=2)+"\n")
@@ -709,6 +743,8 @@ if __name__ == "__main__":
     parser.add_argument("--out",type=Path,required=True)
     parser.add_argument("--diagnostic",action='store_true')
     parser.add_argument("--quick-review",action='store_true')
+    parser.add_argument("--variant-a-only",action='store_true')
     argv=sys.argv[sys.argv.index("--")+1:] if "--" in sys.argv else sys.argv[1:]
     args=parser.parse_args(argv)
-    main(args.out.resolve(),diagnostic=args.diagnostic,quick_review=args.quick_review)
+    main(args.out.resolve(),diagnostic=args.diagnostic,quick_review=args.quick_review,
+         variant_a_only=args.variant_a_only)
