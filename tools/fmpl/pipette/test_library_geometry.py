@@ -191,5 +191,33 @@ class LibraryGeometryTests(unittest.TestCase):
         self.assertGreater(part["sag_blender_units"],.25)
 
 
+    def test_surface_audit_detects_true_single_closed_component(self):
+        good=lib.surface_topology([(0,1,2),(0,3,1),(1,3,2),(2,3,0)])
+        self.assertEqual(good["surface_islands"],1)
+        self.assertEqual(good["naked_boundary_edges"],0)
+        self.assertEqual(good["overlapping_nonmanifold_edges"],0)
+        self.assertEqual(good["degenerate_polygons"],0)
+
+    def test_surface_audit_rejects_disconnected_fake_y(self):
+        shell=[(0,1,2),(0,3,1),(1,3,2),(2,3,0)]
+        disconnected=lib.surface_topology(shell+[
+            tuple(i+10 for i in face) for face in shell])
+        self.assertEqual(disconnected["surface_islands"],2)
+        self.assertEqual(disconnected["naked_boundary_edges"],0)
+
+    def test_surface_audit_detects_open_pipe_cap_or_split_seam(self):
+        open_triangle=lib.surface_topology([(0,1,2)])
+        self.assertEqual(open_triangle["surface_islands"],1)
+        self.assertEqual(open_triangle["naked_boundary_edges"],3)
+        with self.assertRaises(ValueError):
+            lib.surface_topology([])
+
+    def test_surface_audit_catches_overlapping_face_geometry(self):
+        good=[(0,1,2),(0,3,1),(1,3,2),(2,3,0)]
+        overlapping=lib.surface_topology(good+[(0,1,2)])
+        self.assertGreater(overlapping["overlapping_nonmanifold_edges"],0)
+
+
+
 if __name__=="__main__":
     unittest.main()
