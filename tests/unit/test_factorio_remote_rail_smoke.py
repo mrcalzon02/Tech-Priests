@@ -1196,6 +1196,26 @@ class NativeOriginalMagosBoarding0836ContractTests(unittest.TestCase):
                        "retry_after_tick=now()+300",
                        "physical_boarding_confirmed=true"):
             self.assertIn(marker,section)
+        # Native Factorio 2.1.24 rejected set_driver(original unit).
+        # Fail closed before any impossible write or movement lease.
+        blocker='if priest.type~="character" then'
+        self.assertIn(blocker,section)
+        prototype_guard=section.split(blocker,1)[1].split("  end",1)[0]
+        for required in ('state.phase="native-boarding-unsupported-original-unit"',
+                         'state.priest_unit=priest.unit_number',
+                         'state.unsupported_since_tick=state.unsupported_since_tick or now()',
+                         '"native-driver-requires-original-character:"..priest.type',
+                         'return false,state.last_blocker'):
+            self.assertIn(required,prototype_guard)
+        self.assertLess(section.index(blocker),
+                        section.index("local dx=priest.position.x-entity.position.x"))
+        self.assertLess(section.index(blocker),
+                        section.index("entity.set_driver(priest)"))
+        for unsafe in ("teleport", "create_entity", "set_driver",
+                       "physical_boarding_confirmed", "remove_item", "insert"):
+            self.assertNotIn(unsafe,prototype_guard)
+        self.assertIn("unsupported_priest_type=",fixture)
+        self.assertIn("original_priest_identity_intact=",fixture)
         for bypass in ("teleport","surface.create_entity","train.speed="):
             self.assertNotIn(bypass,section)
         self.assertIn("return M.service_first_train_board_0836(pair)",src)

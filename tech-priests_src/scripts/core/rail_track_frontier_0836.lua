@@ -1088,6 +1088,19 @@ function M.service_first_train_board_0836(pair)
     state.last_blocker="boarding-foreign-movement-owned"
     return false,state.last_blocker
   end
+  -- Factorio's native driver socket accepts ONLY characters. The original
+  -- commandable Cogitator priest is a unit, so repeated set_driver(unit)
+  -- never becomes valid. Preserve the identical live priest and train;
+  -- do not create a movement lease or fraudulent passenger receipt.
+  -- Recheck the actual prototype each call for future compatible migrations.
+  if priest.type~="character" then
+    state.phase="native-boarding-unsupported-original-unit"
+    state.last_priest_type=priest.type
+    state.priest_unit=priest.unit_number
+    state.unsupported_since_tick=state.unsupported_since_tick or now()
+    state.last_blocker="native-driver-requires-original-character:"..priest.type
+    return false,state.last_blocker
+  end
   local dx=priest.position.x-entity.position.x
   local dy=priest.position.y-entity.position.y
   local distance_sq=dx*dx+dy*dy

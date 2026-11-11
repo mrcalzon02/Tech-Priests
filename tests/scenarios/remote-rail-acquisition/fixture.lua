@@ -837,6 +837,10 @@ local function inspect(s,elapsed)
     " phase="..tostring(first_board and first_board.phase)..
     " priest_type="..tostring(p.priest.type)..
     " priest_unit="..tostring(p.priest.unit_number)..
+    " unsupported_priest_type="..tostring(first_board
+      and first_board.phase=="native-boarding-unsupported-original-unit")..
+    " original_priest_identity_intact="..tostring(p.priest.valid
+      and first_board and first_board.priest_unit==p.priest.unit_number)..
     " native_driver_read="..tostring(driver_read)..
     " real_original_driver="..tostring(native_driver==p.priest)..
     " contact_sq="..tostring(contact_sq)..
