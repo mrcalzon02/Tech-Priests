@@ -276,7 +276,20 @@ function M.service_pair(pair,reason)
    -- Resume only its existing transaction; all competing physical custody
    -- and defense exclusions below remain authoritative.
    and (machine.custody or pair.machine_logistics_custody_0528
-     or (not foreign_order and not strict_craft))
+     or (not foreign_order and not strict_craft)
+     or (machine.original_train_fuel_0836==true
+       and not strict_craft
+       and machine.action=="supply-fuel"
+       and machine.item=="coal"
+       and valid(machine.machine)
+       and (not foreign_order or (function()
+         local owner=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+         if not(owner and type(owner.can_yield_uncommitted_rail_0836)=="function")then
+           return false
+         end
+         local ok,allowed=pcall(owner.can_yield_uncommitted_rail_0836,pair,nil)
+         return ok and allowed==true
+       end)())))
    and not direct_active(pair)
    and not (pair.construction_task_0338 or pair.construction_custody_0338
      or pair.construction_task_0340 or pair.inventory_transfer_custody_0687
@@ -575,6 +588,46 @@ function M.service_pair(pair,reason)
      "construction",status,result.detail)
    stat("pairs_processed");stat("actions",result.acted);stat("failures",result.failed)
    record("dispatch-first-native-wagon-0836",pair,result.detail)
+   return result
+  end
+  local fuel=m and m.first_fuel_0836
+  local fueled_loco=m and m.first_locomotive_0836
+  local fueled_wagon=m and m.first_wagon_0836
+  local candidate=pair.machine_logistics_candidate_0528
+  if fuel and fueled_loco and fueled_wagon
+      and fueled_loco.phase=="native-paid-locomotive-verified"
+      and fueled_wagon.phase=="native-paid-wagon-verified"
+      and candidate and candidate.source=="original-locomotive-fuel-0836"
+      and candidate.action=="supply-fuel" and candidate.item=="coal"
+      and candidate.machine==fueled_loco.built_entity
+      and fuel.phase~="native-paid-locomotive-fueled" then
+   local q=pair.order_queue_0469
+   local order=pair.active_order_0469 or (q and q.current)
+   if order then
+    local owner=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+    local ok,allowed=false,false
+    if owner and type(owner.can_yield_uncommitted_rail_0836)=="function"then
+     ok,allowed=pcall(owner.can_yield_uncommitted_rail_0836,pair,nil)
+    end
+    if not(ok and allowed==true)then
+     return {processed=1,blocked=1,detail="train-fuel-order-yield-refused"}
+    end
+   end
+   if pair.active_task or pair.current_task or pair.active_task_0285
+      or pair.construction_task_0338 or pair.construction_custody_0338
+      or pair.machine_logistics_custody_0528 or pair.machine_logistics_0528
+      or pair.direct_acquisition_custody_0513 or pair.defense_task_0259
+      or pair.inventory_transfer_custody_0687 or pair.movement_request_0418 then
+    return {processed=1,blocked=1,detail="train-fuel-incumbent-physical-work"}
+   end
+   local result=execute(pair,"machine-logistics",
+     "dispatcher-0510:original-coupled-train-fuel-0836")
+   local status=result.failed>0 and"failed"or result.acted>0 and"acted"
+     or result.blocked>0 and"blocked"or result.waiting>0 and"waiting"or"idle"
+   publish_action(pair,{kind="machine-logistics",
+     source="original-coupled-train-fuel-0836",item="coal",
+     target=fueled_loco.built_entity},"machine-logistics",status,result.detail)
+   stat("pairs_processed");stat("actions",result.acted);stat("failures",result.failed)
    return result
   end
  end

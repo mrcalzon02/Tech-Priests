@@ -780,6 +780,23 @@ local function inspect(s,elapsed)
     " paid="..tostring(paid~=nil)..
     " coupled="..tostring(coupled==true)..
     " unit="..tostring(wagon_entity and wagon_entity.unit_number))
+  local first_fuel=objective and objective.first_fuel_0836
+  local actual_fuel=0
+  if loco_entity and loco_entity.valid and defines and defines.inventory then
+    local ok,fuel=pcall(function()
+      return loco_entity.get_inventory(defines.inventory.fuel)
+    end)
+    if ok and fuel and fuel.valid then
+      local counted,n=pcall(fuel.get_item_count,"coal")
+      if counted and type(n)=="number"then actual_fuel=n end
+    end
+  end
+  emit("FUEL_NATIVE_0836 elapsed="..elapsed..
+    " phase="..tostring(first_fuel and first_fuel.phase)..
+    " fuel_coal="..actual_fuel..
+    " receipt_tick="..tostring(first_fuel and first_fuel.receipt_tick)..
+    " native_loco_unit="..tostring(loco_entity and loco_entity.unit_number)..
+    " native_wagon_unit="..tostring(wagon_entity and wagon_entity.unit_number))
   local drills=surface.find_entities_filtered{
     type="mining-drill",
     area={{s.natural_ore_x-32,s.natural_ore_y-24},
@@ -823,6 +840,8 @@ local function inspect(s,elapsed)
   if elapsed>=90000 then
     if near<1 or far<1 then fail("RAIL_LINE_NEVER_REACHED_REMOTE_PATCH")end
     if #locomotives<1 or wagons<1 then fail("TRAIN_NEVER_ASSEMBLED")end
+    if not(first_fuel and first_fuel.phase=="native-paid-locomotive-fueled"
+        and actual_fuel>0)then fail("TRAIN_NOT_NATIVE_FUELED")end
     if not s.ride_proof then fail("MAGOS_PHYSICAL_TRAIN_RIDE_NOT_PROVEN")end
     if not(s.outbound and s.returned)then fail("TRAIN_ROUND_TRIP_NOT_PROVEN")end
     if resource_drills<1 then fail("REMOTE_MINE_NOT_ESTABLISHED")end

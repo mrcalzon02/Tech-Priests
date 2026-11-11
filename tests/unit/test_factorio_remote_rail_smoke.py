@@ -1100,3 +1100,48 @@ class NativePaidWagon0836ContractTests(unittest.TestCase):
                      "MAGOS_PHYSICAL_TRAIN_RIDE_NOT_PROVEN",
                      "NO_GENUINE_ORE_DELIVERED_BY_RAIL"):
             self.assertIn(gate,fixture)
+
+
+class NativePaidTrainFuel0836ContractTests(unittest.TestCase):
+    def test_original_coupled_train_fuel_uses_existing_physical_0528_and_0510(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        src=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        fuel=(root/"tech-priests_src/scripts/core/logistics_machine_fulfillment_0528.lua").read_text(encoding="utf-8")
+        dispatch=(root/"tech-priests_src/scripts/core/single_dispatcher_0510.lua").read_text(encoding="utf-8")
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        section=src.split("function M.service_first_train_fuel_0836(pair)",1)[1].split("function M.service_pair(pair)",1)[0]
+        for marker in ('wagon.phase=="native-paid-wagon-verified"',
+                       "wagon.built_entity.train.id==entity.train.id",
+                       "receipt.source_before-receipt.source_after==receipt.count",
+                       "receipt.destination_after-receipt.destination_before==receipt.count",
+                       'receipt.authority=="physical-machine-fuel-0528"',
+                       'fuel.get_item_count,"coal"',
+                       "offer_original_locomotive_fuel_0836"):
+            self.assertIn(marker,section)
+        self.assertNotIn("surface.create_entity",section)
+        self.assertNotIn("inventory.insert",section)
+        self.assertIn('locomotive = true, -- explicitly owned original 0836 fuel only',fuel)
+        self.assertIn('candidate.source="original-locomotive-fuel-0836"',fuel)
+        self.assertIn("exact_original_train_0836(pair,state.machine)",fuel)
+        self.assertIn("remove_generic(pair,state.item,state.count)",fuel.replace(" ",""))
+        self.assertIn("insert_inventory(destination, custody.item, custody.count)",fuel)
+        self.assertIn("destination_after == destination_before + inserted",fuel)
+        self.assertIn("dispatcher-0510:original-coupled-train-fuel-0836",dispatch)
+        self.assertIn("train-fuel-order-yield-refused",dispatch)
+        self.assertIn("FUEL_NATIVE_0836 elapsed=",fixture)
+        self.assertIn('fail("TRAIN_NOT_NATIVE_FUELED")',fixture)
+
+    def test_fuel_refuses_uncoupled_unpaid_or_other_custody(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        src=(root/"tech-priests_src/scripts/core/logistics_machine_fulfillment_0528.lua").read_text(encoding="utf-8")
+        section=src.split("local function exact_original_train_0836(pair,locomotive)",1)[1].split("-- 1153:",1)[0]
+        for marker in ("route.chain_audit_completed_tick_0836",
+                       'loco.paid_completion_0836.native_0338_paid==true',
+                       'wagon.paid_completion_0836.native_0338_paid==true',
+                       "locomotive.train.id==wagon.built_entity.train.id",
+                       "has_loco and has_wagon",
+                       "pair.machine_logistics_custody_0528",
+                       "pair.direct_acquisition_custody_0513",
+                       "other-machine-candidate-owned",
+                       "no-counted-original-coal-or-fuel-not-needed"):
+            self.assertIn(marker,section)

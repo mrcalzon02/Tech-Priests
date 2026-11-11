@@ -27,6 +27,7 @@ local MACHINE_TYPES = {
   ["assembling-machine"] = true,
   furnace = true,
   ["mining-drill"] = true, -- fuel only: mined output has no generic inventory
+  locomotive = true, -- explicitly owned original 0836 fuel only; never generic scan
   container = true,
   ["logistic-container"] = true, -- only drill-connected receivers are eligible
 }
@@ -881,6 +882,84 @@ function M.offer_remote_drill_fuel_1016(pair, drill)
   return true,"physical-0528-fuel-candidate-offered"
 end
 
+-- Read-only 0836 original train identification. No fuel, stock or train is
+-- inserted here: only the established 0528 physical logistics executor may
+-- remove counted source goods and put them in a native burner inventory.
+local function exact_original_train_0836(pair,locomotive)
+  local mission=pair and pair.remote_rail_outpost_0835
+  local loco=mission and mission.first_locomotive_0836
+  local wagon=mission and mission.first_wagon_0836
+  local route=mission and mission.rail_frontier_0836
+  if not(valid_pair(pair) and mission
+      and mission.status=="rail-track-established"
+      and mission.root_station_unit==station_unit(pair)
+      and mission.surface_index==pair.station.surface.index
+      and mission.force_index==pair.station.force.index
+      and route and route.chain_audit_completed_tick_0836
+      and type(route.built_units)=="table"
+      and route.segment==#route.built_units
+      and loco and loco.phase=="native-paid-locomotive-verified"
+      and loco.paid_completion_0836
+      and loco.paid_completion_0836.native_0338_paid==true
+      and loco.built_entity==locomotive and valid(locomotive)
+      and locomotive.type=="locomotive"
+      and locomotive.unit_number==loco.built_unit
+      and locomotive.force==pair.station.force
+      and locomotive.surface==pair.station.surface
+      and wagon and wagon.phase=="native-paid-wagon-verified"
+      and wagon.paid_completion_0836
+      and wagon.paid_completion_0836.native_0338_paid==true
+      and valid(wagon.built_entity)
+      and wagon.built_entity.unit_number==wagon.built_unit
+      and locomotive.train and locomotive.train.valid
+      and wagon.built_entity.train and wagon.built_entity.train.valid
+      and locomotive.train.id==wagon.built_entity.train.id)then
+    return false,"original-counted-coupled-train-invalid"
+  end
+  local has_loco,has_wagon=false,false
+  for _,carriage in ipairs(locomotive.train.carriages)do
+    if carriage==locomotive then has_loco=true end
+    if carriage==wagon.built_entity then has_wagon=true end
+  end
+  if not(has_loco and has_wagon)then
+    return false,"original-train-carriage-membership-invalid"
+  end
+  return true,"original-counted-train-verified"
+end
+
+function M.offer_original_locomotive_fuel_0836(pair,locomotive)
+  local authorized,why=exact_original_train_0836(pair,locomotive)
+  if not authorized then return false,why end
+  if active_state(pair) or pair.machine_logistics_custody_0528
+      or pair.construction_task_0338 or pair.construction_custody_0338
+      or pair.direct_acquisition_custody_0513
+      or pair.inventory_transfer_custody_0687
+      or pair.defense_task_0259 then
+    return false,"incumbent-physical-fuel-work"
+  end
+  local existing=pair.machine_logistics_candidate_0528
+  if existing and (tonumber(existing.expires_tick)or 0)>=now()then
+    if existing.source=="original-locomotive-fuel-0836"
+        and existing.machine==locomotive and existing.item=="coal"
+        and existing.action=="supply-fuel"then
+      existing.expires_tick=now()+M.candidate_ttl
+      return true,"existing-original-locomotive-fuel-candidate"
+    end
+    return false,"other-machine-candidate-owned"
+  end
+  local candidate=fuel_candidate(pair,locomotive)
+  if not(candidate and candidate.action=="supply-fuel"
+      and candidate.item=="coal" and candidate.count>=1)then
+    return false,"no-counted-original-coal-or-fuel-not-needed"
+  end
+  candidate.source="original-locomotive-fuel-0836"
+  candidate.score=1000
+  candidate.discovered_tick=now()
+  candidate.expires_tick=now()+M.candidate_ttl
+  pair.machine_logistics_candidate_0528=candidate
+  return true,"original-physical-locomotive-fuel-candidate-offered"
+end
+
 -- 1153: The original 0528 executor may offer a candidate to feed one
 -- actually placed, recipe-configured 0338 factory component. Candidate
 -- discovery never spends an item. Every real debit, travel and insertion
@@ -1079,6 +1158,14 @@ local function discover_pairs(budget)
           and count_inventory(inventory(pair.station,defines and
             defines.inventory and defines.inventory.chest),"coal")>0
           and fuel_candidate(pair,retained.machine)~=nil
+        if not keep and retained
+            and retained.source=="original-locomotive-fuel-0836"
+            and valid(retained.machine)
+            and (tonumber(retained.expires_tick)or 0)>=now()then
+          local authorized=exact_original_train_0836(pair,retained.machine)
+          local needed=fuel_candidate(pair,retained.machine)
+          keep=authorized==true and needed and needed.item=="coal"
+        end
         -- Preserve an authentic newly built component's feed candidate
         -- across bounded discovery until 0510 dispatches it. Revalidate
         -- the same 0338 receipt, live recipe and real station stock.
@@ -1134,6 +1221,7 @@ local function begin_state(pair, candidate)
     machine_name = candidate.machine.name,
     source_inventory = candidate.source_inventory,
     remote_fuel_1016 = candidate.source=="remote-drill-fuel-1016",
+    original_train_fuel_0836 = candidate.source=="original-locomotive-fuel-0836",
     drill_source_0983 = candidate.drill_source_0983,
     drill_source_unit_0983 = candidate.drill_source_0983
       and candidate.drill_source_0983.unit_number or nil,
@@ -1404,7 +1492,11 @@ local function deliver_supply(pair, state)
         and source.item == custody.item
         and source.station_unit == station_unit(pair)
         and source.priest_unit == pair.priest.unit_number
-        and valid(state.machine) and state.machine.type == "mining-drill"
+        and valid(state.machine)
+        and (state.machine.type=="mining-drill"
+          or (state.original_train_fuel_0836==true
+            and state.machine.type=="locomotive"
+            and exact_original_train_0836(pair,state.machine)==true))
         and state.machine.unit_number == state.machine_unit
         and destination_after == destination_before + inserted then
       local receipts = pair.machine_fuel_receipts_1013 or {}
@@ -1784,6 +1876,16 @@ function M.service_pair(pair, reason)
     return result({ processed = 0, detail = "combat-priority" })
   end
   local state = active_state(pair)
+  if state and state.original_train_fuel_0836 then
+    local authorized,why=exact_original_train_0836(pair,state.machine)
+    if not authorized then
+      if state.custody or pair.machine_logistics_custody_0528 then
+        state.last_blocker="original-train-fuel-custody-quarantined:"..safe(why)
+        return result({blocked=1,detail=state.last_blocker})
+      end
+      return M.abort_pair(pair,why)
+    end
+  end
   if state and state.phase=="custody-uncertain-0983" then
     return result({blocked=1,detail=state.last_blocker or "drill-custody-quarantined"})
   end
@@ -1799,6 +1901,14 @@ function M.service_pair(pair, reason)
       or (tonumber(candidate.expires_tick) or 0) < now()
     then
       return result({ processed = 0, detail = "no-machine-candidate" })
+    end
+    if candidate.source=="original-locomotive-fuel-0836" then
+      local authorized,why=exact_original_train_0836(pair,candidate.machine)
+      if not authorized or candidate.action~="supply-fuel"
+          or candidate.item~="coal" then
+        pair.machine_logistics_candidate_0528=nil
+        return result({blocked=1,detail=why or "original-train-fuel-candidate-invalid"})
+      end
     end
     if candidate.source=="remote-drill-fuel-1016" then
       local authorized,why=exact_remote_fuel_mission_1016(pair,candidate.machine)

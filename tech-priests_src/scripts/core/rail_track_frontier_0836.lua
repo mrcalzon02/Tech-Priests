@@ -941,6 +941,79 @@ function M.service_first_wagon_0836(pair)
   m.last_update_tick=now()
   return true,"first-wagon-physical-request-issued"
 end
+-- An original coupled train may count as fueled only after the existing
+-- 0528 physical station->priest->locomotive transaction has reported exact
+-- source and destination deltas, and Factorio still holds that real coal.
+function M.service_first_train_fuel_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  local loco=m and m.first_locomotive_0836
+  local wagon=m and m.first_wagon_0836
+  local entity=loco and loco.built_entity
+  if not(eligible(pair,m) and m.status=="rail-track-established"
+      and m.rail_frontier_0836
+      and m.rail_frontier_0836.chain_audit_completed_tick_0836
+      and loco and loco.phase=="native-paid-locomotive-verified"
+      and wagon and wagon.phase=="native-paid-wagon-verified"
+      and valid(entity) and entity.unit_number==loco.built_unit
+      and valid(wagon.built_entity)
+      and wagon.built_entity.unit_number==wagon.built_unit
+      and entity.train and entity.train.valid
+      and wagon.built_entity.train and wagon.built_entity.train.valid
+      and entity.train.id==wagon.built_entity.train.id)then
+    return false,"original-coupled-train-unavailable"
+  end
+  local fuel_id=defines and defines.inventory and defines.inventory.fuel
+  if not fuel_id then return false,"native-fuel-inventory-id-unavailable"end
+  local ok,fuel=pcall(function()return entity.get_inventory(fuel_id)end)
+  if not(ok and fuel and fuel.valid)then
+    return false,"native-locomotive-fuel-inventory-unavailable"
+  end
+  local state=m.first_fuel_0836 or {}
+  m.first_fuel_0836=state
+  if state.phase=="native-paid-locomotive-fueled" then
+    return false,"native-paid-locomotive-fueled"
+  end
+  local receipts=pair.machine_fuel_receipts_1013 or {}
+  for i=#receipts,1,-1 do
+    local receipt=receipts[i]
+    if receipt and receipt.machine_unit==entity.unit_number
+        and receipt.station_unit==pair.station.unit_number
+        and receipt.priest_unit==pair.priest.unit_number
+        and receipt.authority=="physical-machine-fuel-0528"
+        and receipt.item=="coal" and tonumber(receipt.count)
+        and receipt.count>=1 and receipt.source_before
+        and receipt.source_before-receipt.source_after==receipt.count
+        and receipt.destination_before
+        and receipt.destination_after-receipt.destination_before==receipt.count
+        and loco.verified_tick and receipt.tick>=loco.verified_tick
+        and wagon.verified_tick and receipt.tick>=wagon.verified_tick then
+      local read,n=pcall(fuel.get_item_count,"coal")
+      if read and type(n)=="number" and n>=receipt.count then
+        state.phase="native-paid-locomotive-fueled"
+        state.fuel_item="coal"
+        state.fuel_count=receipt.count
+        state.receipt_tick=receipt.tick
+        state.locomotive_unit=entity.unit_number
+        state.wagon_unit=wagon.built_unit
+        state.train_id=entity.train.id
+        state.verified_tick=now()
+        m.next_step="native-route-and-magos-boarding"
+        return false,"native-paid-locomotive-fueled"
+      end
+    end
+  end
+  local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
+    or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
+  if not(logistics and type(logistics.offer_original_locomotive_fuel_0836)=="function")then
+    return false,"original-0528-fuel-authority-unavailable"
+  end
+  local called,accepted,why=pcall(
+    logistics.offer_original_locomotive_fuel_0836,pair,entity)
+  state.last_attempt_tick=now()
+  state.last_attempt_reason=tostring(called and why or accepted)
+  return called and accepted==true,state.last_attempt_reason
+end
+
 function M.service_pair(pair)
   local m=pair and pair.remote_rail_outpost_0835
   if not m then return false,"no-rail-mission"end
@@ -955,6 +1028,10 @@ function M.service_pair(pair)
   if m.status=="rail-track-established" then
     local loco=m.first_locomotive_0836
     if loco and loco.phase=="native-paid-locomotive-verified"then
+      local wagon=m.first_wagon_0836
+      if wagon and wagon.phase=="native-paid-wagon-verified" then
+        return M.service_first_train_fuel_0836(pair)
+      end
       return M.service_first_wagon_0836(pair)
     end
     return M.service_first_locomotive_0836(pair)
