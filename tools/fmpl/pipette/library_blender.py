@@ -93,14 +93,22 @@ def cylinder(collection, name, start, end, radius):
     d=end-start
     if d.length<.015:
         raise ValueError("Invalid short cylinder "+name)
+    # Blender operators act on ALL selected objects. Boolean keeps the
+    # destination selected, so failing to deselect here rotates the *existing*
+    # manifold when a new drill cylinder is created. That produced a severely
+    # disconnected Y despite the earlier weak proof reporting success.
+    bpy.ops.object.select_all(action="DESELECT")
     bpy.ops.mesh.primitive_cylinder_add(vertices=64,radius=radius,depth=d.length,
                                         end_fill_type="NGON",location=(start+end)*.5)
     ob=bpy.context.object
     ob.name=name
     ob.rotation_euler=d.to_track_quat("Z","Y").to_euler()
-    # Apply geometry transform before Boolean; Boolean should not read scale
-    # transforms from production or prior collections.
+    bpy.ops.object.select_all(action="DESELECT")
+    ob.select_set(True)
+    bpy.context.view_layer.objects.active=ob
+    # Apply geometry transform ONLY to this fresh tool cylinder.
     bpy.ops.object.transform_apply(location=False,rotation=True,scale=True)
+    ob.select_set(False)
     for old in tuple(ob.users_collection):
         old.objects.unlink(ob)
     collection.objects.link(ob)
@@ -152,6 +160,7 @@ def build_fluid_branch(collection, model, approved_material):
         else:
             root=boolean(root,obj,"UNION")
     # Cast branch enlargement encloses the intersection without closing bore.
+    bpy.ops.object.select_all(action="DESELECT")
     bpy.ops.mesh.primitive_uv_sphere_add(segments=32,ring_count=16,
                   radius=radius*(1.22 if kind=="soft_cast_hollow" else 1.08),location=h)
     boss=bpy.context.object
