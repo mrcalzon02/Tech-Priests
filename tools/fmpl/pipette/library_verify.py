@@ -74,6 +74,12 @@ def validate(args):
     if len(collections)!=1:
         raise RuntimeError("Expected one isolated native architecture collection")
     col=collections[0]
+    if receipt.get("blender_collection_asset_marked"):
+        if col.asset_data is None or not col.get("pipette_blender_asset_browser"):
+            raise RuntimeError("Saved .blend lost Blender Asset Browser collection marking")
+        if "PROTOTYPE" not in col.asset_data.description and \
+           "PREVIEW" not in col.asset_data.description:
+            raise RuntimeError("Pipette collection asset lacks prototype/preview warning")
     actual_ports=json.loads(col["pipette_public_ports_json"])
     if actual_ports!=expected_ports:
         raise RuntimeError("Blender port XYZ/normal differs from comparison fixture")
@@ -202,6 +208,8 @@ def validate(args):
         "topology":topology,
         "reference_ports_identical":True,
         "independent_blend_reopened":True,
+        "blender_asset_browser_collection_verified":bool(
+            receipt.get("blender_collection_asset_marked")),
         "independent_glb_reimported":True,
         "native_mesh_count":len(objects),
         "glb_mesh_count":len(glbmeshes),
