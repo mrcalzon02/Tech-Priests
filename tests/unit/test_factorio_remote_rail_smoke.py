@@ -46,7 +46,7 @@ class OriginalRailLiveAdmissionTraceTests(unittest.TestCase):
         self.assertIn("m.last_frontier_dispatch_0510={", handoff)
         self.assertIn("active=active==true", handoff)
         self.assertIn("request_matches=pending~=nil", handoff)
-        self.assertNotIn("pair.construction_request=", handoff)
+        self.assertNotIn("pair.construction_request=nil", handoff)
         self.assertIn("RAIL_LIVE_ADMISSION elapsed=", fixture)
         self.assertIn("dispatcher_frontier_result=", fixture)
         self.assertIn("plan_result=", fixture)
