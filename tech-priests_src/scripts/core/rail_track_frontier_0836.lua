@@ -1017,6 +1017,189 @@ end
 -- First 0836 native Magos boarding. A script receipt is not an onboard
 -- passenger: 0418 must move the SAME original priest close to the real train,
 -- and Factorio must return that LuaEntity from the locomotive driver socket.
+-- First native train stop: one real train-stop item, original 0338
+-- physical builder, exact source debit, live connection to counted 0836 rail.
+-- This is route infrastructure ONLY, never a claim that a unit Magos boarded.
+function M.service_first_train_stop_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  local route=m and m.rail_frontier_0836
+  local loco=m and m.first_locomotive_0836
+  local wagon=m and m.first_wagon_0836
+  local fuel=m and m.first_fuel_0836
+  if not(eligible(pair,m) and m.status=="rail-track-established"
+    and route and route.chain_audit_completed_tick_0836
+    and type(route.built_units)=="table"
+    and route.segment==#route.built_units and route.segment>=24
+    and loco and loco.phase=="native-paid-locomotive-verified"
+    and wagon and wagon.phase=="native-paid-wagon-verified"
+    and fuel and fuel.phase=="native-paid-locomotive-fueled"
+    and valid(loco.built_entity) and valid(wagon.built_entity)
+    and loco.built_entity.train and loco.built_entity.train.valid
+    and wagon.built_entity.train and wagon.built_entity.train.valid
+    and loco.built_entity.train.id==wagon.built_entity.train.id)then
+    return false,"original-paid-fueled-train-and-track-unavailable"
+  end
+  local state=m.first_stop_0836
+  local function connected_original(stop)
+    if not(valid(stop) and stop.name=="train-stop"
+      and stop.force==pair.station.force
+      and stop.surface==pair.station.surface)then return false end
+    local ok,rail=pcall(function()return stop.connected_rail end)
+    if not(ok and valid(rail) and rail.name=="straight-rail")then
+      return false
+    end
+    for _,unit in ipairs(route.built_units)do
+      if unit==rail.unit_number then return true end
+    end
+    return false
+  end
+  if state then
+    if state.phase=="native-paid-original-train-stop-verified"then
+      if connected_original(state.built_entity)
+        and state.built_entity.unit_number==state.built_unit then
+        return false,"native-paid-original-train-stop-verified"
+      end
+      state.phase="blocked"
+      state.blocker="original-native-train-stop-or-rail-lost"
+      return false,state.blocker
+    end
+    if state.phase=="blocked"then return false,state.blocker end
+    local receipt=state.paid_completion_0836
+    if receipt then
+      local stop=receipt.built_entity
+      if not(receipt.request_value==state.request
+        and receipt.native_0338_paid==true
+        and receipt.source_unit
+        and type(receipt.before)=="number"
+        and type(receipt.after)=="number"
+        and receipt.before-receipt.after==1
+        and valid(stop) and stop==state.built_entity
+        and stop.unit_number==receipt.built_unit
+        and connected_original(stop))then
+        state.phase="blocked"
+        state.blocker="original-native-paid-train-stop-receipt-or-connection-invalid"
+        return false,state.blocker
+      end
+      state.phase="native-paid-original-train-stop-verified"
+      state.built_unit=stop.unit_number
+      state.verified_tick=now()
+      m.next_step="native-route-and-original-magos-boarding"
+      return false,"native-paid-original-train-stop-verified"
+    end
+    local last=pair.construction_last_task_0338
+    if last and last.request_value==state.request and last.phase=="aborted"then
+      state.phase="blocked"
+      state.blocker="original-0338-train-stop-aborted:"..tostring(last.result)
+      return false,state.blocker
+    end
+    if pair.construction_request~=state.request
+      and not(pair.construction_task_0338
+        and pair.construction_task_0338.request_value==state.request)
+      and not(pair.construction_custody_0338
+        and pair.construction_custody_0338.request_value==state.request)then
+      state.phase="blocked"
+      state.blocker="original-train-stop-request-lost"
+      return false,state.blocker
+    end
+    return false,"original-0338-train-stop-in-progress"
+  end
+  -- Do not displace funded, physical or identity-owned incumbent work.
+  -- A fresh unstarted, legitimately refused no-site miner is not custody.
+  local prior=pair.construction_requested_item
+  local refusal=pair.construction_site_refusal_0338
+  local name=type(prior)=="string" and prior
+    or type(prior)=="table" and (prior.entity_name or prior.item_name)
+  local proto=name and prototypes and prototypes.entity
+    and prototypes.entity[name]
+  local age=refusal and tonumber(refusal.tick)
+  local refused_miner=prior~=nil and proto and proto.type=="mining-drill"
+    and not(type(prior)=="table"
+      and (prior.position or prior.site_position))
+    and type(refusal)=="table"
+    and refusal.field=="construction_requested_item"
+    and refusal.request==prior and refusal.reason=="no-miner-site"
+    and age and age<=now() and now()-age<=600
+  if (prior and not refused_miner) or pair.construction_request
+    or pair.construction_task_0338 or pair.construction_custody_0338
+    or pair.robot_network_task_0338 or pair.robot_network_request_0338
+    or pair.direct_acquisition_custody_0513
+    or pair.machine_logistics_custody_0528
+    or pair.inventory_transfer_custody_0687
+    or pair.defense_task_0259
+    or (pair.station_expansion_0256
+      and pair.station_expansion_0256.status=="active")then
+    return false,"incumbent-physical-work"
+  end
+  local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    or package.loaded["scripts.core.storage_role_authority_0686"]
+  if not(stock and type(stock.generic_storage_sources)=="function")then
+    return false,"original-train-stop-storage-unavailable"
+  end
+  local observed,sources=pcall(stock.generic_storage_sources,pair)
+  if not(observed and type(sources)=="table")then
+    return false,"original-train-stop-stock-unobservable"
+  end
+  local stocked=false
+  for _,source in ipairs(sources)do
+    if source.inv and source.inv.valid and valid(source.entity)
+      and source.entity.force==pair.station.force
+      and source.entity.surface==pair.station.surface then
+      local ok,n=pcall(source.inv.get_item_count,"train-stop")
+      if ok and type(n)=="number" and n>=1 then stocked=true;break end
+    end
+  end
+  if not stocked then return false,"no-real-train-stop-item" end
+  -- The 0338 builder alone places a stop. Test cardinal sides and
+  -- direction using live engine placeability, never create a trial entity.
+  local chosen,direction
+  for _,index in ipairs({16,18,20,14,22,12})do
+    if index>=2 and index+1<=route.segment then
+      local origin=pos(route.start_position.x+(index-1)*M.segment_step,
+        route.start_position.y)
+      local rail=track_at(pair,origin,route.direction)
+      if rail and rail.unit_number==route.built_units[index] then
+        for _,offset in ipairs({-2,2,-3,3})do
+          for _,heading in ipairs({route.direction,(route.direction+8)%16})do
+            local site=pos(origin.x,origin.y+offset)
+            local ok,placeable=pcall(function()
+              return pair.station.surface.can_place_entity{
+                name="train-stop",position=site,direction=heading,
+                force=pair.station.force}
+            end)
+            if ok and placeable==true then
+              chosen=site;direction=heading;break
+            end
+          end
+          if chosen then break end
+        end
+      end
+    end
+    if chosen then break end
+  end
+  if not chosen then return false,"original-native-train-stop-site-unplaceable"end
+  local queue=pair.order_queue_0469
+  if pair.active_order_0469 or (queue and queue.current)then
+    local owner=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+    if not(owner and type(owner.can_yield_uncommitted_rail_0836)=="function")then
+      return false,"original-train-stop-order-owner-unavailable"
+    end
+    local ok,allowed=pcall(owner.can_yield_uncommitted_rail_0836,pair,nil)
+    if not(ok and allowed==true)then
+      return false,"original-train-stop-incumbent-order-refused"
+    end
+  end
+  local request={item_name="train-stop",entity_name="train-stop",
+    category="rail",position=chosen,direction=direction,
+    site_reason="original-first-train-stop-0836",
+    rail_mission_station_unit_0836=m.root_station_unit}
+  m.first_stop_0836={phase="awaiting-original-0338",
+    request=request,position=chosen,issued_tick=now()}
+  pair.construction_request=request
+  m.next_step="existing-0338-physical-first-train-stop"
+  m.last_update_tick=now()
+  return true,"original-first-train-stop-request-issued"
+end
+
 function M.service_first_train_board_0836(pair)
   local m=pair and pair.remote_rail_outpost_0835
   local loco=m and m.first_locomotive_0836
@@ -1156,6 +1339,10 @@ function M.service_pair(pair)
       if wagon and wagon.phase=="native-paid-wagon-verified" then
         local fuel=m.first_fuel_0836
         if fuel and fuel.phase=="native-paid-locomotive-fueled" then
+          local stop=m.first_stop_0836
+          if not(stop and stop.phase=="native-paid-original-train-stop-verified")then
+            return M.service_first_train_stop_0836(pair)
+          end
           return M.service_first_train_board_0836(pair)
         end
         return M.service_first_train_fuel_0836(pair)

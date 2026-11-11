@@ -818,6 +818,17 @@ local function inspect(s,elapsed)
     " candidate_expiry="..tostring(train_candidate and train_candidate.expires_tick)..
     " construction_active="..tostring(p.construction_task_0338~=nil)..
     " movement_owner="..tostring(p.movement_request_0418 and p.movement_request_0418.owner))
+  local stop_state=objective and objective.first_stop_0836
+  local stop_entity=stop_state and stop_state.built_entity
+  local stop_rail=stop_entity and stop_entity.valid
+    and stop_entity.connected_rail
+  emit("STOP_NATIVE_0836 elapsed="..elapsed..
+    " phase="..tostring(stop_state and stop_state.phase)..
+    " unit="..tostring(stop_entity and stop_entity.valid and stop_entity.unit_number)..
+    " rail_unit="..tostring(stop_rail and stop_rail.valid and stop_rail.unit_number)..
+    " paid="..tostring(stop_state and stop_state.paid_completion_0836
+      and stop_state.paid_completion_0836.native_0338_paid)..
+    " blocker="..tostring(stop_state and stop_state.blocker))
   -- Read the actual engine driver, not the rail mission's assertion.
   local first_board=objective and objective.first_board_0836
   local native_driver

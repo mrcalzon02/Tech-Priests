@@ -1226,3 +1226,26 @@ class NativeOriginalMagosBoarding0836ContractTests(unittest.TestCase):
                      "MAGOS_PHYSICAL_TRAIN_RIDE_NOT_PROVEN",
                      "NO_GENUINE_ORE_DELIVERED_BY_RAIL"):
             self.assertIn(gate,fixture)
+
+
+class NativePaidTrainStop0836ContractTests(unittest.TestCase):
+    def test_stop_is_original_0338_paid_and_native_connected_before_boarding(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        rail = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        builder = (root / "tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        stop = rail.split("function M.service_first_train_stop_0836(pair)", 1)[1].split("function M.service_first_train_board_0836(pair)", 1)[0]
+        for part in ('receipt.before-receipt.after==1', 'stop.connected_rail',
+                     'unit==rail.unit_number', 'no-real-train-stop-item',
+                     'original-first-train-stop-0836', 'pair.construction_request=request',
+                     'native-paid-original-train-stop-verified'):
+            self.assertIn(part, stop)
+        for part in ('owned_pending_stop_0836', 'original_stop_debit_0836',
+                     'stop_before-after==1', 'train-stop-creative-item-bypass-forbidden',
+                     'train-stop-original-physical-request-stale'):
+            self.assertIn(part, builder)
+        self.assertIn('return M.service_first_train_stop_0836(pair)', rail)
+        self.assertIn('STOP_NATIVE_0836 elapsed=', fixture)
+        self.assertNotIn('surface.create_entity', stop)
+        self.assertNotIn('teleport(', stop)
+
