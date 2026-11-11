@@ -1,0 +1,39 @@
+{
+  "asset": "tech-priests-emergency-miner",
+  "revision": "V25",
+  "variant": "A",
+  "approved_by_user": true,
+  "source_run_id": 43075845104,
+  "source_render_in": "mrcalzon02/Dens-Mortis",
+  "source_kind": "64 verified native Blender Cycles frames",
+  "camera": "FMPL fixed orthographic 45 degrees; model-only four yaw orientations",
+  "orientations": [
+    0,
+    90,
+    180,
+    270
+  ],
+  "direction_mapping": {
+    "north": "d00",
+    "east": "d03",
+    "south": "d02",
+    "west": "d01"
+  },
+  "frame_count": 16,
+  "fps": 8,
+  "resolution": {
+    "standard_px": 128,
+    "high_resolution_px": 256
+  },
+  "atlas_layout": "16 columns x 4 directional rows",
+  "file_sha256": {
+    "activity-hr.png": "0b94e4b5063961b6f3b0024858258c4a298df36f36d1fa7d6ab0a8266bc64733",
+    "activity.png": "05c126816dcc36de4b967db95870d81af3fc7659d84d5fea936bd41bbfa80ede",
+    "icon-128.png": "1f3be1257e81fecd33223a0988e0eb293c18c035dd466e851f5e691eb78881d9",
+    "icon-64.png": "d09ac9e76d6a424ecd2dc919d696f0df61f62d3f6bca21e012ad11d169007452",
+    "idle-hr.png": "7858acd62aa1e17b4c1eed84b88ba526577e9ed36be947d5218242e574c9add1",
+    "idle.png": "0fea35edbe685435c63cf77491a4b364ab19061582a7e9077f526e8239e689b6"
+  },
+  "old_martian_micro_sprite_retained": true,
+  "gameplay_logic_unmodified": true
+}
