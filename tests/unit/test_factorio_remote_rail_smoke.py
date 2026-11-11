@@ -1083,6 +1083,7 @@ class NativePaidWagon0836ContractTests(unittest.TestCase):
         for marker in ("owned_pending_wagon_0836(pair,request)",
                        "wagon-original-physical-request-stale",
                        "wagon_before-after==1",
+                       "if original_wagon then",
                        "native-wagon-source-debit-unreconciled",
                        "task.original_wagon_debit_0836={",
                        "custody-returned-source"):

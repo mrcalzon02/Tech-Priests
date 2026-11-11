@@ -2279,7 +2279,7 @@ function M.service_pair(pair,reason)
       source_unit=task.source_entity.unit_number,
       before=locomotive_before,after=after,tick=now()}
   end
-  if original_loco then
+  if original_wagon then
     local after=item_count(task.source_inv,"cargo-wagon")
     if not(wagon_before and wagon_before>=1
       and wagon_before-after==1

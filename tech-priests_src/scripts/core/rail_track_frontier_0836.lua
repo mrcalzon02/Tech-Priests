@@ -887,7 +887,7 @@ function M.service_first_wagon_0836(pair)
       if counted and type(n)=="number" and n>0 then stocked=true;break end
     end
   end
-  if not stocked then return false,"no-real-wagon-item" end
+  if not stocked then return false,"no-real-cargo-wagon-item" end
   local surface=pair.station.surface
   local chosen
   -- Position behind the original locomotive, entirely on its counted native
