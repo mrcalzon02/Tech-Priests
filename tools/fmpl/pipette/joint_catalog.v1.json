@@ -10,7 +10,8 @@
       ],
       "geometry_recipe": "bolted_gasketed_faces",
       "required_visible_feature": "Pipe walls remain hollow; bore clear through gasket",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "union": {
       "domains": [
@@ -26,7 +27,8 @@
       ],
       "geometry_recipe": "male_female_threaded_boss",
       "required_visible_feature": "Matched male and female threaded shoulders",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "butt_weld": {
       "domains": [
@@ -74,7 +76,8 @@
       ],
       "geometry_recipe": "compression_ferrule_nut",
       "required_visible_feature": "Ferrule around inserted tube, not decorative ring",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "bite_ferrule": {
       "domains": [
@@ -82,7 +85,8 @@
       ],
       "geometry_recipe": "double_ferrule_compression",
       "required_visible_feature": "Two ferrules with receiving boss",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "sanitary_clamp": {
       "domains": [
@@ -90,7 +94,8 @@
       ],
       "geometry_recipe": "sanitary_gasket_ferrules",
       "required_visible_feature": "Pair of ferrules and clamp",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "solder": {
       "domains": [
@@ -170,7 +175,8 @@
       ],
       "geometry_recipe": "hose_barb_and_band",
       "required_visible_feature": "Barbed insertion and band/clamp hardware",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "hose_crimp": {
       "domains": [
@@ -178,7 +184,8 @@
       ],
       "geometry_recipe": "hose_insert_crimp_ferrule",
       "required_visible_feature": "Crimp metal ferrule and inserted tail",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "camlock": {
       "domains": [
@@ -242,7 +249,8 @@
       ],
       "geometry_recipe": "threaded_conduit_hub",
       "required_visible_feature": "Receiving metal hub and locknut",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "compression_conduit": {
       "domains": [
@@ -250,7 +258,8 @@
       ],
       "geometry_recipe": "emt_compression_coupler",
       "required_visible_feature": "Compression raceway gland not fluid hardware",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "locknut_bushing": {
       "domains": [
@@ -258,7 +267,8 @@
       ],
       "geometry_recipe": "insulated_locknut_bushing",
       "required_visible_feature": "Insulated entry lip and thread locknut",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "flex_conduit_connector": {
       "domains": [
@@ -266,7 +276,8 @@
       ],
       "geometry_recipe": "helical_conduit_grip",
       "required_visible_feature": "Terminator captures conduit winding",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "liquidtight_connector": {
       "domains": [
@@ -274,7 +285,8 @@
       ],
       "geometry_recipe": "liquidtight_hub_gland",
       "required_visible_feature": "Gasketed raceway entry and strain relief",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "cable_gland": {
       "domains": [
@@ -283,7 +295,8 @@
       ],
       "geometry_recipe": "gland_nut_grommet",
       "required_visible_feature": "Cable diameter-matched grommet with compression shell",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "solvent_conduit_coupler": {
       "domains": [
@@ -299,7 +312,8 @@
       ],
       "geometry_recipe": "conduit_cover_snap",
       "required_visible_feature": "Real latching lip and receiving slot",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "split_loom_clip": {
       "domains": [
@@ -307,7 +321,8 @@
       ],
       "geometry_recipe": "split_lip_bridge",
       "required_visible_feature": "Clips retain accessible split loom seam",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "sleeve_overlap": {
       "domains": [
@@ -389,7 +404,8 @@
       ],
       "geometry_recipe": "conductive_crimp_barrel",
       "required_visible_feature": "Two conductors enter opposed crimp barrel",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "wire_solder_splice": {
       "domains": [
@@ -413,7 +429,8 @@
       ],
       "geometry_recipe": "screw_terminal_block",
       "required_visible_feature": "Electrical screw and contact seat",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "ring_lug": {
       "domains": [
@@ -421,7 +438,8 @@
       ],
       "geometry_recipe": "flat_eyes_and_crimp",
       "required_visible_feature": "Flat terminal eye with barrel",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "spade_lug": {
       "domains": [
@@ -533,7 +551,8 @@
       ],
       "geometry_recipe": "clevis_yoke_pin",
       "required_visible_feature": "Load pin through matching eye",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "turnbuckle": {
       "domains": [
@@ -541,7 +560,8 @@
       ],
       "geometry_recipe": "opposed_thread_turnbuckle",
       "required_visible_feature": "Tension adjustment with opposing threads",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "chain_shackle": {
       "domains": [
@@ -589,7 +609,8 @@
       ],
       "geometry_recipe": "threaded_solid_bar_sleeve",
       "required_visible_feature": "Mechanical thread sleeve around solid rebar",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "rebar_mechanical_coupler": {
       "domains": [
@@ -631,5 +652,12 @@
     "mechanical": "branch requires separate designed node/anchor, not implicit load transfer",
     "reinforcement": "branch requires declared lap/weld/tie/coupler and solid bars"
   },
-  "comparison_fixture": "comparison_fixture.v1.json"
+  "comparison_fixture": "comparison_fixture.v1.json",
+  "current_implementation": {
+    "physically_constructed_joint_type_count": 21,
+    "remaining_index_only": 56,
+    "geometry_module": "library_fittings.py",
+    "status": "source_geometry_not_mechanical_certificate",
+    "note": "Port-fitted editable mesh parts now exist for 21 selected joints, not all 77"
+  }
 }
