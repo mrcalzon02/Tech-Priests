@@ -591,6 +591,37 @@ class FactorioRuntimeCompatibilityTests(unittest.TestCase):
             self.assertFalse(factorio_runtime_compatible(observed, target))
 
 
+class NativeRailPrewritAdmissionTraceTests(unittest.TestCase):
+    def test_native_60k_stall_samples_actual_nil_request_0469_gate_read_only(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/"
+                   "fixture.lua").read_text(encoding="utf-8")
+        queue = (root / "tech-priests_src/scripts/core/"
+                 "order_queue_0469.lua").read_text(encoding="utf-8")
+        self.assertIn("local function trace_uncommitted_rail_gap(s,elapsed)", fixture)
+        self.assertIn("if elapsed>=36000 and elapsed<=60000 and elapsed%600==0 then", fixture)
+        self.assertIn("trace_uncommitted_rail_gap(s,elapsed)", fixture)
+        self.assertIn("RAIL_PREWRIT_GAP elapsed=", fixture)
+        self.assertIn("queue_reason=", fixture)
+        self.assertIn("queue_gate=", fixture)
+        self.assertIn("candidate_station_count=", fixture)
+        self.assertIn("active_order_matches=", fixture)
+        self.assertIn("move_owner=", fixture)
+        self.assertIn("candidate_field=", fixture)
+        self.assertIn("local request=pending and pending.request or nil", fixture)
+        self.assertIn("authority.can_yield_uncommitted_rail_0836,p,request", fixture)
+        self.assertIn("function M.can_yield_uncommitted_rail_0836(p,request)", queue)
+        sampler = fixture.split("local function trace_uncommitted_rail_gap", 1)[1].split(
+            "local function inspect(s,elapsed)", 1)[0]
+        self.assertNotIn("pair.construction_request=", sampler)
+        self.assertNotIn("p.construction_request=", sampler)
+        self.assertNotIn("construction_candidate_0338=nil", sampler)
+        self.assertNotIn("yield_unfunded_frontier_candidate_0338", sampler)
+        self.assertNotIn("surface.create_entity", sampler)
+        self.assertIn("RAIL_NATIVE_CUSTODY_NOT_CONSERVED", fixture)
+        self.assertIn("TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN", fixture)
+
+
 if __name__ == "__main__":
     unittest.main()
 
