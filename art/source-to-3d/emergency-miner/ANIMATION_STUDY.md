@@ -69,3 +69,16 @@ The dedicated code authority is `build_model.py:apply_owner_v22_geometry()`, cal
 Render first from ONE FMPL 45-degree orthographic camera using A/B review cycles. A bounded `--quick-review` run retains the complete 16 authored motion samples at eight samples per second but reduces preview-only Cycles cost and resolution percentage; it does not change the camera, permanent mesh geometry or source registration. Human visual approval is required before any directional atlas, HR/SD sprites or in-game replacement.
 
 **Revision history discipline:** V21 remains available in Git history and the V21 runner artifact. V22 is a new, unapproved candidate; no previous accepted source asset is overwritten.
+
+## V23 — restrained scanning light, synchronized physical gap strobe (2026-11-10)
+
+Following the first source-faithful 45° V22 previews, **preserve the V22 physical mesh, console lift, upward camera-facing three capacitors, fixed base and existing external wiring**. The owner subsequently clarified that a *small light leak is also wanted in the real gap between the raised operator console and middle chassis*; this is distinct from and does NOT reinstate a wandering glow on the console surface or the middle chassis top.
+
+This is an **effects-only** revision in `animate_preview.py`:
+
+- **Vent light**: three original Boolean-cut vent apertures remain the only upper-plate laser outlets. Each emissive insert is more tightly centered within its existing dark cavity, at most 73% of the original inset width, 2.8 source-reference pixels high and 0.008 scene units below the actual steel roof. Maximum emissive-node strength reduced 4.0 → **2.10**, opacity 0.87 → **0.60**, local indirect point-light energy 3.0 → **0.70**. The point lights are also lowered deeper into their real cavities. These limits are maximum values, not claims of measured game-scale readability.
+- **Original physical console–chassis joint**: three narrow glowing subsegments in the actual V22 gap remain attached to the upper rig, not to the console *surface*. They have the exact same strobe phase and amplitude envelope as their respective vent, with maximum opacity reduced 0.33 → **0.22** and narrower geometry (0.76 rather than 0.80 of each physical segment). No independent scanning/panning object, no glow atop the console and no newly invented machinery.
+- **Camera and geometry remain unchanged**: one fixed FMPL 45° orthographic capture (0° grid azimuth), 16 frames × 8 fps for A and B, fixed foundation, real existing upper shell and original three capacitor mouths. Four-direction and native sprite export remain blocked pending owner review.
+- **Proof**: include actual Cycles frame 37 peak vent/joint preview and steam frame 25; re-open each saved animated Blender scene in a fresh process. The independent verifier samples 51 vent/gap/light-energy triplets over all 17 key times, bounds each material and light value, and checks matching normalized strobe amplitudes (tolerance 0.011) and camera-facing capacitor alignment. Runner readback requires V23 manifest ID and light limits before success.
+
+The V23 source changes are **preview-effect only**. The existing original sprite, Factorio prototypes, per-orientation atlases and release remain unmodified until visual approval.
