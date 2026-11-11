@@ -268,6 +268,10 @@ local function setup()
         area=area})~=0 then
     fail("FIXTURE_PREBUILT_TRAIN_OR_RAIL")
   end
+  -- The actual 1x1 vanilla chest center may differ from integer
+  -- requested coordinates. Preserve the ORIGINAL physically placed depot
+  -- LuaEntity across simulation/save, never select unrelated storage.
+  s.depot_entity=depot
   s.depot_unit=depot.unit_number
   s.station_unit=station.unit_number
   s.station_y=STATION.y
@@ -423,9 +427,11 @@ local function inspect(s,elapsed)
   -- One real native-source/depot census at the existing strict checkpoints.
   -- A rail returned to the depot is not necessarily missing or spent;
   -- never infer a built rail from one station's inventory decrement.
-  local depot=surface.find_entity("steel-chest",
-    {x=-8,y=s.station_y+8})
+  local depot=s.depot_entity
   local depot_inv=depot and depot.valid
+    and depot.unit_number==s.depot_unit
+    and depot.force==station.force
+    and depot.surface==surface
     and depot.get_inventory(defines.inventory.chest) or nil
   local depot_rails=depot_inv and depot_inv.valid
     and depot_inv.get_item_count("rail") or nil
