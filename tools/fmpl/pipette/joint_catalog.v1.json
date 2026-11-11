@@ -209,7 +209,8 @@
       ],
       "geometry_recipe": "bellows_terminal_flange",
       "required_visible_feature": "Bellows corrugation seats inside flange",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "expansion_joint": {
       "domains": [
@@ -330,7 +331,8 @@
       ],
       "geometry_recipe": "protective_sheath_overlap",
       "required_visible_feature": "Sleeve overlaps underlying protected line",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "panel_grommet": {
       "domains": [
@@ -463,7 +465,8 @@
       ],
       "geometry_recipe": "idc_blade_slot",
       "required_visible_feature": "Blade slot aligned with insulated core",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "plug_socket": {
       "domains": [
@@ -479,7 +482,8 @@
       ],
       "geometry_recipe": "coaxial_pin_and_shield",
       "required_visible_feature": "Concentric signal core and shield at contact",
-      "implementation_status": "indexed_not_yet_native_verified"
+      "implementation_status": "implemented_editable_mesh_native_proof_pending",
+      "geometry_module": "library_fittings.py"
     },
     "fiber_splice": {
       "domains": [
@@ -654,10 +658,10 @@
   },
   "comparison_fixture": "comparison_fixture.v1.json",
   "current_implementation": {
-    "physically_constructed_joint_type_count": 21,
-    "remaining_index_only": 56,
+    "physically_constructed_joint_type_count": 25,
+    "remaining_index_only": 52,
     "geometry_module": "library_fittings.py",
     "status": "source_geometry_not_mechanical_certificate",
-    "note": "Port-fitted editable mesh parts now exist for 21 selected joints, not all 77"
+    "note": "25 typed fitting geometry recipes implemented; source geometry is not full native installation verification or mechanical/electrical certification."
   }
 }
