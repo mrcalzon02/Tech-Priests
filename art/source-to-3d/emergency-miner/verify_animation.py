@@ -105,6 +105,48 @@ def main(folder, variant):
             raise RuntimeError("Light is not physically between chassis and console")
         if emitter.animation_data is not None and emitter.animation_data.action:
             raise RuntimeError("Stationary seam leak may not translate or pan")
+    # V23 independent native readback of actual animated shader controls.
+    # Vent and console-chassis joint must be the *same* scan pattern at
+    # deliberately capped output. No moving/duplicate surface emitter.
+    point_lights=[bpy.data.objects.get("FX ONLY | vent inside point light %d"%i)
+                  for i in range(3)]
+    if any(ob is None or ob.type!="LIGHT" for ob in point_lights):
+        raise RuntimeError("Expected three recessed existing-vent point lights")
+    if any(ob.get("v23_energy_cap")!=.70 for ob in point_lights):
+        raise RuntimeError("Vent point light budget changed after save")
+    if any(o.get("max_alpha")!=.60 or
+           o.get("v23_effect_profile")!="BOUND_TO_EXISTING_VENT_DARK_WELL"
+           for o in vent_lights):
+        raise RuntimeError("V23 restrained vent glow profile not restored")
+    if any(o.get("max_alpha")!=.22 or
+           o.get("v23_effect_profile")!="NARROW_RECESSED_JOINT_STROBE"
+           for o in gap):
+        raise RuntimeError("V23 restrained console-chassis light profile not restored")
+    def mix_alpha(obj):
+        shader=obj.data.materials[0].node_tree.nodes
+        mix=next((node for node in shader if node.type=="MIX_SHADER"),None)
+        emit=next((node for node in shader if node.type=="EMISSION"),None)
+        if mix is None or emit is None:
+            raise RuntimeError("Recessed laser effect lost its keyed emissive shader")
+        strength=float(emit.inputs["Strength"].default_value)
+        if not (1.95 <= strength <= 2.11):
+            raise RuntimeError("V23 emission shader intensity escaped bounds: "+str(strength))
+        return float(mix.inputs[0].default_value)
+    strobe_evidence=[]
+    for f in list(range(1,97,6))+[97]:
+        scene.frame_set(f)
+        bpy.context.view_layer.update()
+        for i in range(3):
+            vi=mix_alpha(bpy.data.objects["FX ONLY | vent aperture laser glow %d"%i])
+            gi=mix_alpha(bpy.data.objects["FX ONLY | console-middle-chassis joint leakage %d"%i])
+            power=float(point_lights[i].data.energy)
+            if not (0<=vi<=.601 and 0<=gi<=.221 and 0<=power<=.701):
+                raise RuntimeError("V23 vent/joint brightness budget exceeded")
+            if abs(vi/.60-gi/.22)>.011:
+                raise RuntimeError("Console-joint and vent strobe patterns drifted apart")
+            if abs(vi/.60-power/.70)>.011:
+                raise RuntimeError("Light power does not share vent strobe envelope")
+            strobe_evidence.append([f,i,round(vi,4),round(gi,4),round(power,4)])
     from mathutils import Vector
     eye=Vector((0,-0.70710678,0.70710678))
     scene.frame_set(1)
@@ -130,6 +172,10 @@ def main(folder, variant):
         "steam_wisps":len(steam),"vent_aperture_emitters":len(vent_lights),
         "console_chassis_gap_emitters":len(gap),
         "gap_strobe_sources":"THREE_VENT_PHASES",
+        "v23_brightness_limits":{"vent_alpha":.60,"joint_alpha":.22,
+                                 "point_energy":.70,"emission_strength":2.10},
+        "brightness_key_samples_checked":len(strobe_evidence),
+        "brightness_key_samples":strobe_evidence,
         "surface_panning_lights":0,"capacitor_camera_alignments":cap_alignment,
         "saved_blend_sha256":sha(master),
     }
