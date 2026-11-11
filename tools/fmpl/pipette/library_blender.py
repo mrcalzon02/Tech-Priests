@@ -92,6 +92,10 @@ def make_obj(collection, part, material, architecture):
         obj["pipette_full_conductor_branch_continuity"]=part["branch_continuity"]
     if "branch_hardware_type" in part:
         obj["pipette_branch_hardware_type"]=part["branch_hardware_type"]
+    if "axial_length_bu" in part:
+        obj["pipette_axial_length_bu"]=float(part["axial_length_bu"])
+    if "bore_diameter_bu" in part:
+        obj["pipette_bore_diameter_bu"]=float(part["bore_diameter_bu"])
     if "branch_port_id" in part:
         obj["pipette_branch_port_id"]=part["branch_port_id"]
     if "ferrule_terminal_port" in part:
