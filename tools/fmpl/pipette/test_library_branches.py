@@ -145,6 +145,18 @@ class WireBranchGeometryTests(unittest.TestCase):
                              for v in p["vertices"]]
             self.assertLess(max(outward_extents),.12*.52)
 
+    def test_wire_centerlines_do_not_interpenetrate_at_hub(self):
+        for topology in ("wye","tee"):
+            with self.subTest(topology=topology):
+                model=lib.build_demo("wire_eight_loose_bundle",topology)
+                info=model["branch_geometry"]
+                self.assertTrue(info["cross_section_spacing_checked"])
+                self.assertGreater(info["minimum_wire_surface_gap_bu"],0)
+                conductor_od=.12*.115
+                self.assertGreater(
+                    info["minimum_wire_center_spacing_bu"],
+                    conductor_od*1.08)
+
     def test_tied_harness_has_extra_real_lacing_not_a_block(self):
         model=lib.build_demo("wire_eight_laced_loom","wye")
         roles=[p["role"] for p in model["meshes"]]
