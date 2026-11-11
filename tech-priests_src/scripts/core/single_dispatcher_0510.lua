@@ -615,7 +615,16 @@ function M.service_pair(pair,reason)
    end
    if pair.active_task or pair.current_task or pair.active_task_0285
       or pair.construction_task_0338 or pair.construction_custody_0338
-      or pair.machine_logistics_custody_0528 or pair.machine_logistics_0528
+      or pair.machine_logistics_custody_0528
+      -- 0528 retains a terminal diagnostic table after successful completion.
+      -- Such a receipt is NOT a live job and cannot permanently veto this
+      -- original unstarted fuel request. A nonterminal phase still wins.
+      or (type(pair.machine_logistics_0528)=="table"
+        and pair.machine_logistics_0528.phase
+        and pair.machine_logistics_0528.phase~="complete"
+        and pair.machine_logistics_0528.phase~="failed"
+        and pair.machine_logistics_0528.phase~="idle"
+        and pair.machine_logistics_0528.phase~="none")
       or pair.direct_acquisition_custody_0513 or pair.defense_task_0259
       or pair.inventory_transfer_custody_0687 or pair.movement_request_0418 then
     return {processed=1,blocked=1,detail="train-fuel-incumbent-physical-work"}

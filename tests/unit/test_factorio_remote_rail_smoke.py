@@ -1128,6 +1128,11 @@ class NativePaidTrainFuel0836ContractTests(unittest.TestCase):
         self.assertIn("destination_after == destination_before + inserted",fuel)
         self.assertIn("dispatcher-0510:original-coupled-train-fuel-0836",dispatch)
         self.assertIn("train-fuel-order-yield-refused",dispatch)
+        # A completed 0528 task leaves a saved diagnostic table; it cannot
+        # suppress a future authentic fuel request, unlike active custody.
+        self.assertIn('pair.machine_logistics_0528.phase~="complete"',dispatch)
+        self.assertIn('pair.machine_logistics_0528.phase~="failed"',dispatch)
+        self.assertIn('or pair.machine_logistics_custody_0528',dispatch)
         self.assertIn("FUEL_NATIVE_0836 elapsed=",fixture)
         self.assertIn('fail("TRAIN_NOT_NATIVE_FUELED")',fixture)
 
