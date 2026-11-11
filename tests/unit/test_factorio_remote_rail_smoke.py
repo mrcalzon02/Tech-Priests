@@ -22,6 +22,35 @@ B = P + "PASS two distinct 0338-debited native-connected rails"
 
 
 
+class CanonicalFundedConstructionCandidateRefreshTests(unittest.TestCase):
+    def test_unstarted_unfunded_bootstrap_cannot_hide_funded_prior_writ(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        source = (root / "tech-priests_src/scripts/core/"
+                  "construction_planner.lua").read_text(encoding="utf-8")
+        start = source.index("local function refresh_funded_prior_over_unfunded_bootstrap_0338")
+        end = source.index("-- Discovery can run between the frontier", start)
+        refresh = source[start:end]
+        self.assertIn('candidate.request_field=="construction_bootstrap_ghost_0645"', refresh)
+        self.assertIn('not source_for_item(pair,candidate.item_name)', refresh)
+        for custody in (
+            "pair.construction_task_0338", "pair.construction_custody_0338",
+            "pair.robot_network_task_0338", "pair.robot_network_request_0338",
+            "pair.construction_task", "pair.movement_request_0418",
+        ):
+            self.assertIn(custody, refresh)
+        self.assertIn('"structure_construction_requested_item"', refresh)
+        self.assertIn('"construction_requested_item"', refresh)
+        self.assertIn('placeable and source_for_item(pair,placeable.item_name)', refresh)
+        self.assertIn('pair.construction_candidate_0338=nil', refresh)
+        self.assertNotIn('pair.construction_requested_item=nil', refresh)
+        self.assertNotIn('pair.structure_construction_requested_item=nil', refresh)
+        self.assertNotIn('remove_item(', refresh)
+        self.assertNotIn('insert_item(', refresh)
+        self.assertNotIn('q.current=', refresh)
+        self.assertIn('if refresh_funded_prior_over_unfunded_bootstrap_0338(pair) then force=true end', source)
+        self.assertIn('  refresh_funded_prior_over_unfunded_bootstrap_0338(pair)\n  local c=', source)
+        self.assertIn('local request=construction_request(pair);if not request', source)
+
 class QueueOwnedOriginalRailYieldTests(unittest.TestCase):
     def test_exact_ammo_wait_only_preserves_0469_order_and_0338_custody(self):
         root = pathlib.Path(__file__).resolve().parents[2]

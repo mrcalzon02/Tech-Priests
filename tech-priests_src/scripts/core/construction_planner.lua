@@ -627,6 +627,36 @@ local function plan_request(pair,request)
  if request.position then local planner=site_planner();local report;if planner and type(planner.placement_effectiveness_report)=="function"and tostring(request.placeable.category or""):find("defense",1,true)then local ok,r,why=pcall(planner.placement_effectiveness_report,pair,request.placeable.entity_name,request.position,request.placeable.category);if not(ok and r)then return nil,ok and(why or"ineffective-fixed-defense-site")or("site-effectiveness-error:"..safe(r))end;report=r end;return request.position,request.site_reason or"fixed-request-site",report end
  local planner=site_planner();if not(planner and type(planner.plan_site)=="function")then return nil,"site-planner-unavailable"end;local ok,pos,why,report=pcall(planner.plan_site,pair,request.placeable);if not ok then return nil,"site-planner-error:"..safe(pos)end;return pos,why,report
 end
+-- An unstarted bootstrap discovery is not a reservation. If a separate
+-- earlier construction writ actually has a real item source, 0338 must
+-- reconsider that funded work instead of indefinitely reusing the cached
+-- unfunded ghost. Only the canonical builder may discard its own *candidate*;
+-- never clear the writ, its source, a live build, robot job, cargo or movement.
+local function refresh_funded_prior_over_unfunded_bootstrap_0338(pair)
+ local candidate=pair and pair.construction_candidate_0338
+ if not(candidate and candidate.request_field=="construction_bootstrap_ghost_0645"
+   and type(candidate.item_name)=="string"
+   and not source_for_item(pair,candidate.item_name)
+   and not(pair.construction_task_0338 or pair.construction_custody_0338
+     or pair.robot_network_task_0338 or pair.robot_network_request_0338
+     or pair.construction_task or pair.movement_request_0418)) then
+  return false
+ end
+ for _,field in ipairs({"structure_construction_requested_item",
+     "construction_requested_item"}) do
+  local value=pair[field]
+  local placeable=value and normalize_placeable(value)
+  if placeable and source_for_item(pair,placeable.item_name) then
+   -- Refresh discovery through the ORIGINAL 0338 priority/site and physical
+   -- admission pipeline. A funded but unplaceable request can fail there;
+   -- it is never silently bypassed in favor of the remote rail.
+   pair.construction_candidate_0338=nil
+   record(pair,"funded-prior-replaces-unfunded-bootstrap",field)
+   return true
+  end
+ end
+ return false
+end
 -- Discovery can run between the frontier's request and the dispatcher.
 -- A cached unstarted bootstrap candidate may not steal an exact pending
 -- 0836 rail request, even when its stock is funded. Physical tasks/cargo win.
@@ -664,6 +694,7 @@ end
 function M.discover_pair(pair,force)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return nil end
  if refresh_unfunded_frontier_candidate(pair) then force=true end
+ if refresh_funded_prior_over_unfunded_bootstrap_0338(pair) then force=true end
  defer_unfunded_for_remote(pair)
  if pair.construction_task_0338 or pair.construction_custody_0338 then return pair.construction_candidate_0338 end
  local priority=pair.remote_drill_request_1011
@@ -1881,6 +1912,8 @@ function M.service_pair(pair,reason)
    -- Only the cached, UNSTARTED discovery yields; no physical custody.
    pair.construction_candidate_0338=nil
   end
+  -- A cached unfunded bootstrap may not hide a genuinely stocked earlier writ.
+  refresh_funded_prior_over_unfunded_bootstrap_0338(pair)
   local c=pair.construction_candidate_0338
   if priority and (not c or c.request_value~=priority) then c=nil end
   c=c or M.discover_pair(pair,true)
