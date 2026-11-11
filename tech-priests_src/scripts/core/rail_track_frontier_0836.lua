@@ -249,8 +249,16 @@ function M.plan_next(pair)
     local builder=rawget(_G,"TechPriestsConstructionPlanner0338")
     if builder and type(builder.yield_unfunded_frontier_candidate_0338)
         =="function" then
-      local ok=pcall(builder.yield_unfunded_frontier_candidate_0338,pair)
+      -- A successful pcall is not proof that the original 0338 owner
+      -- authorized yielding its candidate. The second return value is the
+      -- real admission verdict; preserve that owner's funded/robot/task
+      -- refusal instead of collapsing it to a generic occupied slot.
+      local ok,yielded,reason=pcall(
+        builder.yield_unfunded_frontier_candidate_0338,pair)
       if not ok then return false,"rail-unfunded-candidate-yield-error" end
+      if yielded~=true then
+        return false,"rail-unfunded-candidate-yield-refused:"..tostring(reason)
+      end
     end
   end
   if pair.construction_task_0338 or pair.construction_custody_0338
@@ -671,7 +679,23 @@ function M.service_pair(pair)
     if m.status=="rail-track-blocked" then return false,why end
     if not done then return true,why end
   end
-  return M.plan_next(pair)
+  local planned,reason=M.plan_next(pair)
+  if planned~=true then
+    -- A nil/pending-free construction gap previously vanished from the
+    -- diagnostic trail because 0510 logs only admitted pending requests.
+    -- Retain one bounded scalar refusal from the original 0836/0338 owner;
+    -- no item, candidate, task, queue or physical acceptance is modified.
+    local previous=m.last_prewrite_refusal_0836
+    local refusal=tostring(reason)
+    if not previous or previous.reason~=refusal
+        or now()-(tonumber(previous.tick)or 0)>=600 then
+      m.last_prewrite_refusal_0836={
+        tick=now(),reason=refusal,
+        segment=m.rail_frontier_0836 and m.rail_frontier_0836.segment,
+      }
+    end
+  end
+  return planned,reason
 end
 _G.TechPriestsRailTrackFrontier0836=M
 return M
