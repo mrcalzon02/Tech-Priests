@@ -47,7 +47,7 @@ class PipetteArchitectureIndexTests(unittest.TestCase):
 
     def test_implemented_recipes_are_a_strict_subset_of_full_index(self):
         entries={item["id"]:item for item in ARCH["architecture_types"]}
-        self.assertEqual(len(GEOMETRY_RECIPES),19)
+        self.assertEqual(len(GEOMETRY_RECIPES),25)
         self.assertLess(len(GEOMETRY_RECIPES),len(entries))
         self.assertEqual(ARCH["current_implementation"]["remaining_unimplemented_types"],
                          len(entries)-len(GEOMETRY_RECIPES))
