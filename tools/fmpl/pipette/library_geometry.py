@@ -45,6 +45,11 @@ RECIPES = {
     "housing_pet_braided_sleeve": ("open_braided_sleeve", 0., "flex_polymer"),
     "hose_wire_suction": ("spring_reinforced_hose", .27, "spring_guarded"),
     "pipe_jacketed_double_wall": ("double_wall_hollow", .24, "fixed"),
+    "tube_retractile_coil": ("retractile_hollow_coil", .24, "spring_guarded"),
+    "hose_layflat": ("flat_collapse_hollow", .22, "soft_hose"),
+    "hose_twin_bonded": ("two_separate_open_lumens", .27, "reinforced_hose"),
+    "housing_ladder_tray": ("open_steel_ladder", 0., "fixed"),
+    "housing_slotted_duct": ("open_slotted_u-channel", 0., "fixed"),
 }
 WIRE_RECIPES = {"single_wire", "eight_wire", "eight_wire_tied", "seven_strand"}
 OPEN_RECIPES = {"open_spiral", "split_annular"}
@@ -593,6 +598,14 @@ def line_segment(a, b, architecture_id, *, nominal_od=.12, topology="straight"):
     if kind=="single_wire":
         return wire_cores(a,b,architecture_id,eight=False,
                           base_sag_fraction=sag_fraction)
+    if kind in {"retractile_hollow_coil","flat_collapse_hollow",
+                "two_separate_open_lumens","open_steel_ladder",
+                "open_slotted_u-channel"}:
+        if __package__:
+            from . import library_forms
+        else:
+            import library_forms
+        return library_forms.generate(a,b,architecture_id,nominal_od)
     if kind=="seven_strand":
         return steel_seven_strand(a,b,architecture_id,nominal_od)
     if kind=="twisted_pair":
