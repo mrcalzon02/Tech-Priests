@@ -927,9 +927,50 @@ local function exact_original_train_0836(pair,locomotive)
   return true,"original-counted-train-verified"
 end
 
+-- A real 0836 engine run observed the original Magos stranded on an
+-- unrelated 0528 'move-to-station' fuel task from tick 15605 through 60000:
+-- NO item had been removed, NO live movement request remained, and NO 0338
+-- builder was active. The incumbent cannot own a permanent no-cargo lease.
+-- Only 0528 may retire its OWN abandoned task; never preempt active movement,
+-- any physical hold, or another construction/acquisition/defense duty.
+local function retire_unladen_abandoned_fuel_0836(pair,locomotive)
+  local state=active_state(pair)
+  if not(state and state.phase=="move-to-station"
+      and state.action=="supply-fuel" and state.item=="coal"
+      and valid(state.machine) and state.machine~=locomotive
+      and type(state.started_tick)=="number"
+      and now()-state.started_tick>=60*120
+      and not(state.custody or pair.machine_logistics_custody_0528)
+      and not(pair.construction_task_0338 or pair.construction_custody_0338
+        or pair.construction_task_0340 or pair.direct_acquisition_custody_0513
+        or pair.inventory_transfer_custody_0687 or pair.defense_task_0259
+        or pair.active_task or pair.current_task
+        or pair.movement_request_0418))then
+    return false
+  end
+  local movement=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+  if not(movement and type(movement.request_status)=="function")then
+    return false -- cannot prove no live movement
+  end
+  local observed,status=pcall(movement.request_status,pair)
+  if not observed or type(status)~="table" or status.active~=false then
+    return false
+  end
+  local result=M.abort_pair(pair,"unladen-source-approach-abandoned-0836")
+  if result and result.acted==1 and result.blocked==0 and result.failed==0
+      and not active_state(pair) and not pair.machine_logistics_custody_0528 then
+    stat("abandoned-unladen-fuel-released-0836")
+    return true
+  end
+  return false
+end
+
 function M.offer_original_locomotive_fuel_0836(pair,locomotive)
   local authorized,why=exact_original_train_0836(pair,locomotive)
   if not authorized then return false,why end
+  -- Reconcile only a proved abandoned *unladen* 0528 task, retaining every
+  -- original physical item and preserving all current movement/cargo owners.
+  retire_unladen_abandoned_fuel_0836(pair,locomotive)
   if active_state(pair) or pair.machine_logistics_custody_0528
       or pair.construction_task_0338 or pair.construction_custody_0338
       or pair.direct_acquisition_custody_0513

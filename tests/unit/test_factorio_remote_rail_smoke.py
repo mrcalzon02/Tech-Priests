@@ -1134,6 +1134,20 @@ class NativePaidTrainFuel0836ContractTests(unittest.TestCase):
         self.assertIn('pair.machine_logistics_0528.phase~="failed"',dispatch)
         self.assertIn('or pair.machine_logistics_custody_0528',dispatch)
         self.assertIn("FUEL_NATIVE_0836 elapsed=",fixture)
+        # Real 60k engine stall: the unrelated 0528 coal supply still had an
+        # unladen move-to-station state from tick 15605, with no live move at 60k.
+        # Only 0528 can retire that exact old task, never cargo or movement.
+        original=src.split("local function retire_unladen_abandoned_fuel_0836",1)[1].split(
+            "function M.offer_original_locomotive_fuel_0836",1)[0]
+        for guard in ('state.phase=="move-to-station"', 'state.action=="supply-fuel"',
+                      'state.item=="coal"', 'state.machine~=locomotive',
+                      'now()-state.started_tick>=60*120', 'state.custody',
+                      'pair.machine_logistics_custody_0528',
+                      'pair.construction_task_0338', 'pair.direct_acquisition_custody_0513',
+                      'pair.movement_request_0418', 'movement.request_status',
+                      'status.active~=false', 'M.abort_pair(pair,',
+                      'not active_state(pair)'):
+            self.assertIn(guard,original)
         # Native snapshots must expose the current 0528 owner, not just a
         # stale 0836 fuel phase or aggregate work counters. No new pass gate.
         for diagnostic in ("offer_reason=", "machine_phase=", "machine_action=",
