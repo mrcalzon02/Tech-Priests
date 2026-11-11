@@ -17,7 +17,7 @@ class PipettePackageApiTests(unittest.TestCase):
         self.assertTrue(callable(pipette.build_demo))
         self.assertTrue(callable(pipette.build_fitting))
         self.assertEqual(len(pipette.RECIPES),25)
-        self.assertEqual(len(pipette.FITTING_RECIPES),21)
+        self.assertEqual(len(pipette.FITTING_RECIPES),25)
         self.assertIs(sys.modules.get("bpy"),original)
 
     def test_public_entrypoints_return_actual_editable_meshes(self):
