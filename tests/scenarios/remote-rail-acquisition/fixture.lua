@@ -363,6 +363,58 @@ local function trace_uncommitted_rail_gap(s,elapsed)
     " blocked_site="..tostring(p.construction_blocked_reason_0338)..
     " dispatcher_refusal="..tostring(p.remote_rail_admission_refusal_0510
       and p.remote_rail_admission_refusal_0510.reason))
+
+  -- Read-only original builder-ownership and genuinely stocked predecessor
+  -- evidence during the existing bounded 600-tick native prewrite samples.
+  -- A candidate name alone does not establish that funded work may yield.
+  local prior=p.construction_requested_item
+  local prior_item=type(prior)=="table"
+    and (prior.item_name or prior.item or prior.name)
+    or (type(prior)=="string" and prior or nil)
+  local other=p.structure_construction_requested_item
+  local other_item=type(other)=="table"
+    and (other.item_name or other.item or other.name)
+    or (type(other)=="string" and other or nil)
+  local station_inv=p.station.get_inventory(defines.inventory.chest)
+  local depot=s.depot_entity
+  local depot_inv=depot and depot.valid
+    and depot.get_inventory(defines.inventory.chest) or nil
+  local refusal=p.construction_site_refusal_0338
+  local rtask=p.robot_network_task_0338
+  local rrequest=p.robot_network_request_0338
+  local previous=p.construction_last_task_0338
+  emit("RAIL_PREWRIT_0338_OWNER elapsed="..elapsed..
+    " prior_item="..tostring(prior_item)..
+    " prior_entity="..tostring(type(prior)=="table"
+      and (prior.entity_name or prior.entity))..
+    " prior_source="..tostring(type(prior)=="table"
+      and (prior.source or prior.owner))..
+    " prior_site="..tostring(type(prior)=="table"
+      and (prior.position or prior.site_position)~=nil)..
+    " prior_station_stock="..tostring(prior_item and station_inv
+      and station_inv.get_item_count(prior_item))..
+    " prior_depot_stock="..tostring(prior_item and depot_inv
+      and depot_inv.get_item_count(prior_item))..
+    " structure_item="..tostring(other_item)..
+    " structure_station_stock="..tostring(other_item and station_inv
+      and station_inv.get_item_count(other_item))..
+    " robot_task_phase="..tostring(rtask and rtask.phase)..
+    " robot_request_item="..tostring(rrequest and rrequest.item_name)..
+    " original_task="..tostring(p.construction_task_0338
+      and p.construction_task_0338.phase)..
+    " old_task="..tostring(p.construction_task and p.construction_task.phase)..
+    " refused_field="..tostring(refusal and refusal.field)..
+    " refused_reason="..tostring(refusal and refusal.reason)..
+    " refused_matches_prior="..tostring(refusal
+      and refusal.request==prior)..
+    " refused_age="..tostring(refusal and refusal.tick
+      and (game.tick-refusal.tick))..
+    " candidate_matches_prior="..tostring(candidate
+      and candidate.request_value==prior)..
+    " builder_last_field="..tostring(previous and previous.request_field)..
+    " builder_last_result="..tostring(previous and previous.result)..
+    " cooldown_remaining="..tostring(
+      (tonumber(p.construction_cooldown_0338)or 0)-game.tick))
 end
 local function inspect(s,elapsed)
   local surface=game.surfaces[1]

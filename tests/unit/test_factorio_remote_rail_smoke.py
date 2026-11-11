@@ -664,6 +664,20 @@ class NativeRailPrewritAdmissionTraceTests(unittest.TestCase):
         self.assertNotIn("construction_candidate_0338=nil", sampler)
         self.assertNotIn("yield_unfunded_frontier_candidate_0338", sampler)
         self.assertNotIn("surface.create_entity", sampler)
+        self.assertIn("RAIL_PREWRIT_0338_OWNER elapsed=", fixture)
+        for field in ("prior_item=", "prior_depot_stock=",
+                      "refused_matches_prior=", "robot_task_phase=",
+                      "candidate_matches_prior=", "cooldown_remaining=",
+                      "builder_last_result="):
+            self.assertIn(field, fixture)
+        trace = fixture.split("RAIL_PREWRIT_0338_OWNER elapsed=", 1)[1].split(
+            "local function inspect(s,elapsed)", 1)[0]
+        for forbidden in ("p.construction_candidate_0338=nil",
+                          "p.construction_requested_item=nil",
+                          "p.construction_request=", "surface.create_entity",
+                          "game.create_inventory",
+                          "p.robot_network_task_0338=nil"):
+            self.assertNotIn(forbidden, trace)
         self.assertIn("RAIL_NATIVE_CUSTODY_NOT_CONSERVED", fixture)
         self.assertIn("TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN", fixture)
 
