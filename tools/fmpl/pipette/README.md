@@ -2,11 +2,11 @@
 
 The first physically modeled connector library is `library_fittings.py`: **21 editable fitting recipes** out of the 77 indexed joint types, with explicit type-compatible selection and a separate `test_library_fittings.py`. [Construction and validation instructions](LIBRARY_BUILD.md) include a standalone OBJ fitting example. Native approvals remain pending.
 
-### Executable geometry construction (19 recipes, current slice)
+### Executable geometry construction (25 recipes, current slice)
 
-**[Build instructions and explicit native verification gates](LIBRARY_BUILD.md)** describe the new independent `library_geometry.py` mesh kernel, `build_library.py` batch OBJ exporter, `library_blender.py` editable Blender/Cycles/GLB builder, and `library_verify.py` independent native readback. These have **19 physically distinct implemented geometry recipes** drawn from the [140-entry construction index](architecture_catalog.v1.json). Examples include metal helical interlocked conduit, annular polymer conduit, open spiral sleeve, split loom, naturally sagging eight-wire bundles, and a Boolean hollow lead-pipe Y using frozen comparison coordinates.
+**[Build instructions and explicit native verification gates](LIBRARY_BUILD.md)** describe the new independent `library_geometry.py` mesh kernel, `build_library.py` batch OBJ exporter, `library_blender.py` editable Blender/Cycles/GLB builder, and `library_verify.py` independent native readback. These have **25 implemented geometry recipes** drawn from the [140-entry construction index](architecture_catalog.v1.json). Examples include metal helical interlocked conduit, annular polymer conduit, open spiral sleeve, split loom, naturally sagging eight-wire bundles, and a Boolean hollow lead-pipe Y using frozen comparison coordinates.
 
-The new source implementation and `test_library_geometry.py` mesh regressions are not automatic production approval: use the existing Dens Mortis opt-in `architecture_gallery` proof when scheduling a bounded, source-pinned Blender run. The standing v0.1 four-fixture script and existing models are preserved; no new workflow or add-on installation is necessary.
+The expanded source implementation and `test_library_geometry.py` mesh regressions are not automatic production approval: use the existing Dens Mortis opt-in `architecture_gallery` proof when scheduling a bounded, source-pinned Blender run. The standing v0.1 four-fixture script and existing models are preserved; no new workflow or add-on installation is necessary.
 
 ## Architecture expansion index (catalog stage)
 
