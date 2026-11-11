@@ -39,6 +39,12 @@ RECIPES = {
     "wire_eight_laced_loom": ("eight_wire_tied", 0., "flex_bundle"),
     "rebar_deformed_ribbed": ("ribbed_rebar", 0., "formed_rebar"),
     "cable_steel_1x7": ("seven_strand", 0., "tensioned"),
+    "wire_twisted_pair": ("twisted_pair", 0., "twisted_bundle"),
+    "wire_flat_ribbon": ("flat_ribbon", 0., "ribbon_flex"),
+    "wire_coax": ("layered_coax", .24, "jacketed_cable"),
+    "housing_pet_braided_sleeve": ("open_braided_sleeve", 0., "flex_polymer"),
+    "hose_wire_suction": ("spring_reinforced_hose", .27, "spring_guarded"),
+    "pipe_jacketed_double_wall": ("double_wall_hollow", .24, "fixed"),
 }
 WIRE_RECIPES = {"single_wire", "eight_wire", "eight_wire_tied", "seven_strand"}
 OPEN_RECIPES = {"open_spiral", "split_annular"}
@@ -432,6 +438,137 @@ def steel_seven_strand(a, b, architecture_id, diameter=.12):
     return meshes
 
 
+
+def flat_extrusion(points, width, thickness, name, architecture_id,
+                   role="flat-cable-web"):
+    """Actual solid rectangular ribbon cross section along a smooth centerline.
+
+    Edges are parallel to the preferred bend axis, unlike a cylindrical
+    insulated wire. This is editable four-vertex-per-section geometry.
+    """
+    if not 0<thickness<width or len(points)<2:
+        raise ValueError("Invalid flat cable cross section")
+    samples=resample(points,max(24,min(220,int(polyline_length(points)/(.045*width))+1)))
+    verts=[]
+    for i,p in enumerate(samples):
+        tangent=sub(samples[min(i+1,len(samples)-1)],
+                    samples[max(0,i-1)])
+        u,v=frame(tangent)
+        for side,up in ((-1,-1),(1,-1),(1,1),(-1,1)):
+            verts.append(plus(p,plus(mult(u,side*width*.5),
+                                     mult(v,up*thickness*.5))))
+    faces=[(3,2,1,0)]
+    for i in range(len(samples)-1):
+        for j in range(4):
+            faces.append((4*i+j,4*i+(j+1)%4,
+                          4*(i+1)+(j+1)%4,4*(i+1)+j))
+    faces.append(tuple((len(samples)-1)*4+j for j in range(4)))
+    return mesh(name,role,verts,faces,architecture_id=architecture_id,
+                other={"profile_kind":"flat-rectangular-extrusion",
+                       "centerline_start":list(points[0]),
+                       "centerline_end":list(points[-1]),
+                       "flat_width_bu":width,"flat_thickness_bu":thickness})
+
+
+def twisted_pair(a,b,architecture_id,diameter=.12):
+    """Two separately modeled insulated helically twisted copper conductors."""
+    a,b=tuple(a),tuple(b)
+    length=norm(sub(b,a))
+    base=sample_centerline(a,b,sag=length*.11,samples=129)
+    u,v=frame(sub(b,a))
+    result=[]
+    for k in (0,1):
+        strand=[]
+        for i,p in enumerate(base):
+            t=i/(len(base)-1)
+            theta=TAU*(2.7*t+k*.5)
+            radial=plus(mult(u,diameter*.19*math.cos(theta)),
+                        mult(v,diameter*.19*math.sin(theta)))
+            strand.append(plus(p,radial))
+        item=tube(strand,diameter*.17,0.,"single_wire",
+                  "Twisted paired conductor %d"%(k+1),architecture_id,
+                  sides=12)
+        item["role"]="individually-helically-twisted-conductor"
+        item["conductor_index"]=k
+        item["public_port_centers_unchanged"]=[list(a),list(b)]
+        item["twist_turns"]=2.7
+        result.append(item)
+    return result
+
+
+def flat_ribbon_cable(a,b,architecture_id,diameter=.12):
+    """Flat flexible insulation strip with eight visible parallel raised tracks."""
+    length=norm(sub(b,a))
+    base=sample_centerline(a,b,sag=length*.075,samples=67)
+    result=[flat_extrusion(base,diameter,diameter*.13,
+                           "Continuous flat ribbon insulation web",
+                           architecture_id)]
+    u,v=frame(sub(b,a))
+    for k in range(8):
+        offs=(k-3.5)*diameter*.105
+        raised=[plus(p,plus(mult(u,offs),mult(v,diameter*.079)))
+                for p in base]
+        track=flat_extrusion(raised,diameter*.066,diameter*.016,
+                             "Conductor strip %02d"%(k+1),
+                             architecture_id,role="ribbon-raised-insulated-trace")
+        track["conductor_index"]=k
+        track["public_port_centers_unchanged"]=[list(a),list(b)]
+        result.append(track)
+    return result
+
+
+def layered_coax(a,b,architecture_id,diameter=.12):
+    """Visible jacket and exposed concentric dielectric/shield/center at ends.
+
+    Only short ends are exposed, honoring FMPL's no unseen internal decoration
+    policy while making a meaningful radial cross-section demonstration.
+    """
+    span=norm(sub(b,a))
+    base=sample_centerline(a,b,sag=span*.095,samples=65)
+    result=[tube(base,diameter,.34,"smooth",
+                 "Outer insulator hollow jacket",architecture_id)]
+    tangent=unit(sub(b,a))
+    for i,end in enumerate((a,b)):
+        inward=tangent if i==0 else mult(tangent,-1)
+        stub=plus(end,mult(inward,diameter*.16))
+        result.append(tube([stub,end],diameter*.64,.31,"smooth",
+                           "Dielectric layer at end %d"%i,architecture_id))
+        core=tube([stub,end],diameter*.19,0.,"single_wire",
+                  "Solid center conductor at end %d"%i,architecture_id,
+                  sides=12)
+        core["role"]="visible-coax-center-conductor"
+        result.append(core)
+    return result
+
+
+def braided_sleeve(a,b,architecture_id,diameter=.12):
+    """Open diagonal textile braid: two opposite-helical families of strands.
+
+    Crossing ribbons create real open lattice geometry. They do not represent
+    a painted diamond shader or a fully sealed conduit wall.
+    """
+    span=norm(sub(b,a))
+    base=sample_centerline(a,b,sag=span*.11,samples=97)
+    u,v=frame(sub(b,a))
+    result=[]
+    for handedness in (-1,1):
+        for strand in range(4):
+            path=[]
+            for i,p in enumerate(base):
+                t=i/(len(base)-1)
+                phase=TAU*(handedness*4.0*t+strand/4)
+                rad=diameter*.46
+                path.append(plus(p,plus(mult(u,rad*math.cos(phase)),
+                                        mult(v,rad*math.sin(phase)))))
+            item=flat_extrusion(path,diameter*.075,diameter*.023,
+                    "Braided textile strand %s %02d"%(
+                        "reverse" if handedness<0 else "forward",strand),
+                    architecture_id,role="open-woven-braid-ribbon")
+            item["braid_handedness"]=handedness
+            result.append(item)
+    return result
+
+
 def terminal_ring(center, direction, diameter, architecture_id, *,
                   role="connector-sleeve", length_factor=.6, scale=1.12):
     a=plus(center, mult(unit(direction), -diameter*length_factor*.5))
@@ -458,6 +595,14 @@ def line_segment(a, b, architecture_id, *, nominal_od=.12, topology="straight"):
                           base_sag_fraction=sag_fraction)
     if kind=="seven_strand":
         return steel_seven_strand(a,b,architecture_id,nominal_od)
+    if kind=="twisted_pair":
+        return twisted_pair(a,b,architecture_id,nominal_od)
+    if kind=="flat_ribbon":
+        return flat_ribbon_cable(a,b,architecture_id,nominal_od)
+    if kind=="layered_coax":
+        return layered_coax(a,b,architecture_id,nominal_od)
+    if kind=="open_braided_sleeve":
+        return braided_sleeve(a,b,architecture_id,nominal_od)
     points=sample_centerline(a,b,sag=distance*sag_fraction)
     if kind=="open_spiral":
         return [helical_ribbon(points,nominal_od,pitch=nominal_od*.95,
@@ -471,7 +616,9 @@ def line_segment(a, b, architecture_id, *, nominal_od=.12, topology="straight"):
         "interlocked_metal":"interlocked_metal",
         "helical_metal":"helical_metal",
         "split_annular":"split_annular", "ribbed_rebar":"ribbed_rebar",
-        "articulated_rings":"annular_metal"}.get(kind)
+        "articulated_rings":"annular_metal",
+        "spring_reinforced_hose":"smooth",
+        "double_wall_hollow":"smooth"}.get(kind)
     if shape is None:
         raise ValueError("No actual geometry recipe for "+kind)
     pitch=nominal_od*(.82 if shape=="interlocked_metal" else 1.08)
@@ -485,6 +632,16 @@ def line_segment(a, b, architecture_id, *, nominal_od=.12, topology="straight"):
                 pitch=pitch,width=pitch*.28,thickness=nominal_od*.045,
                 name="Helically interlocked metal locking seam",
                 architecture_id=architecture_id,role="metal-interlock-seam"))
+    if kind=="spring_reinforced_hose":
+        result.append(helical_ribbon(points,nominal_od*1.12,
+            pitch=nominal_od*.82,width=nominal_od*.26,
+            thickness=nominal_od*.06,
+            name="Real helical suction reinforcement",
+            architecture_id=architecture_id,role="suction-reinforcing-spring"))
+    if kind=="double_wall_hollow":
+        result.append(tube(points,nominal_od*.72,.27,"smooth",
+            "Separate concentric internal process wall",
+            architecture_id,role="true-inner-process-tube"))
     if kind=="articulated_rings":
         # Exposed manufactured sleeves, not simply a modified surface shader.
         for i in range(1,6):
