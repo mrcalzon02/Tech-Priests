@@ -281,7 +281,7 @@ def main() -> int:
                     help="Use 18,060 native ticks to audit the three earliest "
                          "bootstrap checkpoints; never accept the factory goal")
     ap.add_argument("--rail-connected-smoke", action="store_true",
-                    help="Genuine 36k-tick two-paid-connected-rails gate ONLY; "
+                    help="Genuine 36k+ paid-connected-rail gate with extended 60k physical ledger; "
                          "does not accept train travel or ore delivery")
     ap.add_argument("--seed", type=int, default=907260)
     ap.add_argument("--timeout-seconds", type=int, default=1800)
@@ -297,7 +297,7 @@ def main() -> int:
         ap.error("--rail-connected-smoke requires remote-rail-acquisition")
     tick_count = (args.ticks if args.ticks is not None else
                   (18060 if args.midgame_smoke else
-                   36060 if args.rail_connected_smoke else scenario["ticks"]))
+                   60060 if args.rail_connected_smoke else scenario["ticks"]))
     if tick_count < 600:
         ap.error("--ticks must be at least 600")
     if args.midgame_smoke and not 18060 <= tick_count < 36000:

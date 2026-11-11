@@ -502,15 +502,19 @@ local function inspect(s,elapsed)
      " native="..segments.." active="..active_rail..
      " live_units="..tostring(all_real).." owner="..tostring(hold_owner)..
      " total="..tostring(total).." expected="..expected)
-   if elapsed>=36000 and not s.rail_custody_verified then
+   -- Reconcile real stock at EVERY late native checkpoint, not only 36k.
+   -- A previously passing physical-custody receipt is never permanent proof.
+   if elapsed>=36000 then
      if not(hold_owner and all_real and segments>=2
        and total==expected)then
        fail("RAIL_NATIVE_CUSTODY_NOT_CONSERVED expected="..expected..
-         " counted="..tostring(total))
+         " counted="..tostring(total).." elapsed="..elapsed)
      end
-     s.rail_custody_verified=true
-     emit("PASS original physical rail cargo and native segment census conserved"..
-       " total="..total.." held="..held_rails.." built="..segments)
+     if not s.rail_custody_verified then
+       s.rail_custody_verified=true
+       emit("PASS original physical rail cargo and native segment census conserved"..
+         " total="..total.." held="..held_rails.." built="..segments)
+     end
    end
    -- A route objective and even a ghost are not physically placed rail.
   -- The first acceptance requires a real segment with the exact unit

@@ -791,3 +791,21 @@ class NativeRailGridAlignedConstructionTests(unittest.TestCase):
         self.assertIn("if not (actual and actual==previous.built_entity)", source)
         self.assertIn("connected_straight_rails(predecessor,actual)", source)
         self.assertNotIn('surface.create_entity{name="straight-rail"', source)
+
+
+class NativeRailExtendedCustodyCheckpointTests(unittest.TestCase):
+    def test_60k_smoke_continues_real_rail_custody_without_relaxing_36k_gate(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        runner = (root / "tools/run_factorio_isolated_service_scenario.py").read_text(encoding="utf-8")
+        self.assertIn('60060 if args.rail_connected_smoke else scenario["ticks"]', runner)
+        self.assertIn('if args.rail_connected_smoke and not 36060 <= tick_count < 90000:', runner)
+        self.assertIn('for _,mark in ipairs({1800,9000,18000,36000,60000,90000})', fixture)
+        self.assertIn('if elapsed>=36000 then', fixture)
+        self.assertNotIn('if elapsed>=36000 and not s.rail_custody_verified then', fixture)
+        self.assertIn('if not s.rail_custody_verified then', fixture)
+        self.assertIn('total==expected', fixture)
+        self.assertIn('RAIL_NATIVE_CUSTODY_NOT_CONSERVED', fixture)
+        self.assertIn('RAIL_LINE_NEVER_REACHED_REMOTE_PATCH', fixture)
+        self.assertIn('TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN', fixture)
+        self.assertIn('"train_and_ore_delivery_accepted": False', runner)
