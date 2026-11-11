@@ -18,7 +18,7 @@ class TypedFittingGeometryTests(unittest.TestCase):
 
     def test_first_construction_slice_is_real_and_indexed(self):
         joints=g.source_json("joint_catalog.v1.json")["joint_types"]
-        self.assertEqual(len(f.FITTING_RECIPES),21)
+        self.assertEqual(len(f.FITTING_RECIPES),25)
         self.assertTrue(set(f.FITTING_RECIPES).issubset(joints))
 
     def test_fittings_keep_public_port_xyz_unchanged(self):
@@ -140,6 +140,40 @@ class TypedFittingGeometryTests(unittest.TestCase):
         self.assertEqual(len(parts),3)
         self.assertEqual(sum(p["role"]=="sized-multicore-connector-housing"
                              for p in parts),1)
+
+
+
+    def test_flat_ribbon_idc_contacts_align_one_per_conductor(self):
+        parts=self.model("wire_flat_ribbon","insulation_displacement")
+        self.assertEqual(len(parts),9)
+        blades=[p for p in parts if p["role"]=="individual-idc-contact-blade"]
+        self.assertEqual(len(blades),8)
+        self.assertEqual({p["conductor_index"] for p in blades},set(range(8)))
+        self.assertEqual(sum(p["role"]=="ribbon-idc-housing" for p in parts),1)
+
+    def test_coax_has_concentric_shield_dielectric_and_center_pin(self):
+        parts=self.model("wire_coax","coax_connector")
+        roles={p["role"] for p in parts}
+        self.assertEqual(len(parts),5)
+        self.assertIn("shielded-coax-outer-shell",roles)
+        self.assertIn("coax-insulator-ring",roles)
+        self.assertIn("coaxial-inner-pin",roles)
+        self.assertEqual(sum(p["role"]=="coax-bayonet-retainer" for p in parts),2)
+        self.assertTrue(next(p for p in parts if p["role"]==
+                        "shielded-coax-outer-shell")["true_open_bore"])
+
+    def test_expanding_braid_has_two_real_overlapping_protection_rings(self):
+        parts=self.model("housing_pet_braided_sleeve","sleeve_overlap")
+        self.assertEqual(len(parts),2)
+        self.assertEqual({p["role"] for p in parts},
+                         {"hollow-receiving-sleeve","real-sleeve-overlap"})
+        self.assertTrue(all(p["true_open_bore"] for p in parts))
+
+    def test_metal_bellows_receives_flange_and_six_captive_bolts(self):
+        parts=self.model("hose_metal_annular","bellows_flange")
+        self.assertEqual(len(parts),8)
+        self.assertEqual(sum(p["role"]=="bellows-flange-bolt" for p in parts),6)
+        self.assertEqual(sum(p["true_open_bore"] for p in parts),2)
 
 
 
