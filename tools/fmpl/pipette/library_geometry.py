@@ -291,6 +291,63 @@ def helical_ribbon(points, diameter, pitch, width, thickness,
                        "centerline_end": list(points[-1])})
 
 
+
+def surface_topology(faces):
+    """Analyze ACTUAL generated triangle/quad surface connectivity.
+
+    Union-find counts connected surface islands by shared mesh vertex index.
+    Edge valence counts naked (one adjacent polygon) and nonmanifold (>2)
+    edges. An assembled pressure-pipe manifold must form a SINGLE closed
+    connected surface, not merely one Blender object containing disconnected
+    tubes or a Boolean modifier that completed without raising.
+    """
+    if not faces:
+        raise ValueError("Cannot verify empty surface")
+    parents={}
+    ranks={}
+    edges={}
+    def find(a):
+        parents.setdefault(a,a)
+        ranks.setdefault(a,0)
+        while parents[a]!=a:
+            parents[a]=parents[parents[a]]
+            a=parents[a]
+        return a
+    def union(a,b):
+        x,y=find(a),find(b)
+        if x==y:
+            return
+        if ranks[x]<ranks[y]:
+            x,y=y,x
+        parents[y]=x
+        if ranks[x]==ranks[y]:
+            ranks[x]+=1
+    degenerate=0
+    for poly in faces:
+        indices=[int(x) for x in poly]
+        if len(indices)<3 or len(set(indices))<3:
+            degenerate+=1
+            continue
+        anchor=indices[0]
+        for v in indices[1:]:
+            union(anchor,v)
+        for a,b in zip(indices,indices[1:]+indices[:1]):
+            if a==b:
+                degenerate+=1
+                continue
+            key=(min(a,b),max(a,b))
+            edges[key]=edges.get(key,0)+1
+    return {
+        "surface_islands":len({find(a) for a in parents}),
+        "naked_boundary_edges":sum(1 for v in edges.values() if v==1),
+        "overlapping_nonmanifold_edges":sum(1 for v in edges.values() if v>2),
+        "degenerate_polygons":degenerate,
+        "vertex_count_connected":len(parents),
+        "edge_count":len(edges),
+        "polygon_count":len(faces)
+    }
+
+
 def wire_cores(a, b, architecture_id, *, eight=True, tied=False, diameter=.12,
                base_sag_fraction=.11):
     """Group-coherent eight-wire layout, never eight coincident core centerlines."""
