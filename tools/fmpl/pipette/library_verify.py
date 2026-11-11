@@ -17,6 +17,7 @@ import sys
 
 import bpy
 from mathutils import Vector
+from mathutils.bvhtree import BVHTree
 
 HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(HERE))
@@ -102,12 +103,21 @@ def validate(args):
         verts=[manifold.matrix_world @ v.co for v in manifold.data.vertices]
         if not verts:
             raise RuntimeError("CSG manifold has no vertices")
+        # Triangle-surface BVH: a long cylinder only has vertices at its
+        # endpoints. Nearest-VERTEX tests falsely reject a genuine unbroken
+        # cylinder halfway along its shaft.
+        bpy.context.view_layer.update()
+        bvh=BVHTree.FromObject(manifold,bpy.context.evaluated_depsgraph_get())
+        world_to_local=manifold.matrix_world.inverted_safe()
         od=float(receipt["nominal_outer_diameter_bu"])
         for port in expected_ports:
             q=Vector(port["xyz_bu"])
             for t in (.12,.30,.50,.70,.88):
                 probe=hub.lerp(q,t)
-                gap=min((v-probe).length for v in verts)
+                hit,normal,face,distance=bvh.find_nearest(world_to_local@probe)
+                if hit is None:
+                    raise RuntimeError("CSG branch has no queryable triangle surface")
+                gap=(manifold.matrix_world@hit-probe).length
                 if gap>od*.92:
                     raise RuntimeError(
                         "Disconnected CSG pipe branch: %s at %.2f gap %.4f BU"
