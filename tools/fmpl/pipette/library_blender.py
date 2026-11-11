@@ -159,6 +159,57 @@ def boolean(target, tool, operation):
     return target
 
 
+def repair_connected_pipe_surface(obj, diameter):
+    """Close Boolean seams before a Y is accepted as real manifold geometry.
+
+    Exact Booleans can leave coincident or disconnected submeshes even when a
+    Cycles preview looks joined. First weld coincident vertices; if the mesh
+    still is not a single closed surface, use a bounded Blender-native voxel
+    remesh at sufficiently fine pitch to retain a real central open bore.
+    Never silently accept disconnected islands or degenerate wall faces.
+    """
+    import bmesh
+    bm=bmesh.new()
+    bm.from_mesh(obj.data)
+    bmesh.ops.remove_doubles(bm,verts=list(bm.verts),
+                             dist=diameter*.0004)
+    bmesh.ops.dissolve_degenerate(bm,edges=list(bm.edges),
+                                 dist=diameter*.0002)
+    bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces))
+    bm.to_mesh(obj.data)
+    bm.free()
+    obj.data.update()
+    def audit():
+        return lib.surface_topology(
+            [tuple(int(i) for i in poly.vertices)
+             for poly in obj.data.polygons])
+    first=audit()
+    def valid(report):
+        return report["surface_islands"]==1 and \
+            report["naked_boundary_edges"]==0 and \
+            report["overlapping_nonmanifold_edges"]==0 and \
+            report["degenerate_polygons"]==0
+    if not valid(first):
+        print("PIPETTE_CSG_SURFACE_REPAIR",json.dumps(first))
+        bpy.ops.object.select_all(action="DESELECT")
+        obj.select_set(True)
+        bpy.context.view_layer.objects.active=obj
+        if not hasattr(obj.data,"remesh_voxel_size"):
+            raise RuntimeError(
+                "Cannot repair disconnected pipe geometry: Blender voxel remesh unavailable")
+        obj.data.remesh_voxel_size=max(.0025,diameter/28)
+        bpy.ops.object.voxel_remesh()
+        obj.select_set(False)
+        obj.data.update()
+    final=audit()
+    print("PIPETTE_CSG_FINAL_TOPOLOGY",json.dumps(final))
+    if not valid(final):
+        raise RuntimeError("Cannot certify a connected, watertight hollow Y: "+
+                           json.dumps(final))
+    obj["pipette_native_connected_surface_proven"]=True
+    return final
+
+
 def build_fluid_branch(collection, model, approved_material):
     """Native CSG three-way pipe body: union OD, subtract all through-bores.
 
@@ -216,6 +267,9 @@ def build_fluid_branch(collection, model, approved_material):
         drill=cylinder(collection,"pipe actual open bore "+p["id"],
                        h-d*radius*1.65,q+d*radius*.78,inner)
         root=boolean(root,drill,"DIFFERENCE")
+    # Must be one physically continuous watertight surface. An object that
+    # simply contains isolated tubes is NOT an acceptable hollow junction.
+    repair_connected_pipe_surface(root,od)
     root.name=("PIPETTE | "+model["architecture_id"]+
                " | hollow CSG "+model["topology"]+" manifold")
     root.data.materials.append(approved_material)
