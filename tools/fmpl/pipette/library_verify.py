@@ -163,6 +163,28 @@ def validate(args):
                     raise RuntimeError(
                         "Disconnected CSG pipe branch: %s at %.2f gap %.4f BU"
                         %(port["id"],t,gap))
+        # A visible hollow mouth is not proof that the three bores CONNECT.
+        # Cast centerline rays from just outside each public machine socket
+        # through the shared hub; there must be no internal cap or divider.
+        bore_rays_checked=0
+        for port in expected_ports:
+            q=Vector(port["xyz_bu"])
+            outward=Vector(port["outward_normal"]).normalized()
+            distance=(q-hub).length+od*.04
+            origin_world=q+outward*od*.20
+            origin_local=world_to_local@origin_world
+            ray_local=(world_to_local.to_3x3()@(-outward)).normalized()
+            hit,normal,face,extent=bvh.ray_cast(
+                origin_local,ray_local,distance+od*.20)
+            if hit is not None:
+                gap=(manifold.matrix_world@hit-origin_world).length
+                raise RuntimeError(
+                    "Internal CSG bore obstruction on %s, distance %.5f BU"
+                    %(port["id"],gap))
+            bore_rays_checked+=1
+        if bore_rays_checked!=len(expected_ports):
+            raise RuntimeError("Native fluid junction missing a bore ray")
+
         # The bounds must contain geometry on both sides of central Y hub.
         if not (min(v.x for v in verts)<hub.x-.5 and
                 max(v.x for v in verts)>hub.x+.5):
@@ -189,6 +211,7 @@ def validate(args):
         "cycles_preview_sha256":sha256(args.preview),
         "csg_manifold_native_verified":bool(receipt["requires_native_csg_manifold"]),
         "csg_connected_surface_audit":audit if receipt["requires_native_csg_manifold"] else None,
+        "csg_open_bore_centerline_rays":bore_rays_checked if receipt["requires_native_csg_manifold"] else 0,
         "approved_materials":receipt["approved_materials"],
         "game_native_verified":False,
         "owner_visual_approval":False
