@@ -124,6 +124,70 @@ def validate(args):
             raise RuntimeError("Receipt contradicts hardware missing gate")
         if sorted(receipt["missing_terminal_hardware"])!=sorted(expected):
             raise RuntimeError("Untyped port set does not match true fixture ports")
+    branch_wire_proof=False
+    branch_wire_counts=None
+    if receipt.get("branch_junction_status")=="continuous-conductor-breakout-built":
+        from collections import Counter
+        if receipt["topology"] not in {"wye","tee"}:
+            raise RuntimeError("Conductor breakout is not a Y/tee topology")
+        if receipt.get("installed_terminal_fittings"):
+            raise RuntimeError("Branch contains unrelated terminal block fittings")
+        if receipt.get("missing_terminal_hardware"):
+            raise RuntimeError("Branch mini ferrules incorrectly marked missing")
+        if any("junction-housing-preview" in ob.name or
+               "terminal-block" in ob.name.lower() or
+               "eight-way-connector-housing" in str(ob.get("pipette_mesh_role",""))
+               for ob in objects):
+            raise RuntimeError("Illegal box/terminal-block in eight-wire Y")
+        strands=[ob for ob in objects if
+                 ob.get("pipette_mesh_role")=="continuous-branched-conductor"]
+        wraps=[ob for ob in objects if
+               ob.get("pipette_mesh_role")=="branch-strain-relief-wrap"]
+        ferrules=[ob for ob in objects if
+                 ob.get("pipette_mesh_role")=="individual-conductor-ferrule"]
+        counts=receipt.get("branch_geometry",{}).get("branch_port_conductor_counts")
+        if counts!={"A":8,"B":4,"C":4}:
+            raise RuntimeError("Incorrect physical eight-to-four-plus-four branch distribution")
+        if len(strands)!=8 or len(wraps) not in (3,5) or len(ferrules)!=16:
+            raise RuntimeError("Incomplete compact eight-wire junction hardware: "+
+                               "%d strands, %d wraps, %d ferrules"%
+                               (len(strands),len(wraps),len(ferrules)))
+        pairs=Counter()
+        ids=[]
+        for strand in strands:
+            if not strand.get("pipette_full_conductor_branch_continuity"):
+                raise RuntimeError("A branch conductor is not one continuous mesh")
+            ids.append(strand.get("pipette_conductor_index",-1))
+            pair=json.loads(strand["pipette_conductor_port_pair_json"])
+            if len(pair)!=2 or pair[0]!="A" or pair[1] not in ("B","C"):
+                raise RuntimeError("Invalid individual conductor port pair")
+            pairs[tuple(pair)]+=1
+            topology=lib.surface_topology(
+                [tuple(int(v) for v in face.vertices)
+                 for face in strand.data.polygons])
+            if topology["surface_islands"]!=1 or \
+               topology["naked_boundary_edges"]!=0 or \
+               topology["degenerate_polygons"]!=0:
+                raise RuntimeError("Split or unclosed conductor mesh "+strand.name)
+        if sorted(ids)!=list(range(8)) or \
+           pairs!=Counter({("A","B"):4,("A","C"):4}):
+            raise RuntimeError("Eight incoming wires duplicated, missing or mismapped")
+        contact_counts=Counter(x.get("pipette_branch_ferrule_port") for x in ferrules)
+        if contact_counts!=Counter(counts):
+            raise RuntimeError("Wrong count of miniature port ferrules")
+        wrap_counts=Counter(x.get("pipette_branch_port_id") for x in wraps)
+        if not all(wrap_counts[p]>=1 for p in ("A","B","C")):
+            raise RuntimeError("Wire Y missing compact branch strain relief")
+        if json.loads(col.get("pipette_branch_port_counts_json","{}"))!=counts:
+            raise RuntimeError("Saved Blender collection changed branching count")
+        if int(col.get("pipette_branch_route_count",0))!=8:
+            raise RuntimeError("Blender asset lost physical conductor route metadata")
+        branch_wire_proof=True
+        branch_wire_counts={"conductors":len(strands),
+                            "mini_ferrules":len(ferrules),
+                            "strain_relief_wraps":len(wraps),
+                            "port_distribution":dict(counts),
+                            "routes":{a+"->"+b:n for (a,b),n in pairs.items()}}
     if receipt["requires_native_csg_manifold"]:
         booleans=[ob for ob in objects
                   if ob.get("pipette_native_boolean_bore_constructed",False)]
@@ -218,6 +282,8 @@ def validate(args):
         "glb_sha256":sha256(args.glb),
         "cycles_preview_sha256":sha256(args.preview),
         "csg_manifold_native_verified":bool(receipt["requires_native_csg_manifold"]),
+        "eight_wire_branch_continuity_verified":branch_wire_proof,
+        "eight_wire_branch_hardware_audit":branch_wire_counts,
         "csg_connected_surface_audit":audit if receipt["requires_native_csg_manifold"] else None,
         "csg_open_bore_centerline_rays":bore_rays_checked if receipt["requires_native_csg_manifold"] else 0,
         "approved_materials":receipt["approved_materials"],
