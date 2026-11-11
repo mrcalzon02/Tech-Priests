@@ -326,6 +326,13 @@ local function trace_uncommitted_rail_gap(s,elapsed)
   emit("RAIL_PREWRIT_GAP elapsed="..elapsed..
     " segment="..tostring(frontier and frontier.segment)..
     " mission="..tostring(mission and mission.status)..
+    " prewrite_refusal="..tostring(mission
+      and mission.last_prewrite_refusal_0836
+      and mission.last_prewrite_refusal_0836.reason)..
+    " prewrite_refusal_tick="..tostring(mission
+      and mission.last_prewrite_refusal_0836
+      and mission.last_prewrite_refusal_0836.tick)..
+    " generic_construction_task="..tostring(p.construction_task~=nil)..
     " pending="..tostring(pending~=nil)..
     " request="..tostring(p.construction_request~=nil)..
     " queue_gate="..tostring(allowed)..
