@@ -69,6 +69,17 @@ class PipettePhysicalFormsTests(unittest.TestCase):
             self.assertEqual(audit["surface_islands"],1)
             self.assertEqual(audit["naked_boundary_edges"],0)
 
+    def test_tall_narrow_structural_rail_is_closed_six_face_prism(self):
+        rail=forms._rail(self.A,self.B,"housing_slotted_duct",
+                         .012,.045,"Upright narrow wall","real-structural-wall")
+        self.assertEqual(len(rail["vertices"]),8)
+        self.assertEqual(len(rail["faces"]),6)
+        self.assertAlmostEqual(rail["actual_section_width_bu"],.012)
+        self.assertAlmostEqual(rail["actual_section_height_bu"],.045)
+        audit=geom.surface_topology(rail["faces"])
+        self.assertEqual(audit["surface_islands"],1)
+        self.assertEqual(audit["naked_boundary_edges"],0)
+
     def test_ladder_tray_has_rails_and_genuine_open_crossbars(self):
         parts=forms.generate(self.A,self.B,"housing_ladder_tray")
         rails=[x for x in parts if x["role"]=="open-ladder-longitudinal-rail"]
