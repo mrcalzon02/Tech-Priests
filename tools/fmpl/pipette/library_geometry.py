@@ -678,32 +678,41 @@ def build_demo(architecture_id, topology="wye", *, nominal_od=None):
     points={p["id"]:tuple(p["xyz_bu"]) for p in topo["ports"]}
     points.update({p["id"]:tuple(p["xyz_bu"]) for p in topo["junctions"]})
     result=[]
-    # A two-port inline specimen is a single physical free span, not two
-    # artificial dips on either side of a purely diagrammatic HUB marker.
-    # This is essential for believable natural hanging wires and hoses.
-    edges=[("A","B")] if topology=="straight" else topo["connection_graph"]
-    for a,b in edges:
-        result.extend(line_segment(points[a],points[b],architecture_id,
-                                   nominal_od=diameter,topology=topology))
-    # Distinct geometry with explicit provenance; no invented functional join.
-    # For branching pipes, native Blender MUST boolean-union outer shells and
-    # subtract their continuous bores before marking them as a valid manifold.
-    needs_manifold = len(topo["ports"]) >= 3 and meta["group"] in {
+    branch_info={}
+    branch_required=len(topo["ports"])>=3
+    needs_manifold=branch_required and meta["group"] in {
         "metal_pipe","polymer_pipe","hose","tubing"}
-    if len(topo["ports"])>=3 and not needs_manifold:
-        # Central insulated junction enclosure is *not* an implicit electrical
-        # or fluid network. It is a real visible housing for the branch fanout.
-        center=tuple(topo["junctions"][0]["xyz_bu"])
-        w=diameter*1.75
-        # Concise cube with properly modeled solid faces, tagged unapproved.
-        v=[(center[0]+x*w,center[1]+y*w,center[2]+z*w*.68)
-           for x,y,z in ((-1,-1,-1),(-1,-1,1),(-1,1,-1),
-                         (-1,1,1),(1,-1,-1),(1,-1,1),(1,1,-1),(1,1,1))]
-        f=[(0,4,6,2),(1,3,7,5),(0,1,5,4),(2,6,7,3),
-           (0,2,3,1),(4,5,7,6)]
-        result.append(mesh("Typed branch housing - open for connector review",
-                           "junction-housing-preview",v,f,
-                           architecture_id=architecture_id))
+    is_wire_breakout=architecture_id in {
+        "wire_eight_loose_bundle","wire_eight_laced_loom"} and \
+        topology in {"wye","tee"}
+    if is_wire_breakout:
+        # Physical eight-core harness junction: eight continuous wires from A
+        # divide four-to-B/four-to-C. Dedicated small real wraps/ferrules.
+        # This MUST NOT fall through to the old three-leg/eight-copy generator.
+        if __package__:
+            from . import library_branches
+        else:
+            import library_branches
+        branch_info=library_branches.build_eight_wire_y(
+            architecture_id,topo,diameter)
+        result=branch_info.pop("meshes")
+    else:
+        # A two-port inline specimen is ONE continuous naturally hanging span.
+        edges=[("A","B")] if topology=="straight" else topo["connection_graph"]
+        for a,b in edges:
+            result.extend(line_segment(points[a],points[b],architecture_id,
+                                       nominal_od=diameter,topology=topology))
+    # No large cube, even for branch architectures still lacking hardware.
+    # Those unfinished Y/tee constructions are explicitly unverified instead
+    # of claiming a visually convincing but physically nonexistent junction.
+    if is_wire_breakout:
+        branch_status="continuous-conductor-breakout-built"
+    elif needs_manifold:
+        branch_status="requires-native-CSG-connected-hollow-manifold"
+    elif branch_required:
+        branch_status="unresolved-branch-hardware-no-fallback-block"
+    else:
+        branch_status="no-branch"
     return {
         "schema":"fmpl.pipette.geometry-preview.v1",
         "architecture_id":architecture_id,
@@ -714,6 +723,8 @@ def build_demo(architecture_id, topology="wye", *, nominal_od=None):
         "junctions":[dict(p) for p in topo["junctions"]],
         "nominal_outer_diameter_bu":diameter,
         "meshes":result,
+        "branch_junction_status":branch_status,
+        "branch_geometry":branch_info,
         "requires_native_csg_manifold":needs_manifold,
         "electrical_or_fluid_simulation_verified":False,
         "approved_materials":False,
