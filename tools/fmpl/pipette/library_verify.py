@@ -145,7 +145,12 @@ def validate(args):
                ob.get("pipette_mesh_role")=="branch-strain-relief-wrap"]
         ferrules=[ob for ob in objects if
                  ob.get("pipette_mesh_role")=="individual-conductor-ferrule"]
-        counts=receipt.get("branch_geometry",{}).get("branch_port_conductor_counts")
+        branch_info=receipt.get("branch_geometry",{})
+        counts=branch_info.get("branch_port_conductor_counts")
+        if not branch_info.get("cross_section_spacing_checked"):
+            raise RuntimeError("Wire Y lacks deterministic centerline clearance proof")
+        if float(branch_info.get("minimum_wire_surface_gap_bu",0))<=0:
+            raise RuntimeError("Wire Y contains overlapping strand centerlines")
         if counts!={"A":8,"B":4,"C":4}:
             raise RuntimeError("Incorrect physical eight-to-four-plus-four branch distribution")
         if len(strands)!=8 or len(wraps) not in (3,5) or len(ferrules)!=16:
@@ -200,7 +205,9 @@ def validate(args):
                             "mini_ferrules":len(ferrules),
                             "strain_relief_wraps":len(wraps),
                             "port_distribution":dict(counts),
-                            "routes":{a+"->"+b:n for (a,b),n in pairs.items()}}
+                            "routes":{a+"->"+b:n for (a,b),n in pairs.items()},
+                            "minimum_sampled_wire_surface_gap_bu":float(
+                                branch_info["minimum_wire_surface_gap_bu"])}
     if receipt["requires_native_csg_manifold"]:
         booleans=[ob for ob in objects
                   if ob.get("pipette_native_boolean_bore_constructed",False)]
