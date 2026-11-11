@@ -1,8 +1,8 @@
-"""V24 Emergency Miner: genuine four-direction OWNER PREVIEW, never a sprite export.
+"""V25 Emergency Miner: genuine four-direction OWNER PREVIEW, never a sprite export.
 
 One unmodified FMPL 45-degree orthographic camera. Turn the original machine
 and its REAL red laser/steam rigs by 0, 90, 180, 270 degrees, not the camera.
-Eight Cycles samples of the existing authored 16-pose loop per direction.
+All sixteen Cycles samples of the selected Variant A loop per direction.
 A full 16-pose canonical cycle remains in each original A/B .blend.
 """
 from __future__ import annotations
@@ -27,7 +27,7 @@ from blender_camera_guard import assert_clean,camera_record
 from capture_policy import POLICY_ID
 
 ANGLES=[0,90,180,270]
-SAMPLED=FRAMES[::2]
+SAMPLED=FRAMES
 PIXELS=256
 CYCLES_SAMPLES=12
 
@@ -113,10 +113,10 @@ def run(out,variant):
     if scene.get("game_integration_status")!="NOT_INTEGRATED_REVIEW_ONLY":
         raise RuntimeError("V24 must remain for visual review")
     pivot,foundation,root_count=make_turntable(scene)
-    scene["four_view_review"]="V24_DIRECTIONAL_ANIMATED_REVIEW_ONLY"
+    scene["four_view_review"]="V25_DIRECTIONAL_ANIMATED_REVIEW_ONLY"
     scene["four_view_prototype_mapping"]="NOT_VERIFIED"
     scene["source_animation_variant"]=variant
-    saved=out/("V24_four_orientation_preview_%s.blend"%variant)
+    saved=out/("V25_four_orientation_preview_%s.blend"%variant)
     scene.frame_set(1)
     pivot.rotation_euler.z=0
     bpy.ops.wm.save_as_mainfile(filepath=str(saved))
@@ -125,7 +125,7 @@ def run(out,variant):
     print("MINER_V24_4VIEW_SAVED_SOURCE "+str(saved),flush=True)
 
     result={
-        "asset":"Tech Priests Emergency Miner","revision":"V24",
+        "asset":"Tech Priests Emergency Miner","revision":"V25","model_geometry_revision":"V24",
         "artifact_class":"STATIC_CAMERA_FOUR_MODEL_ROTATION_PREVIEW",
         "production_sprite_exported":False,
         "visual_approval":"PENDING",
@@ -141,7 +141,7 @@ def run(out,variant):
         "rotation_root_parts":root_count,
         "samples_per_direction":len(SAMPLED),
         "sampled_source_frames":list(SAMPLED),
-        "sampled_fps":4,
+        "sampled_fps":8,
         "capture_resolution":[PIXELS,PIXELS],
         "sequences":{},
     }
@@ -176,13 +176,13 @@ def run(out,variant):
             if not path.is_file() or path.stat().st_size<3000:
                 raise RuntimeError("Missing native four-view frame: "+str(path))
             captures.append(path)
-        apng=out/("miner_v24_%s_%s_animated.png"%(variant,key))
-        width,height,count=pack_apng(captures,apng,playback_fps=4)
+        apng=out/("miner_v25_%s_%s_animated.png"%(variant,key))
+        width,height,count=pack_apng(captures,apng,playback_fps=8)
         if count!=len(SAMPLED) or width!=PIXELS or height!=PIXELS:
             raise RuntimeError("Wrong APNG dimensions or count")
         scene.render.resolution_x=scene.render.resolution_y=43
         scene.frame_set(37)
-        still=out/("miner_v24_%s_%s_native43.png"%(variant,key))
+        still=out/("miner_v25_%s_%s_native43.png"%(variant,key))
         scene.render.filepath=str(still)
         bpy.ops.render.render(write_still=True)
         scene.render.resolution_x=scene.render.resolution_y=PIXELS
@@ -198,7 +198,7 @@ def run(out,variant):
         }
     receipt=out/("four_orientation_preview_%s.json"%variant)
     receipt.write_text(json.dumps(result,indent=2)+"\n",encoding="utf8")
-    print("MINER_V24_FOUR_DIRECTION_PREVIEW_PASS "+json.dumps(
+    print("MINER_V25_FOUR_DIRECTION_PREVIEW_PASS "+json.dumps(
         {k:v for k,v in result.items() if k!="sequences"},separators=(",",":")),flush=True)
 
 
