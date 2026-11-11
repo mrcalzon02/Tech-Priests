@@ -45,9 +45,31 @@ def _tag(part, role, profile, a, b, **metadata):
 
 
 def _rail(a,b,arch,width,thickness,name,role):
-    return _tag(g.flat_extrusion([a,b],width,thickness,name,arch,
-                                role=role), role,"solid-rectangular-rail",a,b,
-                solid_rail=True)
+    """Closed rectangular structural extrusion (width and height independent).
+
+    This is NOT a flat electrical ribbon. A tray rail may be narrow and tall;
+    the former ribbon-only helper incorrectly rejected a rail when its wall
+    height exceeded its width. The actual prism is just six real faces with
+    a stable local cross-section oriented along its authored segment.
+    """
+    if width<=0 or thickness<=0:
+        raise ValueError("Invalid rail width or wall height")
+    _,u,v=_frame(g.sub(b,a))
+    corners=((-1,-1),(-1,1),(1,1),(1,-1))
+    verts=[]
+    for center in (a,b):
+        for x,y in corners:
+            verts.append(g.plus(center,g.plus(
+                g.mult(u,x*width*.5),g.mult(v,y*thickness*.5))))
+    faces=[
+        (3,2,1,0),(4,5,6,7),
+        (0,1,5,4),(1,2,6,5),(2,3,7,6),(3,0,4,7)
+    ]
+    m=g.mesh(name,role,verts,faces,architecture_id=arch)
+    return _tag(m,role,"solid-rectangular-rail",a,b,
+                solid_rail=True,
+                actual_section_width_bu=width,
+                actual_section_height_bu=thickness)
 
 
 def flattened_hollow(a,b,architecture_id,nominal_od=.12):
