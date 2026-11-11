@@ -610,3 +610,23 @@ class NativeRailOriginalGuardPredicateTests(unittest.TestCase):
         self.assertIn('if not (actual and actual==previous.built_entity)', source)
         self.assertIn('connected_straight_rails(predecessor,actual)', source)
         self.assertNotIn('surface.create_entity{name="straight-rail"', source)
+
+
+class NativeRailGridAlignedConstructionTests(unittest.TestCase):
+    def test_original_request_uses_factorio_native_center_and_unchanged_physical_gates(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        source = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
+                  ).read_text(encoding="utf-8")
+        self.assertIn("local function native_first_rail_center(start)", source)
+        self.assertIn("start.x+M.start_offset+1,math.floor(start.y/2)*2+1", source)
+        self.assertIn("local first=native_first_rail_center(start)", source)
+        self.assertIn("start_position=native_first_rail_center(start)", source)
+        self.assertIn("local forward=target.x-first.x", source)
+        self.assertIn("local lateral=math.abs(target.y-first.y)", source)
+        self.assertIn("(forward-x_clearance)/M.segment_step", source)
+        self.assertIn("and close(previous.built_entity.position,pending.position)", source)
+        self.assertIn("and previous.built_entity.direction==pending.direction", source)
+        self.assertIn("source_before-saved.source_after==1", source)
+        self.assertIn("if not (actual and actual==previous.built_entity)", source)
+        self.assertIn("connected_straight_rails(predecessor,actual)", source)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', source)

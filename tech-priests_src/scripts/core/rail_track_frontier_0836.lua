@@ -61,20 +61,29 @@ local function track_at(pair,point,direction)
   if ok then return exact_native_rail(native) end
 end
 M.track_at=track_at
+-- Factorio 2.1.24 normalized the original 0338 placement request
+-- (12,-206) to an actual eastbound straight-rail center at (13,-205).
+-- Request the 2x2 native rail center from the outset. Never relabel a
+-- differently snapped physical entity as matching the original 0836 writ.
+-- Preserve the even-X station corridor and the original two-tile cadence.
+local function native_first_rail_center(start)
+  return pos(start.x+M.start_offset+1,math.floor(start.y/2)*2+1)
+end
 -- Single physical geometry contract shared with the 0835 natural-ore
--- observer. Rail credit uses Euclidean last-RAIL clearance, not the X
--- coordinate of a hypothetical next segment.
+-- observer. Range counts must use the very same native rail centers
+-- that 0338 receives, not a hypothetical unsnapped builder coordinate.
 function M.required_segments_for_target(start,target)
   if not(start and target and type(start.x)=="number"
       and type(start.y)=="number" and type(target.x)=="number"
       and type(target.y)=="number")then return nil end
-  local forward=target.x-start.x
-  local lateral=math.abs(target.y-start.y)
-  if forward<=M.start_offset or lateral>M.max_lateral_error
+  local first=native_first_rail_center(start)
+  local forward=target.x-first.x
+  local lateral=math.abs(target.y-first.y)
+  if forward<=0 or math.abs(target.y-start.y)>M.max_lateral_error
       or lateral>M.destination_clearance then return nil end
   local x_clearance=math.sqrt(M.destination_clearance^2-lateral^2)
   return math.max(1,math.ceil(
-    (forward-M.start_offset-x_clearance)/M.segment_step)+1)
+    (forward-x_clearance)/M.segment_step)+1)
 end
 function M.last_rail_reaches_target(rail,target)
   if not(rail and target and type(rail.x)=="number"
@@ -206,7 +215,7 @@ function M.plan_next(pair)
   end
   m.rail_frontier_0836=m.rail_frontier_0836 or{
     segment=0,last_position=nil,direction=direction,
-    start_position=pos(start.x+M.start_offset,start.y),
+    start_position=native_first_rail_center(start),
     initial_stock_tick=now(),built_units={},started_tick=now(),
   }
   local route=m.rail_frontier_0836
