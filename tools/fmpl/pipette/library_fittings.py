@@ -231,20 +231,32 @@ def build(architecture_id, joint_id, port, diameter=.12):
         result.append(tube("Flat conductive bolt eye",r*1.23,r*.39,r*.22,
                            role="flat-ring-lug",displacement=r*.90))
     elif joint_id=="terminal_block":
-        result.append(block(p,axis,diameter*.75,diameter*1.5,diameter*.86,
-                            arch=architecture_id,label="Eight insulated terminal positions",
-                            role="eight-way-connector-housing"))
+        # Never put eight blind contacts on a real two-conductor cable.
+        # The construction recipe determines the number of independently
+        # insulated terminal positions in a common, type-compatible housing.
+        count=(2 if architecture_id=="wire_twisted_pair" else
+               8 if architecture_id in {"wire_eight_loose_bundle",
+                                         "wire_eight_laced_loom",
+                                         "wire_eight_sheathed"} else 1)
+        result.append(block(p,axis,diameter*.75,
+                            diameter*(1.50 if count>=8 else .85),diameter*.86,
+                            arch=architecture_id,
+                            label="%d separately insulated terminal positions"%count,
+                            role=("eight-way-connector-housing" if count==8
+                                  else "sized-multicore-connector-housing")))
         u,v=g.frame(axis)
-        for i in range(8):
-            alpha=TAU*i/8
-            # Contacts sit on the outer face of the connector housing,
-            # not invisibly embedded at the block center.
+        for i in range(count):
+            alpha=TAU*i/count
+            # Contacts sit on the outside face of the connector housing, not
+            # hidden inside an opaque box with an arbitrary conductor count.
             spot=g.plus(g.plus(p,g.mult(axis,diameter*.39)),
                         g.plus(g.mult(u,r*.44*math.cos(alpha)),
                                g.mult(v,r*.44*math.sin(alpha))))
-            result.append(annul(spot,axis,r*.14,r*.065,r*.11,
-                                arch=architecture_id,label="Conductive socket %d"%i,
-                                role="individual-recessed-contact"))
+            part=annul(spot,axis,r*.14,r*.065,r*.11,
+                        arch=architecture_id,label="Conductive socket %d"%i,
+                        role="individual-recessed-contact")
+            part["conductor_index"]=i
+            result.append(part)
     elif joint_id=="rebar_threaded_coupler":
         result.append(tube("Solid-bar mechanical coupling sleeve",r*1.38,
                            r*.89,r*1.6,hexed=True,
