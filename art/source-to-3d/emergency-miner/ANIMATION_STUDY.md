@@ -95,3 +95,18 @@ The owner requested a final physical gap correction and four-heading visual revi
 5. **Checks**: independent Blender reopen of both A/B animation sources and both four-direction derivatives; 4x8 original rendered frames per variant; exact fixed camera invariance, correct original three capacitors, nonmoving foundation per angle, red shader/light colors, synchronized vent/gap/spill envelopes, exact measured +0.012 gap, SHA readback and no in-game asset mutation.
 
 These are visually reviewable direction previews, NOT Factorio gameplay direction mapping or final four-orientation HR/standard sprite atlases. User approval is still the promotion gate.
+
+## V25 — owner-selected Variant A: true continuous photocopier scan
+
+The owner selected **Variant A** (persistent chassis rumble) but rejected the V24 **three independently blinking** front gap lights and the **weak** red glow through the real vent openings. This is an explicit correction to the ACTUAL Blender animation, not a new image generation request.
+
+The new A motion:
+- ONE moving red luminous strip in the **measurable, physical** V24 opening below the raised control panel, never over its upper surface. It crosses the full exposed front panel seam **left-to-right without interrupting or reversing while illuminated**; then travels rapidly back while dark. Frame 97 returns exactly to frame 1.
+- ONE accompanying red area light travels at the same x position, projecting real red illumination onto the EXISTING middle chassis upper face. There are zero separate front gap bulbs and zero visible additional machine parts.
+- In each of the three original Boolean-cut vent openings, a stronger red emission remains visible during the scan; ONE synchronized narrow bright band traverses all three vent openings in lockstep with the front seam lamp. No three independently timed vent flashes.
+- Source emitter strength is 5.60 (formerly 2.10), maximum vent ambient opacity 0.90 (formerly 0.60), vent point energy maximum 3.40 (formerly 0.70); one gap beam opacity max 0.96 and accompanying red chassis area light maximum energy 2.20. These are REVIEW parameters subject to visual inspection, not production tuning guarantees.
+- All existing geometry, materials, capacitors, V24 mid-chassis drop, console lift, footprint, attached source wiring, two outer corrugated hoses, camera and steam system are preserved.
+- Native proof tests verify one scan source, strictly monotone emitted X positions over a 2-second timeline, same normalized x for all three vent hotspots, same brightness envelope for their red light, closed loop, and zero independent front gap bulbs. They also check unchanged foundation and source art.
+- Only Variant A receives full four-direction preview production at this stage: all **16 actual native Blender frames at 8 fps per 0/90/180/270° view** beneath one fixed canonical 45° orthographic camera. The original separate A .blend also retains all 16 frames. The 4-direction .blends/APNGs are for approval, NOT in-game sprites.
+
+The original V24 four-angle review remains available by its verified release artifact. V25 requires fresh user visual acceptance before native 2.0 HR/standard sprites, Factorio frame mapping, and prototype integration.
