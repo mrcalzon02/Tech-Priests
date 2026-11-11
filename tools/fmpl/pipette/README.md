@@ -7,8 +7,9 @@ The [branch-connector standard](BRANCH_CONNECTORS.md) and
 describe the **actual** reusable library_branches.py generator. On the
 standardized Y/tee fixture, eight distinct wires enter port A and remain
 continuous through the split: four exit B, four exit C. Each has independent
-deterministic slack, with 16 miniature conductor ferrules and three real
-compact strain-relief wraps. The formerly generated giant central cube and
+deterministic slack, with 16 miniature end ferrules and **no unmounted
+mid-span rings** in the loose-wire version. Only the separately selected laced
+harness receives binding/strain-relief hardware. The formerly generated giant central cube and
 unrelated eight-contact terminal blocks are removed for this case.
 
 Other still-unimplemented branch constructions now explicitly report
