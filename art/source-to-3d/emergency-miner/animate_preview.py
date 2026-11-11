@@ -261,6 +261,59 @@ def make_scan_effects(upper, collection):
     return lights
 
 
+def make_console_chassis_gap_leak(upper, collection):
+    """Light leaks from the REAL space between raised operator console and chassis.
+
+    This is one narrow in-gap effect made from three independent short inserts
+    following the console's forward edge. It is NOT a surface light, new armor
+    trim, hidden machine mechanism, or a beam sweeping across the console.
+    Its owner is the moving upper rig, for all four future orientation exports.
+    """
+    console=bpy.data.objects["Upper controller shared sloped mount"]
+    chassis=bpy.data.objects["LAYER_2 Raised central machine chassis"]
+    casing=bpy.data.objects["LAYER_3 Elevated control deck structural body"]
+    bpy.context.view_layer.update()
+    cpts=[console.matrix_world @ v.co for v in console.data.vertices]
+    mpts=[chassis.matrix_world @ v.co for v in chassis.data.vertices]
+    upts=[casing.matrix_world @ v.co for v in casing.data.vertices]
+    # The lower machine's physical surface is the lower bound. The other end
+    # is the bottom of the raised console; every light vertex stays between.
+    chassis_top=max(v.z for v in mpts)
+    console_bottom=min(v.z for v in cpts)
+    clearance=console_bottom-chassis_top
+    if not .008 < clearance < .24:
+        raise RuntimeError("No measurable console-to-middle-chassis gap: "+str(clearance))
+    seam_z=chassis_top+min(.010,clearance*.35)
+    # Front toward the camera is world -Y; anchor just in front of the
+    # upper casting front edge and tucked BELOW the operator bank.
+    front_y=min(v.y for v in upts)
+    console_y=min(v.y for v in cpts)
+    seam_y=min(front_y,console_y)-.0018
+    left=max(min(p.x for p in cpts)+.045,-.245)
+    right=min(max(p.x for p in cpts)-.045,.245)
+    if right-left<.22:
+        raise RuntimeError("Actual front console seam is too short to emit light")
+    # One restrained, segmented glow line; visible only where armor meets
+    # the raised controls. No movement along X at any frame.
+    groups=[]
+    width=(right-left)/3
+    for idx in range(3):
+        x=left+(idx+.5)*width
+        glow,alpha=make_flicker_surface(
+            "FX ONLY | console-middle-chassis joint leakage %d"%idx,
+            (x,seam_y,seam_z),
+            (width*.80,.0015,.0014),upper,collection)
+        glow["emission_origin"]="PHYSICAL_GAP_BETWEEN_CONSOLE_AND_MIDDLE_CHASSIS"
+        glow["no_surface_panning"]=True
+        glow["shared_strobe_source"]="VENT_LASER_PHASE_%d"%idx
+        glow["gap_world_z"]=seam_z
+        glow["console_lower_z"]=console_bottom
+        glow["chassis_upper_z"]=chassis_top
+        alpha.default_value=0.0
+        groups.append((glow,alpha))
+    return groups
+
+
 def make_steam(upper, collection):
     # Reuse the existing FMPL feathered TRUE volume, never a cone or card.
     steam = _feathered_steam_material()
@@ -303,7 +356,7 @@ def wrap_bell(t, at, width):
 
 
 def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
-    vent_lights = light_parts
+    vent_lights, gap_lights = light_parts
     body0, upper0, cover0 = body.location.copy(), upper.location.copy(), cover.location.copy()
     enabled = set(enabled or ("mechanics", "scan", "lamps", "steam"))
     colors = []
@@ -361,6 +414,10 @@ def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
                 key_value(alpha,frame,.87*intensity)
                 light.data.energy=3.0*intensity
                 light.data.keyframe_insert(data_path="energy",frame=frame)
+                # Use EXACTLY the same original phase envelope as vent i,
+                # with reduced brightness; no independent chase, no sweep.
+                gap_glow,gap_alpha=gap_lights[i]
+                key_value(gap_alpha,frame,.33*intensity)
         if "lamps" in enabled:
             for i, socket in enumerate(colors):
                 trigger = ((frame - 1)//12 + i) % 4 == 0
@@ -486,7 +543,9 @@ def main(out,diagnostic=False,quick_review=False):
               "owner_visual_approved":False,"frames":FRAMES,
               "quick_review":bool(quick_review),
               "v22_console_and_camera_facing_caps":True,
-              "laser_light_sites":"THREE_REAL_VENT_HOLES_ONLY",
+              "laser_light_sites":"THREE_VENTS_PLUS_CONSOLE_CHASSIS_GAP",
+              "laser_gap_strobe_sync":"SAME_THREE_VENT_PHASES",
+              "surface_panning_light_count":0,
               "variants":{}}
     for label in ("A","B"):
         print('MINER_TRACE 10 reopen base '+label,flush=True)
@@ -502,8 +561,10 @@ def main(out,diagnostic=False,quick_review=False):
         if diagnostic:
             diagnostic_render(scene,out,label+'_01_rig_no_fx')
         print('MINER_TRACE 16 begin scan FX '+label,flush=True)
-        parts = make_scan_effects(upper,collection)
-        print('MINER_TRACE 17 scan FX ready '+label,flush=True)
+        vent_parts = make_scan_effects(upper,collection)
+        gap_parts = make_console_chassis_gap_leak(upper,collection)
+        parts = (vent_parts,gap_parts)
+        print('MINER_TRACE 17 vent and physical console-chassis joint FX ready '+label,flush=True)
         if diagnostic:
             diagnostic_render(scene,out,label+'_02_scan_no_steam')
         print('MINER_TRACE 18 begin FMPL steam '+label,flush=True)
@@ -575,8 +636,10 @@ def main(out,diagnostic=False,quick_review=False):
            "sample_count":dims[2],"image_pixels":dims[:2],
            "foundation_static":True,"visible_body_parts":nb,
            "visible_upper_parts":nu,"foundation_parts_fixed":len(still),
-           "steam_lobes":9,"scan_emission_sites":3,
-           "scan_light_spill_locations":"ONLY_PHYSICAL_VENT_APERTURES",
+           "steam_lobes":9,"scan_emission_sites":6,
+           "vent_emitters":3,"console_chassis_gap_emitters":3,
+           "scan_light_spill_locations":"VENTS_AND_CONSOLE_CHASSIS_GAP_ONLY",
+           "gap_strobe_synchronized_to_vent_phase":True,
            "surface_panning_light_count":0,"actual_camera":camera_record(scene)}
     result["status"]="RENDERED_FOR_OWNER_REVIEW_NOT_GAME_READY"
     (out/"motion_manifest.json").write_text(json.dumps(result,indent=2)+"\n")
