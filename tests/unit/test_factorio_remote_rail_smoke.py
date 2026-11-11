@@ -1230,6 +1230,54 @@ class NativeOriginalMagosBoarding0836ContractTests(unittest.TestCase):
 
 class NativePaidTrainStop0836ContractTests(unittest.TestCase):
 
+    def test_paid_stop_contact_respects_audited_native_rail_and_original_custody(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        rail = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
+                ).read_text(encoding="utf-8")
+        corridor = (root / "tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua"
+                    ).read_text(encoding="utf-8")
+        helper = rail.split(
+            "local function authorized_paid_stop_contact_0836(pair,point)", 1
+        )[1].split("-- A physical railway has a narrow", 1)[0]
+        authorizer = rail.split(
+            "function M.authorized_paid_rail_contact_0836(pair,point,reason,opts)", 1
+        )[1].split("local function reject(objective,reason)", 1)[0]
+        for guard in ('mission.status=="rail-track-established"',
+                      'stop.phase=="awaiting-original-0338"',
+                      'route.chain_audit_completed_tick_0836',
+                      'task.phase=="move-site"',
+                      'task.request_value==stop.request',
+                      'pair.construction_request==stop.request',
+                      'task.site_reason=="original-first-train-stop-0836"',
+                      'task.creative_build~=true',
+                      'task.carried.item_name=="train-stop"',
+                      'task.carried.count==1',
+                      'debit.before-debit.after==1',
+                      'task.source_entity.unit_number==debit.source_unit',
+                      'stop.request.rail_mission_station_unit_0836==pair.station.unit_number',
+                      'dx*dx+dy*dy>9',
+                      'rail.unit_number==route.built_units[index]',
+                      'before.unit_number==route.built_units[index-1]',
+                      'after.unit_number==route.built_units[index+1]',
+                      'connected_straight_rails(before,rail)',
+                      'connected_straight_rails(rail,after)'):
+            self.assertIn(guard, helper)
+        for forbidden in ('teleport(', 'surface.create_entity',
+                          'insert_item(', 'remove_item(', 'set_driver(',
+                          'task.carried.count=0', 'station.radius='):
+            self.assertNotIn(forbidden, helper)
+        self.assertIn('reason~="construction-site-standoff-0338"', authorizer)
+        self.assertIn('opts.owner=="construction-planner-0338"', authorizer)
+        self.assertIn('if authorized_paid_stop_contact_0836(pair,point) then return true end',
+                      authorizer)
+        self.assertLess(
+            authorizer.index('if authorized_paid_stop_contact_0836(pair,point)'),
+            authorizer.index('local pending=mission.pending_rail_0836'))
+        self.assertIn(
+            'frontier.authorized_paid_rail_contact_0836,pair,pos,reason,opts',
+            corridor)
+        self.assertIn('if checked and authorized==true then', corridor)
+
     def test_original_stop_receives_canonical_dispatch_without_stealing_real_orders(self):
         root = pathlib.Path(__file__).resolve().parents[2]
         builder = (root / "tech-priests_src/scripts/core/construction_planner.lua"

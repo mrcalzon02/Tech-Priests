@@ -108,6 +108,77 @@ local function connected_straight_rails(from,to)
   end
   return false
 end
+-- 0836 train stops extend the SAME physical rail corridor narrowly, not
+-- station command radius: the original paid 0338 builder may approach ONE
+-- authenticated stop adjoining the audited, item-debited native railway.
+-- This read-only check grants no movement to a foreign task or unsupplied
+-- stop, never builds an entity and never changes inventory or pair custody.
+local function authorized_paid_stop_contact_0836(pair,point)
+  local mission=pair.remote_rail_outpost_0835
+  local stop=mission and mission.first_stop_0836
+  local route=mission and mission.rail_frontier_0836
+  local task=pair.construction_task_0338
+  local debit=task and task.original_stop_debit_0836
+  if not(mission and mission.status=="rail-track-established"
+    and stop and stop.phase=="awaiting-original-0338"
+    and route and route.chain_audit_completed_tick_0836
+    and type(route.built_units)=="table"
+    and route.segment==#route.built_units and route.segment>=24
+    and route.direction and route.start_position
+    and task and task.phase=="move-site"
+    and task.request_field=="construction_request"
+    and task.request_value==stop.request
+    and pair.construction_request==stop.request
+    and task.site_reason=="original-first-train-stop-0836"
+    and task.item_name=="train-stop" and task.entity_name=="train-stop"
+    and task.creative_build~=true
+    and stop.request.rail_mission_station_unit_0836==pair.station.unit_number
+    and task.position and stop.position
+    and close(task.position,stop.position)
+    and close(stop.request.position,stop.position)
+    and task.direction==stop.request.direction
+    and task.carried and task.carried.item_name=="train-stop"
+    and task.carried.count==1
+    and debit and type(debit.before)=="number"
+    and type(debit.after)=="number"
+    and debit.before>=1 and debit.before-debit.after==1
+    and task.source_inv and task.source_inv.valid
+    and valid(task.source_entity)
+    and task.source_entity.unit_number==debit.source_unit)then
+    return false
+  end
+  local dx=point.x-stop.position.x
+  local dy=point.y-stop.position.y
+  if dx*dx+dy*dy>9 then return false end
+  -- A planned line, a ghost or an arbitrary nearby rail is insufficient:
+  -- require the exact original native anchor AND both connected neighbors,
+  -- each matching the conserved original rail construction-unit ledger.
+  for _,index in ipairs({16,18,20,14,22,12})do
+    if index>=2 and index+1<=route.segment then
+      local anchor=pos(route.start_position.x+(index-1)*M.segment_step,
+        route.start_position.y)
+      if math.abs(stop.position.x-anchor.x)<0.25
+        and math.abs(stop.position.y-anchor.y)<=3 then
+        local rail=track_at(pair,anchor,route.direction)
+        local before=track_at(pair,pos(anchor.x-M.segment_step,anchor.y),
+          route.direction)
+        local after=track_at(pair,pos(anchor.x+M.segment_step,anchor.y),
+          route.direction)
+        local rx=point.x-anchor.x
+        local ry=point.y-anchor.y
+        if rx*rx+ry*ry<=25
+          and rail and rail.unit_number==route.built_units[index]
+          and before and before.unit_number==route.built_units[index-1]
+          and after and after.unit_number==route.built_units[index+1]
+          and connected_straight_rails(before,rail)
+          and connected_straight_rails(rail,after) then
+          return true
+        end
+      end
+    end
+  end
+  return false
+end
 -- A physical railway has a narrow, temporary construction contact outside
 -- the stationary Magos' work sphere.  Only its ORIGINAL item-debited 0338
 -- builder may walk beside the LAST genuinely connected rail to place exactly
@@ -119,6 +190,7 @@ function M.authorized_paid_rail_contact_0836(pair,point,reason,opts)
     or not(eligible(pair,pair and pair.remote_rail_outpost_0835))
     or type(point)~="table" or type(point.x)~="number"
     or type(point.y)~="number" then return false end
+  if authorized_paid_stop_contact_0836(pair,point) then return true end
   local mission=pair.remote_rail_outpost_0835
   local pending=mission.pending_rail_0836
   local route=mission.rail_frontier_0836
