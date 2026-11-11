@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import math
+import struct
 import sys
 from pathlib import Path
 
@@ -34,6 +35,27 @@ DIRECTIONS = (0, 90, 180, 270)
 
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def mesh_signatures(scene):
+    """Hash EVERY original source mesh's local geometry/topology, including references.
+
+    Animation changes transforms and FX curves only. Using mesh-local hashes
+    prevents a moved cap from falsely appearing to mutate its actual geometry.
+    """
+    result = {}
+    for obj in sorted((o for o in scene.objects if o.type == 'MESH'), key=lambda o: o.name):
+        mesh = obj.data
+        digest = hashlib.sha256()
+        digest.update(struct.pack('<II', len(mesh.vertices), len(mesh.polygons)))
+        for vertex in mesh.vertices:
+            digest.update(struct.pack('<fff', *vertex.co))
+        for face in mesh.polygons:
+            digest.update(struct.pack('<I', len(face.vertices)))
+            for index in face.vertices:
+                digest.update(struct.pack('<I', index))
+        result[obj.name] = digest.hexdigest()
+    return result
 
 
 def center(obj):
@@ -204,6 +226,7 @@ def run(source, out):
     out.mkdir(parents=True, exist_ok=True)
     bpy.ops.wm.open_mainfile(filepath=str(source))
     scene = bpy.context.scene
+    original_meshes = mesh_signatures(scene)
     caps = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith(CANISTER_PREFIX)]
     seats = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith(SEAT_PREFIX)]
     if len(caps) != HEADS or len(seats) != HEADS:
@@ -214,10 +237,11 @@ def run(source, out):
         if bpy.data.objects.get(name) is None:
             raise RuntimeError('Approved V21 source missing required part ' + name)
     references = bpy.data.collections.get('REFERENCE_ADJACENT_PIPES')
+    cam = profile()
     if references:
         references.hide_render = True
         for obj in references.objects:
-            cam = profile()
+            obj.hide_render = True
     install_canonical_camera(scene, cam, bpy)
     assert_clean(scene, cam, bpy)
     fx = bpy.data.collections.new('CONDENSER V22 | NON-PRODUCTION INTAKE FX')
@@ -312,6 +336,10 @@ def run(source, out):
     scene['native_game_art_modified'] = False
     scene['new_machine_geometry_count'] = 0
     scene['new_render_fx_curve_count'] = HEADS * 3
+    if mesh_signatures(scene) != original_meshes:
+        raise RuntimeError('Existing approved source mesh geometry/topology was modified')
+    scene['source_mesh_local_sha256'] = json.dumps(original_meshes, sort_keys=True)
+    scene['approved_source_mesh_count'] = len(original_meshes)
     scene['owner_visual_approved'] = False
     blend = out / 'condenser_v22_motion_review.blend'
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
@@ -331,8 +359,10 @@ def run(source, out):
             scene.render.filepath = str(dest)
             bpy.ops.render.render(write_still=True)
             renders.append(dest)
-            # 2x2 model at 43 pixels per tile: test actual game-scale legibility.
-            scene.render.resolution_x = scene.render.resolution_y = 86
+            # Orthographic coverage = 3.20 Blender tile units. A 138px
+            # viewport therefore samples 43.125 pixels per Factorio tile;
+            # a nominal 2x2 86px footprint sits inside this unclipped canvas.
+            scene.render.resolution_x = scene.render.resolution_y = 138
             native = out / ('game_scale_%03d_%s.png' % (degrees, state))
             scene.render.filepath = str(native)
             bpy.ops.render.render(write_still=True)
@@ -349,7 +379,8 @@ def run(source, out):
         'fps': FPS, 'cycle_frames': CYCLE, 'piston_order': order,
         'all_eight_heads_actuated': True, 'inward_vapor_fx_curves': HEADS * 3,
         'source_machine_geometry_added': False, 'game_assets_changed': False,
-        'directions_reviewed': list(DIRECTIONS), 'game_scale_pixels_per_tile': 43,
+        'directions_reviewed': list(DIRECTIONS), 'game_scale_pixels_per_tile': 138 / 3.20,
+        'game_scale_canvas_pixels': 138, 'nominal_2x2_footprint_pixels': 2 * (138 / 3.20),
         'camera': camera_record(scene),
         'render_sha256': {p.name: sha(p) for p in renders},
         'owner_visual_approval': 'PENDING',

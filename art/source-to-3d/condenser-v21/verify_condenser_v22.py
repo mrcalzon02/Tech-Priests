@@ -7,6 +7,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import struct
 import sys
 from pathlib import Path
 import bpy
@@ -24,6 +25,22 @@ APPROVED_SHA = '1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def mesh_signatures(scene):
+    result = {}
+    for obj in sorted((o for o in scene.objects if o.type == 'MESH'), key=lambda o: o.name):
+        mesh = obj.data
+        digest = hashlib.sha256()
+        digest.update(struct.pack('<II', len(mesh.vertices), len(mesh.polygons)))
+        for vertex in mesh.vertices:
+            digest.update(struct.pack('<fff', *vertex.co))
+        for face in mesh.polygons:
+            digest.update(struct.pack('<I', len(face.vertices)))
+            for index in face.vertices:
+                digest.update(struct.pack('<I', index))
+        result[obj.name] = digest.hexdigest()
+    return result
 
 
 def center(obj):
@@ -46,6 +63,11 @@ def run(out):
             scene.get('new_machine_geometry_count') != 0 or
             scene.get('new_render_fx_curve_count') != 24):
         raise RuntimeError('Owner source / FX-only / game-art staging gate changed')
+    locked_meshes = json.loads(scene.get('source_mesh_local_sha256', '{}'))
+    if not locked_meshes or mesh_signatures(scene) != locked_meshes:
+        raise RuntimeError('Original V21 mesh local geometry/topology not preserved')
+    if scene.get('approved_source_mesh_count') != len(locked_meshes):
+        raise RuntimeError('Source-geometry mesh count disagrees with source receipt')
     camera = {
         'camera_policy': POLICY_ID, 'capture_kind': 'entity',
         'directions': [0, 90, 180, 270],
@@ -117,6 +139,7 @@ def run(out):
         'verification': 'PASS', 'source_sha256': APPROVED_SHA,
         'sequential_independent_pistons': HEADS, 'inward_vapor_curves': len(vapor),
         'period_frames': CYCLE, 'fps': FPS,
+        'approved_mesh_count_unmodified': len(locked_meshes),
         'foundation_stationary': True, 'pipe_flange_stationary': True,
         'camera': camera_record(scene),
         'actual_png_sha256': {p.name: sha(p) for p in required},
