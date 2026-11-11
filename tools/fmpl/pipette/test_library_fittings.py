@@ -131,6 +131,17 @@ class TypedFittingGeometryTests(unittest.TestCase):
         self.assertTrue(all(p["native_socket_seating_verified"] is False
                             for p in parts))
 
+    def test_twisted_pair_uses_two_contacts_not_eight(self):
+        parts=self.model("wire_twisted_pair","terminal_block")
+        contacts=[p for p in parts if
+                  p["role"]=="individual-recessed-contact"]
+        self.assertEqual(len(contacts),2)
+        self.assertEqual({p["conductor_index"] for p in contacts},{0,1})
+        self.assertEqual(len(parts),3)
+        self.assertEqual(sum(p["role"]=="sized-multicore-connector-housing"
+                             for p in parts),1)
+
+
 
 if __name__=="__main__":
     unittest.main()
