@@ -1190,6 +1190,84 @@ def apply_owner_v22_geometry():
             "capacitor_mouths":cap_record,"new_visible_model_parts":0,"foundation_static":True}
 
 
+
+def apply_owner_v24_middle_chassis_drop(drop=0.012):
+    """Owner V24: lower only the existing middle chassis TOP, opening its true seam.
+
+    Keep foundation and feet seated, preserve the accepted V22 console and all
+    three camera-facing capacitor assemblies. A smooth vertical compression
+    toward the foundation moves the original upper shoulder and two front
+    screws with the actual chassis casting. No slabs or laser mechanism added.
+    """
+    scene=bpy.context.scene
+    if scene.get("emergency_miner_v24_applied"):
+        raise RuntimeError("V24 chassis lowering applied more than once")
+    if scene.get("emergency_miner_v22_applied") is not True:
+        raise RuntimeError("V24 requires already fitted V22 console/capacitors")
+    if not 0.006 <= drop <= 0.020:
+        raise RuntimeError("Middle-chassis adjustment outside restrained bounds")
+    bpy.context.view_layer.update()
+    body=bpy.data.objects["LAYER_2 Raised central machine chassis"]
+    shoulder=bpy.data.objects["LAYER_2 Chassis upper shoulder"]
+    floor=bpy.data.objects["LAYER_1 Foundation perimeter steel slab"]
+    console=bpy.data.objects["Upper controller shared sloped mount"]
+    upper=bpy.data.objects["LAYER_3 Elevated control deck structural body"]
+    caps=[bpy.data.objects["Capacitor %d horizontal supported shell"%i] for i in range(3)]
+    static=[floor,console,upper]+caps
+    anchors={ob.name:[(ob.matrix_world @ v.co).copy() for v in ob.data.vertices]
+             for ob in static}
+    before=[(body.matrix_world @ v.co).copy() for v in body.data.vertices]
+    bottom=min(x.z for x in before)
+    top=max(x.z for x in before)
+    start=bottom+.028
+    if top-start<.065:
+        raise RuntimeError("Not enough original middle chassis height to compress")
+    original_gap=min(x.z for x in anchors[console.name])-top
+    def blend_lower(z):
+        factor=max(0.0,min(1.0,(z-start)/(top-start)))
+        return drop*factor
+    named=[body,shoulder]+[
+        ob for ob in VISIBLE.objects
+        if ob.type=="MESH" and ob.name.startswith("Middle front source screw ")
+    ]
+    for ob in named:
+        mx=ob.matrix_world.copy()
+        inv=mx.inverted()
+        for vertex in ob.data.vertices:
+            at=mx @ vertex.co
+            at.z-=drop if ob is shoulder else blend_lower(at.z)
+            vertex.co=inv @ at
+        ob.data.update()
+    bpy.context.view_layer.update()
+    now_top=max((body.matrix_world @ v.co).z for v in body.data.vertices)
+    lower_actual=top-now_top
+    new_gap=min((console.matrix_world @ v.co).z for v in console.data.vertices)-now_top
+    if abs(lower_actual-drop)>1e-5 or abs(new_gap-original_gap-drop)>1e-5:
+        raise RuntimeError("Requested V24 mid-chassis lowering did not widen real gap")
+    if any((ob.matrix_world @ v.co-before_v).length>1e-6
+           for ob in static
+           for v,before_v in zip(ob.data.vertices,anchors[ob.name])):
+        raise RuntimeError("V24 modified the V22 upper/capacitors or fixed foundation")
+    body["v24_middle_chassis_top_lowered"]=drop
+    shoulder["v24_seated_shoulder_drop"]=drop
+    scene["emergency_miner_v24_applied"]=True
+    scene["middle_chassis_v24_drop"]=drop
+    return {
+        "candidate_revision":"V24",
+        "original_chassis_top":round(top,6),
+        "lowered_chassis_top":round(now_top,6),
+        "drop_blender_units":drop,
+        "original_true_console_gap":round(original_gap,6),
+        "new_true_console_gap":round(new_gap,6),
+        "gap_increase":round(new_gap-original_gap,6),
+        "existing_chassis_fastener_parts_moved":len(named)-2,
+        "foundation_and_original_feet_unchanged":True,
+        "V22_console_and_camera_facing_capacitors_unchanged":True,
+        "new_visible_mesh_parts":0,
+        "in_game_art_changed":False,
+    }
+
+
 def main(out):
     global OUTPUT,COLLECTION,VISIBLE
     if hashlib.sha256(SOURCE.read_bytes()).hexdigest() != SOURCE_SHA256:
@@ -1305,17 +1383,18 @@ def main(out):
     foot_faces=carve_source_corner_foot_faces()
     seated_screws=seat_original_front_face_screws()
     v22_correction=apply_owner_v22_geometry()
+    v24_correction=apply_owner_v24_middle_chassis_drop()
     save_render(scene,top,OUTPUT/"01_source_view_real_mesh.png")
     save_render(scene,iso,OUTPUT/"02_game_candidate_full_miner.png")
     save_render(scene,detail,OUTPUT/"03_visible_enclosure_detail.png")
     scene.camera=iso
     scene["asset"]="Tech Priests emergency miner"
-    scene["asset_revision"]="V22 raised operator console and camera-facing original capacitors"
+    scene["asset_revision"]="V24 lower middle armor lip and expose red-lit physical console gap"
     scene["source_sprite_sha256"]=SOURCE_SHA256
     scene["source_sprite_visual_acceptance"]="PENDING"
     scene["technology_principle"]="DOWNWARD_FREQUENCY_MODULATED_LASER_ABLATION"
     scene["hidden_internal_geometry"]="NOT_MODELED"
-    blend=OUTPUT/"tech_priests_emergency_miner_v22.blend"
+    blend=OUTPUT/"tech_priests_emergency_miner_v24.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     bpy.ops.wm.open_mainfile(filepath=str(blend))
     if bpy.context.scene.get("asset") != "Tech Priests emergency miner":
@@ -1340,7 +1419,7 @@ def main(out):
             obj.select_set(False)
     for obj in bpy.data.objects:
         obj.select_set(obj.type=="MESH")
-    export=OUTPUT/"tech_priests_emergency_miner_v22.glb"
+    export=OUTPUT/"tech_priests_emergency_miner_v24.glb"
     bpy.ops.export_scene.gltf(filepath=str(export),export_format="GLB",
                               use_selection=True,export_apply=True)
     if not export.is_file() or export.stat().st_size<20000:
@@ -1397,6 +1476,7 @@ def main(out):
         "chassis_front_armor_bolts":2,
         "capacitor_ends_read_forward":True,
         "owner_v22_geometry_correction":v22_correction,
+        "owner_v24_gap_correction":v24_correction,
         "upper_wiring_seated_to_machinery":True,
         "owner_layer_map":{"uncolored":"foundation_perimeter",
                            "blue":"middle_chassis_lip_and_front",
