@@ -681,6 +681,33 @@ class NativeRailPrewritAdmissionTraceTests(unittest.TestCase):
         self.assertIn("RAIL_NATIVE_CUSTODY_NOT_CONSERVED", fixture)
         self.assertIn("TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN", fixture)
 
+    def test_prewrite_incumbent_receipt_is_bounded_and_cannot_release_custody(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        frontier = (root / "tech-priests_src/scripts/core/"
+                    "rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/"
+                   "fixture.lua").read_text(encoding="utf-8")
+        block = frontier.split("function M.service_pair(pair)", 1)[1].split(
+            "function M.verify_pending(", 1)[0] if False else frontier.split(
+                "function M.service_pair(pair)", 1)[1]
+        self.assertIn("last_service_sample_tick_0836", block)
+        self.assertIn("last_incumbent_refusal_0836", block)
+        self.assertIn('or pair.inventory_transfer_custody_0687 and "0687-transfer-custody"', block)
+        self.assertIn('or pair.construction_task_0340 and "0340-construction-task"', block)
+        self.assertIn('return false,"original-magos-incumbent-duty"', block)
+        for receipt in ("live_incumbent_owner=", "live_incumbent_tick=",
+                        "last_0836_service_tick=", "last_0836_service_pending=",
+                        "transfer_custody_0687=", "construction_task_0340=",
+                        "active_acquisition_0333=", "direct_task_0336="):
+            self.assertIn(receipt, fixture)
+        sampler = fixture.split("local function trace_uncommitted_rail_gap", 1)[1].split(
+            "local function inspect(s,elapsed)", 1)[0]
+        for forbidden in ("p.inventory_transfer_custody_0687=nil",
+                          "p.construction_task_0340=nil",
+                          "p.construction_request=", "surface.create_entity",
+                          "game.create_inventory"):
+            self.assertNotIn(forbidden, sampler)
+
 
 if __name__ == "__main__":
     unittest.main()

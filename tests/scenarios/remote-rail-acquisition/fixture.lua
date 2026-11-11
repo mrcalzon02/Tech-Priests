@@ -332,6 +332,20 @@ local function trace_uncommitted_rail_gap(s,elapsed)
     " prewrite_refusal_tick="..tostring(mission
       and mission.last_prewrite_refusal_0836
       and mission.last_prewrite_refusal_0836.tick)..
+    " last_0836_service_tick="..tostring(mission
+      and mission.last_service_sample_tick_0836)..
+    " last_0836_service_pending="..tostring(mission
+      and mission.last_service_sample_pending_0836)..
+    " live_incumbent_owner="..tostring(mission
+      and mission.last_incumbent_refusal_0836
+      and mission.last_incumbent_refusal_0836.reason)..
+    " live_incumbent_tick="..tostring(mission
+      and mission.last_incumbent_refusal_0836
+      and mission.last_incumbent_refusal_0836.tick)..
+    " transfer_custody_0687="..tostring(p.inventory_transfer_custody_0687~=nil)..
+    " construction_task_0340="..tostring(p.construction_task_0340~=nil)..
+    " active_acquisition_0333="..tostring(p.active_acquisition_0333~=nil)..
+    " direct_task_0336="..tostring(p.direct_acquisition_task_0336~=nil)..
     " generic_construction_task="..tostring(p.construction_task~=nil)..
     " pending="..tostring(pending~=nil)..
     " request="..tostring(p.construction_request~=nil)..

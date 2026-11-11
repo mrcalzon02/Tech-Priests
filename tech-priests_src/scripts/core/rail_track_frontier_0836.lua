@@ -600,6 +600,12 @@ function M.service_pair(pair)
   local m=pair and pair.remote_rail_outpost_0835
   if not m then return false,"no-rail-mission"end
   if not eligible(pair,m)then return false,"not-authorized-rail-mission"end
+  -- Bounded evidence that the original broker actually serviced this
+  -- specific mission; a stale prewrite refusal is not a live verdict.
+  if now()-(tonumber(m.last_service_sample_tick_0836)or -600)>=600 then
+    m.last_service_sample_tick_0836=now()
+    m.last_service_sample_pending_0836=m.pending_rail_0836~=nil
+  end
   if m.status=="rail-track-blocked" or m.status=="rail-track-established"then
     return false,m.status
   end
@@ -647,6 +653,29 @@ function M.service_pair(pair)
     or (task and not original_builder)
     or (custody and not original_builder)
   if incumbent and not original_builder then
+    -- Identify the actual live authority rejecting the next original
+    -- writ, rather than blaming a historical 0338 candidate refusal.
+    -- Observation only: no order/task, custody or movement is cleared.
+    local owner=pair.active_task and "active_task"
+      or pair.current_task and "current_task"
+      or (not yielding and (pair.active_order_0469
+        or (pair.order_queue_0469 and pair.order_queue_0469.current)))
+        and "0469-current-order"
+      or pair.active_acquisition_0333 and "0333-acquisition"
+      or pair.direct_acquisition_task_0336 and "0336-direct-acquisition"
+      or pair.direct_acquisition_custody_0513 and "0513-direct-custody"
+      or pair.machine_logistics_custody_0528 and "0528-machine-custody"
+      or pair.inventory_transfer_custody_0687 and "0687-transfer-custody"
+      or pair.construction_task_0340 and "0340-construction-task"
+      or task and "0338-other-builder"
+      or custody and "0338-other-custody"
+      or "unidentified-incumbent"
+    local previous=m.last_incumbent_refusal_0836
+    if not previous or previous.reason~=owner
+        or now()-(tonumber(previous.tick)or 0)>=600 then
+      m.last_incumbent_refusal_0836={
+        tick=now(),reason=owner,pending=pending~=nil,yielding=yielding}
+    end
     -- An original 0338 rail may finish before this broker pulse while a
     -- separate incumbent duty is already active. Reconcile its completed
     -- physical receipt without admitting or planning the NEXT rail: otherwise
