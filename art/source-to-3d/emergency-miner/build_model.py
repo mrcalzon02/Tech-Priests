@@ -1,4 +1,4 @@
-"""V22: source-observed construction with raised console and camera-facing capacitor mouths.
+"""V24: retain source geometry and V22 console; lower true mid chassis upper rim.
 
 Do not model unseen internals. Owner-defined laser ablation and proto-matter
 reconstitution are documented conceptually; the sprite governs visible geometry.
@@ -1426,8 +1426,8 @@ def main(out):
         raise RuntimeError("Missing real GLB source-visible geometry")
     report={
         "asset":"tech-priests-emergency-miner",
-        "state":"V22 OWNER-CONSOLE/CAPACITOR REFINEMENT; VISUAL REVIEW PENDING",
-        "candidate_revision":"V22",
+        "state":"V24 OWNER-REQUESTED LOWER MIDDLE CHASSIS; VISUAL REVIEW PENDING",
+        "candidate_revision":"V24",
         "construction_method":"PHYSICAL_3D_SOLIDS_THEN_COMPARE_PROJECTED_RENDER",
         "middle_chassis_physical_cross_sections":reopened_casting.get("cross_sections"),
         "upper_machine_physical_cross_sections":reopened_upper.get("cross_sections"),
@@ -1476,6 +1476,7 @@ def main(out):
         "chassis_front_armor_bolts":2,
         "capacitor_ends_read_forward":True,
         "owner_v22_geometry_correction":v22_correction,
+        "owner_v24_middle_chassis_correction":v24_correction,
         "owner_v24_gap_correction":v24_correction,
         "upper_wiring_seated_to_machinery":True,
         "owner_layer_map":{"uncolored":"foundation_perimeter",
