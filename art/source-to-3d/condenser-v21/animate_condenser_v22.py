@@ -289,6 +289,15 @@ def run(source, out):
     turntable = rotate_only_model(scene, fx)
     scene.render.engine = 'CYCLES'
     scene.cycles.samples = 20
+    # Comparable A/B render probes must use the same per-frame sampling seed.
+    # Random seed differences can otherwise look like vapor/piston pixels.
+    if hasattr(scene.cycles, 'seed'):
+        scene.cycles.seed = 27
+    if hasattr(scene.cycles, 'use_animated_seed'):
+        scene.cycles.use_animated_seed = False
+    for view_layer in scene.view_layers:
+        if hasattr(view_layer, 'cycles') and hasattr(view_layer.cycles, 'use_denoising'):
+            view_layer.cycles.use_denoising = True
     scene.render.threads_mode = 'FIXED'
     scene.render.threads = 4
     scene.render.film_transparent = True
@@ -344,30 +353,61 @@ def run(source, out):
     blend = out / 'condenser_v22_motion_review.blend'
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
     renders = []
+
+    def capture(filename, resolution):
+        """Render a native frame at a declared resolution; always restore 256px."""
+        scene.render.resolution_x = scene.render.resolution_y = resolution
+        try:
+            destination = out / filename
+            scene.render.filepath = str(destination)
+            bpy.ops.render.render(write_still=True)
+            renders.append(destination)
+        finally:
+            scene.render.resolution_x = scene.render.resolution_y = 256
+
     for frame in PREVIEW_FRAMES:
         scene.frame_set(frame)
-        dest = out / ('frame_%03d.png' % frame)
-        scene.render.filepath = str(dest)
-        bpy.ops.render.render(write_still=True)
-        renders.append(dest)
+        capture('frame_%03d.png' % frame, 256)
+
+    # Independent effect-isolation captures for each production direction:
+    # ALL effects; no inward vapor; and cap not lifted (vapor unchanged).
+    # Changing delta_location is a non-keyed additive render override and
+    # NEVER alters original source vertices, native keyframes or saved model.
+    all_strands = [strand for group in streams for strand in group]
     for degrees in DIRECTIONS:
         turntable.rotation_euler.z = math.radians(degrees)
         bpy.context.view_layer.update()
         for frame, state in ((1, 'idle'), (7, 'active')):
             scene.frame_set(frame)
-            dest = out / ('direction_%03d_%s.png' % (degrees, state))
-            scene.render.filepath = str(dest)
-            bpy.ops.render.render(write_still=True)
-            renders.append(dest)
-            # Orthographic coverage = 3.20 Blender tile units. A 138px
-            # viewport therefore samples 43.125 pixels per Factorio tile;
-            # a nominal 2x2 86px footprint sits inside this unclipped canvas.
-            scene.render.resolution_x = scene.render.resolution_y = 138
-            native = out / ('game_scale_%03d_%s.png' % (degrees, state))
-            scene.render.filepath = str(native)
-            bpy.ops.render.render(write_still=True)
-            renders.append(native)
-            scene.render.resolution_x = scene.render.resolution_y = 256
+            capture('direction_%03d_%s.png' % (degrees, state), 256)
+            # 138px canvas / 3.20 tile view = 43.125px per Factorio tile.
+            capture('game_scale_%03d_%s.png' % (degrees, state), 138)
+        scene.frame_set(7)
+        try:
+            for strand in all_strands:
+                strand.hide_render = True
+            bpy.context.view_layer.update()
+            capture('direction_%03d_no_vapor.png' % degrees, 256)
+            capture('game_scale_%03d_no_vapor.png' % degrees, 138)
+        finally:
+            for strand in all_strands:
+                strand.hide_render = False
+            bpy.context.view_layer.update()
+        try:
+            for index, piston in enumerate(pistons):
+                piston.delta_location.z = -head_lift(7, index)
+            bpy.context.view_layer.update()
+            capture('direction_%03d_no_piston.png' % degrees, 256)
+            capture('game_scale_%03d_no_piston.png' % degrees, 138)
+        finally:
+            for piston in pistons:
+                piston.delta_location.z = 0.0
+            bpy.context.view_layer.update()
+        if degrees == 0:
+            # Duplicate of an unmodified active frame. Detect render-noise
+            # artifacts before treating the pixel A/B differences as evidence.
+            capture('direction_000_active_repeat.png', 256)
+            capture('game_scale_000_active_repeat.png', 138)
     turntable.rotation_euler.z = 0
     bpy.context.view_layer.update()
     scene.frame_set(1)
@@ -379,7 +419,9 @@ def run(source, out):
         'fps': FPS, 'cycle_frames': CYCLE, 'piston_order': order,
         'all_eight_heads_actuated': True, 'inward_vapor_fx_curves': HEADS * 3,
         'source_machine_geometry_added': False, 'game_assets_changed': False,
-        'directions_reviewed': list(DIRECTIONS), 'game_scale_pixels_per_tile': 138 / 3.20,
+        'directions_reviewed': list(DIRECTIONS), 'ablation_controls': ['no_vapor', 'no_piston'],
+        'repeatability_control': 'direction_000_active_repeat.png',
+        'game_scale_pixels_per_tile': 138 / 3.20,
         'game_scale_canvas_pixels': 138, 'nominal_2x2_footprint_pixels': 2 * (138 / 3.20),
         'camera': camera_record(scene),
         'render_sha256': {p.name: sha(p) for p in renders},

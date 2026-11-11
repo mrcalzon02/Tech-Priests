@@ -32,13 +32,23 @@ python3 art/source-to-3d/condenser-v21/run_condenser_v22_review.py \
 
 Install `Pillow` in the Python environment used to run the wrapper (`python -m pip install Pillow`) if missing. Blender must be installed separately; a JavaScript/GitHub text API cannot execute native Blender.
 
-The wrapper runs 11 offline timing/source/QA tests, opens Blender **against the owner-accepted file**, saves a separately named editable V22 `.blend`, produces actual 16-frame Cycles timing samples, four cardinal idle/active captures, then **138×138-pixel viewports at 43.125 px per tile** (3.20 tile camera span; the nominal 2×2 footprint occupies 86.25 pixels *inside* the uncropped viewport). It independently reopens the saved native scene, checks every original mesh's local geometry/topology SHA, 8 piston rigs, 24 FX strands, loop closure, unchanged base and pipe connection, source provenance and fixed FMPL camera. A separate Pillow inspection requires meaningful real image pixels and checks idle/active differences. Only afterward does it assemble:
+For the known Windows machine, there is also a single-command PowerShell entry point with those local paths prefilled:
+
+```powershell
+& './art/source-to-3d/condenser-v21/Run-Condenser-V22-Review.ps1'
+```
+
+It prints the output path and bundle checksum and refuses missing Blender, source folders, or any failed gate. It does not assume the local source ZIP has been downloaded; the exact SHA-locked source still must actually exist under `D:\AI-Relocation`.
+
+The wrapper runs 14 offline timing/source/QA tests, opens Blender **against the owner-accepted file**, saves a separately named editable V22 `.blend`, produces actual 16-frame Cycles timing samples, four cardinal idle/active captures, then full-resolution effect-isolation renders (vapor disabled and piston lift disabled independently), a deterministic duplicate-render noise control, and **138×138-pixel viewports at 43.125 px per tile** (3.20 tile camera span; the nominal 2×2 footprint occupies 86.25 pixels *inside* the uncropped viewport). It independently reopens the saved native scene, checks every original mesh's local geometry/topology SHA, 8 piston rigs, 24 FX strands, loop closure, unchanged base and pipe connection, source provenance and fixed FMPL camera. A separate Pillow inspection rejects cases where the generic idle/active difference comes from lamps or render noise instead of visible **inward vapor and piston motion**. Both effects must change independently observable pixels at all four angles and at the 43px/tile capture scale. The full 50 native PNG frames must exist. Only afterward does it assemble:
 
 - `Condenser_V22_Real_Blender_4_Directions_Proof.png` — actual Cycles 0/90/180/270° idle/active contact sheet including 43px/tile captures;
-- `Condenser_V22_Real_Blender_Sequential_Intake.gif` — 16 sampled true Blender frames, played at 2× tempo for concise review;
-- `condenser_v22_motion_review.blend`, native readback JSON, visual diagnostic JSON, and `V22_REVIEW_RECEIPT.json` containing SHA-256 proofs and the explicit `NOT_OWNER_APPROVED` gate.
+- `Condenser_V22_Real_Blender_Effect_Isolation.png` — four real Blender operating/no-vapor/no-piston comparisons at full and Factorio scales;
+- `Condenser_V22_Real_Blender_Sequential_Intake.gif` — 16 sampled true Blender frames, held at their original 12-second cycle pacing (750ms per sample);
+- `condenser_v22_motion_review.blend`, native readback JSON, visual diagnostic JSON, and `V22_REVIEW_RECEIPT.json` containing SHA-256 proofs and the explicit `NOT_OWNER_APPROVED` gate;
+- `Condenser_V22_Native_Review_Bundle.zip` and matching `.sha256` — portable, integrity-checked archive of the source-locked editable derivative, the real preview PNGs/GIF, both visual proof sheets and validation receipts.
 
-**The 16-frame GIF is a sampled visualization, not a frame-for-frame realtime render of the entire 96-frame loop.** It is acceptable for orientation, lighting and piston inspection; if the pacing looks wrong, render additional source frames before release. The pixel checker measures visibility, not artistic correctness.
+**The 16-frame GIF is a sampled visualization with a 12-second loop, not a smooth frame-for-frame render of all 96 animation frames.** It is acceptable for orientation, lighting and piston inspection; if the pacing looks wrong, render additional source frames before release. The pixel checker measures visibility, not artistic correctness.
 
 ## Acceptance sequence / status
 

@@ -108,6 +108,12 @@ def run(out):
                  for s in ('idle', 'active')]
     required += [out / ('game_scale_%03d_%s.png' % (a, s)) for a in (0, 90, 180, 270)
                  for s in ('idle', 'active')]
+    required += [out / ('%s_%03d_%s.png' % (prefix, a, mode))
+                 for a in (0, 90, 180, 270)
+                 for mode in ('no_vapor', 'no_piston')
+                 for prefix in ('direction', 'game_scale')]
+    required += [out / 'direction_000_active_repeat.png',
+                 out / 'game_scale_000_active_repeat.png']
     if any(not p.is_file() or p.stat().st_size < 1000 for p in required):
         raise RuntimeError('Missing real native Cycles review render')
     scene.frame_set(1)
@@ -139,6 +145,7 @@ def run(out):
         'verification': 'PASS', 'source_sha256': APPROVED_SHA,
         'sequential_independent_pistons': HEADS, 'inward_vapor_curves': len(vapor),
         'period_frames': CYCLE, 'fps': FPS,
+        'fx_ablation_captures': 16, 'repeatability_controls': 2,
         'approved_mesh_count_unmodified': len(locked_meshes),
         'foundation_stationary': True, 'pipe_flange_stationary': True,
         'camera': camera_record(scene),

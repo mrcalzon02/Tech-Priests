@@ -194,23 +194,54 @@ def review(source: Path, out: Path, blender: str) -> dict:
             '--', '--out', str(out)], REPO, out / '02_native_readback.log')
     invoke([sys.executable, str(HERE / 'condenser_v22_visual_qa.py'), '--out', str(out)],
            REPO, out / '03_pixel_qa.log')
-    proof = out / 'Condenser_V22_Real_Blender_4_Directions_Proof.png'
-    animation = out / 'Condenser_V22_Real_Blender_Sequential_Intake.gif'
-    if not proof.is_file() or not animation.is_file():
-        raise RuntimeError('No real rendered visual evidence; do not claim review success')
+    proofs = [out / name for name in (
+        'Condenser_V22_Real_Blender_4_Directions_Proof.png',
+        'Condenser_V22_Real_Blender_Effect_Isolation.png',
+        'Condenser_V22_Real_Blender_Sequential_Intake.gif',
+    )]
+    if any(not file.is_file() or file.stat().st_size <= 1000 for file in proofs):
+        raise RuntimeError('Missing genuine Cycles proof; do not claim animation review success')
+    pixel_qa = json.loads((out / 'condenser_v22_visual_qa.json').read_text())
+    if pixel_qa.get('independent_effect_visibility_gates') != 'PASS':
+        raise RuntimeError('Native vapor/piston isolation pixel quality not verified')
     receipt = {
         'result': 'NATIVE_REVIEW_RENDERED_NOT_OWNER_APPROVED',
         'source_sha256': APPROVED_SHA,
         'output_blend': blend.name,
-        'real_native_proofs': [proof.name, animation.name],
-        'files': {p.name: file_hash(p) for p in [blend, proof, animation]},
+        'real_native_proofs': [file.name for file in proofs],
+        'files': {file.name: file_hash(file) for file in [blend, *proofs]},
         'native_validation': json.loads((out / 'condenser_v22_native_readback.json').read_text()),
+        'visual_effect_isolation': pixel_qa['independent_effect_visibility_gates'],
         'human_approval': False,
         'factorio_mod_modified': False,
-        'next_step': 'Show GIF/contact sheet in chat before production atlas packing or prototype edit',
+        'next_step': 'Show true Cycles GIF/contact sheet/A-B effect isolation in chat before Factorio sprite packing',
     }
-    (out / 'V22_REVIEW_RECEIPT.json').write_text(json.dumps(receipt, indent=2) + '\n')
-    print('CONDENSER_V22_REAL_BLENDER_REVIEW_PASS', out, flush=True)
+    receipt_path = out / 'V22_REVIEW_RECEIPT.json'
+    receipt_path.write_text(json.dumps(receipt, indent=2) + '\n')
+    # One portable native proof archive for inspection/handoff: bundle files
+    # that were ACTUALLY rendered, not a speculative preview or output link.
+    bundle = out / 'Condenser_V22_Native_Review_Bundle.zip'
+    source_files = [blend, *proofs, receipt_path,
+                    out / 'condenser_v22_native_readback.json',
+                    out / 'condenser_v22_visual_qa.json',
+                    out / 'condenser_v22_motion_manifest.json',
+                    *sorted(out.glob('frame_*.png')),
+                    *sorted(out.glob('direction_*.png')),
+                    *sorted(out.glob('game_scale_*.png'))]
+    with zipfile.ZipFile(bundle, mode='x', compression=zipfile.ZIP_DEFLATED,
+                         compresslevel=6, allowZip64=True) as zf:
+        for file in source_files:
+            if not file.is_file() or file.stat().st_size < 1:
+                raise RuntimeError('Refusing review bundle without source file: ' + str(file))
+            zf.write(file, arcname=file.name)
+    with zipfile.ZipFile(bundle) as zf:
+        bad_member = zf.testzip()
+        if bad_member is not None or len(zf.namelist()) != len(source_files):
+            raise RuntimeError('Native review archive integrity failed: ' + str(bad_member))
+    (out / 'Condenser_V22_Native_Review_Bundle.sha256').write_text(
+        f'{file_hash(bundle)}  {bundle.name}\n')
+    print('CONDENSER_V22_REAL_BLENDER_REVIEW_PASS', out,
+          'bundle_sha256', file_hash(bundle), flush=True)
     return receipt
 
 
