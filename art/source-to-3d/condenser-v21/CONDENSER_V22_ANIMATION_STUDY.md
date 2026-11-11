@@ -1,11 +1,33 @@
-# Atmospheric Water Condenser V21 → V22 animation and integration
+# Condenser V22 — ordered atmospheric intake strokes (native Blender review candidate)
 
-**Source authority:** owner's accepted V21 editable Blender: `tech_priests_water_condenser_v21.blend`, SHA-256 `1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b`. Source currently recoverable in the user's asset Library, but not yet placed in the Tech-Priests Git tree; never substitute a newly invented model. The 2×2 footprint, existing right-side outlet union and X=1,Y=-0.5,Z=0.36 connector plane, approved 152 mesh solids, all four cardinal 45° silhouettes, and exterior aged-metal material are locked. Reference adjacent pipes remain hidden and excluded from exports.
+**Approved model source stays V21.** Required exact editable source: `tech_priests_water_condenser_v21.blend`, SHA-256 `1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b`. Its 152 approved machine meshes, eight caps and seats, colored indicators, display, worn metalwork, right pipe union at Blender `(1,-0.5,0.36)`, 2×2 footprint, four silhouettes, reference-pipe exclusion and fixed foundation remain authoritative. The source is linked through the prior V21 asset Library package; **it is not bundled in Git**. Never approximate/rebuild a replacement if the exact bytes cannot be accessed.
 
-**Next bounded step:** create and visually review source-linked **native Blender motion**, then only after approval map four-direction HR+SD atlases to the existing Factorio machine prototype. An animation study does not alter in-game art or imply runtime completion.
+## Motion brief (replaces obsolete unified-rack animation)
 
-First mechanical study (`animate_condenser_v22.py`) is intentionally conservative: move the eight existing capped canisters **together** with their eight seats and original support rack by less than 0.002 scene units; make original LCD glow breathe subtly, and pulse the existing red/amber/green indicator covers using **render-invisible** point lights. Original flange and external hose connections remain stationary. **No jets, condensation sprites, exposed moving pipes, new fasteners, random plates, fake internals or dramatic shake.** If the rack-to-fixed-hose physical gap becomes visually wrong in the actual Cycles render, revise the rig while retaining the source mesh.
+The eight **existing individual capped canisters**, not their seats, lift one after the other across the 4×2 rack. The timed order follows actual world-space rows: four left-to-right along one row, then four right-to-left along the other. Each head lifts a maximum **0.058 scene units**, holds while drawing air, seats smoothly, and hands off with no simultaneous piston strokes. Eight 12-frame slots at 8 fps yield a **12-second seamless loop** (frames 1 and 97 identical). All mechanical displacement is encoded in editable source-derived Blender transforms.
 
-The script refuses any source blend whose exact bytes fail the accepted SHA, and refuses a mismatch of the original eight canisters/eight seats. It installs and verifies one canonical FMPL fixed 45° orthographic camera in memory and keys 16 native previews at 8fps plus loop closure at frame 97, saving an editable derivative and frame hashes. It requires an explicit `--source-blend` path; its absence is a truthful blocker, not license to synthesize the geometry.
+When a head opens, three short tapered cool-white/light-blue atmosphere wisps follow **outside-to-inside** curves, with their visible segments travelling *toward the exposed seat*. They do not shoot outward, vent pressurized steam, create any external pipe, or suggest a machine leak. Only the active head has visible vapor, with the streaks retracting before closure. These 24 extra **FX curves are not machinery meshes** and do not change the original geometry. The LCD breathes lightly, the existing red/amber/green lamp covers blink/pulse via temporary material copies and lights, and the internal **rack alone** vibrates by a few thousandths of a tile. Concrete/foundation, main chassis, exterior pipe and hose fittings remain absolutely stationary; no ground/base shaking.
 
-**Visualization acceptance:** show native Blender A cycle and real 0/90/180/270° previews in chat, with idle/active and native 43px views before creating production atlases. User approval must be recorded separately. Next build stage will connect the actual 2×2 water-pipe prototype and preserve the original sprite rollback. This is work **begun**, not a fabricated claim of a finished or rendered V22 animation.
+## Source-locked operation
+
+From the repository root, using native Blender on a machine with access to the exact V21 source:
+
+```bash
+python art/source-to-3d/condenser-v21/test_condenser_v22_timing.py
+blender --background --threads 4 --python art/source-to-3d/condenser-v21/animate_condenser_v22.py -- \
+  --source-blend /absolute/path/to/tech_priests_water_condenser_v21.blend \
+  --out /absolute/path/to/condenser_v22_review
+blender --background /absolute/path/to/condenser_v22_review/condenser_v22_motion_review.blend \
+  --threads 4 --python art/source-to-3d/condenser-v21/verify_condenser_v22.py -- \
+  --out /absolute/path/to/condenser_v22_review
+```
+
+The SHA/source-object gate fails closed; source bytes are never modified. This uses **one canonical FMPL fixed 45° orthographic camera**. Rotation is applied only to the entity via a reversible turntable. It writes an editable animated `.blend`, 16 evenly sampled temporal `frame_*.png`, a genuine idle and raised-head Cycles still for each of the four cardinal directions, another eight actual game-scale renders at **43 px/tile** (86×86 for 2×2), source hash and frame hash manifest, then a separate Blender-reopen validation receipt. A 16-frame study is a *sampled proof*, not a full 96-frame video at natural timing.
+
+## Approval and release gates
+
+1. Review the **actual Blender source-derived** 12s loop, four camera orientations and 86px previews. Check real visible inward vapor, separate head lift, seating, tiny rack shake, blinking covers and a completely stable outlet/base. Adjust visible effects as needed.
+2. Independently reopen the native derivative and check 8 independent pistons, 24 inward vapor FX curves, frame 97 closure, original foundation/outlet immobility, camera and source hash. Inspector reports native correctness, **not human art approval**.
+3. Only on separate owner visual acceptance, export four 45° directions with HR/SD Factorio sprite atlases, check entity graphics and native fluidbox alignment in Factorio, and preserve a one-step rollback to the previous sprite. **No current Factorio replacement, finished render, visual approval or gameplay test is claimed.**
+
+Do not launch more GitHub workflows, modify unrelated machines, or release an unreviewed animation. Blender and the exact original .blend are required for real graphics; static Python tests alone cannot substitute for native renders.

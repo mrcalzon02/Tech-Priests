@@ -1,65 +1,133 @@
-"""Independent native Blender reopen checks for approved-source Condenser V22 study."""
-import argparse,hashlib,json,sys
+"""Independent native Blender reopen: source-locked 8-head suction animation.
+
+Run AFTER native builder writes all 16 temporal and 8 cardinal review renders:
+blender -b OUT/condenser_v22_motion_review.blend --python verify_condenser_v22.py -- --out OUT
+"""
+from __future__ import annotations
+import argparse
+import hashlib
+import json
+import sys
 from pathlib import Path
 import bpy
-ROOT=Path(__file__).resolve().parents[2]
-sys.path.insert(0,str(ROOT/'tools'/'fmpl'))
-from blender_camera_guard import assert_clean,camera_record
+from mathutils import Vector
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[2]  # /repo/art/source-to-3d/condenser-v21 -> /repo
+sys.path.insert(0, str(ROOT / 'tools' / 'fmpl'))
+from blender_camera_guard import assert_clean, camera_record
 from capture_policy import POLICY_ID
-APPROVED_SHA='1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b'
-FRAMES=[1+6*i for i in range(16)]
+from condenser_v22_timing import CYCLE, FPS, HEADS, PREVIEW_FRAMES, STROKE, head_lift, inward_stream, snake_order
+
+APPROVED_SHA = '1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b'
+
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
-def main(out):
-    original=out/'condenser_v22_motion_review.blend'
-    if not original.is_file() or Path(bpy.data.filepath).resolve()!=original.resolve():
-        raise RuntimeError('Must independently reopen the actual saved V22 Blender derivative')
-    scene=bpy.context.scene
-    if (scene.get('model_source_sha256')!=APPROVED_SHA or
-        scene.get('native_game_art_modified') is not False or
-        scene.get('animation_review_revision')!='V22 review-only candidate'):
-        raise RuntimeError('Source hash, review-only, or game-art gate changed')
-    profile={'camera_policy':POLICY_ID,'capture_kind':'entity',
-       'directions':[0,90,180,270],'states':{'condenser_v22_preview':FRAMES},
-       'source_size':256,'camera_override':{
-       'type':'ORTHO','elevation_deg':45,'azimuth_deg':0,'distance':5.5,
-       'target':[0,0,.55],'ortho_scale':3.20,'shift_x':0,'shift_y':0}}
-    assert_clean(scene,profile,bpy)
-    root=bpy.data.objects.get('FX ONLY | mild condenser rack rumble')
-    floor=bpy.data.objects.get('Condenser shallow tapered foundation')
-    if root is None or floor is None:
-        raise RuntimeError('Existing condenser or independent vibration rig missing')
-    caps=[o for o in bpy.data.objects if o.name.startswith('Condenser capped canister ')]
-    seats=[o for o in bpy.data.objects if o.name.startswith('Condenser dark canister seat ')]
-    if len(caps)!=8 or len(seats)!=8 or any(o.parent!=root for o in caps+seats):
-        raise RuntimeError('Exactly eight original capped canisters and seats must remain together')
-    pngs=[out/f'frame_{i:03d}.png' for i in FRAMES]
-    if any(not f.is_file() or f.stat().st_size<1000 for f in pngs):
-        raise RuntimeError('Missing native condenser Cycles frames')
-    scene.frame_set(1)
-    begin=tuple(root.location)
-    begin_rot=tuple(root.rotation_euler)
-    base=tuple(tuple(row) for row in floor.matrix_world)
-    scene.frame_set(49)
-    moved=max(abs(a-b) for a,b in zip(begin,root.location))>.00001
-    scene.frame_set(97)
-    if not moved or max(abs(a-b) for a,b in zip(begin,root.location))>.000001:
-        raise RuntimeError('Small original rack vibration absent or 16-frame cycle not closed')
-    if max(abs(a-b) for a,b in zip(begin_rot,root.rotation_euler))>.000001:
-        raise RuntimeError('Condenser rig rotation loop not closed')
-    if base!=tuple(tuple(row) for row in floor.matrix_world):
-        raise RuntimeError('Condenser foundation moved')
-    result={'verification':'PASS','source_sha256':APPROVED_SHA,
-      'frames':{p.name:sha(p) for p in pngs},'cap_parts':8,'seat_parts':8,
-      'foundation_stationary':True,'fixed_camera':camera_record(scene),
-      'game_art_changed':False,'owner_visual_approved':False}
-    (out/'condenser_v22_native_readback.json').write_text(json.dumps(result,indent=2)+'\n')
-    print('CONDENSER_V22_INDEPENDENT_NATIVE_REOPEN_PASS',json.dumps(result),flush=True)
 
-if __name__=='__main__':
-    p=argparse.ArgumentParser()
-    p.add_argument('--out',type=Path,required=True)
-    args=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else sys.argv[1:])
-    main(args.out.resolve())
+def center(obj):
+    return sum((obj.matrix_world @ v.co for v in obj.data.vertices), Vector((0, 0, 0))) / len(obj.data.vertices)
+
+
+def assert_near(a, b, eps=1e-6):
+    if (a - b).length > eps:
+        raise RuntimeError('Source-fixed mesh moved: ' + str((a - b).length))
+
+
+def run(out):
+    blend = out / 'condenser_v22_motion_review.blend'
+    if not blend.is_file() or Path(bpy.data.filepath).resolve() != blend.resolve():
+        raise RuntimeError('Must independently reopen the actual saved derivative .blend')
+    scene = bpy.context.scene
+    if (scene.get('model_source_sha256') != APPROVED_SHA or
+            scene.get('native_game_art_modified') is not False or
+            scene.get('animation_review_revision') != 'V22 review-only candidate' or
+            scene.get('new_machine_geometry_count') != 0 or
+            scene.get('new_render_fx_curve_count') != 24):
+        raise RuntimeError('Owner source / FX-only / game-art staging gate changed')
+    camera = {
+        'camera_policy': POLICY_ID, 'capture_kind': 'entity',
+        'directions': [0, 90, 180, 270],
+        'states': {'condenser_v22_preview': list(PREVIEW_FRAMES)},
+        'source_size': 256, 'camera_override': {
+            'type': 'ORTHO', 'elevation_deg': 45, 'azimuth_deg': 0,
+            'distance': 5.5, 'target': [0, 0, .55],
+            'ortho_scale': 3.20, 'shift_x': 0, 'shift_y': 0,
+        },
+    }
+    assert_clean(scene, camera, bpy)
+    rack = bpy.data.objects.get('FX ONLY | mild condenser rack rumble')
+    base = bpy.data.objects.get('Condenser shallow tapered foundation')
+    outlet = bpy.data.objects.get('Water outlet end flange')
+    turntable = bpy.data.objects.get('FX ONLY | entity export turntable')
+    if not all((rack, base, outlet, turntable)):
+        raise RuntimeError('Original foundation/outlet or V22 rack/rotation missing')
+    if abs(turntable.rotation_euler.z) > 1e-7:
+        raise RuntimeError('Saved native model must be canonical direction 0')
+    caps = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith('Condenser capped canister ')]
+    seats = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith('Condenser dark canister seat ')]
+    vapor = [o for o in scene.objects if o.type == 'CURVE' and o.get('FX_ONLY_INWARD_ATMOSPHERIC_INTAKE')]
+    if len(caps) != HEADS or len(seats) != HEADS or len(vapor) != HEADS * 3:
+        raise RuntimeError('Wrong original cap/seat or inward FX strand counts')
+    order = json.loads(scene['piston_order'])
+    if len(order) != HEADS or set(order) != {o.name for o in caps}:
+        raise RuntimeError('Not all original canisters have motion assignments')
+    pistons = [bpy.data.objects.get('FX ONLY | piston %02d' % i) for i in range(HEADS)]
+    if any(p is None for p in pistons):
+        raise RuntimeError('Eight separately animated piston controls missing')
+    if any(bpy.data.objects[cap].parent != pistons[i] or pistons[i].parent != rack
+           for i, cap in enumerate(order)):
+        raise RuntimeError('Original caps not parented to their independent piston controls')
+    if any(seat.parent != rack for seat in seats):
+        raise RuntimeError('Original canister seats are not mounted on rack controller')
+    required = [out / ('frame_%03d.png' % f) for f in PREVIEW_FRAMES]
+    required += [out / ('direction_%03d_%s.png' % (a, s)) for a in (0, 90, 180, 270)
+                 for s in ('idle', 'active')]
+    required += [out / ('game_scale_%03d_%s.png' % (a, s)) for a in (0, 90, 180, 270)
+                 for s in ('idle', 'active')]
+    if any(not p.is_file() or p.stat().st_size < 1000 for p in required):
+        raise RuntimeError('Missing real native Cycles review render')
+    scene.frame_set(1)
+    origin = center(base).copy()
+    flange = center(outlet).copy()
+    caps_at_start = [center(bpy.data.objects[name]).copy() for name in order]
+    for i in range(HEADS):
+        scene.frame_set(7 + i * 12)
+        displacement = [center(bpy.data.objects[name]).z - caps_at_start[j].z
+                        for j, name in enumerate(order)]
+        if not STROKE * .97 <= displacement[i] <= STROKE * 1.03:
+            raise RuntimeError('Individual cylinder did not rise at expected step ' + str(i))
+        if any(abs(displacement[j]) > .02 for j in range(HEADS) if j != i):
+            raise RuntimeError('Unscheduled canister also lifted')
+        assert_near(center(base), origin)
+        assert_near(center(outlet), flange)
+        group = [o for o in vapor if o.name.startswith('FX ONLY | inward vapor %02d.' % i)]
+        if len(group) != 3 or not all(o.data.bevel_factor_end > o.data.bevel_factor_start for o in group):
+            raise RuntimeError('Active head missing three inward vapor flows')
+    scene.frame_set(97)
+    for i, name in enumerate(order):
+        assert_near(center(bpy.data.objects[name]), caps_at_start[i])
+    assert_near(center(base), origin)
+    assert_near(center(outlet), flange)
+    for obj in vapor:
+        if abs(obj.data.bevel_factor_start - obj.data.bevel_factor_end) > 1e-6:
+            raise RuntimeError('Steam emission failed to close loop')
+    result = {
+        'verification': 'PASS', 'source_sha256': APPROVED_SHA,
+        'sequential_independent_pistons': HEADS, 'inward_vapor_curves': len(vapor),
+        'period_frames': CYCLE, 'fps': FPS,
+        'foundation_stationary': True, 'pipe_flange_stationary': True,
+        'camera': camera_record(scene),
+        'actual_png_sha256': {p.name: sha(p) for p in required},
+        'game_art_modified': False, 'owner_visual_approved': False,
+    }
+    (out / 'condenser_v22_native_readback.json').write_text(json.dumps(result, indent=2) + '\n')
+    print('CONDENSER_V22_NATIVE_REOPEN_PASS', json.dumps({'caps': HEADS, 'renders': len(required)}), flush=True)
+
+
+if __name__ == '__main__':
+    p = argparse.ArgumentParser()
+    p.add_argument('--out', type=Path, required=True)
+    args = p.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
+    run(args.out.resolve())
