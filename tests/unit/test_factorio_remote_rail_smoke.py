@@ -66,6 +66,32 @@ class CanonicalRailAdmissionRefusalTraceTests(unittest.TestCase):
         self.assertIn('RAIL_FIRST_ENGINE_CONSTRUCTION_NOT_PROVEN', fixture)
         self.assertIn('TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN', fixture)
 
+class OriginalRailPhysicalCarryBatchTests(unittest.TestCase):
+    def test_native_batch_cannot_bypass_single_rail_debit_or_original_identity(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        src = (root / "tech-priests_src/scripts/core/"
+               "construction_planner.lua").read_text(encoding="utf-8")
+        frontier = (root / "tech-priests_src/scripts/core/"
+                    "rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        self.assertIn('local function original_rail_cargo_0836(pair,item)', src)
+        self.assertIn('pending.request==request', src)
+        self.assertIn('held.priest_unit~=pair.priest.unit_number', src)
+        self.assertIn('held.station_unit~=pair.station.unit_number', src)
+        self.assertIn('held.inventory and held.inventory.valid', src)
+        self.assertIn('if invalid then return nil', src)
+        self.assertIn('game.create_inventory(1)', src)
+        self.assertIn('pair.rail_material_cargo_0836=held', src)
+        self.assertIn('removed=remove_item(source,"rail",amount)', src)
+        self.assertIn('inserted=insert_item(inventory,"rail",removed)', src)
+        self.assertIn('refunded~=uninserted', src)
+        self.assertIn('held.quarantine="rail-stage-physical-custody-ambiguous"', src)
+        self.assertIn('if not stage_original_rail_supply_0836(pair,task)', src)
+        self.assertIn('removed=remove_item(task.source_inv,task.item_name,1)', src)
+        self.assertIn('before-after==1', src)
+        self.assertIn('pending.original_paid_completion_0836={', src)
+        self.assertIn('connected_straight_rails(predecessor,actual)', frontier)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', frontier)
+
 class NativePlayerTestSaveSelectionTests(unittest.TestCase):
     def test_native_headless_player_does_not_restart_graphical_steam_client(self):
         argv = rail_native_player_test_command(

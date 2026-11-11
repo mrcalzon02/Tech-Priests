@@ -157,7 +157,43 @@ local function home_sources(pair)
  end
  return out
 end
+-- A rail-loading journey may leave REAL item stacks in a persistent,
+-- engine-owned inventory carried by the ORIGINAL Magos. This is physical
+-- 0338 supply custody, not a virtual rail counter or an alternate builder.
+-- Only the original live 0836 request may ever draw from this protected hold.
+local function original_rail_cargo_0836(pair,item)
+ if item~="rail" or not valid_pair(pair) then return nil,false end
+ local mission=pair.remote_rail_outpost_0835
+ local pending=mission and mission.pending_rail_0836
+ local request=pair.construction_request
+ if not(pending and pending.request==request and type(request)=="table"
+   and request.site_reason=="remote-rail-physical-frontier-0836"
+   and request.item_name=="rail" and request.entity_name=="straight-rail"
+   and mission.root_station_unit==pair.station.unit_number
+   and mission.surface_index==pair.station.surface.index
+   and mission.force_index==pair.station.force.index)then
+  return nil,false
+ end
+ local held=pair.rail_material_cargo_0836
+ if not held then return nil,false end
+ if type(held)~="table" or held.quarantine
+   or not(held.inventory and held.inventory.valid)
+   or held.station_unit~=pair.station.unit_number
+   or held.priest_unit~=pair.priest.unit_number
+   or held.surface_index~=pair.station.surface.index
+   or held.force_index~=pair.station.force.index then
+  return nil,true
+ end
+ return held,false
+end
 local function source_for_item(pair,item)
+ local held,invalid=original_rail_cargo_0836(pair,item)
+ if invalid then return nil end -- preserve lost/ambiguous physical custody
+ if held and item_count(held.inventory,"rail")>0 then
+  return {item_name="rail",count=item_count(held.inventory,"rail"),
+    inv=held.inventory,entity=pair.priest,
+    label="engine-carried-original-rail-0836",score=-math.huge}
+ end
  local best;for _,src in ipairs(home_sources(pair))do local count=item_count(src.inv,item);if count>0 then local score=dist_sq(pair.priest.position,src.entity.position)-math.min(count,100);if not best or score<best.score then best={item_name=item,count=count,inv=src.inv,entity=src.entity,label=src.label,score=score}end end end;return best
 end
 local function entity_exists(name)return type(name)=="string"and name~=""and prototypes and prototypes.entity and prototypes.entity[name]~=nil end
@@ -280,6 +316,56 @@ local function authorized_rail_candidate_0836(pair,candidate)
    and candidate.position.y==request.position.y
    and candidate.direction==request.direction
    and owned_pending_rail_0836(pair,request)
+end
+-- Load a modest REAL rail stack only at the original 0338 source pickup.
+-- Each later construction still removes exactly ONE rail from an actual
+-- LuaInventory, retains the ordinary cargo lease, builds with 0338 and
+-- requires the unweakened 0836 native unit/graph receipt. The one-slot
+-- LuaInventory survives save/reload; other tasks/storage cannot spend it.
+-- Any ambiguous debit/refund remains physically quarantined, never minted.
+local function stage_original_rail_supply_0836(pair,task)
+ if not authorized_rail_candidate_0836(pair,task) then return true end
+ if pair.rail_material_cargo_0836 then return true end
+ if not(game and type(game.create_inventory)=="function"
+   and task.source_inv and task.source_inv.valid
+   and valid(task.source_entity) and task.source_entity.unit_number)then
+  return true -- normal one-item construction path remains authoritative
+ end
+ local source=task.source_inv
+ local before=item_count(source,"rail")
+ local amount=math.min(7,math.max(0,before-1))
+ if amount<1 then return true end
+ local ok,inventory=pcall(function()return game.create_inventory(1)end)
+ if not(ok and inventory and inventory.valid
+   and item_count(inventory,"rail")==0)then return true end
+ local held={inventory=inventory,
+   station_unit=pair.station.unit_number,
+   priest_unit=pair.priest.unit_number,
+   surface_index=pair.station.surface.index,
+   force_index=pair.station.force.index,
+   origin_unit=task.source_entity.unit_number,
+   loaded_tick=now(),loaded_count=0}
+ pair.rail_material_cargo_0836=held -- persist authority BEFORE real transfer
+ local removed=remove_item(source,"rail",amount)
+ local inserted=insert_item(inventory,"rail",removed)
+ local uninserted=removed-inserted
+ local refunded=uninserted>0 and insert_item(source,"rail",uninserted) or 0
+ local source_after=item_count(source,"rail")
+ local held_after=item_count(inventory,"rail")
+ held.loaded_count=held_after
+ if source_after~=before-removed+refunded
+   or held_after~=inserted or refunded~=uninserted
+   or removed~=inserted+refunded
+   or held_after>amount then
+  held.quarantine="rail-stage-physical-custody-ambiguous"
+  record(pair,"rail-stage-quarantined-0836",held.quarantine)
+  return false
+ end
+ record(pair,"rail-stage-native-cargo-0836",
+   "source="..safe(held.origin_unit).." native_held="..safe(held_after)..
+   " original_source_before="..safe(before)..
+   " original_source_after="..safe(source_after))
+ return true
 end
 local function frontier_owned_by_pair_0338(pair,request)
  if not(type(request)=="table" and valid_pair(pair))then return false end
@@ -1859,6 +1945,12 @@ function M.service_pair(pair,reason)
    task.original_rail_source_debit_0836={
     source_unit=task.source_entity.unit_number,
     before=before,after=after,tick=now(),item="rail"}
+   -- After ONE verified 0338 item debit, optionally stage additional
+   -- actual rails into the original Magos' persistent engine inventory.
+   -- The paid rail itself remains in this original 0338 task.carry.
+   if not stage_original_rail_supply_0836(pair,task) then
+    return M.abort_pair(pair,"rail-native-stage-custody-ambiguous")
+   end
   end
   sync_custody(pair,task,"removed-source")
   task.phase="move-site"
