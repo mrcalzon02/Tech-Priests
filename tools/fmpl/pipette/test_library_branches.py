@@ -117,6 +117,22 @@ class WireBranchGeometryTests(unittest.TestCase):
                                    diameter[sleeve["conductor_index"]])
                 self.assertLess(sleeve["outer_diameter_bu"],.12*.20)
 
+    def test_three_breakout_boots_are_tapered_closed_walls_not_thin_rings(self):
+        model=lib.build_demo("wire_eight_loose_bundle","wye")
+        wraps=[p for p in model["meshes"]
+               if p["role"]=="branch-strain-relief-wrap"]
+        self.assertEqual(len(wraps),3)
+        for wrap in wraps:
+            self.assertEqual(wrap["profile_kind"],
+                             "tapered-hollow-wire-breakout-boot")
+            self.assertGreater(wrap["axial_length_bu"],.12*.8)
+            self.assertGreater(wrap["bore_diameter_bu"],.12*.39)
+            audit=lib.surface_topology(wrap["faces"])
+            self.assertEqual(audit["surface_islands"],1)
+            self.assertEqual(audit["naked_boundary_edges"],0)
+            self.assertEqual(audit["degenerate_polygons"],0)
+            self.assertEqual(audit["overlapping_nonmanifold_edges"],0)
+
     def test_does_not_extend_ferrules_beyond_canonical_port_face(self):
         model=lib.build_demo("wire_eight_loose_bundle","wye")
         for p in model["meshes"]:
