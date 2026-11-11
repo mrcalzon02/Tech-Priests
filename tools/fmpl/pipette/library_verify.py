@@ -162,12 +162,12 @@ def validate(args):
             if len(pair)!=2 or pair[0]!="A" or pair[1] not in ("B","C"):
                 raise RuntimeError("Invalid individual conductor port pair")
             pairs[tuple(pair)]+=1
-            topology=lib.surface_topology(
+            strand_audit=lib.surface_topology(
                 [tuple(int(v) for v in face.vertices)
                  for face in strand.data.polygons])
-            if topology["surface_islands"]!=1 or \
-               topology["naked_boundary_edges"]!=0 or \
-               topology["degenerate_polygons"]!=0:
+            if strand_audit["surface_islands"]!=1 or \
+               strand_audit["naked_boundary_edges"]!=0 or \
+               strand_audit["degenerate_polygons"]!=0:
                 raise RuntimeError("Split or unclosed conductor mesh "+strand.name)
         if sorted(ids)!=list(range(8)) or \
            pairs!=Counter({("A","B"):4,("A","C"):4}):
