@@ -153,10 +153,18 @@ def validate(args):
             raise RuntimeError("Wire Y contains overlapping strand centerlines")
         if counts!={"A":8,"B":4,"C":4}:
             raise RuntimeError("Incorrect physical eight-to-four-plus-four branch distribution")
-        if len(strands)!=8 or len(wraps) not in (3,5) or len(ferrules)!=16:
-            raise RuntimeError("Incomplete compact eight-wire junction hardware: "+
-                               "%d strands, %d wraps, %d ferrules"%
-                               (len(strands),len(wraps),len(ferrules)))
+        expected_wraps=int(branch_info.get("branch_strain_relief_wraps",-1))
+        expected_wraps_for_type=(
+            0 if receipt["architecture_id"]=="wire_eight_loose_bundle" else
+            5 if receipt["architecture_id"]=="wire_eight_laced_loom" else -1)
+        if expected_wraps!=expected_wraps_for_type or expected_wraps<0:
+            raise RuntimeError("Incorrect support policy for loose versus laced wiring")
+        if len(strands)!=8 or len(wraps)!=expected_wraps or len(ferrules)!=16:
+            raise RuntimeError("Wrong loose-wire or laced junction geometry: "+
+                               "%d strands, %d wraps (expected %d), %d ferrules"%
+                               (len(strands),len(wraps),expected_wraps,len(ferrules)))
+        if expected_wraps==0 and col.get("pipette_branch_has_midspan_wrappers",True):
+            raise RuntimeError("Loose-wire Y incorrectly advertises unsupported clamps")
         pairs=Counter()
         ids=[]
         for strand in strands:
@@ -181,8 +189,10 @@ def validate(args):
         if contact_counts!=Counter(counts):
             raise RuntimeError("Wrong count of miniature port ferrules")
         wrap_counts=Counter(x.get("pipette_branch_port_id") for x in wraps)
-        if not all(wrap_counts[p]>=1 for p in ("A","B","C")):
-            raise RuntimeError("Wire Y missing compact branch strain relief")
+        if expected_wraps>0 and not all(wrap_counts[p]>=1 for p in ("A","B","C")):
+            raise RuntimeError("Laced-wire Y missing explicit group restraints")
+        if expected_wraps==0 and wraps:
+            raise RuntimeError("Floating hardware forbidden on loose-wire Y")
         for boot in wraps:
             if boot.get("pipette_source_recipe")!=(
                    "tapered-hollow-wire-breakout-boot"):
@@ -200,6 +210,10 @@ def validate(args):
             raise RuntimeError("Saved Blender collection changed branching count")
         if int(col.get("pipette_branch_route_count",0))!=8:
             raise RuntimeError("Blender asset lost physical conductor route metadata")
+        expected_style=("natural-loose-wire-split-with-port-ferrules"
+                       if expected_wraps==0 else "laced-wraps-and-mini-ferrules")
+        if col.get("pipette_embedded_hardware_style")!=expected_style:
+            raise RuntimeError("Embedded branch style contradicts physical support policy")
         branch_wire_proof=True
         branch_wire_counts={"conductors":len(strands),
                             "mini_ferrules":len(ferrules),
