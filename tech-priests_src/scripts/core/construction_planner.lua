@@ -325,7 +325,26 @@ end
 -- Any ambiguous debit/refund remains physically quarantined, never minted.
 local function stage_original_rail_supply_0836(pair,task)
  if not authorized_rail_candidate_0836(pair,task) then return true end
- if pair.rail_material_cargo_0836 then return true end
+ local existing=pair.rail_material_cargo_0836
+ if existing then
+  -- Keep persistent REAL rail cargo. A depleted hold may be refilled only
+  -- after a genuine return to stocked source inventory; a stale/mismatched
+  -- or quarantined hold must never be silently replaced.
+  if type(existing)~="table" or existing.quarantine
+    or not(existing.inventory and existing.inventory.valid)
+    or existing.station_unit~=pair.station.unit_number
+    or existing.priest_unit~=pair.priest.unit_number
+    or existing.surface_index~=pair.station.surface.index
+    or existing.force_index~=pair.station.force.index then
+   record(pair,"rail-restage-refused-0836","custody-invalid-or-mismatched")
+   return false
+  end
+  -- Last item just debited from this hold is already in 0338 task custody.
+  -- Do not transfer or restage it remotely; next stock must come from a
+  -- physical source the Magos actually reaches.
+  if item_count(existing.inventory,"rail")>0
+    or task.source_inv==existing.inventory then return true end
+ end
  if not(game and type(game.create_inventory)=="function"
    and task.source_inv and task.source_inv.valid
    and valid(task.source_entity) and task.source_entity.unit_number)then
@@ -341,17 +360,27 @@ local function stage_original_rail_supply_0836(pair,task)
  local stack_capacity=prototype and tonumber(prototype.stack_size) or 0
  local amount=math.min(24,math.max(0,before-1),math.max(0,stack_capacity))
  if amount<1 then return true end
- local ok,inventory=pcall(function()return game.create_inventory(1)end)
- if not(ok and inventory and inventory.valid
-   and item_count(inventory,"rail")==0)then return true end
- local held={inventory=inventory,
+ local inventory=existing and existing.inventory or nil
+ if not inventory then
+  local ok,created=pcall(function()return game.create_inventory(1)end)
+  if not ok then return true end
+  inventory=created
+ end
+ if not(inventory and inventory.valid
+   and item_count(inventory,"rail")==0)then
+  record(pair,"rail-restage-refused-0836","native-hold-not-empty")
+  return false
+ end
+ local held=existing or {inventory=inventory,
    station_unit=pair.station.unit_number,
    priest_unit=pair.priest.unit_number,
    surface_index=pair.station.surface.index,
    force_index=pair.station.force.index,
    origin_unit=task.source_entity.unit_number,
    loaded_tick=now(),loaded_count=0}
- pair.rail_material_cargo_0836=held -- persist authority BEFORE real transfer
+ if not existing then
+  pair.rail_material_cargo_0836=held -- persist authority BEFORE real transfer
+ end
  local removed=remove_item(source,"rail",amount)
  local inserted=insert_item(inventory,"rail",removed)
  local uninserted=removed-inserted
@@ -359,6 +388,8 @@ local function stage_original_rail_supply_0836(pair,task)
  local source_after=item_count(source,"rail")
  local held_after=item_count(inventory,"rail")
  held.loaded_count=held_after
+ held.loaded_tick=now()
+ held.origin_unit=task.source_entity.unit_number
  if source_after~=before-removed+refunded
    or held_after~=inserted or refunded~=uninserted
    or removed~=inserted+refunded
@@ -367,6 +398,8 @@ local function stage_original_rail_supply_0836(pair,task)
   record(pair,"rail-stage-quarantined-0836",held.quarantine)
   return false
  end
+ held.restock_cycles_0836=(tonumber(held.restock_cycles_0836)or 0)
+   +(existing and 1 or 0)
  record(pair,"rail-stage-native-cargo-0836",
    "source="..safe(held.origin_unit).." native_held="..safe(held_after)..
    " original_source_before="..safe(before)..

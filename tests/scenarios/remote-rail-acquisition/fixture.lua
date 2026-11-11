@@ -274,6 +274,7 @@ local function setup()
   s.started=game.tick
   s.start_ore=inventory.get_item_count("iron-ore")
   s.start_rail=inventory.get_item_count("rail")
+   s.start_depot_rail=depot_inventory.get_item_count("rail")
   s.natural_ore_x=ORE.x
   s.natural_ore_y=ORE.y
   s.natural_ore_amount=original_amount
@@ -455,7 +456,57 @@ local function inspect(s,elapsed)
     " first_loss_tick="..tostring(lost and lost.tick)..
     " first_loss_last_item="..tostring(lost and lost.last_item)..
     " first_loss_last_original="..tostring(lost and lost.last_is_original))
-  -- A route objective and even a ghost are not physically placed rail.
+  -- Strict original-material native census: engine inventories and live
+   -- 0836-verified rail units, including the one currently in 0338 transit.
+   local hold=p.rail_material_cargo_0836
+   local live_hold=type(hold)=="table" and hold.inventory
+     and hold.inventory.valid==true
+   local held_rails=live_hold and hold.inventory.get_item_count("rail") or nil
+   local hold_owner=live_hold and not hold.quarantine
+     and hold.station_unit==station.unit_number
+     and hold.priest_unit==p.priest.unit_number
+     and hold.force_index==station.force.index
+     and hold.surface_index==surface.index
+   local units={}
+   for _,rail in ipairs(rails) do
+     if rail.valid and rail.unit_number then units[rail.unit_number]=true end
+   end
+   local segments=frontier and frontier.segment or 0
+   local all_real=frontier and type(frontier.built_units)=="table"
+   if all_real then for i=1,segments do
+     if not units[frontier.built_units[i]] then all_real=false;break end
+   end end
+   local active_rail=0
+   if builder and builder.item_name=="rail" and builder.carried then
+     active_rail=tonumber(builder.carried.count)or 0
+   elseif not builder and p.construction_custody_0338
+     and p.construction_custody_0338.item_name=="rail" then
+     active_rail=tonumber(p.construction_custody_0338.count)or 0
+   end
+   local station_rails=station.get_inventory(defines.inventory.chest)
+     .get_item_count("rail")
+   local total=held_rails and depot_rails
+     and (station_rails+depot_rails+held_rails+segments+active_rail)
+     or nil
+   local expected=s.start_rail+(s.start_depot_rail or 0)
+   emit("RAIL_NATIVE_CUSTODY_LEDGER elapsed="..elapsed..
+     " source="..station_rails.." depot="..tostring(depot_rails)..
+     " held="..tostring(held_rails).." restocks="..
+       tostring(hold and hold.restock_cycles_0836)..
+     " native="..segments.." active="..active_rail..
+     " live_units="..tostring(all_real).." owner="..tostring(hold_owner)..
+     " total="..tostring(total).." expected="..expected)
+   if elapsed>=36000 and not s.rail_custody_verified then
+     if not(hold_owner and all_real and segments>=2
+       and total==expected)then
+       fail("RAIL_NATIVE_CUSTODY_NOT_CONSERVED expected="..expected..
+         " counted="..tostring(total))
+     end
+     s.rail_custody_verified=true
+     emit("PASS original physical rail cargo and native segment census conserved"..
+       " total="..total.." held="..held_rails.." built="..segments)
+   end
+   -- A route objective and even a ghost are not physically placed rail.
   -- The first acceptance requires a real segment with the exact unit
   -- recorded by the 0836 frontier AFTER canonical 0338 construction.
   if elapsed>=18000 and not s.first_physical_rail_verified then

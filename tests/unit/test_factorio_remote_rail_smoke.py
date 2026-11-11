@@ -133,6 +133,29 @@ class NativePlayerTestSaveSelectionTests(unittest.TestCase):
         self.assertTrue(accepted["native_connected_pair"])
         self.assertEqual(accepted["simulation_mode"], "native-player-test-save")
 
+class RailRestockAndNativeCustodyBoundaryTests(unittest.TestCase):
+    def test_original_hold_must_refill_from_native_source(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        src = (root / "tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
+        self.assertIn("local existing=pair.rail_material_cargo_0836", src)
+        self.assertIn('if item_count(existing.inventory,"rail")>0', src)
+        self.assertIn("or task.source_inv==existing.inventory then return true end", src)
+        self.assertIn("local inventory=existing and existing.inventory or nil", src)
+        self.assertIn("held.restock_cycles_0836=", src)
+        self.assertIn('removed=remove_item(source,"rail",amount)', src)
+        self.assertIn("held_after~=inserted or refunded~=uninserted", src)
+    def test_native_census_checks_actual_persistent_lua_inventory(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        src = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        self.assertIn("local hold=p.rail_material_cargo_0836", src)
+        self.assertIn('hold.inventory.get_item_count("rail")', src)
+        self.assertIn('if not units[frontier.built_units[i]]', src)
+        self.assertIn("total==expected", src)
+        self.assertIn("RAIL_NATIVE_CUSTODY_NOT_CONSERVED", src)
+        self.assertIn("PASS original physical rail cargo and native segment census conserved", src)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', src)
+
+
 class NativeRailSmokeVerdictTests(unittest.TestCase):
     def test_accept_both_native_receipts_only(self):
         self.assertTrue(rail_connected_smoke_verdict(0, A + "\n" + B))
