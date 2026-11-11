@@ -1230,6 +1230,30 @@ local function finish(pair,task,built,reason)
      "missing-original-native-debit-or-entity")
   end
  end
+ -- Preserve ONE paid 0338 train receipt through later generic builds.
+ -- An actual native locomotive and original source debit are mandatory.
+ if built and task.item_name=="locomotive"
+   and task.entity_name=="locomotive"
+   and task.site_reason=="original-first-locomotive-0836"
+   and task.request_field=="construction_requested_item"
+   and task.creative_build~=true then
+  local mission=pair.remote_rail_outpost_0835
+  local state=mission and mission.first_locomotive_0836
+  local debit=task.original_locomotive_debit_0836
+  if state and state.request==task.request_value
+    and debit and debit.source_unit and type(debit.before)=="number"
+    and type(debit.after)=="number" and debit.before-debit.after==1
+    and valid(built) and built.name=="locomotive" and built.unit_number
+    and built.train and built.train.valid
+    and built.force==pair.station.force
+    and built.surface==pair.station.surface then
+   state.built_entity=built
+   state.paid_completion_0836={
+     request_value=task.request_value,native_0338_paid=true,
+     source_unit=debit.source_unit,before=debit.before,after=debit.after,
+     built_entity=built,built_unit=built.unit_number,completed_tick=now()}
+  end
+ end
  record(pair,built and "built" or "aborted",reason)
  -- The last-task slot is shared with routine 0338 work. Reconcile an
  -- ORIGINAL paid, physically placed 0836 rail while this exact terminal
@@ -2008,7 +2032,18 @@ function M.service_pair(pair,reason)
   -- native 0338 source debit, not a counter, source-unit guess or ghost.
   local original_rail=marked_rail_request_0836(task)
     and authorized_rail_candidate_0836(pair,task)
+  local mission=pair.remote_rail_outpost_0835
+  local first_loco=mission and mission.first_locomotive_0836
+  local original_loco=task.item_name=="locomotive"
+    and task.entity_name=="locomotive"
+    and task.site_reason=="original-first-locomotive-0836"
+    and task.request_field=="construction_requested_item"
+    and first_loco and first_loco.request==task.request_value
+    and pair.construction_requested_item==task.request_value
+    and mission.status=="rail-track-established"
   local before=original_rail and item_count(task.source_inv,task.item_name) or nil
+  local locomotive_before=original_loco
+    and item_count(task.source_inv,"locomotive") or nil
   local removed=remove_item(task.source_inv,task.item_name,1)
   if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end
   task.carried={item_name=task.item_name,count=1}
@@ -2029,6 +2064,17 @@ function M.service_pair(pair,reason)
    if not stage_original_rail_supply_0836(pair,task) then
     return M.abort_pair(pair,"rail-native-stage-custody-ambiguous")
    end
+  end
+  if original_loco then
+    local after=item_count(task.source_inv,"locomotive")
+    if not(locomotive_before and locomotive_before>=1
+      and locomotive_before-after==1
+      and valid(task.source_entity) and task.source_entity.unit_number)then
+      return M.abort_pair(pair,"native-locomotive-source-debit-unreconciled")
+    end
+    task.original_locomotive_debit_0836={
+      source_unit=task.source_entity.unit_number,
+      before=locomotive_before,after=after,tick=now()}
   end
   sync_custody(pair,task,"removed-source")
   task.phase="move-site"

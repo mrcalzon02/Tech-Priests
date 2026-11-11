@@ -980,3 +980,29 @@ class NativeRailExtendedCustodyCheckpointTests(unittest.TestCase):
         self.assertIn('RAIL_LINE_NEVER_REACHED_REMOTE_PATCH', fixture)
         self.assertIn('TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN', fixture)
         self.assertIn('"train_and_ore_delivery_accepted": False', runner)
+
+
+class NativePaidFirstLocomotive0836ContractTests(unittest.TestCase):
+    def test_train_first_requires_original_paid_builder_native_rails_and_stock(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        source=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        builder=(root/"tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
+        section=source.split("function M.service_first_locomotive_0836(pair)",1)[1].split("function M.service_pair(pair)",1)[0]
+        for guard in ("route.chain_audit_completed_tick_0836",
+                      "previous.unit_number==route.built_units[index-1]",
+                      "rail.unit_number==route.built_units[index]",
+                      "connected_straight_rails(previous,rail)",
+                      "connected_straight_rails(rail,next_rail)",
+                      'return false,"no-real-locomotive-item"',
+                      "pair.construction_requested_item=request",
+                      "receipt.before-receipt.after==1",
+                      "entity.train and entity.train.valid",
+                      "pair.construction_requested_item~=state.request"):
+            self.assertIn(guard,section)
+        self.assertNotIn("surface.create_entity",section)
+        self.assertIn('local original_loco=task.item_name=="locomotive"',builder)
+        self.assertIn("locomotive_before-after==1",builder)
+        self.assertIn('return M.abort_pair(pair,"native-locomotive-source-debit-unreconciled")',builder)
+        self.assertIn("state.paid_completion_0836={",builder)
+        self.assertIn("native_0338_paid=true",builder)
+        self.assertIn("return M.service_first_locomotive_0836(pair)",source)

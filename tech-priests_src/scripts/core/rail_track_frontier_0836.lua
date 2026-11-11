@@ -596,6 +596,139 @@ function M.verify_pending(pair)
   -- producing the engine rail; no duplicate inventory mutation here.
   return true,"physical-rail-segment-verified"
 end
+-- First rolling-stock transaction. Exactly ONE original locomotive is
+-- requested through 0338 after the complete native-rail identity/graph audit.
+-- This is never permission to create stock, a train, or Magos passenger state.
+function M.service_first_locomotive_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  if not eligible(pair,m) or m.status~="rail-track-established" then
+    return false,"not-original-complete-rail-mission"
+  end
+  local route=m.rail_frontier_0836
+  if not(route and type(route.built_units)=="table"
+      and route.segment==#route.built_units and route.segment>=16
+      and type(route.start_position)=="table"
+      and route.chain_audit_completed_tick_0836)then
+    return false,"original-rail-audit-not-proven"
+  end
+  local state=m.first_locomotive_0836
+  if state then
+    if state.phase=="blocked" then return false,state.blocker end
+    local receipt=state.paid_completion_0836
+    if receipt then
+      local entity=receipt.built_entity
+      if not(receipt.request_value==state.request
+        and receipt.native_0338_paid==true
+        and receipt.source_unit and type(receipt.before)=="number"
+        and type(receipt.after)=="number"
+        and receipt.before-receipt.after==1
+        and valid(entity) and entity==state.built_entity
+        and entity.unit_number==receipt.built_unit
+        and entity.name=="locomotive"
+        and entity.force==pair.station.force
+        and entity.surface==pair.station.surface
+        and entity.train and entity.train.valid
+        and math.abs(entity.position.x-state.position.x)<=2
+        and math.abs(entity.position.y-state.position.y)<=2)then
+        state.phase="blocked"
+        state.blocker="native-paid-locomotive-receipt-invalid"
+        return false,state.blocker
+      end
+      state.phase="native-paid-locomotive-verified"
+      state.built_unit=entity.unit_number
+      state.train_id=entity.train.id
+      state.verified_tick=now()
+      m.next_step="construct-paid-wagon-and-fuel-real-train"
+      return false,"first-native-paid-locomotive-verified"
+    end
+    local last=pair.construction_last_task_0338
+    if last and last.request_value==state.request and last.phase=="aborted"then
+      state.phase="blocked"
+      state.blocker="original-0338-locomotive-aborted:"..tostring(last.result)
+      return false,state.blocker
+    end
+    if pair.construction_requested_item~=state.request
+      and not(pair.construction_task_0338
+        and pair.construction_task_0338.request_value==state.request)
+      and not(pair.construction_custody_0338
+        and pair.construction_custody_0338.request_value==state.request)then
+      state.phase="blocked"
+      state.blocker="original-locomotive-request-lost"
+      return false,state.blocker
+    end
+    return false,"original-0338-locomotive-in-progress"
+  end
+  -- Another active worker or reserved material cannot be preempted.
+  if pair.construction_requested_item or pair.construction_request
+    or pair.construction_task_0338 or pair.construction_custody_0338
+    or pair.robot_network_task_0338 or pair.robot_network_request_0338
+    or pair.direct_acquisition_custody_0513
+    or pair.machine_logistics_custody_0528
+    or pair.inventory_transfer_custody_0687
+    or pair.defense_task_0259
+    or (pair.station_expansion_0256
+       and pair.station_expansion_0256.status=="active")then
+    return false,"incumbent-physical-work"
+  end
+  local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    or package.loaded["scripts.core.storage_role_authority_0686"]
+  if not(stock and type(stock.generic_storage_sources)=="function")then
+    return false,"native-locomotive-storage-unavailable"
+  end
+  local ok,sources=pcall(stock.generic_storage_sources,pair)
+  if not(ok and type(sources)=="table")then
+    return false,"native-locomotive-sources-unobservable"
+  end
+  local stocked=false
+  for _,source in ipairs(sources)do
+    if source.inv and source.inv.valid and valid(source.entity)
+      and source.entity.force==pair.station.force
+      and source.entity.surface==pair.station.surface then
+      local counted,n=pcall(source.inv.get_item_count,"locomotive")
+      if counted and type(n)=="number" and n>0 then stocked=true;break end
+    end
+  end
+  if not stocked then return false,"no-real-locomotive-item" end
+  local surface=pair.station.surface
+  local chosen
+  for _,index in ipairs({8,12,16})do
+    if index+1<=route.segment then
+      local point=pos(route.start_position.x+(index-1)*M.segment_step,
+        route.start_position.y)
+      local previous=track_at(pair,pos(point.x-M.segment_step,point.y),
+        route.direction)
+      local rail=track_at(pair,point,route.direction)
+      local next_rail=track_at(pair,pos(point.x+M.segment_step,point.y),
+        route.direction)
+      if previous and rail and next_rail
+        and previous.unit_number==route.built_units[index-1]
+        and rail.unit_number==route.built_units[index]
+        and next_rail.unit_number==route.built_units[index+1]
+        and connected_straight_rails(previous,rail)
+        and connected_straight_rails(rail,next_rail)then
+        local safe,can=pcall(function()
+          return surface.can_place_entity{
+            name="locomotive",position=point,direction=route.direction,
+            force=pair.station.force}
+        end)
+        if safe and can==true then chosen=point;break end
+      end
+    end
+  end
+  if not chosen then
+    return false,"native-locomotive-site-not-engine-placeable"
+  end
+  local request={item_name="locomotive",entity_name="locomotive",
+    category="rail",position=chosen,direction=route.direction,
+    site_reason="original-first-locomotive-0836",
+    rail_mission_station_unit_0836=m.root_station_unit}
+  m.first_locomotive_0836={phase="awaiting-original-0338",
+    request=request,position=chosen,issued_tick=now()}
+  pair.construction_requested_item=request
+  m.next_step="existing-0338-physical-first-locomotive"
+  m.last_update_tick=now()
+  return true,"first-locomotive-physical-request-issued"
+end
 function M.service_pair(pair)
   local m=pair and pair.remote_rail_outpost_0835
   if not m then return false,"no-rail-mission"end
@@ -606,8 +739,9 @@ function M.service_pair(pair)
     m.last_service_sample_tick_0836=now()
     m.last_service_sample_pending_0836=m.pending_rail_0836~=nil
   end
-  if m.status=="rail-track-blocked" or m.status=="rail-track-established"then
-    return false,m.status
+  if m.status=="rail-track-blocked" then return false,m.status end
+  if m.status=="rail-track-established" then
+    return M.service_first_locomotive_0836(pair)
   end
   -- The strategic ore observer runs in the broker as well as 0510. Neither
   -- path may issue a NEW rail construction writ while the original Magos
