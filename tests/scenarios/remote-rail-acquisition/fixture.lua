@@ -342,6 +342,13 @@ local function trace_uncommitted_rail_gap(s,elapsed)
     " live_incumbent_tick="..tostring(mission
       and mission.last_incumbent_refusal_0836
       and mission.last_incumbent_refusal_0836.tick)..
+    " rail_yield_observed="..tostring(p.rail_order_yield_observed_0836~=nil)..
+    " expansion_status="..tostring(p.station_expansion_0256
+      and p.station_expansion_0256.status)..
+    " facility_feed_custody="..tostring(p.emergency_facility_feed_custody_0357~=nil)..
+    " defense_task="..tostring(p.defense_task_0259~=nil)..
+    " frontier_error="..tostring(p.remote_rail_frontier_failure_0836
+      and p.remote_rail_frontier_failure_0836.reason)..
     " transfer_custody_0687="..tostring(p.inventory_transfer_custody_0687~=nil)..
     " construction_task_0340="..tostring(p.construction_task_0340~=nil)..
     " active_acquisition_0333="..tostring(p.active_acquisition_0333~=nil)..

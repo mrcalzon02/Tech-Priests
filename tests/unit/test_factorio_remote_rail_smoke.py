@@ -54,6 +54,27 @@ class OriginalRailLiveAdmissionTraceTests(unittest.TestCase):
         self.assertIn("TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN", fixture)
 
 
+class UncommittedOriginalRailNilPendingRegressionTests(unittest.TestCase):
+    def test_new_original_rail_planning_yield_cannot_index_absent_pending(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        f = (root / "tech-priests_src/scripts/core/"
+             "rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/"
+                   "fixture.lua").read_text(encoding="utf-8")
+        section = f.split("if yielding and not pair.rail_order_yield_observed_0836 then", 1)[1].split(
+            "local incumbent=", 1)[0]
+        self.assertIn("request_segment=pending and pending.segment or nil", section)
+        self.assertNotIn("request_segment=pending.segment", section)
+        self.assertIn("order_authority.can_yield_uncommitted_rail_0836", f)
+        self.assertIn("pair.construction_request=request", f)
+        for field in ("rail_yield_observed=", "expansion_status=",
+                      "facility_feed_custody=", "defense_task=", "frontier_error="):
+            self.assertIn(field, fixture)
+        # These are observations, not permission to skip real custody or build.
+        self.assertIn('return false,"original-magos-incumbent-duty"', f)
+        self.assertIn("local planned,reason=M.plan_next(pair)", f)
+
+
 class CanonicalFundedConstructionCandidateRefreshTests(unittest.TestCase):
     def test_unstarted_unfunded_bootstrap_cannot_hide_funded_prior_writ(self):
         root = pathlib.Path(__file__).resolve().parents[2]

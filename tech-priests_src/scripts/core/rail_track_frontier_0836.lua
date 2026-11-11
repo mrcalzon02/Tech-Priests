@@ -637,7 +637,10 @@ function M.service_pair(pair)
     yielding=ok and allowed==true
     if yielding and not pair.rail_order_yield_observed_0836 then
       pair.rail_order_yield_observed_0836={
-        tick=now(),request_segment=pending.segment,
+        -- A read-only 0469 yield is legal BETWEEN paid rails, where no
+        -- pending request exists. Never index a nil pending receipt: this
+        -- otherwise aborts the original 0836 broker service before rail N+1.
+        tick=now(),request_segment=pending and pending.segment or nil,
         kind="uncommitted-automatic-ammo",queue_owner="0469",
       }
     end
