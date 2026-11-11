@@ -1,4 +1,4 @@
-"""V22 Emergency Miner: raised console, upward capacitor mouths, vent-only light.
+"""V24 Emergency Miner: lowered middle armor and red vent + real-gap illumination.
 
 A: persistent rumble with one scanning cycle.
 B: intermittent high-energy scan, stronger transient pressure release.
@@ -38,13 +38,15 @@ FPS = 8
 RES = 384
 # V23 owner-review light limits. No physical geometry or camera changes.
 VENT_ALPHA_MAX = .60
-GAP_ALPHA_MAX = .22
+GAP_ALPHA_MAX = .32
+GAP_CHASSIS_SPILL_ENERGY_MAX = .42
+LASER_RED_RGB = (1.0, .028, .008)
 VENT_POINT_ENERGY_MAX = .70
 FX_EMISSION_STRENGTH = 2.10
 SCAN_COVERAGE = .73
 
 FIXED = ("LAYER_1 ", "SOURCE FOUNDATION ", "Foundation source anchor bolt ")
-SCENE_NAME = "EMERGENCY_MINER_V22_MOTION_CANDIDATE"
+SCENE_NAME = "EMERGENCY_MINER_V24_MOTION_CANDIDATE"
 
 
 def sha(path):
@@ -74,7 +76,7 @@ def build_v21():
     miner.MATERIALS.clear()
     miner.FEATURES.clear()
     miner.CABLE_ROUTES.clear()
-    miner.COLLECTION = bpy.data.collections.new("Emergency Miner V22 derivative")
+    miner.COLLECTION = bpy.data.collections.new("Emergency Miner V24 derivative")
     bpy.context.scene.collection.children.link(miner.COLLECTION)
     miner.VISIBLE = bpy.data.collections.new("SOURCE_VISIBLE_CONTROL_ENCLOSURE")
     miner.COLLECTION.children.link(miner.VISIBLE)
@@ -90,6 +92,8 @@ def build_v21():
     miner.seat_original_front_face_screws()
     v22=miner.apply_owner_v22_geometry()
     bpy.context.scene["owner_v22_geometry_report"]=json.dumps(v22)
+    v24=miner.apply_owner_v24_middle_chassis_drop()
+    bpy.context.scene["owner_v24_middle_drop_report"]=json.dumps(v24)
     if len(miner.CABLE_ROUTES) != 6:
         raise RuntimeError("V21 cable count changed")
     scene = bpy.context.scene
@@ -218,7 +222,7 @@ def make_flicker_surface(name, pos, size, upper, collection):
     output = nodes.new("ShaderNodeOutputMaterial")
     trans = nodes.new("ShaderNodeBsdfTransparent")
     emit = nodes.new("ShaderNodeEmission")
-    emit.inputs["Color"].default_value = (.68, .86, 1.0, 1.0)
+    emit.inputs["Color"].default_value = (*LASER_RED_RGB,1.0)
     # Restrained emission: the V22 peak looked like a white/noisy flare.
     emit.inputs["Strength"].default_value = FX_EMISSION_STRENGTH
     mix = nodes.new("ShaderNodeMixShader")
@@ -259,7 +263,7 @@ def make_scan_effects(upper, collection):
         glow["max_alpha"]=VENT_ALPHA_MAX
         glow["max_emission_strength"]=FX_EMISSION_STRENGTH
         data=bpy.data.lights.new("FX ONLY | vent inside point light %d"%idx,"POINT")
-        data.color=(.70,.85,1.0)
+        data.color=LASER_RED_RGB
         data.energy=0
         data.shadow_soft_size=.011
         light=bpy.data.objects.new(data.name,data)
@@ -321,12 +325,31 @@ def make_console_chassis_gap_leak(upper, collection):
         glow["no_surface_panning"]=True
         glow["shared_strobe_source"]="VENT_LASER_PHASE_%d"%idx
         glow["v23_effect_profile"]="NARROW_RECESSED_JOINT_STROBE"
+        glow["v24_laser_color"]="SATURATED_RED"
+        glow["v24_illuminates_original_chassis_surface"]=True
         glow["max_alpha"]=GAP_ALPHA_MAX
         glow["gap_world_z"]=seam_z
         glow["console_lower_z"]=console_bottom
         glow["chassis_upper_z"]=chassis_top
         alpha.default_value=0.0
-        groups.append((glow,alpha))
+        # True 3D area light: shines downward onto the existing upper
+        # middle-chassis metal face. It sits INSIDE the open console gap,
+        # never as an animated colored decal or a bar on console steel.
+        data=bpy.data.lights.new("FX ONLY | middle chassis red spill %d"%idx,"AREA")
+        data.shape="DISK"
+        data.size=.065
+        data.color=LASER_RED_RGB
+        data.energy=0.0
+        lamp=bpy.data.objects.new(data.name,data)
+        collection.objects.link(lamp)
+        lamp.location=(x,seam_y+.013,
+                       max(chassis_top+.003,min(console_bottom-.003,seam_z+.004)))
+        lamp["v24_light_role"]="DOWNWARD_RED_SPILL_ON_EXISTING_MIDDLE_CHASSIS"
+        lamp["source_gap_segment"]=idx
+        lamp["max_energy"]=GAP_CHASSIS_SPILL_ENERGY_MAX
+        lamp["no_visible_surface_mesh"]=True
+        preserve_parent(lamp,upper)
+        groups.append((glow,alpha,lamp))
     return groups
 
 
@@ -435,8 +458,10 @@ def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
                 light.data.keyframe_insert(data_path="energy",frame=frame)
                 # Use EXACTLY the same original phase envelope as vent i,
                 # with reduced brightness; no independent chase, no sweep.
-                gap_glow,gap_alpha=gap_lights[i]
+                gap_glow,gap_alpha,spill=gap_lights[i]
                 key_value(gap_alpha,frame,GAP_ALPHA_MAX*intensity)
+                spill.data.energy=GAP_CHASSIS_SPILL_ENERGY_MAX*intensity
+                spill.data.keyframe_insert(data_path="energy",frame=frame)
         if "lamps" in enabled:
             for i, socket in enumerate(colors):
                 trigger = ((frame - 1)//12 + i) % 4 == 0
@@ -542,15 +567,15 @@ def diagnostic_render(scene, out, name, sample_frame=1, pixels=128):
 
 def main(out,diagnostic=False,quick_review=False):
     out.mkdir(parents=True,exist_ok=True)
-    print('MINER_TRACE 01 begin source V22 build',flush=True)
+    print('MINER_TRACE 01 begin source V24 build',flush=True)
     profile = build_v21()
-    print('MINER_TRACE 02 V22 source built',flush=True)
+    print('MINER_TRACE 02 V24 source built',flush=True)
     if quick_review:
         # Preview only: 16 true samples remain, same camera/motion keys;
         # reduce internal Cycles work without changing geometry or axis.
         bpy.context.scene.cycles.samples=16
         bpy.context.scene.render.resolution_percentage=70
-    base = out/"v22_study_static_master.blend"
+    base = out/"v24_study_static_master.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(base))
     print('MINER_TRACE 03 base saved',flush=True)
     if diagnostic:
@@ -564,11 +589,15 @@ def main(out,diagnostic=False,quick_review=False):
               "v22_console_and_camera_facing_caps":True,
               "laser_light_sites":"THREE_VENTS_PLUS_CONSOLE_CHASSIS_GAP",
               "laser_gap_strobe_sync":"SAME_THREE_VENT_PHASES",
-              "effect_revision":"V23 bounded vent/joint intensity",
+              "effect_revision":"V24 red laser and expanded physical chassis gap",
+              "v24_lower_middle_chassis_top":True,
+              "v24_laser_color_rgb":list(LASER_RED_RGB),
+              "v24_red_surface_spill_emitters":3,
               "effect_limits":{"vent_alpha":VENT_ALPHA_MAX,"joint_alpha":GAP_ALPHA_MAX,
                                "point_energy":VENT_POINT_ENERGY_MAX,
                                "emission_strength":FX_EMISSION_STRENGTH,
-                               "vent_coverage":SCAN_COVERAGE},
+                               "vent_coverage":SCAN_COVERAGE,
+                               "chassis_spill_energy":GAP_CHASSIS_SPILL_ENERGY_MAX},
               "surface_panning_light_count":0,
               "variants":{}}
     for label in ("A","B"):
@@ -663,6 +692,7 @@ def main(out,diagnostic=False,quick_review=False):
            "visible_upper_parts":nu,"foundation_parts_fixed":len(still),
            "steam_lobes":9,"scan_emission_sites":6,
            "vent_emitters":3,"console_chassis_gap_emitters":3,
+           "downward_red_chassis_spill_lights":3,
            "scan_light_spill_locations":"VENTS_AND_CONSOLE_CHASSIS_GAP_ONLY",
            "gap_strobe_synchronized_to_vent_phase":True,
            "surface_panning_light_count":0,"actual_camera":camera_record(scene)}
