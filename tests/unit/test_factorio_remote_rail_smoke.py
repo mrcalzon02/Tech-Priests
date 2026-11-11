@@ -97,7 +97,9 @@ class OriginalRailPhysicalCarryBatchTests(unittest.TestCase):
                / "tech-priests_src/scripts/core/construction_planner.lua"
                ).read_text(encoding="utf-8")
         self.assertIn('local stack_capacity=prototype and tonumber(prototype.stack_size) or 0', src)
-        self.assertIn('local amount=math.min(24,math.max(0,before-1),math.max(0,stack_capacity))', src)
+        self.assertIn('local amount=math.min(100,math.max(0,before-1),math.max(0,stack_capacity))', src)
+        self.assertIn('if item_count(existing.inventory,"rail")>0', src)
+        self.assertIn('or task.source_inv==existing.inventory then return true end', src)
         self.assertIn('removed=remove_item(source,"rail",amount)', src)
         self.assertIn('local held_after=item_count(inventory,"rail")', src)
         self.assertIn('source_after~=before-removed+refunded', src)
