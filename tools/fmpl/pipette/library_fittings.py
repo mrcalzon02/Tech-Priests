@@ -9,7 +9,10 @@ from __future__ import annotations
 
 import math
 
-import library_geometry as g
+if __package__:
+    from . import library_geometry as g
+else:
+    import library_geometry as g
 
 TAU=math.tau
 # The 77-entry registry is broader; these physically constructed entries
