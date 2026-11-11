@@ -22,6 +22,7 @@ from mathutils import Vector
 HERE=Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import library_geometry as lib
+import library_fittings as fittings
 
 
 def file_sha(path):
@@ -265,14 +266,52 @@ def main():
             mat=mat_preview(model["catalog_group"],conductor_index=conductor) \
                     if args.preview_only else surface
             objects.append(make_obj(collection,part,mat,args.architecture))
-    if len(model["public_ports"])>=2 and lib.RECIPES[args.architecture][0] \
-            not in {"open_spiral","single_wire","eight_wire","eight_wire_tied",
-                    "seven_strand"}:
-        for p in model["public_ports"]:
+    # Real, explicitly compatible fitting geometry is selected from the
+    # architecture catalog. Unknown fittings are not relabeled brass rings.
+    catalog=lib.source_json("architecture_catalog.v1.json")
+    meta=next(row for row in catalog["architecture_types"]
+              if row["id"]==args.architecture)
+    favorites={
+        "wire_eight_loose_bundle":"terminal_block",
+        "wire_eight_laced_loom":"terminal_block",
+        "wire_single_insulated_solid":"ring_lug",
+        "hose_rubber_coolant":"hose_barb_clamp",
+        "conduit_fmc_interlocked":"flex_conduit_connector",
+        "conduit_ent_corrugated":"snap_conduit",
+        "conduit_split_corrugated_loom":"split_loom_clip",
+        "conduit_emt_thinwall":"compression_conduit",
+        "pipe_galvanized_threaded":"threaded"}
+    choices=meta["compatible_joint_ids"]
+    preferred=favorites.get(args.architecture)
+    if preferred is not None and preferred not in choices:
+        raise RuntimeError("Misconfigured favorite fitting for "+args.architecture)
+    candidates=([preferred] if preferred else [])+[
+        x for x in choices if x!=preferred and x in fittings.FITTING_RECIPES]
+    chosen=next((x for x in candidates if x in fittings.FITTING_RECIPES),None)
+    installed_fittings=[]
+    for p in model["public_ports"]:
+        if chosen:
+            parts=fittings.build(args.architecture,chosen,p,
+                                 model["nominal_outer_diameter_bu"])
+            for part in parts:
+                fitting_material=mat_preview("metal_pipe") \
+                  if args.preview_only and chosen not in {
+                    "snap_conduit","split_loom_clip","terminal_block"} else surface
+                objects.append(make_obj(collection,part,fitting_material,
+                                        args.architecture))
+            installed_fittings.append({"port":p["id"],"type":chosen,
+                                       "mesh_count":len(parts)})
+        elif lib.RECIPES[args.architecture][0] not in {
+             "open_spiral","single_wire","eight_wire","eight_wire_tied",
+             "seven_strand"}:
+            # Generic collar is explicitly a non-approved placeholder ONLY.
             collar=lib.terminal_ring(p["xyz_bu"],p["outward_normal"],
                                      model["nominal_outer_diameter_bu"],
-                                     args.architecture,role="socket-termination")
+                                     args.architecture,role="unapproved-untyped-end-ring")
             objects.append(make_obj(collection,collar,surface,args.architecture))
+    model["physically_modelled_fitting_type"]=chosen
+    model["installed_terminal_fittings"]=installed_fittings
+
     collection["pipette_public_ports_json"]=json.dumps(model["public_ports"])
     collection["pipette_fixed_fixture"]="comparison_fixture.v1.json"
     collection["pipette_preview_only"]=bool(args.preview_only)
