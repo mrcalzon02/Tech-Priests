@@ -14,7 +14,7 @@ local qty={
   ["burner-mining-drill"]=12,["train-stop"]=4,["iron-ore"]=0
 }
 local inventory={valid=true,get_item_count=function(name)return qty[name] or 0 end}
-local surface={index=1}
+local surface={valid=true,index=1}
 local intel=true
 local nearby=false
 local remote=true
@@ -35,12 +35,12 @@ local terminal_reachable={valid=true,name="iron-ore",unit_number=994,
   type="resource",surface=surface,position={x=666,y=0},amount=10000}
 local terminal_unreachable={valid=true,name="iron-ore",unit_number=995,
   type="resource",surface=surface,position={x=668,y=0},amount=10000}
--- At the last paid rail (650,0), (664,6) is within 16 true tiles,
--- while (665,6) is outside it despite its east coordinate being <= 666.
+-- At native last paid rail (651,1), (664,6) is within 16 true tiles,
+-- while (666,-6) is outside it despite its east coordinate being <= 666.
 local lateral_terminal_reachable={valid=true,name="iron-ore",unit_number=996,
   type="resource",surface=surface,position={x=664,y=6},amount=10000}
 local lateral_terminal_unreachable={valid=true,name="iron-ore",unit_number=997,
-  type="resource",surface=surface,position={x=665,y=6},amount=10000}
+  type="resource",surface=surface,position={x=666,y=-6},amount=10000}
 local remote_entities={ore}
 surface.find_entities_filtered=function(args)
   assert(args.type=="resource" and args.name=="iron-ore",
@@ -99,7 +99,7 @@ remote=true
 -- budget is NOT reachable merely because it is within the 1024-tile survey.
 remote_entities={beyond_segment_budget}
 blocked("no-charted-rail-corridor-ore")
--- Native physical frontier ends at x=650, not its unbuilt x=652 candidate.
+-- Native physical frontier ends at x=651, not its unbuilt x=653 candidate.
 remote_entities={terminal_unreachable}
 blocked("no-charted-rail-corridor-ore")
 remote_entities={lateral_terminal_unreachable}
@@ -111,9 +111,9 @@ assert(still_reason=="starved-charted-patch"
     and still_reachable and still_reachable.position.x==512,
   "unreachable lateral ore stole the counted railway mission")
 remote_entities={lateral_terminal_reachable}
-qty.rail=319
+qty.rail=318
 blocked("insufficient-physical-rails-to-reach-ore")
-qty.rail=320
+qty.rail=319
 local diagonal_target,diagonal_why=Rail.assess(pair)
 assert(diagonal_why=="starved-charted-patch"
     and diagonal_target and diagonal_target.position.x==664
@@ -126,7 +126,7 @@ qty.rail=320
 local edge_target,edge_reason=Rail.assess(pair)
 assert(edge_reason=="starved-charted-patch"
     and edge_target and edge_target.position.x==666 and qty.rail==320,
-  "real 320th rail at x=650 needs exactly 320 paid rail segments")
+  "real 320th rail at x=651 needs exactly 320 paid rail segments")
 qty.rail=700
 -- A closer, charted ore deposit above the eastbound rail corridor must
 -- not permanently divert 0836 into "terrain-route-planner-required".
@@ -139,7 +139,7 @@ assert(corridor_reason=="starved-charted-patch"
 remote_entities={off_corridor}
 blocked("no-charted-rail-corridor-ore")
 remote_entities={ore}
--- x=512 needs 243 contiguous two-tile rail entities, not just the
+-- x=512 needs 243 contiguous native-centered rail entities, not just the
 -- obsolete 64-rail minimum. Refuse before making or spending any request.
 qty.rail=242
 blocked("insufficient-physical-rails-to-reach-ore")
@@ -203,7 +203,7 @@ _G.TechPriestsScanRouting0610.find_entities=function(s,filters,context)
 end
 surface.can_place_entity=function(args)
   assert(args.force==force and args.name=="straight-rail"
-    and args.direction==4 and args.position.y==0,
+    and args.direction==4 and args.position.y==1,
     "rail planner requested an uncharted or invalid corridor")
   return constructed[args.position.x]==nil
 end
@@ -221,15 +221,15 @@ local requested,request_reason=Frontier.service_pair(pair)
 local req=pair.construction_request
 assert(requested and request_reason=="rail-segment-requested"
   and req and req.item_name=="rail" and req.rail_segment_0836==1
-  and req.position.x==12 and qty.rail==700
+  and req.position.x==13 and qty.rail==700
   and not next(constructed) and mission.rail_frontier_0836.segment==0,
   "S1 planning created free track or skipped counted builder custody")
 assert(select(2,Frontier.service_pair(pair))=="waiting-for-construction-proof"
   and pair.construction_request==req and qty.rail==700,
   "S1 duplicated a rail order before the native constructor finished")
 local first={valid=true,name="straight-rail",unit_number=5001,
-  force=force,surface=surface,position={x=12,y=0},direction=4}
-constructed[12]=first
+  force=force,surface=surface,position={x=13,y=1},direction=4}
+constructed[13]=first
 qty.rail=qty.rail-1 -- Represents the separately tested 0338 engine debit.
 pair.construction_request=nil
 pair.construction_last_task_0338={request_value=req,
@@ -240,9 +240,9 @@ assert(select(2,Frontier.verify_pending(pair))=="physical-rail-segment-verified"
   "S1 ignored exact 0338 completion or real-entity scan")
 local again,next_reason=Frontier.service_pair(pair)
 assert(again and next_reason=="rail-segment-requested"
-  and pair.construction_request.position.x==14
+  and pair.construction_request.position.x==15
   and mission.rail_frontier_0836.segment==1
-  and qty.rail==699 and not constructed[14],
+  and qty.rail==699 and not constructed[15],
   "S1 did not continue one verified rail section at a time")
 print("[remote-expansion-scenario-S1-1063] PASS autonomous rail-starvation selection, exact first 0338 track receipt, next counted request; full train expedition still open")
 -- 1064: verify that the production broker, not a test-only direct call,
@@ -281,7 +281,7 @@ assert(result.processed==1 and result.acted==0 and result.failed==0
   and mission2 and mission2.target.x==512
   and first_req and first_req.item_name=="rail"
   and first_req.rail_segment_0836==1
-  and first_req.position.x==12 and not constructed[12]
+  and first_req.position.x==13 and not constructed[13]
   and qty.rail==699 and mission2.rail_frontier_0836.segment==0,
   "broker did not autonomously discover and request first counted rail")
 local retained=spec.fn(nil,1)
@@ -290,8 +290,8 @@ assert(retained.acted==0 and retained.failed==0
   and mission2.rail_frontier_0836.segment==0 and qty.rail==699,
   "duplicate broker pulse falsely completed a rail or issued another request")
 local actual={valid=true,name="straight-rail",unit_number=5002,
-  force=force,surface=surface,position={x=12,y=0},direction=4}
-constructed[12]=actual
+  force=force,surface=surface,position={x=13,y=1},direction=4}
+constructed[13]=actual
 qty.rail=qty.rail-1 -- Existing separately tested 0338 physical item debit.
 pair.construction_request=nil
 pair.construction_last_task_0338={phase="complete",
@@ -301,8 +301,8 @@ assert(progressed.processed==1 and progressed.acted==0
   and progressed.failed==0
   and mission2.rail_frontier_0836.segment==1
   and mission2.rail_frontier_0836.built_units[1]==5002
-  and pair.construction_request.position.x==14
-  and qty.rail==698 and constructed[14]==nil,
+  and pair.construction_request.position.x==15
+  and qty.rail==698 and constructed[15]==nil,
   "broker did not verify native 0338 receipt before next adjacent request")
 -- Fail-closed railway discovery: no technology, no mission or phantom track.
 pair.remote_rail_outpost_0835=nil

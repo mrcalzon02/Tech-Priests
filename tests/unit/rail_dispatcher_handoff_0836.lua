@@ -15,7 +15,7 @@ storage={tech_priests={pairs_by_station={[104]=pair}}}
 -- the new rail pair has no hostile incident until this test creates one.
 _G.TechPriestsDefensePerimeter0259=nil
 local pending={item_name="rail",entity_name="straight-rail",
-  position={x=12,y=0},direction=4}
+  position={x=13,y=1},direction=4}
 pair.construction_request=pending
 pair.remote_rail_outpost_0835={
   status="building-physical-rail",
@@ -118,7 +118,7 @@ do
  local req={item_name="rail",entity_name="straight-rail",category="rail",
   site_reason="remote-rail-physical-frontier-0836",
   rail_mission_station_unit_0836=104,rail_segment_0836=1,
-  position={x=12,y=0},direction=4}
+  position={x=13,y=1},direction=4}
  local bootstrap={item="stone-furnace",entity_name="stone-furnace",
   position=ghost.position,ghost=ghost,status="ghosted"}
  local mission={status="building-physical-rail",root_station_unit=104,
@@ -132,7 +132,7 @@ do
  local function choose()p.construction_candidate_0338=nil;return Builder.discover_pair(p,true)end
  local chosen=choose()
  assert(chosen and chosen.request_value==req and chosen.item_name=="rail"
-  and chosen.direction==4 and chosen.position.x==12
+  and chosen.direction==4 and chosen.position.x==13
   and p.construction_bootstrap_ghost_0645==bootstrap
   and stock.rail==3 and stock["stone-furnace"]==1,
   "verified 0836 request lost to an unstarted funded bootstrap ghost")

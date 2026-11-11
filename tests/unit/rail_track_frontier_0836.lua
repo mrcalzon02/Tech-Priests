@@ -25,7 +25,7 @@ local indexed_rails={}
 local scan_calls=0
 local fresh_scan_calls=0
 local indexed_scan_calls=0
-local surface={index=1,can_place_entity=function(spec)
+local surface={valid=true,index=1,can_place_entity=function(spec)
   assert(spec.name=="straight-rail" and spec.direction==4
     and spec.force==force,"rail placement bypassed engine placement check")
   return not sites[spec.position.x]
@@ -68,10 +68,10 @@ pair.active_task=nil
 local original=Track.service_pair(pair)
 local req=pair.construction_request
 assert(original==true and req and req.item_name=="rail"
-  and req.entity_name=="straight-rail" and req.position.x==12
-  and req.position.y==0 and req.direction==4
+  and req.entity_name=="straight-rail" and req.position.x==13
+  and req.position.y==1 and req.direction==4
   and req.rail_segment_0836==1 and item_count==700
-  and mission.rail_frontier_0836.segment==0 and not sites[12],
+  and mission.rail_frontier_0836.segment==0 and not sites[13],
   "planning first rail created track, consumed stock or skipped custody")
 -- A pending, NOT YET ADMITTED rail does not outrank a newly incumbent
 -- physical ore return. Preserve its original request for later service.
@@ -106,8 +106,8 @@ assert(Track.service_pair(pair)==true
   "pending track after save/reload changed its durable objective")
 -- Even a rail at the right position is NOT ours until the old builder has
 -- physically debited one rail item, built and completed its OWN request.
-sites[12]={valid=true,unit_number=2101,name="straight-rail",
-  position={x=12,y=0},direction=4,force=force}
+sites[13]={valid=true,unit_number=2101,name="straight-rail",
+  position={x=13,y=1},direction=4,force=force,surface=surface}
 assert(Track.verify_pending(pair)==false
   and mission.rail_frontier_0836.segment==0,
   "unproven pre-existing rails were credited as our completed work")
@@ -115,30 +115,30 @@ assert(Track.verify_pending(pair)==false
 -- the outcome of its separately exercised exact-item custody transition.
 item_count=item_count-1
 pair.construction_last_task_0338={request_value=req,phase="complete",
-  built_entity=sites[12]}
+  built_entity=sites[13]}
 pair.construction_request=nil
 -- A saved original 0338 completion with an absent/corrupt primitive chain
 -- cannot be credited by guessing a new inventory debit or rail identity.
 -- This exercises the real first-segment receipt without changing stock.
 local function damaged_chain_receipt(route)
   local req_copy={item_name="rail",entity_name="straight-rail",
-    position={x=12,y=0},direction=4}
+    position={x=13,y=1},direction=4}
   local obj={status="building-physical-rail",root_station_unit=104,
     surface_index=1,force_index=1,target={x=512,y=0},
     rail_frontier_0836=route,
     pending_rail_0836={request=req_copy,segment=1,
-      position={x=12,y=0},direction=4,started_tick=2400}}
+      position={x=13,y=1},direction=4,started_tick=2400}}
   local p={station=pair.station,priest=pair.priest,
     remote_rail_outpost_0835=obj,
     construction_last_task_0338={request_value=req_copy,
-      phase="complete",built_entity=sites[12]}}
+      phase="complete",built_entity=sites[13]}}
   return p,obj
 end
 -- A completed pre-upgrade ADMIN CREATIVE 0338 rail can survive a save,
 -- but its physical entity was never paid for. The current live 0338 guard
 -- only sees active tasks, so 0836 must refuse this persisted terminal receipt.
 local creative_pair,creative_mission=damaged_chain_receipt({
-  segment=0,direction=4,start_position={x=12,y=0},built_units={}})
+  segment=0,direction=4,start_position={x=13,y=1},built_units={}})
 creative_pair.construction_last_task_0338.creative_build=true
 local creative_accepted,creative_why=Track.verify_pending(creative_pair)
 assert(not creative_accepted
@@ -147,11 +147,11 @@ assert(not creative_accepted
   and creative_mission.rail_frontier_0836.segment==0
   and #creative_mission.rail_frontier_0836.built_units==0
   and creative_mission.pending_rail_0836
-  and sites[12] and sites[12].unit_number==2101
+  and sites[13] and sites[13].unit_number==2101
   and item_count==699,
   "persisted creative-built rail was credited as a counted 0338 item debit")
 local missing_ledger,missing_ledger_mission=damaged_chain_receipt({
-  segment=0,direction=4,start_position={x=12,y=0}})
+  segment=0,direction=4,start_position={x=13,y=1}})
 local missing_ok,missing_why=Track.verify_pending(missing_ledger)
 assert(not missing_ok and missing_why=="rail-chain-ledger-incomplete"
   and missing_ledger_mission.pending_rail_0836
@@ -178,7 +178,7 @@ pair.active_task=finished_incumbent
 local unrelated={item_name="rail",entity_name="straight-rail"}
 local actual_receipt=pair.construction_last_task_0338
 pair.construction_last_task_0338={request_value=unrelated,
-  phase="complete",built_entity=sites[12]}
+  phase="complete",built_entity=sites[13]}
 local foreign,foreign_reason=Track.service_pair(pair)
 assert(not foreign and foreign_reason=="original-magos-incumbent-duty"
   and mission.pending_rail_0836.request==req
@@ -205,16 +205,16 @@ pair.active_task=nil
 local next_ok,next_why=Track.service_pair(pair)
 local next_req=pair.construction_request
 assert(next_ok==true and next_why=="rail-segment-requested"
-  and next_req.position.x==14 and next_req.rail_segment_0836==2
+  and next_req.position.x==15 and next_req.rail_segment_0836==2
   and item_count==699 and mission.rail_frontier_0836.segment==1,
   "rail frontier failed to advance by one physically adjacent segment")
 -- The engine's own straight connection, not coordinate proximity,
 -- must bind two physically built and separately debited 0338 segments.
 local second={valid=true,unit_number=2102,name="straight-rail",
-  position={x=14,y=0},direction=4,force=force}
-sites[14]=second
+  position={x=15,y=1},direction=4,force=force,surface=surface}
+sites[15]=second
 local connection_live=true
-sites[12].get_connected_rail=function(args)
+sites[13].get_connected_rail=function(args)
   assert(args.rail_connection_direction==defines.rail_connection_direction.straight
     and (args.rail_direction==defines.rail_direction.front
       or args.rail_direction==defines.rail_direction.back),
@@ -232,17 +232,17 @@ assert(Track.verify_pending(pair)==true
   and mission.pending_rail_0836==nil and item_count==698,
   "connected second 0338 rail was not verified")
 -- Do not spend the next rail against a replacement in the old location.
-local second_real=sites[14]
+local second_real=sites[15]
 -- The index still advertises the old paid unit while the engine now
 -- contains a replacement. Only the live engine read may refuse credit.
 indexed_rails[14]=second_real
-sites[14]={valid=true,unit_number=2999,name="straight-rail",
-  position={x=14,y=0},direction=4,force=force}
+sites[15]={valid=true,unit_number=2999,name="straight-rail",
+  position={x=15,y=1},direction=4,force=force,surface=surface}
 local tampered_mission={status="building-physical-rail",
   root_station_unit=104,target={x=512,y=0},
   surface_index=1,force_index=1,
-  rail_frontier_0836={segment=2,last_position={x=14,y=0},
-    direction=4,built_units={2101,2102},start_position={x=12,y=0}}}
+  rail_frontier_0836={segment=2,last_position={x=15,y=1},
+    direction=4,built_units={2101,2102},start_position={x=13,y=1}}}
 local tampered_pair={station=pair.station,priest=pair.priest,
   remote_rail_outpost_0835=tampered_mission}
 local altered,altered_reason=Track.plan_next(tampered_pair)
@@ -251,12 +251,12 @@ assert(not altered and altered_reason=="previous-physical-rail-identity-changed"
   and tampered_mission.rail_frontier_0836.segment==2
   and tampered_pair.construction_request==nil and item_count==698,
   "replacement predecessor caused an unauthorized rail item request")
-sites[14]=second_real
+sites[15]=second_real
 local third_ok,third_reason=Track.service_pair(pair)
 local third_req=pair.construction_request
 local pending=mission.pending_rail_0836
 assert(third_ok and third_reason=="rail-segment-requested"
-  and third_req.position.x==16 and third_req.rail_segment_0836==3,
+  and third_req.position.x==17 and third_req.rail_segment_0836==3,
   "connected frontier did not request the next counted rail")
 pair.construction_last_task_0338={request_value=third_req,
   phase="aborted",result="engine-site-collision"}
@@ -272,13 +272,13 @@ assert(not no_credit and blocked=="physical-rail-builder-aborted:engine-site-col
 -- a route when the engine says those two rail entities are disconnected.
 connection_live=false
 local detached_req={item_name="rail",entity_name="straight-rail",
-  position={x=14,y=0},direction=4}
+  position={x=15,y=1},direction=4}
 local detached_mission={status="building-physical-rail",
   root_station_unit=104,target={x=512,y=0},
   surface_index=1,force_index=1,
-  rail_frontier_0836={segment=1,last_position={x=12,y=0},
+  rail_frontier_0836={segment=1,last_position={x=13,y=1},
     direction=4,built_units={2101}},
-  pending_rail_0836={position={x=14,y=0},direction=4,
+  pending_rail_0836={position={x=15,y=1},direction=4,
     segment=2,request=detached_req}}
 local detached_pair={station=pair.station,priest=pair.priest,
   remote_rail_outpost_0835=detached_mission,
@@ -303,16 +303,16 @@ assert(not detached_ok
   and detached_mission.pending_rail_0836.request==detached_req
   and item_count==698,
   "two adjacent engine-disconnected rails were falsely counted")
--- Boundary: 320 original 0338-debited rail sections end at x=650.
+-- Boundary: 320 original 0338-debited rail sections end at native x=651.
 -- Target x=666 is within 16 tiles of a REAL last rail; x=668 is not,
--- and a lost original final rail may not claim completion.
+-- (666,-6) also lies outside 2D clearance; a missing rail never completes.
 -- Populate the original 320 physical rail identities and native graph
 -- edges; a terminal segment alone must never certify a broken earlier line.
 local chain={}
 for i=1,320 do
-  local x=12+(i-1)*Track.segment_step
+  local x=13+(i-1)*Track.segment_step
   chain[i]={valid=true,unit_number=4000+i,name="straight-rail",
-    position={x=x,y=0},direction=4,force=force}
+    position={x=x,y=1},direction=4,force=force,surface=surface}
   sites[x]=chain[i]
 end
 for i=1,319 do
@@ -329,8 +329,8 @@ local function terminal_case(target_x,target_y)
   local objective={status="building-physical-rail",root_station_unit=104,
     target={x=target_x,y=target_y or 0},
     surface_index=1,force_index=1,
-    rail_frontier_0836={segment=320,last_position={x=650,y=0},
-      start_position={x=12,y=0},direction=4,built_units=units}}
+    rail_frontier_0836={segment=320,last_position={x=651,y=1},
+      start_position={x=13,y=1},direction=4,built_units=units}}
   return {station=pair.station,priest=pair.priest,
     remote_rail_outpost_0835=objective},objective
 end
@@ -361,7 +361,7 @@ assert(not diagonal_ok and diagonal_reason=="physical-frontier-reached"
   and diagonal_mission.status=="rail-track-established"
   and diagonal_pair.construction_request==nil and item_count==698,
   "physically reachable lateral rail target was refused")
-local lateral_over_pair,lateral_over_mission=terminal_case(665,6)
+local lateral_over_pair,lateral_over_mission=terminal_case(666,-6)
 local lateral_over_ok,lateral_over_why=Track.plan_next(lateral_over_pair)
 assert(not lateral_over_ok
   and lateral_over_why=="maximum-verified-rail-segments"
@@ -386,16 +386,16 @@ assert(not over_ok and over_why=="maximum-verified-rail-segments"
   and over_mission.status=="rail-track-blocked"
   and over_mission.rail_frontier_0836.segment==320
   and over_pair.construction_request==nil and item_count==698,
-  "unbuilt x=652 candidate falsely completed an unreachable x=668 target")
-local last_rail=sites[650]
-sites[650]=nil
+  "unbuilt native x=653 candidate falsely completed an unreachable x=668 target")
+local last_rail=sites[651]
+sites[651]=nil
 local missing_pair,missing_mission=terminal_case(666)
 local missing_ok,missing_why=Track.plan_next(missing_pair)
 assert(not missing_ok and missing_why=="previous-physical-rail-missing"
   and missing_mission.status=="rail-track-blocked"
   and missing_pair.construction_request==nil and item_count==698,
   "a vanished original final rail was accepted as track completion")
-sites[650]=last_rail
+sites[651]=last_rail
 -- A new Magos or an uncharted/different target must never claim this
 -- persistent mission or construct the pending physical rail on its behalf.
 local other={station={valid=true,unit_number=999,
@@ -413,7 +413,7 @@ assert(Track.service_pair(other)==false
 -- timed-out/stale writ is retained for audit, without any item debit.
 local function stalled_pair(started)
   local request={item_name="rail",entity_name="straight-rail",
-    position={x=12,y=0},direction=4}
+    position={x=13,y=1},direction=4}
   local objective={status="building-physical-rail",
     root_station_unit=104,target={x=512,y=0},
     surface_index=1,force_index=1,
