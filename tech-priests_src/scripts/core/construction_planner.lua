@@ -333,7 +333,13 @@ local function stage_original_rail_supply_0836(pair,task)
  end
  local source=task.source_inv
  local before=item_count(source,"rail")
- local amount=math.min(7,math.max(0,before-1))
+ -- The verified native corridor needed another distant supply run after
+ -- the original seven-rail hold. Bound the next physical pickup by the REAL
+ -- rail stack capacity, reserving one item in original source inventory.
+ -- Every built segment still consumes ONE counted rail from this LuaInventory.
+ local prototype=prototypes and prototypes.item and prototypes.item["rail"]
+ local stack_capacity=prototype and tonumber(prototype.stack_size) or 0
+ local amount=math.min(24,math.max(0,before-1),math.max(0,stack_capacity))
  if amount<1 then return true end
  local ok,inventory=pcall(function()return game.create_inventory(1)end)
  if not(ok and inventory and inventory.valid

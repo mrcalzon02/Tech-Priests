@@ -92,6 +92,21 @@ class OriginalRailPhysicalCarryBatchTests(unittest.TestCase):
         self.assertIn('connected_straight_rails(predecessor,actual)', frontier)
         self.assertNotIn('surface.create_entity{name="straight-rail"', frontier)
 
+    def test_bounded_long_range_native_stack_reserves_original_source(self):
+        src = (pathlib.Path(__file__).resolve().parents[2]
+               / "tech-priests_src/scripts/core/construction_planner.lua"
+               ).read_text(encoding="utf-8")
+        self.assertIn('local stack_capacity=prototype and tonumber(prototype.stack_size) or 0', src)
+        self.assertIn('local amount=math.min(24,math.max(0,before-1),math.max(0,stack_capacity))', src)
+        self.assertIn('removed=remove_item(source,"rail",amount)', src)
+        self.assertIn('local held_after=item_count(inventory,"rail")', src)
+        self.assertIn('source_after~=before-removed+refunded', src)
+        self.assertIn('held_after~=inserted or refunded~=uninserted', src)
+        self.assertIn('removed~=inserted+refunded', src)
+        self.assertIn('held.quarantine="rail-stage-physical-custody-ambiguous"', src)
+        self.assertIn('before-after==1', src)
+
+
 class NativePlayerTestSaveSelectionTests(unittest.TestCase):
     def test_native_headless_player_does_not_restart_graphical_steam_client(self):
         argv = rail_native_player_test_command(
