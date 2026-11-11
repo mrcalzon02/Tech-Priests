@@ -241,33 +241,42 @@ def build_eight_wire_y(architecture_id, topology_record, nominal_od=.12):
         raise RuntimeError(
             "Eight-wire breakout centerlines interpenetrate: "
             "min %.5f BU for %.5f BU strands"%(min_spacing,strand_od))
-    trunk_center=_mean(trunk_sites)
-    meshes.append(_hollow_wrap(trunk_center,trunk_direction,
-        nominal_od*.94,nominal_od*1.15,arch,
-        "Compact incoming eight-wire lacing sleeve","A",8,
-        "eight-wire-laced-strain-relief"))
-    for target in ("B","C"):
-        q=b if target=="B" else c
-        direction=geom.unit(geom.sub(q,h))
-        center=_mean(exit_sites[target])
-        meshes.append(_hollow_wrap(center,direction,
-            nominal_od*.85,nominal_od*.88,arch,
-            "Compact four-wire %s branch sleeve"%target,target,4,
-            "four-wire-branch-heatshrink"))
     if laced:
+        # A loose wire assembly contains NO supports in empty space.
+        # Only the explicitly laced harness requests protective wraps.
+        # These modeled wraps are visually provisional until actually
+        # conformed to the wire envelope and seated to real anchors.
+        trunk_center=_mean(trunk_sites)
+        meshes.append(_hollow_wrap(trunk_center,trunk_direction,
+            nominal_od*.94,nominal_od*1.15,arch,
+            "Laced incoming eight-wire containment sleeve","A",8,
+            "eight-wire-laced-strain-relief"))
+        for target in ("B","C"):
+            q=b if target=="B" else c
+            direction=geom.unit(geom.sub(q,h))
+            center=_mean(exit_sites[target])
+            meshes.append(_hollow_wrap(center,direction,
+                nominal_od*.85,nominal_od*.88,arch,
+                "Laced four-wire %s branch sleeve"%target,target,4,
+                "four-wire-branch-heatshrink"))
         for index,at in enumerate((.52,.71)):
             locations=[paths[k][0][round(at*50)] for k in range(8)]
             meshes.append(_hollow_wrap(_mean(locations),trunk_direction,
                 nominal_od*.92,nominal_od*.095,arch,
                 "Laced loom trunk retaining tie %d"%(index+1),"A",8,
                 "additional-harness-lacing"))
+    # In loose-wire mode there is deliberately no suspended mid-span
+    # steel/polymer ring, fictitious clamp, or strain-relief sleeve.
     if len([x for x in meshes if x["role"]=="continuous-branched-conductor"])!=8:
         raise RuntimeError("Conductor continuity count lost")
     if any(x["role"]=="junction-housing-preview" for x in meshes):
         raise RuntimeError("Wire breakout attempted generic box fallback")
     return {
         "meshes":meshes,
-        "branch_hardware_type":"eight-wire-Y-laced-breakout",
+        "branch_hardware_type":("eight-wire-Y-laced-breakout" if laced else
+                                "eight-wire-Y-unbound-loose-split"),
+        "branch_has_mounted_support":False,
+        "branch_strain_relief_wraps":5 if laced else 0,
         "branch_port_conductor_counts":{"A":8,"B":4,"C":4},
         "branch_route_count":8,
         "minimum_wire_center_spacing_bu":min_spacing,
