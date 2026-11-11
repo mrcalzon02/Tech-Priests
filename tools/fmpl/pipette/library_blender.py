@@ -451,7 +451,8 @@ def main():
         [] if (chosen or embedded_wire_breakout) else
         [p["id"] for p in model["public_ports"]])
     if embedded_wire_breakout:
-        model["embedded_branch_connector"]="eight-wire-Y-laced-breakout"
+        model["embedded_branch_connector"]=(
+            model["branch_geometry"]["branch_hardware_type"])
         model["embedded_branch_terminations"]={
             "A":8,"B":4,"C":4,"style":"individual-mini-crimp-ferrules"}
 
@@ -461,7 +462,12 @@ def main():
         collection["pipette_branch_port_counts_json"]=json.dumps(
             model["branch_geometry"]["branch_port_conductor_counts"])
         collection["pipette_branch_route_count"]=8
-        collection["pipette_embedded_hardware_style"]="laced-strain-relief-plus-mini-ferrules"
+        collection["pipette_branch_has_midspan_wrappers"]=(
+            bool(model["branch_geometry"]["branch_strain_relief_wraps"]))
+        collection["pipette_embedded_hardware_style"]=(
+            "natural-loose-wire-split-with-port-ferrules"
+            if model["branch_geometry"]["branch_strain_relief_wraps"]==0
+            else "laced-wraps-and-mini-ferrules")
     collection["pipette_fixed_fixture"]="comparison_fixture.v1.json"
     collection["pipette_preview_only"]=bool(args.preview_only)
     collection["pipette_native_game_connected"]=False
