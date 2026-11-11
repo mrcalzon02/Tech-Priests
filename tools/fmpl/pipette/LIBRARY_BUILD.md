@@ -87,3 +87,9 @@ The Boolean fluid Y now has a mandatory surface-island/non-manifold audit. If ex
 ## Typed connector expansion
 
 `library_fittings.py` now constructs 25 physical fitting types, including flat-ribbon eight-position IDC contacts, coaxial shield/dielectric/center-pin geometry, actual protective braid-sleeve overlap, and six-bolt metal bellows flanges. A twisted-pair terminal block has **two**, not eight, separately placed conductor contacts; eight-wire looms retain eight. Generated Blender objects carry the exact source port ID and type. `library_verify.py` independently checks these Blender fitting objects against the frozen comparison coordinates. This proves authored geometry, not pressure/ampacity rating or host-socket contact approval.
+
+## Immediate Blender Asset Browser use (without a separate add-on)
+
+New `library_blender.py` exports mark their generated editable collection as a **Blender Asset Browser collection asset by default**. The asset description explicitly says **PROTOTYPE / PREVIEW ONLY** unless source-approved materials are supplied. This is native Blender 5.2 ID-level `collection.asset_mark()` behavior, not a new plug-in or global preference mutation. Add the directory containing the resulting `.blend` files under **Edit → Preferences → File Paths → Asset Libraries** (or your existing FMPL Asset Library); the marked Pipette collections can then be selected and appended/linked through Blender's Asset Browser. You can opt out when generating a file with `--no-asset-mark`.
+
+This asset marking still needs a new native proof on the runner. The existing 14-model run proves geometry and Cycles previews but was generated **before** this Asset Browser feature. `library_verify.py` now checks that the marked collection and its prototype warning survive actual `.blend` reopening. 
