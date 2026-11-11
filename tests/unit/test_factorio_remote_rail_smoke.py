@@ -1032,3 +1032,29 @@ class NativePaidFirstLocomotive0836ContractTests(unittest.TestCase):
         self.assertIn("locomotive-order-yield-refused",dispatch)
         self.assertIn("locomotive-original-candidate-refused",dispatch)
         self.assertIn("dispatch-first-native-locomotive-0836",dispatch)
+
+    def test_native_locomotive_standoff_respects_rotated_body_and_priest(self):
+        """The 0338 contact correction must not relax engine placement/custody."""
+        root=pathlib.Path(__file__).resolve().parents[2]
+        builder=(root/"tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
+        geometry=builder.split("local function wide_entity_collision_bounds_1204(task)",1)[1].split(
+            "local function non_ghost_standoff(pair,task,avoid,reach_recovery)",1)[0]
+        self.assertIn('if task.entity_name=="locomotive" then',geometry)
+        self.assertIn('task.direction==d.east or task.direction==d.west',geometry)
+        self.assertIn("x0,y0,x1,y1=-y1,x0,-y0,x1",geometry)
+        self.assertIn("return nil -- Do not guess at a non-cardinal train footprint.",geometry)
+        self.assertIn("local function locomotive_contact_clears_priest_0836",geometry)
+        self.assertIn("return px1+gap<=sx0 or px0-gap>=sx1",geometry)
+        self.assertIn("or py1+gap<=sy0 or py0-gap>=sy1",geometry)
+        self.assertIn("and locomotive_contact_clears_priest_0836(pair,task,pos)",builder)
+        self.assertIn("site_build_distance_sq(pos,task)<=M.build_reach_sq",builder)
+        self.assertIn('return ok and can==true,ok and"engine-revalidated"or"engine-check-failed"',builder)
+        self.assertIn("custody-returned-source",builder)
+        # Cardinal east/west transforms a long N-S rolling-stock box into
+        # its long E-W footprint. A formerly legal north/south contact may
+        # now be inside that train footprint and must not be offered.
+        north=(-0.7,-2.6,0.7,2.6)
+        east=(-north[3],north[0],-north[1],north[2])
+        self.assertEqual(east,(-2.6,-0.7,2.6,0.7))
+        self.assertTrue(-2.6<1.6<2.6) # x=1.6 would overlap the loco
+        self.assertFalse(-2.6<3.6<2.6) # x=3.6 clears the rotated box

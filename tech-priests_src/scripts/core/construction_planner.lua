@@ -1532,6 +1532,21 @@ local function wide_entity_collision_bounds_1204(task)
  local x0,x1=math.min(ax,bx),math.max(ax,bx)
  local y0,y1=math.min(ay,by),math.max(ay,by)
  if x1-x0<1.5 and y1-y0<1.5 then return nil end
+ -- A locomotive's runtime prototype box is in its north-facing frame.
+ -- The original 0836 railway runs EAST: collision is rotated by 90 degrees.
+ -- The ordinary wide-machine standoff otherwise walks the priest INSIDE
+ -- the locomotive's future long axis, turning an initially placeable site
+ -- into a genuine engine-revalidated refusal after the physical approach.
+ -- Correct geometry only; Factorio still checks the final placeability.
+ if task.entity_name=="locomotive" then
+  local d=defines and defines.direction
+  if not d then return nil end
+  if task.direction==d.east or task.direction==d.west then
+   x0,y0,x1,y1=-y1,x0,-y0,x1
+  elseif task.direction~=d.north and task.direction~=d.south then
+   return nil -- Do not guess at a non-cardinal train footprint.
+  end
+ end
  return x0,y0,x1,y1
 end
 local function site_build_distance_sq(position,task)
@@ -1548,6 +1563,32 @@ local function site_build_distance_sq(position,task)
  local dx=math.max(x0-px,0,px-x1)
  local dy=math.max(y0-py,0,py-y1)
  return dx*dx+dy*dy
+end
+-- A planned locomotive contact must keep the original moving priest's
+-- entire projected physical collision box off the rotated rolling-stock
+-- footprint. A site-clear point is insufficient for a non-point-size priest.
+-- Missing geometry fails closed; no item, task or pre-existing writ is altered.
+local function locomotive_contact_clears_priest_0836(pair,task,contact)
+ if task.entity_name~="locomotive"then return true end
+ local x0,y0,x1,y1=wide_entity_collision_bounds_1204(task)
+ if not x0 then return false end
+ local ok,box=pcall(function()return pair.priest.bounding_box end)
+ if not(ok and box)then return false end
+ local a,b=box.left_top or box[1],box.right_bottom or box[2]
+ if not(a and b)then return false end
+ local ax,ay=a.x or a[1],a.y or a[2]
+ local bx,by=b.x or b[1],b.y or b[2]
+ if not(type(ax)=="number"and type(ay)=="number"
+   and type(bx)=="number"and type(by)=="number")then return false end
+ local dx=contact.x-pair.priest.position.x
+ local dy=contact.y-pair.priest.position.y
+ local px0,px1=math.min(ax,bx)+dx,math.max(ax,bx)+dx
+ local py0,py1=math.min(ay,by)+dy,math.max(ay,by)+dy
+ local gap=0.08
+ local sx0,sx1=task.position.x+x0,task.position.x+x1
+ local sy0,sy1=task.position.y+y0,task.position.y+y1
+ return px1+gap<=sx0 or px0-gap>=sx1
+   or py1+gap<=sy0 or py0-gap>=sy1
 end
 local function non_ghost_standoff(pair,task,avoid,reach_recovery)
  if not (valid_pair(pair) and task and task.position) then return nil end
@@ -1620,7 +1661,8 @@ local function non_ghost_standoff(pair,task,avoid,reach_recovery)
   if authorized and not tried[standoff_key(pos)]
     and (not avoid or dist_sq(pos,avoid)>0.01)
     and site_build_distance_sq(pos,task)<=M.build_reach_sq
-    and chest_contact_clears_priest(pair,task,pos) then
+    and chest_contact_clears_priest(pair,task,pos)
+    and locomotive_contact_clears_priest_0836(pair,task,pos) then
    local ok,clear=pcall(function()
     return surface.can_place_entity{
       name=pair.priest.name,position=pos,force=pair.station.force}
