@@ -584,3 +584,29 @@ class NativeRailLiveServerTests(unittest.TestCase):
             self.assertEqual(client_log.read_text(encoding="utf-8"),
                              "CLIENT_NOT_LAUNCHED_NO_HOST\n")
             self.assertNotEqual(code, 0)
+
+
+class NativeRailOriginalGuardPredicateTests(unittest.TestCase):
+    def test_first_original_paid_completion_refusal_records_geometry_and_custody(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        source = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
+                  ).read_text(encoding="utf-8")
+        diagnostic = source.index("ORIGINAL_GUARD_REFUSAL")
+        guard = source.index('if not(previous and previous.request_value==pending.request')
+        rejection = source.index('return reject(m,"pending-original-rail-request-lost")')
+        self.assertLess(guard, diagnostic)
+        self.assertLess(diagnostic, rejection)
+        for predicate in (
+            "built_valid=", "built_unit=", "built_name=", "built_direction=",
+            "position_matches=", "direction_matches=", "name_matches=",
+            "request_cleared=", "same_force=", "same_surface=",
+            "native_at_requested_unit=", "original_debit_before=",
+            "original_debit_after=",
+        ):
+            self.assertIn(predicate, source[guard:rejection])
+        self.assertIn("pending.original_guard_refusal_0836={", source)
+        self.assertIn("native=track_at(pair,pending.position,pending.direction)", source)
+        self.assertIn('if not pending.original_guard_refusal_0836', source)
+        self.assertIn('if not (actual and actual==previous.built_entity)', source)
+        self.assertIn('connected_straight_rails(predecessor,actual)', source)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', source)

@@ -336,6 +336,56 @@ function M.verify_pending(pair)
       -- request; never rewrite, borrow or erase that request/custody.
       and (pair.construction_request==nil
         or (saved_matches and pair.construction_request~=pending.request)))then
+    -- A completed, item-debited ORIGINAL rail that is refused here must
+    -- disclose WHICH unweakened native predicate failed. This is a one-shot,
+    -- read-only receipt: no refund, reconstruction, request mutation or credit.
+    if not pending.original_guard_refusal_0836
+        and previous and previous.request_value==pending.request
+        and previous.phase=="complete" then
+      local built=previous.built_entity
+      local alive=valid(built)
+      local actual_position=alive and built.position or nil
+      local native=track_at(pair,pending.position,pending.direction)
+      local debit=previous.original_rail_source_debit_0836
+      pending.original_guard_refusal_0836={
+        tick=now(),built_valid=alive==true,
+        built_unit=alive and built.unit_number or nil,
+        built_name=alive and built.name or nil,
+        built_x=actual_position and actual_position.x or nil,
+        built_y=actual_position and actual_position.y or nil,
+        built_direction=alive and built.direction or nil,
+        requested_x=pending.position.x,requested_y=pending.position.y,
+        requested_direction=pending.direction,
+        position_matches=alive and close(actual_position,pending.position) or false,
+        direction_matches=alive and built.direction==pending.direction or false,
+        name_matches=alive and built.name=="straight-rail" or false,
+        request_cleared=pair.construction_request==nil,
+        same_force=alive and built.force==pair.station.force or false,
+        same_surface=alive and built.surface==pair.station.surface or false,
+        native_at_requested_unit=native and native.unit_number or nil,
+        original_debit_before=debit and debit.before or nil,
+        original_debit_after=debit and debit.after or nil,
+      }
+      local d=pending.original_guard_refusal_0836
+      if log then log("[Tech-Priests rail-0836] ORIGINAL_GUARD_REFUSAL"..
+        " tick="..tostring(d.tick)..
+        " built_valid="..tostring(d.built_valid)..
+        " built_unit="..tostring(d.built_unit)..
+        " built_name="..tostring(d.built_name)..
+        " built="..tostring(d.built_x)..","..tostring(d.built_y)..
+        " built_direction="..tostring(d.built_direction)..
+        " requested="..tostring(d.requested_x)..","..tostring(d.requested_y)..
+        " requested_direction="..tostring(d.requested_direction)..
+        " position_matches="..tostring(d.position_matches)..
+        " direction_matches="..tostring(d.direction_matches)..
+        " name_matches="..tostring(d.name_matches)..
+        " request_cleared="..tostring(d.request_cleared)..
+        " same_force="..tostring(d.same_force)..
+        " same_surface="..tostring(d.same_surface)..
+        " native_at_requested_unit="..tostring(d.native_at_requested_unit)..
+        " original_debit_before="..tostring(d.original_debit_before)..
+        " original_debit_after="..tostring(d.original_debit_after)) end
+    end
     -- A builder that failed or dropped its request has not laid track.
     if previous and previous.request_value==pending.request
         and previous.phase=="aborted"then
