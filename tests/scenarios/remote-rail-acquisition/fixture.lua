@@ -378,6 +378,28 @@ local function trace_uncommitted_rail_gap(s,elapsed)
     " dispatcher_refusal="..tostring(p.remote_rail_admission_refusal_0510
       and p.remote_rail_admission_refusal_0510.reason))
 
+  -- Separate broker planning from canonical dispatcher entry/handoff.
+  -- These are diagnostic traces, NEVER constructed rails or acceptance proof.
+  local plan=mission and mission.last_plan_trace_0836
+  local dispatch=mission and mission.last_frontier_dispatch_0510
+  emit("RAIL_LIVE_ADMISSION elapsed="..elapsed..
+    " plan_tick="..tostring(plan and plan.tick)..
+    " plan_result="..tostring(plan and plan.reason)..
+    " plan_allowed="..tostring(plan and plan.planned)..
+    " plan_segment="..tostring(plan and plan.segment)..
+    " plan_pending="..tostring(plan and plan.pending)..
+    " plan_request="..tostring(plan and plan.request)..
+    " plan_candidate="..tostring(plan and plan.candidate)..
+    " dispatcher_entry_tick="..tostring(mission
+      and mission.last_dispatch_entry_tick_0510)..
+    " dispatcher_frontier_tick="..tostring(dispatch and dispatch.tick)..
+    " dispatcher_frontier_active="..tostring(dispatch and dispatch.active)..
+    " dispatcher_frontier_result="..tostring(dispatch and dispatch.reason)..
+    " dispatcher_pending="..tostring(dispatch and dispatch.pending)..
+    " dispatcher_request_matches="..tostring(dispatch
+      and dispatch.request_matches)..
+    " dispatcher_builder="..tostring(dispatch and dispatch.builder))
+
   -- Read-only original builder-ownership and genuinely stocked predecessor
   -- evidence during the existing bounded 600-tick native prewrite samples.
   -- A candidate name alone does not establish that funded work may yield.

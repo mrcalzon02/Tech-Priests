@@ -709,6 +709,21 @@ function M.service_pair(pair)
     if not done then return true,why end
   end
   local planned,reason=M.plan_next(pair)
+  -- One bounded, save-safe observation of the LIVE planning decision.
+  -- Do not infer admission from an old prewrite refusal, or alter any
+  -- construction, movement, queue or material ownership here.
+  local prior_plan=m.last_plan_trace_0836
+  if not prior_plan or prior_plan.reason~=tostring(reason)
+      or now()-(tonumber(prior_plan.tick)or 0)>=600 then
+    m.last_plan_trace_0836={
+      tick=now(),reason=tostring(reason),planned=planned==true,
+      segment=m.rail_frontier_0836 and m.rail_frontier_0836.segment,
+      pending=m.pending_rail_0836~=nil,
+      request=pair.construction_request~=nil,
+      candidate=pair.construction_candidate_0338
+        and pair.construction_candidate_0338.item_name,
+    }
+  end
   if planned~=true then
     -- A nil/pending-free construction gap previously vanished from the
     -- diagnostic trail because 0510 logs only admitted pending requests.

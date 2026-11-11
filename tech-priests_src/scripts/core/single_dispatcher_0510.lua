@@ -94,6 +94,13 @@ local function relinquish_unladen_direct_movement(pair,family)
 end
 function M.service_pair(pair,reason)
  local r=root();if r.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
+ -- The 0836 planner also runs in its broker cadence. Distinguish that
+ -- from the canonical 0510 dispatcher actually reaching the rail branch.
+ local rail_mission=pair.remote_rail_outpost_0835
+ if rail_mission and rail_mission.rail_frontier_0836
+     and now()-(tonumber(rail_mission.last_dispatch_entry_tick_0510)or -600)>=600 then
+  rail_mission.last_dispatch_entry_tick_0510=now()
+ end
  -- Diagnose a stalled existing return BEFORE direct-custody and defense early
  -- returns. Observe 0528 phase regardless of its custody flag: 0984 drill
  -- escrow is a distinct physical inventory and must never be inferred from
@@ -372,6 +379,18 @@ function M.service_pair(pair,reason)
   end
   local m=pair.remote_rail_outpost_0835
   local pending=m and m.pending_rail_0836
+  -- Rate-limited readback of the true 0836->0510 handoff; not a second
+  -- dispatcher, and not permission to displace an incumbent physical duty.
+  if m and m.rail_frontier_0836
+      and now()-(tonumber(m.last_frontier_dispatch_tick_0510)or -600)>=600 then
+   m.last_frontier_dispatch_tick_0510=now()
+   m.last_frontier_dispatch_0510={
+    tick=now(),active=active==true,reason=safe(why),
+    pending=pending~=nil,request_matches=pending~=nil
+      and pair.construction_request==pending.request,
+    builder=pair.construction_task_0338~=nil,
+   }
+  end
   -- Record the EXACT canonical admission refusal for a still-original
   -- rail request. A bare "active_order=true" obscures the order identity.
   -- This is a bounded read-only diagnostic: never mutate an order, yield

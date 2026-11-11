@@ -22,6 +22,38 @@ B = P + "PASS two distinct 0338-debited native-connected rails"
 
 
 
+class OriginalRailLiveAdmissionTraceTests(unittest.TestCase):
+    def test_broker_plan_and_dispatcher_handoff_are_distinguished_without_ownership_changes(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        frontier = (root / "tech-priests_src/scripts/core/"
+                    "rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        dispatcher = (root / "tech-priests_src/scripts/core/"
+                      "single_dispatcher_0510.lua").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/"
+                   "fixture.lua").read_text(encoding="utf-8")
+        plan = frontier.split("local planned,reason=M.plan_next(pair)", 1)[1].split(
+            "if planned~=true then", 1)[0]
+        self.assertIn("m.last_plan_trace_0836={", plan)
+        self.assertIn("reason=tostring(reason)", plan)
+        self.assertIn("pending=m.pending_rail_0836~=nil", plan)
+        self.assertIn("request=pair.construction_request~=nil", plan)
+        self.assertIn(">=600", plan)
+        self.assertNotIn("pair.construction_request=", plan)
+        self.assertNotIn("pair.construction_candidate_0338=", plan)
+        self.assertIn("rail_mission.last_dispatch_entry_tick_0510=now()", dispatcher)
+        handoff = dispatcher.split("local pending=m and m.pending_rail_0836", 1)[1].split(
+            "-- Record the EXACT canonical admission refusal", 1)[0]
+        self.assertIn("m.last_frontier_dispatch_0510={", handoff)
+        self.assertIn("active=active==true", handoff)
+        self.assertIn("request_matches=pending~=nil", handoff)
+        self.assertNotIn("pair.construction_request=", handoff)
+        self.assertIn("RAIL_LIVE_ADMISSION elapsed=", fixture)
+        self.assertIn("dispatcher_frontier_result=", fixture)
+        self.assertIn("plan_result=", fixture)
+        self.assertIn("RAIL_NATIVE_CUSTODY_NOT_CONSERVED", fixture)
+        self.assertIn("TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN", fixture)
+
+
 class CanonicalFundedConstructionCandidateRefreshTests(unittest.TestCase):
     def test_unstarted_unfunded_bootstrap_cannot_hide_funded_prior_writ(self):
         root = pathlib.Path(__file__).resolve().parents[2]
