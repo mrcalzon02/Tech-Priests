@@ -90,6 +90,21 @@ def main(folder, variant):
     if any("movable light leak" in ob.name or "front chassis light leak" in ob.name
            or "upper service seam" in ob.name for ob in rig.objects):
         raise RuntimeError("Surface panning laser has reappeared")
+    gap=[o for o in rig.objects
+         if o.name.startswith("FX ONLY | console-middle-chassis joint leakage")]
+    if len(gap)!=3 or any(o.get("emission_origin")!="PHYSICAL_GAP_BETWEEN_CONSOLE_AND_MIDDLE_CHASSIS"
+                          or o.get("no_surface_panning") is not True for o in gap):
+        raise RuntimeError("Exactly three physically anchored console/chassis gap segments required")
+    for idx,emitter in enumerate(sorted(gap,key=lambda o:o.name)):
+        if emitter.get("shared_strobe_source")!="VENT_LASER_PHASE_%d"%idx:
+            raise RuntimeError("Gap emitter must reuse matching vent phase")
+        lo=float(emitter.get("chassis_upper_z",-1))
+        z=float(emitter.get("gap_world_z",-1))
+        hi=float(emitter.get("console_lower_z",-1))
+        if not lo < z < hi:
+            raise RuntimeError("Light is not physically between chassis and console")
+        if emitter.animation_data is not None and emitter.animation_data.action:
+            raise RuntimeError("Stationary seam leak may not translate or pan")
     from mathutils import Vector
     eye=Vector((0,-0.70710678,0.70710678))
     scene.frame_set(1)
@@ -113,6 +128,8 @@ def main(folder, variant):
         "foundation_stationary":True,"rig_loop_closed":True,
         "live_original_art_changed":False,"owner_approved":False,
         "steam_wisps":len(steam),"vent_aperture_emitters":len(vent_lights),
+        "console_chassis_gap_emitters":len(gap),
+        "gap_strobe_sources":"THREE_VENT_PHASES",
         "surface_panning_lights":0,"capacitor_camera_alignments":cap_alignment,
         "saved_blend_sha256":sha(master),
     }
