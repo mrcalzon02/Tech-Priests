@@ -17,6 +17,8 @@ class PipettePackageApiTests(unittest.TestCase):
         self.assertTrue(callable(pipette.build_demo))
         self.assertTrue(callable(pipette.build_fitting))
         self.assertTrue(callable(pipette.build_eight_wire_y))
+        self.assertTrue(callable(pipette.build_carrier_form))
+        self.assertEqual(len(pipette.FORM_RECIPES),5)
         self.assertEqual(len(pipette.RECIPES),30)
         self.assertEqual(len(pipette.FITTING_RECIPES),25)
         self.assertIs(sys.modules.get("bpy"),original)
@@ -43,6 +45,17 @@ class PipettePackageApiTests(unittest.TestCase):
         self.assertNotIn("junction-housing-preview",roles)
         self.assertEqual(model["branch_port_conductor_counts"],
                          {"A":8,"B":4,"C":4})
+
+
+    def test_new_carrier_public_api_does_not_import_blender(self):
+        pipette=importlib.import_module("tools.fmpl.pipette")
+        old=sys.modules.get("bpy")
+        for name in pipette.FORM_RECIPES:
+            parts=pipette.build_carrier_form((-1.2,0,.65),
+                      (1.2,0,.65),name)
+            self.assertGreater(len(parts),0)
+            self.assertTrue(all(p["faces"] and p["vertices"] for p in parts))
+        self.assertIs(sys.modules.get("bpy"),old)
 
 
 if __name__=="__main__":
