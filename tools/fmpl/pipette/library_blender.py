@@ -419,8 +419,21 @@ def main():
         raise RuntimeError("Misconfigured favorite fitting for "+args.architecture)
     candidates=([preferred] if preferred else [])+[
         x for x in choices if x!=preferred and x in fittings.FITTING_RECIPES]
-    chosen=(None if embedded_wire_breakout else
-            next((x for x in candidates if x in fittings.FITTING_RECIPES),None))
+    # The five new physical carriers have profiles that cannot mate to
+    # arbitrary round glands without an actual measured transition.
+    # A flattened layflat hose needs a round-to-flat cuff; twin-bonded
+    # hoses need TWO distinct outlet fittings; slotted U ducts need a
+    # rectangular, not circular, snap. Refuse to fabricate false hardware.
+    special_profiles_without_verified_terminals={
+        "tube_retractile_coil","hose_layflat","hose_twin_bonded",
+        "housing_ladder_tray","housing_slotted_duct"
+    }
+    chosen=(None if embedded_wire_breakout or
+                 args.architecture in special_profiles_without_verified_terminals
+            else next((x for x in candidates if x in fittings.FITTING_RECIPES),None))
+    if args.architecture in special_profiles_without_verified_terminals:
+        print("PIPETTE_FITTING_TRANSITION_PENDING",
+              args.architecture,"source_ports_remain_fixed")
     installed_fittings=[]
     for p in model["public_ports"]:
         if embedded_wire_breakout:
