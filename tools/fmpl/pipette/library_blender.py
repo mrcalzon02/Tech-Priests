@@ -115,7 +115,21 @@ def cylinder(collection, name, start, end, radius):
     return ob
 
 
+def _world_bounds(obj):
+    bpy.context.view_layer.update()
+    verts=[obj.matrix_world @ v.co for v in obj.data.vertices]
+    if not verts:
+        raise RuntimeError("Object has no vertices for CSG bounds")
+    return {"min":[round(min(v[i] for v in verts),5) for i in range(3)],
+            "max":[round(max(v[i] for v in verts),5) for i in range(3)],
+            "faces":len(obj.data.polygons),
+            "location":[round(float(v),5) for v in obj.location]}
+
+
 def boolean(target, tool, operation):
+    # Printed receipts are intended to diagnose CSG lost-arm failures.
+    print("PIPETTE_CSG_BEFORE",operation,json.dumps({
+        "target":_world_bounds(target),"tool":_world_bounds(tool)}))
     bpy.ops.object.select_all(action="DESELECT")
     target.select_set(True)
     bpy.context.view_layer.objects.active=target
@@ -126,6 +140,8 @@ def boolean(target, tool, operation):
     bpy.ops.object.modifier_apply(modifier=mod.name)
     if len(target.data.polygons)==0:
         raise RuntimeError("Boolean produced empty geometry "+operation)
+    print("PIPETTE_CSG_AFTER",operation,json.dumps({
+        "target":_world_bounds(target)}))
     bpy.data.objects.remove(tool,do_unlink=True)
     return target
 
