@@ -89,6 +89,35 @@ def validate(args):
             # Boolean manifold is preview-only too, despite different role.
             if not ob.get("pipette_visual_candidate_not_game_validated",False):
                 raise RuntimeError("Unapproved native mesh lost visual status")
+    # Native Blender fitting provenance: the named connector must be present
+    # at every port claimed by the receipt, with unchanged fixture XYZ.
+    expected={p["id"]:p["xyz_bu"] for p in expected_ports}
+    installs=receipt.get("installed_terminal_fittings",[])
+    for fitting in installs:
+        kind=fitting["type"]
+        port=fitting["port"]
+        if port not in expected:
+            raise RuntimeError("Fitting references unknown canonical port: "+port)
+        components=[obj for obj in objects
+                    if obj.get("pipette_joint_type")==kind and
+                       obj.get("pipette_socket_id")==port]
+        if len(components)!=int(fitting["mesh_count"]):
+            raise RuntimeError(
+                "Missing native fitting geometry at port %s (%s): %d/%d"%
+                (port,kind,len(components),int(fitting["mesh_count"])))
+        for obj in components:
+            if json.loads(obj["pipette_socket_xyz_json"])!=expected[port]:
+                raise RuntimeError("Fitting moved the frozen comparison socket")
+            if obj.get("pipette_socket_seating_verified",True):
+                raise RuntimeError("Unmeasured physical socket must not be certified")
+    if receipt.get("physically_modelled_fitting_type"):
+        if len(installs)!=len(expected_ports):
+            raise RuntimeError("Typed fitting missing from one or more ports")
+    if receipt.get("missing_terminal_hardware"):
+        if installs:
+            raise RuntimeError("Receipt contradicts hardware missing gate")
+        if sorted(receipt["missing_terminal_hardware"])!=sorted(expected):
+            raise RuntimeError("Untyped port set does not match true fixture ports")
     if receipt["requires_native_csg_manifold"]:
         booleans=[ob for ob in objects
                   if ob.get("pipette_native_boolean_bore_constructed",False)]
