@@ -403,16 +403,16 @@ def main():
                                         args.architecture))
             installed_fittings.append({"port":p["id"],"type":chosen,
                                        "mesh_count":len(parts)})
-        elif lib.RECIPES[args.architecture][0] not in {
-             "open_spiral","single_wire","eight_wire","eight_wire_tied",
-             "seven_strand"}:
-            # Generic collar is explicitly a non-approved placeholder ONLY.
-            collar=lib.terminal_ring(p["xyz_bu"],p["outward_normal"],
-                                     model["nominal_outer_diameter_bu"],
-                                     args.architecture,role="unapproved-untyped-end-ring")
-            objects.append(make_obj(collection,collar,surface,args.architecture))
+        else:
+            # An untyped ring is not a usable termination. Keep the actual
+            # section's open end and report the missing hardware instead of
+            # confusing users with a manufactured-looking fake connector.
+            print("PIPETTE_TYPED_FITTING_PENDING",args.architecture,
+                  p["id"],"candidates",",".join(choices))
     model["physically_modelled_fitting_type"]=chosen
     model["installed_terminal_fittings"]=installed_fittings
+    model["missing_terminal_hardware"]=(
+        [] if chosen else [p["id"] for p in model["public_ports"]])
 
     collection["pipette_public_ports_json"]=json.dumps(model["public_ports"])
     collection["pipette_fixed_fixture"]="comparison_fixture.v1.json"
