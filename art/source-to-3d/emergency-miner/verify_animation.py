@@ -89,93 +89,126 @@ def main(folder, variant):
                  "miner_motion_"+variant+"_native43.png"):
         if (folder/name).stat().st_size < 1000:
             raise RuntimeError("Missing APNG/native43 render "+name)
-    vent_lights=[o for o in rig.objects if o.name.startswith("FX ONLY | vent aperture laser glow")]
-    if len(vent_lights)!=3 or {x.get("vent_source_index") for x in vent_lights}!={0,1,2}:
-        raise RuntimeError("Laser emission must originate in each of the exactly 3 source vent openings")
-    if any("movable light leak" in ob.name or "front chassis light leak" in ob.name
-           or "upper service seam" in ob.name for ob in rig.objects):
-        raise RuntimeError("Surface panning laser has reappeared")
-    gap=[o for o in rig.objects
-         if o.name.startswith("FX ONLY | console-middle-chassis joint leakage")]
-    if len(gap)!=3 or any(o.get("emission_origin")!="PHYSICAL_GAP_BETWEEN_CONSOLE_AND_MIDDLE_CHASSIS"
-                          or o.get("no_surface_panning") is not True for o in gap):
-        raise RuntimeError("Exactly three physically anchored console/chassis gap segments required")
-    for idx,emitter in enumerate(sorted(gap,key=lambda o:o.name)):
-        if emitter.get("shared_strobe_source")!="VENT_LASER_PHASE_%d"%idx:
-            raise RuntimeError("Gap emitter must reuse matching vent phase")
-        lo=float(emitter.get("chassis_upper_z",-1))
-        z=float(emitter.get("gap_world_z",-1))
-        hi=float(emitter.get("console_lower_z",-1))
-        if not lo < z < hi:
-            raise RuntimeError("Light is not physically between chassis and console")
-        if emitter.animation_data is not None and emitter.animation_data.action:
-            raise RuntimeError("Stationary seam leak may not translate or pan")
-    # V23 independent native readback of actual animated shader controls.
-    # Vent and console-chassis joint must be the *same* scan pattern at
-    # deliberately capped output. No moving/duplicate surface emitter.
+
+    # V25: actual source vents + one and only ONE moving photocopier
+    # scanner. We intentionally refuse the old three independently
+    # flashing console-gap bulbs and never allow light on console steel.
+    vent_lights=[o for o in rig.objects if o.name.startswith(
+        "FX ONLY | vent aperture laser glow")]
+    vent_hot=[o for o in rig.objects if o.name.startswith(
+        "FX ONLY | moving vent scan hotspot")]
+    if len(vent_lights)!=3 or len(vent_hot)!=3 or (
+       {o.get("vent_source_index") for o in vent_lights}!={0,1,2}) or (
+       {o.get("vent_source_index") for o in vent_hot}!={0,1,2}):
+        raise RuntimeError("Three actual vent openings must share one moving laser scan")
+    if any("movable light leak" in o.name or "front chassis light leak" in o.name
+           or "console-middle-chassis joint leakage" in o.name
+           for o in rig.objects):
+        raise RuntimeError("Old three gap strobes or wandering console-panel lights remain")
+    beam=bpy.data.objects.get("FX ONLY | one continuous red photocopier scanner")
+    spill=bpy.data.objects.get("FX ONLY | one traveling red middle chassis spill")
+    if beam is None or spill is None:
+        raise RuntimeError("Missing the SINGLE moving gap scanner and SINGLE red spill")
+    if beam.get("scan_type")!="SINGLE_CONTINUOUS_TRAVERSE" or (
+       beam.get("has_independent_strobe_segments") is not False) or (
+       beam.get("not_on_console_surface") is not True) or (
+       spill.get("v25_light_role")!="ONE_TRAVELING_DOWNWARD_RED_SPILL") or (
+       spill.get("no_visible_surface_mesh") is not True) or spill.type!="LIGHT":
+        raise RuntimeError("Photocopier scanner replaced with fake lamp clusters or surface decal")
+    if len([o for o in rig.objects if o.name.startswith("FX ONLY | one continuous red")])!=1:
+        raise RuntimeError("More than one moving photocopier strip exists")
+    if len([o for o in rig.objects if "middle chassis red spill" in o.name])!=0:
+        raise RuntimeError("Old three stationary red spill lamps reappeared")
+    lower=float(beam.get("chassis_upper_z",-1))
+    scan_z=float(beam.get("gap_world_z",-1))
+    higher=float(beam.get("console_lower_z",-1))
+    if not lower<scan_z<higher:
+        raise RuntimeError("Moving photocopier line not in the actual open chassis gap")
     point_lights=[bpy.data.objects.get("FX ONLY | vent inside point light %d"%i)
                   for i in range(3)]
-    if any(ob is None or ob.type!="LIGHT" for ob in point_lights):
-        raise RuntimeError("Expected three recessed existing-vent point lights")
-    if any(ob.get("v23_energy_cap")!=.70 for ob in point_lights):
-        raise RuntimeError("Vent point light budget changed after save")
-    if any(o.get("max_alpha")!=.60 or
-           o.get("v23_effect_profile")!="BOUND_TO_EXISTING_VENT_DARK_WELL"
-           for o in vent_lights):
-        raise RuntimeError("V23 restrained vent glow profile not restored")
-    if any(o.get("max_alpha")!=.32 or
-           o.get("v23_effect_profile")!="NARROW_RECESSED_JOINT_STROBE"
-           for o in gap):
-        raise RuntimeError("V23 restrained console-chassis light profile not restored")
-    spill_lights=[bpy.data.objects.get("FX ONLY | middle chassis red spill %d"%i)
-                  for i in range(3)]
+    if any(o is None or o.type!="LIGHT" for o in point_lights):
+        raise RuntimeError("Missing original source vent light")
+    if any(o.get("scan_group")!="ONE_SHARED_PHOTOCOPIER_X_PHASE"
+           or abs(float(o.get("v25_energy_cap",-1))-3.4)>1e-6 for o in point_lights):
+        raise RuntimeError("Source vent light does not share the ONE scan or brightness cap")
     expected=(1.0,.028,.008)
-    def check_red(actual,name):
-        if any(abs(float(actual[i])-expected[i])>1e-5 for i in range(3)):
-            raise RuntimeError("Non-red laser effect found: "+name)
-    if any(ob is None or ob.type!="LIGHT" or ob.data.type!="AREA"
-           or ob.get("v24_light_role")!="DOWNWARD_RED_SPILL_ON_EXISTING_MIDDLE_CHASSIS"
-           or ob.get("no_visible_surface_mesh") is not True
-           for ob in spill_lights):
-        raise RuntimeError("Exactly three real chassis-directed red spill lights required")
-    for i,ob in enumerate(spill_lights):
-        check_red(ob.data.color,ob.name)
-        if abs(float(ob.get("max_energy",-1))-.42)>1e-6:
-            raise RuntimeError("Red spill area intensity cap drift")
-        if ob.get("source_gap_segment")!=i:
-            raise RuntimeError("Spill moved away from paired console gap")
-    for ob in point_lights:
-        check_red(ob.data.color,ob.name)
+    def check_red(rgb,label):
+        if any(abs(float(rgb[i])-expected[i])>1e-5 for i in range(3)):
+            raise RuntimeError("Non-red laser effect: "+label)
+    for obj in point_lights+[spill]:
+        check_red(obj.data.color,obj.name)
+    if abs(float(spill.get("max_energy",-1))-2.2)>1e-6:
+        raise RuntimeError("Single red chassis spill energy cap invalid")
+    if any(o.get("scan_group")!="ONE_SHARED_PHOTOCOPIER_X_PHASE"
+           or o.get("below_original_roof") is not True for o in vent_hot):
+        raise RuntimeError("Bright vent hotspots escaped the original vent holes")
     def mix_alpha(obj):
-        shader=obj.data.materials[0].node_tree.nodes
-        mix=next((node for node in shader if node.type=="MIX_SHADER"),None)
-        emit=next((node for node in shader if node.type=="EMISSION"),None)
-        if mix is None or emit is None:
-            raise RuntimeError("Recessed laser effect lost its keyed emissive shader")
-        strength=float(emit.inputs["Strength"].default_value)
-        if not (1.95 <= strength <= 2.11):
-            raise RuntimeError("V23 emission shader intensity escaped bounds: "+str(strength))
-        check_red(emit.inputs["Color"].default_value,obj.name)
+        nodes=obj.data.materials[0].node_tree.nodes
+        mix=next((n for n in nodes if n.type=="MIX_SHADER"),None)
+        emission=next((n for n in nodes if n.type=="EMISSION"),None)
+        if mix is None or emission is None:
+            raise RuntimeError("Laser effect lost its keyed red emissive shader")
+        if abs(float(emission.inputs["Strength"].default_value)-5.6)>1e-4:
+            raise RuntimeError("Weak/mismatched photocopier emission strength")
+        check_red(emission.inputs["Color"].default_value,obj.name)
         return float(mix.inputs[0].default_value)
+
+    # Verify actual timeline movement at every authored pose, including
+    # exact loop closure. The bright scanner must move strictly in one
+    # direction whenever it is emitting and all vent hotspots follow
+    # precisely the SAME normalized x-translation.
+    keys=list(range(1,97,6))+[97]
+    scene.frame_set(1)
+    bpy.context.view_layer.update()
+    start_gap=beam.location.x
+    start_vents=[o.location.x for o in sorted(vent_hot,key=lambda o:o.name)]
+    gap_span=float(beam.get("v25_scan_span",0))
+    if not .16<=gap_span<=.6:
+        raise RuntimeError("Invalid single scanner horizontal travel span")
+    vent_span=[float(o.get("scan_span",0)) for o in
+               sorted(vent_hot,key=lambda o:o.name)]
+    if any(v<=.015 for v in vent_span):
+        raise RuntimeError("Vent hotspot cannot traverse the actual source opening")
+    peak_positions=[]
+    bright_samples=0
     strobe_evidence=[]
-    for f in list(range(1,97,6))+[97]:
-        scene.frame_set(f)
+    for frame in keys:
+        scene.frame_set(frame)
         bpy.context.view_layer.update()
-        for i in range(3):
-            vi=mix_alpha(bpy.data.objects["FX ONLY | vent aperture laser glow %d"%i])
-            gi=mix_alpha(bpy.data.objects["FX ONLY | console-middle-chassis joint leakage %d"%i])
-            power=float(point_lights[i].data.energy)
-            spill=float(spill_lights[i].data.energy)
-            if not (0<=vi<=.601 and 0<=gi<=.321 and
-                    0<=power<=.701 and 0<=spill<=.421):
-                raise RuntimeError("V23 vent/joint brightness budget exceeded")
-            if abs(vi/.60-gi/.32)>.011:
-                raise RuntimeError("Console-joint and vent strobe patterns drifted apart")
-            if abs(vi/.60-power/.70)>.011:
-                raise RuntimeError("Light power does not share vent strobe envelope")
-            if abs(vi/.60-spill/.42)>.011:
-                raise RuntimeError("True red chassis spill is not synchronized with vent scan")
-            strobe_evidence.append([f,i,round(vi,4),round(gi,4),round(power,4),round(spill,4)])
+        xnorm=(beam.location.x-start_gap)/gap_span
+        b=mix_alpha(beam)
+        sp=float(spill.data.energy)
+        if not (-.012<=xnorm<=1.012) or not (0<=b<=.961 and 0<=sp<=2.201):
+            raise RuntimeError("Scanner position or intensity outside true chassis gap")
+        if abs(b/.96-sp/2.2)>.014:
+            raise RuntimeError("Red chassis spill did not follow the one moving laser")
+        if b>.12:
+            peak_positions.append(beam.location.x)
+            bright_samples+=1
+        for idx,o in enumerate(sorted(vent_hot,key=lambda ob:ob.name)):
+            vnorm=(o.location.x-start_vents[idx])/vent_span[idx]
+            if abs(vnorm-xnorm)>.014:
+                raise RuntimeError("Independent vent flash! Not aligned with continuous scan")
+            va=mix_alpha(vent_lights[idx])
+            hotspot=mix_alpha(o)
+            light=float(point_lights[idx].data.energy)
+            if not (.179<=va<=.901 and 0<=hotspot<=.981
+                    and .339<=light<=3.401):
+                raise RuntimeError("Bright source vent intensity outside calibrated limits")
+            if abs(hotspot/.98-b/.96)>.015 or (
+               abs((va-.18)/.70-b/.96)>.015) or (
+               abs((light-.34)/3.0-b/.96)>.015):
+                raise RuntimeError("Vent and single seam scanner are independently blinking")
+            strobe_evidence.append([frame,idx,round(va,4),
+                                    round(hotspot,4),round(light,4),
+                                    round(vnorm,4)])
+    if bright_samples<8 or any(b<=a for a,b in zip(peak_positions,peak_positions[1:])):
+        raise RuntimeError("The laser failed continuous left-to-right photocopier travel")
+    scene.frame_set(97)
+    end_gap=beam.location.x
+    scene.frame_set(1)
+    if abs(start_gap-end_gap)>1e-6:
+        raise RuntimeError("One moving photocopier scanner did not close its loop")
     from mathutils import Vector
     eye=Vector((0,-0.70710678,0.70710678))
     scene.frame_set(1)
@@ -199,16 +232,21 @@ def main(folder, variant):
         "foundation_stationary":True,"rig_loop_closed":True,
         "live_original_art_changed":False,"owner_approved":False,
         "steam_wisps":len(steam),"vent_aperture_emitters":len(vent_lights),
-        "console_chassis_gap_emitters":len(gap),
-        "gap_strobe_sources":"THREE_VENT_PHASES",
-        "v24_brightness_limits":{"vent_alpha":.60,"joint_alpha":.32,
-                                 "point_energy":.70,"emission_strength":2.10,
-                                 "middle_chassis_area_energy":.42},
+        "vent_moving_hotspots":len(vent_hot),
+        "console_chassis_gap_emitters":1,
+        "gap_strobe_sources":"ONE_CONTINUOUS_TRAVELING_SCAN_PHASE",
+        "v25_brightness_limits":{"vent_alpha":.90,"joint_alpha":.96,
+                                 "point_energy":3.40,"emission_strength":5.60,
+                                 "middle_chassis_area_energy":2.20},
         "v24_gap_increase":record["gap_increase"],
-        "red_spill_emitters":3,
+        "red_spill_emitters":1,
         "laser_color_rgb":list(expected),
         "brightness_key_samples_checked":len(strobe_evidence),
         "brightness_key_samples":strobe_evidence,
+        "scan_bright_key_count":bright_samples,
+        "scanner_one_direction_monotone":True,
+        "scanner_loop_closed":True,
+        "no_independent_gap_bulbs":True,
         "surface_panning_lights":0,"capacitor_camera_alignments":cap_alignment,
         "saved_blend_sha256":sha(master),
     }
