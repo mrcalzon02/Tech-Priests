@@ -13,7 +13,10 @@ import json
 from pathlib import Path
 import sys
 
-import library_geometry as lib
+if __package__:
+    from . import library_geometry as lib
+else:
+    import library_geometry as lib
 
 DEFAULT_TOPOLOGY="straight"
 SHOWCASE=(("pipe_lead_historical","wye"),
