@@ -2,7 +2,7 @@
 
 ### Pipette architecture and connector library expansion
 
-The [Pipette architecture index](pipette/ARCHITECTURE_INDEX.md) tracks 140 planned pipe/tube/conduit/wire/housing/reinforcement constructions with 77 typed joints, 20 stiffness policies, and frozen comparison-port coordinates. **Catalog only:** the four previously verified pilot Blender examples remain separate from production approval of new types.
+The [Pipette architecture index](pipette/ARCHITECTURE_INDEX.md) tracks 140 pipe/tube/conduit/wire/housing/reinforcement constructions, 77 typed joints, 20 stiffness policies and frozen comparison ports. The [executable geometry library](pipette/LIBRARY_BUILD.md) now contains 19 distinct procedural line recipes and 21 modeled connector types; 121 line types and 56 fitting types remain indexed. Blender/Cycles proof and material approval are separate from source code and unit tests. No new workflow is required.
 
 A **versioned, shared, source-indexed production module** for Tech-Priests, Tanks-for-bob-Fork, HB-TTRPG-tools and future Factorio projects. This is a working *inventory and standards API*, not a new GitHub Actions workflow, third-party asset dump or replacement for existing validated art tooling.
 
