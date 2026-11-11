@@ -355,6 +355,23 @@ class NativeRailDurablePaidReceiptTests(unittest.TestCase):
         self.assertNotIn('surface.create_entity{name="straight-rail"', source)
 
 
+class NativeRailFreshNativeLookupTests(unittest.TestCase):
+    def test_index_lag_uses_real_bounded_native_entity_and_keeps_identity_gate(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        frontier = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
+                    ).read_text(encoding="utf-8")
+        self.assertIn('surface.find_entities_filtered{', frontier)
+        self.assertIn('name="straight-rail",position=point,radius=0.25', frontier)
+        self.assertIn('if indexed then return indexed end', frontier)
+        self.assertIn('if ok then return exact_native_rail(native) end', frontier)
+        self.assertIn('and e.force==pair.station.force and e.surface==surface', frontier)
+        self.assertIn('if not (actual and actual==previous.built_entity)', frontier)
+        self.assertIn('return reject(m,"physical-rail-not-at-committed-site")', frontier)
+        self.assertIn('connected_straight_rails(predecessor,actual)', frontier)
+        self.assertIn('NATIVE_SITE_REFUSAL', frontier)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', frontier)
+
+
 class NativeRailFirstLossCustodyTraceTests(unittest.TestCase):
     def test_exact_original_builder_captures_terminal_before_generic_clear(self):
         root = pathlib.Path(__file__).resolve().parents[2]

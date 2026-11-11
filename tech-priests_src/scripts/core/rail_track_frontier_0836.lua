@@ -23,24 +23,42 @@ local function eligible(pair,objective)
     and tonumber(objective.target.x) and tonumber(objective.target.y)
 end
 local function track_at(pair,point,direction)
-  -- An item request, ghost or ledger entry is not proof of physical track.
-  local scan=rawget(_G,"TechPriestsScanRouting0610")
-  if not(scan and type(scan.find_entities)=="function")then return nil end
-  -- Every paid 0338 receipt and predecessor identity must be read from
-  -- live Factorio. The 0579 indexed area can lag rail creation/destruction;
-  -- cached geometry is not physical construction or connectivity proof.
-  local ok,entities=pcall(scan.find_entities,pair.station.surface,{
-    name="straight-rail",position=point,radius=0.25,
-    force=pair.station.force,limit=4},
-    {category="construction",limit=4,record_negative=false,
-      require_fresh=true})
-  if not ok or type(entities)~="table"then return nil end
-  for _,e in ipairs(entities)do
-    if valid(e) and close(e.position,point)
-        and e.direction==direction and e.force==pair.station.force then
-      return e
+  -- The indexed construction scan can lag a freshly built original rail.
+  -- Admit only a REAL native entity in this exact bounded tile, never a
+  -- planned route, ghost, cached positive, or arbitrary nearby rail.
+  local surface=pair and pair.station and pair.station.surface
+  if not(valid(surface) and type(point)=="table")then return nil end
+  local function exact_native_rail(entities)
+    if type(entities)~="table"then return nil end
+    for _,e in ipairs(entities)do
+      if valid(e) and e.name=="straight-rail"
+          and close(e.position,point) and e.direction==direction
+          and e.force==pair.station.force and e.surface==surface then
+        return e
+      end
     end
   end
+  local scan=rawget(_G,"TechPriestsScanRouting0610")
+  if scan and type(scan.find_entities)=="function" then
+    local ok,entities=pcall(scan.find_entities,surface,{
+      name="straight-rail",position=point,radius=0.25,
+      force=pair.station.force,limit=4},
+      {category="construction",limit=4,record_negative=false,
+        require_fresh=true})
+    if ok then
+      local indexed=exact_native_rail(entities)
+      if indexed then return indexed end
+    end
+  end
+  -- Factorio itself is the ultimate physical authority. A tiny native
+  -- lookup closes the index-refresh race without weakening any ledger,
+  -- original 0338 item debit, entity identity, or connected-graph gate.
+  local ok,native=pcall(function()
+    return surface.find_entities_filtered{
+      name="straight-rail",position=point,radius=0.25,
+      force=pair.station.force,limit=4}
+  end)
+  if ok then return exact_native_rail(native) end
 end
 M.track_at=track_at
 -- Single physical geometry contract shared with the 0835 natural-ore
@@ -379,6 +397,30 @@ function M.verify_pending(pair)
   end
   local actual=track_at(pair,pending.position,pending.direction)
   if not (actual and actual==previous.built_entity)then
+    -- One primitive-only failure receipt: distinguish a stale scan, a
+    -- native snapped position/direction, and a substituted physical rail.
+    -- Never claim or rewrite a paid rail on an identity mismatch.
+    if not pending.native_site_refusal_0836 then
+      local built=previous.built_entity
+      pending.native_site_refusal_0836={
+        tick=now(),expected_unit=valid(built) and built.unit_number or nil,
+        found_unit=valid(actual) and actual.unit_number or nil,
+        built_x=valid(built) and built.position.x or nil,
+        built_y=valid(built) and built.position.y or nil,
+        built_direction=valid(built) and built.direction or nil,
+        requested_x=pending.position.x,requested_y=pending.position.y,
+        requested_direction=pending.direction}
+      if log then log("[Tech-Priests rail-0836] NATIVE_SITE_REFUSAL"..
+        " tick="..tostring(now())..
+        " expected="..tostring(pending.native_site_refusal_0836.expected_unit)..
+        " found="..tostring(pending.native_site_refusal_0836.found_unit)..
+        " built="..tostring(pending.native_site_refusal_0836.built_x)..
+          ","..tostring(pending.native_site_refusal_0836.built_y)..
+        " built_direction="..tostring(pending.native_site_refusal_0836.built_direction)..
+        " requested="..tostring(pending.position.x)..","..
+          tostring(pending.position.y)..
+        " requested_direction="..tostring(pending.direction)) end
+    end
     return reject(m,"physical-rail-not-at-committed-site")
   end
   local route=m.rail_frontier_0836
