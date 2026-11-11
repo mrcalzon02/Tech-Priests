@@ -304,9 +304,12 @@ local function marked_rail_request_0836(candidate)
      -- NOT a track segment. Every other forged 0836 marker still fails
      -- the original pending-rail ownership check.
      or (request.rail_mission_station_unit_0836~=nil
-       and not(request.site_reason=="original-first-locomotive-0836"
-         and request.item_name=="locomotive"
-         and request.entity_name=="locomotive")))))
+       and not((request.site_reason=="original-first-locomotive-0836"
+          and request.item_name=="locomotive"
+          and request.entity_name=="locomotive")
+          or (request.site_reason=="original-first-wagon-0836"
+          and request.item_name=="cargo-wagon"
+          and request.entity_name=="cargo-wagon"))))))
 end
 local function authorized_rail_candidate_0836(pair,candidate)
  local request=candidate and candidate.request_value
@@ -441,11 +444,44 @@ local function owned_pending_locomotive_0836(pair,request)
    and point and state.position and point.x==state.position.x
    and point.y==state.position.y and request.direction==route.direction
 end
+local function owned_pending_wagon_0836(pair,request)
+ local mission=pair and pair.remote_rail_outpost_0835
+ local state=mission and mission.first_wagon_0836
+ local route=mission and mission.rail_frontier_0836
+ local station=pair and pair.station
+ local priest=pair and pair.priest
+ local point=request and request.position
+ return type(request)=="table" and valid_pair(pair)
+   and station.name=="planetary-magos-cogitator-station"
+   and priest.force==station.force and priest.surface==station.surface
+   and mission.status=="rail-track-established"
+   and mission.root_station_unit==station.unit_number
+   and mission.force_index==station.force.index
+   and mission.surface_index==station.surface.index
+   and route and route.chain_audit_completed_tick_0836
+   and type(route.built_units)=="table"
+   and route.segment==#route.built_units and route.segment>=16
+   and mission.first_locomotive_0836
+   and mission.first_locomotive_0836.phase=="native-paid-locomotive-verified"
+   and valid(mission.first_locomotive_0836.built_entity)
+   and mission.first_locomotive_0836.built_entity.train
+   and mission.first_locomotive_0836.built_entity.train.valid
+   and state and state.phase=="awaiting-original-0338"
+   and state.request==request and pair.construction_request==request
+   and request.rail_mission_station_unit_0836==station.unit_number
+   and request.site_reason=="original-first-wagon-0836"
+   and request.item_name=="cargo-wagon" and request.entity_name=="cargo-wagon"
+   and point and state.position and point.x==state.position.x
+   and point.y==state.position.y and request.direction==route.direction
+end
 local function frontier_owned_by_pair_0338(pair,request)
  if not(type(request)=="table" and valid_pair(pair))then return false end
  local unit=station_unit(pair)
  if request.site_reason=="original-first-locomotive-0836" then
   return owned_pending_locomotive_0836(pair,request)
+ end
+ if request.site_reason=="original-first-wagon-0836" then
+  return owned_pending_wagon_0836(pair,request)
  end
  if request.rail_mission_station_unit_0836~=nil
    or request.site_reason=="remote-rail-physical-frontier-0836" then
@@ -540,6 +576,8 @@ local function blocked_local_miner_yields_to_rail_0836(pair,field,value)
      and source_for_item(pair,"rail")~=nil)
    or (owned_pending_locomotive_0836(pair,rail)
      and source_for_item(pair,"locomotive")~=nil)
+   or (owned_pending_wagon_0836(pair,rail)
+     and source_for_item(pair,"cargo-wagon")~=nil)
  local at=refusal and tonumber(refusal.tick)
  local item=value and normalize_placeable(value)
  local explicit_site=type(value)=="table"
@@ -606,6 +644,7 @@ local function construction_request(pair)
    -- funded bootstrap ghost; power and already begun custody retain priority.
    and (owned_pending_rail_0836(pair,frontier)
     or owned_pending_locomotive_0836(pair,frontier)
+     or owned_pending_wagon_0836(pair,frontier)
     or not b or not source_for_item(pair,b.placeable.item_name)) then
   local earlier_funded=false
   for _,field in ipairs({"structure_construction_requested_item",
@@ -715,6 +754,7 @@ local function refresh_unfunded_frontier_candidate(pair)
    and type(c.item_name)=="string"
    and (owned_pending_rail_0836(pair,frontier)
      or owned_pending_locomotive_0836(pair,frontier)
+     or owned_pending_wagon_0836(pair,frontier)
      or not source_for_item(pair,c.item_name))) then return false end
  pair.construction_candidate_0338=nil
  return true
@@ -1295,6 +1335,30 @@ local function finish(pair,task,built,reason)
      built_entity=built,built_unit=built.unit_number,completed_tick=now()}
   end
  end
+ -- Preserve ONE paid 0338 train receipt through later generic builds.
+ -- An actual native wagon and original source debit are mandatory.
+ if built and task.item_name=="cargo-wagon"
+   and task.entity_name=="cargo-wagon"
+   and task.site_reason=="original-first-wagon-0836"
+   and task.request_field=="construction_request"
+   and task.creative_build~=true then
+  local mission=pair.remote_rail_outpost_0835
+  local state=mission and mission.first_wagon_0836
+  local debit=task.original_wagon_debit_0836
+  if state and state.request==task.request_value
+    and debit and debit.source_unit and type(debit.before)=="number"
+    and type(debit.after)=="number" and debit.before-debit.after==1
+    and valid(built) and built.name=="cargo-wagon" and built.unit_number
+    and built.train and built.train.valid
+    and built.force==pair.station.force
+    and built.surface==pair.station.surface then
+   state.built_entity=built
+   state.paid_completion_0836={
+     request_value=task.request_value,native_0338_paid=true,
+     source_unit=debit.source_unit,before=debit.before,after=debit.after,
+     built_entity=built,built_unit=built.unit_number,completed_tick=now()}
+  end
+ end
  record(pair,built and "built" or "aborted",reason)
  -- The last-task slot is shared with routine 0338 work. Reconcile an
  -- ORIGINAL paid, physically placed 0836 rail while this exact terminal
@@ -1420,6 +1484,22 @@ local function begin_task(pair,c)
    return nil,"locomotive-original-physical-request-stale"
   end
  end
+ local wagon_writ=type(c.request_value)=="table"
+   and c.request_value.site_reason=="original-first-wagon-0836"
+ if wagon_writ or c.site_reason=="original-first-wagon-0836" then
+  if not(c.request_field=="construction_request"
+    and c.item_name=="cargo-wagon" and c.entity_name=="cargo-wagon"
+    and c.site_reason=="original-first-wagon-0836"
+    and type(c.position)=="table"
+    and type(c.request_value)=="table"
+    and type(c.request_value.position)=="table"
+    and c.position.x==c.request_value.position.x
+    and c.position.y==c.request_value.position.y
+    and c.direction==c.request_value.direction
+    and owned_pending_wagon_0836(pair,c.request_value))then
+   return nil,"wagon-original-physical-request-stale"
+  end
+ end
  local task={version=M.version,phase="waiting-source",item_name=c.item_name,entity_name=c.entity_name,category=c.category,position={x=c.position.x,y=c.position.y},direction=c.direction,site_reason=c.site_reason,effectiveness=c.effectiveness,request_field=c.request_field,request_value=c.request_value,ghost=c.ghost,started_tick=now()};local ok,why=claim_site(pair,task);if not ok then return nil,why end;pair.construction_task_0338=task;return task
 end
 local function restore_orphan_custody(pair)
@@ -1538,7 +1618,7 @@ local function wide_entity_collision_bounds_1204(task)
  -- the locomotive's future long axis, turning an initially placeable site
  -- into a genuine engine-revalidated refusal after the physical approach.
  -- Correct geometry only; Factorio still checks the final placeability.
- if task.entity_name=="locomotive" then
+ if task.entity_name=="locomotive" or task.entity_name=="cargo-wagon" then
   local d=defines and defines.direction
   if not d then return nil end
   if task.direction==d.east or task.direction==d.west then
@@ -1569,7 +1649,7 @@ end
 -- footprint. A site-clear point is insufficient for a non-point-size priest.
 -- Missing geometry fails closed; no item, task or pre-existing writ is altered.
 local function locomotive_contact_clears_priest_0836(pair,task,contact)
- if task.entity_name~="locomotive"then return true end
+ if task.entity_name~="locomotive" and task.entity_name~="cargo-wagon"then return true end
  local x0,y0,x1,y1=wide_entity_collision_bounds_1204(task)
  if not x0 then return false end
  local ok,box=pcall(function()return pair.priest.bounding_box end)
@@ -2075,6 +2155,12 @@ function M.service_pair(pair,reason)
      and owned_pending_locomotive_0836(pair,task.request_value)) then
   return M.abort_pair(pair,"locomotive-original-physical-request-stale")
  end
+ if task.site_reason=="original-first-wagon-0836"
+   and not (task.request_field=="construction_request"
+     and task.request_value==pair.construction_request
+     and owned_pending_wagon_0836(pair,task.request_value)) then
+  return M.abort_pair(pair,"wagon-original-physical-request-stale")
+ end
  -- Preexisting real local infrastructure supersedes only this one-time
  -- bootstrap smelter; original item custody returns through 0338.
  if task.entity_name=="tech-priests-emergency-smelter"
@@ -2151,6 +2237,16 @@ function M.service_pair(pair,reason)
   local before=original_rail and item_count(task.source_inv,task.item_name) or nil
   local locomotive_before=original_loco
     and item_count(task.source_inv,"locomotive") or nil
+  local first_wagon=mission and mission.first_wagon_0836
+  local original_wagon=task.item_name=="cargo-wagon"
+    and task.entity_name=="cargo-wagon"
+    and task.site_reason=="original-first-wagon-0836"
+    and task.request_field=="construction_request"
+    and first_wagon and first_wagon.request==task.request_value
+    and owned_pending_wagon_0836(pair,task.request_value)
+    and mission.status=="rail-track-established"
+  local wagon_before=original_wagon
+    and item_count(task.source_inv,"cargo-wagon") or nil
   local removed=remove_item(task.source_inv,task.item_name,1)
   if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end
   task.carried={item_name=task.item_name,count=1}
@@ -2182,6 +2278,17 @@ function M.service_pair(pair,reason)
     task.original_locomotive_debit_0836={
       source_unit=task.source_entity.unit_number,
       before=locomotive_before,after=after,tick=now()}
+  end
+  if original_loco then
+    local after=item_count(task.source_inv,"cargo-wagon")
+    if not(wagon_before and wagon_before>=1
+      and wagon_before-after==1
+      and valid(task.source_entity) and task.source_entity.unit_number)then
+      return M.abort_pair(pair,"native-wagon-source-debit-unreconciled")
+    end
+    task.original_wagon_debit_0836={
+      source_unit=task.source_entity.unit_number,
+      before=wagon_before,after=after,tick=now()}
   end
   sync_custody(pair,task,"removed-source")
   task.phase="move-site"

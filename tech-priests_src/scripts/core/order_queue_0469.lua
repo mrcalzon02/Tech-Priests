@@ -161,6 +161,7 @@ function M.can_yield_uncommitted_rail_0836(p,request)
   local mission=p.remote_rail_outpost_0835
   local pending=mission and mission.pending_rail_0836
   local loco=mission and mission.first_locomotive_0836
+  local wagon=mission and mission.first_wagon_0836
   local route=mission and mission.rail_frontier_0836
   local same_root=mission
     and mission.root_station_unit==p.station.unit_number
@@ -177,6 +178,14 @@ function M.can_yield_uncommitted_rail_0836(p,request)
     and loco and loco.phase=="awaiting-original-0338"
     and loco.request==request and mission.status=="rail-track-established"
     and route and route.chain_audit_completed_tick_0836
+  local wagon_request=request and request.item_name=="cargo-wagon"
+    and request.entity_name=="cargo-wagon"
+    and request.site_reason=="original-first-wagon-0836"
+    and request.rail_mission_station_unit_0836==p.station.unit_number
+    and wagon and wagon.phase=="awaiting-original-0338"
+    and wagon.request==request and mission.status=="rail-track-established"
+    and loco and loco.phase=="native-paid-locomotive-verified"
+    and loco.built_unit and route and route.chain_audit_completed_tick_0836
   if request==nil then
     -- Only the original mission may plan a new segment, or admit its
     -- first audited locomotive after track completion; never a foreign writ.
@@ -188,10 +197,11 @@ function M.can_yield_uncommitted_rail_0836(p,request)
         or mission.status=="building-physical-rail")
         or (mission.status=="rail-track-established"
           and route and route.chain_audit_completed_tick_0836
-          and loco==nil))) then
+          and (loco==nil or (loco.phase=="native-paid-locomotive-verified"
+            and loco.built_unit and wagon==nil))))) then
       return false,"rail-frontier-planning-not-uncommitted"
     end
-  elseif not(same_root and (rail_request or locomotive_request))then
+  elseif not(same_root and (rail_request or locomotive_request or wagon_request))then
     return false,"rail-mission-identity-mismatch"
   end
   local q=p.order_queue_0469

@@ -762,6 +762,24 @@ local function inspect(s,elapsed)
   local wagons=count(surface,{name="cargo-wagon",
     area={{-25,(s.station_y or 0)-16},
           {s.natural_ore_x+28,(s.station_y or 0)+17}},force=station.force})
+  -- Read-only original source-debited native wagon and locomotive coupling.
+  -- Do not accept mere wagon counts, ghosts or unverified rolling stock.
+  local wagon_state=objective and objective.first_wagon_0836
+  local paid=wagon_state and wagon_state.paid_completion_0836
+  local loco_state=objective and objective.first_locomotive_0836
+  local loco_entity=loco_state and loco_state.built_entity
+  local wagon_entity=wagon_state and wagon_state.built_entity
+  local coupled=paid and wagon_entity and wagon_entity.valid
+    and loco_entity and loco_entity.valid
+    and wagon_entity.train and wagon_entity.train.valid
+    and loco_entity.train and loco_entity.train.valid
+    and wagon_entity.train.id==loco_entity.train.id
+  emit("WAGON_NATIVE_0836 elapsed="..elapsed..
+    " phase="..tostring(wagon_state and wagon_state.phase)..
+    " blocker="..tostring(wagon_state and wagon_state.blocker)..
+    " paid="..tostring(paid~=nil)..
+    " coupled="..tostring(coupled==true)..
+    " unit="..tostring(wagon_entity and wagon_entity.unit_number))
   local drills=surface.find_entities_filtered{
     type="mining-drill",
     area={{s.natural_ore_x-32,s.natural_ore_y-24},

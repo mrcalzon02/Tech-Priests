@@ -758,6 +758,189 @@ function M.service_first_locomotive_0836(pair)
   m.last_update_tick=now()
   return true,"first-locomotive-physical-request-issued"
 end
+function M.service_first_wagon_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  if not eligible(pair,m) or m.status~="rail-track-established" then
+    return false,"not-original-complete-rail-mission"
+  end
+  local route=m.rail_frontier_0836
+  if not(route and type(route.built_units)=="table"
+      and route.segment==#route.built_units and route.segment>=16
+      and type(route.start_position)=="table"
+      and route.chain_audit_completed_tick_0836)then
+    return false,"original-rail-audit-not-proven"
+  end
+  local parent=m.first_locomotive_0836
+  if not(parent and parent.phase=="native-paid-locomotive-verified"
+    and valid(parent.built_entity)
+    and parent.built_entity.unit_number==parent.built_unit
+    and parent.built_entity.train and parent.built_entity.train.valid
+    and parent.built_entity.force==pair.station.force
+    and parent.built_entity.surface==pair.station.surface)then
+    return false,"original-native-locomotive-not-proven"
+  end
+  local state=m.first_wagon_0836
+  if state then
+    if state.phase=="native-paid-wagon-verified"then
+      return false,"first-native-paid-wagon-verified"
+    end
+    if state.phase=="blocked" then return false,state.blocker end
+    local receipt=state.paid_completion_0836
+    if receipt then
+      local entity=receipt.built_entity
+      if not(receipt.request_value==state.request
+        and receipt.native_0338_paid==true
+        and receipt.source_unit and type(receipt.before)=="number"
+        and type(receipt.after)=="number"
+        and receipt.before-receipt.after==1
+        and valid(entity) and entity==state.built_entity
+        and entity.unit_number==receipt.built_unit
+        and entity.name=="cargo-wagon"
+        and entity.force==pair.station.force
+        and entity.surface==pair.station.surface
+        and entity.train and entity.train.valid
+        and parent.built_entity.train and parent.built_entity.train.valid
+        and entity.train.id==parent.built_entity.train.id
+        and math.abs(entity.position.x-state.position.x)<=2
+        and math.abs(entity.position.y-state.position.y)<=2)then
+        state.phase="blocked"
+        state.blocker="native-paid-wagon-receipt-invalid"
+        return false,state.blocker
+      end
+      local has_loco,has_wagon=false,false
+      for _,carriage in ipairs(parent.built_entity.train.carriages)do
+        if carriage==parent.built_entity then has_loco=true end
+        if carriage==entity then has_wagon=true end
+      end
+      if not(has_loco and has_wagon)then
+        state.phase="blocked"
+        state.blocker="native-paid-wagon-not-coupled"
+        return false,state.blocker
+      end
+      state.phase="native-paid-wagon-verified"
+      state.built_unit=entity.unit_number
+      state.train_id=entity.train.id
+      state.verified_tick=now()
+      m.next_step="physically-fuel-coupled-locomotive"
+      return false,"first-native-paid-wagon-verified"
+    end
+    local last=pair.construction_last_task_0338
+    if last and last.request_value==state.request and last.phase=="aborted"then
+      state.phase="blocked"
+      state.blocker="original-0338-wagon-aborted:"..tostring(last.result)
+      return false,state.blocker
+    end
+    if pair.construction_request~=state.request
+      and not(pair.construction_task_0338
+        and pair.construction_task_0338.request_value==state.request)
+      and not(pair.construction_custody_0338
+        and pair.construction_custody_0338.request_value==state.request)then
+      state.phase="blocked"
+      state.blocker="original-wagon-request-lost"
+      return false,state.blocker
+    end
+    return false,"original-0338-wagon-in-progress"
+  end
+  -- A real, previously refused UNSTARTED local miner has no site or
+  -- material lease. Retain its original writ untouched while the already
+  -- audited rail mission may borrow the separate construction_request slot.
+  -- A funded/placeable miner, another refusal, or any active custody wins.
+  local prior=pair.construction_requested_item
+  local refusal=pair.construction_site_refusal_0338
+  local prior_name=type(prior)=="string" and prior
+    or type(prior)=="table" and (prior.entity_name or prior.item_name)
+  local proto=prior_name and prototypes and prototypes.entity
+    and prototypes.entity[prior_name]
+  local age=refusal and tonumber(refusal.tick)
+  local refused_miner=prior~=nil and proto and proto.type=="mining-drill"
+    and not(type(prior)=="table"
+      and (prior.position or prior.site_position))
+    and type(refusal)=="table" and refusal.field=="construction_requested_item"
+    and refusal.request==prior and refusal.reason=="no-miner-site"
+    and age and age<=now() and now()-age<=600
+  if (prior and not refused_miner) or pair.construction_request
+    or pair.construction_task_0338 or pair.construction_custody_0338
+    or pair.robot_network_task_0338 or pair.robot_network_request_0338
+    or pair.direct_acquisition_custody_0513
+    or pair.machine_logistics_custody_0528
+    or pair.inventory_transfer_custody_0687
+    or pair.defense_task_0259
+    or (pair.station_expansion_0256
+       and pair.station_expansion_0256.status=="active")then
+    return false,"incumbent-physical-work"
+  end
+  local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    or package.loaded["scripts.core.storage_role_authority_0686"]
+  if not(stock and type(stock.generic_storage_sources)=="function")then
+    return false,"native-wagon-storage-unavailable"
+  end
+  local ok,sources=pcall(stock.generic_storage_sources,pair)
+  if not(ok and type(sources)=="table")then
+    return false,"native-wagon-sources-unobservable"
+  end
+  local stocked=false
+  for _,source in ipairs(sources)do
+    if source.inv and source.inv.valid and valid(source.entity)
+      and source.entity.force==pair.station.force
+      and source.entity.surface==pair.station.surface then
+      local counted,n=pcall(source.inv.get_item_count,"cargo-wagon")
+      if counted and type(n)=="number" and n>0 then stocked=true;break end
+    end
+  end
+  if not stocked then return false,"no-real-wagon-item" end
+  local surface=pair.station.surface
+  local chosen
+  -- Position behind the original locomotive, entirely on its counted native
+  -- graph. The engine must independently accept this physical cargo wagon.
+  for _,offset in ipairs({-7,-6,-8})do
+    local point=pos(parent.built_entity.position.x+offset,parent.built_entity.position.y)
+    local index=math.floor((point.x-route.start_position.x)/M.segment_step+1.5)
+    if index>=2 and index+1<=route.segment then
+      local previous=track_at(pair,pos(route.start_position.x+(index-2)*M.segment_step,route.start_position.y),route.direction)
+      local rail=track_at(pair,pos(route.start_position.x+(index-1)*M.segment_step,route.start_position.y),route.direction)
+      local following=track_at(pair,pos(route.start_position.x+index*M.segment_step,route.start_position.y),route.direction)
+      if previous and rail and following
+        and previous.unit_number==route.built_units[index-1]
+        and rail.unit_number==route.built_units[index]
+        and following.unit_number==route.built_units[index+1]
+        and connected_straight_rails(previous,rail)
+        and connected_straight_rails(rail,following)then
+        local safe,can=pcall(function()
+          return surface.can_place_entity{
+            name="cargo-wagon",position=point,
+            direction=route.direction,force=pair.station.force}
+        end)
+        if safe and can==true then chosen=point;break end
+      end
+    end
+  end
+  if not chosen then
+    return false,"native-wagon-site-not-engine-placeable"
+  end
+  -- The original 0469 owner, not the frontier, decides whether a live
+  -- source-less emergency order may yield. Never cancel or modify it.
+  local oq=pair.order_queue_0469
+  if pair.active_order_0469 or (oq and oq.current) then
+    local owner=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+    if not(owner and type(owner.can_yield_uncommitted_rail_0836)=="function")then
+      return false,"wagon-order-owner-unavailable"
+    end
+    local ok,allowed=pcall(owner.can_yield_uncommitted_rail_0836,pair,nil)
+    if not(ok and allowed==true)then
+      return false,"wagon-incumbent-order-refused"
+    end
+  end
+  local request={item_name="cargo-wagon",entity_name="cargo-wagon",
+    category="rail",position=chosen,direction=route.direction,
+    site_reason="original-first-wagon-0836",
+    rail_mission_station_unit_0836=m.root_station_unit}
+  m.first_wagon_0836={phase="awaiting-original-0338",
+    request=request,position=chosen,issued_tick=now()}
+  pair.construction_request=request
+  m.next_step="existing-0338-physical-first-wagon"
+  m.last_update_tick=now()
+  return true,"first-wagon-physical-request-issued"
+end
 function M.service_pair(pair)
   local m=pair and pair.remote_rail_outpost_0835
   if not m then return false,"no-rail-mission"end
@@ -770,6 +953,10 @@ function M.service_pair(pair)
   end
   if m.status=="rail-track-blocked" then return false,m.status end
   if m.status=="rail-track-established" then
+    local loco=m.first_locomotive_0836
+    if loco and loco.phase=="native-paid-locomotive-verified"then
+      return M.service_first_wagon_0836(pair)
+    end
     return M.service_first_locomotive_0836(pair)
   end
   -- The strategic ore observer runs in the broker as well as 0510. Neither

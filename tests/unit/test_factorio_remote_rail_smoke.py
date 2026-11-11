@@ -1022,7 +1022,8 @@ class NativePaidFirstLocomotive0836ContractTests(unittest.TestCase):
         self.assertIn("owned_pending_locomotive_0836(pair,frontier)",builder)
         self.assertIn('task.request_field=="construction_request"',builder)
         self.assertIn("locomotive-original-physical-request-stale",builder)
-        self.assertIn('and not(request.site_reason=="original-first-locomotive-0836"',builder)
+        self.assertIn('and not((request.site_reason=="original-first-locomotive-0836"',builder)
+        self.assertIn('or (request.site_reason=="original-first-wagon-0836"',builder)
         self.assertIn('if locomotive_writ or c.site_reason=="original-first-locomotive-0836"',builder)
         self.assertIn('and owned_pending_locomotive_0836(pair,c.request_value)',builder)
         self.assertIn("locomotive_before-after==1",builder)
@@ -1039,7 +1040,7 @@ class NativePaidFirstLocomotive0836ContractTests(unittest.TestCase):
         builder=(root/"tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
         geometry=builder.split("local function wide_entity_collision_bounds_1204(task)",1)[1].split(
             "local function non_ghost_standoff(pair,task,avoid,reach_recovery)",1)[0]
-        self.assertIn('if task.entity_name=="locomotive" then',geometry)
+        self.assertIn('if task.entity_name=="locomotive" or task.entity_name=="cargo-wagon" then',geometry)
         self.assertIn('task.direction==d.east or task.direction==d.west',geometry)
         self.assertIn("x0,y0,x1,y1=-y1,x0,-y0,x1",geometry)
         self.assertIn("return nil -- Do not guess at a non-cardinal train footprint.",geometry)
@@ -1058,3 +1059,43 @@ class NativePaidFirstLocomotive0836ContractTests(unittest.TestCase):
         self.assertEqual(east,(-2.6,-0.7,2.6,0.7))
         self.assertTrue(-2.6<1.6<2.6) # x=1.6 would overlap the loco
         self.assertFalse(-2.6<3.6<2.6) # x=3.6 clears the rotated box
+
+class NativePaidWagon0836ContractTests(unittest.TestCase):
+    """Source regressions cannot replace real Factorio wagon/coupling evidence."""
+    def test_original_wagon_receipt_coupling_and_native_source(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        frontier=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        builder=(root/"tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
+        dispatch=(root/"tech-priests_src/scripts/core/single_dispatcher_0510.lua").read_text(encoding="utf-8")
+        order=(root/"tech-priests_src/scripts/core/order_queue_0469.lua").read_text(encoding="utf-8")
+        wagon=frontier.split("function M.service_first_wagon_0836(pair)",1)[1].split("function M.service_pair(pair)",1)[0]
+        for marker in ('parent.phase=="native-paid-locomotive-verified"',
+                       "route.chain_audit_completed_tick_0836",
+                       'return false,"no-real-cargo-wagon-item"',
+                       'name="cargo-wagon",position=point',
+                       "connected_straight_rails(previous,rail)",
+                       "receipt.before-receipt.after==1",
+                       "entity.train.id==parent.built_entity.train.id",
+                       "has_loco and has_wagon",
+                       "pair.construction_request=request"):
+            self.assertIn(marker,wagon)
+        self.assertNotIn("surface.create_entity",wagon)
+        for marker in ("owned_pending_wagon_0836(pair,request)",
+                       "wagon-original-physical-request-stale",
+                       "wagon_before-after==1",
+                       "native-wagon-source-debit-unreconciled",
+                       "task.original_wagon_debit_0836={",
+                       "custody-returned-source"):
+            self.assertIn(marker,builder)
+        self.assertIn("wagon_request",order)
+        self.assertIn("wagon-order-yield-refused",dispatch)
+        self.assertIn("dispatcher-0510:first-original-paid-wagon-0836",dispatch)
+
+    def test_original_full_expedition_engine_gates_not_diluted(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        for gate in ("TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN",
+                     "TRAIN_NEVER_ASSEMBLED",
+                     "MAGOS_PHYSICAL_TRAIN_RIDE_NOT_PROVEN",
+                     "NO_GENUINE_ORE_DELIVERED_BY_RAIL"):
+            self.assertIn(gate,fixture)
