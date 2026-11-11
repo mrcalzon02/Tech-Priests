@@ -1,5 +1,23 @@
 # Pipette — Blender-unit typed tubing, wiring and coupling planner
 
+## Real eight-wire Y breakout (no central cube)
+
+The [branch-connector standard](BRANCH_CONNECTORS.md) and
+[machine-readable branch-junction index](branch_junction_catalog.v1.json)
+describe the **actual** reusable library_branches.py generator. On the
+standardized Y/tee fixture, eight distinct wires enter port A and remain
+continuous through the split: four exit B, four exit C. Each has independent
+deterministic slack, with 16 miniature conductor ferrules and three real
+compact strain-relief wraps. The formerly generated giant central cube and
+unrelated eight-contact terminal blocks are removed for this case.
+
+Other still-unimplemented branch constructions now explicitly report
+unresolved-branch-hardware-no-fallback-block rather than inventing a
+generic box. The [13 regression cases](test_library_branches.py) and the
+independent Blender/GLB checker enforce no cube, no wire cloning, and unchanged
+public port coordinates. Geometry is **not** a certified electrical splice or
+a native Factorio connection.
+
 The first physically modeled connector library is `library_fittings.py`: **25 editable fitting recipes** out of the 77 indexed joint types, with explicit type-compatible selection and a separate `test_library_fittings.py`. [Construction and validation instructions](LIBRARY_BUILD.md) include a standalone OBJ fitting example. Native approvals remain pending.
 
 ### Executable geometry construction (25 recipes, current slice)
