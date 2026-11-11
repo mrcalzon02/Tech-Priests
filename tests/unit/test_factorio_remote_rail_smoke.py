@@ -1134,6 +1134,13 @@ class NativePaidTrainFuel0836ContractTests(unittest.TestCase):
         self.assertIn('pair.machine_logistics_0528.phase~="failed"',dispatch)
         self.assertIn('or pair.machine_logistics_custody_0528',dispatch)
         self.assertIn("FUEL_NATIVE_0836 elapsed=",fixture)
+        # Native snapshots must expose the current 0528 owner, not just a
+        # stale 0836 fuel phase or aggregate work counters. No new pass gate.
+        for diagnostic in ("offer_reason=", "machine_phase=", "machine_action=",
+                           "machine_blocker=", "machine_train_owned=",
+                           "machine_custody=", "candidate_source=",
+                           "construction_active=", "movement_owner="):
+            self.assertIn(diagnostic, fixture)
         self.assertIn('fail("TRAIN_NOT_NATIVE_FUELED")',fixture)
 
     def test_fuel_refuses_uncoupled_unpaid_or_other_custody(self):

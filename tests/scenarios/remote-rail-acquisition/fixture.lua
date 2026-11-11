@@ -791,12 +791,33 @@ local function inspect(s,elapsed)
       if counted and type(n)=="number"then actual_fuel=n end
     end
   end
+  -- Read-only physical-duty observability: distinguish a genuinely live
+  -- 0528 source/cargo transaction from a completed receipt or an unrelated
+  -- reservation. A missing phase is unknown, NOT evidence of zero work.
+  local train_machine=p.machine_logistics_0528
+  local train_candidate=p.machine_logistics_candidate_0528
+  local train_custody=p.machine_logistics_custody_0528
   emit("FUEL_NATIVE_0836 elapsed="..elapsed..
     " phase="..tostring(first_fuel and first_fuel.phase)..
     " fuel_coal="..actual_fuel..
     " receipt_tick="..tostring(first_fuel and first_fuel.receipt_tick)..
     " native_loco_unit="..tostring(loco_entity and loco_entity.unit_number)..
-    " native_wagon_unit="..tostring(wagon_entity and wagon_entity.unit_number))
+    " native_wagon_unit="..tostring(wagon_entity and wagon_entity.unit_number)..
+    " offer_reason="..tostring(first_fuel and first_fuel.last_attempt_reason)..
+    " offer_tick="..tostring(first_fuel and first_fuel.last_attempt_tick)..
+    " machine_phase="..tostring(train_machine and train_machine.phase)..
+    " machine_action="..tostring(train_machine and train_machine.action)..
+    " machine_item="..tostring(train_machine and train_machine.item)..
+    " machine_unit="..tostring(train_machine and train_machine.machine_unit)..
+    " machine_blocker="..tostring(train_machine and train_machine.last_blocker)..
+    " machine_started="..tostring(train_machine and train_machine.started_tick)..
+    " machine_train_owned="..tostring(train_machine and train_machine.original_train_fuel_0836)..
+    " machine_custody="..tostring(train_custody~=nil)..
+    " candidate_source="..tostring(train_candidate and train_candidate.source)..
+    " candidate_item="..tostring(train_candidate and train_candidate.item)..
+    " candidate_expiry="..tostring(train_candidate and train_candidate.expires_tick)..
+    " construction_active="..tostring(p.construction_task_0338~=nil)..
+    " movement_owner="..tostring(p.movement_request_0418 and p.movement_request_0418.owner))
   local drills=surface.find_entities_filtered{
     type="mining-drill",
     area={{s.natural_ore_x-32,s.natural_ore_y-24},
