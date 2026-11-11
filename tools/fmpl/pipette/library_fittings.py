@@ -39,6 +39,10 @@ FITTING_RECIPES={
     "rebar_threaded_coupler":"heavy_solid_bar_coupling_sleeve",
     "turnbuckle":"screw_adjustable_tension_link",
     "clevis":"forked_mechanical_pin",
+    "insulation_displacement":"eight_way_flat_ribbon_contact_blades",
+    "coax_connector":"concentric_radio_shield_and_center_pin",
+    "sleeve_overlap":"open_protective_sleeve_overlap",
+    "bellows_flange":"hollow_bellows_flange_with_bolted_retainer",
 }
 def annul(center, axis, outer, inner, length, *,
           arch, label, role, hex_outer=False, sides=24):
@@ -257,6 +261,69 @@ def build(architecture_id, joint_id, port, diameter=.12):
                         role="individual-recessed-contact")
             part["conductor_index"]=i
             result.append(part)
+    elif joint_id=="insulation_displacement":
+        if architecture_id!="wire_flat_ribbon":
+            raise ValueError("Flat ribbon IDC requires declared ribbon conductor layout")
+        result.append(block(p,axis,diameter*.82,diameter*1.26,
+                            diameter*.37,arch=architecture_id,
+                            label="Insulated flat-cable IDC connector body",
+                            role="ribbon-idc-housing"))
+        u,v=g.frame(axis)
+        for i in range(8):
+            offset=(i-3.5)*diameter*.105
+            center=g.plus(p,g.plus(g.mult(axis,diameter*.43),
+                                   g.mult(u,offset)))
+            contact=block(center,axis,diameter*.10,
+                          diameter*.043,diameter*.17,
+                          arch=architecture_id,
+                          label="Piercing contact %02d"%(i+1),
+                          role="individual-idc-contact-blade")
+            contact["conductor_index"]=i
+            result.append(contact)
+    elif joint_id=="coax_connector":
+        if architecture_id not in {"wire_coax","wire_triax"}:
+            raise ValueError("Coax connector requires declared concentric cable")
+        result.append(tube("Coaxial grounded outer coupling shell",
+                           r*1.30,r*.82,r*1.14,
+                           role="shielded-coax-outer-shell"))
+        result.append(tube("Coaxial insulator annular dielectric",
+                           r*.78,r*.22,r*.45,
+                           role="coax-insulator-ring",
+                           displacement=r*.20))
+        a=g.plus(p,g.mult(axis,-r*.48))
+        b=g.plus(p,g.mult(axis,r*1.35))
+        result.append(rod(a,b,r*.13,arch=architecture_id,
+                          label="Separate conductive coax center contact",
+                          role="coaxial-inner-pin"))
+        u,_=g.frame(axis)
+        for i in (-1,1):
+            center=g.plus(p,g.plus(g.mult(axis,r*.29),
+                                   g.mult(u,i*r*1.12)))
+            result.append(block(center,axis,r*.40,r*.21,r*.26,
+                                arch=architecture_id,
+                                label="Coax bayonet lug %d"%i,
+                                role="coax-bayonet-retainer"))
+    elif joint_id=="sleeve_overlap":
+        result.append(tube("Internal braid sleeve receiving lip",
+                           r*1.10,r*.84,r*.83,
+                           role="hollow-receiving-sleeve",
+                           displacement=-r*.13))
+        result.append(tube("External protective sleeve overlapping collar",
+                           r*1.28,r*1.03,r*.74,
+                           role="real-sleeve-overlap",
+                           displacement=r*.23))
+    elif joint_id=="bellows_flange":
+        result.append(tube("Real hollow metal bellows flange",
+                           r*1.84,r*.76,r*.39,
+                           role="bellows-bolted-hollow-face"))
+        result.append(tube("Bellows corrugation-to-flange neck",
+                           r*1.07,r*.76,r*.87,
+                           role="bellows-end-throat",
+                           displacement=-r*.23))
+        for i in range(6):
+            result.append(pin("Bellows captured bolt %d"%i,
+                              r*1.46,TAU*i/6,r*.54,
+                              role="bellows-flange-bolt"))
     elif joint_id=="rebar_threaded_coupler":
         result.append(tube("Solid-bar mechanical coupling sleeve",r*1.38,
                            r*.89,r*1.6,hexed=True,
