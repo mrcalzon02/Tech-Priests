@@ -16,6 +16,7 @@ from pathlib import Path
 import sys
 
 import bpy
+from mathutils import Vector
 
 HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(HERE))
@@ -92,6 +93,29 @@ def validate(args):
                   if ob.get("pipette_native_boolean_bore_constructed",False)]
         if len(booleans)!=1 or len(booleans[0].data.polygons)<100:
             raise RuntimeError("Missing genuine native hollow CSG manifold")
+        # A Boolean modifier applying without error is NOT proof of a joined
+        # pipe. The previous pilot produced a disconnected visual Y because
+        # cylinder transform_apply rotated already selected manifold geometry.
+        # Demand real surface coverage along every public branch (not rings).
+        manifold=booleans[0]
+        hub=Vector(receipt["junctions"][0]["xyz_bu"])
+        verts=[manifold.matrix_world @ v.co for v in manifold.data.vertices]
+        if not verts:
+            raise RuntimeError("CSG manifold has no vertices")
+        od=float(receipt["nominal_outer_diameter_bu"])
+        for port in expected_ports:
+            q=Vector(port["xyz_bu"])
+            for t in (.12,.30,.50,.70,.88):
+                probe=hub.lerp(q,t)
+                gap=min((v-probe).length for v in verts)
+                if gap>od*.92:
+                    raise RuntimeError(
+                        "Disconnected CSG pipe branch: %s at %.2f gap %.4f BU"
+                        %(port["id"],t,gap))
+        # The bounds must contain geometry on both sides of central Y hub.
+        if not (min(v.x for v in verts)<hub.x-.5 and
+                max(v.x for v in verts)>hub.x+.5):
+            raise RuntimeError("CSG Y misses one or more branch directions")
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=str(Path(args.glb).resolve()))
     glbmeshes=[o for o in bpy.context.scene.objects if o.type=="MESH"]
