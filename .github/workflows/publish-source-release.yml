@@ -14,8 +14,21 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 90
     steps:
+      - name: Checkout pinned approved art source with write-back credentials
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+          sparse-checkout: |
+            art/source-to-3d/emergency-miner
+            tools/fmpl
+            tech-priests_src
+      - name: Build V25 Factorio atlases from actual native Blender model and push checked art to main
+        shell: bash
+        run: |
+          bash art/source-to-3d/emergency-miner/release_integrate_v25.sh
       - name: Package Factorio mod
         env:
           GH_TOKEN: ${{ github.token }}
@@ -28,7 +41,7 @@ jobs:
           git remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
           git sparse-checkout init --cone
           git sparse-checkout set tech-priests_src
-          git -c protocol.version=2 fetch --quiet --depth=1 --filter=blob:none origin "${GITHUB_SHA}"
+          git -c protocol.version=2 fetch --quiet --depth=1 --filter=blob:none origin "${EFFECTIVE_SOURCE_SHA:-$GITHUB_SHA}"
           git checkout -q --detach FETCH_HEAD
           python3 - <<'PY'
           import json, pathlib, zipfile
@@ -110,7 +123,7 @@ jobs:
           folder="$(cat release-name.txt)"
           tag="factorio-mod-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           {
-            echo "Factorio 2.1 mod ZIP from tech-priests_src at commit $GITHUB_SHA."
+            echo "Factorio 2.1 mod ZIP from tech-priests_src at commit ${EFFECTIVE_SOURCE_SHA:-$GITHUB_SHA}."
             echo
             echo "Headless diagnostic (separate from game release packaging):"
             cat diagnostics/summary.txt
@@ -119,7 +132,7 @@ jobs:
           } > release-notes.txt
           gh release create "$tag" "${folder}.zip" \
             --repo "$GITHUB_REPOSITORY" \
-            --target "$GITHUB_SHA" \
+            --target "${EFFECTIVE_SOURCE_SHA:-$GITHUB_SHA}" \
             --title "Tech Priests Factorio mod ${folder}" \
             --notes-file release-notes.txt \
             --prerelease
