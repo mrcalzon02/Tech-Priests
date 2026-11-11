@@ -7,7 +7,8 @@
     "Public XYZ and outward normals are immutable and shared with fluid Y, hose Y and other source architectures.",
     "8-conductor harness has 8 wires at A and 4 at B plus 4 at C; no hidden wire cloning or electrical bus tapping.",
     "Individual conductor endpoints can be offset inside the public socket envelope, not moved outside it.",
-    "Missing branch architecture is a flagged incomplete preview, never a filled cube or a valid joint claim."
+    "Missing branch architecture is a flagged incomplete preview, never a filled cube or a valid joint claim.",
+    "Unbound loose-wire Y contains ZERO suspended midspan support rings, wraps, boots or clamps. A purposeful laced variant requires an explicitly requested restraint style."
   ],
   "branch_references": [
     {
@@ -27,9 +28,10 @@
       },
       "real_continuous_wire_count": 8,
       "mini_ferrules": 16,
-      "strain_relief_wraps": 3,
-      "allowed_joint_family": "individual-conductor-mini-ferrules-with-three-group-wraps",
-      "status": "real editable mesh, no electrical certificate"
+      "strain_relief_wraps": 0,
+      "allowed_joint_family": "free-hanging-eight-to-four-plus-four-unbound-conductors-with-port-only-ferrules",
+      "status": "unbound natural split: no suspended clamps or rings; end ferrules visual, not certified",
+      "midspan_hardware_allowed": false
     },
     {
       "id": "eight_wire_laced_y",
@@ -50,7 +52,8 @@
       "mini_ferrules": 16,
       "strain_relief_wraps": 5,
       "allowed_joint_family": "laced-retaining-ties-and-ferrules",
-      "status": "real editable mesh, no electrical certificate"
+      "status": "real editable mesh, no electrical certificate",
+      "midspan_hardware_allowed": true
     },
     {
       "id": "two_wire_insulated_splice",
