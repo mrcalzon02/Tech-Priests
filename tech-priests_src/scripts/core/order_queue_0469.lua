@@ -155,32 +155,43 @@ end
 function M.can_yield_uncommitted_rail_0836(p,request)
   if not valid_pair(p) or p.station.name~="planetary-magos-cogitator-station"
     or (request~=nil and (type(request)~="table"
-      or request.site_reason~="remote-rail-physical-frontier-0836"
-      or request.item_name~="rail" or request.entity_name~="straight-rail"
       or p.construction_request~=request)) then
     return false,"not-original-rail-request"
   end
   local mission=p.remote_rail_outpost_0835
   local pending=mission and mission.pending_rail_0836
-  if request==nil then
-    -- Only the already authorized, live Magos starvation objective may
-    -- PLAN another segment. A foreign construction writ or pending original
-    -- rail must use its own owner instead; no cargo/task gets reassigned.
-    if not (mission and mission.root_station_unit==p.station.unit_number
-      and mission.surface_index==p.station.surface.index
-      and mission.force_index==p.station.force.index
-      and (mission.status=="starvation-confirmed"
-        or mission.status=="building-physical-rail")
-      and type(mission.target)=="table"
-      and type(mission.target.x)=="number"
-      and type(mission.target.y)=="number"
-      and pending==nil and p.construction_request==nil) then
-      return false,"rail-frontier-planning-not-uncommitted"
-    end
-  elseif not (pending and pending.request==request
+  local loco=mission and mission.first_locomotive_0836
+  local route=mission and mission.rail_frontier_0836
+  local same_root=mission
     and mission.root_station_unit==p.station.unit_number
     and mission.surface_index==p.station.surface.index
-    and mission.force_index==p.station.force.index) then
+    and mission.force_index==p.station.force.index
+  local rail_request=request and request.item_name=="rail"
+    and request.entity_name=="straight-rail"
+    and request.site_reason=="remote-rail-physical-frontier-0836"
+    and pending and pending.request==request
+  local locomotive_request=request and request.item_name=="locomotive"
+    and request.entity_name=="locomotive"
+    and request.site_reason=="original-first-locomotive-0836"
+    and request.rail_mission_station_unit_0836==p.station.unit_number
+    and loco and loco.phase=="awaiting-original-0338"
+    and loco.request==request and mission.status=="rail-track-established"
+    and route and route.chain_audit_completed_tick_0836
+  if request==nil then
+    -- Only the original mission may plan a new segment, or admit its
+    -- first audited locomotive after track completion; never a foreign writ.
+    if not (same_root and type(mission.target)=="table"
+      and type(mission.target.x)=="number"
+      and type(mission.target.y)=="number"
+      and pending==nil and p.construction_request==nil
+      and ((mission.status=="starvation-confirmed"
+        or mission.status=="building-physical-rail")
+        or (mission.status=="rail-track-established"
+          and route and route.chain_audit_completed_tick_0836
+          and loco==nil))) then
+      return false,"rail-frontier-planning-not-uncommitted"
+    end
+  elseif not(same_root and (rail_request or locomotive_request))then
     return false,"rail-mission-identity-mismatch"
   end
   local q=p.order_queue_0469

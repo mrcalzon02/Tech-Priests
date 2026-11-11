@@ -443,6 +443,72 @@ function M.service_pair(pair,reason)
    record("dispatch-rail-physical-builder",pair,result.detail)
    return result
   end
+  -- A first-locomotive writ is separate from an active local miner.
+  -- 0338 may admit it only if its exact construction_request still belongs
+  -- to the original post-audit Magos, and the 0469 order has explicitly
+  -- authorized a source-less yield. A started physical builder keeps custody.
+  local first=m and m.first_locomotive_0836
+  local loco=first and first.phase=="awaiting-original-0338"
+    and first.request
+  if loco and pair.construction_request==loco
+    and m.status=="rail-track-established"
+    and loco.item_name=="locomotive"
+    and loco.entity_name=="locomotive"
+    and loco.site_reason=="original-first-locomotive-0836"
+    and loco.rail_mission_station_unit_0836==station_unit(pair) then
+   local task=pair.construction_task_0338
+   local carrying=pair.construction_custody_0338
+   local original=(task and task.request_value==loco)
+     or (carrying and carrying.request_value==loco)
+   if not original then
+    local q=pair.order_queue_0469
+    local order=pair.active_order_0469 or (q and q.current)
+    if order then
+     local owner=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+     local ok,allowed=false,false
+     if owner and type(owner.can_yield_uncommitted_rail_0836)=="function" then
+      ok,allowed=pcall(owner.can_yield_uncommitted_rail_0836,pair,loco)
+     end
+     if not(ok and allowed==true)then
+      return {processed=1,blocked=1,detail="locomotive-order-yield-refused"}
+     end
+    end
+    if pair.active_task or pair.current_task or pair.active_task_0285
+      or pair.defense_task_0259 or pair.construction_task_0338
+      or pair.construction_custody_0338 or pair.construction_task_0340
+      or pair.machine_logistics_custody_0528
+      or pair.inventory_transfer_custody_0687
+      or pair.direct_acquisition_custody_0513
+      or pair.robot_network_task_0338 or pair.robot_network_request_0338
+      or pair.movement_request_0418 then
+     return {processed=1,blocked=1,detail="locomotive-incumbent-physical-work"}
+    end
+   end
+   local planner=rawget(_G,"TechPriestsConstructionPlanner0338")
+     or package.loaded["scripts.core.construction_planner"]
+   if not (planner and type(planner.discover_pair)=="function")then
+    return {processed=1,blocked=1,detail="locomotive-builder-unavailable"}
+   end
+   if not original then
+    local ok,candidate=pcall(planner.discover_pair,pair,true)
+    if not ok or not(candidate and candidate.request_field=="construction_request"
+      and candidate.request_value==loco
+      and candidate.item_name=="locomotive")then
+     return {processed=1,blocked=1,detail="locomotive-original-candidate-refused"}
+    end
+   end
+   local result=execute(pair,"construction",
+     "dispatcher-0510:first-original-paid-locomotive-0836")
+   local status=result.failed>0 and "failed" or result.acted>0
+     and "acted" or result.blocked>0 and "blocked"
+     or result.waiting>0 and "waiting" or "idle"
+   publish_action(pair,{kind="construction",source="first-paid-locomotive-0836",
+     item="locomotive",position=first.position,reason="native-paid-rolling-stock"},
+     "construction",status,result.detail)
+   stat("pairs_processed");stat("actions",result.acted);stat("failures",result.failed)
+   record("dispatch-first-native-locomotive-0836",pair,result.detail)
+   return result
+  end
  end
  -- A strategic Magos resource chain owns only its intent. The existing
  -- station expansion executor still controls actual physical construction.

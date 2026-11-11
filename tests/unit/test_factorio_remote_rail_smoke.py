@@ -994,10 +994,10 @@ class NativePaidFirstLocomotive0836ContractTests(unittest.TestCase):
                       "connected_straight_rails(previous,rail)",
                       "connected_straight_rails(rail,next_rail)",
                       'return false,"no-real-locomotive-item"',
-                      "pair.construction_requested_item=request",
+                      "pair.construction_request=request",
                       "receipt.before-receipt.after==1",
                       "entity.train and entity.train.valid",
-                      "pair.construction_requested_item~=state.request"):
+                      "pair.construction_request~=state.request"):
             self.assertIn(guard,section)
         self.assertNotIn("surface.create_entity",section)
         self.assertIn('local original_loco=task.item_name=="locomotive"',builder)
@@ -1006,3 +1006,26 @@ class NativePaidFirstLocomotive0836ContractTests(unittest.TestCase):
         self.assertIn("state.paid_completion_0836={",builder)
         self.assertIn("native_0338_paid=true",builder)
         self.assertIn("return M.service_first_locomotive_0836(pair)",source)
+
+    def test_recent_refused_miner_is_parked_not_erased_for_original_paid_loco(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        src=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        builder=(root/"tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
+        dispatch=(root/"tech-priests_src/scripts/core/single_dispatcher_0510.lua").read_text(encoding="utf-8")
+        queue=(root/"tech-priests_src/scripts/core/order_queue_0469.lua").read_text(encoding="utf-8")
+        loco=src.split("function M.service_first_locomotive_0836(pair)",1)[1].split("function M.service_pair(pair)",1)[0]
+        self.assertIn('refusal.request==prior and refusal.reason=="no-miner-site"',loco)
+        self.assertIn("now()-age<=600",loco)
+        self.assertIn("pair.construction_request=request",loco)
+        self.assertNotIn("pair.construction_requested_item=",loco)
+        self.assertIn("owned_pending_locomotive_0836(pair,rail)",builder)
+        self.assertIn("owned_pending_locomotive_0836(pair,frontier)",builder)
+        self.assertIn('task.request_field=="construction_request"',builder)
+        self.assertIn("locomotive-original-physical-request-stale",builder)
+        self.assertIn("locomotive_before-after==1",builder)
+        self.assertIn("loco.request==request",queue)
+        self.assertIn('route.chain_audit_completed_tick_0836',queue)
+        self.assertNotIn("p.construction_requested_item=nil",queue)
+        self.assertIn("locomotive-order-yield-refused",dispatch)
+        self.assertIn("locomotive-original-candidate-refused",dispatch)
+        self.assertIn("dispatch-first-native-locomotive-0836",dispatch)

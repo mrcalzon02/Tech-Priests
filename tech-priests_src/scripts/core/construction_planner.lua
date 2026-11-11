@@ -408,9 +408,39 @@ local function stage_original_rail_supply_0836(pair,task)
    " original_source_after="..safe(source_after))
  return true
 end
+-- Exact post-audit locomotive ownership. This request cannot borrow a rail
+-- segment's receipt or run under a different Magos, surface or item.
+local function owned_pending_locomotive_0836(pair,request)
+ local mission=pair and pair.remote_rail_outpost_0835
+ local state=mission and mission.first_locomotive_0836
+ local route=mission and mission.rail_frontier_0836
+ local station=pair and pair.station
+ local priest=pair and pair.priest
+ local point=request and request.position
+ return type(request)=="table" and valid_pair(pair)
+   and station.name=="planetary-magos-cogitator-station"
+   and priest.force==station.force and priest.surface==station.surface
+   and mission.status=="rail-track-established"
+   and mission.root_station_unit==station.unit_number
+   and mission.force_index==station.force.index
+   and mission.surface_index==station.surface.index
+   and route and route.chain_audit_completed_tick_0836
+   and type(route.built_units)=="table"
+   and route.segment==#route.built_units and route.segment>=16
+   and state and state.phase=="awaiting-original-0338"
+   and state.request==request and pair.construction_request==request
+   and request.rail_mission_station_unit_0836==station.unit_number
+   and request.site_reason=="original-first-locomotive-0836"
+   and request.item_name=="locomotive" and request.entity_name=="locomotive"
+   and point and state.position and point.x==state.position.x
+   and point.y==state.position.y and request.direction==route.direction
+end
 local function frontier_owned_by_pair_0338(pair,request)
  if not(type(request)=="table" and valid_pair(pair))then return false end
  local unit=station_unit(pair)
+ if request.site_reason=="original-first-locomotive-0836" then
+  return owned_pending_locomotive_0836(pair,request)
+ end
  if request.rail_mission_station_unit_0836~=nil
    or request.site_reason=="remote-rail-physical-frontier-0836" then
   return owned_pending_rail_0836(pair,request)
@@ -500,6 +530,10 @@ end
 local function blocked_local_miner_yields_to_rail_0836(pair,field,value)
  local refusal=pair and pair.construction_site_refusal_0338
  local rail=pair and pair.construction_request
+ local authorized=(owned_pending_rail_0836(pair,rail)
+     and source_for_item(pair,"rail")~=nil)
+   or (owned_pending_locomotive_0836(pair,rail)
+     and source_for_item(pair,"locomotive")~=nil)
  local at=refusal and tonumber(refusal.tick)
  local item=value and normalize_placeable(value)
  local explicit_site=type(value)=="table"
@@ -511,8 +545,7 @@ local function blocked_local_miner_yields_to_rail_0836(pair,field,value)
    and at and at<=now() and now()-at<=600
    and not explicit_site and item
    and entity_type(item.entity_name)=="mining-drill"
-   and owned_pending_rail_0836(pair,rail)
-   and source_for_item(pair,"rail")~=nil
+   and authorized
    and not(pair.construction_task_0338
      or pair.construction_custody_0338 or pair.construction_task_0340
      or pair.robot_network_task_0338 or pair.robot_network_request_0338
@@ -566,6 +599,7 @@ local function construction_request(pair)
    -- Only the exact pending 0836 request can pass a still UNSTARTED
    -- funded bootstrap ghost; power and already begun custody retain priority.
    and (owned_pending_rail_0836(pair,frontier)
+    or owned_pending_locomotive_0836(pair,frontier)
     or not b or not source_for_item(pair,b.placeable.item_name)) then
   local earlier_funded=false
   for _,field in ipairs({"structure_construction_requested_item",
@@ -674,6 +708,7 @@ local function refresh_unfunded_frontier_candidate(pair)
    and not pair.construction_custody_0338
    and type(c.item_name)=="string"
    and (owned_pending_rail_0836(pair,frontier)
+     or owned_pending_locomotive_0836(pair,frontier)
      or not source_for_item(pair,c.item_name))) then return false end
  pair.construction_candidate_0338=nil
  return true
@@ -1235,7 +1270,7 @@ local function finish(pair,task,built,reason)
  if built and task.item_name=="locomotive"
    and task.entity_name=="locomotive"
    and task.site_reason=="original-first-locomotive-0836"
-   and task.request_field=="construction_requested_item"
+   and task.request_field=="construction_request"
    and task.creative_build~=true then
   local mission=pair.remote_rail_outpost_0835
   local state=mission and mission.first_locomotive_0836
@@ -1968,6 +2003,12 @@ function M.service_pair(pair,reason)
    and not authorized_rail_candidate_0836(pair,task) then
   return M.abort_pair(pair,"rail-original-physical-request-stale")
  end
+ if task.site_reason=="original-first-locomotive-0836"
+   and not (task.request_field=="construction_request"
+     and task.request_value==pair.construction_request
+     and owned_pending_locomotive_0836(pair,task.request_value)) then
+  return M.abort_pair(pair,"locomotive-original-physical-request-stale")
+ end
  -- Preexisting real local infrastructure supersedes only this one-time
  -- bootstrap smelter; original item custody returns through 0338.
  if task.entity_name=="tech-priests-emergency-smelter"
@@ -2037,9 +2078,9 @@ function M.service_pair(pair,reason)
   local original_loco=task.item_name=="locomotive"
     and task.entity_name=="locomotive"
     and task.site_reason=="original-first-locomotive-0836"
-    and task.request_field=="construction_requested_item"
+    and task.request_field=="construction_request"
     and first_loco and first_loco.request==task.request_value
-    and pair.construction_requested_item==task.request_value
+    and owned_pending_locomotive_0836(pair,task.request_value)
     and mission.status=="rail-track-established"
   local before=original_rail and item_count(task.source_inv,task.item_name) or nil
   local locomotive_before=original_loco

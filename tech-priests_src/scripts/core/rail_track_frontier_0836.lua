@@ -647,7 +647,7 @@ function M.service_first_locomotive_0836(pair)
       state.blocker="original-0338-locomotive-aborted:"..tostring(last.result)
       return false,state.blocker
     end
-    if pair.construction_requested_item~=state.request
+    if pair.construction_request~=state.request
       and not(pair.construction_task_0338
         and pair.construction_task_0338.request_value==state.request)
       and not(pair.construction_custody_0338
@@ -658,8 +658,24 @@ function M.service_first_locomotive_0836(pair)
     end
     return false,"original-0338-locomotive-in-progress"
   end
-  -- Another active worker or reserved material cannot be preempted.
-  if pair.construction_requested_item or pair.construction_request
+  -- A real, previously refused UNSTARTED local miner has no site or
+  -- material lease. Retain its original writ untouched while the already
+  -- audited rail mission may borrow the separate construction_request slot.
+  -- A funded/placeable miner, another refusal, or any active custody wins.
+  local prior=pair.construction_requested_item
+  local refusal=pair.construction_site_refusal_0338
+  local prior_name=type(prior)=="string" and prior
+    or type(prior)=="table" and (prior.entity_name or prior.item_name)
+  local proto=prior_name and prototypes and prototypes.entity
+    and prototypes.entity[prior_name]
+  local age=refusal and tonumber(refusal.tick)
+  local refused_miner=prior~=nil and proto and proto.type=="mining-drill"
+    and not(type(prior)=="table"
+      and (prior.position or prior.site_position))
+    and type(refusal)=="table" and refusal.field=="construction_requested_item"
+    and refusal.request==prior and refusal.reason=="no-miner-site"
+    and age and age<=now() and now()-age<=600
+  if (prior and not refused_miner) or pair.construction_request
     or pair.construction_task_0338 or pair.construction_custody_0338
     or pair.robot_network_task_0338 or pair.robot_network_request_0338
     or pair.direct_acquisition_custody_0513
@@ -718,13 +734,26 @@ function M.service_first_locomotive_0836(pair)
   if not chosen then
     return false,"native-locomotive-site-not-engine-placeable"
   end
+  -- The original 0469 owner, not the frontier, decides whether a live
+  -- source-less emergency order may yield. Never cancel or modify it.
+  local oq=pair.order_queue_0469
+  if pair.active_order_0469 or (oq and oq.current) then
+    local owner=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+    if not(owner and type(owner.can_yield_uncommitted_rail_0836)=="function")then
+      return false,"locomotive-order-owner-unavailable"
+    end
+    local ok,allowed=pcall(owner.can_yield_uncommitted_rail_0836,pair,nil)
+    if not(ok and allowed==true)then
+      return false,"locomotive-incumbent-order-refused"
+    end
+  end
   local request={item_name="locomotive",entity_name="locomotive",
     category="rail",position=chosen,direction=route.direction,
     site_reason="original-first-locomotive-0836",
     rail_mission_station_unit_0836=m.root_station_unit}
   m.first_locomotive_0836={phase="awaiting-original-0338",
     request=request,position=chosen,issued_tick=now()}
-  pair.construction_requested_item=request
+  pair.construction_request=request
   m.next_step="existing-0338-physical-first-locomotive"
   m.last_update_tick=now()
   return true,"first-locomotive-physical-request-issued"
