@@ -178,6 +178,19 @@ def validate(args):
         wrap_counts=Counter(x.get("pipette_branch_port_id") for x in wraps)
         if not all(wrap_counts[p]>=1 for p in ("A","B","C")):
             raise RuntimeError("Wire Y missing compact branch strain relief")
+        for boot in wraps:
+            if boot.get("pipette_source_recipe")!=(
+                   "tapered-hollow-wire-breakout-boot"):
+                raise RuntimeError("Branch sleeve is an unshaped ring or box")
+            if float(boot.get("pipette_axial_length_bu",0))<=(
+                   receipt["nominal_outer_diameter_bu"]*.8):
+                # Narrow extra lacing ties on the laced variant are allowed,
+                # but three PRIMARY A/B/C sleeves must be properly shaped.
+                if boot.get("pipette_branch_hardware_type") not in {
+                   "additional-harness-lacing"}:
+                    raise RuntimeError("A branch boot is wafer-thin")
+            if float(boot.get("pipette_bore_diameter_bu",0))<=0:
+                raise RuntimeError("Branch sleeve has no real wire passage")
         if json.loads(col.get("pipette_branch_port_counts_json","{}"))!=counts:
             raise RuntimeError("Saved Blender collection changed branching count")
         if int(col.get("pipette_branch_route_count",0))!=8:
