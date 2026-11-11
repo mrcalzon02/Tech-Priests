@@ -331,6 +331,41 @@ function M.verify_pending(pair)
     -- and fail closed after bounded waiting. Active 0338 task/cargo is
     -- handled above and retains its own travel/refund deadlines.
     if pair.construction_request~=pending.request then
+      -- Snapshot FIRST lost original request at the existing physical
+      -- verifier boundary. Never silently call a later unrelated 0338
+      -- terminal build proof of this rail, or create an item to replace it.
+      if not pending.first_loss_snapshot_0836 then
+        local foreign=pair.construction_request
+        local last=pair.construction_last_task_0338
+        local terminal=pending.original_terminal_trace_0836
+        pending.first_loss_snapshot_0836={
+          tick=now(),
+          current_item=type(foreign)=="table" and foreign.item_name or nil,
+          current_site=type(foreign)=="table" and foreign.site_reason or nil,
+          last_item=last and last.item_name or nil,
+          last_result=last and last.result or nil,
+          last_phase=last and last.phase or nil,
+          last_is_original=last and last.request_value==pending.request or false,
+          original_terminal_seen=terminal~=nil,
+          original_terminal_phase=terminal and terminal.phase or nil,
+          original_terminal_reason=terminal and terminal.result or nil,
+          original_debit_before=terminal and terminal.source_before or nil,
+          original_debit_after=terminal and terminal.source_after or nil,
+          original_source_readback=terminal and terminal.source_readback or nil,
+        }
+        if log then
+          log("[Tech-Priests rail-0836] ORIGINAL_REQUEST_LOST"..
+            " tick="..tostring(now())..
+            " current_item="..tostring(pending.first_loss_snapshot_0836.current_item)..
+            " current_site="..tostring(pending.first_loss_snapshot_0836.current_site)..
+            " last_item="..tostring(pending.first_loss_snapshot_0836.last_item)..
+            " last_result="..tostring(pending.first_loss_snapshot_0836.last_result)..
+            " last_original="..tostring(pending.first_loss_snapshot_0836.last_is_original)..
+            " terminal_phase="..tostring(pending.first_loss_snapshot_0836.original_terminal_phase)..
+            " original_debit_before="..tostring(pending.first_loss_snapshot_0836.original_debit_before)..
+            " original_debit_after="..tostring(pending.first_loss_snapshot_0836.original_debit_after))
+        end
+      end
       return reject(m,"pending-original-rail-request-lost")
     end
     local started=tonumber(pending.started_tick)

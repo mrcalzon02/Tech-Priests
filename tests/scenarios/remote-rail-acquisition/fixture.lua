@@ -419,6 +419,42 @@ local function inspect(s,elapsed)
       and p.movement_request_0418.owner)..
     " source_rail="..station.get_inventory(defines.inventory.chest)
       .get_item_count("rail"))
+  -- One real native-source/depot census at the existing strict checkpoints.
+  -- A rail returned to the depot is not necessarily missing or spent;
+  -- never infer a built rail from one station's inventory decrement.
+  local depot=surface.find_entity("steel-chest",
+    {x=-8,y=s.station_y+8})
+  local depot_inv=depot and depot.valid
+    and depot.get_inventory(defines.inventory.chest) or nil
+  local depot_rails=depot_inv and depot_inv.valid
+    and depot_inv.get_item_count("rail") or nil
+  local terminal=pending and pending.original_terminal_trace_0836
+  local lost=pending and pending.first_loss_snapshot_0836
+  emit("RAIL_ORIGINAL_CUSTODY_DIAG elapsed="..elapsed..
+    " station_rail="..station.get_inventory(defines.inventory.chest)
+      .get_item_count("rail")..
+    " depot_rail="..tostring(depot_rails)..
+    " current_request_item="..tostring(p.construction_request
+      and p.construction_request.item_name)..
+    " current_request_site="..tostring(p.construction_request
+      and p.construction_request.site_reason)..
+    " last_receipt_item="..tostring(receipt and receipt.item_name)..
+    " last_receipt_original="..tostring(receipt and pending
+      and receipt.request_value==pending.request)..
+    " original_terminal_phase="..tostring(terminal and terminal.phase)..
+    " original_terminal_reason="..tostring(terminal and terminal.result)..
+    " original_terminal_owned="..tostring(terminal
+      and terminal.request_owned_before_clear)..
+    " original_debit_before="..tostring(terminal and terminal.source_before)..
+    " original_debit_after="..tostring(terminal and terminal.source_after)..
+    " original_source_readback="..tostring(terminal
+      and terminal.source_readback)..
+    " original_held="..tostring(terminal and terminal.carried_remaining)..
+    " original_built_name="..tostring(terminal and terminal.built_name)..
+    " original_built_unit="..tostring(terminal and terminal.built_unit)..
+    " first_loss_tick="..tostring(lost and lost.tick)..
+    " first_loss_last_item="..tostring(lost and lost.last_item)..
+    " first_loss_last_original="..tostring(lost and lost.last_is_original))
   -- A route objective and even a ghost are not physically placed rail.
   -- The first acceptance requires a real segment with the exact unit
   -- recorded by the 0836 frontier AFTER canonical 0338 construction.

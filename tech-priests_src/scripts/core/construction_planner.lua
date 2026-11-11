@@ -961,6 +961,35 @@ local function finish(pair,task,built,reason)
      request.factory_component_recipe_1150)
   end
  end
+ -- Preserve the original 0836 writ's terminal fate BEFORE 0338 clears its
+ -- request and another build overwrites the generic last-task receipt.
+ -- Only native readbacks and primitive values; this trace never grants rail
+ -- credit or restores items.
+ if marked_rail_request_0836(task) then
+  local mission=pair.remote_rail_outpost_0835
+  local pending=mission and mission.pending_rail_0836
+  if pending and pending.request==task.request_value then
+   local debit=task.original_rail_source_debit_0836
+   local source_now=nil
+   if task.source_inv and task.source_inv.valid then
+    source_now=item_count(task.source_inv,task.item_name)
+   end
+   pending.original_terminal_trace_0836={
+    tick=now(),result=reason,phase=built and "complete" or "aborted",
+    request_owned_before_clear=pair.construction_request==task.request_value,
+    item_name=task.item_name,source_label=task.source_label,
+    source_unit=debit and debit.source_unit or nil,
+    source_before=debit and debit.before or nil,
+    source_after=debit and debit.after or nil,
+    source_readback=source_now,
+    carried_remaining=task.carried and task.carried.count or nil,
+    built_name=valid(built) and built.name or nil,
+    built_unit=valid(built) and built.unit_number or nil,
+    built_position=valid(built) and {
+     x=built.position.x,y=built.position.y} or nil,
+   }
+  end
+ end
  if built then clear_request(pair,task)end
  -- A physically debited second starter must reach its source inventory
  -- before the obsolete non-ghost commissioning request is retired.

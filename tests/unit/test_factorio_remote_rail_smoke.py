@@ -355,6 +355,36 @@ class NativeRailDurablePaidReceiptTests(unittest.TestCase):
         self.assertNotIn('surface.create_entity{name="straight-rail"', source)
 
 
+class NativeRailFirstLossCustodyTraceTests(unittest.TestCase):
+    def test_exact_original_builder_captures_terminal_before_generic_clear(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        source = (root / "tech-priests_src/scripts/core/construction_planner.lua"
+                  ).read_text(encoding="utf-8")
+        trace = source.index("pending.original_terminal_trace_0836={")
+        clear = source.index("if built then clear_request(pair,task)end", trace)
+        self.assertLess(trace, clear)
+        self.assertIn("pending.request==task.request_value", source[trace-650:trace])
+        self.assertIn("source_readback=source_now", source[trace:trace+900])
+        self.assertIn("request_owned_before_clear=", source[trace:trace+900])
+        self.assertIn("original_rail_source_debit_0836", source)
+        self.assertNotIn("pending.original_paid_completion_0836={\\n    phase", source)
+
+    def test_first_lost_writ_is_fail_closed_and_censuses_real_depot_stock(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        frontier = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
+                    ).read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua"
+                   ).read_text(encoding="utf-8")
+        self.assertIn("if not pending.first_loss_snapshot_0836 then", frontier)
+        self.assertIn("last_is_original=last and last.request_value==pending.request", frontier)
+        self.assertIn('return reject(m,"pending-original-rail-request-lost")', frontier)
+        self.assertIn('surface.find_entity("steel-chest",', fixture)
+        self.assertIn('get_item_count("rail")', fixture)
+        self.assertIn("RAIL_ORIGINAL_CUSTODY_DIAG elapsed=", fixture)
+        self.assertIn('fail("RAIL_FIRST_ENGINE_CONSTRUCTION_NOT_PROVEN"', fixture)
+        self.assertIn('fail("TWO_NATIVE_CONNECTED_COUNTED_RAILS_NOT_PROVEN"', fixture)
+
+
 class NativeRailTerminalReceiptHandoffTests(unittest.TestCase):
     def test_original_paid_rail_receipt_reconciled_before_0338_overwrites_it(self):
         root = pathlib.Path(__file__).resolve().parents[2]
