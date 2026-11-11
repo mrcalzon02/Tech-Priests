@@ -1014,6 +1014,117 @@ function M.service_first_train_fuel_0836(pair)
   return called and accepted==true,state.last_attempt_reason
 end
 
+-- First 0836 native Magos boarding. A script receipt is not an onboard
+-- passenger: 0418 must move the SAME original priest close to the real train,
+-- and Factorio must return that LuaEntity from the locomotive driver socket.
+function M.service_first_train_board_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  local loco=m and m.first_locomotive_0836
+  local wagon=m and m.first_wagon_0836
+  local fuel=m and m.first_fuel_0836
+  local entity=loco and loco.built_entity
+  local priest=pair and pair.priest
+  if not(eligible(pair,m) and m.status=="rail-track-established"
+      and m.rail_frontier_0836
+      and m.rail_frontier_0836.chain_audit_completed_tick_0836
+      and loco and loco.phase=="native-paid-locomotive-verified"
+      and wagon and wagon.phase=="native-paid-wagon-verified"
+      and fuel and fuel.phase=="native-paid-locomotive-fueled"
+      and valid(entity) and entity.unit_number==loco.built_unit
+      and valid(wagon.built_entity) and wagon.built_entity.unit_number==wagon.built_unit
+      and valid(priest) and priest.unit_number==pair.priest.unit_number
+      and entity.surface==priest.surface and entity.force==priest.force
+      and entity.train and entity.train.valid
+      and wagon.built_entity.train and wagon.built_entity.train.valid
+      and entity.train.id==wagon.built_entity.train.id)then
+    return false,"original-fueled-train-and-priest-unavailable"
+  end
+  local state=m.first_board_0836 or {phase="awaiting-physical-approach"}
+  m.first_board_0836=state
+  local train=entity.train
+  if math.abs(tonumber(train.speed)or 0)>0.01 then
+    state.last_blocker="original-train-not-stationary"
+    return false,state.last_blocker
+  end
+  local ok,driver=pcall(function()return entity.get_driver()end)
+  if not ok then
+    state.last_blocker="native-train-driver-read-unavailable"
+    return false,state.last_blocker
+  end
+  if driver and driver~=priest then
+    state.last_blocker="native-train-driver-occupied"
+    return false,state.last_blocker
+  end
+  if driver==priest then
+    state.phase="native-original-magos-boarded"
+    state.priest_unit=priest.unit_number
+    state.locomotive_unit=entity.unit_number
+    state.wagon_unit=wagon.built_unit
+    state.train_id=train.id
+    state.confirmed_tick=state.confirmed_tick or now()
+    pair.train_transport_rail_0835={
+      train_id=train.id,boarded_priest_unit=priest.unit_number,
+      physical_boarding_confirmed=true,boarded_tick=state.confirmed_tick,
+      locomotive_unit=entity.unit_number,wagon_unit=wagon.built_unit}
+    m.next_step="native-rail-expedition-outbound"
+    return false,"native-original-magos-onboard"
+  end
+  if pair.construction_task_0338 or pair.construction_custody_0338
+      or pair.machine_logistics_custody_0528
+      or pair.direct_acquisition_custody_0513
+      or pair.inventory_transfer_custody_0687
+      or pair.defense_task_0259 then
+    state.last_blocker="boarding-foreign-physical-custody"
+    return false,state.last_blocker
+  end
+  local machine=pair.machine_logistics_0528
+  if type(machine)=="table" and machine.phase
+      and machine.phase~="complete" and machine.phase~="failed" then
+    state.last_blocker="boarding-machine-logistics-still-active"
+    return false,state.last_blocker
+  end
+  local request=pair.movement_request_0418
+  if request and request.owner~="rail-track-frontier-0836" then
+    state.last_blocker="boarding-foreign-movement-owned"
+    return false,state.last_blocker
+  end
+  local dx=priest.position.x-entity.position.x
+  local dy=priest.position.y-entity.position.y
+  local distance_sq=dx*dx+dy*dy
+  state.last_distance_sq=distance_sq
+  if distance_sq>3.3*3.3 then
+    local move=rawget(_G,"tech_priests_request_movement_0418")
+    if type(move)~="function"then
+      state.last_blocker="boarding-canonical-movement-unavailable"
+      return false,state.last_blocker
+    end
+    local called,accepted,why=pcall(move,pair,entity.position,
+      "original-train-physical-boarding-0836",{
+        owner="rail-track-frontier-0836",priority=710,
+        ttl=60*8,radius=2.5,
+        distraction=defines and defines.distraction and defines.distraction.none})
+    state.phase="approaching-native-train"
+    state.last_blocker=called and tostring(why or accepted)
+      or "boarding-canonical-movement-error"
+    return called and accepted==true,state.last_blocker
+  end
+  if now()<(tonumber(state.retry_after_tick)or 0)then
+    return false,state.last_blocker or "native-boarding-retry-bounded"
+  end
+  state.last_priest_type=priest.type
+  local boarded,why=pcall(function()entity.set_driver(priest)end)
+  local read,actual=pcall(function()return entity.get_driver()end)
+  if not(boarded and read and actual==priest and valid(priest)
+      and priest.unit_number==pair.priest.unit_number)then
+    state.last_blocker=boarded and "native-driver-did-not-bind-original-priest"
+      or "native-driver-refused:"..tostring(why)
+    state.retry_after_tick=now()+300
+    state.phase="native-boarding-refused"
+    return false,state.last_blocker
+  end
+  return M.service_first_train_board_0836(pair)
+end
+
 function M.service_pair(pair)
   local m=pair and pair.remote_rail_outpost_0835
   if not m then return false,"no-rail-mission"end
@@ -1030,6 +1141,10 @@ function M.service_pair(pair)
     if loco and loco.phase=="native-paid-locomotive-verified"then
       local wagon=m.first_wagon_0836
       if wagon and wagon.phase=="native-paid-wagon-verified" then
+        local fuel=m.first_fuel_0836
+        if fuel and fuel.phase=="native-paid-locomotive-fueled" then
+          return M.service_first_train_board_0836(pair)
+        end
         return M.service_first_train_fuel_0836(pair)
       end
       return M.service_first_wagon_0836(pair)

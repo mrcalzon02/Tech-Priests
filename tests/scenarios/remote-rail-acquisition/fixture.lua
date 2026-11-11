@@ -818,6 +818,31 @@ local function inspect(s,elapsed)
     " candidate_expiry="..tostring(train_candidate and train_candidate.expires_tick)..
     " construction_active="..tostring(p.construction_task_0338~=nil)..
     " movement_owner="..tostring(p.movement_request_0418 and p.movement_request_0418.owner))
+  -- Read the actual engine driver, not the rail mission's assertion.
+  local first_board=objective and objective.first_board_0836
+  local native_driver
+  local driver_read=false
+  if loco_entity and loco_entity.valid then
+    driver_read,native_driver=pcall(function()
+      return loco_entity.get_driver()
+    end)
+  end
+  local contact_sq
+  if loco_entity and loco_entity.valid then
+    local x=p.priest.position.x-loco_entity.position.x
+    local y=p.priest.position.y-loco_entity.position.y
+    contact_sq=x*x+y*y
+  end
+  emit("BOARD_NATIVE_0836 elapsed="..elapsed..
+    " phase="..tostring(first_board and first_board.phase)..
+    " priest_type="..tostring(p.priest.type)..
+    " priest_unit="..tostring(p.priest.unit_number)..
+    " native_driver_read="..tostring(driver_read)..
+    " real_original_driver="..tostring(native_driver==p.priest)..
+    " contact_sq="..tostring(contact_sq)..
+    " retry_after="..tostring(first_board and first_board.retry_after_tick)..
+    " blocker="..tostring(first_board and first_board.last_blocker)..
+    " movement_owner="..tostring(p.movement_request_0418 and p.movement_request_0418.owner))
   local drills=surface.find_entities_filtered{
     type="mining-drill",
     area={{s.natural_ore_x-32,s.natural_ore_y-24},
@@ -835,10 +860,14 @@ local function inspect(s,elapsed)
       if loco.position.x>=s.natural_ore_x-37 then s.outbound=true end
       if s.outbound and loco.position.x<=28 then s.returned=true end
       local ride=p.train_transport_rail_0835
+      local native_boarded=false
+      local observed,actual_driver=pcall(function()return loco.get_driver()end)
+      native_boarded=observed and actual_driver==p.priest
       if ride and ride.train_id==train.id
           and ride.boarded_priest_unit==p.priest.unit_number
           and ride.physical_boarding_confirmed==true
-          and ride.disembark_confirmed~=true then
+          and ride.disembark_confirmed~=true
+          and native_boarded then
         -- A valid, matching train lease is recorded, but actual onboard
         -- capability remains an independent requirement of the executor.
         s.ride_proof=true

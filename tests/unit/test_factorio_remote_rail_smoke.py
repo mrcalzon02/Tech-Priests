@@ -1171,3 +1171,38 @@ class NativePaidTrainFuel0836ContractTests(unittest.TestCase):
                        "other-machine-candidate-owned",
                        "no-counted-original-coal-or-fuel-not-needed"):
             self.assertIn(marker,section)
+
+
+class NativeOriginalMagosBoarding0836ContractTests(unittest.TestCase):
+    """Native driver readback, not flags or script relocation, proves boarding."""
+    def test_original_priest_can_board_only_at_real_train_contact(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        src=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        section=src.split("function M.service_first_train_board_0836(pair)",1)[1].split("function M.service_pair(pair)",1)[0]
+        for marker in ('fuel.phase=="native-paid-locomotive-fueled"',
+                       'loco.phase=="native-paid-locomotive-verified"',
+                       'wagon.phase=="native-paid-wagon-verified"',
+                       'entity.train.id==wagon.built_entity.train.id',
+                       "driver and driver~=priest",
+                       "pair.machine_logistics_custody_0528",
+                       "pair.direct_acquisition_custody_0513",
+                       "pair.construction_custody_0338",
+                       'distance_sq>3.3*3.3',
+                       '"tech_priests_request_movement_0418"',
+                       "entity.set_driver(priest)",
+                       "actual==priest",
+                       "priest.unit_number==pair.priest.unit_number",
+                       "retry_after_tick=now()+300",
+                       "physical_boarding_confirmed=true"):
+            self.assertIn(marker,section)
+        for bypass in ("teleport","surface.create_entity","train.speed="):
+            self.assertNotIn(bypass,section)
+        self.assertIn("return M.service_first_train_board_0836(pair)",src)
+        self.assertIn("BOARD_NATIVE_0836 elapsed=",fixture)
+        self.assertIn("native_boarded=observed and actual_driver==p.priest",fixture)
+        self.assertIn("and native_boarded then",fixture)
+        for gate in ("TRAIN_NOT_NATIVE_FUELED",
+                     "MAGOS_PHYSICAL_TRAIN_RIDE_NOT_PROVEN",
+                     "NO_GENUINE_ORE_DELIVERED_BY_RAIL"):
+            self.assertIn(gate,fixture)
