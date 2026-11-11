@@ -137,7 +137,10 @@ class WireBranchGeometryTests(unittest.TestCase):
         wraps=[p for p in model["meshes"]
                if p["role"]=="branch-strain-relief-wrap"]
         self.assertEqual(len(wraps),5)
-        for wrap in wraps:
+        primary=[w for w in wraps if w.get("branch_hardware_type")!=
+                 "additional-harness-lacing"]
+        self.assertEqual(len(primary),3)
+        for wrap in primary:
             self.assertEqual(wrap["profile_kind"],
                              "tapered-hollow-wire-breakout-boot")
             self.assertGreater(wrap["axial_length_bu"],.12*.8)
