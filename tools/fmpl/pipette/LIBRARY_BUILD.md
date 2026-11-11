@@ -57,6 +57,21 @@ For a true-hollow historical pipe Y, change `--architecture pipe_lead_historical
 
 To use a production FMPL material instead of an unapproved preview, pass `--source-blend path/to/approved.blend --material-name "exact approved FMPL material ID"` and **omit** `--preview-only`. The builder will fail rather than silently replace missing approved materials.
 
+## Typed fitting construction (21 initial joint types)
+
+The new `library_fittings.py` implements **21 actual editable connector part recipes** from the larger 77-entry joint registry, including flanges with six individually placed fasteners, hex compression fittings, raised helical threads, hose barbs/clamps, electrical glands, ring lugs with conductive tangs, eight-contact terminal blocks, rebar sleeves, and mechanical clevis/turnbuckle parts. They use the same exact public socket XYZ/normals as the construction examples and reject incompatible type/payload matches. The Blender adapter now chooses these typed fitting meshes when available; unimplemented types remain clearly unapproved placeholders rather than silent substitutions.
+
+Pure Python fitting-only OBJ example:
+
+```bash
+python tools/fmpl/pipette/library_fittings.py \\
+  --architecture conduit_fmc_interlocked \\
+  --joint flex_conduit_connector --topology wye --port A \\
+  --out-obj /tmp/fmc-captured-fitting.obj
+```
+
+The 14 checks in `test_library_fittings.py` inspect real fitting meshes, visibility of eight terminals and preserved fixed port coordinates. These added fittings have NOT yet passed a separate native Blender visual approval.
+
 ## Test and proof gates
 
 `test_library_geometry.py` verifies actual topology, helical-versus-annular geometry, open spiral gaps, split-wall construction, natural single- and eight-wire sag, seven-strand winding, exact fixture socket positions, identical diameter at terminal mouths, and refusal to overwrite exports. These tests are pure-Python mesh tests, not substitutes for native Blender readback. The optional `architecture_gallery=true` request in the existing `Dens-Mortis` `fmpl-pipette` mode runs eight hardcoded Blender/Cycles cases and independent verification, without adding any workflow or accepting arbitrary executable parameters.
