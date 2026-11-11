@@ -493,9 +493,12 @@ def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
     bpy.context.scene.frame_set(1)
 
 
-def pack_apng(frames, dest):
+def pack_apng(frames, dest, playback_fps=None):
     """Pure-stdlib APNG. A real sequence of rendered PNGs, no 2D fabrication."""
     signature = b"\x89PNG\r\n\x1a\n"
+    fps=FPS if playback_fps is None else int(playback_fps)
+    if fps<1 or fps>120:
+        raise RuntimeError("Unsupported native Blender APNG preview playback fps")
     def parse(p):
         data = p.read_bytes()
         if not data.startswith(signature):
@@ -526,7 +529,7 @@ def pack_apng(frames, dest):
     out += chunk(b"acTL", struct.pack(">II", len(frames),0))
     seq = 0
     for idx,parts in enumerate(all_chunks):
-        out += chunk(b"fcTL", struct.pack(">IIIIIHHBB", seq,w,h,0,0,1,FPS,0,0))
+        out += chunk(b"fcTL", struct.pack(">IIIIIHHBB", seq,w,h,0,0,1,fps,0,0))
         seq += 1
         ids = [payload for tag,payload in parts if tag==b"IDAT"]
         if not ids:
