@@ -91,7 +91,9 @@ class TypedFittingGeometryTests(unittest.TestCase):
         self.assertEqual({p["role"] for p in parts},
                          {"flat-ring-lug","wire-crimp-barrel",
                           "solid-lug-bridge"})
-        self.assertTrue(all(p["true_open_bore"] for p in parts))
+        self.assertEqual(sum(p["true_open_bore"] for p in parts),2)
+        self.assertFalse(next(p for p in parts if p["role"]=="solid-lug-bridge")
+                         ["true_open_bore"])
 
     def test_eight_terminal_contacts_are_outside_visible_housing_face(self):
         parts=self.model("wire_eight_loose_bundle","terminal_block")
