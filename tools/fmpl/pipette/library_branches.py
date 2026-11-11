@@ -66,12 +66,13 @@ def _ferrule(endpoint, tangent, nominal_od, architecture_id,
     axis=geom.unit(tangent)
     # Eight-wire insulated strand OD is 0.115 of the comparison OD.
     conductor_od=nominal_od*.115
-    ferrule_od=conductor_od*1.22
+    # Ferrule bore must clear the insulated strand: 1.37 * .80 = 1.096.
+    ferrule_od=conductor_od*1.37
     # Confine small sleeve to the first 0.025 BU at each visible wire end;
     # its center does NOT alter the canonical public port XYZ.
     depth=nominal_od*.20
     inner=geom.plus(endpoint,geom.mult(axis,depth if at_port=="input" else -depth))
-    part=geom.tube([endpoint,inner],ferrule_od,.22,"smooth",
+    part=geom.tube([endpoint,inner],ferrule_od,.20,"smooth",
                    "Crimp ferrule %s conductor %02d"%(at_port,conductor_index+1),
                    architecture_id,sides=12)
     part["role"]="individual-conductor-ferrule"
@@ -193,7 +194,7 @@ def build_eight_wire_y(architecture_id, topology_record, nominal_od=.12):
         direction=geom.unit(geom.sub(q,h))
         center=_mean(exit_sites[target])
         meshes.append(_hollow_wrap(center,direction,
-            nominal_od*.64,nominal_od*.17,arch,
+            nominal_od*.72,nominal_od*.17,arch,
             "Compact four-wire %s branch sleeve"%target,target,4,
             "four-wire-branch-heatshrink"))
     if laced:
