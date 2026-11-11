@@ -1,0 +1,140 @@
+{
+  "schema": "fmpl.pipette.branch-junctions.v1",
+  "status": "typed-construction-not-electrical-or-mechanical-certification",
+  "description": "Distinct multiport branch assemblies, separate from endpoint fittings. No cubic fallback is allowed for any carrier.",
+  "fixture": "comparison_fixture.v1.json",
+  "base_port_rules": [
+    "Public XYZ and outward normals are immutable and shared with fluid Y, hose Y and other source architectures.",
+    "8-conductor harness has 8 wires at A and 4 at B plus 4 at C; no hidden wire cloning or electrical bus tapping.",
+    "Individual conductor endpoints can be offset inside the public socket envelope, not moved outside it.",
+    "Missing branch architecture is a flagged incomplete preview, never a filled cube or a valid joint claim."
+  ],
+  "branch_references": [
+    {
+      "id": "eight_wire_loose_y",
+      "carrier": "wire_eight_loose_bundle",
+      "topologies": [
+        "wye",
+        "tee"
+      ],
+      "implementation": "constructed_procedural_geometry_native_proof_pending",
+      "module": "library_branches.py",
+      "builder": "build_eight_wire_y",
+      "port_counts": {
+        "A": 8,
+        "B": 4,
+        "C": 4
+      },
+      "real_continuous_wire_count": 8,
+      "mini_ferrules": 16,
+      "strain_relief_wraps": 3,
+      "allowed_joint_family": "individual-conductor-mini-ferrules-with-three-group-wraps",
+      "status": "real editable mesh, no electrical certificate"
+    },
+    {
+      "id": "eight_wire_laced_y",
+      "carrier": "wire_eight_laced_loom",
+      "topologies": [
+        "wye",
+        "tee"
+      ],
+      "implementation": "constructed_procedural_geometry_native_proof_pending",
+      "module": "library_branches.py",
+      "builder": "build_eight_wire_y",
+      "port_counts": {
+        "A": 8,
+        "B": 4,
+        "C": 4
+      },
+      "real_continuous_wire_count": 8,
+      "mini_ferrules": 16,
+      "strain_relief_wraps": 5,
+      "allowed_joint_family": "laced-retaining-ties-and-ferrules",
+      "status": "real editable mesh, no electrical certificate"
+    },
+    {
+      "id": "two_wire_insulated_splice",
+      "carrier": "wire_single_insulated_solid",
+      "topologies": [
+        "wye",
+        "tee"
+      ],
+      "implementation": "indexed_not_constructed",
+      "allowed_joint_family": "deliberate-rated-looking-conductor-splice",
+      "status": "requires separate electrical splice model and explicit net semantics"
+    },
+    {
+      "id": "four_conductor_breakout",
+      "carrier": "wire_bundle",
+      "topologies": [
+        "wye",
+        "tee"
+      ],
+      "implementation": "indexed_not_constructed",
+      "allowed_joint_family": "laced-grommeted-four-core-splitter",
+      "status": "requires counted conductors and connector profile"
+    },
+    {
+      "id": "eight_wire_jacketed_heatshrink",
+      "carrier": "wire_eight_sheathed",
+      "topologies": [
+        "wye",
+        "tee"
+      ],
+      "implementation": "indexed_not_constructed",
+      "allowed_joint_family": "molded-heatshrink-three-lobe-jacket-transition",
+      "status": "requires combined Y jacket with real individual wire continuity"
+    },
+    {
+      "id": "metal_conduit_junction",
+      "carrier": "conduit_fmc_interlocked",
+      "topologies": [
+        "wye",
+        "tee"
+      ],
+      "implementation": "indexed_not_constructed",
+      "allowed_joint_family": "measured-box-with-three-conduit-glands",
+      "status": "requires host-verified mounting, not floating generic box"
+    },
+    {
+      "id": "hollow_pipe_Y",
+      "carrier": "rigid_pipe",
+      "topologies": [
+        "wye",
+        "tee"
+      ],
+      "implementation": "native_CSG_builder_separately_verified",
+      "module": "library_blender.py",
+      "builder": "build_fluid_branch",
+      "allowed_joint_family": "single-connected-hollow-wall-manifold",
+      "status": "fluidbox integration not yet verified"
+    },
+    {
+      "id": "fiber_Y",
+      "carrier": "wire_optical_bundle",
+      "topologies": [
+        "wye",
+        "tee"
+      ],
+      "implementation": "indexed_not_constructed",
+      "allowed_joint_family": "real optical splitter/patch enclosure",
+      "status": "do not duplicate fiber optical signals with bare cable forks"
+    }
+  ],
+  "do_not_auto_infer": [
+    "electrical_net_connection",
+    "fluidbox_contact",
+    "rated_power",
+    "tensile_support",
+    "pressure_capacity",
+    "host_socket_authenticity"
+  ],
+  "approval_gates": [
+    "pure Python conductor mesh continuity tests",
+    "independent Blender/GLB reopen",
+    "pixel-backed visible Cycles proof",
+    "explicit rejection of all solid generic Y cubes",
+    "provenance-and-material validation",
+    "user visual inspection"
+  ]
+}
