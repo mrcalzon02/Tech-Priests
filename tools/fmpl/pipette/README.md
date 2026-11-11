@@ -1,6 +1,6 @@
 # Pipette — Blender-unit typed tubing, wiring and coupling planner
 
-The first physically modeled connector library is `library_fittings.py`: **21 editable fitting recipes** out of the 77 indexed joint types, with explicit type-compatible selection and a separate `test_library_fittings.py`. [Construction and validation instructions](LIBRARY_BUILD.md) include a standalone OBJ fitting example. Native approvals remain pending.
+The first physically modeled connector library is `library_fittings.py`: **25 editable fitting recipes** out of the 77 indexed joint types, with explicit type-compatible selection and a separate `test_library_fittings.py`. [Construction and validation instructions](LIBRARY_BUILD.md) include a standalone OBJ fitting example. Native approvals remain pending.
 
 ### Executable geometry construction (25 recipes, current slice)
 
