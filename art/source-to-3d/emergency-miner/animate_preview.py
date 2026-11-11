@@ -423,10 +423,13 @@ def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
             # The light is never visible as a rectangle panning over steel.
             # A faint sweep translates a few millimeters INSIDE each slot.
             for i,(glow,alpha,light) in enumerate(vent_lights):
-                center_phase=(.35+.068*i) if label=="A" else (.27+.047*i)
-                first=wrap_bell(phase,center_phase,.074 if label=="A" else .043)
-                second=wrap_bell(phase,center_phase+.38,.051)
-                intensity=min(1.,first+.65*second)
+                # Deliberate left-to-right lamp sequencing WITHIN vent
+                # apertures: narrower, non-overlapping scan beats rather than
+                # three large simultaneous flares on the maintenance plate.
+                center_phase=(.30+.095*i) if label=="A" else (.25+.070*i)
+                first=wrap_bell(phase,center_phase,.050 if label=="A" else .035)
+                second=wrap_bell(phase,center_phase+(.40 if label=="A" else .36),.040)
+                intensity=min(1.,first+.38*second)
                 key_value(alpha,frame,VENT_ALPHA_MAX*intensity)
                 light.data.energy=VENT_POINT_ENERGY_MAX*intensity
                 light.data.keyframe_insert(data_path="energy",frame=frame)
