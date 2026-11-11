@@ -7,9 +7,11 @@ from .core import PipetteError, SIZE_PRESETS, infer_family_candidates, plan
 from .library_geometry import RECIPES, build_demo, export_obj, line_segment
 from .library_fittings import FITTING_RECIPES, build as build_fitting
 from .library_branches import build_eight_wire_y
+from .library_forms import SUPPORTED as FORM_RECIPES, generate as build_carrier_form
 
 __all__ = [
     "PipetteError", "SIZE_PRESETS", "infer_family_candidates", "plan",
     "RECIPES", "build_demo", "export_obj", "line_segment",
-    "FITTING_RECIPES", "build_fitting", "build_eight_wire_y"
+    "FITTING_RECIPES", "build_fitting", "build_eight_wire_y",
+    "FORM_RECIPES", "build_carrier_form"
 ]
