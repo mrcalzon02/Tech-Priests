@@ -18,6 +18,7 @@ from pathlib import Path
 
 import bpy
 from mathutils import Vector
+from mathutils.bvhtree import BVHTree
 
 HERE=Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -126,6 +127,18 @@ def _world_bounds(obj):
             "location":[round(float(v),5) for v in obj.location]}
 
 
+def _nearest_surface_gap(ob, xyz):
+    """Shortest distance to an ACTUAL triangle, not sparse mesh vertices."""
+    bpy.context.view_layer.update()
+    tree=BVHTree.FromObject(ob,bpy.context.evaluated_depsgraph_get())
+    probe=Vector(xyz)
+    local=ob.matrix_world.inverted_safe() @ probe
+    hit,normal,face,distance=tree.find_nearest(local)
+    if hit is None:
+        raise RuntimeError("CSG mesh has no queryable surface triangles")
+    return (ob.matrix_world @ hit-probe).length
+
+
 def boolean(target, tool, operation):
     # Printed receipts are intended to diagnose CSG lost-arm failures.
     print("PIPETTE_CSG_BEFORE",operation,json.dumps({
@@ -190,10 +203,11 @@ def build_fluid_branch(collection, model, approved_material):
         root=boolean(root,outer_arm,"UNION")
         # Validate *after each union* that all already placed full-length
         # arms remain present, not merely that a mesh is nonempty.
-        vertices=[root.matrix_world@v.co for v in root.data.vertices]
         probe=h.lerp(q,.78)
-        if min((v-probe).length for v in vertices)>radius*1.8:
-            raise RuntimeError("CSG union lost a newly added pipe leg "+p["id"])
+        gap=_nearest_surface_gap(root,probe)
+        if gap>radius*1.8:
+            raise RuntimeError("CSG union lost a newly added pipe leg "+
+                               p["id"]+"; surface gap %.4f BU"%gap)
     for p in ports:
         q=Vector(p["xyz_bu"])
         d=(q-h).normalized()
