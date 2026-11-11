@@ -70,7 +70,7 @@ def _ferrule(endpoint, tangent, nominal_od, architecture_id,
     # Confine small sleeve to the first 0.025 BU at each visible wire end;
     # its center does NOT alter the canonical public port XYZ.
     depth=nominal_od*.20
-    inner=geom.plus(endpoint,geom.mult(axis,-depth if at_port=="input" else depth))
+    inner=geom.plus(endpoint,geom.mult(axis,depth if at_port=="input" else -depth))
     part=geom.tube([endpoint,inner],ferrule_od,.22,"smooth",
                    "Crimp ferrule %s conductor %02d"%(at_port,conductor_index+1),
                    architecture_id,sides=12)
