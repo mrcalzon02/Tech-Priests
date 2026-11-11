@@ -43,6 +43,11 @@ def main(folder, variant):
     assert_clean(scene,profile,bpy)
     if scene.get("emergency_miner_v22_applied") is not True:
         raise RuntimeError("Owner V22 console/capacitor geometry was not applied")
+    if scene.get("emergency_miner_v24_applied") is not True:
+        raise RuntimeError("Owner V24 lower-middle-chassis gap was not applied")
+    record=json.loads(scene.get("owner_v24_middle_drop_report","{}"))
+    if abs(float(record.get("gap_increase",-100))-.012)>1e-5:
+        raise RuntimeError("Real console gap did not widen by exactly 0.012 units")
     if scene.get("study_variant") != variant:
         raise RuntimeError("Saved variant identity mismatch")
     if scene.get("visual_approval") != "PENDING":
@@ -118,10 +123,29 @@ def main(folder, variant):
            o.get("v23_effect_profile")!="BOUND_TO_EXISTING_VENT_DARK_WELL"
            for o in vent_lights):
         raise RuntimeError("V23 restrained vent glow profile not restored")
-    if any(o.get("max_alpha")!=.22 or
+    if any(o.get("max_alpha")!=.32 or
            o.get("v23_effect_profile")!="NARROW_RECESSED_JOINT_STROBE"
            for o in gap):
         raise RuntimeError("V23 restrained console-chassis light profile not restored")
+    spill_lights=[bpy.data.objects.get("FX ONLY | middle chassis red spill %d"%i)
+                  for i in range(3)]
+    expected=(1.0,.028,.008)
+    def check_red(actual,name):
+        if any(abs(float(actual[i])-expected[i])>1e-5 for i in range(3)):
+            raise RuntimeError("Non-red laser effect found: "+name)
+    if any(ob is None or ob.type!="LIGHT" or ob.data.type!="AREA"
+           or ob.get("v24_light_role")!="DOWNWARD_RED_SPILL_ON_EXISTING_MIDDLE_CHASSIS"
+           or ob.get("no_visible_surface_mesh") is not True
+           for ob in spill_lights):
+        raise RuntimeError("Exactly three real chassis-directed red spill lights required")
+    for i,ob in enumerate(spill_lights):
+        check_red(ob.data.color,ob.name)
+        if abs(float(ob.get("max_energy",-1))-.42)>1e-6:
+            raise RuntimeError("Red spill area intensity cap drift")
+        if ob.get("source_gap_segment")!=i:
+            raise RuntimeError("Spill moved away from paired console gap")
+    for ob in point_lights:
+        check_red(ob.data.color,ob.name)
     def mix_alpha(obj):
         shader=obj.data.materials[0].node_tree.nodes
         mix=next((node for node in shader if node.type=="MIX_SHADER"),None)
@@ -131,6 +155,7 @@ def main(folder, variant):
         strength=float(emit.inputs["Strength"].default_value)
         if not (1.95 <= strength <= 2.11):
             raise RuntimeError("V23 emission shader intensity escaped bounds: "+str(strength))
+        check_red(emit.inputs["Color"].default_value,obj.name)
         return float(mix.inputs[0].default_value)
     strobe_evidence=[]
     for f in list(range(1,97,6))+[97]:
@@ -140,13 +165,17 @@ def main(folder, variant):
             vi=mix_alpha(bpy.data.objects["FX ONLY | vent aperture laser glow %d"%i])
             gi=mix_alpha(bpy.data.objects["FX ONLY | console-middle-chassis joint leakage %d"%i])
             power=float(point_lights[i].data.energy)
-            if not (0<=vi<=.601 and 0<=gi<=.221 and 0<=power<=.701):
+            spill=float(spill_lights[i].data.energy)
+            if not (0<=vi<=.601 and 0<=gi<=.321 and
+                    0<=power<=.701 and 0<=spill<=.421):
                 raise RuntimeError("V23 vent/joint brightness budget exceeded")
-            if abs(vi/.60-gi/.22)>.011:
+            if abs(vi/.60-gi/.32)>.011:
                 raise RuntimeError("Console-joint and vent strobe patterns drifted apart")
             if abs(vi/.60-power/.70)>.011:
                 raise RuntimeError("Light power does not share vent strobe envelope")
-            strobe_evidence.append([f,i,round(vi,4),round(gi,4),round(power,4)])
+            if abs(vi/.60-spill/.42)>.011:
+                raise RuntimeError("True red chassis spill is not synchronized with vent scan")
+            strobe_evidence.append([f,i,round(vi,4),round(gi,4),round(power,4),round(spill,4)])
     from mathutils import Vector
     eye=Vector((0,-0.70710678,0.70710678))
     scene.frame_set(1)
@@ -172,8 +201,12 @@ def main(folder, variant):
         "steam_wisps":len(steam),"vent_aperture_emitters":len(vent_lights),
         "console_chassis_gap_emitters":len(gap),
         "gap_strobe_sources":"THREE_VENT_PHASES",
-        "v23_brightness_limits":{"vent_alpha":.60,"joint_alpha":.22,
-                                 "point_energy":.70,"emission_strength":2.10},
+        "v24_brightness_limits":{"vent_alpha":.60,"joint_alpha":.32,
+                                 "point_energy":.70,"emission_strength":2.10,
+                                 "middle_chassis_area_energy":.42},
+        "v24_gap_increase":record["gap_increase"],
+        "red_spill_emitters":3,
+        "laser_color_rgb":list(expected),
         "brightness_key_samples_checked":len(strobe_evidence),
         "brightness_key_samples":strobe_evidence,
         "surface_panning_lights":0,"capacitor_camera_alignments":cap_alignment,
