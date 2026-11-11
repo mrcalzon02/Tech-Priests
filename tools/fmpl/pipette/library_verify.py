@@ -99,6 +99,18 @@ def validate(args):
         # cylinder transform_apply rotated already selected manifold geometry.
         # Demand real surface coverage along every public branch (not rings).
         manifold=booleans[0]
+        # Having one Blender OBJECT is not enough: previous native output
+        # contained 59 disconnected surface islands and was falsely passed.
+        audit=lib.surface_topology(
+            [tuple(int(i) for i in face.vertices)
+             for face in manifold.data.polygons])
+        if audit["surface_islands"]!=1:
+            raise RuntimeError(
+                "CSG manifold is disconnected: %d distinct surface islands"
+                %audit["surface_islands"])
+        if audit["degenerate_polygons"] or audit["naked_boundary_edges"] or \
+           audit["overlapping_nonmanifold_edges"]:
+            raise RuntimeError("CSG pipe not a watertight wall: "+json.dumps(audit))
         hub=Vector(receipt["junctions"][0]["xyz_bu"])
         verts=[manifold.matrix_world @ v.co for v in manifold.data.vertices]
         if not verts:
@@ -147,6 +159,7 @@ def validate(args):
         "glb_sha256":sha256(args.glb),
         "cycles_preview_sha256":sha256(args.preview),
         "csg_manifold_native_verified":bool(receipt["requires_native_csg_manifold"]),
+        "csg_connected_surface_audit":audit if receipt["requires_native_csg_manifold"] else None,
         "approved_materials":receipt["approved_materials"],
         "game_native_verified":False,
         "owner_visual_approval":False
