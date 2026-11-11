@@ -14,16 +14,18 @@ unrelated eight-contact terminal blocks are removed for this case.
 
 Other still-unimplemented branch constructions now explicitly report
 unresolved-branch-hardware-no-fallback-block rather than inventing a
-generic box. The [13 regression cases](test_library_branches.py) and the
+generic box. The [16+ regression cases](test_library_branches.py) and the
 independent Blender/GLB checker enforce no cube, no wire cloning, and unchanged
 public port coordinates. Geometry is **not** a certified electrical splice or
 a native Factorio connection.
 
 The first physically modeled connector library is `library_fittings.py`: **25 editable fitting recipes** out of the 77 indexed joint types, with explicit type-compatible selection and a separate `test_library_fittings.py`. [Construction and validation instructions](LIBRARY_BUILD.md) include a standalone OBJ fitting example. Native approvals remain pending.
 
-### Executable geometry construction (25 recipes, current slice)
+### Executable geometry construction (30 recipes, current slice)
 
-**[Build instructions and explicit native verification gates](LIBRARY_BUILD.md)** describe the new independent `library_geometry.py` mesh kernel, `build_library.py` batch OBJ exporter, `library_blender.py` editable Blender/Cycles/GLB builder, and `library_verify.py` independent native readback. These have **25 implemented geometry recipes** drawn from the [140-entry construction index](architecture_catalog.v1.json). Examples include metal helical interlocked conduit, annular polymer conduit, open spiral sleeve, split loom, naturally sagging eight-wire bundles, and a Boolean hollow lead-pipe Y using frozen comparison coordinates.
+The [five-form carrier module](library_forms.py) now also builds true hollow retractile pneumatic coils, flattened layflat hose walls, bonded twin hose passages, physically open ladder trays and slotted U-channel ducts. New comparison specimens preserve the same fixed ports; their unverified end fittings are deliberately left absent rather than fabricated from incompatible circular connectors. [Shape-specific mesh tests](test_library_forms.py) run with the standing Pipette test suite.
+
+**[Build instructions and explicit native verification gates](LIBRARY_BUILD.md)** describe the new independent `library_geometry.py` mesh kernel, `build_library.py` batch OBJ exporter, `library_blender.py` editable Blender/Cycles/GLB builder, and `library_verify.py` independent native readback. These have **30 implemented geometry recipes** drawn from the [140-entry construction index](architecture_catalog.v1.json). Examples include metal helical interlocked conduit, annular polymer conduit, open spiral sleeve, split loom, naturally sagging eight-wire bundles, and a Boolean hollow lead-pipe Y using frozen comparison coordinates.
 
 The expanded source implementation and `test_library_geometry.py` mesh regressions are not automatic production approval: use the existing Dens Mortis opt-in `architecture_gallery` proof when scheduling a bounded, source-pinned Blender run. The standing v0.1 four-fixture script and existing models are preserved; no new workflow or add-on installation is necessary.
 
