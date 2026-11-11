@@ -332,6 +332,8 @@ def main():
     ap.add_argument("--source-blend")
     ap.add_argument("--material-name")
     ap.add_argument("--preview-only",action="store_true")
+    ap.add_argument("--no-asset-mark",action="store_true",
+                    help="do not mark generated collection for Blender Asset Browser")
     ap.add_argument("--out-blend",required=True)
     ap.add_argument("--out-glb",required=True)
     ap.add_argument("--out-png",required=True)
@@ -423,6 +425,21 @@ def main():
     collection["pipette_fixed_fixture"]="comparison_fixture.v1.json"
     collection["pipette_preview_only"]=bool(args.preview_only)
     collection["pipette_native_game_connected"]=False
+    if not args.no_asset_mark:
+        # Blender 5.2 supports native collection asset data-blocks (ID.asset_mark).
+        # These remain EXPLICITLY LABELED PREVIEW assets, not certified hardware
+        # or approved Factorio production models.
+        collection.asset_mark()
+        if collection.asset_data is None:
+            raise RuntimeError("Failed to mark native Pipette collection as Blender asset")
+        collection.asset_data.description=(
+            "FMPL Pipette EDITABLE PROTOTYPE — %s / %s; %s material, no native "
+            "game pressure/electrical/force certification"%
+            (args.architecture,args.topology,
+             "PREVIEW ONLY" if args.preview_only else "source-approved"))
+        collection["pipette_blender_asset_browser"]=True
+    else:
+        collection["pipette_blender_asset_browser"]=False
     bpy.context.view_layer.update()
     if not objects:
         raise RuntimeError("No Blender-native meshes were created")
@@ -458,6 +475,8 @@ def main():
         "independent_reopen_verified":False,
         "mesh_count":len(objects),
         "mesh_face_count":sum(len(o.data.polygons) for o in objects),
+        "blender_collection_asset_marked":not args.no_asset_mark,
+        "blender_asset_category":"FMPL/Pipette/PROTOTYPES",
         "source_blend_sha256":original_hash,
         "source_preserved":True,
         "approved_materials":not args.preview_only,
