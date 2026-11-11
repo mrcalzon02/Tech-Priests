@@ -632,6 +632,10 @@ end
 -- reconsider that funded work instead of indefinitely reusing the cached
 -- unfunded ghost. Only the canonical builder may discard its own *candidate*;
 -- never clear the writ, its source, a live build, robot job, cargo or movement.
+-- A persisted/expired 0418 movement REQUEST is not a 0338 construction
+-- reservation. Do not let that read-only movement record pin an unfunded
+-- cached candidate forever; 0418 and 0510 still own movement and dispatch.
+-- This function NEVER writes the movement request or admits a physical task.
 local function refresh_funded_prior_over_unfunded_bootstrap_0338(pair)
  local candidate=pair and pair.construction_candidate_0338
  if not(candidate and candidate.request_field=="construction_bootstrap_ghost_0645"
@@ -639,7 +643,7 @@ local function refresh_funded_prior_over_unfunded_bootstrap_0338(pair)
    and not source_for_item(pair,candidate.item_name)
    and not(pair.construction_task_0338 or pair.construction_custody_0338
      or pair.robot_network_task_0338 or pair.robot_network_request_0338
-     or pair.construction_task or pair.movement_request_0418)) then
+     or pair.construction_task)) then
   return false
  end
  for _,field in ipairs({"structure_construction_requested_item",

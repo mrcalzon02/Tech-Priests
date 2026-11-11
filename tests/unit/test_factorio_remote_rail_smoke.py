@@ -35,9 +35,16 @@ class CanonicalFundedConstructionCandidateRefreshTests(unittest.TestCase):
         for custody in (
             "pair.construction_task_0338", "pair.construction_custody_0338",
             "pair.robot_network_task_0338", "pair.robot_network_request_0338",
-            "pair.construction_task", "pair.movement_request_0418",
+            "pair.construction_task",
         ):
             self.assertIn(custody, refresh)
+        # Cached discovery does not own a move. An expired/persisted 0418
+        # request must not permanently pin an unfunded 0338 candidate.
+        # This does NOT cancel 0418 authority or admit a physical builder.
+        self.assertNotIn("or pair.movement_request_0418", refresh)
+        self.assertNotIn("pair.movement_request_0418=nil", refresh)
+        self.assertNotIn("pair.construction_task_0338=", refresh)
+        self.assertIn("pair.construction_candidate_0338=nil", refresh)
         self.assertIn('"structure_construction_requested_item"', refresh)
         self.assertIn('"construction_requested_item"', refresh)
         self.assertIn('placeable and source_for_item(pair,placeable.item_name)', refresh)
