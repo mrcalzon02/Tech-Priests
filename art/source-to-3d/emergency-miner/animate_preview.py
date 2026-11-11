@@ -36,6 +36,13 @@ FRAMES = [1 + 6 * i for i in range(16)]
 KEYS = FRAMES + [97]
 FPS = 8
 RES = 384
+# V23 owner-review light limits. No physical geometry or camera changes.
+VENT_ALPHA_MAX = .60
+GAP_ALPHA_MAX = .22
+VENT_POINT_ENERGY_MAX = .70
+FX_EMISSION_STRENGTH = 2.10
+SCAN_COVERAGE = .73
+
 FIXED = ("LAYER_1 ", "SOURCE FOUNDATION ", "Foundation source anchor bolt ")
 SCENE_NAME = "EMERGENCY_MINER_V22_MOTION_CANDIDATE"
 
@@ -212,7 +219,8 @@ def make_flicker_surface(name, pos, size, upper, collection):
     trans = nodes.new("ShaderNodeBsdfTransparent")
     emit = nodes.new("ShaderNodeEmission")
     emit.inputs["Color"].default_value = (.68, .86, 1.0, 1.0)
-    emit.inputs["Strength"].default_value = 4.0
+    # Restrained emission: the V22 peak looked like a white/noisy flare.
+    emit.inputs["Strength"].default_value = FX_EMISSION_STRENGTH
     mix = nodes.new("ShaderNodeMixShader")
     links.new(trans.outputs["BSDF"], mix.inputs[1])
     links.new(emit.outputs["Emission"], mix.inputs[2])
@@ -240,20 +248,26 @@ def make_scan_effects(upper, collection):
         at=center(well.name)
         glow, alpha=make_flicker_surface(
             "FX ONLY | vent aperture laser glow %d"%idx,
-            (at.x,at.y,roof-.0045),
-            (miner.width(slot_width-10),miner.width(4.0),.0008),
+            (at.x,at.y,roof-.0080),
+            (miner.width((slot_width-10)*SCAN_COVERAGE),miner.width(2.8),.0008),
             upper,collection)
         alpha.default_value=0.0
         glow["vent_source_index"]=idx
         glow["source_geometry"]="Physical vent cavity dark well %d"%idx
         glow["surface_light_forbidden"]=True
+        glow["v23_effect_profile"]="BOUND_TO_EXISTING_VENT_DARK_WELL"
+        glow["max_alpha"]=VENT_ALPHA_MAX
+        glow["max_emission_strength"]=FX_EMISSION_STRENGTH
         data=bpy.data.lights.new("FX ONLY | vent inside point light %d"%idx,"POINT")
         data.color=(.70,.85,1.0)
         data.energy=0
         data.shadow_soft_size=.011
         light=bpy.data.objects.new(data.name,data)
         collection.objects.link(light)
-        light.location=at+Vector((0,0,.004))
+        # Stay BELOW roof surface, including the light's local centroid.
+        light.location=at+Vector((0,0,.0008))
+        light["source_vent_index"]=idx
+        light["v23_energy_cap"]=VENT_POINT_ENERGY_MAX
         preserve_parent(light,upper)
         lights.append((glow,alpha,light))
     if len(lights)!=3:
@@ -302,10 +316,12 @@ def make_console_chassis_gap_leak(upper, collection):
         glow,alpha=make_flicker_surface(
             "FX ONLY | console-middle-chassis joint leakage %d"%idx,
             (x,seam_y,seam_z),
-            (width*.80,.0015,.0014),upper,collection)
+            (width*.76,.0012,.0010),upper,collection)
         glow["emission_origin"]="PHYSICAL_GAP_BETWEEN_CONSOLE_AND_MIDDLE_CHASSIS"
         glow["no_surface_panning"]=True
         glow["shared_strobe_source"]="VENT_LASER_PHASE_%d"%idx
+        glow["v23_effect_profile"]="NARROW_RECESSED_JOINT_STROBE"
+        glow["max_alpha"]=GAP_ALPHA_MAX
         glow["gap_world_z"]=seam_z
         glow["console_lower_z"]=console_bottom
         glow["chassis_upper_z"]=chassis_top
@@ -411,13 +427,13 @@ def apply_motion(label, body, upper, cover, light_parts, steam, enabled=None):
                 first=wrap_bell(phase,center_phase,.074 if label=="A" else .043)
                 second=wrap_bell(phase,center_phase+.38,.051)
                 intensity=min(1.,first+.65*second)
-                key_value(alpha,frame,.87*intensity)
-                light.data.energy=3.0*intensity
+                key_value(alpha,frame,VENT_ALPHA_MAX*intensity)
+                light.data.energy=VENT_POINT_ENERGY_MAX*intensity
                 light.data.keyframe_insert(data_path="energy",frame=frame)
                 # Use EXACTLY the same original phase envelope as vent i,
                 # with reduced brightness; no independent chase, no sweep.
                 gap_glow,gap_alpha=gap_lights[i]
-                key_value(gap_alpha,frame,.33*intensity)
+                key_value(gap_alpha,frame,GAP_ALPHA_MAX*intensity)
         if "lamps" in enabled:
             for i, socket in enumerate(colors):
                 trigger = ((frame - 1)//12 + i) % 4 == 0
@@ -529,7 +545,7 @@ def main(out,diagnostic=False,quick_review=False):
     if quick_review:
         # Preview only: 16 true samples remain, same camera/motion keys;
         # reduce internal Cycles work without changing geometry or axis.
-        bpy.context.scene.cycles.samples=8
+        bpy.context.scene.cycles.samples=16
         bpy.context.scene.render.resolution_percentage=70
     base = out/"v22_study_static_master.blend"
     bpy.ops.wm.save_as_mainfile(filepath=str(base))
@@ -545,6 +561,11 @@ def main(out,diagnostic=False,quick_review=False):
               "v22_console_and_camera_facing_caps":True,
               "laser_light_sites":"THREE_VENTS_PLUS_CONSOLE_CHASSIS_GAP",
               "laser_gap_strobe_sync":"SAME_THREE_VENT_PHASES",
+              "effect_revision":"V23 bounded vent/joint intensity",
+              "effect_limits":{"vent_alpha":VENT_ALPHA_MAX,"joint_alpha":GAP_ALPHA_MAX,
+                               "point_energy":VENT_POINT_ENERGY_MAX,
+                               "emission_strength":FX_EMISSION_STRENGTH,
+                               "vent_coverage":SCAN_COVERAGE},
               "surface_panning_light_count":0,
               "variants":{}}
     for label in ("A","B"):
@@ -582,6 +603,7 @@ def main(out,diagnostic=False,quick_review=False):
             # Separate actual peak steam proof. A frame-1 still is NOT
             # evidence of steam because the pressure valve is closed.
             diagnostic_render(scene,out,label+"_05_steam_burst",sample_frame=25,pixels=256)
+            diagnostic_render(scene,out,label+"_06_vent_and_joint_peak",sample_frame=37,pixels=256)
         else:
             apply_motion(label,body,upper,cover,parts,steam)
         print('MINER_TRACE 21 keyed motion ready '+label,flush=True)
