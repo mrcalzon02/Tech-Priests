@@ -86,6 +86,16 @@ def make_obj(collection, part, material, architecture):
         obj["pipette_conductor_index"]=part["conductor_index"]
     if "public_port_centers_unchanged" in part:
         obj["pipette_port_centers_json"]=json.dumps(part["public_port_centers_unchanged"])
+    if "conductor_port_pair" in part:
+        obj["pipette_conductor_port_pair_json"]=json.dumps(part["conductor_port_pair"])
+    if "branch_continuity" in part:
+        obj["pipette_full_conductor_branch_continuity"]=part["branch_continuity"]
+    if "branch_hardware_type" in part:
+        obj["pipette_branch_hardware_type"]=part["branch_hardware_type"]
+    if "branch_port_id" in part:
+        obj["pipette_branch_port_id"]=part["branch_port_id"]
+    if "ferrule_terminal_port" in part:
+        obj["pipette_branch_ferrule_port"]=part["ferrule_terminal_port"]
     if "joint_type" in part:
         obj["pipette_joint_type"]=part["joint_type"]
         obj["pipette_socket_id"]=part["public_socket_id"]
@@ -372,8 +382,14 @@ def main():
         objects=[]
         for part in model["meshes"]:
             conductor=part.get("conductor_index")
-            mat=mat_preview(model["catalog_group"],conductor_index=conductor) \
-                    if args.preview_only else surface
+            if args.preview_only and part.get("role")=="individual-conductor-ferrule":
+                mat=mat_preview("metal_pipe")
+            elif args.preview_only and part.get("role")=="branch-strain-relief-wrap":
+                mat=mat_preview("housing")
+            elif args.preview_only:
+                mat=mat_preview(model["catalog_group"],conductor_index=conductor)
+            else:
+                mat=surface
             objects.append(make_obj(collection,part,mat,args.architecture))
     # Real, explicitly compatible fitting geometry is selected from the
     # architecture catalog. Unknown fittings are not relabeled brass rings.
@@ -391,14 +407,23 @@ def main():
         "conduit_emt_thinwall":"compression_conduit",
         "pipe_galvanized_threaded":"threaded"}
     choices=meta["compatible_joint_ids"]
+    embedded_wire_breakout=(
+        model.get("branch_junction_status")==
+        "continuous-conductor-breakout-built")
     preferred=favorites.get(args.architecture)
     if preferred is not None and preferred not in choices:
         raise RuntimeError("Misconfigured favorite fitting for "+args.architecture)
     candidates=([preferred] if preferred else [])+[
         x for x in choices if x!=preferred and x in fittings.FITTING_RECIPES]
-    chosen=next((x for x in candidates if x in fittings.FITTING_RECIPES),None)
+    chosen=(None if embedded_wire_breakout else
+            next((x for x in candidates if x in fittings.FITTING_RECIPES),None))
     installed_fittings=[]
     for p in model["public_ports"]:
+        if embedded_wire_breakout:
+            # The individual 8->4+4 wire ferrules and 3 lightweight relief
+            # wraps are ALREADY present inside the typed branch mesh. A
+            # terminal_block here produces giant unrelated terminal bricks.
+            continue
         if chosen:
             parts=fittings.build(args.architecture,chosen,p,
                                  model["nominal_outer_diameter_bu"])
@@ -419,9 +444,20 @@ def main():
     model["physically_modelled_fitting_type"]=chosen
     model["installed_terminal_fittings"]=installed_fittings
     model["missing_terminal_hardware"]=(
-        [] if chosen else [p["id"] for p in model["public_ports"]])
+        [] if (chosen or embedded_wire_breakout) else
+        [p["id"] for p in model["public_ports"]])
+    if embedded_wire_breakout:
+        model["embedded_branch_connector"]="eight-wire-Y-laced-breakout"
+        model["embedded_branch_terminations"]={
+            "A":8,"B":4,"C":4,"style":"individual-mini-crimp-ferrules"}
 
     collection["pipette_public_ports_json"]=json.dumps(model["public_ports"])
+    collection["pipette_branch_junction_status"]=model["branch_junction_status"]
+    if embedded_wire_breakout:
+        collection["pipette_branch_port_counts_json"]=json.dumps(
+            model["branch_geometry"]["branch_port_conductor_counts"])
+        collection["pipette_branch_route_count"]=8
+        collection["pipette_embedded_hardware_style"]="laced-strain-relief-plus-mini-ferrules"
     collection["pipette_fixed_fixture"]="comparison_fixture.v1.json"
     collection["pipette_preview_only"]=bool(args.preview_only)
     collection["pipette_native_game_connected"]=False
