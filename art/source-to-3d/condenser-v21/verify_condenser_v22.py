@@ -15,6 +15,9 @@ from mathutils import Vector
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]  # /repo/art/source-to-3d/condenser-v21 -> /repo
+# Blender --python does not add this script's directory to sys.path on Windows.
+# Make the approved sibling timing module visible without weakening source SHA gates.
+sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(ROOT / 'tools' / 'fmpl'))
 from blender_camera_guard import assert_clean, camera_record
 from capture_policy import POLICY_ID
