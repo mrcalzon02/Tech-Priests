@@ -99,7 +99,7 @@ def run(out):
         if delta > 1e-4:
             raise RuntimeError('Approved V21 source object displaced: '
                                + name + ', matrix drift=' + str(delta))
-    rack = bpy.data.objects.get('FX ONLY | mild condenser rack rumble')
+    rack = bpy.data.objects.get('FX ONLY | rack motion timing reference')
     base = bpy.data.objects.get('Condenser shallow tapered foundation')
     outlet = bpy.data.objects.get('Water outlet end flange')
     turntable = bpy.data.objects.get('FX ONLY | entity export turntable')
@@ -120,14 +120,23 @@ def run(out):
     order = json.loads(scene['piston_order'])
     if len(order) != HEADS or set(order) != {o.name for o in caps}:
         raise RuntimeError('Not all original canisters have motion assignments')
-    pistons = [bpy.data.objects.get('FX ONLY | piston %02d' % i) for i in range(HEADS)]
-    if any(p is None for p in pistons):
-        raise RuntimeError('Eight separately animated piston controls missing')
-    if any(bpy.data.objects[cap].parent != pistons[i] or pistons[i].parent != rack
-           for i, cap in enumerate(order)):
-        raise RuntimeError('Original caps not parented to their independent piston controls')
-    if any(seat.parent != rack for seat in seats):
-        raise RuntimeError('Original canister seats are not mounted on rack controller')
+    # Native V22C keeps original V21 parent hierarchy. A previous FX reparent
+    # shifted the eight-seat rack by 0.8256 tile: catch that in saved scene.
+    if scene.get('pistons_are_original_meshes') is not True:
+        raise RuntimeError('Eight original canisters must be the keyed piston heads')
+    original_parents = json.loads(scene.get('source_original_parents', '{}'))
+    if set(original_parents) != set(locked_meshes):
+        raise RuntimeError('Original mesh parenting receipt incomplete')
+    for name, parent_name in original_parents.items():
+        mesh_obj = bpy.data.objects[name]
+        observed = mesh_obj.parent.name if mesh_obj.parent else None
+        if observed != parent_name:
+            raise RuntimeError('Approved V21 mesh was reparented: ' + name)
+    for mesh_obj in [*caps, *seats, bpy.data.objects['Condenser eight-seat rack body']]:
+        if mesh_obj.animation_data is None or mesh_obj.animation_data.action is None:
+            raise RuntimeError('Original canister/rack/seats lack keyed source-preserving motion: ' + mesh_obj.name)
+    if any(o.name.startswith('FX ONLY | piston ') for o in scene.objects):
+        raise RuntimeError('Obsolete reparenting-based piston empties must not survive')
     required = [out / ('frame_%03d.png' % f) for f in PREVIEW_FRAMES]
     required += [out / ('direction_%03d_%s.png' % (a, s)) for a in (0, 90, 180, 270)
                  for s in ('idle', 'active')]
@@ -149,7 +158,7 @@ def run(out):
         scene.frame_set(7 + i * 12)
         displacement = [center(bpy.data.objects[name]).z - caps_at_start[j].z
                         for j, name in enumerate(order)]
-        if not STROKE * .97 <= displacement[i] <= STROKE * 1.03:
+        if not STROKE - .004 <= displacement[i] <= STROKE + .004:
             raise RuntimeError('Individual cylinder did not rise at expected step ' + str(i))
         if any(abs(displacement[j]) > .02 for j in range(HEADS) if j != i):
             raise RuntimeError('Unscheduled canister also lifted')
@@ -161,6 +170,14 @@ def run(out):
         if any(max(o.scale) > .01 for o in vapor if o not in group):
             raise RuntimeError('Inactive head has visible mist')
     scene.frame_set(97)
+    bpy.context.view_layer.update()
+    for name, original in before_world.items():
+        obj = bpy.data.objects[name]
+        delta = max(abs(obj.matrix_world[r][c] - original[r][c])
+                    for r in range(4) for c in range(4))
+        if delta > 1e-4:
+            raise RuntimeError('Original V21 source mesh did not close its cycle: '
+                               + name + ', error ' + str(delta))
     for i, name in enumerate(order):
         assert_near(center(bpy.data.objects[name]), caps_at_start[i])
     assert_near(center(base), origin)
@@ -170,7 +187,7 @@ def run(out):
             raise RuntimeError('Real mist failed to vanish at loop closure')
     result = {
         'verification': 'PASS', 'source_sha256': APPROVED_SHA,
-        'sequential_independent_pistons': HEADS, 'volumetric_mist_puffs': len(vapor), 'beveled_steam_lines': 0,
+        'sequential_independent_pistons': HEADS, 'source_preserving_keyed_heads': True, 'procedural_mist_puffs': len(vapor), 'beveled_steam_lines': 0,
         'period_frames': CYCLE, 'fps': FPS,
         'fx_ablation_captures': 16, 'repeatability_controls': 2,
         'approved_mesh_count_unmodified': len(locked_meshes),
