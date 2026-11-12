@@ -3375,16 +3375,19 @@ def ci_five_observation_1291(content: str, expected: int = 5, *,
                 r"CI_FIVE_PROFILE_1291_CREATED tick=(\d+) stations="
                 + str(expected) + r" requested=" + str(expected)
                 + r" setup=ci-only-real-entities", creation_log or "")
+            result["first_observed_tick"] = a
+            result["last_observed_tick"] = b
+            result["observed_samples"] = n
+            # Preserve existing full-CSV identity observation semantics;
+            # stable-window cost additionally requires distinct --create proof.
+            if native["script_sample_coverage"] == "complete":
+                result["paired_population_verified"] = expected
             if created == ["0"]:
                 result["native_identity_observed"] = expected
-                result["first_observed_tick"] = a
-                result["last_observed_tick"] = b
-                result["observed_samples"] = n
                 if native["script_sample_coverage"] == "complete":
                     stable_cost = ci_stable_pair_script_1291(
                         content, a, b, expected, creation_log)
                     if stable_cost is not None:
-                        result["paired_population_verified"] = expected
                         result.update(stable_cost)
 
     # Count only authentic source counters in the proven stable five-pair
@@ -3397,7 +3400,8 @@ def ci_five_observation_1291(content: str, expected: int = 5, *,
         r"CI_FIVE_PROFILE_1291_ACTIVITY start_tick=(\d+) end_tick=(\d+) "
         + " ".join(key + r"=(\d+|unmeasured)" for key in activity_keys))
     activity = re.findall(activity_pattern, content)
-    if result["native_identity_observed"] == expected and len(activity) == 1:
+    if (result["native_identity_observed"] == expected
+            or result["paired_population_verified"] == expected) and len(activity) == 1:
         start, end, *observations = activity[0]
         start, end = int(start), int(end)
         if (start == result["first_observed_tick"]
