@@ -147,7 +147,9 @@ do
       return native_stock
     end}
   local cell={valid=true,transmitting=true,logistic_network=net,
-    is_in_logistic_range=function(pos)return pos.x>=0 and pos.x<=90 end,
+    -- Site/ore lie outside orange logistic range but inside green
+    -- construction range. Provider stock is still in the real network.
+    is_in_logistic_range=function(pos)return pos.x>=0 and pos.x<=40 end,
     is_in_construction_range=function(pos)return pos.x>=0 and pos.x<=90 end}
   local port={valid=true,type="roboport",force=force,surface=surface,
     position={x=15,y=0},energy=1000,logistic_cell=cell,
@@ -209,6 +211,9 @@ do
   force.is_chunk_charted=function()return true end
   TECH_PRIESTS_STATION_EXPANSION_0256.request_station_expansion=original_request
   game.tick=2401
+  assert(cell.is_in_logistic_range(ore.position)==false
+    and cell.is_in_construction_range(ore.position)==true,
+    "regression fixture did not exercise outer construction-only zone")
   local before=#requests
   local goal=tech_priests_0259_autonomous_robot_goal_for_known_ore(
     auto,"iron-ore",ore)
