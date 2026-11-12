@@ -365,6 +365,14 @@ local function pulse()
       local ghosts=s.surface.find_entities_filtered{
         name="entity-ghost",position=site,radius=1.5,
         force=root.station.force,limit=5}
+      -- A native robot event precedes the 0338 receipt service and can
+      -- precede the next 0480 hierarchy rebuild. Never accept the event
+      -- alone: observe the ORIGINAL full item/rank/identity contract after
+      -- three bounded canonical rebuilds, and fail closed if it never settles.
+      local provider_stock=item_count(s.provider,"intermediate-cogitator-station")
+      local network_stock=network.get_item_count("intermediate-cogitator-station")
+      local built_rank=built and hierarchy.rank(built) or nil
+      local direct=built and hierarchy.is_direct_subordinate(senior,built) or false
       if not(built and built.station and built.station.valid
         and built.station.unit_number==s.event_station
         and built.priest and built.priest.valid
@@ -373,15 +381,33 @@ local function pulse()
         and receipt.child_priest_unit==built.priest.unit_number
         and receipt.network_stock_before==1
         and receipt.stock_delta_verified==true
-        and item_count(s.provider,"intermediate-cogitator-station")==0
-        and network.get_item_count("intermediate-cogitator-station")==0
-        and #ghosts==0
-        and hierarchy.rank(built)==2
-        and hierarchy.is_direct_subordinate(senior,built)==true
+        and provider_stock==0 and network_stock==0
+        and #ghosts==0 and built_rank==2 and direct==true
         and root.priest.unit_number==s.magos_priest
         and senior.priest.unit_number==s.senior_priest
+        and type(receipt.started_tick)=="number"
         and s.event_tick>=receipt.started_tick) then
-        fail("NATIVE_ROBOT_RECEIPT_RANK_OR_ITEM_MISMATCH")
+        local active=senior.robot_network_task_0338
+        local detail=" tick="..game.tick..
+          " event_tick="..tostring(s.event_tick)..
+          " built_pair="..tostring(built~=nil)..
+          " built_priest="..tostring(built and built.priest and built.priest.unit_number)..
+          " built_rank="..tostring(built_rank)..
+          " direct="..tostring(direct)..
+          " receipt_phase="..tostring(receipt and receipt.phase)..
+          " active_phase="..tostring(active and active.phase)..
+          " receipt_station="..tostring(receipt and receipt.child_station_unit)..
+          " debit="..tostring(receipt and receipt.stock_delta_verified)..
+          " provider_stock="..tostring(provider_stock)..
+          " network_stock="..tostring(network_stock)..
+          " ghosts="..tostring(#ghosts)
+        if not s.receipt_wait_logged then
+          s.receipt_wait_logged=true
+          emit("WAIT NATIVE_ROBOT_RECEIPT_SETTLING"..detail)
+        end
+        local interval=tonumber(hierarchy.rebuild_interval) or 300
+        if game.tick-s.event_tick<3*interval then return end
+        fail("NATIVE_ROBOT_RECEIPT_RANK_OR_ITEM_MISMATCH"..detail)
       end
       s.finished=true
       emit("PASS autonomous original 0259 selected and physical native robot-built Intermediate paired"..

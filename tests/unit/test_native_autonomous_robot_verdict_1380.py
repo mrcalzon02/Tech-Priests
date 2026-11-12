@@ -78,6 +78,24 @@ assert 'ORIGINAL_HIERARCHY_NOT_DIRECT_RANKED root=' in fixture
 assert 'hierarchy.rebuild("forced")' not in fixture
 assert 'hierarchy.rebuild("command")' not in fixture
 
+# A genuine native on_robot_built_entity occurs BEFORE the independent
+# canonical 0338 receipt/pair service and possibly before 0480's rebuild.
+# Keep ALL strict physical/rank/identity checks, but allow a bounded genuine
+# authority-settling window. No fixture-written receipt or hierarchy edge.
+assert 'WAIT NATIVE_ROBOT_RECEIPT_SETTLING' in fixture
+assert 'game.tick-s.event_tick<3*interval then return end' in fixture
+assert 'NATIVE_ROBOT_RECEIPT_RANK_OR_ITEM_MISMATCH' in fixture
+assert 'receipt.stock_delta_verified==true' in fixture
+assert 'provider_stock==0 and network_stock==0' in fixture
+assert '#ghosts==0 and built_rank==2 and direct==true' in fixture
+assert 'receipt.child_station_unit==s.event_station' in fixture
+assert 'receipt.child_priest_unit==built.priest.unit_number' in fixture
+assert 's.event_tick>=receipt.started_tick' in fixture
+assert 's.receipt_wait_logged=true' in fixture
+assert 'hierarchy.rebuild("forced")' not in fixture
+assert 'hierarchy.rebuild("command")' not in fixture
+print("PASS native 1380 bounded canonical 0338/0480 receipt settling without physical acceptance dilution")
+
 print("PASS native 1380 original-priest/physical-stock/robot event/receipt "
       "positive and 15 negative verification cases")
 
