@@ -29,7 +29,7 @@ sys.path.insert(0, str(ROOT / 'tools' / 'fmpl'))
 from blender_camera_guard import install_canonical_camera, assert_clean, camera_record
 from capture_policy import POLICY_ID
 from condenser_v22_timing import CYCLE, FPS, HEADS, PREVIEW_FRAMES, STROKE, head_lift, inward_stream, signals, snake_order
-from condenser_v22_volumetric_mist import PUFFS_PER_HEAD, REVIEW_RESOLUTION, mist_material, create_puff, pose as mist_pose
+from condenser_v22_mist_particles import PUFFS_PER_HEAD, REVIEW_RESOLUTION, mist_material, create_puff, pose as mist_pose
 
 APPROVED_SHA = '1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b'
 CANISTER_PREFIX = 'Condenser capped canister '
@@ -123,7 +123,7 @@ def indicator_emission(obj, rgb):
 
 
 # V22B: intentionally no more beveled curve/line FX. True 3D volume mist
-# is built and animated by condenser_v22_volumetric_mist.py.
+# is built and animated by condenser_v22_mist_particles.py.
 
 
 def profile():
@@ -284,12 +284,13 @@ def run(source, out):
     scene['animation_protocol'] = '8 serial canister intake strokes / 12s loop / inward vapor'
     scene['piston_order'] = json.dumps(order)
     scene['volumetric_mist_puffs'] = HEADS * PUFFS_PER_HEAD
-    scene['mist_visual_revision'] = 'V22B real noise-shaped volumetric atmospheric suction'
+    scene['mist_visual_revision'] = 'V22C soft noisy Cycles mist particles, no glowing lines'
     scene['piston_stroke_scene_units'] = STROKE
     scene['native_game_art_modified'] = False
     scene['new_machine_geometry_count'] = 0
     scene['new_render_fx_curve_count'] = 0
-    scene['new_render_fx_volume_count'] = HEADS * PUFFS_PER_HEAD
+    scene['new_render_fx_volume_count'] = 0
+    scene['new_render_fx_particle_count'] = HEADS * PUFFS_PER_HEAD
     if mesh_signatures(scene) != original_meshes:
         raise RuntimeError('Existing approved source mesh geometry/topology was modified')
     scene['source_mesh_local_sha256'] = json.dumps(original_meshes, sort_keys=True)
