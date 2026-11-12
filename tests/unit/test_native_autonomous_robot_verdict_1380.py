@@ -125,3 +125,20 @@ assert 'or entity.type=="fish" then' in fixture
 assert 'else fail("UNEXPECTED_OCCUPIED_SITE "..entity.name) end' in fixture
 assert 'if x<70 or y<12 then' in fixture
 print("PASS native 1380 fish-only corridor clearance and preserved natural ore guard")
+
+# Unlike --benchmark, native --test-save/--test-ticks instantiates an engine
+# player and permits radar chart jobs to be processed. 0836 already verified
+# this execution boundary. Method II may not force/chart/credit visibility.
+driver=path.read_text(encoding="utf-8")
+assert 'native_mode = ("native-player-test-save"' in driver
+assert 'if args.scenario == "remote-robot-acquisition"' in driver
+assert 'rail_native_player_test_command(factorio, mods, save, tick_count)' in driver
+assert 'if native_mode == "native-player-test-save"' in driver
+command=module.rail_native_player_test_command(
+    pathlib.Path("factorio"), pathlib.Path("isolated-mods"),
+    pathlib.Path("scenario-initial.zip"),30060)
+assert command==["factorio","--mod-directory","isolated-mods",
+                "--test-save","scenario-initial.zip","--test-ticks","30060"]
+assert 'force.chart(' not in fixture and 'force.chart_all(' not in fixture
+assert 'game.create_player(' not in fixture
+print("PASS native 1380 real-player test-save chart lifecycle and no chart bypass")
