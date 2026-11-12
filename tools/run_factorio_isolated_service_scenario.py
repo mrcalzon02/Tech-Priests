@@ -49,6 +49,33 @@ CASES = {
 }
 
 
+def verify_autonomous_robot_1380_process_logs(
+        create_exit: int, create_log: str,
+        benchmark_exit: int, benchmark_log: str) -> dict[str, object]:
+    """Verify real --create/on_init stock and later native robot receipts.
+
+    A station physically mined during --create is persisted in the save and
+    cannot emit that on_init receipt again during --benchmark. Require real
+    source provenance on CREATE, production strategy and robot/0338 receipts
+    on BENCHMARK; preserve every original inventory/identity assertion.
+    """
+    tag = "[TP-AUTONOMOUS-ROBOT-1380] "
+    source = tag + "NATIVE_PHYSICAL_SOURCE "
+    future = (tag + "PASS AUTONOMOUS_0259_SELECTED ",
+              tag + "NATIVE_ROBOT_EVENT ",
+              tag + "PASS autonomous original 0259 selected and physical ")
+    if create_exit != 0 or benchmark_exit != 0:
+        raise ValueError("1380 Factorio create or benchmark process failed")
+    if create_log.count(source) != 1 or source in benchmark_log:
+        raise ValueError("1380 missing/duplicate native create/on_init physical source")
+    if any(marker in create_log for marker in future):
+        raise ValueError("1380 robot/goal receipt appeared before loaded benchmark")
+    if tag + "FAIL " in create_log:
+        raise ValueError("1380 refused initial physical site")
+    return verify_autonomous_robot_1380_log(
+        benchmark_exit, create_log + "\n" + benchmark_log)
+
+
 def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, object]:
     """Reject source/ghost-only credit; require ONE ordered native robot receipt.
 
@@ -519,6 +546,13 @@ def main() -> int:
         print("Engine logs: " + str(output / "benchmark.log"))
         return 0
     if args.scenario == "remote-robot-acquisition":
+        create_contents = (output / "create.log").read_text(
+            encoding="utf-8", errors="replace")
+        for line in create_contents.splitlines():
+            if scenario["prefix"] in line and (
+                    "NATIVE_PHYSICAL_SOURCE" in line or "FAIL " in line
+                    or "NATIVE_ON_INIT" in line):
+                print("NATIVE_CREATE_1380 " + line[:1200])
         native = {
             "schema": "tech-priests-1380-native-autonomous-robot-v1",
             "scenario": "production-0259-to-1076-to-0338",
@@ -531,7 +565,8 @@ def main() -> int:
             "accepted": False,
         }
         try:
-            native.update(verify_autonomous_robot_1380_log(benchmark, contents))
+            native.update(verify_autonomous_robot_1380_process_logs(
+                created, create_contents, benchmark, contents))
             passed = True
         except ValueError as error:
             native["blocker"] = str(error)
