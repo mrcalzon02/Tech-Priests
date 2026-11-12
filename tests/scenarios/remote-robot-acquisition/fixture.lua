@@ -157,7 +157,7 @@ local function create_native_site(s)
     " seed="..settings.seed.." magos="..s.magos..
     " senior="..s.senior.." provider="..provider.unit_number..
     " original_source="..original_source.." item=1 robots_docked=3"..
-    " natural_ore_unit="..ore.unit_number..
+    " natural_ore_unit="..tostring(ore.unit_number)..
     " ore_amount="..s.ore_initial.." generated=true chart_forced=false")
 end
 local function observed_robot(event)
