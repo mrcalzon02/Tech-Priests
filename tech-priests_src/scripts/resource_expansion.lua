@@ -232,7 +232,9 @@ local function covered_robot_ore_goal_0259(pair, need, ore)
             and (tonumber(network.all_construction_robots)or 0)>0
             and (tonumber(network.get_item_count(
               "intermediate-cogitator-station"))or 0)>=1
-            and cell.is_in_logistic_range(ore.position)==true
+            -- Native construction robots build in the wider green zone;
+            -- only stocked provider chests must be in the orange logistic
+            -- zone. 0338 still independently proves stock/robot ownership.
             and cell.is_in_construction_range(ore.position)==true
         end)
         ready=ok_native and result==true
@@ -276,7 +278,6 @@ local function covered_robot_ore_goal_0259(pair, need, ore)
                   and distance_sq(station.position,site)>radius(pair)^2 then
                   local allowed,placeable=pcall(function()
                     return cell.is_in_construction_range(site)==true
-                      and cell.is_in_logistic_range(site)==true
                       and station.surface.can_place_entity{
                         name="intermediate-cogitator-station",
                         position=site,force=force}==true
