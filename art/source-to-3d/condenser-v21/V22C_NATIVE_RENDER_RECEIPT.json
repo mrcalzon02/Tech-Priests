@@ -1,0 +1,71 @@
+{
+  "schema": "tech-priests.condenser-v22c-native-cycles-review.v1",
+  "review_stage": "native_cycles_rendered_and_independently_verified; not owner-approved",
+  "source": {
+    "filename": "tech_priests_water_condenser_v21.blend",
+    "sha256": "1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b",
+    "original_meshes": 187,
+    "preserved_mesh_local_geometry": true,
+    "preserved_original_world_transforms": true,
+    "preserved_original_parent_hierarchy": true,
+    "foundation_stationary": true,
+    "pipe_flange_stationary": true
+  },
+  "source_commit": "407d0b37539dd9aa3866aadb032ea7eaf32e37e6",
+  "runner": {
+    "repository": "mrcalzon02/Dens-Mortis",
+    "name": "OLD-CORE30-homebrew",
+    "blender": "5.2.3 LTS",
+    "engine": "Cycles",
+    "workflow_run_id": 43157808231,
+    "run_url": "https://github.com/mrcalzon02/Dens-Mortis/actions/runs/43157808231",
+    "conclusion": "success",
+    "artifact_id": 13916617607,
+    "artifact_name": "dens-mortis-condenser-v22-native-43157808231-1"
+  },
+  "review": {
+    "render_resolution": [
+      512,
+      512
+    ],
+    "sample_count": 48,
+    "frames_rendered": 66,
+    "temporal_samples": 32,
+    "period_frames": 96,
+    "fps": 8,
+    "intended_loop_seconds": 12,
+    "model_footprint_tiles": [
+      2,
+      2
+    ],
+    "game_scale_review_px_per_tile": 43.125,
+    "cardinal_directions": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "animated_original_canisters": 8,
+    "inward_mist_particles": 40,
+    "old_bevel_curve_steam_lines": 0,
+    "mist_technique": "Blender-rendered procedural noise and soft alpha on billboarding camera-facing mist cards; not a physically simulated volume",
+    "independent_native_reopen": "PASS",
+    "independent_pixel_visibility_all_four_directions": "PASS",
+    "rerender_repeatability_noise_pixels": 0
+  },
+  "artifact_checksums_sha256": {
+    "condenser_v22_motion_review.blend": "5e28d62eb5b4250d78a7b4888d4bf031d5437b9e0a0ed52d4ff7e26d4792d247",
+    "Condenser_V22_Real_Blender_Sequential_Intake.gif": "155da8d4f2b9bd4bfc4efd2049868f968ac76651e897f37f64cfa7e27df93c83",
+    "Condenser_V22_Real_Blender_4_Directions_Proof.png": "fcfe75222c1dcf5efe1c86d0a9eb4641ca32a2d9d904705b7a7451268820a963",
+    "Condenser_V22_Real_Blender_Effect_Isolation.png": "504a8ef430fd48b466c08f7623bad3af9205b021044f092736d3874d50b47034",
+    "Condenser_V22_Native_Review_Bundle.zip": "af2cdce8a74b5b49c9239b25651508d0f68a643249923e448783f88ec992a60f"
+  },
+  "output_contract": {
+    "native_Factorio_graphics_changed": false,
+    "source_blend_unchanged": true,
+    "owner_visual_approved": false,
+    "hr_sd_sprite_atlases_generated": false,
+    "gameplay_fluidbox_validation_performed": false
+  },
+  "note": "Review images are authentic Blender Cycles PNGs and a GIF assembled from those frames. The delivered GIF's centisecond frame durations may total 11.84 s; project 12.0 s review sample is retimed to 370/380 ms alternately without changing original pixels."
+}
