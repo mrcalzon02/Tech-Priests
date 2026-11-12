@@ -1,42 +1,63 @@
-name: Workbench hammer animation
+name: Blender asset animation (Workbench / Condenser V22)
+
 on:
   push:
     branches: [main]
     paths:
       - art/source-to-3d/workbench-v5-animation/animate_workbench.py
+      - art/source-to-3d/condenser-v21/RENDER_TRIGGER.md
       - .github/workflows/workbench-animation.yml
   workflow_dispatch:
+    inputs:
+      asset:
+        description: Which approved Blender source to animate and review
+        required: true
+        default: workbench
+        type: choice
+        options:
+          - workbench
+          - condenser-v22
 permissions:
   contents: read
 concurrency:
-  group: workbench-hammer-animation
+  group: blender-animation-${{ ((github.event_name == 'workflow_dispatch' && inputs.asset == 'condenser-v22') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[condenser-v22-run]'))) && 'condenser-v22' || 'workbench' }}
   cancel-in-progress: false
+env:
+  RENDER_CONDENSER: ${{ ((github.event_name == 'workflow_dispatch' && inputs.asset == 'condenser-v22') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[condenser-v22-run]'))) }}
 jobs:
   animate:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    runs-on: ${{ ((github.event_name == 'workflow_dispatch' && inputs.asset == 'condenser-v22') || (github.event_name == 'push' && contains(github.event.head_commit.message, '[condenser-v22-run]'))) && fromJSON('["self-hosted","Windows","X64"]') || 'ubuntu-24.04' }}
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
             art/source-to-3d/workbench-v4/rough_timber_workbench_v4_source.zip
             art/source-to-3d/workbench-v5-animation
+            art/source-to-3d/condenser-v21
+            tools/fmpl
             art/source-to-3d/martian-bunker/captures/lobber-64/install_blender.sh
-      - name: Install render and video libraries
+
+      - name: Install render and video libraries (workbench)
+        if: ${{ env.RENDER_CONDENSER != 'true' }}
         run: |
           sudo apt-get update -qq -o Acquire::Retries=3
           sudo apt-get install -y -qq libxi6 libxfixes3 libxrender1 libgl1 libegl1 libxkbcommon0 ffmpeg
       - uses: actions/cache@v4
+        if: ${{ env.RENDER_CONDENSER != 'true' }}
         with:
           path: .tools/blender-5.0.1-linux-x64
           key: blender-5.0.1-linux-x64-8019580ee1b7262e505f4196a00237ccf743c88d205b38d34201510676e60b09
-      - name: Use established Blender installer and approved model
+      - name: Use established Blender installer and approved workbench model
+        if: ${{ env.RENDER_CONDENSER != 'true' }}
         run: |
           bash art/source-to-3d/martian-bunker/captures/lobber-64/install_blender.sh
           unzip -o art/source-to-3d/workbench-v4/rough_timber_workbench_v4_source.zip rough_timber_workbench_v4.blend -d art/source-to-3d/workbench-v5-animation
-      - name: Animate and render complete work cycle
+      - name: Animate and render workbench cycle
+        if: ${{ env.RENDER_CONDENSER != 'true' }}
         run: .tools/blender-5.0.1-linux-x64/blender -b -t 4 --python-exit-code 12 --python art/source-to-3d/workbench-v5-animation/animate_workbench.py -- --render
-      - name: Verify frames and assemble video
+      - name: Verify workbench frames and assemble video
+        if: ${{ env.RENDER_CONDENSER != 'true' }}
         working-directory: art/source-to-3d/workbench-v5-animation
         run: |
           python3 - <<'PY'
@@ -46,6 +67,7 @@ jobs:
           PY
           ffmpeg -y -framerate 12 -pattern_type glob -i 'frames/frame_*.png' -c:v libx264 -crf 18 -pix_fmt yuv420p -movflags +faststart workbench_v5_cycle.mp4
       - uses: actions/upload-artifact@v4
+        if: ${{ env.RENDER_CONDENSER != 'true' }}
         with:
           name: Workbench-V5-Hammer-Heat-Cooling-Cycle
           path: |
@@ -55,4 +77,36 @@ jobs:
             art/source-to-3d/workbench-v5-animation/animation_manifest.json
             art/source-to-3d/workbench-v5-animation/animate_workbench.py
           if-no-files-found: error
+          retention-days: 90
+
+      - uses: actions/setup-python@v5
+        if: ${{ env.RENDER_CONDENSER == 'true' }}
+        with:
+          python-version: '3.12'
+      - name: Source-locked V22 Cycles render on existing Windows Blender runner
+        if: ${{ env.RENDER_CONDENSER == 'true' }}
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          python -m pip install --disable-pip-version-check 'Pillow>=10,<13'
+          if ($LASTEXITCODE -ne 0) { throw 'Pillow dependency installation failed' }
+          $blender = 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe'
+          if (-not (Test-Path $blender)) {
+            $found = Get-Command blender.exe -ErrorAction SilentlyContinue
+            if ($found) { $blender = $found.Source }
+            else { throw 'Blender 5.2 unavailable on self-hosted Windows runner' }
+          }
+          $out = Join-Path $env:RUNNER_TEMP ('TP-Condenser-V22-' + $env:GITHUB_RUN_ID + '-' + $env:GITHUB_RUN_ATTEMPT)
+          python art/source-to-3d/condenser-v21/run_condenser_v22_review.py --repo-source --blender $blender --out $out
+          if ($LASTEXITCODE -ne 0) { throw 'Native Blender V22 scene or visual QA failed' }
+          foreach ($file in @('Condenser_V22_Real_Blender_Sequential_Intake.gif', 'Condenser_V22_Real_Blender_4_Directions_Proof.png', 'Condenser_V22_Real_Blender_Effect_Isolation.png', 'V22_REVIEW_RECEIPT.json')) {
+            if (-not (Test-Path (Join-Path $out $file))) { throw ('Missing native render output: ' + $file) }
+          }
+          Write-Output ('CONDENSER_V22_NATIVE_RENDER_PASS ' + $out)
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() && env.RENDER_CONDENSER == 'true' }}
+        with:
+          name: Condenser-V22-Native-Blender-${{ github.run_id }}
+          path: ${{ runner.temp }}/TP-Condenser-V22-${{ github.run_id }}-${{ github.run_attempt }}/
+          if-no-files-found: warn
           retention-days: 90
