@@ -182,7 +182,7 @@ def rotate_only_model(scene, fx, original_world):
     return turntable, unparented_source_meshes
 
 
-def run(source, out):
+def run(source, out, *, build_only=False):
     source = source.resolve()
     if not source.is_file() or sha(source) != APPROVED_SHA:
         raise RuntimeError('Missing/mismatched owner-approved V21 native BLEND; no substitute allowed')
@@ -352,6 +352,9 @@ def run(source, out):
     scene['owner_visual_approved'] = False
     blend = out / 'condenser_v22_motion_review.blend'
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))
+    if build_only:
+        print('CONDENSER_V22C_VERIFIED_EDITABLE_SCENE_BUILT', str(blend), APPROVED_SHA, flush=True)
+        return
     renders = []
 
     def capture(filename, resolution):
@@ -435,5 +438,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--source-blend', required=True, type=Path)
     parser.add_argument('--out', required=True, type=Path)
+    parser.add_argument('--build-only', action='store_true', help='Save reviewed, source-locked V22C Blender scene without preview renders')
     args = parser.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else sys.argv[1:])
-    run(args.source_blend, args.out)
+    run(args.source_blend, args.out, build_only=args.build_only)
