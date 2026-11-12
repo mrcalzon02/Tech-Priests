@@ -230,6 +230,30 @@ local function pulse()
     local chunk={x=math.floor(s.ore.position.x/32),
       y=math.floor(s.ore.position.y/32)}
     local charted=root.station.force.is_chunk_charted(s.surface,chunk)
+    -- One bounded native readback to distinguish a genuinely unpowered radar
+    -- or uncharted ore from a persistent original 0820 relay monopoly.
+    -- Diagnostic ONLY: never chart a chunk, reassign a strategy or create ore.
+    if not s.discovery_readback_logged
+      and game.tick-s.started_tick>=1800 then
+      s.discovery_readback_logged=true
+      local radar_power_ok,radar_connected=pcall(function()
+        return s.radar.is_connected_to_electric_network()
+      end)
+      local radar_chunk={x=math.floor(s.radar.position.x/32),
+        y=math.floor(s.radar.position.y/32)}
+      local radar_chart_ok,radar_charted=pcall(function()
+        return root.station.force.is_chunk_charted(s.surface,radar_chunk)
+      end)
+      local chain=root.resource_expansion_0259
+        and root.resource_expansion_0259.chain_0820
+      emit("NATIVE_RADAR_AND_STRATEGY_READBACK tick="..game.tick..
+        " radar_energy="..tostring(s.radar.energy)..
+        " radar_connected="..tostring(radar_power_ok and radar_connected)..
+        " radar_chunk_charted="..tostring(radar_chart_ok and radar_charted)..
+        " ore_chunk_charted="..tostring(charted)..
+        " chain_status="..tostring(chain and chain.status)..
+        " chain_need="..tostring(chain and chain.need))
+    end
     if s.phase=="awaiting-native-strategy" then
       local goal=root.roboport_expansion_goal_1076
       if goal then

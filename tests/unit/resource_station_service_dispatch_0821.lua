@@ -186,6 +186,29 @@ do
   tech_priests_0255_pair_is_magos_planner=function(p)
     return p==auto or old_magos(p)
   end
+  -- Runtime regression: native 1380 first saw the natural patch in a
+  -- generated but UNCHARTED chunk, reserved a blocked Method I chain,
+  -- and could never reconsider the stocked robot route after radar scanning.
+  -- An unseen patch may cause honest exploratory intent, never a persistent
+  -- known-resource chain or a synthetic robot goal.
+  local original_request=TECH_PRIESTS_STATION_EXPANSION_0256.request_station_expansion
+  local exploratory_attempts=0
+  TECH_PRIESTS_STATION_EXPANSION_0256.request_station_expansion=function()
+    exploratory_attempts=exploratory_attempts+1
+    return false
+  end
+  local before_unseen=#requests
+  force.is_chunk_charted=function()return false end
+  game.tick=1200
+  assert(tech_priests_0259_resource_expansion_service(auto)==false
+    and not Chain.status(auto) and not auto.roboport_expansion_goal_1076
+    and #requests==before_unseen and exploratory_attempts>0,
+    "uncharted generated ore reserved a persistent ranked relay")
+  -- A later genuine radar chart must be visible to the next normal pass;
+  -- no injected objective, force.chart or source inventory grant is used.
+  force.is_chunk_charted=function()return true end
+  TECH_PRIESTS_STATION_EXPANSION_0256.request_station_expansion=original_request
+  game.tick=2401
   local before=#requests
   local goal=tech_priests_0259_autonomous_robot_goal_for_known_ore(
     auto,"iron-ore",ore)

@@ -110,13 +110,35 @@ local function nearest_known_resource(pair, resource_names)
   if not (valid_pair(pair) and resource_names and #resource_names > 0) then return nil end
   local station = pair.station
   local center = station.position
+  local force = station.force
+  if not (force and force.is_chunk_charted) then return nil end
+  -- A generated but UNCHARTED patch is not known to the Magos. In native
+  -- 1380, reserving a ranked 0820 chain for such an unseen patch permanently
+  -- prevented a later radar-charted, physically supplied Method II route.
+  -- Cache only within this discovery pass; the next pass must see new radar
+  -- coverage. This never charts a chunk or expands scan authority.
+  local charted_chunks = {}
+  local function charted(entity)
+    local cx=math.floor(entity.position.x/32)
+    local cy=math.floor(entity.position.y/32)
+    local key=tostring(cx)..":"..tostring(cy)
+    local known=charted_chunks[key]
+    if known==nil then
+      local ok,yes=pcall(function()
+        return force.is_chunk_charted(station.surface,{x=cx,y=cy})
+      end)
+      known=ok and yes==true
+      charted_chunks[key]=known
+    end
+    return known
+  end
   local best, best_score = nil, nil
   for search_r = TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_START_0259, TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_MAX_0259, TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_STEP_0259 do
     local area = {{center.x - search_r, center.y - search_r}, {center.x + search_r, center.y + search_r}}
     for _, resource_name in pairs(resource_names) do
       local found = station.surface.find_entities_filtered({ name = resource_name, type = "resource", area = area, limit = 256 })
       for _, entity in pairs(found or {}) do
-        if entity and entity.valid then
+        if entity and entity.valid and charted(entity) then
           local score = distance_sq(center, entity.position)
           if score > (radius(pair) * radius(pair)) and (not best_score or score < best_score) then
             best, best_score = entity, score
