@@ -1,0 +1,126 @@
+{
+  "format": "blender-source-split-v2",
+  "asset": "Atmospheric Water Condenser V21",
+  "approved_source_filename": "tech_priests_water_condenser_v21.blend",
+  "approved_source_sha256": "1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b",
+  "approved_source_size_bytes": 39369602,
+  "part_count": 19,
+  "parts": [
+    {
+      "file": "condenser_v21.blend.part00",
+      "bytes": 2097150,
+      "sha256": "c8a3d74aa0ef60eb1cd15ce8eeca78aae279f1cbed40d89f7c0714abca26f98e",
+      "git_blob_sha1": "f8a4117f6972b30c76fbcc26ddd43ef08520677c"
+    },
+    {
+      "file": "condenser_v21.blend.part01",
+      "bytes": 2097154,
+      "sha256": "fe8784a11239ca2bb8a603cf0c5cce7e19fbfd3c94694912a92a29e231df4864",
+      "git_blob_sha1": "b233975de459d1da0cdb2c2cd1be052d7db3a645"
+    },
+    {
+      "file": "condenser_v21.blend.part02",
+      "bytes": 2097150,
+      "sha256": "94f5fc00370bfa146ffed4a9ab933bb5f10779a24491f05ebdee6084e56d5f11",
+      "git_blob_sha1": "33f9cfd6e61a2faf901697939329cc10bc651154"
+    },
+    {
+      "file": "condenser_v21.blend.part03",
+      "bytes": 2097154,
+      "sha256": "b5af4b218a72be2715f5e943d0a710086d0b2af242ad3fb63eec31a7ab336fb6",
+      "git_blob_sha1": "2bf1d0c8a588055022e2d7b116c920d80991557a"
+    },
+    {
+      "file": "condenser_v21.blend.part04",
+      "bytes": 2097150,
+      "sha256": "c54f5c3ef11baf7f853198de37f5795b4504f9b2f5485f3bb16ea2a30b80ac68",
+      "git_blob_sha1": "0024880ef21b67750db2052e34873c9d669c39d3"
+    },
+    {
+      "file": "condenser_v21.blend.part05",
+      "bytes": 2097154,
+      "sha256": "e3c915eca5e269f6319dcb8dc8d3bd47036b02bf86c845f4df3250a020d90cc2",
+      "git_blob_sha1": "8e241192bcd8c3e759828eed070fce9f495b2727"
+    },
+    {
+      "file": "condenser_v21.blend.part06",
+      "bytes": 2097150,
+      "sha256": "eb4a5e427cb4e77efe8227dcc1bb2ae6674f84cf87e3ca346eac6bd7c3fcd47b",
+      "git_blob_sha1": "5c9b6239c43b7719c35118348eb5ea59003b209f"
+    },
+    {
+      "file": "condenser_v21.blend.part07",
+      "bytes": 2097154,
+      "sha256": "98305e3eb99ccd931f71541f5ef6ebf5e06a3875b760b77527df04479edccc81",
+      "git_blob_sha1": "660218edf581aa4417d18a2174b14d432bfcc404"
+    },
+    {
+      "file": "condenser_v21.blend.part08",
+      "bytes": 2097150,
+      "sha256": "5dd55cc5cb4436691b08f9449167d2446c32351cc62b66ed1ae8aecdbe0dbb20",
+      "git_blob_sha1": "5771973f602cac37739fcc1348eb741c1890a671"
+    },
+    {
+      "file": "condenser_v21.blend.part09",
+      "bytes": 2097154,
+      "sha256": "1692e7518d6e1679321ea12bae802e0d314d8d00b75c2c5e3583f642938482b7",
+      "git_blob_sha1": "7f0c7b5baf6f42d0123c935424a2fab17508c043"
+    },
+    {
+      "file": "condenser_v21.blend.part10",
+      "bytes": 2097150,
+      "sha256": "687e3ea9a548794f8c05445c246073e8f87a635b3e26ac68a681e313f9e82b2c",
+      "git_blob_sha1": "bd9311c68c3693dc6ab962a91406e4695f020a4e"
+    },
+    {
+      "file": "condenser_v21.blend.part11",
+      "bytes": 2097154,
+      "sha256": "52ada020385a20b887d5d22995f0b25f9a5cde8089992c3efb632f8619d34575",
+      "git_blob_sha1": "becff4fe256fa6c929226102c73e5720bd5d0d8e"
+    },
+    {
+      "file": "condenser_v21.blend.part12",
+      "bytes": 2097150,
+      "sha256": "5c1c00fdff14eacaee714fc7f9d5c14bf66f46a21f66f89a70c6b3d28033958e",
+      "git_blob_sha1": "bd1725885b509eccb476c843cdcbcdd9391fb341"
+    },
+    {
+      "file": "condenser_v21.blend.part13",
+      "bytes": 2097154,
+      "sha256": "97cbf3b6ae984a3f069c3a6abc4ac1b6c503e5afa22a6255a2105fff1c802c41",
+      "git_blob_sha1": "71d8ad23fe4383da52681a31279310a6087b4c7c"
+    },
+    {
+      "file": "condenser_v21.blend.part14",
+      "bytes": 2097150,
+      "sha256": "9c3108575d5875dfbac1cb0e2f88c4f501c0221cee23013ec5674d0c05e1c7fb",
+      "git_blob_sha1": "cfc4316b403fad697010173ec0a7310875e2c276"
+    },
+    {
+      "file": "condenser_v21.blend.part15",
+      "bytes": 2097154,
+      "sha256": "45a9375e7c1484814110fabc12636d528d8a3177b942f7dfd2fe6ed3795be518",
+      "git_blob_sha1": "0bfb3d709faa0b9b2c20ea6dcafff700641e2420"
+    },
+    {
+      "file": "condenser_v21.blend.part16",
+      "bytes": 2097150,
+      "sha256": "636848a196796dc4528370ac31288409d6f86df74741ccdaa1cd51974ab6a569",
+      "git_blob_sha1": "b45e44864194786eaeeab3ac3646a235b1a3a5eb"
+    },
+    {
+      "file": "condenser_v21.blend.part17",
+      "bytes": 2097154,
+      "sha256": "b1f0cda1a259c83843f8bca8bc7dcfc75323570325bb6a00e9ac522299affa31",
+      "git_blob_sha1": "0238d2ac98fc60007ea6bf0a4828f2e8f9c4fb00"
+    },
+    {
+      "file": "condenser_v21.blend.part18",
+      "bytes": 1620866,
+      "sha256": "6f7f0ee0a0e79b3d8f6d9d68346dbc82325be3c53e67655986b162f8d21d09a0",
+      "git_blob_sha1": "20fdcd645f972bf9e3f39a9ae25aac51feff01ee"
+    }
+  ],
+  "source_status": "owner-approved V21, unchanged geometry/materials",
+  "purpose": "GitHub-native source backup for V22 animation source-locked pipeline"
+}

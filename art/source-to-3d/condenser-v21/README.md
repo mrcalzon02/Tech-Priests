@@ -24,3 +24,21 @@ Validated with Blender 4.3.2. The final asset contains 152 meshes; the receiver 
 - [Asset-only GLB](https://chatgpt.com/library?file_id=libfile_fbe6d37df4cc81918cbc57d3b61d3701&account_id=personal)
 
 Native binaries are linked above. This directory contains the scripts, hashes and validation records.
+
+## Approved V21 Blender source — now recoverable directly from Git
+
+The owner-accepted V21 native source was recovered from ChatGPT Library, verified as exactly **39,369,602 bytes** with SHA-256 `1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b`, and added byte-for-byte to `source-parts/` as 19 Git binary blobs. Each part has an independent SHA-256 and a Git blob SHA-1 recorded in `source_manifest.json`. There is no reconstructed geometry and no dependency on future Library access.
+
+Restore from any ordinary Git checkout:
+
+```sh
+python3 art/source-to-3d/condenser-v21/restore_condenser_v21_source.py --out /tmp/tech_priests_water_condenser_v21.blend
+```
+
+Run the real native V22 Blender animation/review using only the checked-out source:
+
+```sh
+python3 art/source-to-3d/condenser-v21/run_condenser_v22_review.py --repo-source --blender blender --out /tmp/condenser-v22-review-01
+```
+
+On the Windows Blender host, run `Run-Condenser-V22-Review.ps1` with no source arguments; its default is now this verified Git backup, not a best-effort filesystem scan. Native Blender rendering, human visual approval and in-game sprite integration are separate gates.

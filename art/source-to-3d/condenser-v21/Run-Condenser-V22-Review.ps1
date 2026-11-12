@@ -4,7 +4,7 @@
 #   & './art/source-to-3d/condenser-v21/Run-Condenser-V22-Review.ps1'
 [CmdletBinding()]
 param(
-    [string]$SourceRoot = 'D:\AI-Relocation',
+    [string]$SourceRoot = '',
     [string]$Blender = 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe',
     [string]$OutputRoot = 'D:\AI-Relocation\Tech-Priests-Reviews'
 )
@@ -14,19 +14,23 @@ $Repo = (Resolve-Path (Join-Path $ScriptDir '..\..\..')).Path
 $Runner = Join-Path $ScriptDir 'run_condenser_v22_review.py'
 if (-not (Test-Path -LiteralPath $Runner -PathType Leaf)) { throw "Missing committed V22 runner: $Runner" }
 if (-not (Test-Path -LiteralPath $Blender -PathType Leaf)) { throw "Blender is missing: $Blender" }
-if (-not (Test-Path -LiteralPath $SourceRoot -PathType Container)) { throw "Source root is missing: $SourceRoot" }
+if ($SourceRoot -and -not (Test-Path -LiteralPath $SourceRoot -PathType Container)) { throw "Source root is missing: $SourceRoot" }
 $Python = Get-Command py -ErrorAction SilentlyContinue
 if (-not $Python) { $Python = Get-Command python -ErrorAction SilentlyContinue }
 if (-not $Python) { throw 'Python is missing. Install Python 3 and Pillow to run this review.' }
 New-Item -ItemType Directory -Path $OutputRoot -Force | Out-Null
 $Dest = Join-Path $OutputRoot ("Condenser-V22-{0}" -f (Get-Date -Format 'yyyyMMdd-HHmmss'))
 Write-Host "Reviewing the exact source-locked condenser V21 -> V22 animation"
-Write-Host "Model search: $SourceRoot"
+Write-Host ("Source: " + $(if ($SourceRoot) { $SourceRoot } else { "Git-tracked SHA256 source archive" }))
 Write-Host "Blender: $Blender"
 Write-Host "Fresh output: $Dest"
 Push-Location $Repo
 try {
-    & $Python.Source $Runner --search-root $SourceRoot --blender $Blender --out $Dest
+    if ($SourceRoot) {
+        & $Python.Source $Runner --search-root $SourceRoot --blender $Blender --out $Dest
+    } else {
+        & $Python.Source $Runner --repo-source --blender $Blender --out $Dest
+    }
     if ($LASTEXITCODE -ne 0) { throw "Native Blender V22 review failed (exit $LASTEXITCODE); no production sprites changed." }
 } finally {
     Pop-Location

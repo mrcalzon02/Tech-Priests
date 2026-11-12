@@ -181,7 +181,7 @@ def review(source: Path, out: Path, blender: str) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     invoke([blender, '--version'], REPO, out / '00_blender_version.log')
     subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', str(HERE),
-                    '-p', 'test_condenser_v22_*.py'], cwd=REPO, check=True)
+                    '-p', 'test_*.py'], cwd=REPO, check=True)
     invoke([blender, '-b', '--factory-startup', '--threads', '4',
             '--python-exit-code', '12', '--python', str(HERE / 'animate_condenser_v22.py'),
             '--', '--source-blend', str(source_path), '--out', str(out)],
@@ -250,6 +250,7 @@ def parse():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--source', type=Path, help='Exact approved V21 .blend or starter ZIP')
     group.add_argument('--search-root', type=Path, help='Bounded search root containing approved .blend or ZIP')
+    group.add_argument('--repo-source', action='store_true', help='Reassemble SHA-verified approved V21 directly from Git-tracked parts')
     parser.add_argument('--out', type=Path, required=True, help='NEW empty output directory (never overwritten)')
     parser.add_argument('--blender', help='Blender 5.2 executable; defaults to PATH or known Windows install')
     return parser.parse_args()
@@ -257,9 +258,16 @@ def parse():
 
 def main():
     args = parse()
-    src = args.source if args.source else find_approved(args.search_root)
     binary = blender_binary(args.blender)
-    review(src.resolve(), args.out.expanduser().resolve(), binary)
+    if args.repo_source:
+        from tempfile import TemporaryDirectory
+        from restore_condenser_v21_source import assemble
+        with TemporaryDirectory(prefix='tp-condenser-v21-') as directory:
+            src = assemble(HERE / 'source-parts', Path(directory) / APPROVED_NAME)
+            review(src, args.out.expanduser().resolve(), binary)
+    else:
+        src = args.source if args.source else find_approved(args.search_root)
+        review(src.resolve(), args.out.expanduser().resolve(), binary)
 
 
 if __name__ == '__main__':
