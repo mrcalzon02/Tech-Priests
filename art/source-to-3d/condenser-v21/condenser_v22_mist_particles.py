@@ -89,11 +89,19 @@ def create_puff(name, cap, seat, index, collection, material):
 
     # A noise-softened particle plane, continually facing the actual FMPL
     # capture camera regardless of the machine's cardinal export rotation.
-    bpy.ops.mesh.primitive_plane_add(size=2)
-    obj = bpy.context.object
-    obj.name = name
-    for previous in list(obj.users_collection):
-        previous.objects.unlink(obj)
+    # DATA-API ONLY: bpy.ops.mesh.primitive_plane_add unexpectedly forced
+    # evaluation of the just-reparented upper rack and shifted source meshes.
+    # This direct mesh creation never mutates Blender selection/active context.
+    mesh = bpy.data.meshes.new(name + ' | FX quad')
+    mesh.from_pydata(
+        [(-1, -1, 0), (1, -1, 0), (1, 1, 0), (-1, 1, 0)],
+        [], [(0, 1, 2, 3)])
+    mesh.update()
+    uv = mesh.uv_layers.new(name='MistUV')
+    texcoords = ((0, 0), (1, 0), (1, 1), (0, 1))
+    for loop in mesh.loops:
+        uv.data[loop.index].uv = texcoords[loop.vertex_index]
+    obj = bpy.data.objects.new(name, mesh)
     collection.objects.link(obj)
     obj.data.materials.append(material)
     camera = bpy.context.scene.camera
