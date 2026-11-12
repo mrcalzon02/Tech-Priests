@@ -120,6 +120,27 @@ assert(admitted and admission_reason==
   "existing-powered-covered-grid-and-anchor-verified"
   and not admission_owner.roboport_frontier_1076,
   "existing native covered grid admission failed or built without 0338")
+-- Factorio construction bots can build outside the 25-tile orange logistic
+-- area, as long as an original network with real supplies covers the ghost
+-- in its 55-tile green construction area. Do not demand orange-at-ghost.
+local green_target={x=40,y=0}
+local green_site={x=43,y=0}
+assert(not root_port.logistic_cell.is_in_logistic_range(green_site)
+  and root_port.logistic_cell.is_in_construction_range(green_site)
+  and M.native_covered_ore_admission_1076(
+    admission_owner,green_target,green_site),
+  "physically buildable green-only target denied by robot admission")
+local green_mission=make_pair(green_target)
+green_mission.roboport_expansion_goal_1076.remote_station_item_1076=
+  "intermediate-cogitator-station"
+green_mission.roboport_expansion_goal_1076.remote_station_position_1076=
+  green_site
+local green_result=M.service_pair(green_mission)
+assert(green_result.detail=="remote-station-hierarchy-unavailable"
+  and green_mission.roboport_frontier_1076
+  and green_mission.roboport_frontier_1076.status=="complete"
+  and not green_mission.construction_request,
+  "covered green-only mission tried to extend or fabricate a roboport")
 original_grid_anchor.electric_network_id=8
 assert(not M.native_covered_ore_admission_1076(
   admission_owner,{x=12,y=0},{x=8,y=0}),
