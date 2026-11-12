@@ -933,13 +933,13 @@ end
 -- builder was active. The incumbent cannot own a permanent no-cargo lease.
 -- Only 0528 may retire its OWN abandoned task; never preempt active movement,
 -- any physical hold, or another construction/acquisition/defense duty.
-local function retire_unladen_abandoned_fuel_0836(pair,locomotive)
+local function retire_unladen_abandoned_fuel_0836(pair,locomotive,min_age_ticks)
   local state=active_state(pair)
   if not(state and state.phase=="move-to-station"
       and state.action=="supply-fuel" and state.item=="coal"
       and valid(state.machine) and state.machine~=locomotive
       and type(state.started_tick)=="number"
-      and now()-state.started_tick>=60*120
+      and now()-state.started_tick>=(min_age_ticks or 60*120)
       and not(state.custody or pair.machine_logistics_custody_0528)
       and not(pair.order_queue_0469 and pair.order_queue_0469.current
         and pair.order_queue_0469.current.kind=="machine-logistics")
@@ -985,7 +985,11 @@ function M.release_abandoned_unladen_train_preboarding_0836(pair,locomotive)
       and fuel.train_id==locomotive.train.id)then
     return false,"original-train-fuel-receipt-unverified"
   end
-  if retire_unladen_abandoned_fuel_0836(pair,locomotive)then
+  -- At an item-paid, connected, fueled original train, a 30-second
+  -- unladen no-lease fuel approach is objectively stalled. The ordinary
+  -- incidental fuel-discovery path retains the original 120-second bound.
+  -- Require the SAME zero-custody / idle-movement / no-explicit-order proof.
+  if retire_unladen_abandoned_fuel_0836(pair,locomotive,60*30)then
     return true,"original-abandoned-unladen-fuel-released"
   end
   return false,"no-proven-abandoned-unladen-fuel"

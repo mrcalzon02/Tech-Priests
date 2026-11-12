@@ -866,3 +866,84 @@ print("[drill-fuel-regression] PASS 1037 counted engine escrow to priest to dril
 print("[drill-fuel-regression] PASS 1036 reserved physical station coal, invalid mission refusal, reload and exact native fuel debit/insert")
 print("[drill-fuel-regression] PASS 1035 incumbent machine service, strict craft and foreign order guards")
 print("[drill-fuel-regression] PASS scenarios=23 including 1037 counted local escrow, directed contact and physical fuel delivery")
+
+-- Live 0836 stop run 43164523677: at tick 60000 the original stop was
+-- physically paid and connected, fuel=3, but a fresh unrelated 0528
+-- move-to-station coal task had started at tick 57060. Its contact never
+-- acquired coal or held a movement lease. Preserve ordinary 120s for
+-- incidental fuel, but after native paid/fueled train evidence allow a
+-- bounded 30s abandoned no-cargo/no-lease release by original 0528.
+do
+  local old_movement=_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418
+  local live_move=false
+  _G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418={
+    request_status=function()return {active=live_move}end}
+  local train={valid=true,id=883,speed=0}
+  local loco={valid=true,type="locomotive",name="locomotive",
+    unit_number=881,train=train,force=force,surface=surface}
+  local wagon={valid=true,type="cargo-wagon",name="cargo-wagon",
+    unit_number=882,train=train,force=force,surface=surface}
+  train.carriages={loco,wagon}
+  local other={valid=true,name="stone-furnace",type="furnace",
+    unit_number=599,force=force,surface=surface}
+  local original_priest={valid=true,unit_number=105,
+    position={x=3,y=0},force=force,surface=surface}
+  local original_station={valid=true,unit_number=104,
+    force=force,surface=surface}
+  local p={station=original_station,priest=original_priest,
+    remote_rail_outpost_0835={
+      status="rail-track-established",root_station_unit=104,
+      surface_index=1,force_index=1,
+      rail_frontier_0836={chain_audit_completed_tick_0836=1,
+        segment=1,built_units={501}},
+      first_locomotive_0836={
+        phase="native-paid-locomotive-verified",
+        paid_completion_0836={native_0338_paid=true},
+        built_entity=loco,built_unit=881},
+      first_wagon_0836={
+        phase="native-paid-wagon-verified",
+        paid_completion_0836={native_0338_paid=true},
+        built_entity=wagon,built_unit=882},
+      first_fuel_0836={phase="native-paid-locomotive-fueled",
+        locomotive_unit=881,train_id=883}}}
+  local function task(age)
+    return {phase="move-to-station",action="supply-fuel",
+      item="coal",machine=other,started_tick=game.tick-age}
+  end
+  p.machine_logistics_0528=task(60*20)
+  local too_recent=M.release_abandoned_unladen_train_preboarding_0836(p,loco)
+  check(not too_recent and p.machine_logistics_0528.phase=="move-to-station",
+    "fresh 0528 fuel was incorrectly preempted at native train")
+  p.machine_logistics_0528=task(60*31)
+  live_move=true
+  local moving=M.release_abandoned_unladen_train_preboarding_0836(p,loco)
+  check(not moving and p.machine_logistics_0528.phase=="move-to-station",
+    "real 0418 movement lease was preempted by rail")
+  live_move=false
+  p.order_queue_0469={current={kind="machine-logistics"}}
+  local explicit=M.release_abandoned_unladen_train_preboarding_0836(p,loco)
+  check(not explicit and p.machine_logistics_0528.phase=="move-to-station",
+    "explicit live machine order was incorrectly retired")
+  p.order_queue_0469=nil
+  local held={item="coal",count=2}
+  p.machine_logistics_0528.custody=held
+  p.machine_logistics_custody_0528=held
+  local loaded=M.release_abandoned_unladen_train_preboarding_0836(p,loco)
+  check(not loaded and p.machine_logistics_custody_0528==held
+    and held.count==2 and p.machine_logistics_0528.phase=="move-to-station",
+    "real machine fuel cargo was stolen by native rail preboarding")
+  p.machine_logistics_0528.custody=nil
+  p.machine_logistics_custody_0528=nil
+  p.remote_rail_outpost_0835.first_fuel_0836.train_id=999
+  local unverified=M.release_abandoned_unladen_train_preboarding_0836(p,loco)
+  check(not unverified and p.machine_logistics_0528.phase=="move-to-station",
+    "unverified train fuel identity admitted 0528 retirement")
+  p.remote_rail_outpost_0835.first_fuel_0836.train_id=883
+  local released=M.release_abandoned_unladen_train_preboarding_0836(p,loco)
+  check(released and p.machine_logistics_0528.phase=="failed"
+    and p.machine_logistics_custody_0528==nil
+    and p.priest==original_priest and p.station==original_station,
+    "proved abandoned fuel was not released with physical identity intact")
+  _G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418=old_movement
+end
+print("[rail-0528-preboarding] PASS live thirty-second abandonment, active work and custody refusals")
