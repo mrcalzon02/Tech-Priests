@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 import bpy
-from mathutils import Vector
+from mathutils import Vector, Matrix
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
@@ -152,7 +152,7 @@ def profile():
     }
 
 
-def rotate_only_model(scene, fx):
+def rotate_only_model(scene, fx, original_world):
     """Rotate every actual machine root, never the sole canonical 45deg camera.
 
     Existing parent chains remain intact. Reference pipes/grid and studio
@@ -160,6 +160,7 @@ def rotate_only_model(scene, fx):
     """
     turntable = new_empty('FX ONLY | entity export turntable', fx, Vector((0, 0, 0)))
     excluded = {'REFERENCE_ADJACENT_PIPES', 'GRID', 'GROUND', 'GROUND_GRID'}
+    unparented_source_meshes = []
     for obj in list(scene.objects):
         if obj is turntable or obj.parent is not None or obj.type == 'CAMERA':
             continue
@@ -170,9 +171,15 @@ def rotate_only_model(scene, fx):
             continue
         if any(c.name in excluded or c.name.startswith('REFERENCE_') for c in obj.users_collection):
             continue
+        if obj.type == 'MESH' and obj.name in original_world:
+            # Never reparent any ORIGINAL V21 mesh. For original unparented
+            # outlet flange/pieces, apply temporary direct cardinal transforms.
+            unparented_source_meshes.append(
+                (obj, Matrix(original_world[obj.name])))
+            continue
         if obj.type in {'MESH', 'CURVE', 'EMPTY', 'LIGHT'}:
             parent_preserve(obj, turntable)
-    return turntable
+    return turntable, unparented_source_meshes
 
 
 def run(source, out):
@@ -248,7 +255,13 @@ def run(source, out):
         light = new_light('FX ONLY | ' + label + ' existing diode', center(found[0]), color, fx)
         emission = indicator_emission(found[0], color)
         covers[label] = (light, emission)
-    turntable = rotate_only_model(scene, fx)
+    turntable, source_root_meshes = rotate_only_model(scene, fx, original_world)
+    def set_direction(degrees):
+        turntable.rotation_euler.z = math.radians(degrees)
+        cardinal = Matrix.Rotation(math.radians(degrees), 4, 'Z')
+        for mesh_obj, original_matrix in source_root_meshes:
+            mesh_obj.matrix_world = cardinal @ original_matrix
+        bpy.context.view_layer.update()
     scene.render.engine = 'CYCLES'
     scene.cycles.samples = 48
     # Comparable A/B render probes must use the same per-frame sampling seed.
@@ -362,8 +375,7 @@ def run(source, out):
     # NEVER alters original source vertices, native keyframes or saved model.
     all_strands = [strand for group in streams for strand in group]
     for degrees in DIRECTIONS:
-        turntable.rotation_euler.z = math.radians(degrees)
-        bpy.context.view_layer.update()
+        set_direction(degrees)
         for frame, state in ((1, 'idle'), (7, 'active')):
             scene.frame_set(frame)
             capture('direction_%03d_%s.png' % (degrees, state), REVIEW_RESOLUTION)
@@ -396,9 +408,9 @@ def run(source, out):
             # artifacts before treating the pixel A/B differences as evidence.
             capture('direction_000_active_repeat.png', REVIEW_RESOLUTION)
             capture('game_scale_000_active_repeat.png', 138)
-    turntable.rotation_euler.z = 0
-    bpy.context.view_layer.update()
+    set_direction(0)
     scene.frame_set(1)
+    bpy.context.view_layer.update()
     if any(not p.is_file() or p.stat().st_size < 1000 for p in renders):
         raise RuntimeError('Native Blender Cycles render missing/empty')
     manifest = {
