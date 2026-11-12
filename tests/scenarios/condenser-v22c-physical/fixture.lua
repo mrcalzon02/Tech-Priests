@@ -130,28 +130,30 @@ local function run()
   emit("PASS four original 2x2 V22C condensers with native direction-rotated output pipes")
 end
 function M.install()
-  local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
-  if not(broker and broker.register_service) then
-    fail("CANONICAL_NATIVE_TICK_BROKER_UNAVAILABLE")
+  -- A native save creation always has a real on_init lifecycle, whereas
+  -- headless benchmark ticks can skip the central work broker during startup.
+  -- Register on the canonical owner-keyed lifecycle; never install an extra
+  -- script.on_tick or a parallel event scheduler.
+  local registry=rawget(_G,"TechPriestsRuntimeEventRegistry")
+  if not(registry and registry.on_init) then
+    fail("CANONICAL_NATIVE_INIT_REGISTRY_UNAVAILABLE")
   end
-  assert(broker.register_service{
-    name=KEY,category="diagnostics",interval=60,priority=1100,budget=1,
-    fn=function()
-      storage.tech_priests=storage.tech_priests or {}
-      if storage.tech_priests[KEY] then
-        return {processed=0,failed=0,detail="already-complete"}
-      end
-      storage.tech_priests[KEY]=true
-      local ok,err=pcall(run)
-      if not ok then
-        emit("FAIL "..tostring(err))
-        return {processed=0,failed=1,detail=tostring(err)}
-      end
-      return {processed=1,failed=0,detail="four-engine-pipes"}
-    end,
-    note="isolated V22C Blender-to-Factorio physical output registration"
-  })
-  emit("INSTALLED isolated 4-direction native pipe acceptance")
+  assert(registry.on_init(function()
+    storage.tech_priests=storage.tech_priests or {}
+    if storage.tech_priests[KEY] then
+      emit("FAIL DUPLICATE_NATIVE_INIT_ATTEMPT")
+      return
+    end
+    storage.tech_priests[KEY]={attempted=true,passed=false}
+    local ok,err=pcall(run)
+    if not ok then
+      storage.tech_priests[KEY].failure=tostring(err)
+      emit("FAIL "..tostring(err))
+      return
+    end
+    storage.tech_priests[KEY].passed=true
+  end,{owner=KEY,route="initialize",category="diagnostics",priority="last"}))
+  emit("INSTALLED isolated 4-direction native pipe acceptance on engine on_init")
   return true
 end
 return M
