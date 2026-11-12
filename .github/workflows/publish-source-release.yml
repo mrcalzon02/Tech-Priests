@@ -79,6 +79,12 @@ jobs:
               assert token in patch, 'Graphics contract missing: '+token
           print('CONDENSER_V22C_41_NATIVE_PNGS_VERIFIED_AND_ACTIVE')
           PY
+      - name: Check condenser texture quality, release PNG hashes, and negative test gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tools/fmpl -p 'test_verify_v22c_release.py' -v
+          python3 tools/fmpl/verify_v22c_release.py --mod-dir tech-priests_src
       - name: Package Factorio mod
         env:
           GH_TOKEN: ${{ github.token }}
@@ -106,6 +112,11 @@ jobs:
           pathlib.Path("../release-name.txt").write_text(folder, encoding="utf-8")
           PY
 
+      - name: Verify actual packaged Factorio ZIP includes every exact condenser asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/fmpl/verify_v22c_release.py --mod-dir repo/tech-priests_src --release "$(cat release-name.txt).zip"
       - name: Headless Factorio 2.1.24 startup diagnostics
         shell: bash
         run: |
