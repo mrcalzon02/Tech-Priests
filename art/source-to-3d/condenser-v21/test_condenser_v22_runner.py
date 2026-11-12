@@ -53,7 +53,11 @@ class ExactSourceGateTest(unittest.TestCase):
             root = Path(temp)
             wrong = root / APPROVED_NAME
             wrong.write_bytes(b'wrong')
-            self.assertEqual(list(candidates(root)), [wrong])
+            found = list(candidates(root))
+            self.assertEqual(len(found), 1)
+            # Windows runner Temp paths can be 8.3 aliases of the very same file.
+            # Compare filesystem identity, not case/short-name path spelling.
+            self.assertTrue(found[0].samefile(wrong))
             with self.assertRaisesRegex(SourceBlocked, 'No exact SHA-verified'):
                 find_approved(root)
 
