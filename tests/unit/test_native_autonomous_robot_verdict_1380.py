@@ -117,41 +117,42 @@ assert 'force.chart_all(' not in fixture
 assert 'surface.create_entity{name="iron-ore"' not in fixture
 print("PASS native 1380 day/night physical radar supply and unbiased discovery checks")
 
-# A native --create generates the initial save; the first --test-save load
-# actually executes the mod's on_init, mines one real station item, and then
-# selects and completes the original construction-robot task.
+# Authentic 2.1.24 run 43330690624: on_init DOES execute at --create
+# tick zero. One physically mined station item and matching seed/bootstrap
+# must be in CREATE, while the later real player/test-save process produces
+# 0259 selection, on_robot_built_entity and the 0338/0480 finished receipt.
 bootstrap=(prefix+"NATIVE_ON_INIT_BOOTSTRAP_COMPLETE "
            "phase=awaiting-native-strategy seed=1380001")
-create_log="Factorio 2.1.24: generated initial scenario save"
-benchmark_log="\n".join((
-    prefix+"INSTALLED no prewritten objective no synthetic ore",
-    physical,bootstrap,selected,event,done))
+create_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore",
+                      physical,bootstrap))
+benchmark_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore",
+                         selected,event,done))
 assert module.verify_autonomous_robot_1380_process_logs(
     0,create_log,0,benchmark_log)["accepted"] is True
 negative_processes=[
     (1,create_log,0,benchmark_log),
     (0,create_log,1,benchmark_log),
+    (0,create_log.replace(physical+"\n",""),0,benchmark_log),
     (0,create_log+"\n"+physical,0,benchmark_log),
+    (0,create_log.replace(bootstrap,""),0,benchmark_log),
     (0,create_log+"\n"+bootstrap,0,benchmark_log),
+    (0,create_log.replace(
+        "phase=awaiting-native-strategy","phase=search"),0,benchmark_log),
+    (0,create_log.replace(
+        "phase=awaiting-native-strategy seed=1380001",
+        "phase=awaiting-native-strategy seed=1380002"),0,benchmark_log),
+    (0,create_log.replace(
+        physical+"\n"+bootstrap,bootstrap+"\n"+physical),0,benchmark_log),
+    (0,create_log,0,physical+"\n"+benchmark_log),
+    (0,create_log,0,bootstrap+"\n"+benchmark_log),
     (0,create_log+"\n"+selected,0,benchmark_log),
     (0,create_log+"\n"+prefix+"FAIL NATIVE_PLACEMENT_REFUSED",0,benchmark_log),
-    (0,create_log,0,benchmark_log.replace(physical+"\n","")),
-    (0,create_log,0,benchmark_log+"\n"+physical),
-    (0,create_log,0,benchmark_log.replace(bootstrap+"\n","")),
-    (0,create_log,0,benchmark_log+"\n"+bootstrap),
-    (0,create_log,0,benchmark_log.replace(
-        "phase=awaiting-native-strategy","phase=search")),
-    (0,create_log,0,benchmark_log.replace(
-        "phase=awaiting-native-strategy seed=1380001",
-        "phase=awaiting-native-strategy seed=1380002")),
-    (0,create_log,0,benchmark_log.replace(
-        physical+"\n"+bootstrap,bootstrap+"\n"+physical)),
-    (0,create_log,0,benchmark_log.replace(
-        "INSTALLED no prewritten objective no synthetic ore","NO_INSTALL")),
-    (0,create_log,0,benchmark_log+"\n"+prefix+"FAIL NATIVE_ON_INIT"),
+    (0,create_log,0,benchmark_log+"\n"+prefix+"FAIL NATIVE_ROBOT"),
     (0,create_log,0,benchmark_log.replace(selected+"\n","")),
-    (0,create_log,0,benchmark_log.replace(physical+"\n","").replace(
-        bootstrap+"\n","")),
+    (0,create_log.replace(physical,""),0,
+        physical+"\n"+benchmark_log),
+    (0,create_log.replace(bootstrap,""),0,
+        bootstrap+"\n"+benchmark_log),
 ]
 for args in negative_processes:
     try:
@@ -161,7 +162,7 @@ for args in negative_processes:
     raise AssertionError("1380 falsely accepted missing, failed or cross-phase receipt")
 assert '" natural_ore_unit="..tostring(ore.unit_number)' in fixture
 assert '" natural_ore_unit="..ore.unit_number' not in fixture
-print("PASS native 1380 actual on_init physical source and "
+print("PASS native 1380 authentic --create/on_init physical source and "
       +str(len(negative_processes))+" strict refusal cases")
 
 # Native 1380 CREATE failed on genuine generated fish in the enlarged solar

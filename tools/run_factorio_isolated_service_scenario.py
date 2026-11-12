@@ -59,43 +59,42 @@ CASES = {
 def verify_autonomous_robot_1380_process_logs(
         create_exit: int, create_log: str,
         benchmark_exit: int, benchmark_log: str) -> dict[str, object]:
-    """Check the real Factorio phase that executes on_init and mines stock.
+    """Verify exactly one actual Factorio --create/on_init mined-stock receipt.
 
-    --create generates the initial world save. Its first native --test-save
-    load executes the fixture's registered on_init and physically mines one
-    original station into the provider. Reject absent/duplicated source,
-    missing bootstrap completion, wrong process, wrong seed and any early
-    autonomous/robot receipt. Preserve every original item/identity check.
+    The real Factorio 2.1.24 run 43330690624 confirmed the source and
+    on_init-complete markers were both emitted during --create, at tick zero,
+    before the saved game executed 0259 and native robot construction on its
+    later --test-save load. Do not accept markers from the wrong process,
+    wrong order or a second initialization. Preserve exact identities,
+    item counts, robot event and canonical hierarchy/0338 acceptance.
     """
     tag = "[TP-AUTONOMOUS-ROBOT-1380] "
     source = tag + "NATIVE_PHYSICAL_SOURCE "
     initialized = tag + "NATIVE_ON_INIT_BOOTSTRAP_COMPLETE "
-    installed = tag + "INSTALLED "
     future = (tag + "PASS AUTONOMOUS_0259_SELECTED ",
               tag + "NATIVE_ROBOT_EVENT ",
               tag + "PASS autonomous original 0259 selected and physical ")
     if create_exit != 0 or benchmark_exit != 0:
         raise ValueError("1380 Factorio create or loaded native process failed")
-    if source in create_log or initialized in create_log:
-        raise ValueError("1380 bootstrap incorrectly attributed to --create")
+    if (create_log.count(source) != 1
+            or create_log.count(initialized) != 1
+            or source in benchmark_log or initialized in benchmark_log):
+        raise ValueError("1380 missing/duplicate native --create/on_init physical source")
     if any(marker in create_log for marker in future):
-        raise ValueError("1380 robot/goal receipt appeared before native load")
+        raise ValueError("1380 robot/goal receipt appeared before loaded native process")
     if tag + "FAIL " in create_log or tag + "FAIL " in benchmark_log:
         raise ValueError("1380 refused physical initialization or native build")
-    if (benchmark_log.count(installed) != 1
-            or benchmark_log.count(source) != 1
-            or benchmark_log.count(initialized) != 1):
-        raise ValueError("1380 missing/duplicate loaded on_init physical source")
     physical = re.search(
-        re.escape(source) + r"tick=\d+ seed=(\d+) ", benchmark_log)
+        re.escape(source) + r"tick=\d+ seed=(\d+) ", create_log)
     init = re.search(
         re.escape(initialized)
-        + r"phase=awaiting-native-strategy seed=(\d+)", benchmark_log)
+        + r"phase=awaiting-native-strategy seed=(\d+)", create_log)
     if (physical is None or init is None
             or physical.group(1) != init.group(1)
             or physical.start() >= init.start()):
-        raise ValueError("1380 incomplete/mismatched native on_init transaction")
-    return verify_autonomous_robot_1380_log(benchmark_exit, benchmark_log)
+        raise ValueError("1380 incomplete/mismatched native create/on_init transaction")
+    return verify_autonomous_robot_1380_log(
+        benchmark_exit, create_log + "\n" + benchmark_log)
 
 
 def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, object]:
