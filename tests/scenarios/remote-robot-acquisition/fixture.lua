@@ -70,16 +70,20 @@ local function create_native_site(s)
   end
   -- Keep the selected patch unmodified: only the staging corridor is cleared.
   -- Every actual ore item must later come from a native resource.mine() call.
-  local area={{-12,-12},{66,11}}
+  local area={{-12,-12},{90,42}}
   for _,entity in pairs(surface.find_entities_filtered{area=area}) do
-    if entity.valid and (entity.type=="resource" or entity.type=="tree"
-      or entity.type=="cliff" or entity.type=="simple-entity") then
-      entity.destroy()
-    elseif entity.valid then fail("UNEXPECTED_OCCUPIED_SITE "..entity.name) end
+    if entity.valid and (entity.position.x<70 or entity.position.y<12) then
+      if entity.type=="resource" or entity.type=="tree"
+        or entity.type=="cliff" or entity.type=="simple-entity" then
+        entity.destroy()
+      else fail("UNEXPECTED_OCCUPIED_SITE "..entity.name) end
+    end
   end
   local tiles={}
-  for x=-12,66 do for y=-12,11 do
-    tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
+  for x=-12,90 do for y=-12,42 do
+    if x<70 or y<12 then
+      tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
+    end
   end end
   surface.set_tiles(tiles,true)
   local force=game.forces.player
@@ -119,7 +123,7 @@ local function create_native_site(s)
   local radar=place(surface,force,"radar",66,20)
   local magos=place(surface,force,
     "planetary-magos-cogitator-station",0,0,true)
-  local senior=place(surface,force,"senior-cogitator-station",52,10,true)
+  local senior=place(surface,force,"senior-cogitator-station",55,12,true)
   s.phase="awaiting-native-strategy"
   s.started_tick=game.tick
   s.surface=surface
@@ -187,7 +191,6 @@ local function pulse()
       and hierarchy.is_direct_subordinate(root,senior)==true) then
       fail("ORIGINAL_HIERARCHY_NOT_DIRECT_RANKED")
     end
-    local covered=force and false
     local cell=s.port.logistic_cell
     local network=cell and cell.logistic_network
     local powered=s.port.is_connected_to_electric_network()
