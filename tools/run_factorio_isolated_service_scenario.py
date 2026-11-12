@@ -534,6 +534,13 @@ def main() -> int:
                   output / "create.log", args.timeout_seconds)
     create_engine_wall_minutes = round((time.monotonic()-created_engine_started)/60, 6)
     if created:
+        if args.scenario == "condenser-v22c-physical":
+            # GitHub artifact storage can be quota-blocked. Preserve the
+            # genuine native engine rejection in job logs as well as disk.
+            for line in (output / "create.log").read_text(
+                    encoding="utf-8",errors="replace").splitlines():
+                if scenario["prefix"] in line or "error" in line.lower():
+                    print("NATIVE_CREATE_ERROR " + line[:1200])
         if args.rail_connected_smoke:
             evidence = rail_smoke_evidence(
                 created, None, None, engine_version, required_series, tick_count)
