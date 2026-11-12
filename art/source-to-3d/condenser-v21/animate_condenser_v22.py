@@ -71,10 +71,22 @@ def bbox(obj):
 
 
 def parent_preserve(obj, new_parent):
-    """Preserve source world transform, including the existing tile calibration."""
+    """Preserve exact world matrix despite the source tile-calibration parent.
+
+    An original Blender source mesh may carry matrix_parent_inverse from the
+    former tile-calibration empty. Clear it when reparenting, compute the new
+    inverse and preserve the complete evaluated world matrix.
+    """
     world = obj.matrix_world.copy()
     obj.parent = new_parent
-    obj.matrix_world = world
+    obj.matrix_parent_inverse = new_parent.matrix_world.inverted()
+    obj.matrix_basis = world
+    bpy.context.view_layer.update()
+    drift = max(abs(obj.matrix_world[row][col] - world[row][col])
+                for row in range(4) for col in range(4))
+    if drift > 1e-5:
+        raise RuntimeError('Source world matrix shifted when reparenting '
+                           + obj.name + ': ' + str(drift))
 
 
 def new_empty(name, collection, position):
@@ -131,7 +143,7 @@ def profile():
         'camera_policy': POLICY_ID, 'capture_kind': 'entity',
         'directions': list(DIRECTIONS),
         'states': {'condenser_v22_preview': list(PREVIEW_FRAMES)},
-        'source_size': 256,
+        'source_size': REVIEW_RESOLUTION,
         'camera_override': {
             'type': 'ORTHO', 'elevation_deg': 45, 'azimuth_deg': 0,
             'distance': 5.5, 'target': [0, 0, .55],
@@ -170,7 +182,11 @@ def run(source, out):
     out.mkdir(parents=True, exist_ok=True)
     bpy.ops.wm.open_mainfile(filepath=str(source))
     scene = bpy.context.scene
+    scene.frame_set(1)
+    bpy.context.view_layer.update()
     original_meshes = mesh_signatures(scene)
+    original_world = {o.name: [list(row) for row in o.matrix_world]
+                      for o in scene.objects if o.type == 'MESH'}
     caps = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith(CANISTER_PREFIX)]
     seats = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith(SEAT_PREFIX)]
     if len(caps) != HEADS or len(seats) != HEADS:
@@ -277,6 +293,25 @@ def run(source, out):
             emission.default_value = led[label]
             emission.keyframe_insert(data_path='default_value', frame=frame)
     scene.frame_set(1)
+    bpy.context.view_layer.update()
+    # Critical: the prior V22C render showed a floated top rack although
+    # local mesh geometry hashes were unchanged. Check SOURCE WORLD SPACE,
+    # not only mesh vertices, before saving or rendering any new evidence.
+    errors = {}
+    for name, matrix in original_world.items():
+        obj = bpy.data.objects.get(name)
+        if obj is None:
+            errors[name] = 'missing original source object'
+            continue
+        delta = max(abs(obj.matrix_world[r][c] - matrix[r][c])
+                    for r in range(4) for c in range(4))
+        if delta > 1e-4:
+            errors[name] = delta
+    if errors:
+        raise RuntimeError('Original V21 SOURCE WORLD TRANSFORMS MOVED: '
+                           + json.dumps(dict(list(errors.items())[:15])))
+    scene['source_world_matrices'] = json.dumps(original_world, sort_keys=True)
+    scene['source_world_transform_guard'] = 'PASS'
     scene['model'] = 'Atmospheric Water Condenser'
     scene['model_source_revision'] = 'approved V21 unchanged'
     scene['model_source_sha256'] = APPROVED_SHA
