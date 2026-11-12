@@ -3336,6 +3336,7 @@ def ci_five_observation_1291(content: str, expected: int = 5, *,
         "scenario": f"separate-ci-initialized-{expected}-station-autonomy",
         "requested_population": expected,
         "paired_population_verified": None,
+        "native_identity_observed": None,
         "observed_interval_ticks": 60,
         "engine_ups_including_warmup": native["engine_benchmark_ups"],
         "engine_mean_ms_per_update_including_warmup":
@@ -3366,19 +3367,25 @@ def ci_five_observation_1291(content: str, expected: int = 5, *,
                 and n==(b-a)//60+1 and n>=180
                 and at==ao==bt==bo==expected and bad==0
                 and stable=="true" and "CI_FIVE_PROFILE_1291_UNAVAILABLE" not in content
-                and native["engine_benchmark_updates"]==CI_1291_PROFILE_TICKS
-                and native["script_sample_coverage"]=="complete"):
-            result["paired_population_verified"]=expected
-            result["first_observed_tick"]=a
-            result["last_observed_tick"]=b
-            result["observed_samples"]=n
-            # Whole-run script cost includes population-dependent startup.
-            # Publish a comparable 11,280-tick paired-window cost only when
-            # the benchmark tick origin and all native samples are verified.
-            stable = ci_stable_pair_script_1291(
-                content, a, b, expected, creation_log)
-            if stable is not None:
-                result.update(stable)
+                and native["engine_benchmark_updates"]==CI_1291_PROFILE_TICKS):
+            # The source log proves native original identities independently of
+            # the optional engine verbose CSV. This is observation, not the
+            # accepted complete script-cost profile or clean-exit proof.
+            created = re.findall(
+                r"CI_FIVE_PROFILE_1291_CREATED tick=(\d+) stations="
+                + str(expected) + r" requested=" + str(expected)
+                + r" setup=ci-only-real-entities", creation_log or "")
+            if created == ["0"]:
+                result["native_identity_observed"] = expected
+                result["first_observed_tick"] = a
+                result["last_observed_tick"] = b
+                result["observed_samples"] = n
+                if native["script_sample_coverage"] == "complete":
+                    stable_cost = ci_stable_pair_script_1291(
+                        content, a, b, expected, creation_log)
+                    if stable_cost is not None:
+                        result["paired_population_verified"] = expected
+                        result.update(stable_cost)
 
     # Count only authentic source counters in the proven stable five-pair
     # interval. Missing data stays null; engine script timing includes warmup.
@@ -3390,7 +3397,7 @@ def ci_five_observation_1291(content: str, expected: int = 5, *,
         r"CI_FIVE_PROFILE_1291_ACTIVITY start_tick=(\d+) end_tick=(\d+) "
         + " ".join(key + r"=(\d+|unmeasured)" for key in activity_keys))
     activity = re.findall(activity_pattern, content)
-    if result["paired_population_verified"] == expected and len(activity) == 1:
+    if result["native_identity_observed"] == expected and len(activity) == 1:
         start, end, *observations = activity[0]
         start, end = int(start), int(end)
         if (start == result["first_observed_tick"]
@@ -3441,6 +3448,17 @@ def self_test_ci_five_1291() -> None:
     assert ci_five_observation_1291(verbose_crash)[
         "stable_all_mod_script_mean_ms_per_tick"] is None
     assert observed["stable_all_mod_script_mean_ms_per_tick"] is None
+    # Native 2.1.24 without --benchmark-verbose can still measure whole-engine
+    # UPS, original identity and source activity, but NOT all-mod script cost.
+    summary_only = log.split("tick,scriptUpdate\n")[0]
+    summary_observed = ci_five_observation_1291(
+        summary_only, creation_log=(
+            "CI_FIVE_PROFILE_1291_CREATED tick=0 stations=5 requested=5 "
+            "setup=ci-only-real-entities\n"))
+    assert summary_observed["native_identity_observed"] == 5
+    assert summary_observed["paired_population_verified"] is None
+    assert summary_observed["script_sample_coverage"] is None
+    assert summary_observed["movement_requests_per_1000_ticks"] is not None
     # Native 2.0.77 CSV, with startup at 1ms and the actual stable pair
     # interval at 3ms; a whole-run average cannot represent paired costs.
     source_rows = "".join(f"{i},1000000\n" for i in range(12000))
@@ -3458,6 +3476,7 @@ def self_test_ci_five_1291() -> None:
     paired = ci_five_observation_1291(
         native_log, creation_log=creation_log)
     assert paired["paired_population_verified"] == 5
+    assert paired["native_identity_observed"] == 5
     assert paired["stable_all_mod_script_mean_ms_per_tick"] == 3.0
     assert paired["stable_all_mod_script_p95_ms_per_tick"] == 3.0
     assert paired["stable_all_mod_script_sample_count"] == 11280
@@ -3591,14 +3610,14 @@ def self_test_ci_five_1291() -> None:
 def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
                      work: pathlib.Path, output: pathlib.Path,
                      population: int = 5) -> None:
-    """Serial native 5/25/100-pair runs: matched seed, ticks, hardware.
+    """Native 5/25/100 pairs; retain genuine data after verbose-output crash.
 
-    Native 2.1.24 completed 30k updates then SIGSEGV'd when writing its
-    verbose scriptUpdate tick CSV. Sample the already-proven genuine
-    660..11940, 189-observation 11,280-tick paired window inside a 12k
-    diagnostic benchmark instead. This does not change or replace the
-    original 123k objective or five-process reload acceptance. A failed
-    exit or incomplete native CSV still prevents any population scaling.
+    Factorio 2.1.24 on the trusted Windows worker SIGSEGVs emitting the
+    verbose scriptUpdate CSV even after finishing all benchmark updates.
+    One bounded same-save, same-ticks plain-benchmark retry is allowed ONLY
+    for that precise diagnostic-output crash. It reports real UPS, identity
+    and activity, but script mean/p95 stay unmeasured. This diagnostic does
+    not change functional acceptance or unlock larger populations.
     """
     if population not in (5, 25, 100):
         raise ValueError("unproven profiling population")
@@ -3647,14 +3666,51 @@ def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
             # Retain the native partial verbose CSV and explicitly reject
             # full-window acceptance; profiling never blocks functionality.
             timed_out=True
+    original_log=log_path.read_text(encoding="utf-8",errors="replace")
+    original_native=native_efficiency_observation_1062(original_log)
+    original_exit_status=engine_exit_status
+    plain_fallback=False
+    observed_log=original_log
+    # Do not retry ordinary functional errors, mod crashes or timeouts.
+    # Retry only the observed 2.1.24 Windows verbose-CSV SIGSEGV after
+    # Factorio demonstrably completed exactly the requested real updates.
+    if (not timed_out and engine_exit_status not in (None, 0)
+            and re.search(r"Received SIGSEGV", original_log)
+            and "tick,scriptUpdate" in original_log
+            and original_native["engine_benchmark_updates"] == CI_1291_PROFILE_TICKS
+            and original_native["script_sample_coverage"] != "complete"):
+        plain_log_path=output/("factorio-ci-"+suffix+"-plain.log")
+        with plain_log_path.open("w",encoding="utf-8") as handle:
+            try:
+                plain=subprocess.run([str(binary),"--mod-directory",str(mods),
+                    "--benchmark",str(save),"--benchmark-ticks",
+                    str(CI_1291_PROFILE_TICKS)],
+                    stdout=handle,stderr=subprocess.STDOUT,check=False,
+                    timeout=timeout_seconds)
+                engine_exit_status=plain.returncode
+            except subprocess.TimeoutExpired:
+                timed_out=True
+                engine_exit_status=None
+        observed_log=plain_log_path.read_text(
+            encoding="utf-8",errors="replace")
+        plain_fallback=True
     report=ci_five_observation_1291(
-        log_path.read_text(encoding="utf-8",errors="replace"),
-        expected=population,
+        observed_log, expected=population,
         creation_log=creation_log_path.read_text(
             encoding="utf-8",errors="replace"))
     report["engine_exit_status"]=engine_exit_status
+    report["verbose_engine_exit_status"]=original_exit_status
+    report["plain_after_verbose_sigsegv"]=plain_fallback
+    report["native_identity_verified"]=(
+        population if engine_exit_status==0
+        and report["native_identity_observed"]==population else None)
     report["engine_timeout_seconds"]=timeout_seconds if timed_out else None
     report["performance_is_release_blocking"]=False
+    if plain_fallback:
+        report["script_timing_unmeasured_reason"]=(
+            "native-2.1.24-verbose-output-sigsegv; plain native benchmark "
+            "has no all-mod scriptUpdate tick samples")
+
     (output/("performance-ci-"+suffix+".json")).write_text(
         json.dumps(report,indent=2,sort_keys=True)+"\n",encoding="utf-8")
     print(("CI_FIVE_1291 " if population==5 else f"CI_{population}_1291 ")+
