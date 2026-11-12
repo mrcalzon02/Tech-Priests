@@ -310,7 +310,7 @@ local function pulse()
         s.phase="awaiting-native-robot-build"
         emit("PASS AUTONOMOUS_0259_SELECTED tick="..game.tick..
           " original_magos="..s.magos.." original_senior="..s.senior..
-          " ore="..s.ore.unit_number.." original_station_stock=1"..
+          " ore="..tostring(s.ore.unit_number).." original_station_stock=1"..
           " real_power=true charted=true real_robots=true")
         return
       end
