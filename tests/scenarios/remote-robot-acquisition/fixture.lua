@@ -73,7 +73,7 @@ local function create_native_site(s)
   if not ore then fail("NO_NATURAL_IRON_IN_64_GENERATED_SEEDS") end
   -- Keep the selected patch unmodified: only the staging corridor is cleared.
   -- Every actual ore item must later come from a native resource.mine() call.
-  local area={{-12,-12},{90,42}}
+  local area={{-12,-12},{90,58}}
   for _,entity in pairs(surface.find_entities_filtered{area=area}) do
     if entity.valid and (entity.position.x<70 or entity.position.y<12) then
       if entity.type=="resource" or entity.type=="tree"
@@ -83,7 +83,7 @@ local function create_native_site(s)
     end
   end
   local tiles={}
-  for x=-12,90 do for y=-12,42 do
+  for x=-12,90 do for y=-12,58 do
     if x<70 or y<12 then
       tiles[#tiles+1]={name="grass-1",position={x=x,y=y}}
     end
@@ -96,14 +96,25 @@ local function create_native_site(s)
     place(surface,force,"substation",x,8)
   end
   place(surface,force,"substation",18,24)
+  place(surface,force,"substation",18,40)
+  place(surface,force,"substation",18,56)
   place(surface,force,"substation",66,24)
+  -- The isolated native surface starts with EMPTY accumulator charge.
+  -- The previous 16-panel/4-accumulator island showed radar_energy=334 J,
+  -- electrically connected but unable to chart even its own chunk.
+  -- Supply the 300 kW native radar AND roboports through an ordinary,
+  -- day/night-cycled physical solar grid: 32 x 60 kW panels (1.344 MW
+  -- average on Nauvis) and 16 x 5 MJ accumulators (80 MJ capacity).
+  -- No energy injection, forced daylight, forced chart or scripted scan.
   for _,x in ipairs({10,14,22,26}) do
-    for _,y in ipairs({18,22,26,30}) do
+    for _,y in ipairs({18,22,26,30,34,38,42,46}) do
       place(surface,force,"solar-panel",x,y)
     end
   end
   for _,x in ipairs({10,14,22,26}) do
-    place(surface,force,"accumulator",x,14)
+    for _,y in ipairs({10,14,50,54}) do
+      place(surface,force,"accumulator",x,y)
+    end
   end
   local near_port=place(surface,force,"roboport",18,0)
   place(surface,force,"roboport",46,0)
@@ -233,9 +244,10 @@ local function pulse()
     -- One bounded native readback to distinguish a genuinely unpowered radar
     -- or uncharted ore from a persistent original 0820 relay monopoly.
     -- Diagnostic ONLY: never chart a chunk, reassign a strategy or create ore.
-    if not s.discovery_readback_logged
-      and game.tick-s.started_tick>=1800 then
-      s.discovery_readback_logged=true
+    if (s.discovery_readback_stage or 0)<2
+      and game.tick-s.started_tick>=
+        ((s.discovery_readback_stage or 0)==0 and 1800 or 12000) then
+      s.discovery_readback_stage=(s.discovery_readback_stage or 0)+1
       local radar_power_ok,radar_connected=pcall(function()
         return s.radar.is_connected_to_electric_network()
       end)
@@ -246,7 +258,16 @@ local function pulse()
       end)
       local chain=root.resource_expansion_0259
         and root.resource_expansion_0259.chain_0820
+      local stored_j=0
+      for _,battery in pairs(s.surface.find_entities_filtered{
+        name="accumulator",area={{9,8},{28,58}}}) do
+        if battery.valid then stored_j=stored_j+battery.energy end
+      end
       emit("NATIVE_RADAR_AND_STRATEGY_READBACK tick="..game.tick..
+        " stage="..s.discovery_readback_stage..
+        " daytime="..tostring(s.surface.daytime)..
+        " solar_multiplier="..tostring(s.surface.solar_power_multiplier)..
+        " physical_accumulator_j="..tostring(stored_j)..
         " radar_energy="..tostring(s.radar.energy)..
         " radar_connected="..tostring(radar_power_ok and radar_connected)..
         " radar_chunk_charted="..tostring(radar_chart_ok and radar_charted)..

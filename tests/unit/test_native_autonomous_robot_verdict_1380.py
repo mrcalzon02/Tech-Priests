@@ -75,3 +75,21 @@ assert 'hierarchy.rebuild("command")' not in fixture
 
 print("PASS native 1380 original-priest/physical-stock/robot event/receipt "
       "positive and 15 negative verification cases")
+
+# The previous genuine engine run found a connected 334-J radar with no
+# charted chunk after 18k ticks. Native Method II must have a physically
+# adequate day/night solar island, never energy, daylight or chart injection.
+assert 'for _,y in ipairs({18,22,26,30,34,38,42,46}) do' in fixture
+assert 'for _,y in ipairs({10,14,50,54}) do' in fixture
+assert 'place(surface,force,"substation",18,40)' in fixture
+assert 'place(surface,force,"substation",18,56)' in fixture
+assert 'physical_accumulator_j=' in fixture
+assert 'solar_multiplier=' in fixture
+assert 's.discovery_readback_stage=(s.discovery_readback_stage or 0)+1' in fixture
+assert 's.surface.daytime=' not in fixture
+assert 's.surface.always_day=' not in fixture
+assert 's.radar.energy=' not in fixture
+assert 'force.chart(' not in fixture
+assert 'force.chart_all(' not in fixture
+assert 'surface.create_entity{name="iron-ore"' not in fixture
+print("PASS native 1380 day/night physical radar supply and unbiased discovery checks")
