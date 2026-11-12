@@ -3530,6 +3530,47 @@ def self_test_ci_five_1291() -> None:
         pass
     else:
         raise AssertionError("unsupported 101-priest profiling accepted")
+    # Profiling must refuse unsafe scale-up even when the five-priest
+    # diagnostic crashes or returns an identity-incomplete native receipt.
+    # This is a focused runner contract regression, not native acceptance.
+    from unittest.mock import patch
+    with tempfile.TemporaryDirectory() as root:
+        output = pathlib.Path(root) / "artifacts"
+        calls = []
+        def incomplete_five(binary, mods, work, out, population=5):
+            calls.append(population)
+            (out / "performance-ci-five.json").write_text(
+                json.dumps({"paired_population_verified": None,
+                            "engine_exit_status": 0,
+                            "script_sample_coverage": "complete"}),
+                encoding="utf-8")
+        with patch(__name__ + ".run_ci_five_1291",
+                   side_effect=incomplete_five):
+            diagnostics = run_ci_profile_campaign_1291(
+                pathlib.Path("unused"), pathlib.Path("unused"),
+                pathlib.Path(root) / "work", output)
+        assert calls == [5], calls
+        assert diagnostics[25]["paired_population_verified"] is None
+        assert diagnostics[100]["paired_population_verified"] is None
+        assert "safety unavailable" in diagnostics[25]["reason"]
+        # Native provenance, not source-test return code alone, controls 25.
+        calls.clear()
+        def complete_small(binary, mods, work, out, population=5):
+            calls.append(population)
+            suffix = "five" if population == 5 else str(population)
+            (out / f"performance-ci-{suffix}.json").write_text(
+                json.dumps({"paired_population_verified": population,
+                            "engine_exit_status": 0,
+                            "script_sample_coverage": "complete",
+                            "stable_all_mod_script_sample_count": 11280}),
+                encoding="utf-8")
+        with patch(__name__ + ".run_ci_five_1291",
+                   side_effect=complete_small):
+            diagnostics = run_ci_profile_campaign_1291(
+                pathlib.Path("unused"), pathlib.Path("unused"),
+                pathlib.Path(root) / "work", output)
+        assert calls == [5, 25, 100], calls
+        assert diagnostics[100]["paired_population_verified"] == 100
     print("[ci-five-1291] PASS native 5/25/100 provenance positive/negative")
 
 
@@ -3926,54 +3967,84 @@ def execute(args: argparse.Namespace) -> int:
           f"{stranded} ({stranded.stat().st_size} bytes), "
           f"{carried} ({carried.stat().st_size} bytes), "
           f"{stock_carried} ({stock_carried.stat().st_size} bytes)")
-    # Separate optional native efficiency evidence, not another functional gate.
-    try:
-        run_ci_five_1291(binary, pathlib.Path(args.mod_dir).resolve(), work, output)
-    except Exception as exc:
-        (output/"performance-ci-five.json").write_text(
-            json.dumps({"paired_population_verified":None,
-                        "performance_is_release_blocking":False,
-                        "error":str(exc)},indent=2)+"\n",encoding="utf-8")
-        print("CI_FIVE_1291 UNMEASURED: "+str(exc))
-    # Scaling: 25 only until genuine 25-pair native evidence establishes safety.
-    try:
-        run_ci_five_1291(binary, pathlib.Path(args.mod_dir).resolve(),
-                         work, output, population=25)
-    except Exception as exc:
-        (output/"performance-ci-25.json").write_text(
-            json.dumps({"paired_population_verified":None,
-                        "performance_is_release_blocking":False,
-                        "error":str(exc)},indent=2)+"\n",encoding="utf-8")
-        print("CI_25_1291 UNMEASURED: "+str(exc))
-    # A same-run verified 25-priest native population is the safety gate
-    # before investing in 100. Do not accept source fixtures as that proof.
-    report_25=json.loads((output/"performance-ci-25.json").read_text(encoding="utf-8"))
-    if (report_25.get("paired_population_verified")==25
-            and report_25.get("engine_exit_status")==0
-            and report_25.get("script_sample_coverage")=="complete"):
-        try:
-            run_ci_five_1291(binary, pathlib.Path(args.mod_dir).resolve(),
-                             work, output, population=100)
-        except Exception as exc:
-            (output/"performance-ci-100.json").write_text(
-                json.dumps({"paired_population_verified":None,
-                            "performance_is_release_blocking":False,
-                            "error":str(exc)},indent=2)+"\n",encoding="utf-8")
-            print("CI_100_1291 UNMEASURED: "+str(exc))
-    else:
-        (output/"performance-ci-100.json").write_text(
-            json.dumps({"paired_population_verified":None,
-                        "performance_is_release_blocking":False,
-                        "reason":"same-run 25-pair native safety not verified"},
-                       indent=2)+"\n",encoding="utf-8")
-        print("CI_100_1291 UNMEASURED: 25-pair native safety gate unavailable")
+    # Optional native profiles are diagnostics, not prerequisite to the
+    # independently accepted physical save/reload and inventory gates.
+    run_ci_profile_campaign_1291(binary, pathlib.Path(args.mod_dir).resolve(),
+                                 work, output)
     return 0
+
+
+
+def run_ci_profile_campaign_1291(
+        binary: pathlib.Path, source_mods: pathlib.Path,
+        work: pathlib.Path, output: pathlib.Path) -> dict[int, dict[str, object]]:
+    """Bounded, nonblocking native 5/25/100 diagnostics without five-process prerequisite.
+
+    Profile-only runs the already-authorized CI construction of *initial*
+    real stations/priests, not the separately guarded physical remote-ore
+    acceptance. Every population requires an independent native identity and
+    scriptUpdate receipt before the next larger population is attempted.
+    Failed engine attempts retain partial logs and explicit missing metrics.
+    """
+    output.mkdir(parents=True, exist_ok=True)
+    work.mkdir(parents=True, exist_ok=True)
+    reports: dict[int, dict[str, object]] = {}
+
+    def unmeasured(population: int, reason: str) -> dict[str, object]:
+        report = {
+            "schema": "ci-paired-performance-1291-v1",
+            "requested_population": population,
+            "paired_population_verified": None,
+            "engine_exit_status": None,
+            "script_sample_coverage": None,
+            "performance_is_release_blocking": False,
+            "reason": reason,
+        }
+        suffix = "five" if population == 5 else str(population)
+        (output / f"performance-ci-{suffix}.json").write_text(
+            json.dumps(report, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8")
+        print(f"CI_{population}_1291 UNMEASURED: {reason}")
+        return report
+
+    def measure(population: int) -> dict[str, object]:
+        suffix = "five" if population == 5 else str(population)
+        try:
+            run_ci_five_1291(binary, source_mods, work, output,
+                             population=population)
+            return json.loads((output / f"performance-ci-{suffix}.json").read_text(
+                encoding="utf-8"))
+        except Exception as exc:
+            # The original Factorio create/benchmark logs are retained even on
+            # timeout; an absent or partial report must never count as zero cost.
+            return unmeasured(population, str(exc))
+
+    def safe_to_scale(report: dict[str, object], population: int) -> bool:
+        return (report.get("paired_population_verified") == population
+                and report.get("engine_exit_status") == 0
+                and report.get("script_sample_coverage") == "complete"
+                and isinstance(report.get("stable_all_mod_script_sample_count"),
+                               int)
+                and report["stable_all_mod_script_sample_count"] > 0)
+
+    reports[5] = measure(5)
+    if safe_to_scale(reports[5], 5):
+        reports[25] = measure(25)
+    else:
+        reports[25] = unmeasured(25, "same-run 5-pair native identity/script safety unavailable")
+    if safe_to_scale(reports[25], 25):
+        reports[100] = measure(100)
+    else:
+        reports[100] = unmeasured(100, "same-run 25-pair native identity/script safety unavailable")
+    return reports
 
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--self-test-efficiency", action="store_true")
+    parser.add_argument("--profile-only", action="store_true",
+                        help="measure existing authentic CI 5/25/100 priests without rerunning physical recovery")
     parser.add_argument("--efficiency-log", help="Existing real Factorio log; diagnostics only")
     parser.add_argument("--binary")
     parser.add_argument("--mod-dir")
@@ -3995,6 +4066,25 @@ def main(argv: list[str]) -> int:
         print("NATIVE_EFFICIENCY_1062 "+json.dumps(
             native_efficiency_observation_1062(source.read_text(
                 encoding="utf-8", errors="replace")), sort_keys=True))
+        return 0
+    if args.profile_only:
+        for key in ("binary", "mod_dir", "work_dir", "artifact_dir"):
+            if not getattr(args, key):
+                parser.error(f"--{key.replace('_', '-')} is required")
+        reports = run_ci_profile_campaign_1291(
+            pathlib.Path(args.binary).resolve(),
+            pathlib.Path(args.mod_dir).resolve(),
+            pathlib.Path(args.work_dir).resolve(),
+            pathlib.Path(args.artifact_dir).resolve())
+        print("CI_PROFILE_CAMPAIGN_1291 " + json.dumps({
+            "native_populations_verified": [
+                n for n in (5, 25, 100)
+                if reports[n].get("paired_population_verified") == n
+                and reports[n].get("engine_exit_status") == 0
+                and reports[n].get("script_sample_coverage") == "complete"],
+            "performance_is_release_blocking": False,
+            "functional_remote_ore_gates_accepted": 0,
+        }, sort_keys=True))
         return 0
     for key in ("binary", "mod_dir", "initial_save", "work_dir", "artifact_dir"):
         if not getattr(args, key):
