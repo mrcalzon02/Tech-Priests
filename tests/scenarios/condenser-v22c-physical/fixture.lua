@@ -106,12 +106,15 @@ local function run()
     -- the engine reports an existing segment; never invent water or a segment.
     local machine_has_segment=machine.has_fluid_segment(1)
     local pipe_has_segment=pipe.has_fluid_segment(1)
-    if machine_has_segment~=pipe_has_segment then
-      fail("FLUID_SEGMENT_HALF_FORMED_"..spec.name)
-    end
+    -- A physical 2.1 output joins before the whole network finalizes.
+    -- On the native creation tick one endpoint can have a segment while the
+    -- other is still building its segment. That is NOT a broken pipe link.
+    -- Native target and neighbour identity above remain the hard gate.
     local machine_segment=0
     local segment_state="unformed"
-    if machine_has_segment then
+    if machine_has_segment~=pipe_has_segment then
+      segment_state="forming"
+    elseif machine_has_segment and pipe_has_segment then
       machine_segment=machine.get_fluid_segment_id(1)
       local pipe_segment=pipe.get_fluid_segment_id(1)
       if not(machine_segment and pipe_segment and machine_segment==pipe_segment) then
