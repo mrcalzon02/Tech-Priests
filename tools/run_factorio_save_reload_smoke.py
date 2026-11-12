@@ -3969,8 +3969,14 @@ def execute(args: argparse.Namespace) -> int:
           f"{stock_carried} ({stock_carried.stat().st_size} bytes)")
     # Optional native profiles are diagnostics, not prerequisite to the
     # independently accepted physical save/reload and inventory gates.
-    run_ci_profile_campaign_1291(binary, pathlib.Path(args.mod_dir).resolve(),
-                                 work, output)
+    try:
+        run_ci_profile_campaign_1291(binary, pathlib.Path(args.mod_dir).resolve(),
+                                     work, output)
+    except Exception as diagnostic_error:
+        # Profiling is observational: even its own I/O or setup failure
+        # must not overturn valid native physical custody/ore acceptance.
+        print("WARN: nonblocking native population profile unavailable: "
+              + str(diagnostic_error), file=sys.stderr)
     return 0
 
 
