@@ -171,7 +171,7 @@ def verify_condenser_v22c_physical_log(exit_code: int, log: str) -> dict[str, ob
     pattern = (r"\[TP-CONDENSER-V22C-PHYSICAL\] NATIVE_CONNECTED facing="
                r"(north|east|south|west) machine=(\d+) pipe=(\d+) "
                r"source_x=(-?[\d.]+) source_y=(-?[\d.]+) "
-               r"target_x=(-?[\d.]+) target_y=(-?[\d.]+) segment=(\d+)")
+               r"target_x=(-?[\d.]+) target_y=(-?[\d.]+) segment=(\d+) segment_state=(formed|unformed)")
     records = re.findall(pattern, log)
     if len(records) != 4 or log.count(prefix + "NATIVE_CONNECTED facing=") != 4:
         raise ValueError("Not exactly four authentic native pipe connection receipts")
@@ -179,7 +179,7 @@ def verify_condenser_v22c_physical_log(exit_code: int, log: str) -> dict[str, ob
                 "south": (0, 18), "west": (18, 18)}
     ids, segments, positions = set(), set(), set()
     observed = {}
-    for facing, machine, pipe, sx, sy, tx, ty, segment in records:
+    for facing, machine, pipe, sx, sy, tx, ty, segment, segment_state in records:
         if facing in observed:
             raise ValueError("Duplicated native heading " + facing)
         cx, cy = expected[facing]
@@ -192,19 +192,30 @@ def verify_condenser_v22c_physical_log(exit_code: int, log: str) -> dict[str, ob
         else: outward = ty < cy - 0.75
         if not outward:
             raise ValueError("Native output port did not rotate outward " + facing)
-        if int(machine) == 0 or int(pipe) == 0 or int(segment) == 0:
-            raise ValueError("Missing unique native entity/segment identity")
+        if int(machine) <= 0 or int(pipe) <= 0:
+            raise ValueError("Missing real native machine/pipe identity")
+        segment_id = int(segment)
+        if segment_state == "formed":
+            if segment_id <= 0:
+                raise ValueError("Formed segment missing genuine engine ID")
+            segments.add(segment_id)
+        elif segment_id != 0:
+            raise ValueError("Unformed fluid segment fabricated positive ID")
         ids.update((int(machine),int(pipe)))
-        segments.add(int(segment))
         positions.add((round(tx,3),round(ty,3)))
         observed[facing] = {"machine":int(machine),"pipe":int(pipe),
-                            "target":[tx,ty],"segment":int(segment)}
+                            "target":[tx,ty],"segment":segment_id,
+                            "segment_state":segment_state}
     if set(observed) != set(expected) or len(ids) != 8 or len(positions) != 4:
         raise ValueError("Four cardinal placements or eight distinct entities absent")
-    if len(segments) != 4:
-        raise ValueError("Independent machine fluid segments unexpectedly merged")
+    formed = sum(x["segment_state"] == "formed" for x in observed.values())
+    if len(segments) != formed:
+        raise ValueError("Independent observed fluid segments unexpectedly merged")
     return {"accepted":True,"native_engine_exit":exit_code,
-            "directions":observed,"real_entities":len(ids),"fluid_segments":len(segments)}
+            "directions":observed,"real_entities":len(ids),
+            "connected_pipes":4,
+            "fluid_segments_confirmed":len(segments),
+            "connections_unformed":4-len(segments)}
 
 
 def run(argv: list[str], log_file: pathlib.Path, timeout: int) -> int:
