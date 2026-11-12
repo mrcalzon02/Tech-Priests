@@ -1324,6 +1324,24 @@ class NativePaidTrainStop0836ContractTests(unittest.TestCase):
                           'pair.construction_request=nil', 'teleport('):
             self.assertNotIn(forbidden, stop)
 
+    def test_train_stop_faces_native_track_from_the_correct_side(self):
+        # 43130874362: a physically paid native train stop was built, but
+        # connected_rail was nil. Collision clearance is not rail binding.
+        root = pathlib.Path(__file__).resolve().parents[2]
+        rail = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
+                ).read_text(encoding="utf-8")
+        stop = rail.split("function M.service_first_train_stop_0836(pair)", 1)[1].split(
+            "function M.service_first_train_board_0836(pair)", 1)[0]
+        self.assertIn('local heading=offset<0 and cardinal.west or cardinal.east', stop)
+        self.assertIn('return false,"original-native-train-stop-requires-horizontal-track"', stop)
+        self.assertNotIn('for _,heading in ipairs({route.direction,(route.direction+8)%16})', stop)
+        self.assertIn('can_place_entity{', stop)
+        self.assertIn('connected_original(stop)', stop)
+        self.assertIn('receipt.before-receipt.after==1', stop)
+        self.assertIn('state.phase="blocked"', stop)
+        self.assertNotIn('surface.create_entity', stop)
+        self.assertNotIn('teleport(', stop)
+
     def test_stop_is_original_0338_paid_and_native_connected_before_boarding(self):
         root = pathlib.Path(__file__).resolve().parents[2]
         rail = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")

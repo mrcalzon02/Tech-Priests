@@ -1223,6 +1223,12 @@ function M.service_first_train_stop_0836(pair)
   if not stocked then return false,"no-real-train-stop-item" end
   -- The 0338 builder alone places a stop. Test cardinal sides and
   -- direction using live engine placeability, never create a trial entity.
+  local cardinal=defines and defines.direction
+  if not(cardinal and type(cardinal.east)=="number"
+    and type(cardinal.west)=="number"
+    and (route.direction==cardinal.east or route.direction==cardinal.west))then
+    return false,"original-native-train-stop-requires-horizontal-track"
+  end
   local chosen,direction
   for _,index in ipairs({16,18,20,14,22,12})do
     if index>=2 and index+1<=route.segment then
@@ -1231,18 +1237,20 @@ function M.service_first_train_stop_0836(pair)
       local rail=track_at(pair,origin,route.direction)
       if rail and rail.unit_number==route.built_units[index] then
         for _,offset in ipairs({-2,2,-3,3})do
-          for _,heading in ipairs({route.direction,(route.direction+8)%16})do
-            local site=pos(origin.x,origin.y+offset)
-            local ok,placeable=pcall(function()
-              return pair.station.surface.can_place_entity{
-                name="train-stop",position=site,direction=heading,
-                force=pair.station.force}
-            end)
-            if ok and placeable==true then
-              chosen=site;direction=heading;break
-            end
+          -- A stop sits to the RIGHT of arriving trains. A north-side
+          -- stop must face west, and a south-side stop must face east.
+          -- can_place_entity checks collisions, NOT connected_rail; the
+          -- old arbitrary heading order built a paid but disconnected stop.
+          local heading=offset<0 and cardinal.west or cardinal.east
+          local site=pos(origin.x,origin.y+offset)
+          local ok,placeable=pcall(function()
+            return pair.station.surface.can_place_entity{
+              name="train-stop",position=site,direction=heading,
+              force=pair.station.force}
+          end)
+          if ok and placeable==true then
+            chosen=site;direction=heading;break
           end
-          if chosen then break end
         end
       end
     end
