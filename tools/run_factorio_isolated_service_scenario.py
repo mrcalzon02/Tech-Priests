@@ -32,6 +32,13 @@ CASES = {
         "pass": "PASS active machine consecration and repair from real stocked items ranks=4",
         "ticks": 27000,
     },
+    "remote-robot-acquisition": {
+        "fixture": "tests/scenarios/remote-robot-acquisition/fixture.lua",
+        "module": "ci_remote_robot_acquisition",
+        "prefix": "[TP-AUTONOMOUS-ROBOT-1380]",
+        "pass": "PASS autonomous original 0259 selected and physical native robot-built Intermediate paired",
+        "ticks": 30060,
+    },
     "remote-rail-acquisition": {
         "fixture": "tests/scenarios/remote-rail-acquisition/fixture.lua",
         "module": "ci_remote_rail_acquisition",
