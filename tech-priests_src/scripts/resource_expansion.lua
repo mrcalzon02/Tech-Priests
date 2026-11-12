@@ -129,6 +129,162 @@ local function nearest_known_resource(pair, resource_names)
   return nil
 end
 
+-- Autonomous Method II admission for an ALREADY covered, genuinely mined
+-- resource. This is a read-only selection predicate on the existing 0259
+-- service, not a second robot controller or a material/construction owner.
+-- The 1076/0338/0820 executors alone can spend, build, pair and deliver.
+local function covered_robot_ore_goal_0259(pair, need, ore)
+  if not(valid_pair(pair)
+    and pair.station.name=="planetary-magos-cogitator-station"
+    and not(pair.roboport_expansion_goal_1076 or pair.roboport_frontier_1076
+      or pair.remote_rail_outpost_0835 or pair.construction_task_0338
+      or pair.construction_custody_0338 or pair.robot_network_request_0338)
+    and (need=="iron-ore" or need=="copper-ore"
+      or need=="coal" or need=="stone")
+    and ore and ore.valid and ore.type=="resource"
+    and ore.name==need and ore.surface==pair.station.surface
+    and (tonumber(ore.amount)or 0)>0
+    and ore.position and ore.prototype)then return nil end
+  local station=pair.station
+  local force=station.force
+  if not(force and force.index and station.surface.index
+    and station.unit_number and distance_sq(station.position,ore.position)
+      >radius(pair)^2 and distance_sq(station.position,ore.position)
+      <=(36*24)^2)then return nil end
+  -- Uncharted generated chunks are not known ore locations, even when a
+  -- broad source scan can see them. No test-created chart or resource credit.
+  local charted_ok,charted=pcall(function()
+    return force.is_chunk_charted(station.surface,{
+      x=math.floor(ore.position.x/32),y=math.floor(ore.position.y/32)})
+  end)
+  if not(charted_ok and charted==true)then return nil end
+  local mined=false
+  local ok,products=pcall(function()
+    return ore.prototype.mineable_properties.products
+  end)
+  if ok and type(products)=="table" then
+    for _,product in pairs(products)do
+      if product.type=="item" and product.name==need then
+        mined=true;break
+      end
+    end
+  end
+  if not mined then return nil end
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local readiness=rawget(_G,"TechPriestsRoboportReadiness0714")
+  local tp=storage and storage.tech_priests
+  if not(hierarchy and type(hierarchy.rank)=="function"
+    and type(hierarchy.is_direct_subordinate)=="function"
+    and type(hierarchy.direct_capacity_remaining)=="function"
+    and (tonumber(hierarchy.max_link_distance)or 0)>0
+    and readiness and type(readiness.scan_pair)=="function"
+    and tp and type(tp.pairs_by_station)=="table")then return nil end
+  local rank_ok,root_rank=pcall(hierarchy.rank,pair)
+  if not(rank_ok and root_rank==4)then return nil end
+  local observed=pcall(readiness.scan_pair,pair,true)
+  if not observed then return nil end
+  local ids={}
+  for id in pairs(tp.pairs_by_station)do
+    if type(id)=="number" and id~=station.unit_number then
+      ids[#ids+1]=id
+    end
+  end
+  table.sort(ids)
+  for _,report in ipairs(pair.roboport_reports_0714 or{})do
+    local port=report.entity
+    if port and port.valid and port.type=="roboport"
+      and port.force==force and port.surface==station.surface
+      and distance_sq(port.position,station.position)<=96^2 then
+      local good,cell,network=pcall(function()
+        local c=port.logistic_cell
+        return c,c and c.logistic_network
+      end)
+      local ready=false
+      if good and cell and network then
+        local ok_native,result=pcall(function()
+          return port.is_connected_to_electric_network()==true
+            and (tonumber(port.energy)or 0)>0
+            and cell.valid~=false and cell.transmitting~=false
+            and network.valid~=false and network.force==force
+            and (tonumber(network.available_construction_robots)or 0)>0
+            and (tonumber(network.all_construction_robots)or 0)>0
+            and (tonumber(network.get_item_count(
+              "intermediate-cogitator-station"))or 0)>=1
+            and cell.is_in_logistic_range(ore.position)==true
+            and cell.is_in_construction_range(ore.position)==true
+        end)
+        ready=ok_native and result==true
+      end
+      if ready then
+        for _,id in ipairs(ids)do
+          local senior=tp.pairs_by_station[id]
+          if valid_pair(senior) and senior.station.unit_number==id
+            and senior.station.name=="senior-cogitator-station"
+            and senior.station.surface==station.surface
+            and senior.station.force==force
+            and not(senior.construction_task_0338
+              or senior.construction_custody_0338
+              or senior.robot_network_task_0338
+              or senior.robot_network_request_0338)then
+            local permitted,link,capacity,senior_rank=pcall(function()
+              return hierarchy.is_direct_subordinate(pair,senior),
+                hierarchy.direct_capacity_remaining(senior),
+                hierarchy.rank(senior)
+            end)
+            local r=tonumber(senior.radius or senior.scan_radius
+              or senior.station_radius)
+            if type(refresh_pair_radius)=="function"then
+              local ok_radius,measured=pcall(refresh_pair_radius,senior)
+              if ok_radius and tonumber(measured)then
+                r=tonumber(measured)
+              end
+            end
+            if permitted and link==true and senior_rank==3
+              and type(capacity)=="number" and capacity>0
+              and r and r>0
+              and distance_sq(station.position,senior.station.position)
+                <=hierarchy.max_link_distance^2 then
+              for _,delta in ipairs({
+                {-6,0},{6,0},{0,-6},{0,6},
+                {-9,0},{9,0},{0,-9},{0,9}})do
+                local site={x=math.floor(ore.position.x+delta[1]+0.5),
+                  y=math.floor(ore.position.y+delta[2]+0.5)}
+                if distance_sq(senior.station.position,site)<=r*r
+                  and distance_sq(site,ore.position)<=r*r
+                  and distance_sq(station.position,site)>radius(pair)^2 then
+                  local allowed,placeable=pcall(function()
+                    return cell.is_in_construction_range(site)==true
+                      and cell.is_in_logistic_range(site)==true
+                      and station.surface.can_place_entity{
+                        name="intermediate-cogitator-station",
+                        position=site,force=force}==true
+                  end)
+                  if allowed and placeable then
+                    return {target={x=ore.position.x,y=ore.position.y},
+                      root_station_unit=station.unit_number,
+                      surface_index=station.surface.index,
+                      force_index=force.index,
+                      remote_station_item_1076="intermediate-cogitator-station",
+                      remote_station_position_1076=site,
+                      remote_resource_item_1076=need,
+                      remote_resource_position_1076={
+                        x=ore.position.x,y=ore.position.y}}
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  return nil
+end
+-- Pure and fail-closed; usable by focused unit tests without dispatching
+-- ghosts or changing item ownership.
+tech_priests_0259_autonomous_robot_goal_for_known_ore=
+  covered_robot_ore_goal_0259
+
 local function exploration_angle(pair, key)
   local unit = station_unit(pair) or 1
   local tick = game and game.tick or 0
@@ -258,6 +414,17 @@ function tech_priests_0259_resource_expansion_service(pair)
       if nearest and nearest.valid then
         -- Known resource: reserve one persistent multi-tier mission. A real
         -- child station must be built/paired before the next ghost is issued.
+        local robot_goal=covered_robot_ore_goal_0259(pair,need,nearest)
+        if robot_goal then
+          -- Only a native, charted, physically supplied and ALREADY
+          -- network-covered outpost can select this route. The existing
+          -- 1076 -> 0338 robot builder and 0820/0837 courier still own
+          -- every physical receipt. No station/ore/cargo is created here.
+          pair.roboport_expansion_goal_1076=robot_goal
+          state.last_need=need
+          state.last_reason="autonomous-covered-powered-robot-resource-frontier"
+          return false
+        end
         ok=RemoteChain0820.start(pair,need,nearest.position,nearest.name)
       else
         -- Unknown patch: the historical bounded outward scout ghost remains,

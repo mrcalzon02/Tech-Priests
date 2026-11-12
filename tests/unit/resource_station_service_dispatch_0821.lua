@@ -115,7 +115,124 @@ assert(Chain.status(magos)==preserved and preserved.status=="blocked"
   and #requests==count_before,
   "new robot intent silently overwrote an existing physical relay writ")
 tech_priests_0255_pair_is_magos_planner=original_is_magos
-print("[resource-station-service-dispatch-0821] PASS live wrapper, bounded relay, physical pairing, delegated next link and explicit robot priority")
+-- An autonomous 0259 deficit may select Method II ONLY when actual native
+-- logistic coverage, charting, original Senior rank and one physical robot
+-- supplied Intermediate item all exist. No fixture counts as engine proof.
+do
+  local old_provider=tech_priests_prototype_table_0440
+  local old_surface_search=surface.find_entities_filtered
+  local old_can_place=surface.can_place_entity
+  local old_chart=force.is_chunk_charted
+  local old_readiness=_G.TechPriestsRoboportReadiness0714
+  local old_magos=tech_priests_0255_pair_is_magos_planner
+  local old_max_link=TECH_PRIESTS_COMMAND_HIERARCHY_0480.max_link_distance
+  local old_force_index=force.index
+  local ore={valid=true,type="resource",name="iron-ore",
+    amount=2,surface=surface,position={x=65,y=0},
+    prototype={mineable_properties={products={
+      {type="item",name="iron-ore",amount=1}}}}}
+  local native_available,native_stock=2,1
+  local net={valid=true,force=force,
+    get_item_count=function(item)
+      assert(item=="intermediate-cogitator-station")
+      return native_stock
+    end}
+  local cell={valid=true,transmitting=true,logistic_network=net,
+    is_in_logistic_range=function(pos)return pos.x>=0 and pos.x<=90 end,
+    is_in_construction_range=function(pos)return pos.x>=0 and pos.x<=90 end}
+  local port={valid=true,type="roboport",force=force,surface=surface,
+    position={x=15,y=0},energy=1000,logistic_cell=cell,
+    is_connected_to_electric_network=function()return true end}
+  local auto=pair(300,0,4)
+  auto.station.name="planetary-magos-cogitator-station"
+  local senior=pair(301,40,3)
+  senior.station.name="senior-cogitator-station"
+  senior.priest.unit_number=9301
+  storage.tech_priests.pairs_by_station[300]=auto
+  storage.tech_priests.pairs_by_station[301]=senior
+  force.index=1
+  net.available_construction_robots=native_available
+  net.all_construction_robots=2
+  force.is_chunk_charted=function()return true end
+  TECH_PRIESTS_COMMAND_HIERARCHY_0480.max_link_distance=90
+  tech_priests_prototype_table_0440=function(kind)
+    assert(kind=="entity")
+    return {["iron-ore"]={type="resource",
+      mineable_properties=ore.prototype.mineable_properties}}
+  end
+  surface.find_entities_filtered=function(spec)
+    if spec.name~="iron-ore" then return {} end
+    return spec.area and {ore} or {}
+  end
+  surface.can_place_entity=function(spec)
+    return spec.name=="intermediate-cogitator-station"
+      and spec.force==force and spec.position.x==59
+  end
+  _G.TechPriestsRoboportReadiness0714={
+    scan_pair=function(p)
+      assert(p==auto)
+      p.roboport_reports_0714={{entity=port}}
+      return true
+    end}
+  tech_priests_0255_pair_is_magos_planner=function(p)
+    return p==auto or old_magos(p)
+  end
+  local before=#requests
+  local goal=tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore)
+  assert(goal and goal.target.x==65
+    and goal.remote_station_position_1076.x==59
+    and goal.root_station_unit==300
+    and goal.remote_resource_item_1076=="iron-ore"
+    and not auto.roboport_expansion_goal_1076
+    and #requests==before,
+    "read-only native covered-robot admission fabricated or lost source")
+  assert(tech_priests_0259_resource_expansion_service(auto)==false
+    and auto.roboport_expansion_goal_1076
+    and auto.roboport_expansion_goal_1076.remote_station_position_1076.x==59
+    and auto.resource_expansion_0259.last_reason==
+      "autonomous-covered-powered-robot-resource-frontier"
+    and not Chain.status(auto) and #requests==before,
+    "actual 0259 shortage discovery did not choose covered robot route")
+  auto.roboport_expansion_goal_1076=nil
+  net.available_construction_robots=0
+  assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore),"zero robots authorized the remote station")
+  net.available_construction_robots=2
+  native_stock=0
+  assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore),"missing physical robot-network item passed")
+  native_stock=1
+  force.is_chunk_charted=function()return false end
+  assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore),"uncharted resource selected autonomous route")
+  force.is_chunk_charted=function()return true end
+  auto.construction_custody_0338={item_name="roboport",count=1}
+  assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore) and auto.construction_custody_0338.count==1,
+    "robot goal preempted original Magos item custody")
+  auto.construction_custody_0338=nil
+  senior.priest.valid=false
+  assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore),"missing original ranked Senior was substituted")
+  senior.priest.valid=true
+  local prior_surface=ore.surface
+  ore.surface={}
+  assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore),"foreign-surface ore was credited")
+  ore.surface=prior_surface
+  storage.tech_priests.pairs_by_station[300]=nil
+  storage.tech_priests.pairs_by_station[301]=nil
+  tech_priests_prototype_table_0440=old_provider
+  surface.find_entities_filtered=old_surface_search
+  surface.can_place_entity=old_can_place
+  force.is_chunk_charted=old_chart
+  force.index=old_force_index
+  _G.TechPriestsRoboportReadiness0714=old_readiness
+  tech_priests_0255_pair_is_magos_planner=old_magos
+  TECH_PRIESTS_COMMAND_HIERARCHY_0480.max_link_distance=old_max_link
+end
+print("[resource-station-service-dispatch-0821] PASS live wrapper, bounded relay, physical pairing, delegated next link and explicit/autonomous native-covered robot priority")
 
 -- Existing source-validation workflow exercises the physical ore courier.
 dofile("tests/unit/resource_return_courier_0837.lua")
