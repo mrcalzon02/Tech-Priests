@@ -205,7 +205,7 @@ def inspect(out: Path) -> dict:
             '512px': repeat_full_noise, '138px': repeat_native_noise,
         },
         'independent_effect_visibility_gates': 'PASS',
-        'gif_cycle_duration_ms': len(FRAMES) * 750,
+        'gif_cycle_duration_ms': len(FRAMES) * 375,
         'gif_is_sampled_frames_not_full_native_96_frame_video': True,
         'directions': metrics,
         'proofs': {p.name: digest(p) for p in
