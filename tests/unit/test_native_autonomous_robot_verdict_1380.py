@@ -56,6 +56,11 @@ for exit_code,source in checks:
 fixture=(root/"tests/scenarios/remote-robot-acquisition/fixture.lua").read_text(encoding="utf-8")
 bootstrap=fixture.split("assert(registry.on_init(function()",1)[1].split("end,{owner=KEY",1)[0]
 assert "create_native_site(s)" in bootstrap
+# Real Factorio resource LuaEntities need not have a unit_number. The
+# autonomous 0259 and robot-builder receipt must keep running while the
+# natural ore is identified by its physical position and prototype.
+assert '" ore="..tostring(s.ore.unit_number)' in fixture
+assert '" ore="..s.ore.unit_number' not in fixture
 assert "NATIVE_ON_INIT_BOOTSTRAP_COMPLETE" in bootstrap
 assert 'while s.seed_offset<64 do' in fixture
 assert 'local name=SURFACE.."-"..tostring(s.seed_offset)' in fixture
