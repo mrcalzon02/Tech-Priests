@@ -124,6 +124,15 @@ do
   local old_can_place=surface.can_place_entity
   local old_chart=force.is_chunk_charted
   local old_readiness=_G.TechPriestsRoboportReadiness0714
+  local old_frontier=_G.TechPriestsRoboportExpansionFrontier1076
+  local native_anchor_ready=true
+  local native_preflight_calls=0
+  _G.TechPriestsRoboportExpansionFrontier1076={
+    native_covered_ore_admission_1076=function(owner,target,site)
+      native_preflight_calls=native_preflight_calls+1
+      assert(owner and target and site and target.x==65 and site.x==59)
+      return native_anchor_ready
+    end}
   local old_magos=tech_priests_0255_pair_is_magos_planner
   local old_max_link=TECH_PRIESTS_COMMAND_HIERARCHY_0480.max_link_distance
   local old_force_index=force.index
@@ -185,8 +194,23 @@ do
     and goal.root_station_unit==300
     and goal.remote_resource_item_1076=="iron-ore"
     and not auto.roboport_expansion_goal_1076
-    and #requests==before,
+    and #requests==before and native_preflight_calls==1,
     "read-only native covered-robot admission fabricated or lost source")
+  native_anchor_ready=false
+  assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore) and not auto.roboport_expansion_goal_1076,
+    "unanchored native grid was selected and starved Method I")
+  native_anchor_ready=true
+  _G.TechPriestsRoboportExpansionFrontier1076=nil
+  assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore) and not auto.roboport_expansion_goal_1076,
+    "missing canonical 1076 preflight authorized a dead robot goal")
+  _G.TechPriestsRoboportExpansionFrontier1076={
+    native_covered_ore_admission_1076=function(owner,target,site)
+      native_preflight_calls=native_preflight_calls+1
+      assert(owner==auto and target.x==65 and site.x==59)
+      return true
+    end}
   assert(tech_priests_0259_resource_expansion_service(auto)==false
     and auto.roboport_expansion_goal_1076
     and auto.roboport_expansion_goal_1076.remote_station_position_1076.x==59
@@ -229,6 +253,7 @@ do
   force.is_chunk_charted=old_chart
   force.index=old_force_index
   _G.TechPriestsRoboportReadiness0714=old_readiness
+  _G.TechPriestsRoboportExpansionFrontier1076=old_frontier
   tech_priests_0255_pair_is_magos_planner=old_magos
   TECH_PRIESTS_COMMAND_HIERARCHY_0480.max_link_distance=old_max_link
 end

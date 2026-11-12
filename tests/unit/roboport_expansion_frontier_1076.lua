@@ -109,7 +109,30 @@ local function make_pair(goal)
       target=goal,root_station_unit=99,surface_index=1,force_index=1}}
 end
 local root_port=port({x=0,y=0},true,19)
-pole({x=0,y=4},7)
+local original_grid_anchor=pole({x=0,y=4},7)
+-- A proposed autonomous Method II goal must first prove that the SAME
+-- 1076 authority can identify actual powered coverage and a same-grid pole.
+-- A ready-looking 0714 summary alone is not a buildable route.
+local admission_owner=make_pair({x=10,y=0})
+local admitted,admission_reason=M.native_covered_ore_admission_1076(
+  admission_owner,{x=12,y=0},{x=8,y=0})
+assert(admitted and admission_reason==
+  "existing-powered-covered-grid-and-anchor-verified"
+  and not admission_owner.roboport_frontier_1076,
+  "existing native covered grid admission failed or built without 0338")
+original_grid_anchor.electric_network_id=8
+assert(not M.native_covered_ore_admission_1076(
+  admission_owner,{x=12,y=0},{x=8,y=0}),
+  "foreign electric-grid pole was admitted for autonomous robot construction")
+original_grid_anchor.electric_network_id=7
+root_port.energy=0
+assert(not M.native_covered_ore_admission_1076(
+  admission_owner,{x=12,y=0},{x=8,y=0}),
+  "unpowered original roboport authorized autonomous Method II")
+root_port.energy=10000
+assert(not M.native_covered_ore_admission_1076(
+  admission_owner,{x=80,y=0},{x=78,y=0}),
+  "uncovered remote ore was confused with native reachable network")
 local deferred=make_pair({x=100,y=0})
 deferred.roboport_expansion_goal_1076.activation_pending_1076=true
 local held=M.service_pair(deferred)

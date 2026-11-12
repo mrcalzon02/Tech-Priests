@@ -260,6 +260,23 @@ local function covered_robot_ore_goal_0259(pair, need, ore)
                         position=site,force=force}==true
                   end)
                   if allowed and placeable then
+                    -- 0714 readiness alone is not 1076 executable authority:
+                    -- the original frontier also needs a real same-grid pole
+                    -- anchor and identifiable, fully covered native network.
+                    -- Otherwise leave 0259 free to choose the honest physical
+                    -- Method I fallback instead of persisting a dead goal.
+                    local frontier=rawget(_G,
+                      "TechPriestsRoboportExpansionFrontier1076")
+                    local ready_to_build=false
+                    if frontier and
+                      type(frontier.native_covered_ore_admission_1076)
+                        =="function" then
+                      local admitted,result=pcall(
+                        frontier.native_covered_ore_admission_1076,
+                        pair,ore.position,site)
+                      ready_to_build=admitted and result==true
+                    end
+                    if ready_to_build then
                     return {target={x=ore.position.x,y=ore.position.y},
                       root_station_unit=station.unit_number,
                       surface_index=station.surface.index,
@@ -269,6 +286,7 @@ local function covered_robot_ore_goal_0259(pair, need, ore)
                       remote_resource_item_1076=need,
                       remote_resource_position_1076={
                         x=ore.position.x,y=ore.position.y}}
+                    end
                   end
                 end
               end

@@ -207,6 +207,32 @@ local function complete_coverage(port,target)
   return live_port and covered(live_port.cell,target,"construction")
     and covered(live_port.cell,target,"logistic")
 end
+-- 0259's autonomous strategy may reserve a robot objective only when the
+-- ORIGINAL 1076 grid/anchor owner can genuinely begin servicing it. Reuse
+-- native source-port, same-grid pole and full coverage checks; no second
+-- construction executor, stock debit, ghost or reserved station is created.
+-- Without this preflight an otherwise ready-looking 0714 report could lock
+-- 0259 into an impossible goal and suppress the physical ranked fallback.
+function M.native_covered_ore_admission_1076(pair,target,site)
+  if not(live(pair) and type(target)=="table"
+    and type(target.x)=="number" and type(target.y)=="number"
+    and type(site)=="table" and type(site.x)=="number"
+    and type(site.y)=="number")then
+    return false,"native-robot-admission-invalid-owner-or-site"
+  end
+  local source,why=choose_origin(pair,target)
+  if not source then return false,why end
+  local anchor,reason=choose_anchor(pair,source.port,target)
+  if not anchor then return false,reason end
+  local native=grid_port(source.port)
+  if not(native and native.network_id==source.network_id
+    and native.electric_network_id==anchor.grid_id
+    and complete_coverage(source.port,target)
+    and complete_coverage(source.port,site))then
+    return false,"native-robot-admission-uncovered-or-grid-changed"
+  end
+  return true,"existing-powered-covered-grid-and-anchor-verified"
+end
 local worker_for,resolve_worker
 local function derive_site(pair,source,target)
   local portp=prototype("roboport","roboport","roboport")
