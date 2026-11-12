@@ -65,8 +65,9 @@ def run(out):
             scene.get('animation_review_revision') != 'V22 review-only candidate' or
             scene.get('new_machine_geometry_count') != 0 or
             scene.get('new_render_fx_curve_count') != 0 or
-            scene.get('new_render_fx_volume_count') != 40 or
-            scene.get('mist_visual_revision') != 'V22B real noise-shaped volumetric atmospheric suction'):
+            scene.get('new_render_fx_volume_count') != 0 or
+            scene.get('new_render_fx_particle_count') != 40 or
+            scene.get('mist_visual_revision') != 'V22C soft noisy Cycles mist particles, no glowing lines'):
         raise RuntimeError('Owner source / FX-only / game-art staging gate changed')
     locked_meshes = json.loads(scene.get('source_mesh_local_sha256', '{}'))
     if not locked_meshes or mesh_signatures(scene) != locked_meshes:
@@ -94,12 +95,12 @@ def run(out):
         raise RuntimeError('Saved native model must be canonical direction 0')
     caps = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith('Condenser capped canister ')]
     seats = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith('Condenser dark canister seat ')]
-    vapor = [o for o in scene.objects if o.type == 'MESH' and o.get('FX_REAL_VOLUME_MIST')]
+    vapor = [o for o in scene.objects if o.type == 'MESH' and o.get('FX_PROCEDURAL_MIST_PARTICLE')]
     old_lines = [o for o in scene.objects if o.type == 'CURVE' and o.get('FX_ONLY_INWARD_ATMOSPHERIC_INTAKE')]
     if old_lines:
         raise RuntimeError('Old beveled steam line curves must not survive V22B')
-    if not all(any(m.get('VOLUME_RENDER_NOT_BEVEL_CURVE') for m in ob.data.materials) for ob in vapor):
-        raise RuntimeError('Expected true 3D scattering mist material on every FX cloud')
+    if not all(any(m.get('PROCEDURAL_ALPHA_MIST_NOT_BEVEL_CURVE') for m in ob.data.materials) for ob in vapor):
+        raise RuntimeError('Expected procedural soft mist particle material on every FX cloud')
     if len(caps) != HEADS or len(seats) != HEADS or len(vapor) != HEADS * 5:
         raise RuntimeError('Wrong original cap/seat or 3D mist puff counts')
     order = json.loads(scene['piston_order'])
@@ -142,7 +143,7 @@ def run(out):
         assert_near(center(outlet), flange)
         group = [o for o in vapor if o.name.startswith('FX ONLY | inward mist %02d.' % i)]
         if len(group) != 5 or sum(max(o.scale) > .01 for o in group) < 2:
-            raise RuntimeError('Active head does not draw visible 3D mist clouds inward')
+            raise RuntimeError('Active head does not draw visible soft mist clouds inward')
         if any(max(o.scale) > .01 for o in vapor if o not in group):
             raise RuntimeError('Inactive head has visible mist')
     scene.frame_set(97)
