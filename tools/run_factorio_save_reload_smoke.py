@@ -11,6 +11,7 @@ import re
 import shutil
 import signal
 import subprocess
+import tempfile
 import sys
 import time
 import zipfile
@@ -3268,6 +3269,9 @@ def self_test() -> int:
 
 
 
+CI_1291_PROFILE_TICKS = 12000  # Stable 11,280-tick paired sample; not a functional endurance test.
+
+
 def ci_stable_pair_script_1291(content: str, start: int, end: int,
                                population: int,
                                creation_log: str | None) -> dict[str, object] | None:
@@ -3282,7 +3286,7 @@ def ci_stable_pair_script_1291(content: str, start: int, end: int,
         r"CI_FIVE_PROFILE_1291_CREATED tick=(\d+) stations="
         + str(population) + r" requested=" + str(population)
         + r" setup=ci-only-real-entities", creation_log or "")
-    if created != ["0"] or not (0 <= start < end <= 30000):
+    if created != ["0"] or not (0 <= start < end <= CI_1291_PROFILE_TICKS):
         return None
     headers = re.findall(r"(?m)^[ \t]*tick,scriptUpdate(,?)[ \t]*$", content)
     if len(headers) != 1:
@@ -3291,7 +3295,7 @@ def ci_stable_pair_script_1291(content: str, start: int, end: int,
     pattern = (r"(?m)^t(\d+),([0-9]+(?:\.[0-9]+)?),$" if native_csv
                else r"(?m)^(\d+),([0-9]+(?:\.[0-9]+)?)$")
     rows = re.findall(pattern, content)
-    if len(rows) != 30000:
+    if len(rows) != CI_1291_PROFILE_TICKS:
         return None
     durations = []
     for index, (tick_text, duration_text) in enumerate(rows):
@@ -3362,7 +3366,7 @@ def ci_five_observation_1291(content: str, expected: int = 5, *,
                 and n==(b-a)//60+1 and n>=180
                 and at==ao==bt==bo==expected and bad==0
                 and stable=="true" and "CI_FIVE_PROFILE_1291_UNAVAILABLE" not in content
-                and native["engine_benchmark_updates"]==30000
+                and native["engine_benchmark_updates"]==CI_1291_PROFILE_TICKS
                 and native["script_sample_coverage"]=="complete"):
             result["paired_population_verified"]=expected
             result["first_observed_tick"]=a
@@ -3407,32 +3411,42 @@ def ci_five_observation_1291(content: str, expected: int = 5, *,
 def self_test_ci_five_1291() -> None:
     log = (
         "CI_FIVE_PROFILE_1291_WAITING tick=600 all=0 original=0 requested=5\n"
-        "CI_FIVE_PROFILE_1291_START tick=7200 all=5 original=5 requested=5\n"
-        "CI_FIVE_PROFILE_1291_END tick=18480 all=5 original=5 "
+        "CI_FIVE_PROFILE_1291_START tick=660 all=5 original=5 requested=5\n"
+        "CI_FIVE_PROFILE_1291_END tick=11940 all=5 original=5 "
         "requested=5 samples=189 bad=0 identity_stable=true interval=60\n"
-        "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=7200 end_tick=18480 "
+        "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=660 end_tick=11940 "
         "routed_scans=120 direct_scans=6 movement_requests=12 "
         "movement_collapses=3 movement_priority_denials=2 "
         "movement_stalled_repaths=unmeasured broker_processed=160 "
         "broker_blocked=4\n"
-        "  Performed 30000 updates in 150000.000 ms\n"
+        "  Performed 12000 updates in 150000.000 ms\n"
         "tick,scriptUpdate\n"
-        + "".join(f"{i},1000000\n" for i in range(30000)))
+        + "".join(f"{i},1000000\n" for i in range(12000)))
     observed = ci_five_observation_1291(log)
     assert observed["paired_population_verified"] == 5
-    assert observed["first_observed_tick"] == 7200
-    assert observed["last_observed_tick"] == 18480
+    assert observed["first_observed_tick"] == 660
+    assert observed["last_observed_tick"] == 11940
     assert observed["routed_scans_per_1000_ticks"] == round(120000 / 11280, 6)
     assert observed["movement_requests_per_1000_ticks"] == round(12000 / 11280, 6)
     assert observed["movement_stalled_repaths_per_1000_ticks"] is None
     assert observed["broker_service_blocked_fraction"] == 0.025
+    # Real 2.1.24 completed 30k simulation updates, then SIGSEGV'd
+    # writing the verbose scriptUpdate CSV at t0. Never treat the
+    # simulation summary or the identity markers as a complete profile.
+    verbose_crash = (log.split("tick,scriptUpdate\n")[0]
+                     + "run 1:\ntick,scriptUpdate,\nt0,27934800,"
+                     + " Error CrashHandler.cpp:614: Received SIGSEGV\n")
+    assert ci_five_observation_1291(verbose_crash)[
+        "paired_population_verified"] is None
+    assert ci_five_observation_1291(verbose_crash)[
+        "stable_all_mod_script_mean_ms_per_tick"] is None
     assert observed["stable_all_mod_script_mean_ms_per_tick"] is None
     # Native 2.0.77 CSV, with startup at 1ms and the actual stable pair
     # interval at 3ms; a whole-run average cannot represent paired costs.
-    source_rows = "".join(f"{i},1000000\n" for i in range(30000))
+    source_rows = "".join(f"{i},1000000\n" for i in range(12000))
     native_rows = "".join(
-        f"t{i},{3000000 if 7200 <= i < 18480 else 1000000},\n"
-        for i in range(30000))
+        f"t{i},{3000000 if 660 <= i < 11940 else 1000000},\n"
+        for i in range(12000))
     # The real Factorio --create process writes CREATED to its own log.
     # The subsequent --benchmark log has START/END and native verbose CSV,
     # but must not be expected to repeat the creation-time marker.
@@ -3465,7 +3479,7 @@ def self_test_ci_five_1291() -> None:
                 "stable_all_mod_script_mean_ms_per_tick"] is None
     for invalid_native in (
         native_log.replace("identity_stable=true", "identity_stable=false"),
-        native_log.replace("t7200,3000000,", "t7200,garbled,"),
+        native_log.replace("t660,3000000,", "t660,garbled,"),
     ):
         assert ci_five_observation_1291(
             invalid_native, creation_log=creation_log)[
@@ -3473,9 +3487,9 @@ def self_test_ci_five_1291() -> None:
     for malformed in (
         log.replace("routed_scans=120", "routed_scans=unmeasured"),
         log.replace("routed_scans=120", "routed_scans=-1"),
-        log.replace("end_tick=18480", "end_tick=11820"),
+        log.replace("end_tick=11940", "end_tick=11760"),
         log.replace("CI_FIVE_PROFILE_1291_ACTIVITY", "INVALID_ACTIVITY"),
-        log + "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=600 end_tick=18480 "
+        log + "CI_FIVE_PROFILE_1291_ACTIVITY start_tick=600 end_tick=11940 "
               "routed_scans=120 direct_scans=6 movement_requests=12 "
               "movement_collapses=3 movement_priority_denials=2 "
               "movement_stalled_repaths=unmeasured broker_processed=160 "
@@ -3489,8 +3503,8 @@ def self_test_ci_five_1291() -> None:
         log.replace("bad=0", "bad=1", 1),
         log.replace("identity_stable=true", "identity_stable=false", 1),
         log.replace("samples=189", "samples=188", 1),
-        log.replace("tick=18480", "tick=11820", 1),
-        log+"CI_FIVE_PROFILE_1291_END tick=18480 all=5 original=5 "
+        log.replace("tick=11940", "tick=11760", 1),
+        log+"CI_FIVE_PROFILE_1291_END tick=11940 all=5 original=5 "
             "requested=5 samples=189 bad=0 identity_stable=true interval=60\n"):
         assert ci_five_observation_1291(tampered)["paired_population_verified"] is None
     scaled = (log.replace("all=5", "all=25")
@@ -3521,7 +3535,7 @@ def self_test_ci_five_1291() -> None:
         native_hundred, expected=100,
         creation_log=creation_hundred)["stable_all_mod_script_mean_ms_per_tick"] == 3.0
     assert ci_five_observation_1291(
-        native_hundred.replace("t7200,3000000,", "t7200,garbled,"),
+        native_hundred.replace("t660,3000000,", "t660,garbled,"),
         expected=100,
         creation_log=creation_hundred)["stable_all_mod_script_mean_ms_per_tick"] is None
     try:
@@ -3577,7 +3591,15 @@ def self_test_ci_five_1291() -> None:
 def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
                      work: pathlib.Path, output: pathlib.Path,
                      population: int = 5) -> None:
-    """Serial native 5/25/100-pair runs: matched seed, ticks, hardware."""
+    """Serial native 5/25/100-pair runs: matched seed, ticks, hardware.
+
+    Native 2.1.24 completed 30k updates then SIGSEGV'd when writing its
+    verbose scriptUpdate tick CSV. Sample the already-proven genuine
+    660..11940, 189-observation 11,280-tick paired window inside a 12k
+    diagnostic benchmark instead. This does not change or replace the
+    original 123k objective or five-process reload acceptance. A failed
+    exit or incomplete native CSV still prevents any population scaling.
+    """
     if population not in (5, 25, 100):
         raise ValueError("unproven profiling population")
     suffix="five" if population==5 else str(population)
@@ -3615,7 +3637,8 @@ def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
     with log_path.open("w",encoding="utf-8") as handle:
         try:
             measured=subprocess.run([str(binary),"--mod-directory",str(mods),
-                "--benchmark",str(save),"--benchmark-ticks","30000",
+                "--benchmark",str(save),"--benchmark-ticks",
+                str(CI_1291_PROFILE_TICKS),
                 "--benchmark-verbose","tick,scriptUpdate"],
                 stdout=handle,stderr=subprocess.STDOUT,check=False,
                 timeout=timeout_seconds)
