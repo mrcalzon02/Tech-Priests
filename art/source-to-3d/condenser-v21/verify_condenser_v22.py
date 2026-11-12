@@ -1,6 +1,6 @@
 """Independent native Blender reopen: source-locked 8-head suction animation.
 
-Run AFTER native builder writes all 16 temporal and 8 cardinal review renders:
+Run AFTER native builder writes temporal and cardinal review renders:
 blender -b OUT/condenser_v22_motion_review.blend --python verify_condenser_v22.py -- --out OUT
 """
 from __future__ import annotations
@@ -32,7 +32,7 @@ def sha(path):
 
 def mesh_signatures(scene):
     result = {}
-    for obj in sorted((o for o in scene.objects if o.type == 'MESH'), key=lambda o: o.name):
+    for obj in sorted((o for o in scene.objects if o.type == 'MESH' and not o.get('FX_ONLY_INWARD_ATMOSPHERIC_INTAKE')), key=lambda o: o.name):
         mesh = obj.data
         digest = hashlib.sha256()
         digest.update(struct.pack('<II', len(mesh.vertices), len(mesh.polygons)))
@@ -64,7 +64,9 @@ def run(out):
             scene.get('native_game_art_modified') is not False or
             scene.get('animation_review_revision') != 'V22 review-only candidate' or
             scene.get('new_machine_geometry_count') != 0 or
-            scene.get('new_render_fx_curve_count') != 24):
+            scene.get('new_render_fx_curve_count') != 0 or
+            scene.get('new_render_fx_volume_count') != 40 or
+            scene.get('mist_visual_revision') != 'V22B real noise-shaped volumetric atmospheric suction'):
         raise RuntimeError('Owner source / FX-only / game-art staging gate changed')
     locked_meshes = json.loads(scene.get('source_mesh_local_sha256', '{}'))
     if not locked_meshes or mesh_signatures(scene) != locked_meshes:
@@ -92,9 +94,14 @@ def run(out):
         raise RuntimeError('Saved native model must be canonical direction 0')
     caps = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith('Condenser capped canister ')]
     seats = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith('Condenser dark canister seat ')]
-    vapor = [o for o in scene.objects if o.type == 'CURVE' and o.get('FX_ONLY_INWARD_ATMOSPHERIC_INTAKE')]
-    if len(caps) != HEADS or len(seats) != HEADS or len(vapor) != HEADS * 3:
-        raise RuntimeError('Wrong original cap/seat or inward FX strand counts')
+    vapor = [o for o in scene.objects if o.type == 'MESH' and o.get('FX_REAL_VOLUME_MIST')]
+    old_lines = [o for o in scene.objects if o.type == 'CURVE' and o.get('FX_ONLY_INWARD_ATMOSPHERIC_INTAKE')]
+    if old_lines:
+        raise RuntimeError('Old beveled steam line curves must not survive V22B')
+    if not all(any(m.get('VOLUME_RENDER_NOT_BEVEL_CURVE') for m in ob.data.materials) for ob in vapor):
+        raise RuntimeError('Expected true 3D scattering mist material on every FX cloud')
+    if len(caps) != HEADS or len(seats) != HEADS or len(vapor) != HEADS * 5:
+        raise RuntimeError('Wrong original cap/seat or 3D mist puff counts')
     order = json.loads(scene['piston_order'])
     if len(order) != HEADS or set(order) != {o.name for o in caps}:
         raise RuntimeError('Not all original canisters have motion assignments')
@@ -133,20 +140,22 @@ def run(out):
             raise RuntimeError('Unscheduled canister also lifted')
         assert_near(center(base), origin)
         assert_near(center(outlet), flange)
-        group = [o for o in vapor if o.name.startswith('FX ONLY | inward vapor %02d.' % i)]
-        if len(group) != 3 or not all(o.data.bevel_factor_end > o.data.bevel_factor_start for o in group):
-            raise RuntimeError('Active head missing three inward vapor flows')
+        group = [o for o in vapor if o.name.startswith('FX ONLY | inward mist %02d.' % i)]
+        if len(group) != 5 or sum(max(o.scale) > .01 for o in group) < 2:
+            raise RuntimeError('Active head does not draw visible 3D mist clouds inward')
+        if any(max(o.scale) > .01 for o in vapor if o not in group):
+            raise RuntimeError('Inactive head has visible mist')
     scene.frame_set(97)
     for i, name in enumerate(order):
         assert_near(center(bpy.data.objects[name]), caps_at_start[i])
     assert_near(center(base), origin)
     assert_near(center(outlet), flange)
     for obj in vapor:
-        if abs(obj.data.bevel_factor_start - obj.data.bevel_factor_end) > 1e-6:
-            raise RuntimeError('Steam emission failed to close loop')
+        if max(obj.scale) > .0001:
+            raise RuntimeError('Real mist failed to vanish at loop closure')
     result = {
         'verification': 'PASS', 'source_sha256': APPROVED_SHA,
-        'sequential_independent_pistons': HEADS, 'inward_vapor_curves': len(vapor),
+        'sequential_independent_pistons': HEADS, 'volumetric_mist_puffs': len(vapor), 'beveled_steam_lines': 0,
         'period_frames': CYCLE, 'fps': FPS,
         'fx_ablation_captures': 16, 'repeatability_controls': 2,
         'approved_mesh_count_unmodified': len(locked_meshes),
