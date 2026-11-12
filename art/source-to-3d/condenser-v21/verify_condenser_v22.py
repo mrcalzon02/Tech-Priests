@@ -78,13 +78,27 @@ def run(out):
         'camera_policy': POLICY_ID, 'capture_kind': 'entity',
         'directions': [0, 90, 180, 270],
         'states': {'condenser_v22_preview': list(PREVIEW_FRAMES)},
-        'source_size': 256, 'camera_override': {
+        'source_size': 512, 'camera_override': {
             'type': 'ORTHO', 'elevation_deg': 45, 'azimuth_deg': 0,
             'distance': 5.5, 'target': [0, 0, .55],
             'ortho_scale': 3.20, 'shift_x': 0, 'shift_y': 0,
         },
     }
     assert_clean(scene, camera, bpy)
+    if scene.get('source_world_transform_guard') != 'PASS':
+        raise RuntimeError('Native scene lacks V21 world-space geometry lock')
+    before_world = json.loads(scene.get('source_world_matrices', '{}'))
+    if not before_world or set(before_world) != set(locked_meshes):
+        raise RuntimeError('World-space source snapshot missing or object names differ')
+    scene.frame_set(1)
+    bpy.context.view_layer.update()
+    for name, original in before_world.items():
+        mesh = bpy.data.objects.get(name)
+        delta = max(abs(mesh.matrix_world[r][c] - original[r][c])
+                    for r in range(4) for c in range(4))
+        if delta > 1e-4:
+            raise RuntimeError('Approved V21 source object displaced: '
+                               + name + ', matrix drift=' + str(delta))
     rack = bpy.data.objects.get('FX ONLY | mild condenser rack rumble')
     base = bpy.data.objects.get('Condenser shallow tapered foundation')
     outlet = bpy.data.objects.get('Water outlet end flange')
