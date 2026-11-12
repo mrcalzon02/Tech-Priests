@@ -446,10 +446,12 @@ def main() -> int:
             "frequency": "none", "size": "none", "richness": "none"}},
     }), encoding="utf-8")
     save = output / "scenario-initial.zip"
+    created_engine_started = time.monotonic()
     created = run([str(factorio), "--mod-directory", str(mods),
                    "--create", str(save), "--map-gen-settings",
                    str(map_settings)],
                   output / "create.log", args.timeout_seconds)
+    create_engine_wall_minutes = round((time.monotonic()-created_engine_started)/60, 6)
     if created:
         if args.rail_connected_smoke:
             evidence = rail_smoke_evidence(
@@ -522,6 +524,9 @@ def main() -> int:
             "scenario": "production-0259-to-1076-to-0338",
             "native_benchmark_exit": benchmark,
             "native_benchmark_process_wall_minutes": benchmark_engine_wall_minutes,
+            "native_create_process_wall_minutes": create_engine_wall_minutes,
+            "native_factorio_process_wall_minutes": round(
+                benchmark_engine_wall_minutes + create_engine_wall_minutes, 6),
             "new_distinct_ore_delivery_gates": 0,
             "accepted": False,
         }
