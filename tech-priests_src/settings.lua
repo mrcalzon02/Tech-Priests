@@ -519,3 +519,18 @@ data:extend({
     order = "d[conclave]-b[dont-touch-my-toys]"
   }
 })
+
+-- 0.1.681: V22C Factorio 2.1 condenser texture-quality selector.
+-- Auto uses 512px Cycles art and permits automatic engine downscaling;
+-- Standard reads the actual 256px Blender-derived atlas files at equal scale.
+-- No change to working speed, fluid boxes, recipes, smoke or footprint.
+data:extend({
+  {
+    type = "string-setting",
+    name = "tech-priests-condenser-sprite-quality",
+    setting_type = "startup",
+    default_value = "auto",
+    allowed_values = {"auto", "high", "standard"},
+    order = "z-performance-b[condenser-sprites]",
+  },
+})

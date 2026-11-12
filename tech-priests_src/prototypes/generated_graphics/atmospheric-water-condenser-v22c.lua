@@ -21,26 +21,41 @@ local function frame_path(which, original, resolution, chunk)
   end
   return dir .. string.format('active-%s-%s-%02d.png', original, resolution, chunk)
 end
+-- The 256px standard sheets are genuine downscaled Cycles exports, not
+-- reconstructed or procedurally substituted pixels. Their 0.4 scale keeps
+-- precisely the same placement as 512px at 0.2.
+local quality_setting = settings and settings.startup and
+    settings.startup["tech-priests-condenser-sprite-quality"]
+local quality = quality_setting and quality_setting.value or 'auto'
+assert(quality == 'auto' or quality == 'high' or quality == 'standard',
+       'Unsupported condenser graphics quality: ' .. tostring(quality))
+local resolution = quality == 'standard' and 'sd' or 'hr'
+local frame_size = resolution == 'sd' and 256 or 512
+local world_scale = resolution == 'sd' and 0.4 or 0.2
+assert(math.abs(frame_size * world_scale - 102.4) < 0.001,
+       'Condenser HR and SD sprite footprint registration diverged')
 local function animation(which, facing)
   local original = assert(captured[facing], 'Unknown condenser facing')
   local paths={}
   for i = 0,SLICES-1 do
-    paths[#paths+1]=frame_path(which,original,'hr',i)
+    paths[#paths+1]=frame_path(which,original,resolution,i)
   end
   return {
     filenames=paths,
     priority='high',
-    width=512,height=512,
+    width=frame_size,height=frame_size,
     frame_count=FRAMES,
     line_length=4,
     slice=SLICE_SIZE,
     lines_per_file=2,
     animation_speed=FRAMES / TICKS_PER_CYCLE,
     run_mode='forward',
-    scale=0.2,
+    scale=world_scale,
     shift={0,0},
     allow_reducing_frames=false,
-    allow_forced_downscale=true,
+    -- Auto gives Factorio permission to reduce high-res on limited hardware.
+    -- High explicitly preserves the full resolution; Standard loads SD PNGs.
+    allow_forced_downscale=(quality == 'auto'),
   }
 end
 local active, idle={},{}
@@ -49,8 +64,8 @@ for _,facing in ipairs(order) do
   idle[facing]=animation('idle',facing)
 end
 -- Both sets have 32 frames, required by Factorio 2.1 WorkingVisualisations.
--- Idle files are still frame 1 repeated in eight-frame slices. The separate SD
--- atlases are retained as export assets; Factorio 2.1 auto-downscales HR art.
+-- Idle files repeat frame 1 in eight-frame slices; duplicate filenames share
+-- the same source. Actual SD files are selectable by the startup quality option.
 target.graphics_set={
   animation=active,
   idle_animation=idle,
