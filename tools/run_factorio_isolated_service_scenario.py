@@ -49,6 +49,83 @@ CASES = {
 }
 
 
+def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, object]:
+    """Reject source/ghost-only credit; require ONE ordered native robot receipt.
+
+    This checks the engine fixture's original Magos/Senior identities, actual
+    physically mined station stock, autonomous 0259 selection, and an original
+    0338 robot event/paired Intermediate with the same native robot/entity IDs.
+    It does not credit ore delivery, script profile or save/reload.
+    """
+    prefix = r"\\[TP-AUTONOMOUS-ROBOT-1380\\] "
+    def one(expression: str, label: str) -> re.Match[str]:
+        found = list(re.finditer(prefix + expression, log))
+        if len(found) != 1:
+            raise ValueError(f"1380 missing/duplicate {label}: {len(found)}")
+        return found[0]
+
+    if exit_code != 0 or "[TP-AUTONOMOUS-ROBOT-1380] FAIL " in log:
+        raise ValueError("1380 Factorio process failed or native fixture refused")
+
+    source = one(
+        r"NATIVE_PHYSICAL_SOURCE tick=(\\d+) seed=(\\d+) magos=(\\d+) "
+        r"senior=(\\d+) provider=(\\d+) original_source=(\\d+) "
+        r"item=1 robots_docked=3 natural_ore_unit=(nil|\\d+) "
+        r"ore_amount=([\\d.]+) generated=true chart_forced=false",
+        "physical mined source")
+    selected = one(
+        r"PASS AUTONOMOUS_0259_SELECTED tick=(\\d+) original_magos=(\\d+) "
+        r"original_senior=(\\d+) ore=(nil|\\d+) original_station_stock=1 "
+        r"real_power=true charted=true real_robots=true",
+        "autonomous production goal")
+    event = one(
+        r"NATIVE_ROBOT_EVENT tick=(\\d+) station=(\\d+) robot=(\\d+) "
+        r"event=on_robot_built_entity",
+        "Factorio native robot event")
+    finished = one(
+        r"PASS autonomous original 0259 selected and physical native "
+        r"robot-built Intermediate paired tick=(\\d+) magos=(\\d+) "
+        r"magos_priest=(\\d+) senior=(\\d+) senior_priest=(\\d+) "
+        r"intermediate=(\\d+) intermediate_priest=(\\d+) native_robot=(\\d+) "
+        r"material_delta=1 source_stock=0 ghost=0 ore_return_not_credited=true",
+        "paired Intermediate and exact material debit")
+
+    if not (int(source[1]) <= int(selected[1]) <= int(event[1])
+            <= int(finished[1])):
+        raise ValueError("1380 unordered native material/goal/robot/receipt")
+    if not (source[3] == selected[2] == finished[2]
+            and source[4] == selected[3] == finished[4]
+            and source[7] == selected[4]
+            and event[2] == finished[6] and event[3] == finished[8]):
+        raise ValueError("1380 original identities or event/receipt mismatch")
+    if len({finished[2], finished[4], finished[6]}) != 3:
+        raise ValueError("1380 duplicate ranked station entity")
+    if len({finished[3], finished[5], finished[7]}) != 3:
+        raise ValueError("1380 duplicate original/new priest identity")
+    return {
+        "native_factorio_exit": exit_code,
+        "accepted": True,
+        "native_0259_selection_tick": int(selected[1]),
+        "native_robot_event_tick": int(event[1]),
+        "native_paired_station_tick": int(finished[1]),
+        "magos_station": int(finished[2]),
+        "magos_priest": int(finished[3]),
+        "original_senior_station": int(finished[4]),
+        "original_senior_priest": int(finished[5]),
+        "paired_intermediate_station": int(finished[6]),
+        "paired_intermediate_priest": int(finished[7]),
+        "native_construction_robot": int(finished[8]),
+        "original_stock_debit": 1,
+        "natural_ore_return_accepted": False,
+        "ore_items_delivered_per_1000_ticks": None,
+        "first_delivery_latency_ticks": None,
+        "all_mod_script_mean_ms_per_tick": None,
+        "all_mod_script_p95_ms_per_tick": None,
+        "inventory_discrepancies_in_verified_station_transaction": 0,
+        "other_inventory_or_reloaded_cargo_reconciliation": "not exercised",
+    }
+
+
 def run(argv: list[str], log_file: pathlib.Path, timeout: int) -> int:
     with log_file.open("w", encoding="utf-8") as output:
         try:
@@ -412,10 +489,12 @@ def main() -> int:
               "train/Magos/ore return UNTESTED")
         print("Engine logs: " + str(native_log))
         return 0
+    benchmark_started = time.monotonic()
     benchmark = run([str(factorio), "--mod-directory", str(mods),
                      "--benchmark", str(save), "--benchmark-ticks",
                      str(tick_count)], output / "benchmark.log",
                     args.timeout_seconds)
+    benchmark_engine_wall_minutes = round((time.monotonic()-benchmark_started)/60, 6)
     contents = (output / "benchmark.log").read_text(
         encoding="utf-8", errors="replace")
     for line in contents.splitlines():
@@ -437,6 +516,30 @@ def main() -> int:
               "train/Magos journey and ore return UNTESTED")
         print("Engine logs: " + str(output / "benchmark.log"))
         return 0
+    if args.scenario == "remote-robot-acquisition":
+        native = {
+            "schema": "tech-priests-1380-native-autonomous-robot-v1",
+            "scenario": "production-0259-to-1076-to-0338",
+            "native_benchmark_exit": benchmark,
+            "native_benchmark_process_wall_minutes": benchmark_engine_wall_minutes,
+            "new_distinct_ore_delivery_gates": 0,
+            "accepted": False,
+        }
+        try:
+            native.update(verify_autonomous_robot_1380_log(benchmark, contents))
+            passed = True
+        except ValueError as error:
+            native["blocker"] = str(error)
+            passed = False
+        (output / "native-autonomous-robot-result.json").write_text(
+            json.dumps(native, indent=2, sort_keys=True) + "\\n", encoding="utf-8")
+        if passed:
+            print("PASS true native autonomous 0259 and robot-built paired Intermediate; "
+                  "ore return/save reload UNTESTED")
+            return 0
+        print("FAIL native autonomous robot gate: " + str(native["blocker"]))
+        print("Engine logs: " + str(output / "benchmark.log"))
+        return 1
     if args.scenario == "midgame-science":
         from midgame_checkpoint_audit import inspect, validate_smoke
         # Factorio HEADLESS DOES NOT render PNG screenshots. Archive its
