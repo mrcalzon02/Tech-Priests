@@ -22,7 +22,7 @@ done=(prefix+"PASS autonomous original 0259 selected and physical "
     "magos_priest=11 senior=20 senior_priest=21 intermediate=50 "
     "intermediate_priest=51 native_robot=60 material_delta=1 "
     "source_stock=0 ghost=0 ore_return_not_credited=true")
-sample="\\n".join((physical,selected,event,done))
+sample="\n".join((physical,selected,event,done))
 report=module.verify_autonomous_robot_1380_log(0,sample)
 assert report["accepted"] is True
 assert report["natural_ore_return_accepted"] is False
@@ -40,9 +40,9 @@ checks=[
     (0,sample.replace("intermediate=50","intermediate=90")),
     (0,sample.replace("intermediate_priest=51","intermediate_priest=21")),
     (0,sample.replace("tick=1300","tick=1800")),
-    (0,sample+"\\n"+event),
-    (0,sample+"\\n"+prefix+"FAIL genuinely blocked"),
-    (0,"\\n".join((physical,selected,done))),
+    (0,sample+"\n"+event),
+    (0,sample+"\n"+prefix+"FAIL genuinely blocked"),
+    (0,"\n".join((physical,selected,done))),
 ]
 for exit_code,source in checks:
     try:

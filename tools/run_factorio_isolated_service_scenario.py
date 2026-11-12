@@ -57,7 +57,7 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
     0338 robot event/paired Intermediate with the same native robot/entity IDs.
     It does not credit ore delivery, script profile or save/reload.
     """
-    prefix = r"\\[TP-AUTONOMOUS-ROBOT-1380\\] "
+    prefix = r"\[TP-AUTONOMOUS-ROBOT-1380\] "
     def one(expression: str, label: str) -> re.Match[str]:
         found = list(re.finditer(prefix + expression, log))
         if len(found) != 1:
@@ -68,25 +68,25 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         raise ValueError("1380 Factorio process failed or native fixture refused")
 
     source = one(
-        r"NATIVE_PHYSICAL_SOURCE tick=(\\d+) seed=(\\d+) magos=(\\d+) "
-        r"senior=(\\d+) provider=(\\d+) original_source=(\\d+) "
-        r"item=1 robots_docked=3 natural_ore_unit=(nil|\\d+) "
-        r"ore_amount=([\\d.]+) generated=true chart_forced=false",
+        r"NATIVE_PHYSICAL_SOURCE tick=(\d+) seed=(\d+) magos=(\d+) "
+        r"senior=(\d+) provider=(\d+) original_source=(\d+) "
+        r"item=1 robots_docked=3 natural_ore_unit=(nil|\d+) "
+        r"ore_amount=([\d.]+) generated=true chart_forced=false",
         "physical mined source")
     selected = one(
-        r"PASS AUTONOMOUS_0259_SELECTED tick=(\\d+) original_magos=(\\d+) "
-        r"original_senior=(\\d+) ore=(nil|\\d+) original_station_stock=1 "
+        r"PASS AUTONOMOUS_0259_SELECTED tick=(\d+) original_magos=(\d+) "
+        r"original_senior=(\d+) ore=(nil|\d+) original_station_stock=1 "
         r"real_power=true charted=true real_robots=true",
         "autonomous production goal")
     event = one(
-        r"NATIVE_ROBOT_EVENT tick=(\\d+) station=(\\d+) robot=(\\d+) "
+        r"NATIVE_ROBOT_EVENT tick=(\d+) station=(\d+) robot=(\d+) "
         r"event=on_robot_built_entity",
         "Factorio native robot event")
     finished = one(
         r"PASS autonomous original 0259 selected and physical native "
-        r"robot-built Intermediate paired tick=(\\d+) magos=(\\d+) "
-        r"magos_priest=(\\d+) senior=(\\d+) senior_priest=(\\d+) "
-        r"intermediate=(\\d+) intermediate_priest=(\\d+) native_robot=(\\d+) "
+        r"robot-built Intermediate paired tick=(\d+) magos=(\d+) "
+        r"magos_priest=(\d+) senior=(\d+) senior_priest=(\d+) "
+        r"intermediate=(\d+) intermediate_priest=(\d+) native_robot=(\d+) "
         r"material_delta=1 source_stock=0 ghost=0 ore_return_not_credited=true",
         "paired Intermediate and exact material debit")
 
@@ -532,7 +532,7 @@ def main() -> int:
             native["blocker"] = str(error)
             passed = False
         (output / "native-autonomous-robot-result.json").write_text(
-            json.dumps(native, indent=2, sort_keys=True) + "\\n", encoding="utf-8")
+            json.dumps(native, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         if passed:
             print("PASS true native autonomous 0259 and robot-built paired Intermediate; "
                   "ore return/save reload UNTESTED")
