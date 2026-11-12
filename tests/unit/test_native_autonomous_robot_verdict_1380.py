@@ -93,3 +93,26 @@ assert 'force.chart(' not in fixture
 assert 'force.chart_all(' not in fixture
 assert 'surface.create_entity{name="iron-ore"' not in fixture
 print("PASS native 1380 day/night physical radar supply and unbiased discovery checks")
+
+# Exact source provenance: on_init world-item mining happens in genuine
+# Factorio --create, then 0259/robot/pairing occur in --benchmark of that save.
+create_log="\n".join((prefix+"INSTALLED",physical))
+benchmark_log="\n".join((selected,event,done))
+assert module.verify_autonomous_robot_1380_process_logs(
+    0,create_log,0,benchmark_log)["accepted"] is True
+for args in [
+    (0,prefix+"INSTALLED",0,benchmark_log),
+    (1,create_log,0,benchmark_log),
+    (0,create_log,1,benchmark_log),
+    (0,create_log+"\n"+physical,0,benchmark_log),
+    (0,create_log,0,physical+"\n"+benchmark_log),
+    (0,create_log+"\n"+selected,0,benchmark_log),
+    (0,create_log+"\n"+prefix+"FAIL NATIVE_PLACEMENT_REFUSED",0,benchmark_log),
+    (0,create_log,0,selected+"\n"+done),
+]:
+    try:
+        module.verify_autonomous_robot_1380_process_logs(*args)
+    except ValueError:
+        continue
+    raise AssertionError("1380 falsely accepted missing, failed or cross-process receipt")
+print("PASS native 1380 create/benchmark provenance and eight refusal cases")
