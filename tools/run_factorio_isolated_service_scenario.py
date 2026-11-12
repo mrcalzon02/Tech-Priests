@@ -579,11 +579,22 @@ def main() -> int:
               "train/Magos/ore return UNTESTED")
         print("Engine logs: " + str(native_log))
         return 0
-    benchmark_started = time.monotonic()
-    benchmark = run([str(factorio), "--mod-directory", str(mods),
+    # An isolated --benchmark advances game ticks without an engine-created
+    # player. Factorio can leave native radar charting requests unprocessed in
+    # that mode (as already established by the 0836 native rail smoke).
+    # Method II needs native visibility before autonomous 0259 may select 1076.
+    # Reuse the existing genuine --test-save/--test-ticks execution, not
+    # force.chart(), an injected exploration goal, or a synthetic player.
+    native_mode = ("native-player-test-save"
+                   if args.scenario == "remote-robot-acquisition"
+                   else "benchmark")
+    command = (rail_native_player_test_command(factorio, mods, save, tick_count)
+               if native_mode == "native-player-test-save"
+               else [str(factorio), "--mod-directory", str(mods),
                      "--benchmark", str(save), "--benchmark-ticks",
-                     str(tick_count)], output / "benchmark.log",
-                    args.timeout_seconds)
+                     str(tick_count)])
+    benchmark_started = time.monotonic()
+    benchmark = run(command, output / "benchmark.log", args.timeout_seconds)
     benchmark_engine_wall_minutes = round((time.monotonic()-benchmark_started)/60, 6)
     contents = (output / "benchmark.log").read_text(
         encoding="utf-8", errors="replace")
