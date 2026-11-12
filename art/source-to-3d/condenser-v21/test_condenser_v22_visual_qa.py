@@ -58,7 +58,7 @@ class PixelInspectorTest(unittest.TestCase):
             # vapor-only image difference; this must NOT count as proof.
             (root / 'direction_000_no_vapor.png').write_bytes(
                 (root / 'direction_000_active.png').read_bytes())
-            with self.assertRaisesRegex(RuntimeError, 'vapor at 256px'):
+            with self.assertRaisesRegex(RuntimeError, 'vapor at 512px'):
                 inspect(root)
 
     def test_ablation_gate_checks_both_effects_and_real_time_gif_timing(self):
