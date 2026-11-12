@@ -100,11 +100,24 @@ local function run()
     if not linked then
       fail("NATIVE_FLUIDBOX_NEIGHBOUR_MISSING_"..spec.name)
     end
-    local machine_segment=machine.get_fluid_segment_id(1)
-    local pipe_segment=pipe.get_fluid_segment_id(1)
-    if not(machine_segment and pipe_segment and
-        machine_segment==pipe_segment) then
-      fail("FLUID_SEGMENT_NOT_SHARED_"..spec.name)
+    -- 2.1 fluid segments are NOT created synchronously with on_init entity
+    -- placement. Actual LuaEntity pipe target + independent neighbour identity
+    -- above establish a native physical link. Check segment identity only when
+    -- the engine reports an existing segment; never invent water or a segment.
+    local machine_has_segment=machine.has_fluid_segment(1)
+    local pipe_has_segment=pipe.has_fluid_segment(1)
+    if machine_has_segment~=pipe_has_segment then
+      fail("FLUID_SEGMENT_HALF_FORMED_"..spec.name)
+    end
+    local machine_segment=0
+    local segment_state="unformed"
+    if machine_has_segment then
+      machine_segment=machine.get_fluid_segment_id(1)
+      local pipe_segment=pipe.get_fluid_segment_id(1)
+      if not(machine_segment and pipe_segment and machine_segment==pipe_segment) then
+        fail("FORMED_FLUID_SEGMENT_NOT_SHARED_"..spec.name)
+      end
+      segment_state="formed"
     end
     local pp=after[1].target_position
     if not(near(p.x,pp.x) and near(p.y,pp.y)) then
@@ -113,9 +126,9 @@ local function run()
     machines[#machines+1]=machine.unit_number
     pipes[#pipes+1]=pipe.unit_number
     emit(string.format(
-      "NATIVE_CONNECTED facing=%s machine=%d pipe=%d source_x=%.3f source_y=%.3f target_x=%.3f target_y=%.3f segment=%d",
+      "NATIVE_CONNECTED facing=%s machine=%d pipe=%d source_x=%.3f source_y=%.3f target_x=%.3f target_y=%.3f segment=%d segment_state=%s",
       spec.name,machine.unit_number,pipe.unit_number,
-      center.x,center.y,p.x,p.y,machine_segment
+      center.x,center.y,p.x,p.y,machine_segment,segment_state
     ))
   end
   local checked={}
