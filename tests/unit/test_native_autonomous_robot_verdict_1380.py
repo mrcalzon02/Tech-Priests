@@ -62,5 +62,16 @@ assert 'local name=SURFACE.."-"..tostring(s.seed_offset)' in fixture
 assert 'if not game.delete_surface(surface)' in fixture
 assert 'if not ore then fail("NO_NATURAL_IRON_IN_64_GENERATED_SEEDS") end' in fixture
 assert 'surface.create_entity{name="iron-ore"' not in fixture
+# Native 0480 only assigns the original parent/child link during its
+# canonical periodic topology rebuild. Observe the real edge after a bounded
+# rebuild window; never fabricate a link, priest, rank, or a green gate.
+assert 'hierarchy.is_direct_subordinate(root,senior)~=true' in fixture
+assert 'game.tick-s.started_tick<3*interval' in fixture
+assert 'WAIT ORIGINAL_0480_SLATE_PENDING' in fixture
+assert 'ORIGINAL_RANKS_INVALID' in fixture
+assert 'ORIGINAL_HIERARCHY_NOT_DIRECT_RANKED root=' in fixture
+assert 'hierarchy.rebuild("forced")' not in fixture
+assert 'hierarchy.rebuild("command")' not in fixture
+
 print("PASS native 1380 original-priest/physical-stock/robot event/receipt "
       "positive and 15 negative verification cases")
