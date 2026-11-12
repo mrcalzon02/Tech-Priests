@@ -3428,6 +3428,12 @@ def ci_five_observation_1291(content: str, expected: int = 5, *,
 
 
 def self_test_ci_five_1291() -> None:
+    # Process-only elapsed time must never be inferred from UPS or job setup.
+    assert ci_engine_process_wall_minutes_1291([]) is None
+    assert ci_engine_process_wall_minutes_1291([30.0, 90.0, 60.0]) == 3.0
+    assert ci_engine_process_wall_minutes_1291([0.0]) == 0.0
+    assert ci_engine_process_wall_minutes_1291([-1.0]) is None
+    assert ci_engine_process_wall_minutes_1291([float("nan")]) is None
     log = (
         "CI_FIVE_PROFILE_1291_WAITING tick=600 all=0 original=0 requested=5\n"
         "CI_FIVE_PROFILE_1291_START tick=660 all=5 original=5 requested=5\n"
@@ -3673,6 +3679,20 @@ def self_test_ci_five_1291() -> None:
     print("[ci-five-1291] PASS native 5/25/100 provenance positive/negative")
 
 
+def ci_engine_process_wall_minutes_1291(durations: list[float]) -> float | None:
+    """Actual wall time in Factorio child processes only, not runner overhead.
+
+    Include save creation, original verbose failure, and any plain fallback.
+    Missing/invalid process samples remain unmeasured, not zero.
+    """
+    if not durations or any(
+        not isinstance(value, (int, float)) or not math.isfinite(value)
+        or value < 0 for value in durations
+    ):
+        return None
+    return round(sum(durations) / 60.0, 6)
+
+
 def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
                      work: pathlib.Path, output: pathlib.Path,
                      population: int = 5, *,
@@ -3711,30 +3731,39 @@ def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
     control.write_text(src,encoding="utf-8")
     save=area/(suffix+"-pair-start.zip")
     creation_log_path=output/("factorio-ci-"+suffix+"-create.log")
-    with creation_log_path.open("w",encoding="utf-8") as handle:
-        created=subprocess.run([str(binary),"--mod-directory",str(mods),
-            "--create",str(save),"--map-gen-seed","907260"],
-            stdout=handle,stderr=subprocess.STDOUT,check=False,timeout=120)
+    engine_process_durations=[]
+    process_start=time.monotonic()
+    try:
+        with creation_log_path.open("w",encoding="utf-8") as handle:
+            created=subprocess.run([str(binary),"--mod-directory",str(mods),
+                "--create",str(save),"--map-gen-seed","907260"],
+                stdout=handle,stderr=subprocess.STDOUT,check=False,timeout=120)
+    finally:
+        engine_process_durations.append(max(0.0,time.monotonic()-process_start))
     if created.returncode!=0 or not save.is_file():
         raise RuntimeError(f"native isolated {population}-pair save creation failed")
     log_path=output/("factorio-ci-"+suffix+".log")
     timeout_seconds=1500 if population==100 else 450
     timed_out=False
     engine_exit_status=None
-    with log_path.open("w",encoding="utf-8") as handle:
-        try:
-            args=[str(binary),"--mod-directory",str(mods),
-                  "--benchmark",str(save),"--benchmark-ticks",str(profile_ticks)]
-            if not plain_only_after_verified_csv_sigsegv:
-                args += ["--benchmark-verbose","tick,scriptUpdate"]
-            measured=subprocess.run(args, stdout=handle,
-                                    stderr=subprocess.STDOUT,check=False,
-                                    timeout=timeout_seconds)
-            engine_exit_status=measured.returncode
-        except subprocess.TimeoutExpired:
-            # Retain the native partial verbose CSV and explicitly reject
-            # full-window acceptance; profiling never blocks functionality.
-            timed_out=True
+    process_start=time.monotonic()
+    try:
+        with log_path.open("w",encoding="utf-8") as handle:
+            try:
+                args=[str(binary),"--mod-directory",str(mods),
+                      "--benchmark",str(save),"--benchmark-ticks",str(profile_ticks)]
+                if not plain_only_after_verified_csv_sigsegv:
+                    args += ["--benchmark-verbose","tick,scriptUpdate"]
+                measured=subprocess.run(args, stdout=handle,
+                                        stderr=subprocess.STDOUT,check=False,
+                                        timeout=timeout_seconds)
+                engine_exit_status=measured.returncode
+            except subprocess.TimeoutExpired:
+                # Retain the native partial verbose CSV and explicitly reject
+                # full-window acceptance; profiling never blocks functionality.
+                timed_out=True
+    finally:
+        engine_process_durations.append(max(0.0,time.monotonic()-process_start))
     original_log=log_path.read_text(encoding="utf-8",errors="replace")
     original_native=native_efficiency_observation_1062(original_log)
     original_exit_status=(None if plain_only_after_verified_csv_sigsegv
@@ -3751,17 +3780,21 @@ def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
             and original_native["engine_benchmark_updates"] == profile_ticks
             and original_native["script_sample_coverage"] != "complete"):
         plain_log_path=output/("factorio-ci-"+suffix+"-plain.log")
-        with plain_log_path.open("w",encoding="utf-8") as handle:
-            try:
-                plain=subprocess.run([str(binary),"--mod-directory",str(mods),
-                    "--benchmark",str(save),"--benchmark-ticks",
-                    str(profile_ticks)],
-                    stdout=handle,stderr=subprocess.STDOUT,check=False,
-                    timeout=timeout_seconds)
-                engine_exit_status=plain.returncode
-            except subprocess.TimeoutExpired:
-                timed_out=True
-                engine_exit_status=None
+        process_start=time.monotonic()
+        try:
+            with plain_log_path.open("w",encoding="utf-8") as handle:
+                try:
+                    plain=subprocess.run([str(binary),"--mod-directory",str(mods),
+                        "--benchmark",str(save),"--benchmark-ticks",
+                        str(profile_ticks)],
+                        stdout=handle,stderr=subprocess.STDOUT,check=False,
+                        timeout=timeout_seconds)
+                    engine_exit_status=plain.returncode
+                except subprocess.TimeoutExpired:
+                    timed_out=True
+                    engine_exit_status=None
+        finally:
+            engine_process_durations.append(max(0.0,time.monotonic()-process_start))
         observed_log=plain_log_path.read_text(
             encoding="utf-8",errors="replace")
         plain_fallback=True
@@ -3774,6 +3807,9 @@ def run_ci_five_1291(binary: pathlib.Path, source_mods: pathlib.Path,
     report["plain_after_verbose_sigsegv"]=plain_fallback
     report["plain_only_after_verified_verbose_sigsegv"]=plain_only_after_verified_csv_sigsegv
     report["benchmark_ticks_requested"]=profile_ticks
+    report["native_factorio_process_attempts"]=len(engine_process_durations)
+    report["native_factorio_process_wall_minutes"]=(
+        ci_engine_process_wall_minutes_1291(engine_process_durations))
     report["native_identity_verified"]=(
         population if engine_exit_status==0
         and report["native_identity_observed"]==population else None)
@@ -4266,6 +4302,12 @@ def main(argv: list[str]) -> int:
                 and reports[n].get("script_sample_coverage") == "complete"],
             "performance_is_release_blocking": False,
             "functional_remote_ore_gates_accepted": 0,
+            "native_factorio_process_wall_minutes": (
+                round(sum(reports[n]["native_factorio_process_wall_minutes"]
+                          for n in (5, 25, 100)), 6)
+                if all(isinstance(reports[n].get(
+                           "native_factorio_process_wall_minutes"), (int, float))
+                       for n in (5, 25, 100)) else None),
         }, sort_keys=True))
         return 0
     for key in ("binary", "mod_dir", "initial_save", "work_dir", "artifact_dir"):
