@@ -189,10 +189,33 @@ local function pulse()
       fail("ORIGINAL_PRIEST_IDENTITY_CHANGED")
     end
     local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
-    if not(hierarchy and hierarchy.rank(root)==4
-      and hierarchy.rank(senior)==3
-      and hierarchy.is_direct_subordinate(root,senior)==true) then
-      fail("ORIGINAL_HIERARCHY_NOT_DIRECT_RANKED")
+    -- 0480 owns ranked links and rebuilds topology on its own 300-tick
+    -- cadence. Both original native pairs can exist before the first slate
+    -- includes the newly paired Senior. Never force a hierarchy edge or
+    -- replace either priest; wait for the original authority to reconcile it.
+    local root_rank=hierarchy and hierarchy.rank(root) or 0
+    local senior_rank=hierarchy and hierarchy.rank(senior) or 0
+    if root_rank~=4 or senior_rank~=3 then
+      fail("ORIGINAL_RANKS_INVALID root="..tostring(root_rank)..
+        " senior="..tostring(senior_rank))
+    end
+    if hierarchy.is_direct_subordinate(root,senior)~=true then
+      local slate=hierarchy.hierarchy(senior)
+      local interval=tonumber(hierarchy.rebuild_interval) or 300
+      if game.tick-s.started_tick<3*interval then
+        if not s.hierarchy_wait_logged then
+          s.hierarchy_wait_logged=true
+          emit("WAIT ORIGINAL_0480_SLATE_PENDING tick="..game.tick..
+            " magos="..s.magos.." senior="..s.senior..
+            " superior="..tostring(slate and slate.superior_unit)..
+            " interval="..interval)
+        end
+        return
+      end
+      fail("ORIGINAL_HIERARCHY_NOT_DIRECT_RANKED root="..s.magos..
+        " senior="..s.senior..
+        " superior="..tostring(slate and slate.superior_unit)..
+        " elapsed="..tostring(game.tick-s.started_tick))
     end
     local cell=s.port.logistic_cell
     local network=cell and cell.logistic_network
