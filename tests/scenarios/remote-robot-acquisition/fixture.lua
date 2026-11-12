@@ -77,7 +77,11 @@ local function create_native_site(s)
   for _,entity in pairs(surface.find_entities_filtered{area=area}) do
     if entity.valid and (entity.position.x<70 or entity.position.y<12) then
       if entity.type=="resource" or entity.type=="tree"
-        or entity.type=="cliff" or entity.type=="simple-entity" then
+        -- The 2.1 native map may populate the newly extended solar staging
+        -- strip with ordinary fish. Remove only such native obstructors from
+        -- the corridor that is being tiled; never touch the natural ore patch.
+        or entity.type=="cliff" or entity.type=="simple-entity"
+        or entity.type=="fish" then
         entity.destroy()
       else fail("UNEXPECTED_OCCUPIED_SITE "..entity.name) end
     end
