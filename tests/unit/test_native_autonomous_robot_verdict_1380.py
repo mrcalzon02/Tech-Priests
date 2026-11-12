@@ -116,3 +116,12 @@ for args in [
         continue
     raise AssertionError("1380 falsely accepted missing, failed or cross-process receipt")
 print("PASS native 1380 create/benchmark provenance and eight refusal cases")
+
+# Native 1380 CREATE failed on genuine generated fish in the enlarged solar
+# corridor. Only that exactly-typed non-ore obstacle is clearable, and only
+# inside the original staging coordinate guard, never the target ore patch.
+assert 'if entity.valid and (entity.position.x<70 or entity.position.y<12)' in fixture
+assert 'or entity.type=="fish" then' in fixture
+assert 'else fail("UNEXPECTED_OCCUPIED_SITE "..entity.name) end' in fixture
+assert 'if x<70 or y<12 then' in fixture
+print("PASS native 1380 fish-only corridor clearance and preserved natural ore guard")
