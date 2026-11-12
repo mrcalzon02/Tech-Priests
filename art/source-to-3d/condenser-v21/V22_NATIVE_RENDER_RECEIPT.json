@@ -1,0 +1,46 @@
+{
+  "schema": "tech-priests.condenser-v22-native-blender-review.v1",
+  "revision": "V22",
+  "authoritative_source": {
+    "filename": "tech_priests_water_condenser_v21.blend",
+    "sha256": "1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b",
+    "mesh_count_preserved": 187
+  },
+  "blender": "5.2.3 LTS",
+  "renderer": "Cycles",
+  "runner_repository": "mrcalzon02/Dens-Mortis",
+  "runner_name": "OLD-CORE30-homebrew",
+  "workflow_run_id": 43147924392,
+  "workflow_run_url": "https://github.com/mrcalzon02/Dens-Mortis/actions/runs/43147924392",
+  "workflow_result": "success",
+  "artifact_id": 13912312608,
+  "artifact_name": "dens-mortis-condenser-v22-native-43147924392-1",
+  "native_review": "PASS_NOT_OWNER_APPROVED",
+  "piston_heads": 8,
+  "inward_vapor_curves": 24,
+  "animation_frames": 96,
+  "preview_sample_frames": 16,
+  "frame_rate_fps": 8,
+  "loop_seconds": 12,
+  "factorio_direction_degrees": [
+    0,
+    90,
+    180,
+    270
+  ],
+  "pixel_qa": "PASS",
+  "source_geometry_unchanged": true,
+  "stationary": [
+    "foundation",
+    "pipe flange"
+  ],
+  "production_factorio_graphics_replaced": false,
+  "files": {
+    "condenser_v22_motion_review.blend": "733e60686320322a5352ec525ccdb52086726f5ffc9644124380e76bd14a0e83",
+    "Condenser_V22_Real_Blender_4_Directions_Proof.png": "6e357aafa2f6fcef14299765bc6d5fc6ffda14941425d5f9d4a0a0a07d92c6a7",
+    "Condenser_V22_Real_Blender_Effect_Isolation.png": "9daf870f1accc8a2f886a58275883110aac3bf933f04bc1a3b71ab10272d236c",
+    "Condenser_V22_Real_Blender_Sequential_Intake.gif": "6f130b17e90dd5b199421abcfde7d3dabcf2723ec334cf0216db39bf2ab24e03",
+    "Condenser_V22_Native_Review_Bundle.zip": "9aa8d7d2d001bdbc7f652c40c57a48bcef12bc468b67071a52bae66784af6c19"
+  },
+  "next_gate": "Owner visually reviews genuine Cycles proofs; after approval pack and validate HR and standard Factorio directional sprite atlases; no premature game replacement."
+}

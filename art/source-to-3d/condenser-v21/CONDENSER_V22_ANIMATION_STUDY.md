@@ -58,3 +58,10 @@ The wrapper runs 14 offline timing/source/QA tests, opens Blender **against the 
 4. **After owner visual acceptance:** use FMPL export to produce four 45° directional standard and HR atlases, map them to the real 2×2 Factorio prototype, test connected native fluidbox and alignment in-game, and preserve rollback to current sprite art. **Do not change production art or install an unreviewed animation.**
 
 This is source-bound development, not a new workflow. No other machines, existing source meshes, actual output sprites, branches or GitHub Actions jobs are changed by this review runner.
+
+
+## Verified native Blender V22 render checkpoint
+
+On 2026-11-11/12 the corrected source-locked review completed **successfully** in Blender 5.2.3 Cycles on the registered Windows runner `OLD-CORE30-homebrew`, using the exact SHA-locked V21 model. [Dens-Mortis native Blender Actions run #43147924392](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/43147924392) contains the uploaded 85 MB V22 review artifact `dens-mortis-condenser-v22-native-43147924392-1` (artifact ID `13912312608`). The independent reopen and Cycles per-effect pixel visibility checks passed for all four orientations, with 8 individual moving heads, 24 inward-vapor strands, original 187 source meshes preserved, fixed foundation and pipe flange, and a 12-second/96-frame loop sampled as a genuine 16-frame GIF. The render proof and editable V22 `.blend` SHA-256 checksums are recorded in [V22_NATIVE_RENDER_RECEIPT.json](V22_NATIVE_RENDER_RECEIPT.json).
+
+**Review state: NATIVE BLENDER RENDERED; HUMAN VISUAL APPROVAL PENDING.** This is not HR/SD production sprite packing, fluidbox runtime verification, or an installed Factorio graphic replacement. The source V21 blend and existing in-game sprites remain unchanged.
