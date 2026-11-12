@@ -37,7 +37,7 @@ CASES = {
         "module": "ci_remote_robot_acquisition",
         "prefix": "[TP-AUTONOMOUS-ROBOT-1380]",
         "pass": "PASS autonomous original 0259 selected and physical native robot-built Intermediate paired",
-        "ticks": 30060,
+        "ticks": 42060,
     },
     "condenser-v22c-physical": {
         "fixture": "tests/scenarios/condenser-v22c-physical/fixture.lua",

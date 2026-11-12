@@ -245,6 +245,20 @@ local function pulse()
     local chunk={x=math.floor(s.ore.position.x/32),
       y=math.floor(s.ore.position.y/32)}
     local charted=root.station.force.is_chunk_charted(s.surface,chunk)
+    -- Factorio's real player/radar chart job can become visible after the
+    -- previous 18,000-tick fixture deadline. Start a bounded, genuine
+    -- 0259 discovery window from the FIRST observed force-charted ore, not
+    -- from on_init. This only observes native discovery; it cannot chart
+    -- a chunk, supply stock, select the strategy or start construction.
+    if charted and not s.first_chart_tick then
+      s.first_chart_tick=game.tick
+      emit("NATIVE_ORE_CHARTED tick="..game.tick..
+        " resource_unit="..tostring(s.ore.unit_number)..
+        " last_0259_reason="..tostring(root.resource_expansion_0259
+          and root.resource_expansion_0259.last_reason)..
+        " next_0259_tick="..tostring(root.resource_expansion_0259
+          and root.resource_expansion_0259.next_tick))
+    end
     -- One bounded native readback to distinguish a genuinely unpowered radar
     -- or uncharted ore from a persistent original 0820 relay monopoly.
     -- Diagnostic ONLY: never chart a chunk, reassign a strategy or create ore.
@@ -300,8 +314,24 @@ local function pulse()
           " real_power=true charted=true real_robots=true")
         return
       end
-      if game.tick-s.started_tick>=18000 then
-        fail("AUTONOMOUS_0259_NOT_SELECTED reason="..
+      -- Do not report a 0259 failure in the same tick that the genuine
+      -- resource first became charted. Require three complete existing
+      -- 0259 discovery intervals before refusal, with a separate hard
+      -- 30k-tick bound on a radar that never charts its real natural ore.
+      -- An unselected/failed build still FAILS; this changes no runtime gate.
+      local interval=tonumber(TECH_PRIESTS_RESOURCE_EXPANSION_INTERVAL_0259)
+        or 1200
+      if not charted and game.tick-s.started_tick>=30000 then
+        fail("NATIVE_ORE_NOT_CHARTED_BY_BOUND tick="..game.tick..
+          " radar_energy="..tostring(s.radar.energy))
+      end
+      if s.first_chart_tick
+        and game.tick-s.first_chart_tick>=3*interval then
+        fail("AUTONOMOUS_0259_NOT_SELECTED first_chart_tick="..
+          tostring(s.first_chart_tick)..
+          " last_next_tick="..tostring(root.resource_expansion_0259
+            and root.resource_expansion_0259.next_tick)..
+          " reason="..
           tostring(root.resource_expansion_0259
           and root.resource_expansion_0259.last_reason)..
           " charted="..tostring(charted)..
@@ -317,7 +347,7 @@ local function pulse()
       local goal=s.goal
       local site=goal and goal.remote_station_position_1076
       if not(site and s.event_station and s.event_robot) then
-        if game.tick-s.started_tick>30000 then
+        if game.tick-s.started_tick>42000 then
           fail("AUTONOMOUS_NATIVE_ROBOT_STATION_TIMEOUT event="..
             tostring(s.event_station).." frontier="..
             tostring(root.roboport_frontier_1076

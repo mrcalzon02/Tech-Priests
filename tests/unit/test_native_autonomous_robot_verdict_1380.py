@@ -142,3 +142,27 @@ assert command==["factorio","--mod-directory","isolated-mods",
 assert 'force.chart(' not in fixture and 'force.chart_all(' not in fixture
 assert 'game.create_player(' not in fixture
 print("PASS native 1380 real-player test-save chart lifecycle and no chart bypass")
+
+
+# A genuine Factorio 2.1.24 native-player test charted the natural ore only
+# at the old 18k-tick refusal boundary (43297665271), while production 0259's
+# last decision still predated that discovery. The source-pinned fixture must
+# observe chart transition and allow three REAL existing 0259 discovery
+# cadences before it may reject selection. No forced chart/goal, fabricated
+# inventory or weakened physical robot receipt is permitted.
+assert module.CASES["remote-robot-acquisition"]["ticks"]==42060
+assert 'if charted and not s.first_chart_tick then' in fixture
+assert 's.first_chart_tick=game.tick' in fixture
+assert 'NATIVE_ORE_CHARTED tick=' in fixture
+assert 'TECH_PRIESTS_RESOURCE_EXPANSION_INTERVAL_0259' in fixture
+assert 'game.tick-s.first_chart_tick>=3*interval' in fixture
+assert 'if not charted and game.tick-s.started_tick>=30000 then' in fixture
+assert 'NATIVE_ORE_NOT_CHARTED_BY_BOUND' in fixture
+assert 'if game.tick-s.started_tick>42000 then' in fixture
+assert 'if game.tick-s.started_tick>=18000 then' not in fixture
+assert 'root.roboport_expansion_goal_1076=' not in fixture
+assert 'force.chart(' not in fixture
+assert 'force.chart_all(' not in fixture
+assert 'game.create_player(' not in fixture
+assert 'surface.create_entity{name="iron-ore"' not in fixture
+print("PASS native 1380 genuine chart-relative 0259 cadence and finite failure bounds")
