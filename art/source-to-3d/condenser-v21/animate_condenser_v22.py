@@ -213,7 +213,8 @@ def rotate_only_model(scene, fx):
             continue
         if obj.name.startswith(('Reference pipe', 'Grid ', 'PIPE_FIT_', 'FMPL_CAPTURE_')):
             continue
-        if obj.type == 'LIGHT' and obj not in fx.objects:
+        # Blender 5.2 bpy_prop_collection.__contains__ takes an object NAME, not an Object.
+        if obj.type == 'LIGHT' and obj.name not in fx.objects:
             continue
         if any(c.name in excluded or c.name.startswith('REFERENCE_') for c in obj.users_collection):
             continue
