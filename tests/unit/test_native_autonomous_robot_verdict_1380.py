@@ -50,5 +50,17 @@ for exit_code,source in checks:
     except ValueError:
         continue
     raise AssertionError("Native 1380 false-positive accepted for "+source[-120:])
+# The empty-map runtime austerity gate suspends broker-only bootstrap until
+# an actual station/pair exists. A native fixture must create its physically
+# supplied seed site in on_init, using bounded unique names for queued deletes.
+fixture=(root/"tests/scenarios/remote-robot-acquisition/fixture.lua").read_text(encoding="utf-8")
+bootstrap=fixture.split("assert(registry.on_init(function()",1)[1].split("end,{owner=KEY",1)[0]
+assert "create_native_site(s)" in bootstrap
+assert "NATIVE_ON_INIT_BOOTSTRAP_COMPLETE" in bootstrap
+assert 'while s.seed_offset<64 do' in fixture
+assert 'local name=SURFACE.."-"..tostring(s.seed_offset)' in fixture
+assert 'if not game.delete_surface(surface)' in fixture
+assert 'if not ore then fail("NO_NATURAL_IRON_IN_64_GENERATED_SEEDS") end' in fixture
+assert 'surface.create_entity{name="iron-ore"' not in fixture
 print("PASS native 1380 original-priest/physical-stock/robot event/receipt "
       "positive and 15 negative verification cases")

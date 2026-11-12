@@ -32,7 +32,7 @@ local function place(surface,force,name,x,y,raised)
 end
 local function candidate_ore(surface)
   local orelist=surface.find_entities_filtered{
-    name="iron-ore",type="resource",area={{70,12},{90,21}}}
+    name="iron-ore",type="resource",area={{70,12},{110,43}}}
   for _,ore in ipairs(orelist) do
     if ore.valid and ore.amount>=2 and ore.position then
       local products=ore.prototype and ore.prototype.mineable_properties
@@ -47,27 +47,30 @@ local function candidate_ore(surface)
 end
 local function create_native_site(s)
   if s.phase~="search" then return end
-  if s.awaiting_delete then
-    if game.surfaces[SURFACE] then return end
-    s.awaiting_delete=nil
-  end
-  if s.seed_offset>=64 then fail("NO_NATURAL_IRON_IN_64_GENERATED_SEEDS") end
-  if game.surfaces[SURFACE] then fail("UNOWNED_TEST_SURFACE") end
-  local settings=game.surfaces[1].map_gen_settings
-  settings.seed=1380001+s.seed_offset
-  settings.autoplace_controls=settings.autoplace_controls or {}
-  settings.autoplace_controls["enemy-base"]={frequency=0,size=0,richness=0}
-  local surface=game.create_surface(SURFACE,settings)
-  if not(surface and surface.valid) then fail("NATIVE_SURFACE_MISSING") end
-  surface.request_to_generate_chunks({x=64,y=18},4)
-  surface.force_generate_chunk_requests()
-  local ore=candidate_ore(surface)
-  if not ore then
+  -- The production 0595/0596 idle-world gate correctly suspends broker ticks
+  -- before the first real Magos pair. A diagnostic broker-only bootstrap
+  -- therefore cannot start an empty native save. Select an actual generated
+  -- natural patch ON INIT, using unique bounded candidate surfaces so Factorio
+  -- can retire rejected surfaces asynchronously without reusing their names.
+  -- No resource is created or counted as mined by this search.
+  local surface,settings,ore
+  while s.seed_offset<64 do
+    local name=SURFACE.."-"..tostring(s.seed_offset)
+    if game.surfaces[name] then fail("UNOWNED_TEST_SURFACE") end
+    settings=game.surfaces[1].map_gen_settings
+    settings.seed=1380001+s.seed_offset
+    settings.autoplace_controls=settings.autoplace_controls or {}
+    settings.autoplace_controls["enemy-base"]={frequency=0,size=0,richness=0}
+    surface=game.create_surface(name,settings)
+    if not(surface and surface.valid) then fail("NATIVE_SURFACE_MISSING") end
+    surface.request_to_generate_chunks({x=64,y=18},4)
+    surface.force_generate_chunk_requests()
+    ore=candidate_ore(surface)
+    if ore then break end
     if not game.delete_surface(surface) then fail("SURFACE_DELETE_REFUSED") end
     s.seed_offset=s.seed_offset+1
-    s.awaiting_delete=true
-    return
   end
+  if not ore then fail("NO_NATURAL_IRON_IN_64_GENERATED_SEEDS") end
   -- Keep the selected patch unmodified: only the staging corridor is cleared.
   -- Every actual ore item must later come from a native resource.mine() call.
   local area={{-12,-12},{90,42}}
@@ -302,6 +305,9 @@ function M.install()
   assert(registry.on_init(function()
     local s=state()
     s.phase="search";s.seed_offset=0;s.started_tick=game.tick
+    create_native_site(s)
+    emit("NATIVE_ON_INIT_BOOTSTRAP_COMPLETE phase="..tostring(s.phase)..
+      " seed="..tostring(1380001+s.seed_offset))
   end,{owner=KEY,route="initialize",category="diagnostics",priority="last"}))
   assert(registry.on_event(defines.events.on_robot_built_entity,
     observed_robot,nil,{owner=KEY,route="native-robot-build-observe",
