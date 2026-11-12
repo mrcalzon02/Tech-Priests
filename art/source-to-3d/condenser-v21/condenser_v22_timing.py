@@ -11,7 +11,7 @@ CYCLE = 96
 SLOT = CYCLE // HEADS
 FPS = 8
 STROKE = 0.058  # Blender scene units; this condenser uses 1 unit per tile.
-PREVIEW_FRAMES = tuple(range(1, CYCLE + 1, 6))
+PREVIEW_FRAMES = tuple(range(1, CYCLE + 1, 3))
 
 
 def clamp(value: float) -> float:

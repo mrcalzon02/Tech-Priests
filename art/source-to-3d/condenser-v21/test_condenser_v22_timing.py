@@ -22,7 +22,7 @@ class MotionScheduleTest(unittest.TestCase):
                 self.assertLessEqual(head_lift(frame, head), STROKE)
 
     def test_each_head_lifts_and_each_stream_moves_inward(self):
-        self.assertEqual(len(PREVIEW_FRAMES), 16)
+        self.assertEqual(len(PREVIEW_FRAMES), 32)
         for head in range(HEADS):
             start = 1 + head * 12
             self.assertEqual(head_lift(start, head), 0)

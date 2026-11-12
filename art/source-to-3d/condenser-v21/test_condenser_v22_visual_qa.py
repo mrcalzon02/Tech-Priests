@@ -37,17 +37,17 @@ class PixelInspectorTest(unittest.TestCase):
         def save(path, image):
             image.save(path, compress_level=0)  # >1KB, like actual PNG gate
 
-        for frame in range(1, 97, 6):
-            save(root / f'frame_{frame:03d}.png', make(256))
+        for frame in range(1, 97, 3):
+            save(root / f'frame_{frame:03d}.png', make(512))
         for a in (0, 90, 180, 270):
-            for prefix, size in (('direction', 256), ('game_scale', 138)):
+            for prefix, size in (('direction', 512), ('game_scale', 138)):
                 for label, piston, vapor in (
                     ('idle', False, False), ('active', True, True),
                     ('no_vapor', True, False), ('no_piston', False, True)
                 ):
                     save(root / f'{prefix}_{a:03d}_{label}.png',
                          make(size, piston=piston, vapor=vapor))
-        save(root / 'direction_000_active_repeat.png', make(256))
+        save(root / 'direction_000_active_repeat.png', make(512))
         save(root / 'game_scale_000_active_repeat.png', make(138))
 
     def test_ablation_gate_rejects_missing_real_effect_even_if_idle_active_changes(self):

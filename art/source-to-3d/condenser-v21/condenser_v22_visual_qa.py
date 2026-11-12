@@ -14,7 +14,7 @@ from PIL import Image, ImageChops, ImageDraw, ImageFont
 
 ANGLES = (0, 90, 180, 270)
 STATES = ('idle', 'active')
-FRAMES = tuple(range(1, 97, 6))
+FRAMES = tuple(range(1, 97, 3))
 BG = (27, 30, 34, 255)
 FG = (240, 237, 226, 255)
 MUTED = (180, 195, 195, 255)
@@ -65,19 +65,19 @@ def font(size: int):
 
 
 def storyboard(out: Path, full: dict, native: dict) -> Path:
-    canvas = Image.new('RGBA', (1430, 780), BG)
+    canvas = Image.new('RGBA', (2600, 1470), BG)
     draw = ImageDraw.Draw(canvas)
     draw.text((20, 13), 'CONDENSER V22 - ACTUAL BLENDER CYCLES | SOURCE-LOCKED', font=font(22), fill=FG)
-    draw.text((20, 49), 'Left: full 256px | Right: true 43.125 px / tile capture on a 138px canvas', font=font(16), fill=MUTED)
+    draw.text((20, 49), 'Left: high-detail Cycles 512px | Right: true 43.125 px/tile on 138px canvas', font=font(16), fill=MUTED)
     for j, angle in enumerate(ANGLES):
-        x = 20 + (j % 2) * 708
-        y = 85 + (j // 2) * 334
+        x = 20 + (j % 2) * 1300
+        y = 85 + (j // 2) * 675
         draw.text((x, y), f'{angle:03d} deg | Idle / Intake', font=font(17), fill=FG)
         for k, state in enumerate(STATES):
             source = full[(angle, state)]
-            canvas.alpha_composite(source, (x + k*258, y+36))
+            canvas.alpha_composite(source, (x + k*520, y+36))
             small = native[(angle, state)]
-            canvas.alpha_composite(small, (x+528, y+36+k*144))
+            canvas.alpha_composite(small, (x+1050, y+36+k*160))
     dest = out / 'Condenser_V22_Real_Blender_4_Directions_Proof.png'
     canvas.convert('RGB').save(dest)
     return dest
@@ -86,16 +86,16 @@ def storyboard(out: Path, full: dict, native: dict) -> Path:
 def animation(out: Path) -> Path:
     frames = []
     for frame in FRAMES:
-        rendered = rgba(out / ('frame_%03d.png' % frame), (256, 256))
-        panel = Image.new('RGB', (296, 304), BG[:3])
-        panel.paste(on_dark(rendered), (20, 36))
+        rendered = rgba(out / ('frame_%03d.png' % frame), (512, 512))
+        panel = Image.new('RGB', (552, 568), BG[:3])
+        panel.paste(on_dark(rendered), (20, 42))
         drawer = ImageDraw.Draw(panel)
-        drawer.text((12, 8), f'ACTUAL Blender frame {frame:03d} / 096', font=font(15), fill=FG)
+        drawer.text((16, 9), f'Actual Blender Cycles V22B | frame {frame:03d}/096', font=font(17), fill=FG)
         frames.append(panel)
     dest = out / 'Condenser_V22_Real_Blender_Sequential_Intake.gif'
-    # 16 evenly sampled frames represent the original 12 s / 96-frame cycle.
+    # 32 evenly sampled genuine Cycles frames represent the 12-second cycle.
     # They are sparse hold samples, NOT a 2x-speed animation.
-    frames[0].save(dest, save_all=True, append_images=frames[1:], duration=750,
+    frames[0].save(dest, save_all=True, append_images=frames[1:], duration=375,
                    loop=0, optimize=True)
     return dest
 
@@ -103,19 +103,19 @@ def animation(out: Path) -> Path:
 
 def isolation_sheet(out: Path, groups: dict) -> Path:
     """Show full-resolution and sprite-scale actual Blender effect controls."""
-    canvas = Image.new('RGBA', (1260, 1450), BG)
+    canvas = Image.new('RGBA', (2160, 2760), BG)
     draw = ImageDraw.Draw(canvas)
     draw.text((18, 15), 'CONDENSER V22 | TRUE BLENDER A/B EFFECT ISOLATION', font=font(23), fill=FG)
     draw.text((18, 48), 'Each row: operating / no inward vapor / no piston lift', font=font(16), fill=MUTED)
     for index, angle in enumerate(ANGLES):
-        y = 90 + index * 340
-        draw.text((18, y), f'{angle:03d} degrees | full 256px (top), game-scale 138px (bottom)',
+        y = 90 + index * 660
+        draw.text((18, y), f'{angle:03d} degrees | detailed 512px (left), game-scale 138px (right)',
                   font=font(16), fill=FG)
         for i, mode in enumerate(('active', 'no_vapor', 'no_piston')):
-            x = 18 + i * 413
+            x = 18 + i * 713
             draw.text((x, y + 27), mode.replace('_', ' ').upper(), font=font(13), fill=MUTED)
             canvas.alpha_composite(groups[(angle, mode, 'direction')], (x, y + 45))
-            canvas.alpha_composite(groups[(angle, mode, 'game_scale')], (x + 258, y + 45))
+            canvas.alpha_composite(groups[(angle, mode, 'game_scale')], (x + 518, y + 45))
     dest = out / 'Condenser_V22_Real_Blender_Effect_Isolation.png'
     canvas.convert('RGB').save(dest)
     return dest
@@ -137,18 +137,18 @@ def inspect(out: Path) -> dict:
     for angle in ANGLES:
         for state in STATES:
             key = (angle, state)
-            full[key] = rgba(out / ('direction_%03d_%s.png' % key), (256, 256))
+            full[key] = rgba(out / ('direction_%03d_%s.png' % key), (512, 512))
             native[key] = rgba(out / ('game_scale_%03d_%s.png' % key), (138, 138))
         controls[(angle, 'active', 'direction')] = full[(angle, 'active')]
         controls[(angle, 'active', 'game_scale')] = native[(angle, 'active')]
         for mode in ('no_vapor', 'no_piston'):
-            for capture, size in (('direction', (256, 256)), ('game_scale', (138, 138))):
+            for capture, size in (('direction', (512, 512)), ('game_scale', (138, 138))):
                 path = out / ('%s_%03d_%s.png' % (capture, angle, mode))
                 controls[(angle, mode, capture)] = rgba(path, size)
 
     # Under the fixed Cycles seed, rendering the identical 0-degree frame
     # twice must not create significant false differences from noise.
-    repeated_full = rgba(out / 'direction_000_active_repeat.png', (256, 256))
+    repeated_full = rgba(out / 'direction_000_active_repeat.png', (512, 512))
     repeated_native = rgba(out / 'game_scale_000_active_repeat.png', (138, 138))
     repeat_full_noise = diff_count(full[(0, 'active')], repeated_full)
     repeat_native_noise = diff_count(native[(0, 'active')], repeated_native)
@@ -176,18 +176,18 @@ def inspect(out: Path) -> dict:
         vapor_small = diff_count(small_active, no_vapor_small)
         piston_big = diff_count(big_active, no_piston_big)
         piston_small = diff_count(small_active, no_piston_small)
-        demand_effect(vapor_big, repeat_full_noise, 16, f'{angle}° vapor at 256px')
-        demand_effect(piston_big, repeat_full_noise, 12, f'{angle}° piston at 256px')
+        demand_effect(vapor_big, repeat_full_noise, 16, f'{angle}° vapor at 512px')
+        demand_effect(piston_big, repeat_full_noise, 12, f'{angle}° piston at 512px')
         demand_effect(vapor_small, repeat_native_noise, 3, f'{angle}° vapor at 43px/tile')
         demand_effect(piston_small, repeat_native_noise, 3, f'{angle}° piston at 43px/tile')
         metrics[str(angle)] = {
-            '256px_active_idle_changed': count_big,
+            '512px_active_idle_changed': count_big,
             '138px_active_idle_changed': count_native,
-            '256px_vapor_only_changed': vapor_big,
+            '512px_vapor_only_changed': vapor_big,
             '138px_vapor_only_changed': vapor_small,
-            '256px_piston_only_changed': piston_big,
+            '512px_piston_only_changed': piston_big,
             '138px_piston_only_changed': piston_small,
-            '256px_opaque_pixels': alpha_big,
+            '512px_opaque_pixels': alpha_big,
             '138px_opaque_pixels': alpha_native,
         }
     storyboard_file = storyboard(out, full, native)
@@ -196,13 +196,13 @@ def inspect(out: Path) -> dict:
     result = {
         'status': 'REAL_BLENDER_PIXEL_CHECK_COMPLETE',
         'human_visual_approval': 'PENDING',
-        'full_size': 256, 'native_canvas_size': 138,
+        'full_size': 512, 'native_canvas_size': 138,
         'pixels_per_tile': 138 / 3.20,
         'nominal_footprint_tiles': [2, 2],
         'native_capture_caveat': '138px ortho viewport samples 43.125 pixels/tile over '
                                  '3.20 scene units, before actual sprite crop/shift and prototype alignment',
         'repeatability_control_changed_pixels': {
-            '256px': repeat_full_noise, '138px': repeat_native_noise,
+            '512px': repeat_full_noise, '138px': repeat_native_noise,
         },
         'independent_effect_visibility_gates': 'PASS',
         'gif_cycle_duration_ms': len(FRAMES) * 750,
