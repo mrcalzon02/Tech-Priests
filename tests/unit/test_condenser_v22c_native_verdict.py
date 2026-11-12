@@ -38,6 +38,22 @@ class FailClosedNativeReceipt(unittest.TestCase):
         self.assertEqual(result["connected_pipes"],4)
         self.assertEqual(result["fluid_segments_confirmed"],0)
         self.assertEqual(result["connections_unformed"],4)
+    def test_allow_genuine_native_forming_segments_without_fake_ids(self):
+        """One-sided native segment creation is a real deferred engine state."""
+        forming = [record.replace("segment=30"+str(i),
+                                  "segment=0").replace("segment_state=formed",
+                                                       "segment_state=forming")
+                   for i,record in enumerate(RECORDS,1)]
+        result=verify(0,log(forming))
+        self.assertEqual(result["real_entities"],8)
+        self.assertEqual(result["connected_pipes"],4)
+        self.assertEqual(result["fluid_segments_confirmed"],0)
+        self.assertEqual(result["connections_unformed"],0)
+        self.assertEqual(result["connections_forming"],4)
+    def test_reject_fabricated_forming_segment_id(self):
+        with self.assertRaisesRegex(ValueError,"fabricated"):
+            verify(0,log([RECORDS[0].replace("segment_state=formed",
+                                            "segment_state=forming"),*RECORDS[1:]]))
     def test_reject_fabricated_unformed_segment_id(self):
         with self.assertRaisesRegex(ValueError,"fabricated"):
             verify(0,log([RECORDS[0].replace("segment_state=formed",
