@@ -171,7 +171,7 @@ def verify_condenser_v22c_physical_log(exit_code: int, log: str) -> dict[str, ob
     pattern = (r"\[TP-CONDENSER-V22C-PHYSICAL\] NATIVE_CONNECTED facing="
                r"(north|east|south|west) machine=(\d+) pipe=(\d+) "
                r"source_x=(-?[\d.]+) source_y=(-?[\d.]+) "
-               r"target_x=(-?[\d.]+) target_y=(-?[\d.]+) segment=(\d+) segment_state=(formed|unformed)")
+               r"target_x=(-?[\d.]+) target_y=(-?[\d.]+) segment=(\d+) segment_state=(formed|unformed|forming)")
     records = re.findall(pattern, log)
     if len(records) != 4 or log.count(prefix + "NATIVE_CONNECTED facing=") != 4:
         raise ValueError("Not exactly four authentic native pipe connection receipts")
@@ -200,7 +200,7 @@ def verify_condenser_v22c_physical_log(exit_code: int, log: str) -> dict[str, ob
                 raise ValueError("Formed segment missing genuine engine ID")
             segments.add(segment_id)
         elif segment_id != 0:
-            raise ValueError("Unformed fluid segment fabricated positive ID")
+            raise ValueError("Deferred fluid segment fabricated positive ID")
         ids.update((int(machine),int(pipe)))
         positions.add((round(tx,3),round(ty,3)))
         observed[facing] = {"machine":int(machine),"pipe":int(pipe),
@@ -215,7 +215,10 @@ def verify_condenser_v22c_physical_log(exit_code: int, log: str) -> dict[str, ob
             "directions":observed,"real_entities":len(ids),
             "connected_pipes":4,
             "fluid_segments_confirmed":len(segments),
-            "connections_unformed":4-len(segments)}
+            "connections_unformed":sum(x["segment_state"] == "unformed"
+                                       for x in observed.values()),
+            "connections_forming":sum(x["segment_state"] == "forming"
+                                      for x in observed.values())}
 
 
 def run(argv: list[str], log_file: pathlib.Path, timeout: int) -> int:
