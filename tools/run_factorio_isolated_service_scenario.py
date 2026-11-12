@@ -600,12 +600,25 @@ def main() -> int:
         print("Engine logs: " + str(output / "benchmark.log"))
         return 0
     if args.scenario == "condenser-v22c-physical":
+        # The source-locked fixture validates *real entities and native ports*
+        # in Factorio's on_init lifecycle during --create, not an artificial
+        # broker pulse. Benchmark then ensures that same save reloads without
+        # engine failure. Preserve separate phase/exit evidence.
+        create_contents = (output / "create.log").read_text(
+            encoding="utf-8", errors="replace")
+        for line in create_contents.splitlines():
+            if scenario["prefix"] in line:
+                print("NATIVE_CREATE " + line[:1200])
+        native_evidence = create_contents + "\n" + contents
         receipt = {"schema":"tech-priests.condenser-v22c-native-physical-v1",
                    "runtime_engine":engine_version,
                    "native_create_exit":created,
-                   "native_benchmark_exit":benchmark,"accepted":False}
+                   "native_benchmark_exit":benchmark,
+                   "evidence_phase":"native-factorio-on-init-plus-benchmark",
+                   "accepted":False}
         try:
-            receipt.update(verify_condenser_v22c_physical_log(benchmark, contents))
+            receipt.update(verify_condenser_v22c_physical_log(
+                benchmark, native_evidence))
         except ValueError as error:
             receipt["blocker"] = str(error)
         (output / "condenser-v22c-native-physical-result.json").write_text(
