@@ -187,6 +187,8 @@ def run(source, out):
     original_meshes = mesh_signatures(scene)
     original_world = {o.name: [list(row) for row in o.matrix_world]
                       for o in scene.objects if o.type == 'MESH'}
+    original_parent_names = {o.name: (o.parent.name if o.parent else None)
+                             for o in scene.objects if o.type == 'MESH'}
     caps = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith(CANISTER_PREFIX)]
     seats = [o for o in scene.objects if o.type == 'MESH' and o.name.startswith(SEAT_PREFIX)]
     if len(caps) != HEADS or len(seats) != HEADS:
@@ -217,17 +219,16 @@ def run(source, out):
         matched.append(nearest)
         unused_seats.remove(nearest)
     rack = bpy.data.objects['Condenser eight-seat rack body']
-    root = new_empty('FX ONLY | mild condenser rack rumble', fx, center(rack))
-    # Only the removable rack/canister assembly vibrates. Chassis, outlet,
-    # water pipe, foundation and external hoses NEVER change transform.
-    for obj in [rack] + seats:
-        parent_preserve(obj, root)
-    pistons = []
-    for index, cap in enumerate(ordered_caps):
-        piston = new_empty('FX ONLY | piston %02d' % index, fx, center(cap))
-        parent_preserve(piston, root)
-        parent_preserve(cap, piston)
-        pistons.append(piston)
+    root = new_empty('FX ONLY | rack motion timing reference', fx, center(rack))
+    # CRITICAL: Original rack/seat/cap objects retain their APPROVED parents.
+    # The previous reparenting shifted rack by 0.8256 scene units on Windows.
+    # Key the actual source objects' existing local location transforms instead.
+    movers = [rack] + seats + ordered_caps
+    source_locations = {obj.name: obj.location.copy() for obj in movers}
+    def local_offset(obj, world_delta):
+        if obj.parent is None:
+            return world_delta
+        return obj.parent.matrix_world.to_3x3().inverted_safe() @ world_delta
     material = mist_material()
     streams = []
     for index, (cap, seat) in enumerate(zip(ordered_caps, matched)):
@@ -268,18 +269,21 @@ def run(source, out):
     scene.render.image_settings.color_mode = 'RGBA'
     scene.frame_start, scene.frame_end, scene.render.fps = 1, CYCLE, FPS
     base = root.location.copy()
-    piston_bases = [p.location.copy() for p in pistons]
     for frame in range(1, CYCLE + 2):
         wave = 2 * math.pi * ((frame - 1) % CYCLE) / CYCLE
-        root.location = base + Vector((.0035 * math.sin(4 * wave),
-                                       .0022 * (math.sin(5 * wave + .4) - math.sin(.4)),
-                                       .0018 * math.sin(6 * wave)))
-        root.rotation_euler.z = math.radians(.08) * math.sin(3 * wave)
+        jitter = Vector((.0035 * math.sin(4 * wave),
+                         .0022 * (math.sin(5 * wave + .4) - math.sin(.4)),
+                         .0018 * math.sin(6 * wave)))
+        root.location = base + jitter
         root.keyframe_insert(data_path='location', frame=frame)
-        root.keyframe_insert(data_path='rotation_euler', frame=frame)
-        for index, piston in enumerate(pistons):
-            piston.location = piston_bases[index] + Vector((0, 0, head_lift(frame, index)))
-            piston.keyframe_insert(data_path='location', frame=frame)
+        # Real source meshes move only by a tiny shared vibration.
+        for mover in [rack] + seats:
+            mover.location = source_locations[mover.name] + local_offset(mover, jitter)
+            mover.keyframe_insert(data_path='location', frame=frame)
+        for index, cap in enumerate(ordered_caps):
+            cap.location = (source_locations[cap.name]
+                            + local_offset(cap, jitter + Vector((0, 0, head_lift(frame, index)))))
+            cap.keyframe_insert(data_path='location', frame=frame)
             for cloud in streams[index]:
                 cloud.location, cloud.scale = mist_pose(frame, index, cloud, CYCLE)
                 cloud.keyframe_insert(data_path='location', frame=frame)
@@ -311,6 +315,8 @@ def run(source, out):
         raise RuntimeError('Original V21 SOURCE WORLD TRANSFORMS MOVED: '
                            + json.dumps(dict(list(errors.items())[:15])))
     scene['source_world_matrices'] = json.dumps(original_world, sort_keys=True)
+    scene['source_original_parents'] = json.dumps(original_parent_names, sort_keys=True)
+    scene['pistons_are_original_meshes'] = True
     scene['source_world_transform_guard'] = 'PASS'
     scene['model'] = 'Atmospheric Water Condenser'
     scene['model_source_revision'] = 'approved V21 unchanged'
@@ -375,14 +381,15 @@ def run(source, out):
                 strand.hide_render = False
             bpy.context.view_layer.update()
         try:
-            for index, piston in enumerate(pistons):
-                piston.delta_location.z = -head_lift(7, index)
+            for index, cap in enumerate(ordered_caps):
+                cap.delta_location = local_offset(
+                    cap, Vector((0, 0, -head_lift(7, index))))
             bpy.context.view_layer.update()
             capture('direction_%03d_no_piston.png' % degrees, REVIEW_RESOLUTION)
             capture('game_scale_%03d_no_piston.png' % degrees, 138)
         finally:
-            for piston in pistons:
-                piston.delta_location.z = 0.0
+            for cap in ordered_caps:
+                cap.delta_location = (0, 0, 0)
             bpy.context.view_layer.update()
         if degrees == 0:
             # Duplicate of an unmodified active frame. Detect render-noise
