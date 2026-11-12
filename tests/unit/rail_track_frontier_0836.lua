@@ -529,3 +529,72 @@ print("[rail-track-frontier-0836] PASS fresh native 0338 rail identity, connecte
 -- Prove the actual 0510 dispatcher, not a separate rail tick executor,
 -- owns rail constructor pulses and honors stronger physical duties.
 dofile("tests/unit/rail_dispatcher_handoff_0836.lua")
+
+-- 0836 boarding must ask the existing 0528 physical owner to reconcile an
+-- abandoned, *unladen* prior task, never mutate 0528 state itself. Once 0528
+-- legally releases it, a unit priest is STILL not a native train passenger.
+-- These source regressions are not a substitute for an engine ride.
+do
+  local original_priest={valid=true,unit_number=105,type="unit",
+    force=force,surface=surface,position={x=0,y=5}}
+  local native_train={valid=true,id=935,speed=0}
+  local engine_loco={valid=true,name="locomotive",unit_number=350,
+    force=force,surface=surface,position={x=3,y=1},train=native_train,
+    get_driver=function()return nil end}
+  local engine_wagon={valid=true,name="cargo-wagon",unit_number=351,
+    force=force,surface=surface,position={x=5,y=1},train=native_train}
+  local board_pair={station=pair.station,priest=original_priest}
+  board_pair.remote_rail_outpost_0835={
+    status="rail-track-established",root_station_unit=104,
+    surface_index=1,force_index=1,target={x=512,y=0},
+    rail_frontier_0836={chain_audit_completed_tick_0836=1},
+    first_locomotive_0836={phase="native-paid-locomotive-verified",
+      built_entity=engine_loco,built_unit=350},
+    first_wagon_0836={phase="native-paid-wagon-verified",
+      built_entity=engine_wagon,built_unit=351},
+    first_fuel_0836={phase="native-paid-locomotive-fueled"}}
+  local prior=_G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528
+  local consultations=0
+  _G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528={
+    release_abandoned_unladen_train_preboarding_0836=function(p,e)
+      assert(p==board_pair and e==engine_loco)
+      consultations=consultations+1
+      p.machine_logistics_0528={phase="failed"}
+      return true,"original-abandoned-unladen-fuel-released"
+    end}
+  board_pair.machine_logistics_0528={phase="move-to-station",
+    action="supply-fuel",item="coal"}
+  local success,reason=Track.service_first_train_board_0836(board_pair)
+  assert(not success and consultations==1
+    and reason=="native-driver-requires-original-character:unit"
+    and board_pair.remote_rail_outpost_0835.first_board_0836.phase==
+      "native-boarding-unsupported-original-unit"
+    and not board_pair.train_transport_rail_0835,
+    "0836 did not release stale unladen 0528 safely or fabricated unit boarding")
+  -- A real item hold must stop boarding BEFORE 0836 can ask to retire 0528.
+  local physical_coal={item="coal",count=1}
+  board_pair.machine_logistics_0528={phase="move-to-machine",
+    action="supply-fuel",item="coal",custody=physical_coal}
+  board_pair.machine_logistics_custody_0528=physical_coal
+  local blocked,why=Track.service_first_train_board_0836(board_pair)
+  assert(not blocked and why=="boarding-foreign-physical-custody"
+    and consultations==1
+    and board_pair.machine_logistics_custody_0528==physical_coal
+    and physical_coal.count==1,
+    "0836 preempted physical fuel custody to attempt boarding")
+  board_pair.machine_logistics_custody_0528=nil
+  -- A refused 0528 owner may not be overridden or treated as success.
+  _G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528={
+    release_abandoned_unladen_train_preboarding_0836=function()
+      consultations=consultations+1
+      return false,"live-movement-still-owned"
+    end}
+  local refused,why=Track.service_first_train_board_0836(board_pair)
+  assert(not refused and why=="boarding-machine-logistics-still-active"
+    and consultations==2
+    and board_pair.machine_logistics_0528.phase=="move-to-machine"
+    and not board_pair.train_transport_rail_0835,
+    "0836 overrode a lawful 0528 refusal to pursue a train")
+  _G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528=prior
+end
+print("[rail-board-0836] PASS 0528-owner reconciliation, cargo refusal and original unit fail-closed")

@@ -941,6 +941,10 @@ local function retire_unladen_abandoned_fuel_0836(pair,locomotive)
       and type(state.started_tick)=="number"
       and now()-state.started_tick>=60*120
       and not(state.custody or pair.machine_logistics_custody_0528)
+      and not(pair.order_queue_0469 and pair.order_queue_0469.current
+        and pair.order_queue_0469.current.kind=="machine-logistics")
+      and not(pair.active_order_0469 and
+        pair.active_order_0469.kind=="machine-logistics")
       and not(pair.construction_task_0338 or pair.construction_custody_0338
         or pair.construction_task_0340 or pair.direct_acquisition_custody_0513
         or pair.inventory_transfer_custody_0687 or pair.defense_task_0259
@@ -963,6 +967,28 @@ local function retire_unladen_abandoned_fuel_0836(pair,locomotive)
     return true
   end
   return false
+end
+
+-- The 0836 native rail stop/fuel gate can leave an unrelated, unladen
+-- preexisting 0528 fuel approach waiting long after its movement lease
+-- disappeared. Reconcile it ONLY within this original physical owner,
+-- after the real coupled train and its counted fuel receipt are proven.
+-- Do not offer another fuel job, steal explicit queue work, touch inventory,
+-- or turn a unit priest into a fictional native train passenger.
+function M.release_abandoned_unladen_train_preboarding_0836(pair,locomotive)
+  local authorized,why=exact_original_train_0836(pair,locomotive)
+  if not authorized then return false,why end
+  local mission=pair.remote_rail_outpost_0835
+  local fuel=mission and mission.first_fuel_0836
+  if not(fuel and fuel.phase=="native-paid-locomotive-fueled"
+      and fuel.locomotive_unit==locomotive.unit_number
+      and fuel.train_id==locomotive.train.id)then
+    return false,"original-train-fuel-receipt-unverified"
+  end
+  if retire_unladen_abandoned_fuel_0836(pair,locomotive)then
+    return true,"original-abandoned-unladen-fuel-released"
+  end
+  return false,"no-proven-abandoned-unladen-fuel"
 end
 
 function M.offer_original_locomotive_fuel_0836(pair,locomotive)

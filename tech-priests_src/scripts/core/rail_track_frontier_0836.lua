@@ -1343,8 +1343,22 @@ function M.service_first_train_board_0836(pair)
   local machine=pair.machine_logistics_0528
   if type(machine)=="table" and machine.phase
       and machine.phase~="complete" and machine.phase~="failed" then
-    state.last_blocker="boarding-machine-logistics-still-active"
-    return false,state.last_blocker
+    -- Ask the ORIGINAL 0528 owner to release only its proven abandoned,
+    -- unladen fuel approach AFTER counted native train/fuel verification.
+    -- It must refuse live movement, explicit machine orders and any cargo.
+    -- 0836 never edits another executor's state or inventory directly.
+    local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
+      or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
+    if logistics and
+        type(logistics.release_abandoned_unladen_train_preboarding_0836)=="function"then
+      pcall(logistics.release_abandoned_unladen_train_preboarding_0836,pair,entity)
+    end
+    machine=pair.machine_logistics_0528
+    if type(machine)=="table" and machine.phase
+        and machine.phase~="complete" and machine.phase~="failed"then
+      state.last_blocker="boarding-machine-logistics-still-active"
+      return false,state.last_blocker
+    end
   end
   local request=pair.movement_request_0418
   if request and request.owner~="rail-track-frontier-0836" then
