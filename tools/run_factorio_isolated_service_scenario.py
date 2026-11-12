@@ -39,6 +39,13 @@ CASES = {
         "pass": "PASS autonomous original 0259 selected and physical native robot-built Intermediate paired",
         "ticks": 30060,
     },
+    "condenser-v22c-physical": {
+        "fixture": "tests/scenarios/condenser-v22c-physical/fixture.lua",
+        "module": "ci_condenser_v22c_physical",
+        "prefix": "[TP-CONDENSER-V22C-PHYSICAL]",
+        "pass": "PASS four original 2x2 V22C condensers with native direction-rotated output pipes",
+        "ticks": 720,
+    },
     "remote-rail-acquisition": {
         "fixture": "tests/scenarios/remote-rail-acquisition/fixture.lua",
         "module": "ci_remote_rail_acquisition",
@@ -151,6 +158,53 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         "inventory_discrepancies_in_verified_station_transaction": 0,
         "other_inventory_or_reloaded_cargo_reconciliation": "not exercised",
     }
+
+
+def verify_condenser_v22c_physical_log(exit_code: int, log: str) -> dict[str, object]:
+    """Four actual native Factorio machine/pipe connections, never fake credits."""
+    prefix = "[TP-CONDENSER-V22C-PHYSICAL] "
+    final = prefix + "PASS four original 2x2 V22C condensers with native direction-rotated output pipes"
+    if exit_code != 0 or prefix + "FAIL " in log:
+        raise ValueError("Native engine exited unsuccessfully or emitted physical-port FAIL")
+    if log.count(final) != 1:
+        raise ValueError("Missing or duplicated four-direction native pass")
+    pattern = (r"\[TP-CONDENSER-V22C-PHYSICAL\] NATIVE_CONNECTED facing="
+               r"(north|east|south|west) machine=(\d+) pipe=(\d+) "
+               r"source_x=(-?[\d.]+) source_y=(-?[\d.]+) "
+               r"target_x=(-?[\d.]+) target_y=(-?[\d.]+) segment=(\d+)")
+    records = re.findall(pattern, log)
+    if len(records) != 4 or log.count(prefix + "NATIVE_CONNECTED facing=") != 4:
+        raise ValueError("Not exactly four authentic native pipe connection receipts")
+    expected = {"north": (0, 0), "east": (18, 0),
+                "south": (0, 18), "west": (18, 18)}
+    ids, segments, positions = set(), set(), set()
+    observed = {}
+    for facing, machine, pipe, sx, sy, tx, ty, segment in records:
+        if facing in observed:
+            raise ValueError("Duplicated native heading " + facing)
+        cx, cy = expected[facing]
+        sx, sy, tx, ty = map(float, (sx, sy, tx, ty))
+        if abs(cx-sx)>0.001 or abs(cy-sy)>0.001:
+            raise ValueError("Wrong original test machine center " + facing)
+        if facing == "north": outward = tx > cx + 0.75
+        elif facing == "east": outward = ty > cy + 0.75
+        elif facing == "south": outward = tx < cx - 0.75
+        else: outward = ty < cy - 0.75
+        if not outward:
+            raise ValueError("Native output port did not rotate outward " + facing)
+        if int(machine) == 0 or int(pipe) == 0 or int(segment) == 0:
+            raise ValueError("Missing unique native entity/segment identity")
+        ids.update((int(machine),int(pipe)))
+        segments.add(int(segment))
+        positions.add((round(tx,3),round(ty,3)))
+        observed[facing] = {"machine":int(machine),"pipe":int(pipe),
+                            "target":[tx,ty],"segment":int(segment)}
+    if set(observed) != set(expected) or len(ids) != 8 or len(positions) != 4:
+        raise ValueError("Four cardinal placements or eight distinct entities absent")
+    if len(segments) != 4:
+        raise ValueError("Independent machine fluid segments unexpectedly merged")
+    return {"accepted":True,"native_engine_exit":exit_code,
+            "directions":observed,"real_entities":len(ids),"fluid_segments":len(segments)}
 
 
 def run(argv: list[str], log_file: pathlib.Path, timeout: int) -> int:
@@ -545,6 +599,19 @@ def main() -> int:
               "train/Magos journey and ore return UNTESTED")
         print("Engine logs: " + str(output / "benchmark.log"))
         return 0
+    if args.scenario == "condenser-v22c-physical":
+        receipt = {"schema":"tech-priests.condenser-v22c-native-physical-v1",
+                   "runtime_engine":engine_version,
+                   "native_create_exit":created,
+                   "native_benchmark_exit":benchmark,"accepted":False}
+        try:
+            receipt.update(verify_condenser_v22c_physical_log(benchmark, contents))
+        except ValueError as error:
+            receipt["blocker"] = str(error)
+        (output / "condenser-v22c-native-physical-result.json").write_text(
+            json.dumps(receipt, indent=2, sort_keys=True)+"\n", encoding="utf-8")
+        print("CONDENSER_V22C_NATIVE_PHYSICAL_VERDICT " + json.dumps(receipt, sort_keys=True))
+        return 0 if receipt["accepted"] else 1
     if args.scenario == "remote-robot-acquisition":
         create_contents = (output / "create.log").read_text(
             encoding="utf-8", errors="replace")
