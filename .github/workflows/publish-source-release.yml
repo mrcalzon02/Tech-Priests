@@ -29,6 +29,56 @@ jobs:
         shell: bash
         run: |
           bash art/source-to-3d/emergency-miner/release_integrate_v25.sh
+      - name: Verify complete V22C condenser native atlas before packaging
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import pathlib
+          import struct
+          root = pathlib.Path('tech-priests_src')
+          graphics = root / 'graphics/entity/atmospheric-water-condenser-v22c'
+          manifest = json.loads((graphics / 'atlas_manifest.json').read_text(encoding='utf-8'))
+          assert manifest['schema'] == 'tech-priests.condenser-v22c-factorio-atlases.v1'
+          assert manifest['source_sha256'] == '1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b'
+          assert manifest['source_frame_sequence'] == list(range(1, 97, 3))
+          assert manifest['cycle_seconds'] == 12 and manifest['hr_frame_px'] == 512 and manifest['sd_frame_px'] == 256
+          assert manifest['factorio_output_connection_local'] == [.5,-.5]
+          assert manifest['blender_to_factorio'] == {'north':'north','east':'west_native','south':'south','west':'east_native'}
+          expected = {}
+          for direction in ('north','east_native','south','west_native'):
+              for quality,frame_size in (('hr',512),('sd',256)):
+                  data = manifest['files'][direction][quality]
+                  assert len(data['activity_slices']) == 4
+                  assert len(set(x['name'] for x in data['activity_slices'])) == 4
+                  for entry in (*data['activity_slices'],data['idle_repeated_slice']):
+                      assert entry['name'] not in expected
+                      expected[entry['name']] = (entry, frame_size)
+          icon = manifest['icon']
+          assert len(expected) == 40 and icon['name'] == 'icon-64.png'
+          expected[icon['name']] = (icon, 64)
+          all_names = {file.name for file in graphics.glob('*.png')}
+          assert all_names == set(expected), (all_names - set(expected),set(expected)-all_names)
+          for filename,(entry,frame_size) in expected.items():
+              file = graphics / filename
+              raw = file.read_bytes()
+              assert len(raw) == entry['size_bytes']
+              assert hashlib.sha256(raw).hexdigest() == entry['sha256'], filename
+              assert raw.startswith(bytes.fromhex('89504e470d0a1a0a')), filename
+              width,height = struct.unpack('>II',raw[16:24])
+              size = (64,64) if filename == icon['name'] else (frame_size*4,frame_size*2)
+              assert (width,height) == size, (filename,width,height,size)
+          patch = (root / 'prototypes/generated_graphics/atmospheric-water-condenser-v22c.lua').read_text()
+          fixes = (root / 'data-final-fixes.lua').read_text()
+          assert 'require("prototypes.generated_graphics.atmospheric-water-condenser-v22c")' in fixes
+          for token in ('local FRAMES = 32','local SLICES = 4','slice=SLICE_SIZE','lines_per_file=2',
+                        'animation_speed=FRAMES / TICKS_PER_CYCLE','target.graphics_set={',
+                        'port.position={0.5,-0.5}',"local captured = {north='north', east='west_native', south='south', west='east_native'}"):
+              assert token in patch, 'Graphics contract missing: '+token
+          print('CONDENSER_V22C_41_NATIVE_PNGS_VERIFIED_AND_ACTIVE')
+          PY
       - name: Package Factorio mod
         env:
           GH_TOKEN: ${{ github.token }}

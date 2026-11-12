@@ -1,0 +1,421 @@
+{
+  "schema": "tech-priests.condenser-v22c-factorio-atlases.v1",
+  "asset": "tech-priests-atmospheric-water-condenser",
+  "source_sha256": "1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b",
+  "native_scene_sha256": "1ce0a23f1fd7d10f9974c5af1ac40aad55f87c5df0a542fbaa1c893d9e6a6506",
+  "orientation_angles": [
+    0,
+    90,
+    180,
+    270
+  ],
+  "orientation_name_map": {
+    "0": "north",
+    "90": "east_native",
+    "180": "south",
+    "270": "west_native"
+  },
+  "native_frames_provenance_sha256": "969c57d2c1487e614ec9d5dd0e2e22629b6a222ded4b99ae70466130ca0cc139",
+  "full_native_scene_frames": 96,
+  "actual_factorio_animation_frames": 32,
+  "source_frame_sequence": [
+    1,
+    4,
+    7,
+    10,
+    13,
+    16,
+    19,
+    22,
+    25,
+    28,
+    31,
+    34,
+    37,
+    40,
+    43,
+    46,
+    49,
+    52,
+    55,
+    58,
+    61,
+    64,
+    67,
+    70,
+    73,
+    76,
+    79,
+    82,
+    85,
+    88,
+    91,
+    94
+  ],
+  "cycle_seconds": 12.0,
+  "factorio_animation_speed_frames_per_tick": 0.044444444444444446,
+  "chunk_frame_count": 8,
+  "line_length": 4,
+  "lines_per_file": 2,
+  "hero_world_ortho_scale": 3.2,
+  "hr_frame_px": 512,
+  "sd_frame_px": 256,
+  "hr_factorio_scale": 0.2,
+  "sd_factorio_scale": 0.4,
+  "nominal_collision_footprint_tiles": [
+    2,
+    2
+  ],
+  "native_output_flange_tile_point": [
+    1,
+    -0.5
+  ],
+  "native_output_flange_height": 0.36,
+  "factorio_output_connection_local": [
+    0.5,
+    -0.5
+  ],
+  "factorio_output_direction": "east",
+  "blender_to_factorio": {
+    "north": "north",
+    "east": "west_native",
+    "south": "south",
+    "west": "east_native"
+  },
+  "format": "PNG_RGBA_lossless; authored with Blender Cycles frames, PIL only composes sheets and resizes SD",
+  "original_source_meshes_changed": false,
+  "generated_image_art_or_fabricated_pixels": false,
+  "files": {
+    "north": {
+      "hr": {
+        "activity_slices": [
+          {
+            "name": "active-north-hr-00.png",
+            "sha256": "fbbc1edfc39e3b3a71bafc7c784b0da328d34bdc17f100cb09b177082e25a2da",
+            "size_bytes": 758643,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-north-hr-01.png",
+            "sha256": "7bba1c88c91490c4eab16cb370b748836be8aa54089851673d6edd12ab99e00f",
+            "size_bytes": 758995,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-north-hr-02.png",
+            "sha256": "2a25a34a09c0b6af0ebe8819830e7ede70164cb050b69218e5a29a6c3e5bb1a7",
+            "size_bytes": 761207,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-north-hr-03.png",
+            "sha256": "4b364632876cf80e7660371ec8d3bdf24c7973bb90ff24d0b91f8845d76121d3",
+            "size_bytes": 762460,
+            "width": 2048,
+            "height": 1024
+          }
+        ],
+        "idle_repeated_slice": {
+          "name": "idle-north-hr.png",
+          "sha256": "5d844bf65df879b867d9f39d16872a1370f35a1f0d3fc9d99578aa5278702354",
+          "size_bytes": 382708,
+          "width": 2048,
+          "height": 1024
+        }
+      },
+      "sd": {
+        "activity_slices": [
+          {
+            "name": "active-north-sd-00.png",
+            "sha256": "a3823d4feacb366dd872c019cdd8644cae3596790390dd587b4b7beac2a8e056",
+            "size_bytes": 194553,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-north-sd-01.png",
+            "sha256": "e5cd971f7e5805dc062d5027740945121e5453787c7338fa9a5f6e103b497e2f",
+            "size_bytes": 195358,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-north-sd-02.png",
+            "sha256": "603d26fb00c03ae78a5f85a28a415a1a5d44e47bd3cbad43e3490d5025f28cd1",
+            "size_bytes": 196736,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-north-sd-03.png",
+            "sha256": "e4a3c0fadae7faf5bc3abbe06906bcefe5f0f9bd4944a229bd94eae186e07f90",
+            "size_bytes": 195851,
+            "width": 1024,
+            "height": 512
+          }
+        ],
+        "idle_repeated_slice": {
+          "name": "idle-north-sd.png",
+          "sha256": "d298c41c9e627783728d807441f6a65dff834f2f729d468ac0e032810cc61956",
+          "size_bytes": 84067,
+          "width": 1024,
+          "height": 512
+        }
+      }
+    },
+    "east_native": {
+      "hr": {
+        "activity_slices": [
+          {
+            "name": "active-east_native-hr-00.png",
+            "sha256": "c4ff293be44c0cc24c219c75db62f2153704cab615ce5960ab6946150003c67b",
+            "size_bytes": 771479,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-east_native-hr-01.png",
+            "sha256": "380dbfaac3fd8df5d007033cee5df2a1fbb9184ba834946683bc958a6947e02e",
+            "size_bytes": 785090,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-east_native-hr-02.png",
+            "sha256": "60934115b1e59bbd271dcf797dcf3b64a546f03625ea04cf562449bb1502304b",
+            "size_bytes": 784098,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-east_native-hr-03.png",
+            "sha256": "6727d61643140f687f49b6765ef9a5af90c335837b2490460697a12f0e5615b7",
+            "size_bytes": 770856,
+            "width": 2048,
+            "height": 1024
+          }
+        ],
+        "idle_repeated_slice": {
+          "name": "idle-east_native-hr.png",
+          "sha256": "cb18342866103fad3a05899b093ac55c78eba7fbd437e8f1aeb90cb69850761d",
+          "size_bytes": 395031,
+          "width": 2048,
+          "height": 1024
+        }
+      },
+      "sd": {
+        "activity_slices": [
+          {
+            "name": "active-east_native-sd-00.png",
+            "sha256": "f9f35ff4bbf85bdc81735fd0d62987dee913169a9b782b114189e12983d6ef1a",
+            "size_bytes": 203102,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-east_native-sd-01.png",
+            "sha256": "bec29f64c7e7bb2d2962ab620c2534fa130556f929ad272f5a50a44e70c56312",
+            "size_bytes": 206717,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-east_native-sd-02.png",
+            "sha256": "a61ea1e2c22e7d9045580a6bee279da3ba033be377c484da02a857130f31812d",
+            "size_bytes": 206628,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-east_native-sd-03.png",
+            "sha256": "13de791a4471abfec522bbd09e995468bd7aadb00ef1c207a9eb6f82abba0f6b",
+            "size_bytes": 203662,
+            "width": 1024,
+            "height": 512
+          }
+        ],
+        "idle_repeated_slice": {
+          "name": "idle-east_native-sd.png",
+          "sha256": "449a74ce30f7d47373fc061d1857494844788ebc7f3088e8e0538abc038465cf",
+          "size_bytes": 89904,
+          "width": 1024,
+          "height": 512
+        }
+      }
+    },
+    "south": {
+      "hr": {
+        "activity_slices": [
+          {
+            "name": "active-south-hr-00.png",
+            "sha256": "aed76742e6abd435eb21da8c9ec8d1fe1a7d562363192017456fa97912a55334",
+            "size_bytes": 730529,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-south-hr-01.png",
+            "sha256": "66d090875ded2ce3292650f139d132c856c71918923025c0fb212cdb432f13f5",
+            "size_bytes": 733717,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-south-hr-02.png",
+            "sha256": "b8931b250f1707e01a020d3ae7b53ab42a089894f4fbfe7cfcaa5e8ddc27c3bb",
+            "size_bytes": 729574,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-south-hr-03.png",
+            "sha256": "becb3a3e67fe716089785cb88f4e7677a8e7abcc1e29e68f579a94e720332e32",
+            "size_bytes": 729852,
+            "width": 2048,
+            "height": 1024
+          }
+        ],
+        "idle_repeated_slice": {
+          "name": "idle-south-hr.png",
+          "sha256": "d4a4b282ea97d4cb5e934f322807128f70cc07dcc2a020b509ae0d7b8d75c4e8",
+          "size_bytes": 380009,
+          "width": 2048,
+          "height": 1024
+        }
+      },
+      "sd": {
+        "activity_slices": [
+          {
+            "name": "active-south-sd-00.png",
+            "sha256": "18101683b5adc72e8ea83e2e24f7b4393b49e97f787b3830f9265fd485c4bfaa",
+            "size_bytes": 188965,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-south-sd-01.png",
+            "sha256": "a5b66d7a30730fc5c0a6aecd0591a8a506e6999fd044c52ffefb91bf61ac68bc",
+            "size_bytes": 190086,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-south-sd-02.png",
+            "sha256": "180616b7f365c4f6ae8c8d2ce63a2d1b699194f3a9cdbeb46a158e8b42923373",
+            "size_bytes": 190321,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-south-sd-03.png",
+            "sha256": "03b3c55e7569af7e778ec52ba12954caa18478d407e684512cb4ae4441b9b2d1",
+            "size_bytes": 189447,
+            "width": 1024,
+            "height": 512
+          }
+        ],
+        "idle_repeated_slice": {
+          "name": "idle-south-sd.png",
+          "sha256": "79525d9d249bb3ca1fb0820380ffa41243a013ea1300714c04ce3d1e2e1348c8",
+          "size_bytes": 83376,
+          "width": 1024,
+          "height": 512
+        }
+      }
+    },
+    "west_native": {
+      "hr": {
+        "activity_slices": [
+          {
+            "name": "active-west_native-hr-00.png",
+            "sha256": "b46515a380703b13245e17a01f07bed0168b4853951fc1ab82105a5a0b6733c8",
+            "size_bytes": 781286,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-west_native-hr-01.png",
+            "sha256": "828998a05a022daf080aa25b2aec16618929eb33ae4eee0d30d40309193ab7ea",
+            "size_bytes": 781611,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-west_native-hr-02.png",
+            "sha256": "ce69846ba4100ea00b05ee65d4b909b7125014793a9aba4427b6f0784966e1a9",
+            "size_bytes": 782353,
+            "width": 2048,
+            "height": 1024
+          },
+          {
+            "name": "active-west_native-hr-03.png",
+            "sha256": "77971fb30a9f98bc77f90a3cbc27cee7bb002cb8b971b4fd19ed603f424ddd2d",
+            "size_bytes": 775095,
+            "width": 2048,
+            "height": 1024
+          }
+        ],
+        "idle_repeated_slice": {
+          "name": "idle-west_native-hr.png",
+          "sha256": "8ec8f304428a7b0dc16502bafb23af6fa5e913bcf51c771aaf978394298ceaa1",
+          "size_bytes": 405291,
+          "width": 2048,
+          "height": 1024
+        }
+      },
+      "sd": {
+        "activity_slices": [
+          {
+            "name": "active-west_native-sd-00.png",
+            "sha256": "b2e8ae30cc6b6048d9845d69cf1a8124b5ff72a28c516ab4e6c6ca866753bb4f",
+            "size_bytes": 204961,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-west_native-sd-01.png",
+            "sha256": "12fb806a941be91f3fdece85857b252c991316ce03c17ace6aef7522221987dc",
+            "size_bytes": 205447,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-west_native-sd-02.png",
+            "sha256": "09a35054d6e74ecbe9fb114f7af8f7395782cf6f38922f4bf2531d21e072f559",
+            "size_bytes": 206809,
+            "width": 1024,
+            "height": 512
+          },
+          {
+            "name": "active-west_native-sd-03.png",
+            "sha256": "1c3ddf52c7a2e002136e4d5ed4af01b1ea8186aa96aca3292c8daf5127636c44",
+            "size_bytes": 203869,
+            "width": 1024,
+            "height": 512
+          }
+        ],
+        "idle_repeated_slice": {
+          "name": "idle-west_native-sd.png",
+          "sha256": "87c333f256d29b5cf3e52cea7a722aad553ceeebaefa168dc49adcbfb7f30a5c",
+          "size_bytes": 91608,
+          "width": 1024,
+          "height": 512
+        }
+      }
+    }
+  },
+  "icon": {
+    "name": "icon-64.png",
+    "sha256": "49e2440d5b4ecbe194bd092644508dff77804966505b22525fa0111f82243376",
+    "size_bytes": 6759,
+    "width": 64,
+    "height": 64
+  },
+  "proof": {
+    "file": "Condenser_V22C_Four_Way_Integration_Proof.png",
+    "sha256": "765d64291bf036ec837b4a7ad2c12c428b6fd72c2e2a09926d8e7a83481a8229"
+  }
+}

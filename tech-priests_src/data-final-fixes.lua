@@ -6,6 +6,8 @@
 require("prototypes.emergency_miner_no_fuel_0641")
 -- V25 owner-approved 4-way real Blender miner animation; original sprite is retained.
 require("prototypes.generated_graphics.emergency-miner-v25")
+-- Owner-approved source-locked V22C 4-way Cycles condenser atlas; old micro art is retained for rollback.
+require("prototypes.generated_graphics.atmospheric-water-condenser-v22c")
 
 -- Consecration waste slot support.
 --
