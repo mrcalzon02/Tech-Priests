@@ -207,6 +207,23 @@ local function complete_coverage(port,target)
   return live_port and covered(live_port.cell,target,"construction")
     and covered(live_port.cell,target,"logistic")
 end
+-- Vanilla bots take counted items from logistic-network storage but may
+-- build ghosts throughout the larger native construction zone. Requiring
+-- orange logistic coverage AT a station ghost/ore patch rejects valid green
+-- construction-zone sites. Keep full logistic overlap for new roboport
+-- segments; only the already-supplied remote station uses this predicate.
+local function construction_coverage(port,target)
+  local live_port=grid_port(port)
+  return live_port and covered(live_port.cell,target,"construction")
+end
+local function goal_coverage(pair,port,target)
+  local objective=pair.roboport_expansion_goal_1076
+  if type(objective)=="table" and
+      objective.remote_station_item_1076=="intermediate-cogitator-station" then
+    return construction_coverage(port,target)
+  end
+  return complete_coverage(port,target)
+end
 -- 0259's autonomous strategy may reserve a robot objective only when the
 -- ORIGINAL 1076 grid/anchor owner can genuinely begin servicing it. Reuse
 -- native source-port, same-grid pole and full coverage checks; no second
@@ -227,8 +244,8 @@ function M.native_covered_ore_admission_1076(pair,target,site)
   local native=grid_port(source.port)
   if not(native and native.network_id==source.network_id
     and native.electric_network_id==anchor.grid_id
-    and complete_coverage(source.port,target)
-    and complete_coverage(source.port,site))then
+    and construction_coverage(source.port,target)
+    and construction_coverage(source.port,site))then
     return false,"native-robot-admission-uncovered-or-grid-changed"
   end
   return true,"existing-powered-covered-grid-and-anchor-verified"
@@ -660,7 +677,7 @@ local function service_remote_station_1076(root,state)
     or type(pos.y)~="number" or distance(pos,state.target)>36 then
     return {processed=1,blocked=1,detail="remote-station-objective-invalid"}
   end
-  if not complete_coverage(state.source_port,pos) then
+  if not construction_coverage(state.source_port,pos) then
     return {processed=1,waiting=1,detail="remote-station-awaiting-real-coverage"}
   end
   local tp=storage and storage.tech_priests
@@ -857,7 +874,7 @@ function M.service_pair(pair)
     if confirmed
       and confirmed.electric_network_id==s.electric_network_id
       and confirmed.network_id==s.logistic_network_id
-      and complete_coverage(s.source_port,s.target)then
+      and goal_coverage(pair,s.source_port,s.target)then
       return service_remote_station_1076(pair,s)
     end
     -- A lost port or separated grid invalidates completion immediately.
@@ -894,7 +911,7 @@ function M.service_pair(pair)
       source.network_id~=s.logistic_network_id)then
     return fail(s,"source-roboport-original-network-diverged")
   end
-  if complete_coverage(s.source_port,s.target)then
+  if goal_coverage(pair,s.source_port,s.target)then
     s.status="complete";s.completed_tick=tick()
     if pair.roboport_expansion_goal_1076
       and pair.roboport_expansion_goal_1076.remote_station_item_1076 then
