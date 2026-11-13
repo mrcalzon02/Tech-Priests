@@ -206,6 +206,22 @@ assert "NATIVE_POWERLESS_REFUSAL_OR_CUSTODY_INVALID" in fixture
 assert 'and not remote.is_connected_to_electric_network()' in fixture
 assert 'and network.all_construction_robots==3' in fixture
 assert "NATIVE_POWERLESS_RESTORED_GRID_NOT_JOINED" in fixture
+# A native pole replacement is physically debited exactly once; native
+# electrical/logistic network changes may settle on subsequent ticks.
+# Run 43496371024 hit a same-tick false negative after its real 1500-tick
+# outage/refusal, so do not count same-tick identity as restoration failure.
+assert 'if not s.powerless_restoration_pole then' in fixture
+assert 's.powerless_restoration_pole=restored' in fixture
+assert 's.powerless_restoration_tick=game.tick' in fixture
+assert 'if game.tick-s.powerless_restoration_tick<180 then return end' in fixture
+assert 's.powerless_restoration_pole=nil' in fixture
+assert 'NATIVE_POWERLESS_RESTORATION_CUSTODY_INVALID' in fixture
+assert 'NATIVE_POWERLESS_RESTORATION_ENTITY_INVALID' in fixture
+assert 'remote.electric_network_id==s.port.electric_network_id' in fixture
+assert 's.port.electric_network_id==s.original_electric_grid' in fixture
+assert 'original_network.network_id==returned_network.network_id' in fixture
+assert fixture.index('s.powerless_restoration_pole=restored') < fixture.index('if not joined then')
+assert fixture.index('if not joined then') < fixture.index('hold.destroy() -- only after exact mined pole item was consumed')
 assert 'hold.get_item_count("medium-electric-pole")~=0' in fixture
 assert 'hold.destroy() -- only after exact mined pole item was consumed' in fixture
 assert "if not s.extension_accepted then return end" in fixture
