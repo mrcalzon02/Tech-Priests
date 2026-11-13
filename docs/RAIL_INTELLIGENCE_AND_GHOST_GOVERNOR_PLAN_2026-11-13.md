@@ -138,3 +138,15 @@ New authority `scripts/core/ghost_admission_governor_14xx.lua`. It is a **bounde
 
 ---
 
+
+## 9. Bounded rail-extension choice and waypoint integration
+
+**Follow-up implemented source changes (2026-11-13):**
+- `scripts/core/rail_route_choice_1403.lua`: small independent pure-Lua ranker for real observed native `LuaRailEnd.get_rail_extensions("rail")` results. Requires original frontier unit identity and finite numeric rail positions/directions, eliminates duplicate, stationary, wrong-frontier and non-progressing candidates, uses deterministic ordering, examines at most 32 input choices and retains at most 3. Does **not** create ghosts, spend rail inventory, or build curves.
+- `rail_track_frontier_0836.lua` now calls this ranker on the verified existing rail end. The original straight-east request remains the only executable physical rail plan; options are read-only diagnostic intent. Selecting or storing a curve is **not** yet construction.
+- `movement_controller.lua` now splits only an authenticated original 0338 Magos railway build/source trip into bounded visible 18-tile waypoints even with its high physical-construction priority. Ordinary construction and higher-priority emergency tasks retain their existing pathing policy. Waypoints continue to be validated by the original live rail, item, source and movement ownership predicates.
+- `tests/unit/rail_route_choice_1403.lua` is attached to the existing `tests/unit/rail_track_frontier_0836.lua` fixture. It exercises deterministic choices, wrong rail IDs, duplicate/invalid positions, backwards targets, infinite/NaN limits and large candidate lists. The original `rail_expedition_transit_1401.lua` adds source/build route chunking assertions.
+
+**Verification:** The standalone `rail_route_choice_1403.lua` Lua regression **was executed locally with TeX Lua 5.3 and passed**; the exact committed file lengths were checked against locally tested source. This is not native Factorio or a claim that all repository fixtures passed. All complete source/unit tests and Factorio 2.1.24 runtime scenarios remain the required next acceptance gates.
+
+**Unresolved route planning:** Native rail extensions from an *existing* rail do not themselves provide global terrain A* over future unbuilt track. For the first physical bend, extend 0338 paid request validation, the original receipt's native identity, 0836's per-segment geometry ledger, successor connection proof and the three-way movement permission together. Do not relax the original rail ledger or claim a train route from coordinates alone. Future railway parties may leave command radius only with a separate, authenticated delegated rail work writ and original physical custody; none is issued yet.
