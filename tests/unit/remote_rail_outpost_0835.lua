@@ -317,3 +317,6 @@ assert(rejected.acted==0 and rejected.failed==0
   and pair.construction_request==nil and qty.rail==698,
   "broker bypassed real railway technology prerequisites")
 print("[remote-rail-broker-1064] PASS autonomous budgeted survey, physical builder receipt, no duplicate credit, missing-technology refusal")
+-- Verify the separate station/outpost architect remains read-only and
+-- cannot authorize train, rail, chest, belt or inserter construction.
+dofile("tests/unit/rail_outpost_layout_1404.lua")
