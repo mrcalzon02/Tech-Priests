@@ -201,8 +201,29 @@ local function player_near(surface, position, radius)
   end
   return false
 end
-local function route_chunk_exempt(reason, opts)
+local function route_chunk_exempt(pair, reason, opts)
   if opts and (opts.no_ground_waypoint == true or opts.corridor_waypoint == true) then return true end
+  -- High-priority 0338 builds normally skip visible short-waypoint routing.
+  -- A genuine original Magos rail journey can exceed 600 tiles; retain the
+  -- verified 0836 physical rail corridor but split it into bounded 18-tile
+  -- commands, rather than issuing one expensive wilderness-length path.
+  -- Never change other emergency/high-priority task movement.
+  local mission=pair and pair.remote_rail_outpost_0835
+  local task=pair and pair.construction_task_0338
+  local pending=mission and mission.pending_rail_0836
+  if opts and opts.owner=="construction-planner-0338"
+    and (reason=="construction-site-standoff-0338"
+      or reason=="construction-source-0338")
+    and mission.status=="building-physical-rail"
+    and pending and task
+    and task.request_value==pending.request
+    and pair.construction_request==pending.request
+    and task.request_field=="construction_request"
+    and task.site_reason=="remote-rail-physical-frontier-0836"
+    and task.item_name=="rail" and task.entity_name=="straight-rail"
+    and task.creative_build~=true then
+    return false
+  end
   -- Returning or recovering priests need *shorter* pathfinder segments, not
   -- an exemption from the waypoint system. Bounds exemptions still apply to
   -- the underlying request but do not disable safe route segmentation.
@@ -211,7 +232,7 @@ local function route_chunk_exempt(reason, opts)
 end
 local function plan_visible_ground_segment(pair, destination, reason, opts)
   if not (pair and valid(pair.priest) and valid(pair.station) and destination) then return destination, opts end
-  if route_chunk_exempt(reason, opts) then return destination, opts end
+  if route_chunk_exempt(pair, reason, opts) then return destination, opts end
   local distance_sq = dist_sq(pair.priest.position, destination) or 0
   local maximum = M.visible_ground_segment
   if distance_sq <= maximum * maximum then return destination, opts end
