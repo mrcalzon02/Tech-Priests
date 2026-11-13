@@ -46,9 +46,9 @@ local function first_station(entity)
     return false
   end
   local tp=storage and storage.tech_priests
-  local pairs=tp and tp.pairs_by_station
-  if type(pairs)=="table" then
-    for _,pair in pairs(pairs)do
+  local pair_map=tp and tp.pairs_by_station
+  if type(pair_map)=="table" then
+    for _,pair in pairs(pair_map)do
       if pair and pair.station and pair.station.valid then return false end
     end
   end
