@@ -496,9 +496,25 @@ segment=driver_source.split("def run_robot_cargo_reload_1381(",1)[1].split(
 command=module.robot_saveable_player_command(
     pathlib.Path("factorio"),pathlib.Path("mods"),
     pathlib.Path("scenario-initial.zip"),31900)
-assert command==["factorio","--mod-directory","mods","--disable-audio",
-                 "--fullscreen=false","--window-size","800x600",
-                 "--load-game","scenario-initial.zip"]
+assert command==(["factorio","--mod-directory","mods"]
+                 + (["--force-opengl"] if module.os.name == "nt" else [])
+                 + ["--disable-audio","--fullscreen=false","--window-size",
+                    "800x600","--load-game","scenario-initial.zip"])
+assert 'graphics = ["--force-opengl"] if os.name == "nt" else []' in driver_source
+assert module.native_gui_startup_failure_1381(
+    "D3D11_ERROR DXGI_ERROR_NOT_CURRENTLY_AVAILABLE") == "windows-session-graphics-unavailable"
+assert module.native_gui_startup_failure_1381(
+    "Error Util.cpp:95: Failed to enumerate adapter output.") == "windows-session-graphics-unavailable"
+assert module.native_gui_startup_failure_1381(
+    "Steam requires game restart, restarting...") == "steam-relaunch-lost-arguments"
+assert module.native_gui_startup_failure_1381(
+    "OpenGL: Failed to create rendering context") == "opengl-renderer-unavailable"
+assert module.native_gui_startup_failure_1381(
+    "Error SteamContextInterface.cpp:60: Steam API could not be initialized") is None
+assert module.native_gui_startup_failure_1381(
+    "[TP-AUTONOMOUS-ROBOT-1380] NATIVE_CARGO_SAVE_REQUESTED") is None
+assert "native_first_fatal_diagnostic" in segment
+assert "real GUI failed before physical ore:" in segment
 assert "--until-tick" not in command
 for unsafe_ticks in (25500,32000,72060):
     try: module.robot_saveable_player_command(

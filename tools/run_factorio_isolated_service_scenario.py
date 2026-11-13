@@ -573,7 +573,12 @@ def robot_saveable_player_command(factorio: pathlib.Path, mods: pathlib.Path,
     """
     if ticks != 31900:
         raise ValueError("1381 first-stage native custody bound changed")
-    return [str(factorio), "--mod-directory", str(mods),
+    # The Windows runner service has no accessible DXGI outputs (native run
+    # 43450436526, DXGI_ERROR_NOT_CURRENTLY_AVAILABLE). Factorio officially
+    # supports an alternate OpenGL renderer: exercise it only for the isolated
+    # real-player cargo-save process, never for the protected 123k benchmark.
+    graphics = ["--force-opengl"] if os.name == "nt" else []
+    return [str(factorio), "--mod-directory", str(mods), *graphics,
             "--disable-audio", "--fullscreen=false",
             "--window-size", "800x600", "--load-game", str(save)]
 
@@ -707,6 +712,25 @@ def factorio_1381_save_roots(factorio: pathlib.Path,
     return roots
 
 
+def native_gui_startup_failure_1381(log: str) -> str | None:
+    """Identify fatal native startup without confusing Steam API warnings with failure.
+
+    In the last Windows service runner, graphics failed at 0.1s but a modal
+    notice kept the engine subprocess alive for the full 15-minute limit.
+    Do not consume engine minutes after an observed fatal startup; retain log.
+    """
+    if "DXGI_ERROR_NOT_CURRENTLY_AVAILABLE" in log or "Failed to enumerate adapter output." in log:
+        return "windows-session-graphics-unavailable"
+    if "Steam requires game restart, restarting..." in log:
+        return "steam-relaunch-lost-arguments"
+    if ("OpenGL" in log and ("Failed to create" in log or "Unable to" in log
+                             or "failed to initialize" in log)):
+        return "opengl-renderer-unavailable"
+    if "Error Util.cpp:" in log:
+        return "fatal-engine-initialization"
+    return None
+
+
 def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                                 initial: pathlib.Path, output: pathlib.Path,
                                 timeout: int, engine_version: str,
@@ -766,6 +790,12 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                 first_exit = process.poll()
                 if first_exit is not None:
                     break
+                startup_failure = native_gui_startup_failure_1381(
+                    source_log.read_text(encoding="utf-8", errors="replace"))
+                if startup_failure is not None:
+                    out["native_first_fatal_diagnostic"] = startup_failure
+                    raise RuntimeError(
+                        "real GUI failed before physical ore: " + startup_failure)
                 for folder in roots:
                     native = folder/name
                     if not native.is_file() or native.stat().st_size <= 2048:
