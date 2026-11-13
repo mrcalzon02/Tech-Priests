@@ -196,6 +196,10 @@ assert 'fresh.is_in_construction_range(s.ore.position)==true' in fixture
 assert 'last.built_entity==built_port' in fixture
 assert 'source_entity.mine{inventory=inventory}' in fixture
 assert 'root.roboport_expansion_goal_1076=' not in fixture
+assert 'NATIVE_UNCOVERED_ADMISSION_READBACK' in fixture
+assert 'if s.phase=="awaiting-native-strategy"' in fixture
+assert 's.uncovered_admission_probe=true' in fixture
+assert 'frontier.native_uncovered_ore_admission_1076,' in fixture
 print("PASS native 1380 counted original-grid frontier prerequisite")
 
 # Native 1380 CREATE failed on genuine generated fish in the enlarged solar

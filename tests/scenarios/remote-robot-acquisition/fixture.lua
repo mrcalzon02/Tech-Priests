@@ -338,6 +338,71 @@ local function pulse()
         " chain_status="..tostring(chain and chain.status)..
         " chain_need="..tostring(chain and chain.need))
     end
+    if s.phase=="awaiting-native-strategy"
+      and s.first_chart_tick and not s.uncovered_admission_probe
+      and game.tick>=s.first_chart_tick+60 then
+      -- DIAGNOSTIC ONLY, once per genuine chart. Inspect the same original
+      -- Senior station-radius candidate geometry as production 0259 and
+      -- 1076's read-only physical admission; never call a plan executor,
+      -- assign a goal, chart a chunk or change a physical item.
+      s.uncovered_admission_probe=true
+      local sr=tonumber(senior.radius or senior.scan_radius
+        or senior.station_radius)
+      local h=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+      local cap=h and h.direct_capacity_remaining(senior)
+      local frontier=rawget(_G,"TechPriestsRoboportExpansionFrontier1076")
+      local candidates=0
+      local last_reason="no-senior-radius-site"
+      local first_site
+      for _,delta in ipairs({
+        {-6,0},{6,0},{0,-6},{0,6},
+        {-9,0},{9,0},{0,-9},{0,9}})do
+        local site={x=math.floor(s.ore.position.x+delta[1]+0.5),
+          y=math.floor(s.ore.position.y+delta[2]+0.5)}
+        local dx=senior.station.position.x-site.x
+        local dy=senior.station.position.y-site.y
+        if sr and dx*dx+dy*dy<=sr*sr
+          and s.surface.can_place_entity{
+            name="intermediate-cogitator-station",position=site,
+            force=root.station.force}==true then
+          candidates=candidates+1
+          first_site=first_site or site
+          if frontier and type(
+              frontier.native_uncovered_ore_admission_1076)=="function"then
+            local ok,approved,why=pcall(
+              frontier.native_uncovered_ore_admission_1076,
+              root,s.ore.position,site)
+            if ok and approved==true then
+              last_reason="original-grid-stocked-admitted"
+              break
+            end
+            last_reason=ok and tostring(why)
+              or "uncovered-admission-error:"..tostring(approved)
+          else
+            last_reason="1076-admission-unavailable"
+          end
+        end
+      end
+      emit("NATIVE_UNCOVERED_ADMISSION_READBACK tick="..game.tick..
+        " ore_x="..tostring(s.ore.position.x)..
+        " ore_y="..tostring(s.ore.position.y)..
+        " senior_x="..tostring(senior.station.position.x)..
+        " senior_y="..tostring(senior.station.position.y)..
+        " senior_radius="..tostring(sr)..
+        " direct_capacity="..tostring(cap)..
+        " candidate_sites="..candidates..
+        " first_site_x="..tostring(first_site and first_site.x)..
+        " first_site_y="..tostring(first_site and first_site.y)..
+        " admission="..last_reason..
+        " pole_stock_magos="..tostring(item_count(root.station,
+          "medium-electric-pole"))..
+        " port_stock_magos="..tostring(item_count(root.station,
+          "roboport"))..
+        " pole_stock_senior="..tostring(item_count(senior.station,
+          "medium-electric-pole"))..
+        " port_stock_senior="..tostring(item_count(senior.station,
+          "roboport")))
+    end
     if s.phase=="awaiting-native-strategy" then
       local goal=root.roboport_expansion_goal_1076
       if goal then
