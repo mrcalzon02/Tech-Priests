@@ -209,6 +209,11 @@ end
 function M.propose_outpost_capacity_1404(pair, measurements)
   if not(valid(pair and pair.station) and valid(pair.priest)
     and pair.station.name=="planetary-magos-cogitator-station"
+    and pair.priest.force==pair.station.force
+    and pair.priest.surface==pair.station.surface
+    and storage and storage.tech_priests
+    and type(storage.tech_priests.pairs_by_station)=="table"
+    and storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair
     and type(measurements)=="table")then
     return nil,"outpost-magos-or-measurements-missing"
   end
