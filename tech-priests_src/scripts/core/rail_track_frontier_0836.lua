@@ -778,6 +778,95 @@ function M.verify_pending(pair)
   -- producing the engine rail; no duplicate inventory mutation here.
   return true,"physical-rail-segment-verified"
 end
+-- Native Factorio 2.1 railway planning probe. Only a verified, counted
+-- frontier rail can be inspected. Its LuaRailEnd extensions are the engine's
+-- authoritative NEXT geometry (including curves), not ghosts or build writs.
+-- This is a bounded read-only snapshot for later route search; the original
+-- straight-east 0836 request/0338 custody remains the ONLY live executor.
+function M.inspect_native_rail_extensions_0836(pair)
+  local mission=pair and pair.remote_rail_outpost_0835
+  if not eligible(pair,mission)then return nil,"no-original-magos-mission"end
+  local route=mission.rail_frontier_0836
+  if not(route and type(route.segment)=="number" and route.segment>=1
+    and route.segment==math.floor(route.segment)
+    and route.segment<=M.max_segments
+    and type(route.built_units)=="table"
+    and #route.built_units==route.segment
+    and type(route.last_position)=="table"
+    and type(route.direction)=="number")then
+    return nil,"no-counted-native-rail-frontier"
+  end
+  local last=track_at(pair,route.last_position,route.direction)
+  if not(last and last.unit_number==route.built_units[route.segment])
+    then return nil,"native-frontier-identity-missing" end
+  if type(last.get_rail_end)~="function"
+    or not(defines and defines.rail_direction)then
+    return nil,"native-rail-end-api-unavailable" end
+  local options,seen={},{}
+  local api_ends=0
+  for _,direction in ipairs({defines.rail_direction.front,
+      defines.rail_direction.back})do
+    if direction~=nil then
+      local ok,rail_end=pcall(function()return last.get_rail_end(direction)end)
+      if ok and rail_end and rail_end.valid
+        and type(rail_end.get_rail_extensions)=="function"then
+        local read,extensions=pcall(function()
+          return rail_end.get_rail_extensions("rail") end)
+        if read and type(extensions)=="table"then
+          api_ends=api_ends+1
+          -- Bounding this read avoids accidental unbounded work from
+          -- external rail planners. Only primitive identifiers are retained.
+          for i=1,math.min(#extensions,16)do
+            local ext=extensions[i]
+            local point=ext and ext.position
+            local name=ext and ext.name
+            local d=ext and ext.direction
+            if type(name)=="string" and type(point)=="table"
+              and type(point.x)=="number"and type(point.y)=="number"
+              and type(d)=="number"
+              and prototypes and prototypes.entity
+              and prototypes.entity[name] then
+              local key=name..":"..tostring(point.x)..":"..
+                tostring(point.y)..":"..tostring(d)
+              if not seen[key] then
+                seen[key]=true
+                local can,placeable=pcall(function()
+                  return pair.station.surface.can_place_entity{
+                    name=name,position=point,direction=d,
+                    force=pair.station.force}end)
+                if can and placeable==true then
+                  local dx=point.x-mission.target.x
+                  local dy=point.y-mission.target.y
+                  options[#options+1]={
+                    name=name,position={x=point.x,y=point.y},
+                    direction=d,from_rail_unit=last.unit_number,
+                    rail_end_direction=direction,
+                    distance_sq=dx*dx+dy*dy,
+                  }
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+  if api_ends==0 then return nil,"native-rail-extensions-unavailable"end
+  table.sort(options,function(a,b)
+    if a.distance_sq~=b.distance_sq then
+      return a.distance_sq<b.distance_sq end
+    if a.name~=b.name then return a.name<b.name end
+    if a.position.x~=b.position.x then
+      return a.position.x<b.position.x end
+    return a.position.y<b.position.y
+  end)
+  -- Return at most three safe to DISPLAY and evaluate, never to construct.
+  local selected={}
+  for i=1,math.min(#options,3)do selected[i]=options[i]end
+  return selected,#options>0 and "native-rail-options-observed"
+    or "native-rail-options-obstructed"
+end
+
 -- First rolling-stock transaction. Exactly ONE original locomotive is
 -- requested through 0338 after the complete native-rail identity/graph audit.
 -- This is never permission to create stock, a train, or Magos passenger state.
