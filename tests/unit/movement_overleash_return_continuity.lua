@@ -714,3 +714,7 @@ do
   check(bag.held==1,"movement regression mutated engine-owned ore")
 end
 print("[movement-resource-courier-0953] PASS canonical movement, leash handoff, counted cargo, combat, identity and hierarchy refusal")
+-- The physical railway expedition is the only new authorized exception to
+-- the usual stationary Cogitator movement envelope. Exercise it on the
+-- existing overleash regression entrypoint as well as standalone.
+dofile("tests/unit/rail_expedition_transit_1401.lua")
