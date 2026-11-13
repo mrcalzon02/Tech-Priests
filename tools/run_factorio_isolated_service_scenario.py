@@ -558,6 +558,24 @@ def rail_native_player_test_command(factorio: pathlib.Path, mods: pathlib.Path,
             "--test-save", str(save), "--test-ticks", str(ticks)]
 
 
+def robot_saveable_player_command(factorio: pathlib.Path, mods: pathlib.Path,
+                                  save: pathlib.Path, ticks: int) -> list[str]:
+    """Run actual single-player gameplay, with native save support, to a tick.
+
+    The previously genuine --test-save radar/player trial reached one real
+    ore held at tick 25500, but engine run 43435986297 produced no save ZIP:
+    its sandbox executes the game but does not persist game.auto_save.
+    Use the EXISTING headful Steam runner's real single-player load instead.
+    Never create a player or chart a resource from fixture/driver code.
+    --until-tick is a native Factorio command-line exit boundary, not a
+    scripted save or alternative cargo accounting path.
+    """
+    return [str(factorio), "--mod-directory", str(mods),
+            "--disable-audio", "--fullscreen=false",
+            "--window-size", "800x600", "--load-game", str(save),
+            "--until-tick", str(ticks)]
+
+
 def rail_connected_smoke_verdict(exit_code: int, log: str) -> bool:
     """Accept ONLY two original physical counted connected rails, never a plan."""
     prefix = "[TP-REMOTE-RAIL-TEST] "
@@ -704,13 +722,13 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
            "native_server_process_wall_minutes":None,
            "native_reload_process_wall_minutes":None,
            "native_factorio_process_wall_minutes":None}
-    # A no-player --start-server does not process the same native radar
-    # chart lifecycle as the previously accepted --test-save player fixture:
-    # real 43420567231 reached tick 30000 with radar powered but ore uncharted.
-    # Reuse the SAME genuine native-player test-save mode for the first process,
-    # allow time for the actual natural-ore physical pickup while stopping
-    # before observed tick-31970 Magos deposit, and
-    # require a CRC-verified auto-save containing the actual first-hop cargo.
+    # A no-player --start-server leaves genuine radar ore uncharted, while
+    # --test-save generates a real player and ore but did NOT persist the
+    # requested native autosave in engine run 43435986297. The existing
+    # headful Steam runner can run the true --load-game single-player mode
+    # with a native --until-tick boundary. Retain the same generated ore,
+    # original physical movement and pre-delivery checkpoint at tick 31900.
+    # Only a CRC-verified engine save permits the independent second process.
     roots = factorio_1381_save_roots(factorio)
     started = time.monotonic()
     process = None
@@ -724,7 +742,7 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                 old.unlink()
         with source_log.open("w",encoding="utf-8") as handle:
             process = subprocess.Popen(
-                rail_native_player_test_command(factorio,mods,initial,31900),
+                robot_saveable_player_command(factorio,mods,initial,31900),
                 stdout=handle,stderr=subprocess.STDOUT)
             try:
                 first_exit = process.wait(timeout=timeout)
