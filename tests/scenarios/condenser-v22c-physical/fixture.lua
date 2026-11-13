@@ -7,11 +7,14 @@ local PREFIX="[TP-CONDENSER-V22C-PHYSICAL] "
 local KEY="ci_condenser_v22c_physical"
 local CONDENSER="tech-priests-atmospheric-water-condenser"
 local RECIPE="tech-priests-atmospheric-water-condensing"
+-- Independent V22C flange-to-Factorio tile registration, authored from the
+-- four real sprite views. These world targets are NOT calculated from the
+-- engine's reported fluidbox: that would simply restate the bug as a pass.
 local DIRECTIONS={
-  {name="north", direction=defines.direction.north,x=0,y=0},
-  {name="east", direction=defines.direction.east,x=18,y=0},
-  {name="south", direction=defines.direction.south,x=0,y=18},
-  {name="west", direction=defines.direction.west,x=18,y=18},
+  {name="north", direction=defines.direction.north,x=0,y=0,port_x=1.5,port_y=0.5},
+  {name="east", direction=defines.direction.east,x=18,y=0,port_x=17.5,port_y=1.5},
+  {name="south", direction=defines.direction.south,x=0,y=18,port_x=-1.5,port_y=17.5},
+  {name="west", direction=defines.direction.west,x=18,y=18,port_x=18.5,port_y=16.5},
 }
 local function emit(message) log(PREFIX..message) end
 local function fail(message) error(PREFIX.."FAIL "..message,0) end
@@ -72,18 +75,25 @@ local function run()
       and not c.target) then
       fail("PRECONNECT_OUTPUT_POINT_"..spec.name)
     end
-    -- The intended output is on the rotated exterior, never inside the 2x2.
+    -- Release must fail if the actual fluidbox is opposite the visible
+    -- Blender flange. Engine-reported connectivity alone is insufficient.
+    if not(near(p.x,spec.port_x) and near(p.y,spec.port_y)) then
+      fail("VISUAL_FLANGE_PORT_MISMATCH_"..spec.name..
+        " expected="..spec.port_x..","..spec.port_y..
+        " native="..p.x..","..p.y)
+    end
     if math.abs(p.x-center.x)<0.75 and
        math.abs(p.y-center.y)<0.75 then
       fail("OUTPUT_PIPE_INSIDE_MACHINE_"..spec.name)
     end
+    local authored={x=spec.port_x,y=spec.port_y}
     if not surface.can_place_entity{
-      name="pipe",position=p,force=force
+      name="pipe",position=authored,force=force
     } then
-      fail("OUTPUT_PIPE_SITE_OCCUPIED_"..spec.name.."_"..p.x.."_"..p.y)
+      fail("OUTPUT_PIPE_SITE_OCCUPIED_"..spec.name.."_"..authored.x.."_"..authored.y)
     end
     local pipe=surface.create_entity{
-      name="pipe",position=p,force=force,raise_built=false
+      name="pipe",position=authored,force=force,raise_built=false
     }
     if not(pipe and pipe.valid) then
       fail("NATIVE_PIPE_NOT_CREATED_"..spec.name)
