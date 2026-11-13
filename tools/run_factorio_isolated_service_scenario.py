@@ -743,6 +743,11 @@ def main() -> int:
                 contents, tick_count))
             passed = True
         except ValueError as error:
+            # A previously accepted station milestone must not turn a
+            # missing native ore receipt into an accepted end-to-end result.
+            native["accepted"] = False
+            native["natural_ore_return_accepted"] = False
+            native["ore_items_delivered_per_1000_ticks"] = None
             native["blocker"] = str(error)
             passed = False
         (output / "native-autonomous-robot-result.json").write_text(
