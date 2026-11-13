@@ -27,4 +27,10 @@ local empty,reason=M.rank(f,raw,target,{max_input=0})
 assert(#empty==0 and reason=="no-progressive-rail-extension-1403")
 local one=M.rank(f,raw,target,{max_output=1})
 assert(#one==1 and one[1].name=="curved-rail-a")
+local nonfinite=M.rank(f,raw,target,{max_input=0/0,max_output=math.huge})
+assert(#nonfinite==2,"nonfinite budget may not break bounded planning")
+local huge={}
+for i=1,500 do huge[i]=raw[1] end
+local bounded_options=M.rank(f,huge,target)
+assert(#bounded_options==1,"large native candidate list not bounded/deduplicated")
 print("[rail-route-choice-1403] PASS progressive native geometry, stable ranking, no backward/foreign/invalid rails")
