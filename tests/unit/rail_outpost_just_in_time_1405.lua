@@ -136,4 +136,29 @@ check(reason=="planning-interval-not-due",
   "missing station immediately triggered plan spam")
 check(not JIT.native_removed(mission,99999,385,false),
   "foreign or unobserved entity invalidated outpost history")
+-- One physical inserter may not satisfy both the feeder and loader
+-- roles simply because the planner reaches the next similarly named stage.
+local m2={root_station_unit=22,force_index=1,surface_index=2,
+  target={x=300,y=200},
+  outpost_jit_1405={stage=8,accepted_count=0,
+    accepted_units={},accepted_history={
+      [7]={count=1,units={[600]=true}}},
+    ticket=nil,last_world_revision=0,next_think_tick=0}}
+local shared={valid=true,name="inserter",unit_number=600,
+  force={index=1},surface={index=2},position={x=300,y=200}}
+local denied,reason=JIT.next(m2,layout,{
+  world_revision=0,native_role="load-inserters",
+  native_entity=shared,role_verified=true},400)
+check(denied==nil and reason=="waiting-native-next-object-preflight"
+  and m2.outpost_jit_1405.accepted_count==0,
+  "same physical inserter was double-counted in two loading stages")
+local alternate={valid=true,name="inserter",unit_number=601,
+  force={index=1},surface={index=2},position={x=301,y=201}}
+local adopted,reason=JIT.next(m2,layout,{
+  world_revision=1,native_role="load-inserters",
+  native_entity=alternate,role_verified=true},401)
+check(adopted==nil
+  and reason=="native-object-accepted-rethink-after-interval"
+  and m2.outpost_jit_1405.accepted_count==1,
+  "distinct valid physical loading inserter could not be adopted")
 print("[rail-outpost-jit-1405] PASS one object per stage, no idle planning, change revision, player adoption, physical custody, native loss rollback")
