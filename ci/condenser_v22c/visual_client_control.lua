@@ -116,7 +116,7 @@ script.on_nth_tick(60,function(event)
     show_entity_info=false,
     anti_alias=true,
     force_render=true,
-    daytime=0.5,
+    daytime=0.0, -- noon; 0.5 is midnight and hides the approved piston/mist detail
     hide_clouds=true,
     hide_fog=true
   }
