@@ -4,6 +4,7 @@
 -- synthesize rails, train movement, inventory or a station at the destination.
 local Frontier=require("scripts.core.rail_track_frontier_0836")
 local OutpostLayout1404=require("scripts.core.rail_outpost_layout_1404")
+local JustInTime1405=require("scripts.core.rail_outpost_just_in_time_1405")
 local M={version="0.1.676.0835",scan_interval=900,
   local_radius=64,remote_min=192,remote_max=1024,
   stock_floor=4,resource_item="iron-ore",
@@ -225,6 +226,27 @@ function M.propose_outpost_capacity_1404(pair, measurements)
     and type(mission.item)=="string")then
     return nil,"outpost-original-rail-mission-unavailable"
   end
+  -- A capacity estimate is a planning *input*, not a repeated work order.
+  -- While exactly one object is pending, do not run any new sizing scan.
+  -- Relevant world changes become a dirty flag until current custody ends.
+  local stored=mission.outpost_layout_1404
+  local revision=measurements.observation_revision
+  if revision~=nil and (type(revision)~="number"
+      or revision<0 or revision~=math.floor(revision))then
+    return nil,"invalid-capacity-observation-revision"
+  end
+  local prior=mission.outpost_layout_revision_1404 or 0
+  local changed=revision~=nil and revision>prior
+  local pending=mission.outpost_jit_1405
+    and mission.outpost_jit_1405.ticket
+  if stored and (pending or pair.construction_task_0338
+      or pair.construction_custody_0338)then
+    if changed then mission.outpost_capacity_dirty_1404=true end
+    return stored,"current-physical-object-must-finish"
+  end
+  if stored and not changed and not mission.outpost_capacity_dirty_1404 then
+    return stored,"unchanged-capacity-no-recomputation"
+  end
   local proto_item=prototypes and prototypes.item
     and prototypes.item[mission.item]
   local entities=prototypes and prototypes.entity
@@ -297,9 +319,181 @@ function M.propose_outpost_capacity_1404(pair, measurements)
   -- One bounded primitive snapshot per mission. It is NOT a progress
   -- receipt: railway and outpost physical commissioning remain unverified.
   mission.outpost_layout_1404=plan
+  mission.outpost_layout_revision_1404=revision or prior
+  mission.outpost_capacity_dirty_1404=nil
   mission.outpost_layout_status_1404="provisional-capacity-layout"
   mission.outpost_layout_refusal_1404=nil
   return plan,why
+end
+
+-- Just-in-time outpost planning. An exact original mission, a usable
+-- capacity estimate, and one native site candidate are necessary to offer
+-- ONE non-physical object intent. No pending ghost or item may be created.
+function M.propose_next_outpost_object_1405(pair,observation)
+  if not(valid(pair and pair.station) and valid(pair.priest)
+    and pair.station.name=="planetary-magos-cogitator-station"
+    and pair.priest.force==pair.station.force
+    and pair.priest.surface==pair.station.surface
+    and storage and storage.tech_priests
+    and storage.tech_priests.pairs_by_station
+    and storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair
+    and type(observation)=="table")then
+    return nil,"outpost-planner-unregistered-magos"
+  end
+  local mission=pair.remote_rail_outpost_0835
+  if not(mission and mission.root_station_unit==pair.station.unit_number
+    and mission.force_index==pair.station.force.index
+    and mission.surface_index==pair.station.surface.index
+    and mission.status=="rail-track-established"
+    and mission.outpost_layout_1404)then
+    return nil,"outpost-planning-awaiting-physical-rail-and-capacity"
+  end
+  local current=JustInTime1405.current_stage(mission)
+  local given=observation.native_entity
+  local verified=false
+  if given and current and given.valid and given.name==current.name
+    and given.force==pair.station.force
+    and given.surface==pair.station.surface
+    and given.position then
+    -- Do not count an arbitrary claimant or a ghost with matching name.
+    -- Re-query ONE exact native location, only on a material completion
+    -- event or explicitly supplied observation (not on every broker tick).
+    local ok,found=pcall(function()
+      return pair.station.surface.find_entities_filtered{
+        name=given.name,position=given.position,
+        force=pair.station.force,radius=0.3,limit=4}
+    end)
+    if ok and type(found)=="table"then
+      for _,entity in ipairs(found)do
+        if entity==given and entity.unit_number==given.unit_number then
+          verified=true;break
+        end
+      end
+    end
+    if verified and current.key=="outpost-stop" then
+      local rail=given.connected_rail
+      verified=rail and rail.valid and rail.force==given.force
+        and rail.surface==given.surface or false
+    elseif verified and current.key=="command-anchor"then
+      local child=storage.tech_priests.pairs_by_station[given.unit_number]
+      verified=child and child.station==given and valid(child.priest)
+        or false
+    elseif verified and current.key=="cargo-wagons"then
+      verified=given.train and given.train.valid or false
+    end
+  end
+  local candidate=observation.candidate
+  local prepared=nil
+  local state=mission.outpost_jit_1405
+  if candidate and current and not(state and state.ticket)then
+    local proto=prototypes and prototypes.item
+      and prototypes.item[candidate.item_name or current.name]
+    local named=proto and proto.place_result
+    local native_name=named and named.name
+    local point=candidate.position
+    if candidate.role==current.key
+      and candidate.entity_name==current.name
+      and native_name==current.name
+      and point and type(point.x)=="number"
+      and type(point.y)=="number"then
+      local clear,allowed=pcall(function()
+        return pair.station.surface.can_place_entity{
+          name=current.name,position=point,
+          direction=candidate.direction or 0,
+          force=pair.station.force}
+      end)
+      if clear and allowed==true then
+        local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+        local counted,available=false,0
+        if stock and type(stock.generic_item_count)=="function"then
+          counted,available=pcall(stock.generic_item_count,pair,
+            candidate.item_name or current.name)
+        end
+        prepared={
+          role=current.key,entity_name=current.name,
+          item_name=candidate.item_name or current.name,
+          position={x=point.x,y=point.y},
+          direction=candidate.direction,
+          native_site_verified=true,
+          real_item_available=counted and
+            type(available)=="number" and available>=1,
+        }
+      end
+    end
+  end
+  -- Every cycle sees the current mission's revision, not an external
+  -- caller-provided optimistic revision. A built object can be adopted at
+  -- an alternative valid native site without invalidating real cargo.
+  return JustInTime1405.next(mission,mission.outpost_layout_1404,{
+    world_revision=mission.outpost_world_revision_1405 or 0,
+    stage_required_objects=observation.stage_required_objects,
+    native_role=current and current.key,
+    native_entity=verified and given or nil,
+    role_verified=verified==true,
+    physical_custody_active=pair.construction_custody_0338~=nil
+      or pair.construction_task_0338~=nil,
+    candidate=prepared,
+  },tick())
+end
+
+-- Player and robot construction changes invalidate virtual intent by event.
+-- This is O(registered Magos) only at a physical mutation, NEVER a tick scan.
+-- A changed site cannot erase another executor's physical item custody.
+function M.observe_relevant_world_change_1405(event)
+  local entity=event and (event.created_entity or event.entity
+    or event.destination)
+  local tp=storage and storage.tech_priests
+  if not(entity and entity.position and entity.force and entity.surface
+    and tp and tp.pairs_by_station
+    and type(entity.position.x)=="number"
+    and type(entity.position.y)=="number")then return 0 end
+  if entity.name=="entity-ghost" then return 0 end
+  local count=0
+  for _,pair in pairs(tp.pairs_by_station)do
+    local mission=pair and pair.remote_rail_outpost_0835
+    if mission and mission.outpost_layout_1404
+      and valid(pair.station) and valid(pair.priest)
+      and pair.station.name=="planetary-magos-cogitator-station"
+      and mission.root_station_unit==pair.station.unit_number
+      and mission.status=="rail-track-established"
+      and pair.station.force==entity.force
+      and pair.station.surface==entity.surface
+      and mission.force_index==entity.force.index
+      and mission.surface_index==entity.surface.index then
+      local target=mission.target
+      local dx=target.x-entity.position.x
+      local dy=target.y-entity.position.y
+      local stage=JustInTime1405.current_stage(mission)
+      local near_outpost=dx*dx+dy*dy<=96*96
+      local pending=mission.outpost_jit_1405
+        and mission.outpost_jit_1405.ticket
+      local close_ticket=pending and
+        (pending.position.x-entity.position.x)^2
+        +(pending.position.y-entity.position.y)^2<=16*16
+      local near_home=stage and stage.key=="home-unloaders"
+        and (pair.station.position.x-entity.position.x)^2
+          +(pair.station.position.y-entity.position.y)^2<=64*64
+      if near_outpost or close_ticket or near_home then
+        local interested=stage and entity.name==stage.name
+        if interested or close_ticket then
+          mission.outpost_world_revision_1405=
+            (mission.outpost_world_revision_1405 or 0)+1
+          count=count+1
+          if entity.valid then
+            -- Existing native callback only; never create a ghost or a
+            -- replacement construction request in the event handler.
+            M.propose_next_outpost_object_1405(pair,{
+              native_entity=entity})
+          elseif entity.unit_number then
+            JustInTime1405.native_removed(mission,entity.unit_number,
+              tick(),pair.construction_custody_0338~=nil
+                or pair.construction_task_0338~=nil)
+          end
+        end
+      end
+    end
+  end
+  return count
 end
 
 -- Run the existing strategic observer and existing 0338 rail constructor
