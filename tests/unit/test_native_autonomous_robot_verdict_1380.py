@@ -15,6 +15,9 @@ physical=(prefix+"NATIVE_PHYSICAL_SOURCE tick=100 seed=1380001 magos=10 "
 selected=(prefix+"PASS AUTONOMOUS_0259_SELECTED tick=1300 original_magos=10 "
     "original_senior=20 ore=nil original_station_stock=1 "
     "real_power=true charted=true real_robots=true")
+spare_stage=(prefix+"NATIVE_SPARE_ROBOPORT_PRESTAGE tick=1300 "
+    "original_magos=10 original_senior=20 magos_held=3 "
+    "senior_held=2 senior_available=1 source_total=6")
 extension=(prefix+"PASS NATIVE_PHYSICAL_FRONTIER_EXTENSION tick=1450 "
     "original_magos=10 original_senior=20 original_port=30 built_port=31 "
     "poles_built=2 ports_built=1 pole_debit=2 port_debit=1 "
@@ -38,6 +41,9 @@ coverage_denied=(prefix+"PASS NATIVE_COVERAGELESS_REFUSAL tick=4450 "
 coverage_recovered=(prefix+"PASS NATIVE_COVERAGELESS_RECOVERY tick=4450 "
     "original_port=30 restored_port=32 port_debit=1 held=0 "
     "electric_grid=original logistic_network=merged original_mission=retained")
+spare_return=(prefix+"PASS NATIVE_SPARE_ROBOPORT_RECOVERY tick=4450 "
+    "original_magos=10 original_senior=20 magos_returned=3 "
+    "senior_returned=2 empty_holds=true total_restituted=5")
 material_cut=(prefix+"NATIVE_MATERIALLESS_CUT tick=4450 original_magos=10 "
     "original_senior=20 provider=30 station_held=1 station_stock=0 "
     "robots_still_held=3")
@@ -53,9 +59,9 @@ done=(prefix+"PASS autonomous original 0259 selected and physical "
     "magos_priest=11 senior=20 senior_priest=21 intermediate=50 "
     "intermediate_priest=51 native_robot=60 material_delta=1 "
     "source_stock=0 ghost=0 ore_return_not_credited=true")
-sample="\n".join((physical,selected,extension,robot_cut,
+sample="\n".join((physical,selected,spare_stage,extension,robot_cut,
                   robot_denied,coverage_cut,robot_recovered,
-                  coverage_denied,coverage_recovered,material_cut,
+                  coverage_denied,coverage_recovered,spare_return,material_cut,
                   material_denied,material_recovered,event,done))
 report=module.verify_autonomous_robot_1380_log(0,sample)
 assert report["accepted"] is True
@@ -75,6 +81,10 @@ checks=[
     (0,sample.replace("material_delta=1","material_delta=0")),
     (0,sample.replace("source_stock=0","source_stock=1")),
     (0,sample.replace(extension+"\n","")),
+    (0,sample.replace(spare_stage+"\n","")),
+    (0,sample.replace(spare_return+"\n","")),
+    (0,sample.replace("magos_held=3","magos_held=2")),
+    (0,sample.replace("senior_returned=2","senior_returned=1")),
     (0,sample.replace(robot_cut+"\n","")),
     (0,sample.replace(robot_denied+"\n","")),
     (0,sample.replace(robot_recovered+"\n","")),
@@ -137,6 +147,13 @@ assert "s.robotless_hold=hold" in fixture
 assert "NATIVE_PRESTAGE_ROBOTS_NOT_DOCKED" in fixture
 assert "NATIVE_ROBOTLESS_PRESTAGE tick=" in fixture
 assert "NATIVE_PRESTAGED_ROBOT_CUSTODY_ORIGINAL_GRID_LOST" in fixture
+assert "NATIVE_SPARE_ROBOPORT_PRESTAGE tick=" in fixture
+assert "s.spare_port_magos=magos_spare" in fixture
+assert "s.spare_port_senior=senior_spare" in fixture
+assert 'senior_stock.remove{name="roboport",count=2}' in fixture
+assert 'magos_stock.remove{name="roboport",count=3}' in fixture
+assert "NATIVE_SPARE_ROBOPORT_RESTITUTION_OR_CONSERVATION_INVALID" in fixture
+assert "PASS NATIVE_SPARE_ROBOPORT_RECOVERY tick=" in fixture
 assert "NATIVE_COVERAGELESS_CUSTODY_OR_GREEN_INVALID" in fixture
 assert "NATIVE_COVERAGELESS_REFUSAL_OR_CUSTODY_INVALID" in fixture
 assert "NATIVE_COVERAGELESS_RESTORATION_NOT_COUNTED" in fixture
@@ -221,9 +238,9 @@ physical_supply=(prefix+"NATIVE_INITIAL_CONSTRUCTION_SUPPLY tick=100 "
 create_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore",
                       physical_supply,physical,bootstrap))
 benchmark_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore",
-                         selected,extension,robot_cut,robot_denied,
+                         selected,spare_stage,extension,robot_cut,robot_denied,
                          coverage_cut,robot_recovered,coverage_denied,
-                         coverage_recovered,material_cut,material_denied,
+                         coverage_recovered,spare_return,material_cut,material_denied,
                          material_recovered,event,done))
 assert module.verify_autonomous_robot_1380_process_logs(
     0,create_log,0,benchmark_log)["accepted"] is True

@@ -527,6 +527,44 @@ local function pulse()
           " original_magos="..s.magos.." original_senior="..s.senior..
           " ore="..tostring(s.ore.unit_number).." original_station_stock=1"..
           " real_power=true charted=true real_robots=true")
+        -- The previous native coverage-refusal attempt physically mined the
+        -- extended roboport, but another real port appeared at its site
+        -- during the 1,500-tick outage. Five ORIGINAL mined spare roboport
+        -- items were still available to the canonical 0338 builder. Escrow
+        -- those exact spare items now, BEFORE physical frontier dispatch,
+        -- leaving one original Senior-owned item for the genuine first
+        -- 1076/0338 extension. This isolates loss of COVERAGE from immediate
+        -- fully funded autonomous repair without altering production logic.
+        local magos_stock=root.station.get_inventory(defines.inventory.chest)
+        local senior_stock=senior.station.get_inventory(defines.inventory.chest)
+        if not(magos_stock and magos_stock.valid
+          and senior_stock and senior_stock.valid
+          and magos_stock.get_item_count("roboport")==3
+          and senior_stock.get_item_count("roboport")==3)then
+          fail("NATIVE_SPARE_ROBOPORT_ORIGINAL_STOCK_CHANGED")
+        end
+        local magos_spare=game.create_inventory(1)
+        local senior_spare=game.create_inventory(1)
+        if not(magos_spare and magos_spare.valid
+          and senior_spare and senior_spare.valid)then
+          fail("NATIVE_SPARE_ROBOPORT_HOLDS_UNAVAILABLE")
+        end
+        s.spare_port_magos=magos_spare
+        s.spare_port_senior=senior_spare
+        local mm=magos_stock.remove{name="roboport",count=3}
+        local sm=senior_stock.remove{name="roboport",count=2}
+        local mc=magos_spare.insert{name="roboport",count=mm}
+        local sc=senior_spare.insert{name="roboport",count=sm}
+        if not(mm==3 and sm==2 and mc==3 and sc==2
+          and magos_stock.get_item_count("roboport")==0
+          and senior_stock.get_item_count("roboport")==1
+          and magos_spare.get_item_count("roboport")==3
+          and senior_spare.get_item_count("roboport")==2)then
+          fail("NATIVE_SPARE_ROBOPORT_CUSTODY_INVALID")
+        end
+        emit("NATIVE_SPARE_ROBOPORT_PRESTAGE tick="..game.tick..
+          " original_magos="..s.magos.." original_senior="..s.senior..
+          " magos_held=3 senior_held=2 senior_available=1 source_total=6")
         return
       end
       -- Do not report a 0259 failure in the same tick that the genuine
@@ -806,7 +844,15 @@ local function pulse()
         local built=site and s.surface.find_entities_filtered{
           name="intermediate-cogitator-station",position=site,
           radius=1.5,force=root.station.force,limit=2} or {}
+        local spare_m=s.spare_port_magos
+        local spare_s=s.spare_port_senior
         if not(hold.valid and hold.get_item_count("roboport")==1
+          and spare_m and spare_m.valid
+          and spare_s and spare_s.valid
+          and spare_m.get_item_count("roboport")==3
+          and spare_s.get_item_count("roboport")==2
+          and item_count(root.station,"roboport")==0
+          and item_count(senior.station,"roboport")==0
           and #remaining==0 and old and net and net.valid
           and old.is_in_construction_range(s.ore.position)==false
           and net.all_construction_robots==3
@@ -820,7 +866,13 @@ local function pulse()
               hold.get_item_count("roboport"))..
             " ports="..tostring(#remaining)..
             " robots="..tostring(net and net.all_construction_robots)..
-            " built="..tostring(#built))
+            " built="..tostring(#built)..
+            " magos_stock="..tostring(item_count(root.station,"roboport"))..
+            " senior_stock="..tostring(item_count(senior.station,"roboport"))..
+            " magos_escrow="..tostring(spare_m and spare_m.valid
+              and spare_m.get_item_count("roboport"))..
+            " senior_escrow="..tostring(spare_s and spare_s.valid
+              and spare_s.get_item_count("roboport")))
         end
         emit("PASS NATIVE_COVERAGELESS_REFUSAL tick="..game.tick..
           " original_magos="..s.magos.." original_senior="..s.senior..
@@ -856,6 +908,33 @@ local function pulse()
           " restored_port="..restored.unit_number..
           " port_debit=1 held=0 electric_grid=original"..
           " logistic_network=merged original_mission=retained")
+        -- Return the exact five earlier physically mined spare port items
+        -- to their ORIGINAL station chests, not as a fresh credit. Both
+        -- persistent escrow inventories must be emptied before destruction.
+        local magos_inv=root.station.get_inventory(defines.inventory.chest)
+        local senior_inv=senior.station.get_inventory(defines.inventory.chest)
+        local magos_return=spare_m.remove{name="roboport",count=3}
+        local senior_return=spare_s.remove{name="roboport",count=2}
+        local magos_received=magos_inv and magos_inv.valid
+          and magos_inv.insert{name="roboport",count=magos_return} or 0
+        local senior_received=senior_inv and senior_inv.valid
+          and senior_inv.insert{name="roboport",count=senior_return} or 0
+        if not(magos_return==3 and senior_return==2
+          and magos_received==3 and senior_received==2
+          and spare_m.get_item_count("roboport")==0
+          and spare_s.get_item_count("roboport")==0
+          and magos_inv.get_item_count("roboport")==3
+          and senior_inv.get_item_count("roboport")==2)then
+          fail("NATIVE_SPARE_ROBOPORT_RESTITUTION_OR_CONSERVATION_INVALID")
+        end
+        spare_m.destroy()
+        spare_s.destroy()
+        s.spare_port_magos=nil
+        s.spare_port_senior=nil
+        emit("PASS NATIVE_SPARE_ROBOPORT_RECOVERY tick="..game.tick..
+          " original_magos="..s.magos.." original_senior="..s.senior..
+          " magos_returned=3 senior_returned=2 empty_holds=true"..
+          " total_restituted=5")
         -- Next independent negative starts with three real network robots
         -- but zero original station items. Withhold the one existing mined
         -- station item before the next native robot dispatch.

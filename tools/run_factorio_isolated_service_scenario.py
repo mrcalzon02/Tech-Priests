@@ -182,6 +182,11 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         r"original_senior=(\d+) ore=(nil|\d+) original_station_stock=1 "
         r"real_power=true charted=true real_robots=true",
         "autonomous production goal")
+    spare_stage = one(
+        r"NATIVE_SPARE_ROBOPORT_PRESTAGE tick=(\\d+) "
+        r"original_magos=(\\d+) original_senior=(\\d+) "
+        r"magos_held=3 senior_held=2 senior_available=1 source_total=6",
+        "actual pre-frontier native spare roboport escrow")
     extension = one(
         r"PASS NATIVE_PHYSICAL_FRONTIER_EXTENSION tick=(\d+) "
         r"original_magos=(\d+) original_senior=(\d+) "
@@ -225,6 +230,12 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         r"port_debit=1 held=0 electric_grid=original "
         r"logistic_network=merged original_mission=retained",
         "same mined roboport item physically restored to connected grid")
+    spare_return = one(
+        r"PASS NATIVE_SPARE_ROBOPORT_RECOVERY tick=(\\d+) "
+        r"original_magos=(\\d+) original_senior=(\\d+) "
+        r"magos_returned=3 senior_returned=2 empty_holds=true "
+        r"total_restituted=5",
+        "exact original station-specific five-port restitution")
     material_cut = one(
         r"NATIVE_MATERIALLESS_CUT tick=(\d+) original_magos=(\d+) "
         r"original_senior=(\d+) provider=(\d+) "
@@ -253,10 +264,12 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         r"material_delta=1 source_stock=0 ghost=0 ore_return_not_credited=true",
         "paired Intermediate and exact material debit")
 
-    if not (int(source[1]) <= int(selected[1]) <= int(extension[1])
+    if not (int(source[1]) <= int(selected[1])
+            <= int(spare_stage[1]) <= int(extension[1])
             <= int(cut[1]) < int(denied[1]) == int(coverage_cut[1])
             == int(recovered[1]) < int(coverage_denied[1])
-            == int(coverage_recovered[1]) == int(material_cut[1])
+            == int(coverage_recovered[1]) == int(spare_return[1])
+            == int(material_cut[1])
             < int(material_denied[1]) == int(material_recovered[1])
             < int(event[1]) <= int(finished[1])
             and int(denied[1]) - int(cut[1]) >= 1500
@@ -272,7 +285,9 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
             == coverage_recovered[2] == extension[4]
             and coverage_cut[5] == extension[5]
             and coverage_recovered[3] != coverage_cut[5]
-            and material_cut[4] == material_recovered[2] == source[5]):
+            and material_cut[4] == material_recovered[2] == source[5]
+            and spare_stage[2] == spare_return[2] == source[3]
+            and spare_stage[3] == spare_return[3] == source[4]):
         raise ValueError("1380 unordered native material/goal/robot/receipt")
     if not (source[3] == selected[2] == finished[2]
             and source[4] == selected[3] == finished[4]
