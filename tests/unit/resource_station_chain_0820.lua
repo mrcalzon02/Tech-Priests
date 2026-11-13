@@ -224,11 +224,12 @@ do
     child_priest_unit=1502,stock_delta_verified=true,
     network_stock_before=1}
   sen.robot_network_last_task_0338=receipt
-  local covered_ore=true
+  local logistic_covered=true
+  local construction_covered=true
   local native_net={valid=true,force=force2}
   local native_cell={logistic_network=native_net,
-    is_in_logistic_range=function(pos)return covered_ore end,
-    is_in_construction_range=function(pos)return covered_ore end}
+    is_in_logistic_range=function(pos)return logistic_covered end,
+    is_in_construction_range=function(pos)return construction_covered end}
   local original_port={valid=true,force=force2,energy=10000,
     electric_network_id=1,logistic_cell=native_cell,
     is_connected_to_electric_network=function()return true end}
@@ -277,9 +278,13 @@ do
   _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480.max_link_distance=40
   refused("robot relay exceeded authoritative 0480 command link")
   _G.TECH_PRIESTS_COMMAND_HIERARCHY_0480.max_link_distance=220
-  covered_ore=false
-  refused("disconnected logistics coverage was accepted")
-  covered_ore=true
+  construction_covered=false
+  refused("ore beyond the actual green construction zone was accepted")
+  construction_covered=true
+  local live_power=original_port.is_connected_to_electric_network
+  original_port.is_connected_to_electric_network=function()return false end
+  refused("disconnected original electric grid was accepted")
+  original_port.is_connected_to_electric_network=live_power
   mid.priest.valid=false
   refused("remote station without surviving original priest was accepted")
   mid.priest.valid=true
@@ -290,6 +295,13 @@ do
   native_request.frontier_builder_unit_1076=999
   refused("forged robot request builder was accepted")
   native_request.frontier_builder_unit_1076=501
+  -- The real 0259/1076 native admission and 0338 builder already permit
+  -- green-only ore, outside the orange logistic delivery cell. Adoption
+  -- must not discard this genuinely paid, rank-valid remote station.
+  logistic_covered=false
+  assert(not native_cell.is_in_logistic_range(target)
+    and native_cell.is_in_construction_range(target),
+    "fixture did not isolate green-only ore coverage")
   local accepted,detail=Chain.adopt_verified_robot_frontier(mag,"iron-ore",target)
   local m=Chain.status(mag)
   local route=Chain.return_route(mag)
