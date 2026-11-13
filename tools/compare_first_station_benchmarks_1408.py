@@ -12,6 +12,7 @@ import csv
 import json
 import math
 import pathlib
+import re
 import statistics
 
 WINDOWS = {
@@ -34,43 +35,67 @@ def read_engine_log(path: pathlib.Path, case: str) -> dict:
                 + ("false" if case == "baseline" else "true"))
     if expected not in text:
         raise ValueError(f"{case}: missing actual native fixture PASS")
-    # Factorio --benchmark-verbose all uses nanoseconds for its per-update
-    # metric columns. Require a recognized header and numeric rows, not
-    # free-form guesses from log messages or from game.create_profiler text.
-    header = None
+    # Verified Factorio 2.1.24 native output uses one real update CSV:
+    # run 1:
+    # tick,timestamp,wholeUpdate,scriptUpdate,...,
+    # t0,0,123000,45600,...,
+    # ...
+    # t1999,...,
+    # The trailing empty column and the "t" tick prefix are REQUIRED native
+    # syntax, not invented/missing values. Fail on partial or corrupted rows.
+    header: list[str] | None = None
     samples: dict[int, dict[str, float]] = {}
-    for line in text.splitlines():
-        line = line.strip()
+    for raw in text.splitlines():
+        line = raw.strip()
         if not line:
             continue
-        cells = next(csv.reader([line]))
-        normalized = [cell.strip().strip('"') for cell in cells]
-        if "wholeUpdate" in normalized and "scriptUpdate" in normalized:
-            header = normalized
+        cells = [part.strip().strip('"') for part in next(csv.reader([line]))]
+        # A native comma at the END of every row/header produces one empty
+        # terminal field; remove exactly that known CSV sentinel only.
+        if cells and cells[-1] == "":
+            cells.pop()
+        if "wholeUpdate" in cells and "scriptUpdate" in cells:
+            if header is not None:
+                raise ValueError(f"{case}: multiple native verbose headers")
+            if len(set(cells)) != len(cells) or "tick" not in cells:
+                raise ValueError(f"{case}: invalid native verbose field names")
+            if any(key not in cells for key in FIELDS):
+                raise ValueError(f"{case}: native benchmark missing requested metrics")
+            header = cells
             continue
-        if not header or len(normalized) != len(header):
+        if header is None:
             continue
-        if any(not v for v in normalized):
+        # Factorio starts an update row with "t<number>" rather than a
+        # literal integer. Ignore ordinary engine status/log lines, not
+        # malformed tick rows.
+        tick = re.fullmatch(r"t(\\d+)", cells[0])
+        if not tick:
             continue
-        try:
-            data = {k: float(v) for k, v in zip(header, normalized)}
-        except ValueError:
-            continue
-        if not all(math.isfinite(v) and v >= 0 for v in data.values()):
-            continue
-        tick_key = next((k for k in ("tick", "Tick", "ticks")
-                         if k in data), None)
-        # When benchmark CSV omits the tick column, rows are consecutive
-        # per-tick records beginning with the save's first benchmark update.
-        index = int(data[tick_key]) if tick_key else len(samples) + 1
-        if not 0 <= index <= 1000000:
-            continue
-        samples[index] = {key: data[key] / 1e6
-                          for key in FIELDS if key in data}
-    if not samples:
+        if len(cells) != len(header):
+            raise ValueError(f"{case}: malformed native row field count")
+        index = int(tick.group(1))
+        if index != len(samples):
+            raise ValueError(
+                f"{case}: duplicate/out-of-order/missing native tick {index}")
+        row: dict[str, float] = {}
+        for key in FIELDS:
+            raw_value = cells[header.index(key)]
+            try:
+                value = float(raw_value)
+            except ValueError as exc:
+                raise ValueError(
+                    f"{case}: invalid native {key} at tick {index}") from exc
+            if not math.isfinite(value) or value < 0:
+                raise ValueError(
+                    f"{case}: unbounded native {key} at tick {index}")
+            row[key] = value / 1e6  # native nanoseconds to milliseconds
+        samples[index] = row
+    if header is None:
         raise ValueError(
-            f"{case}: no parseable native --benchmark-verbose all timing CSV; "
-            "retain raw log and inspect its actual header instead of inventing UPS")
+            f"{case}: missing Factorio 2.1.24 benchmark timing header")
+    if len(samples) != 2000:
+        raise ValueError(
+            f"{case}: incomplete native benchmark {len(samples)}/2000 ticks")
     return {
         "case": case,
         "timings_ms": samples,
