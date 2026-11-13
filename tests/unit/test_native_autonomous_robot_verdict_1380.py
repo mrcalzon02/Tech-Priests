@@ -212,6 +212,19 @@ assert "NATIVE_POWERLESS_RESTORED_GRID_NOT_JOINED" in fixture
 # outage/refusal, so do not count same-tick identity as restoration failure.
 assert 'if not s.powerless_restoration_pole then' in fixture
 assert 's.powerless_restoration_pole=restored' in fixture
+# The real 43497956756 run repaired the physical feeder pole at 19620 and
+# re-powered the remote port by 19680, but the old outage-only check ran
+# again and demanded held=1 and unpowered. The outage receipt must be
+# one-time; later native ticks check the real restored grid and EMPTY hold.
+power_start=fixture.index("      if s.powerless_hold then")
+power_end=fixture.index("      local goal=s.goal",power_start)
+power_block=fixture[power_start:power_end]
+assert power_block.count("if not s.powerless_restoration_pole then")==2
+assert power_block.index("if not s.powerless_restoration_pole then") < power_block.index("PASS NATIVE_POWERLESS_REFUSAL")
+assert power_block.index("PASS NATIVE_POWERLESS_REFUSAL") < power_block.index("s.powerless_restoration_pole=restored")
+assert power_block.index("s.powerless_restoration_pole=restored") < power_block.index("NATIVE_POWERLESS_RESTORATION_CUSTODY_INVALID")
+assert 'hold.get_item_count("medium-electric-pole")==1' in power_block
+assert 'hold.get_item_count("medium-electric-pole")==0' in power_block
 assert 's.powerless_restoration_tick=game.tick' in fixture
 assert 'if game.tick-s.powerless_restoration_tick<180 then return end' in fixture
 assert 's.powerless_restoration_pole=nil' in fixture
