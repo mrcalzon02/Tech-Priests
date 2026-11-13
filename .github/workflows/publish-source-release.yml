@@ -45,7 +45,7 @@ jobs:
           assert manifest['source_sha256'] == '1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b'
           assert manifest['source_frame_sequence'] == list(range(1, 97, 3))
           assert manifest['cycle_seconds'] == 12 and manifest['hr_frame_px'] == 512 and manifest['sd_frame_px'] == 256
-          assert manifest['factorio_output_connection_local'] == [.5,-.5]
+          assert manifest['factorio_output_connection_local'] == [.5,.5]
           assert manifest['blender_to_factorio'] == {'north':'north','east':'west_native','south':'south','west':'east_native'}
           expected = {}
           for direction in ('north','east_native','south','west_native'):
@@ -75,7 +75,7 @@ jobs:
           assert 'require("prototypes.generated_graphics.atmospheric-water-condenser-v22c")' in fixes
           for token in ('local FRAMES = 32','local SLICES = 4','slice=SLICE_SIZE','lines_per_file=2',
                         'animation_speed=FRAMES / TICKS_PER_CYCLE','target.graphics_set={',
-                        'port.position={0.5,-0.5}',"local captured = {north='north', east='west_native', south='south', west='east_native'}"):
+                        'port.position={0.5,0.5}',"local captured = {north='north', east='west_native', south='south', west='east_native'}"):
               assert token in patch, 'Graphics contract missing: '+token
           print('CONDENSER_V22C_41_NATIVE_PNGS_VERIFIED_AND_ACTIVE')
           PY
