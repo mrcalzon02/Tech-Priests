@@ -52,7 +52,7 @@ $work=Join-Path $env:TEMP ("condenser-v22c-gui-$stamp")
 if (Test-Path -LiteralPath $work) { throw "Refusing to overwrite $work" }
 New-Item -ItemType Directory -Path $work | Out-Null
 if ([string]::IsNullOrWhiteSpace($OutputDirectory)) {
-  $OutputDirectory=Join-Path $root "models/island-survival/solar-boiler/condenser_v22c/visual-client-$stamp"
+  $OutputDirectory=Join-Path $root "ci/condenser_v22c/visual-client-$stamp"
 }
 $out=[IO.Path]::GetFullPath($OutputDirectory)
 if (Test-Path -LiteralPath $out) { throw "Refusing to overwrite screenshot evidence: $out" }
@@ -94,8 +94,8 @@ Write-Host "Source comparison: $(Join-Path $out 'client-vs-approved-v22c-blender
 Write-Host 'Review native pipe mouth alignment and animated intake; do not call visual approval automatic.'
 # Package only the independently verified genuine Factorio screenshot output.
 # Keep a distinct non-overwriting ZIP for easy review/upload from the desktop.
-$gallery=Join-Path $out 'factorio-client-pipes-all-four.png'
-$comparison=Join-Path $out 'client-vs-approved-v8.png'
+$gallery=Join-Path $out 'condenser-v22c-real-game-four-directions.png'
+$comparison=Join-Path $out 'client-vs-approved-v22c-blender.png'
 foreach($file in @($gallery,$comparison)){
   if(-not(Test-Path -LiteralPath $file -PathType Leaf)){
     throw ('Missing expected real client visual proof: '+$file)
