@@ -214,3 +214,46 @@ assert 'force.chart_all(' not in fixture
 assert 'game.create_player(' not in fixture
 assert 'surface.create_entity{name="iron-ore"' not in fixture
 print("PASS native 1380 genuine chart-relative 0259 cadence and finite failure bounds")
+
+
+# NEW boundary: paid station success is NOT remote resource acquisition.
+# The independent native gate requires a real ore source decrement, two
+# original-priest physical custody hops, Magos chest deposit and empty hold.
+ore_receipt=(prefix+"PASS NATIVE_PHYSICAL_ORE_RETURN tick=2520 "
+    "original_magos=10 magos_priest=11 senior=20 senior_priest=21 "
+    "intermediate=50 intermediate_priest=51 "
+    "source_amount_before=1000 source_amount_after=999 "
+    "hop1_delta=1 hop2_delta=1 magos_deposit=1 "
+    "delivered_tick=2500 source_kind=natural-ore inventory_hold=empty")
+full_log=sample+"\\n"+ore_receipt
+ore_result=module.verify_autonomous_robot_ore_1380_log(full_log,72060)
+assert ore_result["natural_ore_return_accepted"] is True
+assert ore_result["new_distinct_ore_delivery_gates"]==1
+assert ore_result["first_magos_delivery_tick"]==2500
+assert ore_result["ore_items_delivered_per_1000_ticks"]==round(1000/72060,6)
+for bad in (
+    sample,full_log+"\\n"+ore_receipt,
+    full_log.replace("original_magos=10","original_magos=11"),
+    full_log.replace("intermediate_priest=51","intermediate_priest=52"),
+    full_log.replace("source_amount_after=999","source_amount_after=998"),
+    full_log.replace("hop1_delta=1","hop1_delta=0"),
+    full_log.replace("hop2_delta=1","hop2_delta=0"),
+    full_log.replace("magos_deposit=1","magos_deposit=0"),
+    full_log.replace("inventory_hold=empty","inventory_hold=held"),
+    full_log.replace("source_kind=natural-ore","source_kind=synthetic"),
+    full_log.replace("delivered_tick=2500","delivered_tick=99999"),
+):
+    try:
+        module.verify_autonomous_robot_ore_1380_log(bad,72060)
+    except ValueError:
+        continue
+    raise AssertionError("false native physical ore delivery accepted")
+assert 's.phase="awaiting-native-ore-return"' in fixture
+assert 'courier.validate_receipts_0982(cargo,route)==true' in fixture
+assert 's.ore.amount==cargo.ore_amount_before-1' in fixture
+assert 'cargo.ore_source_surface_index_1171==s.surface.index' in fixture
+assert 'item_count(root.station,"iron-ore")' in fixture
+assert '"PASS NATIVE_PHYSICAL_ORE_RETURN tick="' in fixture
+assert 'surface.create_entity{name="iron-ore"' not in fixture
+assert 'force.chart(' not in fixture
+print("PASS native two-hop natural ore return strict source, identity, inventory and refusal contract")
