@@ -196,6 +196,15 @@ assert 'fresh.is_in_construction_range(s.ore.position)==true' in fixture
 assert 'last.built_entity==built_port' in fixture
 assert 'source_entity.mine{inventory=inventory}' in fixture
 assert 'root.roboport_expansion_goal_1076=' not in fixture
+# Preserve the native refusal while exposing exactly which original
+# production goal, provider stock or robot condition failed.
+assert 'NATIVE_AUTONOMOUS_GOAL_READBACK tick=' in fixture
+for field in ("target_x=", "target_y=", "selected_ore_x=",
+              "selected_ore_y=", "expected_root=", "provider_stock=",
+              "network_stock=", "robots_available=", "robots_total=",
+              "frontier_status=", "0259_reason="):
+    assert ('"' + field + '"') in fixture
+assert 'fail("UNVERIFIED_AUTONOMOUS_GOAL_OR_MATERIAL")' in fixture
 assert 'NATIVE_UNCOVERED_ADMISSION_READBACK' in fixture
 assert 'if s.phase=="awaiting-native-strategy"' in fixture
 assert 's.uncovered_admission_probe=true' in fixture

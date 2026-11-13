@@ -414,6 +414,30 @@ local function pulse()
           and goal.remote_resource_position_1076.y==s.ore.position.y
           and item_count(s.provider,"intermediate-cogitator-station")==1
           and charted and network.available_construction_robots>0) then
+          -- Observe original live selection and physical custody before
+          -- diagnosing an actual 0259/1076 refusal. No acceptance relaxation.
+          local p=goal.remote_resource_position_1076
+          local frontier=root.roboport_frontier_1076
+          emit("NATIVE_AUTONOMOUS_GOAL_READBACK tick="..game.tick..
+            " item="..tostring(goal.remote_resource_item_1076)..
+            " root="..tostring(goal.root_station_unit)..
+            " expected_root="..tostring(s.magos)..
+            " station_item="..tostring(goal.remote_station_item_1076)..
+            " target_x="..tostring(p and p.x)..
+            " target_y="..tostring(p and p.y)..
+            " selected_ore_x="..tostring(s.ore.position.x)..
+            " selected_ore_y="..tostring(s.ore.position.y)..
+            " charted="..tostring(charted)..
+            " provider_stock="..tostring(item_count(s.provider,
+              "intermediate-cogitator-station"))..
+            " network_stock="..tostring(network.get_item_count(
+              "intermediate-cogitator-station"))..
+            " robots_available="..tostring(
+              network.available_construction_robots)..
+            " robots_total="..tostring(network.all_construction_robots)..
+            " frontier_status="..tostring(frontier and frontier.status)..
+            " 0259_reason="..tostring(root.resource_expansion_0259
+              and root.resource_expansion_0259.last_reason))
           fail("UNVERIFIED_AUTONOMOUS_GOAL_OR_MATERIAL")
         end
         s.goal=goal
