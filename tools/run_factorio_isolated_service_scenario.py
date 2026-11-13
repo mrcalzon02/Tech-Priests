@@ -825,6 +825,54 @@ def native_server_radar_progress_stalled_1381(log: str) -> bool:
             and float(samples[-1][1]) > 1000)
 
 
+def robot_real_loopback_client_command_1381(
+        factorio: pathlib.Path, mods: pathlib.Path, port: int) -> list[str]:
+    """Launch a genuine native graphical client, not a scripted chart/player.
+
+    The Steam binary directly invoked with --mp-connect restarts through Steam
+    and loses its arguments. Route that invocation through Steam -applaunch,
+    which preserves the private client arguments; standalone builds use their
+    ordinary executable. Success is *only* a server-observed real connection.
+    """
+    if not 1 <= port <= 65535:
+        raise ValueError("1381 invalid private loopback port")
+    arguments = ["--mp-connect", f"127.0.0.1:{port}",
+                 "--mod-directory", str(mods), "--disable-audio",
+                 "--fullscreen=false", "--window-size", "800x600"]
+    if os.name == "nt" and "steam" in str(factorio).lower():
+        for parent in factorio.parents:
+            executable = parent / "steam.exe"
+            if executable.is_file():
+                return [str(executable), "-applaunch", "427520", *arguments]
+        raise RuntimeError("1381 Steam installation lacks its real Steam client")
+    return [str(factorio), *arguments]
+
+
+def stop_robot_real_loopback_client_1381(port: int) -> None:
+    """Bound cleanup to a real client launched for our unique local port.
+
+    Do not terminate the headless Factorio server or any unrelated user's game.
+    A Steam -applaunch process may exit before its actual game client does.
+    """
+    if os.name != "nt":
+        return
+    expression = (
+        "$p='" + f"127.0.0.1:{port}" + "'; "
+        "Get-CimInstance Win32_Process -Filter \"Name='factorio.exe'\" | "
+        "Where-Object { $_.CommandLine -and "
+        "$_.CommandLine.Contains('--mp-connect') -and "
+        "$_.CommandLine.Contains($p) } | "
+        "ForEach-Object { Stop-Process -Id $_.ProcessId -ErrorAction SilentlyContinue }"
+    )
+    try:
+        subprocess.run(["powershell.exe", "-NoProfile", "-NonInteractive",
+                        "-Command", expression],
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                       check=False, timeout=15)
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+
+
 def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                                 initial: pathlib.Path, output: pathlib.Path,
                                 timeout: int, engine_version: str,
@@ -842,15 +890,21 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
            "native_server_process_wall_minutes":None,
            "native_reload_process_wall_minutes":None,
            "native_factorio_process_wall_minutes":None}
-    # Native --test-save supplies a genuine engine player and charts ore.
-    # Probe 2.1.24 allow_in_replay=true autosave; accept ONLY the actual fresh
-    # named ZIP with valid CRC and independent genuine Factorio reload.
-    # No synthetic charting, scripted player or cargo.
+    # --test-save has a native player but cannot produce a live save.
+    # Use the original, genuine private *save-capable* native server with
+    # a real Factorio graphical loopback client. A charted ore patch and
+    # item-backed autosave are mandatory, never fabricated as fixture state.
     roots = [output / "saves", *factorio_1381_save_roots(factorio)]
     started = time.monotonic()
     process = None
-    out["native_first_backend"] = "native-player-test-save-replay-autosave-probe"
-    out["native_first_test_ticks"] = 30060
+    client_process = None
+    client_handle = None
+    client_attempted = False
+    port = free_loopback_udp_port()
+    settings = private_robot_server_settings(output)
+    out["native_first_backend"] = "save-capable-server-with-real-loopback-client"
+    out["native_first_private_port"] = port
+    out["native_first_test_ticks"] = None
     try:
         checkpoint.unlink(missing_ok=True)
         # Remove ONLY our exactly named CI save. All unrelated saves stay put.
@@ -863,14 +917,30 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
         first_exit = None
         with source_log.open("w", encoding="utf-8") as handle:
             process = subprocess.Popen(
-                rail_native_player_test_command(factorio, mods, initial, 30060),
+                robot_saveable_server_command(factorio, mods, initial,
+                                              settings, port),
                 stdin=subprocess.DEVNULL, stdout=handle,
                 stderr=subprocess.STDOUT, cwd=output)
             launched = time.monotonic()
             deadline = launched + timeout
+            host_seen = None
             while time.monotonic() < deadline:
                 first_exit = process.poll()
                 current = source_log.read_text(encoding="utf-8", errors="replace")
+                if "Hosting game at IP ADDR:" in current and host_seen is None:
+                    host_seen = time.monotonic()
+                if host_seen is not None and not client_attempted:
+                    client_attempted = True
+                    out["native_real_client_command_kind"] = (
+                        "steam-applaunch" if os.name == "nt" and
+                        "steam" in str(factorio).lower() else "standalone")
+                    client_handle = (output / "robot-loopback-client.log").open(
+                        "w", encoding="utf-8")
+                    client_process = subprocess.Popen(
+                        robot_real_loopback_client_command_1381(
+                            factorio, mods, port),
+                        stdin=subprocess.DEVNULL, stdout=client_handle,
+                        stderr=subprocess.STDOUT, cwd=output)
                 fatal = native_server_startup_failure_1381(current)
                 if fatal:
                     out["native_first_fatal_diagnostic"] = fatal
@@ -887,11 +957,15 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                         "even its own chunk by tick 12000; no synthetic charting permitted")
                 if first_exit is not None:
                     break
-                if time.monotonic()-launched >= 180 and not any(
-                    x in current for x in ("NATIVE_RADAR_AND_STRATEGY_READBACK tick=",
-                                           "NATIVE_ORE_CHARTED tick=",
-                                           "NATIVE_CARGO_SAVE_REQUESTED tick=")):
-                    raise RuntimeError("no genuine player-test radar progress in 180 seconds")
+                if host_seen is None and time.monotonic()-launched >= 90:
+                    raise RuntimeError("native private server never started hosting")
+                if (client_attempted and host_seen is not None
+                        and time.monotonic()-host_seen >= 150
+                        and "NATIVE_ORE_CHARTED tick=" not in current
+                        and marker not in current):
+                    raise RuntimeError(
+                        "real Steam/standalone client did not establish genuine "
+                        "ore charting in private native server within 150 seconds")
                 for folder in roots:
                     native = folder / name
                     if not native.is_file() or native.stat().st_size <= 2048:
@@ -908,17 +982,17 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                     break
                 time.sleep(0.5)
             if not ready and first_exit is None:
-                raise RuntimeError("native player-test produced no CRC-verified natural ore "
+                raise RuntimeError("native saveable server produced no CRC-verified natural ore "
                                    "custody save before bounded timeout")
         src = source_log.read_text(encoding="utf-8", errors="replace")
         if first_exit is not None and first_exit != 0:
-            raise RuntimeError("native player-test exited " + str(first_exit))
+            raise RuntimeError("native private server exited " + str(first_exit))
         if "[TP-AUTONOMOUS-ROBOT-1380] FAIL " in src or "Error while running" in src:
             raise RuntimeError("native first engine process failed")
         if marker not in src:
             raise RuntimeError("native test process did not produce held ore marker")
         if not ready:
-            raise RuntimeError("native player-test exited before exact ore save ZIP/CRC")
+            raise RuntimeError("native saveable server exited before exact ore save ZIP/CRC")
         out["native_first_stop_reason"] = "verified-engine-save-driver-stop"
         out["native_save_logged_finished"] = "Saving finished" in src
         out["native_save_log_lines"] = [
@@ -947,6 +1021,17 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
     except Exception as error:
         out["blocker"] = str(error)
     finally:
+        # A Steam launcher may detach from its actual Factorio client; clean
+        # only a client whose command line matches this unique loopback port.
+        if client_process is not None and client_process.poll() is None:
+            client_process.terminate()
+            try: client_process.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                client_process.kill()
+                client_process.wait(timeout=10)
+        if client_handle is not None:
+            client_handle.close()
+        stop_robot_real_loopback_client_1381(port)
         if process is not None and process.poll() is None:
             process.terminate()
             try: process.wait(timeout=20)
