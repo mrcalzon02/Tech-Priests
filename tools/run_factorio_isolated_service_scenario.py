@@ -865,10 +865,10 @@ def robot_real_loopback_client_command_1381(
         try:
             import winreg
             for hive,subkey,property_name in (
-                    (winreg.HKEY_CURRENT_USER,r"Software\\Valve\\Steam","SteamPath"),
-                    (winreg.HKEY_CURRENT_USER,r"Software\\Valve\\Steam","SteamExe"),
+                    (winreg.HKEY_CURRENT_USER,r"Software\Valve\Steam","SteamPath"),
+                    (winreg.HKEY_CURRENT_USER,r"Software\Valve\Steam","SteamExe"),
                     (winreg.HKEY_LOCAL_MACHINE,
-                     r"SOFTWARE\\WOW6432Node\\Valve\\Steam","InstallPath")):
+                     r"SOFTWARE\WOW6432Node\Valve\Steam","InstallPath")):
                 try:
                     with winreg.OpenKey(hive,subkey) as key:
                         value=winreg.QueryValueEx(key,property_name)[0]
