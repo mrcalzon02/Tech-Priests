@@ -4,6 +4,11 @@ local M={version="0.1.676.1403",max_input=32,max_output=3}
 local function finite(n)
   return type(n)=="number" and n==n and math.abs(n)<math.huge
 end
+local function bounded(value,default,maximum)
+  local n=tonumber(value)
+  if not finite(n) then n=default end
+  return math.min(maximum,math.max(0,math.floor(n)))
+end
 local function point(p)
   return type(p)=="table" and finite(p.x) and finite(p.y)
 end
@@ -28,8 +33,7 @@ function M.rank(frontier,raw,target,opts)
   if not finite(start_distance) then
     return {},"invalid-rail-distance-1403"
   end
-  local maximum=math.min(M.max_input,math.max(0,math.floor(
-    tonumber(opts.max_input) or M.max_input)))
+  local maximum=bounded(opts.max_input,M.max_input,M.max_input)
   local seen,ranked={},{}
   for i=1,math.min(#raw,maximum)do
     local candidate=raw[i]
@@ -74,8 +78,7 @@ function M.rank(frontier,raw,target,opts)
     return a.direction<b.direction
   end)
   local output={}
-  local max_output=math.min(M.max_output,math.max(0,math.floor(
-    tonumber(opts.max_output) or M.max_output)))
+  local max_output=bounded(opts.max_output,M.max_output,M.max_output)
   for i=1,math.min(#ranked,max_output)do output[i]=ranked[i]end
   return output,#output>0 and "native-progressive-rail-options-1403"
     or "no-progressive-rail-extension-1403"
