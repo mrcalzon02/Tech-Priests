@@ -517,7 +517,7 @@ assert "--test-save" not in command and "--start-server" not in command
 assert "--benchmark" not in command and "force.chart" not in segment
 assert 'source_log.open("w",encoding="utf-8")' in segment
 assert 'str(factorio),"--start-server"' not in segment
-assert "native player reached 31900 ticks" in segment
+assert "real single-player did not produce the " in segment
 assert 'game.force.chart(' not in driver_source
 assert "Native save CRC invalid" in segment
 assert "Copied save CRC invalid" in segment
@@ -535,4 +535,4 @@ roots_1381=module.factorio_1381_save_roots(
 assert pathlib.Path("C:/Users/CI/AppData/Roaming/Factorio/saves") in roots_1381
 assert pathlib.Path("C:/Factorio/saves") in roots_1381
 assert not any("force.chart" in text for text in (segment,))
-print("PASS 1381 real GUI player load with save-capable exit, strict cargo ZIP/CRC and Windows Steam root")
+print("PASS 1381 real interactive player load, CRC-gated stop and strict Windows save root")
