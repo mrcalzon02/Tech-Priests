@@ -716,17 +716,33 @@ assert(funded.detail=="canonical-builder-occupied:funded-bootstrap-request"
   and yielded.construction_request==nil,
   "funded bootstrap candidate was preempted by the frontier")
 stock.roboport=0
+local original_pole_stock=stock["medium-electric-pole"]
 local deferred=M.service_pair(yielded)
+local discovered=yielded.construction_candidate_0338
 assert(deferred.detail=="submitted-to-canonical-0338"
-  and yielded.construction_candidate_0338==nil
+  and discovered and discovered.request_value==yielded.construction_request
+  and discovered.request_field=="construction_request"
+  and discovered.item_name=="medium-electric-pole"
   and yielded.construction_bootstrap_ghost_0645==bootstrap
   and yielded.construction_request
-  and yielded.construction_request.frontier_root_unit_1076==99,
-  "unfunded bootstrap did not yield without losing its request")
-local discovered=Planner.discover_pair(yielded,true)
-assert(discovered and discovered.request_value==yielded.construction_request
-  and discovered.request_field=="construction_request",
-  "0338 rediscovery selected unfunded bootstrap over stocked frontier")
+  and yielded.construction_request.frontier_root_unit_1076==99
+  and yielded.roboport_frontier_1076.last_candidate_discovery_1076
+    =="exact-physical-candidate"
+  and stock["medium-electric-pole"]==original_pole_stock
+  and not yielded.construction_task_0338
+  and not yielded.construction_custody_0338,
+  "1076 failed to seed original 0338 discovery without spending items or creating a task")
+-- The native 43368028005 stall had a live request with NO candidate for
+-- 42k ticks. The submission must hand the existing canonical 0338
+-- discovery an exact request immediately; discovery is still read-only.
+-- Without original physical stock, it must never become a build action.
+stock["medium-electric-pole"]=0
+assert(Planner.recommend_action(yielded)==nil
+  and stock["medium-electric-pole"]==0
+  and not yielded.construction_task_0338
+  and not yielded.construction_custody_0338,
+  "unfunded synchronously discovered frontier became physical construction")
+stock["medium-electric-pole"]=original_pole_stock
 -- A discovery callback racing the dispatcher must also replace an old
 -- unfunded bootstrap candidate without waiting for the normal cooldown.
 yielded.construction_candidate_0338={
