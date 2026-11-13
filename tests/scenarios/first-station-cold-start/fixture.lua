@@ -68,7 +68,8 @@ local function place_first_station()
 end
 function M.install()
   local case=rawget(_G,"TP_CI_FIRST_STATION_1408_CASE")
-  if case~="baseline" and case~="placement" then
+  if case~="baseline" and case~="placement"
+    and case~="placement-unprofiled" then
     error("first-station fixture case must be baseline or placement")
   end
   local Profile=require("scripts.core.first_station_cold_profile_1406")
@@ -91,7 +92,7 @@ function M.install()
       logline("BEFORE","pairs="..pre)
       if pre~=0 then logline("FAIL","nonempty-baseline-before-test")end
     elseif t==at then
-      if f.case=="placement"then
+      if f.case=="placement"or f.case=="placement-unprofiled"then
         f.placed=place_first_station()
       else
         logline("NO-PLACEMENT","pairs="..first_pair_count())
@@ -107,7 +108,7 @@ function M.install()
         .." runtime_callbacks="..tostring(root
           and root.stats and root.stats.services_run or 0))
       if t==1800 then
-        if f.case=="placement" then
+        if f.case=="placement" or f.case=="placement-unprofiled" then
           f.passed=f.placed and first_pair_count()==1
             and wake and wake.completed==true
             and wake.deferred_services>0
@@ -117,7 +118,7 @@ function M.install()
             and not wake
         end
         if f.passed then logline("PASS","case="..f.case
-          .." native_first_station_wake="..tostring(f.case=="placement"))
+          .." native_first_station_wake="..tostring(f.case~="baseline"))
         else logline("FAIL","case="..f.case
           .." missing-engine-pair-or-scheduling-proof")end
       end
