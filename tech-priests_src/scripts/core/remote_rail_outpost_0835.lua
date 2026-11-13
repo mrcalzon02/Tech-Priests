@@ -350,6 +350,32 @@ function M.propose_next_outpost_object_1405(pair,observation)
   end
   local current=JustInTime1405.current_stage(mission)
   local given=observation.native_entity
+  local state=mission.outpost_jit_1405
+  -- Revisit a single stage only on an explicit request, and only when
+  -- no original ticket is waiting or material is carried. This picks up
+  -- previously player-built infrastructure at the next relevant stage.
+  -- Never scan 10 future construction stages or the entire map.
+  if not given and observation.reinspect_stage==true and current
+    and not(state and state.ticket)
+    and not(pair.construction_task_0338 or pair.construction_custody_0338)
+    and tick()>=(state and state.next_think_tick or 0)then
+    local center=current.key=="home-unloaders"
+      and pair.station.position or mission.target
+    local radius=current.key=="home-unloaders" and 64 or 96
+    local ok,observed=pcall(function()
+      return pair.station.surface.find_entities_filtered{
+        name=current.name,force=pair.station.force,
+        position=center,radius=radius,limit=8}end)
+    if ok and type(observed)=="table"then
+      for _,candidate in ipairs(observed)do
+        if candidate.valid and candidate.unit_number
+          and not(state and state.accepted_units
+            and state.accepted_units[candidate.unit_number])then
+          given=candidate;break
+        end
+      end
+    end
+  end
   local verified=false
   if given and current and given.valid and given.name==current.name
     and given.force==pair.station.force
@@ -384,7 +410,6 @@ function M.propose_next_outpost_object_1405(pair,observation)
   end
   local candidate=observation.candidate
   local prepared=nil
-  local state=mission.outpost_jit_1405
   if candidate and current and not(state and state.ticket)then
     local proto=prototypes and prototypes.item
       and prototypes.item[candidate.item_name or current.name]
@@ -474,6 +499,17 @@ function M.observe_relevant_world_change_1405(event)
         and (pair.station.position.x-entity.position.x)^2
           +(pair.station.position.y-entity.position.y)^2<=64*64
       if near_outpost or close_ticket or near_home then
+        local active_cargo=pair.construction_custody_0338~=nil
+          or pair.construction_task_0338~=nil
+        if entity.valid==false and entity.unit_number then
+          local removed=JustInTime1405.native_removed(mission,
+            entity.unit_number,tick(),active_cargo)
+          if removed then
+            mission.outpost_world_revision_1405=
+              (mission.outpost_world_revision_1405 or 0)+1
+            count=count+1
+          end
+        end
         local interested=stage and entity.name==stage.name
         if interested or close_ticket then
           mission.outpost_world_revision_1405=
