@@ -95,8 +95,12 @@ local offered,why=offer(goal,"construction-site-standoff-0338")
 check(offered==true,"original paid rail destination refused: "..tostring(why))
 local original=pair.movement_request_0418
 check(original and original.owner=="construction-planner-0338"
-  and original.reason=="construction-site-standoff-0338",
-  "site movement owner not preserved")
+  and original.reason=="construction-site-standoff-0338"
+  and original.ground_route_chunked==true
+  and original.ground_route_final_destination
+  and original.ground_route_final_destination.x==goal.x
+  and original.x<goal.x,
+  "paid site journey must use original-owned bounded physical waypoints")
 check(Track.authorized_paid_rail_transit_0836(pair,priest.position,original),
   "counted original railway corridor disallowed between station and frontier")
 local kept,reason=Movement.enforce_pair(pair,"original-physical-rail-midroute")
@@ -127,6 +131,11 @@ local home={x=0,y=3}
 offered,why=offer(home,"construction-source-0338")
 check(offered==true,"original source collection refused: "..tostring(why))
 local source_route=pair.movement_request_0418
+check(source_route and source_route.ground_route_chunked==true
+  and source_route.ground_route_final_destination
+  and source_route.ground_route_final_destination.x==home.x
+  and source_route.x>home.x,
+  "original source return must travel as bounded 18-tile waypoints")
 check(Track.authorized_paid_rail_transit_0836(pair,priest.position,source_route),
   "original 0338 collection journey lost its verified railway")
 kept,reason=Movement.enforce_pair(pair,"original-source-midroute")
