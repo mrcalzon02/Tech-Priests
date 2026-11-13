@@ -1,0 +1,44 @@
+{
+  "schema": "tech-priests.v22c.real-factorio-2.1-client.noonday-capture.v1",
+  "engine": "Factorio 2.1.24 (build 87808, win64, steam)",
+  "execution": "real graphical Windows client, OpenGL backend (not headless, not Blender)",
+  "runner": "OLD-CORE30-homebrew",
+  "windows_session_id": 0,
+  "run_url": "https://github.com/mrcalzon02/Dens-Mortis/actions/runs/43352927548",
+  "job_id": 131648056875,
+  "production_source_commit": "3fb3769b29a19800394ab2509d2d4580ed0aa9db",
+  "approved_v21_blend_sha256": "1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b",
+  "source_locked_animation": "V22C 12s 32-frame 4-way HR/SD Factorio prototype",
+  "native_screenshot_count": 16,
+  "native_entities": 8,
+  "native_connected_pipes": 8,
+  "screenshot_plan": {
+    "orientations": [
+      "north",
+      "east",
+      "south",
+      "west"
+    ],
+    "states": [
+      "idle",
+      "working"
+    ],
+    "zooms": [
+      1,
+      2.7
+    ],
+    "lighting": "noonday (daytime=0.0)"
+  },
+  "original_game_png_resolution": [
+    1152,
+    864
+  ],
+  "contact_sheet_png": "art/source-to-3d/condenser-v21/captures/v22c/Condenser_V22C_REAL_Factorio_noonday_four_directions.png",
+  "contact_sheet_kind": "1000px genuine-client screenshot contact resized from 16 validated native game PNG captures",
+  "contact_sheet_png_sha256": "cfbf930d09f016e07e59a77a17fb64c022453ceae48c8733ac08ec152633b627",
+  "contact_sheet_png_bytes": 1420323,
+  "game_capture_result": "TP_FACTORIO_NATIVE_GAME_16_SCREENSHOTS_PASS",
+  "source_image_fabrication": false,
+  "visual_alignment_human_approved": false,
+  "notes": "The genuine game captures were logged in Actions because the Actions artifact quota was exhausted. This committed PNG is a resized contact sheet from those native screenshots. It is not a synthetic in-game rendering or Photoshop composite."
+}
