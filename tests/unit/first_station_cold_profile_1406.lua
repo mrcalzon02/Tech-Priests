@@ -24,13 +24,18 @@ Profile.checkpoint("first-movement-command")
 assert(Profile.finish_pair("physical-pair-registered"))
 assert(Profile.stop_event(token))
 assert(not Profile.stop_event(token),"stop-event duplicated native profile")
-assert(closed==allocated and allocated==5,
+assert(closed==allocated and allocated==6,
   "unclosed or duplicate native profiling objects")
 local has_event,has_pair,has_cache,has_move=false,false,false,false
 for _,entry in ipairs(logged)do
-  local text=type(entry)=="table" and table.concat({
-    tostring(entry[2]or ""),tostring(entry[4]or ""),
-    tostring(entry[6]or ""),tostring(entry[8]or "")},":") or tostring(entry)
+  local fields={}
+  if type(entry)=="table"then
+    for _,value in ipairs(entry)do
+      if type(value)=="string"then fields[#fields+1]=value end
+    end
+  end
+  local text=type(entry)=="table" and table.concat(fields,":")
+    or tostring(entry)
   if text:find("all-build-event-routes",1,true)then has_event=true end
   if text:find("create-pair-total",1,true)then has_pair=true end
   if text:find("hidden-logistic-support",1,true)then has_cache=true end
@@ -49,4 +54,4 @@ storage.tech_priests.pairs_by_station[100]={
 assert(not Profile.begin_pair(station) and not Profile.start_event("build",event),
   "existing pair retriggered native cold-start measurement")
 assert(Profile.set_enabled(false)==false)
-print("[first-station-cold-profile-1406] PASS disabled fast-path, five native clocks, staged event/placement attribution and save-safe state")
+print("[first-station-cold-profile-1406] PASS disabled fast-path, six native clocks, staged event/placement attribution and save-safe state")
