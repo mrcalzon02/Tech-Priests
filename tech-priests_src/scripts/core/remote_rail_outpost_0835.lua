@@ -464,7 +464,7 @@ end
 -- Player and robot construction changes invalidate virtual intent by event.
 -- This is O(registered Magos) only at a physical mutation, NEVER a tick scan.
 -- A changed site cannot erase another executor's physical item custody.
-function M.observe_relevant_world_change_1405(event)
+function M.observe_relevant_world_change_1405(event,is_removal)
   local entity=event and (event.created_entity or event.entity
     or event.destination)
   local tp=storage and storage.tech_priests
@@ -501,7 +501,8 @@ function M.observe_relevant_world_change_1405(event)
       if near_outpost or close_ticket or near_home then
         local active_cargo=pair.construction_custody_0338~=nil
           or pair.construction_task_0338~=nil
-        if entity.valid==false and entity.unit_number then
+        if (is_removal==true or entity.valid==false)
+          and entity.unit_number then
           local removed=JustInTime1405.native_removed(mission,
             entity.unit_number,tick(),active_cargo)
           if removed then
@@ -515,12 +516,12 @@ function M.observe_relevant_world_change_1405(event)
           mission.outpost_world_revision_1405=
             (mission.outpost_world_revision_1405 or 0)+1
           count=count+1
-          if entity.valid then
+          if not is_removal and entity.valid then
             -- Existing native callback only; never create a ghost or a
             -- replacement construction request in the event handler.
             M.propose_next_outpost_object_1405(pair,{
               native_entity=entity})
-          elseif entity.unit_number then
+          elseif (is_removal or not entity.valid) and entity.unit_number then
             JustInTime1405.native_removed(mission,entity.unit_number,
               tick(),pair.construction_custody_0338~=nil
                 or pair.construction_task_0338~=nil)
@@ -602,8 +603,12 @@ local function install_native_outpost_invalidation_1405()
       local called,route=pcall(registry.on_event,id,function(event)
         -- Destroyed entities can become invalid during engine callbacks;
         -- never let a notification exception abort another owner's work.
+        local removal=name=="on_player_mined_entity"
+          or name=="on_robot_mined_entity"
+          or name=="on_entity_died"
+          or name=="script_raised_destroy"
         local processed,reason=pcall(M.observe_relevant_world_change_1405,
-          event)
+          event,removal)
         if not processed and log then
           log("[Tech-Priests 1405] native outpost invalidation: "..
             tostring(reason))
