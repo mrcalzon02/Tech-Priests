@@ -254,6 +254,23 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         r"provider=(\d+) station_restored=1 held=0 "
         r"original_mission=retained",
         "counted return of the exact station item")
+    power_cut = one(
+        r"NATIVE_POWERLESS_CUT tick=(\d+) original_magos=(\d+) "
+        r"original_senior=(\d+) original_port=(\d+) "
+        r"remote_port=(\d+) pole_held=1 robots=3 station_stock=1",
+        "one real feeder pole physically escrowed")
+    power_denied = one(
+        r"PASS NATIVE_POWERLESS_REFUSAL tick=(\d+) "
+        r"original_magos=(\d+) original_senior=(\d+) "
+        r"remote_port=(\d+) pole_held=1 station_stock=1 robots=3 "
+        r"native_event=none ore_unchanged=true",
+        "genuine remote no-power refusal with retained robots and item")
+    power_recovered = one(
+        r"PASS NATIVE_POWERLESS_RECOVERY tick=(\d+) "
+        r"original_port=(\d+) remote_port=(\d+) "
+        r"pole_debit=1 held=0 electric_grid=original "
+        r"logistic_network=merged original_mission=retained",
+        "same physically mined pole item restored to connected grid")
     event = one(
         r"NATIVE_ROBOT_EVENT tick=(\d+) station=(\d+) robot=(\d+) "
         r"event=on_robot_built_entity",
@@ -273,10 +290,18 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
             == int(coverage_recovered[1]) == int(spare_return[1])
             == int(material_cut[1])
             < int(material_denied[1]) == int(material_recovered[1])
+            == int(power_cut[1]) < int(power_denied[1])
+            == int(power_recovered[1])
             < int(event[1]) <= int(finished[1])
             and int(denied[1]) - int(cut[1]) >= 1500
             and int(coverage_denied[1]) - int(coverage_cut[1]) >= 1500
             and int(material_denied[1]) - int(material_cut[1]) >= 1500
+            and int(power_denied[1]) - int(power_cut[1]) >= 1500
+            and power_cut[2] == power_denied[2] == source[3]
+            and power_cut[3] == power_denied[3] == source[4]
+            and power_cut[4] == power_recovered[2] == extension[4]
+            and power_cut[5] == power_denied[4] == power_recovered[3]
+            and power_cut[5] != power_cut[4]
             and cut[2] == denied[2] == coverage_cut[2]
             == coverage_denied[2] == material_cut[2]
             == material_denied[2] == source[3]
@@ -328,6 +353,8 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         "native_coverageless_refusal_ticks": int(coverage_denied[1])-int(coverage_cut[1]),
         "native_materialless_refusal_accepted": True,
         "native_materialless_refusal_ticks": int(material_denied[1])-int(material_cut[1]),
+        "native_powerless_refusal_accepted": True,
+        "native_powerless_refusal_ticks": int(power_denied[1])-int(power_cut[1]),
         "native_frontier_poles": int(extension[6]),
         "native_frontier_ports": int(extension[7]),
         "natural_ore_return_accepted": False,
