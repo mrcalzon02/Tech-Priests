@@ -598,3 +598,6 @@ do
   _G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528=prior
 end
 print("[rail-board-0836] PASS 0528-owner reconciliation, cargo refusal and original unit fail-closed")
+-- The deterministic native extension scorer is a pure, separately executed
+-- Lua contract. It only ranks geometry; it never creates rails or ghosts.
+dofile("tests/unit/rail_route_choice_1403.lua")
