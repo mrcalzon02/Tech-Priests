@@ -14,8 +14,12 @@ function M.enabled()
   return s and s.enabled==true or false
 end
 local function timer()
-  if not(game and type(game.create_profiler)=="function")then return nil end
-  local ok,profiler=pcall(game.create_profiler,false)
+  -- Factorio 2.1 exposes the native clock through helpers; retain older
+  -- game.create_profiler compatibility for migration/runtime fixtures.
+  local clock=helpers and helpers.create_profiler
+    or game and game.create_profiler
+  if type(clock)~="function"then return nil end
+  local ok,profiler=pcall(clock,false)
   return ok and profiler or nil
 end
 local function stop(profiler)
