@@ -492,6 +492,18 @@ function M.plan_next(pair)
       return reject(m,"disconnected-rail-step")
     end
   end
+  -- Retain a small primitive-only inspection of true Factorio rail
+  -- extensions once for each credited segment. This never modifies the
+  -- original straight-east execution path or creates construction ghosts.
+  -- Later curve routing can consume the snapshot after native validation.
+  if route.segment>0
+    and route.native_probe_segment_1402~=route.segment then
+    local options,why=M.inspect_native_rail_extensions_0836(pair)
+    route.native_probe_segment_1402=route.segment
+    route.native_probe_reason_1402=why
+    route.native_probe_options_1402=options or {}
+    route.native_probe_tick_1402=now()
+  end
   -- Completion requires the LAST ACTUALLY BUILT rail to lie within
   -- the true 2D destination clearance. At capacity the last rail is
   -- (650,0): (666,0) is reachable, but (665,6) is NOT. A hypothetical
