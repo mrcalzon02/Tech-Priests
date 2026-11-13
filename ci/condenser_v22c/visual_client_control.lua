@@ -12,24 +12,37 @@ local ZOOMS={{"normal",1.0},{"close",2.7}}
 local NAME="tech-priests-atmospheric-water-condenser"
 local RECIPE="tech-priests-atmospheric-water-condensing"
 local PREFIX="TP_CONDENSER_V22C_GUI "
+local EXPECTED_OUTPUT={
+  -- Independent front-row pipe offsets from the actual four Blender views.
+  -- Not calculated from the fluidbox: this must reject the old rear-row bug.
+  north={x=1.5,y=0.5},
+  east={x=-0.5,y=1.5},
+  south={x=-1.5,y=-0.5},
+  west={x=0.5,y=-1.5}
+}
+local function near(a,b) return math.abs(a-b)<0.001 end
 local function ensure(condition,reason)
   if not condition then error(PREFIX.."FAIL "..reason,0) end
 end
 local function clear_area(surface,center)
+  -- Controlled identical pads (not eight unrelated random-world scenes).
+  -- 49x49 concrete tiles cover the entire 1.0x screenshot viewport.
   local tiles={}
-  for y=-11,11 do
-    for x=-11,11 do
-      tiles[#tiles+1]={name="grass-1",position={center.x+x,center.y+y}}
+  for y=-24,24 do
+    for x=-24,24 do
+      tiles[#tiles+1]={name="concrete",position={center.x+x,center.y+y}}
     end
   end
   surface.set_tiles(tiles,true)
-  for _,item in pairs(surface.find_entities_filtered{
-    area={{center.x-12,center.y-12},{center.x+12,center.y+12}}
-  }) do
+  local area={{center.x-25,center.y-25},{center.x+25,center.y+25}}
+  for _,item in pairs(surface.find_entities_filtered{area=area}) do
     if item.valid and (item.type=="tree" or item.type=="cliff" or
       item.type=="simple-entity" or item.type=="resource") then
       item.destroy()
     end
+  end
+  if surface.destroy_decoratives then
+    surface.destroy_decoratives{area=area}
   end
 end
 script.on_init(function()
@@ -40,7 +53,7 @@ script.on_init(function()
   -- Separate empty native terrain cells; no production saves or user entities.
   for st,state in ipairs(STATES) do
     for d,orientation in ipairs(DIRECTIONS) do
-      local center={x=44*(d-1),y=44*(st-1)}
+      local center={x=192+72*(d-1),y=192+72*(st-1)}
       surface.request_to_generate_chunks(center,2)
       locations[#locations+1]={center=center,state=state,facing=orientation[1],
         direction=orientation[2]}
@@ -66,8 +79,18 @@ script.on_init(function()
     local port=connections[1]
     ensure(port.target_position and port.flow_direction=="output",
       "No native output pipe target")
+    local expected=assert(EXPECTED_OUTPUT[site.facing],
+      "Missing authored flange orientation")
+    local physical={x=site.center.x+expected.x,y=site.center.y+expected.y}
+    ensure(near(port.target_position.x,physical.x) and
+           near(port.target_position.y,physical.y),
+      "VISUAL_FLANGE_PORT_MISMATCH "..site.facing..
+      " expected="..physical.x..","..physical.y..
+      " engine="..port.target_position.x..","..port.target_position.y)
+    -- Place the pipe at the independently specified sprite flange coordinate,
+    -- NOT wherever the defective prototype happens to report its socket.
     local pipe=surface.create_entity{
-      name="pipe",position=port.target_position,force=game.forces.player,
+      name="pipe",position=physical,force=game.forces.player,
       raise_built=false
     }
     ensure(pipe and pipe.valid,"Pipe placement failed "..site.facing..site.state)
@@ -98,7 +121,7 @@ script.on_init(function()
   ensure(machines==8 and pipes==8 and working==4 and #shots==16,
     "Native setup counts wrong")
   storage.condenser_v22c_gui={next_shot=0,shots=shots}
-  log(PREFIX.."NATIVE_WORLD_PASS condensers=8 connected_pipes=8 fueled=4 screenshots=16")
+  log(PREFIX.."NATIVE_WORLD_PASS condensers=8 connected_pipes=8 fueled=4 screenshots=16 independent_front_flange_positions=4 controlled_concrete_pads=8")
 end)
 script.on_nth_tick(60,function(event)
   local state=storage.condenser_v22c_gui
