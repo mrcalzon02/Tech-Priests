@@ -34,7 +34,7 @@ def materialize(path: pathlib.Path, case: str, *, spike: bool = False,
             continue
         ms = 30000000 if spike and tick == 600 else 100000
         data = {
-            "tick": f"t{duplicate if tick == duplicate else tick}",
+            "tick": f"t{tick - 1 if tick == duplicate else tick}",
             "timestamp": str(tick * 1000000),
             "wholeUpdate": str(ms),
             "scriptUpdate": str(25000000 if spike and tick == 600 else 30000),
