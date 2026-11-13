@@ -1,7 +1,7 @@
 # Martian Atmospheric Water Condenser V22C — native four-direction physical acceptance
 
 **Result: PASS — four native Factorio 2.1.24 pipe connections.**
-**Limit: physical pipe/socket proof, not graphical in-game screenshots or verified water transfer.**
+**Native pipe proof scope:** physical pipe/socket connection was checked separately. Real in-game screenshots have since passed (see additional visual capture below); fuel-fed water transfer after the segments form is still a separate gameplay test.
 
 ## Immutable evidence
 
@@ -47,4 +47,17 @@ The real engine save creation exited 0 and the 720-tick benchmark exited 0. The 
 
 The valid native receipt and exact JSON verdict are preserved in the GitHub Actions job log linked above. A separate GitHub Actions artifact upload was rejected because the artifact-storage quota is exhausted; upload delivery is NOT claimed to have succeeded.
 
-Blender source, native render, atlas integration, production ZIP packaging, and four-way physical Factorio pipe/socket alignment are validated. Graphical in-game sprite alignment against neighboring pipes, actual fluid flow after segment formation, and full graphical client animation are **still open**. A headless engine receipt is not a substitute for a real headful in-game screenshot.
+Blender source, native render, atlas integration, production ZIP packaging, and four-way physical Factorio pipe/socket alignment are validated. This section recorded the **earlier headless-only checkpoint**; genuine graphical client screenshots were subsequently obtained as documented below. Actual fluid delivery and human visual approval remain separate.
+
+## Completed graphical in-game V22C proof — November 12, 2026
+
+The owner-requested **real game-client rendering is complete**, not simply planned. The identical Steam Factorio 2.1.24 executable on OLD-CORE30-homebrew was launched with the tested `--force-opengl` backend in Windows Session 0. Its isolated genuine client scenario created **eight V22C condensers with eight physically connected output pipes**, and captured **16 native Factorio PNGs** across 4 cardinal facings, idle/working states, and normal/close zoom levels.
+
+- [First native game capture #43352134779 — pass](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/43352134779)
+- [Daylight repeat #43352927548 — pass](https://github.com/mrcalzon02/Dens-Mortis/actions/runs/43352927548) after changing capture time from dark midnight 0.5 to actual noon 0.0.
+- [Real Factorio daylight game screenshot contact sheet](captures/v22c/Condenser_V22C_REAL_Factorio_noonday_four_directions.png)
+- [Actual screenshot receipt and SHA-256](captures/v22c/Condenser_V22C_REAL_Factorio_native_capture_receipt.json)
+- Published screenshot commit: https://github.com/mrcalzon02/Tech-Priests/commit/2674af85e79433f803ec4008109ea625475a2303
+- Verified contact sheet hash: `cfbf930d09f016e07e59a77a17fb64c022453ceae48c8733ac08ec152633b627` (1,420,323 bytes). Its pixels are a labeled Pillow contact-sheet resizing of real game screenshots, not a replacement image generation.
+
+**Current acceptance:** In-game screenshot capture **PASS**; four-way Factorio physical socket placement **PASS**; source-lock and original 3D render **PASS**; production 41 atlas PNG release validation **PASS**. The screenshots demonstrate visible game-world machines and adjacent pipe artwork. **Manual artistic visual approval remains open**, as do post-initialization fluid output delivery and sustained 12-second animation fidelity in the client. Never conflate successful screenshot generation with these distinct gameplay/artistic gates.
