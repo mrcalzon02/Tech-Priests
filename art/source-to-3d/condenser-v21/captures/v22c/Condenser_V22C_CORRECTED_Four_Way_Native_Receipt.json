@@ -1,0 +1,83 @@
+{
+  "schema": "tech-priests.condenser-v22c-front-row-native-client-proof.v1",
+  "date": "2026-11-12",
+  "state": "real Factorio client capture successful; owner artistic approval pending",
+  "source_repository": "mrcalzon02/Tech-Priests",
+  "production_source_commit": "ce21b9678cfd4a6a2d88cdf44788a214819def4b",
+  "controller_repository": "mrcalzon02/Dens-Mortis",
+  "controller_commit": "4511bab25ebe908554ed3fd93ea860f758286619",
+  "run_url": "https://github.com/mrcalzon02/Dens-Mortis/actions/runs/43364804928",
+  "job_id": 131686590910,
+  "runner": "OLD-CORE30-homebrew",
+  "engine": "actual Steam Factorio 2.1.24 Windows graphical client, OpenGL",
+  "evidence_kind": "original game.take_screenshot PNG frames; displayed preview JPEG recompressed from genuine 16-image Factorio contact sheet",
+  "screenshot_count": 16,
+  "original_screenshot_resolution": [
+    1152,
+    864
+  ],
+  "states": [
+    "idle",
+    "working"
+  ],
+  "headings": [
+    "north",
+    "east",
+    "south",
+    "west"
+  ],
+  "zooms": [
+    "normal",
+    "close"
+  ],
+  "background": "identical daytime concrete pad for every native orientation",
+  "original_png_archive": {
+    "url": "https://github.com/mrcalzon02/Dens-Mortis/releases/download/tp-v22c-native-game-pngs-43364804928-1/TP-Condenser-V22C-REAL-Factorio-16-PNGs-43364804928.zip",
+    "bytes": 19313809,
+    "sha256": "7473cf9c3e155a30df04dd17fa4b538f21e30bd3787046b78aa0b09d2e2db4ee"
+  },
+  "preview": {
+    "path": "art/source-to-3d/condenser-v21/captures/v22c/Condenser_V22C_CORRECTED_Front_Row_NATIVE_Factorio_4_Directions.jpg",
+    "bytes": 264070,
+    "sha256": "901e94bea14e032941c7f7aa6d177ebd5d19d44d9dc1721ccfba977ee2a6848c",
+    "encoding": "JPEG"
+  },
+  "blender_source_flange_xyz": [
+    1,
+    -0.5,
+    0.36
+  ],
+  "factorio_local_socket": [
+    0.5,
+    0.5
+  ],
+  "blender_to_factorio_y_sign": -1,
+  "real_pipe_relative_targets": {
+    "north": [
+      1.5,
+      0.5
+    ],
+    "east": [
+      -0.5,
+      1.5
+    ],
+    "south": [
+      -1.5,
+      -0.5
+    ],
+    "west": [
+      0.5,
+      -1.5
+    ]
+  },
+  "source_mesh_geometry_changed": false,
+  "existing_atlas_pixels_changed": false,
+  "source_blender_reference_join_error_tiles": 0.0000010132789611816406,
+  "sprite_registration_pixels_per_tile": 32,
+  "true_native_four_direction_graphical_and_physical_alignment": "PASS",
+  "pending": [
+    "full sustained 12-second gameplay animation review",
+    "water production following segment initialization",
+    "owner visual sign-off"
+  ]
+}
