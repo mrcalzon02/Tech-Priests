@@ -208,20 +208,20 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         r"original_mission=retained",
         "counted same-robot item restoration")
     coverage_cut = one(
-        r"NATIVE_COVERAGELESS_CUT tick=(\\d+) original_magos=(\\d+) "
-        r"original_senior=(\\d+) original_port=(\\d+) "
-        r"retired_port=(\\d+) roboport_held=1 station_stock=1 "
+        r"NATIVE_COVERAGELESS_CUT tick=(\d+) original_magos=(\d+) "
+        r"original_senior=(\d+) original_port=(\d+) "
+        r"retired_port=(\d+) roboport_held=1 station_stock=1 "
         r"robots_restored=3",
         "physical removal and escrow of original new-grid port")
     coverage_denied = one(
-        r"PASS NATIVE_COVERAGELESS_REFUSAL tick=(\\d+) "
-        r"original_magos=(\\d+) original_senior=(\\d+) "
+        r"PASS NATIVE_COVERAGELESS_REFUSAL tick=(\d+) "
+        r"original_magos=(\d+) original_senior=(\d+) "
         r"retained_port=1 original_green=false remote_port=absent "
         r"robots=3 native_event=none ore_unchanged=true",
         "native uncovered-station refusal with real available robots/items")
     coverage_recovered = one(
-        r"PASS NATIVE_COVERAGELESS_RECOVERY tick=(\\d+) "
-        r"original_port=(\\d+) restored_port=(\\d+) "
+        r"PASS NATIVE_COVERAGELESS_RECOVERY tick=(\d+) "
+        r"original_port=(\d+) restored_port=(\d+) "
         r"port_debit=1 held=0 electric_grid=original "
         r"logistic_network=merged original_mission=retained",
         "same mined roboport item physically restored to connected grid")
