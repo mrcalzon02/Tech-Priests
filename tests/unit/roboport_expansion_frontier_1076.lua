@@ -632,6 +632,85 @@ assert(resumed.detail=="submitted-to-canonical-0338"
   and changing_pair.roboport_frontier_1076,
   "revalidated native network did not resume physical 0338 planning")
 objects=stable_objects
+-- Real native 43407042929: a physically mined and restored frontier
+-- roboport can cause Factorio to renumber a joined logistic network. Keep
+-- the ORIGINAL root port identity, recheck both live cells/force/surface/
+-- electrical grid, and recover from the previously persisted blocked state.
+-- Neither an unpowered replacement nor a foreign logistic island suffices.
+local prior_net_number=net.network_id
+local prior_rejoin_objects=objects
+objects={}
+local immutable_root=port({x=0,y=0},true,19)
+pole({x=0,y=4},7)
+local remote_old=port({x=38,y=0},true,19)
+local restored_owner=make_pair({x=60,y=0})
+local rooted=restored_owner.roboport_frontier_1076
+rooted={version=M.version,target={x=60,y=0},source_port=remote_old,
+  original_port_1076=immutable_root,last_source_position={x=38,y=0},
+  electric_network_id=7,logistic_network_id=net.network_id,
+  status="complete",segments=1,poles_built=3,started_tick=game.tick}
+restored_owner.roboport_frontier_1076=rooted
+local before_rejoin_stock=stock.roboport
+assert(M.service_pair(restored_owner).detail=="verified-existing-covered-frontier",
+  "initial physical root/remote native network not independently verified")
+net.network_id=prior_net_number+100
+assert(M.service_pair(restored_owner).detail=="verified-existing-covered-frontier"
+  and rooted.logistic_network_id==net.network_id,
+  "live joined native network renumbering rejected despite original root proof")
+remote_old.valid=false -- genuine mine invalidates the old LuaEntity
+rooted.status="blocked"
+rooted.blocked_reason="source-roboport-original-network-diverged"
+local missing_port=M.service_pair(restored_owner)
+assert(missing_port.waiting==1 and rooted.status=="blocked"
+  and not restored_owner.construction_request
+  and stock.roboport==before_rejoin_stock,
+  "mined frontier port silently received coverage or spent a new item")
+local foreign_island=port({x=38,y=0},true,net.network_id+1)
+local wrong_network=M.service_pair(restored_owner)
+assert(wrong_network.waiting==1 and rooted.status=="blocked"
+  and rooted.source_port==remote_old
+  and stock.roboport==before_rejoin_stock,
+  "foreign logistic island at exact site impersonated the original root")
+foreign_island.valid=false
+local restored_real=port({x=38,y=0},true,19)
+restored_real.electric_network_id=999
+local wrong_grid=M.service_pair(restored_owner)
+assert(wrong_grid.waiting==1 and rooted.status=="blocked"
+  and rooted.source_port==remote_old,
+  "foreign electric-grid roboport bypassed actual original-grid continuity")
+restored_real.electric_network_id=7
+immutable_root.energy=0
+local dead_root=M.service_pair(restored_owner)
+assert(dead_root.waiting==1 and rooted.status=="blocked"
+  and rooted.source_port==remote_old,
+  "unpowered original root was accepted from a cached logistics identity")
+immutable_root.energy=10000
+local after_restore=M.service_pair(restored_owner)
+assert(after_restore.detail=="verified-existing-covered-frontier"
+  and rooted.status=="complete"
+  and rooted.source_port==restored_real
+  and rooted.original_port_1076==immutable_root
+  and rooted.logistic_network_id==net.network_id
+  and not rooted.blocked_reason
+  and not restored_owner.construction_request
+  and stock.roboport==before_rejoin_stock,
+  "physical same-site port restoration did not rejoin counted original network")
+-- Legacy persisted frontiers lacking an immutable root may continue ONLY
+-- while their original native logistic ID remains exact; a renumbered one
+-- cannot be silently adopted.
+local legacy=make_pair({x=60,y=0})
+legacy.roboport_frontier_1076={
+  version=M.version,target={x=60,y=0},source_port=restored_real,
+  last_source_position={x=38,y=0},electric_network_id=7,
+  logistic_network_id=prior_net_number,status="blocked",
+  blocked_reason="source-roboport-original-network-diverged"}
+local legacy_refused=M.service_pair(legacy)
+assert(legacy_refused.waiting==1
+  and legacy.roboport_frontier_1076.status=="blocked"
+  and not legacy.construction_request,
+  "pre-root-identity mission adopted an unverified renumbered network")
+net.network_id=prior_net_number
+objects=prior_rejoin_objects
 -- Exercise the actual 0600 broker entry point, not only direct service_pair.
 -- A candidate array must never shadow Lua's built-in pairs() iterator:
 -- doing so silently makes every scheduled frontier dispatch fail in pcall.
