@@ -71,6 +71,14 @@ CASES = {
         "case": "placement",
         "ticks": 2000,
     },
+    "first-station-placement-unprofiled-1408": {
+        "fixture": "tests/scenarios/first-station-cold-start/fixture.lua",
+        "module": "ci_first_station_cold_1408",
+        "prefix": "[TP-FIRST-STATION-BENCH-1408]",
+        "pass": "PASS case=placement-unprofiled native_first_station_wake=true",
+        "case": "placement-unprofiled",
+        "ticks": 2000,
+    },
 }
 
 
@@ -1299,7 +1307,7 @@ def main() -> int:
                   and prefix + scenario["pass"] in contents)
         native = {
             "scenario": args.scenario,
-            "first_placement_tick": 600 if scenario["case"] == "placement" else None,
+            "first_placement_tick": 600 if scenario["case"] != "baseline" else None,
             "native_factorio_exit": benchmark,
             "created_save_exit": created,
             "factorio_version": engine_version,
