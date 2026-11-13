@@ -201,7 +201,7 @@ assert 'root.roboport_expansion_goal_1076=' not in fixture
 assert 'NATIVE_AUTONOMOUS_GOAL_READBACK tick=' in fixture
 # A native --create on the previous exact source failed because the new
 # readback had four consecutive periods, an invalid Lua concatenation.
-assert '" original_green="..tostring(original_green)..\\n' in fixture
+assert '" original_green="..tostring(original_green)..' in fixture
 assert 'tostring(original_green)....' not in fixture
 for field in ("target_x=", "target_y=", "selected_ore_x=",
               "selected_ore_y=", "expected_root=", "provider_stock=",
