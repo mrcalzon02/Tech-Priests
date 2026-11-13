@@ -511,6 +511,25 @@ with tempfile.TemporaryDirectory() as tempdir:
     assert config["visibility"]=={"public":False,"lan":False}
     assert config["require_user_verification"] is False
     assert config["autosave_interval"]==1000
+    # Run 43465415234: native Factorio rejected partial property tree
+    # before game load ("description" absent). Check complete explicit
+    # server-settings.example.json field set; preserve local/private saving.
+    required={"name","description","tags","max_players","visibility",
+              "username","password","token","game_password",
+              "require_user_verification","max_upload_in_kilobytes_per_second",
+              "max_upload_slots","minimum_latency_in_ticks",
+              "max_heartbeats_per_second",
+              "ignore_player_limit_for_returning_players","allow_commands",
+              "autosave_interval","autosave_slots","afk_autokick_interval",
+              "auto_pause","only_admins_can_pause_the_game",
+              "autosave_only_on_server","non_blocking_saving","admins"}
+    assert set(config)==required
+    assert config["description"]=="Private, isolated physical ore custody acceptance"
+    assert config["autosave_only_on_server"] is True
+    assert config["non_blocking_saving"] is False
+    assert all(not config[key] for key in ("username","password","token",
+                                           "game_password"))
+    assert config["tags"]==[]
 assert module.native_server_startup_failure_1381(
     "Error ServerMultiplayerManager.cpp:5")=="native-server-initialization"
 assert module.native_server_startup_failure_1381(

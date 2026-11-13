@@ -576,11 +576,32 @@ def robot_saveable_server_command(factorio: pathlib.Path, mods: pathlib.Path,
 def private_robot_server_settings(output: pathlib.Path) -> pathlib.Path:
     path = output / "robot-server-settings.json"
     path.write_text(json.dumps({
+        # Factorio 2.1.24 rejects a partial settings property tree:
+        # run 43465415234 failed before loading with missing "description".
+        # Supply the complete documented native template shape, with NO
+        # credentials and no public/LAN advertising.
         "name": "Tech Priests native cargo custody",
+        "description": "Private, isolated physical ore custody acceptance",
+        "tags": [],
+        "max_players": 1,
         "visibility": {"public": False, "lan": False},
-        "max_players": 1, "require_user_verification": False,
-        "auto_pause": False, "autosave_interval": 1000,
+        "username": "", "password": "", "token": "",
+        "game_password": "",
+        "require_user_verification": False,
+        "max_upload_in_kilobytes_per_second": 0,
+        "max_upload_slots": 5,
+        "minimum_latency_in_ticks": 0,
+        "max_heartbeats_per_second": 60,
+        "ignore_player_limit_for_returning_players": False,
+        "allow_commands": "admins-only",
+        "autosave_interval": 1000,
         "autosave_slots": 2,
+        "afk_autokick_interval": 0,
+        "auto_pause": False,
+        "only_admins_can_pause_the_game": True,
+        "autosave_only_on_server": True,
+        "non_blocking_saving": False,
+        "admins": [],
     }, indent=2), encoding="utf-8")
     return path
 
