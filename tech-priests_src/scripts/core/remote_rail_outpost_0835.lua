@@ -191,6 +191,7 @@ function M.observe_pair(pair)
     surface_index=result.station_surface,force_index=result.force_index,
     initial_stock=result.observed_stock,created_tick=tick(),
     last_observed_tick=tick(),next_step="plan-physical-track-route",
+    outpost_layout_status_1404="awaiting-native-throughput-and-site-observations",
     -- Deliberately no created buildings or cargo: independent executors
     -- must debit stocked rail before claiming a constructed track segment.
   }
@@ -276,6 +277,7 @@ function M.propose_outpost_capacity_1404(pair, measurements)
   local plan,why=OutpostLayout1404.plan(requested)
   if not plan then
     mission.outpost_layout_refusal_1404={tick=tick(),reason=why}
+    mission.outpost_layout_status_1404="capacity-layout-blocked"
     return nil,why
   end
   plan.root_station_unit=mission.root_station_unit
@@ -290,6 +292,7 @@ function M.propose_outpost_capacity_1404(pair, measurements)
   -- One bounded primitive snapshot per mission. It is NOT a progress
   -- receipt: railway and outpost physical commissioning remain unverified.
   mission.outpost_layout_1404=plan
+  mission.outpost_layout_status_1404="provisional-capacity-layout"
   mission.outpost_layout_refusal_1404=nil
   return plan,why
 end
