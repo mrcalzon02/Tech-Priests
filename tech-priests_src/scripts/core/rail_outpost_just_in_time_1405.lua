@@ -29,9 +29,17 @@ local function get_state(mission)
   local state=mission.outpost_jit_1405
   if type(state)~="table"then
     state={stage=1,accepted_count=0,accepted_units={},
-      accepted_history={},ticket=nil,last_world_revision=0,
+      accepted_history={},all_units={},ticket=nil,last_world_revision=0,
       next_think_tick=0}
     mission.outpost_jit_1405=state
+  end
+  if type(state.all_units)~="table" then
+    state.all_units={}
+    for index,group in pairs(state.accepted_history or {})do
+      for unit in pairs(group.units or {})do
+        state.all_units[unit]=index
+      end
+    end
   end
   return state
 end
@@ -53,7 +61,8 @@ local function native_object(mission,stage,observation,state)
     and entity.force and entity.force.index==mission.force_index
     and entity.surface and entity.surface.index==mission.surface_index
     and point(entity.position)
-    and not state.accepted_units[entity.unit_number])then return nil end
+    and not state.accepted_units[entity.unit_number]
+    and not state.all_units[entity.unit_number])then return nil end
   -- A real home-unloading interface belongs to the home area, not ore;
   -- its exact native coverage must be confirmed by the caller. All other
   -- outpost objects must be within a conservative local work envelope.
@@ -131,6 +140,7 @@ function M.next(mission,layout,observation,tick)
     -- Accept an alternative correctly verified player-built position just
     -- as we would a priest-built one. Do not destroy/rebuild or credit stock.
     state.accepted_units[entity.unit_number]=true
+    state.all_units[entity.unit_number]=state.stage
     state.accepted_count=state.accepted_count+1
     group.count=state.accepted_count
     state.ticket=nil
@@ -205,8 +215,14 @@ function M.native_removed(mission,unit,tick,physical_custody_active)
     if group and type(group.units)=="table"
       and group.units[unit]then
       group.units[unit]=nil
+      state.all_units=state.all_units or{}
+      state.all_units[unit]=nil
       group.count=math.max(0,(tonumber(group.count)or 1)-1)
       for later=index+1,#stages do
+        local replaced=state.accepted_history[later]
+        if replaced and type(replaced.units)=="table"then
+          for other in pairs(replaced.units)do state.all_units[other]=nil end
+        end
         state.accepted_history[later]=nil
       end
       state.stage=index
