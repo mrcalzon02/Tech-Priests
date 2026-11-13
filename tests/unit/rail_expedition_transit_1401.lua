@@ -168,4 +168,55 @@ check(not Track.authorized_paid_rail_transit_0836(pair,priest.position,live),
   "orphan/unregistered Magos retained station-wide travel permission")
 storage.tech_priests.pairs_by_station[104]=pair
 check(ghosts_created==0,"rail mission planning generated physical ghosts")
+-- Factorio-native extension geometry is observed only AFTER the last
+-- original 0338 rail has been physically built and its unit ID is known.
+-- Probe is read-only: no blueprint ghosts, new executor, item removal or
+-- early credit for either curved or straight candidate.
+prototypes={item={rail={name="rail"}},entity={
+  ["straight-rail"]={name="straight-rail"},
+  ["curved-rail-a"]={name="curved-rail-a"},
+  ["rail-ramp"]={name="rail-ramp"},
+}}
+surface.can_place_entity=function(spec)
+  return spec.name~="rail-ramp"
+end
+sites[99].get_rail_end=function(direction)
+  return {valid=true,get_rail_extensions=function(planner)
+    check(planner=="rail","native extension probe used wrong rail item")
+    if direction==defines.rail_direction.front then
+      return {
+        {name="straight-rail",position={x=101,y=1},direction=4},
+        {name="curved-rail-a",position={x=103,y=5},direction=2},
+        {name="curved-rail-a",position={x=103,y=5},direction=2},
+        {name="rail-ramp",position={x=105,y=7},direction=4},
+      }
+    end
+    return {}
+  end}
+end
+local candidate,probe_reason=Track.inspect_native_rail_extensions_0836(pair)
+check(probe_reason=="native-rail-options-observed"
+  and type(candidate)=="table" and #candidate==2
+  and candidate[1].name=="curved-rail-a"
+  and candidate[2].name=="straight-rail"
+  and candidate[1].from_rail_unit==sites[99].unit_number,
+  "original connected rail did not provide sorted, deduplicated native options")
+check(ghosts_created==0,
+  "native geometry inspection created ghosts instead of pure route intent")
+pair.construction_task_0338=nil
+pair.construction_request=nil
+mission.pending_rail_0836=nil
+mission.status="building-physical-rail"
+local planned,next_reason=Track.plan_next(pair)
+check(planned and next_reason=="rail-segment-requested"
+  and pair.construction_request
+  and pair.construction_request.item_name=="rail"
+  and pair.construction_request.position.x==101
+  and mission.rail_frontier_0836.segment==44
+  and mission.rail_frontier_0836.native_probe_segment_1402==44
+  and mission.rail_frontier_0836.native_probe_reason_1402
+    =="native-rail-options-observed"
+  and #mission.rail_frontier_0836.native_probe_options_1402==2
+  and ghosts_created==0,
+  "native probe rewrote original single-rail physical execution or emitted ghosts")
 print("[rail-expedition-transit-1401] PASS real source/site transit, bounded lane, physical rail identity, revoked mission, ordinary leash, zero ghosts")
