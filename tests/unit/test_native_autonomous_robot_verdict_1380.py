@@ -198,7 +198,7 @@ print("PASS native 1380 real-player test-save chart lifecycle and no chart bypas
 # observe chart transition and allow three REAL existing 0259 discovery
 # cadences before it may reject selection. No forced chart/goal, fabricated
 # inventory or weakened physical robot receipt is permitted.
-assert module.CASES["remote-robot-acquisition"]["ticks"]==42060
+assert module.CASES["remote-robot-acquisition"]["ticks"]==72060
 assert 'if charted and not s.first_chart_tick then' in fixture
 assert 's.first_chart_tick=game.tick' in fixture
 assert 'NATIVE_ORE_CHARTED tick=' in fixture
@@ -225,7 +225,7 @@ ore_receipt=(prefix+"PASS NATIVE_PHYSICAL_ORE_RETURN tick=2520 "
     "source_amount_before=1000 source_amount_after=999 "
     "hop1_delta=1 hop2_delta=1 magos_deposit=1 "
     "delivered_tick=2500 source_kind=natural-ore inventory_hold=empty")
-full_log=sample+"\\n"+ore_receipt
+full_log=sample+"\n"+ore_receipt
 ore_result=module.verify_autonomous_robot_ore_1380_log(full_log,72060)
 assert ore_result["natural_ore_return_accepted"] is True
 assert ore_result["new_distinct_ore_delivery_gates"]==1
@@ -234,7 +234,7 @@ assert ore_result["ore_items_delivered_per_1000_ticks"]==round(1000/72060,6)
 for bad in (
     sample,full_log+"\\n"+ore_receipt,
     full_log.replace("original_magos=10","original_magos=11"),
-    full_log.replace("intermediate_priest=51","intermediate_priest=52"),
+    sample+"\n"+ore_receipt.replace("intermediate_priest=51","intermediate_priest=52"),
     full_log.replace("source_amount_after=999","source_amount_after=998"),
     full_log.replace("hop1_delta=1","hop1_delta=0"),
     full_log.replace("hop2_delta=1","hop2_delta=0"),
