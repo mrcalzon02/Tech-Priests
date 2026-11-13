@@ -11,10 +11,10 @@ verify=module.verify_condenser_v22c_physical_log
 PREFIX="[TP-CONDENSER-V22C-PHYSICAL] "
 SUCCESS=PREFIX+"PASS four original 2x2 V22C condensers with native direction-rotated output pipes"
 RECORDS=[
-    PREFIX+"NATIVE_CONNECTED facing=north machine=101 pipe=201 source_x=0.000 source_y=0.000 target_x=1.500 target_y=-0.500 segment=301 segment_state=formed",
-    PREFIX+"NATIVE_CONNECTED facing=east machine=102 pipe=202 source_x=18.000 source_y=0.000 target_x=18.500 target_y=1.500 segment=302 segment_state=formed",
-    PREFIX+"NATIVE_CONNECTED facing=south machine=103 pipe=203 source_x=0.000 source_y=18.000 target_x=-1.500 target_y=18.500 segment=303 segment_state=formed",
-    PREFIX+"NATIVE_CONNECTED facing=west machine=104 pipe=204 source_x=18.000 source_y=18.000 target_x=17.500 target_y=16.500 segment=304 segment_state=formed",
+    PREFIX+"NATIVE_CONNECTED facing=north machine=101 pipe=201 source_x=0.000 source_y=0.000 target_x=1.500 target_y=0.500 segment=301 segment_state=formed",
+    PREFIX+"NATIVE_CONNECTED facing=east machine=102 pipe=202 source_x=18.000 source_y=0.000 target_x=17.500 target_y=1.500 segment=302 segment_state=formed",
+    PREFIX+"NATIVE_CONNECTED facing=south machine=103 pipe=203 source_x=0.000 source_y=18.000 target_x=-1.500 target_y=17.500 segment=303 segment_state=formed",
+    PREFIX+"NATIVE_CONNECTED facing=west machine=104 pipe=204 source_x=18.000 source_y=18.000 target_x=18.500 target_y=16.500 segment=304 segment_state=formed",
 ]
 
 def log(records=RECORDS,final=SUCCESS):
@@ -58,6 +58,19 @@ class FailClosedNativeReceipt(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"fabricated"):
             verify(0,log([RECORDS[0].replace("segment_state=formed",
                                             "segment_state=unformed"),*RECORDS[1:]]))
+    def test_reject_old_back_row_pipe_although_engine_would_connect(self):
+        """Native plumbing alone is not Blender artwork alignment."""
+        stale=[
+            RECORDS[0].replace("target_y=0.500","target_y=-0.500"),
+            RECORDS[1].replace("target_x=17.500","target_x=18.500"),
+            RECORDS[2].replace("target_y=17.500","target_y=18.500"),
+            RECORDS[3].replace("target_x=18.500","target_x=17.500"),
+        ]
+        for i in range(4):
+            broken=list(RECORDS)
+            broken[i]=stale[i]
+            with self.assertRaisesRegex(ValueError,"authored V22C flange"):
+                verify(0,log(broken))
     def test_reject_one_missing_heading(self):
         with self.assertRaises(ValueError):verify(0,log(RECORDS[:3]))
     def test_reject_repeated_heading(self):
