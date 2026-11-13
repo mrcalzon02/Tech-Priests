@@ -5,6 +5,7 @@
 local Frontier=require("scripts.core.rail_track_frontier_0836")
 local OutpostLayout1404=require("scripts.core.rail_outpost_layout_1404")
 local JustInTime1405=require("scripts.core.rail_outpost_just_in_time_1405")
+local PriestFactory1410=require("scripts.core.priest_factory_doctrine_1410")
 local M={version="0.1.676.0835",scan_interval=900,
   local_radius=64,remote_min=192,remote_max=1024,
   stock_floor=4,resource_item="iron-ore",
@@ -408,42 +409,84 @@ function M.propose_next_outpost_object_1405(pair,observation)
       verified=given.train and given.train.valid or false
     end
   end
-  local candidate=observation.candidate
   local prepared=nil
-  if candidate and current and not(state and state.ticket)then
-    local proto=prototypes and prototypes.item
-      and prototypes.item[candidate.item_name or current.name]
-    local named=proto and proto.place_result
-    local native_name=named and named.name
-    local point=candidate.position
-    if candidate.role==current.key
-      and candidate.entity_name==current.name
-      and native_name==current.name
-      and point and type(point.x)=="number"
-      and type(point.y)=="number"then
-      local clear,allowed=pcall(function()
-        return pair.station.surface.can_place_entity{
-          name=current.name,position=point,
-          direction=candidate.direction or 0,
-          force=pair.station.force}
-      end)
-      if clear and allowed==true then
-        local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
-        local counted,available=false,0
-        if stock and type(stock.generic_item_count)=="function"then
-          counted,available=pcall(stock.generic_item_count,pair,
-            candidate.item_name or current.name)
+  local incoming=observation.candidates
+  if incoming==nil and observation.candidate then
+    incoming={observation.candidate}
+  end
+  -- No doctrine lookup, site ranking or native placement evaluation while
+  -- the ORIGINAL next-object ticket, physical 0338 task, or cooldown is live.
+  -- Each deliberate planning invocation sees at most SIX positions for the
+  -- SAME immediate entity. All later stages remain unplanned.
+  local work_due=current and not(state and state.ticket)
+    and not(pair.construction_task_0338 or pair.construction_custody_0338)
+    and tick()>=(state and state.next_think_tick or 0)
+  if work_due and incoming~=nil then
+    if type(incoming)~="table"
+      or #incoming>PriestFactory1410.max_candidates then
+      return nil,"unbounded-doctrinal-outpost-site-search"
+    end
+    local verified={}
+    local stocks={}
+    local stock_authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    for _,candidate in ipairs(incoming)do
+      if type(candidate)=="table"then
+        local item=candidate.item_name or current.name
+        local proto=prototypes and prototypes.item
+          and prototypes.item[item]
+        local places=proto and proto.place_result
+        local pos=candidate.position
+        if candidate.role==current.key
+          and candidate.entity_name==current.name
+          and places and places.name==current.name
+          and type(pos)=="table"
+          and type(pos.x)=="number" and pos.x==pos.x
+          and type(pos.y)=="number" and pos.y==pos.y
+          and math.abs(pos.x)<1000000 and math.abs(pos.y)<1000000 then
+          local clear,allowed=pcall(function()
+            return pair.station.surface.can_place_entity{
+              name=current.name,position=pos,
+              direction=candidate.direction or 0,
+              force=pair.station.force}
+          end)
+          if clear and allowed==true then
+            if stocks[item]==nil then
+              local counted,number=false,0
+              if stock_authority
+                and type(stock_authority.generic_item_count)=="function"then
+                counted,number=pcall(
+                  stock_authority.generic_item_count,pair,item)
+              end
+              stocks[item]=counted and type(number)=="number"
+                and number>=1 or false
+            end
+            if stocks[item]then
+              verified[#verified+1]={
+                role=current.key,entity_name=current.name,item_name=item,
+                position={x=pos.x,y=pos.y},
+                direction=candidate.direction,
+                native_site_verified=true,real_item_available=true,
+                -- Advanced machinery is NOT assumed from caller-provided
+                -- flags; native tests must separately prove it before a
+                -- doctrine may prefer those topology-specific capabilities.
+              }
+            end
+          end
         end
-        prepared={
-          role=current.key,entity_name=current.name,
-          item_name=candidate.item_name or current.name,
-          position={x=point.x,y=point.y},
-          direction=candidate.direction,
-          native_site_verified=true,
-          real_item_available=counted and
-            type(available)=="number" and available>=1,
-        }
       end
+    end
+    if #verified>0 then
+      local anchor=current.key=="home-unloaders"
+        and pair.station.position or mission.target
+      local dx=mission.target.x-pair.station.position.x
+      local dy=mission.target.y-pair.station.position.y
+      local axis=observation.preferred_axis
+        or (math.abs(dx)>=math.abs(dy) and "horizontal"or"vertical")
+      local chosen,why=PriestFactory1410.select_immediate_site(
+        pair,current,verified,{anchor=anchor,preferred_axis=axis,
+          radius=current.key=="home-unloaders"and 64 or 96})
+      if not chosen then return nil,why end
+      prepared=chosen
     end
   end
   -- Every cycle sees the current mission's revision, not an external
