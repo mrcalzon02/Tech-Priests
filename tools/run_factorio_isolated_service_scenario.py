@@ -291,8 +291,12 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
             == int(material_cut[1])
             < int(material_denied[1]) == int(material_recovered[1])
             == int(power_cut[1]) < int(power_denied[1])
-            == int(power_recovered[1])
+            <= int(power_recovered[1])
             < int(event[1]) <= int(finished[1])
+            # Native electric/logistic connectivity may settle on a later
+            # Factorio tick after the exact held pole is spent. The fixture
+            # permits at most 180 ticks; do not require same-tick recovery.
+            and int(power_recovered[1]) - int(power_denied[1]) <= 180
             and int(denied[1]) - int(cut[1]) >= 1500
             and int(coverage_denied[1]) - int(coverage_cut[1]) >= 1500
             and int(material_denied[1]) - int(material_cut[1]) >= 1500

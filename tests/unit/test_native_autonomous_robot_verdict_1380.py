@@ -99,7 +99,22 @@ successor_port_sample=(sample.replace(power_cut,new_cut)
     .replace(power_recovered,new_recovered))
 assert module.verify_autonomous_robot_1380_log(
     0,successor_port_sample)["accepted"] is True
+# Graph settlement on the actual engine takes 60 native ticks (19620 to
+# 19680). Require the restored exact item, unchanged IDs and a bounded
+# 180-tick window before native robot construction.
+settled_recovered=power_recovered.replace("tick=7450","tick=7510")
+settled_sample=sample.replace(power_recovered,settled_recovered)
+assert module.verify_autonomous_robot_1380_log(
+    0,settled_sample)["accepted"] is True
+late_recovered=power_recovered.replace("tick=7450","tick=7631")
+late_event=event.replace("tick=7600","tick=7800")
+late_done=done.replace("tick=7700","tick=7900")
+late_sample=(sample.replace(power_recovered,late_recovered)
+    .replace(event,late_event).replace(done,late_done))
 checks=[
+    (0,late_sample),
+    (0,sample.replace(power_recovered,
+        power_recovered.replace("tick=7450","tick=7449"))),
     (0,successor_port_sample.replace(new_denied,
         new_denied.replace("remote_port=33","remote_port=34"))),
     (0,successor_port_sample.replace(new_recovered,
