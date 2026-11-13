@@ -686,6 +686,33 @@ end
 objects={}
 port({x=0,y=0},true,19)
 pole({x=0,y=4},7)
+-- The native uncovered Method II run 43379962913 exposed a genuine 0338
+-- discovery crash: each 0836 locomotive/wagon/stop predicate indexed
+-- mission.status even when the Magos has NO 0835 rail mission. All three
+-- must refuse without an exception; no false rail build or item debit.
+for _,kind in ipairs({
+  {site="original-first-locomotive-0836",item="locomotive"},
+  {site="original-first-wagon-0836",item="cargo-wagon"},
+  {site="original-first-train-stop-0836",item="train-stop"}}) do
+  local no_rail=make_pair({x=100,y=0})
+  no_rail.priest.position={x=0,y=0}
+  no_rail.priest.name="tech-priest"
+  assert(no_rail.remote_rail_outpost_0835==nil,
+    "rail-negative fixture unexpectedly has an original 0835 mission")
+  local request={item_name=kind.item,entity_name=kind.item,
+    position={x=14,y=0},site_reason=kind.site,
+    rail_mission_station_unit_0836=no_rail.station.unit_number}
+  no_rail.construction_request=request
+  local ok,candidate=pcall(Planner.discover_pair,no_rail,true)
+  assert(ok and candidate==nil
+    and no_rail.construction_candidate_0338==nil
+    and no_rail.construction_task_0338==nil
+    and no_rail.construction_custody_0338==nil,
+    "0338 crashed or credited a forged 0836 "..kind.item..
+      " request without an original live rail mission")
+end
+-- The following valid 1076 pole must discover its real stocked original
+-- request without requiring any unrelated rail mission to exist.
 local yielded=make_pair({x=100,y=0})
 yielded.priest.position={x=0,y=0}
 yielded.priest.name="tech-priest"
