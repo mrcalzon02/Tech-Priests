@@ -32,7 +32,7 @@ local function place(surface,force,name,x,y,raised)
 end
 local function candidate_ore(surface)
   local orelist=surface.find_entities_filtered{
-    name="iron-ore",type="resource",area={{70,12},{110,43}}}
+    name="iron-ore",type="resource",area={{85,12},{110,43}}}
   for _,ore in ipairs(orelist) do
     if ore.valid and ore.amount>=2 and ore.position then
       local products=ore.prototype and ore.prototype.mineable_properties
@@ -96,13 +96,11 @@ local function create_native_site(s)
   local force=game.forces.player
   -- Native, physically powered pre-existing infrastructure for the first
   -- already-covered stage. No electric-energy-interface or ghost credit.
-  for _,x in ipairs({18,34,50,66,82}) do
-    place(surface,force,"substation",x,8)
-  end
+  -- Only the ORIGINAL island is powered; expansion must build the rest.
+  place(surface,force,"substation",18,8)
   place(surface,force,"substation",18,24)
   place(surface,force,"substation",18,40)
   place(surface,force,"substation",18,56)
-  place(surface,force,"substation",66,24)
   -- The isolated native surface starts with EMPTY accumulator charge.
   -- The previous 16-panel/4-accumulator island showed radar_energy=334 J,
   -- electrically connected but unable to chart even its own chunk.
@@ -120,10 +118,9 @@ local function create_native_site(s)
       place(surface,force,"accumulator",x,y)
     end
   end
-  local near_port=place(surface,force,"roboport",18,0)
-  place(surface,force,"roboport",46,0)
-  local port=place(surface,force,"roboport",80,0)
-  local provider=place(surface,force,"passive-provider-chest",80,6)
+  -- One original native port. Natural ore at x>85 is beyond original green.
+  local port=place(surface,force,"roboport",18,0)
+  local provider=place(surface,force,"passive-provider-chest",18,6)
   local robot_inv=port.get_inventory(defines.inventory.roboport_robot)
   if not(robot_inv and robot_inv.valid
     and robot_inv.insert{name="construction-robot",count=3}==3) then
@@ -138,10 +135,44 @@ local function create_native_site(s)
   end
   -- A real powered radar, not a forced chart or hidden map observation,
   -- must reveal the naturally generated patch to the production 0259 planner.
-  local radar=place(surface,force,"radar",66,20)
+  local radar=place(surface,force,"radar",18,20)
   local magos=place(surface,force,
     "planetary-magos-cogitator-station",0,0,true)
   local senior=place(surface,force,"senior-cogitator-station",55,12,true)
+  -- Supply both ORIGINAL station chests by physically mining actual poles
+  -- and roboports. This is only scenario bootstrap, not synthetic 1076
+  -- construction, fabricated ore or permission to teleport later goods.
+  local magos_inv=magos.get_inventory(defines.inventory.chest)
+  local senior_inv=senior.get_inventory(defines.inventory.chest)
+  if not(magos_inv and magos_inv.valid and senior_inv and senior_inv.valid)then
+    fail("ORIGINAL_PHYSICAL_SUPPLY_INVENTORY_MISSING")
+  end
+  local function mine_existing_supply(name,count,inventory)
+    for _=1,count do
+      local source_entity=place(surface,force,name,40,50)
+      local before=inventory.get_item_count(name)
+      if not(source_entity.mine{inventory=inventory}==true
+        and not source_entity.valid
+        and inventory.get_item_count(name)==before+1)then
+        fail("NATIVE_CONSTRUCTION_SUPPLY_MINE_REFUSED "..name)
+      end
+    end
+  end
+  mine_existing_supply("medium-electric-pole",6,magos_inv)
+  mine_existing_supply("roboport",3,magos_inv)
+  mine_existing_supply("medium-electric-pole",6,senior_inv)
+  mine_existing_supply("roboport",3,senior_inv)
+  s.initial_pole_stock=magos_inv.get_item_count("medium-electric-pole")
+    +senior_inv.get_item_count("medium-electric-pole")
+  s.initial_port_stock=magos_inv.get_item_count("roboport")
+    +senior_inv.get_item_count("roboport")
+  if s.initial_pole_stock~=12 or s.initial_port_stock~=6 then
+    fail("PHYSICAL_START_SUPPLY_COUNT_MISMATCH")
+  end
+  emit("NATIVE_INITIAL_CONSTRUCTION_SUPPLY tick="..game.tick..
+    " original_magos="..magos.unit_number..
+    " original_senior="..senior.unit_number..
+    " poles=12 ports=6 native_mined=true")
   s.phase="awaiting-native-strategy"
   s.started_tick=game.tick
   s.surface=surface
@@ -241,6 +272,20 @@ local function pulse()
         fail("NATIVE_ROBOT_NETWORK_NOT_POWERED")
       end
       return
+    end
+    -- Require the original physical port to exclude the untouched patch.
+    if not s.original_coverage_read then
+      if cell.is_in_construction_range(s.ore.position)~=false then
+        fail("ORIGINAL_ORE_ALREADY_GREEN_COVERED")
+      end
+      s.original_electric_grid=s.port.electric_network_id
+      if not(type(s.original_electric_grid)=="number"
+        and s.original_electric_grid>0)then
+        fail("ORIGINAL_ELECTRIC_NETWORK_ID_MISSING")
+      end
+      s.original_coverage_read=true
+      emit("NATIVE_ORIGINAL_GREEN_BOUNDARY tick="..game.tick..
+        " ore_initial_green=false original_port="..s.port.unit_number)
     end
     local chunk={x=math.floor(s.ore.position.x/32),
       y=math.floor(s.ore.position.y/32)}
@@ -344,6 +389,68 @@ local function pulse()
       return
     end
     if s.phase=="awaiting-native-robot-build" then
+      -- Only a completed original 0338 build receipt, live electric/logistic
+      -- merge, and actual exact pole/port stock withdrawals prove extension.
+      local f=root.roboport_frontier_1076
+      if not s.extension_accepted and f and f.status=="complete"
+        and (f.segments or 0)>=1 and (f.poles_built or 0)>=1 then
+        local built_port=f.source_port
+        local original=s.port
+        local fresh=built_port and built_port.valid and built_port.logistic_cell
+        local old=original.logistic_cell
+        local new_network=fresh and fresh.logistic_network
+        local old_network=old and old.logistic_network
+        local last=f.last_receipt
+        local builder_unit=last and last.request_value
+          and last.request_value.frontier_builder_unit_1076
+        local builder=builder_unit and pairs_by_station[builder_unit]
+        local port_debit=s.initial_port_stock
+          -((item_count(root.station,"roboport") or 0)
+            +(item_count(senior.station,"roboport") or 0))
+        local pole_debit=s.initial_pole_stock
+          -((item_count(root.station,"medium-electric-pole") or 0)
+            +(item_count(senior.station,"medium-electric-pole") or 0))
+        if not(built_port and built_port.valid and built_port~=original
+          and built_port.type=="roboport"
+          and built_port.force==root.station.force
+          and built_port.surface==s.surface
+          and built_port.is_connected_to_electric_network()
+          and built_port.energy>0
+          and built_port.electric_network_id==s.original_electric_grid
+          and original.electric_network_id==s.original_electric_grid
+          and new_network and new_network.valid
+          and old_network and old_network.valid
+          and new_network.network_id==old_network.network_id
+          and old.is_in_construction_range(s.ore.position)==false
+          and fresh.is_in_construction_range(s.ore.position)==true
+          and last and last.phase=="complete"
+          and last.built_entity==built_port
+          and last.item_name=="roboport"
+          and builder and builder.station.valid
+          and builder.station.force==root.station.force
+          and port_debit==f.segments and pole_debit==f.poles_built)then
+          fail("NATIVE_FRONTIER_EXTENSION_RECEIPT_OR_STOCK_INVALID"..
+            " status="..tostring(f.status)..
+            " segments="..tostring(f.segments)..
+            " poles="..tostring(f.poles_built)..
+            " port_debit="..tostring(port_debit)..
+            " pole_debit="..tostring(pole_debit)..
+            " last_item="..tostring(last and last.item_name)..
+            " original_grid="..tostring(s.original_electric_grid))
+        end
+        s.extension_accepted=true
+        emit("PASS NATIVE_PHYSICAL_FRONTIER_EXTENSION tick="..game.tick..
+          " original_magos="..s.magos..
+          " original_senior="..s.senior..
+          " original_port="..original.unit_number..
+          " built_port="..built_port.unit_number..
+          " poles_built="..f.poles_built..
+          " ports_built="..f.segments..
+          " pole_debit="..pole_debit..
+          " port_debit="..port_debit..
+          " original_green=false actual_green=true"..
+          " electric_grid=original logistic_network=merged builder_receipt=0338")
+      end
       local goal=s.goal
       local site=goal and goal.remote_station_position_1076
       if not(site and s.event_station and s.event_robot) then
@@ -358,6 +465,9 @@ local function pulse()
               and root.resource_expansion_0259.last_reason))
         end
         return
+      end
+      if not s.extension_accepted then
+        fail("ROBOT_STATION_WITHOUT_COUNTED_POWERED_FRONTIER_EXTENSION")
       end
       local built=pairs_by_station[s.event_station]
       local receipt=senior.robot_network_last_task_0338

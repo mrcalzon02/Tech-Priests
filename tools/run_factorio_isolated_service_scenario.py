@@ -71,6 +71,7 @@ def verify_autonomous_robot_1380_process_logs(
     tag = "[TP-AUTONOMOUS-ROBOT-1380] "
     source = tag + "NATIVE_PHYSICAL_SOURCE "
     initialized = tag + "NATIVE_ON_INIT_BOOTSTRAP_COMPLETE "
+    supply = tag + "NATIVE_INITIAL_CONSTRUCTION_SUPPLY "
     future = (tag + "PASS AUTONOMOUS_0259_SELECTED ",
               tag + "NATIVE_ROBOT_EVENT ",
               tag + "PASS autonomous original 0259 selected and physical ")
@@ -78,7 +79,9 @@ def verify_autonomous_robot_1380_process_logs(
         raise ValueError("1380 Factorio create or loaded native process failed")
     if (create_log.count(source) != 1
             or create_log.count(initialized) != 1
-            or source in benchmark_log or initialized in benchmark_log):
+            or create_log.count(supply) != 1
+            or source in benchmark_log or initialized in benchmark_log
+            or supply in benchmark_log):
         raise ValueError("1380 missing/duplicate native --create/on_init physical source")
     if any(marker in create_log for marker in future):
         raise ValueError("1380 robot/goal receipt appeared before loaded native process")
@@ -89,9 +92,16 @@ def verify_autonomous_robot_1380_process_logs(
     init = re.search(
         re.escape(initialized)
         + r"phase=awaiting-native-strategy seed=(\d+)", create_log)
-    if (physical is None or init is None
+    supplied = re.search(
+        re.escape(supply) + r"tick=\d+ original_magos=(\d+) "
+        r"original_senior=(\d+) poles=12 ports=6 native_mined=true",
+        create_log)
+    ids = re.search(re.escape(source)
+        + r"tick=\d+ seed=\d+ magos=(\d+) senior=(\d+)", create_log)
+    if (physical is None or init is None or supplied is None or ids is None
+            or supplied.groups() != ids.groups()
             or physical.group(1) != init.group(1)
-            or physical.start() >= init.start()):
+            or not supplied.start() < physical.start() < init.start()):
         raise ValueError("1380 incomplete/mismatched native create/on_init transaction")
     return verify_autonomous_robot_1380_log(
         benchmark_exit, create_log + "\n" + benchmark_log)
@@ -172,6 +182,15 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         r"original_senior=(\d+) ore=(nil|\d+) original_station_stock=1 "
         r"real_power=true charted=true real_robots=true",
         "autonomous production goal")
+    extension = one(
+        r"PASS NATIVE_PHYSICAL_FRONTIER_EXTENSION tick=(\d+) "
+        r"original_magos=(\d+) original_senior=(\d+) "
+        r"original_port=(\d+) built_port=(\d+) "
+        r"poles_built=(\d+) ports_built=(\d+) "
+        r"pole_debit=(\d+) port_debit=(\d+) "
+        r"original_green=false actual_green=true "
+        r"electric_grid=original logistic_network=merged builder_receipt=0338",
+        "counted native original-grid extension")
     event = one(
         r"NATIVE_ROBOT_EVENT tick=(\d+) station=(\d+) robot=(\d+) "
         r"event=on_robot_built_entity",
@@ -184,14 +203,21 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         r"material_delta=1 source_stock=0 ghost=0 ore_return_not_credited=true",
         "paired Intermediate and exact material debit")
 
-    if not (int(source[1]) <= int(selected[1]) <= int(event[1])
-            <= int(finished[1])):
+    if not (int(source[1]) <= int(selected[1]) <= int(extension[1])
+            <= int(event[1]) <= int(finished[1])):
         raise ValueError("1380 unordered native material/goal/robot/receipt")
     if not (source[3] == selected[2] == finished[2]
             and source[4] == selected[3] == finished[4]
             and source[7] == selected[4]
             and event[2] == finished[6] and event[3] == finished[8]):
         raise ValueError("1380 original identities or event/receipt mismatch")
+    if not (extension[2] == source[3]
+            and extension[3] == source[4]
+            and extension[4] != extension[5]
+            and int(extension[6]) >= 1 and int(extension[7]) >= 1
+            and int(extension[6]) == int(extension[8])
+            and int(extension[7]) == int(extension[9])):
+        raise ValueError("1380 false original-grid or counted extension")
     if len({finished[2], finished[4], finished[6]}) != 3:
         raise ValueError("1380 duplicate ranked station entity")
     if len({finished[3], finished[5], finished[7]}) != 3:
@@ -210,6 +236,9 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         "paired_intermediate_priest": int(finished[7]),
         "native_construction_robot": int(finished[8]),
         "original_stock_debit": 1,
+        "native_counted_frontier_extension_accepted": True,
+        "native_frontier_poles": int(extension[6]),
+        "native_frontier_ports": int(extension[7]),
         "natural_ore_return_accepted": False,
         "ore_items_delivered_per_1000_ticks": None,
         "first_delivery_latency_ticks": None,

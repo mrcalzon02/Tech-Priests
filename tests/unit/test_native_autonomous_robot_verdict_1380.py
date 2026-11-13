@@ -15,6 +15,11 @@ physical=(prefix+"NATIVE_PHYSICAL_SOURCE tick=100 seed=1380001 magos=10 "
 selected=(prefix+"PASS AUTONOMOUS_0259_SELECTED tick=1300 original_magos=10 "
     "original_senior=20 ore=nil original_station_stock=1 "
     "real_power=true charted=true real_robots=true")
+extension=(prefix+"PASS NATIVE_PHYSICAL_FRONTIER_EXTENSION tick=1450 "
+    "original_magos=10 original_senior=20 original_port=30 built_port=31 "
+    "poles_built=2 ports_built=1 pole_debit=2 port_debit=1 "
+    "original_green=false actual_green=true "
+    "electric_grid=original logistic_network=merged builder_receipt=0338")
 event=(prefix+"NATIVE_ROBOT_EVENT tick=1540 station=50 robot=60 "
     "event=on_robot_built_entity")
 done=(prefix+"PASS autonomous original 0259 selected and physical "
@@ -22,7 +27,7 @@ done=(prefix+"PASS autonomous original 0259 selected and physical "
     "magos_priest=11 senior=20 senior_priest=21 intermediate=50 "
     "intermediate_priest=51 native_robot=60 material_delta=1 "
     "source_stock=0 ghost=0 ore_return_not_credited=true")
-sample="\n".join((physical,selected,event,done))
+sample="\n".join((physical,selected,extension,event,done))
 report=module.verify_autonomous_robot_1380_log(0,sample)
 assert report["accepted"] is True
 assert report["natural_ore_return_accepted"] is False
@@ -34,6 +39,14 @@ checks=[
     (0,sample.replace("event=on_robot_built_entity","event=scripted")),
     (0,sample.replace("material_delta=1","material_delta=0")),
     (0,sample.replace("source_stock=0","source_stock=1")),
+    (0,sample.replace(extension+"\n","")),
+    (0,sample+"\n"+extension),
+    (0,sample.replace("original_green=false","original_green=true")),
+    (0,sample.replace("actual_green=true","actual_green=false")),
+    (0,sample.replace("poles_built=2","poles_built=0")),
+    (0,sample.replace("port_debit=1","port_debit=0")),
+    (0,sample.replace("original_port=30","original_port=31")),
+    (0,sample.replace("logistic_network=merged","logistic_network=split")),
     (0,sample.replace("ghost=0","ghost=1")),
     (0,sample.replace("magos=10 magos_priest=11","magos=99 magos_priest=11")),
     (0,sample.replace("native_robot=60","native_robot=61")),
@@ -123,10 +136,13 @@ print("PASS native 1380 day/night physical radar supply and unbiased discovery c
 # 0259 selection, on_robot_built_entity and the 0338/0480 finished receipt.
 bootstrap=(prefix+"NATIVE_ON_INIT_BOOTSTRAP_COMPLETE "
            "phase=awaiting-native-strategy seed=1380001")
+physical_supply=(prefix+"NATIVE_INITIAL_CONSTRUCTION_SUPPLY tick=100 "
+                 "original_magos=10 original_senior=20 "
+                 "poles=12 ports=6 native_mined=true")
 create_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore",
-                      physical,bootstrap))
+                      physical_supply,physical,bootstrap))
 benchmark_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore",
-                         selected,event,done))
+                         selected,extension,event,done))
 assert module.verify_autonomous_robot_1380_process_logs(
     0,create_log,0,benchmark_log)["accepted"] is True
 negative_processes=[
@@ -134,6 +150,12 @@ negative_processes=[
     (0,create_log,1,benchmark_log),
     (0,create_log.replace(physical+"\n",""),0,benchmark_log),
     (0,create_log+"\n"+physical,0,benchmark_log),
+    (0,create_log.replace(physical_supply+"\n",""),0,benchmark_log),
+    (0,create_log+"\n"+physical_supply,0,benchmark_log),
+    (0,create_log.replace("poles=12 ports=6","poles=11 ports=6"),0,benchmark_log),
+    (0,create_log.replace("original_senior=20 poles=12",
+                          "original_senior=21 poles=12"),0,benchmark_log),
+    (0,create_log,0,physical_supply+"\n"+benchmark_log),
     (0,create_log.replace(bootstrap,""),0,benchmark_log),
     (0,create_log+"\n"+bootstrap,0,benchmark_log),
     (0,create_log.replace(
@@ -164,6 +186,17 @@ assert '" natural_ore_unit="..tostring(ore.unit_number)' in fixture
 assert '" natural_ore_unit="..ore.unit_number' not in fixture
 print("PASS native 1380 authentic --create/on_init physical source and "
       +str(len(negative_processes))+" strict refusal cases")
+assert 'area={{85,12},{110,43}}' in fixture
+assert 'NATIVE_INITIAL_CONSTRUCTION_SUPPLY' in fixture
+assert 'NATIVE_PHYSICAL_FRONTIER_EXTENSION' in fixture
+assert 's.extension_accepted' in fixture
+assert 'port_debit==f.segments and pole_debit==f.poles_built' in fixture
+assert 'old.is_in_construction_range(s.ore.position)==false' in fixture
+assert 'fresh.is_in_construction_range(s.ore.position)==true' in fixture
+assert 'last.built_entity==built_port' in fixture
+assert 'source_entity.mine{inventory=inventory}' in fixture
+assert 'root.roboport_expansion_goal_1076=' not in fixture
+print("PASS native 1380 counted original-grid frontier prerequisite")
 
 # Native 1380 CREATE failed on genuine generated fish in the enlarged solar
 # corridor. Only that exactly-typed non-ore obstacle is clearable, and only
