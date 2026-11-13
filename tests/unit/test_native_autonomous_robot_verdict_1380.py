@@ -197,7 +197,8 @@ create_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore
                       physical_supply,physical,bootstrap))
 benchmark_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore",
                          selected,extension,robot_cut,robot_denied,
-                         robot_recovered,event,done))
+                         material_cut,robot_recovered,material_denied,
+                         material_recovered,event,done))
 assert module.verify_autonomous_robot_1380_process_logs(
     0,create_log,0,benchmark_log)["accepted"] is True
 negative_processes=[
