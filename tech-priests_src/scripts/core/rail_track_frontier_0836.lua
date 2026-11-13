@@ -244,6 +244,113 @@ function M.authorized_paid_rail_contact_0836(pair,point,reason,opts)
   end
   return true
 end
+-- Railway-expedition travel is exceptional only while the ORIGINAL 0338
+-- builder owns a real rail step. 0574 admits the distant *destination*, but
+-- 0566 must also recognize the physical journey along previously paid track.
+-- No entity ghosts, new dispatcher, free stock, or general leash override.
+function M.authorized_paid_rail_transit_0836(pair,point,movement)
+  if not(eligible(pair,pair and pair.remote_rail_outpost_0835)
+    and type(point)=="table" and type(point.x)=="number"
+    and type(point.y)=="number" and type(movement)=="table"
+    and movement.owner=="construction-planner-0338"
+    and (movement.expires_tick==nil
+      or (type(movement.expires_tick)=="number"
+        and movement.expires_tick>=now()))
+    and pair.priest.surface==pair.station.surface
+    and pair.priest.force==pair.station.force)then return false end
+  local goal=movement.ground_route_final_destination or movement
+  if not(type(goal)=="table" and type(goal.x)=="number"
+      and type(goal.y)=="number")then return false end
+  local mission=pair.remote_rail_outpost_0835
+  local route=mission.rail_frontier_0836
+  local task=pair.construction_task_0338
+  local pending=mission.pending_rail_0836
+  if not(task and route and type(route.start_position)=="table"
+      and type(route.last_position)=="table"
+      and type(route.segment)=="number" and route.segment>=1
+      and route.segment==math.floor(route.segment)
+      and route.segment<=M.max_segments
+      and type(route.built_units)=="table"
+      and #route.built_units==route.segment
+      and defines and defines.direction
+      and route.direction==defines.direction.east
+      and close(route.start_position,native_first_rail_center(pair.station.position))
+      and close(route.last_position,pos(
+        route.start_position.x+(route.segment-1)*M.segment_step,
+        route.start_position.y)))then return false end
+  local reason=movement.reason
+  if reason=="construction-site-standoff-0338" then
+    if not M.authorized_paid_rail_contact_0836(pair,goal,reason,
+        {owner=movement.owner}) then return false end
+  elseif reason=="construction-source-0338" then
+    -- The outbound rail builder may have to walk HOME to a real source
+    -- before it can debit the next rail. Only the exact pending physical
+    -- rail writ, its original 0338 worker and an in-range real inventory
+    -- can authorize this empty-handed trip. This is not ore scouting.
+    local source=task.source_entity
+    if not(mission.status=="building-physical-rail"
+      and pending and pending.request==pair.construction_request
+      and task.request_field=="construction_request"
+      and task.request_value==pending.request
+      and task.site_reason=="remote-rail-physical-frontier-0836"
+      and task.item_name=="rail" and task.entity_name=="straight-rail"
+      and task.phase=="move-source"
+      and task.position and pending.position
+      and close(task.position,pending.position)
+      and task.direction==pending.direction
+      and pending.segment==route.segment+1
+      and (not task.carried or (tonumber(task.carried.count) or 0)==0)
+      and valid(source) and source.position
+      and source.force==pair.station.force
+      and source.surface==pair.station.surface
+      and task.source_inv and task.source_inv.valid)then return false end
+    local sx=goal.x-source.position.x
+    local sy=goal.y-source.position.y
+    local hx=source.position.x-pair.station.position.x
+    local hy=source.position.y-pair.station.position.y
+    if sx*sx+sy*sy>64 or hx*hx+hy*hy>48*48 then return false end
+    -- Check the original physical frontier even before the builder takes
+    -- the next rail. No merely planned/foreign/disconnected track qualifies.
+    local last=track_at(pair,route.last_position,route.direction)
+    if not(last and last.unit_number==route.built_units[route.segment])then
+      return false
+    end
+    if route.segment>1 then
+      local before=track_at(pair,pos(
+        route.last_position.x-M.segment_step,route.last_position.y),
+        route.direction)
+      if not(before and before.unit_number==route.built_units[route.segment-1]
+        and connected_straight_rails(before,last))then return false end
+    end
+  else
+    return false
+  end
+  -- For the current straight eastbound baseline, the priest must actually
+  -- remain beside item-paid original rails, not merely inside a huge rectangle
+  -- stretching to its eventual target. Check one nearby rail and predecessor,
+  -- bounded O(1) native scans. Curved routes require a later graph-based lane
+  -- validator; they do not inherit this straight-corridor exception.
+  local start=route.start_position
+  local min_x=math.min(pair.station.position.x,start.x)-6
+  local max_x=route.last_position.x+6
+  if point.x<min_x or point.x>max_x
+    or math.abs(point.y-start.y)>10 then return false end
+  local index=math.floor((point.x-start.x)/M.segment_step+0.5)+1
+  index=math.max(1,math.min(route.segment,index))
+  local at=pos(start.x+(index-1)*M.segment_step,start.y)
+  local rail=track_at(pair,at,route.direction)
+  if not(rail and rail.unit_number==route.built_units[index])then
+    return false
+  end
+  if index>1 then
+    local previous=track_at(pair,pos(at.x-M.segment_step,at.y),
+      route.direction)
+    if not(previous and previous.unit_number==route.built_units[index-1]
+      and connected_straight_rails(previous,rail))then return false end
+  end
+  return true
+end
+
 local function reject(objective,reason)
   objective.status="rail-track-blocked"
   objective.stage="blocked"
