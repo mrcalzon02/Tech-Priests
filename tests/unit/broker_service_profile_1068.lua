@@ -4,10 +4,13 @@ package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.
 storage={tech_priests={}}
 game={tick=0}
 local created=0
-game.create_profiler=function()
+-- Factorio 2.1.7 removed game.create_profiler; only helpers exposes
+-- the native profiler. This test must fail if the broker silently retains
+-- the obsolete API in its CI and per-service sampler.
+helpers={create_profiler=function()
   created=created+1
   return {stop=function()return true end}
-end
+end}
 local events={}
 log=function(msg)
   if type(msg)~="table" then return end
