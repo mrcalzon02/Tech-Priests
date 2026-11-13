@@ -2,6 +2,7 @@
 -- time using the EXISTING 0338 construction executor and its exact item ledger.
 -- Never build remotely, spawn stock, bypass the dispatcher or use an uncharted
 -- railway destination. Terrain-routing and a runnable railway remain later gates.
+local RouteChoice1403=require("scripts.core.rail_route_choice_1403")
 local M={version="0.1.676.0836",start_offset=12,segment_step=2,
   destination_clearance=16,max_segments=320,max_lateral_error=6,
   pending_admission_timeout_ticks=60*120}
@@ -876,18 +877,15 @@ function M.inspect_native_rail_extensions_0836(pair)
     end
   end
   if api_ends==0 then return nil,"native-rail-extensions-unavailable"end
-  table.sort(options,function(a,b)
-    if a.distance_sq~=b.distance_sq then
-      return a.distance_sq<b.distance_sq end
-    if a.name~=b.name then return a.name<b.name end
-    if a.position.x~=b.position.x then
-      return a.position.x<b.position.x end
-    return a.position.y<b.position.y
-  end)
-  -- Return at most three safe to DISPLAY and evaluate, never to construct.
-  local selected={}
-  for i=1,math.min(#options,3)do selected[i]=options[i]end
-  return selected,#options>0 and "native-rail-options-observed"
+  -- Score the observed, engine-placeable extensions without trusting
+  -- ghosts, distant speculation, foreign rail IDs or backward duplicates.
+  -- This pure ranker never issues a 0338 work request or spends a rail.
+  local selected,decision=RouteChoice1403.rank({
+    unit_number=last.unit_number,position=last.position,
+  },options,mission.target)
+  if #selected>0 then return selected,"native-rail-options-observed"end
+  return selected,decision=="no-progressive-rail-extension-1403"
+    and "native-rail-options-no-progress"
     or "native-rail-options-obstructed"
 end
 
