@@ -708,7 +708,8 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
     # chart lifecycle as the previously accepted --test-save player fixture:
     # real 43420567231 reached tick 30000 with radar powered but ore uncharted.
     # Reuse the SAME genuine native-player test-save mode for the first process,
-    # stop before the previously observed tick-31970 Magos delivery, and
+    # allow time for the actual natural-ore physical pickup while stopping
+    # before observed tick-31970 Magos deposit, and
     # require a CRC-verified auto-save containing the actual first-hop cargo.
     roots = factorio_1381_save_roots(factorio)
     started = time.monotonic()
@@ -721,7 +722,7 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                 old.unlink()
         with source_log.open("w",encoding="utf-8") as handle:
             process = subprocess.Popen(
-                rail_native_player_test_command(factorio,mods,initial,30000),
+                rail_native_player_test_command(factorio,mods,initial,31900),
                 stdout=handle,stderr=subprocess.STDOUT)
             try:
                 first_exit = process.wait(timeout=timeout)
@@ -736,7 +737,7 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
             raise RuntimeError("first Factorio process failed: "
                                +" | ".join(src.splitlines()[-8:])[-1400:])
         if marker not in src:
-            raise RuntimeError("native player reached 30000 ticks without held"
+            raise RuntimeError("native player reached 31900 ticks without held"
                                " natural ore save marker")
         if "Saving finished" not in src:
             raise RuntimeError("Factorio did not confirm autosave completion")
