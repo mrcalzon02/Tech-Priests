@@ -4,7 +4,14 @@ This test captures **actual Factorio 2.1 GUI pixels** of the approved native Ble
 
 ## Run from the signed-in Steam Windows desktop
 
-With a current Tech-Priests checkout open on that machine, double-click the repository-root file:
+**Simplest option:** download the single repository-root launcher
+[FETCH_AND_RUN_CONDENSER_V22C_STEAM_GUI.cmd](../../FETCH_AND_RUN_CONDENSER_V22C_STEAM_GUI.cmd)
+to the signed-in Steam desktop and double-click it. It requires Git for Windows,
+checks out only the production mod, approved Cycles proof and capture scripts,
+then invokes the native capture. It keeps its downloaded source and all genuine
+evidence under a new Documents/TechPriests-V22C-GUI-* directory.
+
+With a current Tech-Priests checkout already available on that machine, double-click the repository-root file:
 
 **RUN_CONDENSER_V22C_IN_GAME_CAPTURE.cmd**
 
