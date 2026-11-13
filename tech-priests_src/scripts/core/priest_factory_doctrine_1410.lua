@@ -256,6 +256,20 @@ function M.next_factory_object(pair,observation)
   if state.ticket and leased then
     return nil,"original-physical-factory-custody-preserved"
   end
+  if state.ticket and (state.ticket.objective_id~=observation.objective_id
+    or state.ticket.role~=stage.key
+    or state.ticket.entity_name~=stage.name)then
+    -- A different role or production goal cannot steal an existing
+    -- current-object writ. Only an observed world revision can invalidate
+    -- it, and even then the next evaluation is delayed.
+    if revision>state.world_revision then
+      state.ticket=nil
+      state.world_revision=revision
+      state.next_think_tick=t+60
+      return nil,"changed-objective-reinspect-after-world-change"
+    end
+    return nil,"waiting-for-original-factory-object"
+  end
   local native=observed_native(pair,stage,observation,state)
   if native then
     state.ticket=nil
