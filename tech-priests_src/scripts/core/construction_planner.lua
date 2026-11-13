@@ -432,6 +432,7 @@ local function owned_pending_locomotive_0836(pair,request)
  return type(request)=="table" and valid_pair(pair)
    and station.name=="planetary-magos-cogitator-station"
    and priest.force==station.force and priest.surface==station.surface
+   and type(mission)=="table"
    and mission.status=="rail-track-established"
    and mission.root_station_unit==station.unit_number
    and mission.force_index==station.force.index
@@ -457,6 +458,7 @@ local function owned_pending_wagon_0836(pair,request)
  return type(request)=="table" and valid_pair(pair)
    and station.name=="planetary-magos-cogitator-station"
    and priest.force==station.force and priest.surface==station.surface
+   and type(mission)=="table"
    and mission.status=="rail-track-established"
    and mission.root_station_unit==station.unit_number
    and mission.force_index==station.force.index
@@ -490,6 +492,7 @@ local function owned_pending_stop_0836(pair,request)
  return type(request)=="table" and valid_pair(pair)
    and station.name=="planetary-magos-cogitator-station"
    and priest.force==station.force and priest.surface==station.surface
+   and type(mission)=="table"
    and mission.status=="rail-track-established"
    and mission.root_station_unit==station.unit_number
    and mission.force_index==station.force.index
