@@ -101,6 +101,48 @@ local function port_at(pair,pos)
       and same(e.position,pos)then return e end
   end
 end
+-- Recheck the live physical root every time a rebuilt port can renumber
+-- Factorio's logistic network. The initial original-port LuaEntity is a
+-- persistent identity anchor, NOT a cached network-number permission. Never
+-- treat a same-force but disconnected logistic island as the original grid.
+local function rejoin_original_1076(pair,state)
+  local port=state.source_port
+  local live_source=grid_port(port)
+  if not live_source and state.last_source_position then
+    -- The old LuaEntity becomes invalid after a real mine/rebuild. Only an
+    -- actual, same-site Factorio roboport may replace that identity.
+    local replacement=port_at(pair,state.last_source_position)
+    if replacement then port=replacement;live_source=grid_port(port)end
+  end
+  if not(live_source and valid(port)
+    and port.force==pair.station.force
+    and port.surface==pair.station.surface
+    and live_source.electric_network_id==state.electric_network_id)then
+    return nil,"source-roboport-lost-power-or-original-grid"
+  end
+  local original=state.original_port_1076
+  if original then
+    local root=grid_port(original)
+    if not(root and original.force==pair.station.force
+      and original.surface==pair.station.surface
+      and root.electric_network_id==state.electric_network_id)then
+      return nil,"original-roboport-lost-power-or-grid"
+    end
+    if live_source.network_id~=root.network_id then
+      return nil,"original-logistic-cells-disconnected"
+    end
+  elseif live_source.network_id~=state.logistic_network_id then
+    -- Pre-1076-root-identity saves may continue on their originally
+    -- verified ID, but cannot authorize renumbered network adoption.
+    return nil,"legacy-original-logistic-identity-unverifiable"
+  end
+  -- Pure bookkeeping reconciliation after real source/root connectivity,
+  -- original electrical identity, force and surface have been re-proved.
+  state.source_port=port
+  state.logistic_network_id=live_source.network_id
+  return live_source
+end
+
 local function pole_at(pair,pos,name)
   local entities=find(pair,{
     name=name,position=pos,radius=0.75,
@@ -966,8 +1008,23 @@ function M.service_pair(pair)
       last_source_position=point(source.port.position),
       logistic_network_id=source.network_id,
       electric_network_id=anchor.grid_id,power_anchor=anchor.pole,
-      status="planning",segments=0,poles_built=0,started_tick=tick()}
+      original_port_1076=source.port,
+       status="planning",segments=0,poles_built=0,started_tick=tick()}
     pair.roboport_frontier_1076=s
+  end
+  if s.status=="blocked" and
+    (s.blocked_reason=="source-roboport-original-network-diverged"
+      or s.blocked_reason=="source-roboport-lost-power-or-network") then
+    -- A restored, actually joined port may have a NEW native logistic ID.
+    -- Reopen only after both physical ports agree on their current live
+    -- network AND the original electric grid still matches. No item or
+    -- construction request is created by this reconciliation.
+    local rejoined,why=rejoin_original_1076(pair,s)
+    if not rejoined then
+      return {processed=1,waiting=1,
+        detail="awaiting-physical-original-network-rejoin:"..tostring(why)}
+    end
+    s.status="planning";s.blocked_reason=nil;s.last_update_tick=tick()
   end
   if s.status=="blocked" then
     local reason=s.blocked_reason
@@ -983,11 +1040,8 @@ function M.service_pair(pair)
     return {processed=1,detail="blocked:"..tostring(reason or "")}
   end
   if s.status=="complete"then
-    local confirmed=grid_port(s.source_port)
-    if confirmed
-      and confirmed.electric_network_id==s.electric_network_id
-      and confirmed.network_id==s.logistic_network_id
-      and goal_coverage(pair,s.source_port,s.target)then
+    local confirmed=rejoin_original_1076(pair,s)
+    if confirmed and goal_coverage(pair,s.source_port,s.target)then
       return service_remote_station_1076(pair,s)
     end
     -- A lost port or separated grid invalidates completion immediately.
@@ -998,10 +1052,21 @@ function M.service_pair(pair)
     s.power_anchor=nil
   end
   if s.status=="recovering" then
+    local root
+    if s.original_port_1076 then
+      root=grid_port(s.original_port_1076)
+      if not(root
+        and s.original_port_1076.force==pair.station.force
+        and s.original_port_1076.surface==pair.station.surface
+        and root.electric_network_id==s.electric_network_id)then
+        return {processed=1,waiting=1,
+          detail="awaiting-original-powered-root-roboport"}
+      end
+    end
     local recovered,why=choose_origin(pair,s.target,{
       center=s.last_source_position or pair.station.position,
       electric_network_id=s.electric_network_id,
-      logistic_network_id=s.logistic_network_id})
+      logistic_network_id=root and root.network_id or s.logistic_network_id})
     if not recovered then return {processed=1,waiting=1,
       detail="awaiting-original-powered-network:"..tostring(why)}end
     local anchor,reason=choose_anchor(pair,recovered.port,s.target)
@@ -1010,6 +1075,7 @@ function M.service_pair(pair)
         detail="awaiting-original-grid-pole:"..tostring(reason)}
     end
     s.source_port=recovered.port
+    s.logistic_network_id=recovered.network_id
     s.power_anchor=anchor.pole
     s.last_source_position=point(recovered.port.position)
     s.site=nil
@@ -1017,12 +1083,11 @@ function M.service_pair(pair)
     s.status="planning"
   end
   if s.pending then return verify_pending(pair,s)end
-  local source=grid_port(s.source_port)
-  if not source then return fail(s,"source-roboport-lost-power-or-network")end
-  if source.electric_network_id~=s.electric_network_id
-    or (s.logistic_network_id and
-      source.network_id~=s.logistic_network_id)then
-    return fail(s,"source-roboport-original-network-diverged")
+  local source,why=rejoin_original_1076(pair,s)
+  if not source then
+    return fail(s,why=="original-logistic-cells-disconnected"
+      and "source-roboport-original-network-diverged"
+      or "source-roboport-lost-power-or-network")
   end
   if goal_coverage(pair,s.source_port,s.target)then
     s.status="complete";s.completed_tick=tick()
