@@ -264,17 +264,25 @@ def verify_condenser_v22c_physical_log(exit_code: int, log: str) -> dict[str, ob
     records = re.findall(pattern, log)
     if len(records) != 4 or log.count(prefix + "NATIVE_CONNECTED facing=") != 4:
         raise ValueError("Not exactly four authentic native pipe connection receipts")
-    expected = {"north": (0, 0), "east": (18, 0),
-                "south": (0, 18), "west": (18, 18)}
+    # Independent authored world coordinates from approved V22C flange views.
+    # The old rear-row pipe fails even if Factorio reports it as connected.
+    expected = {
+        "north": ((0, 0), (1.5, 0.5)),
+        "east": ((18, 0), (17.5, 1.5)),
+        "south": ((0, 18), (-1.5, 17.5)),
+        "west": ((18, 18), (18.5, 16.5)),
+    }
     ids, segments, positions = set(), set(), set()
     observed = {}
     for facing, machine, pipe, sx, sy, tx, ty, segment, segment_state in records:
         if facing in observed:
             raise ValueError("Duplicated native heading " + facing)
-        cx, cy = expected[facing]
+        (cx, cy), (expected_x, expected_y) = expected[facing]
         sx, sy, tx, ty = map(float, (sx, sy, tx, ty))
         if abs(cx-sx)>0.001 or abs(cy-sy)>0.001:
             raise ValueError("Wrong original test machine center " + facing)
+        if abs(expected_x-tx)>0.001 or abs(expected_y-ty)>0.001:
+            raise ValueError("Actual native pipe does not meet authored V22C flange " + facing)
         if facing == "north": outward = tx > cx + 0.75
         elif facing == "east": outward = ty > cy + 0.75
         elif facing == "south": outward = tx < cx - 0.75
