@@ -233,6 +233,14 @@ assert 'NATIVE_POWERLESS_RESTORATION_ENTITY_INVALID' in fixture
 assert 'remote.electric_network_id==s.port.electric_network_id' in fixture
 assert 's.port.electric_network_id==s.original_electric_grid' in fixture
 assert 'original_network.network_id==returned_network.network_id' in fixture
+# Genuine Factorio 2.1.24 run 43499221889 restored the root/remote
+# native grid and logistic network, but its electric POLE reported false
+# for the consumer/generator-only is_connected_to_electric_network() API.
+# Test actual native grid identity, not a permanently impossible predicate.
+assert 'restored.electric_network_id~=nil' in power_block
+assert 'restored.electric_network_id==s.original_electric_grid' in power_block
+assert 'local joined=(restored.is_connected_to_electric_network()' not in fixture
+assert '" pole_grid="..tostring(restored.electric_network_id)' in fixture
 assert fixture.index('s.powerless_restoration_pole=restored') < fixture.index('if not joined then')
 assert fixture.index('if not joined then') < fixture.index('hold.destroy() -- only after exact mined pole item was consumed')
 assert 'hold.get_item_count("medium-electric-pole")~=0' in fixture
