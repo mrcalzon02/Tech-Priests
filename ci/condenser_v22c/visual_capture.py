@@ -118,6 +118,21 @@ def find_client(explicit: str | None) -> tuple[Path,str]:
                 diagnostics.append(f"{path}: HEADLESS BINARY ONLY, graphical screenshots unavailable")
                 continue
             match=re.search(r"Version:\s*(\d+)\.(\d+)\.(\d+)",version)
+            if not match:
+                # Windows GUI-subsystem builds may return zero but no stdout.
+                # The genuine Core30 runner confirmed Factorio 2.1.24 through
+                # the EXE's Windows product/version resources instead.
+                escaped=str(path).replace("'","''")
+                script=(f"$i=[Diagnostics.FileVersionInfo]::GetVersionInfo('{escaped}');"
+                        " $id=($i.ProductName+' '+$i.FileDescription+' '+$i.OriginalFilename);"
+                        " if($id -notmatch '(?i)Factorio'){exit 8};"
+                        " Write-Output ('Version: '+$i.ProductVersion)")
+                probe=subprocess.run(["powershell.exe","-NoProfile","-NonInteractive",
+                                      "-Command",script],capture_output=True,text=True,
+                                     encoding="utf-8",errors="replace",timeout=20)
+                if probe.returncode==0:
+                    version=probe.stdout.strip()
+                    match=re.search(r"Version:\s*(\d+)\.(\d+)\.(\d+)",version)
             if not match or tuple(map(int,match.groups()))[:2] != (2,1):
                 diagnostics.append(f"{path}: expected graphical Factorio 2.1, got {version[:150]}")
                 continue
