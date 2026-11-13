@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import pathlib
 import re
 import shutil
@@ -670,6 +671,22 @@ def verify_cargo_reload_1381(first: str, second: str) -> dict[str, object]:
             "native_cargo_delivery_tick": int(delivery[0][0])}
 
 
+def factorio_1381_save_roots(factorio: pathlib.Path,
+                            appdata: str | None = None) -> list[pathlib.Path]:
+    """Find native autosaves without touching unrelated saves.
+
+    Windows Steam stores saves under %APPDATA%/Factorio/saves, not inside
+    Steam's game installation. Standalone and Linux roots remain supported.
+    """
+    base = factorio.parent.parent.parent
+    roots = [base / "saves", pathlib.Path.home() / ".factorio" / "saves",
+             pathlib.Path.home() / ".local/share/factorio/saves"]
+    windows_data = os.environ.get("APPDATA") if appdata is None else appdata
+    if windows_data:
+        roots.insert(1, pathlib.Path(windows_data) / "Factorio" / "saves")
+    return roots
+
+
 def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                                 initial: pathlib.Path, output: pathlib.Path,
                                 timeout: int, engine_version: str,
@@ -687,55 +704,56 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
            "native_server_process_wall_minutes":None,
            "native_reload_process_wall_minutes":None,
            "native_factorio_process_wall_minutes":None}
-    base = factorio.parent.parent.parent
-    roots = [base/"saves",pathlib.Path.home()/".factorio"/"saves",
-             pathlib.Path.home()/".local/share/factorio/saves"]
+    # A no-player --start-server does not process the same native radar
+    # chart lifecycle as the previously accepted --test-save player fixture:
+    # real 43420567231 reached tick 30000 with radar powered but ore uncharted.
+    # Reuse the SAME genuine native-player test-save mode for the first process,
+    # stop before the previously observed tick-31970 Magos delivery, and
+    # require a CRC-verified auto-save containing the actual first-hop cargo.
+    roots = factorio_1381_save_roots(factorio)
     started = time.monotonic()
     process = None
     try:
-        settings = output / "robot-cargo-server-settings.json"
-        original = base/"data"/"server-settings.example.json"
-        data = json.loads(original.read_text(encoding="utf-8")) if original.is_file() else {}
-        data.update({"name":"Tech Priests private 1381",
-                     "visibility":{"public":False,"lan":False},
-                     "auto_pause":False,"require_user_verification":False,
-                     "autosave_interval":10,"non_blocking_saving":False})
-        settings.write_text(json.dumps(data),encoding="utf-8")
-        # The exact namespaced test autosave must be fresh; user saves untouched.
+        # Only the exact namespaced CI autosave is removed; never user saves.
         for folder in roots:
             old = folder/name
             if old.exists():
                 old.unlink()
         with source_log.open("w",encoding="utf-8") as handle:
-            process = subprocess.Popen([
-                str(factorio),"--mod-directory",str(mods),
-                "--start-server",str(initial),"--server-settings",str(settings),
-                "--bind","127.0.0.1"],stdout=handle,stderr=subprocess.STDOUT)
-            deadline = time.monotonic()+timeout
-            while time.monotonic()<deadline:
-                handle.flush()
-                src = source_log.read_text(encoding="utf-8",errors="replace")
-                if "[TP-AUTONOMOUS-ROBOT-1380] FAIL " in src or "Error while running" in src:
-                    raise RuntimeError("first Factorio process failed: "+" | ".join(src.splitlines()[-6:])[-1000:])
-                if process.poll() is not None:
-                    raise RuntimeError("Factorio server exited before save: "+str(process.returncode))
-                if marker in src and "Saving finished" in src:
-                    for folder in roots:
-                        native = folder/name
-                        if native.is_file() and native.stat().st_size>2048:
-                            with zipfile.ZipFile(native) as z:
-                                if z.testzip() is not None:
-                                    raise RuntimeError("Native save CRC invalid")
-                            shutil.copy2(native,checkpoint)
-                            with zipfile.ZipFile(checkpoint) as z:
-                                if z.testzip() is not None:
-                                    raise RuntimeError("Copied save CRC invalid")
-                            break
-                    if checkpoint.is_file():
-                        break
-                time.sleep(.25)
-            if not checkpoint.is_file():
-                raise RuntimeError("Real server produced no CRC-verified carried-ore save")
+            process = subprocess.Popen(
+                rail_native_player_test_command(factorio,mods,initial,30000),
+                stdout=handle,stderr=subprocess.STDOUT)
+            try:
+                first_exit = process.wait(timeout=timeout)
+            except subprocess.TimeoutExpired:
+                raise RuntimeError("native-player first process exceeded timeout")
+        out["native_first_exit"] = first_exit
+        src = source_log.read_text(encoding="utf-8",errors="replace")
+        if first_exit != 0:
+            raise RuntimeError("native-player first Factorio process exited "
+                               +str(first_exit))
+        if "[TP-AUTONOMOUS-ROBOT-1380] FAIL " in src or "Error while running" in src:
+            raise RuntimeError("first Factorio process failed: "
+                               +" | ".join(src.splitlines()[-8:])[-1400:])
+        if marker not in src:
+            raise RuntimeError("native player reached 30000 ticks without held"
+                               " natural ore save marker")
+        if "Saving finished" not in src:
+            raise RuntimeError("Factorio did not confirm autosave completion")
+        for folder in roots:
+            native = folder/name
+            if native.is_file() and native.stat().st_size>2048:
+                with zipfile.ZipFile(native) as z:
+                    if z.testzip() is not None:
+                        raise RuntimeError("Native save CRC invalid")
+                shutil.copy2(native,checkpoint)
+                with zipfile.ZipFile(checkpoint) as z:
+                    if z.testzip() is not None:
+                        raise RuntimeError("Copied save CRC invalid")
+                break
+        if not checkpoint.is_file():
+            raise RuntimeError("Native player produced no CRC-verified carried-ore save"
+                               " in standalone/Windows/Linux save roots")
     except Exception as error:
         out["blocker"] = str(error)
     finally:

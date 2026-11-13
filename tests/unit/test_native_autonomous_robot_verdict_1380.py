@@ -474,3 +474,27 @@ for altered in (post_1381.replace("intermediate_priest=51","intermediate_priest=
 assert 'game.auto_save("tech-priests-ci-1380-cargo")' in fixture
 assert "NATIVE_CARGO_INDEPENDENT_RELOAD_CUSTODY_INVALID" in fixture
 print("PASS strict 1381 physical save/reload cargo and identity proof regression")
+
+
+# Real run 43420567231 established a powered yet uncharted radar in a
+# no-player headless server. The first 1381 save process must instead use
+# the already native-accepted player test-save mode (not force.chart).
+# Windows Steam writes the requested namespaced save in %APPDATA%.
+driver_source=path.read_text(encoding="utf-8")
+segment=driver_source.split("def run_robot_cargo_reload_1381(",1)[1].split(
+    "\ndef main()",1)[0]
+assert "rail_native_player_test_command(factorio,mods,initial,30000)" in segment
+assert 'source_log.open("w",encoding="utf-8")' in segment
+assert "--start-server" not in segment
+assert 'game.force.chart(' not in driver_source
+assert "Native save CRC invalid" in segment
+assert "Copied save CRC invalid" in segment
+assert "marker not in src" in segment
+assert "Factorio did not confirm autosave completion" in segment
+roots_1381=module.factorio_1381_save_roots(
+    pathlib.Path("C:/Factorio/bin/x64/factorio.exe"),
+    appdata="C:/Users/CI/AppData/Roaming")
+assert pathlib.Path("C:/Users/CI/AppData/Roaming/Factorio/saves") in roots_1381
+assert pathlib.Path("C:/Factorio/saves") in roots_1381
+assert not any("force.chart" in text for text in (segment,))
+print("PASS 1381 native-player chart, exact cargo autosave and Windows Steam root regression")
