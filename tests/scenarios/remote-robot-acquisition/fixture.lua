@@ -1203,7 +1203,12 @@ local function pulse()
         local current_remote=remote.logistic_cell
         local original_network=current_root and current_root.logistic_network
         local returned_network=current_remote and current_remote.logistic_network
-        local joined=(restored.is_connected_to_electric_network()
+        -- Electric poles do not consume or produce electric power; the
+        -- Factorio API's is_connected_to_electric_network() is false for
+        -- them even when they join an ordinary live copper-wire grid.
+        -- Require the actual pole's native electric_network_id instead.
+        local joined=(restored.electric_network_id~=nil
+          and restored.electric_network_id==s.original_electric_grid
           and remote.is_connected_to_electric_network()
           and remote.electric_network_id==s.port.electric_network_id
           and s.port.electric_network_id==s.original_electric_grid
@@ -1213,7 +1218,7 @@ local function pulse()
         if not joined then
           if game.tick-s.powerless_restoration_tick<180 then return end
           fail("NATIVE_POWERLESS_RESTORED_GRID_NOT_JOINED tick="..game.tick..
-            " pole_power="..tostring(restored.is_connected_to_electric_network())..
+            " pole_grid="..tostring(restored.electric_network_id)..
             " remote_power="..tostring(remote.is_connected_to_electric_network())..
             " root_grid="..tostring(s.port.electric_network_id)..
             " remote_grid="..tostring(remote.electric_network_id)..
