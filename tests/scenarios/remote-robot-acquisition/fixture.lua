@@ -1139,7 +1139,7 @@ local function pulse()
       -- Congestion is not emulated by filters, inventory bars or free item grants.
       if FULL_STORAGE and not s.storage_cut_tick
         and cargo and cargo.phase=="carrying"
-        and (cargo.hops_completed or 0)==0
+        and (cargo.hops_completed or 0)<1
         and cargo.source_kind_0991=="natural-ore"
         and cargo.quantity==1 and cargo.inventory and cargo.inventory.valid
         and cargo.inventory.get_item_count("iron-ore")==1 then
