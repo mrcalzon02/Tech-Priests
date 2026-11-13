@@ -348,6 +348,24 @@ function M.position_allowed(pair, pos, reason, opts)
     local ok, allowed = pcall(corridor, pair, pos, reason, opts)
     if ok and allowed then return true, nil, nil end
   end
+  -- The original 0338 railway expedition may request a short visible
+  -- waypoint between HOME and its already-verified remote build destination.
+  -- A virtual route or arbitrary construction owner is never sufficient.
+  -- Do not use a blanket bounds_exempt: the original 0836 ledger, live
+  -- request, custody and nearby native track must all be checked.
+  if opts and opts.owner=="construction-planner-0338"
+    and opts.ground_route_chunked==true
+    and type(opts.ground_route_final_destination)=="table" then
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if rail and type(rail.authorized_paid_rail_transit_0836)=="function"then
+      local checked,permitted=pcall(
+        rail.authorized_paid_rail_transit_0836,pair,pos,{
+          owner=opts.owner,reason=reason,
+          ground_route_final_destination=opts.ground_route_final_destination,
+        })
+      if checked and permitted==true then return true,nil,nil end
+    end
+  end
   local distance_sq = dist_sq(pair.station.position, pos) or 0
   local distance = math.sqrt(distance_sq)
   local maximum = M.work_radius(pair)
@@ -1369,6 +1387,23 @@ function M.enforce_pair(pair, reason)
         return false,"original-paid-rail-contact-owned-0836"
       end
     end
+    -- Unlike a build-site contact, the *journey* can take many ticks
+    -- outside a Magos' leash. Keep the original 0338 source/site route only
+    -- while its pending physical rail writ, genuine source/cargo and nearby
+    -- original native rail identities are all still valid. No other priest
+    -- or ordinary work gains this exception.
+    if request and request.owner=="construction-planner-0338"
+      and frontier
+      and type(frontier.authorized_paid_rail_transit_0836)=="function"then
+      local checked,authorized=pcall(
+        frontier.authorized_paid_rail_transit_0836,pair,
+        pair.priest.position,request)
+      if checked and authorized==true then
+        root.stats.original_paid_rail_transits_preserved_0836=
+          (root.stats.original_paid_rail_transits_preserved_0836 or 0)+1
+        return false,"original-paid-rail-transit-owned-0836"
+      end
+    end
     local courier_ok,courier_authorized=pcall(
       ResourceReturnMovement0953.authorized,pair,request)
     if courier_ok and courier_authorized then
@@ -1455,7 +1490,11 @@ function M.enforce_pair(pair, reason)
     return true, "overleash-return-released"
   end
   if request then
-    local allowed = M.position_allowed(pair, request, request.reason or reason, { owner = request.owner })
+    local allowed = M.position_allowed(pair, request, request.reason or reason, {
+      owner=request.owner,
+      ground_route_chunked=request.ground_route_chunked,
+      ground_route_final_destination=request.ground_route_final_destination,
+    })
     if not allowed then
       M.stop(pair, "stale-far-movement-request-0566")
       M.request(pair, pair.station.position, "movement-enforcement-stale-return-0566", {
