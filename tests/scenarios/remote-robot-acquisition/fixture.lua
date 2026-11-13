@@ -528,6 +528,50 @@ local function pulse()
       return
     end
     if s.phase=="awaiting-native-robot-build" then
+      -- Bounded READ-ONLY native 1076/0338/0488 admission diagnostics.
+      -- These cannot grant movement, build, cargo, construction or acceptance.
+      if game.tick>=12000 and game.tick%6000==0 then
+        local frontier=root.roboport_frontier_1076
+        local pending=frontier and frontier.pending
+        local worker_id=pending and pending.builder_station_unit
+        local worker=worker_id and pairs_by_station[worker_id]
+        local task=worker and worker.construction_task_0338
+        local candidate=worker and worker.construction_candidate_0338
+        local queue=worker and worker.order_queue_0469
+        local order=worker and ((queue and queue.current)
+          or worker.active_order_0469)
+        local last=worker and worker.construction_last_task_0338
+        local broker=storage.tech_priests.roboport_expansion_broker_1076
+        local attempt=broker and broker.last_attempt
+        emit("NATIVE_FRONTIER_BUILDER_READBACK tick="..game.tick..
+          " frontier="..tostring(frontier and frontier.status)..
+          " pending="..tostring(pending and pending.kind)..
+          " pending_builder="..tostring(worker_id)..
+          " worker_live="..tostring(worker and worker.priest and worker.priest.valid)..
+          " request_same="..tostring(worker and pending
+            and worker.construction_request==pending.request)..
+          " candidate_field="..tostring(candidate and candidate.request_field)..
+          " candidate_same="..tostring(candidate and pending
+            and candidate.request_value==pending.request)..
+          " candidate_item="..tostring(candidate and candidate.item_name)..
+          " task_phase="..tostring(task and task.phase)..
+          " task_field="..tostring(task and task.request_field)..
+          " task_same="..tostring(task and pending
+            and task.request_value==pending.request)..
+          " task_cargo="..tostring(task and task.carried and task.carried.count)..
+          " custody="..tostring(worker and worker.construction_custody_0338~=nil)..
+          " blocked="..tostring(worker and worker.construction_blocked_reason_0338)..
+          " order_kind="..tostring(order and order.kind)..
+          " order_source="..tostring(order and order.source)..
+          " order_status="..tostring(order and order.status)..
+          " direct_custody="..tostring(worker and worker.direct_acquisition_custody_0513~=nil)..
+          " automatic_assignment="..tostring(worker and worker.active_task_0285~=nil)..
+          " strict_craft="..tostring(worker and worker.emergency_craft
+            and worker.emergency_craft.strict_recipe_0647)..
+          " last_phase="..tostring(last and last.phase)..
+          " last_failure="..tostring(last and last.failure_reason_0338)..
+          " broker_detail="..tostring(attempt and attempt.detail))
+      end
       -- Only a completed original 0338 build receipt, live electric/logistic
       -- merge, and actual exact pole/port stock withdrawals prove extension.
       local f=root.roboport_frontier_1076
