@@ -6,6 +6,8 @@
 local M={}
 local KEY="ci_autonomous_robot_1380"
 local PREFIX="[TP-AUTONOMOUS-ROBOT-1380] "
+local CARGO_RELOAD=rawget(_G,"TP_CI_1380_CARGO_RELOAD")==true
+local RELOAD_PROCESS=rawget(_G,"TP_CI_1380_CARGO_RELOAD_PROBE")==true
 local SURFACE="tp-ci-autonomous-robot-1380"
 local function emit(s) log(PREFIX..s) end
 local function fail(s) error(PREFIX.."FAIL "..s) end
@@ -1130,6 +1132,96 @@ local function pulse()
         and root.resource_expansion_0259.chain_0820
       local cargo=mission and mission.return_courier_0837
       local route,why=chain and chain.return_route(root)
+      -- Save only an actually mined, engine-owned first-hop ore item after
+      -- the restored original-powered roboport network and ranked robot
+      -- station are complete. No source inventory or entity is manufactured.
+      if CARGO_RELOAD and not s.cargo_reload_requested
+        and cargo and cargo.phase=="carrying" and cargo.hops_completed==0
+        and cargo.source_kind_0991=="natural-ore" and cargo.quantity==1
+        and cargo.inventory and cargo.inventory.valid
+        and cargo.inventory.get_item_count("iron-ore")==1 then
+        local frontier=root.roboport_frontier_1076
+        local remote=frontier and frontier.source_port
+        local a=s.port.valid and s.port.logistic_cell
+        local b=remote and remote.valid and remote.logistic_cell
+        local an=a and a.logistic_network
+        local bn=b and b.logistic_network
+        if not(s.coverageless_restored and s.materialless_restored
+          and s.extension_accepted and remote and remote.valid
+          and remote~=s.port and an and an.valid and bn and bn.valid
+          and an.network_id==bn.network_id
+          and s.port.electric_network_id==s.original_electric_grid
+          and remote.electric_network_id==s.original_electric_grid
+          and s.ore.amount==cargo.ore_amount_before-1
+          and root.priest.unit_number==s.magos_priest
+          and senior.priest.unit_number==s.senior_priest
+          and not(cargo.receipts_0982 and cargo.receipts_0982[1])) then
+          fail("NATIVE_CARGO_RELOAD_UNSAFE_SAVE_PRECONDITION")
+        end
+        s.cargo_reload_snapshot={
+          magos=s.magos,senior=s.senior,intermediate=s.event_station,
+          magos_priest=s.magos_priest,senior_priest=s.senior_priest,
+          intermediate_priest=s.intermediate_priest,
+          root_port=s.port.unit_number,remote_port=remote.unit_number,
+          grid=s.original_electric_grid,ore_before=cargo.ore_amount_before,
+          ore_after=s.ore.amount}
+        s.cargo_reload_requested=true
+        local ok,why=pcall(function()
+          game.auto_save("tech-priests-ci-1380-cargo")
+        end)
+        if not ok then fail("NATIVE_CARGO_AUTOSAVE_FAILED "..tostring(why)) end
+        emit("NATIVE_CARGO_SAVE_REQUESTED tick="..game.tick..
+          " magos="..s.magos.." senior="..s.senior..
+          " intermediate="..s.event_station..
+          " magos_priest="..s.magos_priest..
+          " senior_priest="..s.senior_priest..
+          " intermediate_priest="..s.intermediate_priest..
+          " root_port="..s.port.unit_number.." remote_port="..remote.unit_number..
+          " ore_before="..cargo.ore_amount_before..
+          " ore_after="..s.ore.amount.." held=1 hops=0")
+      end
+      if CARGO_RELOAD and RELOAD_PROCESS and not s.cargo_reload_verified then
+        local snap=s.cargo_reload_snapshot
+        local frontier=root.roboport_frontier_1076
+        local remote=frontier and frontier.source_port
+        local a=s.port.valid and s.port.logistic_cell
+        local b=remote and remote.valid and remote.logistic_cell
+        local an=a and a.logistic_network
+        local bn=b and b.logistic_network
+        if not(s.cargo_reload_requested and snap
+          and root.station.unit_number==snap.magos
+          and senior.station.unit_number==snap.senior
+          and s.event_station==snap.intermediate
+          and root.priest.unit_number==snap.magos_priest
+          and senior.priest.unit_number==snap.senior_priest
+          and s.intermediate_priest==snap.intermediate_priest
+          and s.port.valid and s.port.unit_number==snap.root_port
+          and remote and remote.valid and remote.unit_number==snap.remote_port
+          and an and an.valid and bn and bn.valid
+          and an.network_id==bn.network_id
+          and s.port.electric_network_id==snap.grid
+          and remote.electric_network_id==snap.grid
+          and s.ore.amount==snap.ore_after
+          and snap.ore_before==snap.ore_after+1
+          and cargo and cargo.phase=="carrying"
+          and cargo.hops_completed==0 and cargo.quantity==1
+          and cargo.source_kind_0991=="natural-ore"
+          and cargo.inventory and cargo.inventory.valid
+          and cargo.inventory.get_item_count("iron-ore")==1
+          and not(cargo.receipts_0982 and cargo.receipts_0982[1])) then
+          fail("NATIVE_CARGO_INDEPENDENT_RELOAD_CUSTODY_INVALID")
+        end
+        s.cargo_reload_verified=true
+        emit("PASS NATIVE_CARGO_INDEPENDENT_RELOAD tick="..game.tick..
+          " magos="..snap.magos.." senior="..snap.senior..
+          " intermediate="..snap.intermediate..
+          " magos_priest="..snap.magos_priest..
+          " senior_priest="..snap.senior_priest..
+          " intermediate_priest="..snap.intermediate_priest..
+          " root_port="..snap.root_port.." remote_port="..snap.remote_port..
+          " ore_before="..snap.ore_before.." ore_after="..snap.ore_after..
+          " held=1 hops=0 original_grid=joined")
+      end
       if not s.ore_wait_readback and
           game.tick-s.ore_return_wait_started>=3600 then
         s.ore_wait_readback=true
@@ -1187,6 +1279,15 @@ local function pulse()
         and (item_count(root.station,"iron-ore") or 0)>=hop2.destination_after
         and root.priest.unit_number==s.magos_priest
         and senior.priest.unit_number==s.senior_priest then
+        if CARGO_RELOAD then
+          if not(RELOAD_PROCESS and s.cargo_reload_verified) then
+            fail("NATIVE_CARGO_RELOAD_DELIVERY_NOT_VERIFIED")
+          end
+          emit("PASS NATIVE_CARGO_RELOADED_DELIVERY tick="..game.tick..
+            " magos="..s.magos.." senior="..s.senior..
+            " intermediate="..s.event_station..
+            " ore_after="..s.ore.amount.." delivered=1 held=0 hops=2")
+        end
         s.finished=true
         emit("PASS NATIVE_PHYSICAL_ORE_RETURN tick="..game.tick..
           " original_magos="..s.magos..

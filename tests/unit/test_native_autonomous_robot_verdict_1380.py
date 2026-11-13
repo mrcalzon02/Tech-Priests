@@ -442,3 +442,35 @@ assert '"PASS NATIVE_PHYSICAL_ORE_RETURN tick="' in fixture
 assert 'surface.create_entity{name="iron-ore"' not in fixture
 assert 'force.chart(' not in fixture
 print("PASS native two-hop natural ore return strict source, identity, inventory and refusal contract")
+
+
+# The next gate must come from TWO separate native Factorio processes:
+# the first has one real ore item in a saved LuaInventory, the second
+# independently reads it and completes two counted original-rank hops.
+save_1381=(prefix+"NATIVE_CARGO_SAVE_REQUESTED tick=6300 magos=10 senior=20 "
+           "intermediate=50 magos_priest=11 senior_priest=21 "
+           "intermediate_priest=51 root_port=30 remote_port=32 "
+           "ore_before=1000 ore_after=999 held=1 hops=0")
+load_1381=(prefix+"PASS NATIVE_CARGO_INDEPENDENT_RELOAD tick=6301 "
+           "magos=10 senior=20 intermediate=50 magos_priest=11 "
+           "senior_priest=21 intermediate_priest=51 root_port=30 "
+           "remote_port=32 ore_before=1000 ore_after=999 held=1 "
+           "hops=0 original_grid=joined")
+end_1381=(prefix+"PASS NATIVE_CARGO_RELOADED_DELIVERY tick=7500 "
+          "magos=10 senior=20 intermediate=50 ore_after=999 "
+          "delivered=1 held=0 hops=2")
+post_1381=load_1381+"\n"+end_1381+"\n"+prefix+"PASS NATIVE_PHYSICAL_ORE_RETURN tick=7500"
+assert module.verify_cargo_reload_1381(save_1381,post_1381)["native_independent_cargo_reload_accepted"]
+for altered in (post_1381.replace("intermediate_priest=51","intermediate_priest=52"),
+                post_1381.replace("held=1","held=0"),
+                post_1381.replace("remote_port=32","remote_port=33"),
+                post_1381.replace("ore_after=999","ore_after=1000"),
+                post_1381.replace(" tick=6301"," tick=6300"),
+                post_1381.replace(end_1381,""),
+                post_1381+"\n"+event):
+    try: module.verify_cargo_reload_1381(save_1381,altered)
+    except ValueError: pass
+    else: raise AssertionError("1381 falsely accepted missing independent cargo proof")
+assert 'game.auto_save("tech-priests-ci-1380-cargo")' in fixture
+assert "NATIVE_CARGO_INDEPENDENT_RELOAD_CUSTODY_INVALID" in fixture
+print("PASS strict 1381 physical save/reload cargo and identity proof regression")

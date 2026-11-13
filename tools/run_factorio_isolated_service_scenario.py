@@ -15,6 +15,7 @@ import shutil
 import subprocess
 import sys
 import time
+import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CASES = {
@@ -631,6 +632,161 @@ def factorio_runtime_compatible(version_line: str, required_series: str) -> bool
     return f"{major}.{minor}" == required_series and (required_series != "2.0" or patch == 77)
 
 
+
+def verify_cargo_reload_1381(first: str, second: str) -> dict[str, object]:
+    """Cross-process proof: exact held native ore, restored roots and two physical hops."""
+    tag = "[TP-AUTONOMOUS-ROBOT-1380] "
+    numbers = (r" tick=(\d+) magos=(\d+) senior=(\d+) intermediate=(\d+)"
+               r" magos_priest=(\d+) senior_priest=(\d+)"
+               r" intermediate_priest=(\d+) root_port=(\d+)"
+               r" remote_port=(\d+) ore_before=(\d+) ore_after=(\d+)")
+    def receipt(text: str, name: str, tail: str) -> tuple[int, ...]:
+        results = re.findall(re.escape(tag + name) + numbers + tail, text)
+        if len(results) != 1:
+            raise ValueError("1381 missing/duplicate " + name)
+        return tuple(map(int, results[0]))
+    original = receipt(first, "NATIVE_CARGO_SAVE_REQUESTED",
+                       r" held=1 hops=0")
+    restored = receipt(second, "PASS NATIVE_CARGO_INDEPENDENT_RELOAD",
+                       r" held=1 hops=0 original_grid=joined")
+    delivery = re.findall(re.escape(tag + "PASS NATIVE_CARGO_RELOADED_DELIVERY")
+                          + r" tick=(\d+) magos=(\d+) senior=(\d+)"
+                          + r" intermediate=(\d+) ore_after=(\d+)"
+                          + r" delivered=1 held=0 hops=2", second)
+    if not (len(delivery) == 1
+            and original[1:] == restored[1:]
+            and original[0] < restored[0] < int(delivery[0][0])
+            and original[9] == original[10]+1
+            and tuple(map(int,delivery[0][1:4])) == original[1:4]
+            and int(delivery[0][4]) == original[10]
+            and "NATIVE_ROBOT_EVENT tick=" not in second
+            and "NATIVE_PHYSICAL_SOURCE tick=" not in second
+            and tag + "PASS NATIVE_PHYSICAL_ORE_RETURN tick=" in second
+            and tag + "FAIL " not in first + second):
+        raise ValueError("1381 original custody/identity/native process continuity failed")
+    return {"native_independent_cargo_reload_accepted": True,
+            "native_cargo_save_tick": original[0],
+            "native_cargo_reload_tick": restored[0],
+            "native_cargo_delivery_tick": int(delivery[0][0])}
+
+
+def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
+                                initial: pathlib.Path, output: pathlib.Path,
+                                timeout: int, engine_version: str,
+                                create_minutes: float) -> int:
+    """Keep genuine failed-process logs. Never accept a logged save without ZIP CRC."""
+    name = "_autosave-tech-priests-ci-1380-cargo.zip"
+    marker = "[TP-AUTONOMOUS-ROBOT-1380] NATIVE_CARGO_SAVE_REQUESTED tick="
+    source_log = output / "robot-cargo-server.log"
+    reload_log = output / "benchmark.log"
+    checkpoint = output / "physical-ore-custody-checkpoint.zip"
+    result_path = output / "native-autonomous-robot-result.json"
+    out = {"schema":"tech-priests-1381-real-reload",
+           "runtime_engine":engine_version,"accepted":False,
+           "native_create_process_wall_minutes":create_minutes,
+           "native_server_process_wall_minutes":None,
+           "native_reload_process_wall_minutes":None,
+           "native_factorio_process_wall_minutes":None}
+    base = factorio.parent.parent.parent
+    roots = [base/"saves",pathlib.Path.home()/".factorio"/"saves",
+             pathlib.Path.home()/".local/share/factorio/saves"]
+    started = time.monotonic()
+    process = None
+    try:
+        settings = output / "robot-cargo-server-settings.json"
+        original = base/"data"/"server-settings.example.json"
+        data = json.loads(original.read_text(encoding="utf-8")) if original.is_file() else {}
+        data.update({"name":"Tech Priests private 1381",
+                     "visibility":{"public":False,"lan":False},
+                     "auto_pause":False,"require_user_verification":False,
+                     "autosave_interval":10,"non_blocking_saving":False})
+        settings.write_text(json.dumps(data),encoding="utf-8")
+        # The exact namespaced test autosave must be fresh; user saves untouched.
+        for folder in roots:
+            old = folder/name
+            if old.exists():
+                old.unlink()
+        with source_log.open("w",encoding="utf-8") as handle:
+            process = subprocess.Popen([
+                str(factorio),"--mod-directory",str(mods),
+                "--start-server",str(initial),"--server-settings",str(settings),
+                "--bind","127.0.0.1"],stdout=handle,stderr=subprocess.STDOUT)
+            deadline = time.monotonic()+timeout
+            while time.monotonic()<deadline:
+                handle.flush()
+                src = source_log.read_text(encoding="utf-8",errors="replace")
+                if "[TP-AUTONOMOUS-ROBOT-1380] FAIL " in src or "Error while running" in src:
+                    raise RuntimeError("first Factorio process failed: "+" | ".join(src.splitlines()[-6:])[-1000:])
+                if process.poll() is not None:
+                    raise RuntimeError("Factorio server exited before save: "+str(process.returncode))
+                if marker in src and "Saving finished" in src:
+                    for folder in roots:
+                        native = folder/name
+                        if native.is_file() and native.stat().st_size>2048:
+                            with zipfile.ZipFile(native) as z:
+                                if z.testzip() is not None:
+                                    raise RuntimeError("Native save CRC invalid")
+                            shutil.copy2(native,checkpoint)
+                            with zipfile.ZipFile(checkpoint) as z:
+                                if z.testzip() is not None:
+                                    raise RuntimeError("Copied save CRC invalid")
+                            break
+                    if checkpoint.is_file():
+                        break
+                time.sleep(.25)
+            if not checkpoint.is_file():
+                raise RuntimeError("Real server produced no CRC-verified carried-ore save")
+    except Exception as error:
+        out["blocker"] = str(error)
+    finally:
+        if process is not None and process.poll() is None:
+            process.terminate()
+            try: process.wait(timeout=20)
+            except subprocess.TimeoutExpired:
+                process.kill();process.wait(timeout=10)
+        out["native_server_process_wall_minutes"] = round((time.monotonic()-started)/60,6)
+    first = source_log.read_text(encoding="utf-8",errors="replace") if source_log.is_file() else ""
+    for line in first.splitlines():
+        if "[TP-AUTONOMOUS-ROBOT-1380]" in line:
+            print("NATIVE_1381_FIRST "+line[-1200:],flush=True)
+    if checkpoint.is_file() and not out.get("blocker"):
+        control = mods/"tech-priests"/"control.lua"
+        old_flag = "_G.TP_CI_1380_CARGO_RELOAD_PROBE=false"
+        source = control.read_text(encoding="utf-8")
+        if source.count(old_flag)!=1:
+            out["blocker"] = "Missing isolated second-process probe flag"
+        else:
+            control.write_text(source.replace(old_flag,
+                "_G.TP_CI_1380_CARGO_RELOAD_PROBE=true"),encoding="utf-8")
+            second_start=time.monotonic()
+            exit_code=run(rail_native_player_test_command(
+                factorio,mods,checkpoint,42060),reload_log,timeout)
+            out["native_reload_exit"]=exit_code
+            out["native_reload_process_wall_minutes"]=round(
+                (time.monotonic()-second_start)/60,6)
+            second=reload_log.read_text(encoding="utf-8",errors="replace")
+            for line in second.splitlines():
+                if "[TP-AUTONOMOUS-ROBOT-1380]" in line:
+                    print("NATIVE_1381_SECOND "+line[-1200:],flush=True)
+            try:
+                if exit_code!=0: raise ValueError("independent native reload exited "+str(exit_code))
+                out.update(verify_cargo_reload_1381(first,second))
+                create_text=(output/"create.log").read_text(encoding="utf-8",errors="replace")
+                out.update(verify_autonomous_robot_1380_process_logs(
+                    0,create_text,exit_code,first+"\n"+second))
+                out.update(verify_autonomous_robot_ore_1380_log(
+                    first+"\n"+second,int(out["native_cargo_save_tick"])+42060))
+                out["accepted"]=True
+            except (ValueError,RuntimeError) as error:
+                out["blocker"]=str(error)
+    out["native_factorio_process_wall_minutes"] = round(
+        create_minutes+out["native_server_process_wall_minutes"]
+        +(out["native_reload_process_wall_minutes"] or 0),6)
+    result_path.write_text(json.dumps(out,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+    print("NATIVE_1381_RESULT "+json.dumps(out,sort_keys=True),flush=True)
+    return 0 if out["accepted"] else 1
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--scenario", choices=tuple(CASES), required=True)
@@ -713,6 +869,12 @@ def main() -> int:
         ap.error("Fixture missing explicit install contract")
     dest = mods / "tech-priests" / "scripts" / "core"
     (dest / (scenario["module"] + ".lua")).write_text(content, encoding="utf-8")
+    if args.scenario == "remote-robot-acquisition":
+        isolated_control = mods / "tech-priests" / "control.lua"
+        isolated_control.write_text(
+            "_G.TP_CI_1380_CARGO_RELOAD=true\n"
+            "_G.TP_CI_1380_CARGO_RELOAD_PROBE=false\n"
+            + isolated_control.read_text(encoding="utf-8"), encoding="utf-8")
     with (mods / "tech-priests" / "control.lua").open(
             "a", encoding="utf-8") as control:
         control.write("\n-- Isolated CI-only scenario; never distributed.\n"
@@ -787,6 +949,10 @@ def main() -> int:
               "train/Magos/ore return UNTESTED")
         print("Engine logs: " + str(native_log))
         return 0
+    if args.scenario == "remote-robot-acquisition":
+        return run_robot_cargo_reload_1381(
+            factorio, mods, save, output, args.timeout_seconds,
+            engine_version, create_engine_wall_minutes)
     # An isolated --benchmark advances game ticks without an engine-created
     # player. Factorio can leave native radar charting requests unprocessed in
     # that mode (as already established by the 0836 native rail smoke).
