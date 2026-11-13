@@ -374,17 +374,17 @@ print("PASS native 1380 genuine chart-relative 0259 cadence and finite failure b
 # NEW boundary: paid station success is NOT remote resource acquisition.
 # The independent native gate requires a real ore source decrement, two
 # original-priest physical custody hops, Magos chest deposit and empty hold.
-ore_receipt=(prefix+"PASS NATIVE_PHYSICAL_ORE_RETURN tick=5520 "
+ore_receipt=(prefix+"PASS NATIVE_PHYSICAL_ORE_RETURN tick=7520 "
     "original_magos=10 magos_priest=11 senior=20 senior_priest=21 "
     "intermediate=50 intermediate_priest=51 "
     "source_amount_before=1000 source_amount_after=999 "
     "hop1_delta=1 hop2_delta=1 magos_deposit=1 "
-    "delivered_tick=5500 source_kind=natural-ore inventory_hold=empty")
+    "delivered_tick=7500 source_kind=natural-ore inventory_hold=empty")
 full_log=sample+"\n"+ore_receipt
 ore_result=module.verify_autonomous_robot_ore_1380_log(full_log,72060)
 assert ore_result["natural_ore_return_accepted"] is True
 assert ore_result["new_distinct_ore_delivery_gates"]==1
-assert ore_result["first_magos_delivery_tick"]==5500
+assert ore_result["first_magos_delivery_tick"]==7500
 assert ore_result["ore_items_delivered_per_1000_ticks"]==round(1000/72060,6)
 for bad in (
     sample,full_log+"\\n"+ore_receipt,
@@ -396,7 +396,7 @@ for bad in (
     full_log.replace("magos_deposit=1","magos_deposit=0"),
     full_log.replace("inventory_hold=empty","inventory_hold=held"),
     full_log.replace("source_kind=natural-ore","source_kind=synthetic"),
-    full_log.replace("delivered_tick=5500","delivered_tick=99999"),
+    full_log.replace("delivered_tick=7500","delivered_tick=99999"),
 ):
     try:
         module.verify_autonomous_robot_ore_1380_log(bad,72060)
