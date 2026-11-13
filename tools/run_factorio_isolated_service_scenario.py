@@ -560,20 +560,22 @@ def rail_native_player_test_command(factorio: pathlib.Path, mods: pathlib.Path,
 
 def robot_saveable_player_command(factorio: pathlib.Path, mods: pathlib.Path,
                                   save: pathlib.Path, ticks: int) -> list[str]:
-    """Run actual single-player gameplay, with native save support, to a tick.
+    """Launch an actual interactive single-player load on the headful runner.
 
-    The previously genuine --test-save radar/player trial reached one real
-    ore held at tick 25500, but engine run 43435986297 produced no save ZIP:
-    its sandbox executes the game but does not persist game.auto_save.
-    Use the EXISTING headful Steam runner's real single-player load instead.
-    Never create a player or chart a resource from fixture/driver code.
-    --until-tick is a native Factorio command-line exit boundary, not a
-    scripted save or alternative cargo accounting path.
+    Native run 43445733037 proved that --load-game plus --until-tick
+    advances like a headless test without processing genuine radar chart
+    requests (ore was uncharted at 30000 despite powered radar). Leave the
+    real GUI player running until a game.auto_save ZIP is observed by the
+    bounded first-process driver; NEVER inject a player or chart a resource.
+    ticks is retained as the intended PRE-DELIVERY checkpoint bound: the
+    fixture requests saving at real ore custody and the driver stops only
+    after the native ZIP/CRC proof, not because a simulated timer expires.
     """
+    if ticks != 31900:
+        raise ValueError("1381 first-stage native custody bound changed")
     return [str(factorio), "--mod-directory", str(mods),
             "--disable-audio", "--fullscreen=false",
-            "--window-size", "800x600", "--load-game", str(save),
-            "--until-tick", str(ticks)]
+            "--window-size", "800x600", "--load-game", str(save)]
 
 
 def rail_connected_smoke_verdict(exit_code: int, log: str) -> bool:
@@ -722,13 +724,12 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
            "native_server_process_wall_minutes":None,
            "native_reload_process_wall_minutes":None,
            "native_factorio_process_wall_minutes":None}
-    # A no-player --start-server leaves genuine radar ore uncharted, while
-    # --test-save generates a real player and ore but did NOT persist the
-    # requested native autosave in engine run 43435986297. The existing
-    # headful Steam runner can run the true --load-game single-player mode
-    # with a native --until-tick boundary. Retain the same generated ore,
-    # original physical movement and pre-delivery checkpoint at tick 31900.
-    # Only a CRC-verified engine save permits the independent second process.
+    # --test-save generates a native test player but did not persist its
+    # requested autosave (43435986297). --load-game with --until-tick then
+    # fast-forwarded without charting natural ore (43445733037). Run normal
+    # interactive single-player WITHOUT --until-tick on the headful runner,
+    # stopping solely after real original-cargo marker and saved ZIP/CRC.
+    # No scripted player or chart bypass; the original physical ore remains.
     roots = factorio_1381_save_roots(factorio)
     started = time.monotonic()
     process = None
@@ -740,25 +741,53 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
             old = folder/name
             if old.exists():
                 old.unlink()
+        # Normal single-player has no test-ticks exit. Observe the genuine
+        # native ZIP while the engine still owns the live player, then stop
+        # only after the exact cargo marker AND ZIP CRC succeed.
+        ready = False
+        first_exit = None
         with source_log.open("w",encoding="utf-8") as handle:
             process = subprocess.Popen(
                 robot_saveable_player_command(factorio,mods,initial,31900),
                 stdout=handle,stderr=subprocess.STDOUT)
-            try:
-                first_exit = process.wait(timeout=timeout)
-            except subprocess.TimeoutExpired:
-                raise RuntimeError("native-player first process exceeded timeout")
-        out["native_first_exit"] = first_exit
+            deadline = time.monotonic() + timeout
+            while time.monotonic() < deadline:
+                first_exit = process.poll()
+                if first_exit is not None:
+                    break
+                for folder in roots:
+                    native = folder/name
+                    if not native.is_file() or native.stat().st_size <= 2048:
+                        continue
+                    try:
+                        with zipfile.ZipFile(native) as z:
+                            valid_crc = z.testzip() is None
+                    except (OSError, zipfile.BadZipFile, EOFError):
+                        valid_crc = False  # native save may still be writing
+                    if (valid_crc and marker in source_log.read_text(
+                            encoding="utf-8",errors="replace")):
+                        ready = True
+                        break
+                if ready:
+                    break
+                time.sleep(0.5)
+            if not ready and first_exit is None:
+                raise RuntimeError("real single-player produced no complete "
+                                   "native cargo save before bounded timeout")
         src = source_log.read_text(encoding="utf-8",errors="replace")
-        if first_exit != 0:
-            raise RuntimeError("native-player first Factorio process exited "
+        if first_exit is not None and first_exit != 0:
+            raise RuntimeError("single-player native Factorio exited "
                                +str(first_exit))
         if "[TP-AUTONOMOUS-ROBOT-1380] FAIL " in src or "Error while running" in src:
             raise RuntimeError("first Factorio process failed: "
                                +" | ".join(src.splitlines()[-8:])[-1400:])
         if marker not in src:
-            raise RuntimeError("native player reached 31900 ticks without held"
-                               " natural ore save marker")
+            raise RuntimeError("real single-player did not produce the "
+                               "held natural ore save marker")
+        if not ready:
+            raise RuntimeError("real single-player exited before native "
+                               "ore custody save ZIP/CRC confirmation")
+        out["native_first_stop_reason"] = "verified-engine-save-driver-stop"
         # Accept only a fresh, exact-name engine ZIP with valid CRC; the
         # "Saving finished" console phrase is not guaranteed in --test-save.
         # Preserve missing-save evidence instead of failing prematurely.
@@ -796,6 +825,8 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
             try: process.wait(timeout=20)
             except subprocess.TimeoutExpired:
                 process.kill();process.wait(timeout=10)
+        out["native_first_process_actual_exit"] = (
+            process.returncode if process is not None else None)
         out["native_server_process_wall_minutes"] = round((time.monotonic()-started)/60,6)
     first = source_log.read_text(encoding="utf-8",errors="replace") if source_log.is_file() else ""
     for line in first.splitlines():
