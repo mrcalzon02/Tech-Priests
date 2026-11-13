@@ -669,7 +669,7 @@ assert 'native-unattended-radar-uncharted' in segment
 assert 'no synthetic charting permitted' in segment
 
 assert 'while time.monotonic() < deadline:' in segment
-assert 'no genuine player-test radar progress in 180 seconds' in segment
+assert 'real Steam/standalone client did not establish genuine ' in segment
 assert 'real native ore fixture failed:' in segment
 assert 'valid_crc = z.testzip() is None' in segment
 assert 'if ready:' in segment and 'if not ready:' in segment
