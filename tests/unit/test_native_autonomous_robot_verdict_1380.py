@@ -486,10 +486,10 @@ assert "NATIVE_CARGO_INDEPENDENT_RELOAD_CUSTODY_INVALID" in fixture
 print("PASS strict 1381 physical save/reload cargo and identity proof regression")
 
 
-# Real run 43420567231 established powered but uncharted radar without a
-# genuine player; run 43435986297 proved that --test-save charts and mines
-# but does not persist game.auto_save. Use actual --load-game single-player
-# on the existing headful worker; do not fabricate player, ore, or charting.
+# 43420567231: server without player uncharted. 43435986297: sandboxed
+# --test-save charted but could not save. 43445733037: --load-game with
+# --until-tick likewise did not chart. Only normal GUI --load-game may
+# establish both native player charting AND a truly persisted ZIP.
 driver_source=path.read_text(encoding="utf-8")
 segment=driver_source.split("def run_robot_cargo_reload_1381(",1)[1].split(
     "\ndef main()",1)[0]
@@ -498,7 +498,20 @@ command=module.robot_saveable_player_command(
     pathlib.Path("scenario-initial.zip"),31900)
 assert command==["factorio","--mod-directory","mods","--disable-audio",
                  "--fullscreen=false","--window-size","800x600",
-                 "--load-game","scenario-initial.zip","--until-tick","31900"]
+                 "--load-game","scenario-initial.zip"]
+assert "--until-tick" not in command
+for unsafe_ticks in (25500,32000,72060):
+    try: module.robot_saveable_player_command(
+        pathlib.Path("factorio"),pathlib.Path("mods"),
+        pathlib.Path("scenario-initial.zip"),unsafe_ticks)
+    except ValueError: pass
+    else: raise AssertionError("1381 first-stage custody bound was widened")
+assert 'while time.monotonic() < deadline:' in segment
+assert 'valid_crc = z.testzip() is None' in segment
+assert 'if ready:' in segment
+assert 'if not ready:' in segment
+assert 'out["native_first_stop_reason"] = "verified-engine-save-driver-stop"' in segment
+assert 'process.terminate()' in segment
 assert "robot_saveable_player_command(factorio,mods,initial,31900)" in segment
 assert "--test-save" not in command and "--start-server" not in command
 assert "--benchmark" not in command and "force.chart" not in segment
