@@ -669,9 +669,20 @@ local function pulse()
         local builder_unit=last and last.request_value
           and last.request_value.frontier_builder_unit_1076
         local builder=builder_unit and pairs_by_station[builder_unit]
+        -- Distinguish actual CONSUMPTION by canonical 0338 from these
+        -- five originally mined items physically held in engine-owned
+        -- inventories during the coverage-loss negative. An escrowed
+        -- roboport is NOT a constructed port or an item debit.
+        local spare_m=s.spare_port_magos
+        local spare_s=s.spare_port_senior
+        local spare_m_qty=spare_m and spare_m.valid
+          and spare_m.get_item_count("roboport") or nil
+        local spare_s_qty=spare_s and spare_s.valid
+          and spare_s.get_item_count("roboport") or nil
         local port_debit=s.initial_port_stock
           -((item_count(root.station,"roboport") or 0)
-            +(item_count(senior.station,"roboport") or 0))
+            +(item_count(senior.station,"roboport") or 0)
+            +(spare_m_qty or 0)+(spare_s_qty or 0))
         local pole_debit=s.initial_pole_stock
           -((item_count(root.station,"medium-electric-pole") or 0)
             +(item_count(senior.station,"medium-electric-pole") or 0))
@@ -691,6 +702,7 @@ local function pulse()
           and last and last.phase=="complete"
           and last.built_entity==built_port
           and last.item_name=="roboport"
+          and spare_m_qty==3 and spare_s_qty==2
           and builder and builder.station.valid
           and builder.station.force==root.station.force
           and port_debit==f.segments and pole_debit==f.poles_built)then
@@ -699,6 +711,8 @@ local function pulse()
             " segments="..tostring(f.segments)..
             " poles="..tostring(f.poles_built)..
             " port_debit="..tostring(port_debit)..
+            " magos_spare_held="..tostring(spare_m_qty)..
+            " senior_spare_held="..tostring(spare_s_qty)..
             " pole_debit="..tostring(pole_debit)..
             " last_item="..tostring(last and last.item_name)..
             " original_grid="..tostring(s.original_electric_grid))
