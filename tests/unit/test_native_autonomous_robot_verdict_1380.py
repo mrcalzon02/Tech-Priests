@@ -678,11 +678,11 @@ assert 'out["native_first_engine_log_tail"]' in segment
 assert 'print("NATIVE_1381_ENGINE_TAIL "+line[-1200:],flush=True)' in segment
 assert 'process.terminate()' in segment
 assert 'cwd=output)' in segment
-assert 'rail_native_player_test_command(factorio, mods, initial, 30060)' in segment
-assert '"native-player-test-save-replay-autosave-probe"' in segment
-assert '"native_first_test_ticks"] = 30060' in segment
-assert 'robot_saveable_server_command(factorio, mods, initial, settings, port)' not in segment
-assert 'out["native_server_autopause"] = False' not in segment
+assert 'robot_real_loopback_client_command_1381(' in segment
+assert '"save-capable-server-with-real-loopback-client"' in segment
+assert '"native_first_test_ticks"] = None' in segment
+assert 'robot_saveable_server_command(factorio, mods, initial,' in segment
+assert 'stop_robot_real_loopback_client_1381(port)' in segment
 assert 'checkpoint.unlink(missing_ok=True)' in segment
 assert 'if z.testzip() is not None:' in segment
 assert 'out["native_save_proof"]="exact-named-new-file-zip-crc"' in segment
@@ -736,4 +736,42 @@ for invalid in (positive.replace("elapsed=1500","elapsed=100"),
     except ValueError: pass
     else: raise AssertionError("invalid native storage refusal/stock accepted")
 
-print("PASS 1381 native player replay-save probe, CRC and independent custody regression")
+# Real game-client connection is a precondition, not a receipt of charting:
+# exact local port, native --mp-connect, Steam -applaunch rather than direct
+# Steam restart, and a save-capable server must remain mandatory.
+import tempfile
+from unittest.mock import patch
+from types import SimpleNamespace
+with tempfile.TemporaryDirectory(prefix="tp-real-client-1381-") as temp:
+    root_steam=pathlib.Path(temp)/"Steam"
+    steam_exe=root_steam/"steam.exe"
+    steam_exe.parent.mkdir(parents=True)
+    steam_exe.write_text("",encoding="utf-8")
+    fake_factorio=(root_steam/"steamapps"/"common"/"Factorio"/"bin"
+                   /"x64"/"factorio.exe")
+    fake_mods=pathlib.Path(temp)/"isolated-mods"
+    with patch.object(module,"os",SimpleNamespace(name="nt")):
+        game_client=module.robot_real_loopback_client_command_1381(
+            fake_factorio,fake_mods,34197)
+        assert game_client[:3]==[str(steam_exe),"-applaunch","427520"]
+        assert game_client[3:5]==["--mp-connect","127.0.0.1:34197"]
+        assert "--test-save" not in game_client
+        assert "--mod-directory" in game_client
+        for illegal_port in (0,65536,-1):
+            try:
+                module.robot_real_loopback_client_command_1381(
+                    fake_factorio,fake_mods,illegal_port)
+            except ValueError: pass
+            else: raise AssertionError("1381 accepted non-private invalid port")
+    with patch.object(module,"os",SimpleNamespace(name="posix")):
+        standalone=module.robot_real_loopback_client_command_1381(
+            fake_factorio,fake_mods,34198)
+        assert standalone[0]==str(fake_factorio)
+        assert standalone[1:3]==["--mp-connect","127.0.0.1:34198"]
+assert 'client_attempted = True' in segment
+assert 'if "Hosting game at IP ADDR:" in current' in segment
+assert '"NATIVE_ORE_CHARTED tick=" not in current' in segment
+assert 'if valid_crc and marker in current:' in segment
+assert 'game.force.chart(' not in driver_source
+
+print("PASS 1381 genuine loopback client, native server CRC and independent custody regression")
