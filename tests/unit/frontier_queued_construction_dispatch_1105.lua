@@ -48,6 +48,37 @@ assert(pair.order_queue_0469.current.kind=="logistics"
   and not pair.construction_task_0338
   and not pair.construction_custody_0338,
   "arbiter fabricated a task, cargo, order cancellation or item")
+-- Queued (not-yet-tasked) 1076 with stocked original source must
+-- dispatch against a queue-owned, noncustodial automatic assignment. The
+-- previous 0488 exception admitted automatic assignments only AFTER a
+-- 0338 move-source task existed, leaving that task unable to start.
+pair.order_queue_0469.current={kind="assignment",source="assign_task",status="active"}
+expect("construction","queued original frontier lost to automatic assignment")
+assert(pair.construction_request==request
+  and pair.construction_candidate_0338==candidate
+  and not pair.construction_task_0338
+  and not pair.construction_custody_0338
+  and pair.order_queue_0469.current.kind=="assignment",
+  "queued frontier classification mutated an order, item or task")
+pair.order_queue_0469.current.source="adopt-active"
+expect("construction","queued frontier lost to adopted automatic assignment")
+pair.order_queue_0469.current.source="explicit-user-acquisition"
+assert(Arbiter.action(pair).kind~="construction",
+  "explicit foreign assignment was displaced by queued frontier")
+pair.order_queue_0469.current.source="assign_task"
+real_stock=0
+assert(Arbiter.action(pair).kind~="construction",
+  "unstocked queued frontier displaced automatic assignment")
+real_stock=1
+pair.direct_acquisition_custody_0513={item_name="iron-ore",count=1}
+assert(Arbiter.action(pair).kind~="construction",
+  "natural mined-ore custody was preempted by queued frontier")
+pair.direct_acquisition_custody_0513=nil
+pair.emergency_craft={strict_recipe_0647=true}
+assert(Arbiter.action(pair).kind~="construction",
+  "strict craft was preempted by queued frontier")
+pair.emergency_craft=nil
+pair.order_queue_0469.current={kind="logistics",status="active"}
 real_stock=0
 expect("acquisition","unfunded candidate took the sole builder")
 real_stock=1

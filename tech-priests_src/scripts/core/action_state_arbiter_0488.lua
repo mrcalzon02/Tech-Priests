@@ -395,7 +395,14 @@ local function construction_recommendation(p,order_kind,mode_kind)
   -- and original assignment are not cancelled; 0338 still owns movement,
   -- actual item debit and all construction custody. Foreign acquisition,
   -- combat, strict crafting and physical cargo retain their priority.
-  local routine_assignment=(funded_frontier_source or held_frontier_assignment or returning_frontier_custody) and current
+  -- A queued 1076 frontier with an exact 0338 candidate and a real item
+  -- source also needs the one existing dispatcher pulse. Automatic 0285
+  -- assignment is noncustodial: it must not starve the physical frontier
+  -- before 0338 can create its task. The strict queued ownership, item,
+  -- rank, site and cargo guards above still apply, as does 0338's real
+  -- source observer. Explicit assignments retain their authority.
+  local routine_assignment=(funded_frontier_source or held_frontier_assignment
+      or returning_frontier_custody or queued_frontier or queued_ranked_robot) and current
     and lower(current.kind)=="assignment"
     and (current.source=="assign_task"
       or current.source=="adopt-active")
