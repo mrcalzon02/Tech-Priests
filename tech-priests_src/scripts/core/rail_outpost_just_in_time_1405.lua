@@ -123,6 +123,10 @@ function M.next(mission,layout,observation,tick)
   state.goal_stage=state.stage
   state.stage_goal=goal
   local entity=native_object(mission,stage,observation,state)
+  if entity and state.ticket
+    and observation.physical_custody_active==true then
+    return nil,"physical-item-custody-preserved"
+  end
   if entity then
     -- Accept an alternative correctly verified player-built position just
     -- as we would a priest-built one. Do not destroy/rebuild or credit stock.
