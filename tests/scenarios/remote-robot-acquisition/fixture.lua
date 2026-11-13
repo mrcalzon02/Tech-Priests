@@ -463,7 +463,7 @@ local function pulse()
             " actual_natural="..tostring(selected_ore and selected_ore.valid)..
             " selected_charted="..tostring(selected_charted)..
             " selected_mineable="..tostring(selected_mineable)..
-            " original_green="..tostring(original_green)....
+            " original_green="..tostring(original_green)..
             " root="..tostring(goal.root_station_unit)..
             " expected_root="..tostring(s.magos)..
             " station_item="..tostring(goal.remote_station_item_1076)..
