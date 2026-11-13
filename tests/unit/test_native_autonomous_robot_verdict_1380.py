@@ -486,14 +486,22 @@ assert "NATIVE_CARGO_INDEPENDENT_RELOAD_CUSTODY_INVALID" in fixture
 print("PASS strict 1381 physical save/reload cargo and identity proof regression")
 
 
-# Real run 43420567231 established a powered yet uncharted radar in a
-# no-player headless server. The first 1381 save process must instead use
-# the already native-accepted player test-save mode (not force.chart).
-# Windows Steam writes the requested namespaced save in %APPDATA%.
+# Real run 43420567231 established powered but uncharted radar without a
+# genuine player; run 43435986297 proved that --test-save charts and mines
+# but does not persist game.auto_save. Use actual --load-game single-player
+# on the existing headful worker; do not fabricate player, ore, or charting.
 driver_source=path.read_text(encoding="utf-8")
 segment=driver_source.split("def run_robot_cargo_reload_1381(",1)[1].split(
     "\ndef main()",1)[0]
-assert "rail_native_player_test_command(factorio,mods,initial,31900)" in segment
+command=module.robot_saveable_player_command(
+    pathlib.Path("factorio"),pathlib.Path("mods"),
+    pathlib.Path("scenario-initial.zip"),31900)
+assert command==["factorio","--mod-directory","mods","--disable-audio",
+                 "--fullscreen=false","--window-size","800x600",
+                 "--load-game","scenario-initial.zip","--until-tick","31900"]
+assert "robot_saveable_player_command(factorio,mods,initial,31900)" in segment
+assert "--test-save" not in command and "--start-server" not in command
+assert "--benchmark" not in command and "force.chart" not in segment
 assert 'source_log.open("w",encoding="utf-8")' in segment
 assert 'str(factorio),"--start-server"' not in segment
 assert "native player reached 31900 ticks" in segment
@@ -514,4 +522,4 @@ roots_1381=module.factorio_1381_save_roots(
 assert pathlib.Path("C:/Users/CI/AppData/Roaming/Factorio/saves") in roots_1381
 assert pathlib.Path("C:/Factorio/saves") in roots_1381
 assert not any("force.chart" in text for text in (segment,))
-print("PASS 1381 native-player chart, exact cargo autosave and Windows Steam root regression")
+print("PASS 1381 real GUI player load with save-capable exit, strict cargo ZIP/CRC and Windows Steam root")
