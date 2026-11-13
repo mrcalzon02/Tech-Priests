@@ -362,6 +362,16 @@ function A.organize_material_plan(pair, plan, doctrine_key)
   return organization.organize_requirements(pair, plan, doctrine_key)
 end
 
+-- 1410: active planning priest's current Conclave doctrine now informs
+-- EXACTLY ONE immediate factory object, NOT an 80-node recipe plan or
+-- a blanket ghost blueprint. This hook is explicit/event-driven and has
+-- no broker registration, no new scanning, no inventory mutation and no
+-- construction authority. Current 0510/0338 custody always takes priority.
+function A.preview_next_priest_factory_object(pair, observation)
+  local advisor=require("scripts.core.priest_factory_doctrine_1410")
+  return advisor.next_factory_object(pair,observation)
+end
+
 -- 1267: explicit physical producer/consumer and real inserter handoff
 -- preview. The arterial planner DOES NOT dispatch these candidate tiles.
 -- Original construction, reservations, movement and material custody are
