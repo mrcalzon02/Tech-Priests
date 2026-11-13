@@ -733,6 +733,12 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
     roots = factorio_1381_save_roots(factorio)
     started = time.monotonic()
     process = None
+    # Steamworks restarts a directly launched Steam executable and drops the
+    # original --load-game arguments. Use the official development app-id
+    # marker ONLY in this isolated scenario working directory (never in the
+    # installed game, user saves, or Steam configuration).
+    steam_marker = output / "steam_appid.txt"
+    steam_marker_created = False
     try:
         # Do not accept a previous attempt's checkpoint as fresh save evidence.
         checkpoint.unlink(missing_ok=True)
@@ -746,10 +752,15 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
         # only after the exact cargo marker AND ZIP CRC succeed.
         ready = False
         first_exit = None
+        if steam_marker.exists():
+            raise RuntimeError("isolated Steam app-id marker already exists; refusing overwrite")
+        steam_marker.write_text("427520\n", encoding="ascii")
+        steam_marker_created = True
+        out["native_isolated_steam_appid"] = "427520"
         with source_log.open("w",encoding="utf-8") as handle:
             process = subprocess.Popen(
                 robot_saveable_player_command(factorio,mods,initial,31900),
-                stdout=handle,stderr=subprocess.STDOUT)
+                stdout=handle,stderr=subprocess.STDOUT,cwd=output)
             deadline = time.monotonic() + timeout
             while time.monotonic() < deadline:
                 first_exit = process.poll()
@@ -825,6 +836,8 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
             try: process.wait(timeout=20)
             except subprocess.TimeoutExpired:
                 process.kill();process.wait(timeout=10)
+        if steam_marker_created:
+            steam_marker.unlink(missing_ok=True)
         out["native_first_process_actual_exit"] = (
             process.returncode if process is not None else None)
         out["native_server_process_wall_minutes"] = round((time.monotonic()-started)/60,6)
