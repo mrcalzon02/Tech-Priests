@@ -501,7 +501,13 @@ assert 'game.force.chart(' not in driver_source
 assert "Native save CRC invalid" in segment
 assert "Copied save CRC invalid" in segment
 assert "marker not in src" in segment
-assert "Factorio did not confirm autosave completion" in segment
+# Exact fresh native ZIP and CRC supersede optional engine log wording.
+assert 'checkpoint.unlink(missing_ok=True)' in segment
+assert 'out["native_save_logged_finished"]' in segment
+assert 'out["native_save_proof"]="exact-named-new-file-zip-crc"' in segment
+assert 'if not checkpoint.is_file():' in segment
+assert 'if "Saving finished" not in src:' not in segment
+assert 'if z.testzip() is not None:' in segment
 roots_1381=module.factorio_1381_save_roots(
     pathlib.Path("C:/Factorio/bin/x64/factorio.exe"),
     appdata="C:/Users/CI/AppData/Roaming")

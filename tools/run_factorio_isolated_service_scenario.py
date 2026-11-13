@@ -715,6 +715,8 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
     started = time.monotonic()
     process = None
     try:
+        # Do not accept a previous attempt's checkpoint as fresh save evidence.
+        checkpoint.unlink(missing_ok=True)
         # Only the exact namespaced CI autosave is removed; never user saves.
         for folder in roots:
             old = folder/name
@@ -739,8 +741,18 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
         if marker not in src:
             raise RuntimeError("native player reached 31900 ticks without held"
                                " natural ore save marker")
-        if "Saving finished" not in src:
-            raise RuntimeError("Factorio did not confirm autosave completion")
+        # Accept only a fresh, exact-name engine ZIP with valid CRC; the
+        # "Saving finished" console phrase is not guaranteed in --test-save.
+        # Preserve missing-save evidence instead of failing prematurely.
+        out["native_save_logged_finished"] = "Saving finished" in src
+        out["native_save_log_lines"] = [
+            line[-350:] for line in src.splitlines()
+            if re.search(r"(?i)\b(?:saving|saved|autosave|save game)\b",line)
+        ][-12:]
+        out["native_save_candidate_names"] = sorted({
+            p.name for folder in roots if folder.is_dir()
+            for p in folder.glob("*tech-priests-ci-1380-cargo*")
+        })[:12]
         for folder in roots:
             native = folder/name
             if native.is_file() and native.stat().st_size>2048:
@@ -751,10 +763,13 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                 with zipfile.ZipFile(checkpoint) as z:
                     if z.testzip() is not None:
                         raise RuntimeError("Copied save CRC invalid")
+                out["native_save_proof"]="exact-named-new-file-zip-crc"
+                out["native_save_bytes"]=checkpoint.stat().st_size
                 break
         if not checkpoint.is_file():
             raise RuntimeError("Native player produced no CRC-verified carried-ore save"
-                               " in standalone/Windows/Linux save roots")
+                               " in standalone/Windows/Linux save roots;"
+                               " inspect native_save_log_lines and candidate_names")
     except Exception as error:
         out["blocker"] = str(error)
     finally:
