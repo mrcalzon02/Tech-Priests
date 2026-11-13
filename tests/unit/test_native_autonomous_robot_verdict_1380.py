@@ -134,7 +134,11 @@ checks=[
     (0,sample.replace(power_denied+"\n","")),
     (0,sample.replace(power_recovered+"\n","")),
     (0,sample.replace("pole_held=1","pole_held=0")),
-    (0,sample.replace("remote_port=32","remote_port=39")),
+    # A DIFFERENT power-cut target while refusal/recovery still name the
+    # original target must fail; a consistently newer physically observed
+    # source port (as in successor_port_sample) is legitimate.
+    (0,sample.replace(power_cut,
+        power_cut.replace("remote_port=32","remote_port=39"))),
     (0,sample.replace("tick=7450","tick=6700")),
     (0,sample.replace("electric_grid=original","electric_grid=foreign")),
     (0,sample.replace("station_held=1","station_held=0")),
