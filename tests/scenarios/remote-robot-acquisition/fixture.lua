@@ -119,7 +119,7 @@ local function create_native_site(s)
     end
   end
   -- One original native port. Natural ore at x>85 is beyond original green.
-  local port=place(surface,force,"roboport",18,0)
+  local port=place(surface,force,"roboport",12,0)
   local provider=place(surface,force,"passive-provider-chest",18,6)
   local robot_inv=port.get_inventory(defines.inventory.roboport_robot)
   if not(robot_inv and robot_inv.valid
@@ -406,12 +406,51 @@ local function pulse()
     if s.phase=="awaiting-native-strategy" then
       local goal=root.roboport_expansion_goal_1076
       if goal then
+        -- 0259 owns the natural-ore choice. It may select a different
+        -- naturally generated tile on the same charted patch than the
+        -- bootstrap witness, which is NOT an authorization to reject
+        -- genuine uncovered network expansion. Bind only to the actual
+        -- selected, observed, mineable natural resource.
+        local p=goal.remote_resource_position_1076
+        local selected_candidates=p and s.surface.find_entities_filtered{
+          name="iron-ore",type="resource",position=p,radius=0.1,limit=2} or {}
+        local selected_ore=#selected_candidates==1 and selected_candidates[1]
+        local selected_products=selected_ore and selected_ore.valid
+          and selected_ore.prototype
+          and selected_ore.prototype.mineable_properties
+          and selected_ore.prototype.mineable_properties.products or {}
+        local selected_mineable=false
+        for _,product in pairs(selected_products)do
+          if product.type=="item" and product.name=="iron-ore"then
+            selected_mineable=true
+            break
+          end
+        end
+        local selected_charted=false
+        if selected_ore and selected_ore.valid then
+          local known,yes=pcall(function()
+            return root.station.force.is_chunk_charted(s.surface,{
+              x=math.floor(selected_ore.position.x/32),
+              y=math.floor(selected_ore.position.y/32)})
+          end)
+          selected_charted=known and yes==true
+        end
+        local original_green=selected_ore and selected_ore.valid
+          and cell.is_in_construction_range(selected_ore.position)
         if not(goal.remote_resource_item_1076=="iron-ore"
           and goal.root_station_unit==s.magos
           and goal.remote_station_item_1076=="intermediate-cogitator-station"
-          and goal.remote_resource_position_1076
-          and goal.remote_resource_position_1076.x==s.ore.position.x
-          and goal.remote_resource_position_1076.y==s.ore.position.y
+          and goal.autonomous_coverage_extension_0259==true
+          and selected_ore and selected_ore.valid
+          and selected_ore.name=="iron-ore"
+          and selected_ore.type=="resource"
+          and selected_ore.surface==s.surface
+          and selected_ore.position.x==p.x
+          and selected_ore.position.y==p.y
+          and selected_ore.amount>=2
+          and selected_mineable
+          and selected_charted
+          and original_green==false
           and item_count(s.provider,"intermediate-cogitator-station")==1
           and charted and network.available_construction_robots>0) then
           -- Observe original live selection and physical custody before
@@ -419,7 +458,12 @@ local function pulse()
           local p=goal.remote_resource_position_1076
           local frontier=root.roboport_frontier_1076
           emit("NATIVE_AUTONOMOUS_GOAL_READBACK tick="..game.tick..
-            " item="..tostring(goal.remote_resource_item_1076)..
+            " item="..tostring(goal.remote_resource_item_1076).. 
+            " extension="..tostring(goal.autonomous_coverage_extension_0259)..
+            " actual_natural="..tostring(selected_ore and selected_ore.valid)..
+            " selected_charted="..tostring(selected_charted)..
+            " selected_mineable="..tostring(selected_mineable)..
+            " original_green="..tostring(original_green)....
             " root="..tostring(goal.root_station_unit)..
             " expected_root="..tostring(s.magos)..
             " station_item="..tostring(goal.remote_station_item_1076)..
@@ -440,6 +484,12 @@ local function pulse()
               and root.resource_expansion_0259.last_reason))
           fail("UNVERIFIED_AUTONOMOUS_GOAL_OR_MATERIAL")
         end
+        s.ore=selected_ore
+        s.ore_initial=selected_ore.amount
+        emit("NATIVE_SELECTED_NATURAL_ORE tick="..game.tick..
+          " x="..s.ore.position.x.." y="..s.ore.position.y..
+          " amount="..s.ore_initial..
+          " original_green=false naturally_generated=true")
         s.goal=goal
         s.phase="awaiting-native-robot-build"
         emit("PASS AUTONOMOUS_0259_SELECTED tick="..game.tick..

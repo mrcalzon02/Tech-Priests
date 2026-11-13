@@ -205,6 +205,24 @@ for field in ("target_x=", "target_y=", "selected_ore_x=",
               "frontier_status=", "0259_reason="):
     assert field in fixture
 assert 'fail("UNVERIFIED_AUTONOMOUS_GOAL_OR_MATERIAL")' in fixture
+# A source-pinned Factorio run selected the nearer natural tile (70.5,12.5)
+# rather than the original witness (85.5,12.5), because the old original
+# roboport covered the nearer tile. The real native test must force no
+# strategy/ore and must require production's ACTUAL naturally selected
+# resource to be beyond the original green cell.
+assert 'local port=place(surface,force,"roboport",12,0)' in fixture
+assert 'local port=place(surface,force,"roboport",18,0)' not in fixture
+assert 'goal.autonomous_coverage_extension_0259==true' in fixture
+assert 'name="iron-ore",type="resource",position=p,radius=0.1,limit=2' in fixture
+assert 'selected_ore.amount>=2' in fixture
+assert 'and selected_mineable' in fixture
+assert 'and selected_charted' in fixture
+assert 'and original_green==false' in fixture
+assert 's.ore=selected_ore' in fixture
+assert 's.ore_initial=selected_ore.amount' in fixture
+assert 'NATIVE_SELECTED_NATURAL_ORE tick=' in fixture
+assert 'goal.remote_resource_position_1076.x==s.ore.position.x' not in fixture
+assert 'root.roboport_expansion_goal_1076=' not in fixture
 assert 'NATIVE_UNCOVERED_ADMISSION_READBACK' in fixture
 assert 'if s.phase=="awaiting-native-strategy"' in fixture
 assert 's.uncovered_admission_probe=true' in fixture
