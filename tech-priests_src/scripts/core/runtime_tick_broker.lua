@@ -123,9 +123,19 @@ function M.set_profiler_enabled(enabled)
   M.root().profiler.enabled = enabled == true
   return M.root().profiler.enabled
 end
+local function profiler_factory_1406()
+  -- Factorio 2.1.7+ moved LuaProfiler creation from game to helpers.
+  -- Older engine saves/tests retain the historical fallback.
+  if helpers and type(helpers.create_profiler)=="function"then
+    return helpers.create_profiler
+  end
+  return game and type(game.create_profiler)=="function"
+    and game.create_profiler or nil
+end
 function M.start_profiler()
-  if not M.profiler_enabled() or not (game and game.create_profiler) then return nil end
-  local ok, profiler = pcall(game.create_profiler, false)
+  local create=profiler_factory_1406()
+  if not M.profiler_enabled() or not create then return nil end
+  local ok, profiler = pcall(create, false)
   return ok and profiler or nil
 end
 local function profiler_ms(profiler)
@@ -436,8 +446,8 @@ function M.pulse(event)
   local ci_profile
   if rawget(_G, "TP_CI_SAVE_RELOAD_SMOKE") == true
       and rawget(_G, "TP_CI_RUNTIME_PROFILE_1064") == true
-      and tick % 60 == 0 and game and game.create_profiler then
-    local ok, timer = pcall(game.create_profiler, false)
+      and tick % 60 == 0 and profiler_factory_1406() then
+    local ok, timer = pcall(profiler_factory_1406(), false)
     if ok then ci_profile = timer end
   end
   -- Attribute a small, bounded sample of normal broker callbacks.  This is
@@ -446,7 +456,7 @@ function M.pulse(event)
   -- stops, so printing a report does not inflate its measured callback time.
   local ci_profile_services = rawget(_G,"TP_CI_SAVE_RELOAD_SMOKE")==true
     and rawget(_G,"TP_CI_RUNTIME_PROFILE_1064")==true
-    and game and game.create_profiler
+    and profiler_factory_1406()
   local ci_service_samples=ci_profile_services and {} or nil
   -- Profile each first actual service activation individually. This opt-in
   -- source records timings for the cold placement that ordinary steady-state
@@ -469,7 +479,7 @@ function M.pulse(event)
         local runs=root.service_stats[service.name]
           and (root.service_stats[service.name].run or 0) or 0
         if (runs+1)%32==0 then
-          local timed, p=pcall(game.create_profiler,false)
+          local timed, p=pcall(profiler_factory_1406(),false)
           if timed then ci_service_profiler=p end
         end
       end
