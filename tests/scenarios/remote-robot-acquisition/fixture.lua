@@ -561,6 +561,19 @@ local function pulse()
           " task_cargo="..tostring(task and task.carried and task.carried.count)..
           " custody="..tostring(worker and worker.construction_custody_0338~=nil)..
           " blocked="..tostring(worker and worker.construction_blocked_reason_0338)..
+          " discovery="..tostring(frontier and frontier.last_candidate_discovery_1076)..
+          " site_refusal="..tostring(worker and worker.construction_site_refusal_0338
+            and worker.construction_site_refusal_0338.reason)..
+          " earlier_structure="..tostring(worker and worker.structure_construction_requested_item
+            and worker.structure_construction_requested_item.item_name)..
+          " earlier_item="..tostring(worker and worker.construction_requested_item
+            and (type(worker.construction_requested_item)=="table"
+              and worker.construction_requested_item.item_name
+              or worker.construction_requested_item))..
+          " bootstrap="..tostring(worker and worker.construction_bootstrap_ghost_0645
+            and worker.construction_bootstrap_ghost_0645.item)..
+          " pole_station_stock="..tostring(worker and worker.station
+            and item_count(worker.station,"medium-electric-pole"))..
           " order_kind="..tostring(order and order.kind)..
           " order_source="..tostring(order and order.source)..
           " order_status="..tostring(order and order.status)..
