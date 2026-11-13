@@ -10,6 +10,7 @@ defines={
   rail_direction={front=0,back=1},
   rail_connection_direction={straight=1},
 }
+local original_scan_routing_1401=_G.TechPriestsScanRouting0610
 _G.TechPriestsScanRouting0610=nil
 _G.TechPriestsPairBucketRegistry0600={force_bucket=function() end}
 local force={index=1}
@@ -76,6 +77,7 @@ local task={
 }
 pair.construction_task_0338=task
 local Track=require("scripts.core.rail_track_frontier_0836")
+_G.TechPriestsRailTrackFrontier0836=Track
 local Corridor=require("scripts.core.authority_corridor_pathing_0574")
 local Movement=require("scripts.core.movement_controller")
 assert(Corridor.install(),"canonical 0574 corridor not installed")
@@ -219,4 +221,5 @@ check(planned and next_reason=="rail-segment-requested"
   and #mission.rail_frontier_0836.native_probe_options_1402==2
   and ghosts_created==0,
   "native probe rewrote original single-rail physical execution or emitted ghosts")
+_G.TechPriestsScanRouting0610=original_scan_routing_1401
 print("[rail-expedition-transit-1401] PASS real source/site transit, bounded lane, physical rail identity, revoked mission, ordinary leash, zero ghosts")
