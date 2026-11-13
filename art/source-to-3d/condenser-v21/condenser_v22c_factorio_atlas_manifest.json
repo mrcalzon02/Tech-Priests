@@ -52,7 +52,7 @@
     91,
     94
   ],
-  "cycle_seconds": 12.0,
+  "cycle_seconds": 12,
   "factorio_animation_speed_frames_per_tick": 0.044444444444444446,
   "chunk_frame_count": 8,
   "line_length": 4,
@@ -73,7 +73,7 @@
   "native_output_flange_height": 0.36,
   "factorio_output_connection_local": [
     0.5,
-    -0.5
+    0.5
   ],
   "factorio_output_direction": "east",
   "blender_to_factorio": {
