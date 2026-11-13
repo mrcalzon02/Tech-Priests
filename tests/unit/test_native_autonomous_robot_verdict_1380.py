@@ -151,6 +151,15 @@ assert "local spare_m_qty=spare_m and spare_m.valid" in fixture
 assert "local spare_s_qty=spare_s and spare_s.valid" in fixture
 assert "and spare_m_qty==3 and spare_s_qty==2" in fixture
 assert "+(spare_m_qty or 0)+(spare_s_qty or 0)" in fixture
+# A removed roboport invalidates the old LuaLogisticNetwork reference.
+# The native refusal/recovery test must compare fresh live cells, not the
+# stale network handle captured before genuine physical removal.
+assert "local original_cell=s.port.valid and s.port.logistic_cell" in fixture
+assert "local original_net=original_cell and original_cell.logistic_network" in fixture
+assert "and new_net and new_net.valid" in fixture
+assert "and original_net and original_net.valid" in fixture
+assert "and new_net.network_id==original_net.network_id" in fixture
+assert "new_net.network_id==net.network_id" not in fixture
 assert "NATIVE_SPARE_ROBOPORT_PRESTAGE tick=" in fixture
 assert "s.spare_port_magos=magos_spare" in fixture
 assert "s.spare_port_senior=senior_spare" in fixture

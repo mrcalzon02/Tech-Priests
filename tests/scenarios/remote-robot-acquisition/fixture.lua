@@ -906,12 +906,19 @@ local function pulse()
         local restored=s.surface.create_entity(spec)
         local cell=restored and restored.valid and restored.logistic_cell
         local new_net=cell and cell.logistic_network
+        -- Removing the frontier roboport invalidates its old network
+        -- handle. Factorio may also replace that network on restoration.
+        -- Compare only two CURRENT native network handles after repair.
+        local original_cell=s.port.valid and s.port.logistic_cell
+        local original_net=original_cell and original_cell.logistic_network
         if not(restored and restored.valid and restored.name=="roboport"
           and restored.unit_number~=s.port.unit_number
           and restored.is_connected_to_electric_network()
           and restored.electric_network_id==s.original_electric_grid
           and cell and cell.is_in_construction_range(s.ore.position)
-          and new_net and net and new_net.network_id==net.network_id)then
+          and new_net and new_net.valid
+          and original_net and original_net.valid
+          and new_net.network_id==original_net.network_id)then
           fail("NATIVE_COVERAGELESS_RESTORED_GRID_NOT_MERGED")
         end
         hold.destroy() -- only after the single engine-owned item was used
