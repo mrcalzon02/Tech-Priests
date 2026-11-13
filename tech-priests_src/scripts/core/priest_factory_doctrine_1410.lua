@@ -201,4 +201,110 @@ function M.select_immediate_site(pair,stage,candidates,options)
     physical_transport_verified=false,read_only=true,
   },"priest-doctrine-ranked-current-object"
 end
+-- Local factory planning is event/receipt driven. The owner-specific
+-- ticket intentionally stores ONE proposed physical object, not an arterial
+-- recipe tree, a belt route, a group of ghosts or a future-stage reservation.
+-- The existing 0510/0338 physical executor remains the sole build authority.
+local function observed_native(pair,stage,observation,state)
+  local e=observation.native_entity
+  if not(valid(e) and e.unit_number
+    and e.name==stage.name and e.force==pair.station.force
+    and e.surface==pair.station.surface and point(e.position)
+    and observation.native_role_verified==true
+    and state.last_native_unit~=e.unit_number)then return nil end
+  local ok,items=pcall(function()
+    return pair.station.surface.find_entities_filtered{
+      name=e.name,position=e.position,force=pair.station.force,
+      radius=0.25,limit=4}
+  end)
+  if not(ok and type(items)=="table")then return nil end
+  for _,native in ipairs(items)do
+    if native==e and native.unit_number==e.unit_number then return e end
+  end
+  return nil
+end
+local function custody(pair)
+  return pair.construction_custody_0338~=nil
+    or pair.construction_task_0338~=nil
+    or pair.machine_logistics_custody_0528~=nil
+    or pair.direct_acquisition_custody_0513~=nil
+end
+function M.next_factory_object(pair,observation)
+  local tp,why=pair_identity(pair)
+  if not tp then return nil,why end
+  if type(observation)~="table"
+    or type(observation.stage)~="table"
+    or type(observation.stage.key)~="string"
+    or type(observation.stage.name)~="string"
+    or type(observation.objective_id)~="string"
+    or #observation.objective_id<1 or #observation.objective_id>80
+    or not(finite(observation.world_revision)
+      and observation.world_revision>=0
+      and observation.world_revision==math.floor(observation.world_revision))
+    or not(game and finite(game.tick))then
+    return nil,"invalid-immediate-factory-object-observation"
+  end
+  local state=pair.factory_just_in_time_1410
+  if type(state)~="table"then
+    state={ticket=nil,world_revision=0,next_think_tick=0}
+    pair.factory_just_in_time_1410=state
+  end
+  local t=game.tick
+  local revision=observation.world_revision
+  local stage=observation.stage
+  local leased=custody(pair)
+  if state.ticket and leased then
+    return nil,"original-physical-factory-custody-preserved"
+  end
+  local native=observed_native(pair,stage,observation,state)
+  if native then
+    state.ticket=nil
+    state.last_native_unit=native.unit_number
+    state.last_adopted_role=stage.key
+    state.last_adopted_tick=t
+    state.world_revision=revision
+    state.next_think_tick=t+60
+    return nil,"native-player-or-priest-factory-object-adopted"
+  end
+  if state.ticket then
+    if revision>state.world_revision then
+      state.ticket=nil
+      state.world_revision=revision
+      state.next_think_tick=t+60
+      return nil,"changed-world-invalidated-one-factory-object"
+    end
+    return nil,"waiting-for-one-original-factory-object"
+  end
+  if leased then return nil,"original-physical-factory-custody-preserved"end
+  if revision>state.world_revision then
+    state.world_revision=revision
+    state.next_think_tick=math.max(state.next_think_tick or 0,t+60)
+    return nil,"factory-world-change-reinspection-cooldown"
+  end
+  if t<(tonumber(state.next_think_tick)or 0)then
+    return nil,"one-object-factory-planning-cooldown"
+  end
+  local candidates=observation.candidates
+  local candidate,reason=M.select_immediate_site(pair,stage,candidates,{
+    anchor=observation.anchor,
+    preferred_axis=observation.preferred_axis,
+    radius=observation.radius,
+    grid_origin=observation.grid_origin,
+    native_train_stop_verified=observation.native_train_stop_verified,
+    train_stop_position=observation.train_stop_position,
+    native_local_pod_verified=observation.native_local_pod_verified,
+    local_pod_position=observation.local_pod_position,
+  })
+  if not candidate then return nil,reason end
+  -- The physical owner must still check the ENTIRE role/port/collision/
+  -- source/inventory claim again at dispatch, even if it liked this preview.
+  candidate.objective_id=observation.objective_id
+  candidate.world_revision=revision
+  candidate.created_tick=t
+  candidate.one_current_object_only=true
+  candidate.construction_ghosts=0
+  state.ticket=candidate
+  state.world_revision=revision
+  return candidate,"one-priest-doctrine-factory-object-proposed"
+end
 return M
