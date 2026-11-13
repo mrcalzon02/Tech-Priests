@@ -57,3 +57,30 @@ Proposed track, estimated platform length, buffer math or virtual cells **never*
 **Not yet accepted:** The legacy 0836 constructor still builds one locomotive, one wagon and its initial stop. This new optimizer does not silently extend or override it. A native 2.1.24 test must establish the available item stack/wagon inventory APIs, physical wagon couplings, legally placed rail/stop, per-wagon loading/unloading, measured throughput, true Magos travel both ways and counted ore delivery before expanding the original builder to multiple wagons.
 
 Next: run Lua regression and native smoke, implement **budgeted native observation collection** for ore viability/travel/loading rate and train clearance, then admit only the next fully validated physical layer through the existing 0510/0338 executor. Shared Ghost Admission Governor remains a separate pending global guard.
+
+
+## 1405 — Immediate-object-only construction planning (2026-11-13)
+
+**Operational rule from project owner:** Observe the live world, choose exactly ONE next object, wait until it is physically built/verified or an applicable world change is observed, then reconsider **only the next object or affected stage**. Do not recalculate entire outposts or materialize hundreds of ghosts on every tick. A matching player-built structure takes precedence over our abandoned virtual site choice; never overwrite it merely because the old plan says otherwise.
+
+Implemented `rail_outpost_just_in_time_1405.lua` and integrated read-only entrypoint `remote_rail_outpost_0835.propose_next_outpost_object_1405(pair,observation)`. This is an **intent governor**, not another 0338 constructor. It stores ONE primitive `ticket` per original mission and at most one current stage. Candidates are considered only on an explicit native-site preflight, not every broker pulse. An existing ticket does no new route/item/geometry planning while pending.
+
+State transitions:
+
+| Event | Result |
+| --- | --- |
+| First verified candidate site and real source stock | One **virtual** next-object ticket (no ghosts, no inventory debit) |
+| Repeated idle tick or unchanged world revision | Return `awaiting-one-original-object`, no new plan |
+| Original object physically completed or a functional/native-validated player alternative already exists | Requery exact native entity, count one original unit, clear only virtual ticket; **delay** next evaluation by at least 60 ticks |
+| Stage's genuinely verified required count reached | Advance exactly one stage on next invocation, not the rest of the outpost |
+| Relevant physical entity built/removed/changed near current work | Increment mission-local revision through existing `runtime_event_registry`, not a new tick scanner |
+| Uncommitted site blocked by new construction | Invalidate only current virtual ticket; wait for next bounded inspection |
+| Existing 0338 task/material custody active | Protect custody even during revisions, player construction or previously accepted item loss |
+| Previously accepted physical object mined/destroyed | Rewind to the affected stage, invalidate later cached assumptions, **never** delete other real buildings or credit replacement inventory |
+| Existing similarly named inserter appears at a different stage | A global native unit-ID ledger prevents double-crediting it for feeder AND loader work |
+
+At stage entry, caller may request a ONE-role targeted scan of at most eight native entities and adopt one valid existing item. The planner never surveys future roles in advance. Position and item availability for one proposed object must be checked through native `can_place_entity`, the actual item prototype and canonical 0686 storage count before a virtual ticket exists; actual 0510 → 0338 placement remains independently gated. Train stops require native rail attachment, command stations must actually be paired, cargo wagons must have valid trains. **Physical placement is not proof of functioning item transfer, which remains a distinct commissioning gate.**
+
+Dynamic stages (power-link segments and individual belt tiles) **must** receive a measured current native route length. The former theoretical capacity estimate of belt lanes is not silently interpreted as physical belt tile count. The existing `1404` capacity model is now cached by explicit observation revision; while there is a current virtual object ticket or live 0338 construction cargo, changed capacity is marked dirty and held for next safe stage boundary instead of triggering repeated whole-outpost recomputation.
+
+**Scope and remaining work:** `1405` issues no automatic 0338 orders; this prevents inadvertently building an unsafe unverified site. A real future implementation must take each validated object intent through the original paid construction executor, confirm exact native entity and functional transport, then notify the JIT state before offering the next. Source/unit fixtures: `tests/unit/rail_outpost_just_in_time_1405.lua` and updated `tests/unit/rail_outpost_layout_1404.lua`; chained into the existing remote rail suite. Full Lua suite/native Factorio 2.1.24 acceptance is still required, including event delivery and save/reload.
