@@ -8,7 +8,9 @@ local target = assert(data.raw['assembling-machine'] and data.raw['assembling-ma
 local dir = '__tech-priests__/graphics/entity/atmospheric-water-condenser-v22c/'
 
 -- Fixed Wube 45-degree camera; Blender positive yaw E/W is opposite Factorio.
--- Native pipe outlet is on the 2x2 east rear-row (x=1,y=-0.5 in scene).
+-- Native pipe outlet is east/front-row in Factorio. The Blender source has its
+-- flange at (1,-0.5) in scene coordinates; Factorio's projected row sign is
+-- opposite. Do not use the rear-row port from the old invalid contact sheets.
 local captured = {north='north', east='west_native', south='south', west='east_native'}
 local order = {'north','east','south','west'}
 local FRAMES = 32
@@ -78,8 +80,10 @@ target.match_animation_speed_to_activity=false
 target.animation_random_start_frame=false
 
 -- Keep exactly the existing fuel-fed atmospheric condensation output fluidbox.
--- The source prototype has one output and no liquid input. At 2x2, the right
--- edge and rear row are placed at {0.5,-0.5} (the direction supplies the edge).
+-- The source prototype has one output and no liquid input. For this 2x2
+-- mesh the visible outlet flange sits on the FRONT half of the EAST side.
+-- Factorio must connect at {0.5,0.5}; old rear row {0.5,-0.5} was one tile
+-- offset. Rotating the entity must move the port to its corresponding front row.
 local boxes = assert(target.fluid_boxes, 'Condenser output fluidbox absent')
 assert(#boxes==1 and boxes[1].production_type=='output', 'Condenser output fluidbox contract drift')
 assert(type(boxes[1].pipe_connections)=='table' and #boxes[1].pipe_connections==1,
@@ -87,7 +91,7 @@ assert(type(boxes[1].pipe_connections)=='table' and #boxes[1].pipe_connections==
 local port=boxes[1].pipe_connections[1]
 assert(port.flow_direction=='output' and port.direction==defines.direction.east,
        'Condenser native east-only output changed')
-port.position={0.5,-0.5}
+port.position={0.5,0.5}
 -- Only authored mist is used as the active visual; no independent random smoke
 -- that could look like an exhaust burst coming out during an intake stroke.
 if target.energy_source and target.energy_source.type=='burner' then
