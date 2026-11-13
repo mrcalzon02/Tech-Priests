@@ -7,8 +7,16 @@
 local M={version="1408",prefix="[TP-FIRST-STATION-BENCH-1408] "}
 local at=600
 local function logline(phase,detail)
-  if log then log(M.prefix..phase.." tick="..tostring(game and game.tick)
-    .." "..tostring(detail or ""))end
+  if not log then return end
+  -- Only the real, native terminal gate gets a stable contiguous signature
+  -- that the isolated runner can match. Tick remains separately observable.
+  if phase=="PASS"then
+    log(M.prefix..phase.." "..tostring(detail or "")..
+      " tick="..tostring(game and game.tick))
+  else
+    log(M.prefix..phase.." tick="..tostring(game and game.tick)..
+      " "..tostring(detail or ""))
+  end
 end
 local function first_pair_count()
   local pairs_by=storage and storage.tech_priests
