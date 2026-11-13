@@ -1174,7 +1174,10 @@ local function pulse()
         local chest=root.station.get_inventory(defines.inventory.chest)
         if cargo and cargo.phase=="carrying"
           and cargo.hops_completed==1
-          and cargo.last_reason=="upstream-inventory-full" then
+          and cargo.last_reason=="upstream-inventory-full"
+          and cargo.last_refused_destination_unit==s.magos
+          and type(cargo.last_refused_tick)=="number"
+          and cargo.last_refused_tick>=s.storage_cut_tick then
           s.storage_refusal_tick=s.storage_refusal_tick or game.tick
         end
         if s.storage_refusal_tick
