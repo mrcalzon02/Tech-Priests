@@ -829,6 +829,15 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
             process.returncode if process is not None else None)
         out["native_server_process_wall_minutes"] = round((time.monotonic()-started)/60,6)
     first = source_log.read_text(encoding="utf-8",errors="replace") if source_log.is_file() else ""
+    # Preserve genuine engine startup/exit diagnostics even if no fixture
+    # marker ever fires (GUI Steam relaunch, early exit, invalid CLI,
+    # missing graphical desktop, or mod load error).
+    if out.get("blocker") and "NATIVE_CARGO_SAVE_REQUESTED" not in first:
+        first_lines = first.splitlines()
+        out["native_first_engine_stdout_lines"] = len(first_lines)
+        out["native_first_engine_log_tail"] = [line[-500:] for line in first_lines[-24:]]
+        for line in first_lines[-24:]:
+            print("NATIVE_1381_ENGINE_TAIL "+line[-1200:],flush=True)
     for line in first.splitlines():
         if "[TP-AUTONOMOUS-ROBOT-1380]" in line:
             print("NATIVE_1381_FIRST "+line[-1200:],flush=True)
