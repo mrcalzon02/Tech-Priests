@@ -1094,6 +1094,9 @@ def main() -> int:
     ap.add_argument("--rail-connected-smoke", action="store_true",
                     help="Genuine 36k+ paid-connected-rail gate with extended 60k physical ledger; "
                          "does not accept train travel or ore delivery")
+    ap.add_argument("--no-verbose-timing", action="store_true",
+                    help="Cold first-station benchmark ONLY: run genuine plain engine when "
+                         "2.1.24 verbose output crashes; per-tick timing stays UNMEASURED")
     ap.add_argument("--seed", type=int, default=907260)
     ap.add_argument("--timeout-seconds", type=int, default=1800)
     args = ap.parse_args()
@@ -1108,6 +1111,8 @@ def main() -> int:
         ap.error("--robot-storage-only requires remote-robot-acquisition")
     if args.rail_connected_smoke and args.scenario != "remote-rail-acquisition":
         ap.error("--rail-connected-smoke requires remote-rail-acquisition")
+    if args.no_verbose_timing and not scenario.get("case"):
+        ap.error("--no-verbose-timing is only permitted for cold first-station diagnostics")
     tick_count = (args.ticks if args.ticks is not None else
                   (18060 if args.midgame_smoke else
                    60060 if args.rail_connected_smoke else scenario["ticks"]))
@@ -1273,9 +1278,10 @@ def main() -> int:
                      "--benchmark", str(save), "--benchmark-ticks",
                      str(tick_count)])
     benchmark_started = time.monotonic()
-    if scenario.get("case"):
-        # Engine update costs are nanoseconds per tick, not Lua wall-clock
-        # estimates. The actual first build is at benchmark tick 600.
+    if scenario.get("case") and not args.no_verbose_timing:
+        # Native per-tick costs require verbose output. A real Factorio
+        # 2.1.24 profiler run may crash in verbose mode; the explicit
+        # plain fallback has no per-tick timings and MUST NOT claim them.
         command += ["--benchmark-verbose", "all"]
     benchmark = run(command, output / "benchmark.log", args.timeout_seconds)
     benchmark_engine_wall_minutes = round((time.monotonic()-benchmark_started)/60, 6)
@@ -1315,6 +1321,8 @@ def main() -> int:
             "profiled_station_event": ("[TP-FIRST-STATION-1406]" in contents
                                        if scenario["case"] == "placement" else False),
             "case": scenario["case"],
+            "verbose_per_tick_requested": not args.no_verbose_timing,
+            "per_tick_timing_accepted": False,
             "exact_script_revision_must_be_recorded_by_runner": True,
         }
         (output / "first-station-native-benchmark-1408.json").write_text(
