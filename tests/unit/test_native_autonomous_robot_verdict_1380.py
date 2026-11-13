@@ -242,6 +242,11 @@ print("PASS native 1380 fish-only corridor clearance and preserved natural ore g
 # player and permits radar chart jobs to be processed. 0836 already verified
 # this execution boundary. Method II may not force/chart/credit visibility.
 driver=path.read_text(encoding="utf-8")
+# A quota-blocked worker artifact must not hide an actual native --create
+# failure. Keep the bounded original Factorio error/fixture receipts visible.
+assert 'if args.scenario in ("condenser-v22c-physical", "remote-robot-acquisition"):' in driver
+assert 'print("NATIVE_CREATE_ERROR " + line[:1200])' in driver
+assert 'print("NATIVE_CREATE_TAIL " + line[:1200])' in driver
 assert 'native_mode = ("native-player-test-save"' in driver
 assert 'if args.scenario == "remote-robot-acquisition"' in driver
 assert 'rail_native_player_test_command(factorio, mods, save, tick_count)' in driver
