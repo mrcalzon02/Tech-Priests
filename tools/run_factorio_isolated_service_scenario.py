@@ -183,8 +183,8 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         r"real_power=true charted=true real_robots=true",
         "autonomous production goal")
     spare_stage = one(
-        r"NATIVE_SPARE_ROBOPORT_PRESTAGE tick=(\\d+) "
-        r"original_magos=(\\d+) original_senior=(\\d+) "
+        r"NATIVE_SPARE_ROBOPORT_PRESTAGE tick=(\d+) "
+        r"original_magos=(\d+) original_senior=(\d+) "
         r"magos_held=3 senior_held=2 senior_available=1 source_total=6",
         "actual pre-frontier native spare roboport escrow")
     extension = one(
@@ -231,8 +231,8 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         r"logistic_network=merged original_mission=retained",
         "same mined roboport item physically restored to connected grid")
     spare_return = one(
-        r"PASS NATIVE_SPARE_ROBOPORT_RECOVERY tick=(\\d+) "
-        r"original_magos=(\\d+) original_senior=(\\d+) "
+        r"PASS NATIVE_SPARE_ROBOPORT_RECOVERY tick=(\d+) "
+        r"original_magos=(\d+) original_senior=(\d+) "
         r"magos_returned=3 senior_returned=2 empty_holds=true "
         r"total_restituted=5",
         "exact original station-specific five-port restitution")
