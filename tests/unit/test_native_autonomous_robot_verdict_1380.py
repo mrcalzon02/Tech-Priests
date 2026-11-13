@@ -511,6 +511,8 @@ assert 'valid_crc = z.testzip() is None' in segment
 assert 'if ready:' in segment
 assert 'if not ready:' in segment
 assert 'out["native_first_stop_reason"] = "verified-engine-save-driver-stop"' in segment
+assert 'out["native_first_engine_log_tail"]' in segment
+assert 'print("NATIVE_1381_ENGINE_TAIL "+line[-1200:],flush=True)' in segment
 assert 'process.terminate()' in segment
 assert "robot_saveable_player_command(factorio,mods,initial,31900)" in segment
 assert "--test-save" not in command and "--start-server" not in command
