@@ -268,7 +268,8 @@ function M.authorized_paid_rail_transit_0836(pair,point,movement)
   local route=mission.rail_frontier_0836
   local task=pair.construction_task_0338
   local pending=mission.pending_rail_0836
-  if not(task and route and type(route.start_position)=="table"
+  if not(task and task.creative_build~=true
+      and route and type(route.start_position)=="table"
       and type(route.last_position)=="table"
       and type(route.segment)=="number" and route.segment>=1
       and route.segment==math.floor(route.segment)
@@ -302,6 +303,10 @@ function M.authorized_paid_rail_transit_0836(pair,point,movement)
       and close(task.position,pending.position)
       and task.direction==pending.direction
       and pending.segment==route.segment+1
+      and pending.request.rail_mission_station_unit_0836
+        ==pair.station.unit_number
+      and pending.request.rail_segment_0836==pending.segment
+      and close(pending.request.position,pending.position)
       and (not task.carried or (tonumber(task.carried.count) or 0)==0)
       and valid(source) and source.position
       and source.force==pair.station.force
