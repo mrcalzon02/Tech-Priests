@@ -738,7 +738,12 @@ function M.adopt_verified_robot_frontier(root_pair,resource_name,target)
     return port.is_connected_to_electric_network()
       and port.energy>0 and port.electric_network_id==frontier.electric_network_id
       and network and network.valid and network.force==root_pair.station.force
-      and cell.is_in_logistic_range(target)==true
+      -- Native construction bots may build in the green area using
+      -- counted items from the same real orange-area logistic network.
+      -- The original 0338 receipt, network force, power and rank above
+      -- already prove the physically paid station. Requiring orange
+      -- logistic range AT THE ORE would reject a valid green-only site
+      -- after the real robot finished building it.
       and cell.is_in_construction_range(target)==true
   end)
   if not(ok and covered==true)then
