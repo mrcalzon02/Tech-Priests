@@ -29,7 +29,8 @@ local function get_state(mission)
   local state=mission.outpost_jit_1405
   if type(state)~="table"then
     state={stage=1,accepted_count=0,accepted_units={},
-      ticket=nil,last_world_revision=0,next_think_tick=0}
+      accepted_history={},ticket=nil,last_world_revision=0,
+      next_think_tick=0}
     mission.outpost_jit_1405=state
   end
   return state
@@ -92,20 +93,42 @@ function M.next(mission,layout,observation,tick)
   if not integer(state.stage,1,#stages+1)then
     return fail("invalid-staged-outpost-cursor")
   end
+  if state.reconciliation_pending then
+    if observation.physical_custody_active==true then
+      return nil,"physical-item-custody-preserved"
+    end
+    state.ticket=nil
+    state.reconciliation_pending=nil
+    state.last_world_revision=revision
+    state.next_think_tick=tick+M.rethink_ticks
+    return nil,"native-loss-stage-reinspection"
+  end
   local stage=stages[state.stage]
   if not stage then return nil,"awaiting-real-outpost-commissioning"end
-  local goal=stage.dynamic and observation.stage_required_objects
+  state.accepted_history=state.accepted_history or{}
+  local group=state.accepted_history[state.stage]
+  if not group then
+    group={units={},count=0}
+    state.accepted_history[state.stage]=group
+  end
+  state.accepted_units=group.units
+  state.accepted_count=group.count
+  local goal=stage.dynamic and (observation.stage_required_objects
+    or (state.goal_stage==state.stage and state.stage_goal))
     or layout.counts[stage.count]
   if not integer(goal,1,512)then
     return fail(stage.dynamic and "native-stage-geometry-unresolved"
       or "unmeasured-outpost-stage-quantity")
   end
+  state.goal_stage=state.stage
+  state.stage_goal=goal
   local entity=native_object(mission,stage,observation,state)
   if entity then
     -- Accept an alternative correctly verified player-built position just
     -- as we would a priest-built one. Do not destroy/rebuild or credit stock.
     state.accepted_units[entity.unit_number]=true
     state.accepted_count=state.accepted_count+1
+    group.count=state.accepted_count
     state.ticket=nil
     state.last_world_revision=revision
     state.next_think_tick=tick+M.rethink_ticks
@@ -118,6 +141,8 @@ function M.next(mission,layout,observation,tick)
     state.stage=state.stage+1
     state.accepted_count=0
     state.accepted_units={}
+    state.goal_stage=nil
+    state.stage_goal=nil
     state.last_world_revision=revision
     state.next_think_tick=tick+M.rethink_ticks
     return nil,"stage-finished-reinspect-next-interval"
@@ -160,5 +185,40 @@ function M.next(mission,layout,observation,tick)
   state.last_world_revision=revision
   state.last_intent_tick=tick
   return request,"one-virtual-object-proposed"
+end
+-- A destroyed/mined already-accepted physical entity invalidates that
+-- one completed stage and any later cached assumptions, without destroying
+-- surviving player-built infrastructure. A later targeted native observation
+-- can re-adopt those surviving objects when their stage becomes current.
+function M.native_removed(mission,unit,tick,physical_custody_active)
+  if type(mission)~="table" or not integer(unit,1,9007199254740991)
+    or not integer(tick,0,9007199254740991)then return false end
+  local state=mission.outpost_jit_1405
+  if type(state)~="table"
+    or type(state.accepted_history)~="table"then return false end
+  for index=1,#stages do
+    local group=state.accepted_history[index]
+    if group and type(group.units)=="table"
+      and group.units[unit]then
+      group.units[unit]=nil
+      group.count=math.max(0,(tonumber(group.count)or 1)-1)
+      for later=index+1,#stages do
+        state.accepted_history[later]=nil
+      end
+      state.stage=index
+      state.accepted_units=group.units
+      state.accepted_count=group.count
+      state.goal_stage=nil
+      state.stage_goal=nil
+      state.next_think_tick=tick+M.rethink_ticks
+      if physical_custody_active then
+        state.reconciliation_pending=true
+      else
+        state.ticket=nil
+      end
+      return true
+    end
+  end
+  return false
 end
 return M
