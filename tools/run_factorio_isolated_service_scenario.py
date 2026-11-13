@@ -55,6 +55,22 @@ CASES = {
         "pass": "PASS planetary Magos built rail, rode train, mined and returned real ore",
         "ticks": 93000,
     },
+    "first-station-baseline-1408": {
+        "fixture": "tests/scenarios/first-station-cold-start/fixture.lua",
+        "module": "ci_first_station_cold_1408",
+        "prefix": "[TP-FIRST-STATION-BENCH-1408]",
+        "pass": "PASS case=baseline native_first_station_wake=false",
+        "case": "baseline",
+        "ticks": 2000,
+    },
+    "first-station-placement-1408": {
+        "fixture": "tests/scenarios/first-station-cold-start/fixture.lua",
+        "module": "ci_first_station_cold_1408",
+        "prefix": "[TP-FIRST-STATION-BENCH-1408]",
+        "pass": "PASS case=placement native_first_station_wake=true",
+        "case": "placement",
+        "ticks": 2000,
+    },
 }
 
 
@@ -1132,6 +1148,14 @@ def main() -> int:
                 shutil.copy2(source, mods / source.name)
             elif source.is_dir() and (source / "info.json").is_file():
                 shutil.copytree(source, mods / source.name)
+    if scenario.get("case"):
+        # Only the disposable test installation receives this marker.
+        isolated_control = mods / "tech-priests" / "control.lua"
+        isolated_control.write_text(
+            "_G.TP_CI_FIRST_STATION_1408_CASE=" +
+            json.dumps(scenario["case"]) + "\n" +
+            isolated_control.read_text(encoding="utf-8"),
+            encoding="utf-8")
     content = (ROOT / scenario["fixture"]).read_text(encoding="utf-8")
     if "function M.install()" not in content:
         ap.error("Fixture missing explicit install contract")
@@ -1241,6 +1265,10 @@ def main() -> int:
                      "--benchmark", str(save), "--benchmark-ticks",
                      str(tick_count)])
     benchmark_started = time.monotonic()
+    if scenario.get("case"):
+        # Engine update costs are nanoseconds per tick, not Lua wall-clock
+        # estimates. The actual first build is at benchmark tick 600.
+        command += ["--benchmark-verbose", "all"]
     benchmark = run(command, output / "benchmark.log", args.timeout_seconds)
     benchmark_engine_wall_minutes = round((time.monotonic()-benchmark_started)/60, 6)
     contents = (output / "benchmark.log").read_text(
@@ -1262,6 +1290,34 @@ def main() -> int:
             return 1
         print("PASS two original item-debited native-connected rails ONLY; "
               "train/Magos journey and ore return UNTESTED")
+        print("Engine logs: " + str(output / "benchmark.log"))
+        return 0
+    if scenario.get("case"):
+        prefix = scenario["prefix"] + " "
+        passed = (benchmark == 0
+                  and prefix + "FAIL " not in contents
+                  and prefix + scenario["pass"] in contents)
+        native = {
+            "scenario": args.scenario,
+            "first_placement_tick": 600 if scenario["case"] == "placement" else None,
+            "native_factorio_exit": benchmark,
+            "created_save_exit": created,
+            "factorio_version": engine_version,
+            "native_first_station_wake_accepted": passed,
+            "profiled_station_event": ("[TP-FIRST-STATION-1406]" in contents
+                                       if scenario["case"] == "placement" else False),
+            "case": scenario["case"],
+            "exact_script_revision_must_be_recorded_by_runner": True,
+        }
+        (output / "first-station-native-benchmark-1408.json").write_text(
+            json.dumps(native, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8")
+        if not passed:
+            print("FAIL isolated cold-first-station benchmark; native evidence incomplete")
+            print("Engine logs: " + str(output / "benchmark.log"))
+            return 1
+        print("PASS native cold first-station scenario=" + args.scenario +
+              " (performance comparison is diagnostic, not acceptance of UPS)")
         print("Engine logs: " + str(output / "benchmark.log"))
         return 0
     if args.scenario == "condenser-v22c-physical":
