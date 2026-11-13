@@ -1136,7 +1136,8 @@ local function pulse()
       -- the restored original-powered roboport network and ranked robot
       -- station are complete. No source inventory or entity is manufactured.
       if CARGO_RELOAD and not s.cargo_reload_requested
-        and cargo and cargo.phase=="carrying" and cargo.hops_completed==0
+        and cargo and cargo.phase=="carrying" and (cargo.hops_completed or 0)==0
+        and type(cargo.receipts_0982)=="table" and #cargo.receipts_0982==0
         and cargo.source_kind_0991=="natural-ore" and cargo.quantity==1
         and cargo.inventory and cargo.inventory.valid
         and cargo.inventory.get_item_count("iron-ore")==1 then
@@ -1204,7 +1205,8 @@ local function pulse()
           and s.ore.amount==snap.ore_after
           and snap.ore_before==snap.ore_after+1
           and cargo and cargo.phase=="carrying"
-          and cargo.hops_completed==0 and cargo.quantity==1
+          and (cargo.hops_completed or 0)==0 and cargo.quantity==1
+          and type(cargo.receipts_0982)=="table" and #cargo.receipts_0982==0
           and cargo.source_kind_0991=="natural-ore"
           and cargo.inventory and cargo.inventory.valid
           and cargo.inventory.get_item_count("iron-ore")==1

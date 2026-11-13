@@ -471,6 +471,16 @@ for altered in (post_1381.replace("intermediate_priest=51","intermediate_priest=
     try: module.verify_cargo_reload_1381(save_1381,altered)
     except ValueError: pass
     else: raise AssertionError("1381 falsely accepted missing independent cargo proof")
+# 0837 initializes its original physically-held courier without a numeric
+# hops_completed field; Lua nil is the canonical pre-first-receipt zero.
+# First-process save and independent reload must both keep a strict empty
+# receipt ledger plus one genuinely held inventory item.
+courier_src=(root/"tech-priests_src/scripts/core/resource_return_courier_0837.lua").read_text(encoding="utf-8")
+assert 'item=mission.need,quantity=0,receipts_0982={},' in courier_src
+assert fixture.count('(cargo.hops_completed or 0)==0')==2
+assert fixture.count('and type(cargo.receipts_0982)=="table" and #cargo.receipts_0982==0')==2
+assert 'cargo.hops_completed==0' not in fixture
+assert 'cargo.inventory.get_item_count("iron-ore")==1' in fixture
 assert 'game.auto_save("tech-priests-ci-1380-cargo")' in fixture
 assert "NATIVE_CARGO_INDEPENDENT_RELOAD_CUSTODY_INVALID" in fixture
 print("PASS strict 1381 physical save/reload cargo and identity proof regression")
