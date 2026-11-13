@@ -320,3 +320,6 @@ print("[remote-rail-broker-1064] PASS autonomous budgeted survey, physical build
 -- Verify the separate station/outpost architect remains read-only and
 -- cannot authorize train, rail, chest, belt or inserter construction.
 dofile("tests/unit/rail_outpost_layout_1404.lua")
+-- The new outpost controller is constrained to ONE virtual object until
+-- physical completion, native adoption or a relevant world revision.
+dofile("tests/unit/rail_outpost_just_in_time_1405.lua")
