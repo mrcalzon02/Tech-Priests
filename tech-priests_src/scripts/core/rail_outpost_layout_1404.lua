@@ -76,7 +76,7 @@ function M.plan(o)
     return fail("native-train-vehicle-clearance-invalid")
   end
   local effective=o.demand_items_per_second*reserve
-  local drills=ceil(effective/o.drill_items_per_second)
+  local drills=math.max(1,ceil(effective/o.drill_items_per_second))
   if not whole(drills,1,M.max_drills)
       or drills>o.ore_drill_sites then
     return fail("drill-capacity-or-real-sites-insufficient")
@@ -90,7 +90,7 @@ function M.plan(o)
       and load_batch<=100000000)then
     return fail("train-cycle-unbounded")
   end
-  local belt_lanes=ceil(effective/o.belt_items_per_second)
+  local belt_lanes=math.max(1,ceil(effective/o.belt_items_per_second))
   if not whole(belt_lanes,1,32)then
     return fail("belt-lane-budget-exceeded")
   end
