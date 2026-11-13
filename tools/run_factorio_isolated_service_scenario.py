@@ -952,6 +952,74 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
     return 0 if out["accepted"] else 1
 
 
+
+def verify_robot_parent_storage_1382_log(log: str) -> dict[str, object]:
+    """Native full-destination refusal and recovery, not a source-only proxy."""
+    tag = r"\[TP-AUTONOMOUS-ROBOT-1380\] "
+    patterns = (
+        tag + r"NATIVE_MAGOS_FULL_STORAGE_CUT tick=(\d+) magos=(\d+) "
+              r"tanks_physically_mined=(\d+) insertable_ore=0 original_courier_held=1",
+        tag + r"PASS NATIVE_MAGOS_FULL_STORAGE_REFUSAL tick=(\d+) magos=(\d+) "
+              r"held=1 hops=1 magos_ore=0 elapsed=(\d+) no_ore_created=true",
+        tag + r"PASS NATIVE_MAGOS_STORAGE_RECOVERY tick=(\d+) magos=(\d+) "
+              r"tanks_escrowed=(\d+) insertable_ore_positive=true "
+              r"original_courier_retained=true",
+        tag + r"PASS NATIVE_MAGOS_STORAGE_RECOVERED_DELIVERY tick=(\d+) "
+              r"magos=(\d+) delivered=1 held=0 hops=2 filler_preserved=(\d+)",
+    )
+    matches = [list(re.finditer(p,log)) for p in patterns]
+    if any(len(group)!=1 for group in matches):
+        raise ValueError("1382 missing or duplicate native storage receipts")
+    cut,refusal,recovery,delivery=[group[0] for group in matches]
+    a,b,c,e=[tuple(map(int,m.groups())) for m in (cut,refusal,recovery,delivery)]
+    if not(cut.start()<refusal.start()<recovery.start()<delivery.start()
+           and a[0]<b[0]<=c[0]<e[0] and b[0]-a[0]>=1500
+           and b[2]>=1500 and a[1]==b[1]==c[1]==e[1]
+           and a[2]>0 and a[2]==c[2]==e[2]):
+        raise ValueError("1382 native capacity/refusal/escrow/conservation sequence invalid")
+    return {"native_full_parent_storage_accepted":True,
+            "full_parent_refusal_tick":b[0],
+            "full_parent_recovery_tick":c[0],
+            "storage_filler_items_preserved":e[2]}
+
+
+def run_robot_parent_storage_1382(factorio: pathlib.Path, mods: pathlib.Path,
+                                  initial: pathlib.Path, output: pathlib.Path,
+                                  timeout: int, engine_version: str,
+                                  create_minutes: float) -> int:
+    """Real Factorio native-player mode; independent cargo reload stays open."""
+    native_log=output/"native-parent-storage.log"
+    began=time.monotonic()
+    code=run(rail_native_player_test_command(
+        factorio,mods,initial,72060),native_log,timeout)
+    native_minutes=round((time.monotonic()-began)/60,6)
+    log=native_log.read_text(encoding="utf-8",errors="replace")
+    source=(output/"create.log").read_text(encoding="utf-8",errors="replace")
+    result={"schema":"tech-priests-1382-native-parent-full-storage",
+            "runtime_engine":engine_version,"accepted":False,
+            "newly_accepted_distinct_gates":0,
+            "independent_save_reload_accepted":False,
+            "native_create_process_wall_minutes":create_minutes,
+            "native_test_process_wall_minutes":native_minutes,
+            "native_factorio_process_wall_minutes":round(create_minutes+native_minutes,6),
+            "native_test_exit":code}
+    try:
+        result.update(verify_autonomous_robot_1380_process_logs(0,source,code,log))
+        result.update(verify_autonomous_robot_ore_1380_log(log,72060))
+        result.update(verify_robot_parent_storage_1382_log(log))
+        result["accepted"]=True
+        result["newly_accepted_distinct_gates"]=1
+    except ValueError as exc:
+        result["blocker"]=str(exc)
+    for line in log.splitlines():
+        if "[TP-AUTONOMOUS-ROBOT-1380]" in line:
+            print("NATIVE_1382_ORIGINAL "+line[-1200:],flush=True)
+    (output/"native-autonomous-robot-result.json").write_text(
+        json.dumps(result,indent=2,sort_keys=True)+"\n",encoding="utf-8")
+    print("NATIVE_1382_RESULT "+json.dumps(result,sort_keys=True),flush=True)
+    return 0 if result["accepted"] else 1
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--scenario", choices=tuple(CASES), required=True)
@@ -966,6 +1034,8 @@ def main() -> int:
     ap.add_argument("--midgame-smoke", action="store_true",
                     help="Use 18,060 native ticks to audit the three earliest "
                          "bootstrap checkpoints; never accept the factory goal")
+    ap.add_argument("--robot-storage-only", action="store_true",
+                    help="Native full Magos inventory refusal and recovery; reload remains a separate gate")
     ap.add_argument("--rail-connected-smoke", action="store_true",
                     help="Genuine 36k+ paid-connected-rail gate with extended 60k physical ledger; "
                          "does not accept train travel or ore delivery")
@@ -979,6 +1049,8 @@ def main() -> int:
         ap.error("Specify --factorio /path/to/factorio for the active mod version")
     if args.midgame_smoke and args.scenario != "midgame-science":
         ap.error("--midgame-smoke is available only for midgame-science")
+    if args.robot_storage_only and args.scenario != "remote-robot-acquisition":
+        ap.error("--robot-storage-only requires remote-robot-acquisition")
     if args.rail_connected_smoke and args.scenario != "remote-rail-acquisition":
         ap.error("--rail-connected-smoke requires remote-rail-acquisition")
     tick_count = (args.ticks if args.ticks is not None else
@@ -1037,8 +1109,9 @@ def main() -> int:
     if args.scenario == "remote-robot-acquisition":
         isolated_control = mods / "tech-priests" / "control.lua"
         isolated_control.write_text(
-            "_G.TP_CI_1380_CARGO_RELOAD=true\n"
+            f"_G.TP_CI_1380_CARGO_RELOAD={str(not args.robot_storage_only).lower()}\n"
             "_G.TP_CI_1380_CARGO_RELOAD_PROBE=false\n"
+            f"_G.TP_CI_1380_FULL_STORAGE={str(args.robot_storage_only).lower()}\n"
             + isolated_control.read_text(encoding="utf-8"), encoding="utf-8")
     with (mods / "tech-priests" / "control.lua").open(
             "a", encoding="utf-8") as control:
@@ -1114,6 +1187,10 @@ def main() -> int:
               "train/Magos/ore return UNTESTED")
         print("Engine logs: " + str(native_log))
         return 0
+    if args.scenario == "remote-robot-acquisition" and args.robot_storage_only:
+        return run_robot_parent_storage_1382(
+            factorio, mods, save, output, args.timeout_seconds,
+            engine_version, create_engine_wall_minutes)
     if args.scenario == "remote-robot-acquisition":
         return run_robot_cargo_reload_1381(
             factorio, mods, save, output, args.timeout_seconds,
