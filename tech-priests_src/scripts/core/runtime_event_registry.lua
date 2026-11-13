@@ -71,7 +71,26 @@ local function call(entry,event)
 end
 
 local function dispatch_event(key,event)
- local routes=Registry.event_routes[key]or{};for _,entry in ipairs(routes)do if matches(event,entry.filters)then local handled=call(entry,event);if handled and entry.stop_on_truthy then return end end end
+ -- 1406 is strictly opt-in; first station full event time is separate from
+ -- each 0600 broker service and from the native spawn-phase micro-profile.
+ -- Profilers live in module locals (never in persisted game.storage).
+ local profile=rawget(_G,"TechPriestsFirstStationColdProfile1406")
+ local token=nil
+ if profile and type(profile.start_event)=="function"then
+  local ok,value=pcall(profile.start_event,key,event)
+  if ok then token=value end
+ end
+ local routes=Registry.event_routes[key]or{}
+ for _,entry in ipairs(routes)do
+  if matches(event,entry.filters)then
+   local handled=call(entry,event)
+   if handled and entry.stop_on_truthy then
+    if token then pcall(profile.stop_event,token)end
+    return
+   end
+  end
+ end
+ if token then pcall(profile.stop_event,token)end
 end
 local function dispatch_tick(key,event)
  if _G and type(_G.tech_priests_should_run_nth_tick_0595)=="function"then local ok,a=pcall(_G.tech_priests_should_run_nth_tick_0595,tonumber(key)or key,Registry.nth_tick_routes[key],event);if ok and a==false then return end end
