@@ -593,6 +593,11 @@ storage_source=storage_fixture.read_text(encoding="utf-8")
 assert 'NATIVE_MAGOS_FULL_STORAGE_REFUSAL' in storage_source
 assert 'entity.mine{inventory=chest}' in storage_source
 assert 'cargo.last_reason=="upstream-inventory-full"' in storage_source
+assert 'cargo.last_refused_destination_unit==s.magos' in storage_source
+assert 'cargo.last_refused_tick>=s.storage_cut_tick' in storage_source
+assert 'state.last_reason="upstream-inventory-full"' in courier_src
+assert 'state.last_refused_destination_unit=dest.station.unit_number' in courier_src
+assert 'state.last_refused_tick=now()' in courier_src
 assert 'chest.get_insertable_count("iron-ore")==0' in storage_source
 assert 'hold.insert{name="tank",count=moved}' in storage_source
 assert '--robot-storage-only' in driver_source
