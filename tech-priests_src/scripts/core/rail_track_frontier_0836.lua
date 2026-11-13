@@ -311,7 +311,14 @@ function M.authorized_paid_rail_transit_0836(pair,point,movement)
       and valid(source) and source.position
       and source.force==pair.station.force
       and source.surface==pair.station.surface
-      and task.source_inv and task.source_inv.valid)then return false end
+      and task.source_inv and task.source_inv.valid
+      and type(task.source_inv.get_item_count)=="function")then
+      return false
+    end
+    local supplied,stocked=pcall(function()
+      return task.source_inv.get_item_count("rail") end)
+    if not(supplied and type(stocked)=="number"
+      and stocked>=1)then return false end
     local sx=goal.x-source.position.x
     local sy=goal.y-source.position.y
     local hx=source.position.x-pair.station.position.x
