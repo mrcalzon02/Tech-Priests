@@ -1439,6 +1439,12 @@ function M.service(magos)
     return dest_inv.get_insertable_count(state.item)
   end)
   if not ok_capacity or capacity<state.quantity then
+    -- Preserve a truthful, save-safe refusal observable by the parent.
+    -- The physical courier remains in engine-owned custody, and the next
+    -- bounded service pass retries only after real destination capacity opens.
+    state.last_reason="upstream-inventory-full"
+    state.last_refused_destination_unit=dest.station.unit_number
+    state.last_refused_tick=now()
     return false,"upstream-inventory-full"
   end
   local before=count(dest_inv,state.item)
