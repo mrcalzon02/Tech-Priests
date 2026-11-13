@@ -448,6 +448,10 @@ function M.pulse(event)
     and rawget(_G,"TP_CI_RUNTIME_PROFILE_1064")==true
     and game and game.create_profiler
   local ci_service_samples=ci_profile_services and {} or nil
+  -- Profile each first actual service activation individually. This opt-in
+  -- source records timings for the cold placement that ordinary steady-state
+  -- 32nd-call sampling would otherwise miss.
+  local cold=rawget(_G,"TechPriestsFirstStationColdProfile1406")
   stat("pulses")
   for _, service in ipairs(M.services) do
     if service.enabled == false then
@@ -469,8 +473,16 @@ function M.pulse(event)
           if timed then ci_service_profiler=p end
         end
       end
+      local cold_service_profiler
+      if cold and type(cold.service_start)=="function"then
+        local measured,probe=pcall(cold.service_start,service,root,tick)
+        if measured then cold_service_profiler=probe end
+      end
       local ok, primary, secondary =
         pcall(service.fn, event or { tick = tick }, offered, service)
+      if cold_service_profiler then
+        pcall(cold.service_stop,service,cold_service_profiler)
+      end
       if ci_service_profiler then
         pcall(function()ci_service_profiler.stop()end)
         ci_service_samples[#ci_service_samples+1]={
