@@ -3,6 +3,7 @@
 -- supplies. This module only publishes a durable objective; it does not
 -- synthesize rails, train movement, inventory or a station at the destination.
 local Frontier=require("scripts.core.rail_track_frontier_0836")
+local OutpostLayout1404=require("scripts.core.rail_outpost_layout_1404")
 local M={version="0.1.676.0835",scan_interval=900,
   local_radius=64,remote_min=192,remote_max=1024,
   stock_floor=4,resource_item="iron-ore",
@@ -200,6 +201,99 @@ function M.observe_pair(pair)
     " next=plan-physical-track-route") end
   return true,"starvation-objective-created"
 end
+-- The remote station complex has its own read-only engineering plan.
+-- The station/Cogitator architect sizes mining/loading; the 0836 planner
+-- only draws native track. 0510 -> 0338 is still the SOLE physical builder.
+-- Missing native capacity/prototype data fails closed; no stock or ghosts.
+function M.propose_outpost_capacity_1404(pair, measurements)
+  if not(valid(pair and pair.station) and valid(pair.priest)
+    and pair.station.name=="planetary-magos-cogitator-station"
+    and type(measurements)=="table")then
+    return nil,"outpost-magos-or-measurements-missing"
+  end
+  local mission=pair.remote_rail_outpost_0835
+  if not(mission and mission.root_station_unit==pair.station.unit_number
+    and mission.force_index==pair.station.force.index
+    and mission.surface_index==pair.station.surface.index
+    and type(mission.target)=="table"
+    and type(mission.item)=="string")then
+    return nil,"outpost-original-rail-mission-unavailable"
+  end
+  local proto_item=prototypes and prototypes.item
+    and prototypes.item[mission.item]
+  local entities=prototypes and prototypes.entity
+  local cargo=entities and entities["cargo-wagon"]
+  local chest_name=measurements.chest_entity_name or "steel-chest"
+  local belt_name=measurements.belt_entity_name or "transport-belt"
+  local chest=entities and entities[chest_name]
+  local belt=entities and entities[belt_name]
+  if not(proto_item and cargo and chest and belt
+    and defines and defines.inventory
+    and defines.inventory.cargo_wagon and defines.inventory.chest
+    and cargo.get_inventory_size and chest.get_inventory_size)then
+    return nil,"outpost-native-prototypes-unobservable"
+  end
+  if belt.type~="transport-belt" then
+    return nil,"outpost-belt-prototype-not-transport-belt"
+  end
+  local wagon_ok,slots=pcall(function()
+    return cargo.get_inventory_size(defines.inventory.cargo_wagon)end)
+  local chest_ok,buffer_slots=pcall(function()
+    return chest.get_inventory_size(defines.inventory.chest)end)
+  local stack=tonumber(proto_item.stack_size)
+  local native_belt_speed=tonumber(belt.belt_speed)
+  if not(wagon_ok and chest_ok
+    and type(slots)=="number"and slots>0
+    and type(buffer_slots)=="number"and buffer_slots>0
+    and type(stack)=="number"and stack>0
+    and type(native_belt_speed)=="number"
+    and native_belt_speed>0)then
+    return nil,"outpost-native-capacity-readback-invalid"
+  end
+  -- This vanilla unstacked belt throughput (2 lanes*4 items/tile*
+  -- 60 ticks/sec) is a CAPACITY ESTIMATE, not measured item delivery.
+  -- Actual inserter transfer and drill rates MUST be supplied as
+  -- measured or conservative forecasts; we never invent them here.
+  local requested={
+    item=mission.item,item_type="item",
+    item_stack_size=stack,wagon_slots=slots,chest_slots=buffer_slots,
+    belt_items_per_second=native_belt_speed*480,
+    demand_items_per_second=measurements.demand_items_per_second,
+    drill_items_per_second=measurements.drill_items_per_second,
+    ore_drill_sites=measurements.ore_drill_sites,
+    train_travel_seconds=measurements.train_travel_seconds,
+    loading_seconds=measurements.loading_seconds,
+    unloading_seconds=measurements.unloading_seconds,
+    inserter_items_per_second=measurements.inserter_items_per_second,
+    train_direction_policy=measurements.train_direction_policy,
+    max_wagons=measurements.max_wagons,
+    max_loaders_per_wagon=measurements.max_loaders_per_wagon,
+    max_chests_per_wagon=measurements.max_chests_per_wagon,
+    max_train_vehicles=measurements.max_train_vehicles,
+    reserve_factor=measurements.reserve_factor,
+    transfer_efficiency=measurements.transfer_efficiency,
+  }
+  local plan,why=OutpostLayout1404.plan(requested)
+  if not plan then
+    mission.outpost_layout_refusal_1404={tick=tick(),reason=why}
+    return nil,why
+  end
+  plan.root_station_unit=mission.root_station_unit
+  plan.surface_index=mission.surface_index
+  plan.force_index=mission.force_index
+  plan.destination={x=mission.target.x,y=mission.target.y}
+  plan.belt_entity_name=belt_name
+  plan.chest_entity_name=chest_name
+  plan.metric_authority="supplied-capacity-estimates-native-prototypes-only"
+  plan.rail_construction_plan_owner="rail-track-frontier-0836"
+  plan.outpost_build_authority="existing-0510-0338-only"
+  -- One bounded primitive snapshot per mission. It is NOT a progress
+  -- receipt: railway and outpost physical commissioning remain unverified.
+  mission.outpost_layout_1404=plan
+  mission.outpost_layout_refusal_1404=nil
+  return plan,why
+end
+
 -- Run the existing strategic observer and existing 0338 rail constructor
 -- through the canonical budgeted broker.  No new on_tick handler or
 -- independent movement/inventory owner is installed.
