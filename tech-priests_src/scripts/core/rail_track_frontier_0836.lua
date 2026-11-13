@@ -253,6 +253,9 @@ function M.authorized_paid_rail_transit_0836(pair,point,movement)
     and type(point)=="table" and type(point.x)=="number"
     and type(point.y)=="number" and type(movement)=="table"
     and movement.owner=="construction-planner-0338"
+    and storage and storage.tech_priests
+    and type(storage.tech_priests.pairs_by_station)=="table"
+    and storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair
     and (movement.expires_tick==nil
       or (type(movement.expires_tick)=="number"
         and movement.expires_tick>=now()))
