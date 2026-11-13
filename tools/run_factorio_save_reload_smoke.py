@@ -3438,7 +3438,11 @@ def ci_five_observation_1291(content: str, expected: int = 5, *,
             and isinstance(result.get("last_observed_tick"), int)):
         start = result["first_observed_tick"]
         end = result["last_observed_tick"]
-        expected_ticks = list(range(((start // 60) + 1) * 60, end, 60))
+        # Broker pulse starts timing BEFORE invoking the fixture's 60-tick
+        # callback. At the native END tick that callback disables profiling,
+        # but the already-started profiler still stops/logs after the pulse.
+        # Include that authentic final boundary sample; reject ticks after END.
+        expected_ticks = list(range(((start // 60) + 1) * 60, end + 1, 60))
         matches = re.findall(
             r"\[TP-RUNTIME-PROFILE-1064\] tick=(\d+) "
             r"scope=broker-pulse duration=(?:Elapsed|Duration):\s*"
@@ -3512,7 +3516,9 @@ def self_test_ci_five_1291() -> None:
     assert summary_observed["stable_broker_pulse_mean_ms_per_sample"] is None
     # Engine-rendered LuaProfiler receipts must lie inside the original
     # stable population window; a foreign tick invalidates the sample series.
-    broker_ticks = list(range(720, 11940, 60))
+    # Tick 11940 is a genuine sample: the broker profiler starts before the
+    # 1291 fixture closes the stable window inside that same broker pulse.
+    broker_ticks = list(range(720, 11940 + 1, 60))
     broker_lines = "".join(
         f"[TP-RUNTIME-PROFILE-1064] tick={t} "
         "scope=broker-pulse duration=Elapsed: 2.5ms\n"
@@ -3526,6 +3532,19 @@ def self_test_ci_five_1291() -> None:
     assert sampled["stable_broker_pulse_mean_ms_per_sample"] == 2.5
     assert sampled["stable_broker_pulse_p95_ms_per_sample"] == 2.5
     assert sampled["stable_all_mod_script_mean_ms_per_tick"] is None
+    # The final in-window pulse cannot be silently rejected as foreign,
+    # while missing boundary receipts must remain explicitly partial.
+    without_close = ci_five_observation_1291(
+        summary_only + "".join(broker_lines.splitlines(keepends=True)[:-1]),
+        creation_log=creation)
+    assert without_close["stable_broker_pulse_sample_count"] == len(broker_ticks) - 1
+    assert without_close["stable_broker_pulse_sample_coverage"] == "partial"
+    with_start_tick = ci_five_observation_1291(
+        summary_only + broker_lines +
+        "[TP-RUNTIME-PROFILE-1064] tick=660 "
+        "scope=broker-pulse duration=Elapsed: 0ms\\n",
+        creation_log=creation)
+    assert with_start_tick["stable_broker_pulse_sample_count"] is None
     corrupted = ci_five_observation_1291(
         summary_only + broker_lines +
         "[TP-RUNTIME-PROFILE-1064] tick=12000 "
