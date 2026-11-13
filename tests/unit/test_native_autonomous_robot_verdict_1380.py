@@ -28,19 +28,30 @@ robot_denied=(prefix+"PASS NATIVE_ROBOTLESS_REFUSAL tick=2950 "
     "station_stock=1 native_event=none ore_unchanged=true")
 robot_recovered=(prefix+"PASS NATIVE_ROBOTLESS_RECOVERY tick=2950 "
     "original_port=30 robots_restored=3 held=0 original_mission=retained")
-event=(prefix+"NATIVE_ROBOT_EVENT tick=3100 station=50 robot=60 "
+material_cut=(prefix+"NATIVE_MATERIALLESS_CUT tick=2950 original_magos=10 "
+    "original_senior=20 provider=30 station_held=1 station_stock=0 "
+    "robots_still_held=3")
+material_denied=(prefix+"PASS NATIVE_MATERIALLESS_REFUSAL tick=4450 "
+    "original_magos=10 original_senior=20 station_held=1 "
+    "network_station_stock=0 robots=3 native_event=none ore_unchanged=true")
+material_recovered=(prefix+"PASS NATIVE_MATERIALLESS_RECOVERY tick=4450 "
+    "provider=30 station_restored=1 held=0 original_mission=retained")
+event=(prefix+"NATIVE_ROBOT_EVENT tick=4600 station=50 robot=60 "
     "event=on_robot_built_entity")
 done=(prefix+"PASS autonomous original 0259 selected and physical "
-    "native robot-built Intermediate paired tick=3200 magos=10 "
+    "native robot-built Intermediate paired tick=4700 magos=10 "
     "magos_priest=11 senior=20 senior_priest=21 intermediate=50 "
     "intermediate_priest=51 native_robot=60 material_delta=1 "
     "source_stock=0 ghost=0 ore_return_not_credited=true")
 sample="\n".join((physical,selected,extension,robot_cut,
-                  robot_denied,robot_recovered,event,done))
+                  robot_denied,material_cut,robot_recovered,
+                  material_denied,material_recovered,event,done))
 report=module.verify_autonomous_robot_1380_log(0,sample)
 assert report["accepted"] is True
 assert report["native_robotless_refusal_accepted"] is True
 assert report["native_robotless_refusal_ticks"] == 1500
+assert report["native_materialless_refusal_accepted"] is True
+assert report["native_materialless_refusal_ticks"] == 1500
 assert report["natural_ore_return_accepted"] is False
 assert report["ore_items_delivered_per_1000_ticks"] is None
 checks=[
@@ -54,6 +65,14 @@ checks=[
     (0,sample.replace(robot_cut+"\n","")),
     (0,sample.replace(robot_denied+"\n","")),
     (0,sample.replace(robot_recovered+"\n","")),
+    (0,sample.replace(material_cut+"\n","")),
+    (0,sample.replace(material_denied+"\n","")),
+    (0,sample.replace(material_recovered+"\n","")),
+    (0,sample.replace("station_held=1","station_held=0")),
+    (0,sample.replace("network_station_stock=0","network_station_stock=1")),
+    (0,sample.replace("robots=3","robots=0")),
+    (0,sample.replace("station_restored=1","station_restored=0")),
+    (0,sample.replace("tick=4450","tick=3500")),
     (0,sample.replace("robots_held=3","robots_held=2")),
     (0,sample.replace("network_robots=0","network_robots=1")),
     (0,sample.replace("native_event=none","native_event=present")),
@@ -98,6 +117,9 @@ assert "s.robotless_hold=hold" in fixture
 assert "NATIVE_PRESTAGE_ROBOTS_NOT_DOCKED" in fixture
 assert "NATIVE_ROBOTLESS_PRESTAGE tick=" in fixture
 assert "NATIVE_PRESTAGED_ROBOT_CUSTODY_ORIGINAL_GRID_LOST" in fixture
+assert "NATIVE_MATERIALLESS_CUSTODY_INVALID" in fixture
+assert "NATIVE_MATERIALLESS_REFUSAL_OR_CUSTODY_INVALID" in fixture
+assert "NATIVE_MATERIALLESS_RESTORATION_NOT_COUNTED" in fixture
 assert "if not s.extension_accepted then return end" in fixture
 assert "s.robotless_cut_tick=game.tick" in fixture
 assert "game.create_inventory(1)" in fixture

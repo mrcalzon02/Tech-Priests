@@ -741,6 +741,33 @@ local function pulse()
           " original_magos="..s.magos.." original_senior="..s.senior..
           " robots_held=3 network_robots=0 station_stock=1"..
           " native_event=none ore_unchanged=true")
+        -- Second genuine native negative: physically withhold the ONE
+        -- existing mined station item before returning robots, so none can
+        -- acquire it during the new refusal interval. Persist real custody.
+        local provider=s.provider.get_inventory(defines.inventory.chest)
+        if not(provider and provider.valid
+          and provider.get_item_count("intermediate-cogitator-station")==1)then
+          fail("NATIVE_MATERIALLESS_ORIGINAL_STOCK_MISSING")
+        end
+        local station_hold=game.create_inventory(1)
+        if not(station_hold and station_hold.valid)then
+          fail("NATIVE_MATERIALLESS_HOLD_MISSING")
+        end
+        s.materialless_hold=station_hold
+        local withdrawn=provider.remove{
+          name="intermediate-cogitator-station",count=1}
+        local retained=station_hold.insert{
+          name="intermediate-cogitator-station",count=withdrawn}
+        if not(withdrawn==1 and retained==1
+          and provider.get_item_count("intermediate-cogitator-station")==0
+          and station_hold.get_item_count("intermediate-cogitator-station")==1)then
+          fail("NATIVE_MATERIALLESS_CUSTODY_INVALID")
+        end
+        s.materialless_cut_tick=game.tick
+        emit("NATIVE_MATERIALLESS_CUT tick="..game.tick..
+          " original_magos="..s.magos.." original_senior="..s.senior..
+          " provider="..s.provider.unit_number..
+          " station_held=1 station_stock=0 robots_still_held=3")
         local released=held.remove{name="construction-robot",count=3}
         local restored=dock.insert{name="construction-robot",count=released}
         if not(released==3 and restored==3
@@ -754,6 +781,60 @@ local function pulse()
         emit("PASS NATIVE_ROBOTLESS_RECOVERY tick="..game.tick..
           " original_port="..s.port.unit_number..
           " robots_restored=3 held=0 original_mission=retained")
+      end
+      if s.materialless_hold then
+        -- After restoring those EXACT 3 robots, let 1,500 genuine ticks
+        -- elapse with ZERO station items. Reject a ghost or stray native
+        -- event as a false physical build; preserve ore, rank and stock.
+        if s.robotless_hold then
+          fail("NATIVE_MATERIALLESS_OVERLAPPING_ROBOT_CUSTODY")
+        end
+        if game.tick-s.materialless_cut_tick<1500 then return end
+        local hold=s.materialless_hold
+        local provider=s.provider.get_inventory(defines.inventory.chest)
+        local cell=s.port.logistic_cell
+        local net=cell and cell.logistic_network
+        local site=s.goal and s.goal.remote_station_position_1076
+        local built=site and s.surface.find_entities_filtered{
+          name="intermediate-cogitator-station",position=site,
+          radius=1.5,force=root.station.force,limit=2} or {}
+        if not(hold.valid
+          and hold.get_item_count("intermediate-cogitator-station")==1
+          and provider and provider.valid
+          and provider.get_item_count("intermediate-cogitator-station")==0
+          and net and net.valid
+          and net.all_construction_robots==3
+          and net.get_item_count("intermediate-cogitator-station")==0
+          and #built==0 and not s.event_station
+          and s.ore.amount==s.ore_initial
+          and root.priest.unit_number==s.magos_priest
+          and senior.priest.unit_number==s.senior_priest)then
+          fail("NATIVE_MATERIALLESS_REFUSAL_OR_CUSTODY_INVALID tick="..
+            game.tick.." hold="..tostring(hold.valid and
+              hold.get_item_count("intermediate-cogitator-station"))..
+            " provider="..tostring(provider and provider.valid and
+              provider.get_item_count("intermediate-cogitator-station"))..
+            " robots="..tostring(net and net.all_construction_robots)..
+            " built="..tostring(#built))
+        end
+        emit("PASS NATIVE_MATERIALLESS_REFUSAL tick="..game.tick..
+          " original_magos="..s.magos.." original_senior="..s.senior..
+          " station_held=1 network_station_stock=0 robots=3"..
+          " native_event=none ore_unchanged=true")
+        local removed=hold.remove{name="intermediate-cogitator-station",count=1}
+        local inserted=provider.insert{
+          name="intermediate-cogitator-station",count=removed}
+        if not(removed==1 and inserted==1
+          and hold.get_item_count("intermediate-cogitator-station")==0
+          and provider.get_item_count("intermediate-cogitator-station")==1)then
+          fail("NATIVE_MATERIALLESS_RESTORATION_NOT_COUNTED")
+        end
+        hold.destroy() -- only once the exact item is in original provider
+        s.materialless_hold=nil
+        s.materialless_restored=true
+        emit("PASS NATIVE_MATERIALLESS_RECOVERY tick="..game.tick..
+          " provider="..s.provider.unit_number..
+          " station_restored=1 held=0 original_mission=retained")
       end
       local goal=s.goal
       local site=goal and goal.remote_station_position_1076
