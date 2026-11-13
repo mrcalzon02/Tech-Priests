@@ -581,6 +581,33 @@ local function submit(pair,state,name,item,pos,kind,root_unit)
     entity_name=name,started_tick=tick(),
     builder_station_unit=pair.station.unit_number}
   state.status="awaiting-priest-physical-build"
+  -- Native 43368028005: the original 1076 request stayed live for >42k
+  -- ticks, but no 0338 candidate/task was ever discovered. The pure 0488
+  -- arbiter cannot dispatch a candidate that has never been admitted.
+  -- Seed ONE discovery through the existing 0338 owner when submitting
+  -- the exact physical request. 0338 still performs all real-source,
+  -- site, movement, debit and custody checks; this creates no task/item.
+  -- The broker remains the only periodic discovery/retry authority.
+  local discovery="canonical-discovery-not-exported"
+  if type(planner.discover_pair)=="function" then
+    local ok,candidate=pcall(planner.discover_pair,pair,true)
+    if ok and type(candidate)=="table"
+      and candidate.request_field=="construction_request"
+      and candidate.request_value==request
+      and candidate.item_name==item
+      and candidate.entity_name==name
+      and type(candidate.position)=="table"
+      and candidate.position.x==pos.x
+      and candidate.position.y==pos.y then
+      discovery="exact-physical-candidate"
+    elseif not ok then
+      discovery="canonical-discovery-error:"..tostring(candidate)
+    else
+      discovery="canonical-discovery-not-admitted:"
+        ..tostring(pair.construction_blocked_reason_0338 or "no-candidate")
+    end
+  end
+  state.last_candidate_discovery_1076=discovery
   return true,"submitted-to-canonical-0338"
 end
 local function fail(state,reason)
