@@ -481,6 +481,11 @@ local function pulse()
         and hop2.item=="iron-ore" and hop2.quantity==1
         and hop2.destination_after==hop2.destination_before+1
         and s.ore.valid and cargo.ore_amount_before
+        and cargo.ore_source_name_1171=="iron-ore"
+        and cargo.ore_source_surface_index_1171==s.surface.index
+        and cargo.ore_source_position_1171
+        and cargo.ore_source_position_1171.x==s.ore.position.x
+        and cargo.ore_source_position_1171.y==s.ore.position.y
         and s.ore.amount==cargo.ore_amount_before-1
         and (item_count(root.station,"iron-ore") or 0)>=hop2.destination_after
         and root.priest.unit_number==s.magos_priest
