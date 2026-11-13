@@ -492,6 +492,37 @@ local function pulse()
           " original_green=false naturally_generated=true")
         s.goal=goal
         s.phase="awaiting-native-robot-build"
+        -- Targeted actual-engine diagnostic: 43388837914 proved a bot
+        -- departs its original port BEFORE the late 0338 extension receipt.
+        -- 0259 has now already chosen a naturally mined target with THREE
+        -- live robots and one real station item. Temporarily retain those
+        -- SAME three still-docked robot ITEMS in a serialized engine-owned
+        -- inventory while the genuine priest-built pole/port frontier
+        -- continues. Do not remove flying bots, fabricate replacement bots
+        -- or change the strategy/ghost/production controller.
+        local dock=s.port.get_inventory(defines.inventory.roboport_robot)
+        local docked=dock and dock.valid
+          and dock.get_item_count("construction-robot") or nil
+        if docked~=3 then
+          fail("NATIVE_PRESTAGE_ROBOTS_NOT_DOCKED tick="..game.tick..
+            " docked="..tostring(docked)..
+            " available="..tostring(network.available_construction_robots)..
+            " all="..tostring(network.all_construction_robots))
+        end
+        local hold=game.create_inventory(1)
+        if not(hold and hold.valid)then fail("ROBOTLESS_CUSTODY_HOLD_MISSING")end
+        s.robotless_hold=hold
+        local removed=dock.remove{name="construction-robot",count=3}
+        local stored=hold.insert{name="construction-robot",count=removed}
+        if not(removed==3 and stored==3
+          and dock.get_item_count("construction-robot")==0
+          and hold.get_item_count("construction-robot")==3
+          and item_count(s.provider,"intermediate-cogitator-station")==1)then
+          fail("NATIVE_ROBOTLESS_PHYSICAL_CUSTODY_INVALID")
+        end
+        emit("NATIVE_ROBOTLESS_PRESTAGE tick="..game.tick..
+          " original_port="..s.port.unit_number..
+          " robots_held=3 station_stock=1 extension_not_yet_credited=true")
         emit("PASS AUTONOMOUS_0259_SELECTED tick="..game.tick..
           " original_magos="..s.magos.." original_senior="..s.senior..
           " ore="..tostring(s.ore.unit_number).." original_station_stock=1"..
@@ -635,26 +666,21 @@ local function pulse()
             " original_grid="..tostring(s.original_electric_grid))
         end
         s.extension_accepted=true
-        -- Genuine Method II negative: after actual paid original-grid
-        -- extension, temporarily withhold the THREE original docked
-        -- construction robots in an engine-owned LuaInventory. No robot,
-        -- station, pole, port or ore is created/destroyed by this stimulus.
-        -- The same three items must return before positive construction.
+        -- Native run 43388837914 showed that 0338 finished the counted
+        -- frontier AFTER a bot had already left its original dock. Never
+        -- seize an in-flight robot or destroy its cargo. Stage the exact
+        -- three docked physical robot items only AFTER autonomous 0259
+        -- genuinely selected its goal, BEFORE the network extension; the
+        -- original priest still constructs poles and ports through 0338.
+        -- The refusal interval itself begins only after physical extension
+        -- is verified here; the green site can never be credited early.
+        local held=s.robotless_hold
         local dock=s.port.get_inventory(defines.inventory.roboport_robot)
-        if not(dock and dock.valid
-          and dock.get_item_count("construction-robot")==3)then
-          fail("NATIVE_ROBOTLESS_CUT_NO_THREE_DOCKED_ROBOTS")
-        end
-        local hold=game.create_inventory(1)
-        if not(hold and hold.valid)then fail("ROBOTLESS_CUSTODY_HOLD_MISSING")end
-        s.robotless_hold=hold -- persist exact physical custody before debit
-        local removed=dock.remove{name="construction-robot",count=3}
-        local stored=hold.insert{name="construction-robot",count=removed}
-        if not(removed==3 and stored==3
-          and dock.get_item_count("construction-robot")==0
-          and hold.get_item_count("construction-robot")==3
-          and item_count(s.provider,"intermediate-cogitator-station")==1)then
-          fail("NATIVE_ROBOTLESS_PHYSICAL_CUSTODY_INVALID")
+        if not(held and held.valid
+          and held.get_item_count("construction-robot")==3
+          and dock and dock.valid
+          and dock.get_item_count("construction-robot")==0)then
+          fail("NATIVE_PRESTAGED_ROBOT_CUSTODY_ORIGINAL_GRID_LOST")
         end
         s.robotless_cut_tick=game.tick
         emit("NATIVE_ROBOTLESS_CUT tick="..game.tick..
@@ -679,6 +705,9 @@ local function pulse()
       -- and neither original priest identity may change. Restore the
       -- EXACT same three robot items, then complete ordinary production.
       if s.robotless_hold then
+        -- A pre-staged item hold is not a refusal proof until the genuine
+        -- 0338 counted frontier actually reaches the remote green site.
+        if not s.extension_accepted then return end
         if game.tick-s.robotless_cut_tick<1500 then return end
         local held=s.robotless_hold
         local dock=s.port.get_inventory(defines.inventory.roboport_robot)

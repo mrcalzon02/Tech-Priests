@@ -95,6 +95,11 @@ assert '" ore="..tostring(s.ore.unit_number)' in fixture
 assert '" ore="..s.ore.unit_number' not in fixture
 assert "NATIVE_ON_INIT_BOOTSTRAP_COMPLETE" in bootstrap
 assert "s.robotless_hold=hold" in fixture
+assert "NATIVE_PRESTAGE_ROBOTS_NOT_DOCKED" in fixture
+assert "NATIVE_ROBOTLESS_PRESTAGE tick=" in fixture
+assert "NATIVE_PRESTAGED_ROBOT_CUSTODY_ORIGINAL_GRID_LOST" in fixture
+assert "if not s.extension_accepted then return end" in fixture
+assert "s.robotless_cut_tick=game.tick" in fixture
 assert "game.create_inventory(1)" in fixture
 assert "live_net.all_construction_robots==0" in fixture
 assert 'dock.get_item_count("construction-robot")==0' in fixture
