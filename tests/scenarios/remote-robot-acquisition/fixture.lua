@@ -8,6 +8,7 @@ local KEY="ci_autonomous_robot_1380"
 local PREFIX="[TP-AUTONOMOUS-ROBOT-1380] "
 local CARGO_RELOAD=rawget(_G,"TP_CI_1380_CARGO_RELOAD")==true
 local RELOAD_PROCESS=rawget(_G,"TP_CI_1380_CARGO_RELOAD_PROBE")==true
+local FULL_STORAGE=rawget(_G,"TP_CI_1380_FULL_STORAGE")==true
 local SURFACE="tp-ci-autonomous-robot-1380"
 local function emit(s) log(PREFIX..s) end
 local function fail(s) error(PREFIX.."FAIL "..s) end
@@ -1132,6 +1133,100 @@ local function pulse()
         and root.resource_expansion_0259.chain_0820
       local cargo=mission and mission.return_courier_0837
       local route,why=chain and chain.return_route(root)
+
+      -- 1382: occupy the ORIGINAL Magos with fully counted, physically mined
+      -- native tank items while an independently mined natural ore is en route.
+      -- Congestion is not emulated by filters, inventory bars or free item grants.
+      if FULL_STORAGE and not s.storage_cut_tick
+        and cargo and cargo.phase=="carrying"
+        and (cargo.hops_completed or 0)==0
+        and cargo.source_kind_0991=="natural-ore"
+        and cargo.quantity==1 and cargo.inventory and cargo.inventory.valid
+        and cargo.inventory.get_item_count("iron-ore")==1 then
+        local chest=root.station.get_inventory(defines.inventory.chest)
+        if not(chest and chest.valid
+          and chest.get_item_count("iron-ore")==0)then
+          fail("NATIVE_PARENT_STORAGE_PRECONDITION_INVALID")
+        end
+        local tanks=0
+        local slots=#chest
+        while chest.get_insertable_count("iron-ore")>0
+          and tanks<=slots+1 do
+          local before=chest.get_item_count("tank")
+          local entity=place(s.surface,root.station.force,"tank",40,50)
+          if not(entity.mine{inventory=chest}==true and not entity.valid
+            and chest.get_item_count("tank")==before+1)then
+            fail("NATIVE_PARENT_STORAGE_TANK_MINE_FAILED")
+          end
+          tanks=tanks+1
+        end
+        if not(tanks>0 and tanks<=slots+1
+          and chest.get_insertable_count("iron-ore")==0)then
+          fail("NATIVE_PARENT_STORAGE_NOT_GENUINELY_FULL")
+        end
+        s.storage_cut_tick=game.tick
+        s.storage_filler_count=tanks
+        emit("NATIVE_MAGOS_FULL_STORAGE_CUT tick="..game.tick..
+          " magos="..s.magos.." tanks_physically_mined="..tanks..
+          " insertable_ore=0 original_courier_held=1")
+      end
+      if FULL_STORAGE and s.storage_cut_tick and not s.storage_restored then
+        local chest=root.station.get_inventory(defines.inventory.chest)
+        if cargo and cargo.phase=="carrying"
+          and cargo.hops_completed==1
+          and cargo.last_reason=="upstream-inventory-full" then
+          s.storage_refusal_tick=s.storage_refusal_tick or game.tick
+        end
+        if s.storage_refusal_tick
+          and game.tick-s.storage_refusal_tick>=1500 then
+          local entries=cargo and cargo.receipts_0982
+          local first=entries and entries[1]
+          if not(chest and chest.valid
+            and chest.get_insertable_count("iron-ore")==0
+            and chest.get_item_count("iron-ore")==0
+            and chest.get_item_count("tank")==s.storage_filler_count
+            and cargo and cargo.phase=="carrying"
+            and cargo.hops_completed==1
+            and cargo.quantity==1
+            and cargo.inventory and cargo.inventory.valid
+            and cargo.inventory.get_item_count("iron-ore")==1
+            and type(entries)=="table" and #entries==1
+            and first and first.hop==1
+            and first.destination_station_unit==s.senior
+            and s.ore.amount==cargo.ore_amount_before-1
+            and root.priest.unit_number==s.magos_priest
+            and senior.priest.unit_number==s.senior_priest)then
+            fail("NATIVE_PARENT_FULL_REFUSAL_OR_CUSTODY_MISMATCH")
+          end
+          emit("PASS NATIVE_MAGOS_FULL_STORAGE_REFUSAL tick="..game.tick..
+            " magos="..s.magos.." held=1 hops=1 magos_ore=0"..
+            " elapsed="..(game.tick-s.storage_refusal_tick)..
+            " no_ore_created=true")
+          local hold=game.create_inventory(math.max(1,s.storage_filler_count))
+          if not(hold and hold.valid) then
+            fail("NATIVE_PARENT_STORAGE_ESCROW_UNAVAILABLE")
+          end
+          local moved=chest.remove{name="tank",count=s.storage_filler_count}
+          local inserted=hold.insert{name="tank",count=moved}
+          if not(moved==s.storage_filler_count
+            and inserted==moved
+            and chest.get_item_count("tank")==0
+            and hold.get_item_count("tank")==s.storage_filler_count
+            and chest.get_insertable_count("iron-ore")>0)then
+            fail("NATIVE_PARENT_STORAGE_RECOVERY_NONCONSERVING")
+          end
+          s.storage_hold=hold
+          s.storage_restored=true
+          emit("PASS NATIVE_MAGOS_STORAGE_RECOVERY tick="..game.tick..
+            " magos="..s.magos.." tanks_escrowed="..moved..
+            " insertable_ore_positive=true original_courier_retained=true")
+        elseif game.tick-s.storage_cut_tick>18000 then
+          fail("NATIVE_PARENT_STORAGE_REFUSAL_TIMEOUT tick="..game.tick..
+            " phase="..tostring(cargo and cargo.phase)..
+            " reason="..tostring(cargo and cargo.last_reason)..
+            " hops="..tostring(cargo and cargo.hops_completed))
+        end
+      end
       -- Save only an actually mined, engine-owned first-hop ore item after
       -- the restored original-powered roboport network and ranked robot
       -- station are complete. No source inventory or entity is manufactured.
@@ -1281,6 +1376,15 @@ local function pulse()
         and (item_count(root.station,"iron-ore") or 0)>=hop2.destination_after
         and root.priest.unit_number==s.magos_priest
         and senior.priest.unit_number==s.senior_priest then
+        if FULL_STORAGE then
+          if not(s.storage_restored and s.storage_hold and s.storage_hold.valid
+            and s.storage_hold.get_item_count("tank")==s.storage_filler_count)then
+            fail("NATIVE_PARENT_STORAGE_DELIVERY_WITHOUT_REFUSAL_RECOVERY")
+          end
+          emit("PASS NATIVE_MAGOS_STORAGE_RECOVERED_DELIVERY tick="..game.tick..
+            " magos="..s.magos.." delivered=1 held=0 hops=2"..
+            " filler_preserved="..s.storage_filler_count)
+        end
         if CARGO_RELOAD then
           if not(RELOAD_PROCESS and s.cargo_reload_verified) then
             fail("NATIVE_CARGO_RELOAD_DELIVERY_NOT_VERIFIED")
