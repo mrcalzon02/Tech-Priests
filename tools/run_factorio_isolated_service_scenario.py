@@ -558,29 +558,31 @@ def rail_native_player_test_command(factorio: pathlib.Path, mods: pathlib.Path,
             "--test-save", str(save), "--test-ticks", str(ticks)]
 
 
-def robot_saveable_player_command(factorio: pathlib.Path, mods: pathlib.Path,
-                                  save: pathlib.Path, ticks: int) -> list[str]:
-    """Launch an actual interactive single-player load on the headful runner.
+def robot_saveable_server_command(factorio: pathlib.Path, mods: pathlib.Path,
+                                  save: pathlib.Path, settings: pathlib.Path,
+                                  port: int) -> list[str]:
+    """Save-capable headless native Factorio; no Windows Session-0 GUI.
 
-    Native run 43445733037 proved that --load-game plus --until-tick
-    advances like a headless test without processing genuine radar chart
-    requests (ore was uncharted at 30000 despite powered radar). Leave the
-    real GUI player running until a game.auto_save ZIP is observed by the
-    bounded first-process driver; NEVER inject a player or chart a resource.
-    ticks is retained as the intended PRE-DELIVERY checkpoint bound: the
-    fixture requests saving at real ore custody and the driver stops only
-    after the native ZIP/CRC proof, not because a simulated timer expires.
+    Private auto_pause=false server updates genuine radar/robot physics without
+    a client. Never inject players, force-chart ore or spoof inventory.
     """
-    if ticks != 31900:
-        raise ValueError("1381 first-stage native custody bound changed")
-    # The Windows runner service has no accessible DXGI outputs (native run
-    # 43450436526, DXGI_ERROR_NOT_CURRENTLY_AVAILABLE). Factorio officially
-    # supports an alternate OpenGL renderer: exercise it only for the isolated
-    # real-player cargo-save process, never for the protected 123k benchmark.
-    graphics = ["--force-opengl"] if os.name == "nt" else []
-    return [str(factorio), "--mod-directory", str(mods), *graphics,
-            "--disable-audio", "--fullscreen=false",
-            "--window-size", "800x600", "--load-game", str(save)]
+    if not 1 <= port <= 65535:
+        raise ValueError("Invalid private native port")
+    return [str(factorio), "--mod-directory", str(mods),
+            "--start-server", str(save), "--server-settings", str(settings),
+            "--port", str(port)]
+
+
+def private_robot_server_settings(output: pathlib.Path) -> pathlib.Path:
+    path = output / "robot-server-settings.json"
+    path.write_text(json.dumps({
+        "name": "Tech Priests native cargo custody",
+        "visibility": {"public": False, "lan": False},
+        "max_players": 1, "require_user_verification": False,
+        "auto_pause": False, "autosave_interval": 1000,
+        "autosave_slots": 2,
+    }, indent=2), encoding="utf-8")
+    return path
 
 
 def rail_connected_smoke_verdict(exit_code: int, log: str) -> bool:
@@ -712,22 +714,12 @@ def factorio_1381_save_roots(factorio: pathlib.Path,
     return roots
 
 
-def native_gui_startup_failure_1381(log: str) -> str | None:
-    """Identify fatal native startup without confusing Steam API warnings with failure.
-
-    In the last Windows service runner, graphics failed at 0.1s but a modal
-    notice kept the engine subprocess alive for the full 15-minute limit.
-    Do not consume engine minutes after an observed fatal startup; retain log.
-    """
-    if "DXGI_ERROR_NOT_CURRENTLY_AVAILABLE" in log or "Failed to enumerate adapter output." in log:
-        return "windows-session-graphics-unavailable"
+def native_server_startup_failure_1381(log: str) -> str | None:
+    """Avoid needless runner minutes after genuine headless startup errors."""
     if "Steam requires game restart, restarting..." in log:
         return "steam-relaunch-lost-arguments"
-    if ("OpenGL" in log and ("Failed to create" in log or "Unable to" in log
-                             or "failed to initialize" in log)):
-        return "opengl-renderer-unavailable"
-    if "Error Util.cpp:" in log:
-        return "fatal-engine-initialization"
+    if "Error Util.cpp:" in log or "Error ServerMultiplayerManager.cpp:" in log:
+        return "native-server-initialization"
     return None
 
 
@@ -748,94 +740,87 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
            "native_server_process_wall_minutes":None,
            "native_reload_process_wall_minutes":None,
            "native_factorio_process_wall_minutes":None}
-    # --test-save generates a native test player but did not persist its
-    # requested autosave (43435986297). --load-game with --until-tick then
-    # fast-forwarded without charting natural ore (43445733037). Run normal
-    # interactive single-player WITHOUT --until-tick on the headful runner,
-    # stopping solely after real original-cargo marker and saved ZIP/CRC.
-    # No scripted player or chart bypass; the original physical ore remains.
-    roots = factorio_1381_save_roots(factorio)
+    # GUI single-player stayed at tick 660 for 15 minutes in Windows
+    # Service Session 0 (run 43455188694). --test-save charted native ore
+    # but could not save. Use Factorio's private save-capable headless server
+    # with auto_pause=false, preserving the original native radar and all
+    # strict world ore, rank, custody and independent reload checks.
+    roots = [output / "saves", *factorio_1381_save_roots(factorio)]
     started = time.monotonic()
     process = None
-    # Steamworks restarts a directly launched Steam executable and drops the
-    # original --load-game arguments. Use the official development app-id
-    # marker ONLY in this isolated scenario working directory (never in the
-    # installed game, user saves, or Steam configuration).
-    steam_marker = output / "steam_appid.txt"
-    steam_marker_created = False
+    out["native_first_backend"] = "private-headless-save-capable-server"
+    out["native_server_autopause"] = False
     try:
-        # Do not accept a previous attempt's checkpoint as fresh save evidence.
         checkpoint.unlink(missing_ok=True)
-        # Only the exact namespaced CI autosave is removed; never user saves.
+        # Remove ONLY our exactly named CI save. All unrelated saves stay put.
         for folder in roots:
-            old = folder/name
+            old = folder / name
             if old.exists():
                 old.unlink()
-        # Normal single-player has no test-ticks exit. Observe the genuine
-        # native ZIP while the engine still owns the live player, then stop
-        # only after the exact cargo marker AND ZIP CRC succeed.
+        (output / "saves").mkdir(exist_ok=True)
+        settings = private_robot_server_settings(output)
+        port = free_loopback_udp_port()
+        out["native_private_udp_port"] = port
         ready = False
         first_exit = None
-        if steam_marker.exists():
-            raise RuntimeError("isolated Steam app-id marker already exists; refusing overwrite")
-        steam_marker.write_text("427520\n", encoding="ascii")
-        steam_marker_created = True
-        out["native_isolated_steam_appid"] = "427520"
-        with source_log.open("w",encoding="utf-8") as handle:
+        with source_log.open("w", encoding="utf-8") as handle:
             process = subprocess.Popen(
-                robot_saveable_player_command(factorio,mods,initial,31900),
-                stdout=handle,stderr=subprocess.STDOUT,cwd=output)
-            deadline = time.monotonic() + timeout
+                robot_saveable_server_command(factorio, mods, initial, settings, port),
+                stdin=subprocess.DEVNULL, stdout=handle,
+                stderr=subprocess.STDOUT, cwd=output)
+            launched = time.monotonic()
+            deadline = launched + timeout
             while time.monotonic() < deadline:
                 first_exit = process.poll()
+                current = source_log.read_text(encoding="utf-8", errors="replace")
+                fatal = native_server_startup_failure_1381(current)
+                if fatal:
+                    out["native_first_fatal_diagnostic"] = fatal
+                    raise RuntimeError("private native server initialization failed: " + fatal)
+                if "[TP-AUTONOMOUS-ROBOT-1380] FAIL " in current:
+                    raise RuntimeError("real native ore fixture failed: " +
+                                       " | ".join(current.splitlines()[-6:])[-1400:])
+                if "Error while running event" in current:
+                    raise RuntimeError("Factorio runtime event failed")
                 if first_exit is not None:
                     break
-                startup_failure = native_gui_startup_failure_1381(
-                    source_log.read_text(encoding="utf-8", errors="replace"))
-                if startup_failure is not None:
-                    out["native_first_fatal_diagnostic"] = startup_failure
-                    raise RuntimeError(
-                        "real GUI failed before physical ore: " + startup_failure)
+                if time.monotonic()-launched >= 180 and not any(
+                    x in current for x in ("NATIVE_RADAR_AND_STRATEGY_READBACK tick=",
+                                           "NATIVE_ORE_CHARTED tick=",
+                                           "NATIVE_CARGO_SAVE_REQUESTED tick=")):
+                    raise RuntimeError("no genuine server radar progress in 180 seconds")
                 for folder in roots:
-                    native = folder/name
+                    native = folder / name
                     if not native.is_file() or native.stat().st_size <= 2048:
                         continue
                     try:
                         with zipfile.ZipFile(native) as z:
                             valid_crc = z.testzip() is None
                     except (OSError, zipfile.BadZipFile, EOFError):
-                        valid_crc = False  # native save may still be writing
-                    if (valid_crc and marker in source_log.read_text(
-                            encoding="utf-8",errors="replace")):
+                        valid_crc = False
+                    if valid_crc and marker in current:
                         ready = True
                         break
                 if ready:
                     break
                 time.sleep(0.5)
             if not ready and first_exit is None:
-                raise RuntimeError("real single-player produced no complete "
-                                   "native cargo save before bounded timeout")
-        src = source_log.read_text(encoding="utf-8",errors="replace")
+                raise RuntimeError("native server produced no CRC-verified natural ore "
+                                   "custody save before bounded timeout")
+        src = source_log.read_text(encoding="utf-8", errors="replace")
         if first_exit is not None and first_exit != 0:
-            raise RuntimeError("single-player native Factorio exited "
-                               +str(first_exit))
+            raise RuntimeError("native server exited " + str(first_exit))
         if "[TP-AUTONOMOUS-ROBOT-1380] FAIL " in src or "Error while running" in src:
-            raise RuntimeError("first Factorio process failed: "
-                               +" | ".join(src.splitlines()[-8:])[-1400:])
+            raise RuntimeError("native first engine process failed")
         if marker not in src:
-            raise RuntimeError("real single-player did not produce the "
-                               "held natural ore save marker")
+            raise RuntimeError("native headless process did not produce held ore marker")
         if not ready:
-            raise RuntimeError("real single-player exited before native "
-                               "ore custody save ZIP/CRC confirmation")
+            raise RuntimeError("native server exited before exact ore save ZIP/CRC")
         out["native_first_stop_reason"] = "verified-engine-save-driver-stop"
-        # Accept only a fresh, exact-name engine ZIP with valid CRC; the
-        # "Saving finished" console phrase is not guaranteed in --test-save.
-        # Preserve missing-save evidence instead of failing prematurely.
         out["native_save_logged_finished"] = "Saving finished" in src
         out["native_save_log_lines"] = [
             line[-350:] for line in src.splitlines()
-            if re.search(r"(?i)\b(?:saving|saved|autosave|save game)\b",line)
+            if re.search(r"(?i)\b(?:saving|saved|autosave|save game)\b", line)
         ][-12:]
         out["native_save_candidate_names"] = sorted({
             p.name for folder in roots if folder.is_dir()
@@ -847,7 +832,7 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                 with zipfile.ZipFile(native) as z:
                     if z.testzip() is not None:
                         raise RuntimeError("Native save CRC invalid")
-                shutil.copy2(native,checkpoint)
+                shutil.copy2(native, checkpoint)
                 with zipfile.ZipFile(checkpoint) as z:
                     if z.testzip() is not None:
                         raise RuntimeError("Copied save CRC invalid")
@@ -855,9 +840,7 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                 out["native_save_bytes"]=checkpoint.stat().st_size
                 break
         if not checkpoint.is_file():
-            raise RuntimeError("Native player produced no CRC-verified carried-ore save"
-                               " in standalone/Windows/Linux save roots;"
-                               " inspect native_save_log_lines and candidate_names")
+            raise RuntimeError("No exact named native save ZIP with verified CRC")
     except Exception as error:
         out["blocker"] = str(error)
     finally:
@@ -866,11 +849,10 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
             try: process.wait(timeout=20)
             except subprocess.TimeoutExpired:
                 process.kill();process.wait(timeout=10)
-        if steam_marker_created:
-            steam_marker.unlink(missing_ok=True)
         out["native_first_process_actual_exit"] = (
             process.returncode if process is not None else None)
-        out["native_server_process_wall_minutes"] = round((time.monotonic()-started)/60,6)
+        out["native_server_process_wall_minutes"] = round(
+            (time.monotonic()-started)/60, 6)
     first = source_log.read_text(encoding="utf-8",errors="replace") if source_log.is_file() else ""
     # Preserve genuine engine startup/exit diagnostics even if no fixture
     # marker ever fires (GUI Steam relaunch, early exit, invalid CLI,

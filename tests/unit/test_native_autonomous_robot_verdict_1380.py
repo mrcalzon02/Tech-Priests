@@ -486,77 +486,61 @@ assert "NATIVE_CARGO_INDEPENDENT_RELOAD_CUSTODY_INVALID" in fixture
 print("PASS strict 1381 physical save/reload cargo and identity proof regression")
 
 
-# 43420567231: server without player uncharted. 43435986297: sandboxed
-# --test-save charted but could not save. 43445733037: --load-game with
-# --until-tick likewise did not chart. Only normal GUI --load-game may
-# establish both native player charting AND a truly persisted ZIP.
+# The Windows service runner cannot advance native GUI world beyond tick 660.
+# Exercise native save-capable headless Factorio with auto_pause=false while
+# retaining genuine radar chart, physical mined ore and strict second process.
 driver_source=path.read_text(encoding="utf-8")
 segment=driver_source.split("def run_robot_cargo_reload_1381(",1)[1].split(
     "\ndef main()",1)[0]
-command=module.robot_saveable_player_command(
+cmd=module.robot_saveable_server_command(
     pathlib.Path("factorio"),pathlib.Path("mods"),
-    pathlib.Path("scenario-initial.zip"),31900)
-assert command==(["factorio","--mod-directory","mods"]
-                 + (["--force-opengl"] if module.os.name == "nt" else [])
-                 + ["--disable-audio","--fullscreen=false","--window-size",
-                    "800x600","--load-game","scenario-initial.zip"])
-assert 'graphics = ["--force-opengl"] if os.name == "nt" else []' in driver_source
-assert module.native_gui_startup_failure_1381(
-    "D3D11_ERROR DXGI_ERROR_NOT_CURRENTLY_AVAILABLE") == "windows-session-graphics-unavailable"
-assert module.native_gui_startup_failure_1381(
-    "Error Util.cpp:95: Failed to enumerate adapter output.") == "windows-session-graphics-unavailable"
-assert module.native_gui_startup_failure_1381(
-    "Steam requires game restart, restarting...") == "steam-relaunch-lost-arguments"
-assert module.native_gui_startup_failure_1381(
-    "OpenGL: Failed to create rendering context") == "opengl-renderer-unavailable"
-assert module.native_gui_startup_failure_1381(
-    "Error SteamContextInterface.cpp:60: Steam API could not be initialized") is None
-assert module.native_gui_startup_failure_1381(
-    "[TP-AUTONOMOUS-ROBOT-1380] NATIVE_CARGO_SAVE_REQUESTED") is None
-assert "native_first_fatal_diagnostic" in segment
-assert "real GUI failed before physical ore:" in segment
-assert "--until-tick" not in command
-for unsafe_ticks in (25500,32000,72060):
-    try: module.robot_saveable_player_command(
+    pathlib.Path("original.zip"),pathlib.Path("settings.json"),35201)
+assert cmd==["factorio","--mod-directory","mods","--start-server",
+            "original.zip","--server-settings","settings.json","--port","35201"]
+for port in (0,65536):
+    try: module.robot_saveable_server_command(
         pathlib.Path("factorio"),pathlib.Path("mods"),
-        pathlib.Path("scenario-initial.zip"),unsafe_ticks)
+        pathlib.Path("original.zip"),pathlib.Path("settings.json"),port)
     except ValueError: pass
-    else: raise AssertionError("1381 first-stage custody bound was widened")
+    else: raise AssertionError("unsafe Factorio port accepted")
+import tempfile
+with tempfile.TemporaryDirectory() as tempdir:
+    settings=module.private_robot_server_settings(pathlib.Path(tempdir))
+    config=module.json.loads(settings.read_text(encoding="utf-8"))
+    assert config["auto_pause"] is False
+    assert config["visibility"]=={"public":False,"lan":False}
+    assert config["require_user_verification"] is False
+    assert config["autosave_interval"]==1000
+assert module.native_server_startup_failure_1381(
+    "Error ServerMultiplayerManager.cpp:5")=="native-server-initialization"
+assert module.native_server_startup_failure_1381(
+    "Steam requires game restart, restarting...")=="steam-relaunch-lost-arguments"
+assert module.native_server_startup_failure_1381(
+    "[TP-AUTONOMOUS-ROBOT-1380] NATIVE_CARGO_SAVE_REQUESTED") is None
 assert 'while time.monotonic() < deadline:' in segment
+assert 'no genuine server radar progress in 180 seconds' in segment
+assert 'real native ore fixture failed:' in segment
 assert 'valid_crc = z.testzip() is None' in segment
-assert 'if ready:' in segment
-assert 'if not ready:' in segment
+assert 'if ready:' in segment and 'if not ready:' in segment
 assert 'out["native_first_stop_reason"] = "verified-engine-save-driver-stop"' in segment
 assert 'out["native_first_engine_log_tail"]' in segment
 assert 'print("NATIVE_1381_ENGINE_TAIL "+line[-1200:],flush=True)' in segment
 assert 'process.terminate()' in segment
-assert 'steam_marker = output / "steam_appid.txt"' in segment
-assert 'steam_marker.write_text("427520\\n", encoding="ascii")' in segment
-assert 'raise RuntimeError("isolated Steam app-id marker already exists; refusing overwrite")' in segment
-assert 'stdout=handle,stderr=subprocess.STDOUT,cwd=output)' in segment
-assert 'steam_marker.unlink(missing_ok=True)' in segment
-assert 'factorio.parent / "steam_appid.txt"' not in segment
-assert "robot_saveable_player_command(factorio,mods,initial,31900)" in segment
-assert "--test-save" not in command and "--start-server" not in command
-assert "--benchmark" not in command and "force.chart" not in segment
-assert 'source_log.open("w",encoding="utf-8")' in segment
-assert 'str(factorio),"--start-server"' not in segment
-assert "real single-player did not produce the " in segment
-assert 'game.force.chart(' not in driver_source
-assert "Native save CRC invalid" in segment
-assert "Copied save CRC invalid" in segment
-assert "marker not in src" in segment
-# Exact fresh native ZIP and CRC supersede optional engine log wording.
+assert 'cwd=output)' in segment
+assert 'robot_saveable_server_command(factorio, mods, initial, settings, port)' in segment
+assert 'out["native_server_autopause"] = False' in segment
 assert 'checkpoint.unlink(missing_ok=True)' in segment
-assert 'out["native_save_logged_finished"]' in segment
+assert 'if z.testzip() is not None:' in segment
 assert 'out["native_save_proof"]="exact-named-new-file-zip-crc"' in segment
 assert 'if not checkpoint.is_file():' in segment
-assert 'if "Saving finished" not in src:' not in segment
-assert 'if z.testzip() is not None:' in segment
-roots_1381=module.factorio_1381_save_roots(
+assert 'if marker not in src:' in segment
+assert 'out.update(verify_cargo_reload_1381(first,second))' in segment
+assert 'game.auto_save("tech-priests-ci-1380-cargo")' in fixture
+assert '--test-save' not in cmd and '--benchmark' not in cmd
+assert '--load-game' not in cmd and '--force-opengl' not in cmd
+assert 'game.force.chart(' not in driver_source
+roots=module.factorio_1381_save_roots(
     pathlib.Path("C:/Factorio/bin/x64/factorio.exe"),
     appdata="C:/Users/CI/AppData/Roaming")
-assert pathlib.Path("C:/Users/CI/AppData/Roaming/Factorio/saves") in roots_1381
-assert pathlib.Path("C:/Factorio/saves") in roots_1381
-assert not any("force.chart" in text for text in (segment,))
-print("PASS 1381 real interactive player load, CRC-gated stop and strict Windows save root")
+assert pathlib.Path("C:/Users/CI/AppData/Roaming/Factorio/saves") in roots
+print("PASS 1381 native headless server, CRC and independent custody regression")
