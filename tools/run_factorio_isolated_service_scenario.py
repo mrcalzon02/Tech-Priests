@@ -191,6 +191,22 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         r"original_green=false actual_green=true "
         r"electric_grid=original logistic_network=merged builder_receipt=0338",
         "counted native original-grid extension")
+    cut = one(
+        r"NATIVE_ROBOTLESS_CUT tick=(\d+) original_magos=(\d+) "
+        r"original_senior=(\d+) original_port=(\d+) "
+        r"robots_held=3 station_stock=1 extension=verified",
+        "original robot custody cut after paid frontier")
+    denied = one(
+        r"PASS NATIVE_ROBOTLESS_REFUSAL tick=(\d+) "
+        r"original_magos=(\d+) original_senior=(\d+) "
+        r"robots_held=3 network_robots=0 station_stock=1 "
+        r"native_event=none ore_unchanged=true",
+        "native zero-robot refusal with conserved source and identities")
+    recovered = one(
+        r"PASS NATIVE_ROBOTLESS_RECOVERY tick=(\d+) "
+        r"original_port=(\d+) robots_restored=3 held=0 "
+        r"original_mission=retained",
+        "counted same-robot item restoration")
     event = one(
         r"NATIVE_ROBOT_EVENT tick=(\d+) station=(\d+) robot=(\d+) "
         r"event=on_robot_built_entity",
@@ -204,7 +220,12 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         "paired Intermediate and exact material debit")
 
     if not (int(source[1]) <= int(selected[1]) <= int(extension[1])
-            <= int(event[1]) <= int(finished[1])):
+            <= int(cut[1]) < int(denied[1]) <= int(recovered[1])
+            < int(event[1]) <= int(finished[1])
+            and int(denied[1]) - int(cut[1]) >= 1500
+            and cut[2] == denied[2] == source[3]
+            and cut[3] == denied[3] == source[4]
+            and cut[4] == recovered[2] == extension[4]):
         raise ValueError("1380 unordered native material/goal/robot/receipt")
     if not (source[3] == selected[2] == finished[2]
             and source[4] == selected[3] == finished[4]
@@ -237,6 +258,8 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         "native_construction_robot": int(finished[8]),
         "original_stock_debit": 1,
         "native_counted_frontier_extension_accepted": True,
+        "native_robotless_refusal_accepted": True,
+        "native_robotless_refusal_ticks": int(denied[1])-int(cut[1]),
         "native_frontier_poles": int(extension[6]),
         "native_frontier_ports": int(extension[7]),
         "natural_ore_return_accepted": False,

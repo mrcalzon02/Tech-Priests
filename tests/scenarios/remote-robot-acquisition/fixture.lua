@@ -635,6 +635,32 @@ local function pulse()
             " original_grid="..tostring(s.original_electric_grid))
         end
         s.extension_accepted=true
+        -- Genuine Method II negative: after actual paid original-grid
+        -- extension, temporarily withhold the THREE original docked
+        -- construction robots in an engine-owned LuaInventory. No robot,
+        -- station, pole, port or ore is created/destroyed by this stimulus.
+        -- The same three items must return before positive construction.
+        local dock=s.port.get_inventory(defines.inventory.roboport_robot)
+        if not(dock and dock.valid
+          and dock.get_item_count("construction-robot")==3)then
+          fail("NATIVE_ROBOTLESS_CUT_NO_THREE_DOCKED_ROBOTS")
+        end
+        local hold=game.create_inventory(1)
+        if not(hold and hold.valid)then fail("ROBOTLESS_CUSTODY_HOLD_MISSING")end
+        s.robotless_hold=hold -- persist exact physical custody before debit
+        local removed=dock.remove{name="construction-robot",count=3}
+        local stored=hold.insert{name="construction-robot",count=removed}
+        if not(removed==3 and stored==3
+          and dock.get_item_count("construction-robot")==0
+          and hold.get_item_count("construction-robot")==3
+          and item_count(s.provider,"intermediate-cogitator-station")==1)then
+          fail("NATIVE_ROBOTLESS_PHYSICAL_CUSTODY_INVALID")
+        end
+        s.robotless_cut_tick=game.tick
+        emit("NATIVE_ROBOTLESS_CUT tick="..game.tick..
+          " original_magos="..s.magos.." original_senior="..s.senior..
+          " original_port="..s.port.unit_number..
+          " robots_held=3 station_stock=1 extension=verified")
         emit("PASS NATIVE_PHYSICAL_FRONTIER_EXTENSION tick="..game.tick..
           " original_magos="..s.magos..
           " original_senior="..s.senior..
@@ -646,6 +672,59 @@ local function pulse()
           " port_debit="..port_debit..
           " original_green=false actual_green=true"..
           " electric_grid=original logistic_network=merged builder_receipt=0338")
+      end
+      -- Observe 1,500 native ticks with zero original construction robots,
+      -- beyond the formerly successful ~957-tick robot dispatch/build.
+      -- No station may be credited, no resource mined, no item consumed,
+      -- and neither original priest identity may change. Restore the
+      -- EXACT same three robot items, then complete ordinary production.
+      if s.robotless_hold then
+        if game.tick-s.robotless_cut_tick<1500 then return end
+        local held=s.robotless_hold
+        local dock=s.port.get_inventory(defines.inventory.roboport_robot)
+        local live_cell=s.port.logistic_cell
+        local live_net=live_cell and live_cell.logistic_network
+        local site=s.goal and s.goal.remote_station_position_1076
+        local built=site and s.surface.find_entities_filtered{
+          name="intermediate-cogitator-station",position=site,
+          radius=1.5,force=root.station.force,limit=2} or {}
+        if not(held.valid and held.get_item_count("construction-robot")==3
+          and dock and dock.valid
+          and dock.get_item_count("construction-robot")==0
+          and live_net and live_net.valid
+          and live_net.available_construction_robots==0
+          and live_net.all_construction_robots==0
+          and #built==0 and not s.event_station
+          and item_count(s.provider,"intermediate-cogitator-station")==1
+          and s.ore.amount==s.ore_initial
+          and root.priest.unit_number==s.magos_priest
+          and senior.priest.unit_number==s.senior_priest)then
+          fail("NATIVE_ROBOTLESS_REFUSAL_OR_CUSTODY_INVALID tick="..
+            game.tick.." held="..tostring(held.valid and
+              held.get_item_count("construction-robot"))..
+            " network_robots="..tostring(live_net and
+              live_net.all_construction_robots)..
+            " provider_item="..tostring(item_count(s.provider,
+              "intermediate-cogitator-station"))..
+            " built="..tostring(#built))
+        end
+        emit("PASS NATIVE_ROBOTLESS_REFUSAL tick="..game.tick..
+          " original_magos="..s.magos.." original_senior="..s.senior..
+          " robots_held=3 network_robots=0 station_stock=1"..
+          " native_event=none ore_unchanged=true")
+        local released=held.remove{name="construction-robot",count=3}
+        local restored=dock.insert{name="construction-robot",count=released}
+        if not(released==3 and restored==3
+          and dock.get_item_count("construction-robot")==3
+          and held.get_item_count("construction-robot")==0)then
+          fail("NATIVE_ROBOTLESS_RESTORATION_NOT_COUNTED")
+        end
+        held.destroy() -- only after empty native item custody is verified
+        s.robotless_hold=nil
+        s.robotless_restored=true
+        emit("PASS NATIVE_ROBOTLESS_RECOVERY tick="..game.tick..
+          " original_port="..s.port.unit_number..
+          " robots_restored=3 held=0 original_mission=retained")
       end
       local goal=s.goal
       local site=goal and goal.remote_station_position_1076

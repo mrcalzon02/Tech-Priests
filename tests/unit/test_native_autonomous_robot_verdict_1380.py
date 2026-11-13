@@ -20,16 +20,27 @@ extension=(prefix+"PASS NATIVE_PHYSICAL_FRONTIER_EXTENSION tick=1450 "
     "poles_built=2 ports_built=1 pole_debit=2 port_debit=1 "
     "original_green=false actual_green=true "
     "electric_grid=original logistic_network=merged builder_receipt=0338")
-event=(prefix+"NATIVE_ROBOT_EVENT tick=1540 station=50 robot=60 "
+robot_cut=(prefix+"NATIVE_ROBOTLESS_CUT tick=1450 original_magos=10 "
+    "original_senior=20 original_port=30 robots_held=3 station_stock=1 "
+    "extension=verified")
+robot_denied=(prefix+"PASS NATIVE_ROBOTLESS_REFUSAL tick=2950 "
+    "original_magos=10 original_senior=20 robots_held=3 network_robots=0 "
+    "station_stock=1 native_event=none ore_unchanged=true")
+robot_recovered=(prefix+"PASS NATIVE_ROBOTLESS_RECOVERY tick=2950 "
+    "original_port=30 robots_restored=3 held=0 original_mission=retained")
+event=(prefix+"NATIVE_ROBOT_EVENT tick=3100 station=50 robot=60 "
     "event=on_robot_built_entity")
 done=(prefix+"PASS autonomous original 0259 selected and physical "
-    "native robot-built Intermediate paired tick=1600 magos=10 "
+    "native robot-built Intermediate paired tick=3200 magos=10 "
     "magos_priest=11 senior=20 senior_priest=21 intermediate=50 "
     "intermediate_priest=51 native_robot=60 material_delta=1 "
     "source_stock=0 ghost=0 ore_return_not_credited=true")
-sample="\n".join((physical,selected,extension,event,done))
+sample="\n".join((physical,selected,extension,robot_cut,
+                  robot_denied,robot_recovered,event,done))
 report=module.verify_autonomous_robot_1380_log(0,sample)
 assert report["accepted"] is True
+assert report["native_robotless_refusal_accepted"] is True
+assert report["native_robotless_refusal_ticks"] == 1500
 assert report["natural_ore_return_accepted"] is False
 assert report["ore_items_delivered_per_1000_ticks"] is None
 checks=[
@@ -40,6 +51,14 @@ checks=[
     (0,sample.replace("material_delta=1","material_delta=0")),
     (0,sample.replace("source_stock=0","source_stock=1")),
     (0,sample.replace(extension+"\n","")),
+    (0,sample.replace(robot_cut+"\n","")),
+    (0,sample.replace(robot_denied+"\n","")),
+    (0,sample.replace(robot_recovered+"\n","")),
+    (0,sample.replace("robots_held=3","robots_held=2")),
+    (0,sample.replace("network_robots=0","network_robots=1")),
+    (0,sample.replace("native_event=none","native_event=present")),
+    (0,sample.replace("robots_restored=3","robots_restored=2")),
+    (0,sample.replace("tick=2950","tick=2400")),
     (0,sample+"\n"+extension),
     (0,sample.replace("original_green=false","original_green=true")),
     (0,sample.replace("actual_green=true","actual_green=false")),
@@ -75,6 +94,14 @@ assert "create_native_site(s)" in bootstrap
 assert '" ore="..tostring(s.ore.unit_number)' in fixture
 assert '" ore="..s.ore.unit_number' not in fixture
 assert "NATIVE_ON_INIT_BOOTSTRAP_COMPLETE" in bootstrap
+assert "s.robotless_hold=hold" in fixture
+assert "game.create_inventory(1)" in fixture
+assert "live_net.all_construction_robots==0" in fixture
+assert 'dock.get_item_count("construction-robot")==0' in fixture
+assert "s.ore.amount==s.ore_initial" in fixture
+assert 'held.get_item_count("construction-robot")==0' in fixture
+assert "held.destroy()" in fixture
+assert "NATIVE_ROBOTLESS_REFUSAL_OR_CUSTODY_INVALID" in fixture
 assert 'while s.seed_offset<64 do' in fixture
 assert 'local name=SURFACE.."-"..tostring(s.seed_offset)' in fixture
 assert 'if not game.delete_surface(surface)' in fixture
@@ -142,7 +169,8 @@ physical_supply=(prefix+"NATIVE_INITIAL_CONSTRUCTION_SUPPLY tick=100 "
 create_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore",
                       physical_supply,physical,bootstrap))
 benchmark_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore",
-                         selected,extension,event,done))
+                         selected,extension,robot_cut,robot_denied,
+                         robot_recovered,event,done))
 assert module.verify_autonomous_robot_1380_process_logs(
     0,create_log,0,benchmark_log)["accepted"] is True
 negative_processes=[
@@ -292,17 +320,17 @@ print("PASS native 1380 genuine chart-relative 0259 cadence and finite failure b
 # NEW boundary: paid station success is NOT remote resource acquisition.
 # The independent native gate requires a real ore source decrement, two
 # original-priest physical custody hops, Magos chest deposit and empty hold.
-ore_receipt=(prefix+"PASS NATIVE_PHYSICAL_ORE_RETURN tick=2520 "
+ore_receipt=(prefix+"PASS NATIVE_PHYSICAL_ORE_RETURN tick=4520 "
     "original_magos=10 magos_priest=11 senior=20 senior_priest=21 "
     "intermediate=50 intermediate_priest=51 "
     "source_amount_before=1000 source_amount_after=999 "
     "hop1_delta=1 hop2_delta=1 magos_deposit=1 "
-    "delivered_tick=2500 source_kind=natural-ore inventory_hold=empty")
+    "delivered_tick=4500 source_kind=natural-ore inventory_hold=empty")
 full_log=sample+"\n"+ore_receipt
 ore_result=module.verify_autonomous_robot_ore_1380_log(full_log,72060)
 assert ore_result["natural_ore_return_accepted"] is True
 assert ore_result["new_distinct_ore_delivery_gates"]==1
-assert ore_result["first_magos_delivery_tick"]==2500
+assert ore_result["first_magos_delivery_tick"]==4500
 assert ore_result["ore_items_delivered_per_1000_ticks"]==round(1000/72060,6)
 for bad in (
     sample,full_log+"\\n"+ore_receipt,
@@ -314,7 +342,7 @@ for bad in (
     full_log.replace("magos_deposit=1","magos_deposit=0"),
     full_log.replace("inventory_hold=empty","inventory_hold=held"),
     full_log.replace("source_kind=natural-ore","source_kind=synthetic"),
-    full_log.replace("delivered_tick=2500","delivered_tick=99999"),
+    full_log.replace("delivered_tick=4500","delivered_tick=99999"),
 ):
     try:
         module.verify_autonomous_robot_ore_1380_log(bad,72060)
