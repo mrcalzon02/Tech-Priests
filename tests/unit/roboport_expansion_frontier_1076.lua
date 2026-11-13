@@ -86,6 +86,8 @@ local stock={["medium-electric-pole"]=300,roboport=24}
 _G.TechPriestsStorageRoleAuthority0686={
   generic_item_count=function(_,item)return stock[item]or 0 end}
 local queries=0
+local anchor_index_stale=false
+local anchor_fresh_reads=0
 _G.TechPriestsScanRouting0610={find_entities=function(s,filter,opts)
   assert(s==surface and opts.limit==filter.limit and filter.limit<=64,
     "expansion used uncapped or foreign-world scan")
@@ -100,6 +102,12 @@ _G.TechPriestsScanRouting0610={find_entities=function(s,filter,opts)
       "native built 0338 receipt was checked against stale industrial index")
   end
   queries=queries+1
+  if filter.type=="electric-pole" and filter.radius==M.scan_radius then
+    if anchor_index_stale and opts.require_fresh~=true then return {} end
+    if opts.require_fresh==true then
+      anchor_fresh_reads=anchor_fresh_reads+1
+    end
+  end
   return surface.find_entities_filtered(filter)
 end}
 local function make_pair(goal)
@@ -168,6 +176,26 @@ assert(extension_ok
   and not admission_owner.roboport_frontier_1076
   and not admission_owner.construction_request and #objects==2,
   "outside-green admission fabricated a build or refused a real first hop")
+-- Live 1380 readback: original native substations were powered, but the
+-- indexed 0579 pole query claimed no original-grid anchor. A fresh bounded
+-- canonical 0610 read must recover ONLY the real qualifying electric pole.
+anchor_index_stale=true
+local fresh_before=anchor_fresh_reads
+local recovered,recovered_reason=M.native_uncovered_ore_admission_1076(
+  admission_owner,distant_target,distant_site)
+assert(recovered
+  and recovered_reason=="native-powered-stocked-first-frontier-waypoint"
+  and anchor_fresh_reads==fresh_before+1
+  and not admission_owner.construction_request and #objects==2,
+  "stale electric-pole catalog suppressed genuine powered native frontier")
+original_grid_anchor.electric_network_id=999
+local refused,refusal_reason=M.native_uncovered_ore_admission_1076(
+  admission_owner,distant_target,distant_site)
+assert(not refused and refusal_reason=="no-proven-powered-grid-anchor"
+  and anchor_fresh_reads==fresh_before+2,
+  "fresh scan bypassed physical same-grid anchor authority")
+original_grid_anchor.electric_network_id=7
+anchor_index_stale=false
 stock.roboport=0
 assert(not M.native_uncovered_ore_admission_1076(
   admission_owner,distant_target,distant_site),

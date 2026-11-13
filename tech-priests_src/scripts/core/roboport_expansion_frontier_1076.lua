@@ -170,30 +170,41 @@ end
 local function choose_anchor(pair,port,goal)
   local cell=grid_port(port)
   if not cell then return nil,"power-anchor-roboport-inactive" end
-  local poles,reason=find(pair,{
-    type="electric-pole",force=pair.station.force,
-    position=port.position,radius=M.scan_radius,limit=M.scan_limit})
+  local filter={type="electric-pole",force=pair.station.force,
+    position=port.position,radius=M.scan_radius,limit=M.scan_limit}
+  local poles,reason=find(pair,filter)
   if not poles then return nil,reason end
-  local best,score
   local claimed=power_id(port)
   if not claimed then return nil,"source-roboport-electric-network-unidentified" end
-  for _,pole in ipairs(poles)do
-    local id=valid(pole) and pole.force==pair.station.force
-      and power_id(pole) or nil
-    local supply=pole_supply(pole.prototype)
-    local reach=pole_wire(pole.prototype)
-    -- Existing connected poles farther toward the goal can be reused:
-    -- the source port independently proves this SAME electric network ID.
-    -- Never rebuild an identical run of poles after losing only the port.
-    if id and reach>2 and supply>0
-      and id==claimed
-      and covered(cell.cell,pole.position,"construction") then
-      local d=distance(pole.position,goal)
-      if not best or d<score then
-        best={pole=pole,grid_id=id};score=d
+  local function verified_anchor(candidates)
+    local best,score
+    for _,pole in ipairs(candidates)do
+      local id=valid(pole) and pole.force==pair.station.force
+        and pole.surface==pair.station.surface and power_id(pole) or nil
+      local supply=id and pole_supply(pole.prototype) or 0
+      local reach=id and pole_wire(pole.prototype) or 0
+      -- Only a live, same-force/surface/grid and native-green-covered
+      -- electric pole is an acceptable physical anchor. A catalog entry
+      -- cannot itself supply power or authorize a construction debit.
+      if id and reach>2 and supply>0 and id==claimed
+        and covered(cell.cell,pole.position,"construction")then
+        local d=distance(pole.position,goal)
+        if not best or d<score then
+          best={pole=pole,grid_id=id};score=d
+        end
       end
     end
+    return best
   end
+  local best=verified_anchor(poles)
+  if best then return best,"physical-grid-anchor" end
+  -- 0579 can return a complete-looking but stale indexed area while the
+  -- live Factorio surface contains the original powered substations. On
+  -- this specific admission dead end, make ONE bounded 0610 fresh read.
+  -- Do not retry or grant an anchor on scan failure, wrong grid or no pole.
+  local fresh,fresh_reason=find(pair,filter,"construction",true)
+  if not fresh then return nil,fresh_reason end
+  best=verified_anchor(fresh)
   return best,best and "physical-grid-anchor" or "no-proven-powered-grid-anchor"
 end
 covered=function(cell,pos,kind)
