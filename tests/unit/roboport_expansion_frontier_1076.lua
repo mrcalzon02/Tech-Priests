@@ -686,7 +686,7 @@ assert(dead_root.waiting==1 and rooted.status=="blocked"
   "unpowered original root was accepted from a cached logistics identity")
 immutable_root.energy=10000
 local after_restore=M.service_pair(restored_owner)
-assert(after_restore.detail=="verified-existing-covered-frontier"
+assert(after_restore.detail=="actual-logistic-and-construction-coverage-at-goal"
   and rooted.status=="complete"
   and rooted.source_port==restored_real
   and rooted.original_port_1076==immutable_root
