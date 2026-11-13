@@ -481,7 +481,7 @@ assert fixture.count('(cargo.hops_completed or 0)==0')==2
 assert fixture.count('and type(cargo.receipts_0982)=="table" and #cargo.receipts_0982==0')==2
 assert 'cargo.hops_completed==0' not in fixture
 assert 'cargo.inventory.get_item_count("iron-ore")==1' in fixture
-assert 'game.auto_save("tech-priests-ci-1380-cargo")' in fixture
+assert 'game.auto_save("tech-priests-ci-1380-cargo", true)' in fixture
 assert "NATIVE_CARGO_INDEPENDENT_RELOAD_CUSTODY_INVALID" in fixture
 print("PASS strict 1381 physical save/reload cargo and identity proof regression")
 
@@ -557,10 +557,10 @@ assert module.native_server_radar_progress_stalled_1381(
     no_client+"\n[TP-AUTONOMOUS-ROBOT-1380] NATIVE_ORE_CHARTED tick=12120") is False
 assert 'native_server_radar_progress_stalled_1381(current)' in segment
 assert 'native-unattended-radar-uncharted' in segment
-assert 'requires genuine player-capable save execution' in segment
+assert 'no synthetic charting permitted' in segment
 
 assert 'while time.monotonic() < deadline:' in segment
-assert 'no genuine server radar progress in 180 seconds' in segment
+assert 'no genuine player-test radar progress in 180 seconds' in segment
 assert 'real native ore fixture failed:' in segment
 assert 'valid_crc = z.testzip() is None' in segment
 assert 'if ready:' in segment and 'if not ready:' in segment
@@ -569,7 +569,10 @@ assert 'out["native_first_engine_log_tail"]' in segment
 assert 'print("NATIVE_1381_ENGINE_TAIL "+line[-1200:],flush=True)' in segment
 assert 'process.terminate()' in segment
 assert 'cwd=output)' in segment
-assert 'robot_saveable_server_command(factorio, mods, initial, settings, port)' in segment
+assert 'rail_native_player_test_command(factorio, mods, initial, 30060)' in segment
+assert '"native-player-test-save-replay-autosave-probe"' in segment
+assert '"native_first_test_ticks"] = 30060' in segment
+assert 'robot_saveable_server_command(factorio, mods, initial, settings, port)' not in segment
 assert 'out["native_server_autopause"] = False' in segment
 assert 'checkpoint.unlink(missing_ok=True)' in segment
 assert 'if z.testzip() is not None:' in segment
@@ -577,7 +580,7 @@ assert 'out["native_save_proof"]="exact-named-new-file-zip-crc"' in segment
 assert 'if not checkpoint.is_file():' in segment
 assert 'if marker not in src:' in segment
 assert 'out.update(verify_cargo_reload_1381(first,second))' in segment
-assert 'game.auto_save("tech-priests-ci-1380-cargo")' in fixture
+assert 'game.auto_save("tech-priests-ci-1380-cargo", true)' in fixture
 assert '--test-save' not in cmd and '--benchmark' not in cmd
 assert '--load-game' not in cmd and '--force-opengl' not in cmd
 assert 'game.force.chart(' not in driver_source
@@ -624,4 +627,4 @@ for invalid in (positive.replace("elapsed=1500","elapsed=100"),
     except ValueError: pass
     else: raise AssertionError("invalid native storage refusal/stock accepted")
 
-print("PASS 1381 native headless server, CRC and independent custody regression")
+print("PASS 1381 native player replay-save probe, CRC and independent custody regression")

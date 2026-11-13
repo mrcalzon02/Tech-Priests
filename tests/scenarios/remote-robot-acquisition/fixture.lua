@@ -1266,7 +1266,7 @@ local function pulse()
           ore_after=s.ore.amount}
         s.cargo_reload_requested=true
         local ok,why=pcall(function()
-          game.auto_save("tech-priests-ci-1380-cargo")
+          game.auto_save("tech-priests-ci-1380-cargo", true)
         end)
         if not ok then fail("NATIVE_CARGO_AUTOSAVE_FAILED "..tostring(why)) end
         emit("NATIVE_CARGO_SAVE_REQUESTED tick="..game.tick..

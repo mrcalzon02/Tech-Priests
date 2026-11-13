@@ -782,16 +782,15 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
            "native_server_process_wall_minutes":None,
            "native_reload_process_wall_minutes":None,
            "native_factorio_process_wall_minutes":None}
-    # GUI single-player stayed at tick 660 for 15 minutes in Windows
-    # Service Session 0 (run 43455188694). --test-save charted native ore
-    # but could not save. Use Factorio's private save-capable headless server
-    # with auto_pause=false, preserving the original native radar and all
-    # strict world ore, rank, custody and independent reload checks.
+    # Native --test-save supplies a genuine engine player and charts ore.
+    # Probe 2.1.24 allow_in_replay=true autosave; accept ONLY the actual fresh
+    # named ZIP with valid CRC and independent genuine Factorio reload.
+    # No synthetic charting, scripted player or cargo.
     roots = [output / "saves", *factorio_1381_save_roots(factorio)]
     started = time.monotonic()
     process = None
-    out["native_first_backend"] = "private-headless-save-capable-server"
-    out["native_server_autopause"] = False
+    out["native_first_backend"] = "native-player-test-save-replay-autosave-probe"
+    out["native_first_test_ticks"] = 30060
     try:
         checkpoint.unlink(missing_ok=True)
         # Remove ONLY our exactly named CI save. All unrelated saves stay put.
@@ -800,14 +799,11 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
             if old.exists():
                 old.unlink()
         (output / "saves").mkdir(exist_ok=True)
-        settings = private_robot_server_settings(output)
-        port = free_loopback_udp_port()
-        out["native_private_udp_port"] = port
         ready = False
         first_exit = None
         with source_log.open("w", encoding="utf-8") as handle:
             process = subprocess.Popen(
-                robot_saveable_server_command(factorio, mods, initial, settings, port),
+                rail_native_player_test_command(factorio, mods, initial, 30060),
                 stdin=subprocess.DEVNULL, stdout=handle,
                 stderr=subprocess.STDOUT, cwd=output)
             launched = time.monotonic()
@@ -818,7 +814,7 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                 fatal = native_server_startup_failure_1381(current)
                 if fatal:
                     out["native_first_fatal_diagnostic"] = fatal
-                    raise RuntimeError("private native server initialization failed: " + fatal)
+                    raise RuntimeError("native player test initialization failed: " + fatal)
                 if "[TP-AUTONOMOUS-ROBOT-1380] FAIL " in current:
                     raise RuntimeError("real native ore fixture failed: " +
                                        " | ".join(current.splitlines()[-6:])[-1400:])
@@ -827,16 +823,15 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                 if native_server_radar_progress_stalled_1381(current):
                     out["native_first_fatal_diagnostic"] = "native-unattended-radar-uncharted"
                     raise RuntimeError(
-                        "native private server has powered radar but did not chart "
-                        "even its own chunk by tick 12000 without a connected player; "
-                        "requires genuine player-capable save execution, not force.chart")
+                        "native test player had powered radar but did not chart "
+                        "even its own chunk by tick 12000; no synthetic charting permitted")
                 if first_exit is not None:
                     break
                 if time.monotonic()-launched >= 180 and not any(
                     x in current for x in ("NATIVE_RADAR_AND_STRATEGY_READBACK tick=",
                                            "NATIVE_ORE_CHARTED tick=",
                                            "NATIVE_CARGO_SAVE_REQUESTED tick=")):
-                    raise RuntimeError("no genuine server radar progress in 180 seconds")
+                    raise RuntimeError("no genuine player-test radar progress in 180 seconds")
                 for folder in roots:
                     native = folder / name
                     if not native.is_file() or native.stat().st_size <= 2048:
@@ -853,17 +848,17 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                     break
                 time.sleep(0.5)
             if not ready and first_exit is None:
-                raise RuntimeError("native server produced no CRC-verified natural ore "
+                raise RuntimeError("native player-test produced no CRC-verified natural ore "
                                    "custody save before bounded timeout")
         src = source_log.read_text(encoding="utf-8", errors="replace")
         if first_exit is not None and first_exit != 0:
-            raise RuntimeError("native server exited " + str(first_exit))
+            raise RuntimeError("native player-test exited " + str(first_exit))
         if "[TP-AUTONOMOUS-ROBOT-1380] FAIL " in src or "Error while running" in src:
             raise RuntimeError("native first engine process failed")
         if marker not in src:
-            raise RuntimeError("native headless process did not produce held ore marker")
+            raise RuntimeError("native test process did not produce held ore marker")
         if not ready:
-            raise RuntimeError("native server exited before exact ore save ZIP/CRC")
+            raise RuntimeError("native player-test exited before exact ore save ZIP/CRC")
         out["native_first_stop_reason"] = "verified-engine-save-driver-stop"
         out["native_save_logged_finished"] = "Saving finished" in src
         out["native_save_log_lines"] = [
