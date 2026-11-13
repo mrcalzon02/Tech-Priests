@@ -11233,6 +11233,8 @@ local function ci_five_sample_1291(state)
       return
     end
     rec.window_start_tick=game.tick
+    -- CI-only native broker sampling, never station/item acceptance.
+    _G.TP_CI_RUNTIME_PROFILE_1064=true
     rec.priest_ids=current_ids
     rec.activity_start=ci_five_activity_snapshot_1291()
     rec.activity_start_tick=game.tick
@@ -11248,6 +11250,7 @@ local function ci_five_sample_1291(state)
   rec.samples=rec.samples+1
   if total~=requested or original~=requested or not identities then rec.bad=rec.bad+1 end
   if game.tick-rec.window_start_tick>=11280 then
+    _G.TP_CI_RUNTIME_PROFILE_1064=false
     emit("CI_FIVE_PROFILE_1291_END tick="..game.tick..
       " all="..total.." original="..original.." requested="..requested..
       " samples="..rec.samples.." bad="..rec.bad..

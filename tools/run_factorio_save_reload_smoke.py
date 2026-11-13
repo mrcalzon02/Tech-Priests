@@ -3358,6 +3358,12 @@ def ci_five_observation_1291(content: str, expected: int = 5, *,
         "stable_all_mod_script_mean_ms_per_tick": None,
         "stable_all_mod_script_p95_ms_per_tick": None,
         "stable_all_mod_script_sample_count": None,
+        "stable_broker_pulse_mean_ms_per_sample": None,
+        "stable_broker_pulse_p95_ms_per_sample": None,
+        "stable_broker_pulse_sample_count": None,
+        "stable_broker_pulse_sample_coverage": None,
+        "stable_broker_pulse_interval_ticks": 60,
+        "stable_broker_pulse_scope": "tech-priests-broker-pulse-only",
         "ore_per_1000_ticks": None,
         "first_delivery_ticks": None,
         "notes": "CI-created initial stations, authentic paired priests and engine "
@@ -3424,6 +3430,32 @@ def ci_five_observation_1291(content: str, expected: int = 5, *,
             if counts.get("broker_processed", 0) > 0 and "broker_blocked" in counts:
                 result["broker_service_blocked_fraction"] = round(
                     counts["broker_blocked"] / counts["broker_processed"], 6)
+    # With Windows 2.1.24 verbose output broken, accept only separately
+    # scoped native LuaProfiler broker pulse samples from the original
+    # identity-stable interval. Never relabel these as all-mod script ms/tick.
+    if (result["native_identity_observed"] == expected
+            and isinstance(result.get("first_observed_tick"), int)
+            and isinstance(result.get("last_observed_tick"), int)):
+        start = result["first_observed_tick"]
+        end = result["last_observed_tick"]
+        expected_ticks = list(range(((start // 60) + 1) * 60, end, 60))
+        matches = re.findall(
+            r"\[TP-RUNTIME-PROFILE-1064\] tick=(\d+) "
+            r"scope=broker-pulse duration=(?:Elapsed|Duration):\s*"
+            r"([0-9]+(?:\.[0-9]+)?)\s*ms", content)
+        samples = [(int(t), float(ms)) for t, ms in matches]
+        ticks = [t for t, _ in samples]
+        if (samples and ticks == sorted(set(ticks))
+                and all(t in expected_ticks and math.isfinite(ms) and ms >= 0
+                        for t, ms in samples)):
+            ordered = sorted(ms for _, ms in samples)
+            result["stable_broker_pulse_mean_ms_per_sample"] = round(
+                sum(ordered) / len(ordered), 6)
+            result["stable_broker_pulse_p95_ms_per_sample"] = round(
+                ordered[math.ceil(0.95 * len(ordered)) - 1], 6)
+            result["stable_broker_pulse_sample_count"] = len(ordered)
+            result["stable_broker_pulse_sample_coverage"] = (
+                "complete" if ticks == expected_ticks else "partial")
     return result
 
 
@@ -3477,6 +3509,29 @@ def self_test_ci_five_1291() -> None:
     assert summary_observed["paired_population_verified"] is None
     assert summary_observed["script_sample_coverage"] is None
     assert summary_observed["movement_requests_per_1000_ticks"] is not None
+    assert summary_observed["stable_broker_pulse_mean_ms_per_sample"] is None
+    # Engine-rendered LuaProfiler receipts must lie inside the original
+    # stable population window; a foreign tick invalidates the sample series.
+    broker_ticks = list(range(720, 11940, 60))
+    broker_lines = "".join(
+        f"[TP-RUNTIME-PROFILE-1064] tick={t} "
+        "scope=broker-pulse duration=Elapsed: 2.5ms\n"
+        for t in broker_ticks)
+    creation = ("CI_FIVE_PROFILE_1291_CREATED tick=0 "
+                "stations=5 requested=5 setup=ci-only-real-entities\n")
+    sampled = ci_five_observation_1291(
+        summary_only + broker_lines, creation_log=creation)
+    assert sampled["stable_broker_pulse_sample_count"] == len(broker_ticks)
+    assert sampled["stable_broker_pulse_sample_coverage"] == "complete"
+    assert sampled["stable_broker_pulse_mean_ms_per_sample"] == 2.5
+    assert sampled["stable_broker_pulse_p95_ms_per_sample"] == 2.5
+    assert sampled["stable_all_mod_script_mean_ms_per_tick"] is None
+    corrupted = ci_five_observation_1291(
+        summary_only + broker_lines +
+        "[TP-RUNTIME-PROFILE-1064] tick=12000 "
+        "scope=broker-pulse duration=Elapsed: 0ms\n",
+        creation_log=creation)
+    assert corrupted["stable_broker_pulse_sample_count"] is None
     # Native 2.0.77 CSV, with startup at 1ms and the actual stable pair
     # interval at 3ms; a whole-run average cannot represent paired costs.
     source_rows = "".join(f"{i},1000000\n" for i in range(12000))
@@ -3635,6 +3690,14 @@ def self_test_ci_five_1291() -> None:
                 pathlib.Path(root) / "work", output)
         assert calls == [5, 25, 100], calls
         assert diagnostics[100]["paired_population_verified"] == 100
+        calls.clear()
+        with patch(__name__ + ".run_ci_five_1291",
+                   side_effect=complete_small):
+            capped = run_ci_profile_campaign_1291(
+                pathlib.Path("unused"), pathlib.Path("unused"),
+                pathlib.Path(root) / "work", output, max_population=5)
+        assert calls == [5] and capped[25]["engine_exit_status"] is None
+        assert "profile cap" in capped[25]["reason"]
         calls.clear()
         options=[]
         def plain_native(binary, mods, work, out, population=5, **kwargs):
@@ -4171,7 +4234,8 @@ def execute(args: argparse.Namespace) -> int:
 
 def run_ci_profile_campaign_1291(
         binary: pathlib.Path, source_mods: pathlib.Path,
-        work: pathlib.Path, output: pathlib.Path) -> dict[int, dict[str, object]]:
+        work: pathlib.Path, output: pathlib.Path,
+        max_population: int = 100) -> dict[int, dict[str, object]]:
     """Bounded, nonblocking native 5/25/100 diagnostics without five-process prerequisite.
 
     Profile-only runs the already-authorized CI construction of *initial*
@@ -4180,6 +4244,8 @@ def run_ci_profile_campaign_1291(
     scriptUpdate receipt before the next larger population is attempted.
     Failed engine attempts retain partial logs and explicit missing metrics.
     """
+    if max_population not in (5, 25, 100):
+        raise ValueError("unsupported focused native population cap")
     output.mkdir(parents=True, exist_ok=True)
     work.mkdir(parents=True, exist_ok=True)
     reports: dict[int, dict[str, object]] = {}
@@ -4241,11 +4307,15 @@ def run_ci_profile_campaign_1291(
 
     reports[5] = measure(5)
     verified_output_crash = proven_csv_crash(reports[5])
-    if safe_to_scale(reports[5], 5):
+    if max_population < 25:
+        reports[25] = unmeasured(25, "focused profile cap=5; no engine launch")
+    elif safe_to_scale(reports[5], 5):
         reports[25] = measure(25, skip_verbose=verified_output_crash)
     else:
         reports[25] = unmeasured(25, "5-pair clean engine/identity/window/UPS safety unavailable")
-    if safe_to_scale(reports[25], 25):
+    if max_population < 100:
+        reports[100] = unmeasured(100, "focused profile cap; no engine launch")
+    elif safe_to_scale(reports[25], 25):
         reports[100] = measure(100, skip_verbose=verified_output_crash
                                or proven_csv_crash(reports[25]))
     else:
@@ -4259,6 +4329,8 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--self-test-efficiency", action="store_true")
     parser.add_argument("--profile-only", action="store_true",
                         help="measure existing authentic CI 5/25/100 priests without rerunning physical recovery")
+    parser.add_argument("--profile-max-population", type=int, choices=(5,25,100),
+                        default=100, help="bounded focused native profile population cap")
     parser.add_argument("--efficiency-log", help="Existing real Factorio log; diagnostics only")
     parser.add_argument("--binary")
     parser.add_argument("--mod-dir")
@@ -4289,7 +4361,8 @@ def main(argv: list[str]) -> int:
             pathlib.Path(args.binary).resolve(),
             pathlib.Path(args.mod_dir).resolve(),
             pathlib.Path(args.work_dir).resolve(),
-            pathlib.Path(args.artifact_dir).resolve())
+            pathlib.Path(args.artifact_dir).resolve(),
+            max_population=args.profile_max_population)
         print("CI_PROFILE_CAMPAIGN_1291 " + json.dumps({
             "native_populations_verified": [
                 n for n in (5, 25, 100)

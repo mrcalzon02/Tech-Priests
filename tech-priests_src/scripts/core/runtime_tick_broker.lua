@@ -444,9 +444,14 @@ function M.pulse(event)
   -- CI-only native timing: LuaProfiler exposes elapsed time only when
   -- rendered as a LocalisedString, never as a Lua numeric value.
   local ci_profile
-  if rawget(_G, "TP_CI_SAVE_RELOAD_SMOKE") == true
-      and rawget(_G, "TP_CI_RUNTIME_PROFILE_1064") == true
-      and tick % 60 == 0 and profiler_factory_1406() then
+  -- The isolated 1291 paired-population diagnostic may sample real broker
+  -- pulses without enabling the unrelated physical-reversal smoke harness.
+  local ci_broker_profile_window =
+      rawget(_G, "TP_CI_RUNTIME_PROFILE_1064") == true
+      and (rawget(_G, "TP_CI_SAVE_RELOAD_SMOKE") == true
+           or rawget(_G, "TP_CI_FIVE_PROFILE_1291") == true)
+  if ci_broker_profile_window and tick % 60 == 0
+      and profiler_factory_1406() then
     local ok, timer = pcall(profiler_factory_1406(), false)
     if ok then ci_profile = timer end
   end
