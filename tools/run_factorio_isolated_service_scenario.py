@@ -105,22 +105,22 @@ def verify_autonomous_robot_ore_1380_log(log: str, ticks: int) -> dict[str, obje
     live 0820/0837 route and patch provenance. Reject missing, reordered,
     duplicate or numerically inconsistent receipt text independently.
     """
-    tag = r"\\[TP-AUTONOMOUS-ROBOT-1380\\] "
+    tag = r"\[TP-AUTONOMOUS-ROBOT-1380\] "
     station = list(re.finditer(
         tag + r"PASS autonomous original 0259 selected and physical "
-        r"native robot-built Intermediate paired tick=(\\d+) magos=(\\d+) "
-        r"magos_priest=(\\d+) senior=(\\d+) senior_priest=(\\d+) "
-        r"intermediate=(\\d+) intermediate_priest=(\\d+) "
-        r"native_robot=(\\d+) material_delta=1 source_stock=0 "
+        r"native robot-built Intermediate paired tick=(\d+) magos=(\d+) "
+        r"magos_priest=(\d+) senior=(\d+) senior_priest=(\d+) "
+        r"intermediate=(\d+) intermediate_priest=(\d+) "
+        r"native_robot=(\d+) material_delta=1 source_stock=0 "
         r"ghost=0 ore_return_not_credited=true", log))
     delivered = list(re.finditer(
-        tag + r"PASS NATIVE_PHYSICAL_ORE_RETURN tick=(\\d+) "
-        r"original_magos=(\\d+) magos_priest=(\\d+) "
-        r"senior=(\\d+) senior_priest=(\\d+) "
-        r"intermediate=(\\d+) intermediate_priest=(\\d+) "
-        r"source_amount_before=(\\d+) source_amount_after=(\\d+) "
+        tag + r"PASS NATIVE_PHYSICAL_ORE_RETURN tick=(\d+) "
+        r"original_magos=(\d+) magos_priest=(\d+) "
+        r"senior=(\d+) senior_priest=(\d+) "
+        r"intermediate=(\d+) intermediate_priest=(\d+) "
+        r"source_amount_before=(\d+) source_amount_after=(\d+) "
         r"hop1_delta=1 hop2_delta=1 magos_deposit=1 "
-        r"delivered_tick=(\\d+) source_kind=natural-ore "
+        r"delivered_tick=(\d+) source_kind=natural-ore "
         r"inventory_hold=empty", log))
     if len(station) != 1 or len(delivered) != 1:
         raise ValueError("1380 missing/duplicate original station or physical ore delivery")
