@@ -34,6 +34,23 @@ class SourceLockedGuiFixture(unittest.TestCase):
         self.assertIn('ZOOMS = ("normal", "close")',self.python)
         self.assertIn('local STATES={"idle","working"}',self.lua)
         self.assertIn('local ZOOMS={{"normal",1.0},{"close",2.7}}',self.lua)
+    def test_display_flange_pipe_positions_not_a_circular_engine_echo(self):
+        expected={
+            "north":"north={x=1.5,y=0.5}",
+            "east":"east={x=-0.5,y=1.5}",
+            "south":"south={x=-1.5,y=-0.5}",
+            "west":"west={x=0.5,y=-1.5}",
+        }
+        for key,token in expected.items():
+            self.assertIn(token,self.lua,key)
+        self.assertIn("VISUAL_FLANGE_PORT_MISMATCH",self.lua)
+        self.assertIn("position=physical",self.lua)
+        self.assertNotIn("name=\"pipe\",position=port.target_position",self.lua)
+    def test_screenshots_have_identical_nonplayer_terrain(self):
+        self.assertIn('name="concrete"',self.lua)
+        self.assertIn('x=192+72*(d-1),y=192+72*(st-1)',self.lua)
+        self.assertNotIn('x=44*(d-1),y=44*(st-1)',self.lua)
+        self.assertIn("surface.destroy_decoratives",self.lua)
     def test_no_renaming_of_real_pngs_and_headless_rejected(self):
         self.assertIn('target=userdata/"script-output"/"condenser-v22c"',self.python)
         self.assertIn("require_interactive_desktop()",self.python)
