@@ -86,7 +86,26 @@ assert report["native_powerless_refusal_accepted"] is True
 assert report["native_powerless_refusal_ticks"] == 1500
 assert report["natural_ore_return_accepted"] is False
 assert report["ore_items_delivered_per_1000_ticks"] is None
+
+# In the actual 2.1.24 native run, the item-backed coverage restoration
+# produced port 104; later physically constructed frontier source port 105
+# remained identical across the power cut, refusal and one-item recovery.
+# Do not require the newer live port to reuse the older restoration unit ID.
+new_cut=power_cut.replace("remote_port=32","remote_port=33")
+new_denied=power_denied.replace("remote_port=32","remote_port=33")
+new_recovered=power_recovered.replace("remote_port=32","remote_port=33")
+successor_port_sample=(sample.replace(power_cut,new_cut)
+    .replace(power_denied,new_denied)
+    .replace(power_recovered,new_recovered))
+assert module.verify_autonomous_robot_1380_log(
+    0,successor_port_sample)["accepted"] is True
 checks=[
+    (0,successor_port_sample.replace(new_denied,
+        new_denied.replace("remote_port=33","remote_port=34"))),
+    (0,successor_port_sample.replace(new_recovered,
+        new_recovered.replace("remote_port=33","remote_port=34"))),
+    (0,successor_port_sample.replace(new_cut,
+        new_cut.replace("remote_port=33","remote_port=30"))),
     (1,sample),
     (0,sample.replace("original_station_stock=1","original_station_stock=0")),
     (0,sample.replace("charted=true","charted=false")),

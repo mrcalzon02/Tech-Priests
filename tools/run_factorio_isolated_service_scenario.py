@@ -301,8 +301,12 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
             and power_cut[3] == power_denied[3] == source[4]
             and power_cut[4] == power_recovered[2] == extension[4]
             and power_cut[5] == power_denied[4] == power_recovered[3]
-            and power_cut[5] == coverage_recovered[3]
+            # 0338 may physically build a successor remote port after the
+            # earlier mined coverage port is returned. A distinct live port
+            # is valid only if the SAME port survives the actual power cut,
+            # 1,500-tick refusal and counted pole restoration above.
             and power_cut[5] != power_cut[4]
+            and power_cut[5] != coverage_cut[5]
             and cut[2] == denied[2] == coverage_cut[2]
             == coverage_denied[2] == material_cut[2]
             == material_denied[2] == source[3]
