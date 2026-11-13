@@ -68,7 +68,7 @@ def read_engine_log(path: pathlib.Path, case: str) -> dict:
         # Factorio starts an update row with "t<number>" rather than a
         # literal integer. Ignore ordinary engine status/log lines, not
         # malformed tick rows.
-        tick = re.fullmatch(r"t(\\d+)", cells[0])
+        tick = re.fullmatch(r"t(\d+)", cells[0])
         if not tick:
             continue
         if len(cells) != len(header):
