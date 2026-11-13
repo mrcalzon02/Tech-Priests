@@ -52,17 +52,28 @@ material_denied=(prefix+"PASS NATIVE_MATERIALLESS_REFUSAL tick=5950 "
     "network_station_stock=0 robots=3 native_event=none ore_unchanged=true")
 material_recovered=(prefix+"PASS NATIVE_MATERIALLESS_RECOVERY tick=5950 "
     "provider=30 station_restored=1 held=0 original_mission=retained")
-event=(prefix+"NATIVE_ROBOT_EVENT tick=6100 station=50 robot=60 "
+power_cut=(prefix+"NATIVE_POWERLESS_CUT tick=5950 original_magos=10 "
+    "original_senior=20 original_port=30 remote_port=32 "
+    "pole_held=1 robots=3 station_stock=1")
+power_denied=(prefix+"PASS NATIVE_POWERLESS_REFUSAL tick=7450 "
+    "original_magos=10 original_senior=20 remote_port=32 "
+    "pole_held=1 station_stock=1 robots=3 native_event=none "
+    "ore_unchanged=true")
+power_recovered=(prefix+"PASS NATIVE_POWERLESS_RECOVERY tick=7450 "
+    "original_port=30 remote_port=32 pole_debit=1 held=0 "
+    "electric_grid=original logistic_network=merged original_mission=retained")
+event=(prefix+"NATIVE_ROBOT_EVENT tick=7600 station=50 robot=60 "
     "event=on_robot_built_entity")
 done=(prefix+"PASS autonomous original 0259 selected and physical "
-    "native robot-built Intermediate paired tick=6200 magos=10 "
+    "native robot-built Intermediate paired tick=7700 magos=10 "
     "magos_priest=11 senior=20 senior_priest=21 intermediate=50 "
     "intermediate_priest=51 native_robot=60 material_delta=1 "
     "source_stock=0 ghost=0 ore_return_not_credited=true")
 sample="\n".join((physical,selected,spare_stage,extension,robot_cut,
                   robot_denied,coverage_cut,robot_recovered,
                   coverage_denied,coverage_recovered,spare_return,material_cut,
-                  material_denied,material_recovered,event,done))
+                  material_denied,material_recovered,power_cut,power_denied,
+                  power_recovered,event,done))
 report=module.verify_autonomous_robot_1380_log(0,sample)
 assert report["accepted"] is True
 assert report["native_robotless_refusal_accepted"] is True
@@ -71,6 +82,8 @@ assert report["native_coverageless_refusal_accepted"] is True
 assert report["native_coverageless_refusal_ticks"] == 1500
 assert report["native_materialless_refusal_accepted"] is True
 assert report["native_materialless_refusal_ticks"] == 1500
+assert report["native_powerless_refusal_accepted"] is True
+assert report["native_powerless_refusal_ticks"] == 1500
 assert report["natural_ore_return_accepted"] is False
 assert report["ore_items_delivered_per_1000_ticks"] is None
 checks=[
@@ -98,6 +111,13 @@ checks=[
     (0,sample.replace(material_cut+"\n","")),
     (0,sample.replace(material_denied+"\n","")),
     (0,sample.replace(material_recovered+"\n","")),
+    (0,sample.replace(power_cut+"\n","")),
+    (0,sample.replace(power_denied+"\n","")),
+    (0,sample.replace(power_recovered+"\n","")),
+    (0,sample.replace("pole_held=1","pole_held=0")),
+    (0,sample.replace("remote_port=32","remote_port=39")),
+    (0,sample.replace("tick=7450","tick=6700")),
+    (0,sample.replace("electric_grid=original","electric_grid=foreign")),
     (0,sample.replace("station_held=1","station_held=0")),
     (0,sample.replace("network_station_stock=0","network_station_stock=1")),
     (0,sample.replace("robots=3","robots=0")),
@@ -175,6 +195,19 @@ assert "s.coverageless_hold" in fixture
 assert "NATIVE_MATERIALLESS_CUSTODY_INVALID" in fixture
 assert "NATIVE_MATERIALLESS_REFUSAL_OR_CUSTODY_INVALID" in fixture
 assert "NATIVE_MATERIALLESS_RESTORATION_NOT_COUNTED" in fixture
+# A real no-power gate uses the physically mined 0338 feeder pole, not a
+# deactivated flag, removed robot supply, scripted chart or fabricated power.
+assert "NATIVE_POWERLESS_NO_REAL_SEPARATING_POLE" in fixture
+assert 'pole.mine{inventory=cargo_hold}' in fixture
+assert 'cargo_hold.get_item_count("medium-electric-pole")==1' in fixture
+assert 's.powerless_cut_tick=game.tick' in fixture
+assert 'game.tick-s.powerless_cut_tick<1500 then return end' in fixture
+assert "NATIVE_POWERLESS_REFUSAL_OR_CUSTODY_INVALID" in fixture
+assert 'and not remote.is_connected_to_electric_network()' in fixture
+assert 'and network.all_construction_robots==3' in fixture
+assert "NATIVE_POWERLESS_RESTORED_GRID_NOT_JOINED" in fixture
+assert 'hold.get_item_count("medium-electric-pole")~=0' in fixture
+assert 'hold.destroy() -- only after exact mined pole item was consumed' in fixture
 assert "if not s.extension_accepted then return end" in fixture
 assert "s.robotless_cut_tick=game.tick" in fixture
 assert "game.create_inventory(1)" in fixture
@@ -254,7 +287,8 @@ benchmark_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic 
                          selected,spare_stage,extension,robot_cut,robot_denied,
                          coverage_cut,robot_recovered,coverage_denied,
                          coverage_recovered,spare_return,material_cut,material_denied,
-                         material_recovered,event,done))
+                         material_recovered,power_cut,power_denied,
+                         power_recovered,event,done))
 assert module.verify_autonomous_robot_1380_process_logs(
     0,create_log,0,benchmark_log)["accepted"] is True
 negative_processes=[
