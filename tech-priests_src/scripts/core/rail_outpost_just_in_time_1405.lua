@@ -178,6 +178,11 @@ function M.next(mission,layout,observation,tick)
   if tick<(tonumber(state.next_think_tick)or 0) then
     return nil,"planning-interval-not-due"
   end
+  if observation.physical_custody_active==true then
+    -- Never issue a new ticket while the original 0338 builder is holding
+    -- another real station item or working under an unresolved writ.
+    return nil,"physical-item-custody-preserved"
+  end
   local candidate=observation.candidate
   if not(type(candidate)=="table" and candidate.role==stage.key
     and candidate.entity_name==stage.name
@@ -192,6 +197,12 @@ function M.next(mission,layout,observation,tick)
     direction=candidate.direction,
     world_revision=revision,created_tick=tick,
     item=candidate.item_name or stage.name,
+    -- Snapshot the currently planning priest's doctrine. Arguments and
+    -- social alignment may change while construction is in flight, but
+    -- the current physical intent must never be re-ranked mid-task.
+    planning_priest_unit=candidate.planning_priest_unit,
+    doctrine_key=candidate.doctrine_key,
+    doctrine_source=candidate.doctrine_source,
     physical_build_authorized=false,
     read_only=true,construction_ghosts=0,
   }
