@@ -122,3 +122,19 @@ New authority `scripts/core/ghost_admission_governor_14xx.lua`. It is a **bounde
 - Avoid direct porting of GPL/custom-licensed code. In-house algorithm over native Factorio API plus MIT-licensed geometry reference is the intended route.
 - Current documentation is a **design artifact**. Do not claim the governor, turning rail construction, native train return or Magos boarding is integrated from publication of this document alone.
 - Keep #6 open until actual counted physical resource return and all three autonomous methods meet its acceptance requirements.
+
+## 8. Implementation checkpoint — 2026-11-13
+
+**Implemented on main in this integration pass (source readback verified, native engine NOT yet proven):**
+
+- `rail_track_frontier_0836.lua`: new `authorized_paid_rail_transit_0836` checks the original registered Magos pair, live original 0338 construction task, one pending item-paid rail mission, exact source identity and available rail stock for the homeward supply leg, exact carried original rail debit for the build-site leg, genuine nearby unit-numbered native rail and predecessor connection, bounded straight-corridor proximity, movement ownership and (if present) TTL. Refuses creative or foreign claims. No general assigned-area override.
+- `movement_controller.lua`: the canonical 0418/0566 controller preserves an eligible rail task through hard-leash enforcement while traveling **between** physically paid track and the builder's confirmed goal, rather than only inside three tiles of the final site. Verified future waypoint goals are scoped through the same predicate; safety returns resume when the predicate fails.
+- `rail_track_frontier_0836.lua`: `inspect_native_rail_extensions_0836` obtains real `LuaRailEnd.get_rail_extensions("rail")` candidates from an *already paid/identity-verified* frontier, checks native placement, deduplicates, ranks by target distance and stores up to three primitive read-only options once per credited segment. It does **not** dispatch curves, spend an item, place ghosts or convert future track into existing track.
+- `tests/unit/rail_expedition_transit_1401.lua` is added and invoked from the existing `tests/unit/movement_overleash_return_continuity.lua` entrypoint. It tests mid-route site and source ownership, no-stock refusal, wrong force/owner, revoked original writ, missing physical rail, default safety restoration, per-segment native preview, and zero ghost/entity creation. **These are committed tests, NOT a claim that they have run successfully.**
+
+**Still open:** actual Lua/Factorio 2.1.24 test execution, native curved-rail construction through counted 0338 debits, additional rail directions, multi-tile obstruction routing, train-stop/signal and return-path acceptance, Cogitator `unit` boarding/physical travel, ore return, delegated non-Magos rail-crew writs, and the shared cross-producer ghost admission governor. The previously established per-station ghost limits remain unchanged.
+
+**Acceptance before broadening the exemption:** only permit a delegated priest to depart its station once it holds a distinct, persistent and hierarchically authenticated railway task, proven physical carriage/route and a bounded travel right. Never authorize off-leash wandering by job-name matching, a ghost, a virtual route or a foreign actor. Method III and issue #6 remain OPEN.
+
+---
+
