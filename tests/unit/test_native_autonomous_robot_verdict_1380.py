@@ -750,7 +750,7 @@ with tempfile.TemporaryDirectory(prefix="tp-real-client-1381-") as temp:
     fake_factorio=(root_steam/"steamapps"/"common"/"Factorio"/"bin"
                    /"x64"/"factorio.exe")
     fake_mods=pathlib.Path(temp)/"isolated-mods"
-    with patch.object(module,"os",SimpleNamespace(name="nt")):
+    with patch.object(module,"os",SimpleNamespace(name="nt",environ={"STEAM_PATH":str(root_steam)})):
         game_client=module.robot_real_loopback_client_command_1381(
             fake_factorio,fake_mods,34197)
         assert game_client[:3]==[str(steam_exe),"-applaunch","427520"]
@@ -763,6 +763,15 @@ with tempfile.TemporaryDirectory(prefix="tp-real-client-1381-") as temp:
                     fake_factorio,fake_mods,illegal_port)
             except ValueError: pass
             else: raise AssertionError("1381 accepted non-private invalid port")
+    # Factorio's real game binary often resides on a different Steam
+    # library drive than the Steam launcher. Verify the explicit path
+    # search rather than requiring a steam.exe among game ancestors.
+    separate_game=pathlib.Path(temp)/"OtherDrive"/"steamapps"/"common"/"Factorio"/"bin"/"x64"/"factorio.exe"
+    with patch.object(module,"os",SimpleNamespace(name="nt",environ={"STEAM_PATH":str(root_steam)})):
+        separate_client=module.robot_real_loopback_client_command_1381(
+            separate_game,fake_mods,34199)
+        assert separate_client[:3]==[str(steam_exe),"-applaunch","427520"]
+        assert separate_client[3:5]==["--mp-connect","127.0.0.1:34199"]
     with patch.object(module,"os",SimpleNamespace(name="posix")):
         standalone=module.robot_real_loopback_client_command_1381(
             fake_factorio,fake_mods,34198)
