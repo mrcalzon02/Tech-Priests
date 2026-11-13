@@ -233,11 +233,18 @@ do
   assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
     auto,"iron-ore",ore) and not auto.roboport_expansion_goal_1076,
     "missing canonical 1076 preflight authorized a dead robot goal")
+  local extension_authorized=true
+  local extension_calls=0
   _G.TechPriestsRoboportExpansionFrontier1076={
     native_covered_ore_admission_1076=function(owner,target,site)
       native_preflight_calls=native_preflight_calls+1
       assert(owner==auto and target.x==65 and site.x==59)
       return true
+    end,
+    native_uncovered_ore_admission_1076=function(owner,target,site)
+      extension_calls=extension_calls+1
+      assert(owner==auto and target.x==65 and site.x==59)
+      return extension_authorized
     end}
   assert(tech_priests_0259_resource_expansion_service(auto)==false
     and auto.roboport_expansion_goal_1076
@@ -247,6 +254,44 @@ do
     and not Chain.status(auto) and #requests==before,
     "actual 0259 shortage discovery did not choose covered robot route")
   auto.roboport_expansion_goal_1076=nil
+  -- The same genuinely charted ore is now outside the ORIGINAL green
+  -- construction cell. 0259 may request 1076's real counted pole/port
+  -- extension, but cannot itself build a ghost, an item, or a robot.
+  local saved_construction_range=cell.is_in_construction_range
+  cell.is_in_construction_range=function(pos)
+    return pos.x>=0 and pos.x<=55
+  end
+  local ext_before=#requests
+  local ext=tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore)
+  assert(ext and ext.autonomous_coverage_extension_0259==true
+    and ext.remote_station_position_1076.x==59
+    and extension_calls==1 and #requests==ext_before
+    and not auto.roboport_expansion_goal_1076,
+    "outside-green natural ore failed preflight or invented construction")
+  extension_authorized=false
+  assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore) and #requests==ext_before,
+    "rejected original-grid/stock preflight authorized dead frontier")
+  extension_authorized=true
+  game.tick=3602
+  assert(tech_priests_0259_resource_expansion_service(auto)==false
+    and auto.roboport_expansion_goal_1076
+    and auto.roboport_expansion_goal_1076.autonomous_coverage_extension_0259
+    and auto.resource_expansion_0259.last_reason==
+      "autonomous-extending-powered-robot-resource-frontier"
+    and not Chain.status(auto) and #requests==ext_before,
+    "normal 0259 charted deficit did not select bounded physical frontier")
+  auto.roboport_expansion_goal_1076=nil
+  net.available_construction_robots=0
+  assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore), "uncovered ore goal bypassed absent native robots")
+  net.available_construction_robots=2
+  native_stock=0
+  assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
+    auto,"iron-ore",ore), "uncovered ore goal bypassed missing station item")
+  native_stock=1
+  cell.is_in_construction_range=saved_construction_range
   net.available_construction_robots=0
   assert(not tech_priests_0259_autonomous_robot_goal_for_known_ore(
     auto,"iron-ore",ore),"zero robots authorized the remote station")
@@ -285,7 +330,7 @@ do
   tech_priests_0255_pair_is_magos_planner=old_magos
   TECH_PRIESTS_COMMAND_HIERARCHY_0480.max_link_distance=old_max_link
 end
-print("[resource-station-service-dispatch-0821] PASS live wrapper, bounded relay, physical pairing, delegated next link and explicit/autonomous native-covered robot priority")
+print("[resource-station-service-dispatch-0821] PASS live wrapper, ranked relay, native-covered robot and read-only counted-stock uncovered frontier selection")
 
 -- Existing source-validation workflow exercises the physical ore courier.
 dofile("tests/unit/resource_return_courier_0837.lua")

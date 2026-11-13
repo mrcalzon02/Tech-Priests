@@ -451,6 +451,81 @@ worker_for=function(root,name,item,pos)
   if eligible(root,false)then return root end
   return nil
 end
+
+-- Read-only admission for a genuinely charted ore deficit OUTSIDE the
+-- original construction area. Unlike 1076's already-covered fast path,
+-- this must prove a physical first priest-built power/port waypoint and
+-- stocked original ranked construction sources BEFORE 0259 reserves a goal.
+-- The later 0338 executor alone debits, moves, builds and confirms each
+-- pole/port; this check grants no extra motion, coverage or item custody.
+function M.native_uncovered_ore_admission_1076(root,target,site)
+  if not(live(root) and type(target)=="table"
+    and type(target.x)=="number" and type(target.y)=="number"
+    and type(site)=="table" and type(site.x)=="number"
+    and type(site.y)=="number" and distance(target,site)<=36)then
+    return false,"uncovered-frontier-invalid-original-owner-or-site"
+  end
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local ok,rank=pcall(function()
+    return hierarchy and type(hierarchy.rank)=="function"
+      and hierarchy.rank(root) or nil
+  end)
+  if not(ok and rank==4)then
+    return false,"uncovered-frontier-not-original-magos"
+  end
+  local source,why=choose_origin(root,target)
+  if not source then return false,why end
+  local native=grid_port(source.port)
+  if not(native and native.network_id==source.network_id)then
+    return false,"uncovered-frontier-native-network-invalid"
+  end
+  if covered(native.cell,target,"construction")then
+    return false,"uncovered-frontier-already-within-construction-area"
+  end
+  if distance(source.port.position,target)>M.max_segments*M.step then
+    return false,"uncovered-frontier-exceeds-physical-segment-budget"
+  end
+  local anchor,anchor_reason=choose_anchor(root,source.port,target)
+  if not anchor or anchor.grid_id~=native.electric_network_id then
+    return false,anchor_reason or "uncovered-frontier-no-original-grid-anchor"
+  end
+  -- 1076's exact first-port geometry/contact preflight, not a speculative
+  -- ghost or an assumption that a distant priest may teleport to a site.
+  local first,first_reason=derive_site(root,source.port,target)
+  if not first then return false,first_reason end
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if not(authority and type(authority.generic_item_count)=="function")then
+    return false,"uncovered-frontier-physical-stock-observer-unavailable"
+  end
+  local tp=storage and storage.tech_priests
+  local function has_stock(item)
+    local function owned(worker)
+      if not worker then return false end
+      local stock_ok,count=pcall(authority.generic_item_count,worker,item)
+      return stock_ok and type(count)=="number" and count>=1
+    end
+    if owned(root)then return true end
+    -- Inspect at most the canonical scan budget of OTHER original pairs.
+    -- Only 0480-verified direct rank-3 Seniors may contribute real stock.
+    local seen=0
+    for id in pairs(tp and tp.pairs_by_station or {})do
+      if type(id)=="number" and id~=root.station.unit_number then
+        seen=seen+1
+        if seen>M.scan_limit then break end
+        if owned(resolve_worker(root,id))then return true end
+      end
+    end
+    return false
+  end
+  if not has_stock("medium-electric-pole")then
+    return false,"uncovered-frontier-no-counted-power-pole"
+  end
+  if not has_stock("roboport")then
+    return false,"uncovered-frontier-no-counted-roboport"
+  end
+  return true,"native-powered-stocked-first-frontier-waypoint"
+end
+
 local function submit(pair,state,name,item,pos,kind,root_unit)
   -- Only 0338 can release its own *unfunded, unstarted* discovery
   -- candidate. Never clear a live task, reserved site or carried item.

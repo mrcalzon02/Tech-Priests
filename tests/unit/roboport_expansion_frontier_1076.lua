@@ -154,6 +154,45 @@ root_port.energy=10000
 assert(not M.native_covered_ore_admission_1076(
   admission_owner,{x=80,y=0},{x=78,y=0}),
   "uncovered remote ore was confused with native reachable network")
+-- A genuine outside-green ore deficit may reserve only a READ-ONLY,
+-- stocked and powered extension route. It cannot claim new network coverage.
+local former_hierarchy=_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480={
+  rank=function(p)return p==admission_owner and 4 or 0 end}
+local distant_target={x=100,y=0}
+local distant_site={x=96,y=0}
+local extension_ok,extension_reason=M.native_uncovered_ore_admission_1076(
+  admission_owner,distant_target,distant_site)
+assert(extension_ok
+  and extension_reason=="native-powered-stocked-first-frontier-waypoint"
+  and not admission_owner.roboport_frontier_1076
+  and not admission_owner.construction_request and #objects==2,
+  "outside-green admission fabricated a build or refused a real first hop")
+stock.roboport=0
+assert(not M.native_uncovered_ore_admission_1076(
+  admission_owner,distant_target,distant_site),
+  "outside-green goal reserved without a counted roboport")
+stock.roboport=24
+stock["medium-electric-pole"]=0
+assert(not M.native_uncovered_ore_admission_1076(
+  admission_owner,distant_target,distant_site),
+  "outside-green goal reserved without a counted electric pole")
+stock["medium-electric-pole"]=300
+original_grid_anchor.electric_network_id=999
+assert(not M.native_uncovered_ore_admission_1076(
+  admission_owner,distant_target,distant_site),
+  "outside-green goal accepted unrelated electric network")
+original_grid_anchor.electric_network_id=7
+root_port.energy=0
+assert(not M.native_uncovered_ore_admission_1076(
+  admission_owner,distant_target,distant_site),
+  "outside-green goal accepted unpowered source")
+root_port.energy=10000
+assert(not M.native_uncovered_ore_admission_1076(
+  admission_owner,{x=40,y=0},{x=36,y=0}),
+  "already-covered target started a redundant frontier")
+_G.TECH_PRIESTS_COMMAND_HIERARCHY_0480=former_hierarchy
+
 local deferred=make_pair({x=100,y=0})
 deferred.roboport_expansion_goal_1076.activation_pending_1076=true
 local held=M.service_pair(deferred)

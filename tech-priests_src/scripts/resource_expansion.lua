@@ -232,10 +232,10 @@ local function covered_robot_ore_goal_0259(pair, need, ore)
             and (tonumber(network.all_construction_robots)or 0)>0
             and (tonumber(network.get_item_count(
               "intermediate-cogitator-station"))or 0)>=1
-            -- Native construction robots build in the wider green zone;
-            -- only stocked provider chests must be in the orange logistic
-            -- zone. 0338 still independently proves stock/robot ownership.
-            and cell.is_in_construction_range(ore.position)==true
+            -- An already-covered station uses native green construction
+            -- reach. A charted deficit beyond that area may instead ask
+            -- 1076 for a real, supplied, ranked first extension waypoint.
+            -- Neither path credits a robot, an item or coverage here.
         end)
         ready=ok_native and result==true
       end
@@ -277,10 +277,9 @@ local function covered_robot_ore_goal_0259(pair, need, ore)
                   and distance_sq(site,ore.position)<=r*r
                   and distance_sq(station.position,site)>radius(pair)^2 then
                   local allowed,placeable=pcall(function()
-                    return cell.is_in_construction_range(site)==true
-                      and station.surface.can_place_entity{
-                        name="intermediate-cogitator-station",
-                        position=site,force=force}==true
+                    return station.surface.can_place_entity{
+                      name="intermediate-cogitator-station",
+                      position=site,force=force}==true
                   end)
                   if allowed and placeable then
                     -- 0714 readiness alone is not 1076 executable authority:
@@ -291,16 +290,25 @@ local function covered_robot_ore_goal_0259(pair, need, ore)
                     local frontier=rawget(_G,
                       "TechPriestsRoboportExpansionFrontier1076")
                     local ready_to_build=false
-                    if frontier and
-                      type(frontier.native_covered_ore_admission_1076)
-                        =="function" then
-                      local admitted,result=pcall(
-                        frontier.native_covered_ore_admission_1076,
-                        pair,ore.position,site)
-                      ready_to_build=admitted and result==true
+                    local already_covered=false
+                    if frontier then
+                      local in_range,covered_both=pcall(function()
+                        return cell.is_in_construction_range(ore.position)
+                          and cell.is_in_construction_range(site)
+                      end)
+                      already_covered=in_range and covered_both==true
+                      local admission=already_covered
+                        and frontier.native_covered_ore_admission_1076
+                        or frontier.native_uncovered_ore_admission_1076
+                      if type(admission)=="function"then
+                        local admitted,result=pcall(admission,
+                          pair,ore.position,site)
+                        ready_to_build=admitted and result==true
+                      end
                     end
                     if ready_to_build then
                     return {target={x=ore.position.x,y=ore.position.y},
+                      autonomous_coverage_extension_0259=not already_covered,
                       root_station_unit=station.unit_number,
                       surface_index=station.surface.index,
                       force_index=force.index,
@@ -457,13 +465,14 @@ function tech_priests_0259_resource_expansion_service(pair)
         -- child station must be built/paired before the next ghost is issued.
         local robot_goal=covered_robot_ore_goal_0259(pair,need,nearest)
         if robot_goal then
-          -- Only a native, charted, physically supplied and ALREADY
-          -- network-covered outpost can select this route. The existing
-          -- 1076 -> 0338 robot builder and 0820/0837 courier still own
-          -- every physical receipt. No station/ore/cargo is created here.
+          -- Either the live native green-area admission or the 1076
+          -- original-grid, counted-stock first-waypoint preflight succeeded.
+          -- Only 1076/0338/0820/0837 can actually build or move items.
           pair.roboport_expansion_goal_1076=robot_goal
           state.last_need=need
-          state.last_reason="autonomous-covered-powered-robot-resource-frontier"
+          state.last_reason=robot_goal.autonomous_coverage_extension_0259
+            and "autonomous-extending-powered-robot-resource-frontier"
+            or "autonomous-covered-powered-robot-resource-frontier"
           return false
         end
         ok=RemoteChain0820.start(pair,need,nearest.position,nearest.name)
