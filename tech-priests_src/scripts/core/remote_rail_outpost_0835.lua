@@ -547,6 +547,38 @@ function M.service_budgeted(_,budget)
   return {processed=count,acted=0,failed=errors,
     exhausted=#list>count,detail="missions-or-pending-requests="..changed}
 end
+local function install_native_outpost_invalidation_1405()
+  if not(script and type(script.on_event)=="function")then
+    return true -- Unit fixtures without Factorio event APIs.
+  end
+  local ev=defines and defines.events
+  if not ev then return false end
+  local ok,registry=pcall(require,"scripts.core.runtime_event_registry")
+  if not(ok and registry and type(registry.on_event)=="function")
+    then return false end
+  for _,name in ipairs({
+    "on_built_entity","on_robot_built_entity","script_raised_built",
+    "on_player_mined_entity","on_robot_mined_entity",
+    "on_entity_died","script_raised_destroy",
+  })do
+    local id=ev[name]
+    if id then
+      local called,route=pcall(registry.on_event,id,function(event)
+        -- Destroyed entities can become invalid during engine callbacks;
+        -- never let a notification exception abort another owner's work.
+        local processed,reason=pcall(M.observe_relevant_world_change_1405,
+          event)
+        if not processed and log then
+          log("[Tech-Priests 1405] native outpost invalidation: "..
+            tostring(reason))
+        end
+      end,nil,{owner="remote-rail-outpost-0835",
+        route="outpost-physical-change-1405:"..name,priority=84})
+      if not(called and route~=nil and route~=false)then return false end
+    end
+  end
+  return true
+end
 function M.install()
   local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
   if not(broker and type(broker.register_service)=="function") then
@@ -558,6 +590,9 @@ function M.install()
     note="charted Magos starvation and counted 0338 physical rail requests only",
     fn=M.service_budgeted}
   if not registered then return false,"rail-discovery-broker-registration-failed" end
+  if not install_native_outpost_invalidation_1405()then
+    return false,"rail-outpost-native-change-route-unavailable"
+  end
   return true
 end
 _G.TechPriestsRemoteRailOutpost0835=M
