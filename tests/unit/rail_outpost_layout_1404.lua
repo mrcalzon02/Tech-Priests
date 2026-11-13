@@ -129,10 +129,24 @@ local denied,why=goals.propose_outpost_capacity_1404(pair,{})
 check(not denied and why=="outpost-original-rail-mission-unavailable",
   "foreign mission claimed home station capacity")
 pair.remote_rail_outpost_0835.force_index=3
+-- Unchanged calls must NOT rerun capacity/prototype selection while a
+-- single local construction object awaits native completion.
+local same,same_reason=goals.propose_outpost_capacity_1404(pair,{})
+check(same==plan and same_reason=="unchanged-capacity-no-recomputation",
+  "unchanged capacity observation caused repeated speculative sizing")
+pair.remote_rail_outpost_0835.outpost_jit_1405={
+  ticket={role="outpost-stop",position={x=515,y=0}}}
+local busy,busy_reason=goals.propose_outpost_capacity_1404(pair,{
+  observation_revision=1})
+check(busy==plan and busy_reason=="current-physical-object-must-finish"
+  and pair.remote_rail_outpost_0835.outpost_capacity_dirty_1404==true,
+  "changed inputs displaced one pending physical construction objective")
+pair.remote_rail_outpost_0835.outpost_jit_1405.ticket=nil
 prototypes.entity["cargo-wagon"].get_inventory_size=nil
-denied,why=goals.propose_outpost_capacity_1404(pair,{})
+denied,why=goals.propose_outpost_capacity_1404(pair,{
+  observation_revision=1})
 check(not denied and why=="outpost-native-prototypes-unobservable",
-  "missing native wagon capacity was silently fabricated")
+  "explicit capacity revision failed to refresh unavailable native wagon data")
 check(created==0,"native outpost planner created ghosts or other entities")
 storage.tech_priests.pairs_by_station[301]=nil
 denied,why=goals.propose_outpost_capacity_1404(pair,{})
