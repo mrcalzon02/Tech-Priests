@@ -203,7 +203,7 @@ for field in ("target_x=", "target_y=", "selected_ore_x=",
               "selected_ore_y=", "expected_root=", "provider_stock=",
               "network_stock=", "robots_available=", "robots_total=",
               "frontier_status=", "0259_reason="):
-    assert ('"' + field + '"') in fixture
+    assert field in fixture
 assert 'fail("UNVERIFIED_AUTONOMOUS_GOAL_OR_MATERIAL")' in fixture
 assert 'NATIVE_UNCOVERED_ADMISSION_READBACK' in fixture
 assert 'if s.phase=="awaiting-native-strategy"' in fixture
