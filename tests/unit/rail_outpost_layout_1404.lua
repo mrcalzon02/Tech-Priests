@@ -134,6 +134,10 @@ denied,why=goals.propose_outpost_capacity_1404(pair,{})
 check(not denied and why=="outpost-native-prototypes-unobservable",
   "missing native wagon capacity was silently fabricated")
 check(created==0,"native outpost planner created ghosts or other entities")
+storage.tech_priests.pairs_by_station[301]=nil
+denied,why=goals.propose_outpost_capacity_1404(pair,{})
+check(not denied and why=="outpost-magos-or-measurements-missing",
+  "unregistered or orphaned Magos received outpost construction plan")
 game,storage,prototypes,defines=previous.game,previous.storage,
   previous.prototypes,previous.defines
 print("[rail-outpost-layout-1404] PASS wagon counts, ore/belt/inserter buffers, staged design, native prototype readback, no ghosts")
