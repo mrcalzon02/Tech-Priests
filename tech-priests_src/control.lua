@@ -1222,3 +1222,12 @@ do
   assert(NativeFuel0707 and NativeFuel0707.install()==true,
     "[Tech-Priests] counted boiler fuel logistics broker 0707 unavailable")
 end
+
+-- 1406: isolated, opt-in measurement of first physical Cogitator placement.
+-- Never enabled without explicit command/scenario request; no new tick
+-- handler, full-map scan, material changes or persistent LuaProfiler objects.
+do
+  local profile=require("scripts.core.first_station_cold_profile_1406")
+  assert(profile and profile.install()==true,
+    "[Tech-Priests] first station cold profiler unavailable")
+end
