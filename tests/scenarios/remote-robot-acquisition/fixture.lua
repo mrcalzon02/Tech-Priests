@@ -1152,36 +1152,76 @@ local function pulse()
           " remote_port="..s.powerless_remote_port..
           " pole_held=1 station_stock=1 robots=3"..
           " native_event=none ore_unchanged=true")
-        local pos=s.powerless_position
-        if not s.surface.can_place_entity{
-          name="medium-electric-pole",position=pos,
-          force=root.station.force}then
-          fail("NATIVE_POWERLESS_RESTORATION_SITE_BLOCKED")
+        -- A physically replaced pole has paid its exact item cost. Factorio
+        -- may publish its merged electric/logistic graph on a later native
+        -- update, so do not confuse one same-tick graph snapshot with failure.
+        -- Retain the empty engine-owned hold until a real graph readback passes.
+        if not s.powerless_restoration_pole then
+          local pos=s.powerless_position
+          if not s.surface.can_place_entity{
+            name="medium-electric-pole",position=pos,
+            force=root.station.force}then
+            fail("NATIVE_POWERLESS_RESTORATION_SITE_BLOCKED")
+          end
+          local debit=hold.remove{name="medium-electric-pole",count=1}
+          if debit~=1 or hold.get_item_count("medium-electric-pole")~=0 then
+            fail("NATIVE_POWERLESS_RESTORATION_ITEM_NONCONSERVING")
+          end
+          local restored=s.surface.create_entity{
+            name="medium-electric-pole",position=pos,
+            force=root.station.force}
+          if not(restored and restored.valid
+            and restored.name=="medium-electric-pole"
+            and restored.force==root.station.force
+            and restored.position.x==pos.x
+            and restored.position.y==pos.y)then
+            fail("NATIVE_POWERLESS_RESTORATION_ENTITY_INVALID")
+          end
+          s.powerless_restoration_pole=restored
+          s.powerless_restoration_tick=game.tick
+          return
         end
-        local debit=hold.remove{name="medium-electric-pole",count=1}
-        if debit~=1 or hold.get_item_count("medium-electric-pole")~=0 then
-          fail("NATIVE_POWERLESS_RESTORATION_ITEM_NONCONSERVING")
+        local restored=s.powerless_restoration_pole
+        if not(hold.valid
+          and hold.get_item_count("medium-electric-pole")==0
+          and restored.valid and restored.name=="medium-electric-pole"
+          and restored.force==root.station.force
+          and restored.position.x==s.powerless_position.x
+          and restored.position.y==s.powerless_position.y
+          and remote and remote.valid
+          and remote.unit_number==s.powerless_remote_port
+          and s.port.valid and s.port.is_connected_to_electric_network()
+          and root.priest.unit_number==s.magos_priest
+          and senior.priest.unit_number==s.senior_priest)then
+          fail("NATIVE_POWERLESS_RESTORATION_CUSTODY_INVALID")
         end
-        local restored=s.surface.create_entity{
-          name="medium-electric-pole",position=pos,
-          force=root.station.force}
-        local current_root=s.port.valid and s.port.logistic_cell
-        local current_remote=remote.valid and remote.logistic_cell
+        local current_root=s.port.logistic_cell
+        local current_remote=remote.logistic_cell
         local original_network=current_root and current_root.logistic_network
         local returned_network=current_remote and current_remote.logistic_network
-        if not(restored and restored.valid
-          and restored.is_connected_to_electric_network()
-          and s.port.is_connected_to_electric_network()
+        local joined=(restored.is_connected_to_electric_network()
           and remote.is_connected_to_electric_network()
           and remote.electric_network_id==s.port.electric_network_id
           and s.port.electric_network_id==s.original_electric_grid
           and original_network and original_network.valid
           and returned_network and returned_network.valid
-          and original_network.network_id==returned_network.network_id)then
-          fail("NATIVE_POWERLESS_RESTORED_GRID_NOT_JOINED")
+          and original_network.network_id==returned_network.network_id)
+        if not joined then
+          if game.tick-s.powerless_restoration_tick<180 then return end
+          fail("NATIVE_POWERLESS_RESTORED_GRID_NOT_JOINED tick="..game.tick..
+            " pole_power="..tostring(restored.is_connected_to_electric_network())..
+            " remote_power="..tostring(remote.is_connected_to_electric_network())..
+            " root_grid="..tostring(s.port.electric_network_id)..
+            " remote_grid="..tostring(remote.electric_network_id)..
+            " original_grid="..tostring(s.original_electric_grid)..
+            " root_network="..tostring(original_network and original_network.valid
+              and original_network.network_id)..
+            " remote_network="..tostring(returned_network and returned_network.valid
+              and returned_network.network_id))
         end
         hold.destroy() -- only after exact mined pole item was consumed
         s.powerless_hold=nil
+        s.powerless_restoration_pole=nil
         s.powerless_restored=true
         emit("PASS NATIVE_POWERLESS_RECOVERY tick="..game.tick..
           " original_port="..s.port.unit_number..
