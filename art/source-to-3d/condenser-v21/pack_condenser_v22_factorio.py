@@ -170,7 +170,7 @@ def build(frame_root, out_root):
         'nominal_collision_footprint_tiles':[2,2],
         'native_output_flange_tile_point':[1,-.5],
         'native_output_flange_height':.36,
-        'factorio_output_connection_local':[.5,-.5],
+        'factorio_output_connection_local':[.5,.5],
         'factorio_output_direction':'east',
         'blender_to_factorio':{'north':'north','east':'west_native','south':'south','west':'east_native'},
         'format':'PNG_RGBA_lossless; authored with Blender Cycles frames, PIL only composes sheets and resizes SD',
