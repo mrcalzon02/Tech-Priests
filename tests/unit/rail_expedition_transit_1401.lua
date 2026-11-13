@@ -51,7 +51,9 @@ local pair={station=station,priest=priest,radius=28}
 storage.tech_priests.pairs_by_station[104]=pair
 local source={valid=true,unit_number=700,name="steel-chest",
   position={x=0,y=0},force=force,surface=surface}
-local source_inv={valid=true}
+local source_stock=10
+local source_inv={valid=true,get_item_count=function(item)
+  return item=="rail" and source_stock or 0 end}
 local rail_request={item_name="rail",entity_name="straight-rail",
   site_reason="remote-rail-physical-frontier-0836",
   rail_mission_station_unit_0836=104,rail_segment_0836=45,
@@ -131,6 +133,12 @@ kept,reason=Movement.enforce_pair(pair,"original-source-midroute")
 check(not kept and reason=="original-paid-rail-transit-owned-0836"
   and pair.movement_request_0418==source_route,
   "overleash safety forced a new destination over original stock collection")
+-- A source on another surface, a depleted original inventory, a task
+-- with foreign cargo or a forged pending writ must not authorize pickup.
+source_stock=0
+check(not Track.authorized_paid_rail_transit_0836(pair,priest.position,source_route),
+  "empty station stock allowed a meaningless out-of-station collection writ")
+source_stock=10
 -- A source on another surface, a task with foreign cargo, or a forged
 -- pending writ must NOT gain an empty-handed rail pass.
 task.source_entity={valid=true,unit_number=701,
