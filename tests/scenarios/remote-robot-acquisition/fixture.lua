@@ -1119,39 +1119,43 @@ local function pulse()
         local remote=root.roboport_frontier_1076
           and root.roboport_frontier_1076.source_port
         local hold=s.powerless_hold
-        local site=s.goal and s.goal.remote_station_position_1076
-        local built=site and s.surface.find_entities_filtered{
-          name="intermediate-cogitator-station",position=site,
-          radius=1.5,force=root.station.force,limit=2} or {}
-        local original_cell=s.port.valid and s.port.logistic_cell
-        local network=original_cell and original_cell.logistic_network
-        if not(hold.valid
-          and hold.get_item_count("medium-electric-pole")==1
-          and remote and remote.valid
-          and remote.unit_number==s.powerless_remote_port
-          and not remote.is_connected_to_electric_network()
-          and s.port.valid and s.port.is_connected_to_electric_network()
-          and network and network.valid and network.all_construction_robots==3
-          and item_count(s.provider,"intermediate-cogitator-station")==1
-          and not s.event_station and #built==0
-          and s.ore.amount==s.ore_initial
-          and root.priest.unit_number==s.magos_priest
-          and senior.priest.unit_number==s.senior_priest)then
-          fail("NATIVE_POWERLESS_REFUSAL_OR_CUSTODY_INVALID tick="..
-            game.tick.." held="..tostring(hold.valid
-              and hold.get_item_count("medium-electric-pole"))..
-            " remote_powered="..tostring(remote and remote.valid
-              and remote.is_connected_to_electric_network())..
-            " robots="..tostring(network and network.valid
-              and network.all_construction_robots)..
-            " built="..tostring(#built))
+        -- Verify the outage and custody only before the ONE real item
+        -- is spent. Later ticks verify restoration, not a still-cut grid.
+        if not s.powerless_restoration_pole then
+          local site=s.goal and s.goal.remote_station_position_1076
+          local built=site and s.surface.find_entities_filtered{
+            name="intermediate-cogitator-station",position=site,
+            radius=1.5,force=root.station.force,limit=2} or {}
+          local original_cell=s.port.valid and s.port.logistic_cell
+          local network=original_cell and original_cell.logistic_network
+          if not(hold.valid
+            and hold.get_item_count("medium-electric-pole")==1
+            and remote and remote.valid
+            and remote.unit_number==s.powerless_remote_port
+            and not remote.is_connected_to_electric_network()
+            and s.port.valid and s.port.is_connected_to_electric_network()
+            and network and network.valid and network.all_construction_robots==3
+            and item_count(s.provider,"intermediate-cogitator-station")==1
+            and not s.event_station and #built==0
+            and s.ore.amount==s.ore_initial
+            and root.priest.unit_number==s.magos_priest
+            and senior.priest.unit_number==s.senior_priest)then
+            fail("NATIVE_POWERLESS_REFUSAL_OR_CUSTODY_INVALID tick="..
+              game.tick.." held="..tostring(hold.valid
+                and hold.get_item_count("medium-electric-pole"))..
+              " remote_powered="..tostring(remote and remote.valid
+                and remote.is_connected_to_electric_network())..
+              " robots="..tostring(network and network.valid
+                and network.all_construction_robots)..
+              " built="..tostring(#built))
+          end
+          emit("PASS NATIVE_POWERLESS_REFUSAL tick="..game.tick..
+            " original_magos="..s.magos..
+            " original_senior="..s.senior..
+            " remote_port="..s.powerless_remote_port..
+            " pole_held=1 station_stock=1 robots=3"..
+            " native_event=none ore_unchanged=true")
         end
-        emit("PASS NATIVE_POWERLESS_REFUSAL tick="..game.tick..
-          " original_magos="..s.magos..
-          " original_senior="..s.senior..
-          " remote_port="..s.powerless_remote_port..
-          " pole_held=1 station_stock=1 robots=3"..
-          " native_event=none ore_unchanged=true")
         -- A physically replaced pole has paid its exact item cost. Factorio
         -- may publish its merged electric/logistic graph on a later native
         -- update, so do not confuse one same-tick graph snapshot with failure.
