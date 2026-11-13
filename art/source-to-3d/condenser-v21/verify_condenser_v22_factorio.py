@@ -48,7 +48,7 @@ def verify(root:Path, source_mod:Path|None=None):
         if img.size!=(64,64):raise RuntimeError('Icon must be 64x64')
     if source_mod:
         lua=(Path(source_mod)/'prototypes/generated_graphics/atmospheric-water-condenser-v22c.lua').read_text()
-        if ("local FRAMES = 32" not in lua or "position={0.5,-0.5}" not in lua or
+        if ("local FRAMES = 32" not in lua or "position={0.5,0.5}" not in lua or
              "lines_per_file=2" not in lua or "target.graphics_set={" not in lua):
             raise RuntimeError('Lua graphics/pipe registration missing')
     return {'status':'PASS','assets':len(checked)+1,'headings':4,'sampled_frames':4*32,'source_sha256':APPROVED_V21_SHA}
