@@ -1040,6 +1040,154 @@ local function pulse()
         emit("PASS NATIVE_MATERIALLESS_RECOVERY tick="..game.tick..
           " provider="..s.provider.unit_number..
           " station_restored=1 held=0 original_mission=retained")
+        -- Genuine negative: remove a PHYSICALLY BUILT feeder pole while the
+        -- exact station item and all original robots remain available.
+        -- Candidate poles are mined into engine-owned holds. Ineffective
+        -- cuts are restored from the SAME mined item, never spawned stock.
+        local frontier=root.roboport_frontier_1076
+        local remote=frontier and frontier.source_port
+        if not(remote and remote.valid and remote~=s.port
+          and remote.is_connected_to_electric_network()
+          and s.port.valid and s.port.is_connected_to_electric_network()
+          and item_count(s.provider,"intermediate-cogitator-station")==1)then
+          fail("NATIVE_POWERLESS_PRECONDITION_INVALID")
+        end
+        local candidates=s.surface.find_entities_filtered{
+          name="medium-electric-pole",force=root.station.force}
+        table.sort(candidates,function(a,b)
+          local da=(a.position.x-remote.position.x)^2
+            +(a.position.y-remote.position.y)^2
+          local db=(b.position.x-remote.position.x)^2
+            +(b.position.y-remote.position.y)^2
+          return da==db and a.unit_number<b.unit_number or da<db
+        end)
+        local separated=false
+        for _,pole in ipairs(candidates)do
+          if pole.valid then
+            local pos={x=pole.position.x,y=pole.position.y}
+            local cargo_hold=game.create_inventory(1)
+            if not(cargo_hold and cargo_hold.valid)then
+              fail("NATIVE_POWERLESS_POLE_HOLD_MISSING")
+            end
+            local mined=pole.mine{inventory=cargo_hold}
+            if not(mined==true and not pole.valid
+              and cargo_hold.get_item_count("medium-electric-pole")==1)then
+              fail("NATIVE_POWERLESS_POLE_MINE_NONCONSERVING")
+            end
+            if not remote.is_connected_to_electric_network()
+              and s.port.is_connected_to_electric_network()then
+              separated=true
+              s.powerless_hold=cargo_hold
+              s.powerless_position=pos
+              s.powerless_cut_tick=game.tick
+              s.powerless_remote_port=remote.unit_number
+              break
+            end
+            if not s.surface.can_place_entity{
+              name="medium-electric-pole",position=pos,
+              force=root.station.force}then
+              fail("NATIVE_POWERLESS_CANDIDATE_RESTITUTION_BLOCKED")
+            end
+            local debit=cargo_hold.remove{
+              name="medium-electric-pole",count=1}
+            if debit~=1 or cargo_hold.get_item_count("medium-electric-pole")~=0 then
+              fail("NATIVE_POWERLESS_CANDIDATE_ITEM_LOST")
+            end
+            local restored=s.surface.create_entity{
+              name="medium-electric-pole",position=pos,
+              force=root.station.force}
+            if not(restored and restored.valid
+              and restored.is_connected_to_electric_network())then
+              fail("NATIVE_POWERLESS_CANDIDATE_GRID_RESTORE_FAILED")
+            end
+            cargo_hold.destroy()
+          end
+        end
+        if not separated then
+          fail("NATIVE_POWERLESS_NO_REAL_SEPARATING_POLE")
+        end
+        emit("NATIVE_POWERLESS_CUT tick="..game.tick..
+          " original_magos="..s.magos..
+          " original_senior="..s.senior..
+          " original_port="..s.port.unit_number..
+          " remote_port="..s.powerless_remote_port..
+          " pole_held=1 robots=3 station_stock=1")
+        return
+      end
+      if s.powerless_hold then
+        if game.tick-s.powerless_cut_tick<1500 then return end
+        local remote=root.roboport_frontier_1076
+          and root.roboport_frontier_1076.source_port
+        local hold=s.powerless_hold
+        local site=s.goal and s.goal.remote_station_position_1076
+        local built=site and s.surface.find_entities_filtered{
+          name="intermediate-cogitator-station",position=site,
+          radius=1.5,force=root.station.force,limit=2} or {}
+        local original_cell=s.port.valid and s.port.logistic_cell
+        local network=original_cell and original_cell.logistic_network
+        if not(hold.valid
+          and hold.get_item_count("medium-electric-pole")==1
+          and remote and remote.valid
+          and remote.unit_number==s.powerless_remote_port
+          and not remote.is_connected_to_electric_network()
+          and s.port.valid and s.port.is_connected_to_electric_network()
+          and network and network.valid and network.all_construction_robots==3
+          and item_count(s.provider,"intermediate-cogitator-station")==1
+          and not s.event_station and #built==0
+          and s.ore.amount==s.ore_initial
+          and root.priest.unit_number==s.magos_priest
+          and senior.priest.unit_number==s.senior_priest)then
+          fail("NATIVE_POWERLESS_REFUSAL_OR_CUSTODY_INVALID tick="..
+            game.tick.." held="..tostring(hold.valid
+              and hold.get_item_count("medium-electric-pole"))..
+            " remote_powered="..tostring(remote and remote.valid
+              and remote.is_connected_to_electric_network())..
+            " robots="..tostring(network and network.valid
+              and network.all_construction_robots)..
+            " built="..tostring(#built))
+        end
+        emit("PASS NATIVE_POWERLESS_REFUSAL tick="..game.tick..
+          " original_magos="..s.magos..
+          " original_senior="..s.senior..
+          " remote_port="..s.powerless_remote_port..
+          " pole_held=1 station_stock=1 robots=3"..
+          " native_event=none ore_unchanged=true")
+        local pos=s.powerless_position
+        if not s.surface.can_place_entity{
+          name="medium-electric-pole",position=pos,
+          force=root.station.force}then
+          fail("NATIVE_POWERLESS_RESTORATION_SITE_BLOCKED")
+        end
+        local debit=hold.remove{name="medium-electric-pole",count=1}
+        if debit~=1 or hold.get_item_count("medium-electric-pole")~=0 then
+          fail("NATIVE_POWERLESS_RESTORATION_ITEM_NONCONSERVING")
+        end
+        local restored=s.surface.create_entity{
+          name="medium-electric-pole",position=pos,
+          force=root.station.force}
+        local current_root=s.port.valid and s.port.logistic_cell
+        local current_remote=remote.valid and remote.logistic_cell
+        local original_network=current_root and current_root.logistic_network
+        local returned_network=current_remote and current_remote.logistic_network
+        if not(restored and restored.valid
+          and restored.is_connected_to_electric_network()
+          and s.port.is_connected_to_electric_network()
+          and remote.is_connected_to_electric_network()
+          and remote.electric_network_id==s.port.electric_network_id
+          and s.port.electric_network_id==s.original_electric_grid
+          and original_network and original_network.valid
+          and returned_network and returned_network.valid
+          and original_network.network_id==returned_network.network_id)then
+          fail("NATIVE_POWERLESS_RESTORED_GRID_NOT_JOINED")
+        end
+        hold.destroy() -- only after exact mined pole item was consumed
+        s.powerless_hold=nil
+        s.powerless_restored=true
+        emit("PASS NATIVE_POWERLESS_RECOVERY tick="..game.tick..
+          " original_port="..s.port.unit_number..
+          " remote_port="..remote.unit_number..
+          " pole_debit=1 held=0 electric_grid=original"..
+          " logistic_network=merged original_mission=retained")
       end
       local goal=s.goal
       local site=goal and goal.remote_station_position_1076
