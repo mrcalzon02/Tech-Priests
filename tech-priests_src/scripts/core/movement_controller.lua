@@ -214,7 +214,7 @@ local function route_chunk_exempt(pair, reason, opts)
   if opts and opts.owner=="construction-planner-0338"
     and (reason=="construction-site-standoff-0338"
       or reason=="construction-source-0338")
-    and mission.status=="building-physical-rail"
+    and mission and mission.status=="building-physical-rail"
     and pending and task
     and task.request_value==pending.request
     and pair.construction_request==pending.request
