@@ -573,7 +573,7 @@ assert 'rail_native_player_test_command(factorio, mods, initial, 30060)' in segm
 assert '"native-player-test-save-replay-autosave-probe"' in segment
 assert '"native_first_test_ticks"] = 30060' in segment
 assert 'robot_saveable_server_command(factorio, mods, initial, settings, port)' not in segment
-assert 'out["native_server_autopause"] = False' in segment
+assert 'out["native_server_autopause"] = False' not in segment
 assert 'checkpoint.unlink(missing_ok=True)' in segment
 assert 'if z.testzip() is not None:' in segment
 assert 'out["native_save_proof"]="exact-named-new-file-zip-crc"' in segment
