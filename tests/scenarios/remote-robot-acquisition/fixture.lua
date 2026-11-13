@@ -409,7 +409,13 @@ local function pulse()
         if game.tick-s.event_tick<3*interval then return end
         fail("NATIVE_ROBOT_RECEIPT_RANK_OR_ITEM_MISMATCH"..detail)
       end
-      s.finished=true
+      -- The first paid station is already an independently accepted gate.
+      -- Continue observing PRODUCTION 1076 -> 0820 -> 0837, without
+      -- inserting ore, forcing a task or granting coverage. A complete
+      -- Method II ore milestone needs real upstream chest receipts too.
+      s.phase="awaiting-native-ore-return"
+      s.ore_return_wait_started=game.tick
+      s.intermediate_priest=built.priest.unit_number
       emit("PASS autonomous original 0259 selected and physical native robot-built Intermediate paired"..
         " tick="..game.tick.." magos="..s.magos..
         " magos_priest="..s.magos_priest..
@@ -418,6 +424,94 @@ local function pulse()
         " intermediate_priest="..built.priest.unit_number..
         " native_robot="..s.event_robot.." material_delta=1"..
         " source_stock=0 ghost=0 ore_return_not_credited=true")
+      return
+    end
+    if s.phase=="awaiting-native-ore-return" then
+      local chain=rawget(_G,"TechPriestsResourceStationChain0820")
+      local courier=rawget(_G,"TechPriestsResourceReturnCourier0837")
+      local mission=root.resource_expansion_0259
+        and root.resource_expansion_0259.chain_0820
+      local cargo=mission and mission.return_courier_0837
+      local route,why=chain and chain.return_route(root)
+      if not s.ore_wait_readback and
+          game.tick-s.ore_return_wait_started>=3600 then
+        s.ore_wait_readback=true
+        emit("NATIVE_ORE_RETURN_WAIT tick="..game.tick..
+          " frontier="..tostring(root.roboport_frontier_1076
+            and root.roboport_frontier_1076.status)..
+          " station="..tostring(root.roboport_frontier_1076
+            and root.roboport_frontier_1076.remote_station_unit_1076)..
+          " mission="..tostring(mission and mission.status)..
+          " robot_route="..tostring(mission and mission.robot_frontier_route_0820)..
+          " route="..tostring(route and #route)..
+          " route_reason="..tostring(why)..
+          " cargo_phase="..tostring(cargo and cargo.phase)..
+          " cargo_reason="..tostring(cargo and cargo.last_reason)..
+          " courier_block="..tostring(cargo and cargo.last_terminal_handoff_reason_1126)..
+          " magos_ore="..tostring(item_count(root.station,"iron-ore")))
+      end
+      local entries=cargo and cargo.receipts_0982
+      local hop1=entries and entries[1]
+      local hop2=entries and entries[2]
+      local ledger_ok=route and courier and courier.validate_receipts_0982
+        and courier.validate_receipts_0982(cargo,route)==true
+      if mission and mission.status=="reached-resource"
+        and mission.robot_frontier_route_0820==true
+        and mission.current_station_unit==s.event_station
+        and route and #route==3 and route[1]==s.event_station
+        and route[2]==s.senior and route[3]==s.magos
+        and cargo and cargo.phase=="magos-delivered"
+        and cargo.source_kind_0991=="natural-ore"
+        and cargo.item=="iron-ore" and cargo.quantity==1
+        and cargo.inventory==nil and cargo.hops_completed==2
+        and cargo.delivered_count==1
+        and cargo.delivered_station_unit==s.magos
+        and (mission.delivered_to_magos_count or 0)>=1
+        and ledger_ok
+        and hop1 and hop1.hop==1
+        and hop1.source_station_unit==s.event_station
+        and hop1.destination_station_unit==s.senior
+        and hop1.carrier_priest_unit==s.intermediate_priest
+        and hop1.item=="iron-ore" and hop1.quantity==1
+        and hop1.destination_after==hop1.destination_before+1
+        and hop2 and hop2.hop==2
+        and hop2.source_station_unit==s.senior
+        and hop2.destination_station_unit==s.magos
+        and hop2.carrier_priest_unit==s.senior_priest
+        and hop2.item=="iron-ore" and hop2.quantity==1
+        and hop2.destination_after==hop2.destination_before+1
+        and s.ore.valid and cargo.ore_amount_before
+        and s.ore.amount==cargo.ore_amount_before-1
+        and (item_count(root.station,"iron-ore") or 0)>=hop2.destination_after
+        and root.priest.unit_number==s.magos_priest
+        and senior.priest.unit_number==s.senior_priest then
+        s.finished=true
+        emit("PASS NATIVE_PHYSICAL_ORE_RETURN tick="..game.tick..
+          " original_magos="..s.magos..
+          " magos_priest="..s.magos_priest..
+          " senior="..s.senior..
+          " senior_priest="..s.senior_priest..
+          " intermediate="..s.event_station..
+          " intermediate_priest="..s.intermediate_priest..
+          " source_amount_before="..cargo.ore_amount_before..
+          " source_amount_after="..s.ore.amount..
+          " hop1_delta=1 hop2_delta=1 magos_deposit=1"..
+          " delivered_tick="..tostring(cargo.completed_tick)..
+          " source_kind=natural-ore inventory_hold=empty")
+        return
+      end
+      if game.tick-s.ore_return_wait_started>=48000 then
+        fail("NATIVE_ORE_RETURN_TIMEOUT tick="..game.tick..
+          " mission="..tostring(mission and mission.status)..
+          " frontier="..tostring(root.roboport_frontier_1076
+            and root.roboport_frontier_1076.status)..
+          " route_reason="..tostring(why)..
+          " cargo_phase="..tostring(cargo and cargo.phase)..
+          " cargo_reason="..tostring(cargo and cargo.last_reason)..
+          " delivered="..tostring(mission and mission.delivered_to_magos_count)..
+          " current_source="..tostring(s.ore.valid and s.ore.amount)..
+          " magos_ore="..tostring(item_count(root.station,"iron-ore")))
+      end
     end
   end)
   if not ok then s.failed=tostring(err);emit("FAIL "..s.failed) end
