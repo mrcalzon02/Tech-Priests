@@ -840,11 +840,56 @@ def robot_real_loopback_client_command_1381(
                  "--mod-directory", str(mods), "--disable-audio",
                  "--fullscreen=false", "--window-size", "800x600"]
     if os.name == "nt" and "steam" in str(factorio).lower():
-        for parent in factorio.parents:
-            executable = parent / "steam.exe"
+        # The game may live in a separate Steam library on D:, while the
+        # legitimate Steam application is installed under C:/Program Files.
+        # Check existing installation metadata and known paths; never spawn
+        # an unverified launcher or scan the user's filesystem recursively.
+        candidates = [parent / "steam.exe" for parent in factorio.parents]
+        environment = os.environ
+        for key in ("STEAM_EXE", "STEAM_PATH", "STEAM_HOME"):
+            value = environment.get(key)
+            if value:
+                folder = pathlib.Path(value)
+                candidates.append(folder if folder.suffix.lower()==".exe"
+                                  else folder / "steam.exe")
+        for key in ("PROGRAMFILES(X86)", "PROGRAMFILES"):
+            value = environment.get(key)
+            if value:
+                candidates.append(pathlib.Path(value) / "Steam" / "steam.exe")
+        candidates += [
+            pathlib.Path("C:/Program Files (x86)/Steam/steam.exe"),
+            pathlib.Path("C:/Program Files/Steam/steam.exe"),
+            pathlib.Path("D:/Steam/steam.exe"),
+            pathlib.Path("D:/Games/Steam/steam.exe"),
+        ]
+        try:
+            import winreg
+            for hive,subkey,property_name in (
+                    (winreg.HKEY_CURRENT_USER,r"Software\\Valve\\Steam","SteamPath"),
+                    (winreg.HKEY_CURRENT_USER,r"Software\\Valve\\Steam","SteamExe"),
+                    (winreg.HKEY_LOCAL_MACHINE,
+                     r"SOFTWARE\\WOW6432Node\\Valve\\Steam","InstallPath")):
+                try:
+                    with winreg.OpenKey(hive,subkey) as key:
+                        value=winreg.QueryValueEx(key,property_name)[0]
+                    if value:
+                        folder=pathlib.Path(value)
+                        candidates.append(
+                            folder if folder.suffix.lower()==".exe"
+                            else folder / "steam.exe")
+                except OSError:
+                    pass
+        except ImportError:
+            pass
+        from_path=shutil.which("steam.exe")
+        if from_path:
+            candidates.append(pathlib.Path(from_path))
+        for executable in dict.fromkeys(candidates):
             if executable.is_file():
                 return [str(executable), "-applaunch", "427520", *arguments]
-        raise RuntimeError("1381 Steam installation lacks its real Steam client")
+        raise RuntimeError(
+            "1381 no verified real steam.exe in Steam registry, known installation "
+            "roots, environment or Factorio library ancestors")
     return [str(factorio), *arguments]
 
 
