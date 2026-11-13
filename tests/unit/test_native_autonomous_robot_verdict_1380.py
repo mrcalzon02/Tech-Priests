@@ -147,6 +147,10 @@ assert "s.robotless_hold=hold" in fixture
 assert "NATIVE_PRESTAGE_ROBOTS_NOT_DOCKED" in fixture
 assert "NATIVE_ROBOTLESS_PRESTAGE tick=" in fixture
 assert "NATIVE_PRESTAGED_ROBOT_CUSTODY_ORIGINAL_GRID_LOST" in fixture
+assert "local spare_m_qty=spare_m and spare_m.valid" in fixture
+assert "local spare_s_qty=spare_s and spare_s.valid" in fixture
+assert "and spare_m_qty==3 and spare_s_qty==2" in fixture
+assert "+(spare_m_qty or 0)+(spare_s_qty or 0)" in fixture
 assert "NATIVE_SPARE_ROBOPORT_PRESTAGE tick=" in fixture
 assert "s.spare_port_magos=magos_spare" in fixture
 assert "s.spare_port_senior=senior_spare" in fixture
