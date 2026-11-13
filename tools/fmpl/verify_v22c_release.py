@@ -67,7 +67,7 @@ def quality_contract(lua: str, settings: str, fixes: str, locale: str):
                   "frame_path(which,original,resolution,i)",
                   "local FRAMES = 32", "lines_per_file=2", "slice=SLICE_SIZE",
                   "animation_speed=FRAMES / TICKS_PER_CYCLE", "target.graphics_set={",
-                  "port.position={0.5,-0.5}"):
+                  "port.position={0.5,0.5}"):
         fail_if(token not in lua, 'Condenser graphics contract missing: ' + token)
     fail_if(fixes.count('require("prototypes.generated_graphics.atmospheric-water-condenser-v22c")') != 1,
             'Condenser graphics module not loaded exactly once by final fixes')
@@ -98,7 +98,7 @@ def validate(mod_dir: Path, *, verify_code: bool=True) -> dict:
     fail_if(m.get('cycle_seconds') != 12 or not math.isclose(m.get('factorio_animation_speed_frames_per_tick'),32/720),
             'Animation speed no longer equals the approved 12-second cycle')
     fail_if(m.get('blender_to_factorio') != EXPECTED_FACES, 'One or more directional mappings changed')
-    fail_if(m.get('nominal_collision_footprint_tiles') != [2,2] or m.get('factorio_output_connection_local') != [.5,-.5]
+    fail_if(m.get('nominal_collision_footprint_tiles') != [2,2] or m.get('factorio_output_connection_local') != [.5,.5]
             or m.get('factorio_output_direction') != 'east', '2x2 water port alignment changed')
     fail_if(m.get('orientation_angles') != [0,90,180,270], 'Missing canonical Factorio directions')
     fail_if((m.get('hr_frame_px'),m.get('sd_frame_px')) != (512,256) or
