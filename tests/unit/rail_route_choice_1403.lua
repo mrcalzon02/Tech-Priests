@@ -1,5 +1,5 @@
-package.path="./scripts/?.lua;./scripts/?/init.lua;"..package.path
-local M=require("core.rail_route_choice_1403")
+package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
+local M=require("scripts.core.rail_route_choice_1403")
 local f={unit_number=100,position={x=99,y=1}}
 local target={x=512,y=6}
 local raw={
