@@ -37,7 +37,7 @@ CASES = {
         "module": "ci_remote_robot_acquisition",
         "prefix": "[TP-AUTONOMOUS-ROBOT-1380]",
         "pass": "PASS autonomous original 0259 selected and physical native robot-built Intermediate paired",
-        "ticks": 42060,
+        "ticks": 72060,
     },
     "condenser-v22c-physical": {
         "fixture": "tests/scenarios/condenser-v22c-physical/fixture.lua",
@@ -95,6 +95,52 @@ def verify_autonomous_robot_1380_process_logs(
         raise ValueError("1380 incomplete/mismatched native create/on_init transaction")
     return verify_autonomous_robot_1380_log(
         benchmark_exit, create_log + "\n" + benchmark_log)
+
+
+def verify_autonomous_robot_ore_1380_log(log: str, ticks: int) -> dict[str, object]:
+    """Accept a real two-hop Magos delivery only after original robot pairing.
+
+    The Factorio fixture itself verifies engine source depletion, persistent
+    LuaInventory emptiness, two chest delta receipts, original priest custody,
+    live 0820/0837 route and patch provenance. Reject missing, reordered,
+    duplicate or numerically inconsistent receipt text independently.
+    """
+    tag = r"\\[TP-AUTONOMOUS-ROBOT-1380\\] "
+    station = list(re.finditer(
+        tag + r"PASS autonomous original 0259 selected and physical "
+        r"native robot-built Intermediate paired tick=(\\d+) magos=(\\d+) "
+        r"magos_priest=(\\d+) senior=(\\d+) senior_priest=(\\d+) "
+        r"intermediate=(\\d+) intermediate_priest=(\\d+) "
+        r"native_robot=(\\d+) material_delta=1 source_stock=0 "
+        r"ghost=0 ore_return_not_credited=true", log))
+    delivered = list(re.finditer(
+        tag + r"PASS NATIVE_PHYSICAL_ORE_RETURN tick=(\\d+) "
+        r"original_magos=(\\d+) magos_priest=(\\d+) "
+        r"senior=(\\d+) senior_priest=(\\d+) "
+        r"intermediate=(\\d+) intermediate_priest=(\\d+) "
+        r"source_amount_before=(\\d+) source_amount_after=(\\d+) "
+        r"hop1_delta=1 hop2_delta=1 magos_deposit=1 "
+        r"delivered_tick=(\\d+) source_kind=natural-ore "
+        r"inventory_hold=empty", log))
+    if len(station) != 1 or len(delivered) != 1:
+        raise ValueError("1380 missing/duplicate original station or physical ore delivery")
+    st, ore = station[0], delivered[0]
+    st_groups, ore_groups = [int(x) for x in st.groups()], [
+        int(x) for x in ore.groups()]
+    if (ore.start() <= st.start() or ore_groups[0] <= st_groups[0]
+            or ore_groups[1:7] != st_groups[1:7]
+            or ore_groups[7] - ore_groups[8] != 1
+            or not st_groups[0] <= ore_groups[9] <= ore_groups[0] <= ticks):
+        raise ValueError("1380 physical ore identity, source, tick or hop mismatch")
+    return {
+        "natural_ore_return_accepted": True,
+        "new_distinct_ore_delivery_gates": 1,
+        "first_magos_delivery_tick": ore_groups[9],
+        "first_delivery_latency_ticks": ore_groups[9],
+        "physically_delivered_ore": 1,
+        "ore_items_delivered_per_1000_ticks": round(1000.0 / ticks, 6),
+        "physical_hops_verified": 2,
+    }
 
 
 def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, object]:
@@ -693,6 +739,8 @@ def main() -> int:
         try:
             native.update(verify_autonomous_robot_1380_process_logs(
                 created, create_contents, benchmark, contents))
+            native.update(verify_autonomous_robot_ore_1380_log(
+                contents, tick_count))
             passed = True
         except ValueError as error:
             native["blocker"] = str(error)
@@ -700,8 +748,9 @@ def main() -> int:
         (output / "native-autonomous-robot-result.json").write_text(
             json.dumps(native, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         if passed:
-            print("PASS true native autonomous 0259 and robot-built paired Intermediate; "
-                  "ore return/save reload UNTESTED")
+            print("PASS true native 0259 robot-built ranked Intermediate AND "
+                  "two-hop counted natural ore returned to original Magos; "
+                  "frontier extension/save reload UNTESTED")
             return 0
         print("FAIL native autonomous robot gate: " + str(native["blocker"]))
         print("Engine logs: " + str(output / "benchmark.log"))
