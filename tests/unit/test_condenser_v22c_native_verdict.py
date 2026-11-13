@@ -79,7 +79,7 @@ class FailClosedNativeReceipt(unittest.TestCase):
         with self.assertRaises(ValueError):verify(1,log())
         with self.assertRaises(ValueError):verify(0,log()+"\n"+PREFIX+"FAIL actual engine")
     def test_reject_wrong_rotated_port(self):
-        with self.assertRaisesRegex(ValueError,"rotate outward"):
+        with self.assertRaisesRegex(ValueError,"authored V22C flange"):
             verify(0,log([RECORDS[0].replace("target_x=1.500","target_x=-1.500"),*RECORDS[1:]]))
     def test_reject_duplicate_machine_identity(self):
         with self.assertRaises(ValueError):
