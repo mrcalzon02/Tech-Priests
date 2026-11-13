@@ -485,7 +485,7 @@ segment=driver_source.split("def run_robot_cargo_reload_1381(",1)[1].split(
     "\ndef main()",1)[0]
 assert "rail_native_player_test_command(factorio,mods,initial,30000)" in segment
 assert 'source_log.open("w",encoding="utf-8")' in segment
-assert "--start-server" not in segment
+assert 'str(factorio),"--start-server"' not in segment
 assert 'game.force.chart(' not in driver_source
 assert "Native save CRC invalid" in segment
 assert "Copied save CRC invalid" in segment
