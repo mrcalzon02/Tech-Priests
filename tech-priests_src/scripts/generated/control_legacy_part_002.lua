@@ -71,11 +71,24 @@ create_pair = function(station)
       and _G.tech_priests_relocation_claim_0823(station) then return end
   ensure_storage()
   if storage.tech_priests.pairs_by_station[station.unit_number] then return end
+  -- 1406: opt-in only; factorio LuaProfiler stays in module locals. Never
+  -- change station authority or material custody to collect a benchmark.
+  local cold = rawget(_G, "TechPriestsFirstStationColdProfile1406")
+  local profile = cold and type(cold.begin_pair)=="function"
+    and cold.begin_pair(station)==true
+  local function phase(name)
+    if profile then cold.checkpoint(name) end
+  end
+  local function finish_profile(reason)
+    if profile then cold.finish_pair(reason) end
+  end
 
   local config = get_station_config(station)
   local priest_name = get_priest_name_for_force(config, station.force)
   local position = find_spawn_position(station, priest_name)
+  phase("priest-native-create")
   if not position then
+    finish_profile("spawn-position-refused")
     station.force.print({ "tech-priests.no-priest-spawn-position" })
     return
   end
@@ -90,9 +103,11 @@ create_pair = function(station)
   })
 
   if not (priest and priest.valid and priest.unit_number) then
+    finish_profile("priest-native-create-refused")
     station.force.print({ "tech-priests.no-priest-created" })
     return
   end
+  phase("priest-identity-and-dossier")
 
   spawn_priest_smoke_for_entity(priest, false)
   pcall(function() priest.destructible = false end)
@@ -117,23 +132,37 @@ create_pair = function(station)
   }
 
   apply_pair_display_names(pair)
+  phase("pair-map-registration")
 
   storage.tech_priests.pairs_by_station[station.unit_number] = pair
   storage.tech_priests.pairs_by_priest = storage.tech_priests.pairs_by_priest or {}
   storage.tech_priests.pairs_by_priest[priest.unit_number] = pair
   storage.tech_priests.station_by_priest[priest.unit_number] = station.unit_number
-
+  phase("first-broker-wake-stagger")
+  local broker = rawget(_G, "TechPriestsRuntimeTickBroker0600")
+  if broker and type(broker.stagger_first_station_wake_1407)=="function" then
+    local ok,accepted,why=pcall(broker.stagger_first_station_wake_1407,pair)
+    if not ok and log then
+      log("[TP-FIRST-STATION-1407] schedule-stagger-error="..tostring(accepted))
+    end
+  end
+  phase("hidden-logistic-support")
   ensure_pair_logistic_caches(pair)
+  phase("pair-state-ledger")
   if type(_G.tech_priests_0362_refresh_pair_state) == "function" then
     pcall(_G.tech_priests_0362_refresh_pair_state, pair, "canonical-pair-created")
   end
+  phase("equipment-armor")
   if type(_G.tech_priests_0302_refresh_pair_fixed_armor) == "function" then
     pcall(_G.tech_priests_0302_refresh_pair_fixed_armor, pair, "canonical-pair-created")
   end
+  phase("equipment-inventory")
   if type(_G.tech_priests_0305_refresh_pair_equipment) == "function" then
     pcall(_G.tech_priests_0305_refresh_pair_equipment, pair, "canonical-pair-created")
   end
+  phase("first-movement-command")
   return_to_station(priest, station)
+  finish_profile("original-first-pair-created")
 end
 
 
