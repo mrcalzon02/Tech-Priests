@@ -333,6 +333,59 @@ function M.register_service(spec)
   service_stat(service.name, index and "replaced" or "registered")
   return service
 end
+-- 1407: one-time cold station activation guard. Before any Cogitator
+-- exists the 0595 dormant gate intentionally leaves background services asleep.
+-- A new registered service starts with next_due_tick=0, so the FIRST station
+-- otherwise wakes all discovery/visual/planning callbacks on one five-tick
+-- pulse. Spread non-safety work over <=120 ticks, never skip an obligation.
+local IMMEDIATE_FIRST_STATION_CATEGORIES_1407={
+  lifecycle=true,dispatcher=true,combat=true,movement=true,
+  recovery=true,safety=true,authority=true,
+}
+function M.stagger_first_station_wake_1407(pair)
+  local station=pair and pair.station
+  local priest=pair and pair.priest
+  local tp=storage and storage.tech_priests
+  if not(station and station.valid and station.unit_number
+    and priest and priest.valid and tp and tp.pairs_by_station
+    and tp.pairs_by_station[station.unit_number]==pair)then
+    return false,"unverified-original-station-pair"
+  end
+  for unit,other in pairs(tp.pairs_by_station)do
+    if unit~=station.unit_number and other
+      and other.station and other.station.valid then
+      return false,"not-the-first-station"
+    end
+  end
+  local root=M.root()
+  if root.first_station_wake_1407 then
+    return false,"already-spread-first-station"
+  end
+  local due,at={},now()
+  for _,service in ipairs(M.services)do
+    if service.enabled~=false
+      and not IMMEDIATE_FIRST_STATION_CATEGORIES_1407[service.category]
+      and (tonumber(service.next_due_tick) or 0)<=at then
+      due[#due+1]=service
+    end
+  end
+  local n=#due
+  for index,service in ipairs(due)do
+    -- Deterministic across peers; no per-tick randomness, no workflow
+    -- disabling, and no drop of actual movement/defense/dispatch.
+    local offset=1+math.floor((index-1)*119/math.max(1,n))
+    service.next_due_tick=at+offset
+  end
+  root.first_station_wake_1407={
+    tick=at,station_unit=station.unit_number,
+    deferred_services=n,immediate_services=#M.services-n,
+    longest_delay_ticks=n>0 and
+      (1+math.floor((n-1)*119/n)) or 0,
+    completed=true,
+  }
+  return true,"nonessential-first-wake-work-staggered"
+end
+
 function M.service_count() return #M.services end
 
 local function record_result(service, result, offered)
