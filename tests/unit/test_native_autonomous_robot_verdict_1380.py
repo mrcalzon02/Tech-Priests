@@ -28,28 +28,41 @@ robot_denied=(prefix+"PASS NATIVE_ROBOTLESS_REFUSAL tick=2950 "
     "station_stock=1 native_event=none ore_unchanged=true")
 robot_recovered=(prefix+"PASS NATIVE_ROBOTLESS_RECOVERY tick=2950 "
     "original_port=30 robots_restored=3 held=0 original_mission=retained")
-material_cut=(prefix+"NATIVE_MATERIALLESS_CUT tick=2950 original_magos=10 "
+coverage_cut=(prefix+"NATIVE_COVERAGELESS_CUT tick=2950 original_magos=10 "
+    "original_senior=20 original_port=30 retired_port=31 "
+    "roboport_held=1 station_stock=1 robots_restored=3")
+coverage_denied=(prefix+"PASS NATIVE_COVERAGELESS_REFUSAL tick=4450 "
+    "original_magos=10 original_senior=20 retained_port=1 "
+    "original_green=false remote_port=absent robots=3 "
+    "native_event=none ore_unchanged=true")
+coverage_recovered=(prefix+"PASS NATIVE_COVERAGELESS_RECOVERY tick=4450 "
+    "original_port=30 restored_port=32 port_debit=1 held=0 "
+    "electric_grid=original logistic_network=merged original_mission=retained")
+material_cut=(prefix+"NATIVE_MATERIALLESS_CUT tick=4450 original_magos=10 "
     "original_senior=20 provider=30 station_held=1 station_stock=0 "
     "robots_still_held=3")
-material_denied=(prefix+"PASS NATIVE_MATERIALLESS_REFUSAL tick=4450 "
+material_denied=(prefix+"PASS NATIVE_MATERIALLESS_REFUSAL tick=5950 "
     "original_magos=10 original_senior=20 station_held=1 "
     "network_station_stock=0 robots=3 native_event=none ore_unchanged=true")
-material_recovered=(prefix+"PASS NATIVE_MATERIALLESS_RECOVERY tick=4450 "
+material_recovered=(prefix+"PASS NATIVE_MATERIALLESS_RECOVERY tick=5950 "
     "provider=30 station_restored=1 held=0 original_mission=retained")
-event=(prefix+"NATIVE_ROBOT_EVENT tick=4600 station=50 robot=60 "
+event=(prefix+"NATIVE_ROBOT_EVENT tick=6100 station=50 robot=60 "
     "event=on_robot_built_entity")
 done=(prefix+"PASS autonomous original 0259 selected and physical "
-    "native robot-built Intermediate paired tick=4700 magos=10 "
+    "native robot-built Intermediate paired tick=6200 magos=10 "
     "magos_priest=11 senior=20 senior_priest=21 intermediate=50 "
     "intermediate_priest=51 native_robot=60 material_delta=1 "
     "source_stock=0 ghost=0 ore_return_not_credited=true")
 sample="\n".join((physical,selected,extension,robot_cut,
-                  robot_denied,material_cut,robot_recovered,
+                  robot_denied,coverage_cut,robot_recovered,
+                  coverage_denied,coverage_recovered,material_cut,
                   material_denied,material_recovered,event,done))
 report=module.verify_autonomous_robot_1380_log(0,sample)
 assert report["accepted"] is True
 assert report["native_robotless_refusal_accepted"] is True
 assert report["native_robotless_refusal_ticks"] == 1500
+assert report["native_coverageless_refusal_accepted"] is True
+assert report["native_coverageless_refusal_ticks"] == 1500
 assert report["native_materialless_refusal_accepted"] is True
 assert report["native_materialless_refusal_ticks"] == 1500
 assert report["natural_ore_return_accepted"] is False
@@ -65,6 +78,13 @@ checks=[
     (0,sample.replace(robot_cut+"\n","")),
     (0,sample.replace(robot_denied+"\n","")),
     (0,sample.replace(robot_recovered+"\n","")),
+    (0,sample.replace(coverage_cut+"\n","")),
+    (0,sample.replace(coverage_denied+"\n","")),
+    (0,sample.replace(coverage_recovered+"\n","")),
+    (0,sample.replace("retired_port=31","retired_port=33")),
+    (0,sample.replace("remote_port=absent","remote_port=present")),
+    (0,sample.replace("restored_port=32","restored_port=31")),
+    (0,sample.replace("roboport_held=1","roboport_held=0")),
     (0,sample.replace(material_cut+"\n","")),
     (0,sample.replace(material_denied+"\n","")),
     (0,sample.replace(material_recovered+"\n","")),
@@ -117,6 +137,11 @@ assert "s.robotless_hold=hold" in fixture
 assert "NATIVE_PRESTAGE_ROBOTS_NOT_DOCKED" in fixture
 assert "NATIVE_ROBOTLESS_PRESTAGE tick=" in fixture
 assert "NATIVE_PRESTAGED_ROBOT_CUSTODY_ORIGINAL_GRID_LOST" in fixture
+assert "NATIVE_COVERAGELESS_CUSTODY_OR_GREEN_INVALID" in fixture
+assert "NATIVE_COVERAGELESS_REFUSAL_OR_CUSTODY_INVALID" in fixture
+assert "NATIVE_COVERAGELESS_RESTORATION_NOT_COUNTED" in fixture
+assert "NATIVE_COVERAGELESS_RESTORED_GRID_NOT_MERGED" in fixture
+assert "s.coverageless_hold" in fixture
 assert "NATIVE_MATERIALLESS_CUSTODY_INVALID" in fixture
 assert "NATIVE_MATERIALLESS_REFUSAL_OR_CUSTODY_INVALID" in fixture
 assert "NATIVE_MATERIALLESS_RESTORATION_NOT_COUNTED" in fixture
@@ -197,7 +222,8 @@ create_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore
                       physical_supply,physical,bootstrap))
 benchmark_log="\n".join((prefix+"INSTALLED no prewritten objective no synthetic ore",
                          selected,extension,robot_cut,robot_denied,
-                         material_cut,robot_recovered,material_denied,
+                         coverage_cut,robot_recovered,coverage_denied,
+                         coverage_recovered,material_cut,material_denied,
                          material_recovered,event,done))
 assert module.verify_autonomous_robot_1380_process_logs(
     0,create_log,0,benchmark_log)["accepted"] is True

@@ -207,6 +207,24 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         r"original_port=(\d+) robots_restored=3 held=0 "
         r"original_mission=retained",
         "counted same-robot item restoration")
+    coverage_cut = one(
+        r"NATIVE_COVERAGELESS_CUT tick=(\\d+) original_magos=(\\d+) "
+        r"original_senior=(\\d+) original_port=(\\d+) "
+        r"retired_port=(\\d+) roboport_held=1 station_stock=1 "
+        r"robots_restored=3",
+        "physical removal and escrow of original new-grid port")
+    coverage_denied = one(
+        r"PASS NATIVE_COVERAGELESS_REFUSAL tick=(\\d+) "
+        r"original_magos=(\\d+) original_senior=(\\d+) "
+        r"retained_port=1 original_green=false remote_port=absent "
+        r"robots=3 native_event=none ore_unchanged=true",
+        "native uncovered-station refusal with real available robots/items")
+    coverage_recovered = one(
+        r"PASS NATIVE_COVERAGELESS_RECOVERY tick=(\\d+) "
+        r"original_port=(\\d+) restored_port=(\\d+) "
+        r"port_debit=1 held=0 electric_grid=original "
+        r"logistic_network=merged original_mission=retained",
+        "same mined roboport item physically restored to connected grid")
     material_cut = one(
         r"NATIVE_MATERIALLESS_CUT tick=(\d+) original_magos=(\d+) "
         r"original_senior=(\d+) provider=(\d+) "
@@ -236,16 +254,24 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         "paired Intermediate and exact material debit")
 
     if not (int(source[1]) <= int(selected[1]) <= int(extension[1])
-            <= int(cut[1]) < int(denied[1]) == int(material_cut[1])
-            == int(recovered[1]) < int(material_denied[1])
-            == int(material_recovered[1]) < int(event[1]) <= int(finished[1])
+            <= int(cut[1]) < int(denied[1]) == int(coverage_cut[1])
+            == int(recovered[1]) < int(coverage_denied[1])
+            == int(coverage_recovered[1]) == int(material_cut[1])
+            < int(material_denied[1]) == int(material_recovered[1])
+            < int(event[1]) <= int(finished[1])
             and int(denied[1]) - int(cut[1]) >= 1500
+            and int(coverage_denied[1]) - int(coverage_cut[1]) >= 1500
             and int(material_denied[1]) - int(material_cut[1]) >= 1500
-            and cut[2] == denied[2] == material_cut[2]
+            and cut[2] == denied[2] == coverage_cut[2]
+            == coverage_denied[2] == material_cut[2]
             == material_denied[2] == source[3]
-            and cut[3] == denied[3] == material_cut[3]
+            and cut[3] == denied[3] == coverage_cut[3]
+            == coverage_denied[3] == material_cut[3]
             == material_denied[3] == source[4]
-            and cut[4] == recovered[2] == extension[4]
+            and cut[4] == recovered[2] == coverage_cut[4]
+            == coverage_recovered[2] == extension[4]
+            and coverage_cut[5] == extension[5]
+            and coverage_recovered[3] != coverage_cut[5]
             and material_cut[4] == material_recovered[2] == source[5]):
         raise ValueError("1380 unordered native material/goal/robot/receipt")
     if not (source[3] == selected[2] == finished[2]
@@ -281,6 +307,8 @@ def verify_autonomous_robot_1380_log(exit_code: int, log: str) -> dict[str, obje
         "native_counted_frontier_extension_accepted": True,
         "native_robotless_refusal_accepted": True,
         "native_robotless_refusal_ticks": int(denied[1])-int(cut[1]),
+        "native_coverageless_refusal_accepted": True,
+        "native_coverageless_refusal_ticks": int(coverage_denied[1])-int(coverage_cut[1]),
         "native_materialless_refusal_accepted": True,
         "native_materialless_refusal_ticks": int(material_denied[1])-int(material_cut[1]),
         "native_frontier_poles": int(extension[6]),

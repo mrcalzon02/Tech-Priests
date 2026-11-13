@@ -741,9 +741,124 @@ local function pulse()
           " original_magos="..s.magos.." original_senior="..s.senior..
           " robots_held=3 network_robots=0 station_stock=1"..
           " native_event=none ore_unchanged=true")
-        -- Second genuine native negative: physically withhold the ONE
-        -- existing mined station item before returning robots, so none can
-        -- acquire it during the new refusal interval. Persist real custody.
+        -- Third independent physical negative: AFTER the original 0338
+        -- finished the counted grid and the zero-robot refusal was observed,
+        -- mine only its newly built roboport into an ENGINE-OWNED item hold.
+        -- Keep the original network, real station item and original identities.
+        -- Restoring the SAME mined item below is a test disturbance repair,
+        -- never credit for autonomous 0338 construction.
+        local port_to_cut=f and f.source_port
+        local port_pos=port_to_cut and port_to_cut.valid
+          and {x=port_to_cut.position.x,y=port_to_cut.position.y}
+        if not(port_pos and port_to_cut~=s.port
+          and port_to_cut.name=="roboport"
+          and port_to_cut.unit_number~=s.port.unit_number)then
+          fail("NATIVE_COVERAGELESS_ORIGINAL_FRONTIER_MISSING")
+        end
+        local port_hold=game.create_inventory(1)
+        if not(port_hold and port_hold.valid)then
+          fail("NATIVE_COVERAGELESS_HOLD_MISSING")
+        end
+        s.coverageless_hold=port_hold
+        s.coverageless_position=port_pos
+        s.coverageless_cut_tick=game.tick
+        local retired_port=port_to_cut.unit_number
+        local mined=port_to_cut.mine{inventory=port_hold}
+        if not(mined==true and not port_to_cut.valid
+          and port_hold.get_item_count("roboport")==1
+          and s.port.valid and s.port.logistic_cell
+          and s.port.logistic_cell.is_in_construction_range(
+            s.ore.position)==false)then
+          fail("NATIVE_COVERAGELESS_CUSTODY_OR_GREEN_INVALID")
+        end
+        emit("NATIVE_COVERAGELESS_CUT tick="..game.tick..
+          " original_magos="..s.magos.." original_senior="..s.senior..
+          " original_port="..s.port.unit_number..
+          " retired_port="..retired_port..
+          " roboport_held=1 station_stock=1 robots_restored=3")
+        local released=held.remove{name="construction-robot",count=3}
+        local restored=dock.insert{name="construction-robot",count=released}
+        if not(released==3 and restored==3
+          and dock.get_item_count("construction-robot")==3
+          and held.get_item_count("construction-robot")==0)then
+          fail("NATIVE_ROBOTLESS_RESTORATION_NOT_COUNTED")
+        end
+        held.destroy() -- only after empty native item custody is verified
+        s.robotless_hold=nil
+        s.robotless_restored=true
+        emit("PASS NATIVE_ROBOTLESS_RECOVERY tick="..game.tick..
+          " original_port="..s.port.unit_number..
+          " robots_restored=3 held=0 original_mission=retained")
+      end
+      if s.coverageless_hold then
+        -- 1,500 real powered ticks with THREE original physical robots
+        -- and a genuine station item, but without the only remote green
+        -- coverage. A ghost or dead mission is NOT a successful station.
+        if game.tick-s.coverageless_cut_tick<1500 then return end
+        local hold=s.coverageless_hold
+        local old=s.port.logistic_cell
+        local net=old and old.logistic_network
+        local p=s.coverageless_position
+        local remaining=s.surface.find_entities_filtered{
+          name="roboport",position=p,radius=1.5,
+          force=root.station.force,limit=2}
+        local site=s.goal and s.goal.remote_station_position_1076
+        local built=site and s.surface.find_entities_filtered{
+          name="intermediate-cogitator-station",position=site,
+          radius=1.5,force=root.station.force,limit=2} or {}
+        if not(hold.valid and hold.get_item_count("roboport")==1
+          and #remaining==0 and old and net and net.valid
+          and old.is_in_construction_range(s.ore.position)==false
+          and net.all_construction_robots==3
+          and item_count(s.provider,"intermediate-cogitator-station")==1
+          and #built==0 and not s.event_station
+          and s.ore.amount==s.ore_initial
+          and root.priest.unit_number==s.magos_priest
+          and senior.priest.unit_number==s.senior_priest)then
+          fail("NATIVE_COVERAGELESS_REFUSAL_OR_CUSTODY_INVALID tick="..
+            game.tick.." held="..tostring(hold.valid and
+              hold.get_item_count("roboport"))..
+            " ports="..tostring(#remaining)..
+            " robots="..tostring(net and net.all_construction_robots)..
+            " built="..tostring(#built))
+        end
+        emit("PASS NATIVE_COVERAGELESS_REFUSAL tick="..game.tick..
+          " original_magos="..s.magos.." original_senior="..s.senior..
+          " retained_port=1 original_green=false remote_port=absent"..
+          " robots=3 native_event=none ore_unchanged=true")
+        -- Restore the exact previously mined item as the negative fixture's
+        -- physical repair. No credited construction, free roboport, ghost
+        -- revival or alteration to original mission/custody authorities.
+        local spec={name="roboport",position=p,force=root.station.force}
+        if not s.surface.can_place_entity(spec)then
+          fail("NATIVE_COVERAGELESS_RESTORATION_SITE_BLOCKED")
+        end
+        local debit=hold.remove{name="roboport",count=1}
+        if debit~=1 or hold.get_item_count("roboport")~=0 then
+          fail("NATIVE_COVERAGELESS_RESTORATION_NOT_COUNTED")
+        end
+        local restored=s.surface.create_entity(spec)
+        local cell=restored and restored.valid and restored.logistic_cell
+        local new_net=cell and cell.logistic_network
+        if not(restored and restored.valid and restored.name=="roboport"
+          and restored.unit_number~=s.port.unit_number
+          and restored.is_connected_to_electric_network()
+          and restored.electric_network_id==s.original_electric_grid
+          and cell and cell.is_in_construction_range(s.ore.position)
+          and new_net and net and new_net.network_id==net.network_id)then
+          fail("NATIVE_COVERAGELESS_RESTORED_GRID_NOT_MERGED")
+        end
+        hold.destroy() -- only after the single engine-owned item was used
+        s.coverageless_hold=nil
+        s.coverageless_restored=true
+        emit("PASS NATIVE_COVERAGELESS_RECOVERY tick="..game.tick..
+          " original_port="..s.port.unit_number..
+          " restored_port="..restored.unit_number..
+          " port_debit=1 held=0 electric_grid=original"..
+          " logistic_network=merged original_mission=retained")
+        -- Next independent negative starts with three real network robots
+        -- but zero original station items. Withhold the one existing mined
+        -- station item before the next native robot dispatch.
         local provider=s.provider.get_inventory(defines.inventory.chest)
         if not(provider and provider.valid
           and provider.get_item_count("intermediate-cogitator-station")==1)then
@@ -768,19 +883,6 @@ local function pulse()
           " original_magos="..s.magos.." original_senior="..s.senior..
           " provider="..s.provider.unit_number..
           " station_held=1 station_stock=0 robots_still_held=3")
-        local released=held.remove{name="construction-robot",count=3}
-        local restored=dock.insert{name="construction-robot",count=released}
-        if not(released==3 and restored==3
-          and dock.get_item_count("construction-robot")==3
-          and held.get_item_count("construction-robot")==0)then
-          fail("NATIVE_ROBOTLESS_RESTORATION_NOT_COUNTED")
-        end
-        held.destroy() -- only after empty native item custody is verified
-        s.robotless_hold=nil
-        s.robotless_restored=true
-        emit("PASS NATIVE_ROBOTLESS_RECOVERY tick="..game.tick..
-          " original_port="..s.port.unit_number..
-          " robots_restored=3 held=0 original_mission=retained")
       end
       if s.materialless_hold then
         -- After restoring those EXACT 3 robots, let 1,500 genuine ticks
