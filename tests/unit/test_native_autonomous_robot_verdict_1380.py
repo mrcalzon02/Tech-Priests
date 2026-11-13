@@ -585,4 +585,38 @@ roots=module.factorio_1381_save_roots(
     pathlib.Path("C:/Factorio/bin/x64/factorio.exe"),
     appdata="C:/Users/CI/AppData/Roaming")
 assert pathlib.Path("C:/Users/CI/AppData/Roaming/Factorio/saves") in roots
+# 1382 real-storage regression: no source marker or route ledger can substitute
+# for an ordered 1,500-tick genuine full Magos inventory refusal and recovery.
+storage_fixture=(pathlib.Path(__file__).resolve().parents[1]
+                 /"scenarios/remote-robot-acquisition/fixture.lua")
+storage_source=storage_fixture.read_text(encoding="utf-8")
+assert 'NATIVE_MAGOS_FULL_STORAGE_REFUSAL' in storage_source
+assert 'entity.mine{inventory=chest}' in storage_source
+assert 'cargo.last_reason=="upstream-inventory-full"' in storage_source
+assert 'chest.get_insertable_count("iron-ore")==0' in storage_source
+assert 'hold.insert{name="tank",count=moved}' in storage_source
+assert '--robot-storage-only' in driver_source
+assert "verify_robot_parent_storage_1382_log" in driver_source
+for invalid in ("","PASS NATIVE_MAGOS_STORAGE_RECOVERED_DELIVERY",
+                "NATIVE_MAGOS_FULL_STORAGE_CUT"):
+    try: module.verify_robot_parent_storage_1382_log(invalid)
+    except ValueError: pass
+    else: raise AssertionError("unverified Magos storage credited as recovery")
+def storage_receipt(tick,body):
+    return f"[TP-AUTONOMOUS-ROBOT-1380] {body} tick={tick}"
+positive="\\n".join((
+    "[TP-AUTONOMOUS-ROBOT-1380] NATIVE_MAGOS_FULL_STORAGE_CUT tick=25000 magos=57 tanks_physically_mined=40 insertable_ore=0 original_courier_held=1",
+    "[TP-AUTONOMOUS-ROBOT-1380] PASS NATIVE_MAGOS_FULL_STORAGE_REFUSAL tick=31000 magos=57 held=1 hops=1 magos_ore=0 elapsed=1500 no_ore_created=true",
+    "[TP-AUTONOMOUS-ROBOT-1380] PASS NATIVE_MAGOS_STORAGE_RECOVERY tick=31000 magos=57 tanks_escrowed=40 insertable_ore_positive=true original_courier_retained=true",
+    "[TP-AUTONOMOUS-ROBOT-1380] PASS NATIVE_MAGOS_STORAGE_RECOVERED_DELIVERY tick=33000 magos=57 delivered=1 held=0 hops=2 filler_preserved=40",
+))
+assert module.verify_robot_parent_storage_1382_log(positive)["storage_filler_items_preserved"]==40
+for invalid in (positive.replace("elapsed=1500","elapsed=100"),
+                positive.replace("tanks_escrowed=40","tanks_escrowed=39"),
+                positive.replace("filler_preserved=40","filler_preserved=0"),
+                positive.replace("tick=31000","tick=25050")):
+    try: module.verify_robot_parent_storage_1382_log(invalid)
+    except ValueError: pass
+    else: raise AssertionError("invalid native storage refusal/stock accepted")
+
 print("PASS 1381 native headless server, CRC and independent custody regression")
