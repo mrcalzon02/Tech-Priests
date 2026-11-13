@@ -536,6 +536,29 @@ assert module.native_server_startup_failure_1381(
     "Steam requires game restart, restarting...")=="steam-relaunch-lost-arguments"
 assert module.native_server_startup_failure_1381(
     "[TP-AUTONOMOUS-ROBOT-1380] NATIVE_CARGO_SAVE_REQUESTED") is None
+# A genuine headless run charted nothing despite sustained physical radar
+# power; observe this blocker promptly without any player/chart fabrication.
+uncharted=lambda tick,energy: (
+    "[TP-AUTONOMOUS-ROBOT-1380] NATIVE_RADAR_AND_STRATEGY_READBACK "
+    f"tick={tick} stage=2 daytime=0.5 solar_multiplier=1 "
+    f"physical_accumulator_j=73467395 radar_energy={energy} "
+    "radar_connected=true radar_chunk_charted=false ore_chunk_charted=false "
+    "chain_status=nil chain_need=nil")
+no_client="\n".join((uncharted(1800,1924),uncharted(12000,5333.333)))
+assert module.native_server_radar_progress_stalled_1381(no_client) is True
+assert module.native_server_radar_progress_stalled_1381(uncharted(12000,5333.333)) is False
+assert module.native_server_radar_progress_stalled_1381(
+    uncharted(1800,1924)+"\n"+uncharted(9000,5333.333)) is False
+assert module.native_server_radar_progress_stalled_1381(
+    no_client.replace("radar_connected=true","radar_connected=false")) is False
+assert module.native_server_radar_progress_stalled_1381(
+    no_client.replace("5333.333","0")) is False
+assert module.native_server_radar_progress_stalled_1381(
+    no_client+"\n[TP-AUTONOMOUS-ROBOT-1380] NATIVE_ORE_CHARTED tick=12120") is False
+assert 'native_server_radar_progress_stalled_1381(current)' in segment
+assert 'native-unattended-radar-uncharted' in segment
+assert 'requires genuine player-capable save execution' in segment
+
 assert 'while time.monotonic() < deadline:' in segment
 assert 'no genuine server radar progress in 180 seconds' in segment
 assert 'real native ore fixture failed:' in segment

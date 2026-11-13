@@ -744,6 +744,27 @@ def native_server_startup_failure_1381(log: str) -> str | None:
     return None
 
 
+def native_server_radar_progress_stalled_1381(log: str) -> bool:
+    """Identify the actual no-client headless radar dead end.
+
+    Run 43466366011 showed powered physical radar at 1800/12000 ticks,
+    yet neither radar nor natural ore chunk charted, and the engine
+    eventually failed at 30000. Refuse this unattended engine mode early,
+    without force-charting, fake player creation or proof dilution.
+    """
+    if ("NATIVE_ORE_CHARTED tick=" in log
+            or "NATIVE_CARGO_SAVE_REQUESTED tick=" in log):
+        return False
+    samples = re.findall(
+        r"NATIVE_RADAR_AND_STRATEGY_READBACK tick=(\d+)[^\n]*?"
+        r"radar_energy=([0-9.]+)[^\n]*?"
+        r"radar_connected=true[^\n]*?"
+        r"radar_chunk_charted=false[^\n]*?"
+        r"ore_chunk_charted=false", log)
+    return (len(samples) >= 2 and int(samples[-1][0]) >= 12000
+            and float(samples[-1][1]) > 1000)
+
+
 def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                                 initial: pathlib.Path, output: pathlib.Path,
                                 timeout: int, engine_version: str,
@@ -803,6 +824,12 @@ def run_robot_cargo_reload_1381(factorio: pathlib.Path, mods: pathlib.Path,
                                        " | ".join(current.splitlines()[-6:])[-1400:])
                 if "Error while running event" in current:
                     raise RuntimeError("Factorio runtime event failed")
+                if native_server_radar_progress_stalled_1381(current):
+                    out["native_first_fatal_diagnostic"] = "native-unattended-radar-uncharted"
+                    raise RuntimeError(
+                        "native private server has powered radar but did not chart "
+                        "even its own chunk by tick 12000 without a connected player; "
+                        "requires genuine player-capable save execution, not force.chart")
                 if first_exit is not None:
                     break
                 if time.monotonic()-launched >= 180 and not any(
