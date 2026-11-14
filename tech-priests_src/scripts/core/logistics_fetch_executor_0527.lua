@@ -382,10 +382,11 @@ local function request_move(pair,src,item)
   -- 0418 may accept an already-owned same-destination request without
   -- transferring its lease to logistics. Such a route is NOT our fetch.
   local live=pair.movement_request_0418
+  local goal=live and (live.ground_route_final_destination or live)
   if not(live and live.owner=="logistics-fetch-0527"
-      and live.reason=="known-source-fetch-0527"
-      and type(live.x)=="number" and type(live.y)=="number"
-      and math.abs(live.x-pos.x)<0.5 and math.abs(live.y-pos.y)<0.5)
+      and live.reason=="known-source-fetch-0527" and goal
+      and type(goal.x)=="number" and type(goal.y)=="number"
+      and math.abs(goal.x-pos.x)<0.5 and math.abs(goal.y-pos.y)<0.5)
   then return false end
   do
     pair.mode="moving-to-known-source"
