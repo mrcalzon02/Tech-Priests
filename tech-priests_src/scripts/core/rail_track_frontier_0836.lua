@@ -3543,6 +3543,273 @@ function M.service_original_remote_wagon_reboard_0836(pair)
   return true,"native-original-magos-physically-reboarded-with-real-ore"
 end
 
+
+-- Only an original native home arrival can authorize this physical final
+-- journey: paid wagon -> existing engine-owned ore hold -> original station.
+function M.authorized_home_ore_walk_0836(pair,point,request)
+  local m=pair and pair.remote_rail_outpost_0835
+  local u=m and m.home_ore_0836
+  local back=m and m.first_return_0836
+  local loco=m and m.first_locomotive_0836
+  local wagon=m and m.first_wagon_0836
+  local home=m and m.first_stop_0836
+  local pickup=m and m.first_remote_drill_0836
+    and m.first_remote_drill_0836.ore_pickup_0836
+  local engine=loco and loco.built_entity
+  local cargo=wagon and wagon.built_entity
+  local priest=pair and pair.priest
+  if not(eligible(pair,m) and u and not u.quarantine
+    and (u.phase=="home-driver-ejected" or u.phase=="home-ore-held")
+    and back and back.phase=="native-original-home-arrived-after-roundtrip"
+    and back.arrival_tick==u.arrival_tick
+    and u.priest_unit==priest.unit_number
+    and u.station_unit==pair.station.unit_number
+    and valid(engine) and engine.unit_number==u.locomotive_unit
+    and valid(cargo) and cargo.unit_number==u.wagon_unit
+    and valid(home and home.built_entity)
+    and engine.train and engine.train.valid
+    and cargo.train and cargo.train.valid
+    and engine.train.id==u.train_id and cargo.train.id==u.train_id
+    and engine.train.station==home.built_entity
+    and math.abs(tonumber(engine.train.speed)or 0)<0.01
+    and valid(priest) and priest.type=="character"
+    and priest.surface==pair.station.surface and priest.force==pair.station.force
+    and pickup and pickup.inventory and pickup.inventory.valid
+    and type(point)=="table" and type(point.x)=="number"
+    and type(point.y)=="number"
+    and request and request.owner=="rail-track-frontier-0836")then return false end
+  local ok,driver=pcall(function()return engine.get_driver()end)
+  if not(ok and driver==nil)then return false end
+  local start,dest,held_expected
+  if request.reason=="original-home-wagon-pickup-0836"
+      and u.phase=="home-driver-ejected" then
+    start,dest,held_expected=u.ejection_position,cargo.position,0
+  elseif request.reason=="original-home-station-deposit-0836"
+      and u.phase=="home-ore-held" then
+    start,dest,held_expected=u.pickup_position,pair.station.position,1
+  else return false end
+  local read,n=pcall(pickup.inventory.get_item_count,m.item)
+  local goal=request.ground_route_final_destination or request
+  if not(read and n==held_expected and start and dest and goal
+      and (goal.x-dest.x)^2+(goal.y-dest.y)^2<=0.25)then return false end
+  local dx,dy=dest.x-start.x,dest.y-start.y
+  local length=dx*dx+dy*dy
+  local px,py=point.x-start.x,point.y-start.y
+  if length<0.1 or length>96*96 then return false end
+  local along=(px*dx+py*dy)/length
+  local cross=math.abs(px*dy-py*dx)/math.sqrt(length)
+  return along>=-0.25 and along<=1.25 and cross<=10
+end
+
+function M.service_home_ore_unload_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  local back=m and m.first_return_0836
+  local lead=m and m.first_locomotive_0836
+  local wagon=m and m.first_wagon_0836
+  local stop=m and m.first_stop_0836
+  local pickup=m and m.first_remote_drill_0836
+    and m.first_remote_drill_0836.ore_pickup_0836
+  local receipt=pickup and pickup.wagon_delivery_0836
+  local engine=lead and lead.built_entity
+  local cargo=wagon and wagon.built_entity
+  local priest=pair and pair.priest
+  if not(eligible(pair,m) and back
+    and back.phase=="native-original-home-arrived-after-roundtrip"
+    and valid(engine) and valid(cargo) and valid(stop and stop.built_entity)
+    and engine.train and engine.train.valid
+    and cargo.train and cargo.train.valid
+    and engine.train.id==back.train_id and cargo.train.id==back.train_id
+    and engine.train.station==stop.built_entity
+    and math.abs(tonumber(engine.train.speed)or 0)<0.01
+    and valid(priest) and priest.type=="character"
+    and pickup and pickup.inventory and pickup.inventory.valid
+    and receipt and not receipt.quarantine
+    and receipt.phase=="native-original-wagon-received-ground-mined-ore"
+    and receipt.priest_unit==priest.unit_number
+    and receipt.station_unit==pair.station.unit_number
+    and receipt.train_id==back.train_id
+    and receipt.wagon_unit==cargo.unit_number
+    and receipt.wagon_after==receipt.wagon_before+1
+    and not pair.construction_custody_0338
+    and not pair.machine_logistics_custody_0528
+    and not pair.item_family_custody_0702
+    and not pair.direct_acquisition_custody_0513
+    and not pair.inventory_transfer_custody_0687)then
+    return false,"home-unload-original-paid-identity-or-custody-missing"
+  end
+  local ok,src,dst=pcall(function()
+    return cargo.get_inventory(defines.inventory.cargo_wagon),
+      pair.station.get_inventory(defines.inventory.chest)
+  end)
+  if not(ok and src and src.valid and dst and dst.valid)then
+    return false,"home-unload-real-inventory-unavailable"
+  end
+  local u=m.home_ore_0836
+  if u and u.phase=="home-station-ore-deposited"then
+    return false,"home-ore-already-deposited"
+  end
+  if u and u.quarantine then return false,u.quarantine end
+  if not u then
+    local read,wagon_before,station_before,held=pcall(function()
+      return src.get_item_count(m.item),dst.get_item_count(m.item),
+        pickup.inventory.get_item_count(m.item)
+    end)
+    local original=m.first_outbound_0836
+      and m.first_outbound_0836.departure_wagon_item_count_0836
+    if not(read and wagon_before==receipt.wagon_after
+      and type(original)=="number" and wagon_before==original+1
+      and type(station_before)=="number" and held==0)then
+      return false,"home-unload-wagon-ore-accounting-invalid"
+    end
+    local room,can=pcall(dst.can_insert,{name=m.item,count=1})
+    if not(room and can==true)then
+      return false,"home-station-full-retain-original-wagon-ore"
+    end
+    local got,driver=pcall(function()return engine.get_driver()end)
+    if not(got and driver==priest)then
+      return false,"home-original-magos-driver-not-present"
+    end
+    u={phase="home-ejection-pending",arrival_tick=back.arrival_tick,
+      train_id=back.train_id,priest_unit=priest.unit_number,
+      station_unit=pair.station.unit_number,
+      locomotive_unit=engine.unit_number,wagon_unit=cargo.unit_number,
+      wagon_before=wagon_before,station_before=station_before}
+    m.home_ore_0836=u
+    local before={x=priest.position.x,y=priest.position.y}
+    local ejected=pcall(function()engine.set_driver(nil)end)
+    local checked,after=pcall(function()return engine.get_driver()end)
+    if not(ejected and checked and after==nil and valid(priest)
+      and priest.unit_number==u.priest_unit
+      and (priest.position.x-before.x)^2+
+        (priest.position.y-before.y)^2<=16*16)then
+      u.quarantine="home-native-driver-ejection-uncertain"
+      return false,u.quarantine
+    end
+    u.native_original_driver_ejected=true
+    u.ejection_position={x=priest.position.x,y=priest.position.y}
+    u.phase="home-driver-ejected"
+    return true,"original-magos-natively-disembarked-at-home"
+  end
+  if u.priest_unit~=priest.unit_number
+    or u.station_unit~=pair.station.unit_number
+    or u.wagon_unit~=cargo.unit_number
+    or u.train_id~=engine.train.id
+    or u.arrival_tick~=back.arrival_tick then
+    return false,"home-original-ore-custody-identity-changed"
+  end
+  local got,driver=pcall(function()return engine.get_driver()end)
+  if not(got and driver==nil)then
+    return false,"home-native-driver-socket-occupied"
+  end
+  local pick=u.phase=="home-driver-ejected"
+  local reason=pick and "original-home-wagon-pickup-0836"
+    or "original-home-station-deposit-0836"
+  local goal=pick and cargo.position or pair.station.position
+  if not M.authorized_home_ore_walk_0836(pair,goal,{
+      owner="rail-track-frontier-0836",reason=reason,
+      ground_route_final_destination=goal})then
+    return false,"home-original-paid-walk-not-authorized"
+  end
+  local move=pair.movement_request_0418
+  if move and (move.owner~="rail-track-frontier-0836"
+      or move.reason~=reason)then
+    return false,"home-original-ore-foreign-movement"
+  end
+  if (priest.position.x-goal.x)^2+(priest.position.y-goal.y)^2>16 then
+    if move and (tonumber(move.expires_tick)or 0)>now()then
+      return false,"home-original-ore-walk-in-progress"
+    end
+    local request=rawget(_G,"tech_priests_request_movement_0418")
+    if type(request)~="function"then return false,"no-canonical-movement"end
+    local called,allowed,why=pcall(request,pair,goal,reason,{
+      owner="rail-track-frontier-0836",priority=710,ttl=60*30,
+      radius=3.5,distraction=defines.distraction.none})
+    u.last_walk_reason=called and tostring(why or allowed)or "request-error"
+    return called and allowed==true,u.last_walk_reason
+  end
+  if pick then
+    local read,wagon_count,held=pcall(function()
+      return src.get_item_count(m.item),
+        pickup.inventory.get_item_count(m.item)
+    end)
+    if not(read and wagon_count==u.wagon_before and held==0)then
+      return false,"home-original-wagon-source-count-changed"
+    end
+    local from
+    for i=1,#src do
+      local stack=src[i]
+      if stack and stack.valid and stack.valid_for_read
+        and stack.name==m.item and stack.count>=1 then from=stack;break end
+    end
+    if not from then return false,"home-original-wagon-no-ore-stack"end
+    u.phase="home-native-wagon-transfer-pending"
+    local moved,result=pcall(function()
+      return pickup.inventory[1].transfer_stack(from,1)
+    end)
+    local checked,held_after,wagon_after=pcall(function()
+      return pickup.inventory.get_item_count(m.item),src.get_item_count(m.item)
+    end)
+    if not(moved and result==true and checked
+      and held_after==1 and wagon_after==u.wagon_before-1)then
+      u.quarantine="home-original-wagon-cargo-transfer-uncertain"
+      return false,u.quarantine
+    end
+    u.phase="home-ore-held"
+    u.wagon_after=wagon_after
+    u.pickup_position={x=priest.position.x,y=priest.position.y}
+    u.pickup_tick=now()
+    local stop=rawget(_G,"tech_priests_stop_movement_0418")
+    if type(stop)=="function" and move then pcall(stop,pair,"home-ore-picked-up")end
+    return true,"home-original-ore-physically-picked-up"
+  end
+  local read,held,station_before,wagon_after=pcall(function()
+    return pickup.inventory.get_item_count(m.item),
+      dst.get_item_count(m.item),src.get_item_count(m.item)
+  end)
+  if not(read and held==1 and station_before==u.station_before
+    and wagon_after==u.wagon_before-1)then
+    return false,"home-original-ore-deposit-inventory-changed"
+  end
+  local room,can=pcall(dst.can_insert,{name=m.item,count=1})
+  if not(room and can==true)then return false,"home-station-full-ore-held"end
+  local target
+  for i=1,#dst do
+    local stack=dst[i]
+    if stack and stack.valid then
+      if not stack.valid_for_read then target=stack;break end
+      if stack.name==m.item then
+        local fits,yes=pcall(stack.can_set_stack,{
+          name=m.item,count=stack.count+1})
+        if fits and yes then target=stack;break end
+      end
+    end
+  end
+  if not target then return false,"home-original-no-native-deposit-slot"end
+  u.phase="home-native-station-transfer-pending"
+  local moved,result=pcall(function()
+    return target.transfer_stack(pickup.inventory[1],1)
+  end)
+  local counted,hold_final,station_after,wagon_final=pcall(function()
+    return pickup.inventory.get_item_count(m.item),
+      dst.get_item_count(m.item),src.get_item_count(m.item)
+  end)
+  if not(moved and result==true and counted and hold_final==0
+    and station_after==u.station_before+1
+    and wagon_final==u.wagon_before-1)then
+    u.quarantine="home-original-station-physical-deposit-uncertain"
+    return false,u.quarantine
+  end
+  u.phase="home-station-ore-deposited"
+  u.held_final=hold_final
+  u.station_after=station_after
+  u.wagon_final=wagon_final
+  u.delivered_tick=now()
+  m.next_step="original-magos-received-counted-rail-ore"
+  local stop=rawget(_G,"tech_priests_stop_movement_0418")
+  if type(stop)=="function" and move then pcall(stop,pair,"home-ore-deposited")end
+  return true,"original-magos-station-native-ore-received"
+end
+
 -- remote stop may ask Factorio to take it home. A schedule or route receipt is
 -- never evidence of a return journey; single-headed trains may have no path.
 function M.service_first_train_return_0836(pair)
@@ -3825,6 +4092,10 @@ function M.service_pair(pair)
               M.service_original_remote_drill_output_pickup_0836(pair)
               M.service_original_remote_wagon_ore_delivery_0836(pair)
               M.service_original_remote_wagon_reboard_0836(pair)
+              if m.first_return_0836 and m.first_return_0836.phase==
+                  "native-original-home-arrived-after-roundtrip"then
+                return M.service_home_ore_unload_0836(pair)
+              end
               return M.service_first_train_return_0836(pair)
             end
             return M.service_first_train_outbound_0836(pair)

@@ -158,6 +158,19 @@ function M.authorization_for_destination(pair, pos, reason, opts)
         station_unit=station_unit(pair)},"native-paid-ore-wagon-walk-0836"
     end
   end
+  if frontier and opts and opts.owner=="rail-track-frontier-0836"
+      and (reason=="original-home-wagon-pickup-0836"
+        or reason=="original-home-station-deposit-0836")
+      and type(frontier.authorized_home_ore_walk_0836)=="function"then
+    local ok,yes=pcall(frontier.authorized_home_ore_walk_0836,
+      pair,pos,{owner=opts.owner,reason=reason,
+        ground_route_final_destination=
+          opts.ground_route_final_destination or pos})
+    if ok and yes==true then
+      return true,{pair=pair,role="physical-original-rail-0836",
+        station_unit=station_unit(pair)},"native-paid-home-ore-carry-0836"
+    end
+  end
   -- Loaded original railway wagon may admit one authentic last-leg walk
   -- back to the same physically paid locomotive, not remote roaming.
   if frontier and opts and opts.owner=="rail-track-frontier-0836"

@@ -1255,6 +1255,19 @@ local function inspect(s,elapsed)
     " priest_x="..tostring(p.priest.position.x)..
     " train_station="..tostring(moving_train and moving_train.valid
       and moving_train.station and moving_train.station.unit_number))
+  local home_unload=objective and objective.home_ore_0836
+  local native_home_ejected=homeward
+    and homeward.phase=="native-original-home-arrived-after-roundtrip"
+    and home_unload and home_unload.native_original_driver_ejected==true
+    and home_unload.arrival_tick==homeward.arrival_tick
+    and home_unload.priest_unit==p.priest.unit_number
+    and home_unload.station_unit==station.unit_number
+    and home_unload.train_id==moving_train.id
+    and home_unload.wagon_unit==wagon_entity.unit_number
+    and home_unload.locomotive_unit==loco_entity.unit_number
+    and moving_train.station==home_entity
+    and homeward.lowest_x<homeward.remote_x-32
+  if native_home_ejected then s.returned=true end
   if outbound and outbound.phase==
       "native-original-outbound-arrived-at-paid-remote-stop"
       and not(moving_train and moving_train.valid
@@ -1270,7 +1283,7 @@ local function inspect(s,elapsed)
                 and homeward.remote_stop_unit==remote_entity.unit_number
                 and home_entity and home_entity.valid
                 and homeward.home_stop_unit==home_entity.unit_number)))
-          or foot_native))then
+          or foot_native or native_home_ejected))then
     fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")
   end
   if foot_native then s.ride_proof=true end
@@ -1317,7 +1330,7 @@ local function inspect(s,elapsed)
   if homeward and homeward.phase=="native-original-home-arrived-after-roundtrip"
     and not(moving_train and moving_train.valid
       and moving_train.station==home_entity
-      and native_driver==p.priest
+      and (native_driver==p.priest or native_home_ejected)
       and homeward.lowest_x<homeward.remote_x-32)then
     fail("HOMEWARD_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")
   end
@@ -1342,7 +1355,7 @@ local function inspect(s,elapsed)
           and train.station==(objective.first_stop_0836
             and objective.first_stop_0836.built_entity)
           and homeward.lowest_x<homeward.remote_x-32
-          and loco.get_driver()==p.priest then
+          and (loco.get_driver()==p.priest or native_home_ejected) then
         s.returned=true
       end
       local ride=p.train_transport_rail_0835
@@ -1362,6 +1375,16 @@ local function inspect(s,elapsed)
   end
   local delivered=station.get_inventory(defines.inventory.chest)
       .get_item_count("iron-ore")-s.start_ore
+  emit("HOME_ORE_NATIVE_0836 elapsed="..elapsed..
+    " phase="..tostring(home_unload and home_unload.phase)..
+    " ejected="..tostring(home_unload and home_unload.native_original_driver_ejected)..
+    " wagon_before="..tostring(home_unload and home_unload.wagon_before)..
+    " wagon_final="..tostring(home_unload and home_unload.wagon_final)..
+    " station_before="..tostring(home_unload and home_unload.station_before)..
+    " station_after="..tostring(home_unload and home_unload.station_after)..
+    " held_final="..tostring(home_unload and home_unload.held_final)..
+    " delivered="..tostring(delivered)..
+    " quarantine="..tostring(home_unload and home_unload.quarantine))
   emit("CHECKPOINT elapsed="..elapsed..
     " starvation="..tostring(objective and objective.status)..
     " natural_target="..tostring(s.natural_ore_x)..

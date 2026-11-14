@@ -1184,6 +1184,35 @@ class OriginalRemoteNativeFuelSourceRegressions(unittest.TestCase):
         self.assertIn("native_burning_remaining_j=", native)
         self.assertIn("local burning_name=type(item)==\"string\" and item", native)
 
+
+class OriginalHomeRailOreTests(unittest.TestCase):
+    def test_original_magos_wagon_unloading_is_native_and_physically_counted(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        rail = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        movement = (root / "tech-priests_src/scripts/core/movement_controller.lua").read_text(encoding="utf-8")
+        corridor = (root / "tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        actual = rail.split("function M.service_home_ore_unload_0836(pair)", 1)[1].split(
+            "\n-- remote stop may ask Factorio", 1)[0]
+        for check in (
+            'back.phase=="native-original-home-arrived-after-roundtrip"',
+            "engine.train.station==stop.built_entity",
+            "engine.set_driver(nil)",
+            "home-station-full-retain-original-wagon-ore",
+            "pickup.inventory[1].transfer_stack(from,1)",
+            "target.transfer_stack(pickup.inventory[1],1)",
+            "station_after==u.station_before+1",
+            'u.phase="home-station-ore-deposited"',
+        ):
+            self.assertIn(check, actual)
+        self.assertNotIn("surface.create_entity", actual)
+        self.assertNotIn("teleport(", actual)
+        self.assertIn("M.service_home_ore_unload_0836(pair)", rail)
+        self.assertIn("authorized_home_ore_walk_0836", movement)
+        self.assertIn("authorized_home_ore_walk_0836", corridor)
+        self.assertIn("HOME_ORE_NATIVE_0836 elapsed=", fixture)
+        self.assertIn('if delivered<=0 then fail("NO_GENUINE_ORE_DELIVERED_BY_RAIL")end', fixture)
+
 if __name__ == "__main__":
     unittest.main()
 

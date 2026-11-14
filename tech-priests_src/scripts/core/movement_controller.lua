@@ -418,6 +418,18 @@ function M.position_allowed(pair, pos, reason, opts)
       if checked and allowed==true then return true,nil,nil end
     end
   end
+  if opts and opts.owner=="rail-track-frontier-0836"
+      and (reason=="original-home-wagon-pickup-0836"
+        or reason=="original-home-station-deposit-0836")then
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if rail and type(rail.authorized_home_ore_walk_0836)=="function"then
+      local ok,yes=pcall(rail.authorized_home_ore_walk_0836,
+        pair,pos,{owner=opts.owner,reason=reason,
+          ground_route_final_destination=
+            opts.ground_route_final_destination or pos})
+      if ok and yes==true then return true,nil,nil end
+    end
+  end
   -- Post-load original-Magos reboarding is a real short walking leg,
   -- verified against the same native mined ore and the same paid train.
   if opts and opts.owner=="rail-track-frontier-0836"
@@ -1528,6 +1540,37 @@ function M.enforce_pair(pair, reason)
     and request.owner == "movement-controller-enforcement-0566"
     and (tonumber(request.priority) or 0) >= 840
     and (dist_sq(request.ground_route_final_destination or request, pair.station.position) or math.huge) <= 0.04
+  -- Release ONLY a prior 0566 home-return on a verified original paid
+  -- ore-unload walk. The original movement owner still issues the walk.
+  do
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    local mission=pair.remote_rail_outpost_0835
+    local u=mission and mission.home_ore_0836
+    if rail and u and type(rail.authorized_home_ore_walk_0836)=="function"then
+      local reason=u.phase=="home-driver-ejected"
+        and "original-home-wagon-pickup-0836"
+        or "original-home-station-deposit-0836"
+      local goal=reason=="original-home-wagon-pickup-0836"
+        and mission.first_wagon_0836 and mission.first_wagon_0836.built_entity
+        and mission.first_wagon_0836.built_entity.position
+        or pair.station.position
+      local active=request and request.owner=="rail-track-frontier-0836"
+        and request.reason==reason
+      local proof=active and request or {
+        owner="rail-track-frontier-0836",reason=reason,
+        ground_route_final_destination=goal}
+      local point=active and pair.priest.position or goal
+      local checked,allowed=pcall(
+        rail.authorized_home_ore_walk_0836,pair,point,proof)
+      if checked and allowed==true then
+        if enforcement_return then
+          M.stop(pair,"original-home-ore-paid-unload-handoff-0836")
+          return true,"original-home-ore-paid-unload-handoff-0836"
+        end
+        if active then return false,"original-home-ore-unload-owned-0836" end
+      end
+    end
+  end
   -- The controller alone releases its own priority-840 home return.
   -- A competing cargo or task lease is never preempted. Every call checks
   -- original priest/train identities, both counted stops and live fuel.
