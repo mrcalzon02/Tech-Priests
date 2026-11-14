@@ -102,6 +102,12 @@ class OriginalTrainLiveFuelRefusalTests(unittest.TestCase):
         self.assertLess(block.index("if driver==priest then"), block.index("local fuel_slot="))
         self.assertLess(block.index("local fuel_slot="), block.index(
             "if priest.type~=\"character\" then"))
+        # The paid, fueled original train cannot take a native unit Magos.
+        # An unrelated 0702 move must not hide this underlying API blocker.
+        self.assertLess(block.index('if priest.type~="character" then'),
+                        block.index("if pair.construction_task_0338"))
+        self.assertLess(block.index('if priest.type~="character" then'),
+                        block.index('state.last_blocker="boarding-foreign-movement-owned"'))
 
 
 class OriginalRailLiveAdmissionTraceTests(unittest.TestCase):
