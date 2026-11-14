@@ -1579,6 +1579,61 @@ class OriginalCharacterObstacleNavigationRegression(unittest.TestCase):
             self.assertIn(key,block)
 
 
+class NativeOriginalHomeward0836ContractTests(unittest.TestCase):
+    """A schedule and an old train receipt cannot prove physical return."""
+    def test_original_paid_arrival_and_native_driver_precede_home_order(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        block=rail.split("function M.service_first_train_return_0836(pair)",1)[1].split(
+            "function M.service_pair(pair)",1)[0]
+        for guard in (
+            'outward.phase=="native-original-outbound-arrived-at-paid-remote-stop"',
+            'outward.highest_x>outward.origin_x+32',
+            'loco.phase=="native-paid-locomotive-verified"',
+            'wagon.phase=="native-paid-wagon-verified"',
+            'far.phase=="native-paid-original-train-stop-verified"',
+            'home.phase=="native-paid-original-train-stop-verified"',
+            'engine.train.id==outward.train_id',
+            'driver==priest',
+            'ride.physical_boarding_confirmed==true',
+            'stop.connected_rail',
+            'paid[rail.unit_number]',
+            'train.station~=remote',
+            'records[1].station==remote_name',
+            'schedule.add_record{station=home_name',
+            'schedule.go_to_station(2)',
+            'train.station==origin',
+            'state.lowest_x<state.remote_x-32',
+            'native-homeward-no-physical-path'):
+            self.assertIn(guard,block)
+        for forbidden in ('surface.create_entity', 'train.speed=', 'priest.teleport(',
+                          'set_driver(', 'game.create_inventory('):
+            self.assertNotIn(forbidden,block)
+        self.assertIn('return M.service_first_train_return_0836(pair)',rail)
+        self.assertIn('RETURN_NATIVE_0836 elapsed=',fixture)
+        self.assertIn('fail("HOMEWARD_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)
+        self.assertIn('train.station==(objective.first_stop_0836',fixture)
+        for old in ('s.returned=true end', 'if s.outbound and loco.position.x<=28'):
+            self.assertNotIn(old,fixture)
+
+    def test_homeward_refuses_schedule_or_identity_mutation_without_claiming_return(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        block=rail.split('function M.service_first_train_return_0836(pair)',1)[1].split(
+            'function M.service_pair(pair)',1)[0]
+        for refusal in ('native-homeward-original-identity-or-outward-gate-missing',
+                        'native-homeward-original-magos-not-driver',
+                        'native-homeward-paid-stop-disconnected',
+                        'native-homeward-schedule-foreign-or-unreadable',
+                        'native-homeward-original-identity-changed',
+                        'native-homeward-two-stop-readback-failed',
+                        'native-homeward-departure-native-refusal'):
+            self.assertIn(refusal,block)
+        self.assertIn('state.home_order_written=true',block)
+        self.assertLess(block.index('state.home_order_written=true'),
+                        block.index('schedule.add_record{station=home_name'))
+
 class OriginalNativeOutboundScheduleGuardTests(unittest.TestCase):
     """Focused boundaries only; actual travel requires real Factorio readback."""
     def test_paid_remote_stop_original_driver_and_live_fuel_precede_schedule_write(self):
