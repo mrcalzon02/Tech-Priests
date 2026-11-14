@@ -2924,6 +2924,8 @@ function M.authorized_original_remote_drill_hold_0836(pair)
       and state.paid_drill_completion_0836.native_0338_paid==true
       and state.paid_drill_completion_0836.request_value==state.request
       and state.paid_drill_completion_0836.phase=="complete"
+      and state.paid_drill_completion_0836.request_field=="remote_drill_request_1011"
+      and state.paid_drill_completion_0836.site_reason=="original-remote-rail-drill-0836"
       and state.paid_drill_completion_0836.item_name=="burner-mining-drill"
       and state.paid_drill_completion_0836.creative_build==false
       and state.paid_drill_completion_0836.built_entity==state.built_entity

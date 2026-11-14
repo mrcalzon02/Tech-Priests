@@ -1500,6 +1500,7 @@ local function finish(pair,task,built,reason)
       and dx*dx+dy*dy<=1 then
    state.paid_drill_completion_0836={
     request_value=task.request_value,phase="complete",
+    request_field=task.request_field,site_reason=task.site_reason,
     item_name=task.item_name,creative_build=false,
     built_entity=built,built_unit=built.unit_number,
     source_before=supply.source_before,
