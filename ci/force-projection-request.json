@@ -1,0 +1,11 @@
+{
+  "schema": "tech-priests.hosted-arena-request.v1",
+  "source_sha": "461553d98afadab117bde9555564e2ae51bf11e3",
+  "preset": "2p2b",
+  "seeds": [
+    534526259,
+    534526260,
+    534526261
+  ],
+  "active_ticks": 36000
+}
