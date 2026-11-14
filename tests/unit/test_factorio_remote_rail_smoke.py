@@ -1164,6 +1164,17 @@ class OriginalRemoteNativeFuelSourceRegressions(unittest.TestCase):
         self.assertIn("remaining_j>0", frontier)
         self.assertIn("fuel_after+native_burning_count==fuel_before+5", frontier)
         self.assertIn("native_burning_coal_count=native_burning_count", frontier)
+        # Factorio 2.1 returns a quality-aware item pair: its name is a
+        # LuaItemPrototype, not a string. Factorio 2.0 returned a prototype
+        # directly. Require both native shapes to be resolved before the
+        # exact five-coal inventory + actively burning reconciliation.
+        self.assertEqual(frontier.count("local item=active and active.name"), 2)
+        self.assertEqual(frontier.count('type(item)=="string" and item'), 2)
+        self.assertEqual(frontier.count("or (item and item.name) or nil"), 2)
+        native = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        self.assertIn("native_burning_item=", native)
+        self.assertIn("native_burning_remaining_j=", native)
+        self.assertIn("local burning_name=type(item)==\"string\" and item", native)
 
 if __name__ == "__main__":
     unittest.main()

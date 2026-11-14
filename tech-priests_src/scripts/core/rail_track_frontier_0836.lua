@@ -3036,7 +3036,10 @@ function M.service_original_remote_drill_fuel_0836(pair)
     local burner=drill.burner
     if not(burner and burner.valid)then return nil,nil end
     local active=burner.currently_burning
-    return active and active.name or nil,
+    local item=active and active.name
+    local burning_name=type(item)=="string" and item
+      or (item and item.name) or nil
+    return burning_name,
       tonumber(burner.remaining_burning_fuel) or 0
   end)
   if not(initial_burn_ok and initial_energy
@@ -3067,7 +3070,10 @@ function M.service_original_remote_drill_fuel_0836(pair)
     local burner=drill.burner
     if not(burner and burner.valid)then return nil,nil end
     local active=burner.currently_burning
-    return active and active.name or nil,
+    local item=active and active.name
+    local burning_name=type(item)=="string" and item
+      or (item and item.name) or nil
+    return burning_name,
       tonumber(burner.remaining_burning_fuel) or 0
   end)
   local native_burning_count=(burner_ok and active_name=="coal"

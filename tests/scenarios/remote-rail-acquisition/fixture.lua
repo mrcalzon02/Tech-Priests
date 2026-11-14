@@ -830,7 +830,10 @@ local function inspect(s,elapsed)
       local burner=built_drill.burner
       if not(burner and burner.valid)then return nil,nil end
       local active=burner.currently_burning
-      return active and active.name or nil,
+      local item=active and active.name
+      local burning_name=type(item)=="string" and item
+        or (item and item.name) or nil
+      return burning_name,
         tonumber(burner.remaining_burning_fuel)
     end)
     if observed then
