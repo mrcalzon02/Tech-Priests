@@ -2455,7 +2455,7 @@ end
 -- The original first remote ORE drill must enter the EXISTING 0338 physical
 -- construction pipeline. 1404/1405 are read-only outpost plans; their presence
 -- has never meant a real miner. This single object request spends no item,
--- does not disembark/teleport the Magos, and cannot count as a mined cargo.
+-- keeps the Magos aboard without artificial travel and cannot count cargo.
 -- 0338 alone may approach a source, debit a real drill and build the entity.
 function M.offer_first_remote_drill_0836(pair)
   local m=pair and pair.remote_rail_outpost_0835
