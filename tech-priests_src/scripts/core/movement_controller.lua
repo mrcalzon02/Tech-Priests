@@ -387,6 +387,22 @@ function M.position_allowed(pair, pos, reason, opts)
       if checked and permitted==true then return true,nil,nil end
     end
   end
+  -- 0836: only live, physically debited 0528 coal for the exact original
+  -- paid coupled locomotive may reach its collision-clear machine contact
+  -- along the verified original rails. No generic fuel/movement exemption.
+  if opts and opts.owner=="logistics_machine_fulfillment_0528"
+    and reason=="machine-logistics-move-to-machine-0528" then
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if rail and
+      type(rail.authorized_original_train_fuel_walk_0836)=="function"then
+      local ok,allowed=pcall(
+        rail.authorized_original_train_fuel_walk_0836,pair,pos,{
+          owner=opts.owner,reason=reason,
+          ground_route_final_destination=
+            opts.ground_route_final_destination or pos})
+      if ok and allowed==true then return true,nil,nil end
+    end
+  end
   local distance_sq = dist_sq(pair.station.position, pos) or 0
   local distance = math.sqrt(distance_sq)
   local maximum = M.work_radius(pair)
@@ -1491,6 +1507,22 @@ function M.enforce_pair(pair, reason)
         root.stats.original_paid_rail_transits_preserved_0836=
           (root.stats.original_paid_rail_transits_preserved_0836 or 0)+1
         return false,"original-paid-rail-transit-owned-0836"
+      end
+    end
+    -- Preserve the same live 0528 ORIGINAL fuel custody and native corridor
+    -- while the priest physically walks beyond ordinary station leash.
+    -- A cleared/foreign/stale task immediately returns to ordinary 0566.
+    if request and request.owner=="logistics_machine_fulfillment_0528"
+      and request.reason=="machine-logistics-move-to-machine-0528"
+      and frontier and
+      type(frontier.authorized_original_train_fuel_walk_0836)=="function"then
+      local checked,authorized=pcall(
+        frontier.authorized_original_train_fuel_walk_0836,pair,
+        pair.priest.position,request)
+      if checked and authorized==true then
+        root.stats.original_paid_train_fuel_walk_preserved_0836=
+          (root.stats.original_paid_train_fuel_walk_preserved_0836 or 0)+1
+        return false,"original-paid-train-fuel-walk-owned-0836"
       end
     end
     local courier_ok,courier_authorized=pcall(
