@@ -128,11 +128,12 @@ function M.authorized_original_train_fuel_walk_0836(pair,point,movement)
   local mission=pair.remote_rail_outpost_0835
   local route=mission.rail_frontier_0836
   local lead=mission.first_locomotive_0836
+  local reverse=mission.return_locomotive_0836
   local wagon=mission.first_wagon_0836
   local state=pair.machine_logistics_0528
   local custody=state and state.custody
   local source=state and state.fuel_source_receipt_1013
-  local locomotive=lead and lead.built_entity
+  local locomotive=state and state.machine
   if not(mission.status=="rail-track-established"
       and route and route.chain_audit_completed_tick_0836
       and type(route.start_position)=="table"
@@ -142,7 +143,18 @@ function M.authorized_original_train_fuel_walk_0836(pair,point,movement)
       and lead and lead.phase=="native-paid-locomotive-verified"
       and lead.paid_completion_0836
       and lead.paid_completion_0836.native_0338_paid==true
-      and valid(locomotive) and locomotive.unit_number==lead.built_unit
+      and valid(lead.built_entity)
+      and lead.built_entity.unit_number==lead.built_unit
+      and valid(locomotive)
+      and (locomotive==lead.built_entity
+        or (reverse and reverse.phase=="native-paid-return-locomotive-verified"
+          and reverse.paid_completion_0836
+          and reverse.paid_completion_0836.native_0338_paid==true
+          and locomotive==reverse.built_entity
+          and locomotive.unit_number==reverse.built_unit
+          and type(locomotive.orientation)=="number"
+          and type(lead.built_entity.orientation)=="number"
+          and math.abs(((locomotive.orientation-lead.built_entity.orientation)%1)-0.5)<0.03125))
       and locomotive.force==pair.station.force
       and locomotive.surface==pair.station.surface
       and wagon and wagon.phase=="native-paid-wagon-verified"
@@ -150,7 +162,9 @@ function M.authorized_original_train_fuel_walk_0836(pair,point,movement)
       and wagon.paid_completion_0836.native_0338_paid==true
       and valid(wagon.built_entity)
       and locomotive.train and locomotive.train.valid
+      and lead.built_entity.train and lead.built_entity.train.valid
       and wagon.built_entity.train and wagon.built_entity.train.valid
+      and locomotive.train.id==lead.built_entity.train.id
       and locomotive.train.id==wagon.built_entity.train.id
       and state and state.phase=="move-to-machine"
       and state.original_train_fuel_0836==true
@@ -1596,6 +1610,91 @@ function M.service_first_train_fuel_0836(pair)
   return called and accepted==true,state.last_attempt_reason
 end
 
+-- The return engine is not propelled by the outward locomotive's fuel.
+-- The SAME native 0528 courier must debit real source coal, carry it on the
+-- audited physical track, and insert it into the original paid reverse engine.
+function M.service_return_train_fuel_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  local lead=m and m.first_locomotive_0836
+  local wagon=m and m.first_wagon_0836
+  local reverse=m and m.return_locomotive_0836
+  local entity=reverse and reverse.built_entity
+  if not(eligible(pair,m) and m.status=="rail-track-established"
+      and m.rail_frontier_0836 and m.rail_frontier_0836.chain_audit_completed_tick_0836
+      and lead and lead.phase=="native-paid-locomotive-verified"
+      and wagon and wagon.phase=="native-paid-wagon-verified"
+      and reverse and reverse.phase=="native-paid-return-locomotive-verified"
+      and reverse.paid_completion_0836
+      and reverse.paid_completion_0836.native_0338_paid==true
+      and valid(entity) and entity.unit_number==reverse.built_unit
+      and valid(lead.built_entity) and valid(wagon.built_entity)
+      and entity.train and entity.train.valid
+      and lead.built_entity.train and lead.built_entity.train.valid
+      and wagon.built_entity.train and wagon.built_entity.train.valid
+      and entity.train.id==lead.built_entity.train.id
+      and entity.train.id==wagon.built_entity.train.id
+      and type(entity.orientation)=="number"
+      and type(lead.built_entity.orientation)=="number"
+      and math.abs(((entity.orientation-lead.built_entity.orientation)%1)-0.5)<0.03125)then
+    return false,"original-counted-reverse-locomotive-unavailable"
+  end
+  local slot=defines and defines.inventory and defines.inventory.fuel
+  if not slot then return false,"native-return-fuel-inventory-id-unavailable"end
+  local opened,inventory=pcall(function()return entity.get_inventory(slot)end)
+  if not(opened and inventory and inventory.valid)then
+    return false,"native-return-fuel-inventory-unavailable"
+  end
+  local state=m.return_fuel_0836 or {}
+  m.return_fuel_0836=state
+  if state.phase=="native-paid-return-locomotive-fueled"then
+    return false,"native-paid-return-locomotive-fueled"
+  end
+  local receipts=pair.machine_fuel_receipts_1013 or {}
+  for i=#receipts,1,-1 do
+    local receipt=receipts[i]
+    if receipt and receipt.machine_unit==entity.unit_number
+        and receipt.station_unit==pair.station.unit_number
+        and receipt.priest_unit==pair.priest.unit_number
+        and receipt.authority=="physical-machine-fuel-0528"
+        and receipt.item=="coal" and type(receipt.count)=="number"
+        and receipt.count>=1
+        and type(receipt.source_before)=="number"
+        and type(receipt.source_after)=="number"
+        and receipt.source_before-receipt.source_after==receipt.count
+        and type(receipt.destination_before)=="number"
+        and type(receipt.destination_after)=="number"
+        and receipt.destination_after-receipt.destination_before==receipt.count
+        and type(receipt.tick)=="number"
+        and reverse.verified_tick and receipt.tick>=reverse.verified_tick
+        and wagon.verified_tick and receipt.tick>=wagon.verified_tick then
+      local counted,coal=pcall(inventory.get_item_count,"coal")
+      if counted and type(coal)=="number" and coal>=receipt.count then
+        state.phase="native-paid-return-locomotive-fueled"
+        state.fuel_item="coal"
+        state.fuel_count=receipt.count
+        state.receipt_tick=receipt.tick
+        state.locomotive_unit=entity.unit_number
+        state.lead_locomotive_unit=lead.built_unit
+        state.wagon_unit=wagon.built_unit
+        state.train_id=entity.train.id
+        state.verified_tick=now()
+        m.next_step="native-route-and-original-magos-boarding"
+        return false,"native-paid-return-locomotive-fueled"
+      end
+    end
+  end
+  local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
+    or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
+  if not(logistics and type(logistics.offer_original_locomotive_fuel_0836)=="function")then
+    return false,"original-reverse-0528-fuel-authority-unavailable"
+  end
+  local called,accepted,why=pcall(
+    logistics.offer_original_locomotive_fuel_0836,pair,entity)
+  state.last_attempt_tick=now()
+  state.last_attempt_reason=tostring(called and why or accepted)
+  return called and accepted==true,state.last_attempt_reason
+end
+
 -- First 0836 native Magos boarding. A script receipt is not an onboard
 -- passenger: 0418 must move the SAME original priest close to the real train,
 -- and Factorio must return that LuaEntity from the locomotive driver socket.
@@ -2323,6 +2422,8 @@ function M.service_first_train_return_0836(pair)
   local outward=m and m.first_outbound_0836
   local loco=m and m.first_locomotive_0836
   local wagon=m and m.first_wagon_0836
+  local reverse=m and m.return_locomotive_0836
+  local reverse_fuel=m and m.return_fuel_0836
   local far=m and m.remote_stop_0836
   local home=m and m.first_stop_0836
   local route=m and m.rail_frontier_0836
@@ -2335,17 +2436,29 @@ function M.service_first_train_return_0836(pair)
     and outward.highest_x and outward.highest_x>outward.origin_x+32
     and loco and loco.phase=="native-paid-locomotive-verified"
     and wagon and wagon.phase=="native-paid-wagon-verified"
+    and reverse and reverse.phase=="native-paid-return-locomotive-verified"
+    and reverse.paid_completion_0836
+    and reverse.paid_completion_0836.native_0338_paid==true
+    and reverse_fuel and reverse_fuel.phase=="native-paid-return-locomotive-fueled"
+    and reverse_fuel.locomotive_unit==reverse.built_unit
     and far and far.phase=="native-paid-original-train-stop-verified"
     and home and home.phase=="native-paid-original-train-stop-verified"
     and route and route.chain_audit_completed_tick_0836
     and valid(engine) and engine.unit_number==loco.built_unit
     and valid(wagon.built_entity) and wagon.built_entity.unit_number==wagon.built_unit
+    and valid(reverse.built_entity)
+    and reverse.built_entity.unit_number==reverse.built_unit
     and valid(remote) and remote.unit_number==far.built_unit
     and valid(origin) and origin.unit_number==home.built_unit
     and remote~=origin and valid(priest) and engine.train and engine.train.valid
     and wagon.built_entity.train and wagon.built_entity.train.valid
     and engine.train.id==wagon.built_entity.train.id
+    and reverse.built_entity.train and reverse.built_entity.train.valid
+    and engine.train.id==reverse.built_entity.train.id
     and engine.train.id==outward.train_id
+    and type(reverse.built_entity.orientation)=="number"
+    and type(engine.orientation)=="number"
+    and math.abs(((reverse.built_entity.orientation-engine.orientation)%1)-0.5)<0.03125
     and engine.surface==remote.surface and engine.surface==origin.surface
     and engine.force==remote.force and engine.force==origin.force)then
     return false,"native-homeward-original-identity-or-outward-gate-missing"
@@ -2358,6 +2471,22 @@ function M.service_first_train_return_0836(pair)
     and ride.physical_boarding_confirmed==true
     and ride.train_id==train.id and ride.disembark_confirmed~=true)then
     return false,"native-homeward-original-magos-not-driver"
+  end
+  -- An old fuel receipt is not traction. The reverse-facing ORIGINAL engine
+  -- must still contain real coal or be actively burning its counted fuel.
+  local reverse_live,reverse_has_fuel=pcall(function()
+    local slot=defines and defines.inventory and defines.inventory.fuel
+    local inv=slot and reverse.built_entity.get_inventory(slot)
+    if not(inv and inv.valid)then return false end
+    local coal=inv.get_item_count("coal")
+    if type(coal)~="number"then return false end
+    if coal>0 then return true end
+    local burner=reverse.built_entity.burner
+    return burner and burner.valid
+      and (tonumber(burner.remaining_burning_fuel)or 0)>0 or false
+  end)
+  if not(reverse_live and reverse_has_fuel==true)then
+    return false,"native-homeward-original-reverse-fuel-missing"
   end
   local paid={}
   for _,unit in ipairs(route.built_units)do paid[unit]=true end
@@ -2486,6 +2615,11 @@ function M.service_pair(pair)
         end
         local fuel=m.first_fuel_0836
         if fuel and fuel.phase=="native-paid-locomotive-fueled" then
+          local reverse_fuel=m.return_fuel_0836
+          if not(reverse_fuel
+              and reverse_fuel.phase=="native-paid-return-locomotive-fueled")then
+            return M.service_return_train_fuel_0836(pair)
+          end
           local stop=m.first_stop_0836
           if not(stop and stop.phase=="native-paid-original-train-stop-verified")then
             return M.service_first_train_stop_0836(pair)
