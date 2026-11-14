@@ -22,6 +22,14 @@ PRESETS = ("2p2b", "1v4-bugs", "2v2", "3v1", "4v4-priests")
 TAG = "[TP-FORCE-PROJECTION] "
 
 
+def parse_process_observations(create_log: str, server_log: str,
+                               preset: str, seed: int, ticks: int) -> dict:
+    if (create_log.count(TAG + "CONFIG ") != 1 or TAG + "CONFIG " in server_log
+            or TAG + "READY " in create_log or TAG + "COMPLETE " in create_log):
+        raise ValueError("Arena initialization/server process evidence misplaced")
+    return parse_observations(create_log + "\n" + server_log, preset, seed, ticks)
+
+
 def parse_observations(log: str, preset: str, seed: int, ticks: int) -> dict:
     """Reject incomplete/mismatched telemetry, without requiring AI success."""
     events: dict[str, list[dict]] = {}
@@ -199,7 +207,11 @@ def main() -> int:
         observed = log_path.read_text(encoding="utf-8", errors="replace")
         if reason != "complete_with_verified_save":
             raise RuntimeError("Native endurance incomplete: " + reason)
-        result.update(parse_observations(observed, args.preset, seed, args.active_ticks))
+        # CONFIG is emitted by native on_init during --create; READY and
+        # later observations belong to the independently loaded server.
+        initial_log=(output / "create.log").read_text(encoding="utf-8", errors="replace")
+        result.update(parse_process_observations(initial_log, observed,
+                                                 args.preset, seed, args.active_ticks))
         result["checkpoint_save"] = str(terminal_save)
         result["save_sha256"] = hashlib.sha256(terminal_save.read_bytes()).hexdigest()
         result["observed_ups_including_setup"] = round(

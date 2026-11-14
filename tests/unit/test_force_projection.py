@@ -35,6 +35,17 @@ def encode(rows):
 
 
 class Verdict(unittest.TestCase):
+    def test_create_and_loaded_server_have_distinct_native_evidence(self):
+        rows = observations()
+        initial = encode([x for x in rows if x[0] == "CONFIG"])
+        loaded = encode([x for x in rows if x[0] != "CONFIG"])
+        self.assertTrue(arena.parse_process_observations(
+            initial, loaded, "2p2b", 42, 3600)["observation_complete"])
+        for a, b in (("", encode(rows)), (encode(rows), ""),
+                     (initial, initial+loaded)):
+            with self.assertRaises(ValueError):
+                arena.parse_process_observations(a,b,"2p2b",42,3600)
+
     def test_complete_observation_does_not_imply_combat_or_expansion(self):
         result = arena.parse_observations(encode(observations()), "2p2b", 42, 3600)
         self.assertTrue(result["observation_complete"])
