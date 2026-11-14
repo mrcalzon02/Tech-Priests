@@ -1489,7 +1489,8 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
     end
   end
 
-  if smelter then
+  local function service_smelter(smelter)
+   if smelter then
     local recipe = recipe_for("smelter", smelter_request)
     -- LuaEntity.set_recipe() is assembling-machine-only in Factorio 2.0.
     -- Furnaces select their recipe from the actual source inventory. A failed
@@ -1501,6 +1502,22 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
         circuit_iron_needed)
       draw(pair, "emergency smelter: " .. tostring(recipe), 90)
       used = true
+    end
+   end
+  end
+  service_smelter(smelter)
+  local craft=pair.emergency_craft
+  local operation=pair.independent_emergency_operation_0184
+  if operation and operation.enabled==true and type(craft)=="table"
+      and craft.strict_recipe_0647==true and craft.facility_only_0647==true
+      and smelter_request=="stone-brick"then
+    local serviced=smelter and 1 or 0
+    for _,record in ipairs(facilities)do
+      if serviced>=3 then break end
+      if record.role=="smelter"and valid(record.entity)and record.entity~=smelter
+          and not machine_output_reserved_by_logistics(pair,record.entity)then
+        service_smelter(record.entity);serviced=serviced+1
+      end
     end
   end
 

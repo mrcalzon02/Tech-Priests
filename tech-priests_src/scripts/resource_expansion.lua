@@ -13,6 +13,7 @@
 local RemoteChain0820=require("scripts.core.resource_station_chain_0820")
 local ReturnCourier0837=require("scripts.core.resource_return_courier_0837")
 local RemoteDrill1011=require("scripts.core.remote_machine_drill_1011")
+local StationSurplus1208=require("scripts.core.station_surplus_resupply_1208")
 TECH_PRIESTS_RESOURCE_EXPANSION_VERSION_0259 = "0.1.259+0.1.674-0820"
 TECH_PRIESTS_RESOURCE_EXPANSION_INTERVAL_0259 = 60 * 20
 TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_START_0259 = 64
@@ -369,6 +370,35 @@ local function exploration_angle(pair, key)
   return (math.pi * 2) * (slot / 8)
 end
 
+local function stocked_ranked_scout(pair,expansion,need,op,angle)
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if not(hierarchy and type(hierarchy.direct_subordinates)=="function"
+      and stock and type(stock.generic_item_count)=="function"
+      and type(expansion.allowed_station_item_for_pair)=="function")then return false end
+  local item=expansion.allowed_station_item_for_pair(pair)
+  local read,count=pcall(stock.generic_item_count,pair,item)
+  if not(read and type(count)=="number"and count==0)then return false end
+  local ok,children=pcall(hierarchy.direct_subordinates,pair)
+  if not(ok and type(children)=="table")then return false end
+  for _,child in ipairs(children)do
+    if valid_pair(child)and child.station.force==pair.station.force
+        and child.station.surface==pair.station.surface
+        and child.priest.force==pair.station.force
+        and child.priest.surface==pair.station.surface then
+      local kit=expansion.allowed_station_item_for_pair(child)
+      local observed,amount=pcall(stock.generic_item_count,child,kit)
+      local donor=kit and StationSurplus1208.find_donor(child,kit)
+      if observed and type(amount)=="number"and(amount>0 or donor)then
+        local issued=expansion.request_station_expansion(child,"resource:"..tostring(need),op,
+          "force-resource-stocked-child-of:"..tostring(station_unit(pair)),angle)
+        if issued then return true,station_unit(child)end
+      end
+    end
+  end
+  return false
+end
+
 local function op_for_pair(pair)
   if tech_priests_get_emergency_operation_0184 then
     local ok, op = pcall(function() return tech_priests_get_emergency_operation_0184(pair) end)
@@ -516,8 +546,14 @@ function tech_priests_0259_resource_expansion_service(pair)
       else
         -- Unknown patch: the historical bounded outward scout ghost remains,
         -- but it is NOT misrepresented as a known-resource chain.
-        ok=StationExpansion.request_station_expansion(
-          pair,"resource:"..tostring(need),op,state.last_reason,angle)
+        local delegated,child_unit=stocked_ranked_scout(pair,StationExpansion,need,op,angle)
+        if delegated then
+          ok=true;state.delegated_station_unit=child_unit
+          state.last_reason="stocked ranked child scouting for "..tostring(need)
+        else
+          ok=StationExpansion.request_station_expansion(
+            pair,"resource:"..tostring(need),op,state.last_reason,angle)
+        end
         if not ok and pair.station_expansion_admission_0256=="command-capacity-full"then
           local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
           if hierarchy and type(hierarchy.direct_subordinates)=="function"then

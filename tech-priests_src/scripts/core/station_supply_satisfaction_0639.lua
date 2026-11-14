@@ -208,7 +208,7 @@ local function acknowledge_ammunition(pair, reason)
   if type(rawget(_G, "tech_priests_emit_overhead_status_0473")) == "function" then
     pcall(rawget(_G, "tech_priests_emit_overhead_status_0473"), pair, "[item=firearm-magazine] ammunition received", { r = 0.20, g = 1.0, b = 0.24, a = 0.98 }, 75, 0.64, "station-supply-satisfaction-0648")
   end
-  record("ammo-acknowledged-0648", pair, "proxy_loaded=" .. safe(loaded) .. " reason=" .. safe(reason), true)
+  record("ammo-acknowledged-0648", pair, "proxy_loaded=" .. safe(loaded) .. " reason=" .. safe(reason), false)
   return changed or loaded
 end
 
@@ -318,7 +318,7 @@ local function clear_request_state(pair, item, reason)
   if changed then
     pair.last_supply_satisfied_0639 = { tick = now(), item = item, reason = reason }
     if pair.mode and lower(pair.mode):find("independent%-emergency", 1, false) then pair.mode = "returning" end
-    record("satisfied-stale-supply-0639", pair, "item=" .. safe(item) .. " reason=" .. safe(reason), true)
+    record("satisfied-stale-supply-0639", pair, "item=" .. safe(item) .. " reason=" .. safe(reason), false)
   end
   return changed
 end

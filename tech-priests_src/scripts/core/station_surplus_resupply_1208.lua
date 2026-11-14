@@ -76,7 +76,19 @@ local function available_donor(donor,item)
   local tp=storage and storage.tech_priests
   local busy=tp and tp.station_expansion_by_worker_0256
     and tp.station_expansion_by_worker_0256[donor.station.unit_number]
-  local floor=M.donor_keep+(busy and 1 or 0)
+  local keep=M.donor_keep
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local item_rank=({["senior-cogitator-station"]=3,["intermediate-cogitator-station"]=2,["junior-cogitator-station"]=1})[item]
+  if item_rank and hierarchy and type(hierarchy.rank)=="function"then
+    local ok,rank=pcall(hierarchy.rank,donor)
+    -- A Magos cannot deploy its Intermediate kit directly. Keep reserves
+    -- for its own immediate tier; let the actual ranked child fetch this kit.
+    if ok and tonumber(rank)and item_rank<rank-1 then keep=0 end
+  end
+  local reserve_busy=busy
+  local writ=busy and tp.station_expansion_0256 and tp.station_expansion_0256[busy]
+  if keep==0 and writ and writ.station_item and writ.station_item~=item then reserve_busy=false end
+  local floor=keep+(reserve_busy and 1 or 0)
   return inv,math.max(0,math.floor(spendable)-floor)
 end
 function M.find_donor(worker,item)
@@ -89,7 +101,7 @@ function M.find_donor(worker,item)
     local ok,r=pcall(_G.refresh_pair_radius,worker)
     if ok and tonumber(r) then radius=tonumber(r) end
   end
-  local max_dist=math.min(M.max_distance,math.max(0,radius-2))
+  local max_dist=math.min(M.max_distance,math.max(0,radius))
   if max_dist<4 then return nil,"no-nearby-coverage-corridor" end
   local best,best_d2=nil,nil
   for _,donor in pairs(pair_map()) do
@@ -124,7 +136,7 @@ local function move(worker,record,destination,leg)
   if type(fn)~="function" then return false,"canonical-movement-unavailable" end
   local ok,accepted,why=pcall(fn,worker,destination,
     "station-surplus-"..leg.."-1208",
-    {owner="station-surplus-relay-1208",priority=72,ttl=600,radius=2,
+    {owner="station-surplus-relay-1208",priority=650,ttl=600,radius=2,
      distraction=defines and defines.distraction
        and defines.distraction.none or nil})
   record.next_move_tick=now()+M.move_retry_ticks

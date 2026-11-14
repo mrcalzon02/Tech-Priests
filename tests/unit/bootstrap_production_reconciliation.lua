@@ -2566,4 +2566,65 @@ scenario("cooperative material buffer cannot complete against one preexisting un
   "cooperative target collapsed to an already-supplied one-unit loop: "..tostring(why))
  check(f.source.get_item_count("copper-cable")==1,"cooperative planning fabricated its buffer")
 end)
+scenario("independent brick supply uses counted stock in both owned furnaces",function()
+ local f=fixture();local second_input,second_output,second_fuel=inventory(),inventory(),inventory()
+ local second={valid=true,unit_number=31,name="stone-furnace",type="furnace",
+  position={x=5,y=0},force=f.force,surface=f.surface}
+ second.get_inventory=function(id)
+  if id==defines.inventory.furnace_source then return second_input end
+  if id==defines.inventory.furnace_result then return second_output end
+  if id==defines.inventory.fuel then return second_fuel end
+ end
+ f.surface.find_entities_filtered=function(args)if args.type=="resource"then return{f.ore}end;return{f.furnace,second}end
+ prototypes.item["stone-brick"]={};f.source.stock.stone=12
+ f.pair.independent_emergency_operation_0184={enabled=true}
+ f.pair.emergency_craft={output_item="stone-brick",count=1,target_stock_0647=50,
+  strict_recipe_0647=true,facility_only_0647=true}
+ F.tag_built_entity(f.pair,f.furnace,"brick-production")
+ F.tag_built_entity(f.pair,second,"brick-production")
+ F.service_pair(f.pair,"parallel-bricks")
+ check(f.input.get_item_count("stone")==4 and second_input.get_item_count("stone")==4
+  and f.source.get_item_count("stone")==4,
+  "independent brick demand left an owned furnace idle or fabricated its input")
+ check(f.output.get_item_count("stone-brick")==0 and second_output.get_item_count("stone-brick")==0,
+  "parallel furnace service fabricated finished bricks")
+end)
+scenario("configured wall throughput requests its real two-minute brick buffer",function()
+ local f=fixture();local p=f.pair
+ f.force.recipes["stone-wall"]={enabled=true,ingredients={{name="stone-brick",type="item",amount=5}}}
+ p.independent_emergency_operation_0184={enabled=true,magos_ratio_plan_0257={factory_component_jobs_1150={
+  ["stone-wall"]={configured=1,researched=true,output_deficient=true,required_per_minute=5}}}}
+ local item,_,count=Infra.factory_component_material_need(p)
+ check(item=="stone-brick"and count==50,"five walls/minute collapsed to a single wall's brick batch")
+ f.source.stock["stone-brick"]=50
+ check(Infra.factory_component_material_need(p)==nil,"funded brick buffer requested duplicate manufacturing")
+end)
+scenario("large brick buffer starts from a genuinely funded native recipe",function()
+ local f=fixture();local p=f.pair
+ prototypes.item["stone-brick"]={}
+ f.force.recipes["stone-brick"]={enabled=true,ingredients={{name="stone",amount=2,type="item"}},products={{name="stone-brick",amount=1,type="item"}}}
+ f.force.recipes["stone-wall"]={enabled=true,ingredients={{name="stone-brick",type="item",amount=5}}}
+ local machines={f.furnace}
+ for i,name in ipairs{"tech-priests-emergency-miner","tech-priests-emergency-assembler"}do
+  local m={valid=true,name=name,type="assembling-machine",unit_number=40+i,
+   force=f.force,surface=f.surface,position={x=6+i,y=0}}
+  machines[#machines+1]=m;F.tag_built_entity(p,m,"funded-brick-stream")
+ end
+ f.surface.find_entities_filtered=function(args)if args.type=="resource"then return{f.ore}end;return machines end
+ f.source.stock["iron-plate"]=12;f.source.stock["copper-plate"]=12;f.source.stock["electronic-circuit"]=10;f.source.stock.stone=2
+ p.independent_emergency_operation_0184={enabled=true,magos_ratio_plan_0257={factory_component_jobs_1150={
+  ["stone-wall"]={configured=1,researched=true,output_deficient=true,required_per_minute=5}}}}
+ local previous_plan=TechPriestsMasterInfrastructurePlan0644.build_plan
+ local previous_recipe=tech_priests_get_recipe_ingredients_for_item_0185
+ TechPriestsMasterInfrastructurePlan0644.build_plan=function()return{}end
+ tech_priests_get_recipe_ingredients_for_item_0185=function(n)if n=="stone-brick"then return{{name="stone",count=2}}end;return previous_recipe(n)end
+ local acted,why=Infra.service_pair(p,"stream-funded-native-bricks")
+ TechPriestsMasterInfrastructurePlan0644.build_plan=previous_plan
+ tech_priests_get_recipe_ingredients_for_item_0185=previous_recipe
+ check(acted and p.emergency_craft and p.emergency_craft.output_item=="stone-brick"
+  and p.emergency_craft.target_stock_0647==50 and p.emergency_craft.facility_only_0647,
+  "funded furnaces waited for the entire raw buffer before starting: "..tostring(why))
+ check(f.source.get_item_count("stone")+f.input.get_item_count("stone")==2,
+  "streaming native feed did not conserve the actual two-stone recipe input")
+end)
 print("[bootstrap-production-regression] PASS scenarios="..total)

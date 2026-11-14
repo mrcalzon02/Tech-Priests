@@ -58,4 +58,15 @@ tech_priests_0259_resource_expansion_service(pair)
 assert(delegated>0 and pair.resource_expansion_0259.delegated_station_unit==3,
  "full commander failed to delegate physical resource scouting")
 assert(child.independent_emergency_operation_0184==nil,"delegation enabled unrelated independent factory mode")
-print("PASS explicit autonomous expansion and blocking raw leaf priority")
+TECH_PRIESTS_STATION_EXPANSION_0256.allowed_station_item_for_pair=function(p)
+ return p==pair and "senior-cogitator-station"or "intermediate-cogitator-station"end
+TechPriestsStorageRoleAuthority0686={generic_item_count=function(p,item)
+ return p==child and item=="intermediate-cogitator-station"and 1 or 0 end}
+TECH_PRIESTS_STATION_EXPANSION_0256.request_station_expansion=function(p)
+ assert(p==child,"unfunded commander started another writ ahead of its actually stocked child")
+ delegated=delegated+1;return true end
+pair.station_expansion_admission_0256=nil;game.tick=18000
+tech_priests_0259_resource_expansion_service(pair)
+assert(pair.resource_expansion_0259.last_reason:find("stocked ranked child",1,true),
+ "stocked child required its commander to exhaust command capacity before delegation")
+print("PASS explicit autonomous expansion, blocking leaf priority and funded ranked child delegation")

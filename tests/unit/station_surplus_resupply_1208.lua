@@ -59,7 +59,7 @@ defines={inventory={chest=1},distraction={none=0}}
 local moves={}
 tech_priests_request_movement_0418=function(p,pos,why,opts)
   assert(p==receiver and opts.owner=="station-surplus-relay-1208"
-    and opts.radius==2 and opts.priority==72)
+    and opts.radius==2 and opts.priority==650)
   moves[#moves+1]={x=pos.x,y=pos.y,reason=why,owner=opts.owner}
   return true
 end
@@ -362,7 +362,7 @@ do
   local moves_before=#moves
   tech_priests_request_movement_0418=function(worker,position,why,opts)
     assert(opts.owner=="station-surplus-relay-1208"
-      and opts.priority==72 and worker and position)
+      and opts.priority==650 and worker and position)
     return true
   end
   game.tick=3000
@@ -415,4 +415,23 @@ do
     and recipients[2].home.get_item_count(stock)==1,
     "donor reserve must survive two counted physical nearby receivers")
 end
-print("[station-surplus-resupply-1208] PASS physical pickup, donor reselection, cross-domain quarantine, post-debit donor loss, module-reload carried custody, multi-receiver reserve conservation, zero duplication")
+do
+ local magos,magos_stock=pair(900,39,{["intermediate-cogitator-station"]=1})
+ magos.station.name="planetary-magos-cogitator-station"
+ local senior=pair(910,0,{})
+ senior.radius=40;senior.station.name="senior-cogitator-station"
+ storage.tech_priests.pairs_by_station={[900]=magos,[910]=senior}
+ storage.tech_priests.station_expansion_by_worker_0256={}
+ refresh_pair_radius=function(p)return p.radius end
+ TECH_PRIESTS_COMMAND_HIERARCHY_0480={rank=function(p)return p==magos and 4 or 3 end}
+ local donor=R.find_donor(senior,"intermediate-cogitator-station")
+ assert(donor==magos and magos_stock.get_item_count("intermediate-cogitator-station")==1,
+  "Magos hoarded its last unusable lower-tier kit inside the Senior's actual operating radius")
+ storage.tech_priests.station_expansion_by_worker_0256[900]=99
+ assert(R.find_donor(senior,"intermediate-cogitator-station")==nil,
+  "rank-aware resupply consumed the active donor's protected construction reserve")
+ storage.tech_priests.station_expansion_0256[99]={station_item="senior-cogitator-station",status="active"}
+ assert(R.find_donor(senior,"intermediate-cogitator-station")==magos,
+  "unfunded Senior writ reserved an unrelated Intermediate kit its commander cannot deploy")
+end
+print("[station-surplus-resupply-1208] PASS physical pickup, custody reload, donor reserve conservation and ranked lower-tier kit availability")

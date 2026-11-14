@@ -396,6 +396,11 @@ function M.factory_component_material_need(pair)
       for _,ingredient in pairs(recipe.ingredients or{})do
         local item=ingredient.name
         local amount=math.max(1,math.min(50,math.ceil(tonumber(ingredient.amount)or 1)))
+        if item=="stone-brick"and(tonumber(job.required_per_minute)or 0)>0 then
+          -- Supply the measured wall demand as a counted two-minute buffer,
+          -- rather than repeatedly mining/smelting for a single wall.
+          amount=math.min(50,amount*math.max(1,math.ceil(job.required_per_minute*2)))
+        end
         if ingredient.type~="fluid"and smelted[item]
             and station_count(pair,item)<amount then
           return item,"factory-component-material:"..name,amount
@@ -1325,10 +1330,18 @@ local function assign_local_step(pair, item, why, high_item, high_source,stock_t
     if item=="stone-brick"and required_stock>1 then
       local crafts=math.max(1,required_stock-station_count(pair,item))
       requirements={}
+      local first_batch_funded=true
       for _,ingredient in ipairs(ingredients)do
+        if station_count(pair,ingredient.name)<math.max(1,tonumber(ingredient.count)or 1)then
+          first_batch_funded=false
+        end
         requirements[#requirements+1]={name=ingredient.name,
           count=math.max(1,tonumber(ingredient.count)or 1)*crafts}
       end
+      -- Begin native smelting as soon as one actual recipe is funded.
+      -- 0637 replenishes this strict owner's exact remaining target while
+      -- the existing furnaces work; a large buffer need not idle them first.
+      if first_batch_funded then requirements=ingredients end
     end
     for _, ingredient in ipairs(requirements or {}) do
       if station_count(pair, ingredient.name) < math.max(1, tonumber(ingredient.count) or 1) then missing = ingredient; break end
