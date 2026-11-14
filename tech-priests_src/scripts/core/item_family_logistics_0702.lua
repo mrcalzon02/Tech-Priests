@@ -591,6 +591,31 @@ local function reversal_future_worker_reserved_0962(pair)
   return reserved == true and type(writ) == "table" and writ.status == "active"
 end
 
+-- 0836: an original, registered Magos with a live naturally charted
+-- starvation/rail writ retains the first opportunity to finish its actual
+-- physical expedition. Defer only NEW discretionary 0702 item-family work:
+-- an already admitted task, a target reservation, carried goods and combat
+-- are never canceled or modified. The original 0835/0836 authorities
+-- determine the mission; 0702 may only read their persisted identity.
+local function original_rail_expedition_reserved_0836(pair)
+  if not valid_pair(pair) or valid(pair.combat_target) then return false end
+  local mission=pair.remote_rail_outpost_0835
+  if not (type(mission)=="table"
+      and pair.station.name=="planetary-magos-cogitator-station"
+      and mission.root_station_unit==station_unit(pair)
+      and pair.station.force and pair.station.surface
+      and mission.force_index==pair.station.force.index
+      and mission.surface_index==pair.station.surface.index
+      and type(mission.target)=="table"
+      and type(mission.resource_unit)=="number"
+      and (mission.status=="starvation-confirmed"
+        or mission.status=="rail-track-established")) then
+    return false
+  end
+  local back=mission.first_return_0836
+  return not (back and back.phase=="native-original-home-arrived-after-roundtrip")
+end
+
 local function discover_pair(pair)
   if not valid_pair(pair) then return false, "invalid-pair" end
   if reversal_future_worker_reserved_0962(pair)
@@ -601,6 +626,11 @@ local function discover_pair(pair)
   if pair.item_family_logistics_0702 or pair.item_family_custody_0702 then
     pair.item_family_candidate_0702 = nil
     return false, "active-task"
+  end
+  -- Do not discover a new discretionary delivery that would later contend
+  -- with the original Magos's already selected, physically supplied rail writ.
+  if original_rail_expedition_reserved_0836(pair) then
+    return false, "original-rail-expedition-reserved"
   end
   local state = M.root()
   local key = tostring(station_unit(pair) or "?")
@@ -1175,6 +1205,12 @@ function M.service_pair(pair, reason)
   if type(task) == "table" then return continue_task(pair, task) end
   if reversal_future_worker_reserved_0962(pair) then
     return { processed = 1, waiting = 1, detail = "reversal-future-worker-reserved" }
+  end
+  -- Keep any previously discovered candidate untouched for after the
+  -- physical rail trip; only admission of a NEW 0702 task is deferred.
+  if original_rail_expedition_reserved_0836(pair) then
+    return { processed = 1, waiting = 1,
+      detail = "original-rail-expedition-reserved" }
   end
   local candidate = pair.item_family_candidate_0702
   if not candidate_valid(pair, candidate) then

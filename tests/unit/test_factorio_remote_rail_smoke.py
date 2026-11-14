@@ -75,6 +75,44 @@ class OriginalNativeRailFailureRetentionTests(unittest.TestCase):
         self.assertEqual(result["native_admission_refusal_receipts"], {})
 
 
+
+class OriginalRailItemFamilyAdmissionTests(unittest.TestCase):
+    def test_live_original_0835_expedition_defers_only_new_0702_work(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        source = (root / "tech-priests_src/scripts/core/"
+                  "item_family_logistics_0702.lua").read_text(encoding="utf-8")
+        guard = source.split(
+            "local function original_rail_expedition_reserved_0836(pair)", 1
+        )[1].split("local function discover_pair(pair)", 1)[0]
+        discover = source.split("local function discover_pair(pair)", 1)[1].split(
+            "local function request_move(", 1)[0]
+        service = source.split("function M.service_pair(pair, reason)", 1)[1].split(
+            "local function action_target(", 1)[0]
+        self.assertIn('mission.status=="starvation-confirmed"', guard)
+        self.assertIn('mission.status=="rail-track-established"', guard)
+        self.assertIn('mission.root_station_unit==station_unit(pair)', guard)
+        self.assertIn('mission.surface_index==pair.station.surface.index', guard)
+        self.assertIn('mission.force_index==pair.station.force.index', guard)
+        self.assertIn('valid(pair.combat_target)', guard)
+        self.assertIn('mission.resource_unit', guard)
+        self.assertIn('back.phase=="native-original-home-arrived-after-roundtrip"', guard)
+        self.assertNotIn("pair.item_family_logistics_0702=", guard)
+        self.assertNotIn("pair.item_family_custody_0702=", guard)
+        self.assertNotIn("controller.stop", guard)
+        self.assertNotIn("request_move", guard)
+        self.assertNotIn("remove_inventory", guard)
+        self.assertIn('if original_rail_expedition_reserved_0836(pair) then', discover)
+        self.assertIn('if original_rail_expedition_reserved_0836(pair) then', service)
+        self.assertLess(service.index('if type(task) == "table" then return continue_task(pair, task) end'),
+                        service.index('if original_rail_expedition_reserved_0836(pair) then'))
+        self.assertLess(service.index("if reversal_future_worker_reserved_0962(pair) then"),
+                        service.index('if original_rail_expedition_reserved_0836(pair) then'))
+        self.assertLess(service.index('if original_rail_expedition_reserved_0836(pair) then'),
+                        service.index("return begin_task(pair, candidate"))
+        self.assertNotIn("pair.item_family_candidate_0702 = nil", guard)
+        self.assertNotIn("pair.item_family_logistics_0702 = nil", service)
+
+
 class OriginalTrainLiveFuelRefusalTests(unittest.TestCase):
     def test_native_boarding_checks_live_traction_not_only_historical_fuel_receipt(self):
         root = pathlib.Path(__file__).resolve().parents[2]
