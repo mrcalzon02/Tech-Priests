@@ -888,6 +888,7 @@ end
 local function exact_original_train_0836(pair,locomotive)
   local mission=pair and pair.remote_rail_outpost_0835
   local loco=mission and mission.first_locomotive_0836
+  local reverse=mission and mission.return_locomotive_0836
   local wagon=mission and mission.first_wagon_0836
   local route=mission and mission.rail_frontier_0836
   if not(valid_pair(pair) and mission
@@ -901,9 +902,24 @@ local function exact_original_train_0836(pair,locomotive)
       and loco and loco.phase=="native-paid-locomotive-verified"
       and loco.paid_completion_0836
       and loco.paid_completion_0836.native_0338_paid==true
-      and loco.built_entity==locomotive and valid(locomotive)
-      and locomotive.type=="locomotive"
-      and locomotive.unit_number==loco.built_unit
+      and valid(loco.built_entity)
+      and loco.built_entity.unit_number==loco.built_unit
+      and valid(locomotive) and locomotive.type=="locomotive"
+      -- The original 0528 physical fuel executor may serve either the paid
+      -- outward locomotive or the SAME train's separately item-debited,
+      -- oppositely oriented return locomotive. No foreign rolling stock.
+      and (locomotive==loco.built_entity
+        or (reverse and reverse.phase=="native-paid-return-locomotive-verified"
+          and reverse.paid_completion_0836
+          and reverse.paid_completion_0836.native_0338_paid==true
+          and reverse.built_entity==locomotive
+          and locomotive.unit_number==reverse.built_unit
+          and type(locomotive.orientation)=="number"
+          and type(loco.built_entity.orientation)=="number"
+          and math.abs(((locomotive.orientation-loco.built_entity.orientation)%1)-0.5)<0.03125
+          and locomotive.train and locomotive.train.valid
+          and loco.built_entity.train and loco.built_entity.train.valid
+          and locomotive.train.id==loco.built_entity.train.id))
       and locomotive.force==pair.station.force
       and locomotive.surface==pair.station.surface
       and wagon and wagon.phase=="native-paid-wagon-verified"
@@ -916,12 +932,13 @@ local function exact_original_train_0836(pair,locomotive)
       and locomotive.train.id==wagon.built_entity.train.id)then
     return false,"original-counted-coupled-train-invalid"
   end
-  local has_loco,has_wagon=false,false
+  local has_loco,has_wagon,has_lead=false,false,false
   for _,carriage in ipairs(locomotive.train.carriages)do
     if carriage==locomotive then has_loco=true end
+    if carriage==loco.built_entity then has_lead=true end
     if carriage==wagon.built_entity then has_wagon=true end
   end
-  if not(has_loco and has_wagon)then
+  if not(has_loco and has_wagon and has_lead)then
     return false,"original-train-carriage-membership-invalid"
   end
   return true,"original-counted-train-verified"
