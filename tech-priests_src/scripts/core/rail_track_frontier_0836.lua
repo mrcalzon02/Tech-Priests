@@ -2704,6 +2704,10 @@ function M.service_original_remote_drill_disembark_0836(pair)
   end
   state.disembark_confirmed=true
   state.disembark_priest_unit=priest.unit_number
+  -- Factorio ejects a driver at the original locomotive, which can be up
+  -- to 16 tiles behind the train STOP. Preserve the verified native footfall:
+  -- subsequent 0418/0566 site contact must begin THERE, not at the stop tile.
+  state.disembark_position={x=priest.position.x,y=priest.position.y}
   state.disembark_tick=now()
   ride.disembark_confirmed=true
   ride.disembarked_tick=state.disembark_tick
@@ -2743,6 +2747,9 @@ function M.authorized_original_remote_drill_walk_0836(pair,point,movement)
       and storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair
       and state and state.disembark_confirmed==true
       and state.disembark_priest_unit==priest.unit_number
+      and state.disembark_position
+      and type(state.disembark_position.x)=="number"
+      and type(state.disembark_position.y)=="number"
       and state.station_unit==pair.station.unit_number
       and state.phase=="awaiting-existing-0338"
       and valid(priest) and priest.type=="character"
@@ -2791,7 +2798,12 @@ function M.authorized_original_remote_drill_walk_0836(pair,point,movement)
   if not(read and driver==nil)then return false end
   -- Admit only the actual short remote-stop to drill-site corridor, not the
   -- whole 400-tile territory or an arbitrary new construction writ.
-  local sx,sy=stop.position.x,stop.position.y
+  local foot=state.disembark_position
+  local ex,ey=foot.x-stop.position.x,foot.y-stop.position.y
+  -- The start must itself have been within the same 16-tile physical native
+  -- ejection envelope verified by service_original_remote_drill_disembark.
+  if ex*ex+ey*ey>16*16 then return false end
+  local sx,sy=foot.x,foot.y
   local tx,ty=state.position.x,state.position.y
   local vx,vy=tx-sx,ty-sy
   local len=vx*vx+vy*vy
@@ -2799,7 +2811,8 @@ function M.authorized_original_remote_drill_walk_0836(pair,point,movement)
   local px,py=point.x-sx,point.y-sy
   local dot=(px*vx+py*vy)/len
   local cross=math.abs(px*vy-py*vx)/math.sqrt(len)
-  local dx,dy=priest.position.x-sx,priest.position.y-sy
+  local dx,dy=priest.position.x-stop.position.x,
+    priest.position.y-stop.position.y
   return dot>=-0.10 and dot<=1.20 and cross<=10
     and px*px+py*py<=96*96
     and dx*dx+dy*dy<=96*96
@@ -2838,7 +2851,7 @@ function M.authorized_original_remote_drill_hold_0836(pair)
     local d=(valid(stop) and
       ((priest.position.x-stop.position.x)^2+
         (priest.position.y-stop.position.y)^2))or -1
-    log("[TP-0836-HOLD-NATIVE-PROBE] tick="..tostring(now())..
+    log("[TP-0836-HOLD-NATIVE-PROBE] RAIL_ADMISSION_DIAG tick="..tostring(now())..
       " phase="..tostring(state.phase)..
       " age="..tostring(now()-(tonumber(state.disembark_tick)or now()))..
       " task="..tostring(completion and completion.phase)..
@@ -2858,6 +2871,16 @@ function M.authorized_original_remote_drill_hold_0836(pair)
       " movement_owner="..tostring(pair.movement_request_0418 and
         pair.movement_request_0418.owner)..
       " active_0338="..tostring(pair.construction_task_0338~=nil)..
+      " task_phase="..tostring(pair.construction_task_0338 and
+        pair.construction_task_0338.phase)..
+      " task_req_matches="..tostring(pair.construction_task_0338 and
+        pair.construction_task_0338.request_value==state.request)..
+      " move_reason="..tostring(pair.movement_request_0418 and
+        pair.movement_request_0418.reason)..
+      " eject_x="..tostring(state.disembark_position and
+        state.disembark_position.x)..
+      " eject_y="..tostring(state.disembark_position and
+        state.disembark_position.y)..
       " custody_0338="..tostring(pair.construction_custody_0338~=nil))
   end
   if not(eligible(pair,m) and m.status=="rail-track-established"
