@@ -71,6 +71,10 @@ local function role_of(e)
   -- A real, locally owned furnace is useful smelting equipment; it need not
   -- have the bespoke emergency-smelter entity name to feed ordinary ore.
   if e.type=="furnace" then return "smelter" end
+  if e.type=="assembling-machine"and(e.name=="assembling-machine-1"
+      or e.name=="assembling-machine-2"or e.name=="assembling-machine-3")then
+    return "assembler"
+  end
   return nil
 end
 local function is_emergency_name(name) return EMERGENCY_ENTITIES[name] ~= nil end
@@ -260,10 +264,11 @@ local function scan_owned_emergency(pair)
   local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered({ position = pair.station.position, radius = r }) end)
   if not ok or not ents then return found end
   for _, e in pairs(ents) do
-    if valid(e) and (is_emergency_name(e.name) or e.type=="furnace")
+    local key=valid(e)and entity_key(e)or nil
+    local rec=key and root.facilities[key]or nil
+    if valid(e) and (is_emergency_name(e.name) or e.type=="furnace"
+        or (rec and rec.station_unit==u))
         and e.force==pair.station.force then
-      local key = entity_key(e)
-      local rec = key and root.facilities[key] or nil
       if rec and rec.station_unit == u then
         rec.entity = e
         if e.type=="furnace" then rec.role="smelter" end
@@ -1315,6 +1320,47 @@ local function initial_miner_recipe(pair, facilities, miner, request_item)
   return recipe_for("miner", preferred)
 end
 
+local function retire_satisfied_workshop_batch(pair,machine,next_item)
+  local task=pair.emergency_craft
+  if not(type(task)=="table"and task.strict_recipe_0647==true
+      and(task.output_item or task.item_name)==next_item)then return nil end
+  local read,finished=pcall(function()return machine.products_finished end)
+  if not(read and tonumber(finished)and finished>0)then return nil end
+  local ok,recipe=pcall(function()return machine.get_recipe()end)
+  if not(ok and recipe and recipe.name~=next_item)then return nil end
+  -- Only a genuinely completed, already supplied batch can be retired.
+  -- Unrelated incomplete recipes retain their existing ownership guard.
+  local products=0
+  for _,product in pairs(recipe.products or{})do
+    if product.type~="fluid"and product.name
+        and product.independent_probability~=0 and product.probability~=0 then
+      products=products+1;local available=0
+      for _,source in ipairs(managed_sources(pair))do
+        available=available+inventory_count(source.inv,product.name)
+      end
+      if available<math.max(1,tonumber(product.amount)or 1)then return nil end
+    end
+  end
+  if products==0 then return nil end
+  local progress_ok,progress=pcall(function()return machine.crafting_progress end)
+  if not(progress_ok and tonumber(progress))then return nil end
+  -- Native assemblers immediately start another cycle while queued inputs
+  -- remain, so waiting for an idle pulse would never retire a running batch.
+  -- Return only unconsumed inventory items and already finished products;
+  -- the engine retains its in-progress craft and all consumed ingredients.
+  for _,spec in ipairs({{"input",recipe.ingredients},{"output",recipe.products}})do
+    local inventory=safe_inventory(machine,crafter_index_1277(spec[1],"assembler"))
+    for _,item in pairs(spec[2]or{})do
+      if item.type~="fluid"and item.name and inventory_count(inventory,item.name)>0 then
+        if not return_furnace_item(pair,inventory,item.name,"satisfied-owned-workshop-batch-return-0357")then
+          return 0,"incumbent-batch-return-blocked"
+        end
+      end
+    end
+  end
+  if progress>0 then return 0,"incumbent-finishing-final-native-cycle" end
+  return 0,"incumbent-completed-batch-retired"
+end
 local function use_owned_facilities(pair, facilities, request_item, workshop_item)
   local used = false
   workshop_item=workshop_item or request_item
@@ -1475,10 +1521,10 @@ local function use_owned_facilities(pair, facilities, request_item, workshop_ite
     -- and only after furnace priority; partial idle inputs may instead be
     -- returned through the existing inventory-conserving ledger.
     feed_fuel_from_pair(pair,assembler)
-    local moved=feed_inputs_from_pair(pair,assembler,protected_incumbent_recipe,
-      nil,true)
+    local moved,drain_phase=retire_satisfied_workshop_batch(pair,assembler,workshop_item)
+    if moved==nil then moved=feed_inputs_from_pair(pair,assembler,protected_incumbent_recipe,nil,true)end
     pair.emergency_facility_workshop_service_phase_0357={
-      tick=now(),item=workshop_item,phase="incumbent-engine-serviced",
+      tick=now(),item=workshop_item,phase=drain_phase or "incumbent-engine-serviced",
       recipe=protected_incumbent_recipe,moved=moved,
     }
     used=true

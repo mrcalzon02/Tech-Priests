@@ -4,6 +4,7 @@
 -- the pure classifier recommends work and single_dispatcher_0510 alone executes it.
 -- Hidden proxy ammunition remains exclusively owned by proxy_ammo_hardener_0649.
 
+local FetchGeometry=require("scripts.core.logistics_fetch_executor_0527")
 local M = {
   version = "0.1.674-dev",
   storage_key = "item_family_logistics_0702",
@@ -173,7 +174,7 @@ local function home_sources(pair)
       return
     end
     if dist_sq(entity.position, pair.station.position) > radius * radius then return end
-    local key = safe(inv)
+    local key = inv
     if seen[key] then return end
     seen[key] = true
     out[#out + 1] = {
@@ -181,6 +182,12 @@ local function home_sources(pair)
       entity = entity,
       label = source.source or source.inventory_id or "home-source",
     }
+  end
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    or package.loaded["scripts.core.storage_role_authority_0686"]
+  if authority and type(authority.generic_storage_sources)=="function"then
+    local ok,sources=pcall(authority.generic_storage_sources,pair)
+    if ok and type(sources)=="table"then for _,source in ipairs(sources)do add(source)end end
   end
   local source_fn = rawget(_G, "tech_priests_inventory_steward_sources_for_pair")
   if type(source_fn) == "function" then
@@ -236,7 +243,7 @@ end
 local function source_for_item(pair, item, target_inv)
   local best
   for _, source in ipairs(home_sources(pair)) do
-    local count = inv_count(source.inv, item)
+    local count = FetchGeometry.spendable_source_count(source.entity,item,inv_count(source.inv,item))
     if count > 0 and (not target_inv or inv_can_insert(target_inv, item, 1)) then
       local distance = dist_sq(pair.priest.position, source.entity.position)
       if not best or distance < best.distance then
@@ -434,7 +441,12 @@ local function research_ingredients(force)
   return out, technology
 end
 
+local function hidden_proxy(entity)
+  return valid(entity)and(entity.name=="tech-priest-small-arms-proxy"
+    or entity.name==rawget(_G,"PROXY_NAME"))
+end
 local function turret_candidate(pair, entity)
+  if hidden_proxy(entity)then return nil end
   if not valid(entity) or connected_automation(entity) then return nil end
   local ids = defines and defines.inventory
   local inv = ids and inventory(entity, ids.turret_ammo) or nil
@@ -554,6 +566,7 @@ local function scan_candidate(pair)
 end
 
 local function candidate_valid(pair, candidate)
+  if candidate and candidate.family=="turret-ammo"and hidden_proxy(candidate.target)then return false end
   if not (valid_pair(pair) and type(candidate) == "table" and valid(candidate.target)) then
     return false
   end
@@ -721,7 +734,7 @@ local function request_move(pair, target, reason)
   local ok, accepted = pcall(
     request,
     pair,
-    target.position,
+    FetchGeometry.pickup_position(pair,target),
     reason or "item-family-logistics-0702",
     {
       owner = "item-family-logistics-0702",
@@ -851,7 +864,16 @@ local function sync_custody(pair, task, reason)
   return false
 end
 
+local function release_owned_movement(pair)
+  local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+  if not(controller and type(controller.request_status)=="function"and type(controller.stop)=="function")then return false end
+  local ok,status=pcall(controller.request_status,pair)
+  if not(ok and status and status.active and status.owner=="item-family-logistics-0702")then return false end
+  local stopped,accepted=pcall(controller.stop,pair,"item-family-physical-phase-handoff-0702")
+  return stopped and accepted==true
+end
 local function finish_task(pair, task, reason)
+  release_owned_movement(pair)
   release_target(pair, task)
   clear_requests(pair, task)
   pair.item_family_custody_0702 = nil
@@ -865,6 +887,7 @@ local function finish_task(pair, task, reason)
 end
 
 local function abort_without_custody(pair, task, reason)
+  release_owned_movement(pair)
   release_target(pair, task)
   clear_requests(pair, task)
   task.phase = "aborted"
@@ -940,7 +963,7 @@ local function return_custody(pair, task)
   end
   local source = valid(task.source_entity) and task.source_entity or nil
   local destination = source or pair.station
-  if dist_sq(pair.priest.position, destination.position) > M.return_reach_sq then
+  if dist_sq(pair.priest.position,FetchGeometry.pickup_position(pair,destination)) > M.return_reach_sq then
     task.phase = "return-custody"
     sync_custody(pair, task, "returning")
     if not request_move(pair, destination, "item-family-return-custody-0702") then
@@ -1080,6 +1103,13 @@ local function continue_task(pair, task)
     return { processed = 0, failed = 1, detail = "invalid-pair" }
   end
   if TERMINAL[lower(task.phase)] then return finish_task(pair, task, task.phase) end
+  if task.family=="turret-ammo"and hidden_proxy(task.target)then
+    if task.carried and(tonumber(task.carried.count)or 0)>0 then
+      task.phase="return-custody";sync_custody(pair,task,"hidden-proxy-owner-handoff")
+      return return_custody(pair,task)
+    end
+    return abort_without_custody(pair,task,"hidden-proxy-owned-by-0649")
+  end
 
   local normalized, why = normalize_task(pair, task)
   if not normalized and tostring(why):find("abort:", 1, true) == 1 then
@@ -1129,7 +1159,7 @@ local function continue_task(pair, task)
     task.source_inv = source.inv
     task.source_entity = source.entity
     task.source_label = source.label
-    if dist_sq(pair.priest.position, source.entity.position) > M.pickup_reach_sq then
+    if dist_sq(pair.priest.position,FetchGeometry.pickup_position(pair,source.entity)) > M.pickup_reach_sq then
       if not request_move(pair, source.entity, "item-family-source-0702") then
         return { processed = 1, blocked = 1, detail = "source-movement-blocked" }
       end
@@ -1147,6 +1177,7 @@ local function continue_task(pair, task)
     task.phase = "move-to-target"
     clear_requests(pair, task)
     sync_custody(pair, task, "picked-up")
+    release_owned_movement(pair)
     if not request_move(pair, task.target, "item-family-delivery-0702") then
       task.phase = "return-custody"
       sync_custody(pair, task, "target-movement-blocked")
@@ -1162,7 +1193,7 @@ local function continue_task(pair, task)
       task.phase = "return-custody"
       return return_custody(pair, task)
     end
-    if dist_sq(pair.priest.position, task.target.position) > M.target_reach_sq then
+    if dist_sq(pair.priest.position,FetchGeometry.pickup_position(pair,task.target)) > M.target_reach_sq then
       if not request_move(pair, task.target, "item-family-delivery-0702") then
         task.phase = "return-custody"
         sync_custody(pair, task, "target-movement-blocked")

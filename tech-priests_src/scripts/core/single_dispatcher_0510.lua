@@ -54,7 +54,14 @@ local EXECUTORS={
  ["direct-acquisition"]={"scripts.core.direct_acquisition_executor_0513","TechPriestsDirectAcquisitionExecutor0513"},["consecration"]={"scripts.core.consecration_executor_0515","TechPriestsConsecrationExecutor0515"},["combat-repair"]={"scripts.core.combat_repair_doctrine_0517","TechPriestsCombatRepairDoctrine0517"},["repair"]={"scripts.core.repair_executor_0516","TechPriestsRepairExecutor0516"},["construction"]={"scripts.core.construction_planner","TechPriestsConstructionPlanner0338"},["machine-logistics"]={"scripts.core.logistics_machine_fulfillment_0528","TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528"},["item-family-logistics"]={"scripts.core.item_family_logistics_0702","TechPriestsItemFamilyLogistics0702"},["energy-family-logistics"]={"scripts.core.energy_family_logistics_0707","TechPriestsEnergyFamilyLogistics0707"},["rocket-silo-logistics"]={"scripts.core.rocket_silo_logistics_0710","TechPriestsRocketSiloLogistics0710"},["artillery-logistics"]={"scripts.core.artillery_logistics_0713","TechPriestsArtilleryLogistics0713"},["roboport-repair-pack-logistics"]={"scripts.core.roboport_repair_pack_logistics_0715","TechPriestsRoboportRepairPackLogistics0715"},
 }
 local function execute(pair,family,reason)
- if family=="station-craft"then local result=call_module("scripts.core.emergency_production_executor_0514","TechPriestsEmergencyProductionExecutor0514","service_pair",pair,reason);if result.failed==0 and(result.acted>0 or result.waiting>0 or result.blocked>0)then return result end;local fallback=call_module("scripts.core.crafting_executor","TechPriestsCraftingExecutor","service_pair",pair,reason);if fallback.failed==0 then return fallback end;return result.failed>0 and result or fallback end
+ if family=="station-craft"then
+  local result=call_module("scripts.core.emergency_production_executor_0514","TechPriestsEmergencyProductionExecutor0514","service_pair",pair,reason)
+  if result.failed==0 and result.acted==0 and result.waiting==0 and result.blocked==0
+      and(pair.emergency_craft or pair.station_crafting_task_0337 or pair.active_craft_0479)then
+   result.blocked=1
+  end
+  return result
+ end
  local spec=EXECUTORS[family];if spec then return call_module(spec[1],spec[2],"service_pair",pair,reason)end;return{processed=1,waiting=family~="idle"and 1 or 0,detail=family=="idle"and"idle"or"compatibility-leaf-family"}
 end
 local function family_owned(r,family)local key=OWNERSHIP[family];return key~=nil and r[key]~=false end

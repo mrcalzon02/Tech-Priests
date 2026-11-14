@@ -204,6 +204,28 @@ local function exact_yield(task,cur,e,item)
  return count,"destructive"
 end
 local function extract(task,cur,e,item)
+ -- Native rocks/trees have real (sometimes random and multi-item) mining
+ -- products. Legacy direct targets carry no exact-yield metadata. Let the
+ -- engine mine into persistent custody rather than inventing a yield or
+ -- retrying the same untouched rock forever.
+ if e.type~="resource"and type(e.mine)=="function"and game and game.create_inventory then
+  local ok,products=pcall(function()return e.prototype.mineable_properties.products end)
+  local supported=false
+  if ok then for _,product in pairs(products or{})do
+   if product.name==item and product.type~="fluid"then supported=true;break end
+  end end
+  if not supported then return false,"native-mining-output-mismatch"end
+  local created,bag=pcall(function()return game.create_inventory(64)end)
+  if not(created and bag and bag.valid)then return false,"native-mining-custody-unavailable"end
+  local mined,result=pcall(function()return e.mine{inventory=bag,force=false,raise_destroyed=true}end)
+  local count=tonumber(bag.get_item_count(item))or 0
+  if count>0 then return true,count,bag end
+  -- A rejected native mine must leave an empty custody inventory. Keep any
+  -- unexpected native products for physical return, even after a callback error.
+  if not bag.is_empty()then return true,0,bag end
+  bag.destroy()
+  return false,mined and(result==true and"native-mining-empty"or"native-mining-refused")or"native-mining-error"
+ end
  local count,kind=exact_yield(task,cur,e,item);if not count then return false,kind end
  if kind=="resource"then
   local amount=tonumber(e.amount)or 0
@@ -216,6 +238,23 @@ local function extract(task,cur,e,item)
 end
 local function atomic_deposit(p,c)
  local f=rawget(_G,"tech_priests_safe_deposit_item");if type(f)~="function"then return false,"atomic-storage-unavailable"end
+ if c.native_inventory then
+  local bag=c.native_inventory
+  if not bag.valid then return false,"native-mining-custody-invalid"end
+  for key,value in pairs(bag.get_contents())do
+   if type(value)=="table"and value.quality and value.quality~="normal"then
+    return false,"native-mining-quality-deposit-unavailable"
+   end
+   local name=type(key)=="string"and key or value.name
+   local amount=type(value)=="number"and value or value.count
+   local removed=bag.remove{name=name,count=amount}
+   local ok,done,why,n=pcall(f,p,name,removed,"direct-native-mining-custody-0513")
+   local inserted=ok and math.max(0,math.min(removed,tonumber(n)or(done==true and removed or 0)))or 0
+   if inserted<removed then bag.insert{name=name,count=removed-inserted};return false,why or"native-mining-deposit-blocked"end
+  end
+  if not bag.is_empty()then return false,"native-mining-custody-not-empty"end
+  bag.destroy();c.native_inventory=nil;return true,"native-mining-deposited"
+ end
  local ok,d,why,n=pcall(f,p,c.item,c.count,"direct-acquisition-custody-0513");n=tonumber(n)or(d==true and c.count or 0);return ok and d==true and n==c.count,why
 end
 
@@ -295,7 +334,11 @@ end
 
 local function service_custody(p,t,cur,key,state)
  local c=p.direct_acquisition_custody_0513;if not c then return false,"no-custody"end
- if not(item_exists(c.item)and tonumber(c.count)and c.count>0)then return fail_unsafe(p,t,key,state,"invalid-custody-metadata")end
+ if not(item_exists(c.item)and tonumber(c.count)and(c.count>0
+     or(c.count==0 and c.native_inventory and c.native_inventory.valid)))then
+  if c.native_inventory then return false,"native-mining-custody-metadata-invalid"end
+  return fail_unsafe(p,t,key,state,"invalid-custody-metadata")
+ end
  if dist2(p.priest.position,p.station.position)>M.station_distance_sq then
   p.target=p.station;p.mode="direct-acquisition-returning-with-custody";phase(p,"return-with-custody",c.item)
   if not state.next_return_retry_tick or now()>=state.next_return_retry_tick then -- The custody return must win over non-safety acquisition-contract retargets
@@ -371,9 +414,10 @@ function M.service_pair(p,reason)
  end
  if now()<t.direct_due_tick_0513 then if not t.direct_last_visual_tick_0513 or now()-t.direct_last_visual_tick_0513>=M.visual_ticks then t.direct_last_visual_tick_0513=now();visual(p,e,false)end;show(p,"[item="..item.."] extracting",e,true);return true,"working"end
 
- visual(p,e,true);local ok,count=extract(t,cur,e,item);clear_due(t);release_clamp(p,"physical-extraction-complete")
+ local source_kind=e.type
+ visual(p,e,true);local ok,count,native_inventory=extract(t,cur,e,item);clear_due(t);release_clamp(p,"physical-extraction-complete")
  if not ok then if count=="resource-depleted"or count=="physical-target-required"then return replan(p,t,state,count)end;return fail_unsafe(p,t,key,state,count)end
- p.direct_acquisition_custody_0513={version=M.version,item=item,count=count,target=id,parent_key=key,required_units=required(t),recipe_output=t.output_item,created_tick=now(),source_kind=e.type};record("physical-custody-acquired-0513",p,item.." x"..count);stat("extracted-item:"..item,count);return service_custody(p,t,cur,key,state)
+ p.direct_acquisition_custody_0513={version=M.version,item=item,count=count,native_inventory=native_inventory,target=id,parent_key=key,required_units=required(t),recipe_output=t.output_item,created_tick=now(),source_kind=source_kind};record("physical-custody-acquired-0513",p,item.." x"..count);stat("extracted-item:"..item,count);return service_custody(p,t,cur,key,state)
 end
 
 function M.service_all(reason,budget)

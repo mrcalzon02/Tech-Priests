@@ -12,6 +12,10 @@ local hostility=0
 local function new_force(name)
  local f={valid=true,name=name,technologies={},recipes={}}
  f.print=function()end
+ f.add_research=function(technology)
+  assert(f.current_research==nil,"Conclave preempted occupied research")
+  f.current_research=technology;return true
+ end
  f.set_cease_fire=function() hostility=hostility+1 end
  f.set_friend=function() hostility=hostility+1 end
  return f
@@ -106,6 +110,14 @@ assert(state.phase=="voting" and state.votes.science==20
 -- No science-family research must NEVER silently select military research.
 local military={name="military-1",valid=true,enabled=true,
  researched=false,research_unit_count=10,prerequisites={}}
+local classify=_G.tech_priests_conclave_0588_family_for_technology
+-- Seed-bound doctrine divergence is intentional; select an actual non-science
+-- constituency rather than assuming its name fixes its political ownership.
+for i=1,200 do
+ military.name="military-"..i
+ if classify(player_force,military)~="science"then break end
+end
+assert(classify(player_force,military)~="science")
 player_force.technologies[military.name]=military
 game.tick=game.tick+300*60
 nth[607]()
@@ -113,7 +125,6 @@ assert(state.phase=="waiting" and player_force.current_research==nil,
  "winning science doctrine stole another faction's technology")
 -- Select a genuinely matching science technology; an unreached
 -- prerequisite must not become a shortcut Conclave research.
-local classify=_G.tech_priests_conclave_0588_family_for_technology
 local candidate=nil
 for i=1,200 do
  local name="science-lab-research-"..i

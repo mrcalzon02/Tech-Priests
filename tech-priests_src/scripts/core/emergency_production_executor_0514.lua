@@ -42,7 +42,18 @@ local function insert(i,n,c) c=math.max(0,math.floor(tonumber(c)or 0));if not(i 
 
 local function sources(p)
   local out,seen={},{}
-  local function add(i,e,l) if not(i and i.valid)then return end local k=safe(i);if seen[k]then return end;seen[k]=true;out[#out+1]={inv=i,entity=e,label=l} end
+  local function add(i,e,l) if not(i and i.valid)then return end local k=i;if seen[k]then return end;seen[k]=true;out[#out+1]={inv=i,entity=e,label=l} end
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    or package.loaded["scripts.core.storage_role_authority_0686"]
+  if authority and type(authority.generic_storage_sources)=="function"then
+    local ok,containers=pcall(authority.generic_storage_sources,p)
+    if ok and type(containers)=="table"then for _,source in ipairs(containers)do
+      local e=source.entity
+      if valid(e)and e.force==p.station.force and e.surface==p.station.surface then
+        add(source.inv,e,source.source or "canonical-storage")
+      end
+    end end
+  end
   if type(_G.tech_priests_inventory_steward_sources_for_pair)=="function" then local ok,a=pcall(_G.tech_priests_inventory_steward_sources_for_pair,p);if ok and type(a)=="table" then for _,s in ipairs(a)do if s and s.valid then add(s,p.station,"steward")elseif type(s)=="table"then add(s.inv or s.inventory,s.entity,s.source or s.inventory_id)end end end end
   local d=defines and defines.inventory;if d then add(inv(p.station,d.chest),p.station,"station") end
   return out
@@ -181,10 +192,11 @@ end
 
 local function facility_root() return storage and storage.tech_priests and storage.tech_priests.emergency_facility_doctrine_0343 end
 local function facilities(p) local r=facility_root();local b=r and r.by_station and r.by_station[station_unit(p)];local out={};for k in pairs(b or {})do local x=r.facilities and r.facilities[k];if x and valid(x.entity)then out[#out+1]=x end end;return out end
+local CrafterInventory=require("scripts.core.native_crafter_inventory_1277")
 local function collect_facility_output(p,n,c)
   local d=defines and defines.inventory;if not d then return 0 end
-  local ids={d.chest,d.assembling_machine_output,d.furnace_result};local moved=0
-  for _,rec in ipairs(facilities(p))do for _,id in ipairs(ids)do local i=inv(rec.entity,id);local take=math.min(c-moved,count(i,n));if take>0 then local x=remove(i,n,take);if x>0 then local ok=deposit(p,n,x,"emergency-facility-output");if ok then moved=moved+x else local back=insert(i,n,x);if back<x then p.emergency_production_custody_0514={version=M.version,phase="output-held",item=n,output_count=x-back,reason="facility-return-shortfall"} end;return moved end end end;if moved>=c then return moved end end end
+  local moved=0
+  for _,rec in ipairs(facilities(p))do local ids={d.chest,CrafterInventory.index(d,"output",rec.entity.type=="furnace"and"furnace"or"assembler")};for _,id in ipairs(ids)do local i=inv(rec.entity,id);local take=math.min(c-moved,count(i,n));if take>0 then local x=remove(i,n,take);if x>0 then local ok=deposit(p,n,x,"emergency-facility-output");if ok then moved=moved+x else local back=insert(i,n,x);if back<x then p.emergency_production_custody_0514={version=M.version,phase="output-held",item=n,output_count=x-back,reason="facility-return-shortfall"} end;return moved end end end;if moved>=c then return moved end end end
   return moved
 end
 local function role_for(n) if n=="iron-plate" or n=="copper-plate" or n=="stone-brick"then return "smelter" end;return "assembler" end

@@ -389,4 +389,15 @@ test("no movement owner means no unrelated stop",function()
     "safety enforcement movement was stopped")
 end)
 
+test("blocked canonical production preserves its reason without a nonexistent fallback",function()
+  local p=make_pair();setup(p)
+  local original=_G.TechPriestsEmergencyProductionExecutor0514.service_pair
+  _G.TechPriestsEmergencyProductionExecutor0514.service_pair=function()
+    return false,"missing-ingredient:iron-plate"
+  end
+  local result=Dispatcher.service_pair(p,"blocked-production")
+  _G.TechPriestsEmergencyProductionExecutor0514.service_pair=original
+  check(result.failed==0 and result.blocked==1 and result.detail=="missing-ingredient:iron-plate",
+    "canonical missing ingredient was replaced by a nonexistent crafting method error")
+end)
 print("[strict-craft-dispatch] PASS scenarios="..total)

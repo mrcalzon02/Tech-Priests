@@ -184,6 +184,14 @@ local function machine_output(machine)
     machine.type=="furnace"and"furnace"or"assembler"))
 end
 local function machine_fuel(machine)
+  -- Inventory enum IDs overlap across entity families (native chest == fuel).
+  -- A drill receiver is never a burner: servicing its chest as fuel creates
+  -- an endless coal delivery/output-return loop that starves real assemblers.
+  if machine.type=="container"or machine.type=="logistic-container"then return nil end
+  if type(machine.get_fuel_inventory)=="function"then
+    local ok,inv=pcall(function()return machine.get_fuel_inventory()end)
+    return ok and inv and inv.valid and inv or nil
+  end
   local ids = defines and defines.inventory
   return ids and inventory(machine, ids.fuel) or nil
 end
@@ -1573,9 +1581,12 @@ end
 local function deliver_supply(pair, state)
   local custody = state.custody
   if not custody then return false, "no-supply-custody" end
-  local destination = state.action == "supply-fuel"
-    and machine_fuel(state.machine) or machine_input(state.machine)
+  local destination
+  if state.action=="supply-fuel"then destination=machine_fuel(state.machine)
+  else destination=machine_input(state.machine)end
   if not (destination and destination.valid) then
+    state.last_blocker="machine-destination-invalid"
+    state.phase="return-custody-to-station"
     return false, "machine-destination-invalid"
   end
   local destination_before = count_inventory(destination, custody.item)

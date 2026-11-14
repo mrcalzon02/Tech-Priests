@@ -94,12 +94,14 @@ for i,stage in ipairs(stages)do
  game.tick=game.tick+100
 end
 local continued,reason=Planner.service_pair(pair)
-check(not continued
- and reason=="steam-machinery-present-await-fluid-fuel-or-grid"
- and pair.structure_construction_requested_item==nil
+check(continued
+ and reason=="physical-power-build-requested:consumer-electric-pole:small-electric-pole"
+ and pair.structure_construction_requested_item.owner=="power-setup-1252"
+ and pair.structure_construction_requested_item.power_setup_load_unit_1252==lab.unit_number
  and pair.construction_bootstrap_ghost_0645==ghost
  and stock["boiler"]==2 and lab.energy==0,
- "mistook bare generated-fluid equipment for real delivered electricity")
+ "unpowered installed laboratory was stranded outside the physical power owner")
+pair.structure_construction_requested_item=nil
 -- 1256: Factorio can build a generator between crowded machines. Its
 -- original eight cardinal candidates are obstructed; the legitimate
 -- diagonal site inside the actual 2.5-tile supply radius must be found.

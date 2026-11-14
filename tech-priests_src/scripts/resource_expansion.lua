@@ -111,8 +111,31 @@ local function nearest_known_resource(pair, resource_names)
   local station = pair.station
   local center = station.position
   local force = station.force
-  if not (force and force.is_chunk_charted) then return nil end
-  -- A generated but UNCHARTED patch is not known to the Magos. In native
+  if not force then return nil end
+  -- Station-local resource observation already uses the real operating
+  -- radius without a player chart. Share those observations force-wide so
+  -- physically constructed non-player subordinates can inform their Magos.
+  -- This neither charts terrain nor authorizes mining outside any station.
+  local observed_chunks={}
+  for _,observer in pairs(storage and storage.tech_priests
+      and storage.tech_priests.pairs_by_station or{})do
+    if valid_pair(observer)and observer.station.force==force
+        and observer.station.surface==station.surface
+        and observer.priest.force==force
+        and observer.priest.surface==station.surface then
+      local r=radius(observer);local p=observer.station.position
+      local zone={position=p,radius_sq=r*r}
+      for x=math.floor((p.x-r)/32),math.floor((p.x+r)/32)do
+        for y=math.floor((p.y-r)/32),math.floor((p.y+r)/32)do
+          local key=x..":"..y
+          observed_chunks[key]=observed_chunks[key]or{}
+          observed_chunks[key][#observed_chunks[key]+1]=zone
+        end
+      end
+    end
+  end
+  -- A generated patch outside charting and all staffed local domains is
+  -- not known to the Magos. In native
   -- 1380, reserving a ranked 0820 chain for such an unseen patch permanently
   -- prevented a later radar-charted, physically supplied Method II route.
   -- Cache only within this discovery pass; the next pass must see new radar
@@ -130,7 +153,11 @@ local function nearest_known_resource(pair, resource_names)
       known=ok and yes==true
       charted_chunks[key]=known
     end
-    return known
+    if known then return true end
+    for _,zone in ipairs(observed_chunks[key]or{})do
+      if distance_sq(zone.position,entity.position)<=zone.radius_sq then return true end
+    end
+    return false
   end
   local best, best_score = nil, nil
   for search_r = TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_START_0259, TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_MAX_0259, TECH_PRIESTS_RESOURCE_EXPANSION_SEARCH_STEP_0259 do
@@ -491,6 +518,26 @@ function tech_priests_0259_resource_expansion_service(pair)
         -- but it is NOT misrepresented as a known-resource chain.
         ok=StationExpansion.request_station_expansion(
           pair,"resource:"..tostring(need),op,state.last_reason,angle)
+        if not ok and pair.station_expansion_admission_0256=="command-capacity-full"then
+          local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+          if hierarchy and type(hierarchy.direct_subordinates)=="function"then
+            local read,children=pcall(hierarchy.direct_subordinates,pair)
+            if read and type(children)=="table"then for _,child in ipairs(children)do
+              if valid_pair(child)and child.station.force==pair.station.force
+                  and child.station.surface==pair.station.surface
+                  and child.priest.force==pair.station.force
+                  and child.priest.surface==pair.station.surface then
+                local delegated=StationExpansion.request_station_expansion(child,
+                  "resource:"..tostring(need),op,"force-resource-scout-delegated-by:"..tostring(station_unit(pair)),angle)
+                if delegated then
+                  ok=true;state.delegated_station_unit=station_unit(child)
+                  state.last_reason="delegated resource scout for "..tostring(need)
+                  break
+                end
+              end
+            end end
+          end
+        end
       end
       if ok then
         issued=issued+1

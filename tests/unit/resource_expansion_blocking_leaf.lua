@@ -30,4 +30,32 @@ assert(started[1]=="stone","speculative iron expansion displaced blocking constr
 game.tick=6000;pair.independent_emergency_operation_0184.enabled=false
 tech_priests_0259_resource_expansion_service(pair)
 assert(#started==1,"disabled operation started another supply chain")
+pair.independent_emergency_operation_0184.enabled=true;game.tick=9000
+force.is_chunk_charted=function()return false end
+storage.tech_priests.pairs_by_station={
+ [1]=pair,[2]={station={valid=true,unit_number=2,force=force,surface=surface,
+ position={x=60,y=0}},priest={valid=true,force=force,surface=surface},radius=30}}
+tech_priests_0259_resource_expansion_service(pair)
+assert(started[2]=="stone","Magos ignored an actual same-force subordinate resource observation")
+storage.tech_priests.pairs_by_station[2].station.force={index=2}
+local explored=0
+TECH_PRIESTS_STATION_EXPANSION_0256.request_station_expansion=function()
+ explored=explored+1;return false end
+game.tick=12000
+tech_priests_0259_resource_expansion_service(pair)
+assert(#started==2 and explored>0,"foreign station granted resource knowledge")
+local child={station={valid=true,unit_number=3,force=force,surface=surface,position={x=0,y=0}},
+ priest={valid=true,force=force,surface=surface},radius=20}
+TECH_PRIESTS_COMMAND_HIERARCHY_0480={direct_subordinates=function(p)assert(p==pair);return {child}end}
+local delegated=0
+TECH_PRIESTS_STATION_EXPANSION_0256.request_station_expansion=function(p)
+ if p==pair then p.station_expansion_admission_0256="command-capacity-full";return false end
+ assert(p==child,"resource scout escaped authoritative subordinate list")
+ delegated=delegated+1;return true
+end
+game.tick=15000
+tech_priests_0259_resource_expansion_service(pair)
+assert(delegated>0 and pair.resource_expansion_0259.delegated_station_unit==3,
+ "full commander failed to delegate physical resource scouting")
+assert(child.independent_emergency_operation_0184==nil,"delegation enabled unrelated independent factory mode")
 print("PASS explicit autonomous expansion and blocking raw leaf priority")

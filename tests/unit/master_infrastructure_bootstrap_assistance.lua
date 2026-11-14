@@ -176,13 +176,23 @@ do
   end
   stock[item]=1
   force.current_research=nil
+  local queued=0
+  force.add_research=function(name)
+    queued=queued+1;rawset(force,"current_research",force.technologies[name]);return true
+  end
   local planned=Plan.build_plan(pair,"real-science-before-belt")
   check(planned.stage~="science-ready"
       and planned.research_candidate==tech.name,
     "affordable research was hidden until unrelated infrastructure completed")
+  setmetatable(force,{__newindex=function(t,k,v)
+    if k=="current_research"then error("native current_research is read-only")end
+    rawset(t,k,v)
+  end})
   Plan.service_pair(pair,"authorize-physically-stocked-science")
+  setmetatable(force,nil)
   check(force.current_research==tech and stock[item]==1,
     "research was not authorized by real science or consumed stored packs")
+  check(queued==1,"research bypassed native add_research")
   force.current_research=nil
   stock[item]=0
   lab_items[item]=1

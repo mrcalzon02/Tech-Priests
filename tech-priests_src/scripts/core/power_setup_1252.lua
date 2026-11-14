@@ -353,10 +353,9 @@ function M.service_pair(pair,opts)
   local source=pole_covering(pair,engine,r)
   local sink=pole_covering(pair,load,r)
   if not sink then
-   if load.type=="lab"then
-    -- 1251 already selects a true native laboratory-covering pole.
-    return false,update(pair,"steam-machinery-present-await-fluid-fuel-or-grid",load)
-   end
+   -- The installed laboratory is part of the same power chain. Publishing
+   -- its exact pole through this existing owner preserves the dispatch
+   -- priority used for the generator and other physical consumers.
    item="small-electric-pole";stage="consumer-electric-pole"
    if item_ready(item)then site=near(pair,load,item,r)end
   else

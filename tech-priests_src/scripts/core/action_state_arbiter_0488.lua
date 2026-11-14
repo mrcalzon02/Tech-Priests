@@ -457,7 +457,20 @@ local function machine_logistics_recommendation(p,order_kind,mode_kind)
   return rec
 end
 local function item_family_recommendation(p,k)if k~="idle"and k~="item-family-logistics"then return nil end;return recommendation("TechPriestsItemFamilyLogistics0702","scripts.core.item_family_logistics_0702",p,"item-family-logistics")end
-local function energy_family_recommendation(p,k)if k~="idle"and k~="energy-family-logistics"then return nil end;return recommendation("TechPriestsEnergyFamilyLogistics0707","scripts.core.energy_family_logistics_0707",p,"energy-family-logistics")end
+local function strict_engine_work(p,k)
+  local task=p.emergency_craft
+  if not(type(task)=="table"and task.strict_recipe_0647==true
+      and task.facility_only_0647==true)then return false end
+  if k=="idle"or k=="crafting"then return true end
+  local direct=p.direct_acquisition_task_0336
+  return k=="acquisition"and type(direct)=="table"
+    and direct.bootstrap_resource_0637==true
+end
+local function energy_family_recommendation(p,k)
+  if p.direct_acquisition_custody_0513 or valid(p.combat_target)then return nil end
+  if k~="idle"and k~="energy-family-logistics"and not strict_engine_work(p,k)then return nil end
+  return recommendation("TechPriestsEnergyFamilyLogistics0707","scripts.core.energy_family_logistics_0707",p,"energy-family-logistics")
+end
 local function rocket_silo_recommendation(p,k)if k~="idle"and k~="rocket-silo-logistics"then return nil end;return recommendation("TechPriestsRocketSiloLogistics0710","scripts.core.rocket_silo_logistics_0710",p,"rocket-silo-logistics")end
 local function artillery_recommendation(p,k)if k~="idle"and k~="artillery-logistics"then return nil end;return recommendation("TechPriestsArtilleryLogistics0713","scripts.core.artillery_logistics_0713",p,"artillery-logistics")end
 local function roboport_recommendation(p,k)if k~="idle"and k~="roboport-repair-pack-logistics"then return nil end;return recommendation("TechPriestsRoboportRepairPackLogistics0715","scripts.core.roboport_repair_pack_logistics_0715",p,"roboport-repair-pack-logistics")end
@@ -502,6 +515,19 @@ function M.action(p)
     kind,reason="machine-logistics","strict-ingredient-physical-output-1044"
     target=machine_rec.target
     position=valid(target)and target.position or machine_rec.position
+  elseif energy_rec and strict_engine_work(p,order_kind)
+      and not p.direct_acquisition_custody_0513
+      and not(p.machine_logistics_custody_0528 or p.inventory_transfer_custody_0687
+        or p.item_family_custody_0702 or p.repair_pack_custody_0516)
+      and not(machine_rec and machine_rec.active)
+      and not active_construction and not active_item and not combat_rec
+      and mode_kind~="combat"and not valid(p.combat_target)then
+    -- A strict engine recipe cannot finish while its production burner is
+    -- cold. Temporarily service its existing fuel owner; retain the original
+    -- recipe, acquisition order and every physical cargo ledger for resumption.
+    kind,reason="energy-family-logistics","strict-engine-energy-prerequisite"
+    target=energy_rec.target;position=valid(target)and target.position or energy_rec.position
+    selected=energy_rec
   elseif actual_crafting(p,o)then kind,reason="crafting","crafting-surface"
   elseif order_kind=="combat-repair"then kind,reason="combat-repair","order"
   elseif combat_rec then kind,reason="combat-repair","tactical-recommendation";target=combat_rec.target;position=valid(target)and target.position or combat_rec.position

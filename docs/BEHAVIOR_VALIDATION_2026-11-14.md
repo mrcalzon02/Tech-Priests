@@ -7,7 +7,66 @@ Work started from remote main `1f7cbb23146703f35d56a9401ef5f966060d4c46` in
 the isolated `behavior/arena-validation-20261114` checkout. Existing local art
 work was preserved. Native engine: Factorio 2.1.24, Windows Steam installation.
 Evidence is under `../arena-evidence/` relative to this checkout, in persistent
-workspace storage. No gameplay save or live mod directory was edited.
+workspace storage. User gameplay saves and the installed live mod were preserved;
+isolated native factory saves are now resumed between behavior corrections.
+
+## Latest measured state
+
+The full native maintenance gate passes in `maintenance-final-regression`:
+all four ranks completed 120 real machine operations, repaired all eight targets,
+and observed natural operation decay on all eight. Consecration counts were
+Junior 5, Intermediate 4, Senior 8 and Magos 6.
+
+The stateful factory now manufactures science and completes research. At tick
+180,121, `stateful-science-05` records 84 red packs, two green packs, three genuine
+research completions and electric-mining-drill research in progress. No science
+packs were seeded. The native save passed ZIP CRC verification; its source save
+was unchanged. This proves functional progression, **not sustained throughput**.
+The original full nine-checkpoint/15-SPM acceptance gate remains unmet.
+
+Native observations identified and corrected these additional blockers:
+
+- Standard bootstrap assemblers were built but omitted from the existing owned
+  workshop ledger. Only actual bootstrap construction receipts register them;
+  arbitrary player assemblers remain unclaimed.
+- Consumer pole construction delegated a laboratory dependency to an owner the
+  dispatcher did not service. The power owner now completes its actual consumer
+  pole; the native laboratory receives real generated electricity.
+- Production read legacy buffers and removed inventory enums. Canonical storage
+  identities and native crafter input/output IDs now supply and collect recipes.
+- A superseded red recipe was continuously refilled. Its unconsumed input queue
+  now returns through exact deposit/refund custody while its last engine cycle
+  finishes. Zero-probability detritus cannot block recipe handoff.
+- Strict engine production prevented its own boiler fuel delivery. The existing
+  energy owner may service that prerequisite while retaining the original recipe,
+  acquisition order, combat priority and physical cargo ledgers.
+- The master planner and Conclave wrote the native 2.1 read-only current research
+  property. Both now call `add_research` and require actual engine acceptance.
+- Native chest and fuel inventory IDs alias. Drill output receivers were treated
+  as burners, creating endless coal deposit/collection jobs. Receiver containers
+  are excluded and native `get_fuel_inventory()` is authoritative. Native rerun
+  `stateful-science-06` tests this last correction.
+
+The latest completed four-way run, `four-way-capacity-contact-proxy`, preserved
+its genuine final save and still fails factory/science/participant-combat gates.
+Force 2 made six build events and force 3 made two; both have their Magos and two
+Senior stations, within direct command capacity. Forces 1 and 4 made no builds.
+No force manufactured science or completed research. Natural enemy combat does
+not satisfy the separate participant battle gate.
+
+Arena corrections include shared actual staffed-domain resource observations,
+command-capacity admission before new station spending, delegated resource scouts,
+in-bounds contact points for edge station ghosts, exclusion of hidden proxies from
+ordinary turret deliveries, and native-compatible proxy ammunition selection.
+Legacy rock targets lacked exact yield metadata and repeatedly failed extraction.
+The existing direct owner now mines into native persistent inventory custody,
+returns actual random stone and secondary coal, and preserves refused deposits
+through reload. `four-way-native-rock-fuel` tests these latest corrections.
+
+Focused regressions cover native inventory aliasing, random multi-item rock
+custody, read-only research, completed workshop recipe handoff, physical lab
+delivery, proxy job retirement/refund, standard workshop isolation and command
+capacity delegation. Earlier observations below are historical checkpoints.
 
 ## Repaired behavior
 

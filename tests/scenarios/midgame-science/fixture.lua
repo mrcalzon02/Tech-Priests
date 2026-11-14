@@ -833,6 +833,15 @@ local function pulse()
     snapshot(mark)
    end
   end
+  if elapsed>=(s.next_production_pulse or 3000)then
+   s.next_production_pulse=elapsed+3000
+   local stats=game.forces.player.get_item_production_statistics(game.surfaces[1])
+   emit("PRODUCTION_PULSE tick="..game.tick..
+     " red_produced="..stats.get_input_count("automation-science-pack")..
+     " green_produced="..stats.get_input_count("logistic-science-pack")..
+     " military_produced="..stats.get_input_count("military-science-pack")..
+     " research_finishes="..#s.research_finishes)
+  end
  end)
  if not ok then
   s.failed=tostring(err)

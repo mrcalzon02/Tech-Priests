@@ -28,8 +28,18 @@ local function count(inv,item)if not(inv and inv.valid and item)then return 0 en
 local function remove(inv,item,n)if not(inv and inv.valid and item and n and n>0)then return 0 end;local ok,got=pcall(function()return inv.remove{name=item,count=n}end);return ok and(tonumber(got)or 0)or 0 end
 local function insert(inv,item,n)if not(inv and inv.valid and item and n and n>0)then return 0 end;local ok,got=pcall(function()return inv.insert{name=item,count=n}end);return ok and(tonumber(got)or 0)or 0 end
 local function station_sources(pair)
- local out,seen={},{};local function add(inv,label)if inv and inv.valid and not seen[tostring(inv)]then out[#out+1]={inv=inv,label=label};seen[tostring(inv)]=true end end
+ local out,seen={},{};local function add(inv,label)if inv and inv.valid and not seen[inv]then out[#out+1]={inv=inv,label=label};seen[inv]=true end end
  if not valid_pair(pair)then return out end
+ local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")or package.loaded["scripts.core.storage_role_authority_0686"]
+ if authority and type(authority.generic_storage_sources)=="function"then
+  local ok,sources=pcall(authority.generic_storage_sources,pair)
+  if ok and type(sources)=="table"then for _,src in ipairs(sources)do
+   local entity=src.entity
+   if valid(entity)and entity.force==pair.station.force and entity.surface==pair.station.surface then
+    add(src.inv,src.source or"canonical-storage")
+   end
+  end end
+ end
  local f=rawget(_G,"tech_priests_inventory_steward_sources_for_pair");if type(f)=="function"then local ok,sources=pcall(f,pair);if ok and type(sources)=="table"then for _,src in ipairs(sources)do if src and src.inv and src.inv.valid then add(src.inv,src.source or"steward")end end end end
  if defines and defines.inventory then add(safe_inventory(pair.station,defines.inventory.chest),"station-chest")end;return out
 end
@@ -46,9 +56,17 @@ local function service_refund(pair)
  local ok,why=atomic_return(pair,c.item,c.count,"proxy-ammo-refund-retry-0649");if not ok then return false,"refund-blocked:"..safe(why)end
  pair.proxy_ammo_refund_custody_0649=nil;record("proxy-ammo-refund-complete-0649",pair,c.item.." x"..c.count,true);return true,"refund-complete"
 end
-function M.station_ammo(pair)
- for _,item in ipairs(AMMO_ORDER)do if item_exists(item)then for _,src in ipairs(station_sources(pair))do local n=count(src.inv,item);if n>0 then return item,n,src end end end end
- if prototypes and prototypes.item then for item_name,proto in pairs(prototypes.item)do local typ;pcall(function()typ=proto.type end);if typ=="ammo"then for _,src in ipairs(station_sources(pair))do local n=count(src.inv,item_name);if n>0 then return item_name,n,src end end end end end
+local function compatible(inv,item)
+ if inv and inv.valid and type(inv.can_insert)=="function"then
+  local ok,yes=pcall(function()return inv.can_insert{name=item,count=1}end)
+  return ok and yes==true
+ end
+ for _,name in ipairs(AMMO_ORDER)do if item==name then return true end end
+ return false
+end
+function M.station_ammo(pair,destination)
+ for _,item in ipairs(AMMO_ORDER)do if item_exists(item)and compatible(destination,item)then for _,src in ipairs(station_sources(pair))do local n=count(src.inv,item);if n>0 then return item,n,src end end end end
+ if destination and prototypes and prototypes.item then for item_name,proto in pairs(prototypes.item)do local typ;pcall(function()typ=proto.type end);if typ=="ammo"and compatible(destination,item_name)then for _,src in ipairs(station_sources(pair))do local n=count(src.inv,item_name);if n>0 then return item_name,n,src end end end end end
  return nil,0,nil
 end
 function M.station_has_ammo(pair)local item,n=M.station_ammo(pair);return item~=nil and n>0 end
@@ -67,7 +85,7 @@ function M.load_proxy_from_station(pair,reason)
  if pair.proxy_ammo_refund_custody_0649 then return false,"refund-pending"end
  if M.proxy_has_ammo(pair)then pair.proxy_ammo_0649={tick=now(),status="already-loaded",reason=reason or"load"};return false,"already-loaded"end
  local inv,proxy=M.proxy_ammo_inventory(pair);if not(valid(proxy)and inv and inv.valid)then pair.proxy_ammo_0649={tick=now(),status="no-proxy-ammo-inventory",reason=reason or"load"};record("proxy-ammo-no-inventory-0649",pair,"reason="..safe(reason),true);return false,"no-proxy-ammo-inventory"end
- local item,available,src=M.station_ammo(pair);if not item then pair.proxy_ammo_0649={tick=now(),status="station-ammo-missing",reason=reason or"load"};return false,"station-ammo-missing"end
+ local item,available,src=M.station_ammo(pair,inv);if not item then pair.proxy_ammo_0649={tick=now(),status="station-ammo-missing",reason=reason or"load"};return false,"station-ammo-missing"end
  local want=math.max(1,math.min(M.load_batch,available));local removed=remove(src.inv,item,want);if removed<=0 then pair.proxy_ammo_0649={tick=now(),status="station-remove-failed",item=item};return false,"station-remove-failed"end
  local loaded=insert(inv,item,removed);local leftover=removed-loaded;local refund_ok,refund_why=true,nil
  if leftover>0 then refund_ok,refund_why=atomic_return(pair,item,leftover,"proxy-ammo-insert-remainder-0649");if not refund_ok then retain_refund(pair,item,leftover,refund_why)end end

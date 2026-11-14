@@ -206,6 +206,11 @@ assert(not Expansion.request_station_expansion(
   and foreign_ghost.valid and stock==0,
   "an occupied ghost site was reused or generated an orphan writ")
 block_all_ghost_sites=false
+TECH_PRIESTS_COMMAND_HIERARCHY_0480.direct_capacity_remaining=function()return 0 end
+assert(not Expansion.request_station_expansion(pair,"resource:iron-ore",nil,"full-parent",0)
+  and ghost==nil and next(storage.tech_priests.station_expansion_0256)==nil,
+  "full command hierarchy spent a ghost on a child it cannot own")
+TECH_PRIESTS_COMMAND_HIERARCHY_0480.direct_capacity_remaining=nil
 local requested=Expansion.request_station_expansion(
   pair,"resource:iron-ore",nil,"known-patch-east",0)
 local rec=storage.tech_priests.station_expansion_0256[1]

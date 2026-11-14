@@ -943,8 +943,12 @@ local function finish_vote(force)
   end
   winner = winner or "science"
   local tech = next_tech_for_family(force, winner)
-  if tech and not force.current_research then
-    force.current_research = tech.name
+  local queued=false
+  if tech and not force.current_research and not(force.research_queue and #force.research_queue>0)then
+    local ok,accepted=pcall(function()return force.add_research(tech.name)end)
+    queued=ok and accepted==true
+  end
+  if queued then
     force.print("[Tech-Priests] Conclave verdict sealed: " .. family_label(winner) .. " claims the research altar for " .. tech.name .. ".")
   else
     force.print("[Tech-Priests] Conclave verdict sealed: " .. family_label(winner) .. " wins, but the research altar was already occupied or no sanctioned candidate was visible.")

@@ -18,3 +18,12 @@ assert(Arbiter.action(pair).kind=="machine-logistics","active machine duty displ
 machine_active=false;pair.machine_logistics_custody_0528={count=1}
 assert(Arbiter.action(pair).kind=="machine-logistics","held machine cargo displaced")
 print("PASS energy prerequisites before routine discovery and incumbent machine protection")
+pair.machine_logistics_custody_0528=nil
+pair.emergency_craft={output_item="logistic-science-pack",strict_recipe_0647=true,facility_only_0647=true}
+assert(Arbiter.action(pair).kind=="energy-family-logistics","strict engine task starved its fuel prerequisite")
+pair.direct_acquisition_custody_0513={item="iron-ore",count=1}
+assert(Arbiter.action(pair).kind~="energy-family-logistics","energy displaced real acquisition cargo")
+pair.direct_acquisition_custody_0513=nil
+pair.combat_target=target
+assert(Arbiter.action(pair).kind~="energy-family-logistics","energy displaced hostile combat target")
+print("PASS strict engine fuel prerequisite preserves actual cargo and combat")

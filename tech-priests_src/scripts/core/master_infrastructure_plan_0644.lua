@@ -433,12 +433,15 @@ local function service_science(pair, plan)
   if not (tech and tech.valid and tech.enabled and not tech.researched) then return false, "research-not-eligible" end
   -- Never seize a player's or another station's active research.
   if force.current_research or (force.research_queue and #force.research_queue > 0) then return false, "research-already-assigned" end
-  local ok, why = pcall(function() force.current_research = tech end)
-  if not ok then return false, "research-assignment-failed:" .. safe(why) end
+  -- Native 2.1 exposes current_research as read-only. Queue through the
+  -- engine API and verify acceptance instead of silently failing every pulse.
+  local ok, accepted = pcall(function() return force.add_research(tech.name) end)
+  if not ok then return false, "research-assignment-failed:" .. safe(accepted) end
+  if accepted~=true then return false,"research-assignment-refused"end
   record("research-assigned-0644", pair, "technology=" .. tech.name)
   return true, "research-assigned"
 end
-function M.service_pair(pair, reason) local r = root(); if r.enabled == false then return false, "disabled" end; local plan, why = M.build_plan(pair, reason or "service"); if plan then stat("plans_built"); record("plan-built-0644", pair, "stage=" .. safe(plan.stage)); if plan.research_candidate then service_science(pair, plan) end; return true, why end; stat("plans_failed"); return false, why end
+function M.service_pair(pair, reason) local r = root(); if r.enabled == false then return false, "disabled" end; local plan, why = M.build_plan(pair, reason or "service"); if plan then stat("plans_built"); record("plan-built-0644", pair, "stage=" .. safe(plan.stage)); if plan.research_candidate then local queued,detail=service_science(pair, plan);plan.research_queued=queued==true;plan.research_assignment_reason=detail end; return true, why end; stat("plans_failed"); return false, why end
 -- The broker's offered budget caps *attempted* station surveys, not just
 -- successful plans. Rotate by stable station ID, persisted in the existing
 -- planner state, so a failed station cannot starve its neighbors.

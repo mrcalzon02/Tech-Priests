@@ -2483,4 +2483,39 @@ scenario("first-Junior reversal yields uncommitted 0647 recipe safely",function(
   _G.TechPriestsStationStarvationReversal0850=old_reversal
 end)
 
+scenario("canonical distinct cache inventory supplies exact station recipe ingredients",function()
+  local f=fixture();local cache=inventory({["iron-plate"]=2})
+  local label={__tostring=function()return "LuaInventory"end}
+  setmetatable(f.source,label);setmetatable(cache,label)
+  local previous=_G.TechPriestsStorageRoleAuthority0686
+  local entity={valid=true,force=f.force,surface=f.surface}
+  _G.TechPriestsStorageRoleAuthority0686={generic_storage_sources=function()
+    return {{entity=f.pair.station,inv=f.source},{entity=entity,inv=cache}}
+  end}
+  local old_prefer=Production.root().prefer_emergency_facilities
+  Production.root().prefer_emergency_facilities=false
+  local task={item_name="iron-gear-wheel",count=1,strict_recipe_0647=true,
+    strict_recipe_ingredients_0647={{name="iron-plate",count=2}}}
+  f.pair.emergency_craft=task
+  Production.service_pair(f.pair)
+  check(task.craft_due_tick_0514~=nil,"canonical recipe never started")
+  game.tick=task.craft_due_tick_0514
+  Production.service_pair(f.pair)
+  check(cache.get_item_count("iron-plate")==0 and f.source.get_item_count("iron-gear-wheel")==1,
+    "real canonical cache ingredients were ignored or output was duplicated")
+  Production.root().prefer_emergency_facilities=old_prefer
+  _G.TechPriestsStorageRoleAuthority0686=previous
+end)
+scenario("modern crafter output is collected through the original production owner",function()
+  local f=fixture();local old=defines.inventory
+  defines.inventory={chest=1,fuel=2,crafter_input=33,crafter_output=34}
+  f.furnace.get_inventory=function(id)if id==34 then return f.output end end
+  f.output.insert({name="iron-plate",count=4})
+  F.tag_built_entity(f.pair,f.furnace,"native-output-regression")
+  f.pair.emergency_craft={item_name="iron-plate",count=4,facility_only_0647=true}
+  Production.service_pair(f.pair)
+  check(f.output.get_item_count("iron-plate")==0 and f.source.get_item_count("iron-plate")==4,
+    "modern engine output was left behind or fabricated")
+  defines.inventory=old
+end)
 print("[bootstrap-production-regression] PASS scenarios="..total)

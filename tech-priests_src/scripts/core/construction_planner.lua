@@ -1368,6 +1368,20 @@ end
 local function finish(pair,task,built,reason)
  release_terminal_movement(pair)
  release_site(pair,task)
+ -- A paid standard bootstrap workshop must enter the existing production
+ -- ownership ledger. Unclaimed player assemblers and dedicated ratio-build
+ -- recipes are not adopted by this general emergency workshop owner.
+ if valid(built)and task.request_field=="construction_bootstrap_ghost_0645"
+     and built.type=="assembling-machine"
+     and(built.name=="assembling-machine-1"or built.name=="assembling-machine-2"
+       or built.name=="assembling-machine-3")then
+  local facilities=rawget(_G,"TECH_PRIESTS_EMERGENCY_FACILITY_DOCTRINE_0343")
+    or package.loaded["scripts.core.emergency_facility_doctrine"]
+  if facilities and type(facilities.tag_built_entity)=="function"then
+   local ok,why=pcall(facilities.tag_built_entity,pair,built,"original-0338-bootstrap-workshop")
+   if not ok then pair.bootstrap_workshop_registration_error_0338=tostring(why)end
+  end
+ end
  local request=task and task.request_value
  if built and type(request)=="table"
    and type(request.factory_component_recipe_1150)=="string"then

@@ -447,6 +447,17 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
   local required_rank = M.required_worker_rank_for_pair(requester_pair)
   local resource_writ=type(blocked_item)=="string"
       and blocked_item:sub(1,9)=="resource:"
+  if resource_writ then
+    local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+    if hierarchy and type(hierarchy.direct_capacity_remaining)=="function"
+        and math.floor(rank_number(requester_pair)or 1)>1 then
+      local ok,free=pcall(hierarchy.direct_capacity_remaining,requester_pair)
+      if not ok or not tonumber(free)or free<1 then
+        requester_pair.station_expansion_admission_0256="command-capacity-full"
+        return false,"command-capacity-full"
+      end
+    end
+  end
   -- Physical remote-resource relay: the actual parent builds its immediate
   -- lower-rank successor, THEN the new paired priest builds the next link.
   -- Existing subordinates retain their own assignments and inventory.
@@ -1491,7 +1502,31 @@ function M.service_station_expansion_assignment(worker_pair)
   if not M.is_at_ghost_build_standoff(worker_pair.priest.position,pos) then
     rec.phase = "moving-to-ghost"
     rec.updated_tick = game.tick
-    if issue_priest_command and defines and defines.command then
+    local home=worker_pair.station.position
+    local operating=refresh_pair_radius and refresh_pair_radius(worker_pair)or worker_pair.radius or 20
+    if rec.commander_bootstrap and distance_sq(home,pos)>operating*operating then
+      -- A rounded edge ghost may lie just outside home coverage. Walk to
+      -- a legal physical build contact inside home instead of asking the
+      -- corridor owner to authorize the out-of-domain ghost center.
+      local length=math.sqrt(distance_sq(home,pos))
+      local inset=math.sqrt(StationCargo0824.reach_sq)-.5
+      local wanted={x=pos.x+(home.x-pos.x)*inset/length,
+        y=pos.y+(home.y-pos.y)*inset/length}
+      local ok,contact=pcall(function()return worker_pair.station.surface.find_non_colliding_position(
+        worker_pair.priest.name,wanted,1,.25,false)end)
+      if not(ok and contact and distance_sq(home,contact)<=operating*operating
+          and distance_sq(contact,pos)<=((math.sqrt(StationCargo0824.reach_sq)-.25)^2))then
+        rec.phase="resource-ghost-no-authorized-contact";return false
+      end
+      local request=rawget(_G,"tech_priests_request_movement_0418")
+      local moved,accepted,why=false,false,"movement-owner-unavailable"
+      if type(request)=="function"then
+        moved,accepted,why=pcall(request,worker_pair,contact,"resource-station-build-contact-0256",
+          {owner="station-expansion-0256",priority=650,ttl=600,radius=.25})
+      end
+      rec.contact_position_0256={x=contact.x,y=contact.y}
+      if not(moved and accepted==true)then rec.phase="resource-ghost-contact-blocked:"..tostring(why or accepted)end
+    elseif issue_priest_command and defines and defines.command then
       issue_priest_command(worker_pair.priest, {
         type = defines.command.go_to_location,
         destination = pos,

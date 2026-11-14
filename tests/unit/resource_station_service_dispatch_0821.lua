@@ -10,7 +10,7 @@ local function pair(id,x,rank)
   return {
     station={valid=true,unit_number=id,position={x=x,y=0},
       force=force,surface=surface,name="station-"..rank},
-    priest={valid=true,position={x=x,y=0}},
+    priest={valid=true,position={x=x,y=0},force=force,surface=surface},
     rank_test=rank,radius=30,
     independent_emergency_operation_0184={enabled=true},
   }
@@ -202,11 +202,14 @@ do
   end
   local before_unseen=#requests
   force.is_chunk_charted=function()return false end
+  -- No live subordinate may already observe the allegedly unseen patch.
+  senior.station.position.x=0
   game.tick=1200
   assert(tech_priests_0259_resource_expansion_service(auto)==false
     and not Chain.status(auto) and not auto.roboport_expansion_goal_1076
     and #requests==before_unseen and exploratory_attempts>0,
     "uncharted generated ore reserved a persistent ranked relay")
+  senior.station.position.x=40
   -- A later genuine radar chart must be visible to the next normal pass;
   -- no injected objective, force.chart or source inventory grant is used.
   force.is_chunk_charted=function()return true end
