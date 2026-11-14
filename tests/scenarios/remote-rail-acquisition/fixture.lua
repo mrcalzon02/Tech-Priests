@@ -920,6 +920,49 @@ local function inspect(s,elapsed)
     " retry_after="..tostring(first_board and first_board.retry_after_tick)..
     " blocker="..tostring(first_board and first_board.last_blocker)..
     " movement_owner="..tostring(p.movement_request_0418 and p.movement_request_0418.owner))
+  -- Read actual native locomotive/schedule/stop movement. The persisted
+  -- 0836 phase is diagnostic ONLY; train coordinates and original driver
+  -- must confirm motion. A route record is never a completed expedition.
+  local outbound=objective and objective.first_outbound_0836
+  local moving_train=loco_entity and loco_entity.valid and loco_entity.train
+  local record_name
+  if moving_train and moving_train.valid then
+    local observed_schedule,records=pcall(function()
+      return moving_train.get_schedule().get_records()
+    end)
+    if observed_schedule and type(records)=="table" and #records==1 then
+      record_name=records[1].station
+    end
+  end
+  emit("OUTBOUND_NATIVE_0836 elapsed="..elapsed..
+    " phase="..tostring(outbound and outbound.phase)..
+    " original_priest_driver="..tostring(native_driver==p.priest)..
+    " train_id="..tostring(moving_train and moving_train.valid
+      and moving_train.id)..
+    " locomotive_x="..tostring(loco_entity and loco_entity.valid
+      and loco_entity.position.x)..
+    " origin_x="..tostring(outbound and outbound.origin_x)..
+    " highest_x="..tostring(outbound and outbound.highest_x)..
+    " speed="..tostring(moving_train and moving_train.valid
+      and moving_train.speed)..
+    " has_path="..tostring(moving_train and moving_train.valid
+      and moving_train.has_path)..
+    " path_end_stop_unit="..tostring(moving_train and moving_train.valid
+      and moving_train.path_end_stop
+      and moving_train.path_end_stop.unit_number)..
+    " actual_station_unit="..tostring(moving_train and moving_train.valid
+      and moving_train.station and moving_train.station.unit_number)..
+    " remote_stop_unit="..tostring(remote_entity and remote_entity.valid
+      and remote_entity.unit_number)..
+    " schedule_station="..tostring(record_name)..
+    " blocked="..tostring(outbound and outbound.last_blocker))
+  if outbound and outbound.phase==
+      "native-original-outbound-arrived-at-paid-remote-stop"
+      and not(moving_train and moving_train.valid
+        and moving_train.station==remote_entity
+        and native_driver==p.priest)then
+    fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")
+  end
   local drills=surface.find_entities_filtered{
     type="mining-drill",
     area={{s.natural_ore_x-32,s.natural_ore_y-24},
@@ -1053,7 +1096,7 @@ local function pulse()
     if elapsed>=36000 and elapsed<=60000 and elapsed%600==0 then
       trace_uncommitted_rail_gap(s,elapsed)
     end
-    for _,mark in ipairs({1800,9000,18000,36000,60000,90000}) do
+    for _,mark in ipairs({1800,9000,18000,36000,60000,72000,90000}) do
       if elapsed>=mark and not s["checked_"..mark] then
         inspect(s,mark);s["checked_"..mark]=true
       end
