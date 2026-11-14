@@ -155,3 +155,5 @@ check(not denied and why=="outpost-magos-or-measurements-missing",
 game,storage,prototypes,defines=previous.game,previous.storage,
   previous.prototypes,previous.defines
 print("[rail-outpost-layout-1404] PASS wagon counts, ore/belt/inserter buffers, staged design, native prototype readback, no ghosts")
+-- 1410: live Magos doctrine affects ONLY the immediate outpost element.
+dofile("tests/unit/rail_outpost_priest_doctrine_1410.lua")
