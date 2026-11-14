@@ -22,6 +22,35 @@ B = P + "PASS two distinct 0338-debited native-connected rails"
 
 
 
+class OriginalTrainLiveFuelRefusalTests(unittest.TestCase):
+    def test_native_boarding_checks_live_traction_not_only_historical_fuel_receipt(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        source = (root / "tech-priests_src/scripts/core/"
+                  "rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        block = source.split("function M.service_first_train_board_0836(pair)", 1)[1].split(
+            "function M.service_pair(pair)", 1)[0]
+        fuel = block.split("-- A prior 0528 delivery receipt is historical", 1)[1].split(
+            "if pair.construction_task_0338", 1)[0]
+        self.assertIn("entity.get_inventory(fuel_slot)", fuel)
+        self.assertIn('inv.get_item_count("coal")', fuel)
+        self.assertIn("burner.remaining_burning_fuel", fuel)
+        self.assertIn("if not fuel_read or fuel_now~=true then", fuel)
+        self.assertIn("original-train-out-of-live-fuel", fuel)
+        self.assertIn("original-train-live-fuel-unobservable", fuel)
+        self.assertNotIn("set_driver(", fuel)
+        self.assertNotIn("create_entity(", fuel)
+        self.assertNotIn("insert(", fuel)
+        self.assertNotIn("teleport(", fuel)
+        # Never misrepresent original unit boarding as successful.
+        self.assertIn('if priest.type~="character" then', block)
+        self.assertIn('state.phase="native-boarding-unsupported-original-unit"', block)
+        # Readback occurs only before new movement/boarding, not as an
+        # excuse to forget an already physically confirmed native driver.
+        self.assertLess(block.index("if driver==priest then"), block.index("local fuel_slot="))
+        self.assertLess(block.index("local fuel_slot="), block.index(
+            "if priest.type~=\"character\" then"))
+
+
 class OriginalRailLiveAdmissionTraceTests(unittest.TestCase):
     def test_broker_plan_and_dispatcher_handoff_are_distinguished_without_ownership_changes(self):
         root = pathlib.Path(__file__).resolve().parents[2]
