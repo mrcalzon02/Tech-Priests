@@ -208,7 +208,7 @@ class OriginalRailOwnerYieldEvidenceTests(unittest.TestCase):
         ):
             self.assertIn('"' + " " + field + '="..tostring(', board)
         self.assertIn("native_driver==p.priest", board)
-        self.assertIn("loco_entity.get_driver()", board)
+        self.assertIn("loco_entity.get_driver()", fixture)
         self.assertNotIn('first_board.last_item_family_yield_0836==true)', board)
         self.assertNotIn('first_board.last_item_family_yield_reason_0836==nil)', board)
 
