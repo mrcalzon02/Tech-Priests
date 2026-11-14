@@ -499,6 +499,8 @@ local function stage_original_wagon_drill_0836(pair,task)
    and held.surface_index==pair.station.surface.index
    and held.force_index==pair.station.force.index
    and held.wagon_request==task.request_value
+   and type(held.source_before)=="number"
+   and type(held.source_after)=="number"
    and held.source_before-held.source_after==1
    and item_count(held.inventory,"burner-mining-drill")==1
  end
