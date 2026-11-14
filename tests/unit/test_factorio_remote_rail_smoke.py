@@ -1925,6 +1925,21 @@ class NativeOriginalHomeward0836ContractTests(unittest.TestCase):
         self.assertIn('state.last_blocker="native-homeward-no-physical-path"',home)
 
     """A schedule and an old train receipt cannot prove physical return."""
+    def test_original_docked_reverse_consist_not_rejected_by_lead_position(self):
+        """Native paid home docking, not the eastmost lead's coordinate, is final authority."""
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        body=rail.split("function M.service_first_train_return_0836(pair)",1)[1].split("function M.service_pair(pair)",1)[0]
+        self.assertIn('if train.station==origin\n    and state.lowest_x<state.remote_x-32 then',body)
+        self.assertNotIn('engine.position.x<=origin.position.x+12',body)
+        for required in ('driver==priest', 'engine.train.id==outward.train_id',
+                         'paid[rail.unit_number]', 'reverse.paid_completion_0836.native_0338_paid==true',
+                         'state.phase="native-original-home-arrived-after-roundtrip"',
+                         'state.last_blocker="native-homeward-no-physical-path"'):
+            self.assertIn(required,body)
+        for forbidden in ("priest.teleport(", "train.speed=", "surface.create_entity("):
+            self.assertNotIn(forbidden,body)
+
     def test_original_paid_arrival_and_native_driver_precede_home_order(self):
         root=pathlib.Path(__file__).resolve().parents[2]
         rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")

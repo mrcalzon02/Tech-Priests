@@ -2604,9 +2604,14 @@ function M.service_first_train_return_0836(pair)
   state.last_has_path=train.has_path
   state.last_station_unit=valid(train.station)
     and train.station.unit_number or nil
+  -- Native train.station is Factorio's actual stop-arrival proof. The
+  -- original east-facing locomotive is at the opposite end of this paid
+  -- bidirectional consist: at the observed home dock its x=60 while the
+  -- west-facing stop x=43. The old 12-tile lead-locomotive test rejected a
+  -- truly docked train. Retain original driver/train/stop identities,
+  -- physical rail/fuel checks and the recorded 326-tile westward journey.
   if train.station==origin
-    and state.lowest_x<state.remote_x-32
-    and engine.position.x<=origin.position.x+12 then
+    and state.lowest_x<state.remote_x-32 then
     state.phase="native-original-home-arrived-after-roundtrip"
     state.arrival_tick=state.arrival_tick or now()
     state.last_blocker=nil
