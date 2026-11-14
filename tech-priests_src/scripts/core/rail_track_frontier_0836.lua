@@ -1710,6 +1710,12 @@ function M.service_pair(pair)
           if not(far and far.phase=="native-paid-original-train-stop-verified")then
             return M.service_first_train_stop_0836(pair,"remote")
           end
+          -- A recorded remote stop is not a durable connection guarantee:
+          -- revalidate it natively before every boarding/departure pulse.
+          M.service_first_train_stop_0836(pair,"remote")
+          if far.phase~="native-paid-original-train-stop-verified"then
+            return false,far.blocker or "original-remote-stop-lost"
+          end
           return M.service_first_train_board_0836(pair)
         end
         return M.service_first_train_fuel_0836(pair)
