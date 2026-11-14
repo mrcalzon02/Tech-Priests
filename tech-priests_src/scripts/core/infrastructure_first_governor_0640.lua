@@ -1746,10 +1746,7 @@ function M.request_installed_lab_power_pole_1251(pair)
     and prototypes.item["small-electric-pole"]
   local placed=nil
   if pole_item then pcall(function() placed=pole_item.place_result end) end
-  local reach=nil
-  if pole_proto then
-    pcall(function() reach=pole_proto.supply_area_distance end)
-  end
+  local reach=PowerSetup1252.supply_distance and PowerSetup1252.supply_distance(pole_proto)
   if not(placed and placed.name=="small-electric-pole"
       and type(reach)=="number" and reach>0) then
     return false,"lab-power-real-placeable-pole-unavailable"

@@ -20,6 +20,17 @@ function M.network_id(entity)
  return id and id>0 and id or nil
 end
 
+function M.supply_distance(prototype,quality)
+ if not prototype then return nil end
+ local ok,value=pcall(function()
+  return prototype.get_supply_area_distance(quality or "normal")
+ end)
+ if not(ok and type(value)=="number")then
+  ok,value=pcall(function()return prototype.supply_area_distance end)
+ end
+ return ok and type(value)=="number"and value>0 and value<=64 and value or nil
+end
+
 function M.coverage_at(position,entity,supply)
  supply=tonumber(supply)
  if not(position and valid(entity)and entity.position
@@ -44,8 +55,9 @@ function M.real_pole_covers(pole,entity)
      and pole.surface==entity.surface and pole.force==entity.force)then
   return false,"invalid-or-foreign-physical-pole"
  end
- local supply
- pcall(function()supply=pole.prototype.supply_area_distance end)
+ local quality
+ pcall(function()quality=pole.quality end)
+ local supply=M.supply_distance(pole.prototype,quality)
  if not M.coverage_at(pole.position,entity,supply)then
   return false,"outside-native-pole-supply-area"
  end

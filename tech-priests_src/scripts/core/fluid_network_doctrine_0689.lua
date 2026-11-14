@@ -30,10 +30,19 @@ end
 local function segment_contents(box,index)local out={};if box and box.valid then pcall(function()out=box.get_fluid_segment_contents(index)or{}end)end;return type(out)=="table"and out or{}end
 local function segment_id(box,index)local v;if box and box.valid then pcall(function()v=box.get_fluid_segment_id(index)end)end;return v end
 local function capacity(box,index)local v=0;if box and box.valid then pcall(function()v=tonumber(box.get_capacity(index))or 0 end)end;return v end
-local function prototype_record(box,index)local v;if box and box.valid then pcall(function()v=box.get_prototype(index)end)end;if type(v)=="table"and v.object_name==nil then for _,p in pairs(v)do if p then return p end end end;return v end
+local function prototype_record(box,index)local v;if box and box.valid then pcall(function()v=box.get_prototype(index)end)end;if type(v)=="table"and v.object_name==nil and v.production_type==nil and v[1]~=nil then return v[1]end;return v end
 local function production_type(box,index)local p=prototype_record(box,index);local v;if p then pcall(function()v=p.production_type end)end;return v end
 local function filter_name(box,index)
- local f;if box and box.valid then pcall(function()f=box.get_filter(index)end);if type(f)=="table"then f=f.name end;if not f then pcall(function()f=box.get_locked_fluid(index)end)end;if not f then local p=prototype_record(box,index);pcall(function()f=p and p.filter and p.filter.name end)end end;return type(f)=="string"and f~=""and f or nil
+ local function name(value)
+  if type(value)=="string"then return value end
+  local ok,n=pcall(function()return value and value.name end)
+  return ok and type(n)=="string"and n or nil
+ end
+ local f;if box and box.valid then
+  pcall(function()f=name(box.get_filter(index))end)
+  if not f then pcall(function()f=name(box.get_locked_fluid(index))end)end
+  if not f then local p=prototype_record(box,index);pcall(function()f=name(p and p.filter)end)end
+ end;return type(f)=="string"and f~=""and f or nil
 end
 local function connection_records(box,index)
  local out={};local connections={};if box and box.valid then pcall(function()connections=box.get_pipe_connections(index)or{}end)end;for _,c in pairs(connections)do if type(c)=="table"then local owner;if c.target then pcall(function()owner=c.target.owner end)end;local p=c.target_position or c.position;out[#out+1]={position=p and{x=p.x,y=p.y}or nil,connected=c.target~=nil or valid(owner),target_owner=owner}end end;return out
@@ -126,8 +135,8 @@ local function proposals_for_report(pair,report)
  for _,rec in ipairs(report.blocked_outputs or{})do local fluid=rec.requirement.name;local sink=source_or_sink(pair,report.machine,fluid,"output");if sink then local targets={};for _,target in ipairs(rec.free_targets or{})do local ok=M.validate_endpoint(report.machine,rec.index,target,fluid,report.records,false);if ok then targets[#targets+1]=target end end;if#targets>0 then outputs[#outputs+1]={version=M.version,tick=now(),expires_tick=now()+M.proposal_ttl,read_only=true,action="connect-fluid-output",direction="output",machine=report.machine,machine_name=report.machine_name,machine_unit=report.machine_unit,report_tick=report.tick,context_identity=report.context_identity,fluid=fluid,fluidbox_index=rec.index,connection_targets=targets,sink=sink,state="safe-sink-found",port_collision_safe=true}end end end
  return inputs,outputs
 end
-function M.validate_proposal(pair,p)
- if not(valid_pair(pair)and type(p)=="table"and valid(p.machine)and p.context_identity and p.fluid and p.fluidbox_index)then return false,"invalid-proposal"end;if(tonumber(p.expires_tick)or 0)<now()then return false,"proposal-expired"end;if p.machine.surface~=pair.station.surface or p.machine.force~=pair.station.force then return false,"machine-context-mismatch"end;if p.context_identity.machine_unit and p.machine.unit_number~=p.context_identity.machine_unit then return false,"machine-unit-mismatch"end
+function M.validate_proposal(pair,p,owned_route)
+ if not(valid_pair(pair)and type(p)=="table"and valid(p.machine)and p.context_identity and p.fluid and p.fluidbox_index)then return false,"invalid-proposal"end;local plan=pair.standard_fluid_route_plan_0691;local continuing=owned_route and plan and plan.proposal==p;if not continuing and(tonumber(p.expires_tick)or 0)<now()then return false,"proposal-expired"end;if p.machine.surface~=pair.station.surface or p.machine.force~=pair.station.force then return false,"machine-context-mismatch"end;if p.context_identity.machine_unit and p.machine.unit_number~=p.context_identity.machine_unit then return false,"machine-unit-mismatch"end
  local report=M.inspect_machine(pair,p.machine,true);if not(report and report.context_identity.machine_unit==p.context_identity.machine_unit)then return false,"report-context-mismatch"end;local record;for _,rec in ipairs(report.records or{})do if rec.index==p.fluidbox_index and rec.requirement and rec.requirement.name==p.fluid then record=rec break end end;if not record then return false,"machine-port-no-longer-required"end
  local endpoint=p.direction=="input"and p.source or p.sink;if not(endpoint and valid(endpoint.entity)and endpoint.entity.surface==pair.station.surface and endpoint.entity.force==pair.station.force)then return false,"remote-endpoint-invalid"end;local machine_safe=false;for _,target in ipairs(p.connection_targets or{})do local ok=M.validate_endpoint(p.machine,p.fluidbox_index,target,p.fluid,report.records,false);if ok then machine_safe=true break end end;if not machine_safe then return false,"machine-port-unsafe"end
  local endpoint_records=port_records(endpoint.entity,{},{});local remote_safe=false;for _,target in ipairs(endpoint.interfaces or{})do local ok=M.validate_endpoint(endpoint.entity,endpoint.fluidbox_index,target,p.fluid,endpoint_records,p.direction=="output");if ok then remote_safe=true break end end;if not remote_safe then return false,"remote-port-unsafe"end;if p.direction=="input"then
@@ -149,7 +158,21 @@ end
 function M.scan_pair(pair,force)
  if M.root().enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end;if not force and now()<(tonumber(pair.fluid_network_scan_due_0689)or 0)then return{processed=0,acted=0,detail="cached"}end;pair.fluid_network_scan_due_0689=now()+M.scan_interval
  local radius=service_radius(pair);local p=pair.station.position;local machines=routed_find(pair.station.surface,{area={{p.x-radius,p.y-radius},{p.x+radius,p.y+radius}},force=pair.station.force,type=MACHINE_TYPES,limit=M.max_machines},"standard-fluid-machines","standard-fluid-machines:"..safe(pair.station.surface.index)..":"..safe(pair.station.force.index)..":"..safe(station_unit(pair)),180)
- local reports,inputs,outputs={},{},{};for _,machine in pairs(machines)do local report=M.inspect_machine(pair,machine,false);if report then reports[#reports+1]=report;local a,b=proposals_for_report(pair,report);for _,v in ipairs(a)do inputs[#inputs+1]=v end;for _,v in ipairs(b)do outputs[#outputs+1]=v end end end
+ local reports,inputs,outputs={},{},{};for _,machine in pairs(machines)do
+  local ok,report=pcall(M.inspect_machine,pair,machine,false)
+  if not ok then
+   pair.fluid_network_error_0689={tick=now(),machine=machine.name,error=tostring(report)}
+   error(report)
+  end
+  if report then reports[#reports+1]=report
+   local ok,a,b=pcall(proposals_for_report,pair,report)
+   if not ok then
+    pair.fluid_network_error_0689={tick=now(),machine=machine.name,error=tostring(a)}
+    error(a)
+   end
+   for _,v in ipairs(a)do inputs[#inputs+1]=v end;for _,v in ipairs(b)do outputs[#outputs+1]=v end
+  end
+ end
  pair.machine_fluid_reports_0689=reports;pair.machine_fluid_network_0689=reports[1];pair.fluid_connection_proposals_0689=inputs;pair.fluid_output_sink_proposals_0694=outputs;record(pair,"pair-scan","machines="..#reports.." inputs="..#inputs.." outputs="..#outputs);return{processed=1,acted=0,waiting=#inputs+#outputs,detail="machines="..#reports}
 end
 local function patch_diagnostics()

@@ -5,6 +5,7 @@
 -- by this fixture. Original Tech Priest physical builders must do that.
 local M={}
 local Transition=require("scripts.core.bootstrap_research_exit_1224")
+local NativeFluidbox=require("scripts.core.native_fluidbox_1279")
 local PREFIX="[TP-MIDGAME-SCIENCE] "
 local KEY="ci_midgame_science_1194"
 local MARKS={0,9000,18000,36000,72000,108000,144000,180000,216000}
@@ -192,11 +193,14 @@ local function setup()
   if not(well and well.valid and well.amount>=250000)then
    fail("OIL_WELL_CREATION_REFUSED "..r.name)
   end
-  -- A pond near every station makes offshore pumping a real design task.
+  -- Keep a real shoreline inside the Magos construction interior. The old
+  -- (-29,-30) pond only exposed a diagonal corner inside that interior;
+  -- ghost-revival checks allowed a dry pump there, manual checks correctly
+  -- reject it. This is starting terrain, never a water/steam injection.
   local water={}
   for dx=-2,2 do for dy=-2,2 do
    water[#water+1]={name="water",
-     position={x=r.x-29+dx,y=-30+dy}}
+     position={x=r.x-24+dx,y=-24+dy}}
   end end
   surface.set_tiles(water,true)
   emit("STATION_CREATED rank="..r.name.." unit="..station.unit_number..
@@ -336,6 +340,11 @@ local function diagnostic_pair(label,unit)
   science_ratio_gap=tostring(operation.magos_ratio_prerequisite_gap_1178 or "none"),
   science_factory_request=tostring(operation.magos_factory_component_request_1150 or "none"),
   science_operation_enabled=operation.enabled==true,
+  energy_summary=pair.energy_family_summary_0705,
+  energy_candidate_item=pair.energy_family_candidate_0707 and pair.energy_family_candidate_0707.item,
+  energy_last=pair.energy_family_logistics_last_0707,
+  energy_readiness_recent=root.energy_family_readiness_0705 and root.energy_family_readiness_0705.recent,
+  energy_logistics_recent=root.energy_family_logistics_0707 and root.energy_family_logistics_0707.recent,
   ghost_entity=tostring(ghost.entity_name or "none"),
   ghost_status=tostring(ghost.status or "none"),
   ghost_blocker=tostring(ghost.blocker or "none"),
@@ -365,10 +374,12 @@ local function diagnostic_pair(label,unit)
    fluid_input_proposals_0689=#(pair.fluid_connection_proposals_0689 or {}),
    fluid_output_proposals_0689=#(pair.fluid_output_sink_proposals_0694 or {}),
    fluid_route_state_0691=tostring(fluid_plan.state or "none"),
+   fluid_native_error_0689=pair.fluid_network_error_0689 and pair.fluid_network_error_0689.error,
    fluid_route_fluid_0691=tostring(fluid_plan.fluid or "none"),
    fluid_route_index_0691=fluid_plan.current_index or 0,
    fluid_route_tiles_0691=#(fluid_plan.tiles or {}),
    fluid_route_last_result_0691=tostring(fluid_last.result or "none"),
+   fluid_route_refusal_0691=pair.standard_fluid_route_refusal_0691 and pair.standard_fluid_route_refusal_0691.reason,
    fluid_pipe_request_0691=tostring(fluid_request.item_name or "none"),
    fluid_pipe_request_source_0691=tostring(fluid_request.source or "none"),
   construction_last_action=tostring(event.action or "none"),
@@ -506,19 +517,38 @@ local function snapshot(elapsed)
  power.native_pipe_count=counts.pipe or 0
  power.steam_ports={}
  power.pole_networks={}
- for _,e in ipairs(entities) do
+ local live_power_entities=surface.find_entities_filtered{
+   area=area(),force=force,type={"generator","boiler","offshore-pump","electric-pole","pipe"}}
+ for _,e in ipairs(live_power_entities) do
   if e and e.valid and
       (e.name=="offshore-pump" or e.name=="boiler"
-       or e.name=="steam-engine") then
+       or e.name=="steam-engine" or e.type=="pipe") then
    local sample={name=e.name,unit=e.unit_number,
      x=e.position.x,y=e.position.y,ports={}}
-   local box
-   pcall(function()box=e.fluidbox end)
+   pcall(function()sample.status=e.status;sample.active=e.active end)
+   local box=NativeFluidbox.observe(e)
+   pcall(function()sample.fluids_count=e.fluids_count end)
+   if e.type=="offshore-pump" then
+    local ok,result=pcall(function()return e.get_fluid_source_fluid()end)
+    sample.source_fluid=ok and result or nil
+    if not ok then sample.source_error=tostring(result)end
+    pcall(function()
+     sample.source_tile_position=e.get_fluid_source_tile()
+     sample.source_tile=surface.get_tile(sample.source_tile_position).name
+     sample.direction=e.direction
+    end)
+   end
    if box and box.valid then
     local count=0
     pcall(function()count=#box end)
     for index=1,math.min(count,6) do
      local port={index=index}
+     pcall(function()port.segment_id=box.get_fluid_segment_id(index)end)
+     pcall(function()port.locked_fluid=box.get_locked_fluid(index)end)
+     local ok,raw_segment=pcall(function()return e.get_fluid_segment_id(index)end)
+     if not ok then port.native_segment_error=tostring(raw_segment)end
+     local ok_filter,raw_filter=pcall(function()return e.get_fluid_segment_filter(index)end)
+     if not ok_filter then port.native_filter_error=tostring(raw_filter)end
      local prototype
      pcall(function()prototype=box.get_prototype(index)end)
      if type(prototype)=="table"and prototype.object_name==nil then
@@ -543,8 +573,10 @@ local function snapshot(elapsed)
      pcall(function()
       local connections=box.get_pipe_connections(index) or {}
       port.connections=#connections
+      port.positions={}
       local occupied=0
       for _,c in ipairs(connections) do
+       port.positions[#port.positions+1]=c.target_position or c.position
        if c.target then occupied=occupied+1 end
       end
       port.connected=occupied
@@ -674,6 +706,9 @@ local function snapshot(elapsed)
     " science_gap="..tostring(d.science_ratio_gap or "none")..
     " science_request="..tostring(d.science_factory_request or "none")..
     " science_enabled="..tostring(d.science_operation_enabled)..
+    " energy_state="..tostring(d.energy_summary and d.energy_summary.worst_state or "none")..
+    " energy_candidate="..tostring(d.energy_candidate_item or "none")..
+    " energy_last="..tostring(d.energy_last and d.energy_last.detail or "none")..
     " ghost="..tostring(d.ghost_entity or "none")..
     " ghost_status="..tostring(d.ghost_status or "none")..
     " ghost_blocker="..tostring(d.ghost_blocker or "none")..
@@ -687,10 +722,12 @@ local function snapshot(elapsed)
      " fluid_inputs="..tostring(d.fluid_input_proposals_0689 or 0)..
      " fluid_outputs="..tostring(d.fluid_output_proposals_0689 or 0)..
      " fluid_state="..tostring(d.fluid_route_state_0691 or "none")..
+     " fluid_error="..tostring(d.fluid_native_error_0689 or "none")..
      " fluid_name="..tostring(d.fluid_route_fluid_0691 or "none")..
      " fluid_tile="..tostring(d.fluid_route_index_0691 or 0)..
        "/"..tostring(d.fluid_route_tiles_0691 or 0)..
      " fluid_last="..tostring(d.fluid_route_last_result_0691 or "none")..
+     " fluid_refusal="..tostring(d.fluid_route_refusal_0691 or "none")..
      " fluid_request="..tostring(d.fluid_pipe_request_0691 or "none")..
      " fluid_source="..tostring(d.fluid_pipe_request_source_0691 or "none")..
     " order="..tostring(d.active_order_kind or "none")..
@@ -767,6 +804,20 @@ local function pulse()
  if not s.started or s.failed then return {processed=1,acted=0}end
  local elapsed=game.tick-s.started
  local ok,err=pcall(function()
+  -- This is the explicitly independent factory profile. Maintenance mode
+  -- must not be relied on to silently enable autonomy during discovery.
+  s.independent_authorized=s.independent_authorized or{}
+  for _,rank in ipairs(RANKS)do
+   local unit=s["station_"..rank.name]
+   local pair=storage.tech_priests.pairs_by_station[unit]
+   if pair and pair.priest and pair.priest.valid and not s.independent_authorized[unit]then
+    pair.emergency_operation_auto_allowed_0190=true
+    pair.logistic_frustration_due_tick=game.tick
+    assert(tech_priests_set_emergency_operation_0184(pair,true,"midgame-independent"),
+      "independent factory profile authorization refused")
+    s.independent_authorized[unit]=true
+   end
+  end
   for _,mark in ipairs(MARKS)do
    if elapsed>=mark and not s.checkpoints[mark] then
     snapshot(mark)

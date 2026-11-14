@@ -96,10 +96,15 @@ local unknown=Doctrine.inspect_machine(pair,foreign,true)
 assert(unknown==nil,"unknown dry generator received fabricated steam authority")
 -- Once the actual port switches to a foreign filtered fluid, the original
 -- proposal must fail closed; no pipe may be planned from stale identity.
+game.tick=found_water.expires_tick+1
+assert(not Doctrine.validate_proposal(pair,found_water),"unowned stale discovery accepted")
+pair.standard_fluid_route_plan_0691={proposal=found_water}
+assert(Doctrine.validate_proposal(pair,found_water,true),"owned physical route expired during construction")
 pump.fluidbox=fluidbox({
  {direction="output",filter="crude-oil",x=6,y=0}})
-local unsafe=Doctrine.validate_proposal(pair,found_water)
+local unsafe=Doctrine.validate_proposal(pair,found_water,true)
 assert(not unsafe,"wrong-fluid source was treated as empty water")
+game.tick=3000
 -- Opposite failure: output may be a real owned boiler but empty and UNFILTERED.
 -- Its unknown segment cannot be assumed to contain steam.
 boiler.fluidbox=fluidbox({

@@ -2,7 +2,7 @@
 -- Every request is only an order for existing 0338; no stock is spent here.
 package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 game={tick=12000}
-defines={direction={north=0,east=4,south=8,west=12}}
+defines={direction={north=0,east=4,south=8,west=12},build_check_type={manual=1}}
 local force={index=1,name="player"}
 local foreign={index=2,name="enemy"}
 local surface={valid=true,index=1}
@@ -29,6 +29,8 @@ end
 surface.find_tiles_filtered=function()return water end
 surface.can_place_entity=function(spec)
  assert(spec.force==force and spec.position)
+ assert(spec.build_check_type==defines.build_check_type.manual,
+  "power machinery used ghost-revival placement rules")
  if type(placeable)=="function"then return placeable(spec)end
  return placeable
 end

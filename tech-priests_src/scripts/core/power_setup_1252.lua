@@ -66,7 +66,8 @@ local function legal(pair,item,pos,direction,r)
  if d2(pos,pair.station.position)>(r-2)^2 then return false end
  local ok,clear=pcall(function()
   return pair.station.surface.can_place_entity{
-   name=item,position=pos,direction=direction,force=pair.station.force}
+   name=item,position=pos,direction=direction,force=pair.station.force,
+   build_check_type=defines and defines.build_check_type and defines.build_check_type.manual}
  end)
  return ok and clear==true
 end
@@ -109,6 +110,7 @@ end
 -- 1251 laboratory and 1252 generator planners. Geometric coverage proposes
 -- a site; LuaEntity electric_network_id verifies a real installed connection.
 local NativeElectric=require("scripts.core.native_electric_authority_1263")
+M.supply_distance=NativeElectric.supply_distance
 local pole_supplies_entity=NativeElectric.coverage_at
 local function near(pair,entity,item,r)
  -- Find real, engine-placeable sites inside this station's territory.
@@ -127,10 +129,7 @@ local function near(pair,entity,item,r)
  if item=="small-electric-pole"then
   local prototype=prototypes and prototypes.entity
     and prototypes.entity["small-electric-pole"]
-  local supply
-  if prototype then
-   pcall(function()supply=tonumber(prototype.supply_area_distance)end)
-  end
+  local supply=NativeElectric.supply_distance(prototype)
   -- An unknown supply radius does NOT authorize an invented connection.
   if not(supply and supply>0 and supply<=64)then return nil end
   local box

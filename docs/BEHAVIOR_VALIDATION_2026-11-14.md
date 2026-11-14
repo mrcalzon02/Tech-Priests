@@ -83,6 +83,32 @@ and corrected through the existing movement owner and command budget.
 
 ## Earlier checks and remaining blockers
 
+Later native factory iterations correct the 2.1 pole supply API, half-tile pipe
+grid, bound placement calls, output-only fluidbox neighbour segments, premature
+route completion and proposal expiry during physical construction. Pipe adjacency
+now checks the exact touching port rather than every fluidbox of a nearby boiler.
+The explicitly independent 72,000-tick run builds 19 real pipes, completes the
+water and steam routes, and installs the laboratory and three networked poles.
+Water is produced by a real offshore pump; no fluid is seeded. Science and
+research are still zero at this checkpoint. The next measured blocker is the
+valid zero-slot vanilla burnt-result inventory being misclassified as full;
+the correction is covered by a residue-capacity regression and is under native
+rerun. Do not count physical assembly as science acceptance.
+
+Manual shoreline checks exposed another fixture defect: the old pond only put
+a diagonal corner inside the station construction interior. It allowed a dry
+pump under ghost-revival checks. The initial pond now has an accessible shoreline
+inside that interior; starting terrain is changed, never fluid inventory.
+This factory fixture now explicitly enables independent mode through the existing
+setter after each original pair appears, rather than depending on discovery to
+enable it silently. Default maintenance discovery no longer authorizes expansion.
+
+The arena now records resource expansion reasons and mission state. A pending
+raw construction leaf takes priority over speculative ratio materials: forces
+blocked on stone now explore for stone instead of iron. Existing physical
+missions and ore custody retain their owners when independent mode is disabled.
+The four-way factory/science/combat acceptance gate remains failing.
+
 `midgame-final/midgame-science` passes native early checkpoint acceptance at
 0, 9,000 and 18,000 ticks. This is explicitly a smoke gate. At 18,000 ticks:
 three paired priests, a physically built laboratory, boiler, engine and pump,

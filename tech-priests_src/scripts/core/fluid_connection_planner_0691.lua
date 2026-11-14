@@ -13,7 +13,7 @@ local function valid_pair(p)return type(p)=="table"and valid(p.station)and valid
 local function station_unit(p)return p and(p.station_unit or(valid(p.station)and p.station.unit_number))or nil end
 local function pair_map()return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or{}end
 local function dist_sq(a,b)if not(a and b)then return math.huge end;local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
-local function normalized_position(v)if not v then return nil end;local x=tonumber(v.x or v[1]);local y=tonumber(v.y or v[2]);if not(x and y)then return nil end;return{x=math.floor(x+.5),y=math.floor(y+.5)}end
+local function normalized_position(v)if not v then return nil end;local x=tonumber(v.x or v[1]);local y=tonumber(v.y or v[2]);if not(x and y)then return nil end;return{x=x,y=y}end
 local function position_key(p)return p and(tostring(p.x)..","..tostring(p.y))or"nil"end
 function M.root()
  storage.tech_priests=storage.tech_priests or{};local r=storage.tech_priests[M.storage_key]or{version=M.version,enabled=true,wrapper_free=true,input_output_integrated=true,construction_handoff=true,structured_scan_truth=true,stats={},recent={},plans={},cursor=0};storage.tech_priests[M.storage_key]=r;r.version=M.version
@@ -30,8 +30,27 @@ end
 local NATIVE_FLUIDBOX_1279=require("scripts.core.native_fluidbox_1279")
 local function fluidbox(e)return NATIVE_FLUIDBOX_1279.observe(e)end
 local function segment_contents(box,index)local out={};if box and box.valid then pcall(function()out=box.get_fluid_segment_contents(index)or{}end)end;return type(out)=="table"and out or{}end
-local function segment_id(box,index)local v;if box and box.valid then pcall(function()v=box.get_fluid_segment_id(index)end)end;return v end
-local function filter_name(box,index)local f;if box and box.valid then pcall(function()f=box.get_filter(index)end);if type(f)=="table"then f=f.name end;if not f then pcall(function()f=box.get_locked_fluid(index)end)end end;return type(f)=="string"and f~=""and f or nil end
+local function segment_id(box,index)
+ local v;if box and box.valid then
+  pcall(function()v=box.get_fluid_segment_id(index)end)
+  -- Native 2.1 output-only boxes feed a neighbouring segment instead of
+  -- belonging to one. Observe the exact connected pipe, never geometry.
+  if v==nil then
+   local connections={};pcall(function()connections=box.get_connections(index)or{}end)
+   for _,entity in pairs(connections)do
+    if valid(entity)and(entity.type=="pipe"or entity.type=="pipe-to-ground")then
+     local neighbour=fluidbox(entity)
+     if neighbour then pcall(function()v=neighbour.get_fluid_segment_id(1)end)end
+     if v~=nil then break end
+    end
+   end
+  end
+ end;return v
+end
+local function filter_name(box,index)
+ local function name(v)if type(v)=="string"then return v end;local ok,n=pcall(function()return v and v.name end);return ok and n or nil end
+ local f;if box and box.valid then pcall(function()f=name(box.get_filter(index))end);if not f then pcall(function()f=name(box.get_locked_fluid(index))end)end end;return type(f)=="string"and f~=""and f or nil
+end
 local function segment_state(e,index,fluid)
  local box=fluidbox(e);if not box then return nil,"no-fluidbox"end;local contents=segment_contents(box,index);local same=tonumber(contents[fluid])or 0;local wrong;for name,amount in pairs(contents)do if name~=fluid and(tonumber(amount)or 0)>.001 then wrong=name break end end;return{box=box,same=same,wrong=wrong,filter=filter_name(box,index),segment_id=segment_id(box,index)},"ok"
 end
@@ -41,10 +60,35 @@ local function existing_compatible_pipe(pair,p,plan)
  for _,e in pairs(entities_at(pair.station.surface,p,.35,{"pipe","pipe-to-ground"}))do if valid(e)and e.force==pair.station.force then local box=fluidbox(e);if box then for index=1,#box do local state=segment_state(e,index,plan.fluid);if state and not state.wrong then local known=state.same>.001 or state.filter==plan.fluid or(state.segment_id and(state.segment_id==plan.remote_segment_id or state.segment_id==plan.machine_segment_id));if known then return e end end end end end end;return nil
 end
 local function adjacent_safe(pair,p,plan)
- for _,e in pairs(entities_at(pair.station.surface,p,M.adjacency_radius,FLUID_TYPES))do if valid(e)and e.force==pair.station.force then local box=fluidbox(e);if box then for index=1,#box do local state=segment_state(e,index,plan.fluid);if state then if state.wrong then return false,"adjacent-wrong-fluid:"..state.wrong end;local endpoint=e==plan.machine or e==plan.remote.entity;local known=state.same>.001 or state.filter==plan.fluid or(state.segment_id and(state.segment_id==plan.remote_segment_id or state.segment_id==plan.machine_segment_id));if not(endpoint or known)then return false,"adjacent-ambiguous-fluidbox:"..safe(e.name)end end end end end end;return true,"safe"
+ for _,e in pairs(entities_at(pair.station.surface,p,M.adjacency_radius,FLUID_TYPES))do
+  if valid(e)and e.force==pair.station.force then
+   local box=fluidbox(e)
+   if box then for index=1,#box do
+    -- Nearby bounding boxes can expose separate water and steam ports.
+    -- Only the fluidbox whose real connection reaches this tile can mix.
+    local connections={};pcall(function()connections=box.get_pipe_connections(index)or{}end)
+    local touches=false
+    for _,c in pairs(connections)do
+     local target=c.target_position or c.position
+     if target and dist_sq(target,p)<0.0225 then touches=true;break end
+    end
+    if touches then
+     local state=segment_state(e,index,plan.fluid)
+     if state then
+      if state.wrong then return false,"adjacent-wrong-fluid:"..state.wrong end
+      local endpoint=e==plan.machine or e==plan.remote.entity
+      local known=state.same>.001 or state.filter==plan.fluid or
+       (state.segment_id and(state.segment_id==plan.remote_segment_id or state.segment_id==plan.machine_segment_id))
+      if not(endpoint or known)then return false,"adjacent-ambiguous-fluidbox:"..safe(e.name)end
+     end
+    end
+   end end
+  end
+ end
+ return true,"safe"
 end
 local function tile_available(pair,p,plan)
- if not inside_territory(pair,p)then return false,"outside-station-interior"end;if existing_compatible_pipe(pair,p,plan)then return true,"existing"end;local ok_adj,why=adjacent_safe(pair,p,plan);if not ok_adj then return false,why end;local ok,allowed=pcall(pair.station.surface.can_place_entity,pair.station.surface,{name=M.pipe_entity,position=p,force=pair.station.force,build_check_type=defines and defines.build_check_type and defines.build_check_type.manual or nil});if not ok then ok,allowed=pcall(pair.station.surface.can_place_entity,pair.station.surface,{name=M.pipe_entity,position=p,force=pair.station.force})end;return ok and allowed==true,ok and(allowed and"placeable"or"blocked")or"can-place-error"
+ if not inside_territory(pair,p)then return false,"outside-station-interior"end;if existing_compatible_pipe(pair,p,plan)then return true,"existing"end;local ok_adj,why=adjacent_safe(pair,p,plan);if not ok_adj then return false,why end;local ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force,build_check_type=defines and defines.build_check_type and defines.build_check_type.manual or nil})end);if not ok then ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force})end)end;return ok and allowed==true,ok and(allowed and"placeable"or"blocked")or"can-place-error"
 end
 local function reconstruct(came,current,positions)local reverse={};while current do reverse[#reverse+1]=positions[current];current=came[current]end;local route={};for i=#reverse,1,-1 do route[#route+1]=reverse[i]end;return route end
 local function route_between(pair,start_position,goal_position,plan)
@@ -71,10 +115,17 @@ local function create_plan(pair,p)
 end
 local function current_tile(plan)return plan and plan.tiles and plan.tiles[tonumber(plan.current_index)or 1]or nil end
 local function connection_complete(pair,plan)
+ -- A first pipe on the machine is not a completed route. Both physical
+ -- endpoints must belong to the same live native fluid segment.
+ local machine_segment=segment_id(fluidbox(plan.machine),plan.machine_fluidbox_index)
+ local remote_segment=plan.remote and segment_id(fluidbox(plan.remote.entity),plan.remote.fluidbox_index)
+ if machine_segment==nil or remote_segment==nil or machine_segment~=remote_segment then return false,"endpoint-segments-disconnected"end
  local d=doctrine();if not(d and type(d.inspect_machine)=="function"and valid(plan.machine))then return false,"doctrine-unavailable"end;local report=d.inspect_machine(pair,plan.machine,true);if not report then return false,"report-unavailable"end;for _,rec in ipairs(report.records or{})do if rec.index==plan.machine_fluidbox_index and rec.requirement and rec.requirement.name==plan.fluid then if rec.connected then return true,"machine-port-connected"end;return false,"machine-port-unconnected"end end;return false,"machine-port-missing"
 end
 local function validate_plan(pair,plan)
- if not(valid(plan.machine)and plan.remote and valid(plan.remote.entity))then return false,"endpoint-invalid"end;local complete=connection_complete(pair,plan);if complete then return true,"connected"end;local d=doctrine();if not(d and type(d.validate_proposal)=="function")then return false,"doctrine-unavailable"end;local ok,why=d.validate_proposal(pair,plan.proposal);if not ok then return false,why end;local tile=current_tile(plan);if tile then local allowed,twhy=tile_available(pair,tile,plan);if not allowed then return false,twhy end end;return true,"valid"
+ plan.machine_segment_id=segment_id(fluidbox(plan.machine),plan.machine_fluidbox_index)
+ if plan.remote then plan.remote_segment_id=segment_id(fluidbox(plan.remote.entity),plan.remote.fluidbox_index)end
+ if not(valid(plan.machine)and plan.remote and valid(plan.remote.entity))then return false,"endpoint-invalid"end;local complete=connection_complete(pair,plan);if complete then return true,"connected"end;local d=doctrine();if not(d and type(d.validate_proposal)=="function")then return false,"doctrine-unavailable"end;local ok,why=d.validate_proposal(pair,plan.proposal,true);if not ok then return false,why end;local tile=current_tile(plan);if tile then local allowed,twhy=tile_available(pair,tile,plan);if not allowed then return false,twhy end end;return true,"valid"
 end
 local function observe_construction(pair,plan)
  local task=pair.construction_last_task_0338;if type(task)~="table"or task.request_field~="construction_request"or type(task.request_value)~="table"or task.request_value.source~="standard-fluid-route-0691"or task.request_value.route_plan_id~=plan.id then return end;local tick=tonumber(task.completed_tick)or-1;if tick<=(tonumber(plan.last_task_tick)or-1)then return end;plan.last_task_tick=tick;local index=tonumber(task.request_value.route_index)or tonumber(plan.current_index)or 1;local tile=plan.tiles[index]
@@ -90,7 +141,7 @@ function M.refresh_pair(pair)
  if M.root().enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end;local plan=pair.standard_fluid_route_plan_0691
  if plan then observe_construction(pair,plan);plan=pair.standard_fluid_route_plan_0691;if not plan then return{processed=1,blocked=1,detail="plan-aborted"}end;local ok,why=validate_plan(pair,plan);if not ok then abort_plan(pair,plan,why);return{processed=1,blocked=1,detail="plan-invalid:"..safe(why)}end;if why=="connected"then complete_plan(pair,plan,"route-connected");return{processed=1,acted=0,detail="connected"}end;if plan.state=="awaiting-connection"then if now()>(tonumber(plan.settle_until)or 0)then abort_plan(pair,plan,"route-built-not-connected");return{processed=1,blocked=1,detail="not-connected"}end;return{processed=1,waiting=1,detail="awaiting-connection"}end;local published,pwhy=publish_request(pair,plan);return{processed=1,acted=0,waiting=published and 1 or 0,blocked=(not published and pwhy~="construction-busy")and 1 or 0,detail=pwhy}
  end
- if(tonumber(pair.standard_fluid_route_reject_until_0691)or 0)>now()then return{processed=1,waiting=1,detail="cooldown"}end;local d=doctrine();if d and type(d.scan_pair)=="function"then pcall(d.scan_pair,pair,true)end;for _,proposal in ipairs(proposal_lists(pair))do local created=create_plan(pair,proposal);if created then local published,pwhy=publish_request(pair,created);return{processed=1,acted=0,waiting=published and 1 or 0,blocked=published and 0 or 1,detail=pwhy}end end;return{processed=1,waiting=1,detail="no-safe-proposal"}
+ if(tonumber(pair.standard_fluid_route_reject_until_0691)or 0)>now()then return{processed=1,waiting=1,detail="cooldown"}end;local d=doctrine();if d and type(d.scan_pair)=="function"then pcall(d.scan_pair,pair,true)end;for _,proposal in ipairs(proposal_lists(pair))do local ok,created,why=pcall(create_plan,pair,proposal);if not ok then pair.standard_fluid_route_refusal_0691={tick=now(),reason=tostring(created)};return {processed=1,failed=1,detail=tostring(created)}end;if not created then pair.standard_fluid_route_refusal_0691={tick=now(),reason=tostring(why)}end;if created then local published,pwhy=publish_request(pair,created);return{processed=1,acted=0,waiting=published and 1 or 0,blocked=published and 0 or 1,detail=pwhy}end end;return{processed=1,waiting=1,detail="no-safe-proposal"}
 end
 function M.abort_pair(pair,reason)local plan=pair and pair.standard_fluid_route_plan_0691;if not plan then return false,"no-plan"end;return abort_plan(pair,plan,reason or"aborted")end
 function M.describe_pair(pair)local plan=pair and pair.standard_fluid_route_plan_0691;if not plan then return"No standard fluid route."end;return"Standard fluid route "..safe(plan.direction).." "..safe(plan.fluid).." state="..safe(plan.state).." index="..safe(plan.current_index).."/"..safe(#(plan.tiles or{}))end

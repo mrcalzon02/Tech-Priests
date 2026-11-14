@@ -59,4 +59,13 @@ assert(native.observe({
  get_fluid_box_prototype=function()return nil end,
 })==nil,"internal-only buffer claimed to be a pipe")
 assert(native.observe({valid=false,fluids_count=1})==nil)
+local source_fluid="water"
+local dry_pump=native.observe({valid=true,type="offshore-pump",fluids_count=1,
+ get_fluid_box_prototype=function()return {production_type="output"}end,
+ get_fluid_source_fluid=function(...)assert(select('#',...)==0);return source_fluid end})
+assert(dry_pump.get_locked_fluid(1)=="water")
+source_fluid="lava"
+assert(dry_pump.get_locked_fluid(1)=="lava","pump source identity was guessed")
+source_fluid=nil
+assert(dry_pump.get_locked_fluid(1)==nil,"dry land invented water")
 print("[native-fluidbox-21-1279] PASS real 2.1 fluids and connections, 2.0 intact")

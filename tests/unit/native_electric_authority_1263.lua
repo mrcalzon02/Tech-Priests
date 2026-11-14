@@ -3,6 +3,12 @@
 -- confer an electric connection where the engine reports none.
 package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 local A=require("scripts.core.native_electric_authority_1263")
+local modern=setmetatable({get_supply_area_distance=function(quality)
+ assert(quality=="normal");return 2.5
+end},{__index=function(_,key)error("removed native prototype member: "..key)end})
+assert(A.supply_distance(modern)==2.5,"native method-only pole was rejected")
+assert(A.supply_distance({supply_area_distance=3.5})==3.5)
+assert(A.supply_distance({})==nil,"missing native pole range was invented")
 local force={index=1};local enemy={index=2};local surface={index=1}
 local station={valid=true,position={x=0,y=0},force=force,surface=surface}
 local engine={valid=true,type="generator",position={x=16,y=0},

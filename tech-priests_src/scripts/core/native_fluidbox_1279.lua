@@ -5,7 +5,9 @@ local M={}
 local function native(entity,method,index)
   local ok,value=pcall(function()
     local fn=entity[method]
-    return fn and fn(index) or nil
+    if not fn then return nil end
+    if index==nil then return fn() end
+    return fn(index)
   end)
   return ok and value or nil
 end
@@ -42,7 +44,18 @@ function M.observe(entity)
     return native(entity,"get_fluid_filter",index)
   end
   function view.get_locked_fluid(index)
-    return filter_name(entity,index)
+    local name=filter_name(entity,index)
+    if not name then
+      local segment_filter=native(entity,"get_fluid_segment_filter",index)
+      local ok,value=pcall(function()return segment_filter and segment_filter.name end)
+      if ok then name=value end
+    end
+    -- 2.1 offshore pumps derive their output from the actual source tile;
+    -- a dry output may have no fluidbox filter yet.
+    if not name and entity.type=="offshore-pump" then
+      name=native(entity,"get_fluid_source_fluid")
+    end
+    return name
   end
   function view.get_fluid_segment_contents(index)
     local fluid=native(entity,"get_fluid_segment_fluid",index)

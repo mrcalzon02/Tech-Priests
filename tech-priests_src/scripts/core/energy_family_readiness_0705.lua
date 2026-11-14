@@ -318,7 +318,11 @@ function M.inspect_entity(pair, entity, force)
   if key then state.machine_due[key] = now() + M.machine_cache_ticks end
   local fuel_inv, burnt_inv, burner = fuel_inventory(entity), burnt_inventory(entity), burner_state(entity)
   local fuel_count, burnt_count = inventory_count(fuel_inv), inventory_count(burnt_inv)
-  local burnt_ready = not burnt_inv or empty_slots(burnt_inv) > 0
+  -- Vanilla burners expose a valid zero-slot burnt-result inventory. Coal
+  -- creates no residue; fuel compatibility independently rejects ash-bearing
+  -- fuels that cannot insert their actual burnt result.
+  local burnt_ready = not burnt_inv or (burnt_count==0 and #burnt_inv==0)
+    or empty_slots(burnt_inv) > 0
   local fluid = fluid_prerequisites(entity); local electric, network_id = electric_ready(entity)
   local heat, heat_count = heat_ready(entity); local automated, reasons = M.connected_item_automation(entity)
   local has_item_fuel = fuel_inv ~= nil; local readiness_state, severity
