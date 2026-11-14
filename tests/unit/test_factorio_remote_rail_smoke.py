@@ -1642,6 +1642,30 @@ class NativeOriginalHomeward0836ContractTests(unittest.TestCase):
         self.assertIn('HOMEWARD_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL',block)
         self.assertIn('train.station==(objective.first_stop_0836',fixture)
 
+    def test_historical_outbound_gate_parentheses_parse_boundary(self):
+        # Real Factorio save creation loads the CI fixture as Lua, whereas
+        # earlier source-only assertions did not parse it. The native run
+        # 43569268892 failed before a test-save process or engine checkpoint.
+        # Ensure the original historical-arrival Boolean gate remains
+        # syntactically balanced while keeping ALL identity requirements.
+        root=pathlib.Path(__file__).resolve().parents[2]
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(
+            encoding="utf-8")
+        gate=fixture.split('  if outbound and outbound.phase==\\n',1)[1].split(
+            'then\\n    fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',1)[0]
+        depth=0
+        for char in gate:
+            if char=="(": depth+=1
+            if char==")":
+                depth-=1
+                self.assertGreaterEqual(depth,0,"extra Lua close parenthesis in native gate")
+        self.assertEqual(depth,0,"unclosed Lua gate parenthesis")
+        for proof in ("homeward.home_order_written==true",
+                      "native_driver==p.priest",
+                      "homeward.train_id==moving_train.id",
+                      "homeward.home_stop_unit==home_entity.unit_number"):
+            self.assertIn(proof,gate)
+
     def test_homeward_refuses_schedule_or_identity_mutation_without_claiming_return(self):
         root=pathlib.Path(__file__).resolve().parents[2]
         rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")

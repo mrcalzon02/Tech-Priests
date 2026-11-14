@@ -986,7 +986,7 @@ local function inspect(s,elapsed)
             and homeward.priest_unit==p.priest.unit_number
             and homeward.remote_stop_unit==remote_entity.unit_number
             and home_entity and home_entity.valid
-            and homeward.home_stop_unit==home_entity.unit_number))))then
+            and homeward.home_stop_unit==home_entity.unit_number)))then
     fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")
   end
   local home_schedule
