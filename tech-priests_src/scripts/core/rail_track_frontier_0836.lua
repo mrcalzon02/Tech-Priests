@@ -2617,7 +2617,7 @@ end
 
 -- Original Magos disembarkation is native Factorio passenger ejection.
 -- Only an original 0338 task with ONE physically debited drill in custody
--- qualifies; no teleports, synthetic cargo, replacement priest or new owner.
+-- qualifies; no remote relocation, synthetic cargo, replacement priest or new owner.
 function M.service_original_remote_drill_disembark_0836(pair)
   local m=pair and pair.remote_rail_outpost_0835
   local state=m and m.first_remote_drill_0836
