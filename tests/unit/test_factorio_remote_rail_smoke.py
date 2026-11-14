@@ -213,6 +213,27 @@ class OriginalRailOwnerYieldEvidenceTests(unittest.TestCase):
         self.assertNotIn('first_board.last_item_family_yield_reason_0836==nil)', board)
 
 
+class OriginalTrainCountedFuelEnduranceTests(unittest.TestCase):
+    def test_original_two_ended_rail_uses_real_counted_extra_coal_only(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        source = (root / "tech-priests_src/scripts/core/"
+                  "logistics_machine_fulfillment_0528.lua").read_text(encoding="utf-8")
+        section = source.split("local function fuel_candidate(pair, machine, requested_floor)", 1)[1].split("local function ingredient_candidate(", 1)[0]
+        offer = source.split("function M.offer_original_locomotive_fuel_0836(pair,locomotive)", 1)[1].split("function M.offer_factory_component_feed_1153", 1)[0]
+        self.assertIn("original_train_min_fuel_count_0836 = 12", source)
+        self.assertIn("if total >= floor then return nil end", section)
+        self.assertIn("count = math.min(M.max_transfer, floor - total, available)", section)
+        self.assertIn("local available = generic_count(pair, item)", section)
+        self.assertIn("M.original_train_min_fuel_count_0836)", offer)
+        self.assertIn('exact_original_train_0836(pair,locomotive)', offer)
+        self.assertIn('candidate.item=="coal"', offer)
+        self.assertNotIn("inventory.insert(", offer)
+        self.assertNotIn("create_entity(", offer)
+        # Non-rail machine fuel remains at the original three-item floor.
+        self.assertIn("min_fuel_count = 3", source)
+        self.assertIn("local candidate=fuel_candidate(pair,locomotive,", offer)
+
+
 class OriginalTrainLiveFuelRefusalTests(unittest.TestCase):
     def test_native_boarding_checks_live_traction_not_only_historical_fuel_receipt(self):
         root = pathlib.Path(__file__).resolve().parents[2]

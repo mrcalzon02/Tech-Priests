@@ -19,6 +19,10 @@ local M = {
   move_ttl = 480,
   max_transfer = 50,
   min_fuel_count = 3,
+  -- 0836 only: three coal per engine left the original roundtrip stalled
+  -- at x=60 with both native coal inventories empty (run 43596684528).
+  -- These are REAL 0528 item debits, not free fuel or a generic threshold.
+  original_train_min_fuel_count_0836 = 12,
   no_task_cooldown = 180,
   reservation_ttl = 300,
 }
@@ -613,19 +617,25 @@ local function output_candidate(machine)
   end
   return best
 end
-local function fuel_candidate(pair, machine)
+local function fuel_candidate(pair, machine, requested_floor)
+  -- Only the original counted 0836 railway explicitly requests a larger
+  -- initial load. All normal drills/furnaces retain the three-item policy.
+  local floor = M.min_fuel_count
+  if type(requested_floor)=="number" then
+    floor=math.max(floor,math.min(M.max_transfer,math.floor(requested_floor)))
+  end
   local fuel = machine_fuel(machine)
   if not fuel then return nil end
   local total = 0
   each_inventory_item(fuel, function(_, count) total = total + count end)
-  if total >= M.min_fuel_count then return nil end
+  if total >= floor then return nil end
   for _, item in ipairs(FUEL_CANDIDATES) do
     local available = generic_count(pair, item)
     if item_exists(item) and available > 0 then
       return {
         action = "supply-fuel",
         item = item,
-        count = math.min(M.max_transfer, M.min_fuel_count - total, available),
+        count = math.min(M.max_transfer, floor - total, available),
         machine = machine,
       }
     end
@@ -1035,7 +1045,8 @@ function M.offer_original_locomotive_fuel_0836(pair,locomotive)
     end
     return false,"other-machine-candidate-owned"
   end
-  local candidate=fuel_candidate(pair,locomotive)
+  local candidate=fuel_candidate(pair,locomotive,
+    M.original_train_min_fuel_count_0836)
   if not(candidate and candidate.action=="supply-fuel"
       and candidate.item=="coal" and candidate.count>=1)then
     return false,"no-counted-original-coal-or-fuel-not-needed"
@@ -1251,7 +1262,8 @@ local function discover_pairs(budget)
             and valid(retained.machine)
             and (tonumber(retained.expires_tick)or 0)>=now()then
           local authorized=exact_original_train_0836(pair,retained.machine)
-          local needed=fuel_candidate(pair,retained.machine)
+          local needed=fuel_candidate(pair,retained.machine,
+            M.original_train_min_fuel_count_0836)
           keep=authorized==true and needed and needed.item=="coal"
         end
         -- Preserve an authentic newly built component's feed candidate
