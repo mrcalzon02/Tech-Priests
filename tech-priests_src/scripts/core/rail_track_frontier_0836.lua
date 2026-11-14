@@ -2885,7 +2885,15 @@ function M.authorized_original_remote_drill_hold_0836(pair)
         state.disembark_position.x)..
       " eject_y="..tostring(state.disembark_position and
         state.disembark_position.y)..
-      " custody_0338="..tostring(pair.construction_custody_0338~=nil))
+      " custody_0338="..tostring(pair.construction_custody_0338~=nil)..
+      " built_site_sq="..tostring(state.position and valid(state.built_entity)
+        and ((state.built_entity.position.x-state.position.x)^2+
+          (state.built_entity.position.y-state.position.y)^2))..
+      " paid_native_identity="..tostring(state.paid_drill_completion_0836
+        and state.paid_drill_completion_0836.built_entity==state.built_entity)..
+      " competing_0528="..tostring(pair.machine_logistics_custody_0528~=nil)..
+      " competing_0702="..tostring(pair.item_family_custody_0702~=nil)..
+      " competing_0513="..tostring(pair.direct_acquisition_custody_0513~=nil))
   end
   if not(eligible(pair,m) and m.status=="rail-track-established"
       and state and state.disembark_confirmed==true
@@ -2941,7 +2949,17 @@ function M.authorized_original_remote_drill_hold_0836(pair)
       and state.built_entity.type=="mining-drill"
       and state.built_entity.force==stop.force
       and state.built_entity.surface==stop.surface
-      and close(state.built_entity.position,state.position)
+      -- Factorio snaps a 2x2 burner drill to the native entity grid.
+      -- The sole 0338 paid terminal receipt already proved this exact
+      -- original physical entity within one tile of the requested site.
+      -- Recheck that SAME bound here; the generic rail-center close()
+      -- tolerance (<0.25 per axis) can reject a legitimate snapped drill
+      -- after its construction route has been released by 0338.
+      and type(state.position)=="table"
+      and type(state.position.x)=="number"
+      and type(state.position.y)=="number"
+      and (state.built_entity.position.x-state.position.x)^2
+        +(state.built_entity.position.y-state.position.y)^2<=1
       and original_supply and not original_supply.quarantine
       and original_supply.station_unit==pair.station.unit_number
       and original_supply.priest_unit==priest.unit_number
