@@ -2730,7 +2730,10 @@ function M.authorized_original_remote_drill_walk_0836(pair,point,movement)
       and type(point)=="table" and type(point.x)=="number"
       and type(point.y)=="number" and type(movement)=="table"
       and ((movement.owner=="construction-planner-0338"
-          and movement.reason=="construction-site-standoff-0338")
+          and (movement.reason=="construction-site-standoff-0338"
+            or (task and task.phase=="move-clear-site"
+              and (movement.reason=="construction-clear-occupied-site-0338"
+                or movement.reason=="construction-clear-ghost-footprint-0338"))))
         or (movement.owner=="movement-controller-enforcement-0566"
           and (movement.reason=="movement-enforcement-overleash-return-0566"
             or movement.reason=="movement-enforcement-return-0566")
@@ -2762,7 +2765,8 @@ function M.authorized_original_remote_drill_walk_0836(pair,point,movement)
       and engine.train.station==stop
       and math.abs(tonumber(engine.train.speed)or 0)<0.01
       and priest.surface==engine.surface and priest.force==engine.force
-      and task and task.phase=="move-site"
+      and task and (task.phase=="move-site" or task.phase=="build"
+        or task.phase=="move-clear-site")
       and task.request_field=="remote_drill_request_1011"
       and task.request_value==state.request
       and task.site_reason=="original-remote-rail-drill-0836"
@@ -2771,7 +2775,18 @@ function M.authorized_original_remote_drill_walk_0836(pair,point,movement)
       and task.carried.count==1
       and custody and custody.request_value==state.request
       and custody.item_name=="burner-mining-drill" and custody.count==1
-      and pair.remote_drill_request_1011==state.request)then return false end
+      and pair.remote_drill_request_1011==state.request
+      -- The paid drill has moved from the engine-owned staged hold into
+      -- the same original 0338 task. Never grant a generic station waiver.
+      and pair.rail_remote_drill_supply_0836
+      and not pair.rail_remote_drill_supply_0836.quarantine
+      and pair.rail_remote_drill_supply_0836.station_unit==pair.station.unit_number
+      and pair.rail_remote_drill_supply_0836.priest_unit==priest.unit_number
+      and pair.rail_remote_drill_supply_0836.wagon_request==wagon.request
+      and pair.rail_remote_drill_supply_0836.source_before
+      and pair.rail_remote_drill_supply_0836.source_after
+      and pair.rail_remote_drill_supply_0836.source_before
+        -pair.rail_remote_drill_supply_0836.source_after==1)then return false end
   local read,driver=pcall(function()return engine.get_driver()end)
   if not(read and driver==nil)then return false end
   -- Admit only the actual short remote-stop to drill-site corridor, not the

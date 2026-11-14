@@ -160,7 +160,9 @@ function M.authorization_for_destination(pair, pos, reason, opts)
   -- 0574 must admit the same exact paid-stop, original Magos and 0338
   -- drill custody that canonical 0418/0566 independently validates.
   if frontier and opts and opts.owner=="construction-planner-0338"
-      and reason=="construction-site-standoff-0338"
+      and (reason=="construction-site-standoff-0338"
+        or reason=="construction-clear-occupied-site-0338"
+        or reason=="construction-clear-ghost-footprint-0338")
       and type(frontier.authorized_original_remote_drill_walk_0836)=="function"then
     local checked,authorized=pcall(
       frontier.authorized_original_remote_drill_walk_0836,pair,pos,{

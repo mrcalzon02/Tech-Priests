@@ -1575,7 +1575,9 @@ function M.enforce_pair(pair, reason)
     -- The physically ejected original Magos may walk ONLY from its real
     -- paid remote stop to the exact current 0338 drill site with counted cargo.
     if request and request.owner=="construction-planner-0338"
-      and request.reason=="construction-site-standoff-0338"
+      and (request.reason=="construction-site-standoff-0338"
+        or request.reason=="construction-clear-occupied-site-0338"
+        or request.reason=="construction-clear-ghost-footprint-0338")
       and frontier
       and type(frontier.authorized_original_remote_drill_walk_0836)=="function"then
       local checked,authorized=pcall(

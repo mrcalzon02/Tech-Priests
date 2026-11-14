@@ -2441,3 +2441,35 @@ class NativePaidRemoteDrillCompletionHold0836Tests(unittest.TestCase):
         self.assertIn('foot_native=dx*dx+dy*dy<=96*96',fixture)
         self.assertIn('if foot_native then s.ride_proof=true end',fixture)
         self.assertIn('fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)
+
+
+class OriginalPaidRemoteDrillBuildPhaseCorridor0836Tests(unittest.TestCase):
+    """The original source-debited 0338 drill must not be recalled mid-build."""
+
+    def test_live_0338_build_and_clear_preserve_only_paid_site_corridor(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        controller=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        corridor=(root/"tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text()
+        permit=rail.split("function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[1].split(
+            "function M.authorized_original_remote_drill_hold_0836(pair)",1)[0]
+        for token in ('task.phase=="move-site"', 'task.phase=="build"',
+                      'task.phase=="move-clear-site"',
+                      'state.disembark_confirmed==true',
+                      'engine.train.station==stop',
+                      'task.request_value==state.request',
+                      'task.carried.count==1',
+                      'custody.request_value==state.request',
+                      'pair.rail_remote_drill_supply_0836.source_before',
+                      '-pair.rail_remote_drill_supply_0836.source_after==1',
+                      'driver==nil',
+                      'dot>=-0.10 and dot<=1.20 and cross<=10'):
+            self.assertIn(token,permit)
+        for reason in ('construction-site-standoff-0338',
+                       'construction-clear-occupied-site-0338',
+                       'construction-clear-ghost-footprint-0338'):
+            self.assertIn(reason,permit)
+            self.assertIn(reason,controller)
+            self.assertIn(reason,corridor)
+        for forbidden in ('teleport(', 'create_entity(', 'bounds_exempt'):
+            self.assertNotIn(forbidden,permit)
