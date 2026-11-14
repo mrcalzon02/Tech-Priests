@@ -1109,6 +1109,41 @@ local function continue_task(pair, task)
   return { processed = 1, failed = 1, detail = "unknown-phase:" .. safe(task.phase) }
 end
 
+-- 0836: a completed 0702 item-family duty can leave an expired or stale
+-- long-action route in the canonical movement controller.  Only the 0702
+-- owner may release its own orphan; an unladen *active* task, reserved
+-- physical source, real custody, or another movement owner must survive.
+-- The caller has already verified the original paid/fueled railway.
+function M.release_orphaned_movement_for_rail_0836(pair)
+  if not valid_pair(pair) then return false,"invalid-pair" end
+  if pair.item_family_logistics_0702~=nil
+      or pair.item_family_custody_0702~=nil then
+    return false,"live-item-family-duty-or-custody"
+  end
+  local request=pair.movement_request_0418
+  if type(request)~="table"
+      or request.owner~="item-family-logistics-0702" then
+    return false,"no-original-0702-route"
+  end
+  local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+  if not (controller and type(controller.request_status)=="function"
+      and type(controller.stop)=="function") then
+    return false,"canonical-movement-unavailable"
+  end
+  local read,status=pcall(controller.request_status,pair,"item-family-logistics-0702")
+  if not (read and type(status)=="table"
+      and status.owner_match==true
+      and status.owner=="item-family-logistics-0702") then
+    return false,"canonical-route-owner-mismatch"
+  end
+  local stopped,ok=pcall(controller.stop,pair,"orphan-0702-after-physical-task")
+  if not (stopped and ok==true and pair.movement_request_0418==nil) then
+    return false,"canonical-0702-stop-refused"
+  end
+  record(pair,"orphan-0702-movement-released","rail-boarding-no-duty-no-cargo")
+  return true,"released-original-0702-orphan"
+end
+
 function M.abort_pair(pair, reason)
   if not valid_pair(pair) then return false, "invalid-pair" end
   restore_orphan_custody(pair)

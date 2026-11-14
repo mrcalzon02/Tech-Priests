@@ -1843,3 +1843,39 @@ class NativeRailDirectionalStopAdmissionTests(unittest.TestCase):
         self.assertNotIn("for _,offset in ipairs({-2,2,-3,3})",stop)
         self.assertNotIn("surface.create_entity(",stop)
         self.assertNotIn("teleport(",stop)
+
+
+class NativeRailOrphan0702HandoffTests(unittest.TestCase):
+    def test_original_0702_alone_may_release_finished_unladen_route(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        family=(root/"tech-priests_src/scripts/core/item_family_logistics_0702.lua").read_text(encoding="utf-8")
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        section=family.split("function M.release_orphaned_movement_for_rail_0836(pair)",1)[1].split(
+            "function M.abort_pair(pair, reason)",1)[0]
+        for marker in ('pair.item_family_logistics_0702~=nil',
+                       'pair.item_family_custody_0702~=nil',
+                       'request.owner~="item-family-logistics-0702"',
+                       'type(controller.request_status)=="function"',
+                       'type(controller.stop)=="function"',
+                       'status.owner_match==true',
+                       'status.owner=="item-family-logistics-0702"',
+                       'pcall(controller.stop,pair,"orphan-0702-after-physical-task")',
+                       'pair.movement_request_0418==nil',
+                       'return false,"canonical-route-owner-mismatch"'):
+            self.assertIn(marker,section)
+        for forbidden in ("remove_item(", "insert(", "destroy(", "teleport(",
+                          "pair.item_family_logistics_0702=nil",
+                          "pair.item_family_custody_0702=nil"):
+            self.assertNotIn(forbidden,section)
+        board=rail.split("function M.service_first_train_board_0836(pair)",1)[1].split(
+            "function M.service_first_train_outbound_0836(pair)",1)[0]
+        self.assertLess(board.index('fuel_now~=true'),board.index(
+            'release_orphaned_movement_for_rail_0836'))
+        self.assertLess(board.index('pair.machine_logistics_custody_0528'),board.index(
+            'release_orphaned_movement_for_rail_0836'))
+        self.assertLess(board.index('release_orphaned_movement_for_rail_0836'),board.index(
+            'state.last_blocker="boarding-foreign-movement-owned"'))
+        for marker in ("item_family_phase_0702=", "item_family_item_0702=",
+                       "item_family_custody_0702="):
+            self.assertIn(marker,fixture)

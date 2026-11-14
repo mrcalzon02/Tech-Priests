@@ -1943,6 +1943,21 @@ function M.service_first_train_board_0836(pair)
     end
   end
   local request=pair.movement_request_0418
+  if request and request.owner=="item-family-logistics-0702" then
+    -- Ask the ORIGINAL logistics owner to release ONLY an orphaned route.
+    -- If a 0702 task or item custody exists, it refuses and nothing changes.
+    local family=rawget(_G,"TechPriestsItemFamilyLogistics0702")
+      or package.loaded["scripts.core.item_family_logistics_0702"]
+    if family and type(family.release_orphaned_movement_for_rail_0836)=="function" then
+      pcall(family.release_orphaned_movement_for_rail_0836,pair)
+    end
+    local task=pair.item_family_logistics_0702
+    local custody=pair.item_family_custody_0702
+    state.item_family_phase_0702=task and task.phase or "none"
+    state.item_family_item_0702=task and task.item or "none"
+    state.item_family_custody_0702=custody and custody.count or 0
+    request=pair.movement_request_0418
+  end
   if request and request.owner~="rail-track-frontier-0836" then
     state.last_blocker="boarding-foreign-movement-owned"
     return false,state.last_blocker

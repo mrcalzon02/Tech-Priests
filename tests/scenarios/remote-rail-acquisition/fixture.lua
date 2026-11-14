@@ -945,6 +945,9 @@ local function inspect(s,elapsed)
     " move_state="..tostring(p.movement_controller_state_0418)..
     " retry_after="..tostring(first_board and first_board.retry_after_tick)..
     " blocker="..tostring(first_board and first_board.last_blocker)..
+    " item_family_phase_0702="..tostring(first_board and first_board.item_family_phase_0702)..
+    " item_family_item_0702="..tostring(first_board and first_board.item_family_item_0702)..
+    " item_family_custody_0702="..tostring(first_board and first_board.item_family_custody_0702)..
     " movement_owner="..tostring(p.movement_request_0418 and p.movement_request_0418.owner))
   -- Read actual native locomotive/schedule/stop movement. The persisted
   -- 0836 phase is diagnostic ONLY; train coordinates and original driver
