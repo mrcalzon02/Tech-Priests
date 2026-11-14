@@ -69,6 +69,22 @@ class Verdict(unittest.TestCase):
         self.assertTrue(result["observation_complete"])
         self.assertFalse(result["combat_observed"])
         self.assertTrue(result["expansion_success_not_assumed"])
+        self.assertFalse(result["factory_progress_proven"])
+
+    def test_factory_progress_requires_every_priest_force_and_native_science(self):
+        rows = observations()
+        for kind, sample in rows:
+            if kind == "SAMPLE":
+                sample.update(build_events=2, research_finished=1,
+                              science_production={"automation-science-pack": 10})
+        self.assertTrue(arena.parse_observations(encode(rows), "2p2b", 42, 3600)
+                        ["factory_progress_proven"])
+        sample = next(x[1] for x in rows if x[0] == "SAMPLE")
+        sample["science_production"] = {"automation-science-pack": 0}
+        sample["science_consumption"] = {"automation-science-pack": 100}
+        result = arena.parse_observations(encode(rows), "2p2b", 42, 3600)
+        self.assertFalse(result["factory_progress_proven"])
+        self.assertIn("no-native-science-production", result["factory_progress"]["f0"]["missing"])
 
     def test_missing_mismatched_duplicate_and_failed_receipts(self):
         rows = observations()

@@ -9,8 +9,9 @@
 --
 -- 0.1.638 safety note: the 0.1.637 fresh-world crash implicated an nth-tick
 -- generic inventory deposit path reaching Factorio machine/furnace result
--- transfer code.  This governor is therefore installed only as a command-visible
--- disabled module until the deposit surface is proven safe in live testing.
+-- transfer code. Generic reserve sweeps therefore remain disabled by default.
+-- Explicit independent operations may execute only their concrete raw recipe
+-- leaves through the current 0513 physical-custody owner.
 
 local M = {}
 M.version = "0.1.638"
@@ -499,8 +500,53 @@ strict_assembler_needs_coal=function(pair, item)
 end
 
 function M.service_pair(pair, reason)
-  local root=M.root(); if root.enabled==false then return false,"disabled" end
+  local root=M.root()
   if not valid_pair(pair) then return false,"invalid" end
+  if root.enabled==false then
+    -- Generic reserve sweeping remains opt-in. An explicitly independent
+    -- station must nevertheless execute its exact pending raw recipe leaf;
+    -- otherwise 0647 waits forever while survival repeatedly requests ammo.
+    local op=pair.independent_emergency_operation_0184
+    local request=pair.infrastructure_recipe_request_0647
+    if root.recipe_acquisition_disabled or not(type(op)=="table" and op.enabled==true
+        and type(request)=="table" and request.missing) then
+      return false,"disabled"
+    end
+    if valid(pair.combat_target) then return false,"combat-has-priority" end
+    for _,spec in ipairs({
+        {"TechPriestsResourceReturnCourier0837","worker_reserved"},
+        {"TechPriestsStationStarvationReversal0850","future_worker_reserved"},
+        {"TechPriestsStationRecycling0822","reservation_for"}}) do
+      local authority=rawget(_G,spec[1])
+      if authority and type(authority[spec[2]])=="function" then
+        local ok,reserved=pcall(authority[spec[2]],pair)
+        if not ok or reserved then return false,"independent-recipe-reserved:"..spec[1] end
+      end
+    end
+    for _,field in ipairs({"emergency_craft","direct_acquisition_task_0336",
+        "active_acquisition_0333","construction_task_0338","construction_custody_0338",
+        "direct_acquisition_custody_0513","machine_logistics_custody_0528",
+        "emergency_production_custody_0514","station_crafting_task_0337",
+        "scavenge","inventory_transfer_custody_0687"}) do
+      if pair[field] then return false,"independent-recipe-incumbent-duty:"..field end
+    end
+    local order=pair.order_queue_0469 and pair.order_queue_0469.current
+    if order and order.status=="active" then return false,"independent-recipe-active-order" end
+    for _,spec in ipairs(RAW_RESERVES) do
+      if spec.item==request.missing then
+        local required=1
+        for _,ingredient in ipairs(request.ingredients or {}) do
+          if ingredient.name==spec.item then required=math.max(1,tonumber(ingredient.count) or 1);break end
+        end
+        local have=station_count(pair,spec.item)
+        if have>=required then return false,"independent-recipe-material-ready" end
+        local acted,why=assign_direct(pair,spec,have,required-have)
+        if not acted then pair.bootstrap_mode_0637={tick=now(),state=why,item=spec.item} end
+        return acted,why
+      end
+    end
+    return false,"disabled"
+  end
   clear_stale_critical(pair)
   if not emergencyish(pair) then return false,"not-emergencyish" end
   -- Production owns already-authorized recipe work. Do not start a new
@@ -581,11 +627,22 @@ function M.service_pair(pair, reason)
 end
 
 function M.service_all(reason)
-  local root=M.root(); if root.enabled==false then return 0 end
+  local root=M.root()
+  local list={}
+  for _,pair in pairs(pair_map()) do
+    if valid_pair(pair) then list[#list+1]=pair end
+  end
+  table.sort(list,function(a,b)return station_unit(a)<station_unit(b) end)
+  if #list==0 then return 0 end
+  local start=1
+  for i,pair in ipairs(list) do
+    if station_unit(pair)>(root.last_station_unit or 0) then start=i;break end
+  end
   local n=0
-  for _, pair in pairs(pair_map()) do
-    if n >= M.max_pairs then break end
-    if valid_pair(pair) then pcall(M.service_pair, pair, reason or "pulse"); n=n+1 end
+  for offset=0,math.min(M.max_pairs,#list)-1 do
+    local pair=list[(start+offset-1)%#list+1]
+    pcall(M.service_pair,pair,reason or "pulse");n=n+1
+    root.last_station_unit=station_unit(pair)
   end
   return n
 end
@@ -604,7 +661,7 @@ local function install_command()
     local player=event and event.player_index and game.get_player(event.player_index) or nil
     local p=lower(event and event.parameter or "status")
     local r=M.root()
-    if p=="on" then r.enabled=true elseif p=="off" then r.enabled=false elseif p=="all" then M.service_all("command-all") elseif p=="kick" then local pair=selected_pair(player); if pair then M.service_pair(pair,"command-kick") end end
+    if p=="on" then r.enabled=true;r.recipe_acquisition_disabled=false elseif p=="off" then r.enabled=false;r.recipe_acquisition_disabled=true elseif p=="all" then M.service_all("command-all") elseif p=="kick" then local pair=selected_pair(player); if pair then M.service_pair(pair,"command-kick") end end
     local msg="[tp-bootstrap-0637] enabled="..safe(r.enabled).." assigned="..safe(r.stats["bootstrap-assigned-direct-0637"] or 0).." cleared="..safe(r.stats["bootstrap-cleared-stale-critical-0637"] or 0).." yielded="..safe(r.stats["bootstrap-yielded-active-direct-0637"] or 0).." satisfied="..safe(r.stats["bootstrap-reserve-satisfied-0637"] or 0)
     if player and player.valid then player.print(msg) elseif game and game.print then game.print(msg) end
   end)

@@ -32,7 +32,7 @@ CASES = {
         "module": "ci_consecration_maintenance",
         "prefix": "[TP-CONSECRATION-TEST]",
         "pass": "PASS active machine consecration and repair from real stocked items ranks=4",
-        "ticks": 27000,
+        "ticks": 30000,
     },
     "remote-robot-acquisition": {
         "fixture": "tests/scenarios/remote-robot-acquisition/fixture.lua",

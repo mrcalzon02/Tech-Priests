@@ -40,13 +40,19 @@ attack commands or forced encounters.
 | Preset | Arrangement and diplomacy | Map |
 | --- | --- | --- |
 | 2p2b | NW/SW priests hostile to each other; NE/SE bugs hostile to each other and priests | 2048 square |
+| 4p-ffa | Four independently owned priest forces, all mutually hostile | 2048 square |
 | 1v4-bugs | One priest against four allied, separately owned bug forces | 3072 square |
 | 2v2 | Two allied priest forces on left versus two allied bug forces on right | 2048 square |
 | 3v1 | Three allied priest forces versus one bug force | 2048 square |
 | 4v4-priests | Eight independently owned priest forces, allied as four left versus four right | 3072 square |
 
 These are explicit first interpretations of the requested ratios; diplomacy is
-configuration data so a later four-way/free-for-all variant is straightforward.
+configuration data. `4p-ffa` exercises four competing factory planners directly.
+
+Priest starts explicitly enable the existing independent-operation authority,
+with frustration due immediately. The CONFIG receipt labels this as
+`independent-maximum-frustration`; it does not change the player faction's normal
+mode, grant demolition authority, or directly drive construction tasks.
 
 Every 256-square macrocell contains randomized blobs of iron, copper, coal,
 stone, crude oil and water. Starts have a protected 96-square clear pad. Resource
@@ -109,6 +115,17 @@ and service benchmark tests stay separate and unchanged.
 ## Running
 
     python3 tools/run_force_projection.py --factorio /path/to/factorio --preset 2p2b --active-ticks 36000
+
+    python3 tools/run_force_projection.py --factorio /path/to/factorio --preset 4p-ffa --seed 14081114 --active-ticks 36000 --game-speed 20 --require-factory-progress
+
+`--game-speed` changes native simulation pacing, not elapsed-tick acceptance.
+`--require-factory-progress` requires every priest force to have an observed
+autonomous build, actual native science production, and a research completion.
+Missing evidence fails the command even when observation and final saving
+complete. This is a minimum progress gate, not full factory throughput or combat
+acceptance. Stocked packs and consumed packs do not count as manufactured science.
+Results include per-force missing criteria and a manifest hash for the staged
+Lua/JSON source; the separate fixture hash identifies instrumentation changes.
 
 Optional `--seed` repeats the exact stock/layout; `--dependency-mods` accepts an
 existing external mod folder. Default active duration is 216000 ticks (one hour).

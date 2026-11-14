@@ -118,6 +118,21 @@ local function parse_blocker_need(pair,item)
   end
   return nil
 end
+local function request_need(pair,value,item)
+  local count=requested_count_from_order(value,item) or parse_blocker_need(pair,item) or 1
+  if pair.logistic_requested_item==item then
+    count=math.max(count,tonumber(pair.logistic_requested_count) or 1)
+  end
+  local recipe=pair.infrastructure_recipe_request_0647
+  if type(recipe)=="table" and recipe.missing==item then
+    for _,ingredient in ipairs(recipe.ingredients or {}) do
+      if ingredient.name==item then
+        count=math.max(count,tonumber(ingredient.count) or 1)
+      end
+    end
+  end
+  return count
+end
 local function active_request(pair)
   if not pair then return nil end
   local q=pair.order_queue_0469
@@ -125,11 +140,11 @@ local function active_request(pair)
   local item=normalize_item(o)
   local kind=lower(type(o)=="table" and (o.kind or o.type or o.source or o.key) or "")
   if item and (kind=="" or kind:find("logistic",1,true) or kind:find("supply",1,true) or kind:find("gather",1,true) or kind:find("acqui",1,true) or kind:find("scavenge",1,true) or kind:find("emergency",1,true) or kind:find("construction",1,true) or kind:find("craft",1,true)) then
-    return {item=item,count=requested_count_from_order(o,item) or parse_blocker_need(pair,item) or 1,source="order-queue"}
+    return {item=item,count=request_need(pair,o,item),source="order-queue"}
   end
   for _,field in ipairs({"active_supply_request","supply_request","logistic_requested_item","requested_item","scavenge","inventory_scan","emergency_craft","station_crafting_task_0337","direct_acquisition_task_0336","active_acquisition_0333"}) do
     item=normalize_item(pair[field])
-    if item then return {item=item,count=requested_count_from_order(pair[field],item) or parse_blocker_need(pair,item) or 1,source=field} end
+    if item then return {item=item,count=request_need(pair,pair[field],item),source=field} end
   end
   local mode=lower(pair.mode or "")
   if mode:find("ammo",1,true) or mode:find("survival%-ammo") then return {item="firearm-magazine",count=parse_blocker_need(pair,"firearm-magazine") or 10,source="mode-ammo"} end
@@ -366,9 +381,22 @@ local function publish_leaf(pair,src,item,phase)
   pair.current_work_target_0655=src.source
   pair.target=src.source
 end
+-- Inventory entities can be larger than the pickup radius. Approach their
+-- actual world-space footprint, then measure reach to that same point; a
+-- center goal can otherwise remain permanently inside solid cargo storage.
+function M.pickup_position(pair,source)
+  local pos=source.position
+  local ok,box=pcall(function() return source.bounding_box end)
+  if ok and box and box.left_top and box.right_bottom then
+    local p=pair.priest.position
+    return {x=math.max(box.left_top.x,math.min(box.right_bottom.x,p.x)),
+      y=math.max(box.left_top.y,math.min(box.right_bottom.y,p.y))}
+  end
+  return pos
+end
 local function request_move(pair,src,item)
   if not (valid_pair(pair) and src and valid(src.source)) then return false end
-  local pos=src.source.position
+  local pos=M.pickup_position(pair,src.source)
   -- 0418 alone owns the live movement lease and engine command. A fetch
   -- must not prewrite its request table (or issue a fallback set_command):
   -- both paths bypass the original 0338 rail builder and recovery routes.
@@ -423,7 +451,7 @@ function M.service_pair(pair,reason)
   if not (src and valid(src.source)) then return false,"no-known-fetch-source" end
   local key=tostring(station_unit(pair))..":"..tostring(item)..":"..tostring(src.source.unit_number or src.source.name)..":"..safe(src.inventory_id or src.kind)
   if (r.cooldowns[key] or 0)>now() then return false,"cooldown" end
-  local d2=dist_sq(pair.priest.position,src.source.position)
+  local d2=dist_sq(pair.priest.position,M.pickup_position(pair,src.source))
   if d2 > M.pickup_radius_sq then
     local moved=request_move(pair,src,item)
     if not moved then r.cooldowns[key]=now()+math.min(M.cooldown_ticks,60); record(pair,"movement-request-failed-0527",tostring(item).." from "..tostring(src.source.name).."#"..tostring(src.source.unit_number or "?")); return false,"movement-request-failed" end

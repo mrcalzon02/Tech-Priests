@@ -22,6 +22,7 @@ end
 local function config() return _G.TP_FORCE_PROJECTION_CONFIG end
 local PRESETS={
   ["2p2b"]={"p:left-a","b:bugs-a","p:left-b","b:bugs-b"},
+  ["4p-ffa"]={"p:priest-a","p:priest-b","p:priest-c","p:priest-d"},
   ["1v4-bugs"]={"p:priests","b:bugs","b:bugs","b:bugs","b:bugs"},
   ["2v2"]={"p:priests","b:bugs","p:priests","b:bugs"},
   ["3v1"]={"p:priests","p:priests","p:priests","b:bugs"},
@@ -30,6 +31,7 @@ local PRESETS={
 }
 local function init()
   local c=config(); assert(c and PRESETS[c.preset],"missing arena config")
+  game.speed=c.game_speed or 1
   local roster=PRESETS[c.preset]
   local side=#roster>4 and 3072 or 2048
   storage[KEY]={phase="terrain",seed=c.seed,preset=c.preset,
@@ -68,6 +70,8 @@ local function init()
   emit("CONFIG",{seed=s.seed,preset=s.preset,side=side,
     active_ticks=c.active_ticks,participants=s.participants,
     novice_evolution=0,fixture_supply_only=true,
+    operation_profile="independent-maximum-frustration",
+    game_speed=game.speed,
     stock_profile="random-chest-plus-1-to-5-senior-kits"})
 end
 local function owner(force)
@@ -190,6 +194,14 @@ local function seed_participant(s,surface)
     assert(station and station.valid,"Magos station creation refused")
     local pair=storage.tech_priests.pairs_by_station[station.unit_number]
     assert(pair and pair.priest and pair.priest.valid,"original Magos pairing absent")
+    -- This stress profile starts after the player's patience has run out.
+    -- Use the existing production authority; do not drive its planner/tasks.
+    pair.emergency_operation_auto_allowed_0190=true
+    pair.logistic_frustration_due_tick=game.tick
+    assert(tech_priests_set_emergency_operation_0184(pair,true,"arena-independent"),
+      "independent operation authorization refused")
+    local op=tech_priests_get_emergency_operation_0184(pair)
+    assert(op and op.enabled,"independent operation readback absent")
     p.station=station;p.priest=pair.priest
     p.initial[station.unit_number]=true;p.initial[pair.priest.unit_number]=true
     -- Immediate direct subordinates of a Planetary Magos are Seniors. Kits
@@ -280,12 +292,16 @@ local function census(s,surface)
         and e.position.y>=y and e.position.y<y+32 then
       local p=owner(e.force)
       if p then
-        local c=s.census[p.force] or {live=0,ghosts=0,stations=0}
+        local c=s.census[p.force] or {live=0,ghosts=0,stations=0,labs=0,powered_labs=0}
         s.census[p.force]=c
         if e.type=="entity-ghost" or e.type=="tile-ghost" then c.ghosts=c.ghosts+1
         else
           c.live=c.live+1
           if e.name:find("cogitator%-station") then c.stations=c.stations+1 end
+          if e.type=="lab" then
+            c.labs=c.labs+1
+            if e.energy>0 then c.powered_labs=c.powered_labs+1 end
+          end
         end
       end
     end
@@ -313,6 +329,29 @@ local function sample(s,p)
   local fanout=pair and pair.last_recipe_fanout_refusal_0284
   local move=pair and pair.movement_request_0418
   local fetch=pair and pair.logistics_fetch_0527
+  local science={};local consumed={}
+  for _,name in ipairs({"automation-science-pack","logistic-science-pack",
+      "military-science-pack","chemical-science-pack","production-science-pack",
+      "utility-science-pack","space-science-pack"}) do
+    if prototypes.item[name] then
+      science[name]=stats.get_input_count(name)
+      consumed[name]=stats.get_output_count(name)
+    end
+  end
+  local research=force.current_research
+  local op=pair and pair.independent_emergency_operation_0184
+  local combat=pair and pair.combat_target
+  local craft=pair and pair.emergency_craft
+  local direct=pair and pair.direct_acquisition_task_0336
+  local inventory=p.station and p.station.valid
+    and p.station.get_inventory(defines.inventory.chest)
+  local bootstrap_stock={}
+  if inventory then
+    for _,name in ipairs({"stone","stone-furnace","iron-ore","iron-plate",
+      "copper-ore","copper-plate","coal","tech-priests-emergency-smelter"}) do
+      bootstrap_stock[name]=inventory.get_item_count(name)
+    end
+  end
   emit("SAMPLE",{tick=game.tick,elapsed=game.tick-s.started,force=p.force,
     kind=p.kind,team=p.team,build_events=p.built,lost=p.lost,
     research_finished=p.research,damage_dealt=p.damage_dealt,
@@ -320,6 +359,26 @@ local function sample(s,p)
     census=(s.last_census or {})[p.force],census_tick=s.last_census_tick,
     census_saturated=s.last_census_saturated,
     ore_production=mined,station_alive=p.station and p.station.valid or false,
+    science_production=science,science_consumption=consumed,
+    current_research=research and research.name,
+    research_progress=research and force.research_progress,
+    mode=pair and pair.mode,
+    radius=pair and pair.radius,bootstrap_stock=bootstrap_stock,
+    bootstrap=pair and pair.bootstrap_mode_0637,
+    emergency_craft=craft and {item=craft.item_name or craft.output_item,
+      strict=craft.strict_recipe_0647,started_tick=craft.started_tick,
+      required_count=craft.required_count,current_kind=craft.current and craft.current.kind},
+    direct_acquisition=direct and {item=direct.output_item,
+      required_count=direct.required_count,gathered=direct.gathered_units,
+      current_kind=direct.current and direct.current.kind},
+    independent_operation=op and {enabled=op.enabled,phase=op.phase,
+      reason=op.reason,science_item=op.science_item},
+    science_planner=pair and pair.magos_science_last_result_1172,
+    combat_target=combat and combat.valid and {name=combat.name,
+      force=combat.force.name,position=combat.position,health=combat.health},
+    infrastructure_plan=pair and pair.master_infrastructure_plan_0644 and {
+      stage=pair.master_infrastructure_plan_0644.stage,
+      blocker=pair.master_infrastructure_plan_0644.blocker},
     priest_alive=p.priest and p.priest.valid or false,
     current_task=pair and tostring(pair.current_task or pair.task or "unknown") or "none",
     infrastructure_gate=gate and {item=gate.item,state=gate.state,why=gate.why,

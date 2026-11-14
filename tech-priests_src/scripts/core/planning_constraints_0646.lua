@@ -42,6 +42,28 @@ end
 function M.entity_unlocked(pair,entity_name)
  if not(pair and valid(pair.station)and entity_name)then return false,"invalid-pair-or-entity"end
  local item=M.item_for_entity(entity_name);if not item then return false,"no-placeable-item"end
+ -- Research controls manufacture. A real, already owned installation kit
+ -- can still be placed by Factorio before its manufacturing recipe unlocks.
+ -- Keep item_unlocked strict; 0338 must still debit this physical item and
+ -- pass the native placement/surface checks before creating the entity.
+ local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+   or(package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
+ if authority and type(authority.generic_item_count)=="function"then
+  local ok,count=pcall(authority.generic_item_count,pair,item)
+  if ok and type(count)=="number"and count>0 then
+   return true,"physical-construction-stock",item
+  end
+ end
+ local chest=defines and defines.inventory and defines.inventory.chest
+ if chest then
+  local ok,count=pcall(function()
+   local inv=pair.station.get_inventory(chest)
+   return inv and inv.valid and inv.get_item_count(item)or 0
+  end)
+  if ok and type(count)=="number"and count>0 then
+   return true,"physical-construction-stock",item
+  end
+ end
  local ok,why=M.item_unlocked(pair.station.force,item);return ok,why,item
 end
 function M.interior_position_allowed(pair,position,margin)

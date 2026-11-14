@@ -3,6 +3,7 @@
 -- Four live paired ranks; two rows of genuinely crafting vanilla assemblers
 -- per rank. No fabricated production, consecration completion or repair.
 local M={}
+local CrafterInventory=require("scripts.core.native_crafter_inventory_1277")
 local PREFIX="[TP-CONSECRATION-TEST] "
 local SPECS={
   {name="junior-cogitator-station",x=0},
@@ -35,7 +36,7 @@ local function inv(e,id)
 end
 local function setup()
   local s=root()
-  if s.started then return end
+  if s.setup_tick then return end
   local surface,force=game.surfaces[1],game.forces.player
   if not (prototypes.entity["electric-energy-interface"]
       and prototypes.entity["substation"]
@@ -72,7 +73,7 @@ local function setup()
       end
     end
     local generator=safe_create(surface,{name="electric-energy-interface",
-      position={x=rank.x,y=24},force=force})
+      position={x=rank.x,y=20},force=force})
     generator.power_production=10*1000*1000
     generator.energy=10*1000*1000
     for _,xoffset in ipairs({-7,7}) do
@@ -89,7 +90,7 @@ local function setup()
         if not machine.set_recipe("iron-gear-wheel") then
           fail("assembler refused vanilla engine recipe")
         end
-        if inv(machine,defines.inventory.assembling_machine_input)
+        if inv(machine,CrafterInventory.index(defines.inventory,"input","assembler"))
             .insert{name="iron-plate",count=30}~=30 then
           fail("assembler ingredient insertion refused")
         end
@@ -114,7 +115,7 @@ local function setup()
     emit("SETUP rank="..rank.name.." station="..st.unit_number..
       " assemblers="..#rec.machines.." repair=16 oil=16 litany=8 ammo=24")
   end
-  s.started=game.tick;s.damaged=false
+  s.setup_tick=game.tick;s.damaged=false
 end
 local function checkpoint(s,elapsed)
   local tp=storage.tech_priests
@@ -125,7 +126,7 @@ local function checkpoint(s,elapsed)
     if not (pair and pair.priest and pair.priest.valid) then
       fail("NO_LIVE_PRIEST_PAIR rank="..rank.name)
     end
-    local produced,repaired,consecrated,decayed=0,0,0
+    local produced,repaired,consecrated,decayed=0,0,0,0
     for _,m in ipairs(r.machines) do
       if not (m.entity and m.entity.valid) then
         fail("MACHINE_DISAPPEARED rank="..rank.name.." unit="..m.unit)
@@ -134,8 +135,9 @@ local function checkpoint(s,elapsed)
       if not (recipe and recipe.name=="iron-gear-wheel") then
         fail("MACHINE_RECIPE_LOST rank="..rank.name)
       end
-      produced=produced+inv(m.entity,defines.inventory.assembling_machine_output)
-        .get_item_count("iron-gear-wheel")
+      -- Normal logistics can already have collected the output. The native
+      -- completed-operation counter still proves these exact machines ran.
+      produced=produced+(tonumber(m.entity.products_finished) or 0)
       local ledger=get_consecration_record(m.entity)
       if not ledger then fail("MACHINE_SPIRIT_LOST rank="..rank.name) end
       -- Prove the original machines REALLY completed work and underwent
@@ -183,7 +185,22 @@ local function pulse()
   local s=root()
   if s.finished or s.failed then return {processed=0} end
   local ok,err=pcall(function()
-    if not s.started then fail("fixture did not initialize") end
+    if not s.setup_tick then fail("fixture did not initialize") end
+    if not s.started then
+      local tp=storage.tech_priests
+      for _,rank in ipairs(SPECS) do
+        local r=s.ranks[rank.name]
+        local pair=tp.pairs_by_station and tp.pairs_by_station[r.station_unit]
+        if not(pair and pair.priest and pair.priest.valid) then
+          if game.tick-s.setup_tick>=3600 then
+            fail("PAIR_INITIALIZATION_TIMEOUT rank="..rank.name)
+          end
+          return
+        end
+      end
+      s.started=game.tick
+      emit("READY original paired priests=4 setup_ticks="..(game.tick-s.setup_tick))
+    end
     local elapsed=game.tick-s.started
     if elapsed>=900 and not s.damaged then
       for _,r in pairs(s.ranks) do

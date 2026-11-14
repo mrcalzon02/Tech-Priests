@@ -18,7 +18,7 @@ from run_factorio_isolated_service_scenario import (
     private_robot_server_settings, run,
 )
 
-PRESETS = ("2p2b", "1v4-bugs", "2v2", "3v1", "4v4-priests")
+PRESETS = ("2p2b", "4p-ffa", "1v4-bugs", "2v2", "3v1", "4v4-priests")
 TAG = "[TP-FORCE-PROJECTION] "
 
 
@@ -84,11 +84,26 @@ def parse_observations(log: str, preset: str, seed: int, ticks: int) -> dict:
     if set(latest) != {x["force"] for x in roster} or any(
             x["elapsed"] != ticks for x in latest.values()):
         raise ValueError("Missing exact final native force observations")
+    progress = {}
+    for name in sorted(priests):
+        sample = latest[name]
+        missing = []
+        if sample.get("build_events", 0) <= 0:
+            missing.append("no-observed-autonomous-build")
+        if sum(sample.get("science_production", {}).values()) <= 0:
+            missing.append("no-native-science-production")
+        if sample.get("research_finished", 0) <= 0:
+            missing.append("no-research-completion")
+        progress[name] = {"proven": not missing, "missing": missing}
     return {"observation_complete": True, "preset": preset, "seed": seed,
+            "operation_profile": config.get("operation_profile", "unspecified-legacy"),
             "active_ticks": ticks, "setup_ticks": ready["tick"],
             "forces": latest, "contacts": events.get("CONTACT", []),
             "supply_manifests": supplies, "resource_deposits": len(deposits),
             "combat_observed": bool(events.get("CONTACT")),
+            "factory_progress": progress,
+            "factory_progress_proven": bool(progress) and all(
+                p["proven"] for p in progress.values()),
             "expansion_success_not_assumed": True,
             "native_script_ms_per_tick": None,
             "timing_note": "Wall UPS includes setup/telemetry/save costs; script time unmeasured"}
@@ -101,10 +116,16 @@ def main() -> int:
     ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--active-ticks", type=int, default=216000)
     ap.add_argument("--timeout-seconds", type=int, default=7200)
+    ap.add_argument("--game-speed", type=float, default=1,
+                    help="Native simulation speed (1-20); tick-based behavior is unchanged")
+    ap.add_argument("--require-factory-progress", action="store_true",
+                    help="Fail unless every priest force builds, manufactures science and finishes research")
     ap.add_argument("--dependency-mods", type=pathlib.Path)
     ap.add_argument("--output-dir", type=pathlib.Path,
                     default=ROOT / "test-artifacts" / "force-projection")
     args = ap.parse_args()
+    if not 1 <= args.game_speed <= 20:
+        ap.error("Game speed must be between 1 and 20")
     seed = args.seed if args.seed is not None else secrets.randbelow(2**31)
     if not 0 <= seed < 2**31 or not 3600 <= args.active_ticks <= 864000:
         ap.error("Seed must fit uint31; duration must be 1 minute to 4 hours")
@@ -121,13 +142,21 @@ def main() -> int:
     started = time.monotonic()
     result = {"schema": "tech-priests.force-projection.v1", "seed": seed,
               "preset": args.preset, "observation_complete": False,
-              "engine_version": engine, "active_ticks": args.active_ticks}
+              "engine_version": engine, "active_ticks": args.active_ticks,
+              "game_speed": args.game_speed}
     try:
         source_sha = subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
         result["source_sha"] = source_sha
         mods = output / "mods"; mods.mkdir()
         shutil.copytree(ROOT / "tech-priests_src", mods / "tech-priests")
+        manifest = {p.relative_to(mods / "tech-priests").as_posix():
+                    hashlib.sha256(p.read_bytes()).hexdigest()
+                    for p in sorted((mods / "tech-priests").rglob("*"))
+                    if p.is_file() and p.suffix in (".lua", ".json")}
+        manifest_bytes = json.dumps(manifest, sort_keys=True, indent=2).encode()
+        (output / "source-manifest.json").write_bytes(manifest_bytes)
+        result["source_manifest_sha256"] = hashlib.sha256(manifest_bytes).hexdigest()
         if args.dependency_mods:
             for p in args.dependency_mods.iterdir():
                 if p.name.startswith("tech-priests") or p.name == "base":
@@ -141,7 +170,8 @@ def main() -> int:
         shutil.copy2(fixture, mods / "tech-priests/scripts/core/ci_force_projection.lua")
         control = mods / "tech-priests/control.lua"
         config = json.dumps({"seed": seed, "preset": args.preset,
-                             "active_ticks": args.active_ticks})
+                             "active_ticks": args.active_ticks,
+                             "game_speed": args.game_speed})
         # table_from_json is called while control.lua loads, where helpers is
         # available; no game/storage mutation is performed outside on_init.
         control.write_text("_G.TP_FORCE_PROJECTION_CONFIG=helpers.json_to_table(" +
@@ -240,7 +270,8 @@ def main() -> int:
         (output / "result.json").write_text(json.dumps(result, indent=2, sort_keys=True),
                                            encoding="utf-8")
         print("ARENA_RESULT " + json.dumps(result, sort_keys=True), flush=True)
-    return 0 if result["observation_complete"] else 1
+    return 0 if result["observation_complete"] and (
+        not args.require_factory_progress or result.get("factory_progress_proven")) else 1
 
 
 if __name__ == "__main__":

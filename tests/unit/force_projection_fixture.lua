@@ -1,13 +1,23 @@
 -- Executable API-contract mock: verifies bounded setup and all presets.
 -- This is NOT native Factorio acceptance.
 local fixture="tests/scenarios/force-projection/fixture.lua"
-local presets={"2p2b","1v4-bugs","2v2","3v1","4v4-priests"}
+local presets={"2p2b","4p-ffa","1v4-bugs","2v2","3v1","4v4-priests"}
 for _,preset in ipairs(presets) do
   local handlers,initializers,records={},{},{}
   local Registry={on_init=function(fn)initializers[#initializers+1]=fn end,
     on_event=function(id,fn)handlers[id]=fn;return true end}
   package.loaded["scripts.core.runtime_event_registry"]=Registry
   storage={tech_priests={pairs_by_station={}}}
+  tech_priests_set_emergency_operation_0184=function(pair,enabled,reason)
+    assert(enabled and reason=="arena-independent")
+    assert(pair.emergency_operation_auto_allowed_0190==true)
+    assert(pair.logistic_frustration_due_tick==game.tick)
+    pair.independent_emergency_operation_0184={enabled=true,reason=reason}
+    return true
+  end
+  tech_priests_get_emergency_operation_0184=function(pair)
+    return pair.independent_emergency_operation_0184
+  end
   helpers={table_to_json=function(data)records[#records+1]=data;return "{}" end}
   log=function()end
   _G.TP_FORCE_PROJECTION_CONFIG={preset=preset,seed=42,active_ticks=3600}
@@ -61,7 +71,8 @@ for _,preset in ipairs(presets) do
   game.create_force=function(name)
     local force={name=name,set_evolution_factor=function()end,
       set_friend=function()end,set_cease_fire=function()end,chart=function()end,
-      get_item_production_statistics=function()return {get_input_count=function()return 0 end}end}
+      get_item_production_statistics=function()return {
+        get_input_count=function()return 0 end,get_output_count=function()return 0 end}end}
     game.forces[name]=force;return force
   end
   local M=dofile(fixture);M.install();initializers[1]()
@@ -70,6 +81,7 @@ for _,preset in ipairs(presets) do
   assert(#s.participants==expected)
   for _,p in ipairs(s.participants)do
     assert(game.forces[p.force].ai_controllable==(p.kind=="b"))
+    if preset=="4p-ffa" then assert(p.kind=="p") end
   end
   for t=1,100000 do
     game.tick=t;api_calls=0
@@ -81,6 +93,8 @@ for _,preset in ipairs(presets) do
   assert(s.finished,"fixture did not terminate")
   for _,p in ipairs(s.participants)do
     if p.kind=="p"then
+      local pair=storage.tech_priests.pairs_by_station[p.station.unit_number]
+      assert(pair.independent_emergency_operation_0184.enabled)
       assert(p.expansion_stock.count>=1 and p.expansion_stock.count<=5)
       assert(p.station.get_inventory(1).get_item_count("senior-cogitator-station")==p.expansion_stock.count)
       assert(p.expansion_stock.deployed==0)
