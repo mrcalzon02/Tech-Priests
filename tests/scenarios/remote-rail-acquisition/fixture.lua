@@ -817,6 +817,25 @@ local function inspect(s,elapsed)
       and rear.train.id==loco_entity.train.id)..
     " blocker="..tostring(reverse and reverse.blocker))
   local first_fuel=objective and objective.first_fuel_0836
+  local reverse_fuel=objective and objective.return_fuel_0836
+  local reverse_coal="unmeasured"
+  if rear and rear.valid and defines and defines.inventory then
+    local opened,inventory=pcall(function()
+      return rear.get_inventory(defines.inventory.fuel)
+    end)
+    if opened and inventory and inventory.valid then
+      local counted,coal=pcall(inventory.get_item_count,"coal")
+      if counted and type(coal)=="number" then reverse_coal=coal end
+    end
+  end
+  emit("REVERSE_FUEL_NATIVE_0836 elapsed="..elapsed..
+    " phase="..tostring(reverse_fuel and reverse_fuel.phase)..
+    " rear_unit="..tostring(rear and rear.valid and rear.unit_number)..
+    " coal="..tostring(reverse_coal)..
+    " receipt_tick="..tostring(reverse_fuel and reverse_fuel.receipt_tick)..
+    " fuel_source_debit="..tostring(reverse_fuel and reverse_fuel.fuel_count)..
+    " train_id="..tostring(reverse_fuel and reverse_fuel.train_id)..
+    " last_attempt_reason="..tostring(reverse_fuel and reverse_fuel.last_attempt_reason))
   local actual_fuel=0
   if loco_entity and loco_entity.valid and defines and defines.inventory then
     local ok,fuel=pcall(function()
