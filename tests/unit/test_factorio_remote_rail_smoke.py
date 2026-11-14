@@ -1380,7 +1380,7 @@ class NativeReverseLocomotivePhysicalFuel0836ContractTests(unittest.TestCase):
         for required in (
             'reverse.phase=="native-paid-return-locomotive-verified"',
             'reverse.paid_completion_0836.native_0338_paid==true',
-            'locomotive==reverse.built_entity',
+            'reverse.built_entity==locomotive',
             'locomotive.unit_number==reverse.built_unit',
             'locomotive.train.id==loco.built_entity.train.id',
             'has_loco and has_wagon and has_lead',
