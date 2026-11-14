@@ -109,6 +109,96 @@ local function connected_straight_rails(from,to)
   end
   return false
 end
+-- Fueling the ORIGINAL paid locomotive requires a real physical walk along
+-- already-item-debited 0836 rail. 0528 remains the sole station-debit, cargo,
+-- movement-request and machine-insertion owner; this is read-only corridor
+-- evidence for canonical 0418/0566, never bounds_exempt or item creation.
+-- The narrow exception expires with its exact live COAL custody transaction.
+function M.authorized_original_train_fuel_walk_0836(pair,point,movement)
+  if not(eligible(pair,pair and pair.remote_rail_outpost_0835)
+      and type(point)=="table" and type(point.x)=="number"
+      and type(point.y)=="number" and type(movement)=="table"
+      and movement.owner=="logistics_machine_fulfillment_0528"
+      and movement.reason=="machine-logistics-move-to-machine-0528"
+      and storage and storage.tech_priests
+      and type(storage.tech_priests.pairs_by_station)=="table"
+      and storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair
+      and pair.priest.force==pair.station.force
+      and pair.priest.surface==pair.station.surface)then return false end
+  local mission=pair.remote_rail_outpost_0835
+  local route=mission.rail_frontier_0836
+  local lead=mission.first_locomotive_0836
+  local wagon=mission.first_wagon_0836
+  local state=pair.machine_logistics_0528
+  local custody=state and state.custody
+  local source=state and state.fuel_source_receipt_1013
+  local locomotive=lead and lead.built_entity
+  if not(mission.status=="rail-track-established"
+      and route and route.chain_audit_completed_tick_0836
+      and type(route.start_position)=="table"
+      and type(route.built_units)=="table"
+      and route.segment==#route.built_units and route.segment>=16
+      and route.direction==defines.direction.east
+      and lead and lead.phase=="native-paid-locomotive-verified"
+      and lead.paid_completion_0836
+      and lead.paid_completion_0836.native_0338_paid==true
+      and valid(locomotive) and locomotive.unit_number==lead.built_unit
+      and locomotive.force==pair.station.force
+      and locomotive.surface==pair.station.surface
+      and wagon and wagon.phase=="native-paid-wagon-verified"
+      and wagon.paid_completion_0836
+      and wagon.paid_completion_0836.native_0338_paid==true
+      and valid(wagon.built_entity)
+      and locomotive.train and locomotive.train.valid
+      and wagon.built_entity.train and wagon.built_entity.train.valid
+      and locomotive.train.id==wagon.built_entity.train.id
+      and state and state.phase=="move-to-machine"
+      and state.original_train_fuel_0836==true
+      and state.action=="supply-fuel" and state.item=="coal"
+      and state.machine==locomotive
+      and state.machine_unit==locomotive.unit_number
+      and custody and custody==pair.machine_logistics_custody_0528
+      and custody.item=="coal" and custody.kind=="supply"
+      and type(custody.count)=="number" and custody.count>=1
+      and source and source.item=="coal"
+      and source.station_unit==pair.station.unit_number
+      and source.priest_unit==pair.priest.unit_number
+      and source.count==custody.count
+      and type(source.source_before)=="number"
+      and type(source.source_after)=="number"
+      and source.source_before-source.source_after==custody.count)then
+    return false
+  end
+  local goal=movement.ground_route_final_destination or movement
+  if not(type(goal)=="table" and type(goal.x)=="number"
+      and type(goal.y)=="number")then return false end
+  local gx=goal.x-locomotive.position.x
+  local gy=goal.y-locomotive.position.y
+  -- Actual 0528 collision-clear machine contact must remain inside 1.5
+  -- tiles of this exact paid machine. No arbitrary mining/scouting leash.
+  if gx*gx+gy*gy>2.25 then return false end
+  if math.abs(point.y-route.start_position.y)>4
+      or point.x<route.start_position.x-8
+      or point.x>locomotive.position.x+4 then return false end
+  local index=math.floor((point.x-route.start_position.x)/M.segment_step+1.5)
+  if index<2 or index+1>route.segment then return false end
+  local rail_point=pos(route.start_position.x+(index-1)*M.segment_step,
+    route.start_position.y)
+  local dx=point.x-rail_point.x
+  local dy=point.y-rail_point.y
+  if dx*dx+dy*dy>20.25 then return false end
+  local before=track_at(pair,pos(rail_point.x-M.segment_step,
+    rail_point.y),route.direction)
+  local center=track_at(pair,rail_point,route.direction)
+  local after=track_at(pair,pos(rail_point.x+M.segment_step,
+    rail_point.y),route.direction)
+  return before and center and after
+    and before.unit_number==route.built_units[index-1]
+    and center.unit_number==route.built_units[index]
+    and after.unit_number==route.built_units[index+1]
+    and connected_straight_rails(before,center)
+    and connected_straight_rails(center,after) or false
+end
 -- 0836 train stops extend the SAME physical rail corridor narrowly, not
 -- station command radius: the original paid 0338 builder may approach ONE
 -- authenticated stop adjoining the audited, item-debited native railway.
