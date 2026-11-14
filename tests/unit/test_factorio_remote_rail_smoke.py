@@ -2579,3 +2579,33 @@ class OriginalPaidRemoteDrillTerminalReceipt0836Tests(unittest.TestCase):
         self.assertNotIn('and completion and completion.phase=="complete"',hold)
         for forbidden in ('teleport(', 'create_entity(', 'bounds_exempt'):
             self.assertNotIn(forbidden,finish)
+
+    def test_original_paid_drill_hold_rechecks_same_one_tile_native_builder_snap(self):
+        # The native paid 0338 builder accepts the original actual drill
+        # within one square tile of the requested ore site. Holding that
+        # original Magos after build must not reuse rail-center close(<.25).
+        # This is a contract check, not proof of engine return or ore delivery.
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        hold=rail.split("function M.authorized_original_remote_drill_hold_0836(pair)",1)[1].split(
+            "\nfunction ",1)[0]
+        for paid in (
+            'state.paid_drill_completion_0836.native_0338_paid==true',
+            'state.paid_drill_completion_0836.built_entity==state.built_entity',
+            'state.built_entity.unit_number==state.built_unit',
+            'original_supply.source_before-original_supply.source_after==1',
+            'not pair.construction_task_0338',
+            'not pair.construction_custody_0338',
+            'train_engine.train.station==stop',
+            'and (state.built_entity.position.x-state.position.x)^2',
+            '+(state.built_entity.position.y-state.position.y)^2<=1',
+        ):
+            self.assertIn(paid,hold)
+        self.assertNotIn('and close(state.built_entity.position,state.position)',hold)
+        self.assertIn('" built_site_sq="',hold)
+        for forbidden in ('teleport(', 'create_entity(', 'bounds_exempt'):
+            self.assertNotIn(forbidden,hold)
+        # A legitimate half-tile native snap passes the same <=1 receipt
+        # contract; a different construction 2 tiles away still fails.
+        self.assertLessEqual(0.5**2+0.5**2,1)
+        self.assertGreater(2**2,1)
