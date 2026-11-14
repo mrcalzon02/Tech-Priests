@@ -964,16 +964,31 @@ local function inspect(s,elapsed)
       and remote_entity.unit_number)..
     " schedule_station="..tostring(record_name)..
     " blocked="..tostring(outbound and outbound.last_blocker))
+  -- A native outward ARRIVAL is a historical event. Once the original train
+  -- receives its authenticated homeward order, Factorio may immediately clear
+  -- train.station even before moving. Preserve the proof only with the same
+  -- original driver, native train ID and paid destination identities; never
+  -- infer arrival from a schedule, plan or outbound Lua flag alone.
+  local homeward=objective and objective.first_return_0836
+  local home_state=objective and objective.first_stop_0836
+  local home_entity=home_state and home_state.built_entity
   if outbound and outbound.phase==
       "native-original-outbound-arrived-at-paid-remote-stop"
       and not(moving_train and moving_train.valid
-        and moving_train.station==remote_entity
-        and native_driver==p.priest)then
+        and native_driver==p.priest
+        and (moving_train.station==remote_entity
+          or (homeward and homeward.home_order_written==true
+            and outbound.arrived_tick~=nil
+            and outbound.highest_x and outbound.origin_x
+            and outbound.highest_x>outbound.origin_x+32
+            and homeward.train_id==moving_train.id
+            and outbound.train_id==moving_train.id
+            and homeward.priest_unit==p.priest.unit_number
+            and homeward.remote_stop_unit==remote_entity.unit_number
+            and home_entity and home_entity.valid
+            and homeward.home_stop_unit==home_entity.unit_number))))then
     fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")
   end
-  local homeward=objective and objective.first_return_0836
-  local home_entity=objective and objective.first_stop_0836
-    and objective.first_stop_0836.built_entity
   local home_schedule
   if moving_train and moving_train.valid then
     local observed,records=pcall(function()
