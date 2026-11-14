@@ -1164,7 +1164,6 @@ class NativeReverseLocomotive0836ContractTests(unittest.TestCase):
         self.assertIn('frontier.authorized_original_train_fuel_walk_0836,pair,pos',auth)
         self.assertIn('"native-paid-original-locomotive-fuel-0836"',auth)
         self.assertIn('role="physical-original-rail-0836"',auth)
-        self.assertIn('if not ok then',corridor) if False else None
         self.assertIn('if allowed == false then',movement)
         self.assertIn('if corridor_rejected then allowed = false end',movement)
         self.assertIn('M.stop(pair, "movement-overleash-0566")',movement)
