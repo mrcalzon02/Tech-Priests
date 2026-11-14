@@ -4,6 +4,7 @@
 -- dispatcher-owned execution, literal movement acceptance, container-only station
 -- stock, dedicated target-machine inventories, persistent custody, and atomic return.
 
+local CrafterInventory=require("scripts.core.native_crafter_inventory_1277")
 local M = {
   version = "0.1.674-dev",
   storage_key = "logistics_machine_fulfillment_0528",
@@ -171,16 +172,16 @@ local function insert_inventory(inv, item, count)
 end
 local function machine_input(machine)
   local ids = defines and defines.inventory
-  return ids and (inventory(machine, ids.assembling_machine_input)
-    or inventory(machine, ids.furnace_source)) or nil
+  return inventory(machine,CrafterInventory.index(ids,"input",
+    machine.type=="furnace"and"furnace"or"assembler"))
 end
 local function machine_output(machine)
   local ids = defines and defines.inventory
   if ids and (machine.type=="container" or machine.type=="logistic-container") then
     return inventory(machine,ids.chest)
   end
-  return ids and (inventory(machine, ids.assembling_machine_output)
-    or inventory(machine, ids.furnace_result)) or nil
+  return inventory(machine,CrafterInventory.index(ids,"output",
+    machine.type=="furnace"and"furnace"or"assembler"))
 end
 local function machine_fuel(machine)
   local ids = defines and defines.inventory

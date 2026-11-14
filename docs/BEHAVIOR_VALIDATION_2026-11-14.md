@@ -109,6 +109,23 @@ blocked on stone now explore for stone instead of iron. Existing physical
 missions and ore custody retain their owners when independent mode is disabled.
 The four-way factory/science/combat acceptance gate remains failing.
 
+`energy-phase-handoff/midgame-science` subsequently records real electricity
+generation at tick 72,000 (`generator_output_last_tick=41.666666666666`). Its
+energy receipts prove two coal removed from canonical storage, carried to the
+boiler and inserted at tick 28,090. Source/delivery movement now uses the same
+physical footprint calculation, and verified pickup and terminal events release
+only the energy owner's movement lease. Previously movement debounce returned
+the coal immediately to its source. A regression exercises this with the real
+movement controller, including pickup outside its smaller arrival radius.
+
+Fuel discovery now uses the same canonical storage sources as stock accounting,
+keeps distinct inventory identities and honors reserved ore courier stock.
+The factory builder checks modern fluid storage before recipe configuration;
+0528 reads native crafter input/output inventory IDs. Boiler coal pickup uses a
+counted batch of up to eight to reduce repeated two-item round trips. These fixes
+do not yet prove laboratory throughput or research completion; those native gates
+remain under iteration.
+
 `midgame-final/midgame-science` passes native early checkpoint acceptance at
 0, 9,000 and 18,000 ticks. This is explicitly a smoke gate. At 18,000 ticks:
 three paired priests, a physically built laboratory, boiler, engine and pump,

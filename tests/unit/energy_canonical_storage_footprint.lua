@@ -1,5 +1,6 @@
 package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
-game={tick=1000};defines={inventory={chest=1}};storage={tech_priests={pairs_by_station={}}}
+game={tick=1000};defines={inventory={chest=1},command={stop=1,go_to_location=2},
+ distraction={none=0}};storage={tech_priests={pairs_by_station={}}}
 local force={index=1};local surface={index=1};local stock=2;local delivered=0
 local same_text={__tostring=function()return "LuaInventory"end}
 local empty=setmetatable({valid=true,get_item_count=function()return 0 end},same_text)
@@ -26,7 +27,10 @@ TechPriestsWorkReservations0601={categories={},root=function()return {}end,
 local services={}
 TechPriestsRuntimeTickBroker0600={register_service=function(spec)services[spec.name]=spec;return spec end}
 local moves={}
-tech_priests_request_movement_0418=function(p,pos)assert(p==pair);moves[#moves+1]=pos;return true end
+local Movement=require("scripts.core.movement_controller")
+TECH_PRIESTS_MOVEMENT_CONTROLLER_0418=Movement
+tech_priests_request_movement_0418=function(p,pos,reason,opts)
+ assert(p==pair);moves[#moves+1]=pos;return Movement.request(p,pos,reason,opts)end
 local Energy=require("scripts.core.energy_family_logistics_0707")
 assert(Energy.install())
 services.energy_family_discovery_0707.fn(nil,1)
@@ -34,11 +38,16 @@ assert(pair.energy_family_candidate_0707.source.entity==cache and stock==2,
  "canonical fuel storage disappeared behind an identical inventory display name")
 Energy.service_pair(pair)
 assert(moves[#moves].x==2,"fuel pickup still targets the solid cargo center")
-pair.priest.position={x=1,y=0};Energy.service_pair(pair)
+-- Pickup reach is greater than the movement completion radius. Arriving
+-- within item reach must hand off the owned source route before delivery.
+pair.priest.position={x=.5,y=0};Energy.service_pair(pair)
 assert(stock==0 and pair.energy_family_custody_0707.count==2 and delivered==0,
  "physical edge pickup failed to retain exact fuel custody")
 assert(moves[#moves].x==8.5,"boiler delivery did not use its actual footprint")
+assert(pair.movement_request_0418.x==8.5,
+ "native movement debounce sent counted coal back to its source")
 pair.priest.position={x=8,y=0};Energy.service_pair(pair)
 assert(delivered==2 and not pair.energy_family_custody_0707 and not pair.energy_family_logistics_0707,
  "counted coal never reached the physical boiler")
+assert(not pair.movement_request_0418,"completed fuel duty retained its movement lease")
 print("PASS canonical fuel storage, distinct inventory identity and physical footprint delivery")

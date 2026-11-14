@@ -114,6 +114,15 @@ assert(not ok and why=="real-inserter-or-loader-already-connected",
  "manual priest feed stole an already automated machine")
 assert(station_stock==5 and machine_input_count==0,
  "read-only candidate discovery modified real stock or machine contents")
+defines.inventory={crafter_input=33,crafter_output=34}
+surface.find_entities_filtered=function()return {}end
+machine.get_inventory=function(id)
+ assert(id==33,"modern crafter received a removed inventory identifier")
+ return input
+end
+ok,why=M.offer_factory_component_feed_1153(pair,machine,"iron-gear-wheel")
+assert(ok and pair.machine_logistics_candidate_0528.item=="iron-plate",
+ "2.1-only crafter inventory prevented physical factory feed discovery: "..tostring(why))
 TechPriestsStorageRoleAuthority0686=saved_stock
 prototypes=saved_prototypes
 defines=saved_defines
