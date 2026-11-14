@@ -16,12 +16,37 @@ Latest source also retires satisfied survival-item history from fetch demand,
 counts accessible canonical stock before fetching, defers ammo-less ambient
 targets outside the station pursuit envelope, and plans laboratory capacity
 from native research duration/speed. Explicit combat orders and active research
-remain preserved. Native science-30 at tick 796,586 verifies **four** physically
-built, powered labs (three actively researching) and a further original 0338
-lab construction in progress, using the fixture's counted stored hardware.
-At tick 807,554 the same factory's research advances to 0.9931667 without
-any manual technology or progress mutation. Duration-based autonomous research
-selection is being verified in science-31.
+remain preserved. A native unit mismatch was caught and corrected: technology
+research duration is in ticks, so laboratory demand divides by **3600 ticks per
+minute**, not 60. The earlier science-30/33 diagnostic over-requested labs and
+must not be cited as correct capacity planning. A preserved pre-lab save is
+rerun with corrected units in **science-35**: at tick 772,536 it has exactly
+**three actual labs**, matching the native 1800-tick duration and lab speed 1
+for a five-unit/minute target. Actual normal mining drills increased from one
+to **four**, with counted receiver construction handled by original 0338.
+The planner now executes stocked power/mining/smelting ratio requests instead
+of indefinitely reporting the gap without constructing anything.
+
+The stateful runner now loads a per-run **private copy** of its input, records
+the original SHA-256 and start observation, and verifies source preservation.
+Graceful Factorio shutdown could rewrite the loaded input in earlier diagnostic
+runs; their logs remain historical evidence, but some earlier ZIP paths now
+contain a later checkpoint and must not be assumed immutable. The native
+`input-copy-shutdown-probe/input-protection-result.json` verifies the corrected
+runner preserves its source hash after a real checkpoint and graceful quit.
+`fresh-science-protected-current` starts at tick 3 from an untouched original
+tick-zero fixture; `science-35` starts at tick 733,623 from preserved pre-lab
+evidence. User gameplay saves have never been used by these isolated runs.
+
+The supplemental **compact-capacity** arena is a separate profile, retaining
+the original failed random stress profile. It gives all four factions equal,
+one-time counted industrial stock, no science packs, two kits per subordinate
+tier and symmetric local resource/shore access. Its 512-tile map permits real
+participant contact. Production and combat remain entirely engine/planner-owned;
+the strict run requires every faction to build, manufacture science and finish
+research, plus real participant-to-participant damage. Seven Python receipt tests
+reject seeded science and unequal compact supplies. Native evidence is under
+`four-way-compact-capacity`; no successful battle is yet claimed.
 
 Native inventory identity was a further completion blocker: science-27's
 `observation-production-stock.json` shows canonical/steward/station wrappers

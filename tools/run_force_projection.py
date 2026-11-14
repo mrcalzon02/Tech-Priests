@@ -69,6 +69,22 @@ def parse_observations(log: str, preset: str, seed: int, ticks: int) -> dict:
                 len({x["slot"] for x in stock["stock"]}) != len(stock["stock"]) or
                 any(x["count"] <= 0 for x in stock["stock"])):
             raise ValueError("Invalid actual initial inventory manifest")
+    if config.get("stock_profile")=="compact-counted-capacity":
+        if preset!="4p-ffa"or config["side"]!=512:
+            raise ValueError("Compact capacity geometry/roster mismatch")
+        reference=None
+        for stock in supplies.values():
+            totals={}
+            for entry in stock["stock"]:
+                name=entry.get("name","")
+                if not name or "science"in name:
+                    raise ValueError("Compact capacity arena seeded science or unnamed stock")
+                totals[name]=totals.get(name,0)+entry["count"]
+            lower={x["name"]:x["count"]for x in stock["expansion_stock"].get("lower_tier",[])}
+            if lower!={"intermediate-cogitator-station":2,"junior-cogitator-station":2}:
+                raise ValueError("Compact ranked starter kit manifest missing")
+            if reference is None:reference=totals
+            elif reference!=totals:raise ValueError("Compact factions did not receive equal counted capacity")
     cells = (config["side"] // 256) ** 2
     deposits = events.get("DEPOSIT", [])
     required = {"iron-ore", "copper-ore", "coal", "stone", "crude-oil", "water"}
@@ -113,6 +129,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--factorio", required=True, type=pathlib.Path)
     ap.add_argument("--preset", choices=PRESETS, default="2p2b")
+    ap.add_argument("--profile",choices=("random-stress","compact-capacity"),default="random-stress")
     ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--active-ticks", type=int, default=216000)
     ap.add_argument("--timeout-seconds", type=int, default=7200)
@@ -120,10 +137,13 @@ def main() -> int:
                     help="Native simulation speed (1-20); tick-based behavior is unchanged")
     ap.add_argument("--require-factory-progress", action="store_true",
                     help="Fail unless every priest force builds, manufactures science and finishes research")
+    ap.add_argument("--require-combat",action="store_true",help="Fail unless native participant-to-participant damage occurs")
     ap.add_argument("--dependency-mods", type=pathlib.Path)
     ap.add_argument("--output-dir", type=pathlib.Path,
                     default=ROOT / "test-artifacts" / "force-projection")
     args = ap.parse_args()
+    if args.profile=="compact-capacity" and args.preset!="4p-ffa":
+        ap.error("Compact capacity profile requires --preset 4p-ffa")
     if not 1 <= args.game_speed <= 20:
         ap.error("Game speed must be between 1 and 20")
     seed = args.seed if args.seed is not None else secrets.randbelow(2**31)
@@ -143,7 +163,8 @@ def main() -> int:
     result = {"schema": "tech-priests.force-projection.v1", "seed": seed,
               "preset": args.preset, "observation_complete": False,
               "engine_version": engine, "active_ticks": args.active_ticks,
-              "game_speed": args.game_speed}
+              "game_speed": args.game_speed,"profile":args.profile,
+              "combat_required":args.require_combat}
     try:
         source_sha = subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
@@ -170,6 +191,7 @@ def main() -> int:
         shutil.copy2(fixture, mods / "tech-priests/scripts/core/ci_force_projection.lua")
         control = mods / "tech-priests/control.lua"
         config = json.dumps({"seed": seed, "preset": args.preset,
+                             "profile": args.profile,
                              "active_ticks": args.active_ticks,
                              "game_speed": args.game_speed})
         # table_from_json is called while control.lua loads, where helpers is
@@ -178,7 +200,7 @@ def main() -> int:
                            json.dumps(config) + ")\n" + control.read_text(encoding="utf-8") +
                            '\nrequire("scripts.core.ci_force_projection").install()\n',
                            encoding="utf-8")
-        width = 3072 if args.preset in ("1v4-bugs", "4v4-priests") else 2048
+        width = 512 if args.profile=="compact-capacity" else (3072 if args.preset in ("1v4-bugs", "4v4-priests") else 2048)
         settings = output / "map-gen-settings.json"
         settings.write_text(json.dumps({"seed": seed, "width": width,
             "height": width, "water": "none", "peaceful_mode": False,
@@ -271,7 +293,8 @@ def main() -> int:
                                            encoding="utf-8")
         print("ARENA_RESULT " + json.dumps(result, sort_keys=True), flush=True)
     return 0 if result["observation_complete"] and (
-        not args.require_factory_progress or result.get("factory_progress_proven")) else 1
+        not args.require_factory_progress or result.get("factory_progress_proven")) and (
+        not args.require_combat or result.get("combat_observed")) else 1
 
 
 if __name__ == "__main__":

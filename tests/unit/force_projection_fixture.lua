@@ -1,8 +1,9 @@
 -- Executable API-contract mock: verifies bounded setup and all presets.
 -- This is NOT native Factorio acceptance.
 local fixture="tests/scenarios/force-projection/fixture.lua"
-local presets={"2p2b","4p-ffa","1v4-bugs","2v2","3v1","4v4-priests"}
-for _,preset in ipairs(presets) do
+local presets={"2p2b","4p-ffa","1v4-bugs","2v2","3v1","4v4-priests","4p-ffa"}
+for case_index,preset in ipairs(presets) do
+  local compact=case_index==7
   local handlers,initializers,records={},{},{}
   local Registry={on_init=function(fn)initializers[#initializers+1]=fn end,
     on_event=function(id,fn)handlers[id]=fn;return true end}
@@ -20,7 +21,8 @@ for _,preset in ipairs(presets) do
   end
   helpers={table_to_json=function(data)records[#records+1]=data;return "{}" end}
   log=function()end
-  _G.TP_FORCE_PROJECTION_CONFIG={preset=preset,seed=42,active_ticks=3600}
+  _G.TP_FORCE_PROJECTION_CONFIG={preset=preset,seed=42,active_ticks=3600,
+    profile=compact and "compact-capacity"or nil}
   defines={events={},inventory={chest=1}}
   for _,name in ipairs({"on_tick","on_entity_damaged","on_built_entity",
       "on_robot_built_entity","script_raised_built","script_raised_revive",
@@ -62,6 +64,13 @@ for _,preset in ipairs(presets) do
     hidden={hidden=true,stack_size=100,type="item"}},
     entity={["steel-chest"]={hidden=false,type="container",
       get_inventory_size=function()return 48 end}}}
+  for _,name in ipairs{"iron-plate","copper-plate","steel-plate","stone","coal","wood",
+    "iron-gear-wheel","electronic-circuit","copper-cable","transport-belt","inserter",
+    "small-electric-pole","pipe","stone-furnace","burner-mining-drill","electric-mining-drill",
+    "assembling-machine-1","lab","offshore-pump","boiler","steam-engine","repair-pack","firearm-magazine",
+    "intermediate-cogitator-station","junior-cogitator-station"}do
+    prototypes.item[name]={hidden=false,type="item",stack_size=name:find("cogitator-station",1,true)and 1 or(name=="coal"or name=="stone")and 50 or 100}
+  end
   game={tick=0,surfaces={surface},forces={},map_settings={enemy_expansion={},enemy_evolution={}},
     create_random_generator=function(seed)
       local x=seed
@@ -98,6 +107,17 @@ for _,preset in ipairs(presets) do
       assert(p.expansion_stock.count>=1 and p.expansion_stock.count<=5)
       assert(p.station.get_inventory(1).get_item_count("senior-cogitator-station")==p.expansion_stock.count)
       assert(p.expansion_stock.deployed==0)
+      if compact then
+        assert(p.station.get_inventory(1).get_item_count("intermediate-cogitator-station")==2)
+        assert(p.station.get_inventory(1).get_item_count("junior-cogitator-station")==2)
+        local totals={}
+        for _,slot in ipairs(p.stock)do
+          assert(not slot.name:find("science",1,true),"compact arena seeded science")
+          totals[slot.name]=(totals[slot.name]or 0)+slot.count
+        end
+        assert(totals["iron-plate"]==400 and totals["copper-plate"]==300
+          and totals["assembling-machine-1"]==8,"compact arena lost counted native capacity")
+      end
     end
   end
   assert(chunks==(s.side/32)^2)
@@ -109,5 +129,5 @@ for _,preset in ipairs(presets) do
     end
   end
   for cell=0,(s.side/256)^2-1 do assert(counts[cell]==6)end
-  print("PASS bounded fixture setup and observation "..preset)
+  print("PASS bounded fixture setup and observation "..preset..(compact and " compact-capacity"or ""))
 end

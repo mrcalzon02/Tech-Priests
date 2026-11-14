@@ -33,7 +33,9 @@ local function init()
   local c=config(); assert(c and PRESETS[c.preset],"missing arena config")
   game.speed=c.game_speed or 1
   local roster=PRESETS[c.preset]
-  local side=#roster>4 and 3072 or 2048
+  local compact=c.profile=="compact-capacity"
+  assert(not compact or c.preset=="4p-ffa","compact capacity profile requires four priest forces")
+  local side=compact and 512 or(#roster>4 and 3072 or 2048)
   storage[KEY]={phase="terrain",seed=c.seed,preset=c.preset,
     side=side,chunk=0,cell=0,patch=0,tile=0,participants={},
     random=game.create_random_generator(c.seed),
@@ -44,8 +46,9 @@ local function init()
   local s=state(); local rows=math.ceil(#roster/2)
   for i,entry in ipairs(roster) do
     local force=game.create_force("tp-arena-"..i)
-    local position={x=(i%2==1 and -1 or 1)*(side/2-320),
-      y=-side/2+320+(math.floor((i-1)/2))*(side-640)/math.max(1,rows-1)}
+    local inset=compact and 160 or 320
+    local position={x=(i%2==1 and -1 or 1)*(side/2-inset),
+      y=-side/2+inset+(math.floor((i-1)/2))*(side-2*inset)/math.max(1,rows-1)}
     local p={force=force.name,kind=entry:sub(1,1),team=entry:sub(3),
       origin=position,built=0,lost=0,research=0,damage_dealt=0,
       damage_received=0,max_build_distance=0,initial={},stock={}}
@@ -72,7 +75,7 @@ local function init()
     novice_evolution=0,fixture_supply_only=true,
     operation_profile="independent-maximum-frustration",
     game_speed=game.speed,
-    stock_profile="random-chest-plus-1-to-5-senior-kits"})
+    stock_profile=compact and "compact-counted-capacity"or "random-chest-plus-1-to-5-senior-kits"})
 end
 local function owner(force)
   if not force then return nil end
@@ -81,8 +84,9 @@ local function owner(force)
   end
 end
 local function reserved(x,y)
+  local margin=config().profile=="compact-capacity"and 20 or 48
   for _,p in ipairs(state().participants) do
-    if math.abs(x-p.origin.x)<48 and math.abs(y-p.origin.y)<48 then return true end
+    if math.abs(x-p.origin.x)<margin and math.abs(y-p.origin.y)<margin then return true end
   end
   return false
 end
@@ -110,6 +114,11 @@ local function seed_resources(s,surface)
     local offset=offsets[s.patch+1]
     local x=-s.side/2+cx*256+128+offset[1]+s.random(-18,18)
     local y=-s.side/2+cy*256+128+offset[2]+s.random(-18,18)
+    if config().profile=="compact-capacity"then
+      local origin=s.participants[s.cell+1].origin
+      local local_offset=({{-28,0},{28,0},{0,-28},{0,28},{-28,-22},{-28,22}})[s.patch+1]
+      x=origin.x+local_offset[1];y=origin.y+local_offset[2]
+    end
     if reserved(x,y) then
       -- Keep every macrocell's six deposits while reserving clear spawn pads.
       x=-s.side/2+cx*256+128;y=-s.side/2+cy*256+128
@@ -120,6 +129,7 @@ local function seed_resources(s,surface)
     end
     s.deposit={name=kind,x=x,y=y,radius=s.random(4,8),
       amount=near and s.random(100,400) or s.random(400,1800),cursor=0,placed=0}
+    if config().profile=="compact-capacity"then s.deposit.radius=5;s.deposit.amount=400 end
   end
   local d=s.deposit; local width=d.radius*2+1
   -- Bound each resource/tile API batch; persist exact cursor across saves.
@@ -162,6 +172,29 @@ local function supply_pool()
   end
   table.sort(names);assert(#names>0,"no supply item pool")
   return names
+end
+local CAPACITY_STOCK={
+ {"iron-plate",400},{"copper-plate",300},{"steel-plate",100},
+ {"stone",200},{"coal",300},{"wood",40},
+ {"iron-gear-wheel",100},{"electronic-circuit",100},{"copper-cable",200},
+ {"transport-belt",200},{"inserter",40},{"small-electric-pole",40},{"pipe",100},
+ {"stone-furnace",4},{"burner-mining-drill",4},{"electric-mining-drill",4},
+ {"assembling-machine-1",8},{"lab",3},{"offshore-pump",2},
+ {"boiler",2},{"steam-engine",4},{"repair-pack",40},{"firearm-magazine",100},
+}
+local function seed_capacity_stock(inv,participant)
+ local slot=1
+ for _,entry in ipairs(CAPACITY_STOCK)do
+  local name,remaining=entry[1],entry[2]
+  assert(prototypes.item[name],"missing capacity profile item: "..name)
+  while remaining>0 do
+   assert(slot<=#inv,"capacity starter inventory overflow")
+   local count=math.min(remaining,prototypes.item[name].stack_size)
+   assert(inv[slot].set_stack{name=name,count=count},"capacity stock insert failed")
+   participant.stock[#participant.stock+1]={slot=slot,name=name,count=count,quality="normal"}
+   remaining=remaining-count;slot=slot+1
+  end
+ end
 end
 local function chest_name()
   local best="steel-chest";local size=0
@@ -211,7 +244,8 @@ local function seed_participant(s,surface)
     assert(station_inv and station_inv.valid,"Magos inventory unavailable")
     local kit="senior-cogitator-station"
     assert(prototypes.item[kit],"senior station kit prototype unavailable")
-    local wanted=s.expansion_random(1,5)
+    local compact=config().profile=="compact-capacity"
+    local wanted=compact and 2 or s.expansion_random(1,5)
     local before=station_inv.get_item_count(kit)
     assert(before==0,"unexpected preexisting Magos expansion kits")
     local accepted=station_inv.insert{name=kit,count=wanted}
@@ -219,21 +253,32 @@ local function seed_participant(s,surface)
     assert(accepted==wanted and after-before==wanted,"Magos expansion kit capacity/debit mismatch")
     p.expansion_stock={name=kit,count=wanted,inserted=accepted,
       native_count=after,quality="normal",location="magos-station",deployed=0}
+    if compact then
+      p.expansion_stock.lower_tier={}
+      for _,name in ipairs{"intermediate-cogitator-station","junior-cogitator-station"}do
+        assert(station_inv.insert{name=name,count=2}==2,"lower-tier starter kit capacity mismatch")
+        assert(station_inv.get_item_count(name)==2,"lower-tier starter kit readback mismatch")
+        p.expansion_stock.lower_tier[#p.expansion_stock.lower_tier+1]={name=name,count=2}
+      end
+      local tiles={}
+      for x=-31,-25 do for y=19,25 do tiles[#tiles+1]={name="water",position={x=p.origin.x+x,y=p.origin.y+y}}end end
+      surface.set_tiles(tiles,true)
+    end
     local chest=surface.create_entity{name=chest_name(),
       position={x=p.origin.x+8,y=p.origin.y+8},force=force,raise_built=true}
     assert(chest and chest.valid,"supply chest creation refused")
     p.chest=chest;p.initial[chest.unit_number]=true
     local inv=chest.get_inventory(defines.inventory.chest)
-    local pool=supply_pool()
-    for slot=1,#inv do
+    local pool=compact and CAPACITY_STOCK or supply_pool()
+    if compact then seed_capacity_stock(inv,p)else for slot=1,#inv do
       local name=pool[s.supply_random(1,#pool)]
       local count=s.supply_random(1,prototypes.item[name].stack_size)
       assert(inv[slot].set_stack{name=name,count=count},"stock insert failed")
       p.stock[#p.stock+1]={slot=slot,name=name,count=count,quality="normal"}
-    end
+    end end
     emit("SUPPLY",{force=p.force,chest=chest.name,unit=chest.unit_number,
       station=station.unit_number,priest=pair.priest.unit_number,
-      stock=p.stock,pool_size=#pool,refills=0,randomized=true,
+      stock=p.stock,pool_size=#pool,refills=0,randomized=not compact,
       expansion_stock=p.expansion_stock})
     force.chart(surface,{{p.origin.x-160,p.origin.y-160},
       {p.origin.x+160,p.origin.y+160}})

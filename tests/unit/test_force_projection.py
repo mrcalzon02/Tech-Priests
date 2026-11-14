@@ -38,6 +38,31 @@ def encode(rows):
 
 
 class Verdict(unittest.TestCase):
+    def test_compact_capacity_rejects_seeded_science_and_unequal_supplies(self):
+        rows=observations()
+        roster=[{"force":"f"+str(i),"kind":"p"}for i in range(4)]
+        rows=[(kind,data)for kind,data in rows if kind!="SUPPLY"
+              and not(kind=="DEPOSIT"and data["cell"]>=4)]
+        rows[0][1].update(preset="4p-ffa",side=512,participants=roster,
+                          stock_profile="compact-counted-capacity")
+        rows[-1][1]["preset"]="4p-ffa"
+        for p in roster:
+            rows.insert(2,("SUPPLY",{"force":p["force"],"refills":0,
+                "expansion_stock":{"name":"senior-cogitator-station","count":2,
+                    "inserted":2,"native_count":2,"location":"magos-station","deployed":0,
+                    "lower_tier":[{"name":"intermediate-cogitator-station","count":2},
+                                  {"name":"junior-cogitator-station","count":2}]},
+                "stock":[{"slot":1,"name":"iron-plate","count":100}] } ))
+        parsed=arena.parse_observations(encode(rows),"4p-ffa",42,3600)
+        self.assertFalse(parsed["factory_progress_proven"])
+        supplies=[data for kind,data in rows if kind=="SUPPLY"]
+        supplies[0]["stock"][0]["name"]="automation-science-pack"
+        with self.assertRaisesRegex(ValueError,"seeded science"):
+            arena.parse_observations(encode(rows),"4p-ffa",42,3600)
+        supplies[0]["stock"][0].update(name="iron-plate",count=99)
+        with self.assertRaisesRegex(ValueError,"equal counted capacity"):
+            arena.parse_observations(encode(rows),"4p-ffa",42,3600)
+
     def test_expansion_kits_must_be_one_to_five_real_undeployed_items(self):
         for count in (1,5):
             rows=copy.deepcopy(observations())
