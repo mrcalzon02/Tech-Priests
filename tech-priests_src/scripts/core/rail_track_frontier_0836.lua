@@ -1341,7 +1341,12 @@ function M.service_first_train_stop_0836(pair,role)
     and m.first_stop_0836.built_entity.unit_number==m.first_stop_0836.built_unit)then
     return false,"original-home-stop-not-verified"
   end
-  local state=remote and m.remote_stop_0836 or m.first_stop_0836
+  -- A missing remote state MUST NOT fall back to the already verified
+  -- home stop. Lua's 'a and nil or b' would silently take the home receipt,
+  -- declaring the remote stage complete without placing its physical item.
+  local state
+  if remote then state=m.remote_stop_0836
+  else state=m.first_stop_0836 end
   local function connected_original(stop)
     if not(valid(stop) and stop.name=="train-stop"
       and stop.force==pair.station.force
