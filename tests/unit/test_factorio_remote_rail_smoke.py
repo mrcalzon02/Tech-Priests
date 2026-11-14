@@ -1651,8 +1651,8 @@ class NativeOriginalHomeward0836ContractTests(unittest.TestCase):
         root=pathlib.Path(__file__).resolve().parents[2]
         fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(
             encoding="utf-8")
-        gate=fixture.split('  if outbound and outbound.phase==\\n',1)[1].split(
-            'then\\n    fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',1)[0]
+        gate=fixture.split('  if outbound and outbound.phase==\n',1)[1].split(
+            'then\n    fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',1)[0]
         depth=0
         for char in gate:
             if char=="(": depth+=1
