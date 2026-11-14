@@ -1553,6 +1553,35 @@ function M.enforce_pair(pair, reason)
     end
   end
   if distance > M.hard_leash(pair) then
+    -- Sample actual native 0566/0338 contention before a return replaces
+    -- the original movement. Observation only; no admission or custody change.
+    local mission=pair.remote_rail_outpost_0835
+    local remote=mission and mission.first_remote_drill_0836
+    if remote and remote.disembark_confirmed==true
+        and type(remote.disembark_tick)=="number"
+        and now()-remote.disembark_tick<=15000
+        and (not remote.last_0566_site_probe_tick_0836
+          or now()-remote.last_0566_site_probe_tick_0836>=600)
+        and type(log)=="function" then
+      remote.last_0566_site_probe_tick_0836=now()
+      local task=pair.construction_task_0338
+      local req=pair.movement_request_0418
+      log("[TP-0836-0566-BOUNDARY] tick="..tostring(now())..
+        " dist="..tostring(distance)..
+        " priest_x="..tostring(pair.priest.position.x)..
+        " priest_y="..tostring(pair.priest.position.y)..
+        " phase="..tostring(remote.phase)..
+        " task_phase="..tostring(task and task.phase)..
+        " task_owned="..tostring(task and task.request_value==remote.request)..
+        " custody="..tostring(pair.construction_custody_0338~=nil)..
+        " request_owner="..tostring(request and request.owner)..
+        " request_reason="..tostring(request and request.reason)..
+        " pair_owner="..tostring(req and req.owner)..
+        " canonical_same="..tostring(request==req)..
+        " enforcement_return="..tostring(enforcement_return)..
+        " paid_receipt="..tostring(remote.paid_drill_completion_0836 and
+          remote.paid_drill_completion_0836.native_0338_paid))
+    end
     -- 0836 original paid rail construction is a physically verified track
     -- contact, not a general overleash exemption.  Require the same live
     -- 0338 owner and authentic last connected rail that 0574 checked.

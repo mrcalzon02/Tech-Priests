@@ -2740,7 +2740,8 @@ function M.authorized_original_remote_drill_walk_0836(pair,point,movement)
                 or movement.reason=="construction-clear-ghost-footprint-0338"))))
         or (movement.owner=="movement-controller-enforcement-0566"
           and (movement.reason=="movement-enforcement-overleash-return-0566"
-            or movement.reason=="movement-enforcement-return-0566")
+            or movement.reason=="movement-enforcement-return-0566"
+            or movement.reason=="movement-enforcement-stale-return-0566")
           and pair.movement_request_0418==movement))
       and storage and storage.tech_priests
       and storage.tech_priests.pairs_by_station

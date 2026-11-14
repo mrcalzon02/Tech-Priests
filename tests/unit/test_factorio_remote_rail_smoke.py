@@ -2399,6 +2399,32 @@ class OriginalNativeRailDisembarkAndDrillWalk0836Tests(unittest.TestCase):
         self.assertIn('M.stop(pair,"original-remote-drill-construction-safety-handoff-0836")',movement)
 
 
+class OriginalPaidRemoteDrillStaleReturn0566Regression(unittest.TestCase):
+    """The actual canonical stale-return cannot discard original paid drill custody."""
+
+    def test_all_canonical_0566_returns_respect_same_native_builder_identity(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        controller=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        permit=rail.split("function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[1].split(
+            "function M.authorized_original_remote_drill_hold_0836(pair)",1)[0]
+        for reason in ('movement-enforcement-overleash-return-0566',
+                       'movement-enforcement-return-0566',
+                       'movement-enforcement-stale-return-0566'):
+            self.assertIn(reason,permit)
+        for invariant in ('pair.movement_request_0418==movement',
+                          'task.request_value==state.request',
+                          'task.carried.count==1',
+                          'custody.request_value==state.request',
+                          'state.disembark_priest_unit==priest.unit_number',
+                          'engine.train.station==stop',
+                          'pair.rail_remote_drill_supply_0836.source_before'):
+            self.assertIn(invariant,permit)
+        self.assertNotIn('bounds_exempt',permit)
+        self.assertNotIn('teleport(',permit)
+        self.assertIn('[TP-0836-0566-BOUNDARY]',controller)
+
+
 class NativePaidRemoteDrillCompletionHold0836Tests(unittest.TestCase):
     """Native paid drill completes before 0566 can recall the original Magos."""
 
