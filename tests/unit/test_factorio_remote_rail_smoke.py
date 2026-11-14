@@ -1098,17 +1098,20 @@ class NativeReverseLocomotive0836ContractTests(unittest.TestCase):
         source=rail.split("function M.service_return_locomotive_0836(pair)",1)[1].split(
             "function M.service_first_wagon_0836(pair)",1)[0]
         for expected in ("receipt.before-receipt.after==1",
-                         "entity.direction==(route.direction+8)%16",
+                         "math.abs(((entity.orientation-lead.built_entity.orientation)%1)-0.5)",
                          "entity.train.id==lead.built_entity.train.id",
                          'site_reason="original-return-locomotive-0836"',
                          "pair.construction_request=request"):
             self.assertIn(expected,source)
-        for forbidden in ("surface.create_entity","train.speed=","teleport"):
+        for forbidden in ("surface.create_entity","train.speed=","teleport",
+                          "entity.direction==(route.direction+8)%16"):
             self.assertNotIn(forbidden,source)
         self.assertIn("return M.service_return_locomotive_0836(pair)",rail)
         for checked in (builder,dispatch,queue):
             self.assertIn("original-return-locomotive-0836",checked)
         self.assertIn("REVERSE_LOCO_NATIVE_0836",fixture)
+        self.assertIn("native_opposite=",fixture)
+        self.assertIn("rear_orientation=",fixture)
         self.assertIn("NO_GENUINE_ORE_DELIVERED_BY_RAIL",fixture)
 
 

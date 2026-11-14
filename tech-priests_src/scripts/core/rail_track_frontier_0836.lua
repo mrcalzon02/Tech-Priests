@@ -1107,7 +1107,14 @@ function M.service_return_locomotive_0836(pair)
         and entity.force==pair.station.force
         and entity.surface==pair.station.surface
         and entity.train and entity.train.valid
-        and entity.direction==(route.direction+8)%16
+        -- Rolling stock uses continuous orientation. LuaEntity.direction
+        -- may read north for entities with supports_direction=false, even
+        -- when the native east/west locomotive visibly faces otherwise.
+        -- Reject any locomotive not physically opposite the original lead.
+        and type(entity.orientation)=="number"
+        and type(lead.built_entity.orientation)=="number"
+        and math.abs(((entity.orientation-lead.built_entity.orientation)%1)-0.5)
+          <0.03125
         and lead.built_entity.train and lead.built_entity.train.valid
         and wagon.built_entity.train and wagon.built_entity.train.valid
         and entity.train.id==lead.built_entity.train.id

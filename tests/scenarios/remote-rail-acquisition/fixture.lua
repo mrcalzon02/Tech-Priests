@@ -801,6 +801,17 @@ local function inspect(s,elapsed)
     " native_0338_paid="..tostring(debit and debit.native_0338_paid)..
     " source_debit="..tostring(debit and debit.before and debit.after
       and debit.before-debit.after)..
+    " rear_orientation="..tostring(rear and rear.valid and rear.orientation)..
+    " lead_orientation="..tostring(loco_entity and loco_entity.valid
+      and loco_entity.orientation)..
+    " rear_direction="..tostring(rear and rear.valid and rear.direction)..
+    " supports_direction="..tostring(rear and rear.valid
+      and rear.supports_direction)..
+    " native_opposite="..tostring(rear and rear.valid
+      and loco_entity and loco_entity.valid
+      and type(rear.orientation)=="number"
+      and type(loco_entity.orientation)=="number"
+      and math.abs(((rear.orientation-loco_entity.orientation)%1)-0.5)<0.03125)..
     " same_train="..tostring(rear and rear.valid and loco_entity
       and loco_entity.valid and rear.train and loco_entity.train
       and rear.train.id==loco_entity.train.id)..
