@@ -1,0 +1,19 @@
+{
+  "original_machine_meshes": 187,
+  "modified_original_meshes": [
+    "Condenser eight-seat rack body",
+    "Condenser dark canister seat 0 0",
+    "Condenser dark canister seat 1 0",
+    "Condenser dark canister seat 0 1",
+    "Condenser dark canister seat 1 1",
+    "Condenser dark canister seat 0 2",
+    "Condenser dark canister seat 1 2",
+    "Condenser dark canister seat 0 3",
+    "Condenser dark canister seat 1 3"
+  ],
+  "new_liners_and_floors": 16,
+  "frames_verified": 97,
+  "max_original_hardware_world_matrix_error": 0.0,
+  "unchanged_original_meshes": 178,
+  "result": "PASS"
+}
