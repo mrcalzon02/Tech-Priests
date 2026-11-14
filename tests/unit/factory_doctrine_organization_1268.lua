@@ -130,3 +130,6 @@ assert(n==before and pair.construction_request==nil
  and pair.structure_construction_requested_item==nil,
  "read-only factory organization stole worker custody or mutated station")
 print("[factory-doctrine-organization-1268] PASS 14 explicit styles, differing layout scores, shared batch inputs, native belt capacities and no construction")
+-- 1410: the actual planning priest now supplies the advisory doctrine,
+-- with one immutable next-object ticket and native player-structure adoption.
+dofile("tests/unit/priest_factory_doctrine_1410.lua")
