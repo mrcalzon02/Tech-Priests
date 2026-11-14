@@ -841,6 +841,49 @@ local function inspect(s,elapsed)
     " paid="..tostring(stop_state and stop_state.paid_completion_0836
       and stop_state.paid_completion_0836.native_0338_paid)..
     " blocker="..tostring(stop_state and stop_state.blocker))
+  -- The distant stop is a SECOND physically paid 0338 build, with another
+  -- actual engine connection to the far end of the original 205-link track.
+  -- A second home-side ghost or a cached receipt is not remote access.
+  local remote=objective and objective.remote_stop_0836
+  local remote_entity=remote and remote.built_entity
+  local remote_rail=remote_entity and remote_entity.valid
+    and remote_entity.connected_rail
+  local remote_receipt=remote and remote.paid_completion_0836
+  local far_connected=false
+  local track=objective and objective.rail_frontier_0836
+  if remote_rail and remote_rail.valid and track
+      and type(track.built_units)=="table" then
+    for index=math.max(1,#track.built_units-28),#track.built_units do
+      if track.built_units[index]==remote_rail.unit_number then
+        far_connected=true;break
+      end
+    end
+  end
+  emit("REMOTE_STOP_NATIVE_0836 elapsed="..elapsed..
+    " phase="..tostring(remote and remote.phase)..
+    " role="..tostring(remote and remote.request
+      and remote.request.rail_stop_role_0836)..
+    " unit="..tostring(remote_entity and remote_entity.valid
+      and remote_entity.unit_number)..
+    " rail_unit="..tostring(remote_rail and remote_rail.valid
+      and remote_rail.unit_number)..
+    " far_connected="..tostring(far_connected)..
+    " home_separate="..tostring(stop_entity and stop_entity.valid
+      and remote_entity and remote_entity.valid
+      and stop_entity.unit_number~=remote_entity.unit_number)..
+    " paid="..tostring(remote_receipt and remote_receipt.native_0338_paid)..
+    " source_debit="..tostring(remote_receipt and
+      remote_receipt.before-remote_receipt.after)..
+    " blocker="..tostring(remote and remote.blocker))
+  if remote and remote.phase=="native-paid-original-train-stop-verified"
+      and not(remote.request and remote.request.rail_stop_role_0836=="remote"
+        and remote_receipt and remote_receipt.native_0338_paid==true
+        and remote_receipt.before-remote_receipt.after==1
+        and far_connected and stop_entity and stop_entity.valid
+        and remote_entity and remote_entity.valid
+        and stop_entity.unit_number~=remote_entity.unit_number)then
+    fail("REMOTE_STOP_NATIVE_IDENTITY_DEBIT_OR_FAR_CONNECTION_INVALID")
+  end
   -- Read the actual engine driver, not the rail mission's assertion.
   local first_board=objective and objective.first_board_0836
   local native_driver
