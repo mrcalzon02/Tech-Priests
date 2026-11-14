@@ -1583,7 +1583,8 @@ class NativeReverseLocomotivePhysicalFuel0836ContractTests(unittest.TestCase):
             'logistics.offer_original_locomotive_fuel_0836,pair,entity',
         ):
             self.assertIn(required,fuel)
-        self.assertIn('candidate=fuel_candidate(pair,locomotive)',logistics)
+        self.assertIn('candidate=fuel_candidate(pair,locomotive,',logistics)
+        self.assertIn('M.original_train_min_fuel_count_0836)',logistics)
         self.assertIn('destination_after == destination_before + inserted',logistics)
         service=rail.split("function M.service_pair(pair)",1)[1]
         self.assertLess(service.index("return M.service_return_train_fuel_0836(pair)"),
