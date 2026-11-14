@@ -1443,7 +1443,7 @@ class NativePaidTrainStop0836ContractTests(unittest.TestCase):
         root = pathlib.Path(__file__).resolve().parents[2]
         rail = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua"
                 ).read_text(encoding="utf-8")
-        stop = rail.split("function M.service_first_train_stop_0836(pair)", 1)[1].split(
+        stop = rail.split("function M.service_first_train_stop_0836(pair,role)", 1)[1].split(
             "function M.service_first_train_board_0836(pair)", 1)[0]
         self.assertIn('local heading=offset<0 and cardinal.west or cardinal.east', stop)
         self.assertIn('return false,"original-native-train-stop-requires-horizontal-track"', stop)
@@ -1460,7 +1460,7 @@ class NativePaidTrainStop0836ContractTests(unittest.TestCase):
         rail = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
         builder = (root / "tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
         fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
-        stop = rail.split("function M.service_first_train_stop_0836(pair)", 1)[1].split("function M.service_first_train_board_0836(pair)", 1)[0]
+        stop = rail.split("function M.service_first_train_stop_0836(pair,role)", 1)[1].split("function M.service_first_train_board_0836(pair)", 1)[0]
         for part in ('receipt.before-receipt.after==1', 'stop.connected_rail',
                      'unit==rail.unit_number', 'no-real-train-stop-item',
                      'original-first-train-stop-0836', 'pair.construction_request=request',
@@ -1472,6 +1472,41 @@ class NativePaidTrainStop0836ContractTests(unittest.TestCase):
             self.assertIn(part, builder)
         self.assertIn('return M.service_first_train_stop_0836(pair)', rail)
         self.assertIn('STOP_NATIVE_0836 elapsed=', fixture)
+        self.assertNotIn('surface.create_entity', stop)
+        self.assertNotIn('teleport(', stop)
+
+
+    def test_remote_stop_requires_distinct_paid_0338_receipt_and_real_far_rail(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        rail = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        builder = (root / "tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        stop = rail.split("function M.service_first_train_stop_0836(pair,role)", 1)[1].split(
+            "function M.service_first_train_board_0836(pair)", 1)[0]
+        for required in (
+            'local remote=role=="remote"',
+            'route.segment-16',
+            'route.segment-22',
+            'm.remote_stop_0836=record',
+            'rail_stop_role_0836=remote and "remote" or "home"',
+            'receipt.native_0338_paid==true',
+            'receipt.before-receipt.after==1',
+            'connected_original(stop)',
+            'original-home-stop-not-verified',
+            'return false,"no-real-train-stop-item"',
+        ):
+            self.assertIn(required, stop)
+        for required in (
+            'if role=="remote" then state=mission.remote_stop_0836',
+            'if stop_role=="remote" then first_stop=mission.remote_stop_0836',
+            'and state.request==request and pair.construction_request==request',
+            'stop_before-after==1',
+            'train-stop-original-physical-request-stale',
+        ):
+            self.assertIn(required, builder)
+        self.assertIn('M.service_first_train_stop_0836(pair,"remote")', rail)
+        self.assertIn('if far.phase~="native-paid-original-train-stop-verified"then', rail)
+        self.assertIn("REMOTE_STOP_NATIVE_0836 elapsed=", fixture)
         self.assertNotIn('surface.create_entity', stop)
         self.assertNotIn('teleport(', stop)
 
