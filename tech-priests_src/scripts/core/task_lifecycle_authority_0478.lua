@@ -250,6 +250,32 @@ end
 
 function M.service_pair(pair)
   if not enabled() or not valid_pair(pair) then return false end
+  local direct=rawget(_G,"TechPriestsDirectAcquisitionExecutor0513")
+  local state=storage and storage.tech_priests and storage.tech_priests.direct_acquisition_executor_0513
+  local production=rawget(_G,"TechPriestsEmergencyProductionExecutor0514")
+  local production_state=storage and storage.tech_priests and storage.tech_priests.emergency_production_executor_0514
+  local strict=pair.emergency_craft
+  local production_owned=production and type(production.service_pair)=="function"
+      and not(production_state and production_state.enabled==false)
+      and type(strict)=="table"and strict.strict_recipe_0647==true
+  local direct_owned=direct and type(direct.current_direct_task)=="function"
+      and not(state and state.enabled==false)
+      and(direct.current_direct_task(pair)or pair.direct_acquisition_custody_0513)
+  if direct_owned or production_owned then
+    -- 0513 owns mining travel, required quantity and physical return. Legacy
+    -- manufacturing aliases must not retarget its material child or complete
+    -- the parent merely because one mined unit has reached storage.
+    local req=pair.movement_request_0418
+    local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+    if req and req.owner=="task-lifecycle-0478"and controller
+        and type(controller.request_status)=="function"and type(controller.stop)=="function"then
+      local ok,status=pcall(controller.request_status,pair)
+      if ok and status and status.active and status.owner=="task-lifecycle-0478"then
+        pcall(controller.stop,pair,"canonical-direct-owner-handoff-0478")
+      end
+    end
+    return false,direct_owned and "canonical-direct-owner"or "canonical-production-owner"
+  end
   local changed = false
   if satisfy_current_if_stocked(pair) then changed = true end
   if enforce_move_before_remote_work(pair) then changed = true end

@@ -672,9 +672,11 @@ local function deficient_factory_job(pair,machine)
   local job=recipe and plan.factory_component_jobs_1150
     and plan.factory_component_jobs_1150[recipe.name]
   if job and job.output_deficient==true and job.researched==true then
-    local science=type(job.output_item)=="string"and job.output_item:find("science%-pack")
     local buffer=math.max(5,math.ceil((tonumber(job.required_per_minute)or 0)*2))
-    if not science and generic_count(pair,job.output_item)>=buffer then return nil end
+    -- Already buffered science must yield its urgency to missing upstream
+    -- parts for the other planned families. Otherwise green's 920 priority
+    -- can monopolize every trip while military ammunition/walls remain 820.
+    if generic_count(pair,job.output_item)>=buffer then return nil end
     return job
   end
 end

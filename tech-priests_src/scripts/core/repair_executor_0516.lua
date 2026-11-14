@@ -89,6 +89,21 @@ end
 function M.service_pair(p,why,forced)
  local root=M.root();if root.enabled==false then return result{processed=0,detail="disabled"}end;if not valid_pair(p)then return result{failed=1,detail="invalid-pair"}end;local s=p.repair_0516 or{phase="none"};p.repair_0516=s;s.version=M.version;s.last_service_tick=now();s.last_reason=safe(why or"service")
  if p.repair_pack_custody_0516 then local ok,w=apply_custody(p);if not ok then return result{blocked=1,detail=w}end;if s.abort_after_refund then s.abort_after_refund=nil;clear_state(p,"failed",s.last_blocker or"repair-aborted-after-refund");p.mode=valid(p.combat_target)and"combat"or"idle";return result{acted=1,detail="repair-aborted-after-refund"}end end
+ -- Broker/legacy repair pulses also reach this owner outside the dispatcher.
+ -- They must not seize travel from a courier already holding real inventory.
+ -- Retain the repair task and its order for the next cargo-free service.
+ local machine=p.machine_logistics_0528
+ if p.machine_logistics_custody_0528 or(machine and machine.custody)
+     or p.direct_acquisition_custody_0513 or p.construction_custody_0338
+     or p.energy_family_custody_0707 or p.item_family_custody_0702 then
+   local movement=p.movement_request_0418
+   local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+   if movement and movement.owner=="repair_executor_0516"and controller
+       and type(controller.stop)=="function"then
+     pcall(controller.stop,p,"repair-yield-to-physical-cargo-0516")
+   end
+   return result{waiting=1,detail="physical-cargo-owner-retained"}
+ end
  if s.phase=="failed"and not valid(forced)and not repair_order(current_order(p))then return result{processed=0,detail=s.last_blocker or"repair-failed"}end
  local e=valid(forced)and forced or(valid(s.target)and s.target)or order_target(p);if not valid(e)then e,s.target_source=find_target(p)end;if not valid(e)then s.phase=pack_count(p)>0 and"no-target"or"need-item";s.last_blocker=s.target_source or"no-target";return result{blocked=s.phase=="need-item"and 1 or 0,waiting=s.phase=="no-target"and 1 or 0,detail=s.last_blocker}end
  local allowed,w=eligible(p,e,true);if not allowed then local q=queue_terminal(p,"fail_current","repair-target-invalid:"..safe(w));clear_state(p,"failed",w);p.mode="idle";return result{failed=q and 1 or 0,blocked=q and 0 or 1,detail=w}end

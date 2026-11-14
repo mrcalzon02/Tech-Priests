@@ -211,6 +211,9 @@ for _, recipe in pairs(data.raw.recipe or {}) do
   add_detritus_product(recipe)
 end
 
+require("prototypes.compatibility.furnace_detritus_capacity")(
+  data.raw.furnace,data.raw.recipe)
+
 
 -- Mechanical Detritus furnace reclamation.
 -- This is intentionally dirty, lossy, and compatible: base ores are always

@@ -12,6 +12,34 @@ isolated native factory saves are now resumed between behavior corrections.
 
 ## Latest measured state
 
+Further native continuations exposed a data-stage smelting failure: the
+zero-probability Mechanical Detritus product made ordinary smelting recipes
+require two item output slots, while vanilla and emergency furnaces retained
+one. Even fresh, empty, fueled furnaces rejected stone, iron and copper. The
+final prototype pass now provides the required waste slot without changing
+recipe costs or probabilities. `stateful-science-19/observation-smelting.json`
+verifies existing native furnaces accept inputs and physically produce bricks.
+At tick 450,233 that run records 418 red and 73 green packs, military zero,
+and physical-projectile-damage research progressing. Its native save passes
+CRC validation and its original source save remains unchanged.
+
+The legacy lifecycle now yields strict manufacturing and physical acquisition
+to their canonical owners; an obsolete parent mining alias cannot resume after
+its material child finishes. Periodic repair pulses also yield their own
+movement lease to existing physical courier cargo, retaining the pending repair.
+At tick 484,998 the continued native factory has 462 red and 88 green packs;
+military remains zero. Native observation confirms five actual grenades reached
+the military assembler, with piercing ammunition and walls still missing.
+Buffered science now yields transport urgency to those missing intermediates;
+that latest balance change is undergoing native validation in science-22.
+
+Arena-10 preserves a native continuation at tick 327,024. All four factions
+have expanded (3/3/3/2 stations); science and participant combat acceptance
+remain unfulfilled. Nearby native ore reports uncharted for every faction,
+including within the scenario's initial chart area. This discovery/cold-start
+blocker remains under investigation; no ore, lower-rank kits, science or
+recurring inventory has been injected to conceal it.
+
 The full native maintenance gate passes in `maintenance-final-regression`:
 all four ranks completed 120 real machine operations, repaired all eight targets,
 and observed natural operation decay on all eight. Consecration counts were
