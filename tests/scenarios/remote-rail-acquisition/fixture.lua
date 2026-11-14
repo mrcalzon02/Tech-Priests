@@ -792,6 +792,28 @@ local function inspect(s,elapsed)
     " paid="..tostring(paid~=nil)..
     " coupled="..tostring(coupled==true)..
     " unit="..tostring(wagon_entity and wagon_entity.unit_number))
+  -- Observe the actual carried engine inventory, its original 0338
+  -- source debit, and whether 0338 has since taken physical custody.
+  -- A zero hold after pickup is NOT an ore-delivery receipt.
+  local supply=p.rail_remote_drill_supply_0836
+  local held_drill="unmeasured"
+  if supply and supply.inventory and supply.inventory.valid then
+    local counted,n=pcall(supply.inventory.get_item_count,
+      "burner-mining-drill")
+    if counted and type(n)=="number"then held_drill=n end
+  end
+  emit("REMOTE_DRILL_SUPPLY_NATIVE_0836 elapsed="..elapsed..
+    " source_unit="..tostring(supply and supply.source_unit)..
+    " source_before="..tostring(supply and supply.source_before)..
+    " source_after="..tostring(supply and supply.source_after)..
+    " staged_tick="..tostring(supply and supply.stage_tick)..
+    " held_drill="..tostring(held_drill)..
+    " quarantine="..tostring(supply and supply.quarantine)..
+    " construction_phase="..tostring(p.construction_task_0338
+      and p.construction_task_0338.phase)..
+    " construction_carry="..tostring(p.construction_task_0338
+      and p.construction_task_0338.carried
+      and p.construction_task_0338.carried.item_name))
   local reverse=objective and objective.return_locomotive_0836
   local rear=reverse and reverse.built_entity
   local debit=reverse and reverse.paid_completion_0836

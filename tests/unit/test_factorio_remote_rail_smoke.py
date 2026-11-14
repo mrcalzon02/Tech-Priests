@@ -114,6 +114,65 @@ class OriginalRailNativeDrillHandoffTests(unittest.TestCase):
         self.assertIn("train.station==origin", native_return)
 
 
+class OriginalNativeDrillWagonCustodyTests(unittest.TestCase):
+    def test_real_depot_debit_is_staged_before_original_wagon_pickup(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        builder = (root / "tech-priests_src/scripts/core/"
+                   "construction_planner.lua").read_text(encoding="utf-8")
+        stage = builder.split(
+            "local function stage_original_wagon_drill_0836(pair,task)", 1
+        )[1].split("-- Exact post-audit locomotive ownership.", 1)[0]
+        self.assertIn('wagon.request==task.request_value', stage)
+        self.assertIn('within_entity_reach(pair.priest.position,task.source_entity,', stage)
+        self.assertIn('game.create_inventory(1)', stage)
+        self.assertIn('pair.rail_remote_drill_supply_0836=held', stage)
+        self.assertIn('remove_item(task.source_inv,"burner-mining-drill",1)', stage)
+        self.assertIn('insert_item(inventory,"burner-mining-drill",removed)', stage)
+        self.assertIn('before-after~=1', stage)
+        self.assertIn('held.quarantine="native-remote-drill-debit-unreconciled"', stage)
+        self.assertNotIn("surface.create_entity", stage)
+        self.assertNotIn("teleport(", stage)
+        pickup = builder.split('if task.phase=="pickup"then', 1)[1]
+        self.assertLess(
+            pickup.index("stage_original_wagon_drill_0836(pair,task)"),
+            pickup.index("remove_item(task.source_inv,task.item_name,1)"))
+        self.assertIn("original-remote-drill-real-supply-not-staged", pickup)
+
+    def test_0338_remote_drill_uses_only_same_original_physical_hold(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        builder = (root / "tech-priests_src/scripts/core/"
+                   "construction_planner.lua").read_text(encoding="utf-8")
+        gate = builder.split(
+            "local function original_remote_drill_supply_0836(pair,item)", 1
+        )[1].split("local function source_for_item(pair,item)", 1)[0]
+        for part in ('state.request==request',
+                     'request.site_reason=="original-remote-rail-drill-0836"',
+                     'mission.first_wagon_0836.phase=="native-paid-wagon-verified"',
+                     'held.wagon_request~=mission.first_wagon_0836.request',
+                     'held.source_before-held.source_after==1',
+                     'item_count(held.inventory,item)~=1',
+                     'entity=pair.priest'):
+            self.assertIn(part, gate)
+        source = builder.split("local function source_for_item(pair,item)", 1
+                               )[1].split("local function entity_exists(name)", 1)[0]
+        self.assertIn("if remote_drill_owned then return drill_supply end", source)
+        self.assertLess(source.index("if remote_drill_owned then return drill_supply end"),
+                        source.index("home_sources(pair)"))
+        self.assertNotIn('insert_item(', gate)
+        self.assertNotIn('remove_item(', gate)
+
+    def test_native_fixture_reports_source_and_actual_hold_not_credit(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/"
+                   "fixture.lua").read_text(encoding="utf-8")
+        self.assertIn("REMOTE_DRILL_SUPPLY_NATIVE_0836 elapsed=", fixture)
+        self.assertIn("p.rail_remote_drill_supply_0836", fixture)
+        self.assertIn('get_item_count("burner-mining-drill")', fixture)
+        self.assertIn("source_before=", fixture)
+        self.assertIn("source_after=", fixture)
+        self.assertNotIn('inventory.insert{name="iron-ore"', fixture)
+
+
 class OriginalRailItemFamilyAdmissionTests(unittest.TestCase):
     def test_live_original_0835_expedition_defers_only_new_0702_work(self):
         root = pathlib.Path(__file__).resolve().parents[2]

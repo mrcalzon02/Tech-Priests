@@ -186,7 +186,56 @@ local function original_rail_cargo_0836(pair,item)
  end
  return held,false
 end
+-- The remote ore drill rides in ONE real, persisted engine-owned inventory
+-- loaded by the original 0338 wagon builder at its actual source pickup.
+-- Only the same original Magos and same paid wagon/remote drill request can
+-- use it. A missing or quarantined hold must never fall back to remote debit
+-- of home storage when the priest is already 380 tiles away.
+local function original_remote_drill_supply_0836(pair,item)
+ if item~="burner-mining-drill" or not valid_pair(pair) then
+  return nil,false
+ end
+ local mission=pair.remote_rail_outpost_0835
+ local request=pair.remote_drill_request_1011
+ local state=mission and mission.first_remote_drill_0836
+ if not(type(request)=="table" and state and state.request==request
+   and request.site_reason=="original-remote-rail-drill-0836"
+   and request.item_name=="burner-mining-drill"
+   and request.original_rail_mission_station_unit_0836
+     ==pair.station.unit_number
+   and mission.root_station_unit==pair.station.unit_number
+   and mission.surface_index==pair.station.surface.index
+   and mission.force_index==pair.station.force.index
+   and state.station_unit==pair.station.unit_number
+   and state.priest_unit==pair.priest.unit_number
+   and mission.first_wagon_0836
+   and mission.first_wagon_0836.phase=="native-paid-wagon-verified"
+   and mission.first_outbound_0836
+   and mission.first_outbound_0836.phase
+     =="native-original-outbound-arrived-at-paid-remote-stop")then
+  return nil,false
+ end
+ local held=pair.rail_remote_drill_supply_0836
+ if type(held)~="table" or held.quarantine
+   or not(held.inventory and held.inventory.valid)
+   or held.station_unit~=pair.station.unit_number
+   or held.priest_unit~=pair.priest.unit_number
+   or held.surface_index~=pair.station.surface.index
+   or held.force_index~=pair.station.force.index
+   or held.wagon_request~=mission.first_wagon_0836.request
+   or not(held.source_before and held.source_after
+     and held.source_before-held.source_after==1)
+   or not held.source_unit then
+  return nil,true
+ end
+ if item_count(held.inventory,item)~=1 then return nil,true end
+ return {inv=held.inventory,entity=pair.priest,count=1,
+   label="original-native-remote-drill-cargo-0836",
+   item_name=item,score=-math.huge},true
+end
 local function source_for_item(pair,item)
+ local drill_supply,remote_drill_owned=original_remote_drill_supply_0836(pair,item)
+ if remote_drill_owned then return drill_supply end
  local held,invalid=original_rail_cargo_0836(pair,item)
  if invalid then return nil end -- preserve lost/ambiguous physical custody
  if held and item_count(held.inventory,"rail")>0 then
@@ -421,6 +470,65 @@ local function stage_original_rail_supply_0836(pair,task)
    "source="..safe(held.origin_unit).." native_held="..safe(held_after)..
    " original_source_before="..safe(before)..
    " original_source_after="..safe(source_after))
+ return true
+end
+-- Stage precisely ONE actual original remote mining drill when the
+-- original 0338 wagon builder is at the same physically stocked depot.
+-- There is no direct remote warehouse debit; the persistent hold and
+-- source inventory are both read back after the actual LuaInventory transfer.
+-- On unclear custody retain/quarantine the original hold, never mint stock.
+local function stage_original_wagon_drill_0836(pair,task)
+ local mission=pair.remote_rail_outpost_0835
+ local wagon=mission and mission.first_wagon_0836
+ if not(wagon and wagon.request==task.request_value
+   and wagon.phase=="awaiting-original-0338"
+   and mission.root_station_unit==pair.station.unit_number
+   and mission.force_index==pair.station.force.index
+   and mission.surface_index==pair.station.surface.index
+   and task.source_inv and task.source_inv.valid
+   and valid(task.source_entity) and task.source_entity.unit_number
+   and within_entity_reach(pair.priest.position,task.source_entity,
+      M.pickup_reach_sq))then return false end
+ local held=pair.rail_remote_drill_supply_0836
+ if held then
+  return type(held)=="table" and not held.quarantine
+   and held.inventory and held.inventory.valid
+   and held.station_unit==pair.station.unit_number
+   and held.priest_unit==pair.priest.unit_number
+   and held.source_unit==task.source_entity.unit_number
+   and held.surface_index==pair.station.surface.index
+   and held.force_index==pair.station.force.index
+   and held.wagon_request==task.request_value
+   and held.source_before-held.source_after==1
+   and item_count(held.inventory,"burner-mining-drill")==1
+ end
+ local before=item_count(task.source_inv,"burner-mining-drill")
+ if before<1 or not(game and type(game.create_inventory)=="function")
+   then return false end
+ local ok,inventory=pcall(function()return game.create_inventory(1)end)
+ if not(ok and inventory and inventory.valid)then return false end
+ held={inventory=inventory,station_unit=pair.station.unit_number,
+   priest_unit=pair.priest.unit_number,
+   surface_index=pair.station.surface.index,
+   force_index=pair.station.force.index,
+   wagon_request=task.request_value,
+   source_unit=task.source_entity.unit_number,
+   source_before=before,source_after=nil,stage_tick=now()}
+ pair.rail_remote_drill_supply_0836=held
+ local removed=remove_item(task.source_inv,"burner-mining-drill",1)
+ local inserted=insert_item(inventory,"burner-mining-drill",removed)
+ local after=item_count(task.source_inv,"burner-mining-drill")
+ local carried=item_count(inventory,"burner-mining-drill")
+ held.source_after=after
+ if removed~=1 or inserted~=1 or carried~=1
+   or before-after~=1 then
+  held.quarantine="native-remote-drill-debit-unreconciled"
+  record(pair,"remote-drill-supply-quarantined-0836",held.quarantine)
+  return false
+ end
+ record(pair,"original-remote-drill-physical-cargo-staged-0836",
+   "source="..safe(held.source_unit).." before="..safe(before)..
+   " after="..safe(after).." held="..safe(carried))
  return true
 end
 -- Exact post-audit locomotive ownership. This request cannot borrow a rail
@@ -2394,6 +2502,12 @@ function M.service_pair(pair,reason)
     and mission.status=="rail-track-established"
   local stop_before=original_stop
     and item_count(task.source_inv,"train-stop") or nil
+  -- Source must physically load the remote drill BEFORE spending the wagon.
+  -- A failed or missing supply hold refuses this exact wagon build without
+  -- taking any wagon item or pretending the remote site has local stock.
+  if original_wagon and not stage_original_wagon_drill_0836(pair,task)then
+   return M.abort_pair(pair,"original-remote-drill-real-supply-not-staged")
+  end
   local removed=remove_item(task.source_inv,task.item_name,1)
   if removed~=1 then return M.abort_pair(pair,"source-remove-failed")end
   task.carried={item_name=task.item_name,count=1}
