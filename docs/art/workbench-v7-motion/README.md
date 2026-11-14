@@ -1,3 +1,5 @@
+**OWNER CORRECTION — OUT OF SCOPE / STOP.** This workbench belongs to Tanks for Bob, not the Tech-Priests machine lineup. Its corrected one-tile V8 is already published in the correct repository. This directory is a historical misplaced duplicate; do not resume, promote or republish its art. Preserve held local artifacts only. See ../WORKBENCH_SCOPE_CORRECTION.json.
+
 # Workbench V7 — recovered motion candidate
 
 Candidate only; normal runtime retains V6. The original hammer motion struck the plate with the side of the head. The recovered V7 generator rotates the actual striking face downward, seats it at the evaluated sheet contact, and retains six lift/strike/recoil events followed by cooling and rest.

@@ -55,7 +55,7 @@
     "Energy dish V03 final surfacing/fidelity and firing/emission/shadow/native prototype integration open",
     "Thetazine V04 ordinary graphics integrated; final family polish/owner review and narrow/large fusion model integration remain open"
   ],
-  "next_slice": "Resume workbench V7 source candidate and remaining clock/surface/native-direction gates; preserve current runtime until promotion gates pass. A02 capture/atlas package completed locally; ground its actual alternate-cap import interface and animated interchange. Condenser V21 source is now restored from tracked parts; do not search Library again. Reconcile newer FMPL/refinery work before any new modeling.",
+  "next_slice": "Continue only Tech-Priests assets. Exclude workbench entirely: Tanks for Bob already has its corrected V8 on main. Avoid emergency steam-engine edits owned by the other chat. Reconcile current condenser V24 implementation and existing evidence before selecting new work; A02 native alternate-cap import/interchange and other Tech-Priests families remain open. Do not repeat completed A02 captures/assembly.",
   "automation": "tech-priests-local-model-completion, every four hours",
   "publication": "Read exact delivered SHA and status from issue #13; never infer publication from local commit",
   "local_work": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work",
@@ -601,15 +601,30 @@
     "local_immutable_game_log": "work/thruster-v04/pilot-35/normal-native-reviewed.log (not published; source35 final prototype/images are separately preserved)"
   },
   "workbench_v7_candidate": {
-    "status": "LOCAL_SOURCE_ATLAS_AND_NATIVE_NORTH_REVIEW_CANDIDATE_ONLY",
+    "status": "OUT_OF_SCOPE_ALREADY_COMPLETED_IN_TANKS_FOR_BOB",
     "path": "docs/art/workbench-v7-motion/validation.json",
     "runtime_promoted": false,
     "remaining": [
-      "Source finish score3/5",
-      "Native clock measurement",
-      "Actual ordinary machine is constrained to north; four source headings are not four native orientation proof",
-      "Wire attachment fidelity",
-      "Current-main promotion review"
+      "No workbench work is authorized under the Tech-Priests goal. Existing local duplicate remains held."
     ]
+  },
+  "scope_correction_workbench": {
+    "status": "WORKBENCH_EXCLUDED_FROM_TECH_PRIESTS_GOAL",
+    "authority": "Explicit owner correction: workbench is Tanks for Bob survival crafting work, already completed there; stop duplicating it.",
+    "recorded_utc": "2026-11-14T05:39:29.651190+00:00",
+    "correct_repository": "mrcalzon02/Tanks-for-bob-Fork",
+    "correct_branch": "main",
+    "verified_remote_head": "7290824bf43711d0bb31bd8e2969c51459864f91",
+    "existing_completion_commit": "3f38f801631a88460bca5599616edb0173f4a970",
+    "existing_import": "tanks_for_bob_fork_1.8.103/data-final-fixes.lua",
+    "existing_art": "tanks_for_bob_fork_1.8.103/graphics/entity/workbench-v8-one-tile/",
+    "verification": "All eight published PNG bytes match their V8 manifest; current1.8.103 import uses scale0.33/shift0,-0.07; original V7 generator matches. No new transfer or overwrite needed.",
+    "action": "Stop all workbench modeling, clock tests, captures, integration, promotion and art publication here. Preserve held local artifacts only. Historical misplaced published artifacts are not authority for further work.",
+    "future_constraints_if_explicitly_resumed": [
+      "Workbench is a simple machine and must not receive machine sanctification",
+      "Respect owner size correction; do not replace the existing one-tile V8 with overlarge duplicate"
+    ],
+    "other_chat_unapproved_commit": "083055647cf37d928bb4bee1a9a2fd768d06f2c0 remains unpublished/unapproved by this task",
+    "avoid_duplicate_active_work": "Another chat owns Tech-Priests emergency steam engine source fidelity and left/right pipe interfaces."
   }
 }

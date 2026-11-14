@@ -1,0 +1,19 @@
+{
+  "status": "WORKBENCH_EXCLUDED_FROM_TECH_PRIESTS_GOAL",
+  "authority": "Explicit owner correction: workbench is Tanks for Bob survival crafting work, already completed there; stop duplicating it.",
+  "recorded_utc": "2026-11-14T05:39:29.651190+00:00",
+  "correct_repository": "mrcalzon02/Tanks-for-bob-Fork",
+  "correct_branch": "main",
+  "verified_remote_head": "7290824bf43711d0bb31bd8e2969c51459864f91",
+  "existing_completion_commit": "3f38f801631a88460bca5599616edb0173f4a970",
+  "existing_import": "tanks_for_bob_fork_1.8.103/data-final-fixes.lua",
+  "existing_art": "tanks_for_bob_fork_1.8.103/graphics/entity/workbench-v8-one-tile/",
+  "verification": "All eight published PNG bytes match their V8 manifest; current1.8.103 import uses scale0.33/shift0,-0.07; original V7 generator matches. No new transfer or overwrite needed.",
+  "action": "Stop all workbench modeling, clock tests, captures, integration, promotion and art publication here. Preserve held local artifacts only. Historical misplaced published artifacts are not authority for further work.",
+  "future_constraints_if_explicitly_resumed": [
+    "Workbench is a simple machine and must not receive machine sanctification",
+    "Respect owner size correction; do not replace the existing one-tile V8 with overlarge duplicate"
+  ],
+  "other_chat_unapproved_commit": "083055647cf37d928bb4bee1a9a2fd768d06f2c0 remains unpublished/unapproved by this task",
+  "avoid_duplicate_active_work": "Another chat owns Tech-Priests emergency steam engine source fidelity and left/right pipe interfaces."
+}
