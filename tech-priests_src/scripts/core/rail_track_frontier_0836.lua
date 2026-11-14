@@ -2570,8 +2570,14 @@ function M.service_first_train_return_0836(pair)
     -- the stop or overwrite another train's schedule.
     state.home_order_written=true
     local written=pcall(function()
+      -- Hold the same original paid train at home long enough for the
+      -- existing native 0836 return/cargo service to observe its arrival.
+      -- A 3,600-tick dwell allowed the two-stop schedule to cycle back to
+      -- the remote stop before a durable original-home arrival receipt.
+      -- This changes only a train schedule wait; it neither moves entities
+      -- nor substitutes movement, rail, cargo or driver proof.
       schedule.add_record{station=home_name,
-        wait_conditions={{type="time",ticks=3600,compare_type="and"}}}
+        wait_conditions={{type="time",ticks=36000,compare_type="and"}}}
     end)
     if not written then
       state.last_blocker="native-homeward-schedule-write-uncertain"

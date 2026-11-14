@@ -1912,6 +1912,18 @@ class OriginalCharacterObstacleNavigationRegression(unittest.TestCase):
 
 
 class NativeOriginalHomeward0836ContractTests(unittest.TestCase):
+    def test_original_home_dwell_preserves_native_arrival_observation(self):
+        """Do not auto-cycle back to remote before the same-train home readback."""
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        outward=rail.split("function M.service_first_train_outbound_0836(pair)",1)[1].split("function M.service_first_train_return_0836(pair)",1)[0]
+        home=rail.split("function M.service_first_train_return_0836(pair)",1)[1].split("function M.service_pair(pair)",1)[0]
+        self.assertIn('schedule.add_record{station=unique,\n        wait_conditions={{type="time",ticks=3600,compare_type="and"}}}',outward)
+        self.assertIn('schedule.add_record{station=home_name,\n        wait_conditions={{type="time",ticks=36000,compare_type="and"}}}',home)
+        self.assertIn("if train.station==origin",home)
+        self.assertIn('state.phase="native-original-home-arrived-after-roundtrip"',home)
+        self.assertIn('state.last_blocker="native-homeward-no-physical-path"',home)
+
     """A schedule and an old train receipt cannot prove physical return."""
     def test_original_paid_arrival_and_native_driver_precede_home_order(self):
         root=pathlib.Path(__file__).resolve().parents[2]

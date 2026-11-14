@@ -1061,6 +1061,14 @@ local function inspect(s,elapsed)
     " lowest_x="..tostring(homeward and homeward.lowest_x)..
     " home_stop_unit="..tostring(home_entity and home_entity.valid
       and home_entity.unit_number)..
+    " home_heading="..tostring(home_entity and home_entity.valid
+      and home_entity.direction)..
+    " home_x="..tostring(home_entity and home_entity.valid
+      and home_entity.position.x)..
+    " home_y="..tostring(home_entity and home_entity.valid
+      and home_entity.position.y)..
+    " native_path_stop="..tostring(moving_train and moving_train.valid
+      and moving_train.path_end_stop and moving_train.path_end_stop.unit_number)..
     " native_station_unit="..tostring(moving_train and moving_train.valid
       and moving_train.station and moving_train.station.unit_number)..
     " home_schedule="..tostring(home_schedule)..
