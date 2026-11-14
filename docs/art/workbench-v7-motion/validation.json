@@ -1,0 +1,455 @@
+{
+  "status": "PASS_LOCAL_V7_MOTION_AND_ATLASES_ORDINARY_NATIVE_NORTH_WORKING_IDLE",
+  "observed_utc": "2026-11-14T01:21:59.492673+00:00",
+  "source_provenance": {
+    "source_repository": "mrcalzon02/Tanks-for-bob-Fork",
+    "source_commit": "ce3ef9720298807e3036962bde094341643c237f",
+    "script": "models/island-survival/blender/workbench-v7/workbench_v7.py",
+    "script_sha256": "a7905acf08af2bfa02c0b1d116d2865b6b52c590233dc5dc7445f1f7b3bde0d4",
+    "source_zip": "models/island-survival/blender/workbench-v7/source.zip",
+    "source_zip_sha256": "26f1402a2aa1920cdaaa8e8e15399250a86e6a6aa9bb9a00c832a76068d6c2cb",
+    "render": "passed"
+  },
+  "original_v4_source_zip_matches_tracked_tp": true,
+  "candidate_native_sha256": "082b07db828aa26c199ca2a861522573545efb8744369c6e5d7e91a59496d983",
+  "atlas_validation_sha256": "e27f915d766e5dc3cc001bc96206e298e599d8ce0f2c797eca1dadc4c1c2c210",
+  "native_images": [
+    {
+      "path": "workbench-v7/north-cycle-000.png",
+      "sha256": "e09a9e902bf8645e08d5451bafd93795d51464b23529630f45a241a295e95fe3"
+    },
+    {
+      "path": "workbench-v7/north-cycle-001.png",
+      "sha256": "8c3e4d7829b8f5eac06d25071b1fc93ad94fcabff6bf3051937ee1205ffeb5fa"
+    },
+    {
+      "path": "workbench-v7/north-cycle-002.png",
+      "sha256": "17f8fa73ec31a80028cf76fcb682ac793c912ab5b742f52481d390bca5b91439"
+    },
+    {
+      "path": "workbench-v7/north-cycle-003.png",
+      "sha256": "c699b60c9b85c0ca25ea54fa76982acbc5f45ab95d504735e000bb638bcfad91"
+    },
+    {
+      "path": "workbench-v7/north-cycle-004.png",
+      "sha256": "843efd4feb3c7f922169209b1d2854c8a4e58b4be24147cf627ce2c4ee6e01b6"
+    },
+    {
+      "path": "workbench-v7/north-cycle-005.png",
+      "sha256": "bacb6f31cce4a7937b167cc1fa5945ca302234d4f0b538d31c9336d8c3e72044"
+    },
+    {
+      "path": "workbench-v7/north-cycle-006.png",
+      "sha256": "c125418744afe8873a0597949af7b3ab1fccabf2e12a5ccf7653866388017845"
+    },
+    {
+      "path": "workbench-v7/north-cycle-007.png",
+      "sha256": "3c4b0965fb4a504f45e631f92fe9954f103932074dd7ab497b0aefded6dd1da7"
+    },
+    {
+      "path": "workbench-v7/north-cycle-008.png",
+      "sha256": "163c2f87e888c3c15ad272d14ee27839c742f6278054d23d48912ba8b6052b69"
+    },
+    {
+      "path": "workbench-v7/north-cycle-009.png",
+      "sha256": "154aad8306600c1c4a15d40f5dc3e18c0694d9ec1e826250dad3f997999add21"
+    },
+    {
+      "path": "workbench-v7/north-cycle-010.png",
+      "sha256": "a39a1656c07166a93f572b024b394168b3e7153b9f6ca0b8fbf4e22b18075d2c"
+    },
+    {
+      "path": "workbench-v7/north-cycle-011.png",
+      "sha256": "0bd6c6467220c64eb260a4e5cd6c674f5df15c8a6abac0b065e7da82dc460a1c"
+    },
+    {
+      "path": "workbench-v7/north-cycle-012.png",
+      "sha256": "0ddb4c836f7306f95305ffe49915d7d282ae61315f2e79d19ae7569bff3b162d"
+    },
+    {
+      "path": "workbench-v7/north-cycle-013.png",
+      "sha256": "2395b4a5293592ace37bd91d22fe50a774454af74ce2e7dae3534abdb5a92f70"
+    },
+    {
+      "path": "workbench-v7/north-cycle-014.png",
+      "sha256": "a266e35546b14b628a7340953b8b0d5f86e2b7b94452827f79e37f9e6301461c"
+    },
+    {
+      "path": "workbench-v7/north-cycle-015.png",
+      "sha256": "086096bbc38994ea42c0d280c6a5891d24501e7a7f8b22e3ef345092c24876f2"
+    },
+    {
+      "path": "workbench-v7/north-cycle-016.png",
+      "sha256": "b68939a41f9d34e9508c5db2da3e4a6707ef446811c110c54131d834d1bcc1ef"
+    },
+    {
+      "path": "workbench-v7/north-cycle-017.png",
+      "sha256": "0aad352a2ef871fadcf916e143d190d1d4a06e6d8a2fed9c2c3ccf2afe695961"
+    },
+    {
+      "path": "workbench-v7/north-cycle-018.png",
+      "sha256": "33040cc787c642116e49afbdb10549b27bbc928ec2baa37f4084f587ffe62776"
+    },
+    {
+      "path": "workbench-v7/north-cycle-019.png",
+      "sha256": "7837cd66b43aa093440cbe3271dd5817007fec3738d1b9d6b074d35c9d78dbc4"
+    },
+    {
+      "path": "workbench-v7/north-cycle-020.png",
+      "sha256": "661d64dc6933930170d0d574dba1fe81481852185b053b6d1c61c219857f3c8e"
+    },
+    {
+      "path": "workbench-v7/north-cycle-021.png",
+      "sha256": "661d64dc6933930170d0d574dba1fe81481852185b053b6d1c61c219857f3c8e"
+    },
+    {
+      "path": "workbench-v7/north-cycle-022.png",
+      "sha256": "aa7ed8fd0721e4c09e2098f6abe77d169b36932ad7fbf80353b103b0abc3bd0d"
+    },
+    {
+      "path": "workbench-v7/north-cycle-023.png",
+      "sha256": "aa7ed8fd0721e4c09e2098f6abe77d169b36932ad7fbf80353b103b0abc3bd0d"
+    },
+    {
+      "path": "workbench-v7/north-cycle-024.png",
+      "sha256": "9d6fb60f6377cd55f7a402e66edaff062862ade7dbd6ee84d0fb0d01ed61364a"
+    },
+    {
+      "path": "workbench-v7/north-cycle-025.png",
+      "sha256": "9d6fb60f6377cd55f7a402e66edaff062862ade7dbd6ee84d0fb0d01ed61364a"
+    },
+    {
+      "path": "workbench-v7/north-cycle-026.png",
+      "sha256": "8d54af6c5d35bc528f459202d870418a831ccf59f30592221d4791e24dec387f"
+    },
+    {
+      "path": "workbench-v7/north-cycle-027.png",
+      "sha256": "8d54af6c5d35bc528f459202d870418a831ccf59f30592221d4791e24dec387f"
+    },
+    {
+      "path": "workbench-v7/north-cycle-028.png",
+      "sha256": "863bf56d1556591624b875c4d0d75ccf2a87a8fd639953ddea296455e1675c36"
+    },
+    {
+      "path": "workbench-v7/north-cycle-029.png",
+      "sha256": "863bf56d1556591624b875c4d0d75ccf2a87a8fd639953ddea296455e1675c36"
+    },
+    {
+      "path": "workbench-v7/north-cycle-030.png",
+      "sha256": "86b09374dbecb213aa8d27f6e63f67852b9037efeda6dad2fc1c2cc15103e255"
+    },
+    {
+      "path": "workbench-v7/north-cycle-031.png",
+      "sha256": "86b09374dbecb213aa8d27f6e63f67852b9037efeda6dad2fc1c2cc15103e255"
+    },
+    {
+      "path": "workbench-v7/north-cycle-032.png",
+      "sha256": "200a0f5866b4741ecfd04a5131ec28d0b6d8a164ba65449713a4eff4d6bcdb5e"
+    },
+    {
+      "path": "workbench-v7/north-cycle-033.png",
+      "sha256": "200a0f5866b4741ecfd04a5131ec28d0b6d8a164ba65449713a4eff4d6bcdb5e"
+    },
+    {
+      "path": "workbench-v7/north-cycle-034.png",
+      "sha256": "06893d91e8238c4cf3a82401b9873164248149a1068a46c46c1b8d5d0a77aad5"
+    },
+    {
+      "path": "workbench-v7/north-cycle-035.png",
+      "sha256": "06893d91e8238c4cf3a82401b9873164248149a1068a46c46c1b8d5d0a77aad5"
+    },
+    {
+      "path": "workbench-v7/north-cycle-036.png",
+      "sha256": "bfb9e19dd9bee9da87b2ddfa472dfcd404905dedac0d26f5d023c72b38f82517"
+    },
+    {
+      "path": "workbench-v7/north-cycle-037.png",
+      "sha256": "bfb9e19dd9bee9da87b2ddfa472dfcd404905dedac0d26f5d023c72b38f82517"
+    },
+    {
+      "path": "workbench-v7/north-cycle-038.png",
+      "sha256": "c4371e17c9b8b06d924bf97831b9a812197f20bb0894cca547d738c68df2eab3"
+    },
+    {
+      "path": "workbench-v7/north-cycle-039.png",
+      "sha256": "c4371e17c9b8b06d924bf97831b9a812197f20bb0894cca547d738c68df2eab3"
+    },
+    {
+      "path": "workbench-v7/north-cycle-040.png",
+      "sha256": "e389f3840e5ef50906f7ef46d86c88cd8481057ed968df303601c8631cb01133"
+    },
+    {
+      "path": "workbench-v7/north-cycle-041.png",
+      "sha256": "e389f3840e5ef50906f7ef46d86c88cd8481057ed968df303601c8631cb01133"
+    },
+    {
+      "path": "workbench-v7/north-cycle-042.png",
+      "sha256": "f7b64387b18ce62133563e07523a8de2c99742cbb59d0b3153754188a58a15cd"
+    },
+    {
+      "path": "workbench-v7/north-cycle-043.png",
+      "sha256": "f7b64387b18ce62133563e07523a8de2c99742cbb59d0b3153754188a58a15cd"
+    },
+    {
+      "path": "workbench-v7/north-cycle-044.png",
+      "sha256": "90ad5d696b26c9898e2d5e27456d45b85e58418ddb4bd7034d68dfb95c0a3e2b"
+    },
+    {
+      "path": "workbench-v7/north-cycle-045.png",
+      "sha256": "90ad5d696b26c9898e2d5e27456d45b85e58418ddb4bd7034d68dfb95c0a3e2b"
+    },
+    {
+      "path": "workbench-v7/north-cycle-046.png",
+      "sha256": "5c42b31c06d54fd725e0d82896a6b17d33a42ed021969cfa4c27e7fed8159d77"
+    },
+    {
+      "path": "workbench-v7/north-cycle-047.png",
+      "sha256": "5c42b31c06d54fd725e0d82896a6b17d33a42ed021969cfa4c27e7fed8159d77"
+    },
+    {
+      "path": "workbench-v7/north-cycle-048.png",
+      "sha256": "9b956cf93aa152c5a64b22f67cd95211d9cdefd9325946abe9d504dd0d7caa32"
+    },
+    {
+      "path": "workbench-v7/north-cycle-049.png",
+      "sha256": "9b956cf93aa152c5a64b22f67cd95211d9cdefd9325946abe9d504dd0d7caa32"
+    },
+    {
+      "path": "workbench-v7/north-cycle-050.png",
+      "sha256": "3368c602c68cf320ec4e49a74fcbbe3d8051bb3d5f4f0ed6f67a477cd5752dfd"
+    },
+    {
+      "path": "workbench-v7/north-cycle-051.png",
+      "sha256": "3368c602c68cf320ec4e49a74fcbbe3d8051bb3d5f4f0ed6f67a477cd5752dfd"
+    },
+    {
+      "path": "workbench-v7/north-cycle-052.png",
+      "sha256": "5f6a6af324de5fcef3ae17e83ae186510480b676bcb0b2614ccd76a9f6f30f79"
+    },
+    {
+      "path": "workbench-v7/north-cycle-053.png",
+      "sha256": "5f6a6af324de5fcef3ae17e83ae186510480b676bcb0b2614ccd76a9f6f30f79"
+    },
+    {
+      "path": "workbench-v7/north-cycle-054.png",
+      "sha256": "4434c8763f8cd2a05e22df35fd17cf8ed0636dd403fb8f1fde6eb9ad6500b500"
+    },
+    {
+      "path": "workbench-v7/north-cycle-055.png",
+      "sha256": "4434c8763f8cd2a05e22df35fd17cf8ed0636dd403fb8f1fde6eb9ad6500b500"
+    },
+    {
+      "path": "workbench-v7/north-cycle-056.png",
+      "sha256": "603f4f9f740e5f47a707c05a6e47fb5f997d6d5b07e6e9596694ae36c02a7147"
+    },
+    {
+      "path": "workbench-v7/north-cycle-057.png",
+      "sha256": "603f4f9f740e5f47a707c05a6e47fb5f997d6d5b07e6e9596694ae36c02a7147"
+    },
+    {
+      "path": "workbench-v7/north-cycle-058.png",
+      "sha256": "07ddf83c515f9e7cfdc93e10b56732fe7ca8b5c618a05cc82012e8f762d05002"
+    },
+    {
+      "path": "workbench-v7/north-cycle-059.png",
+      "sha256": "07ddf83c515f9e7cfdc93e10b56732fe7ca8b5c618a05cc82012e8f762d05002"
+    },
+    {
+      "path": "workbench-v7/north-cycle-060.png",
+      "sha256": "1f87a8b70383491fb36432071b20979d1a119d2065b145d4c81b744b91e2be45"
+    },
+    {
+      "path": "workbench-v7/north-cycle-061.png",
+      "sha256": "1f87a8b70383491fb36432071b20979d1a119d2065b145d4c81b744b91e2be45"
+    },
+    {
+      "path": "workbench-v7/north-cycle-062.png",
+      "sha256": "5a9492d046c9c834df703c1a04ef0f1e69ffb6d5e1b597b92f2e81c48ad34006"
+    },
+    {
+      "path": "workbench-v7/north-cycle-063.png",
+      "sha256": "5a9492d046c9c834df703c1a04ef0f1e69ffb6d5e1b597b92f2e81c48ad34006"
+    },
+    {
+      "path": "workbench-v7/north-cycle-064.png",
+      "sha256": "f3485fad1d4174a64f38d98ca4357c57e151c3531846bd8fa6db1b9291deaef7"
+    },
+    {
+      "path": "workbench-v7/north-cycle-065.png",
+      "sha256": "f3485fad1d4174a64f38d98ca4357c57e151c3531846bd8fa6db1b9291deaef7"
+    },
+    {
+      "path": "workbench-v7/north-cycle-066.png",
+      "sha256": "c3492f96010fa9bfbcd83a01b4a3fb7c4752f721babb3e2af11ea1d309dd190d"
+    },
+    {
+      "path": "workbench-v7/north-cycle-067.png",
+      "sha256": "c3492f96010fa9bfbcd83a01b4a3fb7c4752f721babb3e2af11ea1d309dd190d"
+    },
+    {
+      "path": "workbench-v7/north-cycle-068.png",
+      "sha256": "72dd7c7818cb5d89144700425d5bee9361547c8803855361fa6b26c8980b942a"
+    },
+    {
+      "path": "workbench-v7/north-cycle-069.png",
+      "sha256": "72dd7c7818cb5d89144700425d5bee9361547c8803855361fa6b26c8980b942a"
+    },
+    {
+      "path": "workbench-v7/north-cycle-070.png",
+      "sha256": "e63f3f7974db119141cb39aeaf6fd3aea3c9a846b0fb3ed666d32739829bfa1f"
+    },
+    {
+      "path": "workbench-v7/north-cycle-071.png",
+      "sha256": "e63f3f7974db119141cb39aeaf6fd3aea3c9a846b0fb3ed666d32739829bfa1f"
+    },
+    {
+      "path": "workbench-v7/north-cycle-072.png",
+      "sha256": "fa2cf61c9d5a202eb0c26ddafb21d54ec7b5d99918739558d368c747d899f64e"
+    },
+    {
+      "path": "workbench-v7/north-cycle-073.png",
+      "sha256": "fa2cf61c9d5a202eb0c26ddafb21d54ec7b5d99918739558d368c747d899f64e"
+    },
+    {
+      "path": "workbench-v7/north-cycle-074.png",
+      "sha256": "8d2155488c7a3a4394ac541979647230fe633f1ce214085cc3cc5f9cb695341f"
+    },
+    {
+      "path": "workbench-v7/north-cycle-075.png",
+      "sha256": "8d2155488c7a3a4394ac541979647230fe633f1ce214085cc3cc5f9cb695341f"
+    },
+    {
+      "path": "workbench-v7/north-cycle-076.png",
+      "sha256": "1de698f5460499b0876949824a09e1ce2f8578c7205ae1bcd6806dea511051aa"
+    },
+    {
+      "path": "workbench-v7/north-cycle-077.png",
+      "sha256": "1de698f5460499b0876949824a09e1ce2f8578c7205ae1bcd6806dea511051aa"
+    },
+    {
+      "path": "workbench-v7/north-cycle-078.png",
+      "sha256": "2e8b7f19c157de66d516a34515ff0e801f3dc8417e64487ebcda020d06c1d734"
+    },
+    {
+      "path": "workbench-v7/north-cycle-079.png",
+      "sha256": "2e8b7f19c157de66d516a34515ff0e801f3dc8417e64487ebcda020d06c1d734"
+    },
+    {
+      "path": "workbench-v7/north-cycle-080.png",
+      "sha256": "9015fe660fcdc02d3a79ef279d28651e5e8d456dfd45eab96575b6e795014780"
+    },
+    {
+      "path": "workbench-v7/north-cycle-081.png",
+      "sha256": "9015fe660fcdc02d3a79ef279d28651e5e8d456dfd45eab96575b6e795014780"
+    },
+    {
+      "path": "workbench-v7/north-cycle-082.png",
+      "sha256": "91d298150f1b39756ba1159e3724fd4c376c6b84d2944b65ffedb70e69f36b20"
+    },
+    {
+      "path": "workbench-v7/north-cycle-083.png",
+      "sha256": "91d298150f1b39756ba1159e3724fd4c376c6b84d2944b65ffedb70e69f36b20"
+    },
+    {
+      "path": "workbench-v7/north-cycle-084.png",
+      "sha256": "181535865b5afe637ab6ae51c4db1722732e139236e4f734060ccd1996f7e9b9"
+    },
+    {
+      "path": "workbench-v7/north-cycle-085.png",
+      "sha256": "181535865b5afe637ab6ae51c4db1722732e139236e4f734060ccd1996f7e9b9"
+    },
+    {
+      "path": "workbench-v7/north-cycle-086.png",
+      "sha256": "3ea78ce2186212f32e1f0d470dabf1d35927bb21e45f24893f41240225a552aa"
+    },
+    {
+      "path": "workbench-v7/north-cycle-087.png",
+      "sha256": "3ea78ce2186212f32e1f0d470dabf1d35927bb21e45f24893f41240225a552aa"
+    },
+    {
+      "path": "workbench-v7/north-cycle-088.png",
+      "sha256": "2f6da70b3b16226f6d35a7302692d35f088f1cae2214a556a2b07769c6b60d4e"
+    },
+    {
+      "path": "workbench-v7/north-cycle-089.png",
+      "sha256": "2f6da70b3b16226f6d35a7302692d35f088f1cae2214a556a2b07769c6b60d4e"
+    },
+    {
+      "path": "workbench-v7/north-cycle-090.png",
+      "sha256": "ffbe01f42f33eeba6ea8ecbd4225be8144b9767eb6bee33c017cfa9ea5b80df6"
+    },
+    {
+      "path": "workbench-v7/north-cycle-091.png",
+      "sha256": "ffbe01f42f33eeba6ea8ecbd4225be8144b9767eb6bee33c017cfa9ea5b80df6"
+    },
+    {
+      "path": "workbench-v7/north-cycle-092.png",
+      "sha256": "5d7d83a981b190605b2a409ac600688ce272c53c32c8292a64d4366369a4097d"
+    },
+    {
+      "path": "workbench-v7/north-cycle-093.png",
+      "sha256": "5d7d83a981b190605b2a409ac600688ce272c53c32c8292a64d4366369a4097d"
+    },
+    {
+      "path": "workbench-v7/north-cycle-094.png",
+      "sha256": "0d8ceed7ed7ee516b9765cd86ff1300a4d3f9df256b6fee093b9f966459e9e63"
+    },
+    {
+      "path": "workbench-v7/north-cycle-095.png",
+      "sha256": "0d8ceed7ed7ee516b9765cd86ff1300a4d3f9df256b6fee093b9f966459e9e63"
+    },
+    {
+      "path": "workbench-v7/working-direction-2.png",
+      "sha256": "ea2178b2687ae1ebb2e9fcec841822a8ffc61090d2f6197745a4fe81f4cec6f8"
+    },
+    {
+      "path": "workbench-v7/working-direction-3.png",
+      "sha256": "0dc41a1180e8ea814af127c3587878fbb0c180625d3dee23a824f8c300de54b9"
+    },
+    {
+      "path": "workbench-v7/working-direction-4.png",
+      "sha256": "443163a6de6dc973e56a7df7994815a7d9725be50397d540bc33c97afcf90bb0"
+    },
+    {
+      "path": "workbench-v7-idle/idle-direction-1.png",
+      "sha256": "a97487209085647bfa84dcf9d5b3c84c46c1bd6027d990af407314d962149cb7"
+    },
+    {
+      "path": "workbench-v7-idle/idle-direction-2.png",
+      "sha256": "f3a18fdf4268bab978d240d9bb646d1307d0c6432be1f87e96ada29dd72e4384"
+    },
+    {
+      "path": "workbench-v7-idle/idle-direction-3.png",
+      "sha256": "38e5b03da78bbf89873bd5ef50b13084c20d97a0c4fc3b651538170464a3897e"
+    },
+    {
+      "path": "workbench-v7-idle/idle-direction-4.png",
+      "sha256": "c4fbd0378df2ffe93093a8fdf8ebb12fec0afcead7ed2a56a9d56962caa0872e"
+    }
+  ],
+  "unchanged_import_code": [
+    {
+      "path": "data-final-fixes.lua",
+      "sha256": "c48e50cb90c98c93100d9dbcb024a31ec8f34d8ed5f9fe939c741fccde12988f"
+    },
+    {
+      "path": "prototypes/workbench_graphics.lua",
+      "sha256": "79c679b80e58237790a9c867709bd8dec9054119fffdd00a41f11e7367904a28"
+    }
+  ],
+  "native_review_baseline": "8eaf8f95765c45af54627a2ec1894be394284898 runtime snapshot; newer main reconciled without replacing current assets. Candidate only, no current-main native integration claimed.",
+  "native_direction_limitation": "All4requested orientations resolve to actual direction0 in the unchanged ordinary square burner crafting-machine prototype. Therefore these are north-facing normal-entity working/idle views, not four-direction native proof. All4authored directional exports are exact-cell checked. No dummy fluid box or collision change introduced.",
+  "direction_rule_reference": "https://lua-api.factorio.com/2.1.24/prototypes/CraftingMachinePrototype.html",
+  "fixture_recovery": "First fixture saved96north samples and3additional working images before failing on read-only LuaEntity.active. Retained captures, reran only4missing idle views in a recipe-free fixture, which completed without errors.",
+  "scope": "Eight runtime PNG replacement candidates only; unchanged physical/prototype Lua, scale, shifts,96frame count and .2 animation speed. Source uses recovered face-first hammer motion; existing ground-shadow rendering retained. No behavior/regression tests or release. Native clock has not been measured; samples do not certify full-cycle timing.",
+  "scored_review": {
+    "motion": 4,
+    "atlas_registration": 4,
+    "surface_finish": 3,
+    "reason": "Actual hammer face contacts the sheet rather than its side; frame/world geometry preserved and native working/cold pose seen. Source surface finish remains simple, ground-shadow noise/material refinement and wire-mount fidelity remain open. This is a motion correction, not final family appearance acceptance."
+  },
+  "goal_open": true,
+  "source_archive_sha256": "a2ed1cd7191d00d43d00361d31be2513bc1b76bd42be8501793e514890b52c92",
+  "native_archive_sha256": "251f6dfedf229877e6771a8d16dac64b902fa41cb0788f2c09c88b6bf24b45b6",
+  "tp_native_reopen_sha256": "0f8dfc6cd8610225d19a4d19808a851ebcf6650fdf3bc6ad504998e035aa4ad4"
+}

@@ -1,5 +1,5 @@
 {
-  "status": "chat_design_sources_located_native_package_bytes_not_recovered",
+  "status": "chat_designs_and_repository_sources_reconciled_remaining_native_gaps",
   "scope": "Relevant recovered chat evidence; reported historical model completion is not independently verified model acceptance.",
   "reactor_family": {
     "source_chat": "https://chatgpt.com/c/6aefafd6-f2a8-83e8-9888-c5c6aa215a88",
@@ -60,5 +60,195 @@
     "Recover v14 native package and original reference images with hashes.",
     "Locate the remaining water-to-pellet stage designs; the reactor chats do not by themselves establish the whole chain.",
     "Locate lumberyard chat/source; do not silently substitute the timber workbench."
-  ]
+  ],
+  "condenser_v21_recovered": {
+    "status": "PASS_RECONCILED_V21_EXACT_NATIVE_SOURCE_AND_41_CURRENT_ATLAS_ICON_HASHES",
+    "native_source_sha256": "1ccd8093e5b153d80b7ac66cb77b364f05e7ee46a5f236efe189498b71dd052b",
+    "native_bytes": 39369602,
+    "source_parts_manifest_sha256": "3b0ae016ad141046d299277c6bc6ec82b783b3dde6571fab284351f8aff93fac",
+    "atlas_manifest_sha256": "f34c37a447028300efdcbee988cc6573976a9f327e0f52a808ce29235e0b2792",
+    "files": [
+      {
+        "name": "active-north-hr-00.png",
+        "sha256": "fbbc1edfc39e3b3a71bafc7c784b0da328d34bdc17f100cb09b177082e25a2da"
+      },
+      {
+        "name": "active-north-hr-01.png",
+        "sha256": "7bba1c88c91490c4eab16cb370b748836be8aa54089851673d6edd12ab99e00f"
+      },
+      {
+        "name": "active-north-hr-02.png",
+        "sha256": "2a25a34a09c0b6af0ebe8819830e7ede70164cb050b69218e5a29a6c3e5bb1a7"
+      },
+      {
+        "name": "active-north-hr-03.png",
+        "sha256": "4b364632876cf80e7660371ec8d3bdf24c7973bb90ff24d0b91f8845d76121d3"
+      },
+      {
+        "name": "idle-north-hr.png",
+        "sha256": "5d844bf65df879b867d9f39d16872a1370f35a1f0d3fc9d99578aa5278702354"
+      },
+      {
+        "name": "active-north-sd-00.png",
+        "sha256": "a3823d4feacb366dd872c019cdd8644cae3596790390dd587b4b7beac2a8e056"
+      },
+      {
+        "name": "active-north-sd-01.png",
+        "sha256": "e5cd971f7e5805dc062d5027740945121e5453787c7338fa9a5f6e103b497e2f"
+      },
+      {
+        "name": "active-north-sd-02.png",
+        "sha256": "603d26fb00c03ae78a5f85a28a415a1a5d44e47bd3cbad43e3490d5025f28cd1"
+      },
+      {
+        "name": "active-north-sd-03.png",
+        "sha256": "e4a3c0fadae7faf5bc3abbe06906bcefe5f0f9bd4944a229bd94eae186e07f90"
+      },
+      {
+        "name": "idle-north-sd.png",
+        "sha256": "d298c41c9e627783728d807441f6a65dff834f2f729d468ac0e032810cc61956"
+      },
+      {
+        "name": "active-east_native-hr-00.png",
+        "sha256": "c4ff293be44c0cc24c219c75db62f2153704cab615ce5960ab6946150003c67b"
+      },
+      {
+        "name": "active-east_native-hr-01.png",
+        "sha256": "380dbfaac3fd8df5d007033cee5df2a1fbb9184ba834946683bc958a6947e02e"
+      },
+      {
+        "name": "active-east_native-hr-02.png",
+        "sha256": "60934115b1e59bbd271dcf797dcf3b64a546f03625ea04cf562449bb1502304b"
+      },
+      {
+        "name": "active-east_native-hr-03.png",
+        "sha256": "6727d61643140f687f49b6765ef9a5af90c335837b2490460697a12f0e5615b7"
+      },
+      {
+        "name": "idle-east_native-hr.png",
+        "sha256": "cb18342866103fad3a05899b093ac55c78eba7fbd437e8f1aeb90cb69850761d"
+      },
+      {
+        "name": "active-east_native-sd-00.png",
+        "sha256": "f9f35ff4bbf85bdc81735fd0d62987dee913169a9b782b114189e12983d6ef1a"
+      },
+      {
+        "name": "active-east_native-sd-01.png",
+        "sha256": "bec29f64c7e7bb2d2962ab620c2534fa130556f929ad272f5a50a44e70c56312"
+      },
+      {
+        "name": "active-east_native-sd-02.png",
+        "sha256": "a61ea1e2c22e7d9045580a6bee279da3ba033be377c484da02a857130f31812d"
+      },
+      {
+        "name": "active-east_native-sd-03.png",
+        "sha256": "13de791a4471abfec522bbd09e995468bd7aadb00ef1c207a9eb6f82abba0f6b"
+      },
+      {
+        "name": "idle-east_native-sd.png",
+        "sha256": "449a74ce30f7d47373fc061d1857494844788ebc7f3088e8e0538abc038465cf"
+      },
+      {
+        "name": "active-south-hr-00.png",
+        "sha256": "aed76742e6abd435eb21da8c9ec8d1fe1a7d562363192017456fa97912a55334"
+      },
+      {
+        "name": "active-south-hr-01.png",
+        "sha256": "66d090875ded2ce3292650f139d132c856c71918923025c0fb212cdb432f13f5"
+      },
+      {
+        "name": "active-south-hr-02.png",
+        "sha256": "b8931b250f1707e01a020d3ae7b53ab42a089894f4fbfe7cfcaa5e8ddc27c3bb"
+      },
+      {
+        "name": "active-south-hr-03.png",
+        "sha256": "becb3a3e67fe716089785cb88f4e7677a8e7abcc1e29e68f579a94e720332e32"
+      },
+      {
+        "name": "idle-south-hr.png",
+        "sha256": "d4a4b282ea97d4cb5e934f322807128f70cc07dcc2a020b509ae0d7b8d75c4e8"
+      },
+      {
+        "name": "active-south-sd-00.png",
+        "sha256": "18101683b5adc72e8ea83e2e24f7b4393b49e97f787b3830f9265fd485c4bfaa"
+      },
+      {
+        "name": "active-south-sd-01.png",
+        "sha256": "a5b66d7a30730fc5c0a6aecd0591a8a506e6999fd044c52ffefb91bf61ac68bc"
+      },
+      {
+        "name": "active-south-sd-02.png",
+        "sha256": "180616b7f365c4f6ae8c8d2ce63a2d1b699194f3a9cdbeb46a158e8b42923373"
+      },
+      {
+        "name": "active-south-sd-03.png",
+        "sha256": "03b3c55e7569af7e778ec52ba12954caa18478d407e684512cb4ae4441b9b2d1"
+      },
+      {
+        "name": "idle-south-sd.png",
+        "sha256": "79525d9d249bb3ca1fb0820380ffa41243a013ea1300714c04ce3d1e2e1348c8"
+      },
+      {
+        "name": "active-west_native-hr-00.png",
+        "sha256": "b46515a380703b13245e17a01f07bed0168b4853951fc1ab82105a5a0b6733c8"
+      },
+      {
+        "name": "active-west_native-hr-01.png",
+        "sha256": "828998a05a022daf080aa25b2aec16618929eb33ae4eee0d30d40309193ab7ea"
+      },
+      {
+        "name": "active-west_native-hr-02.png",
+        "sha256": "ce69846ba4100ea00b05ee65d4b909b7125014793a9aba4427b6f0784966e1a9"
+      },
+      {
+        "name": "active-west_native-hr-03.png",
+        "sha256": "77971fb30a9f98bc77f90a3cbc27cee7bb002cb8b971b4fd19ed603f424ddd2d"
+      },
+      {
+        "name": "idle-west_native-hr.png",
+        "sha256": "8ec8f304428a7b0dc16502bafb23af6fa5e913bcf51c771aaf978394298ceaa1"
+      },
+      {
+        "name": "active-west_native-sd-00.png",
+        "sha256": "b2e8ae30cc6b6048d9845d69cf1a8124b5ff72a28c516ab4e6c6ca866753bb4f"
+      },
+      {
+        "name": "active-west_native-sd-01.png",
+        "sha256": "12fb806a941be91f3fdece85857b252c991316ce03c17ace6aef7522221987dc"
+      },
+      {
+        "name": "active-west_native-sd-02.png",
+        "sha256": "09a35054d6e74ecbe9fb114f7af8f7395782cf6f38922f4bf2531d21e072f559"
+      },
+      {
+        "name": "active-west_native-sd-03.png",
+        "sha256": "1c3ddf52c7a2e002136e4d5ed4af01b1ea8186aa96aca3292c8daf5127636c44"
+      },
+      {
+        "name": "idle-west_native-sd.png",
+        "sha256": "87c333f256d29b5cf3e52cea7a722aad553ceeebaefa168dc49adcbfb7f30a5c"
+      },
+      {
+        "name": "icon-64.png",
+        "sha256": "49e2440d5b4ecbe194bd092644508dff77804966505b22525fa0111f82243376"
+      }
+    ],
+    "existing_native_image_review": {
+      "path": "art/source-to-3d/condenser-v21/captures/v22c/Condenser_V22C_CORRECTED_Front_Row_NATIVE_Factorio_4_Directions.jpg",
+      "sha256": "901e94bea14e032941c7f7aa6d177ebd5d19d44d9dc1721ccfba977ee2a6848c",
+      "review": "Viewed committed four-way native contact sheet: front-row pipe seating appears coherent. This slice did not rerun those engine captures or physical tests."
+    },
+    "remaining": "Broader final fidelity/owner feedback and source-specific per-gate review; no gameplay or behavior acceptance inferred.",
+    "text_manifest_hash_scope": "Current committed Git blob bytes, independent of Windows checkout newline conversion.",
+    "newer_v23_review": {
+      "path": "art/source-to-3d/condenser-v21/CONDENSER_V23_RECONCILIATION.md",
+      "sha256": "0370b4a2a16fd70fce889d7ceb36966d53107fbfd7a36058d427306ed72f2066",
+      "status": "Upstream review derivative cuts eight inlet apertures; full four-heading12second export and new geometry contract still pending. V22C production remains installed. No source lock bypass or behavior test authorized here."
+    }
+  },
+  "metallic_hydrogen_current_designs": {
+    "packet": "docs/art/metallic-hydrogen-chain/",
+    "latest_reviewed_plan": "WATER_PURIFIER_V14_GIRDERIZATION_CONSOLE_COUPLINGS_PLAN.md",
+    "status": "Tracked seven-machine design/build packet and purifier V13/V14 evidence; not full-chain model or native integration completion."
+  }
 }

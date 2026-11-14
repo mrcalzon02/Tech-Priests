@@ -1,0 +1,125 @@
+{
+  "status": "PASS_COMPLETE_LOCAL_A02_PACKAGE_ALL_42816_EXACT_RGBA_ATLAS_CELLS",
+  "source_identity": {
+    "source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+    "config_sha256": "9dd6aac249aa44f10f6ab2bb7a03873b6dc251ba0924f1d0164c9ddf56d2fb7e",
+    "renderer_sha256": "cdc81d50fb6aa35bb8b7b5db06ceb0076b329a255f6aa043332da01941530923"
+  },
+  "cells": 42816,
+  "sheets": 1926,
+  "headings": 64,
+  "passes": [
+    "beauty",
+    "emission",
+    "shadow"
+  ],
+  "states": {
+    "idle": 1,
+    "cycle": 192,
+    "entry": 15,
+    "settle": 15
+  },
+  "cell_verification_sha256": "c4edb67fe9f29e101d97a4829ff732d95cb01c7988a1fd866107dd27741d4e64",
+  "original_input_preservation": {
+    "manifest_sha256": "3fd46eb73811ab6adcc37ef619c99175d427f621b92d0aef86fe3cd3ad261ed0",
+    "files": 42880,
+    "changed_original_inputs": [],
+    "assembler_exit_code": 0,
+    "mode": "Disposable copies, original cache preserved"
+  },
+  "archives": [
+    {
+      "filename": "Lobber_beauty_00.zip",
+      "bytes": 341251143,
+      "sha256": "29bc8df9842d8c835b5ffd4b8d2739423ff6daeb144843829cff50a095700763"
+    },
+    {
+      "filename": "Lobber_beauty_01.zip",
+      "bytes": 343893548,
+      "sha256": "bfa0f679b569e84200a2889a26213c73e773b73e8534bc95963f7d69e2310857"
+    },
+    {
+      "filename": "Lobber_beauty_02.zip",
+      "bytes": 342479959,
+      "sha256": "7a9b8a3185c3a7b25d84b2046836562872bc4be22a746036f7fee53ed444d0fb"
+    },
+    {
+      "filename": "Lobber_beauty_03.zip",
+      "bytes": 20929481,
+      "sha256": "6e4f9215ace1b49ba1370b5ec1b4a78a56bc762208e470691aa27c6386db3399"
+    },
+    {
+      "filename": "Lobber_emission_00.zip",
+      "bytes": 278198357,
+      "sha256": "4a5221a2cce5c390f4972a4e6bbb50bc233f22ebed10d7e8fb8d653ff659750e"
+    },
+    {
+      "filename": "Lobber_emission_01.zip",
+      "bytes": 4484981,
+      "sha256": "c2cf9c4c39d687c6f64c4cdc752188811650e8fb3f9a36927fa3d9094aedd790"
+    },
+    {
+      "filename": "Lobber_shadow_00.zip",
+      "bytes": 348643268,
+      "sha256": "3c85d1f3173fdb53b4435487962f5440b3cccec7c9dbb5875b97b343f2b5cb5d"
+    },
+    {
+      "filename": "Lobber_shadow_01.zip",
+      "bytes": 347621430,
+      "sha256": "d52327fb4d5fad7faf473a62c1ce0e3b6a3f44e04105b79f851e840cd0e9e84c"
+    },
+    {
+      "filename": "Lobber_shadow_02.zip",
+      "bytes": 346543248,
+      "sha256": "034e80dba9d4c18ce13ada581164abc16a09e8d7ab7b16fb1bfa0c7da44d5fd9"
+    },
+    {
+      "filename": "Lobber_shadow_03.zip",
+      "bytes": 348360874,
+      "sha256": "368352bf5fbd316cc39bee02c1ac5cd75af87a75394ba71eb7ed55a637e76a5a"
+    },
+    {
+      "filename": "Lobber_shadow_04.zip",
+      "bytes": 346869049,
+      "sha256": "19d0ff02290201dfa5612750d4d3fc66c1bc4e43eb693c55c6a43d210b2875f3"
+    },
+    {
+      "filename": "Lobber_shadow_05.zip",
+      "bytes": 348054631,
+      "sha256": "c9ff16aa843944c2f290c549d7c5f31dc97322a990fc011d92beee1905f0d5af"
+    },
+    {
+      "filename": "Lobber_shadow_06.zip",
+      "bytes": 347765285,
+      "sha256": "bfb9c83c4c7505131768443f8d15367f91b7ba7b04afeae4006bc86b314597ad"
+    },
+    {
+      "filename": "Lobber_shadow_07.zip",
+      "bytes": 116521767,
+      "sha256": "02d0f06f099f8c212f50a080a3a80f0b55b136a546a9cddeb768530573a18133"
+    },
+    {
+      "filename": "Lobber_Editable_Source_And_Metadata.zip",
+      "bytes": 10951707,
+      "sha256": "4205d2ae24133756c367583c9ff969c9240d64add10fe85ba58d4fbc8d0b70b1"
+    }
+  ],
+  "archive_location": "LOCAL_ONLY C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-full-delivery-20261109",
+  "review_video": {
+    "frames": 13376,
+    "fps": 24,
+    "seconds": 557.333333,
+    "sha256": "d1987f552354c917b575333aeeb2ddcf8a70d7b77286f387d3b53f66618b2b8f"
+  },
+  "verification_recovery": "Windows atomic checkpoint replacement briefly failed; resumed the terminated verifier using exact sheet/source hash-bound receipts after adding bounded PermissionError retries. No source render or atlas assembly repeated.",
+  "not_claimed": [
+    "Native alternate-cap integration",
+    "Animated PBR GLB interchange acceptance",
+    "Owner final visual acceptance",
+    "Remote delivery of large local ZIP archives"
+  ],
+  "goal_open": true,
+  "local_delivery_manifest_sha256": "83e80cc1dd4b62043e5c0e7aca7f2984cd057cb0a4695ee2a83fa9213f4838e3",
+  "published_delivery_manifest_sha256": "fce5ebe9029f51db78a067318a518908c904b5414bcc386bd0fc207a89b79ac5",
+  "text_receipt_hash_scope": "Per-sheet receipt hashes and local delivery-manifest hash identify original local verification bytes. Published report copies use LF JSON; published report hashes are separately bound."
+}

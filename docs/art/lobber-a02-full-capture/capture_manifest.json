@@ -1,0 +1,5573 @@
+{
+  "status": "VERIFIED_CAPTURE",
+  "source_identity": {
+    "source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+    "config_sha256": "9dd6aac249aa44f10f6ab2bb7a03873b6dc251ba0924f1d0164c9ddf56d2fb7e",
+    "renderer_sha256": "cdc81d50fb6aa35bb8b7b5db06ceb0076b329a255f6aa043332da01941530923"
+  },
+  "direction_count": 64,
+  "direction_mapping": "north0_clockwise",
+  "fps": 24,
+  "frame_index_base": 0,
+  "shot_events": [
+    {
+      "station": "TOP_R",
+      "cycle_frame": 0,
+      "seconds": 0.0
+    },
+    {
+      "station": "TOP_L",
+      "cycle_frame": 32,
+      "seconds": 1.3333333333333333
+    },
+    {
+      "station": "MID_R",
+      "cycle_frame": 64,
+      "seconds": 2.6666666666666665
+    },
+    {
+      "station": "MID_L",
+      "cycle_frame": 96,
+      "seconds": 4.0
+    },
+    {
+      "station": "BOT_R",
+      "cycle_frame": 128,
+      "seconds": 5.333333333333333
+    },
+    {
+      "station": "BOT_L",
+      "cycle_frame": 160,
+      "seconds": 6.666666666666667
+    }
+  ],
+  "cycle_frames_per_heading": 192,
+  "entry_frames_per_heading": 15,
+  "settle_frames_per_heading": 15,
+  "rendered_images": 42816,
+  "passes": [
+    "beauty",
+    "emission",
+    "shadow"
+  ],
+  "sheet_layouts": {
+    "beauty": {
+      "columns": 8,
+      "rows": 4,
+      "capacity": 32
+    },
+    "emission": {
+      "columns": 8,
+      "rows": 4,
+      "capacity": 32
+    },
+    "shadow": {
+      "columns": 4,
+      "rows": 4,
+      "capacity": 16
+    }
+  },
+  "maximum_sheet_dimension": 5120,
+  "idle_rotation_layouts": {
+    "beauty": [
+      8,
+      8,
+      1
+    ],
+    "emission": [
+      8,
+      8,
+      1
+    ],
+    "shadow": [
+      4,
+      4,
+      4
+    ]
+  },
+  "beauty_emission_cell": [
+    640,
+    640
+  ],
+  "shadow_cell": [
+    1280,
+    1280
+  ],
+  "shadow_offset_pixels": [
+    -320,
+    -320
+  ],
+  "pixels_per_world_unit": 103.22580962721946,
+  "registration": {
+    "status": "PASS",
+    "directions": 64,
+    "fps": 24,
+    "frames_per_direction": 192,
+    "cycle_frames": 12288,
+    "idle_frames": 64,
+    "entry_frames_per_direction": 15,
+    "settle_frames_per_direction": 15,
+    "camera": "original bunker 45 degree orthographic",
+    "pixels_per_world_unit": 103.22580962721946,
+    "entity_origin_pixel": [
+      320.0,
+      434.6742248535156
+    ],
+    "mount_pixel": [
+      320.0,
+      310.58837890625
+    ],
+    "all_idle_hatches_closed": true,
+    "idle_effects_disabled": true,
+    "six_independent_shots_verified": true,
+    "entry_joins_cycle": true,
+    "tail_returns_to_idle": true,
+    "textures_packed": true,
+    "base_excluded": true,
+    "eight_heading_extreme_bounds_checked": true,
+    "camera_and_area_lights_fixed_at_all_64_headings": true
+  },
+  "directions": [
+    {
+      "direction": 0,
+      "orientation": 0.0,
+      "yaw_degrees": 180.0,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d00_cycle_00.png",
+            "beauty/d00_cycle_01.png",
+            "beauty/d00_cycle_02.png",
+            "beauty/d00_cycle_03.png",
+            "beauty/d00_cycle_04.png",
+            "beauty/d00_cycle_05.png"
+          ],
+          "entry": "beauty/d00_entry_00.png",
+          "settle": "beauty/d00_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            0,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d00_cycle_00.png",
+            "emission/d00_cycle_01.png",
+            "emission/d00_cycle_02.png",
+            "emission/d00_cycle_03.png",
+            "emission/d00_cycle_04.png",
+            "emission/d00_cycle_05.png"
+          ],
+          "entry": "emission/d00_entry_00.png",
+          "settle": "emission/d00_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            0,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d00_cycle_00.png",
+            "shadow/d00_cycle_01.png",
+            "shadow/d00_cycle_02.png",
+            "shadow/d00_cycle_03.png",
+            "shadow/d00_cycle_04.png",
+            "shadow/d00_cycle_05.png",
+            "shadow/d00_cycle_06.png",
+            "shadow/d00_cycle_07.png",
+            "shadow/d00_cycle_08.png",
+            "shadow/d00_cycle_09.png",
+            "shadow/d00_cycle_10.png",
+            "shadow/d00_cycle_11.png"
+          ],
+          "entry": "shadow/d00_entry_00.png",
+          "settle": "shadow/d00_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            0,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 1,
+      "orientation": 0.015625,
+      "yaw_degrees": 174.375,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d01_cycle_00.png",
+            "beauty/d01_cycle_01.png",
+            "beauty/d01_cycle_02.png",
+            "beauty/d01_cycle_03.png",
+            "beauty/d01_cycle_04.png",
+            "beauty/d01_cycle_05.png"
+          ],
+          "entry": "beauty/d01_entry_00.png",
+          "settle": "beauty/d01_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            1,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d01_cycle_00.png",
+            "emission/d01_cycle_01.png",
+            "emission/d01_cycle_02.png",
+            "emission/d01_cycle_03.png",
+            "emission/d01_cycle_04.png",
+            "emission/d01_cycle_05.png"
+          ],
+          "entry": "emission/d01_entry_00.png",
+          "settle": "emission/d01_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            1,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d01_cycle_00.png",
+            "shadow/d01_cycle_01.png",
+            "shadow/d01_cycle_02.png",
+            "shadow/d01_cycle_03.png",
+            "shadow/d01_cycle_04.png",
+            "shadow/d01_cycle_05.png",
+            "shadow/d01_cycle_06.png",
+            "shadow/d01_cycle_07.png",
+            "shadow/d01_cycle_08.png",
+            "shadow/d01_cycle_09.png",
+            "shadow/d01_cycle_10.png",
+            "shadow/d01_cycle_11.png"
+          ],
+          "entry": "shadow/d01_entry_00.png",
+          "settle": "shadow/d01_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            1,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 2,
+      "orientation": 0.03125,
+      "yaw_degrees": 168.75,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d02_cycle_00.png",
+            "beauty/d02_cycle_01.png",
+            "beauty/d02_cycle_02.png",
+            "beauty/d02_cycle_03.png",
+            "beauty/d02_cycle_04.png",
+            "beauty/d02_cycle_05.png"
+          ],
+          "entry": "beauty/d02_entry_00.png",
+          "settle": "beauty/d02_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            2,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d02_cycle_00.png",
+            "emission/d02_cycle_01.png",
+            "emission/d02_cycle_02.png",
+            "emission/d02_cycle_03.png",
+            "emission/d02_cycle_04.png",
+            "emission/d02_cycle_05.png"
+          ],
+          "entry": "emission/d02_entry_00.png",
+          "settle": "emission/d02_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            2,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d02_cycle_00.png",
+            "shadow/d02_cycle_01.png",
+            "shadow/d02_cycle_02.png",
+            "shadow/d02_cycle_03.png",
+            "shadow/d02_cycle_04.png",
+            "shadow/d02_cycle_05.png",
+            "shadow/d02_cycle_06.png",
+            "shadow/d02_cycle_07.png",
+            "shadow/d02_cycle_08.png",
+            "shadow/d02_cycle_09.png",
+            "shadow/d02_cycle_10.png",
+            "shadow/d02_cycle_11.png"
+          ],
+          "entry": "shadow/d02_entry_00.png",
+          "settle": "shadow/d02_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            2,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 3,
+      "orientation": 0.046875,
+      "yaw_degrees": 163.125,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d03_cycle_00.png",
+            "beauty/d03_cycle_01.png",
+            "beauty/d03_cycle_02.png",
+            "beauty/d03_cycle_03.png",
+            "beauty/d03_cycle_04.png",
+            "beauty/d03_cycle_05.png"
+          ],
+          "entry": "beauty/d03_entry_00.png",
+          "settle": "beauty/d03_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            3,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d03_cycle_00.png",
+            "emission/d03_cycle_01.png",
+            "emission/d03_cycle_02.png",
+            "emission/d03_cycle_03.png",
+            "emission/d03_cycle_04.png",
+            "emission/d03_cycle_05.png"
+          ],
+          "entry": "emission/d03_entry_00.png",
+          "settle": "emission/d03_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            3,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d03_cycle_00.png",
+            "shadow/d03_cycle_01.png",
+            "shadow/d03_cycle_02.png",
+            "shadow/d03_cycle_03.png",
+            "shadow/d03_cycle_04.png",
+            "shadow/d03_cycle_05.png",
+            "shadow/d03_cycle_06.png",
+            "shadow/d03_cycle_07.png",
+            "shadow/d03_cycle_08.png",
+            "shadow/d03_cycle_09.png",
+            "shadow/d03_cycle_10.png",
+            "shadow/d03_cycle_11.png"
+          ],
+          "entry": "shadow/d03_entry_00.png",
+          "settle": "shadow/d03_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            3,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 4,
+      "orientation": 0.0625,
+      "yaw_degrees": 157.5,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d04_cycle_00.png",
+            "beauty/d04_cycle_01.png",
+            "beauty/d04_cycle_02.png",
+            "beauty/d04_cycle_03.png",
+            "beauty/d04_cycle_04.png",
+            "beauty/d04_cycle_05.png"
+          ],
+          "entry": "beauty/d04_entry_00.png",
+          "settle": "beauty/d04_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            4,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d04_cycle_00.png",
+            "emission/d04_cycle_01.png",
+            "emission/d04_cycle_02.png",
+            "emission/d04_cycle_03.png",
+            "emission/d04_cycle_04.png",
+            "emission/d04_cycle_05.png"
+          ],
+          "entry": "emission/d04_entry_00.png",
+          "settle": "emission/d04_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            4,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d04_cycle_00.png",
+            "shadow/d04_cycle_01.png",
+            "shadow/d04_cycle_02.png",
+            "shadow/d04_cycle_03.png",
+            "shadow/d04_cycle_04.png",
+            "shadow/d04_cycle_05.png",
+            "shadow/d04_cycle_06.png",
+            "shadow/d04_cycle_07.png",
+            "shadow/d04_cycle_08.png",
+            "shadow/d04_cycle_09.png",
+            "shadow/d04_cycle_10.png",
+            "shadow/d04_cycle_11.png"
+          ],
+          "entry": "shadow/d04_entry_00.png",
+          "settle": "shadow/d04_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            0,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 5,
+      "orientation": 0.078125,
+      "yaw_degrees": 151.875,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d05_cycle_00.png",
+            "beauty/d05_cycle_01.png",
+            "beauty/d05_cycle_02.png",
+            "beauty/d05_cycle_03.png",
+            "beauty/d05_cycle_04.png",
+            "beauty/d05_cycle_05.png"
+          ],
+          "entry": "beauty/d05_entry_00.png",
+          "settle": "beauty/d05_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            5,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d05_cycle_00.png",
+            "emission/d05_cycle_01.png",
+            "emission/d05_cycle_02.png",
+            "emission/d05_cycle_03.png",
+            "emission/d05_cycle_04.png",
+            "emission/d05_cycle_05.png"
+          ],
+          "entry": "emission/d05_entry_00.png",
+          "settle": "emission/d05_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            5,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d05_cycle_00.png",
+            "shadow/d05_cycle_01.png",
+            "shadow/d05_cycle_02.png",
+            "shadow/d05_cycle_03.png",
+            "shadow/d05_cycle_04.png",
+            "shadow/d05_cycle_05.png",
+            "shadow/d05_cycle_06.png",
+            "shadow/d05_cycle_07.png",
+            "shadow/d05_cycle_08.png",
+            "shadow/d05_cycle_09.png",
+            "shadow/d05_cycle_10.png",
+            "shadow/d05_cycle_11.png"
+          ],
+          "entry": "shadow/d05_entry_00.png",
+          "settle": "shadow/d05_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            1,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 6,
+      "orientation": 0.09375,
+      "yaw_degrees": 146.25,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d06_cycle_00.png",
+            "beauty/d06_cycle_01.png",
+            "beauty/d06_cycle_02.png",
+            "beauty/d06_cycle_03.png",
+            "beauty/d06_cycle_04.png",
+            "beauty/d06_cycle_05.png"
+          ],
+          "entry": "beauty/d06_entry_00.png",
+          "settle": "beauty/d06_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            6,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d06_cycle_00.png",
+            "emission/d06_cycle_01.png",
+            "emission/d06_cycle_02.png",
+            "emission/d06_cycle_03.png",
+            "emission/d06_cycle_04.png",
+            "emission/d06_cycle_05.png"
+          ],
+          "entry": "emission/d06_entry_00.png",
+          "settle": "emission/d06_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            6,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d06_cycle_00.png",
+            "shadow/d06_cycle_01.png",
+            "shadow/d06_cycle_02.png",
+            "shadow/d06_cycle_03.png",
+            "shadow/d06_cycle_04.png",
+            "shadow/d06_cycle_05.png",
+            "shadow/d06_cycle_06.png",
+            "shadow/d06_cycle_07.png",
+            "shadow/d06_cycle_08.png",
+            "shadow/d06_cycle_09.png",
+            "shadow/d06_cycle_10.png",
+            "shadow/d06_cycle_11.png"
+          ],
+          "entry": "shadow/d06_entry_00.png",
+          "settle": "shadow/d06_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            2,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 7,
+      "orientation": 0.109375,
+      "yaw_degrees": 140.625,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d07_cycle_00.png",
+            "beauty/d07_cycle_01.png",
+            "beauty/d07_cycle_02.png",
+            "beauty/d07_cycle_03.png",
+            "beauty/d07_cycle_04.png",
+            "beauty/d07_cycle_05.png"
+          ],
+          "entry": "beauty/d07_entry_00.png",
+          "settle": "beauty/d07_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            7,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d07_cycle_00.png",
+            "emission/d07_cycle_01.png",
+            "emission/d07_cycle_02.png",
+            "emission/d07_cycle_03.png",
+            "emission/d07_cycle_04.png",
+            "emission/d07_cycle_05.png"
+          ],
+          "entry": "emission/d07_entry_00.png",
+          "settle": "emission/d07_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            7,
+            0
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d07_cycle_00.png",
+            "shadow/d07_cycle_01.png",
+            "shadow/d07_cycle_02.png",
+            "shadow/d07_cycle_03.png",
+            "shadow/d07_cycle_04.png",
+            "shadow/d07_cycle_05.png",
+            "shadow/d07_cycle_06.png",
+            "shadow/d07_cycle_07.png",
+            "shadow/d07_cycle_08.png",
+            "shadow/d07_cycle_09.png",
+            "shadow/d07_cycle_10.png",
+            "shadow/d07_cycle_11.png"
+          ],
+          "entry": "shadow/d07_entry_00.png",
+          "settle": "shadow/d07_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            3,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 8,
+      "orientation": 0.125,
+      "yaw_degrees": 135.0,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d08_cycle_00.png",
+            "beauty/d08_cycle_01.png",
+            "beauty/d08_cycle_02.png",
+            "beauty/d08_cycle_03.png",
+            "beauty/d08_cycle_04.png",
+            "beauty/d08_cycle_05.png"
+          ],
+          "entry": "beauty/d08_entry_00.png",
+          "settle": "beauty/d08_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            0,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d08_cycle_00.png",
+            "emission/d08_cycle_01.png",
+            "emission/d08_cycle_02.png",
+            "emission/d08_cycle_03.png",
+            "emission/d08_cycle_04.png",
+            "emission/d08_cycle_05.png"
+          ],
+          "entry": "emission/d08_entry_00.png",
+          "settle": "emission/d08_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            0,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d08_cycle_00.png",
+            "shadow/d08_cycle_01.png",
+            "shadow/d08_cycle_02.png",
+            "shadow/d08_cycle_03.png",
+            "shadow/d08_cycle_04.png",
+            "shadow/d08_cycle_05.png",
+            "shadow/d08_cycle_06.png",
+            "shadow/d08_cycle_07.png",
+            "shadow/d08_cycle_08.png",
+            "shadow/d08_cycle_09.png",
+            "shadow/d08_cycle_10.png",
+            "shadow/d08_cycle_11.png"
+          ],
+          "entry": "shadow/d08_entry_00.png",
+          "settle": "shadow/d08_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            0,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 9,
+      "orientation": 0.140625,
+      "yaw_degrees": 129.375,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d09_cycle_00.png",
+            "beauty/d09_cycle_01.png",
+            "beauty/d09_cycle_02.png",
+            "beauty/d09_cycle_03.png",
+            "beauty/d09_cycle_04.png",
+            "beauty/d09_cycle_05.png"
+          ],
+          "entry": "beauty/d09_entry_00.png",
+          "settle": "beauty/d09_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            1,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d09_cycle_00.png",
+            "emission/d09_cycle_01.png",
+            "emission/d09_cycle_02.png",
+            "emission/d09_cycle_03.png",
+            "emission/d09_cycle_04.png",
+            "emission/d09_cycle_05.png"
+          ],
+          "entry": "emission/d09_entry_00.png",
+          "settle": "emission/d09_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            1,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d09_cycle_00.png",
+            "shadow/d09_cycle_01.png",
+            "shadow/d09_cycle_02.png",
+            "shadow/d09_cycle_03.png",
+            "shadow/d09_cycle_04.png",
+            "shadow/d09_cycle_05.png",
+            "shadow/d09_cycle_06.png",
+            "shadow/d09_cycle_07.png",
+            "shadow/d09_cycle_08.png",
+            "shadow/d09_cycle_09.png",
+            "shadow/d09_cycle_10.png",
+            "shadow/d09_cycle_11.png"
+          ],
+          "entry": "shadow/d09_entry_00.png",
+          "settle": "shadow/d09_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            1,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 10,
+      "orientation": 0.15625,
+      "yaw_degrees": 123.75,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d10_cycle_00.png",
+            "beauty/d10_cycle_01.png",
+            "beauty/d10_cycle_02.png",
+            "beauty/d10_cycle_03.png",
+            "beauty/d10_cycle_04.png",
+            "beauty/d10_cycle_05.png"
+          ],
+          "entry": "beauty/d10_entry_00.png",
+          "settle": "beauty/d10_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            2,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d10_cycle_00.png",
+            "emission/d10_cycle_01.png",
+            "emission/d10_cycle_02.png",
+            "emission/d10_cycle_03.png",
+            "emission/d10_cycle_04.png",
+            "emission/d10_cycle_05.png"
+          ],
+          "entry": "emission/d10_entry_00.png",
+          "settle": "emission/d10_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            2,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d10_cycle_00.png",
+            "shadow/d10_cycle_01.png",
+            "shadow/d10_cycle_02.png",
+            "shadow/d10_cycle_03.png",
+            "shadow/d10_cycle_04.png",
+            "shadow/d10_cycle_05.png",
+            "shadow/d10_cycle_06.png",
+            "shadow/d10_cycle_07.png",
+            "shadow/d10_cycle_08.png",
+            "shadow/d10_cycle_09.png",
+            "shadow/d10_cycle_10.png",
+            "shadow/d10_cycle_11.png"
+          ],
+          "entry": "shadow/d10_entry_00.png",
+          "settle": "shadow/d10_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            2,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 11,
+      "orientation": 0.171875,
+      "yaw_degrees": 118.125,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d11_cycle_00.png",
+            "beauty/d11_cycle_01.png",
+            "beauty/d11_cycle_02.png",
+            "beauty/d11_cycle_03.png",
+            "beauty/d11_cycle_04.png",
+            "beauty/d11_cycle_05.png"
+          ],
+          "entry": "beauty/d11_entry_00.png",
+          "settle": "beauty/d11_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            3,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d11_cycle_00.png",
+            "emission/d11_cycle_01.png",
+            "emission/d11_cycle_02.png",
+            "emission/d11_cycle_03.png",
+            "emission/d11_cycle_04.png",
+            "emission/d11_cycle_05.png"
+          ],
+          "entry": "emission/d11_entry_00.png",
+          "settle": "emission/d11_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            3,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d11_cycle_00.png",
+            "shadow/d11_cycle_01.png",
+            "shadow/d11_cycle_02.png",
+            "shadow/d11_cycle_03.png",
+            "shadow/d11_cycle_04.png",
+            "shadow/d11_cycle_05.png",
+            "shadow/d11_cycle_06.png",
+            "shadow/d11_cycle_07.png",
+            "shadow/d11_cycle_08.png",
+            "shadow/d11_cycle_09.png",
+            "shadow/d11_cycle_10.png",
+            "shadow/d11_cycle_11.png"
+          ],
+          "entry": "shadow/d11_entry_00.png",
+          "settle": "shadow/d11_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            3,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 12,
+      "orientation": 0.1875,
+      "yaw_degrees": 112.5,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d12_cycle_00.png",
+            "beauty/d12_cycle_01.png",
+            "beauty/d12_cycle_02.png",
+            "beauty/d12_cycle_03.png",
+            "beauty/d12_cycle_04.png",
+            "beauty/d12_cycle_05.png"
+          ],
+          "entry": "beauty/d12_entry_00.png",
+          "settle": "beauty/d12_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            4,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d12_cycle_00.png",
+            "emission/d12_cycle_01.png",
+            "emission/d12_cycle_02.png",
+            "emission/d12_cycle_03.png",
+            "emission/d12_cycle_04.png",
+            "emission/d12_cycle_05.png"
+          ],
+          "entry": "emission/d12_entry_00.png",
+          "settle": "emission/d12_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            4,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d12_cycle_00.png",
+            "shadow/d12_cycle_01.png",
+            "shadow/d12_cycle_02.png",
+            "shadow/d12_cycle_03.png",
+            "shadow/d12_cycle_04.png",
+            "shadow/d12_cycle_05.png",
+            "shadow/d12_cycle_06.png",
+            "shadow/d12_cycle_07.png",
+            "shadow/d12_cycle_08.png",
+            "shadow/d12_cycle_09.png",
+            "shadow/d12_cycle_10.png",
+            "shadow/d12_cycle_11.png"
+          ],
+          "entry": "shadow/d12_entry_00.png",
+          "settle": "shadow/d12_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            0,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 13,
+      "orientation": 0.203125,
+      "yaw_degrees": 106.875,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d13_cycle_00.png",
+            "beauty/d13_cycle_01.png",
+            "beauty/d13_cycle_02.png",
+            "beauty/d13_cycle_03.png",
+            "beauty/d13_cycle_04.png",
+            "beauty/d13_cycle_05.png"
+          ],
+          "entry": "beauty/d13_entry_00.png",
+          "settle": "beauty/d13_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            5,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d13_cycle_00.png",
+            "emission/d13_cycle_01.png",
+            "emission/d13_cycle_02.png",
+            "emission/d13_cycle_03.png",
+            "emission/d13_cycle_04.png",
+            "emission/d13_cycle_05.png"
+          ],
+          "entry": "emission/d13_entry_00.png",
+          "settle": "emission/d13_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            5,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d13_cycle_00.png",
+            "shadow/d13_cycle_01.png",
+            "shadow/d13_cycle_02.png",
+            "shadow/d13_cycle_03.png",
+            "shadow/d13_cycle_04.png",
+            "shadow/d13_cycle_05.png",
+            "shadow/d13_cycle_06.png",
+            "shadow/d13_cycle_07.png",
+            "shadow/d13_cycle_08.png",
+            "shadow/d13_cycle_09.png",
+            "shadow/d13_cycle_10.png",
+            "shadow/d13_cycle_11.png"
+          ],
+          "entry": "shadow/d13_entry_00.png",
+          "settle": "shadow/d13_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            1,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 14,
+      "orientation": 0.21875,
+      "yaw_degrees": 101.25,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d14_cycle_00.png",
+            "beauty/d14_cycle_01.png",
+            "beauty/d14_cycle_02.png",
+            "beauty/d14_cycle_03.png",
+            "beauty/d14_cycle_04.png",
+            "beauty/d14_cycle_05.png"
+          ],
+          "entry": "beauty/d14_entry_00.png",
+          "settle": "beauty/d14_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            6,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d14_cycle_00.png",
+            "emission/d14_cycle_01.png",
+            "emission/d14_cycle_02.png",
+            "emission/d14_cycle_03.png",
+            "emission/d14_cycle_04.png",
+            "emission/d14_cycle_05.png"
+          ],
+          "entry": "emission/d14_entry_00.png",
+          "settle": "emission/d14_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            6,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d14_cycle_00.png",
+            "shadow/d14_cycle_01.png",
+            "shadow/d14_cycle_02.png",
+            "shadow/d14_cycle_03.png",
+            "shadow/d14_cycle_04.png",
+            "shadow/d14_cycle_05.png",
+            "shadow/d14_cycle_06.png",
+            "shadow/d14_cycle_07.png",
+            "shadow/d14_cycle_08.png",
+            "shadow/d14_cycle_09.png",
+            "shadow/d14_cycle_10.png",
+            "shadow/d14_cycle_11.png"
+          ],
+          "entry": "shadow/d14_entry_00.png",
+          "settle": "shadow/d14_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            2,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 15,
+      "orientation": 0.234375,
+      "yaw_degrees": 95.625,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d15_cycle_00.png",
+            "beauty/d15_cycle_01.png",
+            "beauty/d15_cycle_02.png",
+            "beauty/d15_cycle_03.png",
+            "beauty/d15_cycle_04.png",
+            "beauty/d15_cycle_05.png"
+          ],
+          "entry": "beauty/d15_entry_00.png",
+          "settle": "beauty/d15_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            7,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d15_cycle_00.png",
+            "emission/d15_cycle_01.png",
+            "emission/d15_cycle_02.png",
+            "emission/d15_cycle_03.png",
+            "emission/d15_cycle_04.png",
+            "emission/d15_cycle_05.png"
+          ],
+          "entry": "emission/d15_entry_00.png",
+          "settle": "emission/d15_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            7,
+            1
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d15_cycle_00.png",
+            "shadow/d15_cycle_01.png",
+            "shadow/d15_cycle_02.png",
+            "shadow/d15_cycle_03.png",
+            "shadow/d15_cycle_04.png",
+            "shadow/d15_cycle_05.png",
+            "shadow/d15_cycle_06.png",
+            "shadow/d15_cycle_07.png",
+            "shadow/d15_cycle_08.png",
+            "shadow/d15_cycle_09.png",
+            "shadow/d15_cycle_10.png",
+            "shadow/d15_cycle_11.png"
+          ],
+          "entry": "shadow/d15_entry_00.png",
+          "settle": "shadow/d15_settle_00.png",
+          "idle_sheet": "shadow/rotation_00.png",
+          "idle_cell": [
+            3,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 16,
+      "orientation": 0.25,
+      "yaw_degrees": 90.0,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d16_cycle_00.png",
+            "beauty/d16_cycle_01.png",
+            "beauty/d16_cycle_02.png",
+            "beauty/d16_cycle_03.png",
+            "beauty/d16_cycle_04.png",
+            "beauty/d16_cycle_05.png"
+          ],
+          "entry": "beauty/d16_entry_00.png",
+          "settle": "beauty/d16_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            0,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d16_cycle_00.png",
+            "emission/d16_cycle_01.png",
+            "emission/d16_cycle_02.png",
+            "emission/d16_cycle_03.png",
+            "emission/d16_cycle_04.png",
+            "emission/d16_cycle_05.png"
+          ],
+          "entry": "emission/d16_entry_00.png",
+          "settle": "emission/d16_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            0,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d16_cycle_00.png",
+            "shadow/d16_cycle_01.png",
+            "shadow/d16_cycle_02.png",
+            "shadow/d16_cycle_03.png",
+            "shadow/d16_cycle_04.png",
+            "shadow/d16_cycle_05.png",
+            "shadow/d16_cycle_06.png",
+            "shadow/d16_cycle_07.png",
+            "shadow/d16_cycle_08.png",
+            "shadow/d16_cycle_09.png",
+            "shadow/d16_cycle_10.png",
+            "shadow/d16_cycle_11.png"
+          ],
+          "entry": "shadow/d16_entry_00.png",
+          "settle": "shadow/d16_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            0,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 17,
+      "orientation": 0.265625,
+      "yaw_degrees": 84.375,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d17_cycle_00.png",
+            "beauty/d17_cycle_01.png",
+            "beauty/d17_cycle_02.png",
+            "beauty/d17_cycle_03.png",
+            "beauty/d17_cycle_04.png",
+            "beauty/d17_cycle_05.png"
+          ],
+          "entry": "beauty/d17_entry_00.png",
+          "settle": "beauty/d17_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            1,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d17_cycle_00.png",
+            "emission/d17_cycle_01.png",
+            "emission/d17_cycle_02.png",
+            "emission/d17_cycle_03.png",
+            "emission/d17_cycle_04.png",
+            "emission/d17_cycle_05.png"
+          ],
+          "entry": "emission/d17_entry_00.png",
+          "settle": "emission/d17_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            1,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d17_cycle_00.png",
+            "shadow/d17_cycle_01.png",
+            "shadow/d17_cycle_02.png",
+            "shadow/d17_cycle_03.png",
+            "shadow/d17_cycle_04.png",
+            "shadow/d17_cycle_05.png",
+            "shadow/d17_cycle_06.png",
+            "shadow/d17_cycle_07.png",
+            "shadow/d17_cycle_08.png",
+            "shadow/d17_cycle_09.png",
+            "shadow/d17_cycle_10.png",
+            "shadow/d17_cycle_11.png"
+          ],
+          "entry": "shadow/d17_entry_00.png",
+          "settle": "shadow/d17_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            1,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 18,
+      "orientation": 0.28125,
+      "yaw_degrees": 78.75,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d18_cycle_00.png",
+            "beauty/d18_cycle_01.png",
+            "beauty/d18_cycle_02.png",
+            "beauty/d18_cycle_03.png",
+            "beauty/d18_cycle_04.png",
+            "beauty/d18_cycle_05.png"
+          ],
+          "entry": "beauty/d18_entry_00.png",
+          "settle": "beauty/d18_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            2,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d18_cycle_00.png",
+            "emission/d18_cycle_01.png",
+            "emission/d18_cycle_02.png",
+            "emission/d18_cycle_03.png",
+            "emission/d18_cycle_04.png",
+            "emission/d18_cycle_05.png"
+          ],
+          "entry": "emission/d18_entry_00.png",
+          "settle": "emission/d18_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            2,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d18_cycle_00.png",
+            "shadow/d18_cycle_01.png",
+            "shadow/d18_cycle_02.png",
+            "shadow/d18_cycle_03.png",
+            "shadow/d18_cycle_04.png",
+            "shadow/d18_cycle_05.png",
+            "shadow/d18_cycle_06.png",
+            "shadow/d18_cycle_07.png",
+            "shadow/d18_cycle_08.png",
+            "shadow/d18_cycle_09.png",
+            "shadow/d18_cycle_10.png",
+            "shadow/d18_cycle_11.png"
+          ],
+          "entry": "shadow/d18_entry_00.png",
+          "settle": "shadow/d18_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            2,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 19,
+      "orientation": 0.296875,
+      "yaw_degrees": 73.125,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d19_cycle_00.png",
+            "beauty/d19_cycle_01.png",
+            "beauty/d19_cycle_02.png",
+            "beauty/d19_cycle_03.png",
+            "beauty/d19_cycle_04.png",
+            "beauty/d19_cycle_05.png"
+          ],
+          "entry": "beauty/d19_entry_00.png",
+          "settle": "beauty/d19_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            3,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d19_cycle_00.png",
+            "emission/d19_cycle_01.png",
+            "emission/d19_cycle_02.png",
+            "emission/d19_cycle_03.png",
+            "emission/d19_cycle_04.png",
+            "emission/d19_cycle_05.png"
+          ],
+          "entry": "emission/d19_entry_00.png",
+          "settle": "emission/d19_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            3,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d19_cycle_00.png",
+            "shadow/d19_cycle_01.png",
+            "shadow/d19_cycle_02.png",
+            "shadow/d19_cycle_03.png",
+            "shadow/d19_cycle_04.png",
+            "shadow/d19_cycle_05.png",
+            "shadow/d19_cycle_06.png",
+            "shadow/d19_cycle_07.png",
+            "shadow/d19_cycle_08.png",
+            "shadow/d19_cycle_09.png",
+            "shadow/d19_cycle_10.png",
+            "shadow/d19_cycle_11.png"
+          ],
+          "entry": "shadow/d19_entry_00.png",
+          "settle": "shadow/d19_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            3,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 20,
+      "orientation": 0.3125,
+      "yaw_degrees": 67.5,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d20_cycle_00.png",
+            "beauty/d20_cycle_01.png",
+            "beauty/d20_cycle_02.png",
+            "beauty/d20_cycle_03.png",
+            "beauty/d20_cycle_04.png",
+            "beauty/d20_cycle_05.png"
+          ],
+          "entry": "beauty/d20_entry_00.png",
+          "settle": "beauty/d20_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            4,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d20_cycle_00.png",
+            "emission/d20_cycle_01.png",
+            "emission/d20_cycle_02.png",
+            "emission/d20_cycle_03.png",
+            "emission/d20_cycle_04.png",
+            "emission/d20_cycle_05.png"
+          ],
+          "entry": "emission/d20_entry_00.png",
+          "settle": "emission/d20_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            4,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d20_cycle_00.png",
+            "shadow/d20_cycle_01.png",
+            "shadow/d20_cycle_02.png",
+            "shadow/d20_cycle_03.png",
+            "shadow/d20_cycle_04.png",
+            "shadow/d20_cycle_05.png",
+            "shadow/d20_cycle_06.png",
+            "shadow/d20_cycle_07.png",
+            "shadow/d20_cycle_08.png",
+            "shadow/d20_cycle_09.png",
+            "shadow/d20_cycle_10.png",
+            "shadow/d20_cycle_11.png"
+          ],
+          "entry": "shadow/d20_entry_00.png",
+          "settle": "shadow/d20_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            0,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 21,
+      "orientation": 0.328125,
+      "yaw_degrees": 61.875,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d21_cycle_00.png",
+            "beauty/d21_cycle_01.png",
+            "beauty/d21_cycle_02.png",
+            "beauty/d21_cycle_03.png",
+            "beauty/d21_cycle_04.png",
+            "beauty/d21_cycle_05.png"
+          ],
+          "entry": "beauty/d21_entry_00.png",
+          "settle": "beauty/d21_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            5,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d21_cycle_00.png",
+            "emission/d21_cycle_01.png",
+            "emission/d21_cycle_02.png",
+            "emission/d21_cycle_03.png",
+            "emission/d21_cycle_04.png",
+            "emission/d21_cycle_05.png"
+          ],
+          "entry": "emission/d21_entry_00.png",
+          "settle": "emission/d21_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            5,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d21_cycle_00.png",
+            "shadow/d21_cycle_01.png",
+            "shadow/d21_cycle_02.png",
+            "shadow/d21_cycle_03.png",
+            "shadow/d21_cycle_04.png",
+            "shadow/d21_cycle_05.png",
+            "shadow/d21_cycle_06.png",
+            "shadow/d21_cycle_07.png",
+            "shadow/d21_cycle_08.png",
+            "shadow/d21_cycle_09.png",
+            "shadow/d21_cycle_10.png",
+            "shadow/d21_cycle_11.png"
+          ],
+          "entry": "shadow/d21_entry_00.png",
+          "settle": "shadow/d21_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            1,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 22,
+      "orientation": 0.34375,
+      "yaw_degrees": 56.25,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d22_cycle_00.png",
+            "beauty/d22_cycle_01.png",
+            "beauty/d22_cycle_02.png",
+            "beauty/d22_cycle_03.png",
+            "beauty/d22_cycle_04.png",
+            "beauty/d22_cycle_05.png"
+          ],
+          "entry": "beauty/d22_entry_00.png",
+          "settle": "beauty/d22_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            6,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d22_cycle_00.png",
+            "emission/d22_cycle_01.png",
+            "emission/d22_cycle_02.png",
+            "emission/d22_cycle_03.png",
+            "emission/d22_cycle_04.png",
+            "emission/d22_cycle_05.png"
+          ],
+          "entry": "emission/d22_entry_00.png",
+          "settle": "emission/d22_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            6,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d22_cycle_00.png",
+            "shadow/d22_cycle_01.png",
+            "shadow/d22_cycle_02.png",
+            "shadow/d22_cycle_03.png",
+            "shadow/d22_cycle_04.png",
+            "shadow/d22_cycle_05.png",
+            "shadow/d22_cycle_06.png",
+            "shadow/d22_cycle_07.png",
+            "shadow/d22_cycle_08.png",
+            "shadow/d22_cycle_09.png",
+            "shadow/d22_cycle_10.png",
+            "shadow/d22_cycle_11.png"
+          ],
+          "entry": "shadow/d22_entry_00.png",
+          "settle": "shadow/d22_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            2,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 23,
+      "orientation": 0.359375,
+      "yaw_degrees": 50.625,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d23_cycle_00.png",
+            "beauty/d23_cycle_01.png",
+            "beauty/d23_cycle_02.png",
+            "beauty/d23_cycle_03.png",
+            "beauty/d23_cycle_04.png",
+            "beauty/d23_cycle_05.png"
+          ],
+          "entry": "beauty/d23_entry_00.png",
+          "settle": "beauty/d23_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            7,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d23_cycle_00.png",
+            "emission/d23_cycle_01.png",
+            "emission/d23_cycle_02.png",
+            "emission/d23_cycle_03.png",
+            "emission/d23_cycle_04.png",
+            "emission/d23_cycle_05.png"
+          ],
+          "entry": "emission/d23_entry_00.png",
+          "settle": "emission/d23_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            7,
+            2
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d23_cycle_00.png",
+            "shadow/d23_cycle_01.png",
+            "shadow/d23_cycle_02.png",
+            "shadow/d23_cycle_03.png",
+            "shadow/d23_cycle_04.png",
+            "shadow/d23_cycle_05.png",
+            "shadow/d23_cycle_06.png",
+            "shadow/d23_cycle_07.png",
+            "shadow/d23_cycle_08.png",
+            "shadow/d23_cycle_09.png",
+            "shadow/d23_cycle_10.png",
+            "shadow/d23_cycle_11.png"
+          ],
+          "entry": "shadow/d23_entry_00.png",
+          "settle": "shadow/d23_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            3,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 24,
+      "orientation": 0.375,
+      "yaw_degrees": 45.0,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d24_cycle_00.png",
+            "beauty/d24_cycle_01.png",
+            "beauty/d24_cycle_02.png",
+            "beauty/d24_cycle_03.png",
+            "beauty/d24_cycle_04.png",
+            "beauty/d24_cycle_05.png"
+          ],
+          "entry": "beauty/d24_entry_00.png",
+          "settle": "beauty/d24_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            0,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d24_cycle_00.png",
+            "emission/d24_cycle_01.png",
+            "emission/d24_cycle_02.png",
+            "emission/d24_cycle_03.png",
+            "emission/d24_cycle_04.png",
+            "emission/d24_cycle_05.png"
+          ],
+          "entry": "emission/d24_entry_00.png",
+          "settle": "emission/d24_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            0,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d24_cycle_00.png",
+            "shadow/d24_cycle_01.png",
+            "shadow/d24_cycle_02.png",
+            "shadow/d24_cycle_03.png",
+            "shadow/d24_cycle_04.png",
+            "shadow/d24_cycle_05.png",
+            "shadow/d24_cycle_06.png",
+            "shadow/d24_cycle_07.png",
+            "shadow/d24_cycle_08.png",
+            "shadow/d24_cycle_09.png",
+            "shadow/d24_cycle_10.png",
+            "shadow/d24_cycle_11.png"
+          ],
+          "entry": "shadow/d24_entry_00.png",
+          "settle": "shadow/d24_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            0,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 25,
+      "orientation": 0.390625,
+      "yaw_degrees": 39.375,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d25_cycle_00.png",
+            "beauty/d25_cycle_01.png",
+            "beauty/d25_cycle_02.png",
+            "beauty/d25_cycle_03.png",
+            "beauty/d25_cycle_04.png",
+            "beauty/d25_cycle_05.png"
+          ],
+          "entry": "beauty/d25_entry_00.png",
+          "settle": "beauty/d25_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            1,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d25_cycle_00.png",
+            "emission/d25_cycle_01.png",
+            "emission/d25_cycle_02.png",
+            "emission/d25_cycle_03.png",
+            "emission/d25_cycle_04.png",
+            "emission/d25_cycle_05.png"
+          ],
+          "entry": "emission/d25_entry_00.png",
+          "settle": "emission/d25_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            1,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d25_cycle_00.png",
+            "shadow/d25_cycle_01.png",
+            "shadow/d25_cycle_02.png",
+            "shadow/d25_cycle_03.png",
+            "shadow/d25_cycle_04.png",
+            "shadow/d25_cycle_05.png",
+            "shadow/d25_cycle_06.png",
+            "shadow/d25_cycle_07.png",
+            "shadow/d25_cycle_08.png",
+            "shadow/d25_cycle_09.png",
+            "shadow/d25_cycle_10.png",
+            "shadow/d25_cycle_11.png"
+          ],
+          "entry": "shadow/d25_entry_00.png",
+          "settle": "shadow/d25_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            1,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 26,
+      "orientation": 0.40625,
+      "yaw_degrees": 33.75,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d26_cycle_00.png",
+            "beauty/d26_cycle_01.png",
+            "beauty/d26_cycle_02.png",
+            "beauty/d26_cycle_03.png",
+            "beauty/d26_cycle_04.png",
+            "beauty/d26_cycle_05.png"
+          ],
+          "entry": "beauty/d26_entry_00.png",
+          "settle": "beauty/d26_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            2,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d26_cycle_00.png",
+            "emission/d26_cycle_01.png",
+            "emission/d26_cycle_02.png",
+            "emission/d26_cycle_03.png",
+            "emission/d26_cycle_04.png",
+            "emission/d26_cycle_05.png"
+          ],
+          "entry": "emission/d26_entry_00.png",
+          "settle": "emission/d26_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            2,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d26_cycle_00.png",
+            "shadow/d26_cycle_01.png",
+            "shadow/d26_cycle_02.png",
+            "shadow/d26_cycle_03.png",
+            "shadow/d26_cycle_04.png",
+            "shadow/d26_cycle_05.png",
+            "shadow/d26_cycle_06.png",
+            "shadow/d26_cycle_07.png",
+            "shadow/d26_cycle_08.png",
+            "shadow/d26_cycle_09.png",
+            "shadow/d26_cycle_10.png",
+            "shadow/d26_cycle_11.png"
+          ],
+          "entry": "shadow/d26_entry_00.png",
+          "settle": "shadow/d26_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            2,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 27,
+      "orientation": 0.421875,
+      "yaw_degrees": 28.125,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d27_cycle_00.png",
+            "beauty/d27_cycle_01.png",
+            "beauty/d27_cycle_02.png",
+            "beauty/d27_cycle_03.png",
+            "beauty/d27_cycle_04.png",
+            "beauty/d27_cycle_05.png"
+          ],
+          "entry": "beauty/d27_entry_00.png",
+          "settle": "beauty/d27_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            3,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d27_cycle_00.png",
+            "emission/d27_cycle_01.png",
+            "emission/d27_cycle_02.png",
+            "emission/d27_cycle_03.png",
+            "emission/d27_cycle_04.png",
+            "emission/d27_cycle_05.png"
+          ],
+          "entry": "emission/d27_entry_00.png",
+          "settle": "emission/d27_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            3,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d27_cycle_00.png",
+            "shadow/d27_cycle_01.png",
+            "shadow/d27_cycle_02.png",
+            "shadow/d27_cycle_03.png",
+            "shadow/d27_cycle_04.png",
+            "shadow/d27_cycle_05.png",
+            "shadow/d27_cycle_06.png",
+            "shadow/d27_cycle_07.png",
+            "shadow/d27_cycle_08.png",
+            "shadow/d27_cycle_09.png",
+            "shadow/d27_cycle_10.png",
+            "shadow/d27_cycle_11.png"
+          ],
+          "entry": "shadow/d27_entry_00.png",
+          "settle": "shadow/d27_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            3,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 28,
+      "orientation": 0.4375,
+      "yaw_degrees": 22.5,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d28_cycle_00.png",
+            "beauty/d28_cycle_01.png",
+            "beauty/d28_cycle_02.png",
+            "beauty/d28_cycle_03.png",
+            "beauty/d28_cycle_04.png",
+            "beauty/d28_cycle_05.png"
+          ],
+          "entry": "beauty/d28_entry_00.png",
+          "settle": "beauty/d28_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            4,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d28_cycle_00.png",
+            "emission/d28_cycle_01.png",
+            "emission/d28_cycle_02.png",
+            "emission/d28_cycle_03.png",
+            "emission/d28_cycle_04.png",
+            "emission/d28_cycle_05.png"
+          ],
+          "entry": "emission/d28_entry_00.png",
+          "settle": "emission/d28_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            4,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d28_cycle_00.png",
+            "shadow/d28_cycle_01.png",
+            "shadow/d28_cycle_02.png",
+            "shadow/d28_cycle_03.png",
+            "shadow/d28_cycle_04.png",
+            "shadow/d28_cycle_05.png",
+            "shadow/d28_cycle_06.png",
+            "shadow/d28_cycle_07.png",
+            "shadow/d28_cycle_08.png",
+            "shadow/d28_cycle_09.png",
+            "shadow/d28_cycle_10.png",
+            "shadow/d28_cycle_11.png"
+          ],
+          "entry": "shadow/d28_entry_00.png",
+          "settle": "shadow/d28_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            0,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 29,
+      "orientation": 0.453125,
+      "yaw_degrees": 16.875,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d29_cycle_00.png",
+            "beauty/d29_cycle_01.png",
+            "beauty/d29_cycle_02.png",
+            "beauty/d29_cycle_03.png",
+            "beauty/d29_cycle_04.png",
+            "beauty/d29_cycle_05.png"
+          ],
+          "entry": "beauty/d29_entry_00.png",
+          "settle": "beauty/d29_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            5,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d29_cycle_00.png",
+            "emission/d29_cycle_01.png",
+            "emission/d29_cycle_02.png",
+            "emission/d29_cycle_03.png",
+            "emission/d29_cycle_04.png",
+            "emission/d29_cycle_05.png"
+          ],
+          "entry": "emission/d29_entry_00.png",
+          "settle": "emission/d29_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            5,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d29_cycle_00.png",
+            "shadow/d29_cycle_01.png",
+            "shadow/d29_cycle_02.png",
+            "shadow/d29_cycle_03.png",
+            "shadow/d29_cycle_04.png",
+            "shadow/d29_cycle_05.png",
+            "shadow/d29_cycle_06.png",
+            "shadow/d29_cycle_07.png",
+            "shadow/d29_cycle_08.png",
+            "shadow/d29_cycle_09.png",
+            "shadow/d29_cycle_10.png",
+            "shadow/d29_cycle_11.png"
+          ],
+          "entry": "shadow/d29_entry_00.png",
+          "settle": "shadow/d29_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            1,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 30,
+      "orientation": 0.46875,
+      "yaw_degrees": 11.25,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d30_cycle_00.png",
+            "beauty/d30_cycle_01.png",
+            "beauty/d30_cycle_02.png",
+            "beauty/d30_cycle_03.png",
+            "beauty/d30_cycle_04.png",
+            "beauty/d30_cycle_05.png"
+          ],
+          "entry": "beauty/d30_entry_00.png",
+          "settle": "beauty/d30_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            6,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d30_cycle_00.png",
+            "emission/d30_cycle_01.png",
+            "emission/d30_cycle_02.png",
+            "emission/d30_cycle_03.png",
+            "emission/d30_cycle_04.png",
+            "emission/d30_cycle_05.png"
+          ],
+          "entry": "emission/d30_entry_00.png",
+          "settle": "emission/d30_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            6,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d30_cycle_00.png",
+            "shadow/d30_cycle_01.png",
+            "shadow/d30_cycle_02.png",
+            "shadow/d30_cycle_03.png",
+            "shadow/d30_cycle_04.png",
+            "shadow/d30_cycle_05.png",
+            "shadow/d30_cycle_06.png",
+            "shadow/d30_cycle_07.png",
+            "shadow/d30_cycle_08.png",
+            "shadow/d30_cycle_09.png",
+            "shadow/d30_cycle_10.png",
+            "shadow/d30_cycle_11.png"
+          ],
+          "entry": "shadow/d30_entry_00.png",
+          "settle": "shadow/d30_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            2,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 31,
+      "orientation": 0.484375,
+      "yaw_degrees": 5.625,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d31_cycle_00.png",
+            "beauty/d31_cycle_01.png",
+            "beauty/d31_cycle_02.png",
+            "beauty/d31_cycle_03.png",
+            "beauty/d31_cycle_04.png",
+            "beauty/d31_cycle_05.png"
+          ],
+          "entry": "beauty/d31_entry_00.png",
+          "settle": "beauty/d31_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            7,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d31_cycle_00.png",
+            "emission/d31_cycle_01.png",
+            "emission/d31_cycle_02.png",
+            "emission/d31_cycle_03.png",
+            "emission/d31_cycle_04.png",
+            "emission/d31_cycle_05.png"
+          ],
+          "entry": "emission/d31_entry_00.png",
+          "settle": "emission/d31_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            7,
+            3
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d31_cycle_00.png",
+            "shadow/d31_cycle_01.png",
+            "shadow/d31_cycle_02.png",
+            "shadow/d31_cycle_03.png",
+            "shadow/d31_cycle_04.png",
+            "shadow/d31_cycle_05.png",
+            "shadow/d31_cycle_06.png",
+            "shadow/d31_cycle_07.png",
+            "shadow/d31_cycle_08.png",
+            "shadow/d31_cycle_09.png",
+            "shadow/d31_cycle_10.png",
+            "shadow/d31_cycle_11.png"
+          ],
+          "entry": "shadow/d31_entry_00.png",
+          "settle": "shadow/d31_settle_00.png",
+          "idle_sheet": "shadow/rotation_01.png",
+          "idle_cell": [
+            3,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 32,
+      "orientation": 0.5,
+      "yaw_degrees": 0.0,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d32_cycle_00.png",
+            "beauty/d32_cycle_01.png",
+            "beauty/d32_cycle_02.png",
+            "beauty/d32_cycle_03.png",
+            "beauty/d32_cycle_04.png",
+            "beauty/d32_cycle_05.png"
+          ],
+          "entry": "beauty/d32_entry_00.png",
+          "settle": "beauty/d32_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            0,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d32_cycle_00.png",
+            "emission/d32_cycle_01.png",
+            "emission/d32_cycle_02.png",
+            "emission/d32_cycle_03.png",
+            "emission/d32_cycle_04.png",
+            "emission/d32_cycle_05.png"
+          ],
+          "entry": "emission/d32_entry_00.png",
+          "settle": "emission/d32_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            0,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d32_cycle_00.png",
+            "shadow/d32_cycle_01.png",
+            "shadow/d32_cycle_02.png",
+            "shadow/d32_cycle_03.png",
+            "shadow/d32_cycle_04.png",
+            "shadow/d32_cycle_05.png",
+            "shadow/d32_cycle_06.png",
+            "shadow/d32_cycle_07.png",
+            "shadow/d32_cycle_08.png",
+            "shadow/d32_cycle_09.png",
+            "shadow/d32_cycle_10.png",
+            "shadow/d32_cycle_11.png"
+          ],
+          "entry": "shadow/d32_entry_00.png",
+          "settle": "shadow/d32_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            0,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 33,
+      "orientation": 0.515625,
+      "yaw_degrees": -5.625,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d33_cycle_00.png",
+            "beauty/d33_cycle_01.png",
+            "beauty/d33_cycle_02.png",
+            "beauty/d33_cycle_03.png",
+            "beauty/d33_cycle_04.png",
+            "beauty/d33_cycle_05.png"
+          ],
+          "entry": "beauty/d33_entry_00.png",
+          "settle": "beauty/d33_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            1,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d33_cycle_00.png",
+            "emission/d33_cycle_01.png",
+            "emission/d33_cycle_02.png",
+            "emission/d33_cycle_03.png",
+            "emission/d33_cycle_04.png",
+            "emission/d33_cycle_05.png"
+          ],
+          "entry": "emission/d33_entry_00.png",
+          "settle": "emission/d33_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            1,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d33_cycle_00.png",
+            "shadow/d33_cycle_01.png",
+            "shadow/d33_cycle_02.png",
+            "shadow/d33_cycle_03.png",
+            "shadow/d33_cycle_04.png",
+            "shadow/d33_cycle_05.png",
+            "shadow/d33_cycle_06.png",
+            "shadow/d33_cycle_07.png",
+            "shadow/d33_cycle_08.png",
+            "shadow/d33_cycle_09.png",
+            "shadow/d33_cycle_10.png",
+            "shadow/d33_cycle_11.png"
+          ],
+          "entry": "shadow/d33_entry_00.png",
+          "settle": "shadow/d33_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            1,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 34,
+      "orientation": 0.53125,
+      "yaw_degrees": -11.25,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d34_cycle_00.png",
+            "beauty/d34_cycle_01.png",
+            "beauty/d34_cycle_02.png",
+            "beauty/d34_cycle_03.png",
+            "beauty/d34_cycle_04.png",
+            "beauty/d34_cycle_05.png"
+          ],
+          "entry": "beauty/d34_entry_00.png",
+          "settle": "beauty/d34_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            2,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d34_cycle_00.png",
+            "emission/d34_cycle_01.png",
+            "emission/d34_cycle_02.png",
+            "emission/d34_cycle_03.png",
+            "emission/d34_cycle_04.png",
+            "emission/d34_cycle_05.png"
+          ],
+          "entry": "emission/d34_entry_00.png",
+          "settle": "emission/d34_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            2,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d34_cycle_00.png",
+            "shadow/d34_cycle_01.png",
+            "shadow/d34_cycle_02.png",
+            "shadow/d34_cycle_03.png",
+            "shadow/d34_cycle_04.png",
+            "shadow/d34_cycle_05.png",
+            "shadow/d34_cycle_06.png",
+            "shadow/d34_cycle_07.png",
+            "shadow/d34_cycle_08.png",
+            "shadow/d34_cycle_09.png",
+            "shadow/d34_cycle_10.png",
+            "shadow/d34_cycle_11.png"
+          ],
+          "entry": "shadow/d34_entry_00.png",
+          "settle": "shadow/d34_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            2,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 35,
+      "orientation": 0.546875,
+      "yaw_degrees": -16.875,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d35_cycle_00.png",
+            "beauty/d35_cycle_01.png",
+            "beauty/d35_cycle_02.png",
+            "beauty/d35_cycle_03.png",
+            "beauty/d35_cycle_04.png",
+            "beauty/d35_cycle_05.png"
+          ],
+          "entry": "beauty/d35_entry_00.png",
+          "settle": "beauty/d35_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            3,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d35_cycle_00.png",
+            "emission/d35_cycle_01.png",
+            "emission/d35_cycle_02.png",
+            "emission/d35_cycle_03.png",
+            "emission/d35_cycle_04.png",
+            "emission/d35_cycle_05.png"
+          ],
+          "entry": "emission/d35_entry_00.png",
+          "settle": "emission/d35_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            3,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d35_cycle_00.png",
+            "shadow/d35_cycle_01.png",
+            "shadow/d35_cycle_02.png",
+            "shadow/d35_cycle_03.png",
+            "shadow/d35_cycle_04.png",
+            "shadow/d35_cycle_05.png",
+            "shadow/d35_cycle_06.png",
+            "shadow/d35_cycle_07.png",
+            "shadow/d35_cycle_08.png",
+            "shadow/d35_cycle_09.png",
+            "shadow/d35_cycle_10.png",
+            "shadow/d35_cycle_11.png"
+          ],
+          "entry": "shadow/d35_entry_00.png",
+          "settle": "shadow/d35_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            3,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 36,
+      "orientation": 0.5625,
+      "yaw_degrees": -22.5,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d36_cycle_00.png",
+            "beauty/d36_cycle_01.png",
+            "beauty/d36_cycle_02.png",
+            "beauty/d36_cycle_03.png",
+            "beauty/d36_cycle_04.png",
+            "beauty/d36_cycle_05.png"
+          ],
+          "entry": "beauty/d36_entry_00.png",
+          "settle": "beauty/d36_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            4,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d36_cycle_00.png",
+            "emission/d36_cycle_01.png",
+            "emission/d36_cycle_02.png",
+            "emission/d36_cycle_03.png",
+            "emission/d36_cycle_04.png",
+            "emission/d36_cycle_05.png"
+          ],
+          "entry": "emission/d36_entry_00.png",
+          "settle": "emission/d36_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            4,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d36_cycle_00.png",
+            "shadow/d36_cycle_01.png",
+            "shadow/d36_cycle_02.png",
+            "shadow/d36_cycle_03.png",
+            "shadow/d36_cycle_04.png",
+            "shadow/d36_cycle_05.png",
+            "shadow/d36_cycle_06.png",
+            "shadow/d36_cycle_07.png",
+            "shadow/d36_cycle_08.png",
+            "shadow/d36_cycle_09.png",
+            "shadow/d36_cycle_10.png",
+            "shadow/d36_cycle_11.png"
+          ],
+          "entry": "shadow/d36_entry_00.png",
+          "settle": "shadow/d36_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            0,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 37,
+      "orientation": 0.578125,
+      "yaw_degrees": -28.125,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d37_cycle_00.png",
+            "beauty/d37_cycle_01.png",
+            "beauty/d37_cycle_02.png",
+            "beauty/d37_cycle_03.png",
+            "beauty/d37_cycle_04.png",
+            "beauty/d37_cycle_05.png"
+          ],
+          "entry": "beauty/d37_entry_00.png",
+          "settle": "beauty/d37_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            5,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d37_cycle_00.png",
+            "emission/d37_cycle_01.png",
+            "emission/d37_cycle_02.png",
+            "emission/d37_cycle_03.png",
+            "emission/d37_cycle_04.png",
+            "emission/d37_cycle_05.png"
+          ],
+          "entry": "emission/d37_entry_00.png",
+          "settle": "emission/d37_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            5,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d37_cycle_00.png",
+            "shadow/d37_cycle_01.png",
+            "shadow/d37_cycle_02.png",
+            "shadow/d37_cycle_03.png",
+            "shadow/d37_cycle_04.png",
+            "shadow/d37_cycle_05.png",
+            "shadow/d37_cycle_06.png",
+            "shadow/d37_cycle_07.png",
+            "shadow/d37_cycle_08.png",
+            "shadow/d37_cycle_09.png",
+            "shadow/d37_cycle_10.png",
+            "shadow/d37_cycle_11.png"
+          ],
+          "entry": "shadow/d37_entry_00.png",
+          "settle": "shadow/d37_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            1,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 38,
+      "orientation": 0.59375,
+      "yaw_degrees": -33.75,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d38_cycle_00.png",
+            "beauty/d38_cycle_01.png",
+            "beauty/d38_cycle_02.png",
+            "beauty/d38_cycle_03.png",
+            "beauty/d38_cycle_04.png",
+            "beauty/d38_cycle_05.png"
+          ],
+          "entry": "beauty/d38_entry_00.png",
+          "settle": "beauty/d38_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            6,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d38_cycle_00.png",
+            "emission/d38_cycle_01.png",
+            "emission/d38_cycle_02.png",
+            "emission/d38_cycle_03.png",
+            "emission/d38_cycle_04.png",
+            "emission/d38_cycle_05.png"
+          ],
+          "entry": "emission/d38_entry_00.png",
+          "settle": "emission/d38_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            6,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d38_cycle_00.png",
+            "shadow/d38_cycle_01.png",
+            "shadow/d38_cycle_02.png",
+            "shadow/d38_cycle_03.png",
+            "shadow/d38_cycle_04.png",
+            "shadow/d38_cycle_05.png",
+            "shadow/d38_cycle_06.png",
+            "shadow/d38_cycle_07.png",
+            "shadow/d38_cycle_08.png",
+            "shadow/d38_cycle_09.png",
+            "shadow/d38_cycle_10.png",
+            "shadow/d38_cycle_11.png"
+          ],
+          "entry": "shadow/d38_entry_00.png",
+          "settle": "shadow/d38_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            2,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 39,
+      "orientation": 0.609375,
+      "yaw_degrees": -39.375,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d39_cycle_00.png",
+            "beauty/d39_cycle_01.png",
+            "beauty/d39_cycle_02.png",
+            "beauty/d39_cycle_03.png",
+            "beauty/d39_cycle_04.png",
+            "beauty/d39_cycle_05.png"
+          ],
+          "entry": "beauty/d39_entry_00.png",
+          "settle": "beauty/d39_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            7,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d39_cycle_00.png",
+            "emission/d39_cycle_01.png",
+            "emission/d39_cycle_02.png",
+            "emission/d39_cycle_03.png",
+            "emission/d39_cycle_04.png",
+            "emission/d39_cycle_05.png"
+          ],
+          "entry": "emission/d39_entry_00.png",
+          "settle": "emission/d39_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            7,
+            4
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d39_cycle_00.png",
+            "shadow/d39_cycle_01.png",
+            "shadow/d39_cycle_02.png",
+            "shadow/d39_cycle_03.png",
+            "shadow/d39_cycle_04.png",
+            "shadow/d39_cycle_05.png",
+            "shadow/d39_cycle_06.png",
+            "shadow/d39_cycle_07.png",
+            "shadow/d39_cycle_08.png",
+            "shadow/d39_cycle_09.png",
+            "shadow/d39_cycle_10.png",
+            "shadow/d39_cycle_11.png"
+          ],
+          "entry": "shadow/d39_entry_00.png",
+          "settle": "shadow/d39_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            3,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 40,
+      "orientation": 0.625,
+      "yaw_degrees": -45.0,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d40_cycle_00.png",
+            "beauty/d40_cycle_01.png",
+            "beauty/d40_cycle_02.png",
+            "beauty/d40_cycle_03.png",
+            "beauty/d40_cycle_04.png",
+            "beauty/d40_cycle_05.png"
+          ],
+          "entry": "beauty/d40_entry_00.png",
+          "settle": "beauty/d40_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            0,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d40_cycle_00.png",
+            "emission/d40_cycle_01.png",
+            "emission/d40_cycle_02.png",
+            "emission/d40_cycle_03.png",
+            "emission/d40_cycle_04.png",
+            "emission/d40_cycle_05.png"
+          ],
+          "entry": "emission/d40_entry_00.png",
+          "settle": "emission/d40_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            0,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d40_cycle_00.png",
+            "shadow/d40_cycle_01.png",
+            "shadow/d40_cycle_02.png",
+            "shadow/d40_cycle_03.png",
+            "shadow/d40_cycle_04.png",
+            "shadow/d40_cycle_05.png",
+            "shadow/d40_cycle_06.png",
+            "shadow/d40_cycle_07.png",
+            "shadow/d40_cycle_08.png",
+            "shadow/d40_cycle_09.png",
+            "shadow/d40_cycle_10.png",
+            "shadow/d40_cycle_11.png"
+          ],
+          "entry": "shadow/d40_entry_00.png",
+          "settle": "shadow/d40_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            0,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 41,
+      "orientation": 0.640625,
+      "yaw_degrees": -50.625,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d41_cycle_00.png",
+            "beauty/d41_cycle_01.png",
+            "beauty/d41_cycle_02.png",
+            "beauty/d41_cycle_03.png",
+            "beauty/d41_cycle_04.png",
+            "beauty/d41_cycle_05.png"
+          ],
+          "entry": "beauty/d41_entry_00.png",
+          "settle": "beauty/d41_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            1,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d41_cycle_00.png",
+            "emission/d41_cycle_01.png",
+            "emission/d41_cycle_02.png",
+            "emission/d41_cycle_03.png",
+            "emission/d41_cycle_04.png",
+            "emission/d41_cycle_05.png"
+          ],
+          "entry": "emission/d41_entry_00.png",
+          "settle": "emission/d41_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            1,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d41_cycle_00.png",
+            "shadow/d41_cycle_01.png",
+            "shadow/d41_cycle_02.png",
+            "shadow/d41_cycle_03.png",
+            "shadow/d41_cycle_04.png",
+            "shadow/d41_cycle_05.png",
+            "shadow/d41_cycle_06.png",
+            "shadow/d41_cycle_07.png",
+            "shadow/d41_cycle_08.png",
+            "shadow/d41_cycle_09.png",
+            "shadow/d41_cycle_10.png",
+            "shadow/d41_cycle_11.png"
+          ],
+          "entry": "shadow/d41_entry_00.png",
+          "settle": "shadow/d41_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            1,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 42,
+      "orientation": 0.65625,
+      "yaw_degrees": -56.25,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d42_cycle_00.png",
+            "beauty/d42_cycle_01.png",
+            "beauty/d42_cycle_02.png",
+            "beauty/d42_cycle_03.png",
+            "beauty/d42_cycle_04.png",
+            "beauty/d42_cycle_05.png"
+          ],
+          "entry": "beauty/d42_entry_00.png",
+          "settle": "beauty/d42_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            2,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d42_cycle_00.png",
+            "emission/d42_cycle_01.png",
+            "emission/d42_cycle_02.png",
+            "emission/d42_cycle_03.png",
+            "emission/d42_cycle_04.png",
+            "emission/d42_cycle_05.png"
+          ],
+          "entry": "emission/d42_entry_00.png",
+          "settle": "emission/d42_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            2,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d42_cycle_00.png",
+            "shadow/d42_cycle_01.png",
+            "shadow/d42_cycle_02.png",
+            "shadow/d42_cycle_03.png",
+            "shadow/d42_cycle_04.png",
+            "shadow/d42_cycle_05.png",
+            "shadow/d42_cycle_06.png",
+            "shadow/d42_cycle_07.png",
+            "shadow/d42_cycle_08.png",
+            "shadow/d42_cycle_09.png",
+            "shadow/d42_cycle_10.png",
+            "shadow/d42_cycle_11.png"
+          ],
+          "entry": "shadow/d42_entry_00.png",
+          "settle": "shadow/d42_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            2,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 43,
+      "orientation": 0.671875,
+      "yaw_degrees": -61.875,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d43_cycle_00.png",
+            "beauty/d43_cycle_01.png",
+            "beauty/d43_cycle_02.png",
+            "beauty/d43_cycle_03.png",
+            "beauty/d43_cycle_04.png",
+            "beauty/d43_cycle_05.png"
+          ],
+          "entry": "beauty/d43_entry_00.png",
+          "settle": "beauty/d43_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            3,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d43_cycle_00.png",
+            "emission/d43_cycle_01.png",
+            "emission/d43_cycle_02.png",
+            "emission/d43_cycle_03.png",
+            "emission/d43_cycle_04.png",
+            "emission/d43_cycle_05.png"
+          ],
+          "entry": "emission/d43_entry_00.png",
+          "settle": "emission/d43_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            3,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d43_cycle_00.png",
+            "shadow/d43_cycle_01.png",
+            "shadow/d43_cycle_02.png",
+            "shadow/d43_cycle_03.png",
+            "shadow/d43_cycle_04.png",
+            "shadow/d43_cycle_05.png",
+            "shadow/d43_cycle_06.png",
+            "shadow/d43_cycle_07.png",
+            "shadow/d43_cycle_08.png",
+            "shadow/d43_cycle_09.png",
+            "shadow/d43_cycle_10.png",
+            "shadow/d43_cycle_11.png"
+          ],
+          "entry": "shadow/d43_entry_00.png",
+          "settle": "shadow/d43_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            3,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 44,
+      "orientation": 0.6875,
+      "yaw_degrees": -67.5,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d44_cycle_00.png",
+            "beauty/d44_cycle_01.png",
+            "beauty/d44_cycle_02.png",
+            "beauty/d44_cycle_03.png",
+            "beauty/d44_cycle_04.png",
+            "beauty/d44_cycle_05.png"
+          ],
+          "entry": "beauty/d44_entry_00.png",
+          "settle": "beauty/d44_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            4,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d44_cycle_00.png",
+            "emission/d44_cycle_01.png",
+            "emission/d44_cycle_02.png",
+            "emission/d44_cycle_03.png",
+            "emission/d44_cycle_04.png",
+            "emission/d44_cycle_05.png"
+          ],
+          "entry": "emission/d44_entry_00.png",
+          "settle": "emission/d44_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            4,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d44_cycle_00.png",
+            "shadow/d44_cycle_01.png",
+            "shadow/d44_cycle_02.png",
+            "shadow/d44_cycle_03.png",
+            "shadow/d44_cycle_04.png",
+            "shadow/d44_cycle_05.png",
+            "shadow/d44_cycle_06.png",
+            "shadow/d44_cycle_07.png",
+            "shadow/d44_cycle_08.png",
+            "shadow/d44_cycle_09.png",
+            "shadow/d44_cycle_10.png",
+            "shadow/d44_cycle_11.png"
+          ],
+          "entry": "shadow/d44_entry_00.png",
+          "settle": "shadow/d44_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            0,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 45,
+      "orientation": 0.703125,
+      "yaw_degrees": -73.125,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d45_cycle_00.png",
+            "beauty/d45_cycle_01.png",
+            "beauty/d45_cycle_02.png",
+            "beauty/d45_cycle_03.png",
+            "beauty/d45_cycle_04.png",
+            "beauty/d45_cycle_05.png"
+          ],
+          "entry": "beauty/d45_entry_00.png",
+          "settle": "beauty/d45_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            5,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d45_cycle_00.png",
+            "emission/d45_cycle_01.png",
+            "emission/d45_cycle_02.png",
+            "emission/d45_cycle_03.png",
+            "emission/d45_cycle_04.png",
+            "emission/d45_cycle_05.png"
+          ],
+          "entry": "emission/d45_entry_00.png",
+          "settle": "emission/d45_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            5,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d45_cycle_00.png",
+            "shadow/d45_cycle_01.png",
+            "shadow/d45_cycle_02.png",
+            "shadow/d45_cycle_03.png",
+            "shadow/d45_cycle_04.png",
+            "shadow/d45_cycle_05.png",
+            "shadow/d45_cycle_06.png",
+            "shadow/d45_cycle_07.png",
+            "shadow/d45_cycle_08.png",
+            "shadow/d45_cycle_09.png",
+            "shadow/d45_cycle_10.png",
+            "shadow/d45_cycle_11.png"
+          ],
+          "entry": "shadow/d45_entry_00.png",
+          "settle": "shadow/d45_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            1,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 46,
+      "orientation": 0.71875,
+      "yaw_degrees": -78.75,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d46_cycle_00.png",
+            "beauty/d46_cycle_01.png",
+            "beauty/d46_cycle_02.png",
+            "beauty/d46_cycle_03.png",
+            "beauty/d46_cycle_04.png",
+            "beauty/d46_cycle_05.png"
+          ],
+          "entry": "beauty/d46_entry_00.png",
+          "settle": "beauty/d46_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            6,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d46_cycle_00.png",
+            "emission/d46_cycle_01.png",
+            "emission/d46_cycle_02.png",
+            "emission/d46_cycle_03.png",
+            "emission/d46_cycle_04.png",
+            "emission/d46_cycle_05.png"
+          ],
+          "entry": "emission/d46_entry_00.png",
+          "settle": "emission/d46_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            6,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d46_cycle_00.png",
+            "shadow/d46_cycle_01.png",
+            "shadow/d46_cycle_02.png",
+            "shadow/d46_cycle_03.png",
+            "shadow/d46_cycle_04.png",
+            "shadow/d46_cycle_05.png",
+            "shadow/d46_cycle_06.png",
+            "shadow/d46_cycle_07.png",
+            "shadow/d46_cycle_08.png",
+            "shadow/d46_cycle_09.png",
+            "shadow/d46_cycle_10.png",
+            "shadow/d46_cycle_11.png"
+          ],
+          "entry": "shadow/d46_entry_00.png",
+          "settle": "shadow/d46_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            2,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 47,
+      "orientation": 0.734375,
+      "yaw_degrees": -84.375,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d47_cycle_00.png",
+            "beauty/d47_cycle_01.png",
+            "beauty/d47_cycle_02.png",
+            "beauty/d47_cycle_03.png",
+            "beauty/d47_cycle_04.png",
+            "beauty/d47_cycle_05.png"
+          ],
+          "entry": "beauty/d47_entry_00.png",
+          "settle": "beauty/d47_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            7,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d47_cycle_00.png",
+            "emission/d47_cycle_01.png",
+            "emission/d47_cycle_02.png",
+            "emission/d47_cycle_03.png",
+            "emission/d47_cycle_04.png",
+            "emission/d47_cycle_05.png"
+          ],
+          "entry": "emission/d47_entry_00.png",
+          "settle": "emission/d47_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            7,
+            5
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d47_cycle_00.png",
+            "shadow/d47_cycle_01.png",
+            "shadow/d47_cycle_02.png",
+            "shadow/d47_cycle_03.png",
+            "shadow/d47_cycle_04.png",
+            "shadow/d47_cycle_05.png",
+            "shadow/d47_cycle_06.png",
+            "shadow/d47_cycle_07.png",
+            "shadow/d47_cycle_08.png",
+            "shadow/d47_cycle_09.png",
+            "shadow/d47_cycle_10.png",
+            "shadow/d47_cycle_11.png"
+          ],
+          "entry": "shadow/d47_entry_00.png",
+          "settle": "shadow/d47_settle_00.png",
+          "idle_sheet": "shadow/rotation_02.png",
+          "idle_cell": [
+            3,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 48,
+      "orientation": 0.75,
+      "yaw_degrees": -90.0,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d48_cycle_00.png",
+            "beauty/d48_cycle_01.png",
+            "beauty/d48_cycle_02.png",
+            "beauty/d48_cycle_03.png",
+            "beauty/d48_cycle_04.png",
+            "beauty/d48_cycle_05.png"
+          ],
+          "entry": "beauty/d48_entry_00.png",
+          "settle": "beauty/d48_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            0,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d48_cycle_00.png",
+            "emission/d48_cycle_01.png",
+            "emission/d48_cycle_02.png",
+            "emission/d48_cycle_03.png",
+            "emission/d48_cycle_04.png",
+            "emission/d48_cycle_05.png"
+          ],
+          "entry": "emission/d48_entry_00.png",
+          "settle": "emission/d48_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            0,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d48_cycle_00.png",
+            "shadow/d48_cycle_01.png",
+            "shadow/d48_cycle_02.png",
+            "shadow/d48_cycle_03.png",
+            "shadow/d48_cycle_04.png",
+            "shadow/d48_cycle_05.png",
+            "shadow/d48_cycle_06.png",
+            "shadow/d48_cycle_07.png",
+            "shadow/d48_cycle_08.png",
+            "shadow/d48_cycle_09.png",
+            "shadow/d48_cycle_10.png",
+            "shadow/d48_cycle_11.png"
+          ],
+          "entry": "shadow/d48_entry_00.png",
+          "settle": "shadow/d48_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            0,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 49,
+      "orientation": 0.765625,
+      "yaw_degrees": -95.625,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d49_cycle_00.png",
+            "beauty/d49_cycle_01.png",
+            "beauty/d49_cycle_02.png",
+            "beauty/d49_cycle_03.png",
+            "beauty/d49_cycle_04.png",
+            "beauty/d49_cycle_05.png"
+          ],
+          "entry": "beauty/d49_entry_00.png",
+          "settle": "beauty/d49_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            1,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d49_cycle_00.png",
+            "emission/d49_cycle_01.png",
+            "emission/d49_cycle_02.png",
+            "emission/d49_cycle_03.png",
+            "emission/d49_cycle_04.png",
+            "emission/d49_cycle_05.png"
+          ],
+          "entry": "emission/d49_entry_00.png",
+          "settle": "emission/d49_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            1,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d49_cycle_00.png",
+            "shadow/d49_cycle_01.png",
+            "shadow/d49_cycle_02.png",
+            "shadow/d49_cycle_03.png",
+            "shadow/d49_cycle_04.png",
+            "shadow/d49_cycle_05.png",
+            "shadow/d49_cycle_06.png",
+            "shadow/d49_cycle_07.png",
+            "shadow/d49_cycle_08.png",
+            "shadow/d49_cycle_09.png",
+            "shadow/d49_cycle_10.png",
+            "shadow/d49_cycle_11.png"
+          ],
+          "entry": "shadow/d49_entry_00.png",
+          "settle": "shadow/d49_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            1,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 50,
+      "orientation": 0.78125,
+      "yaw_degrees": -101.25,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d50_cycle_00.png",
+            "beauty/d50_cycle_01.png",
+            "beauty/d50_cycle_02.png",
+            "beauty/d50_cycle_03.png",
+            "beauty/d50_cycle_04.png",
+            "beauty/d50_cycle_05.png"
+          ],
+          "entry": "beauty/d50_entry_00.png",
+          "settle": "beauty/d50_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            2,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d50_cycle_00.png",
+            "emission/d50_cycle_01.png",
+            "emission/d50_cycle_02.png",
+            "emission/d50_cycle_03.png",
+            "emission/d50_cycle_04.png",
+            "emission/d50_cycle_05.png"
+          ],
+          "entry": "emission/d50_entry_00.png",
+          "settle": "emission/d50_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            2,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d50_cycle_00.png",
+            "shadow/d50_cycle_01.png",
+            "shadow/d50_cycle_02.png",
+            "shadow/d50_cycle_03.png",
+            "shadow/d50_cycle_04.png",
+            "shadow/d50_cycle_05.png",
+            "shadow/d50_cycle_06.png",
+            "shadow/d50_cycle_07.png",
+            "shadow/d50_cycle_08.png",
+            "shadow/d50_cycle_09.png",
+            "shadow/d50_cycle_10.png",
+            "shadow/d50_cycle_11.png"
+          ],
+          "entry": "shadow/d50_entry_00.png",
+          "settle": "shadow/d50_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            2,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 51,
+      "orientation": 0.796875,
+      "yaw_degrees": -106.875,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d51_cycle_00.png",
+            "beauty/d51_cycle_01.png",
+            "beauty/d51_cycle_02.png",
+            "beauty/d51_cycle_03.png",
+            "beauty/d51_cycle_04.png",
+            "beauty/d51_cycle_05.png"
+          ],
+          "entry": "beauty/d51_entry_00.png",
+          "settle": "beauty/d51_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            3,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d51_cycle_00.png",
+            "emission/d51_cycle_01.png",
+            "emission/d51_cycle_02.png",
+            "emission/d51_cycle_03.png",
+            "emission/d51_cycle_04.png",
+            "emission/d51_cycle_05.png"
+          ],
+          "entry": "emission/d51_entry_00.png",
+          "settle": "emission/d51_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            3,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d51_cycle_00.png",
+            "shadow/d51_cycle_01.png",
+            "shadow/d51_cycle_02.png",
+            "shadow/d51_cycle_03.png",
+            "shadow/d51_cycle_04.png",
+            "shadow/d51_cycle_05.png",
+            "shadow/d51_cycle_06.png",
+            "shadow/d51_cycle_07.png",
+            "shadow/d51_cycle_08.png",
+            "shadow/d51_cycle_09.png",
+            "shadow/d51_cycle_10.png",
+            "shadow/d51_cycle_11.png"
+          ],
+          "entry": "shadow/d51_entry_00.png",
+          "settle": "shadow/d51_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            3,
+            0
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 52,
+      "orientation": 0.8125,
+      "yaw_degrees": -112.5,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d52_cycle_00.png",
+            "beauty/d52_cycle_01.png",
+            "beauty/d52_cycle_02.png",
+            "beauty/d52_cycle_03.png",
+            "beauty/d52_cycle_04.png",
+            "beauty/d52_cycle_05.png"
+          ],
+          "entry": "beauty/d52_entry_00.png",
+          "settle": "beauty/d52_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            4,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d52_cycle_00.png",
+            "emission/d52_cycle_01.png",
+            "emission/d52_cycle_02.png",
+            "emission/d52_cycle_03.png",
+            "emission/d52_cycle_04.png",
+            "emission/d52_cycle_05.png"
+          ],
+          "entry": "emission/d52_entry_00.png",
+          "settle": "emission/d52_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            4,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d52_cycle_00.png",
+            "shadow/d52_cycle_01.png",
+            "shadow/d52_cycle_02.png",
+            "shadow/d52_cycle_03.png",
+            "shadow/d52_cycle_04.png",
+            "shadow/d52_cycle_05.png",
+            "shadow/d52_cycle_06.png",
+            "shadow/d52_cycle_07.png",
+            "shadow/d52_cycle_08.png",
+            "shadow/d52_cycle_09.png",
+            "shadow/d52_cycle_10.png",
+            "shadow/d52_cycle_11.png"
+          ],
+          "entry": "shadow/d52_entry_00.png",
+          "settle": "shadow/d52_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            0,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 53,
+      "orientation": 0.828125,
+      "yaw_degrees": -118.125,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d53_cycle_00.png",
+            "beauty/d53_cycle_01.png",
+            "beauty/d53_cycle_02.png",
+            "beauty/d53_cycle_03.png",
+            "beauty/d53_cycle_04.png",
+            "beauty/d53_cycle_05.png"
+          ],
+          "entry": "beauty/d53_entry_00.png",
+          "settle": "beauty/d53_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            5,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d53_cycle_00.png",
+            "emission/d53_cycle_01.png",
+            "emission/d53_cycle_02.png",
+            "emission/d53_cycle_03.png",
+            "emission/d53_cycle_04.png",
+            "emission/d53_cycle_05.png"
+          ],
+          "entry": "emission/d53_entry_00.png",
+          "settle": "emission/d53_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            5,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d53_cycle_00.png",
+            "shadow/d53_cycle_01.png",
+            "shadow/d53_cycle_02.png",
+            "shadow/d53_cycle_03.png",
+            "shadow/d53_cycle_04.png",
+            "shadow/d53_cycle_05.png",
+            "shadow/d53_cycle_06.png",
+            "shadow/d53_cycle_07.png",
+            "shadow/d53_cycle_08.png",
+            "shadow/d53_cycle_09.png",
+            "shadow/d53_cycle_10.png",
+            "shadow/d53_cycle_11.png"
+          ],
+          "entry": "shadow/d53_entry_00.png",
+          "settle": "shadow/d53_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            1,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 54,
+      "orientation": 0.84375,
+      "yaw_degrees": -123.75,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d54_cycle_00.png",
+            "beauty/d54_cycle_01.png",
+            "beauty/d54_cycle_02.png",
+            "beauty/d54_cycle_03.png",
+            "beauty/d54_cycle_04.png",
+            "beauty/d54_cycle_05.png"
+          ],
+          "entry": "beauty/d54_entry_00.png",
+          "settle": "beauty/d54_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            6,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d54_cycle_00.png",
+            "emission/d54_cycle_01.png",
+            "emission/d54_cycle_02.png",
+            "emission/d54_cycle_03.png",
+            "emission/d54_cycle_04.png",
+            "emission/d54_cycle_05.png"
+          ],
+          "entry": "emission/d54_entry_00.png",
+          "settle": "emission/d54_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            6,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d54_cycle_00.png",
+            "shadow/d54_cycle_01.png",
+            "shadow/d54_cycle_02.png",
+            "shadow/d54_cycle_03.png",
+            "shadow/d54_cycle_04.png",
+            "shadow/d54_cycle_05.png",
+            "shadow/d54_cycle_06.png",
+            "shadow/d54_cycle_07.png",
+            "shadow/d54_cycle_08.png",
+            "shadow/d54_cycle_09.png",
+            "shadow/d54_cycle_10.png",
+            "shadow/d54_cycle_11.png"
+          ],
+          "entry": "shadow/d54_entry_00.png",
+          "settle": "shadow/d54_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            2,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 55,
+      "orientation": 0.859375,
+      "yaw_degrees": -129.375,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d55_cycle_00.png",
+            "beauty/d55_cycle_01.png",
+            "beauty/d55_cycle_02.png",
+            "beauty/d55_cycle_03.png",
+            "beauty/d55_cycle_04.png",
+            "beauty/d55_cycle_05.png"
+          ],
+          "entry": "beauty/d55_entry_00.png",
+          "settle": "beauty/d55_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            7,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d55_cycle_00.png",
+            "emission/d55_cycle_01.png",
+            "emission/d55_cycle_02.png",
+            "emission/d55_cycle_03.png",
+            "emission/d55_cycle_04.png",
+            "emission/d55_cycle_05.png"
+          ],
+          "entry": "emission/d55_entry_00.png",
+          "settle": "emission/d55_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            7,
+            6
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d55_cycle_00.png",
+            "shadow/d55_cycle_01.png",
+            "shadow/d55_cycle_02.png",
+            "shadow/d55_cycle_03.png",
+            "shadow/d55_cycle_04.png",
+            "shadow/d55_cycle_05.png",
+            "shadow/d55_cycle_06.png",
+            "shadow/d55_cycle_07.png",
+            "shadow/d55_cycle_08.png",
+            "shadow/d55_cycle_09.png",
+            "shadow/d55_cycle_10.png",
+            "shadow/d55_cycle_11.png"
+          ],
+          "entry": "shadow/d55_entry_00.png",
+          "settle": "shadow/d55_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            3,
+            1
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 56,
+      "orientation": 0.875,
+      "yaw_degrees": -135.0,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d56_cycle_00.png",
+            "beauty/d56_cycle_01.png",
+            "beauty/d56_cycle_02.png",
+            "beauty/d56_cycle_03.png",
+            "beauty/d56_cycle_04.png",
+            "beauty/d56_cycle_05.png"
+          ],
+          "entry": "beauty/d56_entry_00.png",
+          "settle": "beauty/d56_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            0,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d56_cycle_00.png",
+            "emission/d56_cycle_01.png",
+            "emission/d56_cycle_02.png",
+            "emission/d56_cycle_03.png",
+            "emission/d56_cycle_04.png",
+            "emission/d56_cycle_05.png"
+          ],
+          "entry": "emission/d56_entry_00.png",
+          "settle": "emission/d56_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            0,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d56_cycle_00.png",
+            "shadow/d56_cycle_01.png",
+            "shadow/d56_cycle_02.png",
+            "shadow/d56_cycle_03.png",
+            "shadow/d56_cycle_04.png",
+            "shadow/d56_cycle_05.png",
+            "shadow/d56_cycle_06.png",
+            "shadow/d56_cycle_07.png",
+            "shadow/d56_cycle_08.png",
+            "shadow/d56_cycle_09.png",
+            "shadow/d56_cycle_10.png",
+            "shadow/d56_cycle_11.png"
+          ],
+          "entry": "shadow/d56_entry_00.png",
+          "settle": "shadow/d56_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            0,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 57,
+      "orientation": 0.890625,
+      "yaw_degrees": -140.625,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d57_cycle_00.png",
+            "beauty/d57_cycle_01.png",
+            "beauty/d57_cycle_02.png",
+            "beauty/d57_cycle_03.png",
+            "beauty/d57_cycle_04.png",
+            "beauty/d57_cycle_05.png"
+          ],
+          "entry": "beauty/d57_entry_00.png",
+          "settle": "beauty/d57_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            1,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d57_cycle_00.png",
+            "emission/d57_cycle_01.png",
+            "emission/d57_cycle_02.png",
+            "emission/d57_cycle_03.png",
+            "emission/d57_cycle_04.png",
+            "emission/d57_cycle_05.png"
+          ],
+          "entry": "emission/d57_entry_00.png",
+          "settle": "emission/d57_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            1,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d57_cycle_00.png",
+            "shadow/d57_cycle_01.png",
+            "shadow/d57_cycle_02.png",
+            "shadow/d57_cycle_03.png",
+            "shadow/d57_cycle_04.png",
+            "shadow/d57_cycle_05.png",
+            "shadow/d57_cycle_06.png",
+            "shadow/d57_cycle_07.png",
+            "shadow/d57_cycle_08.png",
+            "shadow/d57_cycle_09.png",
+            "shadow/d57_cycle_10.png",
+            "shadow/d57_cycle_11.png"
+          ],
+          "entry": "shadow/d57_entry_00.png",
+          "settle": "shadow/d57_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            1,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 58,
+      "orientation": 0.90625,
+      "yaw_degrees": -146.25,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d58_cycle_00.png",
+            "beauty/d58_cycle_01.png",
+            "beauty/d58_cycle_02.png",
+            "beauty/d58_cycle_03.png",
+            "beauty/d58_cycle_04.png",
+            "beauty/d58_cycle_05.png"
+          ],
+          "entry": "beauty/d58_entry_00.png",
+          "settle": "beauty/d58_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            2,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d58_cycle_00.png",
+            "emission/d58_cycle_01.png",
+            "emission/d58_cycle_02.png",
+            "emission/d58_cycle_03.png",
+            "emission/d58_cycle_04.png",
+            "emission/d58_cycle_05.png"
+          ],
+          "entry": "emission/d58_entry_00.png",
+          "settle": "emission/d58_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            2,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d58_cycle_00.png",
+            "shadow/d58_cycle_01.png",
+            "shadow/d58_cycle_02.png",
+            "shadow/d58_cycle_03.png",
+            "shadow/d58_cycle_04.png",
+            "shadow/d58_cycle_05.png",
+            "shadow/d58_cycle_06.png",
+            "shadow/d58_cycle_07.png",
+            "shadow/d58_cycle_08.png",
+            "shadow/d58_cycle_09.png",
+            "shadow/d58_cycle_10.png",
+            "shadow/d58_cycle_11.png"
+          ],
+          "entry": "shadow/d58_entry_00.png",
+          "settle": "shadow/d58_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            2,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 59,
+      "orientation": 0.921875,
+      "yaw_degrees": -151.875,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d59_cycle_00.png",
+            "beauty/d59_cycle_01.png",
+            "beauty/d59_cycle_02.png",
+            "beauty/d59_cycle_03.png",
+            "beauty/d59_cycle_04.png",
+            "beauty/d59_cycle_05.png"
+          ],
+          "entry": "beauty/d59_entry_00.png",
+          "settle": "beauty/d59_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            3,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d59_cycle_00.png",
+            "emission/d59_cycle_01.png",
+            "emission/d59_cycle_02.png",
+            "emission/d59_cycle_03.png",
+            "emission/d59_cycle_04.png",
+            "emission/d59_cycle_05.png"
+          ],
+          "entry": "emission/d59_entry_00.png",
+          "settle": "emission/d59_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            3,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d59_cycle_00.png",
+            "shadow/d59_cycle_01.png",
+            "shadow/d59_cycle_02.png",
+            "shadow/d59_cycle_03.png",
+            "shadow/d59_cycle_04.png",
+            "shadow/d59_cycle_05.png",
+            "shadow/d59_cycle_06.png",
+            "shadow/d59_cycle_07.png",
+            "shadow/d59_cycle_08.png",
+            "shadow/d59_cycle_09.png",
+            "shadow/d59_cycle_10.png",
+            "shadow/d59_cycle_11.png"
+          ],
+          "entry": "shadow/d59_entry_00.png",
+          "settle": "shadow/d59_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            3,
+            2
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 60,
+      "orientation": 0.9375,
+      "yaw_degrees": -157.5,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d60_cycle_00.png",
+            "beauty/d60_cycle_01.png",
+            "beauty/d60_cycle_02.png",
+            "beauty/d60_cycle_03.png",
+            "beauty/d60_cycle_04.png",
+            "beauty/d60_cycle_05.png"
+          ],
+          "entry": "beauty/d60_entry_00.png",
+          "settle": "beauty/d60_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            4,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d60_cycle_00.png",
+            "emission/d60_cycle_01.png",
+            "emission/d60_cycle_02.png",
+            "emission/d60_cycle_03.png",
+            "emission/d60_cycle_04.png",
+            "emission/d60_cycle_05.png"
+          ],
+          "entry": "emission/d60_entry_00.png",
+          "settle": "emission/d60_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            4,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d60_cycle_00.png",
+            "shadow/d60_cycle_01.png",
+            "shadow/d60_cycle_02.png",
+            "shadow/d60_cycle_03.png",
+            "shadow/d60_cycle_04.png",
+            "shadow/d60_cycle_05.png",
+            "shadow/d60_cycle_06.png",
+            "shadow/d60_cycle_07.png",
+            "shadow/d60_cycle_08.png",
+            "shadow/d60_cycle_09.png",
+            "shadow/d60_cycle_10.png",
+            "shadow/d60_cycle_11.png"
+          ],
+          "entry": "shadow/d60_entry_00.png",
+          "settle": "shadow/d60_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            0,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 61,
+      "orientation": 0.953125,
+      "yaw_degrees": -163.125,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d61_cycle_00.png",
+            "beauty/d61_cycle_01.png",
+            "beauty/d61_cycle_02.png",
+            "beauty/d61_cycle_03.png",
+            "beauty/d61_cycle_04.png",
+            "beauty/d61_cycle_05.png"
+          ],
+          "entry": "beauty/d61_entry_00.png",
+          "settle": "beauty/d61_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            5,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d61_cycle_00.png",
+            "emission/d61_cycle_01.png",
+            "emission/d61_cycle_02.png",
+            "emission/d61_cycle_03.png",
+            "emission/d61_cycle_04.png",
+            "emission/d61_cycle_05.png"
+          ],
+          "entry": "emission/d61_entry_00.png",
+          "settle": "emission/d61_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            5,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d61_cycle_00.png",
+            "shadow/d61_cycle_01.png",
+            "shadow/d61_cycle_02.png",
+            "shadow/d61_cycle_03.png",
+            "shadow/d61_cycle_04.png",
+            "shadow/d61_cycle_05.png",
+            "shadow/d61_cycle_06.png",
+            "shadow/d61_cycle_07.png",
+            "shadow/d61_cycle_08.png",
+            "shadow/d61_cycle_09.png",
+            "shadow/d61_cycle_10.png",
+            "shadow/d61_cycle_11.png"
+          ],
+          "entry": "shadow/d61_entry_00.png",
+          "settle": "shadow/d61_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            1,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 62,
+      "orientation": 0.96875,
+      "yaw_degrees": -168.75,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d62_cycle_00.png",
+            "beauty/d62_cycle_01.png",
+            "beauty/d62_cycle_02.png",
+            "beauty/d62_cycle_03.png",
+            "beauty/d62_cycle_04.png",
+            "beauty/d62_cycle_05.png"
+          ],
+          "entry": "beauty/d62_entry_00.png",
+          "settle": "beauty/d62_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            6,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d62_cycle_00.png",
+            "emission/d62_cycle_01.png",
+            "emission/d62_cycle_02.png",
+            "emission/d62_cycle_03.png",
+            "emission/d62_cycle_04.png",
+            "emission/d62_cycle_05.png"
+          ],
+          "entry": "emission/d62_entry_00.png",
+          "settle": "emission/d62_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            6,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d62_cycle_00.png",
+            "shadow/d62_cycle_01.png",
+            "shadow/d62_cycle_02.png",
+            "shadow/d62_cycle_03.png",
+            "shadow/d62_cycle_04.png",
+            "shadow/d62_cycle_05.png",
+            "shadow/d62_cycle_06.png",
+            "shadow/d62_cycle_07.png",
+            "shadow/d62_cycle_08.png",
+            "shadow/d62_cycle_09.png",
+            "shadow/d62_cycle_10.png",
+            "shadow/d62_cycle_11.png"
+          ],
+          "entry": "shadow/d62_entry_00.png",
+          "settle": "shadow/d62_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            2,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    },
+    {
+      "direction": 63,
+      "orientation": 0.984375,
+      "yaw_degrees": -174.375,
+      "passes": {
+        "beauty": {
+          "cycle": [
+            "beauty/d63_cycle_00.png",
+            "beauty/d63_cycle_01.png",
+            "beauty/d63_cycle_02.png",
+            "beauty/d63_cycle_03.png",
+            "beauty/d63_cycle_04.png",
+            "beauty/d63_cycle_05.png"
+          ],
+          "entry": "beauty/d63_entry_00.png",
+          "settle": "beauty/d63_settle_00.png",
+          "idle_sheet": "beauty/rotation_64.png",
+          "idle_cell": [
+            7,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "emission": {
+          "cycle": [
+            "emission/d63_cycle_00.png",
+            "emission/d63_cycle_01.png",
+            "emission/d63_cycle_02.png",
+            "emission/d63_cycle_03.png",
+            "emission/d63_cycle_04.png",
+            "emission/d63_cycle_05.png"
+          ],
+          "entry": "emission/d63_entry_00.png",
+          "settle": "emission/d63_settle_00.png",
+          "idle_sheet": "emission/rotation_64.png",
+          "idle_cell": [
+            7,
+            7
+          ],
+          "cell_size": [
+            640,
+            640
+          ],
+          "columns": 8,
+          "rows": 4,
+          "sheet_capacity": 32
+        },
+        "shadow": {
+          "cycle": [
+            "shadow/d63_cycle_00.png",
+            "shadow/d63_cycle_01.png",
+            "shadow/d63_cycle_02.png",
+            "shadow/d63_cycle_03.png",
+            "shadow/d63_cycle_04.png",
+            "shadow/d63_cycle_05.png",
+            "shadow/d63_cycle_06.png",
+            "shadow/d63_cycle_07.png",
+            "shadow/d63_cycle_08.png",
+            "shadow/d63_cycle_09.png",
+            "shadow/d63_cycle_10.png",
+            "shadow/d63_cycle_11.png"
+          ],
+          "entry": "shadow/d63_entry_00.png",
+          "settle": "shadow/d63_settle_00.png",
+          "idle_sheet": "shadow/rotation_03.png",
+          "idle_cell": [
+            3,
+            3
+          ],
+          "cell_size": [
+            1280,
+            1280
+          ],
+          "columns": 4,
+          "rows": 4,
+          "sheet_capacity": 16
+        }
+      }
+    }
+  ],
+  "base_included": false
+}

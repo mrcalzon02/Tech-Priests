@@ -1,5 +1,5 @@
 {
-  "status": "ALL_384_CHUNKS_AND_42816_SOURCE_IMAGES_FULLY_DECODE_VERIFIED",
+  "status": "PASS_COMPLETE_LOCAL_A02_PACKAGE_ALL_42816_EXACT_RGBA_ATLAS_CELLS",
   "observed_utc": "2026-11-09T12:59:15.915703+00:00",
   "complete_chunks": 384,
   "target_chunks": 384,
@@ -21,9 +21,11 @@
     ],
     "valid_original_cache_bytes": "preserved during merge"
   },
-  "assembly": "Separate disposable staging currently in progress; not certified complete by this snapshot. Read actual process and output manifests before resuming.",
+  "assembly": "Complete locally: archive SHA/CRC, all1926sheets/42816exact RGBAcells, original cache unchanged. Large ZIPs are local only.",
   "local_staging": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-assembly-staging-20261109",
   "local_output": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\lobber-a02-full-delivery-20261109",
   "native_integration": "Not integrated: current normal prototype is autocannon; alternate lobber target/interface must be grounded before modifying normal prototype. No gameplay changes.",
-  "goal_open": true
+  "goal_open": true,
+  "atlas_proof": "lobber-a02-full-capture/ASSEMBLY_AND_ATLAS_PROOF.json",
+  "verification_recovery": "Windows atomic checkpoint replacement briefly failed; resumed the terminated verifier using exact sheet/source hash-bound receipts after adding bounded PermissionError retries. No source render or atlas assembly repeated."
 }

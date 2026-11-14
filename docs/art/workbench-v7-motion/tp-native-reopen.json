@@ -1,0 +1,204 @@
+{
+  "impact_frames": [
+    32,
+    48,
+    64,
+    80,
+    96,
+    112
+  ],
+  "contacts": [
+    {
+      "direction": "north",
+      "frame": 32,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "north",
+      "frame": 48,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "north",
+      "frame": 64,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "north",
+      "frame": 80,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "north",
+      "frame": 96,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "north",
+      "frame": 112,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "east",
+      "frame": 32,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "east",
+      "frame": 48,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "east",
+      "frame": 64,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "east",
+      "frame": 80,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "east",
+      "frame": 96,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "east",
+      "frame": 112,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "south",
+      "frame": 32,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.35285978037105e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "south",
+      "frame": 48,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.35285978037105e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "south",
+      "frame": 64,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.35285978037105e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "south",
+      "frame": 80,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.35285978037105e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "south",
+      "frame": 96,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.35285978037105e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "south",
+      "frame": 112,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.35285978037105e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "west",
+      "frame": 32,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "west",
+      "frame": 48,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "west",
+      "frame": 64,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "west",
+      "frame": 80,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "west",
+      "frame": 96,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    },
+    {
+      "direction": "west",
+      "frame": 112,
+      "normal_dot_down": 1.0,
+      "face_center_error": 6.812943797358943e-08,
+      "lowest_head_z": 0.798541784286499
+    }
+  ],
+  "rendered_impact_frames": [
+    32,
+    48,
+    64,
+    80,
+    96,
+    112
+  ],
+  "source_geometry_preserved": true,
+  "face_axis": "head local +Y",
+  "face_alignment_required": 0.99999,
+  "rest_loop_exact": true,
+  "fully_cold_at_end": true,
+  "all_192_frames_clear_sheet": true,
+  "minimum_hammer_z": {
+    "head": 0.798541784286499,
+    "handle": 0.8100215196609497
+  },
+  "sheet_center_z": 0.7980418438911439,
+  "status": "PASS_ACTUAL_TP_SHADOW_CANDIDATE_NATIVE_REOPEN_24_CONTACTS_192_FRAME_CLEARANCE",
+  "native_sha256": "082b07db828aa26c199ca2a861522573545efb8744369c6e5d7e91a59496d983",
+  "ground_shadow_preserved": true,
+  "blender": "5.0.1",
+  "scope": "Actual saved TP derivative reopened; contact/loop math repeated on saved animation. No GLB or gameplay acceptance inferred."
+}
