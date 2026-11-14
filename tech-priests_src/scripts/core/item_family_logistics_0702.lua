@@ -607,7 +607,15 @@ local function original_rail_expedition_reserved_0836(pair)
       and mission.force_index==pair.station.force.index
       and mission.surface_index==pair.station.surface.index
       and type(mission.target)=="table"
-      and type(mission.resource_unit)=="number"
+      and type(mission.target.x)=="number"
+      and type(mission.target.y)=="number"
+      and type(mission.item)=="string" and mission.item~=""
+      and mission.resource_name==mission.item
+      -- Natural Factorio ore patches have no unit_number. 0835 records
+      -- the original charted ore prototype and coordinates instead;
+      -- optional native resource IDs must never authorize or block this
+      -- strictly unladen owner-local movement handoff by themselves.
+      and (mission.resource_unit==nil or type(mission.resource_unit)=="number")
       and (mission.status=="starvation-confirmed"
         or mission.status=="building-physical-rail"
         or mission.status=="rail-track-established")) then
