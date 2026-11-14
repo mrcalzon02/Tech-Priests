@@ -374,6 +374,12 @@ local function sample(s,p)
     independent_operation=op and {enabled=op.enabled,phase=op.phase,
       reason=op.reason,science_item=op.science_item},
     science_planner=pair and pair.magos_science_last_result_1172,
+    resource_expansion=pair and pair.resource_expansion_0259 and {
+      reason=pair.resource_expansion_0259.last_reason,
+      need=pair.resource_expansion_0259.last_need,
+      next_tick=pair.resource_expansion_0259.next_tick,
+      chain_status=pair.resource_expansion_0259.chain_0820 and
+        pair.resource_expansion_0259.chain_0820.status},
     combat_target=combat and combat.valid and {name=combat.name,
       force=combat.force.name,position=combat.position,health=combat.health},
     infrastructure_plan=pair and pair.master_infrastructure_plan_0644 and {

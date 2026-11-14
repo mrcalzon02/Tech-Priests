@@ -12,6 +12,7 @@ local function pair(id,x,rank)
       force=force,surface=surface,name="station-"..rank},
     priest={valid=true,position={x=x,y=0}},
     rank_test=rank,radius=30,
+    independent_emergency_operation_0184={enabled=true},
   }
 end
 local magos=pair(100,0,4)

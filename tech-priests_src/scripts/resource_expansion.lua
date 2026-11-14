@@ -347,12 +347,18 @@ local function op_for_pair(pair)
     local ok, op = pcall(function() return tech_priests_get_emergency_operation_0184(pair) end)
     if ok and op then return op end
   end
-  pair.independent_emergency_operation_0184 = pair.independent_emergency_operation_0184 or { enabled = true, reason = "resource-expansion" }
-  return pair.independent_emergency_operation_0184
+  return pair.independent_emergency_operation_0184 or {enabled=false}
 end
 
 local function build_need_list(pair, op)
   local result = {}
+  -- The raw leaf currently stopping physical infrastructure wins over a
+  -- speculative ratio deficit. Preserve its identity through ranked expansion.
+  local request=pair.infrastructure_recipe_request_0647
+  local pending=type(request)=="table"and request.missing or pair.requested_item
+  if type(pending)=="string"and #resource_names_for_need(pending)>0 then
+    result[#result+1]=pending
+  end
   if tech_priests_0257_build_ratio_plan then
     local ok, plan = pcall(function() return tech_priests_0257_build_ratio_plan(pair, op or {}) end)
     if ok and plan then
@@ -434,6 +440,10 @@ function tech_priests_0259_resource_expansion_service(pair)
       and robot_goal.surface_index==pair.station.surface.index
       and robot_goal.force_index==pair.station.force.index then
     state.last_reason="explicit-powered-robot-frontier-priority"
+    return false
+  end
+  if op.enabled~=true then
+    state.last_reason="independent-operation-disabled"
     return false
   end
   if game and game.tick and game.tick < (state.next_tick or 0) then return false end
