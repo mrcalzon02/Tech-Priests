@@ -543,6 +543,20 @@ do
     get_driver=function()return nil end}
   local engine_wagon={valid=true,name="cargo-wagon",unit_number=351,
     force=force,surface=surface,position={x=5,y=1},train=native_train}
+  -- Native live-fuel readback must use the original locomotive inventory:
+  -- a historical 0528 receipt alone is never permission to board.
+  defines.inventory.fuel=2
+  local native_fuel={valid=true,amount=3}
+  native_fuel.get_item_count=function(item)
+    assert(item=="coal","0836 read foreign locomotive cargo as fuel")
+    return native_fuel.amount
+  end
+  engine_loco.get_inventory=function(slot)
+    assert(slot==defines.inventory.fuel,
+      "0836 did not read the real native locomotive fuel inventory")
+    return native_fuel
+  end
+  engine_loco.burner={valid=true,remaining_burning_fuel=0}
   local board_pair={station=pair.station,priest=original_priest}
   board_pair.remote_rail_outpost_0835={
     status="rail-track-established",root_station_unit=104,
@@ -595,9 +609,46 @@ do
     and board_pair.machine_logistics_0528.phase=="move-to-machine"
     and not board_pair.train_transport_rail_0835,
     "0836 overrode a lawful 0528 refusal to pursue a train")
+  -- Negative: 0528's earlier physical coal receipt still exists, but
+  -- removing all current traction fuel must stop new boarding attempts.
+  -- The original Magos/rolling stock and unrelated custody remain untouched.
+  board_pair.machine_logistics_0528=nil
+  native_fuel.amount=0
+  engine_loco.burner.remaining_burning_fuel=0
+  local empty,empty_why=Track.service_first_train_board_0836(board_pair)
+  assert(not empty and empty_why=="original-train-out-of-live-fuel"
+    and board_pair.remote_rail_outpost_0835.first_board_0836.phase==
+      "native-boarding-fuel-blocked"
+    and board_pair.priest==original_priest
+    and original_priest.valid and original_priest.unit_number==105
+    and engine_loco.valid and engine_wagon.valid
+    and not board_pair.train_transport_rail_0835,
+    "0836 treated historic fueled phase as current native traction")
+  -- Positive current traction: Factorio may have already begun burning coal
+  -- and therefore hold no unburned coal. Do not falsely block the live burner.
+  engine_loco.burner.remaining_burning_fuel=1200
+  local burning,burning_why=Track.service_first_train_board_0836(board_pair)
+  assert(not burning
+    and burning_why=="native-driver-requires-original-character:unit"
+    and not board_pair.train_transport_rail_0835,
+    "0836 failed to accept genuine burning fuel or bypassed unit refusal")
+  engine_loco.burner.remaining_burning_fuel=0
+  native_fuel.amount=2
+  local stocked,stocked_why=Track.service_first_train_board_0836(board_pair)
+  assert(not stocked
+    and stocked_why=="native-driver-requires-original-character:unit"
+    and not board_pair.train_transport_rail_0835,
+    "0836 did not accept real stocked coal or miscredited Magos boarding")
+  native_fuel.valid=false
+  local unreadable,unreadable_why=Track.service_first_train_board_0836(board_pair)
+  assert(not unreadable
+    and unreadable_why=="original-train-live-fuel-unobservable"
+    and not board_pair.train_transport_rail_0835,
+    "0836 accepted unobservable locomotive fuel")
+  native_fuel.valid=true
   _G.TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528=prior
 end
-print("[rail-board-0836] PASS 0528-owner reconciliation, cargo refusal and original unit fail-closed")
+print("[rail-board-0836] PASS 0528 custody, live coal/burner/empty/unknown fuel refusal and original unit identity")
 -- The deterministic native extension scorer is a pure, separately executed
 -- Lua contract. It only ranks geometry; it never creates rails or ghosts.
 dofile("tests/unit/rail_route_choice_1403.lua")
