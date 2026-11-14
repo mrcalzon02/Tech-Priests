@@ -150,6 +150,8 @@ local function active_request(pair)
   if mode:find("ammo",1,true) or mode:find("survival%-ammo") then return {item="firearm-magazine",count=parse_blocker_need(pair,"firearm-magazine") or 10,source="mode-ammo"} end
   if mode:find("repair",1,true) then return {item="repair-pack",count=parse_blocker_need(pair,"repair-pack") or 1,source="mode-repair"} end
   local op=pair.independent_emergency_operation_0184 or pair.independent_emergency_operation or pair.emergency_operation
+  local op_phase=lower(op and op.phase)
+  if op_phase:find("satisfied",1,true)or op_phase:find("complete",1,true)then return nil end
   item=normalize_item(op and (op.last_item or op.requested_item or op.item or op.item_name))
   if item then return {item=item,count=requested_count_from_order(op,item) or parse_blocker_need(pair,item) or 1,source="emergency-operation"} end
   return nil
@@ -158,6 +160,11 @@ local function active_requested_item(pair) local req=active_request(pair); retur
 
 local function station_count(pair,item)
   if not (valid_pair(pair) and item) then return 0 end
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if authority and type(authority.generic_item_count)=="function"then
+    local ok,n=pcall(authority.generic_item_count,pair,item)
+    if ok and type(n)=="number"and n>=0 then return n end
+  end
   if type(_G.tech_priests_0358_station_item_count)=="function" then local ok,n=pcall(_G.tech_priests_0358_station_item_count,pair,item); if ok then return tonumber(n) or 0 end end
   local inv=pair.station.get_inventory and pair.station.get_inventory(defines.inventory.chest)
   if inv and inv.valid then local ok,n=pcall(function() return inv.get_item_count(item) end); if ok then return tonumber(n) or 0 end end

@@ -210,6 +210,24 @@ do
   check(force.current_research==nil,
     "research planner assigned an already completed technology")
   tech.researched=false
+  local slow={valid=true,name="slow-red",enabled=true,researched=false,prerequisites={},
+    research_unit_ingredients={{name=item,amount=1}},research_unit_count=200,research_unit_energy=60}
+  local green="logistic-science-pack"
+  local fast={valid=true,name="fast-red-green",enabled=true,researched=false,prerequisites={},
+    research_unit_ingredients={{name=item,amount=1},{name=green,amount=1}},research_unit_count=50,research_unit_energy=30}
+  force.technologies={[slow.name]=slow,[fast.name]=fast}
+  lab.prototype.lab_inputs={item,green};stock[item]=1;stock[green]=1
+  pair.independent_emergency_operation_0184={enabled=true}
+  local autonomous=Plan.build_plan(pair,"physical-multiple-science-types")
+  check(autonomous.research_candidate==fast.name,
+    "independent force ignored a faster actually supplied two-pack technology")
+  force.current_research=slow
+  Plan.service_pair(pair,"retain-current-research")
+  check(force.current_research==slow,"new autonomous scoring preempted an already active research")
+  force.current_research=nil;pair.independent_emergency_operation_0184.enabled=false
+  local maintenance=Plan.build_plan(pair,"maintenance-research-order")
+  check(maintenance.research_candidate==slow.name,"autonomous research scoring changed maintenance doctrine")
+  pair.independent_emergency_operation_0184=nil;stock[green]=nil
   force.technologies=nil
   stock[item]=nil
 end

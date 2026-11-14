@@ -31,4 +31,15 @@ Movement.stop(pair,"test-handoff")
 assert(Movement.combat_intent(pair,target,"test-wrapper",{owner="fallback-combat-laser-0423",fire_range=1.5,radius=.975,priority=92}))
 assert(pair.movement_request_0418.x==8.5 and pair.movement_request_0418.owner=="fallback-combat-laser-0423",
  "combat wrapper replaced the authorized footprint goal with blocked center")
-print("PASS native point-blank footprint range, no remote shots and canonical combat movement handoff")
+tech_priests_stop_movement_0418=Movement.stop
+target.position={x=80,y=0};target.bounding_box={left_top={x=78.5,y=-1.5},right_bottom={x=81.5,y=1.5}}
+pair.combat_target=target;pair.dispatcher_combat_target_0510=target;pair.target=target;pair.mode="moving-to-laser-fallback"
+assert(not tech_priests_0312_fallback_combat_laser(pair,target,"unreachable-ambient-target")
+ and not pair.combat_target and not pair.dispatcher_combat_target_0510 and not pair.movement_request_0418
+ and pair.mode=="idle"and shots==1,
+ "distant ambient target pinned the unarmed station outside its physical pursuit envelope")
+pair.order_queue_0469={current={kind="combat",target=target,status="active"}}
+tech_priests_request_movement_0418=function()moves=moves+1;return false end
+assert(tech_priests_0312_fallback_combat_laser(pair,target,"explicit-order")and pair.combat_target==target,
+ "ambient pursuit deferral silently cancelled an explicit combat order")
+print("PASS point-blank footprint range, bounded ambient pursuit and explicit combat-order preservation")

@@ -759,6 +759,41 @@ function tech_priests_0312_fallback_combat_laser(pair, target, reason)
   local d2 = dx * dx + dy * dy
   local point_blank = tech_priests_0423_point_blank_laser_range()
 
+  -- An ammo-less cutter cannot pursue a distant enemy beyond its station's
+  -- real operating envelope. Repeatedly doing so pinned arena commanders
+  -- in unreachable combat forever. Close threats and explicit attack orders
+  -- retain their original authority; this grants no new travel or range.
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+  local order_kind=string.lower(tostring(order and(order.kind or order.type)or ""))
+  local explicit_combat=order and(order_kind:find("combat",1,true)or order_kind:find("attack",1,true))
+  local station=pair.station
+  local radius=tonumber(pair.radius)
+  if type(refresh_pair_radius)=="function"then
+    local ok,value=pcall(refresh_pair_radius,pair)
+    if ok and tonumber(value)then radius=tonumber(value)end
+  end
+  if station and station.valid and radius and radius>0 and not explicit_combat
+      and d2>point_blank*point_blank then
+    local edge=tech_priests_combat_target_contact_0322
+      and tech_priests_combat_target_contact_0322(station,target)or target.position
+    local sx,sy=edge.x-station.position.x,edge.y-station.position.y
+    if sx*sx+sy*sy>(radius+point_blank)^2 then
+      pair.deferred_fallback_target_0423={tick=tick,target=target.name,
+        reason="outside-station-pursuit-envelope",radius=radius}
+      if pair.combat_target==target then pair.combat_target=nil end
+      if pair.dispatcher_combat_target_0510==target then pair.dispatcher_combat_target_0510=nil end
+      if pair.target==target then pair.target=nil end
+      if pair.task_kind=="combat"then pair.task_kind=nil end
+      local mode=tostring(pair.mode or "")
+      if mode:find("combat",1,true)or mode:find("fallback",1,true)or mode:find("defend",1,true)then pair.mode="idle"end
+      if pair.movement_request_0418 and pair.movement_request_0418.owner=="fallback-combat-laser-0423"
+          and type(tech_priests_stop_movement_0418)=="function"then
+        pcall(tech_priests_stop_movement_0418,pair,"unreachable-ambient-combat-deferred-0423")
+      end
+      return false
+    end
+  end
+
   pair.task_kind = "combat"
   pair.target = target
   pair.combat_target = target

@@ -348,12 +348,13 @@ local function cheapest_available_science(pair)
   if not labs or #labs == 0 then return nil, "no-laboratory" end
   local best
   for name, tech in pairs(force.technologies or {}) do
-    local enabled, researched, prerequisites, ingredients, count = false, true, {}, {}, 0
+    local enabled, researched, prerequisites, ingredients, count, duration = false, true, {}, {}, 0, 1
     pcall(function()
       enabled = tech.enabled == true; researched = tech.researched == true
       prerequisites = tech.prerequisites or {}
       ingredients = tech.research_unit_ingredients or {}
       count = tech.research_unit_count or 0
+      duration = tonumber(tech.research_unit_energy) or 1
     end)
     if enabled and not researched then
       local ready = true
@@ -398,9 +399,20 @@ local function cheapest_available_science(pair)
           if accepts then supported = true; break end
         end
         if supported then
-          local score = #packs * 100000 + count
-          if not best or score < best.score or (score == best.score and name < best.name) then
-            best = {name=name, score=score, unit_count=count, packs=packs}
+          local independent=pair.independent_emergency_operation_0184
+            and pair.independent_emergency_operation_0184.enabled==true
+          local units=math.max(1,tonumber(count)or 1)
+          local cost=0;for _,pack in ipairs(packs)do cost=cost+units*pack.amount end
+          -- Autonomous forces should finish a genuinely affordable short
+          -- two-pack technology before a much longer red-only technology.
+          -- The former type-count penalty ignored actual engine duration.
+          local score=independent and units*math.max(1,duration)or #packs*100000+count
+          if not best or score<best.score or(score==best.score
+              and(independent and cost<best.science_cost
+                or(not independent or cost==best.science_cost)and name<best.name))then
+            best = {name=name, score=score, science_cost=cost,
+              score_policy=independent and "engine-research-duration"or "starter-pack-breadth",
+              unit_count=count, packs=packs}
           end
         end
       end

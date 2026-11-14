@@ -237,6 +237,26 @@ assert(portfolio.science_packs["automation-science-pack"]==1
  and portfolio.recipes["iron-gear-wheel"].rate==10/60,
  "independent factory omitted unlocked science capacity or bypassed locked military recipe")
 op.factory_science_portfolio_1172=nil;force.recipes=nil;observed_map=nil
+entities.lab.get_researching_speed=function(quality)assert(quality=="normal");return 1 end
+force.current_research={research_unit_energy=60,research_unit_ingredients={{name="automation-science-pack",amount=1}}}
+local lab_capacity=tech_priests_0257_build_ratio_plan(pair,op)
+assert(lab_capacity.groups.labs==5,"native one-minute research units were assigned only a single laboratory")
+force.current_research=nil
+local previous_pick=tech_priests_0257_pick_ratio_need
+tech_priests_0257_pick_ratio_need=function()return nil,"ratio-miners 1/29",{groups={labs=3},target_spm=5}end
+tech_priests_0257_count_group_entities=function()return 1 end
+tech_priests_1176_has_local_research_lab=function()return true end
+TechPriestsStorageRoleAuthority0686={generic_item_count=function(_,name)assert(name=="lab");return 2 end}
+pair.independent_emergency_operation_0184={enabled=true}
+pair.master_infrastructure_plan_0644={stage="science-ready"}
+local issued,why=tech_priests_1172_service_autonomous_science_component(pair)
+assert(issued and pair.construction_requested_item.item_name=="lab",
+ "full mining ratio blocked an actually stocked research-capacity lab: "..tostring(why))
+local request=pair.construction_requested_item
+tech_priests_1172_service_autonomous_science_component(pair)
+assert(pair.construction_requested_item==request,"research-capacity planning replaced an active construction request")
+pair.construction_requested_item=nil;TechPriestsStorageRoleAuthority0686=nil
+tech_priests_0257_pick_ratio_need=previous_pick
 -- Measurements fail CLOSED if the force API is missing. They must never
 -- return estimated planned SPM in place of observed actual production.
 force.get_item_production_statistics=nil

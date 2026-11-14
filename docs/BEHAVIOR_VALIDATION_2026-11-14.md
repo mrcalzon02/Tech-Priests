@@ -12,6 +12,41 @@ isolated native factory saves are now resumed between behavior corrections.
 
 ## Latest measured state
 
+Latest source also retires satisfied survival-item history from fetch demand,
+counts accessible canonical stock before fetching, defers ammo-less ambient
+targets outside the station pursuit envelope, and plans laboratory capacity
+from native research duration/speed. Explicit combat orders and active research
+remain preserved. Native science-30 at tick 796,586 verifies **four** physically
+built, powered labs (three actively researching) and a further original 0338
+lab construction in progress, using the fixture's counted stored hardware.
+At tick 807,554 the same factory's research advances to 0.9931667 without
+any manual technology or progress mutation. Duration-based autonomous research
+selection is being verified in science-31.
+
+Native inventory identity was a further completion blocker: science-27's
+`observation-production-stock.json` shows canonical/steward/station wrappers
+for the same physical chest compare equal but are distinct wrapper table keys.
+Seventeen real bricks were therefore miscounted as 51. Production now compares
+inventory equality when deduplicating; its regression reproduces separate equal
+wrappers and rejects premature completion of a 50-brick target. Repair similarly
+retains distinct inventories with identical diagnostic stringification.
+`maintenance-native-inventory-identity` passes the complete native maintenance
+gate after these corrections: all four ranks produce 120, repair 8/8, and
+observe natural decay on 8/8.
+
+The first fresh-start full science attempt reached **223 red, 14 green,
+10 military packs and six research completions by tick 177,000**, then hit its
+900-second wall-clock limit. It is partial evidence, not full acceptance.
+`fresh-science-streaming-gate` reruns the original 216,300-tick gate with an
+1800-second allowance; its source snapshot predates the subsequent inventory,
+fetch and lab-capacity corrections. All scenario acceptance requirements remain
+unchanged. The full fresh four-way gate in `four-way-fresh-smelting-custody`
+completed 108,000 active ticks with a CRC-verified native save, but **failed**
+factory progression for all four forces and observed no participant combat.
+Its build event counts are 0/3/5/2; science/research are zero for all factions.
+Ranked kit donation/delegation and bounded combat deferral are subsequent fixes,
+not evidence that this arena gate passed.
+
 **All three early science families now manufacture in native Factorio.**
 `stateful-science-23/result.json` records tick 555,896 with 462 red,
 88 green and **two military packs**, plus genuine progressing

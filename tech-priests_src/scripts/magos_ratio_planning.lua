@@ -621,9 +621,23 @@ function tech_priests_0257_build_ratio_plan(pair, op)
       pair.station and pair.station.force)
   end
 
-  -- Science objectives imply at least one lab.  Slow doctrine, but not zero doctrine.
+  -- Research units have a real duration. One lab is insufficient for a
+  -- five-unit/minute objective when the engine requires 30+ seconds per unit.
   if string.find(objective, "science", 1, true) or objective == "automation-science-pack" then
-    tech_priests_0257_add_need(plan.groups, "labs", 1)
+    local labs=1
+    local force=pair.station and pair.station.force
+    local technology=force and force.current_research
+    local prototype=tech_priests_get_entity_prototype_0440 and tech_priests_get_entity_prototype_0440("lab")
+    local ok,duration,speed=pcall(function()
+      local value=prototype and(prototype.get_researching_speed
+        and prototype.get_researching_speed("normal")or prototype.researching_speed)
+      return technology and technology.research_unit_energy,value
+    end)
+    if ok and tonumber(duration)and duration>0 and tonumber(speed)and speed>0 then
+      labs=math.max(1,math.min(TECH_PRIESTS_MAGOS_RATIO_MAX_PER_GROUP_0257,
+        math.ceil((tonumber(plan.target_spm)or 0)*duration/(60*speed))))
+    end
+    tech_priests_0257_add_need(plan.groups, "labs", labs)
   end
 
   local production_machine_count = (plan.groups.miners or 0) + (plan.groups.smelters or 0) + (plan.groups.assemblers or 0) + (plan.groups.chemical or 0) + (plan.groups.oil or 0)
@@ -1362,6 +1376,30 @@ function tech_priests_1172_service_autonomous_science_component(pair)
   op.magos_ratio_component_job_1150=science.magos_ratio_component_job_1150
   op.magos_ratio_component_machine_1150=
     science.magos_ratio_component_machine_1150
+  -- A functioning starter factory must be able to consume its real science
+  -- before every target-ratio mining drill has been built. Request only an
+  -- actually stocked standard lab through the original construction owner.
+  if plan and not science.magos_ratio_component_job_1150
+      and(tonumber(plan.groups and plan.groups.labs)or 0)>
+        tech_priests_0257_count_group_entities(pair,"labs")
+      and tech_priests_1206_has_physical_starter_spine(pair)
+      and tech_priests_1176_has_local_research_lab(pair)
+      and not(pair.machine_logistics_custody_0528 or pair.energy_family_custody_0707
+        or pair.item_family_custody_0702 or pair.construction_requested_item
+        or pair.construction_request or pair.structure_construction_requested_item)then
+    local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+    local ok,amount=false,0
+    if stock and type(stock.generic_item_count)=="function"then
+      ok,amount=pcall(stock.generic_item_count,pair,"lab")
+    end
+    if ok and type(amount)=="number"and amount>0 then
+      pair.construction_requested_item={item_name="lab",entity_name="lab",
+        category="research",source="magos-native-research-capacity",
+        site_reason="real-research-duration-laboratory-shortfall"}
+      op.magos_ratio_phase_0257="research-laboratory-capacity-needed"
+      return true,"stocked-native-lab-capacity-construction-requested"
+    end
+  end
   if not(item and plan and science.magos_ratio_component_job_1150) then
     return false,reason or "no-actionable-science-component"
   end
