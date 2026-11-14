@@ -255,6 +255,16 @@ assert(issued and pair.construction_requested_item.item_name=="lab",
 local request=pair.construction_requested_item
 tech_priests_1172_service_autonomous_science_component(pair)
 assert(pair.construction_requested_item==request,"research-capacity planning replaced an active construction request")
+pair.construction_requested_item=nil
+items["electric-mining-drill"]={}
+tech_priests_0257_pick_ratio_need=function()return "electric-mining-drill","ratio-miners 1/29",{groups={labs=1,miners=29},target_spm=5}end
+TechPriestsStorageRoleAuthority0686={generic_item_count=function(_,name)return name=="electric-mining-drill"and 2 or 0 end}
+issued,why=tech_priests_1172_service_autonomous_science_component(pair)
+assert(issued and pair.construction_requested_item.item_name=="electric-mining-drill",
+ "ratio planner repeatedly reported a mining deficit without dispatching its real stocked drill: "..tostring(why))
+request=pair.construction_requested_item
+tech_priests_1172_service_autonomous_science_component(pair)
+assert(pair.construction_requested_item==request,"stocked capacity planning replaced an in-flight construction request")
 pair.construction_requested_item=nil;TechPriestsStorageRoleAuthority0686=nil
 tech_priests_0257_pick_ratio_need=previous_pick
 -- Measurements fail CLOSED if the force API is missing. They must never

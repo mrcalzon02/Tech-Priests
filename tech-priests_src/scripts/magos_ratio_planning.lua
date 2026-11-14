@@ -1401,6 +1401,27 @@ function tech_priests_1172_service_autonomous_science_component(pair)
     end
   end
   if not(item and plan and science.magos_ratio_component_job_1150) then
+    local group=type(reason)=="string"and reason:match("^ratio%-(%w+)")
+    if plan and(group=="power"or group=="miners"or group=="smelters")
+        and tech_priests_1206_has_physical_starter_spine(pair)
+        and not(pair.machine_logistics_custody_0528 or pair.energy_family_custody_0707
+          or pair.item_family_custody_0702 or pair.construction_requested_item
+          or pair.construction_request or pair.structure_construction_requested_item)then
+      local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+      local groups=TECH_PRIESTS_MAGOS_STANDARD_ENTITY_GROUPS_0255 or{}
+      if stock and type(stock.generic_item_count)=="function"then
+        for _,name in ipairs(groups[group]or{})do
+          local ok,amount=pcall(stock.generic_item_count,pair,name)
+          if ok and type(amount)=="number"and amount>0
+              and tech_priests_0257_item_valid(name)and tech_priests_0257_entity_valid(name)then
+            pair.construction_requested_item={item_name=name,entity_name=name,
+              source="magos-stocked-ratio-capacity",site_reason="physical-"..group.."-capacity-shortfall"}
+            op.magos_ratio_phase_0257="stocked-"..group.."-capacity-construction"
+            return true,"stocked-native-"..group.."-capacity-construction-requested"
+          end
+        end
+      end
+    end
     return false,reason or "no-actionable-science-component"
   end
   local placed,why=tech_priests_1150_issue_component_construction(
