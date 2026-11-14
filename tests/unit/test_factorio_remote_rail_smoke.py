@@ -186,6 +186,25 @@ class ExistingUnladen0702RailYieldTests(unittest.TestCase):
         self.assertNotIn("create_entity(", board)
 
 
+class OriginalRailOwnerYieldEvidenceTests(unittest.TestCase):
+    def test_native_log_carries_0702_owner_refusal_with_custody_checks_not_rail_credit(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        board = fixture.split('emit("BOARD_NATIVE_0836 elapsed="', 1)[1].split(
+            'emit("OUTBOUND_NATIVE_0836 elapsed="', 1)[0]
+        for field in (
+            "item_family_yield_0836", "item_family_yield_reason_0836",
+            "item_family_source_valid_0702", "item_family_target_valid_0702",
+            "item_family_held_0702", "item_family_relay_0702",
+            "item_family_custody_present_0702", "rail_resource_unit_0835",
+        ):
+            self.assertIn('"' + " " + field + '="..tostring(', board)
+        self.assertIn("native_driver==p.priest", board)
+        self.assertIn("loco_entity.get_driver()", board)
+        self.assertNotIn('first_board.last_item_family_yield_0836==true)', board)
+        self.assertNotIn('first_board.last_item_family_yield_reason_0836==nil)', board)
+
+
 class OriginalTrainLiveFuelRefusalTests(unittest.TestCase):
     def test_native_boarding_checks_live_traction_not_only_historical_fuel_receipt(self):
         root = pathlib.Path(__file__).resolve().parents[2]
