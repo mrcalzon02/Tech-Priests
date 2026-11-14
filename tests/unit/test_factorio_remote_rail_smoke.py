@@ -1076,7 +1076,7 @@ class NativeRailExtendedCustodyCheckpointTests(unittest.TestCase):
         runner = (root / "tools/run_factorio_isolated_service_scenario.py").read_text(encoding="utf-8")
         self.assertIn('60060 if args.rail_connected_smoke else scenario["ticks"]', runner)
         self.assertIn('if args.rail_connected_smoke and not 36060 <= tick_count < 90000:', runner)
-        self.assertIn('for _,mark in ipairs({1800,9000,18000,36000,60000,90000})', fixture)
+        self.assertIn('for _,mark in ipairs({1800,9000,18000,36000,60000,72000,90000})', fixture)
         self.assertIn('if elapsed>=36000 then', fixture)
         self.assertNotIn('if elapsed>=36000 and not s.rail_custody_verified then', fixture)
         self.assertIn('if not s.rail_custody_verified then', fixture)
