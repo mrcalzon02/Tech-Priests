@@ -119,7 +119,7 @@ local function setup()
 end
 local function checkpoint(s,elapsed)
   local tp=storage.tech_priests
-  local all_operating,all_repaired,all_consecrated,all_decayed=0,0,0
+  local all_operating,all_repaired,all_consecrated,all_decayed=0,0,0,0
   for _,rank in ipairs(SPECS) do
     local r=s.ranks[rank.name]
     local pair=tp.pairs_by_station and tp.pairs_by_station[r.station_unit]

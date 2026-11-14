@@ -83,7 +83,7 @@ Force 2 also needs actual iron/copper delivery for its laboratory prerequisites.
 
 The maintenance fixture needed native 2.1 crafter inventory enums, a readiness
 wait for its four original canonical pairs, and initialization of its decay
-counter. Readiness times out after 3,600 ticks; the four-rank 24,000-active-tick
+counters. Readiness times out after 3,600 ticks; the four-rank 24,000-active-tick
 repair/consecration requirements remain unchanged. Default runner duration is
 30,000 ticks to include pairing. Earlier failures are preserved under
 `maintenance-final`, `maintenance-21`, and `maintenance-ready`; do not count them
@@ -96,7 +96,9 @@ so legitimate output collection cannot erase evidence of crafting.
 `maintenance-powered/consecration-maintenance` now observes four original pairs
 (ready at tick 660) and 120 real completed machine operations per rank. At 12,000
 active ticks all four ranks still report zero repairs, zero rites and zero
-recorded natural operation decay. This is a real remaining maintenance/decay
+recorded natural operation decay. The same zero counters persist at 24,000 ticks;
+the aggregate decay counter also needed initialization before the final failure
+could be reported correctly. This is a real remaining maintenance/decay
 service-delivery failure; do not claim that player maintenance is validated.
 
 Focused source checks are recorded by `arena-evidence/run-behavior-regressions.py`.
