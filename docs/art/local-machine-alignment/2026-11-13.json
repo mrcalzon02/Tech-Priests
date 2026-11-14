@@ -1,0 +1,406 @@
+{
+  "passed": false,
+  "single_factorio_session": true,
+  "version": "Version: 2.1.24 (build 87808, win64, steam)\nVersion: 64\nMap input version: 1.0.0-0\nMap output version: 2.1.24-1",
+  "condenser_commit": "23c0f7fcfd4dd5b3de28ebecc9f6e56155cb3851",
+  "pump_commit": "f85318ff2ca944cbf8ac4464c4ca621182865f39",
+  "pump_runtime": {
+    "passed": true,
+    "pumps": 12,
+    "connected_pipes": 12,
+    "working_water_pipes": 4,
+    "idle_full_pipes": 4,
+    "landfill_water_pipes": 4,
+    "sites": [
+      {
+        "direction": "north",
+        "state": "idle",
+        "pipe_water": 100,
+        "pipe_position": {
+          "y": 625.5,
+          "x": 192.5
+        },
+        "machine_position": {
+          "y": 624.5,
+          "x": 192.5
+        }
+      },
+      {
+        "direction": "east",
+        "state": "idle",
+        "pipe_water": 100,
+        "pipe_position": {
+          "y": 624.5,
+          "x": 263.5
+        },
+        "machine_position": {
+          "y": 624.5,
+          "x": 264.5
+        }
+      },
+      {
+        "direction": "south",
+        "state": "idle",
+        "pipe_water": 100,
+        "pipe_position": {
+          "y": 623.5,
+          "x": 336.5
+        },
+        "machine_position": {
+          "y": 624.5,
+          "x": 336.5
+        }
+      },
+      {
+        "direction": "west",
+        "state": "idle",
+        "pipe_water": 100,
+        "pipe_position": {
+          "y": 624.5,
+          "x": 409.5
+        },
+        "machine_position": {
+          "y": 624.5,
+          "x": 408.5
+        }
+      },
+      {
+        "direction": "north",
+        "state": "working",
+        "pipe_water": 5.999994277954102,
+        "pipe_position": {
+          "y": 697.5,
+          "x": 192.5
+        },
+        "machine_position": {
+          "y": 696.5,
+          "x": 192.5
+        }
+      },
+      {
+        "direction": "east",
+        "state": "working",
+        "pipe_water": 5.999994277954102,
+        "pipe_position": {
+          "y": 696.5,
+          "x": 263.5
+        },
+        "machine_position": {
+          "y": 696.5,
+          "x": 264.5
+        }
+      },
+      {
+        "direction": "south",
+        "state": "working",
+        "pipe_water": 5.999994277954102,
+        "pipe_position": {
+          "y": 695.5,
+          "x": 336.5
+        },
+        "machine_position": {
+          "y": 696.5,
+          "x": 336.5
+        }
+      },
+      {
+        "direction": "west",
+        "state": "working",
+        "pipe_water": 5.999994277954102,
+        "pipe_position": {
+          "y": 696.5,
+          "x": 409.5
+        },
+        "machine_position": {
+          "y": 696.5,
+          "x": 408.5
+        }
+      },
+      {
+        "direction": "north",
+        "state": "landfill",
+        "pipe_water": 5.999994277954102,
+        "pipe_position": {
+          "y": 769.5,
+          "x": 192.5
+        },
+        "machine_position": {
+          "y": 768.5,
+          "x": 192.5
+        }
+      },
+      {
+        "direction": "east",
+        "state": "landfill",
+        "pipe_water": 5.999994277954102,
+        "pipe_position": {
+          "y": 768.5,
+          "x": 263.5
+        },
+        "machine_position": {
+          "y": 768.5,
+          "x": 264.5
+        }
+      },
+      {
+        "direction": "south",
+        "state": "landfill",
+        "pipe_water": 5.999994277954102,
+        "pipe_position": {
+          "y": 767.5,
+          "x": 336.5
+        },
+        "machine_position": {
+          "y": 768.5,
+          "x": 336.5
+        }
+      },
+      {
+        "direction": "west",
+        "state": "landfill",
+        "pipe_water": 5.999994277954102,
+        "pipe_position": {
+          "y": 768.5,
+          "x": 409.5
+        },
+        "machine_position": {
+          "y": 768.5,
+          "x": 408.5
+        }
+      }
+    ]
+  },
+  "screenshots": {
+    "condenser-v24": {
+      "north-idle-normal.png": "e6e4d8d756d49ab7c85a88dc325dfcf2d38b51c7b28e17520486586ef73d896e",
+      "north-idle-close.png": "08144d6aecc9478cae7b745b91d7521bccbc227cc7a30b3c15cc4f55f083a79c",
+      "east-idle-normal.png": "8cd38967533e31f5ab8bcdcbaa541aedd7ca60ab80b5cae9faf78f353569b837",
+      "east-idle-close.png": "9518655211cedaae8ca4c53e693e93a42333200d16ed4eeaa3298453f2c41da0",
+      "south-idle-normal.png": "6270c90616e9b91d8e22b38672fe35e3c22fad07ec4764617b76e6a940506a97",
+      "south-idle-close.png": "ecdbb89c800a8f11238380aed89bf97b801ae76b4e4d998cd0d458f1468afbb5",
+      "west-idle-normal.png": "4368ffe916f9081a752cacf91eeb7749260bfb6459cb3a4ae5b726e4e13dd2ec",
+      "west-idle-close.png": "df019e01bf8de1d18e11e7a20ce046daa61cc9386c587a6869fe2eafdde09ecf",
+      "north-working-normal.png": "ad943f8053fbea05f3f2e8b4232d6548edbf967ebc447c19209898889cb7948b",
+      "north-working-close.png": "16a8c18558536f431248c6b128d50d94cab42446147bd5a07009cac840e82131",
+      "east-working-normal.png": "b0e7d5238773eaf64ac7fc822e561fb51f018a9e9e75229c3f4af0fdb2b41c0e",
+      "east-working-close.png": "cbca3ca32d1ca4ad298b1b7bfe43d9dcd41d606459be9982d9619a4274c246f3",
+      "south-working-normal.png": "8d2887e8b7ba14ef67e618b92058bb81f9d9e90138a766b4fb6f2cd0e197116a",
+      "south-working-close.png": "1e639f555fa283dc83007cc068e5b58e64f1646f7102fa29aab8fa970779a010",
+      "west-working-normal.png": "5e8edf5db138c9834a0985f52b74279a6ee8bdfa8db0d4e92f9b0c7b8b669290",
+      "west-working-close.png": "173d081c370809a76ef6b51fbd2cbf253a9b392496eee9a2a6202e64e6ad5ea9",
+      "animation-north-1.png": "7e8241ac0c814bef8215dab1f17f5fc33c6402099baef167e8c98a01759ecc43",
+      "animation-north-2.png": "5e41489e531dfad5508035d8ea63d4aeba257ec8813fb45320c75bde2940d9da",
+      "animation-north-3.png": "a9e8a2b65de180137cf924c37ee711d8c3fc0d2502770c84c14f520a145a230b",
+      "animation-north-4.png": "f5c2d4efb40ed49c443d17cddc96d5eee94abab7a2f4a150956931f03d6273c3",
+      "animation-north-5.png": "2a62067f56ee4e8b7222b54fa888361c4fb665c0499371ffd31dd797f3723e4a",
+      "animation-north-6.png": "442c26b18759332eaf6020d803c7fba7e7c1487ce5b5c64bb7c75947de960545",
+      "animation-north-7.png": "21633052735a2d0a230b360371a2a55bed70edf2bba39137b80bdd1cf765c7e2",
+      "animation-north-8.png": "8ba2d57136978ed84358bebc61beae82f86d6fdec33c397d99f86e9193440451",
+      "animation-east-1.png": "5b57fe7bac570bd392936d41148ce7f65bb9b6d1f1b5d3aa66ef11277e448f85",
+      "animation-east-2.png": "4ce6e46ee035ebb44faa2062e8c66a90c307b313c48c2ff950aa79c44a34c626",
+      "animation-east-3.png": "b8b6c7a5475413d74235adc10a67aac359f7c38714d08d46731ad8ea79925e27",
+      "animation-east-4.png": "0a79522da19e9fc05448a96b51c57791ea871040ed87dcaca5dcdc82c70e27b0",
+      "animation-east-5.png": "bfa14d8f06f657260e9a8ccdd2ba9a5e76084df24e3d28c7d51be501321f2891",
+      "animation-east-6.png": "dedb06af3b368565b527d608991fe29319ecea52155e4b3ac14d428a17050e74",
+      "animation-east-7.png": "8ec1c82f7efed316392c79d337daf74b9a1b25fb67c95b069f68cb28db4f74d7",
+      "animation-east-8.png": "eecc032f291e679b63353bea809b16b112f860738de44720aabdec23b2db8a16",
+      "animation-south-1.png": "3d628fe221f241c3efe0f780661e35837216eca7a7370cd42342bbf3a4cd87e9",
+      "animation-south-2.png": "e8e4a87b22802869446cc635f5af00a13a90b7715d65d621bb74ca9113f2af3f",
+      "animation-south-3.png": "7e5259620b36faf3b626a2e9faf3c6d22ec01b9d45a4fec6aee9854a5353e1b9",
+      "animation-south-4.png": "11fed3828400c0fcd7721c310560f19debcd380755701b8ae80bdb1d46a8831e",
+      "animation-south-5.png": "53ec1e18de4e5f5c925d1bfed0ed244f98a17b0eebc86dfde18900794907cdc4",
+      "animation-south-6.png": "a5dc828373cd5506d5c336f64192166712af29b39fdd844f1b69ba6a96ae5f2c",
+      "animation-south-7.png": "ca694ac5a403b91630bb1ad3fbd3af7e67dbd73d1b39039b52ae8c71ac6f5354",
+      "animation-south-8.png": "e6883d18c3e637be5ce9ab019acc98cd212ccfacfcf713b995e45bc5020191a1",
+      "animation-west-1.png": "22f0fe4fe8d1a7c047a864da3083da4fa9ee6b423a0971eeeb1717cedb185ec8",
+      "animation-west-2.png": "c97208c87f853a78c1be2cbfb193f5b0c15c64c32e36c6f756dccef464269d56",
+      "animation-west-3.png": "b7e6a77f62ac731bcfb4c8f4cf3982ca4ea2a66ca3c5e40ca3e0f4e066415dd8",
+      "animation-west-4.png": "9c9e084b02a9cf7a7cc1e44f8296cd8420000d8e40aff8e383066b14a0c5a363",
+      "animation-west-5.png": "74ced50acbf3e430fa0592d22d281ad681b465744c3fdfef8d6c367c4d7efa75",
+      "animation-west-6.png": "036a9c8ec426199b9e43bff1e1a0e4a5c1287a459087e76a94ab218122cc8b76",
+      "animation-west-7.png": "857d9b420af7d5abf0ae2637d89093dc791b27fff9790184c72987fa5ee736ab",
+      "animation-west-8.png": "96bc139482f909a2e582d2ede5dd6d3552a2bb1fe8bcbbcea099c4062d1fa0fb"
+    },
+    "beach-pump-v12": {
+      "north-idle-normal.png": "7fb3111f270f39012ebdf5707c334463345edde133a4c42f70bd5e436ce628f5",
+      "north-idle-close.png": "90821702b0e92936d0df0e1cc393d3651f59d5f5043cc91e7a26dcb027ae6129",
+      "east-idle-normal.png": "ef13d4f5a9e82bb75a7782eebec5c6eb42d60bf42907d5dcd63e2a156d29eedd",
+      "east-idle-close.png": "cb48e707ab2b6e1fd29a8b55a38c3c2abd5f4e66e31b29122a56d265474285e6",
+      "south-idle-normal.png": "f9f4f1ac0b9b1034c4284110c7ddb184a2f24754d6245ab5809296a895af2cd6",
+      "south-idle-close.png": "ffa2a7f77445c021b3c8355096757e162ee29229c41cfc6e5939668c8bcc3eca",
+      "west-idle-normal.png": "c37e9ebfc10adbd4f6c3ad3bcb0f3856e2ba9574d0da6d3f64a8faefe8407283",
+      "west-idle-close.png": "886635e44b4bce2787f0e29e96f140f67ff1250da9c829a5c9fa6ca9e76b99f8",
+      "north-working-normal.png": "e8db99e4fb01c14000a98d22d088266c09a7af0387ca442bb56eb9a455e20dea",
+      "north-working-close.png": "8bf85e50bc2957dd6bb52cbc9c87c3fe6e689d2b616c0c1b80d9aa817a0b8869",
+      "east-working-normal.png": "2c00c60a890f8fac2cfce40bb1486ee4c00aef456d35f6c8d1caffeba853ae1b",
+      "east-working-close.png": "d47e39be866597e8d2231a9bd3e8020dff185c3f2f2d276dd7f910cf7a445442",
+      "south-working-normal.png": "cdf511a53878e67f0d7153380d3ccb32f973e229755869d0c6eab8f715b4a7af",
+      "south-working-close.png": "2524e2f739b018d460520b946c101117661712919d95e4c17e11a0ece342d556",
+      "west-working-normal.png": "d58bd75421336018da7a2f7f4a45adc861de461c2875897ac31ff504333adb16",
+      "west-working-close.png": "65b88dc9397e637da84813afae77501c8a8a4b0e207e0390122c11ced73d67ed",
+      "north-landfill-normal.png": "a6cd1d7263231998ab471fa49e814b8f1b7e25260f6aa3779c5741f1bf8fab40",
+      "north-landfill-close.png": "6528b55ee43f86f5e7a989d25a921a540f0ed8c3f3c747018f91a648a8672a5d",
+      "east-landfill-normal.png": "154d6c4b6c2d5c7ad4dbeff93e46b7395c6a3cd48bd37888f3aa09ba965c0687",
+      "east-landfill-close.png": "3fcabf334a857b3ba35a83ef9af598e0ec651277dcaa0c85faa65421d7a97c58",
+      "south-landfill-normal.png": "a24e76884f9bc81f1ebfa04250a37b69890b526e33b72fff0486cdaa1c25d664",
+      "south-landfill-close.png": "25b40a3150db21f7b7ed460656b498e4cb5b603e4380b4e7d13088129d8e1edd",
+      "west-landfill-normal.png": "2ef56b41b83e1985c1f26542700740cf4a56e308c3bde4cc5e1b192bfa3770f9",
+      "west-landfill-close.png": "81abc6f79b31dd82a891ba417dac44b53ac32e9a07e303e0bf68fa2e1324c298",
+      "animation-north-1.png": "5c110c063da13443e47298778ec356d612358438e9a6449b76cf0767bf8b0671",
+      "animation-north-2.png": "682848f7e4c1aa0cb25ed3d53655018e510c7cdfd83979897380de0a1aea5010",
+      "animation-north-3.png": "16722548a10e03ad28a5e91ac8aebaa19f066918d085c0ac0a7279e5bb7db539",
+      "animation-north-4.png": "ece844bbdf9e663cf2cd52a2c2575049a693e0b2631516e345c0f6be738fcf34",
+      "animation-north-5.png": "09c5e930ddec93a569646509c30f70647c0d0e939eb075624f1c328b45b2509c",
+      "animation-north-6.png": "96775df82c80d65420d60a7a39d7ee12845471667098c3f044638da690cdd428",
+      "animation-north-7.png": "753dbeceaca2ad964849f6801fe5acae43fd19020d5d8f8df1e351b2edc2b1ae",
+      "animation-north-8.png": "2d72dcf13430570b1a3083252b8102c6424398ed17e1591a3fe19bfec45b1a47",
+      "animation-east-1.png": "2d76730c444282210106a497a0689fdd0ea798c25acded3608c0019fbfc61d14",
+      "animation-east-2.png": "23499c8be3f79624bb1dac7d3be4982cb9b99eb536a6fdd3672d14e795816acc",
+      "animation-east-3.png": "acfaf33d51b8f185d11898cb6425bc941ced35402d4391afdf3fec571506713f",
+      "animation-east-4.png": "ca6a3db5695417e79dc6b6ce310f17895972e30fa57382076d30596c9556ed9a",
+      "animation-east-5.png": "7dce2a99f7d66c4674279523e77fee88c215b59d734011ca128a837078f04980",
+      "animation-east-6.png": "3b3c16a437a65d56dc38986538ed25022d203718ee4bad65c59361d70182426f",
+      "animation-east-7.png": "ca14b4a9168999f7af7334bc38e9194a43c0eed5366c22f2def5f47123e1867e",
+      "animation-east-8.png": "36dd84412535b843cc75f30d7a409bd979029166dc08407f6012445aec34b954",
+      "animation-south-1.png": "ead1a5251c5e751f1b638967415929e742115fd64dee2b6617db97d5f9043286",
+      "animation-south-2.png": "ad2e01c32333e697ba86f760c68f79640a193244eef67d78e10357ed7d0e086b",
+      "animation-south-3.png": "829888851c694c04ab107fffb7fd3f6a814725a2aa552f4edf3d171540bb4c5c",
+      "animation-south-4.png": "effd6a3894b7fff7d6e49be5c80d6bba8d18420e6a5592b4fd6615b1ebc1bfa9",
+      "animation-south-5.png": "ee5c605cf0739858ea021fa1d48b657069e3c95379f03162f3c0fc1218f205fc",
+      "animation-south-6.png": "424e35802f513b18c7bcb6a4d64bef46cb53bd0c992fe67a241c1f550afe5e53",
+      "animation-south-7.png": "95fb1df0f84542570a824d71737c7649bf5fbba280b5f021c5dd8ade26142069",
+      "animation-south-8.png": "69d6e05ad0d0951024497affb39d2f09ddddbb4f921220ee7b4b0959d675101a",
+      "animation-west-1.png": "b4c2f9e40bf8659362d8cc441792b7b4f5b39cdfe53ae0079c4a291c07830aac",
+      "animation-west-2.png": "05a4e59422ca97a81305e875ed45742f1dd5a68dd9709a202254f5d09fb221f7",
+      "animation-west-3.png": "df2e5551fe57e20d46abf3f2105a54a896b7a33ad66edb9479f421d3401e5102",
+      "animation-west-4.png": "3b5cd06b01556972528d59463c0b15f59bd8107b9482702a8b78302ac4a9e4de",
+      "animation-west-5.png": "17a28a089880cf5dca2b700bda1d4c958dd729ffb045fa7225a5fd617b33c44f",
+      "animation-west-6.png": "9ce946e49b36b09873990bf0cde40067ccb5511ba6e54b98eb9a10e2b7dc0ee2",
+      "animation-west-7.png": "1ed08ce8c19255fac2fcd542fad6f598d23e90a7c07f433eb9ff6c7d129c16d9",
+      "animation-west-8.png": "91825c9513e54901ba35e8a509134ec04a7c73eb3b72e4ebcb886980e81269dc"
+    }
+  },
+  "runtime_passed": true,
+  "capture_passed": true,
+  "screen_capture_count": 104,
+  "native_connected_pipes": 20,
+  "fuel_fed_condenser_water_verified": true,
+  "pump_water_full_output_landfill_verified": true,
+  "visual_review_passed": false,
+  "visual_findings": [
+    "Beach Pump underwater sprite remains obscured by pixels in the above-water animation; a correct native layer split is still required."
+  ],
+  "visual_review_pending": false,
+  "alignment_calibration_applied": {
+    "pump": {
+      "scale": 0.6,
+      "source_frame_center": [
+        144,
+        144
+      ],
+      "facings": {
+        "north": {
+          "source_socket": [
+            144,
+            190
+          ],
+          "target_socket_pixels": [
+            0,
+            13
+          ]
+        },
+        "east": {
+          "source_socket": [
+            112,
+            170
+          ],
+          "target_socket_pixels": [
+            -16,
+            0
+          ]
+        },
+        "south": {
+          "source_socket": [
+            144,
+            110
+          ],
+          "target_socket_pixels": [
+            0,
+            -26
+          ]
+        },
+        "west": {
+          "source_socket": [
+            177,
+            170
+          ],
+          "target_socket_pixels": [
+            16,
+            0
+          ]
+        }
+      }
+    },
+    "condenser": {
+      "scale": 0.24,
+      "source_frame_center": [
+        256,
+        256
+      ],
+      "facings": {
+        "north": {
+          "source_socket": [
+            406,
+            318
+          ],
+          "target_socket_pixels": [
+            32,
+            14
+          ]
+        },
+        "east": {
+          "source_socket": [
+            176,
+            390
+          ],
+          "target_socket_pixels": [
+            -16,
+            28
+          ]
+        },
+        "south": {
+          "source_socket": [
+            110,
+            196
+          ],
+          "target_socket_pixels": [
+            -32,
+            -18
+          ]
+        },
+        "west": {
+          "source_socket": [
+            334,
+            116
+          ],
+          "target_socket_pixels": [
+            16,
+            -34
+          ]
+        }
+      }
+    }
+  },
+  "alignment_visual_review": {
+    "all_four_facings_reviewed": true,
+    "pipe_alignment_improved": true,
+    "owner_acceptance_pending": true
+  },
+  "native_profile": "Factorio 2.1.24 Steam, combined isolated local test",
+  "screenshot_provenance": {
+    "condenser_source": "23c0f7fcfd4dd5b3de28ebecc9f6e56155cb3851",
+    "pump_source": "f85318ff2ca944cbf8ac4464c4ca621182865f39",
+    "original_assets_unchanged": true
+  },
+  "accepted_by_owner": "Per-facing scale and placement accepted in this chat on 2026-11-13; underwater defect explicitly remains open."
+}

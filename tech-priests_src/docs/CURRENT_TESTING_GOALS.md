@@ -710,3 +710,8 @@ The separate cold-pose native/GLB branch passes raw geometry/UV/normal/image ins
 ### Hydrogen V01 â€” graphics-only model/import acceptance
 
 The authored model/static GLB, 18 PBR maps, 7+7 source poses, exact atlas cells, registered shadow and real late import pass the model/render/native graphics lane. All seven working rectangles are displayed as frozen native variants; connected/disconnected caps and night glow are reviewed. All nonvisual prototype fields are preserved. Only the graphics set and measured drawing-box extent change. Source/fixture hashes and commands are in `docs/art/hydrogen-thruster-v01/`. Powered working-clock, fuel/thrust behavior, regression and release readiness are not tested or claimed.
+
+
+## 2026-11-13 — local machine art integration
+
+V24 condenser scale/registration and Beach Pump V12 have combined current-source graphical/runtime proof in docs/art/local-machine-alignment/integrated-source-validation.json. Alignment accepted by the owner. Underwater sprite separation remains an open visual defect. Next art target: resume timber workbench V7 finish, measure its native eight-second clock, independently inspect animated interchange, preserve the current burner/collision/recipe interfaces, and promote only after real capture review.

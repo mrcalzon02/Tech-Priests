@@ -1,0 +1,100 @@
+{
+  "pump": {
+    "scale": 0.6,
+    "source_frame_center": [
+      144,
+      144
+    ],
+    "facings": {
+      "north": {
+        "source_socket": [
+          144,
+          190
+        ],
+        "target_socket_pixels": [
+          0,
+          13
+        ]
+      },
+      "east": {
+        "source_socket": [
+          112,
+          170
+        ],
+        "target_socket_pixels": [
+          -16,
+          0
+        ]
+      },
+      "south": {
+        "source_socket": [
+          144,
+          110
+        ],
+        "target_socket_pixels": [
+          0,
+          -26
+        ]
+      },
+      "west": {
+        "source_socket": [
+          177,
+          170
+        ],
+        "target_socket_pixels": [
+          16,
+          0
+        ]
+      }
+    }
+  },
+  "condenser": {
+    "scale": 0.24,
+    "source_frame_center": [
+      256,
+      256
+    ],
+    "facings": {
+      "north": {
+        "source_socket": [
+          406,
+          318
+        ],
+        "target_socket_pixels": [
+          32,
+          14
+        ]
+      },
+      "east": {
+        "source_socket": [
+          176,
+          390
+        ],
+        "target_socket_pixels": [
+          -16,
+          28
+        ]
+      },
+      "south": {
+        "source_socket": [
+          110,
+          196
+        ],
+        "target_socket_pixels": [
+          -32,
+          -18
+        ]
+      },
+      "west": {
+        "source_socket": [
+          334,
+          116
+        ],
+        "target_socket_pixels": [
+          16,
+          -34
+        ]
+      }
+    }
+  }
+}

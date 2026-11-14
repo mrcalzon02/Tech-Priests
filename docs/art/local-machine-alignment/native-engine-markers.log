@@ -1,0 +1,11 @@
+ 100.493 Script @__beach-pump-v12-check__/control.lua:35: BP_V12 NATIVE_PLACEMENT_PASS pumps=12 connected_pipes=12 standard_tile_targets=12
+ 100.623 Script @__tp-condenser-v24-visual__/control.lua:126: TP_CONDENSER_V24_GUI NATIVE_WORLD_PASS condensers=8 connected_pipes=8 fueled=4 screenshots=16 independent_front_flange_positions=4 controlled_concrete_pads=8
+ 103.982 Script @__beach-pump-v12-check__/control.lua:48: BP_V12 RUNTIME_PASS working_water=4 idle_full=4 landfill_water=4
+ 112.267 Script @__beach-pump-v12-check__/control.lua:54: BP_V12 SCREENSHOTS_COMPLETE count=24
+ 134.919 Script @__tp-condenser-v24-visual__/control.lua:139: TP_CONDENSER_V24_GUI FLOW facing=north products=1 pipe_water=30
+ 134.919 Script @__tp-condenser-v24-visual__/control.lua:139: TP_CONDENSER_V24_GUI FLOW facing=east products=1 pipe_water=30
+ 134.919 Script @__tp-condenser-v24-visual__/control.lua:139: TP_CONDENSER_V24_GUI FLOW facing=south products=1 pipe_water=30
+ 134.919 Script @__tp-condenser-v24-visual__/control.lua:139: TP_CONDENSER_V24_GUI FLOW facing=west products=1 pipe_water=30
+ 134.919 Script @__tp-condenser-v24-visual__/control.lua:142: TP_CONDENSER_V24_GUI REAL_FLOW_PASS facings=4
+ 140.317 Script @__tp-condenser-v24-visual__/control.lua:166: TP_CONDENSER_V24_GUI SCREENSHOT_QUEUE_COMPLETE count=16
+ 145.830 Script @__combined-animation-check__/control.lua:65: COMBINED_ANIMATION_COMPLETE frames=64

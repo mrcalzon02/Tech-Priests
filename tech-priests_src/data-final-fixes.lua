@@ -619,3 +619,6 @@ require("prototypes.generated_graphics.hydrogen-thruster-v01")
 
 -- Thetazine V04: authored machinery, separate thermal and projected-shadow layers.
 require("prototypes.generated_graphics.thetazine-thruster-v04")
+
+-- V24: accepted four-way Cycles animation, calibrated against native pipe sprites.
+require("prototypes.generated_graphics.atmospheric-water-condenser-v24")

@@ -1,3 +1,7 @@
+## 2026-11-13 local graphical alignment closure
+
+Condenser V24 four-facing scale/placement is owner-accepted and integrated on current main. The actual integrated sources passed 104 native combined captures and 20 physical pipe connections. Evidence: local-machine-alignment/integrated-source-validation.json. Beach Pump underwater visual separation remains open. Next production target: finish the recovered timber workbench V7 surfaces, native eight-second animation clock and animated export. Historical V21/V22C entries below are provenance rather than the active condenser import.
+
 ## Current handoff â€” source35 integrated; A02 capture verified
 
 **Latest integrated iteration (2026-11-09):** Thetazine V04 source35 now has a normal-prototype import: 64-frame body, separate heat and projected shadow, cold states, native caps and underlay. Actual ordinary working/idle/disconnected/restart views and data-stage readback pass. All 33 nonvisual root fields are unchanged. [Current source, evidence and remaining gates](thetazine-thruster-v04/LEAF_COOLING_CANDIDATE.md).
