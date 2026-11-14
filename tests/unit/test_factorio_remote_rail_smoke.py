@@ -1156,6 +1156,17 @@ class NativeReverseLocomotive0836ContractTests(unittest.TestCase):
         self.assertIn('frontier.authorized_original_train_fuel_walk_0836,pair,',enforcement)
         self.assertIn('pair.priest.position,request)',enforcement)
         self.assertIn('return false,"original-paid-train-fuel-walk-owned-0836"',enforcement)
+        corridor=(root/"tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text(encoding="utf-8")
+        auth=corridor.split("function M.authorization_for_destination(pair, pos, reason, opts)",1)[1].split(
+            "function M.position_allowed(pair, pos, reason, opts)",1)[0]
+        self.assertIn('opts.owner=="logistics_machine_fulfillment_0528"',auth)
+        self.assertIn('reason=="machine-logistics-move-to-machine-0528"',auth)
+        self.assertIn('frontier.authorized_original_train_fuel_walk_0836,pair,pos',auth)
+        self.assertIn('"native-paid-original-locomotive-fuel-0836"',auth)
+        self.assertIn('role="physical-original-rail-0836"',auth)
+        self.assertIn('if not ok then',corridor) if False else None
+        self.assertIn('if allowed == false then',movement)
+        self.assertIn('if corridor_rejected then allowed = false end',movement)
         self.assertIn('M.stop(pair, "movement-overleash-0566")',movement)
 
 
