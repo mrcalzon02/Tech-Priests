@@ -157,4 +157,90 @@ do
       and t.read_calls()<=3,
     "dense industrial scanning probed unrelated machine inventories")
 end
-print("[logistics-general-storage-custody] PASS scenarios=5")
+-- Original 0338 rail custody and the 0418 movement lease are exclusive.
+-- A rejected generic fetch may not prewrite 0419 or command the native priest.
+do
+  local t=scenario()
+  local warehouse,stock=t.source("rail-safe-store","container",8,
+    defines.inventory.chest,{["electronic-circuit"]=2})
+  t.pair.priest.position={x=0,y=0}
+  local original={owner="construction-planner-0338",
+    reason="construction-site-standoff-0338",x=4,y=0,
+    priority=1000,expires_tick=1000}
+  storage.tech_priests.movement_controller_0419={
+    requests={["1"]=original},active_request_ids={["1"]=true},stats={}}
+  t.pair.movement_request_0418=original
+  local requests=0
+  _G.tech_priests_request_movement_0418=function()
+    requests=requests+1
+    return false,"lease-retarget-held"
+  end
+  local moved,why=t.mod.service_pair(t.pair,"denied-canonical-lease")
+  assert(not moved and why=="movement-request-failed" and requests==1
+    and t.pair.movement_request_0418==original
+    and storage.tech_priests.movement_controller_0419.requests["1"]==original
+    and stock.get_item_count("electronic-circuit")==2
+    and t.cargo.get_item_count("electronic-circuit")==0
+    and not t.pair.logistics_fetch_0527,
+    "rejected 0527 fetch overwrote 0418's paid construction lease")
+  -- An accepted same-location request owned by another service does not
+  -- transfer the lease to fetch, even when the movement API returns true.
+  game.tick=161
+  _G.tech_priests_request_movement_0418=function()
+    requests=requests+1
+    return true,"already-moving-to-target"
+  end
+  moved,why=t.mod.service_pair(t.pair,"same-target-foreign-owner")
+  assert(not moved and why=="movement-request-failed"
+    and t.pair.movement_request_0418==original
+    and stock.get_item_count("electronic-circuit")==2,
+    "same-target acceptance was mistaken for exclusive logistics ownership")
+  -- A real 0418 acceptance may have an 18-tile visible waypoint while its
+  -- final destination is the actual inventory source.
+  game.tick=222
+  local accepted
+  _G.tech_priests_request_movement_0418=function(pair,pos,reason,opts)
+    accepted={owner=opts.owner,reason=reason,x=pos.x-3,y=pos.y,
+      ground_route_final_destination={x=pos.x,y=pos.y},
+      expires_tick=game.tick+opts.ttl}
+    pair.movement_request_0418=accepted
+    storage.tech_priests.movement_controller_0419.requests["1"]=accepted
+    return true
+  end
+  moved,why=t.mod.service_pair(t.pair,"canonical-lease-accepted")
+  assert(moved and why=="moving-to-known-source"
+    and t.pair.movement_request_0418==accepted
+    and accepted.owner=="logistics-fetch-0527"
+    and t.pair.logistics_fetch_0527.phase=="moving-to-source"
+    and t.pair.logistics_fetch_0527.source==warehouse
+    and stock.get_item_count("electronic-circuit")==2
+    and t.cargo.get_item_count("electronic-circuit")==0,
+    "accepted 0418 waypoint lease did not preserve real source custody")
+  _G.tech_priests_request_movement_0418=nil
+end
+do
+  local t=scenario()
+  local warehouse,stock=t.source("rail-active-store","container",8,
+    defines.inventory.chest,{["electronic-circuit"]=2})
+  t.pair.priest.position={x=0,y=0}
+  local request={item_name="rail",rail_segment_0836=1}
+  local builder={request_value=request,phase="move-source",
+    item_name="rail"}
+  t.pair.remote_rail_outpost_0835={
+    pending_rail_0836={request=request}}
+  t.pair.construction_task_0338=builder
+  local movement_calls=0
+  _G.tech_priests_request_movement_0418=function()
+    movement_calls=movement_calls+1
+    error("0527 cannot seize original paid 0338 movement")
+  end
+  local accepted,why=t.mod.service_pair(t.pair,"original-rail-custody")
+  assert(not accepted and why=="original-rail-builder-owns-physical-work"
+    and movement_calls==0 and t.pair.construction_task_0338==builder
+    and t.pair.remote_rail_outpost_0835.pending_rail_0836.request==request
+    and stock.get_item_count("electronic-circuit")==2
+    and t.cargo.get_item_count("electronic-circuit")==0,
+    "generic logistics preempted an admitted original physical rail builder")
+  _G.tech_priests_request_movement_0418=nil
+end
+print("[logistics-general-storage-custody] PASS scenarios=7")
