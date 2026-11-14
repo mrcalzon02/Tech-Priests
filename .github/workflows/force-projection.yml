@@ -1,0 +1,115 @@
+name: Force projection hosted iterations
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['ci/force-projection-request.json']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tech-priests-hosted-force-projection
+  cancel-in-progress: false
+
+jobs:
+  observe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            ci
+          persist-credentials: false
+      - name: Validate request and prepare exact source
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, re, subprocess
+          from pathlib import Path
+          request=json.loads(Path('ci/force-projection-request.json').read_text())
+          assert request['schema']=='tech-priests.hosted-arena-request.v1'
+          pin=request['source_sha']
+          assert re.fullmatch('[0-9a-f]{40}',pin)
+          seeds=request['seeds']
+          assert 1<=len(seeds)<=3 and len(set(seeds))==len(seeds)
+          assert all(type(s) is int and 0<=s<2**31 for s in seeds)
+          assert request['preset']=='2p2b' and request['active_ticks']==36000
+          subprocess.run(['git','init','-q','source'],check=True)
+          for command in (
+              ['remote','add','origin','https://github.com/mrcalzon02/Tech-Priests.git'],
+              ['sparse-checkout','init','--cone'],
+              ['sparse-checkout','set','tech-priests_src','tools','tests'],
+              ['fetch','--depth=1','--filter=blob:none','origin',pin],
+              ['checkout','--detach','FETCH_HEAD']):
+              subprocess.run(['git','-C','source',*command],check=True)
+          actual=subprocess.check_output(['git','-C','source','rev-parse','HEAD'],text=True).strip()
+          assert actual==pin
+          print('HOSTED_ARENA_SOURCE_VERIFIED',pin,flush=True)
+          PY
+      - name: Install official pinned Factorio headless 2.1.24
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p engine
+          curl --fail --location --retry 3 --connect-timeout 30 --max-time 600 \
+            https://factorio.com/get-download/2.1.24/headless/linux64 -o engine/factorio.tar.xz
+          echo 'c49b66cff90aceff87b30f2973af0df7f51712cb2ee3153e0169d9bed46a964f  engine/factorio.tar.xz' | sha256sum --check
+          tar -xJf engine/factorio.tar.xz -C engine
+          engine/factorio/bin/x64/factorio --version
+      - name: Check telemetry parser
+        run: python3 source/tests/unit/test_force_projection.py
+      - name: Native smoke and three sequential seeded baselines
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -u - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          request=json.loads(Path('ci/force-projection-request.json').read_text())
+          engine=str(Path('engine/factorio/bin/x64/factorio').resolve())
+          runner=str(Path('source/tools/run_force_projection.py').resolve())
+          output=Path('observations').resolve()
+          commands=[(request['seeds'][0],3600,output/'smoke')]
+          commands += [(seed,36000,output/'baseline') for seed in request['seeds']]
+          for seed,ticks,destination in commands:
+              print('HOSTED_ARENA_ITERATION',seed,ticks,flush=True)
+              code=subprocess.call(['python3','-u',runner,'--factorio',engine,
+                  '--preset','2p2b','--seed',str(seed),'--active-ticks',str(ticks),
+                  '--timeout-seconds','2400','--output-dir',str(destination)])
+              if code: raise SystemExit(code)
+          PY
+      - name: Retain result summaries in job log and summary
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          rows=[]
+          for path in sorted(Path('observations').glob('**/result.json')):
+              r=json.loads(path.read_text())
+              row={k:r.get(k) for k in ('source_sha','preset','seed','active_ticks',
+                  'observation_complete','combat_observed','blocker','observed_ups_including_setup')}
+              print('HOSTED_ARENA_SUMMARY',json.dumps(row),flush=True)
+              rows.append(row)
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write('### Force projection observations\n\n')
+              f.write('```json\n'+json.dumps(rows,indent=2)+'\n```\n')
+              f.write('Completion is observation coverage, not expansion or combat success.\n')
+          PY
+      - name: Attempt compact evidence upload
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: force-projection-hosted-${{ github.run_id }}
+          path: |
+            observations/**/result.json
+            observations/**/create.log
+            observations/**/native-server.log
+          if-no-files-found: warn
+          retention-days: 3
