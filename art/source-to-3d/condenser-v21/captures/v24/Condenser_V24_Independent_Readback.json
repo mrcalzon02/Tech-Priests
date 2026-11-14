@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "hardware_meshes": 203,
+  "modified_hardware_meshes": 0,
+  "hardware_material_assignments_unchanged": true,
+  "frames_verified": 97,
+  "max_hardware_world_matrix_error": 0.0,
+  "mist_particles": 40,
+  "distinct_mist_materials": 40,
+  "inlet_aim_constraints_verified": 40,
+  "mist_transform_loop_seam": "PASS",
+  "cycle_seconds": 12,
+  "owner_visual_approval": "PENDING",
+  "source_sha256": "5b7a8bb22a23463db555eba8cdb9327180a67939dc151ec59e0d44ec1461d554",
+  "candidate_sha256": "1bf12339ad62855b032665e76aeda540a4ede3d301fa57e45bd766ca1444e037"
+}
