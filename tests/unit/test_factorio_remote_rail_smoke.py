@@ -1505,6 +1505,9 @@ class NativePaidTrainStop0836ContractTests(unittest.TestCase):
         ):
             self.assertIn(required, builder)
         self.assertIn('M.service_first_train_stop_0836(pair,"remote")', rail)
+        self.assertIn('if remote then state=m.remote_stop_0836', stop)
+        self.assertIn('else state=m.first_stop_0836 end', stop)
+        self.assertNotIn('remote and m.remote_stop_0836 or m.first_stop_0836', stop)
         self.assertIn('if far.phase~="native-paid-original-train-stop-verified"then', rail)
         self.assertIn("REMOTE_STOP_NATIVE_0836 elapsed=", fixture)
         self.assertNotIn('surface.create_entity', stop)
