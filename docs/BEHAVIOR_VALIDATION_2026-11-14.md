@@ -12,6 +12,27 @@ isolated native factory saves are now resumed between behavior corrections.
 
 ## Latest measured state
 
+**All three early science families now manufacture in native Factorio.**
+`stateful-science-23/result.json` records tick 555,896 with 462 red,
+88 green and **two military packs**, plus genuine progressing
+physical-projectile-damage research. Native observations show the actually
+constructed military assembler received grenades, piercing ammunition and
+walls produced by its own physical upstream chain. This continuation's native
+save passed CRC validation; its source save was unchanged. This proves the
+formerly blocked military chain functions, not sustained 15-SPM acceptance.
+The untouched-start full gate is running separately in
+`fresh-science-final-gate`; maintenance is independently rerun in
+`maintenance-after-smelting-fix`.
+
+The latest regressions pass 44 Lua groups plus six Python arena tests. Exact
+independent raw-material requests now mine a counted batch at the actual patch
+before returning, retaining the existing work duration and resource debit for
+every unit. A four-unit regression verifies four real debits, no remote deposit,
+one actual return trip, and exact final storage. The physical-target guard
+preserves the canonical owner while cargo from a consumed rock/tree is held.
+Corrections through `456f747` are published on
+`behavior/arena-validation-20261114`, independently verified by remote SHA.
+
 Further native continuations exposed a data-stage smelting failure: the
 zero-probability Mechanical Detritus product made ordinary smelting recipes
 require two item output slots, while vanilla and emergency furnaces retained
@@ -31,7 +52,8 @@ At tick 484,998 the continued native factory has 462 red and 88 green packs;
 military remains zero. Native observation confirms five actual grenades reached
 the military assembler, with piercing ammunition and walls still missing.
 Buffered science now yields transport urgency to those missing intermediates;
-that latest balance change is undergoing native validation in science-22.
+native science-23 verifies actual ammunition and wall production after this
+change, followed by the first military science craft.
 
 Arena-10 preserves a native continuation at tick 327,024. All four factions
 have expanded (3/3/3/2 stations); science and participant combat acceptance
