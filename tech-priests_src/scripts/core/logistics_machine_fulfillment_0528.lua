@@ -665,25 +665,40 @@ local function fuel_candidate(pair, machine, requested_floor)
   end
   return nil
 end
-local function deficient_factory_job(pair,machine)
+local function planned_factory_job(pair,machine)
   local op=pair.independent_emergency_operation_0184
   local plan=op and op.enabled==true and op.magos_ratio_plan_0257
   local recipe=plan and get_recipe(machine)
   local job=recipe and plan.factory_component_jobs_1150
     and plan.factory_component_jobs_1150[recipe.name]
-  if job and job.output_deficient==true and job.researched==true then
-    local buffer=math.max(5,math.ceil((tonumber(job.required_per_minute)or 0)*2))
+  return job and job.researched==true and job or nil
+end
+local function factory_job_buffer(job)
+  return math.max(5,math.ceil((tonumber(job.required_per_minute)or 0)*2))
+end
+local function science_job(job)
+  return type(job.output_item)=="string"and job.output_item:find("science%-pack")
+end
+local function deficient_factory_job(pair,machine)
+  local job=planned_factory_job(pair,machine)
+  if job and job.output_deficient==true then
+    local buffered=generic_count(pair,job.output_item)>=factory_job_buffer(job)
     -- Already buffered science must yield its urgency to missing upstream
     -- parts for the other planned families. Otherwise green's 920 priority
     -- can monopolize every trip while military ammunition/walls remain 820.
-    if generic_count(pair,job.output_item)>=buffer then return nil end
-    return job
+    if buffered and not science_job(job)then return nil end
+    return job,buffered
   end
 end
 local function ingredient_candidate(pair, machine)
   local input = machine_input(machine)
   local recipe = get_recipe(machine)
   if not (input and recipe) then return nil end
+  local planned=planned_factory_job(pair,machine)
+  if planned and not science_job(planned)
+      and generic_count(pair,planned.output_item)>=factory_job_buffer(planned)then
+    return nil -- Preserve stocked intermediates instead of feeding endless surplus.
+  end
   for _, ingredient in ipairs(recipe_ingredients(recipe)) do
     local cycles=deficient_factory_job(pair,machine)and 5 or 1
     local missing = ingredient.amount*cycles - count_inventory(input, ingredient.name)
@@ -703,13 +718,13 @@ local function task_score(pair, task)
   local base = task.action == "clear-output" and 600
     or task.action == "supply-fuel" and 500 or 420
   if task.kind == "waste" then base = base + 120 end
-  local job=deficient_factory_job(pair,task.machine)
+  local job,buffered=deficient_factory_job(pair,task.machine)
   if job and(task.action=="supply-ingredient"or task.action=="clear-output")then
     -- Work on the independently planned, actually configured recipe before
     -- collecting another incidental raw stack. Active cargo is never preempted.
     -- Five-cycle counted input batches reduce repeated single-craft round trips.
-    local science=type(job.output_item)=="string"and job.output_item:find("science%-pack")
-    base=math.max(base,(science and 920 or 820)+(task.action=="clear-output"and 20 or 0))
+    local science=science_job(job)
+    base=math.max(base,(science and(buffered and 700 or 920)or 820)+(task.action=="clear-output"and 20 or 0))
   end
   -- Completed Electronics parts are an actual researched-production
   -- dependency. If a priest keeps collecting easier raw ore or topping off

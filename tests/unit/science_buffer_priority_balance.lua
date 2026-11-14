@@ -18,7 +18,8 @@ local function offer(name,id)
  {output_item=name,output_deficient=true,researched=true,required_per_minute=5}
  pair.factory_component_last_receipt_1150={configured=true,built_entity=machine,entity_unit=id,station_unit=1,recipe=name}
  pair.machine_logistics_candidate_0528=nil
- assert(M.offer_factory_component_feed_1153(pair,machine,name))
+ local accepted,why=M.offer_factory_component_feed_1153(pair,machine,name)
+ if not accepted then return nil,why end
  return pair.machine_logistics_candidate_0528
 end
 local urgent=offer("logistic-science-pack",3)
@@ -28,6 +29,12 @@ local buffered=offer("logistic-science-pack",3)
 local ammunition=offer("firearm-magazine",4)
 assert(ammunition.score>buffered.score and ammunition.count==5,
  "buffered green science still monopolizes trips over missing military intermediates")
+assert(buffered.score>600 and buffered.count==5,
+ "measured deficient science lost its priority over routine surplus once a small buffer existed")
+stocks["firearm-magazine"]=20
+local surplus,why=offer("firearm-magazine",4)
+assert(surplus==nil and why=="no-physical-local-ingredient-stock",
+ "already buffered intermediate monopolized repeated ingredient deliveries")
 assert(stocks["iron-plate"]==50 and stocks["logistic-science-pack"]==20,
  "priority discovery changed physical stock")
 print("PASS stocked science yields transport urgency to missing military intermediates without spending stock")
