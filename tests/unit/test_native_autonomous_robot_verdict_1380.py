@@ -524,6 +524,7 @@ ore_result=module.verify_autonomous_robot_ore_1380_log(full_log,72060)
 assert ore_result["natural_ore_return_accepted"] is True
 assert ore_result["new_distinct_ore_delivery_gates"]==1
 assert ore_result["first_magos_delivery_tick"]==9000
+assert ore_result["first_delivery_latency_ticks"]==7700  # 9000 - selection 1300
 assert ore_result["ore_items_delivered_per_1000_ticks"]==round(1000/72060,6)
 for bad in (
     sample,full_log+"\\n"+ore_receipt,
@@ -536,6 +537,10 @@ for bad in (
     full_log.replace("inventory_hold=empty","inventory_hold=held"),
     full_log.replace("source_kind=natural-ore","source_kind=synthetic"),
     full_log.replace("delivered_tick=9000","delivered_tick=99999"),
+    full_log.replace("PASS AUTONOMOUS_0259_SELECTED tick=1300",
+                     "PASS AUTONOMOUS_0259_SELECTED tick=9100"),
+    full_log+"\n"+selected,
+    full_log.replace(selected+"\n",""),
 ):
     try:
         module.verify_autonomous_robot_ore_1380_log(bad,72060)

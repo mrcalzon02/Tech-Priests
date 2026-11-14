@@ -142,6 +142,10 @@ def verify_autonomous_robot_ore_1380_log(log: str, ticks: int) -> dict[str, obje
     duplicate or numerically inconsistent receipt text independently.
     """
     tag = r"\[TP-AUTONOMOUS-ROBOT-1380\] "
+    # A real first-delivery latency begins at autonomous mission selection,
+    # not at simulation tick zero. Only the original native selection counts.
+    selections = list(re.finditer(
+        tag + r"PASS AUTONOMOUS_0259_SELECTED tick=(\d+) ", log))
     station = list(re.finditer(
         tag + r"PASS autonomous original 0259 selected and physical "
         r"native robot-built Intermediate paired tick=(\d+) magos=(\d+) "
@@ -158,12 +162,15 @@ def verify_autonomous_robot_ore_1380_log(log: str, ticks: int) -> dict[str, obje
         r"hop1_delta=1 hop2_delta=1 magos_deposit=1 "
         r"delivered_tick=(\d+) source_kind=natural-ore "
         r"inventory_hold=empty", log))
-    if len(station) != 1 or len(delivered) != 1:
-        raise ValueError("1380 missing/duplicate original station or physical ore delivery")
+    if len(selections) != 1 or len(station) != 1 or len(delivered) != 1:
+        raise ValueError("1380 missing/duplicate original selection, station or ore delivery")
     st, ore = station[0], delivered[0]
+    selected_tick = int(selections[0].group(1))
     st_groups, ore_groups = [int(x) for x in st.groups()], [
         int(x) for x in ore.groups()]
-    if (ore.start() <= st.start() or ore_groups[0] <= st_groups[0]
+    if (not (0 <= selected_tick < st_groups[0])
+            or selections[0].start() >= st.start()
+            or ore.start() <= st.start() or ore_groups[0] <= st_groups[0]
             or ore_groups[1:7] != st_groups[1:7]
             or ore_groups[7] - ore_groups[8] != 1
             or not st_groups[0] <= ore_groups[9] <= ore_groups[0] <= ticks):
@@ -172,7 +179,7 @@ def verify_autonomous_robot_ore_1380_log(log: str, ticks: int) -> dict[str, obje
         "natural_ore_return_accepted": True,
         "new_distinct_ore_delivery_gates": 1,
         "first_magos_delivery_tick": ore_groups[9],
-        "first_delivery_latency_ticks": ore_groups[9],
+        "first_delivery_latency_ticks": ore_groups[9] - selected_tick,
         "physically_delivered_ore": 1,
         "ore_items_delivered_per_1000_ticks": round(1000.0 / ticks, 6),
         "physical_hops_verified": 2,
