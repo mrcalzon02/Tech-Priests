@@ -1509,6 +1509,22 @@ class NativePaidTrainStop0836ContractTests(unittest.TestCase):
         self.assertIn('else state=m.first_stop_0836 end', stop)
         self.assertNotIn('remote and m.remote_stop_0836 or m.first_stop_0836', stop)
         self.assertIn('if far.phase~="native-paid-original-train-stop-verified"then', rail)
+        contact = rail.split("local function authorized_paid_stop_contact_0836(pair,point)",1)[1].split(
+            "function M.authorized_paid_rail_contact_0836(pair,point,reason,opts)",1)[0]
+        for required in (
+            'if role=="remote" then stop=mission.remote_stop_0836',
+            'else stop=mission.first_stop_0836 end',
+            'stop.request.rail_stop_role_0836==role',
+            'role~="remote" or (mission.first_stop_0836',
+            'route.segment-16',
+            'route.segment-22',
+            'task.carried.item_name=="train-stop"',
+            'debit.before-debit.after==1',
+            'connected_straight_rails(before,rail)',
+            'connected_straight_rails(rail,after)',
+        ):
+            self.assertIn(required, contact)
+        self.assertNotIn('role=="remote" and mission.remote_stop_0836 or mission.first_stop_0836',contact)
         self.assertIn("REMOTE_STOP_NATIVE_0836 elapsed=", fixture)
         self.assertNotIn('surface.create_entity', stop)
         self.assertNotIn('teleport(', stop)
