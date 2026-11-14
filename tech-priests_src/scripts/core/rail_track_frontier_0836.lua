@@ -1582,7 +1582,7 @@ function M.service_first_train_board_0836(pair)
   -- Diagnose this original prototype before incidental logistics movement:
   -- never cancel a legitimate 0702 duty or change any physical inventory.
   -- Factorio's native driver socket accepts ONLY characters. The original
-  -- commandable Cogitator priest is a unit, so repeated set_driver(unit)
+  -- commandable Cogitator priest is a unit, so attempted driver assignment
   -- never becomes valid. Preserve the identical live priest and train;
   -- do not create a movement lease or fraudulent passenger receipt.
   -- Recheck the actual prototype each call for future compatible migrations.
