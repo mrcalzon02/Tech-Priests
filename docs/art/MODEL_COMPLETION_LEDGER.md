@@ -4,6 +4,10 @@
 
 Stop all workbench modeling, clock tests, captures, integration, promotion and art publication here. Held local duplicate artifacts remain preserved. Earlier Tech-Priests workbench entries below are historical scope mistakes, not continuation instructions. A simple workbench must not receive machine sanctification; future size work requires explicit resumption in the correct project. Another chat owns the emergency steam engine; avoid duplicate engine edits. See WORKBENCH_SCOPE_CORRECTION.json.
 
+## 2026-11-14 Energy-dish V03 missing idle shadows exported
+
+Completed only the missing64heading idle shadow pass:64fully decoded PNGs,128exact source/downsample atlas cells,8bounded sheets and a CRC/SHA-verified raw-source archive. Original33mesh native source, GLB and64beauty captures remain unchanged. Original camera/receiver/rotation mapping retained; explicit shadow-only single-key lighting derivative replaces the rejected diffuse three-light pilot. [Real source compositions, registration and open gates](energy-dish-v03-shadow64/README.md). No native prototype/weapon interface was invented; working/emission, final surface and owner approval remain open.
+
 ## 2026-11-14 A02 GLTF adapter pilot rejected
 
 A bounded one-belt evaluated mesh-sequence pilot preserved all193discrete geometry samples and192STEPmidpoint selections, but strict normal correspondence failed. The GLB is162,908,036bytes for one belt; do not expand this approach blindly across the cap. Original source, sprite cache, verified USD and ordinary runtime remain unchanged. [Actual import closeups, receipts and rejection checkpoint](lobber-a02-evaluated-usd/belt-flipbook-rejected/README.md). Full G5/native/owner gates remain open; do not repeat this completed pilot.

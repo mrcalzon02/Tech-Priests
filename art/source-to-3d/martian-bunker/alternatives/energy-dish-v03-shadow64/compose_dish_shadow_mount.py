@@ -1,0 +1,13 @@
+"""Actual source shadow/base/cap composition using current recorded draw transforms."""
+from PIL import Image,ImageDraw
+import pathlib,json,hashlib,re
+W=pathlib.Path(__file__).parent;R=pathlib.Path('C:/GITS/Tech-Priests');O=W/'energy-dish-v03-shadow64-sharp/loader-metadata';B=W/'energy-dish-v03';base=R/'tech-priests_src/graphics/entity/bunker-autocannon';gpath=R/'tech-priests_src/prototypes/bunker_autocannon_graphics.lua';text=gpath.read_text();bscale=float(re.search(r'base_scale=([0-9.]+)',text)[1]);bshift=[float(x) for x in re.search(r'base_shift=\{([^}]+)',text)[1].split(',')];m=json.loads((B/'idle64-validation.json').read_text());shadow_scale=m['factorio_scale_at_256']/5;shift=m['factorio_shift'];pixels=48;board=Image.new('RGB',(2080,700),(160,160,160));draw=ImageDraw.Draw(board);records=[]
+for i,d in enumerate([0,16,32,48]):
+ tile=Image.new('RGBA',(520,650),(160,160,160,255));origin=(240,400)
+ def paste(im,scale,offset):
+  size=(round(im.width*scale*pixels/32),round(im.height*scale*pixels/32));p=im.resize(size,Image.Resampling.LANCZOS);tile.alpha_composite(p,(round(origin[0]+offset[0]*pixels-size[0]/2),round(origin[1]+offset[1]*pixels-size[1]/2)))
+ p=O/f'shadow-{d:02}.png';raw=Image.open(p).convert('RGBA');shadow=Image.new('RGBA',raw.size,(0,0,0,0));shadow.putalpha(raw.getchannel('A').point([round(x*177/255) for x in range(256)]));paste(shadow,shadow_scale,shift)
+ for suffix in ['-shadow','','-glow']:
+  p=base/f'base-north{suffix}.png';paste(Image.open(p).convert('RGBA'),bscale,bshift);records.append({'file':p.relative_to(R).as_posix(),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+ paste(Image.open(B/'idle64'/f'idle-{d:02}.png').convert('RGBA'),m['factorio_scale_at_256']*256/640,shift);board.paste(tile.convert('RGB'),(i*520,30));draw.text((i*520+12,666),f'd{d:02}: source composition / fixed north base',fill='black')
+draw.text((12,8),'Actual new shadow + existing base/cap pixels at recorded transforms; alpha177 baseline. Source composition, not native-game proof.',fill='black');board.save(O/'mounted-cardinal-shadows.png');(O/'mounted-composition-receipt.json').write_text(json.dumps({'status':'SOURCE_COMPOSITION_NOT_NATIVE','graphics_module_sha256':hashlib.sha256(gpath.read_bytes()).hexdigest(),'base_scale':bscale,'base_shift':bshift,'shadow_scale_at1280':shadow_scale,'shadow_shift':shift,'shadow_alpha_transform':'round(raw_alpha*177/255), same as export authoring','pixels_per_tile':pixels,'base_sources':records,'preview_sha256':hashlib.sha256((O/'mounted-cardinal-shadows.png').read_bytes()).hexdigest(),'native_integration':False},indent=2)+'\n',encoding='utf-8',newline='\n')

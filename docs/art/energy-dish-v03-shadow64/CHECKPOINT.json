@@ -1,0 +1,30 @@
+{
+  "status": "IDLE_SHADOW64_SOURCE_EXPORT_VERIFIED_NATIVE_AND_WORKING_GATES_OPEN",
+  "source_dish_sha256": "b4851a3cfca888e51eff8f77ba12e0adc8d216b65304448aaefc40bb1cdc5c71",
+  "source_camera_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+  "directions": 64,
+  "mapping": "N0/E16/S32/W48 clockwise",
+  "source_shadow_png": 64,
+  "atlas_exact_cells": 128,
+  "atlas_sheets": 8,
+  "camera_registration": {
+    "world_origin_pixel_at1280": [
+      640.0,
+      754.6742346542837
+    ],
+    "factorio_shift": [
+      0.0,
+      -1.1109066140377886
+    ],
+    "factorio_scale_at1280": 0.3099999904632568,
+    "factorio_scale_at512": 0.7749999761581421,
+    "camera_and_shift_equal_existing_beauty": true
+  },
+  "working_or_emission_states": false,
+  "native_prototype_integration": false,
+  "owner_final_approval": false,
+  "local_checkpoint": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\energy-dish-v03-shadow64-sharp\\loader-metadata",
+  "source_unchanged": true,
+  "beauty_unchanged": "64original image hashes verified",
+  "next_step": "Do not repeat64idlebeauty or64shadow captures. Refine dish surfaces or recover intended emitter/working source design; ground exact native target without replacing autocannon or inventing ammo/weapon interfaces. Full goal open; workbench/other-chat steam engine excluded."
+}

@@ -1,0 +1,59 @@
+{
+  "status": "IDLE_SHADOW_EXPORT_REVIEWED_NOT_FINAL_MODEL_ACCEPTANCE",
+  "owner_approval": false,
+  "source_dish_sha256": "b4851a3cfca888e51eff8f77ba12e0adc8d216b65304448aaefc40bb1cdc5c71",
+  "camera_source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+  "finish_reference": {
+    "method": "round(raw_alpha*177/255); authored RGB explicitly neutral black (raw display RGB retained in archive)",
+    "reference_file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-shadow.png",
+    "reference_sha256": "735fb344a878a8f487bd18a8f82902ae8b362c44915409a4cb7ebeff266894ab",
+    "reference_maximum_alpha": 177
+  },
+  "viewed_previews": {
+    "eight-headings-shadow-composition.png": "d2b479441a6d411d50e101d6be554d9f23736e0fad9ca4bb2fa2f6f4d87aeca6",
+    "mounted-cardinal-shadows.png": "39c4d72ee8a1cca6349b655d7c858e114456bd5a82425f21cbf1e5718f91c4d5",
+    "rejected-studio-pilot.png": "4db871d0eedad9baec9ee855bbc74fb8310fb0482e47605b3a11b40fc2a5651b",
+    "single-key-raw-pilot.png": "a150d8b9f672750268291d62d10960581d3b97f57e6588aa78855c5139874a4f"
+  },
+  "sheet_hashes": {
+    "atlases/idle-shadow-1280-1.png": "e1fe22cabfcc71bb79bb36db298b7f5a8dc10cb313c9284e2365a28ecd41c697",
+    "atlases/idle-shadow-1280-2.png": "c449e8b7a010cb9702dc28acf9d1764686d0779426c4c4ecd2ac1199890978a4",
+    "atlases/idle-shadow-1280-3.png": "ba0c0774ab7a7ee1937eb01c21aff62ec2c6492ed2d254032ed3d36e40019659",
+    "atlases/idle-shadow-1280-4.png": "d33daf868d603e5354e44a5a58b51ba761958b5a59a0c7c19a5d2ca92a09a69a",
+    "atlases/idle-shadow-512-1.png": "0729afb207d5480975f04fd783788633288b4dc3aba882b7b9758d6787821061",
+    "atlases/idle-shadow-512-2.png": "8cf20f573e324f05b962c3a0bd30978c7e455f9ed674e7e300edb0a062f11994",
+    "atlases/idle-shadow-512-3.png": "f3ec59ed4c25a50bc2b8da928d8033c0e5793ef8fc9711333071b26132855ab6",
+    "atlases/idle-shadow-512-4.png": "b3f8f677dc1acf956435d32c868fbe33dd44c1e12c9415f4ae02c7f42702893c"
+  },
+  "scores_out_of_5": {
+    "shadow_shape_readability": {
+      "score": 4,
+      "reason": "Single source-key projection reveals dish/rim/support silhouette; cardinal and eight-heading compositions inspected."
+    },
+    "source_registration": {
+      "score": 4,
+      "reason": "Original camera, origin, receiver and fixed base/cap transforms align in source composition; native-game layering not established."
+    },
+    "shadow_finish_match": {
+      "score": 4,
+      "reason": "Neutral authored alpha peak177 matches the measured existing base-shadow reference. Untouched raw renders retained; final native intensity open."
+    },
+    "whole_model_final_surface": {
+      "score": 3,
+      "reason": "Existing coarse painted/metal finish and simple reflector construction are unchanged; this shadow slice cannot close previous surface/owner gates."
+    }
+  },
+  "required_final_score": 4,
+  "rejected_pilot": {
+    "file": "rejected-studio-pilot.png",
+    "reason": "Inherited three-light studio gave broad faint multiple projections; reviewed before propagation and replaced by explicit single-key derivative."
+  },
+  "open_gates": [
+    "Owner final source/fidelity acceptance",
+    "Model-specific final surfacing",
+    "Ground intended emitter/working animation source design",
+    "Exact native alternate-cap target and graphical placement/layering in all directions",
+    "Working/emission and associated shadow states where required"
+  ],
+  "scope": "Only the missing idle shadow export; no new model/source geometry or prototype/gameplay modification"
+}

@@ -1,0 +1,9 @@
+{
+  "status": "PASS_ARCHIVED_RAW_TO_AUTHORED_AND_ALL_128_ATLAS_CELLS",
+  "archive_sha256": "0ae09da12974a24f5c6e49ed6ff893dc67213a384fa63ebdbda6b0712c24a706",
+  "raw_frames": 64,
+  "authored_frames": 64,
+  "exact_cells": 128,
+  "source": "Published delivery folders only; no live capture cache read",
+  "native_integration": false
+}

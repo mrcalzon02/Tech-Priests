@@ -1,0 +1,51 @@
+{
+  "identity": {
+    "dish_sha256": "b4851a3cfca888e51eff8f77ba12e0adc8d216b65304448aaefc40bb1cdc5c71",
+    "camera_source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+    "script_sha256": "ff60e818607594c45b232bd19294b9d840363ed3b899ee618bf77b1a0c814a6f",
+    "shadow_renderer_source_sha256": "ab584ed7d5e28fb052c6baad1dcdb43ea2f91a16be59e979dc5735d718463940",
+    "config_sha256": "9dd6aac249aa44f10f6ab2bb7a03873b6dc251ba0924f1d0164c9ddf56d2fb7e",
+    "size": 1280,
+    "camera_ortho_scale": 12.399999618530273,
+    "camera_matrix": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        -0.7071067690849304,
+        -8.0
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        0.7071067690849304,
+        9.571059226989746
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "backend": [
+      "NVIDIA GeForce RTX 5070"
+    ],
+    "samples": 16,
+    "mapping": "N0/E16/S32/W48; clockwise yaw180-direction*5.625",
+    "receiver": "Original calibrated A02 catcher and soft footprint mask; same fixed bunker mounting frame",
+    "scope": "Idle shadow only; no beauty recapture, firing state, native integration or source edit"
+  },
+  "frames": {
+    "0": "83205ac7159a534771dfcf6ac2a9478891da729a47afcbfbcd5158a218724218",
+    "16": "86586b63d8712abeeb8cab63360546841f5dbf32d07d85e6ff4f1d474209f693",
+    "32": "ca397cb04494d963a9928a16354054d8af2e38751f68c7eb69ddd756b31d2016",
+    "48": "3c368037e73f9b354d09f4c22e91d1dfafa84238005337d78240314aba7abcbd"
+  },
+  "status": "REJECTED_DIFFUSE_PILOT_RETAINED_LOCAL_SOURCE_IMAGES"
+}
