@@ -10,7 +10,7 @@
     "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/source-samples.json": "1c78fc29b9e66f3727a21afc2d021129140db1df2c1d5af12866a687670c706d",
     "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/visual-review.json": "1ee3601ae96ea133f0f0d6f27b4af07a63d270d7a1566751a799ca1f6c7d6e68",
     "tools/art/a02_interchange/failed_studies/a02_flipbook_pilot.py": "6aa8f61c05daa341ea1229bce1901548b3ae6e1f8d24dd02ec8b610b817da0e8",
-    "tools/art/a02_interchange/failed_studies/check_a02_raw_normals.py": "b61cba8a209789cb65a25f80cca4ed68a86f791dfd7b30724477f88c02d5e039",
+    "tools/art/a02_interchange/failed_studies/check_a02_raw_normals.py": "9a41591735fa6341b23949f0a5a7a1a8bdb6599afaad0adb6c0d8fa458049caa",
     "tools/art/a02_interchange/failed_studies/render_a02_flipbook_pilot.py": "46419b2fbcf6ead0865c4b6225b5e5b1af21467c5747b763703386b4f644b7ce",
     "tools/art/a02_interchange/failed_studies/verify_a02_flipbook_pilot.py": "20e2ccf7c821bb3dd1cff1be3a0e0bd76f48e20315274ffae0ae42f04d64e5fc"
   },
