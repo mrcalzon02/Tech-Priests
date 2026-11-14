@@ -18,11 +18,14 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 150
     steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            ci
-          persist-credentials: false
+      - name: Fetch immutable public request without legacy submodule checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ci
+          curl --fail --location --retry 2 --max-time 60 \
+            "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_SHA}/ci/force-projection-request.json" \
+            -o ci/force-projection-request.json
       - name: Validate request and prepare exact source
         shell: bash
         run: |
