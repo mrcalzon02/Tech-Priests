@@ -2823,6 +2823,43 @@ function M.authorized_original_remote_drill_hold_0836(pair)
   local ride=pair and pair.train_transport_rail_0835
   local completion=pair and pair.construction_last_task_0338
   local original_supply=pair and pair.rail_remote_drill_supply_0836
+  -- Temporary native diagnostic of the real post-0338 custody/hold boundary.
+  -- Read-only: the strict admission predicate immediately below is unchanged.
+  if state and state.disembark_confirmed==true and valid(priest)
+      and now()-(tonumber(state.last_hold_probe_tick_0836)or -600)>=600 then
+    state.last_hold_probe_tick_0836=now()
+    local train=valid(train_engine) and train_engine.train or nil
+    local driver_ok,driver=pcall(function()
+      return valid(train_engine) and train_engine.get_driver() or nil
+    end)
+    local inv=original_supply and original_supply.inventory
+    local held=(inv and inv.valid)
+      and inv.get_item_count("burner-mining-drill") or "inventory-invalid"
+    local d=(valid(stop) and
+      ((priest.position.x-stop.position.x)^2+
+        (priest.position.y-stop.position.y)^2))or -1
+    log("[TP-0836-HOLD-NATIVE-PROBE] tick="..tostring(now())..
+      " phase="..tostring(state.phase)..
+      " age="..tostring(now()-(tonumber(state.disembark_tick)or now()))..
+      " task="..tostring(completion and completion.phase)..
+      " task_field="..tostring(completion and completion.request_field)..
+      " task_matches="..tostring(completion and completion.request_value==state.request)..
+      " item="..tostring(completion and completion.item_name)..
+      " actual_built="..tostring(completion and valid(completion.built_entity))..
+      " source_delta="..tostring(original_supply and original_supply.source_before and
+        original_supply.source_after and
+        (original_supply.source_before-original_supply.source_after))..
+      " held="..tostring(held)..
+      " supply_quarantine="..tostring(original_supply and original_supply.quarantine)..
+      " ride_disembark="..tostring(ride and ride.disembark_confirmed)..
+      " train_stop="..tostring(train and train.valid and train.station==stop)..
+      " driver_nil="..tostring(driver_ok and driver==nil)..
+      " dist_sq="..tostring(d)..
+      " movement_owner="..tostring(pair.movement_request_0418 and
+        pair.movement_request_0418.owner)..
+      " active_0338="..tostring(pair.construction_task_0338~=nil)..
+      " custody_0338="..tostring(pair.construction_custody_0338~=nil))
+  end
   if not(eligible(pair,m) and m.status=="rail-track-established"
       and state and state.disembark_confirmed==true
       and state.priest_unit==priest.unit_number
