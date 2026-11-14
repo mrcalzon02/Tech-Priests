@@ -227,11 +227,14 @@ class QueueOwnedOriginalRailYieldTests(unittest.TestCase):
         # No new queue owner or assignment mutation. A new rail writ may be
         # PLANNED only between actual segments, under the same full 0469
         # source-less automatic-ammo and physical-lease refusal predicate.
+        identity = queue.split('local same_root=', 1)[1].split(
+            'local rail_request=', 1)[0]
         pre = queue.split('if request==nil then', 1)[1].split(
-            'elseif not (pending', 1)[0]
-        self.assertIn('mission.root_station_unit==p.station.unit_number', pre)
-        self.assertIn('mission.surface_index==p.station.surface.index', pre)
-        self.assertIn('mission.force_index==p.station.force.index', pre)
+            'elseif not(same_root', 1)[0]
+        self.assertIn('mission.root_station_unit==p.station.unit_number', identity)
+        self.assertIn('mission.surface_index==p.station.surface.index', identity)
+        self.assertIn('mission.force_index==p.station.force.index', identity)
+        self.assertIn('same_root and type(mission.target)', pre)
         self.assertIn('mission.status=="starvation-confirmed"', pre)
         self.assertIn('mission.status=="building-physical-rail"', pre)
         self.assertIn('pending==nil and p.construction_request==nil', pre)
@@ -672,7 +675,13 @@ class NativeRailFirstLossCustodyTraceTests(unittest.TestCase):
         self.assertIn("if not pending.first_loss_snapshot_0836 then", frontier)
         self.assertIn("last_is_original=last and last.request_value==pending.request", frontier)
         self.assertIn('return reject(m,"pending-original-rail-request-lost")', frontier)
-        self.assertIn('surface.find_entity("steel-chest",', fixture)
+        # The fixture pins the original real depot entity and checks its exact
+        # unit, force and surface rather than finding an unrelated chest.
+        self.assertIn('local depot=s.depot_entity', fixture)
+        self.assertIn('depot.unit_number==s.depot_unit', fixture)
+        self.assertIn('depot.force==station.force', fixture)
+        self.assertIn('depot.surface==surface', fixture)
+        self.assertIn('depot_inv.get_item_count("rail")', fixture)
         self.assertIn('get_item_count("rail")', fixture)
         self.assertIn("RAIL_ORIGINAL_CUSTODY_DIAG elapsed=", fixture)
         self.assertIn('fail("RAIL_FIRST_ENGINE_CONSTRUCTION_NOT_PROVEN"', fixture)
@@ -698,7 +707,11 @@ class NativeRailTerminalReceiptHandoffTests(unittest.TestCase):
         self.assertIn('previous.request_value==pending.request', frontier)
         self.assertIn('valid(previous.built_entity)', frontier)
         self.assertIn('previous.phase=="complete"', frontier)
-        self.assertIn('and pair.construction_request==nil', frontier)
+        # A completed original rail may be reconciled while a NEW unrelated
+        # construction request is live, but never borrowed for the pending rail.
+        self.assertIn('and (pair.construction_request==nil', frontier)
+        self.assertIn('or (saved_matches and pair.construction_request~=pending.request)', frontier)
+        self.assertIn('saved.request_value==pending.request', frontier)
         self.assertIn('local actual=track_at(pair,pending.position,pending.direction)', frontier)
         self.assertIn('connected_straight_rails(predecessor,actual)', frontier)
         self.assertNotIn('surface.create_entity{name="straight-rail"', frontier)
@@ -942,7 +955,11 @@ class NativeRailLiveServerTests(unittest.TestCase):
             self.assertEqual(reason, "fixture_failure")
             self.assertEqual(client_log.read_text(encoding="utf-8"),
                              "CLIENT_NOT_LAUNCHED_NO_HOST\n")
-            self.assertNotEqual(code, 0)
+            # A fake host printing FAIL can exit naturally with code 0.
+            # Preserve that native process exit separately from the strict
+            # fixture_failure verdict and insist no physical-rail credit.
+            self.assertFalse(rail_connected_smoke_verdict(
+                code, server_log.read_text(encoding="utf-8")))
 
 
 class NativeRailOriginalGuardPredicateTests(unittest.TestCase):
@@ -1193,7 +1210,9 @@ class NativePaidTrainFuel0836ContractTests(unittest.TestCase):
         fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
         section=src.split("function M.service_first_train_fuel_0836(pair)",1)[1].split("function M.service_pair(pair)",1)[0]
         for marker in ('wagon.phase=="native-paid-wagon-verified"',
-                       "wagon.built_entity.train.id==entity.train.id",
+                       "entity.train.id==wagon.built_entity.train.id",
+                       "entity.train and entity.train.valid",
+                       "wagon.built_entity.train and wagon.built_entity.train.valid",
                        "receipt.source_before-receipt.source_after==receipt.count",
                        "receipt.destination_after-receipt.destination_before==receipt.count",
                        'receipt.authority=="physical-machine-fuel-0528"',
