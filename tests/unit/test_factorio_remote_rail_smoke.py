@@ -1115,6 +1115,50 @@ class NativeReverseLocomotive0836ContractTests(unittest.TestCase):
         self.assertIn("NO_GENUINE_ORE_DELIVERED_BY_RAIL",fixture)
 
 
+    def test_0528_original_fuel_walk_requires_exact_paid_train(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        movement=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text(encoding="utf-8")
+        fuel=(root/"tech-priests_src/scripts/core/logistics_machine_fulfillment_0528.lua").read_text(encoding="utf-8")
+        guard=rail.split("function M.authorized_original_train_fuel_walk_0836(pair,point,movement)",1)[1].split(
+            "-- 0836 train stops extend",1)[0]
+        for required in (
+            'movement.owner=="logistics_machine_fulfillment_0528"',
+            'movement.reason=="machine-logistics-move-to-machine-0528"',
+            'and state.phase=="move-to-machine"',
+            'and state.original_train_fuel_0836==true',
+            'and state.action=="supply-fuel" and state.item=="coal"',
+            'and state.machine==locomotive',
+            'and custody==pair.machine_logistics_custody_0528',
+            'source.source_before-source.source_after==custody.count',
+            'lead.paid_completion_0836.native_0338_paid==true',
+            'wagon.paid_completion_0836.native_0338_paid==true',
+            'locomotive.train.id==wagon.built_entity.train.id',
+            'goal.x-locomotive.position.x',
+            'before.unit_number==route.built_units[index-1]',
+            'center.unit_number==route.built_units[index]',
+            'after.unit_number==route.built_units[index+1]',
+            'connected_straight_rails(before,center)',
+            'connected_straight_rails(center,after)',
+        ):
+            self.assertIn(required,guard)
+        for forbidden in ('bounds_exempt', 'surface.create_entity', 'teleport',
+                          'train.speed=', 'state.custody=nil', 'inventory.remove'):
+            self.assertNotIn(forbidden,guard)
+        self.assertIn('owner = "logistics_machine_fulfillment_0528"',fuel)
+        self.assertIn('"machine-logistics-move-to-machine-0528"',fuel)
+        allowed=movement.split("function M.position_allowed(pair, pos, reason, opts)",1)[1].split(
+            "local function proxy_prime_allowed",1)[0]
+        self.assertIn('rail.authorized_original_train_fuel_walk_0836,pair,pos',allowed)
+        self.assertIn('if ok and allowed==true then return true,nil,nil end',allowed)
+        enforcement=movement.split("function M.enforce_pair(pair, reason)",1)[1].split(
+            'local courier_ok,courier_authorized=pcall(',1)[0]
+        self.assertIn('frontier.authorized_original_train_fuel_walk_0836,pair,',enforcement)
+        self.assertIn('pair.priest.position,request)',enforcement)
+        self.assertIn('return false,"original-paid-train-fuel-walk-owned-0836"',enforcement)
+        self.assertIn('M.stop(pair, "movement-overleash-0566")',movement)
+
+
 class NativePaidFirstLocomotive0836ContractTests(unittest.TestCase):
     def test_train_first_requires_original_paid_builder_native_rails_and_stock(self):
         root=pathlib.Path(__file__).resolve().parents[2]
