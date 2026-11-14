@@ -35,6 +35,13 @@ local wall={valid=true,name="stone-wall",type="wall",
   unit_number=51,health=100,max_health=270,
   position={x=2,y=0},surface=surface,force=force}
 local pair={station=station,priest=priest,radius=28}
+local inventory_text={__tostring=function()return "LuaInventory"end}
+setmetatable(inventory,inventory_text)
+local empty_inventory=setmetatable({valid=true,get_item_count=function()return 0 end},inventory_text)
+tech_priests_inventory_steward_sources_for_pair=function(p)
+  assert(p==pair)
+  return{{inv=empty_inventory},{inv=inventory}}
+end
 storage={tech_priests={pairs_by_station={[station.unit_number]=pair}}}
 local claimed,released=0,0
 _G.TechPriestsWorkReservations0601={

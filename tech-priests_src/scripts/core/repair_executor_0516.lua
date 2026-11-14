@@ -46,7 +46,7 @@ local function find_target(p,explicit)
  local best,best_score;for _,candidate in ipairs(list)do if eligible(p,candidate,false)then local s=score(p,candidate);if not best_score or s>best_score then best,best_score=candidate,s end end end;return best,best and"bounded-scan"or"no-eligible-target"
 end
 local function sources(p)
- local out,seen={},{};local function add(inv,label)if not(inv and inv.valid)then return end;local k=safe(inv);if seen[k]then return end;seen[k]=true;out[#out+1]={inv=inv,label=label or"station"}end
+ local out={};local function add(inv,label)if not(inv and inv.valid)then return end;for _,source in ipairs(out)do if source.inv==inv then return end end;out[#out+1]={inv=inv,label=label or"station"}end
  local f=rawget(_G,"tech_priests_inventory_steward_sources_for_pair");if type(f)=="function"then local ok,list=pcall(f,p);if ok and type(list)=="table"then for _,s in ipairs(list)do if s then add(s.inv or s.inventory,s.label or s.source or s.kind)end end end end
  local g=rawget(_G,"get_station_inventory");if type(g)=="function"then local ok,inv=pcall(g,p.station);if ok then add(inv,"station")end end;if defines and defines.inventory and p.station.get_inventory then local ok,inv=pcall(function()return p.station.get_inventory(defines.inventory.chest)end);if ok then add(inv,"station-chest")end end;return out
 end

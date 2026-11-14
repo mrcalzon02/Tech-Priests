@@ -41,8 +41,15 @@ local function remove(i,n,c) c=math.max(0,math.floor(tonumber(c)or 0));if not(i 
 local function insert(i,n,c) c=math.max(0,math.floor(tonumber(c)or 0));if not(i and i.valid and n and c>0)then return 0 end local ok,v=pcall(function()return i.insert{name=n,count=c}end);return ok and tonumber(v) or 0 end
 
 local function sources(p)
-  local out,seen={},{}
-  local function add(i,e,l) if not(i and i.valid)then return end local k=i;if seen[k]then return end;seen[k]=true;out[#out+1]={inv=i,entity=e,label=l} end
+  local out={}
+  local function add(i,e,l)
+    if not(i and i.valid)then return end
+    -- Distinct LuaInventory wrappers compare equal for the same native
+    -- inventory, but table-key lookup uses wrapper identity. Do not count
+    -- canonical, steward and station views of one physical stock three times.
+    for _,source in ipairs(out)do if source.inv==i then return end end
+    out[#out+1]={inv=i,entity=e,label=l}
+  end
   local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
     or package.loaded["scripts.core.storage_role_authority_0686"]
   if authority and type(authority.generic_storage_sources)=="function"then

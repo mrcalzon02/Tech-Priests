@@ -2627,4 +2627,23 @@ scenario("large brick buffer starts from a genuinely funded native recipe",funct
  check(f.source.get_item_count("stone")+f.input.get_item_count("stone")==2,
   "streaming native feed did not conserve the actual two-stone recipe input")
 end)
+scenario("equal native inventory wrappers cannot triple physical production stock",function()
+ local f=fixture();prototypes.item["stone-brick"]={};f.source.stock["stone-brick"]=17
+ local mt={__eq=function(a,b)return a.native_id==b.native_id end,__index=f.source}
+ local function wrapper()return setmetatable({native_id=1},mt)end
+ local canonical,steward,chest=wrapper(),wrapper(),wrapper()
+ check(canonical==steward and not rawequal(canonical,steward),"test did not simulate native wrapper equality")
+ local old_authority=TechPriestsStorageRoleAuthority0686
+ local old_steward=tech_priests_inventory_steward_sources_for_pair
+ TechPriestsStorageRoleAuthority0686={generic_storage_sources=function()return{{entity=f.pair.station,inv=canonical}}end}
+ tech_priests_inventory_steward_sources_for_pair=function()return{{entity=f.pair.station,inv=steward}}end
+ f.pair.station.get_inventory=function()return chest end
+ local task={output_item="stone-brick",count=1,target_stock_0647=50,strict_recipe_0647=true,facility_only_0647=true}
+ f.pair.emergency_craft=task
+ Production.service_pair(f.pair,"native-wrapper-stock")
+ TechPriestsStorageRoleAuthority0686=old_authority
+ tech_priests_inventory_steward_sources_for_pair=old_steward
+ check(f.pair.emergency_craft==task and f.source.get_item_count("stone-brick")==17,
+  "17 real bricks were counted as 51 and falsely completed a 50-brick task")
+end)
 print("[bootstrap-production-regression] PASS scenarios="..total)
