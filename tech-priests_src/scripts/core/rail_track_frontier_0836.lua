@@ -3411,6 +3411,7 @@ function M.authorized_original_remote_train_reboarding_walk_0836(pair,point,move
     and pickup.ground_before==1 and pickup.ground_after==0
     and pickup.native_ore_count==1 and not pickup.quarantine
     and pickup.inventory and pickup.inventory.valid
+    and original and original.phase=="native-original-outbound-arrived-at-paid-remote-stop"
     and receipt and receipt.phase=="native-original-wagon-received-ground-mined-ore"
     and not receipt.quarantine
     and receipt.priest_unit==priest.unit_number
