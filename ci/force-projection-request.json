@@ -1,11 +1,12 @@
 {
   "schema": "tech-priests.hosted-arena-request.v1",
-  "source_sha": "97719799b2b2e44746474015f0446a83c8c01e39",
+  "source_sha": "41de8fbe049fa6bdb9a3050091f8661583aebccf",
   "preset": "2p2b",
   "seeds": [
     534526259,
     534526260,
     534526261
   ],
-  "active_ticks": 36000
+  "active_ticks": 36000,
+  "stock_profile": "random-chest-plus-1-to-5-senior-kits"
 }
