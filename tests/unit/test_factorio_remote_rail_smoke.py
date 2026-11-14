@@ -13,13 +13,66 @@ import subprocess
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "tools"))
 from run_factorio_isolated_service_scenario import (
     factorio_runtime_compatible, rail_connected_smoke_verdict,
-    rail_smoke_evidence, reset_rail_smoke_diagnostics,
+    rail_smoke_evidence, original_rail_native_refusals, reset_rail_smoke_diagnostics,
     run_rail_live_server, private_rail_server_settings,
     rail_native_player_test_command)
 P = "[TP-REMOTE-RAIL-TEST] "
 A = P + "PASS first physical rail built and exact stock debited"
 B = P + "PASS two distinct 0338-debited native-connected rails"
 
+
+
+class OriginalNativeRailFailureRetentionTests(unittest.TestCase):
+    def test_genuine_0469_0836_0338_refusals_are_retained_without_rail_credit(self):
+        log = "\n".join([
+            P + "RAIL_ADMISSION_DIAG elapsed=1800 queue_yield_reason=0527-occupied",
+            P + "RAIL_ADMISSION_DIAG elapsed=9000 queue_yield_reason=foreign-custody",
+            P + "RAIL_ADMISSION_DIAG elapsed=18000 queue_yield_reason=live-duty",
+            P + "RAIL_LIVE_ADMISSION elapsed=9000 plan_result=rail-unadmitted",
+            P + "RAIL_PREWRIT_GAP elapsed=36000 queue_reason=active",
+            P + "RAIL_PREWRIT_0338_OWNER elapsed=36000 builder_phase=nil",
+            P + "RAIL_ORIGINAL_CUSTODY_DIAG elapsed=36000 station_rail=600",
+            P + "FAIL no-native-connected-original-rail",
+            "OTHER FIXTURE RAIL_ADMISSION_DIAG unrelated",
+        ])
+        data = original_rail_native_refusals(log)
+        self.assertEqual(data["native_first_fixture_failure"],
+                         "FAIL no-native-connected-original-rail")
+        samples = data["native_admission_refusal_receipts"]
+        self.assertEqual(len(samples["RAIL_ADMISSION_DIAG"]), 2)
+        self.assertIn("elapsed=9000", samples["RAIL_ADMISSION_DIAG"][0])
+        self.assertIn("elapsed=18000", samples["RAIL_ADMISSION_DIAG"][1])
+        self.assertEqual(len(samples), 5)
+        result = rail_smoke_evidence(
+            0, 1, log, "Factorio 2.1.24", "2.1", 36060,
+            engine_mode="native-player-test-save",
+            create_process_wall_minutes=0.075,
+            test_process_wall_minutes=2.345)
+        self.assertFalse(result["accepted"])
+        self.assertTrue(result["fixture_failed"])
+        self.assertEqual(result["native_factorio_process_wall_minutes"], 2.42)
+        self.assertEqual(result["native_admission_refusal_receipts"], samples)
+        self.assertNotIn("OTHER FIXTURE", repr(samples))
+
+    def test_absent_native_process_and_unobserved_receipts_stay_unmeasured(self):
+        partial = rail_smoke_evidence(
+            1, None, "", "Factorio 2.1.24", "2.1", 36060,
+            create_process_wall_minutes=0.1)
+        self.assertIsNone(partial["native_test_process_wall_minutes"])
+        self.assertIsNone(partial["native_factorio_process_wall_minutes"])
+        self.assertIsNone(partial["native_first_fixture_failure"])
+        self.assertEqual(partial["native_admission_refusal_receipts"], {})
+        self.assertFalse(partial["accepted"])
+
+    def test_authentic_rail_success_unchanged_by_diagnostics_and_timing(self):
+        result = rail_smoke_evidence(
+            0, 0, A + "\n" + B, "Factorio 2.1.24", "2.1", 36060,
+            engine_mode="native-player-test-save",
+            create_process_wall_minutes=0.08,
+            test_process_wall_minutes=3.1)
+        self.assertTrue(result["accepted"])
+        self.assertEqual(result["native_factorio_process_wall_minutes"], 3.18)
+        self.assertEqual(result["native_admission_refusal_receipts"], {})
 
 
 class OriginalTrainLiveFuelRefusalTests(unittest.TestCase):
