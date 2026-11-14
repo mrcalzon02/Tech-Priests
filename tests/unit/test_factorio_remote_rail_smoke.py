@@ -83,7 +83,7 @@ class OriginalRailItemFamilyAdmissionTests(unittest.TestCase):
                   "item_family_logistics_0702.lua").read_text(encoding="utf-8")
         guard = source.split(
             "local function original_rail_expedition_reserved_0836(pair)", 1
-        )[1].split("local function discover_pair(pair)", 1)[0]
+        )[1].split("local function pause_unladen_item_family_for_rail_0836(pair,task)", 1)[0]
         discover = source.split("local function discover_pair(pair)", 1)[1].split(
             "local function request_move(", 1)[0]
         service = source.split("function M.service_pair(pair, reason)", 1)[1].split(
