@@ -138,9 +138,12 @@ def main() -> int:
         settings.write_text(json.dumps({"seed": seed, "width": width,
             "height": width, "water": "none", "peaceful_mode": False,
             "cliff_settings": {"cliff_elevation_interval": 0},
-            "autoplace_controls": {name: {"frequency": 0, "size": 0, "richness": 0}
-                for name in ("iron-ore", "copper-ore", "coal", "stone", "crude-oil",
-                             "uranium-ore", "trees", "enemy-base")}}), encoding="utf-8")
+            # Disabling individual noise ratios with literal zeros causes
+            # Factorio 2.1 coal spotNoise division by zero during --create.
+            # Disable entity autoplace as a category instead. All resources,
+            # trees and enemies in this fixture are explicitly authored.
+            "autoplace_settings": {"entity": {
+                "treat_missing_as_default": False, "settings": {}}}}), encoding="utf-8")
         runtime = output / "runtime"; runtime.mkdir()
         ini = output / "config.ini"
         ini.write_text("[path]\nread-data=__PATH__executable__/../../data\nwrite-data=" +
