@@ -143,6 +143,20 @@ function M.authorization_for_destination(pair, pos, reason, opts)
         station_unit=station_unit(pair)},"native-paid-original-locomotive-fuel-0836"
     end
   end
+  -- Original 0836 boarding: the same physically paid, powered, stopped
+  -- locomotive and the original Magos, not an arbitrary station-leash bypass.
+  if frontier and opts and opts.owner=="rail-track-frontier-0836"
+      and reason=="original-train-physical-boarding-0836"
+      and type(frontier.authorized_original_train_boarding_walk_0836)=="function"then
+    local checked,authorized=pcall(
+      frontier.authorized_original_train_boarding_walk_0836,pair,pos,{
+        owner=opts.owner,reason=reason,
+        ground_route_final_destination=opts.ground_route_final_destination or pos})
+    if checked and authorized==true then
+      return true,{pair=pair,role="physical-original-rail-0836",
+        station_unit=station_unit(pair)},"native-paid-original-train-boarding-0836"
+    end
+  end
   local surface = destination_surface(pair, pos)
   local auth, order, source = authorized_pairs(pair)
   local best, best_d = nil, nil

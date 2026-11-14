@@ -1821,6 +1821,146 @@ function M.service_first_train_stop_0836(pair,role)
     or "original-first-train-stop-request-issued"
 end
 
+-- Only the original 0836 driver may walk to the original item-paid train.
+-- This is read-only native corridor evidence for canonical 0574/0418/0566,
+-- not a new movement owner, leash increase, driver surrogate or cargo credit.
+-- A live 0566 return may be released by ITS controller only when this exact
+-- boarded-stage physical approach is ready, empty-handed and identity-safe.
+function M.authorized_original_train_boarding_walk_0836(pair,point,movement)
+  if not(eligible(pair,pair and pair.remote_rail_outpost_0835)
+      and type(point)=="table" and type(point.x)=="number"
+      and type(point.y)=="number" and type(movement)=="table"
+      and storage and storage.tech_priests
+      and type(storage.tech_priests.pairs_by_station)=="table"
+      and storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair
+      and pair.priest.type=="character"
+      and pair.priest.force==pair.station.force
+      and pair.priest.surface==pair.station.surface)then return false end
+  local rail_owner=movement.owner=="rail-track-frontier-0836"
+    and movement.reason=="original-train-physical-boarding-0836"
+  local safety_owner=movement.owner=="movement-controller-enforcement-0566"
+    and movement.reason=="movement-enforcement-overleash-return-0566"
+    and pair.movement_request_0418==movement
+    and (tonumber(movement.priority)or 0)>=840
+    and (tonumber(movement.expires_tick)or -1)>=now()
+  if not(rail_owner or safety_owner)then return false end
+  local m=pair.remote_rail_outpost_0835
+  local route=m.rail_frontier_0836
+  local lead=m.first_locomotive_0836
+  local wagon=m.first_wagon_0836
+  local fuel=m.first_fuel_0836
+  local board=m.first_board_0836
+  local home=m.first_stop_0836
+  local remote=m.remote_stop_0836
+  local loco=lead and lead.built_entity
+  if not(m.status=="rail-track-established"
+      and route and route.chain_audit_completed_tick_0836
+      and type(route.start_position)=="table"
+      and type(route.built_units)=="table"
+      and route.segment==#route.built_units and route.segment>=24
+      and defines and defines.direction and route.direction==defines.direction.east
+      and lead and lead.phase=="native-paid-locomotive-verified"
+      and lead.paid_completion_0836
+      and lead.paid_completion_0836.native_0338_paid==true
+      and valid(loco) and loco.unit_number==lead.built_unit
+      and wagon and wagon.phase=="native-paid-wagon-verified"
+      and wagon.paid_completion_0836
+      and wagon.paid_completion_0836.native_0338_paid==true
+      and valid(wagon.built_entity)
+      and fuel and fuel.phase=="native-paid-locomotive-fueled"
+      and board and (board.phase=="awaiting-physical-approach"
+        or board.phase=="approaching-native-train"
+        or board.phase=="native-boarding-refused")
+      and home and home.phase=="native-paid-original-train-stop-verified"
+      and remote and remote.phase=="native-paid-original-train-stop-verified"
+      and loco.force==pair.station.force and loco.surface==pair.station.surface
+      and loco.train and loco.train.valid
+      and wagon.built_entity.train and wagon.built_entity.train.valid
+      and loco.train.id==wagon.built_entity.train.id
+      and math.abs(tonumber(loco.train.speed)or 0)<0.01
+      and not pair.construction_task_0338
+      and not pair.construction_custody_0338
+      and not pair.machine_logistics_custody_0528
+      and not pair.direct_acquisition_custody_0513
+      and not pair.inventory_transfer_custody_0687
+      and not pair.item_family_logistics_0702
+      and not pair.item_family_custody_0702
+      and not pair.defense_task_0259)then return false end
+  local machine=pair.machine_logistics_0528
+  if machine and machine.phase~="complete"
+      and machine.phase~="failed"then return false end
+  -- Verify separately item-debited, still connected engine-owned stops.
+  for _,stop in ipairs({home,remote})do
+    local receipt=stop.paid_completion_0836
+    local entity=stop.built_entity
+    if not(receipt and receipt.native_0338_paid==true
+        and type(receipt.before)=="number"
+        and type(receipt.after)=="number"
+        and receipt.before-receipt.after==1
+        and valid(entity) and entity.unit_number==stop.built_unit
+        and entity.force==pair.station.force
+        and entity.surface==pair.station.surface)then return false end
+    local ok,rail=pcall(function()return entity.connected_rail end)
+    if not(ok and valid(rail))then return false end
+    local accounted=false
+    for _,unit in ipairs(route.built_units)do
+      if rail.unit_number==unit then accounted=true;break end
+    end
+    if not accounted then return false end
+  end
+  -- Historical fuel receipts alone are insufficient: inspect live fuel.
+  local ok,has_fuel=pcall(function()
+    local slot=defines and defines.inventory and defines.inventory.fuel
+    local inv=slot and loco.get_inventory(slot)
+    if not(inv and inv.valid)then return false end
+    local n=inv.get_item_count("coal")
+    if type(n)~="number"then return false end
+    if n>0 then return true end
+    local burner=loco.burner
+    return burner and burner.valid
+      and (tonumber(burner.remaining_burning_fuel)or 0)>0 or false
+  end)
+  if not(ok and has_fuel==true)then return false end
+  local goal=rail_owner
+    and (movement.ground_route_final_destination or movement)
+    or loco.position
+  if not(type(goal)=="table" and type(goal.x)=="number"
+      and type(goal.y)=="number")then return false end
+  if rail_owner then
+    local dx=goal.x-loco.position.x
+    local dy=goal.y-loco.position.y
+    if dx*dx+dy*dy>2.25 then return false end
+  else
+    local target=movement.ground_route_final_destination or movement
+    local dx=target.x-pair.station.position.x
+    local dy=target.y-pair.station.position.y
+    if dx*dx+dy*dy>0.04 then return false end
+  end
+  -- Keep the walker beside the exact paid straight track. The origin
+  -- handoff is bounded to home command reach, not a broad lane exception.
+  local start=route.start_position
+  if math.abs(point.y-start.y)>6
+      or point.x<math.min(pair.station.position.x,start.x)-8
+      or point.x>loco.position.x+4 then return false end
+  local hx=point.x-pair.station.position.x
+  local hy=point.y-pair.station.position.y
+  if hx*hx+hy*hy<=18*18 then return true end
+  local index=math.floor((point.x-start.x)/M.segment_step+0.5)+1
+  if index<2 or index+1>route.segment then return false end
+  local center=pos(start.x+(index-1)*M.segment_step,start.y)
+  local before=track_at(pair,pos(center.x-M.segment_step,center.y),
+    route.direction)
+  local middle=track_at(pair,center,route.direction)
+  local after=track_at(pair,pos(center.x+M.segment_step,center.y),
+    route.direction)
+  return before and middle and after
+    and before.unit_number==route.built_units[index-1]
+    and middle.unit_number==route.built_units[index]
+    and after.unit_number==route.built_units[index+1]
+    and connected_straight_rails(before,middle)
+    and connected_straight_rails(middle,after) or false
+end
+
 function M.service_first_train_board_0836(pair)
   local m=pair and pair.remote_rail_outpost_0835
   local loco=m and m.first_locomotive_0836

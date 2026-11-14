@@ -1879,3 +1879,60 @@ class NativeRailOrphan0702HandoffTests(unittest.TestCase):
         for marker in ("item_family_phase_0702=", "item_family_item_0702=",
                        "item_family_custody_0702="):
             self.assertIn(marker,fixture)
+
+class NativeRailBoardingLeashAuthority0836Tests(unittest.TestCase):
+    """Existing 0418/0566/0574 must honor only the original paid boarding lane."""
+
+    def test_paid_boarding_requires_native_stops_train_fuel_original_priest_and_no_custody(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        block=rail.split("function M.authorized_original_train_boarding_walk_0836(pair,point,movement)",1)[1].split(
+            "function M.service_first_train_board_0836(pair)",1)[0]
+        for marker in ('storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair',
+                       'pair.priest.type=="character"',
+                       'movement.reason=="original-train-physical-boarding-0836"',
+                       'movement.reason=="movement-enforcement-overleash-return-0566"',
+                       'pair.movement_request_0418==movement',
+                       'and route.chain_audit_completed_tick_0836',
+                       'route.segment==#route.built_units',
+                       'lead.paid_completion_0836.native_0338_paid==true',
+                       'wagon.paid_completion_0836.native_0338_paid==true',
+                       'home.phase=="native-paid-original-train-stop-verified"',
+                       'remote.phase=="native-paid-original-train-stop-verified"',
+                       'receipt.before-receipt.after==1',
+                       'entity.connected_rail',
+                       'loco.train.id==wagon.built_entity.train.id',
+                       'inv.get_item_count("coal")',
+                       'not pair.machine_logistics_custody_0528',
+                       'not pair.construction_custody_0338',
+                       'not pair.item_family_logistics_0702',
+                       'not pair.item_family_custody_0702',
+                       'connected_straight_rails(before,middle)',
+                       'connected_straight_rails(middle,after)'):
+            self.assertIn(marker,block)
+        for forbidden in ('teleport(', 'create_entity(', 'set_driver(', 'insert(', 'remove_item(',
+                          'bounds_exempt', 'force_retarget'):
+            self.assertNotIn(forbidden,block)
+
+    def test_canonical_enforcement_releases_only_own_safety_and_preserves_live_boarding(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        controller=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text(encoding="utf-8")
+        corridor=(root/"tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text(encoding="utf-8")
+        enforce=controller.split("function M.enforce_pair(pair, reason)",1)[1]
+        self.assertLess(enforce.index("original-paid-train-boarding-safety-handoff-0836"),
+                        enforce.index("if distance > M.hard_leash(pair)"))
+        self.assertIn('M.stop(pair,"original-paid-train-boarding-safety-handoff-0836")',enforce)
+        self.assertIn('request.owner=="rail-track-frontier-0836"',enforce)
+        self.assertIn('return false,"original-paid-train-boarding-route-owned-0836"',enforce)
+        self.assertIn('M.stop(pair, "movement-overleash-0566")',enforce)
+        self.assertIn('return moved == true, "overleash-return"',enforce)
+        position=controller.split("function M.position_allowed(pair, pos, reason, opts)",1)[1].split(
+            "local function proxy_prime_allowed",1)[0]
+        self.assertIn('opts.owner=="rail-track-frontier-0836"',position)
+        self.assertIn('frontier.authorized_original_train_boarding_walk_0836,pair,pos',position)
+        auth=corridor.split("function M.authorization_for_destination(pair, pos, reason, opts)",1)[1].split(
+            "function M.position_allowed",1)[0]
+        self.assertIn('opts.owner=="rail-track-frontier-0836"',auth)
+        self.assertIn('frontier.authorized_original_train_boarding_walk_0836,pair,pos',auth)
+        self.assertNotIn('bounds_exempt',auth)
+

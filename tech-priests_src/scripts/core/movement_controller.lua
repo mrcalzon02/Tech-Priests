@@ -403,6 +403,20 @@ function M.position_allowed(pair, pos, reason, opts)
       if ok and allowed==true then return true,nil,nil end
     end
   end
+  -- Only the original no-cargo Magos may approach the exact native-paid,
+  -- fueled locomotive after 0836's read-only physical rail verification.
+  if opts and opts.owner=="rail-track-frontier-0836"
+      and reason=="original-train-physical-boarding-0836" then
+    local frontier=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if frontier and
+        type(frontier.authorized_original_train_boarding_walk_0836)=="function"then
+      local ok,allowed=pcall(
+        frontier.authorized_original_train_boarding_walk_0836,pair,pos,{
+          owner=opts.owner,reason=reason,
+          ground_route_final_destination=opts.ground_route_final_destination or pos})
+      if ok and allowed==true then return true,nil,nil end
+    end
+  end
   local distance_sq = dist_sq(pair.station.position, pos) or 0
   local distance = math.sqrt(distance_sq)
   local maximum = M.work_radius(pair)
@@ -1472,6 +1486,25 @@ function M.enforce_pair(pair, reason)
     and request.owner == "movement-controller-enforcement-0566"
     and (tonumber(request.priority) or 0) >= 840
     and (dist_sq(request.ground_route_final_destination or request, pair.station.position) or math.huge) <= 0.04
+  -- The controller alone releases its own priority-840 home return.
+  -- A competing cargo or task lease is never preempted. Every call checks
+  -- original priest/train identities, both counted stops and live fuel.
+  if enforcement_return and request
+      and request.reason=="movement-enforcement-overleash-return-0566" then
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if rail and
+        type(rail.authorized_original_train_boarding_walk_0836)=="function"then
+      local checked,ready=pcall(
+        rail.authorized_original_train_boarding_walk_0836,
+        pair,pair.priest.position,request)
+      if checked and ready==true then
+        M.stop(pair,"original-paid-train-boarding-safety-handoff-0836")
+        root.stats.original_paid_train_boarding_safety_handoffs_0836=
+          (root.stats.original_paid_train_boarding_safety_handoffs_0836 or 0)+1
+        return true,"original-paid-train-boarding-safety-handoff-0836"
+      end
+    end
+  end
   if distance > M.hard_leash(pair) then
     -- 0836 original paid rail construction is a physically verified track
     -- contact, not a general overleash exemption.  Require the same live
@@ -1523,6 +1556,23 @@ function M.enforce_pair(pair, reason)
         root.stats.original_paid_train_fuel_walk_preserved_0836=
           (root.stats.original_paid_train_fuel_walk_preserved_0836 or 0)+1
         return false,"original-paid-train-fuel-walk-owned-0836"
+      end
+    end
+    -- Never turn a physically authorized original Magos boarding approach
+    -- into a higher-priority 0566 return solely for crossing the home leash.
+    if request and request.owner=="rail-track-frontier-0836"
+        and request.reason=="original-train-physical-boarding-0836" then
+      local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+      if rail and
+          type(rail.authorized_original_train_boarding_walk_0836)=="function"then
+        local checked,allowed=pcall(
+          rail.authorized_original_train_boarding_walk_0836,
+          pair,pair.priest.position,request)
+        if checked and allowed==true then
+          root.stats.original_paid_train_boarding_routes_preserved_0836=
+            (root.stats.original_paid_train_boarding_routes_preserved_0836 or 0)+1
+          return false,"original-paid-train-boarding-route-owned-0836"
+        end
       end
     end
     local courier_ok,courier_authorized=pcall(
