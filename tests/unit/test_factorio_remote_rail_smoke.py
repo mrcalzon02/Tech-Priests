@@ -113,6 +113,45 @@ class OriginalRailItemFamilyAdmissionTests(unittest.TestCase):
         self.assertNotIn("pair.item_family_logistics_0702 = nil", service)
 
 
+
+class ExistingUnladen0702RailYieldTests(unittest.TestCase):
+    def test_preexisting_magazine_source_approach_yields_without_cargo_or_task_loss(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        src = (root / "tech-priests_src/scripts/core/"
+               "item_family_logistics_0702.lua").read_text(encoding="utf-8")
+        yield_block = src.split(
+            "local function pause_unladen_item_family_for_rail_0836(pair,task)", 1
+        )[1].split("local function discover_pair(pair)", 1)[0]
+        service = src.split("function M.service_pair(pair, reason)", 1)[1].split(
+            "local function action_target(", 1)[0]
+        classifier = src.split("function M.recommend_action(pair)", 1)[1].split(
+            "local function discover_pairs(budget)", 1)[0]
+        for field in (
+            'task.phase~="move-to-source"',
+            "task.carried~=nil", "pair.item_family_custody_0702~=nil",
+            "task.relay_paused_order_1042~=nil",
+            "valid(task.source_entity)", "valid(task.target)",
+            'request.owner=="item-family-logistics-0702"',
+            'status.owner_match==true',
+            'status.owner=="item-family-logistics-0702"',
+            'pair.movement_request_0418==nil',
+            "task.rail_deferred_0836=true",
+        ):
+            self.assertIn(field, yield_block)
+        for forbidden in ("task.phase=", "task.carried=", "task.source_inv=",
+                          "pair.item_family_logistics_0702=", "pair.item_family_custody_0702=",
+                          "inv_remove(", "inv_insert(", "create_entity(", "teleport("):
+            self.assertNotIn(forbidden, yield_block)
+        self.assertIn("task.rail_deferred_0836=nil", service)
+        self.assertIn("return continue_task(pair,task)", service)
+        self.assertIn('task.rail_deferred_0836==true', classifier)
+        self.assertIn("original_rail_expedition_reserved_0836(pair)", classifier)
+        self.assertLess(classifier.index("task.rail_deferred_0836==true"),
+                        classifier.index("local candidate = pair.item_family_candidate_0702"))
+        self.assertLess(service.index("pause_unladen_item_family_for_rail_0836(pair,task)"),
+                        service.index("return continue_task(pair,task)"))
+
+
 class OriginalTrainLiveFuelRefusalTests(unittest.TestCase):
     def test_native_boarding_checks_live_traction_not_only_historical_fuel_receipt(self):
         root = pathlib.Path(__file__).resolve().parents[2]

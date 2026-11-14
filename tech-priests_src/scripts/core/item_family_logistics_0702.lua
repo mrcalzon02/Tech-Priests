@@ -616,6 +616,47 @@ local function original_rail_expedition_reserved_0836(pair)
   return not (back and back.phase=="native-original-home-arrived-after-roundtrip")
 end
 
+-- The original 0835 mission can be admitted *after* 0702 has already
+-- reserved a real source/target. Yield only an unladen, pre-pickup approach:
+-- retain the original task, source identity and target reservation exactly,
+-- and release a movement lease only through its verified 0418 owner. The
+-- dispatcher may resume the same task after the native rail expedition.
+local function pause_unladen_item_family_for_rail_0836(pair,task)
+  if not original_rail_expedition_reserved_0836(pair)
+      or type(task)~="table" or task.phase~="move-to-source"
+      or task.carried~=nil or pair.item_family_custody_0702~=nil
+      or task.relay_paused_order_1042~=nil
+      or not valid(task.source_entity) or not valid(task.target) then
+    return false,"live-0702-duty-or-no-original-rail"
+  end
+  local request=pair.movement_request_0418
+  if type(request)=="table" and request.owner=="item-family-logistics-0702" then
+    local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+    if not (controller and type(controller.request_status)=="function"
+        and type(controller.stop)=="function") then
+      return false,"canonical-0702-movement-unavailable"
+    end
+    local read,status=pcall(controller.request_status,pair,"item-family-logistics-0702")
+    if not (read and type(status)=="table"
+        and status.owner_match==true
+        and status.owner=="item-family-logistics-0702")then
+      return false,"canonical-0702-owner-mismatch"
+    end
+    local stopped,accepted=pcall(controller.stop,pair,
+      "original-0836-rail-expedition-unladen-0702-yield")
+    if not (stopped and accepted==true
+        and pair.movement_request_0418==nil)then
+      return false,"canonical-0702-pause-refused"
+    end
+  end
+  -- A foreign owner remains untouched. The original task and real source
+  -- stock also remain untouched; this is a reversible priority yield only.
+  task.rail_deferred_0836=true
+  task.rail_deferred_tick_0836=now()
+  record(pair,"unladen-0702-rail-yield",task.item)
+  return true,"unladen-0702-original-rail-yield"
+end
+
 local function discover_pair(pair)
   if not valid_pair(pair) then return false, "invalid-pair" end
   if reversal_future_worker_reserved_0962(pair)
@@ -1202,7 +1243,22 @@ function M.service_pair(pair, reason)
     -- source-less task while another authority may own the priest.
     return { processed=1, waiting=1, detail="waiting-source-relay-paused-1042" }
   end
-  if type(task) == "table" then return continue_task(pair, task) end
+  if type(task)=="table" and task.rail_deferred_0836==true then
+    if original_rail_expedition_reserved_0836(pair) then
+      return { processed=1, waiting=1, detail="unladen-0702-original-rail-yield" }
+    end
+    -- On mission completion/abort or a genuine combat interruption, resume
+    -- the identical original source/target task through its normal executor.
+    task.rail_deferred_0836=nil
+    task.rail_deferred_tick_0836=nil
+  end
+  if type(task)=="table" then
+    local yielded= pause_unladen_item_family_for_rail_0836(pair,task)
+    if yielded then
+      return { processed=1, waiting=1, detail="unladen-0702-original-rail-yield" }
+    end
+    return continue_task(pair,task)
+  end
   if reversal_future_worker_reserved_0962(pair) then
     return { processed = 1, waiting = 1, detail = "reversal-future-worker-reserved" }
   end
@@ -1246,6 +1302,8 @@ function M.recommend_action(pair)
   local task = pair.item_family_logistics_0702
   local custody = pair.item_family_custody_0702
   if type(task)=="table" and task.relay_paused_order_1042 then return nil end
+  if type(task)=="table" and task.rail_deferred_0836==true
+      and original_rail_expedition_reserved_0836(pair) then return nil end
   if type(task) == "table" then
     local target, phase, label = action_target(pair, task)
     return {
@@ -1277,6 +1335,7 @@ function M.recommend_action(pair)
     }
   end
   if reversal_future_worker_reserved_0962(pair) then return nil end
+  if original_rail_expedition_reserved_0836(pair) then return nil end
   local candidate = pair.item_family_candidate_0702
   if not candidate_valid(pair, candidate) then return nil end
   return {
