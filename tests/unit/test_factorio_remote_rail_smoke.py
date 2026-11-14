@@ -2704,3 +2704,53 @@ class OriginalRemoteNativeDrillWorldOrePickup0836(unittest.TestCase):
         self.assertIn('native_ground_iron=',fixture)
         # No new native PASS marker or weakening of the original return gate.
         self.assertIn('fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)
+
+
+
+class OriginalNativePaidOreWagonCarry0836(unittest.TestCase):
+    """A source-debited natural item must walk into the exact paid wagon."""
+
+    def test_ground_hold_requires_physical_wagon_walk_and_atomic_native_transfer(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        movement=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        corridor=(root/"tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text()
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text()
+        authorization=rail.split("function M.authorized_original_remote_wagon_carry_0836(pair,point,movement)",1)[1].split(
+            "\nfunction M.service_original_remote_wagon_ore_delivery_0836(pair)",1)[0]
+        delivery=rail.split("function M.service_original_remote_wagon_ore_delivery_0836(pair)",1)[1].split(
+            "\n-- remote stop may ask Factorio",1)[0]
+        for required in (
+            'M.authorized_original_remote_drill_hold_0836(pair)',
+            'pickup.phase=="native-ground-item-in-original-carrier"',
+            'pickup.ground_before==1 and pickup.ground_after==0',
+            'pickup.inventory.get_item_count',
+            'pickup.drill_unit==state.built_unit',
+            'wagon.paid_completion_0836.native_0338_paid==true',
+            'engine.train.station==stop',
+            'engine.train.id==wagon_entity.train.id',
+            'movement.owner=="rail-track-frontier-0836"',
+            'movement.reason=="original-rail-ore-wagon-carry-0836"',
+        ):
+            self.assertIn(required,authorization)
+        for required in (
+            'tech_priests_request_movement_0418',
+            'dx*dx+dy*dy>16',
+            'defines.inventory.cargo_wagon',
+            'wagon_before==original_before',
+            'pickup.wagon_delivery_0836=receipt',
+            'target.transfer_stack(pickup.inventory[1],1)',
+            'held_after==0 and wagon_after==wagon_before+1',
+            'native-original-wagon-transfer-quarantined',
+            'native-original-wagon-received-ground-mined-ore',
+        ):
+            self.assertIn(required,delivery)
+        for forbidden in ('teleport(', 'surface.create_entity(', 'create_inventory(', 'bounds_exempt',
+                          'pickup.inventory.insert(', 'wagon_entity.insert('):
+            self.assertNotIn(forbidden,delivery)
+        self.assertIn('M.service_original_remote_wagon_ore_delivery_0836(pair)',rail)
+        self.assertIn('original-rail-ore-wagon-carry-0836',movement)
+        self.assertIn('authorized_original_remote_wagon_carry_0836',corridor)
+        self.assertIn('REMOTE_DRILL_WAGON_NATIVE_0836 elapsed=',fixture)
+        self.assertIn('receipt_wagon_after=',fixture)
+        self.assertIn('fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)

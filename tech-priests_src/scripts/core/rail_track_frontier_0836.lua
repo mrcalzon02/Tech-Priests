@@ -3213,6 +3213,176 @@ function M.service_original_remote_drill_output_pickup_0836(pair)
   return true,"original-native-drill-ground-item-physically-picked-up"
 end
 
+-- Only the ORIGINAL Magos holding one genuinely mined, native-ground
+-- iron item may walk to the SAME paid remote wagon. This is a read-only
+-- corridor admission for canonical 0418/0574, never a movement bypass.
+function M.authorized_original_remote_wagon_carry_0836(pair,point,movement)
+  local m=pair and pair.remote_rail_outpost_0835
+  local state=m and m.first_remote_drill_0836
+  local pickup=state and state.ore_pickup_0836
+  local loco=m and m.first_locomotive_0836
+  local wagon=m and m.first_wagon_0836
+  local far=m and m.remote_stop_0836
+  local priest=pair and pair.priest
+  local engine=loco and loco.built_entity
+  local wagon_entity=wagon and wagon.built_entity
+  local stop=far and far.built_entity
+  if not(type(point)=="table" and type(point.x)=="number"
+    and type(point.y)=="number"
+    and type(movement)=="table"
+    and movement.owner=="rail-track-frontier-0836"
+    and movement.reason=="original-rail-ore-wagon-carry-0836"
+    and M.authorized_original_remote_drill_hold_0836(pair)
+    and pickup and pickup.phase=="native-ground-item-in-original-carrier"
+    and not pickup.quarantine and not pickup.wagon_delivery_0836
+    and pickup.priest_unit==priest.unit_number
+    and pickup.station_unit==pair.station.unit_number
+    and pickup.drill_unit==state.built_unit
+    and pickup.train_id==state.train_id
+    and pickup.ground_before==1 and pickup.ground_after==0
+    and pickup.native_ore_count==1
+    and pickup.inventory and pickup.inventory.valid
+    and wagon and wagon.phase=="native-paid-wagon-verified"
+    and wagon.paid_completion_0836
+    and wagon.paid_completion_0836.native_0338_paid==true
+    and valid(wagon_entity) and wagon_entity.unit_number==wagon.built_unit
+    and valid(engine) and loco.phase=="native-paid-locomotive-verified"
+    and valid(stop) and far.phase=="native-paid-original-train-stop-verified"
+    and engine.train and engine.train.valid and wagon_entity.train
+    and wagon_entity.train.valid and engine.train.id==wagon_entity.train.id
+    and engine.train.id==state.train_id
+    and engine.train.station==stop
+    and math.abs(tonumber(engine.train.speed)or 0)<0.01
+    and priest.force==wagon_entity.force and priest.surface==wagon_entity.surface
+    and valid(state.built_entity) and state.built_entity.unit_number==state.built_unit)then
+    return false
+  end
+  local counted,held=pcall(pickup.inventory.get_item_count,m.item)
+  if not(counted and held==1)then return false end
+  local goal=movement.ground_route_final_destination or movement
+  if not(type(goal)=="table" and type(goal.x)=="number"
+    and type(goal.y)=="number"
+    and (goal.x-wagon_entity.position.x)^2
+      +(goal.y-wagon_entity.position.y)^2<=0.04)then return false end
+  -- Corridor: the original real drill to the original real cargo wagon,
+  -- with only a short clearance envelope for actual walking obstacles.
+  local from=state.built_entity.position
+  local to=wagon_entity.position
+  local vx,vy=to.x-from.x,to.y-from.y
+  local length=vx*vx+vy*vy
+  if length<4 or length>96*96 then return false end
+  local px,py=point.x-from.x,point.y-from.y
+  local along=(px*vx+py*vy)/length
+  local cross=math.abs(px*vy-py*vx)/math.sqrt(length)
+  return along>=-0.12 and along<=1.12 and cross<=10
+    and px*px+py*py<=96*96
+end
+
+-- Move the SAME physical source-ground item, still inside the original
+-- persistent engine inventory, to the SAME original paid cargo wagon.
+-- No transfer is attempted until the original character actually walks
+-- into native reach; a prewritten ambiguous native transfer is quarantined.
+function M.service_original_remote_wagon_ore_delivery_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  local state=m and m.first_remote_drill_0836
+  local pickup=state and state.ore_pickup_0836
+  local wagon=m and m.first_wagon_0836
+  local wagon_entity=wagon and wagon.built_entity
+  local priest=pair and pair.priest
+  if not(pickup and pickup.phase=="native-ground-item-in-original-carrier"
+    and not pickup.wagon_delivery_0836 and valid(wagon_entity)
+    and M.authorized_original_remote_wagon_carry_0836(pair,
+      wagon_entity.position,{owner="rail-track-frontier-0836",
+        reason="original-rail-ore-wagon-carry-0836",
+        ground_route_final_destination=wagon_entity.position}))then
+    return false,"original-paid-wagon-ground-custody-unverified"
+  end
+  local move=pair.movement_request_0418
+  if move and (move.owner~="rail-track-frontier-0836"
+      or move.reason~="original-rail-ore-wagon-carry-0836")then
+    return false,"original-paid-wagon-foreign-movement-owned"
+  end
+  local dx=priest.position.x-wagon_entity.position.x
+  local dy=priest.position.y-wagon_entity.position.y
+  if dx*dx+dy*dy>16 then
+    if move and (tonumber(move.expires_tick)or 0)>now()then
+      return false,"original-paid-wagon-native-cargo-walk-in-progress"
+    end
+    local request=rawget(_G,"tech_priests_request_movement_0418")
+    if type(request)~="function"then
+      return false,"original-paid-wagon-canonical-movement-unavailable"
+    end
+    local called,allowed,reason=pcall(request,pair,wagon_entity.position,
+      "original-rail-ore-wagon-carry-0836",{
+        owner="rail-track-frontier-0836",priority=710,ttl=60*20,radius=3.5,
+        distraction=defines and defines.distraction and defines.distraction.none})
+    pickup.last_wagon_carry_reason_0836=called
+      and tostring(reason or allowed) or "native-wagon-walk-request-error"
+    return called and allowed==true,pickup.last_wagon_carry_reason_0836
+  end
+  local slot=defines and defines.inventory and defines.inventory.cargo_wagon
+  local opened,inv=pcall(function()
+    return slot and wagon_entity.get_inventory(slot)
+  end)
+  if not(opened and inv and inv.valid)then
+    return false,"original-paid-wagon-cargo-inventory-unavailable"
+  end
+  local counted,held_before,wagon_before=pcall(function()
+    return pickup.inventory.get_item_count(m.item),inv.get_item_count(m.item)
+  end)
+  local outward=m.first_outbound_0836
+  local original_before=outward
+    and tonumber(outward.departure_wagon_item_count_0836)
+  if not(counted and held_before==1 and type(wagon_before)=="number"
+    and original_before and wagon_before==original_before)then
+    return false,"original-paid-wagon-pretransfer-ore-accounting-mismatch"
+  end
+  local target
+  local found_slot,slot_error=pcall(function()
+    for i=1,#inv do
+      local stack=inv[i]
+      if stack and stack.valid and not stack.valid_for_read then
+        target=stack
+        break
+      end
+    end
+  end)
+  if not found_slot or not target then
+    return false,"original-paid-wagon-real-free-slot-missing"
+  end
+  local receipt={phase="native-original-wagon-transfer-pending",
+    priest_unit=priest.unit_number,drill_unit=state.built_unit,
+    wagon_unit=wagon_entity.unit_number,train_id=state.train_id,
+    station_unit=pair.station.unit_number,held_before=held_before,
+    wagon_before=wagon_before,attempted_tick=now()}
+  pickup.wagon_delivery_0836=receipt
+  local transferred,result=pcall(function()
+    return target.transfer_stack(pickup.inventory[1],1)
+  end)
+  local checked,held_after,wagon_after=pcall(function()
+    return pickup.inventory.get_item_count(m.item),
+      inv.get_item_count(m.item)
+  end)
+  if not(transferred and result==true and checked
+    and held_after==0 and wagon_after==wagon_before+1)then
+    receipt.phase="native-original-wagon-transfer-quarantined"
+    receipt.quarantine="original-wagon-physical-ore-transfer-uncertain"
+    return false,receipt.quarantine
+  end
+  receipt.phase="native-original-wagon-received-ground-mined-ore"
+  receipt.held_after=held_after
+  receipt.wagon_after=wagon_after
+  receipt.loaded_tick=now()
+  pickup.phase="native-ground-ore-loaded-into-original-paid-wagon"
+  m.next_step="original-paid-wagon-contains-real-mined-ore-awaiting-reboard"
+  local stop=rawget(_G,"tech_priests_stop_movement_0418")
+  if type(stop)=="function" and move
+      and move.owner=="rail-track-frontier-0836"then
+    pcall(stop,pair,"original-rail-ore-wagon-delivery-complete-0836")
+  end
+  return true,"native-original-wagon-received-real-ground-mined-ore"
+end
+
 -- remote stop may ask Factorio to take it home. A schedule or route receipt is
 -- never evidence of a return journey; single-headed trains may have no path.
 function M.service_first_train_return_0836(pair)
@@ -3480,6 +3650,7 @@ function M.service_pair(pair)
               M.service_original_remote_drill_disembark_0836(pair)
               M.service_original_remote_drill_fuel_0836(pair)
               M.service_original_remote_drill_output_pickup_0836(pair)
+              M.service_original_remote_wagon_ore_delivery_0836(pair)
               return M.service_first_train_return_0836(pair)
             end
             return M.service_first_train_outbound_0836(pair)

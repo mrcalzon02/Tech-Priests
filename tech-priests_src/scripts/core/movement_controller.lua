@@ -403,6 +403,21 @@ function M.position_allowed(pair, pos, reason, opts)
       if ok and allowed==true then return true,nil,nil end
     end
   end
+  -- Original 0836 counted ore carrier: no station-radius exemption without
+  -- the SAME paid drill, source-ground cargo, train, and native remote stop.
+  if opts and opts.owner=="rail-track-frontier-0836"
+      and reason=="original-rail-ore-wagon-carry-0836" then
+    local frontier=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if frontier and
+        type(frontier.authorized_original_remote_wagon_carry_0836)=="function"then
+      local checked,allowed=pcall(
+        frontier.authorized_original_remote_wagon_carry_0836,pair,pos,{
+          owner=opts.owner,reason=reason,
+          ground_route_final_destination=
+            opts.ground_route_final_destination or pos})
+      if checked and allowed==true then return true,nil,nil end
+    end
+  end
   -- Only the original no-cargo Magos may approach the exact native-paid,
   -- fueled locomotive after 0836's read-only physical rail verification.
   if opts and opts.owner=="rail-track-frontier-0836"

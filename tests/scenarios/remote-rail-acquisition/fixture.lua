@@ -890,6 +890,39 @@ local function inspect(s,elapsed)
     " source_ground_after="..tostring(pickup and pickup.ground_after)..
     " native_collected_tick="..tostring(pickup and pickup.collected_tick)..
     " quarantine="..tostring(pickup and pickup.quarantine))
+  -- Native wagon proof remains separate from ground pickup and full
+  -- train-return acceptance. Report real inventory, original identity and
+  -- transfer quarantine from the same physical cargo hold.
+  local wagon_transfer=pickup and pickup.wagon_delivery_0836
+  local original_wagon_ore="unmeasured"
+  if wagon_entity and wagon_entity.valid and defines
+      and defines.inventory and defines.inventory.cargo_wagon then
+    local opened,inv=pcall(function()
+      return wagon_entity.get_inventory(defines.inventory.cargo_wagon)
+    end)
+    if opened and inv and inv.valid then
+      local counted,n=pcall(inv.get_item_count,"iron-ore")
+      if counted then original_wagon_ore=n end
+    end
+  end
+  emit("REMOTE_DRILL_WAGON_NATIVE_0836 elapsed="..elapsed..
+    " transfer_phase="..tostring(wagon_transfer and wagon_transfer.phase)..
+    " original_ore_wagon="..tostring(original_wagon_ore)..
+    " receipt_held_before="..tostring(wagon_transfer and wagon_transfer.held_before)..
+    " receipt_held_after="..tostring(wagon_transfer and wagon_transfer.held_after)..
+    " receipt_wagon_before="..tostring(wagon_transfer and wagon_transfer.wagon_before)..
+    " receipt_wagon_after="..tostring(wagon_transfer and wagon_transfer.wagon_after)..
+    " receipt_magos_unit="..tostring(wagon_transfer and wagon_transfer.priest_unit)..
+    " receipt_wagon_unit="..tostring(wagon_transfer and wagon_transfer.wagon_unit)..
+    " receipt_train_id="..tostring(wagon_transfer and wagon_transfer.train_id)..
+    " loaded_tick="..tostring(wagon_transfer and wagon_transfer.loaded_tick)..
+    " movement_owner="..tostring(p.movement_request_0418
+      and p.movement_request_0418.owner)..
+    " movement_reason="..tostring(p.movement_request_0418
+      and p.movement_request_0418.reason)..
+    " last_walk_reason="..tostring(pickup
+      and pickup.last_wagon_carry_reason_0836)..
+    " quarantine="..tostring(wagon_transfer and wagon_transfer.quarantine))
   emit("REMOTE_DRILL_SUPPLY_NATIVE_0836 elapsed="..elapsed..
     " source_unit="..tostring(supply and supply.source_unit)..
     " source_before="..tostring(supply and supply.source_before)..
