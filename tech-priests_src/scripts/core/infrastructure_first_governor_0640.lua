@@ -2021,7 +2021,7 @@ function M.service_pair(pair, reason)
       pair.cooperative_labor_assignment_0690={
         tick=now(),item=choice,source=source,previous=needed,
       }
-      needed,why=choice,"cooperative-labor:"..tostring(source)
+      needed,why,stock_target=choice,"cooperative-labor:"..tostring(source),LABOR_TARGETS[choice]
     end
   end
   if not needed then

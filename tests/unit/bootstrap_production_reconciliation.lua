@@ -2542,4 +2542,28 @@ scenario("configured independent factory publishes real smelted-material shortag
  check(item=="stone-brick","stocked external steel was ignored ahead of the real brick shortage")
  _G.TechPriestsStorageRoleAuthority0686=authority
 end)
+scenario("cooperative material buffer cannot complete against one preexisting unit",function()
+ local f=fixture()
+ local assembler={valid=true,type="assembling-machine",name="tech-priests-emergency-assembler",
+  unit_number=34,position={x=6,y=0},force=f.force,surface=f.surface}
+ f.surface.find_entities_filtered=function(args)if args.type=="resource"then return{f.ore}end;return{f.furnace,assembler}end
+ for _,n in ipairs{"electronic-circuit","copper-cable","copper-plate"}do prototypes.item[n]={}end
+ f.force.recipes["electronic-circuit"]={enabled=true,products={{name="electronic-circuit",type="item",amount=1}}}
+ f.force.recipes["copper-cable"]={enabled=true,products={{name="copper-cable",type="item",amount=2}}}
+ f.source.stock["iron-plate"]=12;f.source.stock["copper-plate"]=30;f.source.stock["copper-cable"]=1
+ local old_recipe=tech_priests_get_recipe_ingredients_for_item_0185
+ tech_priests_get_recipe_ingredients_for_item_0185=function(n)
+  if n=="electronic-circuit"then return{{name="iron-plate",count=1},{name="copper-cable",count=3}}end
+  if n=="copper-cable"then return{{name="copper-plate",count=1}}end
+  return old_recipe(n)
+ end
+ local old_coop=Infra.cooperative_labor_for_pair
+ Infra.cooperative_labor_for_pair=function()return"copper-cable","cooperative"end
+ local acted,why=Infra.service_pair(f.pair,"cooperative-buffer")
+ Infra.cooperative_labor_for_pair=old_coop;tech_priests_get_recipe_ingredients_for_item_0185=old_recipe
+ check(acted and f.pair.emergency_craft and f.pair.emergency_craft.output_item=="copper-cable"
+  and f.pair.emergency_craft.target_stock_0647==20,
+  "cooperative target collapsed to an already-supplied one-unit loop: "..tostring(why))
+ check(f.source.get_item_count("copper-cable")==1,"cooperative planning fabricated its buffer")
+end)
 print("[bootstrap-production-regression] PASS scenarios="..total)
