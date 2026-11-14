@@ -635,7 +635,7 @@ function tech_priests_0257_build_ratio_plan(pair, op)
     end)
     if ok and tonumber(duration)and duration>0 and tonumber(speed)and speed>0 then
       labs=math.max(1,math.min(TECH_PRIESTS_MAGOS_RATIO_MAX_PER_GROUP_0257,
-        math.ceil((tonumber(plan.target_spm)or 0)*duration/(60*speed))))
+        math.ceil((tonumber(plan.target_spm)or 0)*duration/(3600*speed))))
     end
     tech_priests_0257_add_need(plan.groups, "labs", labs)
   end

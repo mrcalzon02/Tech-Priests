@@ -238,9 +238,12 @@ assert(portfolio.science_packs["automation-science-pack"]==1
  "independent factory omitted unlocked science capacity or bypassed locked military recipe")
 op.factory_science_portfolio_1172=nil;force.recipes=nil;observed_map=nil
 entities.lab.get_researching_speed=function(quality)assert(quality=="normal");return 1 end
-force.current_research={research_unit_energy=60,research_unit_ingredients={{name="automation-science-pack",amount=1}}}
+force.current_research={research_unit_energy=3600,research_unit_ingredients={{name="automation-science-pack",amount=1}}}
 local lab_capacity=tech_priests_0257_build_ratio_plan(pair,op)
 assert(lab_capacity.groups.labs==5,"native one-minute research units were assigned only a single laboratory")
+force.current_research.research_unit_energy=900
+assert(tech_priests_0257_build_ratio_plan(pair,op).groups.labs==2,
+ "native tick duration was mistaken for seconds and overbuilt laboratory capacity")
 force.current_research=nil
 local previous_pick=tech_priests_0257_pick_ratio_need
 tech_priests_0257_pick_ratio_need=function()return nil,"ratio-miners 1/29",{groups={labs=3},target_spm=5}end

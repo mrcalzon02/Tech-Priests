@@ -211,10 +211,10 @@ do
     "research planner assigned an already completed technology")
   tech.researched=false
   local slow={valid=true,name="slow-red",enabled=true,researched=false,prerequisites={},
-    research_unit_ingredients={{name=item,amount=1}},research_unit_count=200,research_unit_energy=60}
+    research_unit_ingredients={{name=item,amount=1}},research_unit_count=200,research_unit_energy=3600}
   local green="logistic-science-pack"
   local fast={valid=true,name="fast-red-green",enabled=true,researched=false,prerequisites={},
-    research_unit_ingredients={{name=item,amount=1},{name=green,amount=1}},research_unit_count=50,research_unit_energy=30}
+    research_unit_ingredients={{name=item,amount=1},{name=green,amount=1}},research_unit_count=50,research_unit_energy=1800}
   force.technologies={[slow.name]=slow,[fast.name]=fast}
   lab.prototype.lab_inputs={item,green};stock[item]=1;stock[green]=1
   pair.independent_emergency_operation_0184={enabled=true}
