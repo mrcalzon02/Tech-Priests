@@ -867,6 +867,8 @@ local function inspect(s,elapsed)
       and remote_entity.unit_number)..
     " rail_unit="..tostring(remote_rail and remote_rail.valid
       and remote_rail.unit_number)..
+    " native_heading="..tostring(remote_entity and remote_entity.valid
+      and remote_entity.direction)..
     " far_connected="..tostring(far_connected)..
     " home_separate="..tostring(stop_entity and stop_entity.valid
       and remote_entity and remote_entity.valid
@@ -943,6 +945,12 @@ local function inspect(s,elapsed)
       and loco_entity.position.x)..
     " origin_x="..tostring(outbound and outbound.origin_x)..
     " highest_x="..tostring(outbound and outbound.highest_x)..
+    " locomotive_heading="..tostring(loco_entity and loco_entity.valid
+      and loco_entity.direction)..
+    " manual_mode="..tostring(moving_train and moving_train.valid
+      and moving_train.manual_mode)..
+    " train_state="..tostring(moving_train and moving_train.valid
+      and moving_train.state)..
     " speed="..tostring(moving_train and moving_train.valid
       and moving_train.speed)..
     " has_path="..tostring(moving_train and moving_train.valid
