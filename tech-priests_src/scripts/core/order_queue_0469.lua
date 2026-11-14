@@ -162,8 +162,6 @@ function M.can_yield_uncommitted_rail_0836(p,request)
   local pending=mission and mission.pending_rail_0836
   local loco=mission and mission.first_locomotive_0836
   local reverse=mission and mission.return_locomotive_0836
-  local loco_request_state=request and request.site_reason=="original-return-locomotive-0836"
-    and reverse or loco
   local wagon=mission and mission.first_wagon_0836
   local stop=mission and mission.first_stop_0836
   local fuel=mission and mission.first_fuel_0836
@@ -181,8 +179,13 @@ function M.can_yield_uncommitted_rail_0836(p,request)
     and (request.site_reason=="original-first-locomotive-0836"
       or request.site_reason=="original-return-locomotive-0836")
     and request.rail_mission_station_unit_0836==p.station.unit_number
-    and loco_request_state and loco_request_state.phase=="awaiting-original-0338"
-    and loco_request_state.request==request and mission.status=="rail-track-established"
+    and ((request.site_reason=="original-first-locomotive-0836"
+      and loco and loco.phase=="awaiting-original-0338"
+      and loco.request==request)
+      or (request.site_reason=="original-return-locomotive-0836"
+        and reverse and reverse.phase=="awaiting-original-0338"
+        and reverse.request==request))
+    and mission.status=="rail-track-established"
     and route and route.chain_audit_completed_tick_0836
   local wagon_request=request and request.item_name=="cargo-wagon"
     and request.entity_name=="cargo-wagon"
