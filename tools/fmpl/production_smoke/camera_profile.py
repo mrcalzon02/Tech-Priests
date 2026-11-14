@@ -26,7 +26,8 @@ def purifier_profile(resolution=512):
     profile = {
         "camera_policy": POLICY_ID,
         "capture_kind": "entity",
-        "directions": [0, 90, 180, 270],
+        "orientation_policy": "fixed",
+        "directions": [0],
         "states": {"idle": [1], "working": [25]},
         "source_size": resolution,
         "camera_override": {

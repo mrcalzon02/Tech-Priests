@@ -1,0 +1,107 @@
+{
+  "status": "candidate_native; endpoint census incomplete",
+  "source_path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\model-completion\\metallic-hydrogen-chain\\v13-recovered\\fmpl-super-greeble\\water-purifier-fmpl-super.blend",
+  "source_sha256": "971087c8a03e5b91ab6f70afa2a1abe13f5d0cd231b9983969bd509ed10330be",
+  "source_mesh_digest": "997a3238157abb473b750b9240125d76f75c010469c1125a67c6779e7269ce1c",
+  "original_count": 50,
+  "process_count": 504,
+  "console_height_offset": 0.775,
+  "console_panel_margins": [
+    0.15499995708465575,
+    0.08700010299682615,
+    0.20400006532669068,
+    0.09499984741210943
+  ],
+  "console_tank_BVH_intersections": [],
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071068286895752,
+        -0.7071067094802856,
+        -6.0
+      ],
+      [
+        0.0,
+        0.7071067094802856,
+        0.7071068286895752,
+        7.650000095367432
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 5.800000190734863,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      512,
+      512
+    ]
+  },
+  "bores": {
+    "passed": true,
+    "schema": "fmpl.water-purifier.side-bores.v11",
+    "side_count": 2,
+    "probed_rays": 74,
+    "bore_nominal_diameter": 0.49,
+    "inner_test_radius": 0.205,
+    "hits": [],
+    "tested_actual_rendered_meshes": 637,
+    "native_factorio_fluidbox_verified": false
+  },
+  "added_meshes": 182,
+  "contact_graph": [
+    {
+      "path": [
+        "motor housing",
+        "bearing ring",
+        "I-section bridge",
+        "source red pedestal -1",
+        "metal landing shoe",
+        "triangulated haunch",
+        "steel vessel shell",
+        "source chassis",
+        "foundation"
+      ],
+      "status": "constructed; independent contact verification required"
+    },
+    {
+      "path": [
+        "motor housing",
+        "bearing ring",
+        "I-section bridge",
+        "source red pedestal 1",
+        "metal landing shoe",
+        "triangulated haunch",
+        "steel vessel shell",
+        "source chassis",
+        "foundation"
+      ],
+      "status": "constructed; independent contact verification required"
+    }
+  ],
+  "fitted_process_endpoints": 10,
+  "source_preserving_UV_derivatives": 59,
+  "model_sha256": "724175240b04311637904348c29fa435914f08e705975737bf44370439e7a24f",
+  "runtime_integrated": false,
+  "owner_approved": false,
+  "pending": [
+    "all line endpoints/couplings",
+    "independent reopen/export/contact QA",
+    "render comparison",
+    "atlases",
+    "native prototype and pipe jig"
+  ]
+}

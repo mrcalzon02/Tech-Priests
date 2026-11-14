@@ -1,3 +1,9 @@
+## 2026-11-14 metallicized-hydrogen purifier V14 local checkpoint
+
+Recovered the actual V13 native artifact and built a source-preserving V14 candidate: full enclosed CRT/buttons, supported I-section upper drive, ten fitted main-process unions and source-safe UV derivatives. Independent native/GLB geometry passes: 74 clear bore rays per artifact, twelve drive contact edges, ten process fitting contacts, 637 imported meshes / 128,868 triangles, no degenerate triangles or missing UV layers. Native central/witness visibility passes; one fixed-angle idle/eight-working capture and six size sheets are saved and inspected. Thirteen focused camera tests pass after explicitly supporting fixed entities.
+
+**Still open:** GLB liquid/glass/steam visual parity fails; idle steam is 66 pixels against the existing 75-pixel requirement. Remaining service fittings/electrical routing, reusable-part extraction, actual native prototype/pipe jig, six other chain machines, reactor V14 source recovery and final owner finish acceptance remain required. Nothing is promoted into ordinary runtime. [Exact local source, evidence, scores and continuation](metallic-hydrogen-chain/V14_LOCAL_CHECKPOINT.md).
+
 ## Owner scope correction — workbench belongs to Tanks for Bob
 
 **Workbench is excluded from this Tech-Priests goal.** The existing completed V7/V8 work is already on [Tanks-for-bob-Fork main](https://github.com/mrcalzon02/Tanks-for-bob-Fork/tree/main/docs/art/workbench-v8-one-tile), originally committed at3f38f801631a88460bca5599616edb0173f4a970 and present in the current1.8.103 import. All eight published PNG bytes and the original source generator were read back. No fourth copy, rerender, transfer or overwrite is needed.

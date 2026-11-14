@@ -1,0 +1,45 @@
+{
+  "schema": "tech-priests.hash-bound-visual-review.v1",
+  "status": "CANDIDATE_NOT_FINAL; GLB_VISUAL_REJECTED",
+  "scale": "0 to 5; final threshold 4 in every category",
+  "reviewed_images": {
+    "v13-before.png": "27bd81860dfbd8da22c706d4e645fffe5d48cb8337b65d73e591986130f0e731",
+    "working.png": "8084be583a516dc88f32b6bef0de00906f6051a2cb40788ec4366d5c47075d6a",
+    "runtime-front.png": "ef9b293d7f342093e7119f2c25b9f8c1ad362661541219984042d379c0cd0f48",
+    "runtime-clay.png": "0310367153b692a1edad84d0abf3e47460f35b74e8ca90b4bfdc319ed1d9d6e4"
+  },
+  "source_sha256": "724175240b04311637904348c29fa435914f08e705975737bf44370439e7a24f",
+  "export_sha256": "47c33a9952bc94c2cfa3ee0fd9d07b7ee67b91a492cec7a9aaaed999b7012d62",
+  "references": {
+    "art/source-to-3d/boiler-v08/production/Boiler_V08_Game_Ready_Overview.png": "a50cb83c2c5bd62f1b575567db2d7ce93ae2d5355f336efb07ca9a24b9038665",
+    "docs/art/metallic-hydrogen-chain/references/metallic_hydrogen_seven_precursor_style_board.jpg": "b01eb8526b5825865e7f8b6d848b529dfda9aaa469cb2b0ce0307e74b0e01e94"
+  },
+  "scores": {
+    "silhouette": {
+      "score": 4,
+      "reason": "Process vessel, two filter stages, raw/clean witnesses and red load-bearing frame remain readable."
+    },
+    "construction": {
+      "score": 3,
+      "reason": "Console and upper drive repaired; ten main unions contact receivers; remaining service endpoint census incomplete."
+    },
+    "native_surface_finish": {
+      "score": 3,
+      "reason": "Packed PBR, physical UVs and material identities present; no final wear/finish comparison or owner approval."
+    },
+    "animation_and_states": {
+      "score": 3,
+      "reason": "Quarter-turn motion, water/foam/bubbles and CRT isolation pass; idle steam fails inherited threshold; native state/clock integration unproven."
+    },
+    "runtime_export_visual": {
+      "score": 2,
+      "reason": "Metal channels and geometry survive; witness liquids/glass become pale and steam becomes opaque on actual GLB reimport."
+    },
+    "prototype_pipe_integration": {
+      "score": 0,
+      "reason": "No native purifier prototype installed; no actual connected/disconnected placement jig yet."
+    }
+  },
+  "owner_approval": false,
+  "ordinary_runtime_integrated": false
+}

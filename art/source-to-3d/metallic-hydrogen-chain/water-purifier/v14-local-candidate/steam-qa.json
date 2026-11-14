@@ -1,0 +1,60 @@
+{
+  "schema": "fmpl.steam-visibility.v1",
+  "passed": false,
+  "genuine_blender_cycles_images": true,
+  "source_sha256": {
+    "idle": "94320a4bfa589002e9ea2bf6146ae0976e9364b69ddb1b9ec73bb08ed36485fe",
+    "working": "8084be583a516dc88f32b6bef0de00906f6051a2cb40788ec4366d5c47075d6a"
+  },
+  "canonical_camera": "45-degree fixed orthographic 512px",
+  "source_regions_origin": "top-left",
+  "steam_crop": [
+    320,
+    90,
+    359,
+    120
+  ],
+  "high_rise_crop": [
+    322,
+    102,
+    356,
+    118
+  ],
+  "nozzle_lip_excluded_from_steam_measurement": true,
+  "steam_pixel_alpha_threshold": 0.055,
+  "steam_pixel_rgb_threshold": 0.15,
+  "minimum_visible_steam_pixels": 75,
+  "minimum_high_rise_steam_pixels": 20,
+  "frames": {
+    "idle": {
+      "steam_crop": {
+        "visibly_composited_pixels": 66,
+        "sum_alpha": 15.949,
+        "sum_max_rgb": 46.2235
+      },
+      "high_rise": {
+        "visibly_composited_pixels": 37,
+        "sum_alpha": 7.6118,
+        "sum_max_rgb": 25.4588
+      }
+    },
+    "working": {
+      "steam_crop": {
+        "visibly_composited_pixels": 92,
+        "sum_alpha": 13.2863,
+        "sum_max_rgb": 64.3176
+      },
+      "high_rise": {
+        "visibly_composited_pixels": 60,
+        "sum_alpha": 8.0353,
+        "sum_max_rgb": 41.5804
+      }
+    }
+  },
+  "state_pass": {
+    "idle": false,
+    "working": true
+  },
+  "human_visual_approval": false,
+  "factorio_game_integrated": false
+}

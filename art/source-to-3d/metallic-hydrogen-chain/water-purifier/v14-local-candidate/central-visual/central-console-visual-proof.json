@@ -1,0 +1,60 @@
+{
+  "schema": "fmpl.purifier-v14.render-isolation.v1",
+  "passed": true,
+  "real_blender_cycles": true,
+  "sample_frame": 25,
+  "camera_preserved": true,
+  "blender_sha256": "724175240b04311637904348c29fa435914f08e705975737bf44370439e7a24f",
+  "water_center_roi": [
+    175,
+    105,
+    347,
+    273
+  ],
+  "console_roi": [
+    305,
+    290,
+    420,
+    372
+  ],
+  "min_visible_pixels": {
+    "central_surface": 30,
+    "central_foam": 14,
+    "central_bubbles": 10,
+    "console_readout": 8
+  },
+  "actual_object_count": {
+    "central_surface": 5,
+    "central_foam": 36,
+    "central_bubbles": 24,
+    "console_readout": 5
+  },
+  "effect_pixel_differences": {
+    "central_surface": {
+      "visible_changed_pixels": 1011,
+      "sum_channel_delta": 181.5569
+    },
+    "central_foam": {
+      "visible_changed_pixels": 495,
+      "sum_channel_delta": 110.3686
+    },
+    "central_bubbles": {
+      "visible_changed_pixels": 689,
+      "sum_channel_delta": 156.8157
+    },
+    "console_readout": {
+      "visible_changed_pixels": 193,
+      "sum_channel_delta": 81.6392
+    }
+  },
+  "png_sha256": {
+    "all-central-effects.png": "b9e2087cd649921c1ef6fae258e665af0adfbb73a547adf13c10cfca87bc253b",
+    "without-central_surface.png": "0acef303e5f00652afd1b325437dcf1546878aea63affd55e4af29d476ef921c",
+    "without-central_foam.png": "21e398eda25820d1fd83858973330a034e189f6598cb5b5e81f2b97fcbac452d",
+    "without-central_bubbles.png": "67ef835232cbd08e1a6831221f6e14cd2d7934a76b10dbc9c834131d0235e757",
+    "without-console_readout.png": "6c8ac00a958613b4059f809281fc0619c60a3d84663bdca144b1faa048451767"
+  },
+  "factorio_integrated": false,
+  "owner_visual_approval": false,
+  "console_roi_authority": "actual raised full-casting V14 console, source camera 512px"
+}

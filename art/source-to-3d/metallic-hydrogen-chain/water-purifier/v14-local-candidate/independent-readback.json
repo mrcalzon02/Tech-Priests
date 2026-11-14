@@ -1,0 +1,854 @@
+{
+  "status": "PASS_TARGETED_GEOMETRY",
+  "errors": [],
+  "source_sha256": "724175240b04311637904348c29fa435914f08e705975737bf44370439e7a24f",
+  "glb_sha256": "47c33a9952bc94c2cfa3ee0fd9d07b7ee67b91a492cec7a9aaaed999b7012d62",
+  "source_images": [
+    {
+      "name": "brass_albedo.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "brass_normal.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "brass_orm.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "dark_recess_albedo.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "dark_recess_normal.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "dark_recess_orm.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "ferrocrete_albedo.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "ferrocrete_dark_albedo.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "ferrocrete_dark_normal.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "ferrocrete_dark_orm.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "ferrocrete_light_albedo.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "ferrocrete_light_normal.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "ferrocrete_light_orm.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "ferrocrete_normal.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "ferrocrete_orm.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "gunmetal_dark_albedo.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "gunmetal_dark_normal.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "gunmetal_dark_orm.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "iron_albedo.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "iron_normal.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "iron_orm.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "machine_steel_albedo.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "machine_steel_normal.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "machine_steel_orm.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "martian_red_albedo.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "martian_red_normal.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    },
+    {
+      "name": "martian_red_orm.png",
+      "packed": true,
+      "size": [
+        512,
+        512
+      ]
+    }
+  ],
+  "source_geometry_preserved": true,
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071068286895752,
+        -0.7071067094802856,
+        -6.0
+      ],
+      [
+        0.0,
+        0.7071067094802856,
+        0.7071068286895752,
+        7.650000095367432
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 5.800000190734863,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      512,
+      512
+    ]
+  },
+  "native_bores": {
+    "passed": true,
+    "schema": "fmpl.water-purifier.side-bores.v11",
+    "side_count": 2,
+    "probed_rays": 74,
+    "bore_nominal_diameter": 0.49,
+    "inner_test_radius": 0.205,
+    "hits": [],
+    "tested_actual_rendered_meshes": 637,
+    "native_factorio_fluidbox_verified": false
+  },
+  "runtime_bores": {
+    "passed": true,
+    "schema": "fmpl.water-purifier.side-bores.v11",
+    "side_count": 2,
+    "probed_rays": 74,
+    "bore_nominal_diameter": 0.49,
+    "inner_test_radius": 0.205,
+    "hits": [],
+    "tested_actual_rendered_meshes": 637,
+    "native_factorio_fluidbox_verified": false
+  },
+  "upper_drive_contact_graph": [
+    {
+      "a": "FMPL_PROCESS | agitator motor gearbox housing",
+      "b": "FMPL_PROCESS | agitator gearbox bearing ring",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    },
+    {
+      "a": "FMPL_PROCESS | agitator gearbox bearing ring",
+      "b": "TP_MH7_V14 | drive I beam flange 3.161",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    },
+    {
+      "a": "TP_MH7_V14 | drive I beam flange 3.055",
+      "b": "FMPL_PROCESS | gearbox crossbeam pedestal -0.84",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    },
+    {
+      "a": "FMPL_PROCESS | gearbox crossbeam pedestal -0.84",
+      "b": "TP_MH7_V14 | drive metal landing shoe -1",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    },
+    {
+      "a": "TP_MH7_V14 | drive metal landing shoe -1",
+      "b": "TP_MH7_V14 | drive gusset (-1, 0.025)",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    },
+    {
+      "a": "TP_MH7_V14 | drive gusset (-1, 0.025)",
+      "b": "FMPL_PROCESS | open double-wall steel treatment vessel",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    },
+    {
+      "a": "FMPL_PROCESS | agitator motor gearbox housing",
+      "b": "FMPL_PROCESS | agitator gearbox bearing ring",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    },
+    {
+      "a": "FMPL_PROCESS | agitator gearbox bearing ring",
+      "b": "TP_MH7_V14 | drive I beam flange 3.161",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    },
+    {
+      "a": "TP_MH7_V14 | drive I beam flange 3.055",
+      "b": "FMPL_PROCESS | gearbox crossbeam pedestal 0.84",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    },
+    {
+      "a": "FMPL_PROCESS | gearbox crossbeam pedestal 0.84",
+      "b": "TP_MH7_V14 | drive metal landing shoe 1",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    },
+    {
+      "a": "TP_MH7_V14 | drive metal landing shoe 1",
+      "b": "TP_MH7_V14 | drive gusset (1, 0.025)",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    },
+    {
+      "a": "TP_MH7_V14 | drive gusset (1, 0.025)",
+      "b": "FMPL_PROCESS | open double-wall steel treatment vessel",
+      "distance_tiles": 0.0,
+      "pass_contact": true
+    }
+  ],
+  "fitted_process_joint_contacts": [
+    {
+      "line": "FMPL_PROCESS | manifold to mounted intake pump / section 1",
+      "end": 0,
+      "receiver": "FMPL_PROCESS | dirty inlet visible sight glass",
+      "contact_distance": 0.0,
+      "passed": true
+    },
+    {
+      "line": "FMPL_PROCESS | manifold to mounted intake pump / section 1",
+      "end": 1,
+      "receiver": "FMPL_PROCESS | low mounted intake centrifugal pump",
+      "contact_distance": 0.0,
+      "passed": true
+    },
+    {
+      "line": "FMPL_PROCESS | pump to first vertical filter / section 1",
+      "end": 0,
+      "receiver": "FMPL_PROCESS | low mounted intake centrifugal pump",
+      "contact_distance": 0.0,
+      "passed": true
+    },
+    {
+      "line": "FMPL_PROCESS | pump to first vertical filter / section 1",
+      "end": 1,
+      "receiver": "FMPL_PROCESS | filter 1 cartridge body",
+      "contact_distance": 0.0,
+      "passed": true
+    },
+    {
+      "line": "FMPL_PROCESS | first filter to second filter / section 1",
+      "end": 0,
+      "receiver": "FMPL_PROCESS | filter 1 vertical cartridge pressure crown",
+      "contact_distance": 0.0,
+      "passed": true
+    },
+    {
+      "line": "FMPL_PROCESS | first filter to second filter / section 1",
+      "end": 1,
+      "receiver": "FMPL_PROCESS | filter 2 cartridge body",
+      "contact_distance": 0.0,
+      "passed": true
+    },
+    {
+      "line": "FMPL_PROCESS | second filter to central treatment inlet / section 1",
+      "end": 0,
+      "receiver": "FMPL_PROCESS | filter 2 vertical cartridge pressure crown",
+      "contact_distance": 0.0,
+      "passed": true
+    },
+    {
+      "line": "FMPL_PROCESS | second filter to central treatment inlet / section 1",
+      "end": 1,
+      "receiver": "FMPL_PROCESS | open double-wall steel treatment vessel",
+      "contact_distance": 0.0,
+      "passed": true
+    },
+    {
+      "line": "FMPL_PROCESS | treatment outlet to clean discharge reducer / section 1",
+      "end": 0,
+      "receiver": "FMPL_PROCESS | open double-wall steel treatment vessel",
+      "contact_distance": 0.0,
+      "passed": true
+    },
+    {
+      "line": "FMPL_PROCESS | treatment outlet to clean discharge reducer / section 1",
+      "end": 1,
+      "receiver": "FMPL_PROCESS | clarified water outlet casting",
+      "contact_distance": 0.0,
+      "passed": true
+    }
+  ],
+  "motion": [
+    {
+      "frame": 1,
+      "agitator_z": 0.0,
+      "green_bar_scale": [
+        0.49000000953674316,
+        0.6983798146247864,
+        0.9195923209190369,
+        0.7248353958129883,
+        0.4916292130947113
+      ]
+    },
+    {
+      "frame": 25,
+      "agitator_z": 0.39269912242889404,
+      "green_bar_scale": [
+        0.9200000166893005,
+        0.7116201519966125,
+        0.49040767550468445,
+        0.6851646304130554,
+        0.91837078332901
+      ]
+    },
+    {
+      "frame": 97,
+      "agitator_z": 1.5707964897155762,
+      "green_bar_scale": [
+        0.49000000953674316,
+        0.6983798146247864,
+        0.9195923209190369,
+        0.7248353958129883,
+        0.4916292130947113
+      ]
+    }
+  ],
+  "native_bounds": [
+    [
+      -1.5000001192092896,
+      -1.487398386001587,
+      0.0
+    ],
+    [
+      1.5000001192092896,
+      1.4300000667572021,
+      3.3899998664855957
+    ]
+  ],
+  "runtime_bounds": [
+    [
+      -1.5000001192092896,
+      -1.487398386001587,
+      0.0
+    ],
+    [
+      1.5000001192092896,
+      1.4300000667572021,
+      3.3899998664855957
+    ]
+  ],
+  "max_bounds_error": 0.0,
+  "runtime_meshes": 637,
+  "triangles": 128868,
+  "nonfinite_vertices": 0,
+  "degenerate_triangles": 0,
+  "missing_UV": [],
+  "GLB_PBR_channels": [
+    {
+      "name": "TP Library | martian_red",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "TP Library | machine_steel",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "TP Library | brass",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "TP Library | iron",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "TP Library | ferrocrete_light",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "TP Library | ferrocrete_dark",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "FMPL | clear inspection glass",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "FMPL | agitated process surface",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "FMPL | clarified water channel",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "FMPL | churning foam",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "TP Library | gunmetal_dark",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "FMPL | raw turbid inlet water",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "FMPL | purifier raw-water olive-amber V11",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "FMPL FX | glass-clear",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "FMPL | purifier raw olive-ochre foam V11",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "FMPL | purifier clean-water luminous cyan V11",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "FMPL | purifier clean cyan-white foam V11",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "FMPL | relief steam irregular feathered wisps v05",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "TP Library | ferrocrete",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "FMPL | central pale-turquoise swirl wake V13",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "FMPL | central recirculating aeration V13",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "FMPL | central broken foam V13",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "MH7 green",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "MH7 amber",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "TP Library | dark_recess",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "TP Water Purifier V14 | iron",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "TP Water Purifier V14 | brass",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "FMPL | live green CRT level bars V13",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    },
+    {
+      "name": "TP Water Purifier V14 | machine_steel",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "TP Water Purifier V14 | martian_red",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "TP Water Purifier V14 | dark_recess",
+      "base_color": true,
+      "metallic_roughness": true,
+      "normal": true
+    },
+    {
+      "name": "FMPL | central churned water V13",
+      "base_color": false,
+      "metallic_roughness": false,
+      "normal": false
+    }
+  ],
+  "animation_clips": [
+    "FMPL | Water Purifier slow quarter-turn V13",
+    "FMPL_PROCESS | powered inlet pump drive rotorAction",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 00Action",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 01Action",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 02Action",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 03Action",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 04Action",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 05Action",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 06Action",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 07Action",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 08Action",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 09Action",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 10Action",
+    "FMPL_PROCESS | sample station 1 waterline froth bead 11Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 00Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 01Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 02Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 03Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 04Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 05Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 06Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 07Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 08Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 09Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 10Action",
+    "FMPL_PROCESS | sample station 1 liquid bubble 11Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 00Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 01Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 02Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 03Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 04Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 05Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 06Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 07Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 08Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 09Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 10Action",
+    "FMPL_PROCESS | sample station 2 waterline froth bead 11Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 00Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 01Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 02Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 03Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 04Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 05Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 06Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 07Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 08Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 09Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 10Action",
+    "FMPL_PROCESS | sample station 2 liquid bubble 11Action",
+    "FMPL_PROCESS | raw-canister inlet / flow tracer 00Action",
+    "FMPL_PROCESS | raw-canister inlet / flow tracer 01Action",
+    "FMPL_PROCESS | raw-canister outlet / flow tracer 00Action",
+    "FMPL_PROCESS | raw-canister outlet / flow tracer 01Action",
+    "FMPL_PROCESS | clean-canister inlet / flow tracer 00Action",
+    "FMPL_PROCESS | clean-canister inlet / flow tracer 01Action",
+    "FMPL_PROCESS | clean-canister outlet / flow tracer 00Action",
+    "FMPL_PROCESS | clean-canister outlet / flow tracer 01Action",
+    "FMPL_PROCESS | working gauge needle 1Action",
+    "FMPL_PROCESS | working gauge needle 2Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 00Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 01Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 02Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 03Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 04Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 05Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 06Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 07Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 08Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 09Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 10Action",
+    "FMPL_PROCESS | treatment chamber aeration bubble 11Action",
+    "FMPL_PROCESS | relief nozzle keyed condensed steam 00Action",
+    "FMPL_PROCESS | relief nozzle keyed condensed steam 01Action",
+    "FMPL_PROCESS | relief nozzle keyed condensed steam 02Action",
+    "FMPL_PROCESS | relief nozzle keyed condensed steam 03Action",
+    "FMPL_PROCESS | steam veil layered feather 00Action",
+    "FMPL_PROCESS | steam veil layered feather 01Action",
+    "FMPL_PROCESS | steam veil layered feather 02Action",
+    "FMPL_PROCESS | steam veil layered feather 03Action",
+    "FMPL_PROCESS | steam veil layered feather 04Action",
+    "FMPL_PROCESS | steam veil layered feather 05Action",
+    "FMPL_PROCESS | steam veil layered feather 06Action",
+    "FMPL_PROCESS | steam veil layered feather 07Action",
+    "FMPL_PROCESS | central visible spiral flow rigAction",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 00Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 01Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 02Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 03Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 04Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 05Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 06Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 07Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 08Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 09Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 10Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 11Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 12Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 13Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 14Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 15Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 16Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 17Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 18Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 19Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 20Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 21Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 22Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central recirculating bubble 23Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 00Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 01Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 02Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 03Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 04Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 05Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 06Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 07Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 08Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 09Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 10Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 11Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 12Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 13Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 14Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 15Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 16Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 17Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 18Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 19Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 20Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 21Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 22Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central floating foam clump 23Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 00Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 01Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 02Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 03Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 04Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 05Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 06Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 07Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 08Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 09Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 10Action",
+    "FMPL_PROCESS | FMPL_PROCESS | central impeller turbulence froth 11Action",
+    "FMPL_PROCESS | angled CRT live green readout bar 00Action",
+    "FMPL_PROCESS | angled CRT live green readout bar 01Action",
+    "FMPL_PROCESS | angled CRT live green readout bar 02Action",
+    "FMPL_PROCESS | angled CRT live green readout bar 03Action",
+    "FMPL_PROCESS | angled CRT live green readout bar 04Action",
+    "FMPL WITNESS WATER | 01Action",
+    "FMPL_PROCESS | sample station 1 animated waterline foam crestAction",
+    "FMPL WITNESS WATER | 02Action",
+    "FMPL_PROCESS | sample station 2 animated waterline foam crestAction",
+    "FMPL | Central animated churning water surface V13Action"
+  ],
+  "pending": [
+    "remaining service lines and original sight routes",
+    "complete source/export visual assessment",
+    "effect isolation",
+    "production atlases",
+    "native prototype/pipe placement",
+    "owner review"
+  ]
+}

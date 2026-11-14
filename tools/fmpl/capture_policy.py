@@ -20,7 +20,10 @@ def validate_capture_profile(cfg):
     kind = cfg.get("capture_kind")
     if kind not in ("entity", "item"):
         raise ValueError("capture_kind must be entity or item")
-    correct = ENTITY_DIRECTIONS if kind == "entity" else ITEM_DIRECTIONS
+    orientation = cfg.get("orientation_policy", "rotatable")
+    if orientation not in ("fixed", "rotatable"):
+        raise ValueError("orientation_policy must be fixed or rotatable")
+    correct = ENTITY_DIRECTIONS if kind == "entity" and orientation == "rotatable" else ITEM_DIRECTIONS
     directions = cfg.get("directions")
     if (not isinstance(directions, list) or
             len(directions) != len(correct) or

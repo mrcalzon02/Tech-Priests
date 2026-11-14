@@ -1,0 +1,203 @@
+{
+  "schema": "fmpl.super-greeble-atlas.v1",
+  "passed": true,
+  "native_master_sha256": "13cbeab3d2d74540fe9c55b17eb90dabff18d3f90bb36650c33da2885c19239a",
+  "fixed_factorio_camera": true,
+  "directions": [
+    0
+  ],
+  "states": [
+    "idle",
+    "working"
+  ],
+  "unique_source_frames": 9,
+  "outputs": [
+    {
+      "state": "idle",
+      "path": "idle-64.png",
+      "sha256": "8851d8d4d40b76830c0878de99cb099c9418f73469f11f779876c2a5f922ac35",
+      "cell_size": 64,
+      "frame_count": 1,
+      "direction_count": 1,
+      "columns": 1,
+      "rows": 1,
+      "dimensions": [
+        64,
+        64
+      ],
+      "timeline_frames": [
+        1
+      ]
+    },
+    {
+      "state": "working",
+      "path": "working-64.png",
+      "sha256": "c55e69eec8f988549695a650ac05dd9ae4561f90a0c4369d5e6ca836e561b775",
+      "cell_size": 64,
+      "frame_count": 8,
+      "direction_count": 1,
+      "columns": 4,
+      "rows": 2,
+      "dimensions": [
+        256,
+        128
+      ],
+      "timeline_frames": [
+        1,
+        13,
+        25,
+        37,
+        49,
+        61,
+        73,
+        85
+      ]
+    },
+    {
+      "state": "idle",
+      "path": "idle-128.png",
+      "sha256": "6da69d531d6b0ebbf40b035df6b184ae66ea7e41f0cfc590b4e7b32404469bf1",
+      "cell_size": 128,
+      "frame_count": 1,
+      "direction_count": 1,
+      "columns": 1,
+      "rows": 1,
+      "dimensions": [
+        128,
+        128
+      ],
+      "timeline_frames": [
+        1
+      ]
+    },
+    {
+      "state": "working",
+      "path": "working-128.png",
+      "sha256": "1bca0d0f8af129fd058847b9ca478f46d458eef4c5d1c2788b315bc96356ce39",
+      "cell_size": 128,
+      "frame_count": 8,
+      "direction_count": 1,
+      "columns": 4,
+      "rows": 2,
+      "dimensions": [
+        512,
+        256
+      ],
+      "timeline_frames": [
+        1,
+        13,
+        25,
+        37,
+        49,
+        61,
+        73,
+        85
+      ]
+    },
+    {
+      "state": "idle",
+      "path": "idle-256.png",
+      "sha256": "2a9a3504dec4a43330311d49b9477256fe6e4b62e38836c6b4502879a2655e8f",
+      "cell_size": 256,
+      "frame_count": 1,
+      "direction_count": 1,
+      "columns": 1,
+      "rows": 1,
+      "dimensions": [
+        256,
+        256
+      ],
+      "timeline_frames": [
+        1
+      ]
+    },
+    {
+      "state": "working",
+      "path": "working-256.png",
+      "sha256": "88c5c5329b623f5f765405d570f9ecc5280270a8fa647d4c77f868c7c3f51c57",
+      "cell_size": 256,
+      "frame_count": 8,
+      "direction_count": 1,
+      "columns": 4,
+      "rows": 2,
+      "dimensions": [
+        1024,
+        512
+      ],
+      "timeline_frames": [
+        1,
+        13,
+        25,
+        37,
+        49,
+        61,
+        73,
+        85
+      ]
+    }
+  ],
+  "contact_sheet_sha256": "d0304bbee77a43721c1c6695febceb20a6909b88c4e6170528db481c530c4094",
+  "frame_alpha_bounds": {
+    "idle": [
+      [
+        60,
+        31,
+        195,
+        200
+      ]
+    ],
+    "working": [
+      [
+        60,
+        31,
+        195,
+        200
+      ],
+      [
+        60,
+        31,
+        195,
+        200
+      ],
+      [
+        60,
+        31,
+        195,
+        201
+      ],
+      [
+        60,
+        31,
+        195,
+        201
+      ],
+      [
+        60,
+        31,
+        195,
+        201
+      ],
+      [
+        60,
+        31,
+        195,
+        200
+      ],
+      [
+        60,
+        31,
+        195,
+        200
+      ],
+      [
+        60,
+        31,
+        195,
+        200
+      ]
+    ]
+  },
+  "production_native_accepted": false,
+  "game_integrated": false,
+  "owner_visual_approval": false
+}

@@ -1,0 +1,297 @@
+[
+  {
+    "source": "FMPL_PROCESS | open double-wall steel treatment vessel",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | open double-wall steel treatment vessel",
+    "method": "vessel circumferential wrap, vertical grain"
+  },
+  {
+    "source": "FMPL_PROCESS | raw-water-in / reusable machine collar",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-water-in / reusable machine collar",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | raw-water-in / reusable machine throat",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-water-in / reusable machine throat",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | purified-water-out / reusable machine collar",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine collar",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | purified-water-out / reusable machine throat",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine throat",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | raw inlet cast receiving manifold",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw inlet cast receiving manifold",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | manifold to mounted intake pump / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | manifold to mounted intake pump / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | dirty inlet visible sight glass",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | dirty inlet visible sight glass",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | dirty inlet fluid seen through glass",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | dirty inlet fluid seen through glass",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | pump to first vertical filter / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pump to first vertical filter / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | first filter to second filter / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | first filter to second filter / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | second filter to central treatment inlet / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | second filter to central treatment inlet / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | treatment outlet to clean discharge reducer / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | treatment outlet to clean discharge reducer / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | clarified water outlet casting",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clarified water outlet casting",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | clean discharge visible sight glass",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean discharge visible sight glass",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | clarified water seen at discharge",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clarified water seen at discharge",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | pressure relief to exhaust elbow / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure relief to exhaust elbow / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | pressure relief to exhaust elbow / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure relief to exhaust elbow / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | pump metal pressure bleeder / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pump metal pressure bleeder / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | pump metal pressure bleeder / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pump metal pressure bleeder / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | filter 1 pressure impulse tube / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | filter 1 pressure impulse tube / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | filter 1 pressure impulse tube / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | filter 1 pressure impulse tube / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | filter 2 pressure impulse tube / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | filter 2 pressure impulse tube / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | filter 2 pressure impulse tube / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | filter 2 pressure impulse tube / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | sample station 1 enlarged transparent vessel",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 1 enlarged transparent vessel",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | sample station 1 moving liquid meniscus",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 1 moving liquid meniscus",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | sample station 1 animated waterline foam crest",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 1 animated waterline foam crest",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | sample station 2 enlarged transparent vessel",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 2 enlarged transparent vessel",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | sample station 2 moving liquid meniscus",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 2 moving liquid meniscus",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | sample station 2 animated waterline foam crest",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 2 animated waterline foam crest",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | raw-canister inlet / transparent tube",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-canister inlet / transparent tube",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | raw-canister outlet / transparent tube",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-canister outlet / transparent tube",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | clean-canister inlet / transparent tube",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean-canister inlet / transparent tube",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | clean-canister outlet / transparent tube",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean-canister outlet / transparent tube",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | raw witness feed from pump / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw witness feed from pump / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | raw witness feed from pump / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw witness feed from pump / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | raw witness return to first filter / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw witness return to first filter / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | raw witness return to first filter / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw witness return to first filter / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | clean witness feed from treatment outlet / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean witness feed from treatment outlet / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | clean witness feed from treatment outlet / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean witness feed from treatment outlet / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | clean witness return to discharge casting / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean witness return to discharge casting / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | clean witness return to discharge casting / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean witness return to discharge casting / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | pressure gauge 1 hardline / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure gauge 1 hardline / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | pressure gauge 1 hardline / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure gauge 1 hardline / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | pressure gauge 2 hardline / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure gauge 2 hardline / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | pressure gauge 2 hardline / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure gauge 2 hardline / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | control panel motor power armored conduit / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | control panel motor power armored conduit / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | control panel motor power armored conduit / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | control panel motor power armored conduit / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | control panel motor power armored conduit / section 3",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | control panel motor power armored conduit / section 3",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | return condensate pipe from working relief / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | return condensate pipe from working relief / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | return condensate pipe from working relief / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | return condensate pipe from working relief / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | process sump gravity return / section 1",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | process sump gravity return / section 1",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | process sump gravity return / section 2",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | process sump gravity return / section 2",
+    "method": "axial physical-scale wrap with seam"
+  },
+  {
+    "source": "FMPL_PROCESS | relief vent emitter / open steel throat",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | relief vent emitter / open steel throat",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | central real animated agitator liquid top",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | central real animated agitator liquid top",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | central stirring current ribbon 00",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | central stirring current ribbon 00",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | central stirring current ribbon 01",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | central stirring current ribbon 01",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | central stirring current ribbon 02",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | central stirring current ribbon 02",
+    "method": "physical-scale planar islands"
+  },
+  {
+    "source": "FMPL_PROCESS | central stirring current ribbon 03",
+    "derivative": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | central stirring current ribbon 03",
+    "method": "physical-scale planar islands"
+  }
+]

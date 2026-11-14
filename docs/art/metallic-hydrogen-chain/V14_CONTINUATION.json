@@ -1,0 +1,107 @@
+{
+  "schema": "tech-priests.mh7.production-continuation.v1",
+  "status": "active",
+  "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production",
+  "base_commit": "e6a5022",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\metallic-hydrogen-chain\\water-purifier\\v14-local-candidate",
+  "staging": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\model-completion\\metallic-hydrogen-chain\\v14-pilot-03-surface-repair",
+  "source_recovery": {
+    "run": 42854827403,
+    "artifact": 13781794050,
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\model-completion\\metallic-hydrogen-chain\\v13-recovered\\fmpl-super-greeble\\water-purifier-fmpl-super.blend",
+    "sha256": "971087c8a03e5b91ab6f70afa2a1abe13f5d0cd231b9983969bd509ed10330be"
+  },
+  "geometry_gate": "PASS_TARGETED_GEOMETRY",
+  "central_effects": true,
+  "witness_effects": true,
+  "steam": false,
+  "atlas": true,
+  "GLB_visual": "failed",
+  "queue": [
+    {
+      "id": "water-purifier",
+      "planned_footprint_tiles": [
+        3,
+        3
+      ],
+      "status": "candidate_native"
+    },
+    {
+      "id": "electrolyzer",
+      "planned_footprint_tiles": [
+        3,
+        4
+      ],
+      "status": "not_built_this_checkpoint"
+    },
+    {
+      "id": "hydrogen-compressor",
+      "planned_footprint_tiles": [
+        3,
+        4
+      ],
+      "status": "not_built_this_checkpoint"
+    },
+    {
+      "id": "metallization-crucible",
+      "planned_footprint_tiles": [
+        5,
+        5
+      ],
+      "status": "not_built_this_checkpoint"
+    },
+    {
+      "id": "pelletization-forge",
+      "planned_footprint_tiles": [
+        3,
+        3
+      ],
+      "status": "not_built_this_checkpoint"
+    },
+    {
+      "id": "pressure-vessel-fabricator",
+      "planned_footprint_tiles": [
+        4,
+        4
+      ],
+      "status": "not_built_this_checkpoint"
+    },
+    {
+      "id": "canister-assembler",
+      "planned_footprint_tiles": [
+        4,
+        4
+      ],
+      "status": "not_built_this_checkpoint"
+    }
+  ],
+  "source_timeline_fps": 24.0,
+  "cycle_timeline_interval": 96,
+  "cycle_seconds": 4.0,
+  "captured_working_frames": 8,
+  "proposed_native_animation_speed": 0.03333333333333333,
+  "clock_authority": "source timeline duration; proposed Factorio clock requires actual engine readback",
+  "parts_registry_sha256": "ecfa8c7c04b7549a590e23c9c351a422f21e235c09ea0735698da03b87f7f109",
+  "registered_parts": 0,
+  "native_ports_verified": false,
+  "reactors": {
+    "status": "source_recovery_pending",
+    "source_manifest": "docs/art/external-model-sources.json",
+    "browser_attempt": "app-access approval timed out before navigation; no source absence inferred"
+  },
+  "next_steps": [
+    "Complete source steam idle visibility without lowering 75/20 pixel gates",
+    "Complete named endpoint/branch audit and raised-console electrical route",
+    "Bake or adapt procedural GLB materials; reimport and inspect again",
+    "Extract and clean-append a genuine library component",
+    "Build isolated native purifier prototype and real pipe fitting jig",
+    "Continue unique machines 02-07; recover reactor V14 bytes"
+  ],
+  "safety": {
+    "other_checkouts_untouched": true,
+    "release_changed": false,
+    "workflows_dispatched": false
+  },
+  "remote_published": false,
+  "owner_approved": false
+}
