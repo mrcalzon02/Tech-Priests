@@ -1617,6 +1617,31 @@ class NativeOriginalHomeward0836ContractTests(unittest.TestCase):
         for old in ('s.returned=true end', 'if s.outbound and loco.position.x<=28'):
             self.assertNotIn(old,fixture)
 
+    def test_historical_outbound_native_receipt_survives_only_identical_homeward_train(self):
+        # Once the actual train begins the original homeward order, Factorio
+        # clears train.station. That cannot erase a previously witnessed native
+        # outbound arrival or authorize a substituted driver/stop/train.
+        root=pathlib.Path(__file__).resolve().parents[2]
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        block=fixture.split('local outbound=objective and objective.first_outbound_0836',1)[1].split(
+            'local drills=surface.find_entities_filtered{',1)[0]
+        for required in (
+            'outbound.arrived_tick~=nil',
+            'outbound.highest_x>outbound.origin_x+32',
+            'native_driver==p.priest',
+            'moving_train.station==remote_entity',
+            'homeward.home_order_written==true',
+            'homeward.train_id==moving_train.id',
+            'outbound.train_id==moving_train.id',
+            'homeward.priest_unit==p.priest.unit_number',
+            'homeward.remote_stop_unit==remote_entity.unit_number',
+            'homeward.home_stop_unit==home_entity.unit_number',
+            'fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")'):
+            self.assertIn(required,block)
+        self.assertNotIn('or outbound.phase==',block)
+        self.assertIn('HOMEWARD_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL',block)
+        self.assertIn('train.station==(objective.first_stop_0836',fixture)
+
     def test_homeward_refuses_schedule_or_identity_mutation_without_claiming_return(self):
         root=pathlib.Path(__file__).resolve().parents[2]
         rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
