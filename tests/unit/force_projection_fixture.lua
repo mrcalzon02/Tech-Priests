@@ -19,7 +19,12 @@ for _,preset in ipairs(presets) do
   local surface={request_to_generate_chunks=function()api_calls=api_calls+1 end,
     force_generate_chunk_requests=function()chunks=chunks+1 end,
     set_tiles=function()api_calls=api_calls+1 end,
-    find_entities_filtered=function()return {}end}
+    find_entities_filtered=function(opts)
+      assert(type(opts.force)=="table" and #opts.force==#storage.ci_force_projection_v1.participants,
+        "census must filter participating forces before its entity limit")
+      assert(opts.limit==512)
+      return {}
+    end}
   local inventories={}
   surface.create_entity=function(args)
     api_calls=api_calls+1;created=created+1

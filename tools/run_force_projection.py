@@ -160,6 +160,10 @@ def main() -> int:
             "autoplace_settings": {"entity": {
                 "treat_missing_as_default": False, "settings": {}}}}), encoding="utf-8")
         runtime = output / "runtime"; runtime.mkdir()
+        # server_save canonicalizes this directory and does not create it.
+        # A fresh write-data root otherwise fails only at the terminal gate.
+        (runtime / "saves").mkdir()
+        (runtime / "script-output").mkdir()
         ini = output / "config.ini"
         ini.write_text("[path]\nread-data=__PATH__executable__/../../data\nwrite-data=" +
                        runtime.as_posix() + "\n", encoding="utf-8")

@@ -267,7 +267,24 @@ function tech_priests_0284_recipe_fanout(pair, item_name, op, reason)
   -- No available subordinate: requester begins one remaining ingredient itself.
   for _, ing in ipairs(missing) do
     if not tech_priests_0284_assignment_already_requested(pair, ing.name) then
-      tech_priests_0285_assign_task(pair, { type = "logistics", item = ing.name, count = ing.count, priority = TECH_PRIESTS_0285_TASK_PRIORITY.logistics, owner_system = "recipe-fanout-self" }, "recipe-fanout-self")
+      local task = { type = "logistics", item = ing.name, count = ing.count, priority = TECH_PRIESTS_0285_TASK_PRIORITY.logistics, owner_system = "recipe-fanout-self" }
+      local accepted = tech_priests_0285_assign_task(pair, task, "recipe-fanout-self")
+      local queue = pair.order_queue_0469
+      local current = queue and queue.current
+      -- 0469 can accept a request into its queue without activating it.
+      -- A retained survival-ammo order previously made this function claim
+      -- an iron-plate assignment every pulse although no worker owned it.
+      -- Never invoke a second acquisition or advance the parent operation
+      -- unless this exact self-assignment became the active order.
+      if not accepted or (queue and not (current and current.status == "active"
+          and current.item == ing.name and current.task == task)) then
+        pair.last_recipe_fanout_refusal_0284 = {
+          tick = tech_priests_0286_now(), item = item_name, missing = ing.name,
+          reason = accepted and "self-assignment-queued-not-active" or "self-assignment-rejected",
+          incumbent_item = current and current.item,
+        }
+        return false
+      end
       if tech_priests_emergency_operation_acquire_item_0185 and op then pcall(function() tech_priests_emergency_operation_acquire_item_0185(pair, ing.name, op, ing.count, 0) end) end
       pair.last_recipe_fanout_item_0284 = item_name
       pair.last_recipe_fanout_self_item_0284 = ing.name

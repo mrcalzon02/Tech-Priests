@@ -267,7 +267,12 @@ end
 local function census(s,surface)
   local n=s.side/32;local i=s.census_cursor
   local x=(i%n-n/2)*32;local y=(math.floor(i/n)-n/2)*32
-  local entities=surface.find_entities_filtered{area={{x,y},{x+32,y+32}},limit=512}
+  local forces={}
+  for _,p in ipairs(s.participants)do forces[#forces+1]=p.force end
+  -- Exclude neutral ore/decorations before applying the entity limit. Dense
+  -- resource blobs previously consumed the entire building census allowance.
+  local entities=surface.find_entities_filtered{
+    area={{x,y},{x+32,y+32}},force=forces,limit=512}
   if #entities==512 then s.census_saturated=true end
   for _,e in ipairs(entities) do
     -- Entity centers select one chunk, avoiding boundary double counting.
@@ -300,6 +305,14 @@ local function sample(s,p)
     mined[name]=stats.get_input_count(name)
   end
   local pair=p.station and p.station.valid and storage.tech_priests.pairs_by_station[p.station.unit_number]
+  local gate=pair and pair.local_infrastructure_gate_0640
+  local request=pair and pair.infrastructure_recipe_request_0647
+  local task=pair and pair.construction_task_0338
+  local dispatch=pair and pair.dispatcher_0510
+  local order=pair and pair.order_queue_0469 and pair.order_queue_0469.current
+  local fanout=pair and pair.last_recipe_fanout_refusal_0284
+  local move=pair and pair.movement_request_0418
+  local fetch=pair and pair.logistics_fetch_0527
   emit("SAMPLE",{tick=game.tick,elapsed=game.tick-s.started,force=p.force,
     kind=p.kind,team=p.team,build_events=p.built,lost=p.lost,
     research_finished=p.research,damage_dealt=p.damage_dealt,
@@ -309,6 +322,24 @@ local function sample(s,p)
     ore_production=mined,station_alive=p.station and p.station.valid or false,
     priest_alive=p.priest and p.priest.valid or false,
     current_task=pair and tostring(pair.current_task or pair.task or "unknown") or "none",
+    infrastructure_gate=gate and {item=gate.item,state=gate.state,why=gate.why,
+      tick=gate.tick,next_retry_tick=gate.next_retry_tick},
+    recipe_request=request and {item=request.item,missing=request.missing,
+      tick=request.tick,status=request.status},
+    construction=task and {item=task.item_name,phase=task.phase,started_tick=task.started_tick},
+    dispatcher=dispatch and {tick=dispatch.tick,kind=dispatch.kind,
+      action=dispatch.action,detail=dispatch.detail,reason=dispatch.reason},
+    requested_item=pair and pair.requested_item,
+    active_order=order and {item=order.item,kind=order.kind,status=order.status,
+      source=order.source,created_tick=order.created_tick,expires_tick=order.expires_tick},
+    fanout_refusal=fanout and {item=fanout.item,missing=fanout.missing,
+      reason=fanout.reason,incumbent_item=fanout.incumbent_item,tick=fanout.tick},
+    priest_position=p.priest and p.priest.valid and p.priest.position or nil,
+    movement=move and {owner=move.owner,reason=move.reason,x=move.x,y=move.y,
+      expires_tick=move.expires_tick},
+    logistics_fetch=fetch and {phase=fetch.phase,item=fetch.item,
+      source_unit=fetch.source_unit,source_name=fetch.source_name,
+      x=fetch.x,y=fetch.y,tick=fetch.tick},
     supply_remaining=p.chest and p.chest.valid and p.chest.get_item_count() or 0,
     initial_expansion_kits=p.expansion_stock and p.expansion_stock.count,
     senior_kits_in_magos=p.station and p.station.valid

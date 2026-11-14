@@ -1,0 +1,157 @@
+{
+  "active_ticks": 3600,
+  "changed_source_sha256": {
+    "tech-priests_src/scripts/generated/control_legacy_part_018.lua": "0ae074aff4c6b5d7037eead573fbb167b187222af6d636c6bb2c6a957430f203",
+    "tests/scenarios/force-projection/fixture.lua": "7353182203700a37f3835784d733082d339c034516f668276180dc24210bfce3",
+    "tools/run_force_projection.py": "8d92f1bca1e8ab0173959b8bdceb0f9bd78bb66dc037a0a2883703c3fabf8182"
+  },
+  "combat_observed": false,
+  "driver_stop_reason": "complete_with_verified_save",
+  "forces": {
+    "tp-arena-1": {
+      "build_events": 0,
+      "current_task": "unknown",
+      "damage_dealt": 0,
+      "damage_received": 0,
+      "dispatcher": {
+        "action": "acquisition",
+        "reason": "compatibility-mode",
+        "tick": 30715
+      },
+      "elapsed": 3600,
+      "fanout_refusal": {
+        "incumbent_item": "firearm-magazine",
+        "item": "firearm-magazine",
+        "missing": "iron-plate",
+        "reason": "self-assignment-rejected",
+        "tick": 30300
+      },
+      "force": "tp-arena-1",
+      "initial_expansion_kits": 3,
+      "kind": "p",
+      "lost": 0,
+      "max_build_distance": 0,
+      "ore_production": {
+        "coal": 0,
+        "copper-ore": 0,
+        "iron-ore": 0,
+        "stone": 0
+      },
+      "priest_alive": true,
+      "research_finished": 0,
+      "senior_kits_in_magos": 3,
+      "station_alive": true,
+      "supply_remaining": 1309,
+      "team": "left-a",
+      "tick": 30720
+    },
+    "tp-arena-2": {
+      "build_events": 0,
+      "current_task": "none",
+      "damage_dealt": 0,
+      "damage_received": 0,
+      "elapsed": 3600,
+      "force": "tp-arena-2",
+      "kind": "b",
+      "lost": 0,
+      "max_build_distance": 0,
+      "ore_production": {
+        "coal": 0,
+        "copper-ore": 0,
+        "iron-ore": 0,
+        "stone": 0
+      },
+      "priest_alive": false,
+      "research_finished": 0,
+      "senior_kits_in_magos": 0,
+      "station_alive": false,
+      "supply_remaining": 0,
+      "team": "bugs-a",
+      "tick": 30720
+    },
+    "tp-arena-3": {
+      "build_events": 0,
+      "current_task": "unknown",
+      "damage_dealt": 0,
+      "damage_received": 0,
+      "dispatcher": {
+        "action": "logistics-fetch",
+        "reason": "moving-to-known-source",
+        "tick": 30715
+      },
+      "elapsed": 3600,
+      "fanout_refusal": {
+        "incumbent_item": "firearm-magazine",
+        "item": "firearm-magazine",
+        "missing": "iron-plate",
+        "reason": "self-assignment-rejected",
+        "tick": 30600
+      },
+      "force": "tp-arena-3",
+      "infrastructure_gate": {
+        "item": "tech-priests-emergency-smelter",
+        "next_retry_tick": 28685,
+        "state": "waiting-recipe-material",
+        "tick": 26885,
+        "why": "central-plan:bootstrap-smelting"
+      },
+      "initial_expansion_kits": 5,
+      "kind": "p",
+      "lost": 0,
+      "max_build_distance": 0,
+      "ore_production": {
+        "coal": 0,
+        "copper-ore": 0,
+        "iron-ore": 0,
+        "stone": 0
+      },
+      "priest_alive": true,
+      "recipe_request": {
+        "item": "tech-priests-emergency-smelter",
+        "missing": "stone",
+        "tick": 26885
+      },
+      "requested_item": "stone",
+      "research_finished": 0,
+      "senior_kits_in_magos": 5,
+      "station_alive": true,
+      "supply_remaining": 1349,
+      "team": "left-b",
+      "tick": 30720
+    },
+    "tp-arena-4": {
+      "build_events": 0,
+      "current_task": "none",
+      "damage_dealt": 0,
+      "damage_received": 0,
+      "elapsed": 3600,
+      "force": "tp-arena-4",
+      "kind": "b",
+      "lost": 0,
+      "max_build_distance": 0,
+      "ore_production": {
+        "coal": 0,
+        "copper-ore": 0,
+        "iron-ore": 0,
+        "stone": 0
+      },
+      "priest_alive": false,
+      "research_finished": 0,
+      "senior_kits_in_magos": 0,
+      "station_alive": false,
+      "supply_remaining": 0,
+      "team": "bugs-b",
+      "tick": 30720
+    }
+  },
+  "observation_complete": true,
+  "performance_baseline": false,
+  "preset": "2p2b",
+  "save_sha256": "63608e99fc9642c69cbb51e97d8ef5871335de6f629465c16c349b199bd5d628",
+  "schema": "tech-priests.force-projection.v1",
+  "scope": "Working-tree native Factorio 2.1.24 private server, final-save CRC and telemetry; independent reload and autonomous expansion not accepted.",
+  "seed": 534526259,
+  "setup_ticks": 27120,
+  "simulation_speed_override": 20,
+  "validation_only": true
+}
