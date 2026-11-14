@@ -1577,3 +1577,68 @@ class OriginalCharacterObstacleNavigationRegression(unittest.TestCase):
         for key in ('priest_x=', 'priest_y=', 'loco_x=', 'loco_y=',
                     'move_x=', 'move_y=', 'move_state='):
             self.assertIn(key,block)
+
+
+class OriginalNativeOutboundScheduleGuardTests(unittest.TestCase):
+    """Focused boundaries only; actual travel requires real Factorio readback."""
+    def test_paid_remote_stop_original_driver_and_live_fuel_precede_schedule_write(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        block=rail.split("function M.service_first_train_outbound_0836(pair)",1)[1].split(
+            "function M.service_pair(pair)",1)[0]
+        for required in (
+            'far.phase=="native-paid-original-train-stop-verified"',
+            'home.phase=="native-paid-original-train-stop-verified"',
+            'engine.train.id==wagon.built_entity.train.id',
+            'driver==priest',
+            'ride.physical_boarding_confirmed==true',
+            'ride.boarded_priest_unit==priest.unit_number',
+            'remote.connected_rail',
+            'unit==remote_rail.unit_number',
+            'original-outbound-identity-changed',
+            'original-outbound-no-observed-native-fuel',
+            'original-train-has-foreign-schedule',
+            'schedule.add_record{station=unique',
+            'schedule.get_records()',
+            'schedule.go_to_station(1)',
+            'train.station==remote',
+        ):
+            self.assertIn(required,block)
+        self.assertLess(block.index('original-train-has-foreign-schedule'),
+                        block.index('remote.backer_name=unique'))
+        self.assertLess(block.index('original-outbound-no-observed-native-fuel'),
+                        block.index('remote.backer_name=unique'))
+        self.assertLess(block.index('state.schedule_write_attempted=true'),
+                        block.index('schedule.add_record{station=unique'))
+        self.assertLess(block.index('schedule.get_records()',block.index('schedule.add_record')),
+                        block.index('schedule.go_to_station(1)'))
+        self.assertNotIn('train.speed=',block)
+        self.assertNotIn('train.schedule=',block)
+        self.assertNotIn('priest.teleport(',block)
+        self.assertNotIn('create_entity(',block)
+        self.assertNotIn('inventory.insert',block)
+
+    def test_original_outbound_only_after_native_boarding_and_pays_no_ghost_credit(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        run=rail.split("function M.service_pair(pair)",1)[1]
+        self.assertIn('if boarded and boarded.phase=="native-original-magos-boarded"then',run)
+        self.assertIn("return M.service_first_train_outbound_0836(pair)",run)
+        self.assertIn("return M.service_first_train_board_0836(pair)",run)
+        self.assertLess(run.index('M.service_first_train_stop_0836(pair,"remote")'),
+                        run.index("M.service_first_train_outbound_0836(pair)"))
+
+    def test_fixture_requires_real_train_coordinates_driver_and_station(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        block=fixture.split('emit("OUTBOUND_NATIVE_0836 elapsed="',1)[1].split(
+            'local drills=',1)[0]
+        for token in ('original_priest_driver=', 'locomotive_x=', 'origin_x=',
+                      'highest_x=', 'speed=', 'has_path=', 'actual_station_unit=',
+                      'remote_stop_unit=', 'schedule_station=', 'blocked='):
+            self.assertIn(token,block)
+        self.assertIn("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL",block)
+        self.assertIn('moving_train.station==remote_entity',block)
+        self.assertIn('native_driver==p.priest',block)
+        self.assertIn('{1800,9000,18000,36000,60000,72000,90000}',fixture)
+        self.assertNotIn('surface.create_entity{name="iron-ore"',fixture)
