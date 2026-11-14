@@ -1839,7 +1839,9 @@ function M.authorized_original_train_boarding_walk_0836(pair,point,movement)
   local rail_owner=movement.owner=="rail-track-frontier-0836"
     and movement.reason=="original-train-physical-boarding-0836"
   local safety_owner=movement.owner=="movement-controller-enforcement-0566"
-    and movement.reason=="movement-enforcement-overleash-return-0566"
+    and (movement.reason=="movement-enforcement-overleash-return-0566"
+      or movement.reason=="movement-enforcement-return-0566"
+      or movement.reason=="movement-enforcement-stale-return-0566")
     and pair.movement_request_0418==movement
     and (tonumber(movement.priority)or 0)>=840
     and (tonumber(movement.expires_tick)or -1)>=now()
@@ -1887,7 +1889,7 @@ function M.authorized_original_train_boarding_walk_0836(pair,point,movement)
       and not pair.item_family_custody_0702
       and not pair.defense_task_0259)then return false end
   local machine=pair.machine_logistics_0528
-  if machine and machine.phase~="complete"
+  if machine and machine.phase and machine.phase~="complete"
       and machine.phase~="failed"then return false end
   -- Verify separately item-debited, still connected engine-owned stops.
   for _,stop in ipairs({home,remote})do

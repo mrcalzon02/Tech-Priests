@@ -1490,7 +1490,9 @@ function M.enforce_pair(pair, reason)
   -- A competing cargo or task lease is never preempted. Every call checks
   -- original priest/train identities, both counted stops and live fuel.
   if enforcement_return and request
-      and request.reason=="movement-enforcement-overleash-return-0566" then
+      and (request.reason=="movement-enforcement-overleash-return-0566"
+        or request.reason=="movement-enforcement-return-0566"
+        or request.reason=="movement-enforcement-stale-return-0566") then
     local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
     if rail and
         type(rail.authorized_original_train_boarding_walk_0836)=="function"then
