@@ -65,7 +65,23 @@ The final arena save passed CRC validation and an additional independent native
 See `four-way-final/reload-result.json` and `reload-native.log`. This reload
 proves that checkpoint loads, not that factory progress succeeded.
 
-## Additional checks and remaining blockers
+## Native maintenance correction and verified result
+
+The subsequent `maintenance-order-reconcile/consecration-maintenance` run passes
+the full four-rank, 24,000-active-tick gate. Every rank repaired all eight damaged
+machines and recorded natural operation decay on all eight. Junior/intermediate/
+Senior/Magos completed 5/4/8/6 rites respectively; each rank also completed 120
+real machine operations. The native log contains `PASS active machine
+consecration and repair from real stocked items ranks=4`.
+
+The operation economy needed registration with the canonical tick broker;
+its former legacy callback was not receiving service. The dispatcher needed to
+reconcile finished orders before admitting the next maintenance job. Repair and
+rite movement now use reachable standoff distances outside solid machines while
+retaining the physical interaction range. Native wandering commands are detected
+and corrected through the existing movement owner and command budget.
+
+## Earlier checks and remaining blockers
 
 `midgame-final/midgame-science` passes native early checkpoint acceptance at
 0, 9,000 and 18,000 ticks. This is explicitly a smoke gate. At 18,000 ticks:

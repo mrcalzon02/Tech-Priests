@@ -949,8 +949,41 @@ function M.service_pair(pair,reason)
     end
    end
  end
- -- Only issue routine orders after defense/expansion can take a free priest.
+ -- Retire stale completed surface orders before admitting fresh maintenance.
  order_tick(pair)
+ -- The old legacy tick used to discover repair/rites. The dispatcher must
+ -- submit those real owners' work now that it owns the routine tick. A bare
+ -- infrastructure ingredient string is planning, not physical custody.
+ local current=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+ local maintenance_free=not(current and current.status=="active")
+ pair.maintenance_discovery_wait_0510=maintenance_free and nil or "active-order"
+ for _,field in ipairs({"active_task","active_task_0285","current_task",
+   "emergency_craft","active_craft_0479","direct_acquisition_task_0336",
+   "direct_acquisition_custody_0513","construction_task_0338",
+   "construction_custody_0338","machine_logistics_custody_0528",
+   "emergency_production_custody_0514","inventory_transfer_custody_0687",
+   "energy_family_custody_0707","item_family_custody_0702","defense_task_0259"}) do
+  if pair[field] then maintenance_free=false;pair.maintenance_discovery_wait_0510=field;break end
+ end
+ local moving=pair.movement_request_0418
+ if moving and (tonumber(moving.expires_tick)or now())>=now() then maintenance_free=false end
+ if valid(pair.combat_target) then maintenance_free=false end
+ if maintenance_free and now()>=(pair.next_maintenance_discovery_0510 or 0) then
+  pair.next_maintenance_discovery_0510=now()+60
+  local repair=rawget(_G,"TechPriestsRepairExecutor0516")
+  local rites=rawget(_G,"TechPriestsConsecrationExecutor0515")
+  local accepted=false
+  if repair and type(repair.discover_pair)=="function" then
+   local ok,done=pcall(repair.discover_pair,pair,"dispatcher-maintenance-discovery")
+   accepted=ok and done==true
+   if not ok then pair.maintenance_discovery_error_0510=tostring(done) end
+  end
+  if not accepted and rites and type(rites.submit_or_assign_consecration_task)=="function" then
+   local ok,why=pcall(rites.submit_or_assign_consecration_task,pair,nil,"dispatcher-maintenance-discovery")
+   if not ok then pair.maintenance_discovery_error_0510=tostring(why) end
+  end
+ end
+ -- Only issue routine orders after defense/expansion can take a free priest.
  local craft=pair.emergency_craft
  if (type(craft)=="table" and craft.strict_recipe_0647==true)
    or direct_active(pair) then

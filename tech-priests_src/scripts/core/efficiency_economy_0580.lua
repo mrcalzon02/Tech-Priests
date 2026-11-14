@@ -230,6 +230,7 @@ end
 
 function M.update_all_budgeted()
   local r=M.root()
+  if r.last_budget_tick==now() then return true end
   if r.enabled == false then
     if original_update_all then return original_update_all() end
     return false
@@ -359,6 +360,18 @@ function M.install()
   install_events()
   install_command()
   _G.TechPriestsEfficiencyEconomy0580 = M
+  local broker=rawget(_G,"TechPriestsRuntimeTickBroker0600")
+    or package.loaded["scripts.core.runtime_tick_broker"]
+  if not(broker and type(broker.register_service)=="function") then return false end
+  local registered=broker.register_service{
+    name="consecration_operation_economy_0580",category="consecration",
+    interval=10,priority=50,budget=M.default_budget_per_call,
+    fn=function()
+      M.update_all_budgeted()
+      local r=M.root()
+      return {processed=r.last_budget_spent or 0,detail="bounded native machine operation sensing"}
+    end}
+  if not registered then return false end
   if log then log("[Tech-Priests 0.1.580] consecration economy installed; machine-spirit updates are budgeted and dirty-aware") end
   return true
 end

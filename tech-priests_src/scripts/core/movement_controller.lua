@@ -2020,6 +2020,21 @@ local function apply_request(pair, req)
     return walked
   end
 
+  -- Unit AI can replace a completed/failed command with native wandering.
+  -- Motion alone is then not progress on this still-owned work lease. Reissue
+  -- the exact authorized path when the actual command no longer matches it.
+  if now()-(tonumber(req.last_command_tick)or 0)>=M.command_refresh_ticks
+      and not valid(pair.combat_target) then
+    local checked,command=pcall(function()return priest.commandable.command end)
+    if checked and command and (command.type~=defines.command.go_to_location
+        or not command.destination
+        or (dist_sq(command.destination,req)or math.huge)>0.25) then
+      req.last_command_tick=0
+      req.native_command_drift_tick=now()
+      local root=ensure_root()
+      root.stats.native_command_drift_repaths=(root.stats.native_command_drift_repaths or 0)+1
+    end
+  end
   -- A three-second sustained wrong waypoint, wrong direction, or stall
   -- triggers a legal forward waypoint recovery, without dropping the request.
   if watch_bad_route(pair, req) then return true end

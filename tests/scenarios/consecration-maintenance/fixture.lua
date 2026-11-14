@@ -165,6 +165,33 @@ local function checkpoint(s,elapsed)
         and pair.order_queue_0469.current.kind).. " consecration="..
       tostring(pair.consecration_0515 and pair.consecration_0515.phase)..
       " repair="..tostring(pair.repair_0516 and pair.repair_0516.phase))
+    local first=get_consecration_record(r.machines[1].entity)
+    local native_command={}
+    pcall(function()
+      local command=pair.priest.commandable.command
+      native_command={type=command.type,destination=command.destination,radius=command.radius}
+      for name,value in pairs(defines.command)do
+        if value==command.type then native_command.kind=name end
+      end
+    end)
+    emit("DIAGNOSTIC rank="..rank.name.." mode="..tostring(pair.mode)..
+      " dispatcher="..helpers.table_to_json(pair.dispatcher_0510 or {})..
+      " economy_error="..tostring(first and first.last_sanctification_economy_error_0580)..
+      " sensor_tick="..tostring(first and first.last_sensor_service_tick_0446)..
+      " sanctification="..tostring(first and first.sanctification)..
+      " economy_stats="..helpers.table_to_json((tp.efficiency_economy_0580 or {}).stats or {})..
+      " priest_position="..helpers.table_to_json(pair.priest.position)..
+      " repair_distance="..tostring(pair.repair_0516 and pair.repair_0516.distance)..
+      " movement="..helpers.table_to_json(pair.movement_request_0418 and {
+        x=pair.movement_request_0418.x,y=pair.movement_request_0418.y,
+        owner=pair.movement_request_0418.owner,reason=pair.movement_request_0418.reason,
+        expires_tick=pair.movement_request_0418.expires_tick,
+        last_distance=pair.movement_request_0418.last_distance_sq,
+        recovery=pair.movement_request_0418.last_recovery_blocker} or {})..
+      " movement_state="..tostring(pair.movement_controller_state_0418)..
+      " discovery_error="..tostring(pair.maintenance_discovery_error_0510)..
+      " discovery_wait="..tostring(pair.maintenance_discovery_wait_0510)..
+      " native_command="..helpers.table_to_json(native_command))
     if produced==0 then fail("ASSEMBLERS_NEVER_CRAFTED rank="..rank.name) end
     all_operating=all_operating+1
     if repaired>0 then all_repaired=all_repaired+1 end

@@ -247,7 +247,8 @@ end
 
 local function move(p,e)
   local f=rawget(_G,"tech_priests_request_movement_0418");if type(f)~="function" then return false,"movement-authority-unavailable" end
-  local ok,v,why=pcall(f,p,e.position,"consecration-executor-0515",{radius=1.25,owner="consecration_executor_0515",priority=705,ttl=900,distraction=defines and defines.distraction and defines.distraction.none})
+  local reach=tonumber(rawget(_G,"PRIEST_CONSECRATION_REACH_DISTANCE_SQ")) or 16
+  local ok,v,why=pcall(f,p,e.position,"consecration-executor-0515",{radius=math.max(.5,math.sqrt(reach)-.5),owner="consecration_executor_0515",priority=705,ttl=900,distraction=defines and defines.distraction and defines.distraction.none})
   return ok and v==true, ok and (why or v) or v
 end
 local function apply(p,e,name,info)

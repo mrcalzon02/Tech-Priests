@@ -56,6 +56,19 @@ local function step(pair, tick, x, y)
   Movement.service(nil, 24)
 end
 local starting = teleports
+local drift=pair_at(109,0,0)
+local drift_route=begin(drift,{x=12,y=0})
+local issued=#drift.priest.commandable.issued
+drift.priest.commandable.command={type=6,radius=10}
+step(drift,game.tick+Movement.command_refresh_ticks,1,0)
+check(#drift.priest.commandable.issued==issued+1,"native wandering did not restore owned route")
+check(drift.movement_request_0418==drift_route and teleports==starting,
+ "command correction replaced custody or teleported")
+local restored=drift.priest.commandable.issued[#drift.priest.commandable.issued]
+check(restored.type==defines.command.go_to_location and restored.destination.x==12,
+ "command correction changed the authorized goal")
+storage.tech_priests.pairs_by_station[109]=nil
+game.tick=1000
 local wrong = pair_at(11, 0, 0)
 local route = begin(wrong, { x = 12, y = 0 })
 for tick = 1010, 1180, 10 do

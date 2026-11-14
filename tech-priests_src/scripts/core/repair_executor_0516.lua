@@ -56,7 +56,7 @@ local function remove_pack(p)for _,s in ipairs(sources(p))do if count(s.inv,"rep
 local function atomic_return(p,n,why)local f=rawget(_G,"tech_priests_safe_deposit_item");if type(f)~="function"then return false,"atomic-storage-unavailable"end;local ok,a,b,c=pcall(f,p,"repair-pack",n,why);c=tonumber(c)or(a==true and n or 0);return ok and a==true and c==n,b end
 local function claim(p,e)local R=Reservations();if not(R and type(R.claim)=="function")then return false,"reservation-authority-unavailable"end;local ok,v=pcall(R.claim,"repair",e,p,M.reservation_ttl_ticks,{surface_index=e.surface and e.surface.index,force_index=e.force and e.force.index});return ok and v==true,ok and"claimed"or safe(v)end
 local function release(p,e)local R=Reservations();if valid(e)and R and type(R.release)=="function"then pcall(R.release,"repair",e,p)end end
-local function move(p,e)local f=rawget(_G,"tech_priests_request_movement_0418");if type(f)~="function"then return false,"movement-authority-unavailable"end;local ok,v=pcall(f,p,e.position,"repair-executor-0516-walk-to-target",{radius=1.4,owner="repair_executor_0516",priority=820,ttl=900,distraction=defines and defines.distraction and defines.distraction.none});return ok and v==true,ok and safe(v)or"movement-error:"..safe(v)end
+local function move(p,e)local f=rawget(_G,"tech_priests_request_movement_0418");if type(f)~="function"then return false,"movement-authority-unavailable"end;local ok,v=pcall(f,p,e.position,"repair-executor-0516-walk-to-target",{radius=math.max(.5,math.sqrt(M.repair_range_sq)-.5),owner="repair_executor_0516",priority=820,ttl=900,distraction=defines and defines.distraction and defines.distraction.none});return ok and v==true,ok and safe(v)or"movement-error:"..safe(v)end
 local function clear_state(p,phase,why)local s=p.repair_0516 or{};local e=valid(s.target)and s.target or nil;if e then release(p,e)end;s.phase=phase or"none";s.last_blocker=why;s.target=nil;s.target_name=nil;s.target_unit=nil;s.target_source=nil;s.started_tick=nil;s.due_tick=nil;s.distance=nil;s.missing=nil;p.repair_0516=s;if p.target==e then p.target=nil end end
 local function queue_terminal(p,kind,why)
  local o=current_order(p);if not repair_order(o)then return true,"no-repair-order"end;local Q=Queue();local fn=Q and Q[kind];if type(fn)~="function"then return false,"order-queue-unavailable"end;local ok,v,w=pcall(fn,p,why);return ok and v==true,ok and w or v
@@ -80,6 +80,11 @@ function M.active(p)local s=p and p.repair_0516;return p and(p.repair_pack_custo
 function M.submit_or_assign_repair_task(p,e,why)
  if not valid_pair(p)then return false,"invalid-pair"end;if not valid(e)then e=select(1,find_target(p))end;if not valid(e)then return false,"no-target"end;local Q=Queue();if not(Q and type(Q.submit)=="function")then return false,"order-queue-unavailable"end
  local ok,a,w,o=pcall(Q.submit,p,{kind="repair",item="repair-pack",target=e,priority=800,source="repair_executor_0516",purpose=why or"repair",reason=why or"repair"});if not ok then return false,"order-submit-error:"..safe(a)end;if a==true or w=="duplicate-merged"then record(p,"order-accepted",w);return true,w,o end;record(p,"order-rejected",w);return false,w,o
+end
+function M.discover_pair(p,why)
+ if not valid_pair(p)then return false,"invalid-pair"end
+ if pack_count(p)<=0 then return false,"no-repair-pack"end
+ return M.submit_or_assign_repair_task(p,nil,why or "maintenance-discovery-0516")
 end
 function M.service_pair(p,why,forced)
  local root=M.root();if root.enabled==false then return result{processed=0,detail="disabled"}end;if not valid_pair(p)then return result{failed=1,detail="invalid-pair"}end;local s=p.repair_0516 or{phase="none"};p.repair_0516=s;s.version=M.version;s.last_service_tick=now();s.last_reason=safe(why or"service")
