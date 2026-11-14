@@ -543,6 +543,33 @@ local function make_priest(def, belt_immune)
   return priest
 end
 
+-- Optional ORIGINAL rail-capable Magos body, created at first station pairing.
+-- This is a native Factorio character from birth: never swap an existing
+-- unit priest, attach a proxy passenger, or move an entity by teleport.
+-- Legacy unit prototypes/names are unchanged for old saves and normal play.
+local function make_original_rail_character_magos(def,belt_immune)
+  local base=data.raw["character"] and data.raw["character"]["character"]
+  if not base then return nil end
+  local priest=table.deepcopy(base)
+  priest.name=belt_immune
+    and "planetary-magos-tech-priest-rail-character-belt-immune"
+    or "planetary-magos-tech-priest-rail-character"
+  priest.icon="__base__/graphics/icons/repair-pack.png"
+  priest.icon_size=64
+  priest.localised_name={"entity-name."..def.priest_name}
+  priest.localised_description={"entity-description."..def.priest_name}
+  priest.max_health=def.priest_health
+  priest.resistances={
+    {type="physical",decrease=1,percent=10},
+    {type="fire",percent=20}}
+  -- Preserve the character prototype's genuine native driver eligibility.
+  -- Do not manufacture equipment, items, cargo, or any commandable surrogate.
+  priest.minable=nil
+  priest.running_speed=belt_immune and 0.18 or 0.15
+  priest.corpse=def.corpse_name
+  return priest
+end
+
 -- Hidden small-arms proxy. The visible Tech-Priest remains the moving unit;
 -- this ammo turret exists only so Factorio can resolve real bullet-category
 -- ammunition, including weird modded bullet effects, through the normal turret path.
@@ -1097,6 +1124,12 @@ for _, def in pairs(TIER_DEFS) do
   table.insert(prototypes_to_extend, make_station(def))
   table.insert(prototypes_to_extend, make_priest(def, false))
   table.insert(prototypes_to_extend, make_priest(def, true))
+  if def.key=="planetary-magos" then
+    local native_char=make_original_rail_character_magos(def,false)
+    local native_immune=make_original_rail_character_magos(def,true)
+    if native_char then table.insert(prototypes_to_extend,native_char) end
+    if native_immune then table.insert(prototypes_to_extend,native_immune) end
+  end
   table.insert(prototypes_to_extend, make_priest_corpse(def))
 end
 

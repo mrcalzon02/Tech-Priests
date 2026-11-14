@@ -76,6 +76,8 @@ PRIEST_TO_STATION = {
   ["intermediate-tech-priest"] = "intermediate-cogitator-station",
   ["senior-tech-priest"] = "senior-cogitator-station",
   ["planetary-magos-tech-priest"] = "planetary-magos-cogitator-station",
+  ["planetary-magos-tech-priest-rail-character"] = "planetary-magos-cogitator-station",
+  ["planetary-magos-tech-priest-rail-character-belt-immune"] = "planetary-magos-cogitator-station",
   ["void-tech-priest"] = "void-cogitator-station",
   ["junior-tech-priest-belt-immune"] = "junior-cogitator-station",
   ["intermediate-tech-priest-belt-immune"] = "intermediate-cogitator-station",
@@ -540,6 +542,15 @@ end
 
 function get_priest_name_for_force(config, force)
   if not config then return nil end
+  -- New original Magos only. A pre-existing unit is never converted, cloned
+  -- or relabeled; this optional native character is born at the station.
+  local option=settings and settings.global
+    and settings.global["tech-priests-original-magos-rail-character"]
+  if config.tier=="planetary-magos" and option and option.value==true then
+    return force_has_priest_belt_immunity(force)
+      and "planetary-magos-tech-priest-rail-character-belt-immune"
+      or "planetary-magos-tech-priest-rail-character"
+  end
   if force_has_priest_belt_immunity(force) and config.immune_priest_name then
     return config.immune_priest_name
   end

@@ -1475,3 +1475,30 @@ class NativePaidTrainStop0836ContractTests(unittest.TestCase):
         self.assertNotIn('surface.create_entity', stop)
         self.assertNotIn('teleport(', stop)
 
+
+class OriginalRailCharacterBirthContractTests(unittest.TestCase):
+    def test_only_opted_in_new_magos_uses_native_character(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        settings=(root/"tech-priests_src/settings.lua").read_text(encoding="utf-8")
+        config=(root/"tech-priests_src/scripts/generated/control_legacy_part_001.lua").read_text(encoding="utf-8")
+        entity=(root/"tech-priests_src/prototypes/entity.lua").read_text(encoding="utf-8")
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        self.assertIn('name="tech-priests-original-magos-rail-character"',settings)
+        self.assertIn('default_value=false',settings.split('name="tech-priests-original-magos-rail-character"')[1][:160])
+        self.assertIn('data.raw["character"]["character"]',entity)
+        self.assertIn('make_original_rail_character_magos(def,false)',entity)
+        self.assertIn('config.tier=="planetary-magos" and option and option.value==true',config)
+        self.assertIn('["planetary-magos-tech-priest-rail-character"]',config)
+        self.assertLess(fixture.index('settings.global["tech-priests-original-magos-rail-character"]={value=true}'),
+                        fixture.index('local station=surface.create_entity{'))
+        self.assertNotIn('priest.teleport(',entity)
+    def test_original_character_is_walked_only_by_canonical_controller(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        move=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text(encoding="utf-8")
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        self.assertIn('priest.walking_state={walking=true,direction=heading}',move)
+        self.assertIn('original-character-native-walk-recovery-only',move)
+        self.assertIn('native-original-character-onboard',move)
+        self.assertIn('if priest.type~="character" then',rail)
+        self.assertIn('entity.set_driver(priest)',rail)
+        self.assertIn('actual==priest',rail)

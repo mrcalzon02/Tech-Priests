@@ -166,6 +166,18 @@ local function setup()
   if not(natural.valid and natural.amount==original_amount) then
     fail("NATURAL_ORE_SOURCE_DAMAGED_DURING_FIXTURE_ISOLATION")
   end
+  -- This scenario starts with a NEW original Magos born as a Factorio
+  -- character. No historical unit is replaced and no substitute boards.
+  -- The user-visible setting is OFF in normal worlds and old saves.
+  local option=settings and settings.global
+    and settings.global["tech-priests-original-magos-rail-character"]
+  if not option then fail("ORIGINAL_CHARACTER_SETTING_MISSING") end
+  settings.global["tech-priests-original-magos-rail-character"]={value=true}
+  if settings.global["tech-priests-original-magos-rail-character"].value~=true
+      or not prototypes.entity["planetary-magos-tech-priest-rail-character"] then
+    fail("ORIGINAL_NATIVE_CHARACTER_OPT_IN_REFUSED")
+  end
+  emit("ORIGINAL_NATIVE_CHARACTER_MODE_ENABLE_BEFORE_FIRST_PAIR")
   local station=surface.create_entity{
     name="planetary-magos-cogitator-station",
     position=STATION,force=force,raise_built=true}

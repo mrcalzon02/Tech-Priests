@@ -534,3 +534,16 @@ data:extend({
     order = "z-performance-b[condenser-sprites]",
   },
 })
+
+-- Method III experimental native original-body option. OFF by default:
+-- existing save characters are NEVER transformed or substituted. Applies
+-- only when a new Magos station first creates its original priest.
+data:extend({
+  {
+    type="bool-setting",
+    name="tech-priests-original-magos-rail-character",
+    setting_type="runtime-global",
+    default_value=false,
+    order="d[rail]-a[original-native-boarding]"
+  }
+})

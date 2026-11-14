@@ -428,6 +428,23 @@ end
 
 local function direct_go_to(priest, pos, radius, distraction)
   if not (priest and priest.valid and pos and defines and defines.command) then return false end
+  if priest.type=="character" then
+    -- The ORIGINAL character cannot accept a unit's set_command. Let the
+    -- existing 0418 lease move it by Factorio walking physics instead.
+    -- No teleport, proxy navigator, synthetic driver or premature arrival.
+    local dx,dy=pos.x-priest.position.x,pos.y-priest.position.y
+    local ax,ay=math.abs(dx),math.abs(dy)
+    local d=defines.direction
+    local heading
+    if ax>ay*2 then heading=dx>0 and d.east or d.west
+    elseif ay>ax*2 then heading=dy>0 and d.south or d.north
+    elseif dx>=0 then heading=dy>=0 and d.southeast or d.northeast
+    else heading=dy>=0 and d.southwest or d.northwest end
+    local ok=pcall(function()
+      priest.walking_state={walking=true,direction=heading}
+    end)
+    return ok
+  end
   local command = {
     type = defines.command.go_to_location,
     destination = { x = pos.x, y = pos.y },
@@ -1682,6 +1699,11 @@ local function recover_bad_route(pair, req, reason)
     end
     return true
   end
+  -- A character Magos is the original physical railway passenger. It may
+  -- only walk through engine physics under 0418; no recovery teleport ever.
+  if priest.type=="character" then
+    return false,"original-character-native-walk-recovery-only"
+  end
   local surface = priest.surface
   if not (surface and priest.teleport and surface.can_place_entity) then
     return false, "recovery-teleport-unavailable"
@@ -1841,6 +1863,26 @@ local function apply_request(pair, req)
     pair.movement_controller_state_0418 = "loitering"
     direct_stop(priest)
     return true
+  end
+
+  -- Native characters cannot use unit path commands. Re-steer their
+  -- actual walking_state from the same authorized 0418 lease each pulse.
+  if priest.type=="character" then
+    local in_vehicle,vehicle=pcall(function() return priest.vehicle end)
+    if in_vehicle and vehicle and vehicle.valid then
+      pair.movement_controller_state_0418="native-original-character-onboard"
+      return false
+    end
+    if not movement_command_budget_allowed(req) then
+      pair.movement_controller_state_0418="character-walk-budget-deferred"
+      return false
+    end
+    local walked=direct_go_to(priest,req,radius,req.distraction)
+    if walked then
+      req.last_command_tick=now()
+      pair.movement_controller_state_0418="original-character-native-walking"
+    end
+    return walked
   end
 
   -- A three-second sustained wrong waypoint, wrong direction, or stall
