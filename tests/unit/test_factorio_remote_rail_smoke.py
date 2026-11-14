@@ -2670,3 +2670,37 @@ class OriginalPaidRemoteDrillTerminalReceipt0836Tests(unittest.TestCase):
         # contract; a different construction 2 tiles away still fails.
         self.assertLessEqual(0.5**2+0.5**2,1)
         self.assertGreater(2**2,1)
+
+
+class OriginalRemoteNativeDrillWorldOrePickup0836(unittest.TestCase):
+    """Only the original drill's real ground stack can enter physical custody."""
+
+    def test_native_ground_pickup_never_credits_remote_wagon(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text()
+        pickup=rail.split("function M.service_original_remote_drill_output_pickup_0836(pair)",1)[1].split(
+            "\nfunction M.service_first_train_return_0836(pair)",1)[0]
+        for proof in (
+            'M.authorized_original_remote_drill_hold_0836(pair)',
+            'state.fuel_delivery_0836.native_inventory_verified==true',
+            'type="mining-drill"',
+            'type="resource",name=m.item',
+            'type="item-entity",position=output',
+            'game.create_inventory(1)',
+            'state.ore_pickup_0836=receipt',
+            'hold[1].transfer_stack(world_item.stack,1)',
+            'held_after==1 and ground_after==world_before-1',
+            'native-ground-transfer-quarantined',
+            'native-ground-item-in-original-carrier',
+        ):
+            self.assertIn(proof,pickup)
+        for forbidden in ('teleport(', 'surface.create_entity(', 'wagon.built_entity.get_inventory',
+                          'bounds_exempt', 'source_inventory.insert('):
+            self.assertNotIn(forbidden,pickup)
+        self.assertIn('M.service_original_remote_drill_output_pickup_0836(pair)',rail)
+        self.assertIn('REMOTE_DRILL_GROUND_NATIVE_0836 elapsed=',fixture)
+        self.assertIn('held_original_ore=',fixture)
+        self.assertIn('native_ground_iron=',fixture)
+        # No new native PASS marker or weakening of the original return gate.
+        self.assertIn('fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)

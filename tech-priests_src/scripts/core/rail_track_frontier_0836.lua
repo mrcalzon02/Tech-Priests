@@ -3105,6 +3105,114 @@ function M.service_original_remote_drill_fuel_0836(pair)
   return true,"original-remote-drill-received-five-source-debited-coal"
 end
 
+-- The original paid drill may put real mined ore on the ground at its
+-- native output tile. Pick up only ONE world item, with the original on-foot
+-- Magos in reach, into a persistent real LuaInventory. This is the first
+-- physical-cargo leg, not a remotely credited wagon item or an ore-delivery
+-- receipt. A later leg must physically carry the SAME hold to the wagon.
+function M.service_original_remote_drill_output_pickup_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  local state=m and m.first_remote_drill_0836
+  local priest=pair and pair.priest
+  if not(m and m.item=="iron-ore" and state and state.fuel_delivery_0836
+    and state.fuel_delivery_0836.native_inventory_verified==true
+    and M.authorized_original_remote_drill_hold_0836(pair))then
+    return false,"original-drill-output-physical-authority-missing"
+  end
+  -- A pending or quarantined native transfer survives save/reload; never
+  -- create a second inventory or silently repeat a possibly completed debit.
+  if state.ore_pickup_0836 then
+    return false,"original-drill-ground-cargo-already-reserved"
+  end
+  local drill=state.built_entity
+  if not(valid(drill) and drill.unit_number==state.built_unit
+    and drill.force==priest.force and drill.surface==priest.surface)then
+    return false,"original-drill-output-entity-identity-invalid"
+  end
+  local dx=priest.position.x-drill.position.x
+  local dy=priest.position.y-drill.position.y
+  if dx*dx+dy*dy>16 then
+    return false,"original-magos-not-at-physical-drill-output"
+  end
+  -- The paid drill must be the only drill in this native output footprint,
+  -- mining an existing natural ore patch. Never adopt another miner's item.
+  local ok,drills,ores,drop,items=pcall(function()
+    local surface=drill.surface
+    local nearby=surface.find_entities_filtered{
+      type="mining-drill",position=drill.position,radius=5,limit=4}
+    local natural=surface.find_entities_filtered{
+      type="resource",name=m.item,position=drill.position,
+      radius=3,limit=16}
+    local output=drill.drop_position
+    local grounded=output and surface.find_entities_filtered{
+      type="item-entity",position=output,radius=0.7,limit=8}
+    return nearby,natural,output,grounded
+  end)
+  if not(ok and type(drills)=="table" and #drills==1
+    and drills[1]==drill and type(ores)=="table"
+    and type(drop)=="table" and type(items)=="table")then
+    return false,"original-drill-ground-native-observation-unavailable"
+  end
+  local live_ore=false
+  for _,ore in ipairs(ores)do
+    if valid(ore) and ore.name==m.item and
+        (tonumber(ore.amount)or 0)>0 then live_ore=true;break end
+  end
+  if not live_ore then
+    return false,"original-drill-ground-natural-ore-not-present"
+  end
+  local world_item,world_before
+  for _,item in ipairs(items)do
+    local read,name,count=pcall(function()
+      return valid(item) and item.stack.valid_for_read
+        and item.stack.name or nil,
+        valid(item) and item.stack.count or nil
+    end)
+    if read and name==m.item and type(count)=="number"
+        and count>=1 then
+      world_item,world_before=item,count
+      break
+    end
+  end
+  if not world_item then
+    return false,"original-drill-native-output-not-on-ground"
+  end
+  local created,hold=pcall(function()return game.create_inventory(1)end)
+  if not(created and hold and hold.valid
+    and hold.get_item_count(m.item)==0)then
+    return false,"original-drill-ground-engine-hold-unavailable"
+  end
+  -- Intent is persisted BEFORE the native world-stack transfer. On an
+  -- exception, preserve the actual hold and world item for reconciliation,
+  -- without a blind insert/refund, fabricated ore or another pickup.
+  local receipt={phase="native-ground-transfer-pending",
+    inventory=hold,priest_unit=priest.unit_number,
+    drill_unit=drill.unit_number,train_id=state.train_id,
+    station_unit=pair.station.unit_number,ground_entity=world_item,
+    ground_before=world_before,output_position={x=drop.x,y=drop.y},
+    attempted_tick=now()}
+  state.ore_pickup_0836=receipt
+  local transferred,result=pcall(function()
+    return hold[1].transfer_stack(world_item.stack,1)
+  end)
+  local checked,held_after,ground_after=pcall(function()
+    return hold.get_item_count(m.item),
+      valid(world_item) and world_item.stack.count or 0
+  end)
+  if not(transferred and result==true and checked
+      and held_after==1 and ground_after==world_before-1)then
+    receipt.phase="native-ground-transfer-quarantined"
+    receipt.quarantine="original-drill-world-stack-transfer-uncertain"
+    return false,receipt.quarantine
+  end
+  receipt.phase="native-ground-item-in-original-carrier"
+  receipt.native_ore_count=1
+  receipt.ground_after=ground_after
+  receipt.collected_tick=now()
+  m.next_step="carry-original-ground-mined-ore-physically-to-paid-wagon"
+  return true,"original-native-drill-ground-item-physically-picked-up"
+end
+
 -- remote stop may ask Factorio to take it home. A schedule or route receipt is
 -- never evidence of a return journey; single-headed trains may have no path.
 function M.service_first_train_return_0836(pair)
@@ -3371,6 +3479,7 @@ function M.service_pair(pair)
               M.offer_first_remote_drill_0836(pair)
               M.service_original_remote_drill_disembark_0836(pair)
               M.service_original_remote_drill_fuel_0836(pair)
+              M.service_original_remote_drill_output_pickup_0836(pair)
               return M.service_first_train_return_0836(pair)
             end
             return M.service_first_train_outbound_0836(pair)

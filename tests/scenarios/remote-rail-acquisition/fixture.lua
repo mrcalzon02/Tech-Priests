@@ -854,6 +854,42 @@ local function inspect(s,elapsed)
     " receipt_drill_unit="..tostring(delivery and delivery.drill_unit)..
     " receipt_tick="..tostring(delivery and delivery.delivered_tick)..
     " fuel_quarantine="..tostring(supply and supply.quarantine))
+  -- Observe native drill output tile and the original ground-item custody
+  -- independently; a pending/recovered stack is not wagon delivery.
+  local pickup=paid_drill and paid_drill.ore_pickup_0836
+  local ground_count="unmeasured"
+  local native_drop="unmeasured"
+  if built_drill and built_drill.valid then
+    local observed,position,number=pcall(function()
+      local point=built_drill.drop_position
+      local nearby=point and built_drill.surface.find_entities_filtered{
+        type="item-entity",position=point,radius=0.7,limit=8}
+      local n=0
+      for _,item in ipairs(nearby or {})do
+        if item.valid and item.stack.valid_for_read
+          and item.stack.name=="iron-ore" then n=n+item.stack.count end
+      end
+      return point,n
+    end)
+    if observed and position then
+      native_drop=tostring(position.x)..","..tostring(position.y)
+      ground_count=number
+    end
+  end
+  local held_ore="unmeasured"
+  if pickup and pickup.inventory and pickup.inventory.valid then
+    local observed,n=pcall(pickup.inventory.get_item_count,"iron-ore")
+    if observed then held_ore=n end
+  end
+  emit("REMOTE_DRILL_GROUND_NATIVE_0836 elapsed="..elapsed..
+    " drop_position="..tostring(native_drop)..
+    " native_ground_iron="..tostring(ground_count)..
+    " pickup_phase="..tostring(pickup and pickup.phase)..
+    " held_original_ore="..tostring(held_ore)..
+    " source_ground_before="..tostring(pickup and pickup.ground_before)..
+    " source_ground_after="..tostring(pickup and pickup.ground_after)..
+    " native_collected_tick="..tostring(pickup and pickup.collected_tick)..
+    " quarantine="..tostring(pickup and pickup.quarantine))
   emit("REMOTE_DRILL_SUPPLY_NATIVE_0836 elapsed="..elapsed..
     " source_unit="..tostring(supply and supply.source_unit)..
     " source_before="..tostring(supply and supply.source_before)..
