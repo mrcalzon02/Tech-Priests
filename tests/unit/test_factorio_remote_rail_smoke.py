@@ -2529,7 +2529,8 @@ class OriginalPaidRemoteDrillTerminalReceipt0836Tests(unittest.TestCase):
         builder=(root/"tech-priests_src/scripts/core/construction_planner.lua").read_text()
         rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
         finish=builder.split("local function finish(pair,task,built,reason)",1)[1].split(
-            "pair.construction_last_task_0338=task",1)[1]
+            "pair.construction_last_task_0338=task",1)[1].split(
+            " -- The generic terminal slot",1)[0]
         hold=rail.split("function M.authorized_original_remote_drill_hold_0836(pair)",1)[1].split(
             "\nfunction ",1)[0]
         for proof in ('state.request==task.request_value',
