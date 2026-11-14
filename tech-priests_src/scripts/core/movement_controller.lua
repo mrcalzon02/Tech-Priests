@@ -1011,7 +1011,12 @@ function M.combat_intent(pair, target, reason, opts)
   if is_space_pair(pair) then return false end
   local range = tonumber(opts.fire_range) or tonumber(_G.COMBAT_FIRE_RANGE) or M.combat_fire_range
   local approach = tonumber(opts.radius) or tonumber(_G.COMBAT_APPROACH_RADIUS) or math.max(1, range - 2)
-  local d2 = dist_sq(pair.priest.position, target.position) or 999999
+  local destination=target.position
+  if opts.owner=="fallback-combat-laser-0423"and CombatSafety
+      and type(CombatSafety.target_contact_position)=="function"then
+    destination=CombatSafety.target_contact_position(pair.priest,target)
+  end
+  local d2 = dist_sq(pair.priest.position, destination) or 999999
   pair.combat_target = target
   pair.target = target
   pair.movement_controller_combat_intent_0419 = {
@@ -1023,9 +1028,9 @@ function M.combat_intent(pair, target, reason, opts)
   }
   if d2 > range * range then
     pair.mode = "moving-to-combat"
-    return M.request(pair, target.position, reason or "combat-intent", {
+    return M.request(pair, destination, reason or "combat-intent", {
       radius = approach,
-      owner = "combat-intent",
+      owner = opts.owner or "combat-intent",
       priority = tonumber(opts.priority) or 85,
       ttl = tonumber(opts.ttl) or 60 * 4,
       distraction = defines and defines.distraction and defines.distraction.by_enemy or nil

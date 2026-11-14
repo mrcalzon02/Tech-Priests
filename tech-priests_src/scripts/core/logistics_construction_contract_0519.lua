@@ -12,6 +12,7 @@
 --     A build can be placed from available station-known inventory, or deferred
 --     until the required item is actually unlocked/producible/available.
 
+local StationCargo0824=require("scripts.core.station_cargo_0824")
 local M = {}
 M.version = "0.1.519"
 M.storage_key = "logistics_construction_contract_0519"
@@ -337,6 +338,12 @@ local function wrap_station_expansion()
     Exp.service_station_expansion_assignment=function(worker_pair,...)
       if valid_pair(worker_pair) and worker_pair.station_expansion_0256 then
         local rec=worker_pair.station_expansion_0256
+        -- The last kit has already left storage when its original priest is
+        -- carrying it. Let 0256 validate/reconcile that engine-owned hold before
+        -- asking whether a second station item could be manufactured.
+        if rec and StationCargo0824.has_record(rec)then
+          return Exp.TECH_PRIESTS_0519_PRE_SERVICE_ASSIGNMENT(worker_pair,...)
+        end
         if rec and rec.station_item and station_item_count(worker_pair, rec.station_item) <= 0 then
           local can,why=M.item_available_or_producible(worker_pair, rec.station_item)
           if not can then

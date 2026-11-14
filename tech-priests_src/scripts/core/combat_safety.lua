@@ -126,6 +126,17 @@ function M.is_valid_hostile_target(owner_or_force, target)
   return target_force ~= owner_force
 end
 
+function M.target_contact_position(priest,target)
+  local pos=target.position
+  local ok,box=pcall(function()return target.bounding_box end)
+  if ok and box and box.left_top and box.right_bottom then
+    local p=priest.position
+    return {x=math.max(box.left_top.x,math.min(box.right_bottom.x,p.x)),
+      y=math.max(box.left_top.y,math.min(box.right_bottom.y,p.y))}
+  end
+  return pos
+end
+
 function M.is_safe_direct_mining_target(owner_or_force, target)
   if not (target and target.valid) then return false end
   local typ = target.type
@@ -168,6 +179,7 @@ function M.clear_invalid_combat_state(pair, reason)
 end
 
 function M.install()
+  tech_priests_combat_target_contact_0322=M.target_contact_position
   -- 0.1.674-dev / 0785: target selection and combat execution call these
   -- predicates directly; this module no longer replaces generated functions.
   tech_priests_0322_is_valid_hostile_target = M.is_valid_hostile_target

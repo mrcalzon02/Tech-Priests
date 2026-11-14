@@ -577,6 +577,18 @@ function tech_priests_0257_build_ratio_plan(pair, op)
     plan.target_rate=plan.target_spm/60
     plan.science_packs,plan.science_technology=
       tech_priests_1136_required_science_basket(pair,objective)
+    if op.factory_science_portfolio_1172==true then
+      -- Independent factory capacity must outlive a single cheap red-only
+      -- research choice. Include each actually unlocked starter science family
+      -- while retaining every native ingredient of the current research basket.
+      local force=pair.station and pair.station.force
+      for _,name in ipairs({"automation-science-pack","logistic-science-pack","military-science-pack"})do
+        local recipe=force and force.recipes and force.recipes[name]
+        if recipe and recipe.enabled==true and not plan.science_packs[name]then
+          plan.science_packs[name]=1
+        end
+      end
+    end
     local names={}
     for name in pairs(plan.science_packs)do names[#names+1]=name end
     table.sort(names)
@@ -1306,6 +1318,7 @@ function tech_priests_1172_service_autonomous_science_component(pair)
   end
   local science={
     science_item=pack,science_spm_target_1133=op.science_spm_target_1133,
+    factory_science_portfolio_1172=true,
   }
   local item,reason,plan=tech_priests_0257_pick_ratio_need(pair,science)
   -- 1178/1206: A physical starter factory can be below its target ratio

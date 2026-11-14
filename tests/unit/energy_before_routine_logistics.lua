@@ -27,3 +27,12 @@ pair.direct_acquisition_custody_0513=nil
 pair.combat_target=target
 assert(Arbiter.action(pair).kind~="energy-family-logistics","energy displaced hostile combat target")
 print("PASS strict engine fuel prerequisite preserves actual cargo and combat")
+pair.combat_target=nil;pair.emergency_craft=nil
+TechPriestsEnergyFamilyLogistics0707.recommend_action=function()return nil end
+local lab={valid=true,type="lab",position={x=3,y=0},force=force}
+TechPriestsItemFamilyLogistics0702={recommend_action=function()
+ return {kind="item-family-logistics",target=lab,item="automation-science-pack",active=false}end}
+assert(Arbiter.action(pair).kind=="item-family-logistics","routine raw collection starved laboratory science")
+machine_active=true
+assert(Arbiter.action(pair).kind=="machine-logistics","lab discovery displaced incumbent machine duty")
+print("PASS physical laboratory delivery before fresh routine machine collection")

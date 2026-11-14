@@ -392,6 +392,15 @@ end
 -- indefinitely pathing into its collision box. Pick an actual unoccupied
 -- standing point inside the existing 1.6-tile physical transfer envelope.
 -- The 0.15 arrival tolerance must not let movement stop outside that envelope.
+local function machine_distance_sq(position,machine)
+  local ok,box=pcall(function()return machine.bounding_box end)
+  if ok and box and box.left_top and box.right_bottom then
+    local x=math.max(box.left_top.x,math.min(box.right_bottom.x,position.x))
+    local y=math.max(box.left_top.y,math.min(box.right_bottom.y,position.y))
+    return dist_sq(position,{x=x,y=y})
+  end
+  return dist_sq(position,machine.position)
+end
 local function machine_contact(pair, state)
   if not (valid_pair(pair) and state and valid(state.machine)) then return nil end
   local priest, machine = pair.priest, state.machine
@@ -400,7 +409,7 @@ local function machine_contact(pair, state)
     return nil
   end
   local function is_clear(pos)
-    if dist_sq(pos, machine.position) > (1.45 * 1.45) then return false end
+    if machine_distance_sq(pos,machine) > (1.45 * 1.45) then return false end
     local ok, allowed = pcall(function()
       return surface.can_place_entity({
         name = priest.name, position = pos, force = priest.force })
@@ -451,6 +460,11 @@ local function machine_contact(pair, state)
         x = machine.position.x + radius * direction[1],
         y = machine.position.y + radius * direction[2],
       }
+      local read,box=pcall(function()return machine.bounding_box end)
+      if read and box and box.left_top and box.right_bottom then
+        if direction[1]~=0 then pos.x=(direction[1]>0 and box.right_bottom.x or box.left_top.x)+radius*direction[1]end
+        if direction[2]~=0 then pos.y=(direction[2]>0 and box.right_bottom.y or box.left_top.y)+radius*direction[2]end
+      end
       if is_clear(pos) then
         choices[#choices + 1] = {
           pos = pos,
@@ -651,12 +665,26 @@ local function fuel_candidate(pair, machine, requested_floor)
   end
   return nil
 end
+local function deficient_factory_job(pair,machine)
+  local op=pair.independent_emergency_operation_0184
+  local plan=op and op.enabled==true and op.magos_ratio_plan_0257
+  local recipe=plan and get_recipe(machine)
+  local job=recipe and plan.factory_component_jobs_1150
+    and plan.factory_component_jobs_1150[recipe.name]
+  if job and job.output_deficient==true and job.researched==true then
+    local science=type(job.output_item)=="string"and job.output_item:find("science%-pack")
+    local buffer=math.max(5,math.ceil((tonumber(job.required_per_minute)or 0)*2))
+    if not science and generic_count(pair,job.output_item)>=buffer then return nil end
+    return job
+  end
+end
 local function ingredient_candidate(pair, machine)
   local input = machine_input(machine)
   local recipe = get_recipe(machine)
   if not (input and recipe) then return nil end
   for _, ingredient in ipairs(recipe_ingredients(recipe)) do
-    local missing = ingredient.amount - count_inventory(input, ingredient.name)
+    local cycles=deficient_factory_job(pair,machine)and 5 or 1
+    local missing = ingredient.amount*cycles - count_inventory(input, ingredient.name)
     local available = generic_count(pair, ingredient.name)
     if missing > 0 and available > 0 then
       return {
@@ -673,6 +701,14 @@ local function task_score(pair, task)
   local base = task.action == "clear-output" and 600
     or task.action == "supply-fuel" and 500 or 420
   if task.kind == "waste" then base = base + 120 end
+  local job=deficient_factory_job(pair,task.machine)
+  if job and(task.action=="supply-ingredient"or task.action=="clear-output")then
+    -- Work on the independently planned, actually configured recipe before
+    -- collecting another incidental raw stack. Active cargo is never preempted.
+    -- Five-cycle counted input batches reduce repeated single-craft round trips.
+    local science=type(job.output_item)=="string"and job.output_item:find("science%-pack")
+    base=math.max(base,(science and 920 or 820)+(task.action=="clear-output"and 20 or 0))
+  end
   -- Completed Electronics parts are an actual researched-production
   -- dependency. If a priest keeps collecting easier raw ore or topping off
   -- neighboring drills, copper cable remains trapped in the assembler and
@@ -2076,7 +2112,7 @@ function M.service_pair(pair, reason)
   end
 
   if state.phase == "move-to-machine" then
-    if dist_sq(pair.priest.position, state.machine.position) > M.machine_reach_sq then
+    if machine_distance_sq(pair.priest.position,state.machine) > M.machine_reach_sq then
       local contact = machine_contact(pair, state)
       if not contact then
         state.last_blocker = "machine-contact-unavailable"

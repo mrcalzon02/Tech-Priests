@@ -115,6 +115,15 @@ test("strict assembler permits its marked real coal refuel run",function()
   check(p.emergency_craft.strict_recipe_0647==true,
     "fuel transport erased parent strict recipe")
 end)
+test("strict smelter permits its marked real ingredient acquisition",function()
+ local p=make_pair();local raw=setup(p)
+ p.emergency_craft.output_item="stone-brick";p.emergency_craft.craft_due_tick_0514=nil
+ raw.output_item="stone";raw.current.output_item="stone";raw.material_for_strict_recipe_0637=true
+ check(Arbiter.action(p).kind=="acquisition","strict batch stole its missing stone extraction")
+ local result=Dispatcher.service_pair(p,"strict-material-physical-acquisition")
+ check(result.acted==1 and counts.direct==1 and counts.craft==0 and p.emergency_craft.output_item=="stone-brick",
+  "material extraction did not preserve strict smelting parent")
+end)
 
 test("physical custody returns before strict station crafting",function()
   local p=make_pair();setup(p)

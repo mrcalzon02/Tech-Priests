@@ -24,6 +24,58 @@ packs were seeded. The native save passed ZIP CRC verification; its source save
 was unchanged. This proves functional progression, **not sustained throughput**.
 The original full nine-checkpoint/15-SPM acceptance gate remains unmet.
 
+Further resumed native runs now physically build and configure twelve standard
+assemblers, including military science, walls, grenades, ammunition, circuits
+and inserters. At tick 300,451, genuine one-minute native rates are red 10 SPM,
+green 5 SPM and military 0, with totals 168 red and 20 green. This meets the
+individual red/green starter rates at that observation, not the complete sustained
+three-family acceptance gate. `stateful-science-11` preserves that continuation.
+Large assembler delivery now measures the same 1.6-tile reach from its actual
+footprint and chooses collision-clear perimeter contacts. Hidden Cogitator
+backing inventories use their physical host station footprint for pickup.
+An unreachable backing-cache center had stranded the real fuel carrier; the
+native continuation verifies its return, refueling and resumed production.
+
+The independent component planner now includes each actually unlocked red,
+green and military science family alongside the native current research basket.
+Counted five-cycle input batches and deficient-recipe priority prevent incidental
+raw collection from starving these configured machines. Physical lab supply
+precedes fresh routine machine collection while existing cargo retains its owner.
+
+Arena combat had two further extension failures: large targets were measured to
+their unreachable solid centers, and combat remained a compatibility-only
+dispatcher leaf. The existing proxy/fallback combat owner is now serviced by the
+canonical dispatcher, with native cooldowns, diplomacy revalidation and incumbent
+cargo restitution. Its safety dependency is loaded at control initialization;
+Factorio cannot perform that require from an event-stage tick. Native continuation
+`stateful-arena-05` clears the root force's long-running spawner fight and resumes
+the authentic station expansion writ. Participant battle and four-force factory
+acceptance remain unproven. Runtime damage receipts expose actual engine damage.
+
+The legacy generated beam ownership audit cannot run in full on this branch:
+its required `.github/workflows/source-validation.yml` is absent from tracked
+source, independently of sparse checkout. Focused canonical owner, movement,
+friendly-fire, cargo, science graph and physical delivery regressions pass.
+
+At tick 324,044, the continued native factory has 207 red and 44 green packs;
+military remains zero. Its wall assembler's brick shortage now reaches the
+existing strict smelting and physical stone acquisition owners. Canonical steel
+and brick stock reads prevent duplicate requests for the 300 real steel plates
+already in crates. Existing partially funded strict brick batches can replenish
+stone through a separate marked 0513 child while retaining actual furnace inputs,
+completed brick output and the active native craft. Stale compatibility mining
+targets on a strict manufacturing parent cannot seize that child's extraction.
+Configured intermediate machines lose deficit priority when their actual general
+stock already covers a bounded buffer, so surplus gears cannot starve ammunition.
+
+`stateful-arena-06` proves another source-empty/cargo-full extension fix: force 4
+now has two real stations and a physically built, fueled emergency smelter. The
+0519 wrapper previously rejected a station assignment after its last item had
+already been debited into 0824 cargo. It now lets the original cargo owner validate
+that hold before testing new item producibility. Unfunded new work remains deferred.
+Ordinary 0256 pickup/build movement now uses the same canonical owner and priority
+as its already repaired edge-ghost contact route.
+
 Native observations identified and corrected these additional blockers:
 
 - Standard bootstrap assemblers were built but omitted from the existing owned

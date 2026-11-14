@@ -212,6 +212,7 @@ local function station_count(pair, item)
   end
   if installable or item=="copper-cable" or item=="electronic-circuit"
       or item=="iron-gear-wheel"
+      or item=="steel-plate"or item=="stone-brick"
       or (item=="copper-plate" and post_electronics)
       or item=="automation-science-pack" or item=="logistic-science-pack"
       or item=="inserter" or item=="lab"
@@ -378,6 +379,30 @@ local function stocked_installable(pair,item)
   -- A count without a genuinely placeable prototype is ingredient stock,
   -- not proof that a machine can be installed.
   return ok and placed~=nil and station_count(pair,item)>=1
+end
+
+function M.factory_component_material_need(pair)
+  local op=pair and pair.independent_emergency_operation_0184
+  local plan=op and op.enabled==true and op.magos_ratio_plan_0257
+  local jobs=plan and plan.factory_component_jobs_1150
+  if type(jobs)~="table"or not valid_pair(pair)then return nil end
+  local names={};for name in pairs(jobs)do names[#names+1]=name end;table.sort(names)
+  local smelted={["iron-plate"]=true,["copper-plate"]=true,["stone-brick"]=true,["steel-plate"]=true}
+  for _,name in ipairs(names)do
+    local job=jobs[name]
+    local recipe=pair.station.force.recipes and pair.station.force.recipes[name]
+    if job.output_deficient==true and job.researched==true
+        and(tonumber(job.configured)or 0)>0 and recipe and recipe.enabled==true then
+      for _,ingredient in pairs(recipe.ingredients or{})do
+        local item=ingredient.name
+        local amount=math.max(1,math.min(50,math.ceil(tonumber(ingredient.amount)or 1)))
+        if ingredient.type~="fluid"and smelted[item]
+            and station_count(pair,item)<amount then
+          return item,"factory-component-material:"..name,amount
+        end
+      end
+    end
+  end
 end
 
 local function need_local_step(pair)
@@ -694,6 +719,8 @@ local function need_local_step(pair)
   if (not resources_in_range) and not roles.miner then return "tech-priests-emergency-miner", "no-local-resource-use-emergency-miner" end
   if not roles.assembler then return "tech-priests-emergency-assembler", "missing-emergency-assembler" end
   if copper_plate < M.min_copper_plate and copper_ore > 0 then return "copper-plate", "need-local-copper-plate" end
+  local material,why,amount=M.factory_component_material_need(pair)
+  if material then return material,why,amount end
   return nil, "local-fabrication-ready"
 end
 
@@ -1171,7 +1198,7 @@ local function recipe_enabled_for_item(pair,item)
   return false
 end
 
-local function assign_local_step(pair, item, why, high_item, high_source)
+local function assign_local_step(pair, item, why, high_item, high_source,stock_target)
   if not (valid_pair(pair) and item and item_exists(item)) then return false, "invalid-local-step" end
   if already_working_local(pair, item) then return true, "already-working-local-step" end
   local count = (item == "iron-plate" and
@@ -1181,8 +1208,11 @@ local function assign_local_step(pair, item, why, high_item, high_source)
     or (item == "copper-plate" and
       (why == "unlock-electronics-copper-trigger" and 10
         or M.min_copper_plate)) or 1
-  local required_stock=1
+  local required_stock=math.max(1,math.min(50,tonumber(stock_target)or 1))
   local parent=pair.infrastructure_recipe_request_0647
+  if type(parent)=="table"and parent.item==item then
+    required_stock=math.max(required_stock,math.min(50,tonumber(parent.target_stock_0647)or 1))
+  end
   if type(parent)=="table" and parent.item~=item and parent.missing==item then
     for _,ingredient in ipairs(parent.ingredients or {}) do
       if ingredient.name==item then
@@ -1277,7 +1307,7 @@ local function assign_local_step(pair, item, why, high_item, high_source)
   -- Every manufactured intermediary uses a real ingredient transaction.
   -- Smelted plates take the physical furnace path, not a simulated craft.
   local recipe_item = item ~= "iron-plate" and item ~= "copper-plate"
-    and item ~= "stone-brick" and (placeable or local_product(item))
+    and (placeable or local_product(item))
   -- Manufactured prerequisites may need multiple physical units. Run one
   -- complete strict-recipe transaction per output until the parent's exact
   -- stock requirement is met. Existing partial stock is not completion.
@@ -1291,7 +1321,16 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       return false,"recipe-locked-or-unavailable:"..item
     end
     local missing = nil
-    for _, ingredient in ipairs(ingredients or {}) do
+    local requirements=ingredients
+    if item=="stone-brick"and required_stock>1 then
+      local crafts=math.max(1,required_stock-station_count(pair,item))
+      requirements={}
+      for _,ingredient in ipairs(ingredients)do
+        requirements[#requirements+1]={name=ingredient.name,
+          count=math.max(1,tonumber(ingredient.count)or 1)*crafts}
+      end
+    end
+    for _, ingredient in ipairs(requirements or {}) do
       if station_count(pair, ingredient.name) < math.max(1, tonumber(ingredient.count) or 1) then missing = ingredient; break end
     end
     if missing then
@@ -1299,7 +1338,8 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       pair.logistic_requested_item = missing.name
       pair.logistic_requested_count = math.max(1, tonumber(missing.count) or 1)
       pair.infrastructure_recipe_request_0647 = { tick = now(), item = item,
-        ingredients = ingredients, missing = missing.name, reason = why,
+        ingredients = requirements, missing = missing.name, reason = why,
+        target_stock_0647=required_stock,
         parent_request_0647 = type(parent)=="table" and
           (parent.item==item and parent.parent_request_0647 or parent) or nil }
       pair.mode = "infrastructure-material-acquisition-0647"
@@ -1320,7 +1360,7 @@ local function assign_local_step(pair, item, why, high_item, high_source)
       -- Science must be crafted by a real compatible assembler. A timed
       -- station fallback may not claim science production in its place.
       facility_only_0647 = (item=="automation-science-pack"
-        or item=="logistic-science-pack" or item=="lab") or nil,
+        or item=="logistic-science-pack" or item=="lab"or item=="stone-brick") or nil,
       strict_recipe_ingredients_0647 = ingredients,
       -- The station may already contain some units. A one-unit transaction
       -- must finish only after the parent's required physical stock exists.
@@ -1943,7 +1983,7 @@ function M.service_pair(pair, reason)
   if power_requested then return false,power_reason end
   complete_first_circuit_plate_reserve(pair)
   close_researched_copper_trigger(pair)
-  local needed, why = need_local_step(pair)
+  local needed, why,stock_target = need_local_step(pair)
   -- Protect an existing vanilla-lab/science dependency ancestry from
   -- opportunistic cooperative assignments. The parent physically requires
   -- its missing gear, belt or other input; replacing that child with a
@@ -2041,7 +2081,7 @@ function M.service_pair(pair, reason)
   end
 
   local cleared = clear_high_tier_state(pair, "infrastructure-first-0643")
-  local ok, result = assign_local_step(pair, needed, why, high_item, high_source)
+  local ok, result = assign_local_step(pair, needed, why, high_item, high_source,stock_target)
   if ok then
     record("infrastructure-gate-assigned-0643", pair, "needed=" .. safe(needed) .. " why=" .. safe(why) .. " blocked=" .. safe(high_item) .. " source=" .. safe(high_source) .. " cleared=" .. safe(cleared), true)
     return true, result

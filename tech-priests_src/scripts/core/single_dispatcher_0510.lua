@@ -2,6 +2,7 @@
 -- Tech Priests 0.1.674-dev base-state recovery.
 -- One fair per-pair scheduler/executor dispatcher and canonical action owner.
 
+local CombatSafety=require("scripts.core.combat_safety")
 local M={version="0.1.674-dev",storage_key="single_dispatcher_0510",tick_interval=5,max_pairs_per_pulse=24,legacy_gate_window=30}
 local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
@@ -12,6 +13,7 @@ local function pair_map()return storage and storage.tech_priests and storage.tec
 local function station_unit(p)return p and(p.station_unit or(valid(p.station)and p.station.unit_number))or nil end
 local function priest_unit(p)return p and(p.priest_unit or(valid(p.priest)and p.priest.unit_number))or nil end
 local OWNERSHIP={
+ ["combat"]="dispatcher_owns_combat",
  ["direct-acquisition"]="dispatcher_owns_direct",["station-craft"]="dispatcher_owns_station_craft",["consecration"]="dispatcher_owns_consecration",["repair"]="dispatcher_owns_repair",["combat-repair"]="dispatcher_owns_combat_repair",["construction"]="dispatcher_owns_construction",["machine-logistics"]="dispatcher_owns_machine_logistics",["item-family-logistics"]="dispatcher_owns_item_family_logistics",["energy-family-logistics"]="dispatcher_owns_energy_family_logistics",["rocket-silo-logistics"]="dispatcher_owns_rocket_silo_logistics",["artillery-logistics"]="dispatcher_owns_artillery_logistics",["roboport-repair-pack-logistics"]="dispatcher_owns_roboport_repair_pack_logistics",
 }
 local function root()
@@ -54,6 +56,42 @@ local EXECUTORS={
  ["direct-acquisition"]={"scripts.core.direct_acquisition_executor_0513","TechPriestsDirectAcquisitionExecutor0513"},["consecration"]={"scripts.core.consecration_executor_0515","TechPriestsConsecrationExecutor0515"},["combat-repair"]={"scripts.core.combat_repair_doctrine_0517","TechPriestsCombatRepairDoctrine0517"},["repair"]={"scripts.core.repair_executor_0516","TechPriestsRepairExecutor0516"},["construction"]={"scripts.core.construction_planner","TechPriestsConstructionPlanner0338"},["machine-logistics"]={"scripts.core.logistics_machine_fulfillment_0528","TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528"},["item-family-logistics"]={"scripts.core.item_family_logistics_0702","TechPriestsItemFamilyLogistics0702"},["energy-family-logistics"]={"scripts.core.energy_family_logistics_0707","TechPriestsEnergyFamilyLogistics0707"},["rocket-silo-logistics"]={"scripts.core.rocket_silo_logistics_0710","TechPriestsRocketSiloLogistics0710"},["artillery-logistics"]={"scripts.core.artillery_logistics_0713","TechPriestsArtilleryLogistics0713"},["roboport-repair-pack-logistics"]={"scripts.core.roboport_repair_pack_logistics_0715","TechPriestsRoboportRepairPackLogistics0715"},
 }
 local function execute(pair,family,reason)
+ if family=="combat"then
+  -- Combat classified by the canonical scheduler needs its real leaf owner,
+  -- not a compatibility result waiting hundreds of ticks for a legacy sweep.
+  -- Finish/refund incumbent physical cargo through its existing owner first.
+  for _,cargo in ipairs({{"machine_logistics_custody_0528","machine-logistics"},
+      {"item_family_custody_0702","item-family-logistics"},
+      {"energy_family_custody_0707","energy-family-logistics"},
+      {"construction_custody_0338","construction"}})do
+   if pair[cargo[1]]then return execute(pair,cargo[2],reason..":combat-custody")end
+  end
+  local target=valid(pair.combat_target)and pair.combat_target
+    or pair.dispatcher_combat_target_0510
+  local safety=CombatSafety
+  if not valid(target)and now()>=(pair.next_combat_discovery_0510 or 0)then
+   pair.next_combat_discovery_0510=now()+30
+   local discover=rawget(_G,"tech_priests_0293_force_combat_tick")
+   if type(discover)=="function"then
+    local ok,why=pcall(discover,pair,reason..":discover",true)
+    if not ok then return {processed=1,failed=1,detail=safe(why)}end
+    target=pair.combat_target
+   end
+  end
+  if not(valid(target)and safety and safety.is_valid_hostile_target(pair.priest,target))then
+   pair.dispatcher_combat_target_0510=nil
+   return {processed=1,blocked=1,detail="combat-hostile-target-unverified"}
+  end
+  -- Routine order expiry can clear the compatibility target between combat
+  -- pulses. Retain only the original owner's still-valid hostile entity;
+  -- revalidate diplomacy each time and never discover an enemy from a name.
+  pair.dispatcher_combat_target_0510=target;pair.combat_target=target
+  local prime=rawget(_G,"tech_priests_0293_prime_proxy_attack")
+  if type(prime)~="function"then return {processed=1,failed=1,detail="canonical-combat-owner-unavailable"}end
+  local ok,acted=pcall(prime,pair,target,reason)
+  if not ok then return {processed=1,failed=1,detail=safe(acted)}end
+  return {processed=1,acted=acted==true and 1 or 0,waiting=acted~=true and 1 or 0,detail="canonical-combat-owner-serviced"}
+ end
  if family=="station-craft"then
   local result=call_module("scripts.core.emergency_production_executor_0514","TechPriestsEmergencyProductionExecutor0514","service_pair",pair,reason)
   if result.failed==0 and result.acted==0 and result.waiting==0 and result.blocked==0

@@ -18,7 +18,8 @@ surface.find_entities_filtered=function(spec)
  if spec.limit==64 then return {}end
  return {receiver,drill,machine}
 end
-TechPriestsStorageRoleAuthority0686={generic_item_count=function()return 20 end}
+TechPriestsStorageRoleAuthority0686={generic_item_count=function(_,item)
+ return(item=="iron-plate"or item=="coal")and 20 or 0 end}
 local discover
 TechPriestsRuntimeTickBroker0600={register_service=function(s)discover=s.fn;return true end}
 local M=require("scripts.core.logistics_machine_fulfillment_0528");assert(M.install());discover(nil,1)
@@ -41,3 +42,17 @@ pair.priest.position={x=0,y=0};M.service_pair(pair,"old-save-return")
 assert(refunded==3 and pair.machine_logistics_0528.phase=="failed"and pair.machine_logistics_custody_0528==nil,
  "legacy false fuel cargo did not return exactly")
 print("PASS prior-save false fuel duty releases only after exact physical coal restitution")
+local raw={valid=true,get_item_count=function(name)return name=="iron-ore"and 10 or 0 end,
+ get_contents=function()return {{name="iron-ore",count=10,quality="normal"}}end}
+receiver.get_inventory=function()return raw end
+pair.independent_emergency_operation_0184={enabled=true,magos_ratio_plan_0257={factory_component_jobs_1150={
+ ["iron-gear-wheel"]={output_item="iron-gear-wheel",output_deficient=true,researched=true}}}}
+game.tick=2000;discover(nil,1)
+c=pair.machine_logistics_candidate_0528
+assert(c and c.machine==machine and c.action=="supply-ingredient"and c.count==10,
+ "incidental raw output starved a counted five-cycle active factory recipe")
+pair.independent_emergency_operation_0184.enabled=false;game.tick=3000;discover(nil,1)
+c=pair.machine_logistics_candidate_0528
+assert(c and c.machine==receiver and c.action=="clear-output",
+ "maintenance mode inherited independent production priority")
+print("PASS independent counted factory batches before incidental raw collection; maintenance ordering retained")

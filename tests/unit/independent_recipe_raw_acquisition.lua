@@ -63,6 +63,28 @@ pair.energy_family_logistics_0707={family="energy-fuel",phase="waiting-source",
 assert(not Raw.service_pair(pair),"foreign energy machine authorized raw work")
 TechPriestsEnergyFamilyReadiness0705=nil
 resource.name="stone"
+pair=fixture();pair.infrastructure_recipe_request_0647=nil
+defines.inventory.crafter_input=33;defines.inventory.crafter_output=34
+local strict={item_name="stone-brick",output_item="stone-brick",strict_recipe_0647=true,
+ facility_only_0647=true,infrastructure_first_0640=true,target_stock_0647=5,
+ strict_recipe_ingredients_0647={{name="stone",count=2}}}
+pair.emergency_craft=strict
+local furnace={valid=true,type="furnace",force=force,surface=surface,crafting_progress=.5,
+ get_recipe=function()return {name="stone-brick"}end,
+ get_inventory=function(id)return {valid=true,get_item_count=function(name)
+  if id==33 and name=="stone"then return 2 end
+  if id==34 and name=="stone-brick"then return 1 end
+  return 0
+ end}end}
+storage.tech_priests.emergency_facility_doctrine_0343={by_station={[1]={[10]=true}},facilities={[10]={role="smelter",entity=furnace}}}
+assert(Raw.service_pair(pair),"blocked strict native brick batch could not acquire remaining real stone")
+local material=pair.direct_acquisition_task_0336
+assert(pair.emergency_craft==strict and material.material_for_strict_recipe_0637==true
+ and material.required_count==4 and resource.amount==100,
+ "strict material acquisition lost its parent or ignored real in-flight furnace stock")
+assert(not Raw.service_pair(pair)and pair.direct_acquisition_task_0336==material,
+ "existing material acquisition was overwritten")
+print("PASS strict native smelting replenishment counts actual furnace inputs, completed output and active craft")
 -- A bounded service must eventually visit every force/station, including
 -- stations after the first twelve in a large four-way factory population.
 fixture()

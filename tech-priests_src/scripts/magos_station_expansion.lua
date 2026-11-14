@@ -822,18 +822,30 @@ local function finish_record(rec, status, note)
 end
 
 -- The unit must physically visit the inventory it collects from or returns to.
+local function request_assignment_movement(worker,pos,radius,reason)
+  local request=rawget(_G,"tech_priests_request_movement_0418")
+  if type(request)=="function"then
+    local ok,accepted=pcall(request,worker,pos,reason,
+      {owner="station-expansion-0256",priority=650,ttl=600,radius=radius,
+       distraction=defines and defines.distraction and defines.distraction.none})
+    return ok and accepted==true
+  end
+  if issue_priest_command and defines and defines.command then
+    local ok,accepted=pcall(issue_priest_command,worker.priest,{
+      type=defines.command.go_to_location,destination=pos,radius=radius,
+      distraction=defines.distraction.none})
+    return ok and accepted~=false
+  end
+  return false
+end
 local function move_to_stock(worker, rec, phase)
   if distance_sq(worker.priest.position, worker.station.position) <= 25 then
     return false
   end
   rec.phase = phase
   rec.updated_tick = game.tick
-  if issue_priest_command and defines and defines.command then
-    issue_priest_command(worker.priest, {
-      type = defines.command.go_to_location,
-      destination = worker.station.position, radius = 2,
-      distraction = defines.distraction.none
-    })
+  if not request_assignment_movement(worker,worker.station.position,2,"station-item-physical-pickup-0256")then
+    rec.phase=phase..":movement-blocked"
   end
   return true
 end
@@ -1526,13 +1538,8 @@ function M.service_station_expansion_assignment(worker_pair)
       end
       rec.contact_position_0256={x=contact.x,y=contact.y}
       if not(moved and accepted==true)then rec.phase="resource-ghost-contact-blocked:"..tostring(why or accepted)end
-    elseif issue_priest_command and defines and defines.command then
-      issue_priest_command(worker_pair.priest, {
-        type = defines.command.go_to_location,
-        destination = pos,
-        radius = GHOST_MOVEMENT_COMMAND_RADIUS_0256,
-        distraction = defines.distraction.none
-      })
+    elseif not request_assignment_movement(worker_pair,pos,GHOST_MOVEMENT_COMMAND_RADIUS_0256,"station-item-physical-build-0256")then
+      rec.phase="resource-ghost-contact-blocked:movement-refused"
     end
     if tech_priests_draw_emergency_operation_status_0184 then
       tech_priests_draw_emergency_operation_status_0184(worker_pair, "[item=" .. rec.station_item .. "] moving to Cogitator ghost")

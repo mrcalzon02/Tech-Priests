@@ -99,7 +99,7 @@ local function phase(p,k,d)p.dispatcher_action="direct-acquisition";p.dispatcher
 
 local function current_task(p)
  if not p then return nil end
- for _,key in ipairs{"emergency_craft","direct_acquisition_task_0336","active_acquisition_0333"}do local t=p[key];local cur=t and(t.current or t);if cur and DIRECT_KINDS[tostring(cur.kind or"")]then return t,cur,key end end
+ for _,key in ipairs{"emergency_craft","direct_acquisition_task_0336","active_acquisition_0333"}do local t=p[key];local cur=t and(t.current or t);if cur and not(key=="emergency_craft"and t.strict_recipe_0647==true)and DIRECT_KINDS[tostring(cur.kind or"")]then return t,cur,key end end
 end
 M.current_direct_task=current_task
 

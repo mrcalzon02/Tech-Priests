@@ -2518,4 +2518,28 @@ scenario("modern crafter output is collected through the original production own
     "modern engine output was left behind or fabricated")
   defines.inventory=old
 end)
+scenario("configured independent factory publishes real smelted-material shortage",function()
+ local f=fixture();local p=f.pair
+ prototypes.item["stone-brick"]={}
+ f.force.recipes["stone-wall"]={enabled=true,ingredients={{name="stone-brick",type="item",amount=5}}}
+ p.independent_emergency_operation_0184={enabled=false,magos_ratio_plan_0257={factory_component_jobs_1150={
+  ["stone-wall"]={configured=1,researched=true,output_deficient=true}}}}
+ check(Infra.factory_component_material_need(p)==nil,"maintenance inherited independent material planning")
+ p.independent_emergency_operation_0184.enabled=true
+ local item,why,count=Infra.factory_component_material_need(p)
+ check(item=="stone-brick"and count==5 and why=="factory-component-material:stone-wall",
+  "real wall assembler did not request its exact five-brick deficit")
+ f.source.stock["stone-brick"]=5
+ check(Infra.factory_component_material_need(p)==nil,"stocked material was needlessly manufactured")
+ f.source.stock["stone-brick"]=nil;f.force.recipes["stone-wall"].enabled=false
+ check(Infra.factory_component_material_need(p)==nil,"locked recipe granted factory material planning")
+ f.force.recipes["stone-wall"].enabled=true
+ f.force.recipes["piercing-rounds-magazine"]={enabled=true,ingredients={{name="steel-plate",type="item",amount=2}}}
+ p.independent_emergency_operation_0184.magos_ratio_plan_0257.factory_component_jobs_1150["piercing-rounds-magazine"]={configured=1,researched=true,output_deficient=true}
+ local authority=_G.TechPriestsStorageRoleAuthority0686
+ _G.TechPriestsStorageRoleAuthority0686={generic_item_count=function(_,name)return name=="steel-plate"and 300 or 0 end}
+ item,why=Infra.factory_component_material_need(p)
+ check(item=="stone-brick","stocked external steel was ignored ahead of the real brick shortage")
+ _G.TechPriestsStorageRoleAuthority0686=authority
+end)
 print("[bootstrap-production-regression] PASS scenarios="..total)

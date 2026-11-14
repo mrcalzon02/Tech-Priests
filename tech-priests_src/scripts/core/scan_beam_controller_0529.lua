@@ -188,15 +188,15 @@ local function apply_damage(priest, target, damage)
   if not (valid(priest) and valid(target)) then return false end
   if target.type == "item-entity" then return false end
   local d = math.max(1, tonumber(damage) or 5)
-  local ok = pcall(function()
+  local ok,applied = pcall(function()
     if target.valid and target.type == "resource" then
       local amount = tonumber(target.amount) or 0
       if amount > 1 then target.amount = math.max(1, amount - math.max(1, math.floor(d * 0.35))) end
     elseif target.valid and target.health and target.health > 0 then
-      target.damage(d, priest.force, "laser", priest)
+      return target.damage(d, priest.force, "laser", priest)
     end
   end)
-  return ok
+  return ok,applied
 end
 
 function M.fire_laser(priest, target, damage, reason, color)
@@ -208,9 +208,9 @@ function M.fire_laser(priest, target, damage, reason, color)
     if ok and res == false then stat("laser-suppressed-by-arbiter"); return false end
   end
   local kind = classify(target, reason, { color=color })
-  local ok_damage = apply_damage(priest, target, damage)
+  local ok_damage,applied_damage = apply_damage(priest, target, damage)
   M.draw(pair or { priest=priest }, target, kind, { reason=reason or "laser", color=color, ttl=7, circle_ttl=6, strong_smoke=(kind=="resource" or kind=="world_damage") })
-  return ok_damage
+  return ok_damage,applied_damage
 end
 
 function M.wrap_globals()

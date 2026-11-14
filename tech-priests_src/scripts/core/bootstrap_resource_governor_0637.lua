@@ -426,13 +426,14 @@ local function clear_stale_critical(pair)
   return changed
 end
 
-local function assign_direct(pair, spec, have, deficit, strict_fuel)
+local function assign_direct(pair, spec, have, deficit, strict_fuel,strict_material)
   if same_bootstrap_task(pair, spec.item) then return false, "already-bootstrap" end
   local source = find_nearest_source(pair, spec)
   if not source then return false, "no-source-"..spec.item end
   local need = math.max(1, math.min(12, tonumber(deficit) or 1))
   local cur = { kind="direct-mine-0336", entity=source, output_item=spec.item, item_name=spec.item, requested_item=spec.item, bootstrap_resource_0637=true }
   local task = { kind="direct-mine-0336", current=cur, output_item=spec.item, item_name=spec.item, requested_item=spec.item, required_count=need, count=need, gathered_units=0, bootstrap_resource_0637=true, fuel_for_strict_recipe_0637=strict_fuel or nil, started_tick=now(), reason="bootstrap-resource-governor-0637" }
+  task.material_for_strict_recipe_0637=strict_material or nil
   -- A facility-only smelting request must survive acquisition of its ore/fuel.
   -- The direct executor recognizes the separate raw task and clears only that
   -- alias on physical deposit, leaving the machine-production task intact.
@@ -499,15 +500,49 @@ strict_assembler_needs_coal=function(pair, item)
   return false
 end
 
+local function strict_brick_material_request(pair)
+  local task=pair.emergency_craft
+  if not(type(task)=="table"and task.strict_recipe_0647==true
+      and task.facility_only_0647==true and task.infrastructure_first_0640==true
+      and(task.output_item or task.item_name)=="stone-brick")then return nil end
+  local outstanding=math.max(0,(tonumber(task.target_stock_0647)or 1)-station_count(pair,"stone-brick"))
+  local input_count=0
+  local ids=defines and defines.inventory or{}
+  local root=storage and storage.tech_priests and storage.tech_priests.emergency_facility_doctrine_0343
+  local owned=root and root.by_station and root.by_station[station_unit(pair)]
+  for id in pairs(owned or{})do
+    local rec=root.facilities and root.facilities[id];local m=rec and rec.role=="smelter"and rec.entity
+    if valid(m)and m.type=="furnace"and m.force==pair.station.force and m.surface==pair.station.surface then
+      local input=safe_inventory(m,ids.crafter_input or ids.furnace_source)
+      local output=safe_inventory(m,ids.crafter_output or ids.furnace_result)
+      input_count=input_count+(input and input.get_item_count("stone")or 0)
+      outstanding=math.max(0,outstanding-(output and output.get_item_count("stone-brick")or 0))
+      local ok,progress=pcall(function()return m.crafting_progress end)
+      local read,recipe=pcall(function()return m.get_recipe()end)
+      if ok and tonumber(progress)and progress>0 and read and recipe
+          and recipe.name=="stone-brick"then outstanding=math.max(0,outstanding-1)end
+    end
+  end
+  for _,ingredient in ipairs(task.strict_recipe_ingredients_0647 or{})do
+    if ingredient.name=="stone"then
+      local required=math.max(0,outstanding*math.max(1,tonumber(ingredient.count)or 1)-input_count)
+      if station_count(pair,"stone")<required then
+        return {missing="stone",ingredients={{name="stone",count=required}}},task
+      end
+    end
+  end
+end
+
 function M.service_pair(pair, reason)
   local root=M.root()
   if not valid_pair(pair) then return false,"invalid" end
-  if root.enabled==false then
+  local strict_request,strict_material=strict_brick_material_request(pair)
+  if root.enabled==false or strict_request then
     -- Generic reserve sweeping remains opt-in. An explicitly independent
     -- station must nevertheless execute its exact pending raw recipe leaf;
     -- otherwise 0647 waits forever while survival repeatedly requests ammo.
     local op=pair.independent_emergency_operation_0184
-    local request=pair.infrastructure_recipe_request_0647
+    local request=pair.infrastructure_recipe_request_0647 or strict_request
     local energy=pair.energy_family_logistics_0707
     if type(energy)=="table"and energy.family=="energy-fuel"
         and energy.phase=="waiting-source"and valid(energy.target)
@@ -538,16 +573,28 @@ function M.service_pair(pair, reason)
         if not ok or reserved then return false,"independent-recipe-reserved:"..spec[1] end
       end
     end
+    if strict_request and not pair.direct_acquisition_custody_0513 then
+      local direct=pair.direct_acquisition_task_0336
+      local order=pair.order_queue_0469 and pair.order_queue_0469.current
+      if type(direct)=="table"and direct.bootstrap_resource_0637==true
+          and not direct.material_for_strict_recipe_0637
+          and not direct.fuel_for_strict_recipe_0637
+          and not(order and order.status=="active")then
+        pair.direct_acquisition_task_0336=nil
+        if pair.active_acquisition_0333==direct then pair.active_acquisition_0333=nil end
+        record("unladen-reserve-yielded-to-strict-material-0637",pair,safe(direct.output_item),true)
+      end
+    end
     for _,field in ipairs({"emergency_craft","direct_acquisition_task_0336",
         "active_acquisition_0333","construction_task_0338","construction_custody_0338",
         "direct_acquisition_custody_0513","machine_logistics_custody_0528",
         "emergency_production_custody_0514","station_crafting_task_0337",
         "energy_family_custody_0707","item_family_custody_0702",
         "scavenge","inventory_transfer_custody_0687"}) do
-      if pair[field] then return false,"independent-recipe-incumbent-duty:"..field end
+      if pair[field]and not(field=="emergency_craft"and pair[field]==strict_material)then return false,"independent-recipe-incumbent-duty:"..field end
     end
     local order=pair.order_queue_0469 and pair.order_queue_0469.current
-    if order and order.status=="active" then return false,"independent-recipe-active-order" end
+    if order and order.status=="active"and not(strict_material and order.task==strict_material)then return false,"independent-recipe-active-order" end
     for _,spec in ipairs(RAW_RESERVES) do
       if spec.item==request.missing then
         local required=1
@@ -556,7 +603,7 @@ function M.service_pair(pair, reason)
         end
         local have=station_count(pair,spec.item)
         if have>=required then return false,"independent-recipe-material-ready" end
-        local acted,why=assign_direct(pair,spec,have,required-have)
+        local acted,why=assign_direct(pair,spec,have,required-have,nil,strict_material~=nil)
         if not acted then pair.bootstrap_mode_0637={tick=now(),state=why,item=spec.item} end
         return acted,why
       end
@@ -574,7 +621,7 @@ function M.service_pair(pair, reason)
       -- Coal requested specifically for the blocked strict assembler is a
       -- physical fuel-acquisition objective. Let the direct executor finish
       -- and deposit it without replacing the manufacturing task.
-      if direct.fuel_for_strict_recipe_0637==true then
+      if direct.fuel_for_strict_recipe_0637==true or direct.material_for_strict_recipe_0637==true then
         return false,"strict-recipe-fuel-acquisition-in-progress"
       end
       -- Never throw away mined output in custody or an explicit ordered job.

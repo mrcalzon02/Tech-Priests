@@ -225,6 +225,18 @@ assert(uneven.science_packs["logistic-science-pack"]==2
 -- Restore the single-pack source-only refusal fixture.
 force.current_research=nil
 observed_map=nil
+force.recipes={}
+for name,r in pairs(recipes)do r.enabled=true;force.recipes[name]=r end
+force.recipes["military-science-pack"]={enabled=false}
+observed_map={["automation-science-pack"]=0,["logistic-science-pack"]=0}
+op.factory_science_portfolio_1172=true
+local portfolio=tech_priests_0257_build_ratio_plan(pair,op)
+assert(portfolio.science_packs["automation-science-pack"]==1
+ and portfolio.science_packs["logistic-science-pack"]==1
+ and portfolio.science_packs["military-science-pack"]==nil
+ and portfolio.recipes["iron-gear-wheel"].rate==10/60,
+ "independent factory omitted unlocked science capacity or bypassed locked military recipe")
+op.factory_science_portfolio_1172=nil;force.recipes=nil;observed_map=nil
 -- Measurements fail CLOSED if the force API is missing. They must never
 -- return estimated planned SPM in place of observed actual production.
 force.get_item_production_statistics=nil

@@ -525,13 +525,12 @@ function tech_priests_0312_fire_laser(priest, target, damage, reason, color)
   local d = math.max(1, damage or profile.mining_laser_damage or 5)
   color = color or { r = 1.0, g = 0.25, b = 0.05, a = 0.68 }
 
-  local ok_damage = true
-  pcall(function()
+  local ok_damage,applied_damage = pcall(function()
     if target.valid and target.type == "resource" then
       local amount = target.amount or 0
       if amount and amount > 1 then target.amount = math.max(1, amount - math.max(1, math.floor(d * 0.35))) end
     elseif target.valid and target.health and target.health > 0 then
-      target.damage(d, force, "laser", priest)
+      return target.damage(d, force, "laser", priest)
     end
   end)
 
@@ -571,7 +570,7 @@ function tech_priests_0312_fire_laser(priest, target, damage, reason, color)
     end)
   end
   pcall(function() priest.surface.create_entity({ name = "spark-explosion", position = pos }) end)
-  return ok_damage
+  return ok_damage,applied_damage
 end
 
 function tech_priests_0312_insert_loose_item(pair, item_entity)
@@ -753,8 +752,10 @@ function tech_priests_0312_fallback_combat_laser(pair, target, reason)
 
   local tick = game and game.tick or 0
   local priest = pair.priest
-  local dx = (priest.position.x or 0) - (target.position.x or 0)
-  local dy = (priest.position.y or 0) - (target.position.y or 0)
+  local contact=tech_priests_combat_target_contact_0322
+    and tech_priests_combat_target_contact_0322(priest,target)or target.position
+  local dx = (priest.position.x or 0) - (contact.x or 0)
+  local dy = (priest.position.y or 0) - (contact.y or 0)
   local d2 = dx * dx + dy * dy
   local point_blank = tech_priests_0423_point_blank_laser_range()
 
@@ -772,7 +773,7 @@ function tech_priests_0312_fallback_combat_laser(pair, target, reason)
     pair.next_fallback_laser_tick_0312 = math.max(pair.next_fallback_laser_tick_0312 or 0, tick + 10)
     if tech_priests_request_movement_0418 then
       pcall(function()
-        tech_priests_request_movement_0418(pair, target.position, "fallback-combat-point-blank", {
+        tech_priests_request_movement_0418(pair, contact, "fallback-combat-point-blank", {
           radius = math.max(0.55, point_blank * 0.65),
           owner = "fallback-combat-laser-0423",
           priority = 92,
@@ -782,7 +783,7 @@ function tech_priests_0312_fallback_combat_laser(pair, target, reason)
       end)
     elseif issue_priest_command then
       pcall(function()
-        issue_priest_command(priest, { type = defines.command.go_to_location, destination = target.position, radius = math.max(0.55, point_blank * 0.65), distraction = defines.distraction.by_enemy })
+        issue_priest_command(priest, { type = defines.command.go_to_location, destination = contact, radius = math.max(0.55, point_blank * 0.65), distraction = defines.distraction.by_enemy })
       end)
     end
     return true
@@ -791,7 +792,10 @@ function tech_priests_0312_fallback_combat_laser(pair, target, reason)
   if tick < (pair.next_fallback_laser_tick_0312 or 0) then return true end
   pair.next_fallback_laser_tick_0312 = tick + TECH_PRIESTS_0312_FALLBACK_LASER_TICKS
   pair.mode = "defending-laser-fallback"
-  tech_priests_0312_fire_laser(pair.priest, target, TECH_PRIESTS_0312_MINING_LASER_DAMAGE, "fallback-combat-point-blank", { r = 1.0, g = 0.15, b = 0.05, a = 0.75 })
+  local fired,damage=tech_priests_0312_fire_laser(pair.priest, target, TECH_PRIESTS_0312_MINING_LASER_DAMAGE, "fallback-combat-point-blank", { r = 1.0, g = 0.15, b = 0.05, a = 0.75 })
+  pair.last_combat_fallback_0312.engine_call_succeeded=fired==true
+  pair.last_combat_fallback_0312.applied_damage=type(damage)=="number"and damage or nil
+  pair.last_combat_fallback_0312.damage_error=fired==false and tostring(damage)or nil
   return true
 end
 

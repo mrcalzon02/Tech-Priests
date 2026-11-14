@@ -386,7 +386,16 @@ end
 -- center goal can otherwise remain permanently inside solid cargo storage.
 function M.pickup_position(pair,source)
   local pos=source.position
-  local ok,box=pcall(function() return source.bounding_box end)
+  local physical=source
+  -- Cogitator backing inventories are hidden zero-size entities at the
+  -- station center. Their real access point is the host station footprint;
+  -- a center goal can be unreachable even though its backing inventory is full.
+  if (source.name=="tech-priests-cogitator-return-cache"
+      or source.name=="tech-priests-cogitator-requester-cache")
+      and valid(pair.station)and source.force==pair.station.force
+      and source.surface==pair.station.surface
+      and dist_sq(pos,pair.station.position)<0.01 then physical=pair.station end
+  local ok,box=pcall(function() return physical.bounding_box end)
   if ok and box and box.left_top and box.right_bottom then
     local p=pair.priest.position
     return {x=math.max(box.left_top.x,math.min(box.right_bottom.x,p.x)),

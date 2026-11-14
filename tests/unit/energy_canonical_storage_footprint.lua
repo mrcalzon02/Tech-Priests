@@ -51,3 +51,11 @@ assert(delivered==2 and not pair.energy_family_custody_0707 and not pair.energy_
  "counted coal never reached the physical boiler")
 assert(not pair.movement_request_0418,"completed fuel duty retained its movement lease")
 print("PASS canonical fuel storage, distinct inventory identity and physical footprint delivery")
+station.bounding_box={left_top={x=-.7,y=-.7},right_bottom={x=.7,y=.7}}
+local backing={valid=true,name="tech-priests-cogitator-return-cache",position={x=0,y=0},force=force,surface=surface,
+ bounding_box={left_top={x=0,y=0},right_bottom={x=0,y=0}}}
+local Fetch=require("scripts.core.logistics_fetch_executor_0527")
+assert(Fetch.pickup_position(pair,backing).x==.7,"hidden station inventory still targets inaccessible solid host center")
+backing.force={index=2}
+assert(Fetch.pickup_position(pair,backing).x==0,"foreign backing inventory inherited station access geometry")
+print("PASS same-force co-located backing inventory uses actual host footprint")

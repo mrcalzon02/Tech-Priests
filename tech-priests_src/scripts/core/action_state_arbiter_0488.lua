@@ -81,7 +81,8 @@ local function actual_crafting(p,o)
   -- the selected strict recipe. Its direct custody must complete before the
   -- priest can resume manufacturing, without discarding the original craft.
   local fuel_task=p and p.direct_acquisition_task_0336
-  if type(fuel_task)=="table" and fuel_task.fuel_for_strict_recipe_0637==true
+  if type(fuel_task)=="table" and(fuel_task.fuel_for_strict_recipe_0637==true
+      or fuel_task.material_for_strict_recipe_0637==true)
     then return false end
   local t=p and(p.emergency_craft or p.station_crafting_task_0337 or p.station_craft_0337 or p.active_craft_0479);if not t then return false end
   local due=tonumber(t.craft_due_tick_0514 or t.craft_due_tick or t.build_due_tick or t.station_craft_due_tick_0337 or t.due_tick)
@@ -557,6 +558,11 @@ function M.action(p)
     kind,reason="energy-family-logistics","energy-before-routine-machine-logistics"
     target=energy_rec.target;position=valid(target)and target.position or energy_rec.position
     selected=energy_rec
+  elseif item_rec and valid(item_rec.target)and item_rec.target.type=="lab"
+      and not(machine_rec and machine_rec.active)
+      and not(p.machine_logistics_custody_0528 or p.inventory_transfer_custody_0687)then
+    kind,reason="item-family-logistics","laboratory-before-routine-machine-logistics"
+    target=item_rec.target;position=target.position;selected=item_rec
   elseif machine_rec then kind,reason="machine-logistics","machine-recommendation";target=machine_rec.target;position=valid(target)and target.position or machine_rec.position
   elseif item_rec then kind,reason="item-family-logistics","item-family-recommendation";target=item_rec.target;position=valid(target)and target.position or item_rec.position
   elseif energy_rec then kind,reason="energy-family-logistics","energy-family-recommendation";target=energy_rec.target;position=valid(target)and target.position or energy_rec.position
