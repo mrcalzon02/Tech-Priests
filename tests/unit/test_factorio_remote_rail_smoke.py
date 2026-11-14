@@ -2754,3 +2754,53 @@ class OriginalNativePaidOreWagonCarry0836(unittest.TestCase):
         self.assertIn('REMOTE_DRILL_WAGON_NATIVE_0836 elapsed=',fixture)
         self.assertIn('receipt_wagon_after=',fixture)
         self.assertIn('fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)
+
+
+class OriginalNativeOreLoadedReboarding0836(unittest.TestCase):
+    """Loading one real wagon item must lead to original native driver reboarding."""
+
+    def test_native_loaded_reboard_preserves_movement_custody_and_ore_gate(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        movement=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        corridor=(root/"tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text()
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text()
+        authorization=rail.split(
+            "function M.authorized_original_remote_train_reboarding_walk_0836(pair,point,movement)",1
+        )[1].split("\nfunction M.service_original_remote_wagon_reboard_0836(pair)",1)[0]
+        reboard=rail.split(
+            "function M.service_original_remote_wagon_reboard_0836(pair)",1
+        )[1].split("\n-- remote stop may ask Factorio",1)[0]
+        for required in (
+            "M.authorized_original_remote_drill_hold_0836(pair)",
+            'pickup.phase=="native-ground-ore-loaded-into-original-paid-wagon"',
+            'receipt.phase=="native-original-wagon-received-ground-mined-ore"',
+            'receipt.held_before==1 and receipt.held_after==0',
+            'receipt.wagon_after==receipt.wagon_before+1',
+            'engine.train.station==stop',
+            'engine.train.id==state.train_id',
+            'ride.disembark_confirmed==true',
+            'receipt.wagon_before==original.departure_wagon_item_count_0836',
+            'loaded==receipt.wagon_after',
+            'movement.reason=="original-rail-ore-loaded-reboard-0836"',
+        ):
+            self.assertIn(required,authorization)
+        for required in (
+            'tech_priests_request_movement_0418',
+            'dx*dx+dy*dy>3.3*3.3',
+            'engine.set_driver(priest)',
+            'actual==priest',
+            'ride.disembark_confirmed=false',
+            'native_original_driver_confirmed=true',
+            'native-original-magos-physically-reboarded-with-real-ore',
+        ):
+            self.assertIn(required,reboard)
+        for forbidden in ("teleport(", "surface.create_entity(", "create_inventory(",
+                          "bounds_exempt", "pickup.inventory.insert("):
+            self.assertNotIn(forbidden,reboard)
+        self.assertIn('M.service_original_remote_wagon_reboard_0836(pair)',rail)
+        self.assertIn('native-homeward-original-loaded-reboarding-unverified',rail)
+        self.assertIn('original-rail-ore-loaded-reboard-0836',movement)
+        self.assertIn('authorized_original_remote_train_reboarding_walk_0836',corridor)
+        self.assertIn('REMOTE_REBOARD_NATIVE_0836 elapsed=',fixture)
+        self.assertIn('fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)

@@ -923,6 +923,29 @@ local function inspect(s,elapsed)
     " last_walk_reason="..tostring(pickup
       and pickup.last_wagon_carry_reason_0836)..
     " quarantine="..tostring(wagon_transfer and wagon_transfer.quarantine))
+  local reboard=paid_drill and paid_drill.reboard_0836
+  local native_reboard_driver="unmeasured"
+  if loco_entity and loco_entity.valid then
+    local observed,driver=pcall(function()return loco_entity.get_driver()end)
+    if observed then
+      native_reboard_driver=driver and driver.valid
+        and driver.unit_number or "none"
+    end
+  end
+  emit("REMOTE_REBOARD_NATIVE_0836 elapsed="..elapsed..
+    " receipt_phase="..tostring(reboard and reboard.phase)..
+    " native_driver_unit="..tostring(native_reboard_driver)..
+    " original_priest_unit="..tostring(p.priest and p.priest.unit_number)..
+    " paid_locomotive_unit="..tostring(reboard and reboard.locomotive_unit)..
+    " paid_wagon_unit="..tostring(reboard and reboard.wagon_unit)..
+    " loaded_real_ore="..tostring(reboard and reboard.wagon_ore_count)..
+    " boarded_tick="..tostring(reboard and reboard.boarded_tick)..
+    " native_original_driver_confirmed="..tostring(reboard
+      and reboard.native_original_driver_confirmed)..
+    " current_disembark="..tostring(p.train_transport_rail_0835
+      and p.train_transport_rail_0835.disembark_confirmed)..
+    " last_reboard_reason="..tostring(paid_drill
+      and paid_drill.last_reboard_reason_0836))
   emit("REMOTE_DRILL_SUPPLY_NATIVE_0836 elapsed="..elapsed..
     " source_unit="..tostring(supply and supply.source_unit)..
     " source_before="..tostring(supply and supply.source_before)..

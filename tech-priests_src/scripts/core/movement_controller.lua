@@ -418,6 +418,21 @@ function M.position_allowed(pair, pos, reason, opts)
       if checked and allowed==true then return true,nil,nil end
     end
   end
+  -- Post-load original-Magos reboarding is a real short walking leg,
+  -- verified against the same native mined ore and the same paid train.
+  if opts and opts.owner=="rail-track-frontier-0836"
+      and reason=="original-rail-ore-loaded-reboard-0836" then
+    local frontier=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if frontier and
+        type(frontier.authorized_original_remote_train_reboarding_walk_0836)=="function"then
+      local checked,allowed=pcall(
+        frontier.authorized_original_remote_train_reboarding_walk_0836,pair,pos,{
+          owner=opts.owner,reason=reason,
+          ground_route_final_destination=
+            opts.ground_route_final_destination or pos})
+      if checked and allowed==true then return true,nil,nil end
+    end
+  end
   -- Only the original no-cargo Magos may approach the exact native-paid,
   -- fueled locomotive after 0836's read-only physical rail verification.
   if opts and opts.owner=="rail-track-frontier-0836"
