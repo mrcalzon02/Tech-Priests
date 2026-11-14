@@ -502,6 +502,20 @@ pair.construction_requested_item={}
 refused=Builder.configure_built_factory_recipe_1150(pair,task,built)
 assert(not refused and changes==1,
   "configuration ignored exact original builder request identity")
+pair.construction_requested_item=request
+built.fluids_count=1
+local fluid_amount=0
+built.get_fluid=function(index)assert(index==1);return {name="water",amount=fluid_amount}end
+setmetatable(built,{__index=function(_,key)
+ if key=="fluidbox"then error("2.1 removed legacy fluidbox")end
+end})
+configured_ok=Builder.configure_built_factory_recipe_1150(pair,task,built)
+assert(configured_ok and changes==2 and selected=="iron-gear-wheel",
+ "modern fluid storage API prevented configuration of an empty paid assembler")
+selected=nil;fluid_amount=1
+refused,cause=Builder.configure_built_factory_recipe_1150(pair,task,built)
+assert(not refused and changes==2 and cause=="new-assembler-has-fluid-or-unreadable-fluidbox",
+ "modern fluid inventory was displaced during recipe assignment")
 -- Verify the NEW request enters the ORIGINAL 0338 canonical discovery,
 -- not an isolated planning ledger. Discovery alone must never spend an item.
 local prior_prototypes=rawget(_G,"prototypes")

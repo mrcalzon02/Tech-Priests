@@ -359,7 +359,7 @@ local function diagnostic_pair(label,unit)
   mode=tostring(pair.mode or "none"),
   canonical_family=tostring(canonical.family or "none"),
   canonical_status=tostring(canonical.status or "none"),
-  canonical_reason=tostring(canonical.reason or "none"),
+  canonical_reason=tostring(canonical.detail or canonical.reason or "none"),
   emergency_craft=type(pair.emergency_craft)=="table",
   strict_recipe=type(pair.emergency_craft)=="table"
     and pair.emergency_craft.strict_recipe_0647==true,

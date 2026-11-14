@@ -508,6 +508,21 @@ function M.service_pair(pair, reason)
     -- otherwise 0647 waits forever while survival repeatedly requests ammo.
     local op=pair.independent_emergency_operation_0184
     local request=pair.infrastructure_recipe_request_0647
+    local energy=pair.energy_family_logistics_0707
+    if type(energy)=="table"and energy.family=="energy-fuel"
+        and energy.phase=="waiting-source"and valid(energy.target)
+        and energy.target.force==pair.station.force
+        and energy.target.surface==pair.station.surface
+        and not energy.carried and not pair.energy_family_custody_0707 then
+      local readiness=rawget(_G,"TechPriestsEnergyFamilyReadiness0705")
+      if readiness and type(readiness.inspect_entity)=="function"then
+        local ok,report=pcall(readiness.inspect_entity,pair,energy.target,true)
+        if ok and report and report.state=="fuel-service-eligible"then
+          request={missing=energy.item,ingredients={{name=energy.item,
+            count=math.max(1,math.min(4,tonumber(energy.count)or 2))}}}
+        end
+      end
+    end
     if root.recipe_acquisition_disabled or not(type(op)=="table" and op.enabled==true
         and type(request)=="table" and request.missing) then
       return false,"disabled"
@@ -527,6 +542,7 @@ function M.service_pair(pair, reason)
         "active_acquisition_0333","construction_task_0338","construction_custody_0338",
         "direct_acquisition_custody_0513","machine_logistics_custody_0528",
         "emergency_production_custody_0514","station_crafting_task_0337",
+        "energy_family_custody_0707","item_family_custody_0702",
         "scavenge","inventory_transfer_custody_0687"}) do
       if pair[field] then return false,"independent-recipe-incumbent-duty:"..field end
     end
@@ -641,7 +657,14 @@ function M.service_all(reason)
   local n=0
   for offset=0,math.min(M.max_pairs,#list)-1 do
     local pair=list[(start+offset-1)%#list+1]
-    pcall(M.service_pair,pair,reason or "pulse");n=n+1
+    local ok,acted,detail=pcall(M.service_pair,pair,reason or "pulse")
+    pair.bootstrap_service_0637={tick=now(),acted=ok and acted==true,
+      reason=tostring(ok and detail or acted)}
+    local energy=pair.energy_family_logistics_0707
+    if energy and energy.phase=="waiting-source"then
+      record("bootstrap-energy-service-0637",pair,pair.bootstrap_service_0637.reason)
+    end
+    n=n+1
     root.last_station_unit=station_unit(pair)
   end
   return n

@@ -6,7 +6,7 @@ local force={name="tp-arena-3"}
 local resource={valid=true,name="stone",type="resource",amount=100,
   position={x=10,y=0}}
 local surface={find_entities_filtered=function(opts)
-  assert(opts.name=="stone" and opts.radius==40)
+  assert(opts.name==resource.name and opts.radius==40)
   return {resource}
 end}
 local function fixture()
@@ -47,6 +47,22 @@ assert(not Raw.service_pair(pair),"active player order preempted")
 pair=fixture();TechPriestsResourceReturnCourier0837={worker_reserved=function()return true end}
 assert(not Raw.service_pair(pair),"physical ore courier reservation preempted")
 TechPriestsResourceReturnCourier0837=nil
+pair=fixture();pair.infrastructure_recipe_request_0647=nil
+resource.name="coal"
+local boiler={valid=true,force=force,surface=surface}
+pair.energy_family_logistics_0707={family="energy-fuel",phase="waiting-source",
+ target=boiler,item="coal",count=2}
+TechPriestsEnergyFamilyReadiness0705={inspect_entity=function(p,target)
+ assert(p==pair and target==boiler);return {state="fuel-service-eligible"}end}
+assert(Raw.service_pair(pair) and pair.direct_acquisition_task_0336.required_count==2,
+ "canonical missing energy fuel never reached real raw acquisition")
+assert(pair.energy_family_logistics_0707.phase=="waiting-source" and resource.amount==100)
+pair=fixture();pair.infrastructure_recipe_request_0647=nil
+pair.energy_family_logistics_0707={family="energy-fuel",phase="waiting-source",
+ target={valid=true,force={},surface=surface},item="coal",count=2}
+assert(not Raw.service_pair(pair),"foreign energy machine authorized raw work")
+TechPriestsEnergyFamilyReadiness0705=nil
+resource.name="stone"
 -- A bounded service must eventually visit every force/station, including
 -- stations after the first twelve in a large four-way factory population.
 fixture()

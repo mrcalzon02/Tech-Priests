@@ -1335,6 +1335,14 @@ function M.configure_built_factory_recipe_1150(pair,task,built)
   return false,"new-assembler-not-empty"
  end
  local checked,empty=pcall(function()
+  local modern,count=pcall(function()return built.fluids_count end)
+  if modern and type(count)=="number"then
+   for i=1,count do
+    local fluid=built.get_fluid(i)
+    if fluid and (tonumber(fluid.amount)or 0)>0 then return false end
+   end
+   return true
+  end
   local box=built.fluidbox
   if not box then return true end
   for i=1,#box do

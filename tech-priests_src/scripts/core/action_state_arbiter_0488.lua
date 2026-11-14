@@ -523,6 +523,14 @@ function M.action(p)
   elseif order_kind=="acquisition" and machine_rec then kind,reason="machine-logistics","physical-machine-output-before-more-mining";target=machine_rec.target;position=valid(target)and target.position or machine_rec.position
   elseif order_kind=="acquisition"then kind,reason="acquisition","order" elseif order_kind=="movement"then kind,reason="movement","order"
   elseif construction_rec then kind,reason="construction","construction-recommendation";target=construction_rec.target;position=valid(target)and target.position or construction_rec.position
+  elseif energy_rec and not(machine_rec and machine_rec.active)
+      and not(p.machine_logistics_custody_0528 or p.inventory_transfer_custody_0687)then
+    -- A cold production-energy machine is a prerequisite for all downstream
+    -- machine logistics. Admit its existing canonical fuel owner before a
+    -- fresh routine recommendation; active orders/builds/cargo above retain priority.
+    kind,reason="energy-family-logistics","energy-before-routine-machine-logistics"
+    target=energy_rec.target;position=valid(target)and target.position or energy_rec.position
+    selected=energy_rec
   elseif machine_rec then kind,reason="machine-logistics","machine-recommendation";target=machine_rec.target;position=valid(target)and target.position or machine_rec.position
   elseif item_rec then kind,reason="item-family-logistics","item-family-recommendation";target=item_rec.target;position=valid(target)and target.position or item_rec.position
   elseif energy_rec then kind,reason="energy-family-logistics","energy-family-recommendation";target=energy_rec.target;position=valid(target)and target.position or energy_rec.position
