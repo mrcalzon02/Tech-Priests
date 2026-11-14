@@ -2340,3 +2340,60 @@ class NativeRailBoardingLeashAuthority0836Tests(unittest.TestCase):
         self.assertIn('frontier.authorized_original_train_boarding_walk_0836,pair,pos',auth)
         self.assertNotIn('bounds_exempt',auth)
 
+
+class OriginalNativeRailDisembarkAndDrillWalk0836Tests(unittest.TestCase):
+    """Source guards for the next genuine native engine boundary."""
+
+    def test_original_paid_train_ejection_cannot_preempt_0338_cargo(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        eject=rail.split("function M.service_original_remote_drill_disembark_0836(pair)",1)[1].split(
+            "function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[0]
+        for predicate in ('engine.train.station==stop',
+                          'engine.train.id==wagon.built_entity.train.id',
+                          'task.phase=="move-site"',
+                          'task.request_field=="remote_drill_request_1011"',
+                          'task.request_value==state.request',
+                          'task.carried.count==1',
+                          'custody.count==1',
+                          'supply.source_before-supply.source_after==1',
+                          'supply.inventory.get_item_count("burner-mining-drill")==0',
+                          'driver==priest','engine.set_driver(nil)',
+                          'after==nil','priest.unit_number==state.priest_unit',
+                          'state.disembark_confirmed=true'):
+            self.assertIn(predicate,eject)
+        self.assertLess(eject.index('supply.inventory.get_item_count("burner-mining-drill")==0'),
+                        eject.index('engine.set_driver(nil)'))
+        self.assertLess(eject.index('after==nil'),eject.index('state.disembark_confirmed=true'))
+        for forbidden in ('teleport(', 'create_entity(', 'remove_item(', 'inventory.insert(', 'bounds_exempt'):
+            self.assertNotIn(forbidden,eject)
+        service=rail.split("function M.service_pair(pair)",1)[1]
+        self.assertLess(service.index('M.offer_first_remote_drill_0836(pair)'),
+                        service.index('M.service_original_remote_drill_disembark_0836(pair)'))
+        self.assertLess(service.index('M.service_original_remote_drill_disembark_0836(pair)'),
+                        service.index('M.service_first_train_return_0836(pair)'))
+
+    def test_only_original_0338_drill_corridor_admitted_in_both_movement_authorities(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        movement=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        corridor=(root/"tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text()
+        permit=rail.split("function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[1].split(
+            "function M.service_first_train_return_0836(pair)",1)[0]
+        for predicate in ('storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair',
+                          'state.disembark_confirmed==true',
+                          'ride.disembark_confirmed==true',
+                          'movement.owner=="construction-planner-0338"',
+                          'movement.reason=="construction-site-standoff-0338"',
+                          'movement.owner=="movement-controller-enforcement-0566"',
+                          'task.request_value==state.request',
+                          'custody.request_value==state.request',
+                          'engine.train.station==stop',
+                          'driver==nil',
+                          'dot>=-0.10 and dot<=1.20 and cross<=10'):
+            self.assertIn(predicate,permit)
+        self.assertNotIn('teleport(',permit)
+        self.assertIn('rail.authorized_original_remote_drill_walk_0836,pair,pos',movement)
+        self.assertIn('frontier.authorized_original_remote_drill_walk_0836,pair,pos',corridor)
+        self.assertIn('return false,"original-native-remote-drill-contact-owned-0836"',movement)
+        self.assertIn('M.stop(pair,"original-remote-drill-construction-safety-handoff-0836")',movement)

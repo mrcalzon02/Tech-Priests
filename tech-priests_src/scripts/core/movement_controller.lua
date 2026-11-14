@@ -417,6 +417,18 @@ function M.position_allowed(pair, pos, reason, opts)
       if ok and allowed==true then return true,nil,nil end
     end
   end
+  -- Authenticated original 0338 drill walk after native paid-stop ejection.
+  -- It is not a new owner or general Magos territory expansion.
+  if opts and opts.owner=="construction-planner-0338"
+      and reason=="construction-site-standoff-0338" then
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if rail and type(rail.authorized_original_remote_drill_walk_0836)=="function"then
+      local checked,allowed=pcall(
+        rail.authorized_original_remote_drill_walk_0836,pair,pos,{
+          owner=opts.owner,reason=reason})
+      if checked and allowed==true then return true,nil,nil end
+    end
+  end
   local distance_sq = dist_sq(pair.station.position, pos) or 0
   local distance = math.sqrt(distance_sq)
   local maximum = M.work_radius(pair)
@@ -1507,6 +1519,20 @@ function M.enforce_pair(pair, reason)
       end
     end
   end
+  -- Release only our own overleash return when the original 0338 drill
+  -- carries a real paid item and the same Magos was natively ejected.
+  if enforcement_return then
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if rail and type(rail.authorized_original_remote_drill_walk_0836)=="function"then
+      local checked,allowed=pcall(
+        rail.authorized_original_remote_drill_walk_0836,
+        pair,pair.priest.position,request)
+      if checked and allowed==true then
+        M.stop(pair,"original-remote-drill-construction-safety-handoff-0836")
+        return true,"original-remote-drill-construction-safety-handoff-0836"
+      end
+    end
+  end
   if distance > M.hard_leash(pair) then
     -- 0836 original paid rail construction is a physically verified track
     -- contact, not a general overleash exemption.  Require the same live
@@ -1525,6 +1551,19 @@ function M.enforce_pair(pair, reason)
         root.stats.original_paid_rail_contacts_preserved_0836=
           (root.stats.original_paid_rail_contacts_preserved_0836 or 0)+1
         return false,"original-paid-rail-contact-owned-0836"
+      end
+    end
+    -- The physically ejected original Magos may walk ONLY from its real
+    -- paid remote stop to the exact current 0338 drill site with counted cargo.
+    if request and request.owner=="construction-planner-0338"
+      and request.reason=="construction-site-standoff-0338"
+      and frontier
+      and type(frontier.authorized_original_remote_drill_walk_0836)=="function"then
+      local checked,authorized=pcall(
+        frontier.authorized_original_remote_drill_walk_0836,pair,
+        pair.priest.position,request)
+      if checked and authorized==true then
+        return false,"original-native-remote-drill-contact-owned-0836"
       end
     end
     -- Unlike a build-site contact, the *journey* can take many ticks
