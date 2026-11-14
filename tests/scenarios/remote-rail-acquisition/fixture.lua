@@ -1267,7 +1267,7 @@ local function inspect(s,elapsed)
     and home_unload.locomotive_unit==loco_entity.unit_number
     and moving_train.station==home_entity
     and homeward.lowest_x<homeward.remote_x-32
-  if native_home_ejected then s.returned=true end
+  -- Departure and return credit remain gated in the native train-loop below.
   if outbound and outbound.phase==
       "native-original-outbound-arrived-at-paid-remote-stop"
       and not(moving_train and moving_train.valid
