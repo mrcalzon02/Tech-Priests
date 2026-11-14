@@ -3,7 +3,7 @@
 package.path="./tech-priests_src/?.lua;./tech-priests_src/?/init.lua;"..package.path
 local Outpost=require("scripts.core.remote_rail_outpost_0835")
 game={tick=1000}
-local force={index=9},surface={index=7,valid=true}
+local force,surface={index=9},{index=7,valid=true}
 local build_calls=0
 surface.can_place_entity=function(spec)
   build_calls=build_calls+1
@@ -42,7 +42,7 @@ prototypes={item={
   place_result={name="senior-cogitator-station"}}}}
 _G.TechPriestsStorageRoleAuthority0686={
  generic_item_count=function(_,name)
-  return name=="train-stop"or name=="senior-cogitator-station"
+  return (name=="train-stop"or name=="senior-cogitator-station")
     and 1 or 0
  end}
 local function check(ok,reason)
