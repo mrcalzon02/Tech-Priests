@@ -483,8 +483,11 @@ local function owned_pending_stop_0836(pair,request)
  local mission=pair and pair.remote_rail_outpost_0835
  local role=request and request.rail_stop_role_0836
  if role~=nil and role~="home" and role~="remote" then return false end
- local state=mission and (role=="remote"
-   and mission.remote_stop_0836 or mission.first_stop_0836)
+ local state
+ if mission then
+  if role=="remote" then state=mission.remote_stop_0836
+  else state=mission.first_stop_0836 end
+ end
  local route=mission and mission.rail_frontier_0836
  local station=pair and pair.station
  local priest=pair and pair.priest
@@ -1418,8 +1421,11 @@ local function finish(pair,task,built,reason)
    and task.creative_build~=true then
   local mission=pair.remote_rail_outpost_0835
   local role=task.request_value and task.request_value.rail_stop_role_0836
-  local state=mission and (role=="remote"
-    and mission.remote_stop_0836 or mission.first_stop_0836)
+  local state
+  if mission then
+   if role=="remote" then state=mission.remote_stop_0836
+   else state=mission.first_stop_0836 end
+  end
   local debit=task.original_stop_debit_0836
   if state and state.request==task.request_value
     and debit and debit.source_unit and type(debit.before)=="number"
@@ -2349,8 +2355,11 @@ function M.service_pair(pair,reason)
   local wagon_before=original_wagon
     and item_count(task.source_inv,"cargo-wagon") or nil
   local stop_role=task.request_value and task.request_value.rail_stop_role_0836
-  local first_stop=mission and (stop_role=="remote"
-    and mission.remote_stop_0836 or mission.first_stop_0836)
+  local first_stop
+  if mission then
+   if stop_role=="remote" then first_stop=mission.remote_stop_0836
+   else first_stop=mission.first_stop_0836 end
+  end
   local original_stop=task.item_name=="train-stop"
     and task.entity_name=="train-stop"
     and task.site_reason=="original-first-train-stop-0836"
