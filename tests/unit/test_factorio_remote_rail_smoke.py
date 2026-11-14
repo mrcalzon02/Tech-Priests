@@ -1123,6 +1123,39 @@ class NativeRailPrewritAdmissionTraceTests(unittest.TestCase):
             self.assertNotIn(forbidden, sampler)
 
 
+
+class OriginalRemoteNativeFuelSourceRegressions(unittest.TestCase):
+    """Focused source guards, not substitutes for native Factorio evidence."""
+
+    def test_original_remote_drill_coal_debit_and_real_fuel_slot(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        builder = (root / "tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
+        frontier = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        native = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        self.assertIn("game.create_inventory(2)", builder)
+        self.assertIn('removed_fuel=remove_item(task.source_inv,"coal",5)', builder)
+        self.assertIn('held.quarantine="native-remote-fuel-debit-unreconciled"', builder)
+        self.assertIn('held.fuel_source_before-held.fuel_source_after==5', builder)
+        self.assertIn('item_count(held.inventory,"coal")==5', builder)
+        self.assertIn("function M.service_original_remote_drill_fuel_0836(pair)", frontier)
+        self.assertIn("M.authorized_original_remote_drill_hold_0836(pair)", frontier)
+        self.assertIn('return hold.remove{name="coal",count=5}', frontier)
+        self.assertIn('return drill_fuel.insert{name="coal",count=removed}', frontier)
+        self.assertIn('supply.quarantine="native-remote-fuel-transfer-uncertain"', frontier)
+        self.assertIn('M.service_original_remote_drill_fuel_0836(pair)', frontier)
+        self.assertIn("REMOTE_DRILL_FUEL_NATIVE_0836 elapsed=", native)
+        self.assertIn("fuel_paid=", native)
+
+    def test_fail_closed_if_original_drill_or_fuel_custody_is_unavailable(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        frontier = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        self.assertIn('"native-remote-fuel-original-physical-custody-missing"', frontier)
+        self.assertIn('"native-remote-drill-real-fuel-slot-missing"', frontier)
+        self.assertIn('"native-remote-fuel-removal-uncertain"', frontier)
+        self.assertIn('"native-remote-fuel-transfer-uncertain"', frontier)
+        self.assertIn('drill.unit_number==state.built_unit', frontier)
+        self.assertIn('dx*dx+dy*dy>9', frontier)
+
 if __name__ == "__main__":
     unittest.main()
 

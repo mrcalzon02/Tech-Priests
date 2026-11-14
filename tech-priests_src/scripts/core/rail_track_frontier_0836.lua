@@ -2980,6 +2980,89 @@ function M.authorized_original_remote_drill_hold_0836(pair)
   return dx*dx+dy*dy<=96*96
 end
 
+-- The original paid burner drill receives ONLY source-debited coal from
+-- the original 0338 wagon staging inventory. Native inventories own the cargo.
+-- Neither this receipt nor a fueled drill proves ore extraction or delivery.
+function M.service_original_remote_drill_fuel_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  local state=m and m.first_remote_drill_0836
+  local supply=pair and pair.rail_remote_drill_supply_0836
+  if not(state and state.phase=="native-0338-drill-built"
+    and M.authorized_original_remote_drill_hold_0836(pair)
+    and supply and not supply.quarantine
+    and supply.station_unit==pair.station.unit_number
+    and supply.priest_unit==pair.priest.unit_number
+    and type(supply.fuel_source_before)=="number"
+    and type(supply.fuel_source_after)=="number"
+    and supply.fuel_source_before-supply.fuel_source_after==5
+    and supply.fuel_staged_count==5
+    and supply.inventory and supply.inventory.valid)then
+    return false,"native-remote-fuel-original-physical-custody-missing"
+  end
+  local drill=state.built_entity
+  local priest=pair.priest
+  if not(valid(drill) and drill.unit_number==state.built_unit
+    and drill.name=="burner-mining-drill" and drill.type=="mining-drill"
+    and drill.surface==priest.surface and drill.force==priest.force)then
+    return false,"native-remote-fuel-original-drill-invalid"
+  end
+  if state.fuel_delivery_0836 then
+    return false,"native-remote-drill-fuel-already-delivered"
+  end
+  local dx=priest.position.x-drill.position.x
+  local dy=priest.position.y-drill.position.y
+  if dx*dx+dy*dy>9 then
+    return false,"native-remote-fuel-original-magos-not-in-reach"
+  end
+  local slot=defines and defines.inventory and defines.inventory.fuel
+  local read,drill_fuel=pcall(function()
+    return slot and drill.get_inventory(slot)
+  end)
+  if not(read and drill_fuel and drill_fuel.valid)then
+    return false,"native-remote-drill-real-fuel-slot-missing"
+  end
+  local hold=supply.inventory
+  local counted,held_before,fuel_before=pcall(function()
+    return hold.get_item_count("coal"),drill_fuel.get_item_count("coal")
+  end)
+  if not(counted and held_before==5 and type(fuel_before)=="number"
+      and fuel_before>=0)then
+    return false,"native-remote-drill-fuel-pretransfer-count-unreadable"
+  end
+  -- Record intent BEFORE any native debit. A post-mutation error leaves the
+  -- real inventories quarantined, never blindly restoring imaginary items.
+  supply.fuel_transfer_attempt_tick_0836=now()
+  local removed_ok,removed=pcall(function()
+    return hold.remove{name="coal",count=5}
+  end)
+  if not(removed_ok and removed==5)then
+    supply.quarantine="native-remote-fuel-removal-uncertain"
+    return false,supply.quarantine
+  end
+  local inserted_ok,inserted=pcall(function()
+    return drill_fuel.insert{name="coal",count=removed}
+  end)
+  if not inserted_ok or type(inserted)~="number" then inserted=0 end
+  local returned_ok,returned=pcall(function()
+    return hold.insert{name="coal",count=removed-inserted}
+  end)
+  local after_ok,held_after,fuel_after=pcall(function()
+    return hold.get_item_count("coal"),drill_fuel.get_item_count("coal")
+  end)
+  if not(inserted_ok and inserted==5 and returned_ok and returned==0
+      and after_ok and held_after==0 and fuel_after==fuel_before+5)then
+    supply.quarantine="native-remote-fuel-transfer-uncertain"
+    return false,supply.quarantine
+  end
+  state.fuel_delivery_0836={
+    native_inventory_verified=true,drill_unit=drill.unit_number,
+    priest_unit=priest.unit_number,source_coal_debit=5,
+    held_before=held_before,held_after=held_after,
+    drill_before=fuel_before,drill_after=fuel_after,delivered_tick=now()}
+  m.next_step="native-original-remote-drill-fueled-output-still-unverified"
+  return true,"original-remote-drill-received-five-source-debited-coal"
+end
+
 -- remote stop may ask Factorio to take it home. A schedule or route receipt is
 -- never evidence of a return journey; single-headed trains may have no path.
 function M.service_first_train_return_0836(pair)
@@ -3245,6 +3328,7 @@ function M.service_pair(pair)
               -- remains authoritative until physical ore appears.
               M.offer_first_remote_drill_0836(pair)
               M.service_original_remote_drill_disembark_0836(pair)
+              M.service_original_remote_drill_fuel_0836(pair)
               return M.service_first_train_return_0836(pair)
             end
             return M.service_first_train_outbound_0836(pair)

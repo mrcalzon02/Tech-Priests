@@ -802,6 +802,37 @@ local function inspect(s,elapsed)
       "burner-mining-drill")
     if counted and type(n)=="number"then held_drill=n end
   end
+  -- Observe the REAL paid miner fuel slot and the original home-debited
+  -- engine-owned carried coal, not a projected mission fuel counter.
+  local native_held_coal="unmeasured"
+  if supply and supply.inventory and supply.inventory.valid then
+    local ok,n=pcall(supply.inventory.get_item_count,"coal")
+    if ok and type(n)=="number"then native_held_coal=n end
+  end
+  local paid_drill=objective and objective.first_remote_drill_0836
+  local delivery=paid_drill and paid_drill.fuel_delivery_0836
+  local built_drill=paid_drill and paid_drill.built_entity
+  local native_drill_coal="unmeasured"
+  if built_drill and built_drill.valid
+      and defines and defines.inventory and defines.inventory.fuel then
+    local ok,inv=pcall(function()
+      return built_drill.get_inventory(defines.inventory.fuel)
+    end)
+    if ok and inv and inv.valid then
+      local counted,n=pcall(inv.get_item_count,"coal")
+      if counted and type(n)=="number"then native_drill_coal=n end
+    end
+  end
+  emit("REMOTE_DRILL_FUEL_NATIVE_0836 elapsed="..elapsed..
+    " original_source_coal_before="..tostring(supply and supply.fuel_source_before)..
+    " original_source_coal_after="..tostring(supply and supply.fuel_source_after)..
+    " held_coal="..tostring(native_held_coal)..
+    " native_drill_coal="..tostring(native_drill_coal)..
+    " fuel_paid="..tostring(delivery and delivery.native_inventory_verified)..
+    " native_drill_unit="..tostring(built_drill and built_drill.unit_number)..
+    " receipt_drill_unit="..tostring(delivery and delivery.drill_unit)..
+    " receipt_tick="..tostring(delivery and delivery.delivered_tick)..
+    " fuel_quarantine="..tostring(supply and supply.quarantine))
   emit("REMOTE_DRILL_SUPPLY_NATIVE_0836 elapsed="..elapsed..
     " source_unit="..tostring(supply and supply.source_unit)..
     " source_before="..tostring(supply and supply.source_before)..

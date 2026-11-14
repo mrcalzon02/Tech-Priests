@@ -502,12 +502,18 @@ local function stage_original_wagon_drill_0836(pair,task)
    and type(held.source_before)=="number"
    and type(held.source_after)=="number"
    and held.source_before-held.source_after==1
+   and type(held.fuel_source_before)=="number"
+   and type(held.fuel_source_after)=="number"
+   and held.fuel_source_before-held.fuel_source_after==5
+   and held.fuel_staged_count==5
+   and item_count(held.inventory,"coal")==5
    and item_count(held.inventory,"burner-mining-drill")==1
  end
  local before=item_count(task.source_inv,"burner-mining-drill")
- if before<1 or not(game and type(game.create_inventory)=="function")
+ local fuel_before=item_count(task.source_inv,"coal")
+ if before<1 or fuel_before<5 or not(game and type(game.create_inventory)=="function")
    then return false end
- local ok,inventory=pcall(function()return game.create_inventory(1)end)
+ local ok,inventory=pcall(function()return game.create_inventory(2)end)
  if not(ok and inventory and inventory.valid)then return false end
  held={inventory=inventory,station_unit=pair.station.unit_number,
    priest_unit=pair.priest.unit_number,
@@ -515,7 +521,9 @@ local function stage_original_wagon_drill_0836(pair,task)
    force_index=pair.station.force.index,
    wagon_request=task.request_value,
    source_unit=task.source_entity.unit_number,
-   source_before=before,source_after=nil,stage_tick=now()}
+   source_before=before,source_after=nil,
+    fuel_source_before=fuel_before,fuel_source_after=nil,
+    fuel_staged_count=nil,stage_tick=now()}
  pair.rail_remote_drill_supply_0836=held
  local removed=remove_item(task.source_inv,"burner-mining-drill",1)
  local inserted=insert_item(inventory,"burner-mining-drill",removed)
@@ -526,6 +534,20 @@ local function stage_original_wagon_drill_0836(pair,task)
    or before-after~=1 then
   held.quarantine="native-remote-drill-debit-unreconciled"
   record(pair,"remote-drill-supply-quarantined-0836",held.quarantine)
+  return false
+ end
+ local removed_fuel=remove_item(task.source_inv,"coal",5)
+ local inserted_fuel=insert_item(inventory,"coal",removed_fuel)
+ local fuel_refunded=insert_item(task.source_inv,"coal",removed_fuel-inserted_fuel)
+ local fuel_after=item_count(task.source_inv,"coal")
+ local held_fuel=item_count(inventory,"coal")
+ held.fuel_source_after=fuel_after
+ held.fuel_staged_count=held_fuel
+ if removed_fuel~=5 or inserted_fuel~=5 or fuel_refunded~=0
+    or fuel_before-fuel_after~=5 or held_fuel~=5 then
+  -- Preserve and quarantine the real native hold on any ambiguous debit.
+  held.quarantine="native-remote-fuel-debit-unreconciled"
+  record(pair,"remote-drill-fuel-quarantined-0836",held.quarantine)
   return false
  end
  record(pair,"original-remote-drill-physical-cargo-staged-0836",
