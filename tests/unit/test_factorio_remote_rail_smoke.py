@@ -1642,3 +1642,18 @@ class OriginalNativeOutboundScheduleGuardTests(unittest.TestCase):
         self.assertIn('native_driver==p.priest',block)
         self.assertIn('{1800,9000,18000,36000,60000,72000,90000}',fixture)
         self.assertNotIn('surface.create_entity{name="iron-ore"',fixture)
+
+
+class NativeRailDirectionalStopAdmissionTests(unittest.TestCase):
+    def test_distant_stop_faces_original_eastbound_train_and_home_faces_return(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        source=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        stop=source.split("function M.service_first_train_stop_0836(pair,role)",1)[1].split(
+            "function M.service_first_train_board_0836(pair)",1)[0]
+        self.assertIn("local offsets=remote and {2,3} or {-2,-3}",stop)
+        self.assertIn("local heading=offset<0 and cardinal.west or cardinal.east",stop)
+        self.assertIn("surface.can_place_entity{",stop)
+        self.assertIn("if not chosen then return false",stop)
+        self.assertNotIn("for _,offset in ipairs({-2,2,-3,3})",stop)
+        self.assertNotIn("surface.create_entity(",stop)
+        self.assertNotIn("teleport(",stop)
