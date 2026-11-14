@@ -104,7 +104,7 @@ class OriginalRailItemFamilyAdmissionTests(unittest.TestCase):
         self.assertNotIn("remove_inventory", guard)
         self.assertIn('if original_rail_expedition_reserved_0836(pair) then', discover)
         self.assertIn('if original_rail_expedition_reserved_0836(pair) then', service)
-        self.assertLess(service.index('if type(task) == "table" then return continue_task(pair, task) end'),
+        self.assertLess(service.index("return continue_task(pair,task)"),
                         service.index('if original_rail_expedition_reserved_0836(pair) then'))
         self.assertLess(service.index("if reversal_future_worker_reserved_0962(pair) then"),
                         service.index('if original_rail_expedition_reserved_0836(pair) then'))
