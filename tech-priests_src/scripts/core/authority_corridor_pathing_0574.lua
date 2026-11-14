@@ -125,6 +125,24 @@ function M.authorization_for_destination(pair, pos, reason, opts)
         station_unit=station_unit(pair)},"native-paid-rail-contact-0836"
     end
   end
+  -- The canonical 0574 planner runs BEFORE 0418 work-radius checks. It must
+  -- recognize the same exact live 0528 physical coal custody and item-debited
+  -- 0836 native rail corridor; otherwise a valid 0418 grant is overwritten
+  -- by corridor_rejected. No general machine, fuel or authority exemption.
+  if frontier and opts
+      and opts.owner=="logistics_machine_fulfillment_0528"
+      and reason=="machine-logistics-move-to-machine-0528"
+      and type(frontier.authorized_original_train_fuel_walk_0836)=="function"then
+    local checked,authorized=pcall(
+      frontier.authorized_original_train_fuel_walk_0836,pair,pos,{
+        owner=opts.owner,reason=reason,
+        ground_route_final_destination=
+          opts.ground_route_final_destination or pos})
+    if checked and authorized==true then
+      return true,{pair=pair,role="physical-original-rail-0836",
+        station_unit=station_unit(pair)},"native-paid-original-locomotive-fuel-0836"
+    end
+  end
   local surface = destination_surface(pair, pos)
   local auth, order, source = authorized_pairs(pair)
   local best, best_d = nil, nil
