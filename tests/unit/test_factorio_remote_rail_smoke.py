@@ -153,6 +153,39 @@ class ExistingUnladen0702RailYieldTests(unittest.TestCase):
                         service.index("return continue_task(pair,task)"))
 
 
+    def test_original_boarding_handoff_invokes_only_0702_owner_custody_preflight(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        family = (root / "tech-priests_src/scripts/core/"
+                  "item_family_logistics_0702.lua").read_text(encoding="utf-8")
+        rail = (root / "tech-priests_src/scripts/core/"
+                "rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        exported = family.split(
+            "function M.pause_unladen_for_original_rail_0836(pair)", 1
+        )[1].split("local function discover_pair(pair)", 1)[0]
+        board = rail.split(
+            "function M.service_first_train_board_0836(pair)", 1
+        )[1].split("-- First outward expedition:", 1)[0]
+        self.assertIn(
+            "return pause_unladen_item_family_for_rail_0836(", exported)
+        self.assertIn("pair and pair.item_family_logistics_0702", exported)
+        self.assertIn("if pair.item_family_logistics_0702 then", board)
+        self.assertIn(
+            "family.pause_unladen_for_original_rail_0836,pair", board)
+        self.assertIn("state.last_item_family_yield_reason_0836=", board)
+        self.assertIn(
+            "family.release_orphaned_movement_for_rail_0836,pair", board)
+        self.assertLess(
+            board.index("family.pause_unladen_for_original_rail_0836,pair"),
+            board.index('state.last_blocker="boarding-foreign-movement-owned"'))
+        self.assertLess(
+            board.index("family.pause_unladen_for_original_rail_0836,pair"),
+            board.index('owner="rail-track-frontier-0836",priority=710'))
+        self.assertNotIn("pair.item_family_logistics_0702=nil", board)
+        self.assertNotIn("pair.item_family_custody_0702=nil", board)
+        self.assertNotIn("teleport(", board)
+        self.assertNotIn("create_entity(", board)
+
+
 class OriginalTrainLiveFuelRefusalTests(unittest.TestCase):
     def test_native_boarding_checks_live_traction_not_only_historical_fuel_receipt(self):
         root = pathlib.Path(__file__).resolve().parents[2]
