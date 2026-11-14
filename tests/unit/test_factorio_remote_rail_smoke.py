@@ -76,6 +76,44 @@ class OriginalNativeRailFailureRetentionTests(unittest.TestCase):
 
 
 
+class OriginalRailNativeDrillHandoffTests(unittest.TestCase):
+    def test_original_paid_remote_train_offers_only_existing_0338_ore_drill(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        src = (root / "tech-priests_src/scripts/core/"
+               "rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        section = src.split(
+            "function M.offer_first_remote_drill_0836(pair)", 1
+        )[1].split("function M.service_first_train_return_0836(pair)", 1)[0]
+        self.assertIn('engine.train.station==remote', section)
+        self.assertIn('driver==priest', section)
+        self.assertIn('m.item=="iron-ore"', section)
+        self.assertIn('TechPriestsStorageRoleAuthority0686', section)
+        self.assertIn('authority.generic_item_count', section)
+        self.assertIn('TechPriestsScanRouting0610', section)
+        self.assertIn('ore.name==m.resource_name', section)
+        self.assertIn('ore.amount', section)
+        self.assertIn('surface.can_place_entity', section)
+        self.assertIn('pair.remote_drill_request_1011=request', section)
+        self.assertIn('pair.construction_last_task_0338', section)
+        self.assertIn('task.phase=="complete"', section)
+        self.assertIn('task.creative_build~=true', section)
+        self.assertIn('valid(task.built_entity)', section)
+        self.assertNotIn("surface.create_entity", section)
+        self.assertNotIn("get_inventory(slot).insert", section)
+        self.assertNotIn("get_schedule().go_to_station", section)
+        service = src.split("function M.service_pair(pair)", 1)[1]
+        self.assertLess(
+            service.index("M.offer_first_remote_drill_0836(pair)"),
+            service.index("return M.service_first_train_return_0836(pair)"))
+        native_return = src.split(
+            "function M.service_first_train_return_0836(pair)", 1
+        )[1].split("function M.service_pair(pair)", 1)[0]
+        self.assertIn("loaded>before", native_return)
+        self.assertIn('original-remote-wagon-has-no-new-physical-ore',
+                      native_return)
+        self.assertIn("train.station==origin", native_return)
+
+
 class OriginalRailItemFamilyAdmissionTests(unittest.TestCase):
     def test_live_original_0835_expedition_defers_only_new_0702_work(self):
         root = pathlib.Path(__file__).resolve().parents[2]
