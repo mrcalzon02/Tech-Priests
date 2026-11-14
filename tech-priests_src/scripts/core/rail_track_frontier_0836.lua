@@ -1706,6 +1706,160 @@ function M.service_first_train_board_0836(pair)
   return M.service_first_train_board_0836(pair)
 end
 
+-- First outward expedition: the ORIGINAL Magos must be the native driver of
+-- the ORIGINAL counted train. Only a physically paid/connected distant 0338
+-- stop is eligible. A schedule is an order, NOT a travel acceptance receipt.
+function M.service_first_train_outbound_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  local loco=m and m.first_locomotive_0836
+  local wagon=m and m.first_wagon_0836
+  local far=m and m.remote_stop_0836
+  local home=m and m.first_stop_0836
+  local route=m and m.rail_frontier_0836
+  local priest=pair and pair.priest
+  local engine=loco and loco.built_entity
+  local remote=far and far.built_entity
+  local origin=home and home.built_entity
+  if not(eligible(pair,m) and m.status=="rail-track-established"
+    and loco and loco.phase=="native-paid-locomotive-verified"
+    and wagon and wagon.phase=="native-paid-wagon-verified"
+    and far and far.phase=="native-paid-original-train-stop-verified"
+    and home and home.phase=="native-paid-original-train-stop-verified"
+    and valid(engine) and engine.unit_number==loco.built_unit
+    and valid(wagon.built_entity)
+    and wagon.built_entity.unit_number==wagon.built_unit
+    and valid(remote) and remote.unit_number==far.built_unit
+    and valid(origin) and origin.unit_number==home.built_unit
+    and remote~=origin and valid(priest) and route
+    and type(route.built_units)=="table"
+    and engine.train and engine.train.valid
+    and wagon.built_entity.train and wagon.built_entity.train.valid
+    and engine.train.id==wagon.built_entity.train.id
+    and engine.force==remote.force and engine.force==origin.force
+    and engine.surface==remote.surface and engine.surface==origin.surface
+    and engine.surface==priest.surface and engine.force==priest.force)then
+    return false,"original-outbound-train-stops-or-priest-unavailable"
+  end
+  local train=engine.train
+  local ride=pair.train_transport_rail_0835
+  local driver_read,driver=pcall(function()return engine.get_driver()end)
+  if not(driver_read and driver==priest
+    and ride and ride.train_id==train.id
+    and ride.boarded_priest_unit==priest.unit_number
+    and ride.physical_boarding_confirmed==true
+    and ride.disembark_confirmed~=true)then
+    return false,"original-magos-not-native-driver-for-outbound"
+  end
+  -- The independently paid stop must still touch an original 0836-built
+  -- native rail. Merely preserving its Lua completion record is insufficient.
+  local connected,remote_rail=pcall(function()return remote.connected_rail end)
+  local counted=false
+  if connected and valid(remote_rail)then
+    for _,unit in ipairs(route.built_units)do
+      if unit==remote_rail.unit_number then counted=true;break end
+    end
+  end
+  if not counted then return false,"original-remote-stop-no-longer-on-paid-rail"end
+  local state=m.first_outbound_0836
+  if not state then
+    state={phase="awaiting-original-native-schedule",train_id=train.id,
+      priest_unit=priest.unit_number,locomotive_unit=engine.unit_number,
+      remote_stop_unit=remote.unit_number,home_stop_unit=origin.unit_number,
+      origin_x=engine.position.x,highest_x=engine.position.x}
+    m.first_outbound_0836=state
+  end
+  if state.train_id~=train.id or state.priest_unit~=priest.unit_number
+      or state.locomotive_unit~=engine.unit_number
+      or state.remote_stop_unit~=remote.unit_number
+      or state.home_stop_unit~=origin.unit_number then
+    state.last_blocker="original-outbound-identity-changed"
+    return false,state.last_blocker
+  end
+  local schedule_ok,schedule=pcall(function()return train.get_schedule()end)
+  if not(schedule_ok and schedule and schedule.valid)then
+    state.last_blocker="original-native-schedule-unavailable"
+    return false,state.last_blocker
+  end
+  local unique="TP-0836-remote-"..tostring(m.root_station_unit)
+    .."-"..tostring(remote.unit_number)
+  local name_ok,name=pcall(function()return remote.backer_name end)
+  if not name_ok then
+    state.last_blocker="original-remote-stop-name-unreadable"
+    return false,state.last_blocker
+  end
+  -- No new material or entity is created: this only names the original
+  -- paid physical stop. Never replace another train's existing schedule.
+  if name~=unique then
+    if state.schedule_write_attempted then
+      state.last_blocker="original-remote-stop-name-changed-after-order"
+      return false,state.last_blocker
+    end
+    local renamed=pcall(function()remote.backer_name=unique end)
+    local verified,new_name=pcall(function()return remote.backer_name end)
+    if not(renamed and verified and new_name==unique)then
+      state.last_blocker="original-remote-stop-rename-unverified"
+      return false,state.last_blocker
+    end
+  end
+  local read,records=pcall(function()return schedule.get_records()end)
+  if not(read and type(records)=="table")then
+    state.last_blocker="original-native-schedule-records-unobservable"
+    return false,state.last_blocker
+  end
+  if not state.schedule_write_attempted then
+    if #records~=0 then
+      state.last_blocker="original-train-has-foreign-schedule"
+      return false,state.last_blocker
+    end
+    -- Set this BEFORE mutating the engine: an exception after the native
+    -- write must not cause duplicate records or overwrite a foreign order.
+    state.schedule_write_attempted=true
+    local written=pcall(function()
+      schedule.add_record{station=unique,
+        wait_conditions={{type="time",ticks=3600,compare_type="and"}}}
+    end)
+    if not written then
+      state.last_blocker="original-native-schedule-write-unconfirmed"
+      return false,state.last_blocker
+    end
+  end
+  local verified,observed=pcall(function()return schedule.get_records()end)
+  if not(verified and type(observed)=="table"
+    and #observed==1 and observed[1].station==unique)then
+    state.last_blocker="original-outbound-schedule-readback-mismatch"
+    return false,state.last_blocker
+  end
+  if not state.departure_order_issued then
+    state.departure_order_issued=true
+    local issued=pcall(function()schedule.go_to_station(1)end)
+    if not issued then
+      state.last_blocker="original-native-departure-order-unconfirmed"
+      return false,state.last_blocker
+    end
+  end
+  state.schedule_confirmed_tick=state.schedule_confirmed_tick or now()
+  state.highest_x=math.max(tonumber(state.highest_x)or state.origin_x,
+    engine.position.x)
+  local at_remote=(train.station==remote)
+  if at_remote and state.highest_x>state.origin_x+32 then
+    state.phase="native-original-outbound-arrived-at-paid-remote-stop"
+    state.arrived_tick=state.arrived_tick or now()
+    state.last_blocker=nil
+    m.next_step="native-remote-station-and-ore-acquisition"
+    return false,"native-original-outbound-arrival-confirmed"
+  end
+  if state.highest_x>state.origin_x+32 then
+    state.phase="native-original-outbound-movement-observed"
+  else
+    state.phase="native-original-outbound-schedule-admitted"
+  end
+  state.last_train_state=train.state
+  state.last_has_path=train.has_path
+  state.last_path_stop_unit=valid(train.path_end_stop)
+    and train.path_end_stop.unit_number or nil
+  return false,"native-original-outbound-awaiting-physical-arrival"
+end
+
 function M.service_pair(pair)
   local m=pair and pair.remote_rail_outpost_0835
   if not m then return false,"no-rail-mission"end
@@ -1737,6 +1891,10 @@ function M.service_pair(pair)
           M.service_first_train_stop_0836(pair,"remote")
           if far.phase~="native-paid-original-train-stop-verified"then
             return false,far.blocker or "original-remote-stop-lost"
+          end
+          local boarded=m.first_board_0836
+          if boarded and boarded.phase=="native-original-magos-boarded"then
+            return M.service_first_train_outbound_0836(pair)
           end
           return M.service_first_train_board_0836(pair)
         end
