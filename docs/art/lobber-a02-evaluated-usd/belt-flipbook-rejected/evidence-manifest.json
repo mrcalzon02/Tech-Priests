@@ -1,0 +1,18 @@
+{
+  "files": {
+    "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/actual-import-front.png": "eea187751ba403e800a458ee4b5221d8c143da294a61289d2b0d428bee819efb",
+    "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/actual-import-rear.png": "c897e04f05ffab5fb38f224b21f0b43046d259a713c6543ea7292875cfc1735f",
+    "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/CHECKPOINT.json": "3ab732b0dffead37db6bcc27faa036ff77ed23e0e1366108f20dae0de0c204a7",
+    "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/independent-import-verification.json": "df871c65ec8bfe0a1dca7e22e45902377d279da235d0a30ee6b134b79bc64dca",
+    "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/raw-buffer-diagnostic.json": "85380d09539e98958bc13534d86ba1f38921160862d4a2920a58cf2cecc3ffe1",
+    "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/README.md": "2b27a91ce647cd04ec904f7917b4fb2af9aea02e7d22714f1e5f1d1f7d96bf1d",
+    "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/render-receipt.json": "1ccd00c98b8b2960ac9b1958afa868d2c0ce5c6f7abc26e9822bbe47d1d64804",
+    "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/source-samples.json": "1c78fc29b9e66f3727a21afc2d021129140db1df2c1d5af12866a687670c706d",
+    "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/visual-review.json": "1ee3601ae96ea133f0f0d6f27b4af07a63d270d7a1566751a799ca1f6c7d6e68",
+    "tools/art/a02_interchange/failed_studies/a02_flipbook_pilot.py": "6aa8f61c05daa341ea1229bce1901548b3ae6e1f8d24dd02ec8b610b817da0e8",
+    "tools/art/a02_interchange/failed_studies/check_a02_raw_normals.py": "b61cba8a209789cb65a25f80cca4ed68a86f791dfd7b30724477f88c02d5e039",
+    "tools/art/a02_interchange/failed_studies/render_a02_flipbook_pilot.py": "46419b2fbcf6ead0865c4b6225b5e5b1af21467c5747b763703386b4f644b7ce",
+    "tools/art/a02_interchange/failed_studies/verify_a02_flipbook_pilot.py": "20e2ccf7c821bb3dd1cff1be3a0e0bd76f48e20315274ffae0ae42f04d64e5fc"
+  },
+  "binary_remote": false
+}

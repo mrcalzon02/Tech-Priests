@@ -1,0 +1,27 @@
+{
+  "status": "REJECTED_ONE_BELT_DISCRETE_GLTF_STUDY_DO_NOT_EXPAND",
+  "pid": 25040,
+  "original_source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+  "derivative_sha256": "5bd28f596ceed45a3d88ad26d18bff14e76e4544d2fe4a4138b41bc2304019b4",
+  "target": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_3_ANIM_L",
+  "frames": 193,
+  "fps": 24,
+  "completed_samples": 193,
+  "glb_sha256": "e35c7e3949be991e636bd1fe5758ec8e63f512f475aed714de7a69adb8d30584",
+  "glb_bytes": 162908036,
+  "source_unchanged": true,
+  "scope": "One belt only; exact discrete24fps samples, no subframe interpolation, no whole-cap GLTF acceptance",
+  "independent_import_status": "FAILED_PILOT_REQUIRES_REPAIR",
+  "maximum_import_position_error": 0.0,
+  "maximum_import_normal_error": 0.009495764039456844,
+  "normal_component_tolerance": 2e-05,
+  "raw_buffer_maximum_normal_error": 6.74128532409668e-05,
+  "production_rejection": [
+    "Normals do not satisfy existing2e-5component correspondence threshold; no tolerance relaxation.",
+    "162908036byte artifact for only one belt; reject blind expansion across entire cap."
+  ],
+  "next_step": "Do not repeat this193pose study or expand full-cap flipbook meshes. Keep verified USD as faithful geometry-cache option; ground native alternate-cap target or select another source-grounded asset. GLTF full gate remains open.",
+  "binary_remote": false,
+  "local_directory": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\a02-belt-flipbook-pilot-20261114",
+  "goal_open": true
+}

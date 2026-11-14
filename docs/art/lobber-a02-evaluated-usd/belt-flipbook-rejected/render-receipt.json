@@ -1,0 +1,15 @@
+{
+  "status": "REJECTED_PILOT_ACTUAL_IMPORT_DIAGNOSTIC_RENDERS",
+  "glb_sha256": "e35c7e3949be991e636bd1fe5758ec8e63f512f475aed714de7a69adb8d30584",
+  "renders": [
+    {
+      "file": "actual-import-front.png",
+      "sha256": "eea187751ba403e800a458ee4b5221d8c143da294a61289d2b0d428bee819efb"
+    },
+    {
+      "file": "actual-import-rear.png",
+      "sha256": "c897e04f05ffab5fb38f224b21f0b43046d259a713c6543ea7292875cfc1735f"
+    }
+  ],
+  "scope": "Isolated imported belt diagnostic only; no complete cap, owner approval or native game claim."
+}

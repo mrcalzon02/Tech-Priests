@@ -660,5 +660,15 @@
     "local_export_directory": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\a02-evaluated-usd-20261114",
     "local_archive_directory": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\a02-usd-delivery-20261114",
     "next_step": "Do not rerun source captures, assembly or USD export. Ground native alternate-cap target without inventing gameplay; GLTF adapter and full effect/final acceptance remain open. Exclude workbench and other-chat steam engine."
+  },
+  "a02_rejected_belt_flipbook": {
+    "status": "REJECTED_ONE_BELT_DISCRETE_GLTF_STUDY_DO_NOT_EXPAND",
+    "checkpoint": "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/CHECKPOINT.json",
+    "discrete_samples": 193,
+    "geometry_positions": "exact",
+    "normal_gate": "FAILED",
+    "glb_bytes": 162908036,
+    "binary_remote": false,
+    "next_step": "Do not repeat this193pose study or expand full-cap flipbook meshes. Keep verified USD as faithful geometry-cache option; ground native alternate-cap target or select another source-grounded asset. GLTF full gate remains open."
   }
 }

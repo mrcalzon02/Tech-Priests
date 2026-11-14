@@ -4,6 +4,10 @@
 
 Stop all workbench modeling, clock tests, captures, integration, promotion and art publication here. Held local duplicate artifacts remain preserved. Earlier Tech-Priests workbench entries below are historical scope mistakes, not continuation instructions. A simple workbench must not receive machine sanctification; future size work requires explicit resumption in the correct project. Another chat owns the emergency steam engine; avoid duplicate engine edits. See WORKBENCH_SCOPE_CORRECTION.json.
 
+## 2026-11-14 A02 GLTF adapter pilot rejected
+
+A bounded one-belt evaluated mesh-sequence pilot preserved all193discrete geometry samples and192STEPmidpoint selections, but strict normal correspondence failed. The GLB is162,908,036bytes for one belt; do not expand this approach blindly across the cap. Original source, sprite cache, verified USD and ordinary runtime remain unchanged. [Actual import closeups, receipts and rejection checkpoint](lobber-a02-evaluated-usd/belt-flipbook-rejected/README.md). Full G5/native/owner gates remain open; do not repeat this completed pilot.
+
 ## 2026-11-14 A02 evaluated USD interchange checkpoint
 
 The four-state evaluated USD subset passes 68,252 mesh-sample comparisons with actual source geometry, topology, normals, material-used UVs and world transforms. Four actual import views, eight imported moving poses and a clay view were rendered locally and reviewed. Source, capture cache and ordinary runtime art were not edited. [Hash-bound results, real previews, scripts and remaining gates](lobber-a02-evaluated-usd/README.md).

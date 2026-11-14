@@ -1,0 +1,2333 @@
+{
+  "status": "FAILED_PILOT_REQUIRES_REPAIR",
+  "glb_sha256": "e35c7e3949be991e636bd1fe5758ec8e63f512f475aed714de7a69adb8d30584",
+  "source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+  "source_target": "CONTINUOUS_SEGMENTED_RUBBER_TRACK_LEFT_3_ANIM_L",
+  "discrete_frames_checked": 193,
+  "step_midpoints_checked": 192,
+  "imported_pose_meshes": 193,
+  "clip_start_frame": 0.0,
+  "max_position_error": 0.0,
+  "max_normal_error": 0.009495764039456844,
+  "failures": [
+    {
+      "frame": 1,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036347508430480957
+    },
+    {
+      "frame": 2,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036830666940659285
+    },
+    {
+      "frame": 3,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0032045841217041016
+    },
+    {
+      "frame": 4,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0058367252349853516
+    },
+    {
+      "frame": 5,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.005114242434501648
+    },
+    {
+      "frame": 6,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003228709101676941
+    },
+    {
+      "frame": 7,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.009232591837644577
+    },
+    {
+      "frame": 8,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003216475248336792
+    },
+    {
+      "frame": 9,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003190845251083374
+    },
+    {
+      "frame": 10,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0017900466918945312
+    },
+    {
+      "frame": 11,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0032164528965950012
+    },
+    {
+      "frame": 12,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00262296199798584
+    },
+    {
+      "frame": 13,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003642898052930832
+    },
+    {
+      "frame": 14,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035836659371852875
+    },
+    {
+      "frame": 15,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036661624908447266
+    },
+    {
+      "frame": 16,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003592252731323242
+    },
+    {
+      "frame": 17,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00366409495472908
+    },
+    {
+      "frame": 18,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037170052528381348
+    },
+    {
+      "frame": 19,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036860108375549316
+    },
+    {
+      "frame": 20,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0032088905572891235
+    },
+    {
+      "frame": 21,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003565911203622818
+    },
+    {
+      "frame": 22,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035782381892204285
+    },
+    {
+      "frame": 23,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036734342575073242
+    },
+    {
+      "frame": 24,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003670990467071533
+    },
+    {
+      "frame": 25,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037427544593811035
+    },
+    {
+      "frame": 26,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036758296191692352
+    },
+    {
+      "frame": 27,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0030798912048339844
+    },
+    {
+      "frame": 28,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.001893654465675354
+    },
+    {
+      "frame": 29,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036985576152801514
+    },
+    {
+      "frame": 30,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003631243482232094
+    },
+    {
+      "frame": 31,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036145001649856567
+    },
+    {
+      "frame": 32,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 33,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 34,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003566902130842209
+    },
+    {
+      "frame": 35,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0028983652591705322
+    },
+    {
+      "frame": 36,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003172561526298523
+    },
+    {
+      "frame": 37,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036356449127197266
+    },
+    {
+      "frame": 38,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003659069538116455
+    },
+    {
+      "frame": 39,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035904161632061005
+    },
+    {
+      "frame": 40,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037723779678344727
+    },
+    {
+      "frame": 41,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00372159481048584
+    },
+    {
+      "frame": 42,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003640592098236084
+    },
+    {
+      "frame": 43,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037734955549240112
+    },
+    {
+      "frame": 44,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037392079830169678
+    },
+    {
+      "frame": 45,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036510489881038666
+    },
+    {
+      "frame": 46,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035948343575000763
+    },
+    {
+      "frame": 47,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00360792875289917
+    },
+    {
+      "frame": 48,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0030157268047332764
+    },
+    {
+      "frame": 49,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003725707530975342
+    },
+    {
+      "frame": 50,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036586634814739227
+    },
+    {
+      "frame": 51,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.002718687057495117
+    },
+    {
+      "frame": 52,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035902895033359528
+    },
+    {
+      "frame": 53,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003665223717689514
+    },
+    {
+      "frame": 54,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0018754452466964722
+    },
+    {
+      "frame": 55,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003742039203643799
+    },
+    {
+      "frame": 56,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035704225301742554
+    },
+    {
+      "frame": 57,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037578344345092773
+    },
+    {
+      "frame": 58,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003702878952026367
+    },
+    {
+      "frame": 59,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036495327949523926
+    },
+    {
+      "frame": 60,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035717524588108063
+    },
+    {
+      "frame": 61,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003608621656894684
+    },
+    {
+      "frame": 62,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003107607364654541
+    },
+    {
+      "frame": 63,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00360310822725296
+    },
+    {
+      "frame": 64,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 65,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 66,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037552714347839355
+    },
+    {
+      "frame": 67,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036355536431074142
+    },
+    {
+      "frame": 68,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0031835734844207764
+    },
+    {
+      "frame": 69,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003653228282928467
+    },
+    {
+      "frame": 70,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036812424659729004
+    },
+    {
+      "frame": 71,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035607367753982544
+    },
+    {
+      "frame": 72,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036546215415000916
+    },
+    {
+      "frame": 73,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003190845251083374
+    },
+    {
+      "frame": 74,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0017900466918945312
+    },
+    {
+      "frame": 75,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0032164528965950012
+    },
+    {
+      "frame": 76,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00262296199798584
+    },
+    {
+      "frame": 77,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003642898052930832
+    },
+    {
+      "frame": 78,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035836659371852875
+    },
+    {
+      "frame": 79,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036661624908447266
+    },
+    {
+      "frame": 80,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003592252731323242
+    },
+    {
+      "frame": 81,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00366409495472908
+    },
+    {
+      "frame": 82,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037170052528381348
+    },
+    {
+      "frame": 83,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036860108375549316
+    },
+    {
+      "frame": 84,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0032088905572891235
+    },
+    {
+      "frame": 85,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003565911203622818
+    },
+    {
+      "frame": 86,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035782381892204285
+    },
+    {
+      "frame": 87,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036734342575073242
+    },
+    {
+      "frame": 88,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003670990467071533
+    },
+    {
+      "frame": 89,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037427544593811035
+    },
+    {
+      "frame": 90,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036758296191692352
+    },
+    {
+      "frame": 91,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0030798912048339844
+    },
+    {
+      "frame": 92,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.001893654465675354
+    },
+    {
+      "frame": 93,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036985576152801514
+    },
+    {
+      "frame": 94,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003631243482232094
+    },
+    {
+      "frame": 95,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036145001649856567
+    },
+    {
+      "frame": 96,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 97,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 98,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003566902130842209
+    },
+    {
+      "frame": 99,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0028983652591705322
+    },
+    {
+      "frame": 100,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003172561526298523
+    },
+    {
+      "frame": 101,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036356449127197266
+    },
+    {
+      "frame": 102,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003659069538116455
+    },
+    {
+      "frame": 103,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035904161632061005
+    },
+    {
+      "frame": 104,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037723779678344727
+    },
+    {
+      "frame": 105,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00372159481048584
+    },
+    {
+      "frame": 106,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003640592098236084
+    },
+    {
+      "frame": 107,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037734955549240112
+    },
+    {
+      "frame": 108,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037392079830169678
+    },
+    {
+      "frame": 109,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036510489881038666
+    },
+    {
+      "frame": 110,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035948343575000763
+    },
+    {
+      "frame": 111,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00360792875289917
+    },
+    {
+      "frame": 112,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0030157268047332764
+    },
+    {
+      "frame": 113,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003725707530975342
+    },
+    {
+      "frame": 114,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036586634814739227
+    },
+    {
+      "frame": 115,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.002718687057495117
+    },
+    {
+      "frame": 116,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035902895033359528
+    },
+    {
+      "frame": 117,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003665223717689514
+    },
+    {
+      "frame": 118,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0018754452466964722
+    },
+    {
+      "frame": 119,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003742039203643799
+    },
+    {
+      "frame": 120,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035704225301742554
+    },
+    {
+      "frame": 121,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037578344345092773
+    },
+    {
+      "frame": 122,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003702878952026367
+    },
+    {
+      "frame": 123,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036495327949523926
+    },
+    {
+      "frame": 124,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035717524588108063
+    },
+    {
+      "frame": 125,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003608621656894684
+    },
+    {
+      "frame": 126,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003107607364654541
+    },
+    {
+      "frame": 127,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00360310822725296
+    },
+    {
+      "frame": 128,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 129,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 130,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037552714347839355
+    },
+    {
+      "frame": 131,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036355536431074142
+    },
+    {
+      "frame": 132,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0031835734844207764
+    },
+    {
+      "frame": 133,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003653228282928467
+    },
+    {
+      "frame": 134,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036812424659729004
+    },
+    {
+      "frame": 135,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035607367753982544
+    },
+    {
+      "frame": 136,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036546215415000916
+    },
+    {
+      "frame": 137,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003190845251083374
+    },
+    {
+      "frame": 138,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0017900466918945312
+    },
+    {
+      "frame": 139,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0032164528965950012
+    },
+    {
+      "frame": 140,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00262296199798584
+    },
+    {
+      "frame": 141,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003642898052930832
+    },
+    {
+      "frame": 142,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035836659371852875
+    },
+    {
+      "frame": 143,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036661624908447266
+    },
+    {
+      "frame": 144,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003592252731323242
+    },
+    {
+      "frame": 145,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00366409495472908
+    },
+    {
+      "frame": 146,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037170052528381348
+    },
+    {
+      "frame": 147,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036860108375549316
+    },
+    {
+      "frame": 148,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0032088905572891235
+    },
+    {
+      "frame": 149,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003565911203622818
+    },
+    {
+      "frame": 150,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035782381892204285
+    },
+    {
+      "frame": 151,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036734342575073242
+    },
+    {
+      "frame": 152,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003670990467071533
+    },
+    {
+      "frame": 153,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037427544593811035
+    },
+    {
+      "frame": 154,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036758296191692352
+    },
+    {
+      "frame": 155,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0030798912048339844
+    },
+    {
+      "frame": 156,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.001893654465675354
+    },
+    {
+      "frame": 157,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036985576152801514
+    },
+    {
+      "frame": 158,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003631243482232094
+    },
+    {
+      "frame": 159,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036145001649856567
+    },
+    {
+      "frame": 160,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 161,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 162,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.005064636468887329
+    },
+    {
+      "frame": 163,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036713462322950363
+    },
+    {
+      "frame": 164,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0030035972595214844
+    },
+    {
+      "frame": 165,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0030608177185058594
+    },
+    {
+      "frame": 166,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00367867574095726
+    },
+    {
+      "frame": 167,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.004822283983230591
+    },
+    {
+      "frame": 168,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00431949645280838
+    },
+    {
+      "frame": 169,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003600007388740778
+    },
+    {
+      "frame": 170,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.009495764039456844
+    },
+    {
+      "frame": 171,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036513125523924828
+    },
+    {
+      "frame": 172,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0034576356410980225
+    },
+    {
+      "frame": 173,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0035758018493652344
+    },
+    {
+      "frame": 174,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.004882879555225372
+    },
+    {
+      "frame": 175,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036590583622455597
+    },
+    {
+      "frame": 176,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0018506646156311035
+    },
+    {
+      "frame": 177,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0032662898302078247
+    },
+    {
+      "frame": 178,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003334343433380127
+    },
+    {
+      "frame": 179,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.00371570885181427
+    },
+    {
+      "frame": 180,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036104246973991394
+    },
+    {
+      "frame": 181,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0038642287254333496
+    },
+    {
+      "frame": 182,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036550164222717285
+    },
+    {
+      "frame": 183,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003725290298461914
+    },
+    {
+      "frame": 184,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.004649944603443146
+    },
+    {
+      "frame": 185,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0033866465091705322
+    },
+    {
+      "frame": 186,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0044883787631988525
+    },
+    {
+      "frame": 187,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003566071391105652
+    },
+    {
+      "frame": 188,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036005452275276184
+    },
+    {
+      "frame": 189,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.007101908326148987
+    },
+    {
+      "frame": 190,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.004419296979904175
+    },
+    {
+      "frame": 191,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0038137435913085938
+    },
+    {
+      "frame": 192,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.003629269078373909
+    },
+    {
+      "frame": 193,
+      "triangles_match": true,
+      "position_error": 0.0,
+      "normal_error": 0.0036347508430480957
+    }
+  ],
+  "samples": [
+    {
+      "frame": 1,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036347508430480957
+    },
+    {
+      "frame": 2,
+      "triangles": 13660,
+      "position_error": 0.0,
+      "normal_error": 0.0036830666940659285
+    },
+    {
+      "frame": 3,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0032045841217041016
+    },
+    {
+      "frame": 4,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0058367252349853516
+    },
+    {
+      "frame": 5,
+      "triangles": 13660,
+      "position_error": 0.0,
+      "normal_error": 0.005114242434501648
+    },
+    {
+      "frame": 6,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003228709101676941
+    },
+    {
+      "frame": 7,
+      "triangles": 13660,
+      "position_error": 0.0,
+      "normal_error": 0.009232591837644577
+    },
+    {
+      "frame": 8,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003216475248336792
+    },
+    {
+      "frame": 9,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003190845251083374
+    },
+    {
+      "frame": 10,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0017900466918945312
+    },
+    {
+      "frame": 11,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0032164528965950012
+    },
+    {
+      "frame": 12,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00262296199798584
+    },
+    {
+      "frame": 13,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003642898052930832
+    },
+    {
+      "frame": 14,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035836659371852875
+    },
+    {
+      "frame": 15,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036661624908447266
+    },
+    {
+      "frame": 16,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003592252731323242
+    },
+    {
+      "frame": 17,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00366409495472908
+    },
+    {
+      "frame": 18,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037170052528381348
+    },
+    {
+      "frame": 19,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036860108375549316
+    },
+    {
+      "frame": 20,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0032088905572891235
+    },
+    {
+      "frame": 21,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003565911203622818
+    },
+    {
+      "frame": 22,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035782381892204285
+    },
+    {
+      "frame": 23,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036734342575073242
+    },
+    {
+      "frame": 24,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003670990467071533
+    },
+    {
+      "frame": 25,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037427544593811035
+    },
+    {
+      "frame": 26,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036758296191692352
+    },
+    {
+      "frame": 27,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0030798912048339844
+    },
+    {
+      "frame": 28,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.001893654465675354
+    },
+    {
+      "frame": 29,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036985576152801514
+    },
+    {
+      "frame": 30,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003631243482232094
+    },
+    {
+      "frame": 31,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036145001649856567
+    },
+    {
+      "frame": 32,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 33,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 34,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003566902130842209
+    },
+    {
+      "frame": 35,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0028983652591705322
+    },
+    {
+      "frame": 36,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003172561526298523
+    },
+    {
+      "frame": 37,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036356449127197266
+    },
+    {
+      "frame": 38,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003659069538116455
+    },
+    {
+      "frame": 39,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035904161632061005
+    },
+    {
+      "frame": 40,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037723779678344727
+    },
+    {
+      "frame": 41,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00372159481048584
+    },
+    {
+      "frame": 42,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003640592098236084
+    },
+    {
+      "frame": 43,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037734955549240112
+    },
+    {
+      "frame": 44,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037392079830169678
+    },
+    {
+      "frame": 45,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036510489881038666
+    },
+    {
+      "frame": 46,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035948343575000763
+    },
+    {
+      "frame": 47,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00360792875289917
+    },
+    {
+      "frame": 48,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0030157268047332764
+    },
+    {
+      "frame": 49,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003725707530975342
+    },
+    {
+      "frame": 50,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036586634814739227
+    },
+    {
+      "frame": 51,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.002718687057495117
+    },
+    {
+      "frame": 52,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035902895033359528
+    },
+    {
+      "frame": 53,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003665223717689514
+    },
+    {
+      "frame": 54,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0018754452466964722
+    },
+    {
+      "frame": 55,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003742039203643799
+    },
+    {
+      "frame": 56,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035704225301742554
+    },
+    {
+      "frame": 57,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037578344345092773
+    },
+    {
+      "frame": 58,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003702878952026367
+    },
+    {
+      "frame": 59,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036495327949523926
+    },
+    {
+      "frame": 60,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035717524588108063
+    },
+    {
+      "frame": 61,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003608621656894684
+    },
+    {
+      "frame": 62,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003107607364654541
+    },
+    {
+      "frame": 63,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00360310822725296
+    },
+    {
+      "frame": 64,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 65,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 66,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037552714347839355
+    },
+    {
+      "frame": 67,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036355536431074142
+    },
+    {
+      "frame": 68,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0031835734844207764
+    },
+    {
+      "frame": 69,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003653228282928467
+    },
+    {
+      "frame": 70,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036812424659729004
+    },
+    {
+      "frame": 71,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035607367753982544
+    },
+    {
+      "frame": 72,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036546215415000916
+    },
+    {
+      "frame": 73,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003190845251083374
+    },
+    {
+      "frame": 74,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0017900466918945312
+    },
+    {
+      "frame": 75,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0032164528965950012
+    },
+    {
+      "frame": 76,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00262296199798584
+    },
+    {
+      "frame": 77,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003642898052930832
+    },
+    {
+      "frame": 78,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035836659371852875
+    },
+    {
+      "frame": 79,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036661624908447266
+    },
+    {
+      "frame": 80,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003592252731323242
+    },
+    {
+      "frame": 81,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00366409495472908
+    },
+    {
+      "frame": 82,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037170052528381348
+    },
+    {
+      "frame": 83,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036860108375549316
+    },
+    {
+      "frame": 84,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0032088905572891235
+    },
+    {
+      "frame": 85,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003565911203622818
+    },
+    {
+      "frame": 86,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035782381892204285
+    },
+    {
+      "frame": 87,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036734342575073242
+    },
+    {
+      "frame": 88,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003670990467071533
+    },
+    {
+      "frame": 89,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037427544593811035
+    },
+    {
+      "frame": 90,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036758296191692352
+    },
+    {
+      "frame": 91,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0030798912048339844
+    },
+    {
+      "frame": 92,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.001893654465675354
+    },
+    {
+      "frame": 93,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036985576152801514
+    },
+    {
+      "frame": 94,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003631243482232094
+    },
+    {
+      "frame": 95,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036145001649856567
+    },
+    {
+      "frame": 96,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 97,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 98,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003566902130842209
+    },
+    {
+      "frame": 99,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0028983652591705322
+    },
+    {
+      "frame": 100,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003172561526298523
+    },
+    {
+      "frame": 101,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036356449127197266
+    },
+    {
+      "frame": 102,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003659069538116455
+    },
+    {
+      "frame": 103,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035904161632061005
+    },
+    {
+      "frame": 104,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037723779678344727
+    },
+    {
+      "frame": 105,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00372159481048584
+    },
+    {
+      "frame": 106,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003640592098236084
+    },
+    {
+      "frame": 107,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037734955549240112
+    },
+    {
+      "frame": 108,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037392079830169678
+    },
+    {
+      "frame": 109,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036510489881038666
+    },
+    {
+      "frame": 110,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035948343575000763
+    },
+    {
+      "frame": 111,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00360792875289917
+    },
+    {
+      "frame": 112,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0030157268047332764
+    },
+    {
+      "frame": 113,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003725707530975342
+    },
+    {
+      "frame": 114,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036586634814739227
+    },
+    {
+      "frame": 115,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.002718687057495117
+    },
+    {
+      "frame": 116,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035902895033359528
+    },
+    {
+      "frame": 117,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003665223717689514
+    },
+    {
+      "frame": 118,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0018754452466964722
+    },
+    {
+      "frame": 119,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003742039203643799
+    },
+    {
+      "frame": 120,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035704225301742554
+    },
+    {
+      "frame": 121,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037578344345092773
+    },
+    {
+      "frame": 122,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003702878952026367
+    },
+    {
+      "frame": 123,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036495327949523926
+    },
+    {
+      "frame": 124,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035717524588108063
+    },
+    {
+      "frame": 125,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003608621656894684
+    },
+    {
+      "frame": 126,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003107607364654541
+    },
+    {
+      "frame": 127,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00360310822725296
+    },
+    {
+      "frame": 128,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 129,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 130,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037552714347839355
+    },
+    {
+      "frame": 131,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036355536431074142
+    },
+    {
+      "frame": 132,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0031835734844207764
+    },
+    {
+      "frame": 133,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003653228282928467
+    },
+    {
+      "frame": 134,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036812424659729004
+    },
+    {
+      "frame": 135,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035607367753982544
+    },
+    {
+      "frame": 136,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036546215415000916
+    },
+    {
+      "frame": 137,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003190845251083374
+    },
+    {
+      "frame": 138,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0017900466918945312
+    },
+    {
+      "frame": 139,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0032164528965950012
+    },
+    {
+      "frame": 140,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00262296199798584
+    },
+    {
+      "frame": 141,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003642898052930832
+    },
+    {
+      "frame": 142,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035836659371852875
+    },
+    {
+      "frame": 143,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036661624908447266
+    },
+    {
+      "frame": 144,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003592252731323242
+    },
+    {
+      "frame": 145,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00366409495472908
+    },
+    {
+      "frame": 146,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037170052528381348
+    },
+    {
+      "frame": 147,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036860108375549316
+    },
+    {
+      "frame": 148,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0032088905572891235
+    },
+    {
+      "frame": 149,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003565911203622818
+    },
+    {
+      "frame": 150,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035782381892204285
+    },
+    {
+      "frame": 151,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036734342575073242
+    },
+    {
+      "frame": 152,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003670990467071533
+    },
+    {
+      "frame": 153,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037427544593811035
+    },
+    {
+      "frame": 154,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036758296191692352
+    },
+    {
+      "frame": 155,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0030798912048339844
+    },
+    {
+      "frame": 156,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.001893654465675354
+    },
+    {
+      "frame": 157,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036985576152801514
+    },
+    {
+      "frame": 158,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003631243482232094
+    },
+    {
+      "frame": 159,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036145001649856567
+    },
+    {
+      "frame": 160,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 161,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0037541985511779785
+    },
+    {
+      "frame": 162,
+      "triangles": 13692,
+      "position_error": 0.0,
+      "normal_error": 0.005064636468887329
+    },
+    {
+      "frame": 163,
+      "triangles": 13692,
+      "position_error": 0.0,
+      "normal_error": 0.0036713462322950363
+    },
+    {
+      "frame": 164,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0030035972595214844
+    },
+    {
+      "frame": 165,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0030608177185058594
+    },
+    {
+      "frame": 166,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00367867574095726
+    },
+    {
+      "frame": 167,
+      "triangles": 13692,
+      "position_error": 0.0,
+      "normal_error": 0.004822283983230591
+    },
+    {
+      "frame": 168,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00431949645280838
+    },
+    {
+      "frame": 169,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003600007388740778
+    },
+    {
+      "frame": 170,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.009495764039456844
+    },
+    {
+      "frame": 171,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036513125523924828
+    },
+    {
+      "frame": 172,
+      "triangles": 13692,
+      "position_error": 0.0,
+      "normal_error": 0.0034576356410980225
+    },
+    {
+      "frame": 173,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0035758018493652344
+    },
+    {
+      "frame": 174,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.004882879555225372
+    },
+    {
+      "frame": 175,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036590583622455597
+    },
+    {
+      "frame": 176,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0018506646156311035
+    },
+    {
+      "frame": 177,
+      "triangles": 13692,
+      "position_error": 0.0,
+      "normal_error": 0.0032662898302078247
+    },
+    {
+      "frame": 178,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003334343433380127
+    },
+    {
+      "frame": 179,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.00371570885181427
+    },
+    {
+      "frame": 180,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036104246973991394
+    },
+    {
+      "frame": 181,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0038642287254333496
+    },
+    {
+      "frame": 182,
+      "triangles": 13660,
+      "position_error": 0.0,
+      "normal_error": 0.0036550164222717285
+    },
+    {
+      "frame": 183,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.003725290298461914
+    },
+    {
+      "frame": 184,
+      "triangles": 13660,
+      "position_error": 0.0,
+      "normal_error": 0.004649944603443146
+    },
+    {
+      "frame": 185,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0033866465091705322
+    },
+    {
+      "frame": 186,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0044883787631988525
+    },
+    {
+      "frame": 187,
+      "triangles": 13628,
+      "position_error": 0.0,
+      "normal_error": 0.003566071391105652
+    },
+    {
+      "frame": 188,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036005452275276184
+    },
+    {
+      "frame": 189,
+      "triangles": 13660,
+      "position_error": 0.0,
+      "normal_error": 0.007101908326148987
+    },
+    {
+      "frame": 190,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.004419296979904175
+    },
+    {
+      "frame": 191,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0038137435913085938
+    },
+    {
+      "frame": 192,
+      "triangles": 13628,
+      "position_error": 0.0,
+      "normal_error": 0.003629269078373909
+    },
+    {
+      "frame": 193,
+      "triangles": 13724,
+      "position_error": 0.0,
+      "normal_error": 0.0036347508430480957
+    }
+  ],
+  "scope": "One topology-changing belt only. Whole-cap GLTF, signed antenna adapter, full FX, clean geometry and native integration remain open. No arbitrary continuous subframe fidelity claim."
+}
