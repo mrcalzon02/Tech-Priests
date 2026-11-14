@@ -461,13 +461,16 @@ function M.service_pair(pair,reason)
   -- to the original post-audit Magos, and the 0469 order has explicitly
   -- authorized a source-less yield. A started physical builder keeps custody.
   local first=m and m.first_locomotive_0836
+  local reverse=m and m.return_locomotive_0836
+  if reverse and reverse.phase=="awaiting-original-0338"then first=reverse end
   local loco=first and first.phase=="awaiting-original-0338"
     and first.request
   if loco and pair.construction_request==loco
     and m.status=="rail-track-established"
     and loco.item_name=="locomotive"
     and loco.entity_name=="locomotive"
-    and loco.site_reason=="original-first-locomotive-0836"
+    and (loco.site_reason=="original-first-locomotive-0836"
+      or loco.site_reason=="original-return-locomotive-0836")
     and loco.rail_mission_station_unit_0836==station_unit(pair) then
    local task=pair.construction_task_0338
    local carrying=pair.construction_custody_0338

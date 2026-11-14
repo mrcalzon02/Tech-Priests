@@ -1087,6 +1087,31 @@ class NativeRailExtendedCustodyCheckpointTests(unittest.TestCase):
         self.assertIn('"train_and_ore_delivery_accepted": False', runner)
 
 
+class NativeReverseLocomotive0836ContractTests(unittest.TestCase):
+    def test_reverse_traction_is_second_original_paid_physical_entity(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        builder=(root/"tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
+        dispatch=(root/"tech-priests_src/scripts/core/single_dispatcher_0510.lua").read_text(encoding="utf-8")
+        queue=(root/"tech-priests_src/scripts/core/order_queue_0469.lua").read_text(encoding="utf-8")
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        source=rail.split("function M.service_return_locomotive_0836(pair)",1)[1].split(
+            "function M.service_first_wagon_0836(pair)",1)[0]
+        for expected in ("receipt.before-receipt.after==1",
+                         "entity.direction==(route.direction+8)%16",
+                         "entity.train.id==lead.built_entity.train.id",
+                         'site_reason="original-return-locomotive-0836"',
+                         "pair.construction_request=request"):
+            self.assertIn(expected,source)
+        for forbidden in ("surface.create_entity","train.speed=","teleport"):
+            self.assertNotIn(forbidden,source)
+        self.assertIn("return M.service_return_locomotive_0836(pair)",rail)
+        for checked in (builder,dispatch,queue):
+            self.assertIn("original-return-locomotive-0836",checked)
+        self.assertIn("REVERSE_LOCO_NATIVE_0836",fixture)
+        self.assertIn("NO_GENUINE_ORE_DELIVERED_BY_RAIL",fixture)
+
+
 class NativePaidFirstLocomotive0836ContractTests(unittest.TestCase):
     def test_train_first_requires_original_paid_builder_native_rails_and_stock(self):
         root=pathlib.Path(__file__).resolve().parents[2]

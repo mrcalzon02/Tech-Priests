@@ -307,6 +307,9 @@ local function marked_rail_request_0836(candidate)
        and not((request.site_reason=="original-first-locomotive-0836"
           and request.item_name=="locomotive"
           and request.entity_name=="locomotive")
+          or (request.site_reason=="original-return-locomotive-0836"
+           and request.item_name=="locomotive"
+           and request.entity_name=="locomotive")
           or (request.site_reason=="original-first-wagon-0836"
           and request.item_name=="cargo-wagon"
           and request.entity_name=="cargo-wagon")
@@ -424,7 +427,9 @@ end
 -- segment's receipt or run under a different Magos, surface or item.
 local function owned_pending_locomotive_0836(pair,request)
  local mission=pair and pair.remote_rail_outpost_0835
- local state=mission and mission.first_locomotive_0836
+ local reverse=request and request.site_reason=="original-return-locomotive-0836"
+ local state=mission and (reverse and mission.return_locomotive_0836
+   or mission.first_locomotive_0836)
  local route=mission and mission.rail_frontier_0836
  local station=pair and pair.station
  local priest=pair and pair.priest
@@ -443,10 +448,20 @@ local function owned_pending_locomotive_0836(pair,request)
    and state and state.phase=="awaiting-original-0338"
    and state.request==request and pair.construction_request==request
    and request.rail_mission_station_unit_0836==station.unit_number
-   and request.site_reason=="original-first-locomotive-0836"
+   and (request.site_reason=="original-first-locomotive-0836"
+     or request.site_reason=="original-return-locomotive-0836")
+   and (not reverse or (mission.first_wagon_0836
+     and mission.first_wagon_0836.phase=="native-paid-wagon-verified"
+     and valid(mission.first_wagon_0836.built_entity)
+     and valid(mission.first_locomotive_0836.built_entity)
+     and mission.first_wagon_0836.built_entity.train
+     and mission.first_locomotive_0836.built_entity.train
+     and mission.first_wagon_0836.built_entity.train.id
+       ==mission.first_locomotive_0836.built_entity.train.id))
    and request.item_name=="locomotive" and request.entity_name=="locomotive"
    and point and state.position and point.x==state.position.x
-   and point.y==state.position.y and request.direction==route.direction
+   and point.y==state.position.y
+   and request.direction==(reverse and (route.direction+8)%16 or route.direction)
 end
 local function owned_pending_wagon_0836(pair,request)
  local mission=pair and pair.remote_rail_outpost_0835
@@ -524,7 +539,8 @@ end
 local function frontier_owned_by_pair_0338(pair,request)
  if not(type(request)=="table" and valid_pair(pair))then return false end
  local unit=station_unit(pair)
- if request.site_reason=="original-first-locomotive-0836" then
+ if request.site_reason=="original-first-locomotive-0836"
+   or request.site_reason=="original-return-locomotive-0836" then
   return owned_pending_locomotive_0836(pair,request)
  end
  if request.site_reason=="original-first-wagon-0836" then
@@ -1369,11 +1385,13 @@ local function finish(pair,task,built,reason)
  -- An actual native locomotive and original source debit are mandatory.
  if built and task.item_name=="locomotive"
    and task.entity_name=="locomotive"
-   and task.site_reason=="original-first-locomotive-0836"
+   and (task.site_reason=="original-first-locomotive-0836"
+     or task.site_reason=="original-return-locomotive-0836")
    and task.request_field=="construction_request"
    and task.creative_build~=true then
   local mission=pair.remote_rail_outpost_0835
-  local state=mission and mission.first_locomotive_0836
+  local state=mission and (task.site_reason=="original-return-locomotive-0836"
+    and mission.return_locomotive_0836 or mission.first_locomotive_0836)
   local debit=task.original_locomotive_debit_0836
   if state and state.request==task.request_value
     and debit and debit.source_unit and type(debit.before)=="number"
@@ -1550,11 +1568,15 @@ local function begin_task(pair,c)
  -- The first locomotive has its OWN post-audit, counted site and source
  -- ownership. A station marker alone cannot authorize train construction.
  local locomotive_writ=type(c.request_value)=="table"
-   and c.request_value.site_reason=="original-first-locomotive-0836"
- if locomotive_writ or c.site_reason=="original-first-locomotive-0836" then
+   and (c.request_value.site_reason=="original-first-locomotive-0836"
+     or c.request_value.site_reason=="original-return-locomotive-0836")
+ if locomotive_writ or c.site_reason=="original-first-locomotive-0836"
+   or c.site_reason=="original-return-locomotive-0836" then
   if not(c.request_field=="construction_request"
     and c.item_name=="locomotive" and c.entity_name=="locomotive"
-    and c.site_reason=="original-first-locomotive-0836"
+    and (c.site_reason=="original-first-locomotive-0836"
+      or c.site_reason=="original-return-locomotive-0836")
+    and c.request_value and c.site_reason==c.request_value.site_reason
     and type(c.position)=="table"
     and type(c.request_value)=="table"
     and type(c.request_value.position)=="table"
@@ -2250,8 +2272,9 @@ function M.service_pair(pair,reason)
    and not authorized_rail_candidate_0836(pair,task) then
   return M.abort_pair(pair,"rail-original-physical-request-stale")
  end
- if task.site_reason=="original-first-locomotive-0836"
-   and not (task.request_field=="construction_request"
+ if (task.site_reason=="original-first-locomotive-0836"
+   or task.site_reason=="original-return-locomotive-0836")
+    and not (task.request_field=="construction_request"
      and task.request_value==pair.construction_request
      and owned_pending_locomotive_0836(pair,task.request_value)) then
   return M.abort_pair(pair,"locomotive-original-physical-request-stale")
@@ -2333,10 +2356,12 @@ function M.service_pair(pair,reason)
   local original_rail=marked_rail_request_0836(task)
     and authorized_rail_candidate_0836(pair,task)
   local mission=pair.remote_rail_outpost_0835
-  local first_loco=mission and mission.first_locomotive_0836
+  local first_loco=mission and (task.site_reason=="original-return-locomotive-0836"
+    and mission.return_locomotive_0836 or mission.first_locomotive_0836)
   local original_loco=task.item_name=="locomotive"
     and task.entity_name=="locomotive"
-    and task.site_reason=="original-first-locomotive-0836"
+    and (task.site_reason=="original-first-locomotive-0836"
+      or task.site_reason=="original-return-locomotive-0836")
     and task.request_field=="construction_request"
     and first_loco and first_loco.request==task.request_value
     and owned_pending_locomotive_0836(pair,task.request_value)

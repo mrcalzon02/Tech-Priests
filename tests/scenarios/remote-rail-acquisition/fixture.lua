@@ -792,6 +792,19 @@ local function inspect(s,elapsed)
     " paid="..tostring(paid~=nil)..
     " coupled="..tostring(coupled==true)..
     " unit="..tostring(wagon_entity and wagon_entity.unit_number))
+  local reverse=objective and objective.return_locomotive_0836
+  local rear=reverse and reverse.built_entity
+  local debit=reverse and reverse.paid_completion_0836
+  emit("REVERSE_LOCO_NATIVE_0836 elapsed="..elapsed..
+    " phase="..tostring(reverse and reverse.phase)..
+    " unit="..tostring(rear and rear.valid and rear.unit_number)..
+    " native_0338_paid="..tostring(debit and debit.native_0338_paid)..
+    " source_debit="..tostring(debit and debit.before and debit.after
+      and debit.before-debit.after)..
+    " same_train="..tostring(rear and rear.valid and loco_entity
+      and loco_entity.valid and rear.train and loco_entity.train
+      and rear.train.id==loco_entity.train.id)..
+    " blocker="..tostring(reverse and reverse.blocker))
   local first_fuel=objective and objective.first_fuel_0836
   local actual_fuel=0
   if loco_entity and loco_entity.valid and defines and defines.inventory then
