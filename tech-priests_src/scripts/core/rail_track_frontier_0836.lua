@@ -1493,7 +1493,14 @@ function M.service_first_train_stop_0836(pair,role)
         route.start_position.y)
       local rail=track_at(pair,origin,route.direction)
       if rail and rail.unit_number==route.built_units[index] then
-        for _,offset in ipairs({-2,2,-3,3})do
+        -- The original engine confirmed both paid stops but returned
+        -- train.has_path=false for twelve thousand ticks: the generic
+        -- north-first search picked a WEST-facing distant stop, impossible
+        -- for the original EASTBOUND Magos expedition. Only select the
+        -- arrival-side orientation for each role, and fail closed if that
+        -- actual Factorio placement is unavailable.
+        local offsets=remote and {2,3} or {-2,-3}
+        for _,offset in ipairs(offsets)do
           -- A stop sits to the RIGHT of arriving trains. A north-side
           -- stop must face west, and a south-side stop must face east.
           -- can_place_entity checks collisions, NOT connected_rail; the
