@@ -1782,6 +1782,34 @@ function M.service_first_train_outbound_0836(pair)
   end
   local unique="TP-0836-remote-"..tostring(m.root_station_unit)
     .."-"..tostring(remote.unit_number)
+  local read,records=pcall(function()return schedule.get_records()end)
+  if not(read and type(records)=="table")then
+    state.last_blocker="original-native-schedule-records-unobservable"
+    return false,state.last_blocker
+  end
+  -- Reject an existing operator/other-train schedule BEFORE renaming the
+  -- stop. In particular, do not invalidate another train's destination.
+  if not state.schedule_write_attempted and #records~=0 then
+    state.last_blocker="original-train-has-foreign-schedule"
+    return false,state.last_blocker
+  end
+  local fuel_slot=defines and defines.inventory and defines.inventory.fuel
+  local live,has_fuel=pcall(function()
+    if not fuel_slot then return nil end
+    local inv=engine.get_inventory(fuel_slot)
+    if not(inv and inv.valid)then return nil end
+    local coal=inv.get_item_count("coal")
+    if type(coal)~="number" or coal<0 then return nil end
+    if coal>0 then return true end
+    local burner=engine.burner
+    if not(burner and burner.valid)then return nil end
+    local energy=tonumber(burner.remaining_burning_fuel)
+    return energy and energy>0 or nil
+  end)
+  if not(live and has_fuel==true)then
+    state.last_blocker="original-outbound-no-observed-native-fuel"
+    return false,state.last_blocker
+  end
   local name_ok,name=pcall(function()return remote.backer_name end)
   if not name_ok then
     state.last_blocker="original-remote-stop-name-unreadable"
@@ -1801,16 +1829,7 @@ function M.service_first_train_outbound_0836(pair)
       return false,state.last_blocker
     end
   end
-  local read,records=pcall(function()return schedule.get_records()end)
-  if not(read and type(records)=="table")then
-    state.last_blocker="original-native-schedule-records-unobservable"
-    return false,state.last_blocker
-  end
   if not state.schedule_write_attempted then
-    if #records~=0 then
-      state.last_blocker="original-train-has-foreign-schedule"
-      return false,state.last_blocker
-    end
     -- Set this BEFORE mutating the engine: an exception after the native
     -- write must not cause duplicate records or overwrite a foreign order.
     state.schedule_write_attempted=true
