@@ -1368,6 +1368,96 @@ class NativePaidTrainFuel0836ContractTests(unittest.TestCase):
             self.assertIn(marker,section)
 
 
+class NativeReverseLocomotivePhysicalFuel0836ContractTests(unittest.TestCase):
+    """Only real 0528 coal can propel the original paid train home."""
+
+    def test_same_original_two_headed_consist_and_0528_custody(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        logistics=(root/"tech-priests_src/scripts/core/logistics_machine_fulfillment_0528.lua").read_text(encoding="utf-8")
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        exact=logistics.split("local function exact_original_train_0836(pair,locomotive)",1)[1].split(
+            "local function retire_unladen_abandoned_fuel_0836",1)[0]
+        for required in (
+            'reverse.phase=="native-paid-return-locomotive-verified"',
+            'reverse.paid_completion_0836.native_0338_paid==true',
+            'locomotive==reverse.built_entity',
+            'locomotive.unit_number==reverse.built_unit',
+            'locomotive.train.id==loco.built_entity.train.id',
+            'has_loco and has_wagon and has_lead',
+        ):
+            self.assertIn(required,exact)
+        self.assertIn('locomotive==loco.built_entity',exact)
+        walk=rail.split("function M.authorized_original_train_fuel_walk_0836(pair,point,movement)",1)[1].split(
+            "local function authorized_paid_stop_contact_0836",1)[0]
+        for required in (
+            'movement.owner=="logistics_machine_fulfillment_0528"',
+            'state.original_train_fuel_0836==true',
+            'source.source_before-source.source_after==custody.count',
+            'reverse.paid_completion_0836.native_0338_paid==true',
+            'locomotive==reverse.built_entity',
+            'locomotive.train.id==lead.built_entity.train.id',
+            'connected_straight_rails(before,center)',
+        ):
+            self.assertIn(required,walk)
+        for forbidden in ("create_entity(", "inventory.insert(", "teleport(", "bounds_exempt"):
+            self.assertNotIn(forbidden,walk)
+
+    def test_second_unique_real_native_coal_receipt_precedes_boarding(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        logistics=(root/"tech-priests_src/scripts/core/logistics_machine_fulfillment_0528.lua").read_text(encoding="utf-8")
+        fuel=rail.split("function M.service_return_train_fuel_0836(pair)",1)[1].split(
+            "-- First 0836 native Magos boarding.",1)[0]
+        for required in (
+            'reverse.paid_completion_0836.native_0338_paid==true',
+            'entity.train.id==lead.built_entity.train.id',
+            'entity.train.id==wagon.built_entity.train.id',
+            'receipt.machine_unit==entity.unit_number',
+            'receipt.station_unit==pair.station.unit_number',
+            'receipt.priest_unit==pair.priest.unit_number',
+            'receipt.authority=="physical-machine-fuel-0528"',
+            'receipt.source_before-receipt.source_after==receipt.count',
+            'receipt.destination_after-receipt.destination_before==receipt.count',
+            'receipt.tick>=reverse.verified_tick',
+            'inventory.get_item_count,"coal"',
+            'state.phase="native-paid-return-locomotive-fueled"',
+            'logistics.offer_original_locomotive_fuel_0836,pair,entity',
+        ):
+            self.assertIn(required,fuel)
+        self.assertIn('candidate=fuel_candidate(pair,locomotive)',logistics)
+        self.assertIn('destination_after-destination_before==inserted',logistics)
+        service=rail.split("function M.service_pair(pair)",1)[1]
+        self.assertLess(service.index("return M.service_return_train_fuel_0836(pair)"),
+                        service.index("return M.service_first_train_stop_0836(pair)"))
+        self.assertIn('return M.service_first_train_return_0836(pair)',service)
+        for forbidden in ("create_entity(", "insert(", "teleport(", "set_driver("):
+            self.assertNotIn(forbidden,fuel)
+
+    def test_return_refuses_empty_reverse_fuel_and_unrelated_stock(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        body=rail.split("function M.service_first_train_return_0836(pair)",1)[1].split(
+            "function M.service_pair(pair)",1)[0]
+        for required in (
+            'reverse_fuel.phase=="native-paid-return-locomotive-fueled"',
+            'reverse_fuel.locomotive_unit==reverse.built_unit',
+            'reverse.built_entity.train.id',
+            'math.abs(((reverse.built_entity.orientation-engine.orientation)%1)-0.5)',
+            'reverse.built_entity.get_inventory(slot)',
+            'reverse.built_entity.burner',
+            '"native-homeward-original-reverse-fuel-missing"',
+            'outward.phase=="native-original-outbound-arrived-at-paid-remote-stop"',
+            'driver==priest',
+            'train.station==origin',
+            'state.lowest_x<state.remote_x-32',
+        ):
+            self.assertIn(required,body)
+        self.assertLess(body.index('reverse.built_entity.get_inventory(slot)'),
+                        body.index('schedule.go_to_station(2)'))
+        for forbidden in ("create_entity(", "insert(", "teleport(", "train.speed="):
+            self.assertNotIn(forbidden,body)
+
+
 class NativeOriginalMagosBoarding0836ContractTests(unittest.TestCase):
     """Native driver readback, not flags or script relocation, proves boarding."""
     def test_original_priest_can_board_only_at_real_train_contact(self):
