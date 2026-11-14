@@ -1984,7 +1984,17 @@ function M.authorized_original_train_boarding_walk_0836(pair,point,movement)
       and not pair.machine_logistics_custody_0528
       and not pair.direct_acquisition_custody_0513
       and not pair.inventory_transfer_custody_0687
-      and not pair.item_family_logistics_0702
+      -- The 0702 OWNER may have kept its exact unladen source task in a
+      -- suspended rail-yield state. That task still owns its source and
+      -- target reservations, but has relinquished its *own* movement lease
+      -- through canonical 0418; it cannot move or collect until rail ends.
+      -- No live 0702 task, any cargo, or any other owner is exempt here.
+      and (not pair.item_family_logistics_0702
+        or (pair.item_family_logistics_0702.rail_deferred_0836==true
+          and pair.item_family_logistics_0702.phase=="move-to-source"
+          and pair.item_family_logistics_0702.carried==nil
+          and valid(pair.item_family_logistics_0702.source_entity)
+          and valid(pair.item_family_logistics_0702.target)))
       and not pair.item_family_custody_0702
       and not pair.defense_task_0259)then return false end
   local machine=pair.machine_logistics_0528

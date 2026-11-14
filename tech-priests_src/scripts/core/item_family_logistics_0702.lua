@@ -609,6 +609,7 @@ local function original_rail_expedition_reserved_0836(pair)
       and type(mission.target)=="table"
       and type(mission.resource_unit)=="number"
       and (mission.status=="starvation-confirmed"
+        or mission.status=="building-physical-rail"
         or mission.status=="rail-track-established")) then
     return false
   end

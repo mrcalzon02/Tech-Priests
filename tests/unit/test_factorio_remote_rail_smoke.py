@@ -90,6 +90,7 @@ class OriginalRailItemFamilyAdmissionTests(unittest.TestCase):
             "local function action_target(", 1)[0]
         self.assertIn('mission.status=="starvation-confirmed"', guard)
         self.assertIn('mission.status=="rail-track-established"', guard)
+        self.assertIn('mission.status=="building-physical-rail"', guard)
         self.assertIn('mission.root_station_unit==station_unit(pair)', guard)
         self.assertIn('mission.surface_index==pair.station.surface.index', guard)
         self.assertIn('mission.force_index==pair.station.force.index', guard)
@@ -2073,6 +2074,11 @@ class NativeRailBoardingLeashAuthority0836Tests(unittest.TestCase):
                        'not pair.machine_logistics_custody_0528',
                        'not pair.construction_custody_0338',
                        'not pair.item_family_logistics_0702',
+                       'pair.item_family_logistics_0702.rail_deferred_0836==true',
+                       'pair.item_family_logistics_0702.phase=="move-to-source"',
+                       'pair.item_family_logistics_0702.carried==nil',
+                       'valid(pair.item_family_logistics_0702.source_entity)',
+                       'valid(pair.item_family_logistics_0702.target)',
                        'not pair.item_family_custody_0702',
                        'connected_straight_rails(before,middle)',
                        'connected_straight_rails(middle,after)'):
