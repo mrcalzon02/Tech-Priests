@@ -1,0 +1,51 @@
+{
+  "status": "INTERCHANGE_REVIEW_ONLY_NOT_FINAL_ASSET_ACCEPTANCE",
+  "reviewer": "agent self-review; not owner approval",
+  "source_reference_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+  "source_idle_raster_sha256": "c23b1891ca79ee17f37ebd2282d9565aedf26cc8d6dd98303672fb5c994b39a3",
+  "usd_sha256": {
+    "idle": "4e8deae594fe7e13f993de07a687b4988885edbcb0160daf08577dfb195439ef",
+    "cycle": "0f805c47dee9b65747679f64be7d322c4a794de3805e99aad191803baa419ed1",
+    "entry": "2bff74e0425d9154f82f2f9c5497022c548b39809a8c5fc6123f81c6914d176e",
+    "settle": "2e3faff86991c66b4fa64bfa892fd2c0e3506262a7e4d60555ddcf414d9f45a2"
+  },
+  "render_sha256": {
+    "imported-usd-four-views.png": "e66e08bd3bd2c47010b3f0add502dd1ea4c4891178f56eb3c96a1ab626d781e3",
+    "imported-cycle-eight-poses.jpg": "76e357e481b421c703bfe6783173736d67ebdff0a5b79d047247bb0f30a92379",
+    "imported-usd-clay.png": "e2b8e9fc610541aa0db57777b879b43cca7fa9779714a789a01f7f70a4141519",
+    "imported-usd-front.png": "ada53f776f7353155d51de6fb9dfbbc473599824977b2ea4c4c237cb658c9122",
+    "imported-usd-rear.png": "63f993b9171bb744cb528ad3fcbbbfcf40be4ba3b7ebddf15d4655f83481ad7f",
+    "imported-usd-left.png": "215983d08eba37821f493ba4fc5f3995dc1972916310b96249180ff0a394fdd7",
+    "imported-usd-right.png": "d0adbb1ecb9a6e0ad174db76e1b1fe4c52ab1efd2f4d4d82b2423c85f2c77ea8",
+    "imported-cycle-001.png": "264b6031dffcdcfd0ba018ead01b8219101604db633307cc16d8baf6107fccb5",
+    "imported-cycle-025.png": "6d753b653f54e4f6d5cf76d8e4e1ce1608c112b390fe60711fcfab42db04f55e",
+    "imported-cycle-049.png": "f3a3ddabbf59abc50a29bf3936048160a4e2c0bc3c1f1a03d3fd9feaf47dd214",
+    "imported-cycle-073.png": "bbd555efb964ffa0bc5824f606b99c1546f5a71ee5f1434182ac06ed953a2eb5",
+    "imported-cycle-097.png": "d89d47f873411a1ef15324bd41c623fc02e632f341dbab823e25369a93fd4d26",
+    "imported-cycle-121.png": "60d6738debbb709c7dc5c8ee016e6d3755e5cab0251be4d3a7c2495c701702ae",
+    "imported-cycle-145.png": "879f33f5413c98efc91c0ffa38417d8338450340da48bfa373ae1b7ed961e742",
+    "imported-cycle-169.png": "3dc719d170d03a30ba26fc2eed21631bf90daa29d7b6fb775ed730f7ecab8d2f"
+  },
+  "scale": "0..5; final required >=4 for every applicable final gate",
+  "scores": {
+    "source_silhouette_and_bevel_fidelity": 4,
+    "loaded_paint_and_metal_surface_readability": 4,
+    "sampled_mechanical_motion_preservation": 4,
+    "complete_effect_parity": 2,
+    "native_integration": 0
+  },
+  "observations": [
+    "Four actual USD reimport views retain six barrels, stacked loader tracks, base ring and red painted spine; source idle raster viewed alongside the actual imported front.",
+    "Two source UV image maps load at1254x1254; prior Generated-coordinate concern is superseded by actual UV->Image inspection. No newly authored texture finish claimed.",
+    "Eight actual imported cycle poses show moving grenades and changing evaluated vertex counts; original bevel details retained.",
+    "Clay view exposes the stacked loader supports; existing dense construction and inherited degenerate triangles remain source-level review items.",
+    "Emissive flash meshes included;18volume smoke meshes, capture receiver and flash point lights excluded from core geometry interchange. Full effect parity is not passed."
+  ],
+  "open": [
+    "GLTF export drops238evaluated modifier meshes; negative antenna shape weights clamp in Blender importer. No GLTF pass or promotion.",
+    "Source contains2131..2140degenerate triangles depending pose. No cleanup or geometry acceptance waiver.",
+    "No grounded native lobber prototype/ammo interface; ordinary bunker_autocannon must not be replaced.",
+    "All-direction native mounted firing/reload/entry/settle, effect/shadow parity and owner final appearance approval remain open."
+  ],
+  "binary_delivery": "Four CRC/SHA-verified ZIPs local only; cycle ZIP129539984bytes exceeds GitHub single-file limit. No binary upload/release or archive-publication claim."
+}

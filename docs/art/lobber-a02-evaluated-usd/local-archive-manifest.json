@@ -1,0 +1,43 @@
+{
+  "status": "FOUR_LOCAL_ARCHIVES_VERIFIED",
+  "source_unchanged_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+  "archives": [
+    {
+      "file": "idle-evaluated-usd.zip",
+      "bytes": 10285963,
+      "sha256": "1a1229706c280e427c6521000df5df07562a0fef3c145ec337848f3c88b99a9f",
+      "mode": "idle",
+      "usd_sha256": "4e8deae594fe7e13f993de07a687b4988885edbcb0160daf08577dfb195439ef",
+      "archive_crc": "PASS",
+      "decompressed_members_sha256": "PASS"
+    },
+    {
+      "file": "cycle-evaluated-usd.zip",
+      "bytes": 129539984,
+      "sha256": "f702244d85ed9665f7d844533efd6d9f59035fee46c722837b36e409bcc4f022",
+      "mode": "cycle",
+      "usd_sha256": "0f805c47dee9b65747679f64be7d322c4a794de3805e99aad191803baa419ed1",
+      "archive_crc": "PASS",
+      "decompressed_members_sha256": "PASS"
+    },
+    {
+      "file": "entry-evaluated-usd.zip",
+      "bytes": 26883969,
+      "sha256": "6d57cb6486e9b4eea0e82cb18ec924404e1bbc82113131a656b08fbaa1f29e7c",
+      "mode": "entry",
+      "usd_sha256": "2bff74e0425d9154f82f2f9c5497022c548b39809a8c5fc6123f81c6914d176e",
+      "archive_crc": "PASS",
+      "decompressed_members_sha256": "PASS"
+    },
+    {
+      "file": "settle-evaluated-usd.zip",
+      "bytes": 18925005,
+      "sha256": "15efde1db67f13f03085b0333874b9755e1a33380f9e194820029d69b1c27098",
+      "mode": "settle",
+      "usd_sha256": "2e3faff86991c66b4fa64bfa892fd2c0e3506262a7e4d60555ddcf414d9f45a2",
+      "archive_crc": "PASS",
+      "decompressed_members_sha256": "PASS"
+    }
+  ],
+  "publication": "LOCAL_ONLY_UNTIL_REMOTE_READBACK"
+}

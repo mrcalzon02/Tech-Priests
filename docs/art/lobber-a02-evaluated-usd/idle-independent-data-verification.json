@@ -1,0 +1,16 @@
+{
+  "mode": "idle",
+  "usd_sha256": "4e8deae594fe7e13f993de07a687b4988885edbcb0160daf08577dfb195439ef",
+  "frames": 1,
+  "mesh_count": 302,
+  "mesh_sample_checks": 302,
+  "missing_objects": [],
+  "topology_failures": 0,
+  "maximum_position_error": 0.0,
+  "maximum_corner_normal_error": 0.0,
+  "maximum_material_used_uv_error": 1.1920928955078125e-07,
+  "unused_uv_max_error": 1.1920928955078125e-07,
+  "maximum_world_matrix_error": 3.5778676310825636e-07,
+  "failures": [],
+  "status": "PASS_EVALUATED_GEOMETRY_NORMALS_UV_TOPOLOGY_AND_TRANSFORMS"
+}

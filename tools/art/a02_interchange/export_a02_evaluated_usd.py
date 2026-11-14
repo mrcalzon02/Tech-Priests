@@ -1,0 +1,11 @@
+"""Evaluated-topology interchange: preserve real animated modifier geometry, UVs and normals."""
+import bpy,pathlib,json,hashlib,os
+W=pathlib.Path(__file__).parent;I=W/'a02-gltf-20261114';O=W/'a02-evaluated-usd-20261114';assert not O.exists(),'Inspect existing checkpoint/process instead of duplicating export';O.mkdir();sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();old=json.loads((I/'CHECKPOINT.json').read_text());state={'status':'STARTED','pid':os.getpid(),'source_sha256':old['source_sha256'],'completed':[],'format_reason':'A02 belt bevels change evaluated topology. Evaluated USD retains per-time topology; failed GLB study is not promoted.'}
+def save(status,**kw):
+ state.update(status=status,**kw);p=O/'CHECKPOINT.tmp';p.write_text(json.dumps(state,indent=2)+'\n',encoding='utf-8',newline='\n');p.replace(O/'CHECKPOINT.json')
+for mode in ['idle','cycle','entry','settle']:
+ save('EXPORTING_EVALUATED_USD',mode=mode);bpy.ops.wm.open_mainfile(filepath=str(I/(mode+'-derivative.blend')));s=bpy.context.scene;sample=json.loads((I/(mode+'-sampled-source.json')).read_text());s.frame_start=1;s.frame_end=sample['frames'];s.render.fps=24;s.frame_set(1);bpy.context.view_layer.update();bpy.ops.object.select_all(action='DESELECT')
+ for name in sample['objects']:bpy.data.objects[name].select_set(True)
+ dest=O/(mode+'.usdc');bpy.ops.wm.usd_export(filepath=str(dest),selected_objects_only=True,export_animation=sample['frames']>1,export_uvmaps=True,export_normals=True,export_materials=True,export_shapekeys=False,evaluation_mode='RENDER',generate_preview_surface=True,export_textures_mode='NEW',overwrite_textures=True,relative_paths=True,export_lights=False,export_cameras=False,export_curves=False,export_points=False,export_volumes=False,export_subdivision='TESSELLATE',export_custom_properties=False,author_blender_name=True)
+ row={'mode':mode,'frames':sample['frames'],'usd_bytes':dest.stat().st_size,'usd_sha256':sha(dest),'sample_sha256':sha(I/(mode+'-sampled-source.json'))};state['completed'].append(row);save('MODE_EXPORTED_REQUIRES_INDEPENDENT_USD_REIMPORT',mode=mode);print('A02_USD_EXPORTED',json.dumps(row),flush=True)
+save('FOUR_EVALUATED_USD_STATES_REQUIRE_INDEPENDENT_REIMPORT',source_unchanged=sha(W/'lobber-a02/lobber_capture.blend')==state['source_sha256'])

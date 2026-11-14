@@ -1,0 +1,32 @@
+{
+  "status": "EVALUATED_USD_DATA_PASS_ACTUAL_IMPORT_REVIEWED_LOCAL_ARCHIVES_ONLY",
+  "source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+  "mesh_count": 302,
+  "mesh_sample_checks": 68252,
+  "four_modes": [
+    "idle",
+    "cycle",
+    "entry",
+    "settle"
+  ],
+  "fps": 24,
+  "keyframes": {
+    "idle": 1,
+    "cycle": 193,
+    "entry": 16,
+    "settle": 16
+  },
+  "discrete_source_frames": {
+    "idle": 1,
+    "cycle": 192,
+    "entry": 15,
+    "settle": 15
+  },
+  "source_unchanged": true,
+  "native_game_integration": false,
+  "gltf_gate": "FAILED_STUDY_RETAINED_NOT_PROMOTED",
+  "full_goal_open": true,
+  "local_export_directory": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\a02-evaluated-usd-20261114",
+  "local_archive_directory": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\a02-usd-delivery-20261114",
+  "next_step": "Do not rerun source captures, assembly or USD export. Ground native alternate-cap target without inventing gameplay; GLTF adapter and full effect/final acceptance remain open. Exclude workbench and other-chat steam engine."
+}

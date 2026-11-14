@@ -1,0 +1,59 @@
+{
+  "status": "FAILED_STUDY_REPAIR_REQUIRED",
+  "modes": [
+    {
+      "mode": "idle",
+      "glb_sha256": "5af46a971cc1a7da37c6b87c0e3f48fdaafb371a732e799ae329433baa298d4a",
+      "source_sample_sha256": "a9878816a5268025cd125a6e9df17547521458f16c5390d6bee2aa707ec293af",
+      "frames": 1,
+      "missing_nodes": [],
+      "unexpected_nodes": [],
+      "maximum_world_matrix_error": 7.152557373046875e-07,
+      "maximum_morph_weight_error": 0,
+      "geometry_mismatches": 238,
+      "inherited_degenerate_triangles": 2140,
+      "status": "FAIL_REQUIRES_REPAIR"
+    },
+    {
+      "mode": "cycle",
+      "glb_sha256": "54c4bad8ba605e0d19eaba5cbffe3d91f87acda8ca2b54018d84d04fc7ca3fce",
+      "source_sample_sha256": "2f27deafdcce2bc83d8ae570da8923ec0aca28bb94a2f19184ad2fe3ed9403cc",
+      "frames": 193,
+      "missing_nodes": [],
+      "unexpected_nodes": [],
+      "maximum_world_matrix_error": 1.6689300537109375e-06,
+      "maximum_morph_weight_error": 0.025859549641609192,
+      "geometry_mismatches": 238,
+      "inherited_degenerate_triangles": 2131,
+      "status": "FAIL_REQUIRES_REPAIR"
+    },
+    {
+      "mode": "entry",
+      "glb_sha256": "7c04421efa3f7a5c2b6b1ed109661fbfc52a294cf73d31bbb3821fd6af3fc369",
+      "source_sample_sha256": "1032d7a0754bfbc4df6d3b55cb2f61962bc027ae5d7548fa7dcdfabdb8ccc96e",
+      "frames": 16,
+      "missing_nodes": [],
+      "unexpected_nodes": [],
+      "maximum_world_matrix_error": 1.430511474609375e-06,
+      "maximum_morph_weight_error": 0.023892991244792938,
+      "geometry_mismatches": 238,
+      "inherited_degenerate_triangles": 2140,
+      "status": "FAIL_REQUIRES_REPAIR"
+    },
+    {
+      "mode": "settle",
+      "glb_sha256": "693a36542bfa83033be4258970c9ebbca6026fd5b98678fbc33a95542e2c5ff5",
+      "source_sample_sha256": "e35cceac89a6adcf7878fe54180d6b88c22648536f6d4ac7b74d1b37fe810fcd",
+      "frames": 16,
+      "missing_nodes": [],
+      "unexpected_nodes": [],
+      "maximum_world_matrix_error": 7.152557373046875e-07,
+      "maximum_morph_weight_error": 0.0016125621332321316,
+      "geometry_mismatches": 238,
+      "inherited_degenerate_triangles": 2131,
+      "status": "FAIL_REQUIRES_REPAIR"
+    }
+  ],
+  "source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+  "scope": "Exact all-sample transform/morph values, evaluated local geometry bounds and triangle counts. Full UV/texture/normal and visual export gates remain separate. Volume smoke/capture receiver and source flash lights are not core glTF geometry."
+}

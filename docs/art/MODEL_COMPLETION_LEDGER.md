@@ -4,6 +4,12 @@
 
 Stop all workbench modeling, clock tests, captures, integration, promotion and art publication here. Held local duplicate artifacts remain preserved. Earlier Tech-Priests workbench entries below are historical scope mistakes, not continuation instructions. A simple workbench must not receive machine sanctification; future size work requires explicit resumption in the correct project. Another chat owns the emergency steam engine; avoid duplicate engine edits. See WORKBENCH_SCOPE_CORRECTION.json.
 
+## 2026-11-14 A02 evaluated USD interchange checkpoint
+
+The four-state evaluated USD subset passes 68,252 mesh-sample comparisons with actual source geometry, topology, normals, material-used UVs and world transforms. Four actual import views, eight imported moving poses and a clay view were rendered locally and reviewed. Source, capture cache and ordinary runtime art were not edited. [Hash-bound results, real previews, scripts and remaining gates](lobber-a02-evaluated-usd/README.md).
+
+Four SHA/CRC-verified USD/texture ZIPs remain local only. GLTF remains a failed study: missing bevel evaluation and signed-weight importer differences; evaluated belt topology changes prevent ordinary morph baking. Inherited degenerate triangles, full volume/light FX parity, a grounded native alternate-cap target and final owner acceptance remain open. This does not close G5 or the full goal. Do not repeat completed capture/assembly/USD exports or reopen excluded workbench/other-chat steam-engine work.
+
 ## 2026-11-13 local graphical alignment closure
 
 Condenser V24 four-facing scale/placement is owner-accepted and integrated on current main. The actual integrated sources passed 104 native combined captures and 20 physical pipe connections. Evidence: local-machine-alignment/integrated-source-validation.json. Beach Pump underwater visual separation remains open. Next production target: finish the recovered timber workbench V7 surfaces, native eight-second animation clock and animated export. Historical V21/V22C entries below are provenance rather than the active condenser import.

@@ -1,0 +1,56 @@
+{
+  "status": "ACTUAL_CYCLE_USD_IMPORTED_AND_EIGHT_POSES_RENDERED",
+  "usd_sha256": "0f805c47dee9b65747679f64be7d322c4a794de3805e99aad191803baa419ed1",
+  "frames": [
+    {
+      "frame": 1,
+      "file": "imported-cycle-001.png",
+      "sha256": "264b6031dffcdcfd0ba018ead01b8219101604db633307cc16d8baf6107fccb5",
+      "vertices": 235926
+    },
+    {
+      "frame": 25,
+      "file": "imported-cycle-025.png",
+      "sha256": "6d753b653f54e4f6d5cf76d8e4e1ce1608c112b390fe60711fcfab42db04f55e",
+      "vertices": 235926
+    },
+    {
+      "frame": 49,
+      "file": "imported-cycle-049.png",
+      "sha256": "f3a3ddabbf59abc50a29bf3936048160a4e2c0bc3c1f1a03d3fd9feaf47dd214",
+      "vertices": 235926
+    },
+    {
+      "frame": 73,
+      "file": "imported-cycle-073.png",
+      "sha256": "bbd555efb964ffa0bc5824f606b99c1546f5a71ee5f1434182ac06ed953a2eb5",
+      "vertices": 235926
+    },
+    {
+      "frame": 97,
+      "file": "imported-cycle-097.png",
+      "sha256": "d89d47f873411a1ef15324bd41c623fc02e632f341dbab823e25369a93fd4d26",
+      "vertices": 235894
+    },
+    {
+      "frame": 121,
+      "file": "imported-cycle-121.png",
+      "sha256": "60d6738debbb709c7dc5c8ee016e6d3755e5cab0251be4d3a7c2495c701702ae",
+      "vertices": 235926
+    },
+    {
+      "frame": 145,
+      "file": "imported-cycle-145.png",
+      "sha256": "879f33f5413c98efc91c0ffa38417d8338450340da48bfa373ae1b7ed961e742",
+      "vertices": 235910
+    },
+    {
+      "frame": 169,
+      "file": "imported-cycle-169.png",
+      "sha256": "3dc719d170d03a30ba26fc2eed21631bf90daa29d7b6fb775ed730f7ecab8d2f",
+      "vertices": 235926
+    }
+  ],
+  "clay_sha256": "e2b8e9fc610541aa0db57777b879b43cca7fa9779714a789a01f7f70a4141519",
+  "scope": "Eight bounded review samples, not a full animation raster recapture; no native game integration claimed."
+}

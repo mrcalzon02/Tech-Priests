@@ -1,0 +1,46 @@
+{
+  "status": "FOUR_ACTUAL_USD_IMPORT_RENDERS_REQUIRE_VISUAL_REVIEW",
+  "usd_sha256": "4e8deae594fe7e13f993de07a687b4988885edbcb0160daf08577dfb195439ef",
+  "imported_meshes": 302,
+  "loaded_images": [
+    {
+      "image": "02_dark_gunmetal.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": false
+    },
+    {
+      "image": "01_oxide_red_paint.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": false
+    }
+  ],
+  "renders": [
+    {
+      "file": "imported-usd-front.png",
+      "sha256": "ada53f776f7353155d51de6fb9dfbbc473599824977b2ea4c4c237cb658c9122"
+    },
+    {
+      "file": "imported-usd-rear.png",
+      "sha256": "63f993b9171bb744cb528ad3fcbbbfcf40be4ba3b7ebddf15d4655f83481ad7f"
+    },
+    {
+      "file": "imported-usd-left.png",
+      "sha256": "215983d08eba37821f493ba4fc5f3995dc1972916310b96249180ff0a394fdd7"
+    },
+    {
+      "file": "imported-usd-right.png",
+      "sha256": "d0adbb1ecb9a6e0ad174db76e1b1fe4c52ab1efd2f4d4d82b2423c85f2c77ea8"
+    }
+  ],
+  "render_backend": [
+    "NVIDIA GeForce RTX 5070"
+  ],
+  "preferences_saved": false,
+  "scope": "Actual USD import; native capture camera/world/area lights retained, source geometry removed before import. No native game integration or final owner approval claimed."
+}
