@@ -3060,9 +3060,16 @@ function M.service_original_remote_drill_fuel_0836(pair)
     return drill_fuel.insert{name="coal",count=removed}
   end)
   if not inserted_ok or type(inserted)~="number" then inserted=0 end
-  local returned_ok,returned=pcall(function()
-    return hold.insert{name="coal",count=removed-inserted}
-  end)
+  -- Factorio refuses a zero-count insert. If all five counted coal went
+  -- into the native drill, there is nothing to refund. Do not falsely
+  -- quarantine that fully reconciled native transaction on a no-op call.
+  local refund_count=removed-inserted
+  local returned_ok,returned=true,0
+  if refund_count>0 then
+    returned_ok,returned=pcall(function()
+      return hold.insert{name="coal",count=refund_count}
+    end)
+  end
   local after_ok,held_after,fuel_after=pcall(function()
     return hold.get_item_count("coal"),drill_fuel.get_item_count("coal")
   end)

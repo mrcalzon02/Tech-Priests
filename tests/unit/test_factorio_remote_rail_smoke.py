@@ -1163,6 +1163,14 @@ class OriginalRemoteNativeFuelSourceRegressions(unittest.TestCase):
         self.assertIn('active_name=="coal"', frontier)
         self.assertIn("remaining_j>0", frontier)
         self.assertIn("fuel_after+native_burning_count==fuel_before+5", frontier)
+        # The native engine consumed one coal while inserting the other four;
+        # no refund remains. A count=0 LuaInventory.insert is not a legal
+        # accounting operation and must never quarantine a correct transfer.
+        self.assertIn("local refund_count=removed-inserted", frontier)
+        self.assertIn("local returned_ok,returned=true,0", frontier)
+        self.assertIn("if refund_count>0 then", frontier)
+        self.assertIn('return hold.insert{name="coal",count=refund_count}', frontier)
+        self.assertNotIn('return hold.insert{name="coal",count=removed-inserted}', frontier)
         self.assertIn("native_burning_coal_count=native_burning_count", frontier)
         # Factorio 2.1 returns a quality-aware item pair: its name is a
         # LuaItemPrototype, not a string. Factorio 2.0 returned a prototype
