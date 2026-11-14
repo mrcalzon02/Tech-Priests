@@ -1,6 +1,6 @@
 {
   "schema": "tech-priests.hosted-arena-request.v1",
-  "source_sha": "41de8fbe049fa6bdb9a3050091f8661583aebccf",
+  "source_sha": "e25cf7dd4e62d291e549c78319f3c7311a6efa28",
   "preset": "2p2b",
   "seeds": [
     534526259,
