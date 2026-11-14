@@ -1940,6 +1940,27 @@ class NativeOriginalHomeward0836ContractTests(unittest.TestCase):
         for forbidden in ("priest.teleport(", "train.speed=", "surface.create_entity("):
             self.assertNotIn(forbidden,body)
 
+    def test_original_remote_wagon_requires_new_real_ore_before_home_order(self):
+        """An empty wagon or preloaded home ore may not initiate a railway return."""
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        outward=rail.split("function M.service_first_train_outbound_0836(pair)",1)[1].split("function M.service_first_train_return_0836(pair)",1)[0]
+        home=rail.split("function M.service_first_train_return_0836(pair)",1)[1].split("function M.service_pair(pair)",1)[0]
+        self.assertIn('state.departure_wagon_item_count_0836=starting',outward)
+        self.assertLess(outward.index('state.departure_wagon_item_count_0836=starting'),outward.index('schedule.go_to_station(1)'))
+        self.assertIn('defines.inventory.cargo_wagon',outward)
+        self.assertIn('defines.inventory.cargo_wagon',home)
+        self.assertIn('loaded>before',home)
+        self.assertIn('outward.departure_wagon_item_count_0836',home)
+        self.assertIn('original-remote-wagon-has-no-new-physical-ore',home)
+        self.assertLess(home.index('loaded>before'),home.index('schedule.go_to_station(2)'))
+        self.assertIn('if not(state and state.home_order_written==true)then',home)
+        self.assertIn('original_return_load_refusal=',fixture)
+        for forbidden in ('priest.teleport(', 'train.speed=', 'surface.create_entity(',
+                          'game.create_inventory(', 'wagon.built_entity.insert('):
+            self.assertNotIn(forbidden,home)
+
     def test_original_paid_arrival_and_native_driver_precede_home_order(self):
         root=pathlib.Path(__file__).resolve().parents[2]
         rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")

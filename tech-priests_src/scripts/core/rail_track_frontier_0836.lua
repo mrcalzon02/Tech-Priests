@@ -2407,6 +2407,20 @@ function M.service_first_train_outbound_0836(pair)
     return false,state.last_blocker
   end
   if not state.departure_order_issued then
+    -- Record ACTUAL ore already in this original cargo wagon before leaving
+    -- home. Ore preloaded at home can never count as a remote pickup.
+    local read_stock,starting=pcall(function()
+      local slot=defines and defines.inventory
+        and defines.inventory.cargo_wagon
+      local inv=slot and wagon.built_entity.get_inventory(slot)
+      if not(inv and inv.valid and type(m.item)=="string")then return nil end
+      return inv.get_item_count(m.item)
+    end)
+    if not(read_stock and type(starting)=="number" and starting>=0)then
+      state.last_blocker="original-outbound-wagon-stock-unobservable"
+      return false,state.last_blocker
+    end
+    state.departure_wagon_item_count_0836=starting
     state.departure_order_issued=true
     local issued=pcall(function()schedule.go_to_station(1)end)
     if not issued then
@@ -2520,6 +2534,31 @@ function M.service_first_train_return_0836(pair)
     end
   end
   local state=m.first_return_0836
+  -- The earlier native round trip demonstrated that the train can return,
+  -- but it departed its paid REMOTE stop with no mined iron ore aboard.
+  -- Do not waste counted fuel on another empty home journey or claim that
+  -- preloaded home stock is a remote delivery. The real wagon inventory,
+  -- not a mission counter or train timetable, is the loading boundary.
+  -- Once a genuine home order is already issued, unloading at home may
+  -- legitimately reduce the count and must not revoke historical travel.
+  if not(state and state.home_order_written==true)then
+    local read_stock,loaded=pcall(function()
+      local slot=defines and defines.inventory
+        and defines.inventory.cargo_wagon
+      local inv=slot and wagon.built_entity.get_inventory(slot)
+      if not(inv and inv.valid and type(m.item)=="string")then return nil end
+      return inv.get_item_count(m.item)
+    end)
+    local before=tonumber(outward.departure_wagon_item_count_0836)
+    m.last_return_wagon_ore_0836=read_stock and loaded or nil
+    if not(read_stock and type(loaded)=="number" and loaded>=0
+      and before and before>=0 and loaded>before)then
+      m.last_return_load_refusal_0836=
+        "original-remote-wagon-has-no-new-physical-ore"
+      return false,m.last_return_load_refusal_0836
+    end
+    m.last_return_load_refusal_0836=nil
+  end
   if not state then
     if train.station~=remote then
       return false,"native-homeward-original-remote-arrival-not-live"

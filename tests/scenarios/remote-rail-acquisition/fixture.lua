@@ -1076,7 +1076,13 @@ local function inspect(s,elapsed)
       and moving_train.has_path)..
     " train_state="..tostring(moving_train and moving_train.valid
       and moving_train.state)..
-    " blocker="..tostring(homeward and homeward.last_blocker))
+    " blocker="..tostring(homeward and homeward.last_blocker)..
+    " original_departure_wagon_ore="..tostring(outbound
+      and outbound.departure_wagon_item_count_0836)..
+    " original_return_wagon_ore="..tostring(objective
+      and objective.last_return_wagon_ore_0836)..
+    " original_return_load_refusal="..tostring(objective
+      and objective.last_return_load_refusal_0836))
   if homeward and homeward.phase=="native-original-home-arrived-after-roundtrip"
     and not(moving_train and moving_train.valid
       and moving_train.station==home_entity
