@@ -124,7 +124,9 @@ class OriginalNativeDrillWagonCustodyTests(unittest.TestCase):
         )[1].split("-- Exact post-audit locomotive ownership.", 1)[0]
         self.assertIn('wagon.request==task.request_value', stage)
         self.assertIn('within_entity_reach(pair.priest.position,task.source_entity,', stage)
-        self.assertIn('game.create_inventory(1)', stage)
+        self.assertIn('game.create_inventory(2)', stage)
+        self.assertIn('fuel_before=item_count(task.source_inv,"coal")', stage)
+        self.assertIn('held.fuel_source_before-held.fuel_source_after==5', stage)
         self.assertIn('pair.rail_remote_drill_supply_0836=held', stage)
         self.assertIn('remove_item(task.source_inv,"burner-mining-drill",1)', stage)
         self.assertIn('insert_item(inventory,"burner-mining-drill",removed)', stage)
