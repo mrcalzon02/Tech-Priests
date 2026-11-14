@@ -658,6 +658,16 @@ local function pause_unladen_item_family_for_rail_0836(pair,task)
   return true,"unladen-0702-original-rail-yield"
 end
 
+-- Allow the ORIGINAL 0836 boarding executor to request the existing 0702
+-- owner-local unladen handoff at the physical train-contact boundary. This
+-- does not grant 0836 authority to drop a source reservation or stop any
+-- owner other than 0702; the same custody, combat, identity and lease
+-- preflight above still applies.
+function M.pause_unladen_for_original_rail_0836(pair)
+  return pause_unladen_item_family_for_rail_0836(
+    pair,pair and pair.item_family_logistics_0702)
+end
+
 local function discover_pair(pair)
   if not valid_pair(pair) then return false, "invalid-pair" end
   if reversal_future_worker_reserved_0962(pair)
