@@ -2520,3 +2520,33 @@ class OriginalNativeEjectionFootfallCorridor0836Tests(unittest.TestCase):
         self.assertLess(old_dot,-0.10)
         self.assertEqual(new_dot,0)
         self.assertLessEqual((foot_x-stop_x)**2,16**2)
+
+class OriginalPaidRemoteDrillTerminalReceipt0836Tests(unittest.TestCase):
+    """The original source-paid 0338 terminal receipt must survive unrelated builds."""
+
+    def test_native_0338_drill_receipt_is_not_generic_last_task(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        builder=(root/"tech-priests_src/scripts/core/construction_planner.lua").read_text()
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        finish=builder.split("local function finish(pair,task,built,reason)",1)[1].split(
+            "pair.construction_last_task_0338=task",1)[1]
+        hold=rail.split("function M.authorized_original_remote_drill_hold_0836(pair)",1)[1].split(
+            "\nfunction ",1)[0]
+        for proof in ('state.request==task.request_value',
+                      'task.request_field=="remote_drill_request_1011"',
+                      'task.creative_build~=true',
+                      'supply.source_before-supply.source_after==1',
+                      'supply.inventory.get_item_count("burner-mining-drill")==0',
+                      'valid(built) and built.name=="burner-mining-drill"',
+                      'state.paid_drill_completion_0836={',
+                      'state.phase="native-0338-drill-built"'):
+            self.assertIn(proof,finish)
+        for proof in ('state.paid_drill_completion_0836.native_0338_paid==true',
+                      'state.paid_drill_completion_0836.request_value==state.request',
+                      'state.built_entity.unit_number==state.built_unit',
+                      'original_supply.source_before-original_supply.source_after==1',
+                      'not pair.construction_custody_0338'):
+            self.assertIn(proof,hold)
+        self.assertNotIn('and completion and completion.phase=="complete"',hold)
+        for forbidden in ('teleport(', 'create_entity(', 'bounds_exempt'):
+            self.assertNotIn(forbidden,finish)

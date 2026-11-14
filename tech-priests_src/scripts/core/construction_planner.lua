@@ -1455,6 +1455,66 @@ local function finish(pair,task,built,reason)
  task.result=reason
  task.built_entity=built
  pair.construction_last_task_0338=task
+
+ -- Original 0338 remote-drill completion is transient in the generic last
+ -- task slot. Record its actual paid entity at the sole physical builder
+ -- terminal boundary, before unrelated rail/stop builds overwrite it.
+ if built and task.request_field=="remote_drill_request_1011"
+     and task.item_name=="burner-mining-drill"
+     and task.entity_name=="burner-mining-drill"
+     and task.site_reason=="original-remote-rail-drill-0836"
+     and task.creative_build~=true then
+  local mission=pair.remote_rail_outpost_0835
+  local state=mission and mission.first_remote_drill_0836
+  local wagon=mission and mission.first_wagon_0836
+  local supply=pair.rail_remote_drill_supply_0836
+  local ride=pair.train_transport_rail_0835
+  local priest=pair.priest
+  local dx=(valid(built) and state and state.position)
+    and built.position.x-state.position.x or math.huge
+  local dy=(valid(built) and state and state.position)
+    and built.position.y-state.position.y or math.huge
+  if state and state.phase=="awaiting-existing-0338"
+      and state.request==task.request_value
+      and valid(pair.station) and valid(priest)
+      and state.station_unit==pair.station.unit_number
+      and state.priest_unit==priest.unit_number
+      and state.disembark_confirmed==true
+      and state.disembark_priest_unit==priest.unit_number
+      and ride and ride.disembark_confirmed==true
+      and ride.boarded_priest_unit==priest.unit_number
+      and wagon and wagon.phase=="native-paid-wagon-verified"
+      and supply and not supply.quarantine
+      and supply.station_unit==pair.station.unit_number
+      and supply.priest_unit==priest.unit_number
+      and supply.wagon_request==wagon.request
+      and type(supply.source_before)=="number"
+      and type(supply.source_after)=="number"
+      and supply.source_before-supply.source_after==1
+      and supply.inventory and supply.inventory.valid
+      and supply.inventory.get_item_count("burner-mining-drill")==0
+      and valid(built) and built.name=="burner-mining-drill"
+      and built.type=="mining-drill" and built.unit_number
+      and built.force==pair.station.force
+      and built.surface==pair.station.surface
+      and dx*dx+dy*dy<=1 then
+   state.paid_drill_completion_0836={
+    request_value=task.request_value,phase="complete",
+    item_name=task.item_name,creative_build=false,
+    built_entity=built,built_unit=built.unit_number,
+    source_before=supply.source_before,
+    source_after=supply.source_after,completed_tick=now(),
+    native_0338_paid=true,
+   }
+   state.phase="native-0338-drill-built"
+   state.built_entity=built
+   state.built_unit=built.unit_number
+   state.built_tick=now()
+   state.last_blocker=nil
+   record(pair,"original-remote-drill-paid-build-preserved-0836",
+     safe(built.unit_number))
+  end
+ end
  -- The generic terminal slot is overwritten by unrelated subsequent work.
  -- Preserve THIS exact original paid 0836 completion inside its pending writ
  -- so a later native scan can verify it after indexed scans catch up. This

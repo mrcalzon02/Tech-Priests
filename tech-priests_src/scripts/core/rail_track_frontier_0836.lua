@@ -2747,6 +2747,7 @@ function M.authorized_original_remote_drill_walk_0836(pair,point,movement)
       and storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair
       and state and state.disembark_confirmed==true
       and state.disembark_priest_unit==priest.unit_number
+      and state.priest_unit==priest.unit_number
       and state.disembark_position
       and type(state.disembark_position.x)=="number"
       and type(state.disembark_position.y)=="number"
@@ -2857,6 +2858,8 @@ function M.authorized_original_remote_drill_hold_0836(pair)
       " task="..tostring(completion and completion.phase)..
       " task_field="..tostring(completion and completion.request_field)..
       " task_matches="..tostring(completion and completion.request_value==state.request)..
+      " paid_receipt="..tostring(state.paid_drill_completion_0836 and
+        state.paid_drill_completion_0836.native_0338_paid)..
       " item="..tostring(completion and completion.item_name)..
       " actual_built="..tostring(completion and valid(completion.built_entity))..
       " source_delta="..tostring(original_supply and original_supply.source_before and
@@ -2914,18 +2917,28 @@ function M.authorized_original_remote_drill_hold_0836(pair)
       and ride.disembark_confirmed==true
       and ride.train_id==state.train_id
       and ride.boarded_priest_unit==priest.unit_number
-      and completion and completion.phase=="complete"
-      and completion.request_value==state.request
-      and completion.request_field=="remote_drill_request_1011"
-      and completion.site_reason=="original-remote-rail-drill-0836"
-      and completion.item_name=="burner-mining-drill"
-      and completion.creative_build~=true
-      and valid(completion.built_entity)
-      and completion.built_entity.name=="burner-mining-drill"
-      and completion.built_entity.type=="mining-drill"
-      and completion.built_entity.force==stop.force
-      and completion.built_entity.surface==stop.surface
-      and close(completion.built_entity.position,state.position)
+      -- A later unrelated 0338 task may replace the generic last receipt.
+      -- Only the exact source-paid original 0338 build can preserve this duty.
+      and state.phase=="native-0338-drill-built"
+      and state.paid_drill_completion_0836
+      and state.paid_drill_completion_0836.native_0338_paid==true
+      and state.paid_drill_completion_0836.request_value==state.request
+      and state.paid_drill_completion_0836.phase=="complete"
+      and state.paid_drill_completion_0836.item_name=="burner-mining-drill"
+      and state.paid_drill_completion_0836.creative_build==false
+      and state.paid_drill_completion_0836.built_entity==state.built_entity
+      and state.paid_drill_completion_0836.built_unit==state.built_unit
+      and type(state.paid_drill_completion_0836.source_before)=="number"
+      and type(state.paid_drill_completion_0836.source_after)=="number"
+      and state.paid_drill_completion_0836.source_before
+        -state.paid_drill_completion_0836.source_after==1
+      and valid(state.built_entity)
+      and state.built_entity.unit_number==state.built_unit
+      and state.built_entity.name=="burner-mining-drill"
+      and state.built_entity.type=="mining-drill"
+      and state.built_entity.force==stop.force
+      and state.built_entity.surface==stop.surface
+      and close(state.built_entity.position,state.position)
       and original_supply and not original_supply.quarantine
       and original_supply.station_unit==pair.station.unit_number
       and original_supply.priest_unit==priest.unit_number
