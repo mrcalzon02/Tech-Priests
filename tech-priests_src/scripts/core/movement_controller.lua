@@ -440,6 +440,57 @@ local function direct_go_to(priest, pos, radius, distraction)
     elseif ay>ax*2 then heading=dy>0 and d.south or d.north
     elseif dx>=0 then heading=dy>=0 and d.southeast or d.northeast
     else heading=dy>=0 and d.southwest or d.northwest end
+    -- Native walking is not native pathfinding. Probe the original
+    -- character's next physical footprint, and steer around an actual
+    -- obstruction instead of walking into a locomotive forever. This only
+    -- chooses the next walking direction of an already-authorized 0418
+    -- lease; no item, entity, authority, position or arrival is fabricated.
+    local surface=priest.surface
+    local vectors={
+      {d.north,0,-1},{d.northeast,0.70710678,-0.70710678},
+      {d.east,1,0},{d.southeast,0.70710678,0.70710678},
+      {d.south,0,1},{d.southwest,-0.70710678,0.70710678},
+      {d.west,-1,0},{d.northwest,-0.70710678,-0.70710678}}
+    local function clear_step(v)
+      if not(surface and type(surface.can_place_entity)=="function")then
+        return false
+      end
+      local probe={x=priest.position.x+v[2]*0.85,
+        y=priest.position.y+v[3]*0.85}
+      local ok,allowed=pcall(function()
+        return surface.can_place_entity{
+          name=priest.name,position=probe,force=priest.force}
+      end)
+      return ok and allowed==true
+    end
+    local direct_index
+    for index,v in ipairs(vectors)do
+      if v[1]==heading then direct_index=index;break end
+    end
+    if not direct_index then return false end
+    if not clear_step(vectors[direct_index]) then
+      -- Bounded eight-way local obstacle detour. Prefer an actual
+      -- traversable sidestep which still reduces remaining distance;
+      -- fall back to the closest clear tangent only if every forward
+      -- option is blocked. No coordinate writes or path-completion credit.
+      local best,score
+      for index,v in ipairs(vectors)do
+        if clear_step(v)then
+          local px=priest.position.x+v[2]*0.85
+          local py=priest.position.y+v[3]*0.85
+          local remain=(pos.x-px)^2+(pos.y-py)^2
+          local delta=math.abs(index-direct_index)
+          delta=math.min(delta,8-delta)
+          local candidate=remain+delta*0.001
+          if not score or candidate<score then
+            score=candidate
+            best=v[1]
+          end
+        end
+      end
+      if not best then return false end
+      heading=best
+    end
     local ok=pcall(function()
       priest.walking_state={walking=true,direction=heading}
     end)

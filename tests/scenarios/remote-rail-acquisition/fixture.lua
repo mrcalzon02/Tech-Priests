@@ -867,6 +867,13 @@ local function inspect(s,elapsed)
     " native_driver_read="..tostring(driver_read)..
     " real_original_driver="..tostring(native_driver==p.priest)..
     " contact_sq="..tostring(contact_sq)..
+    " priest_x="..tostring(p.priest.position.x)..
+    " priest_y="..tostring(p.priest.position.y)..
+    " loco_x="..tostring(loco_entity and loco_entity.valid and loco_entity.position.x)..
+    " loco_y="..tostring(loco_entity and loco_entity.valid and loco_entity.position.y)..
+    " move_x="..tostring(p.movement_request_0418 and p.movement_request_0418.x)..
+    " move_y="..tostring(p.movement_request_0418 and p.movement_request_0418.y)..
+    " move_state="..tostring(p.movement_controller_state_0418)..
     " retry_after="..tostring(first_board and first_board.retry_after_tick)..
     " blocker="..tostring(first_board and first_board.last_blocker)..
     " movement_owner="..tostring(p.movement_request_0418 and p.movement_request_0418.owner))

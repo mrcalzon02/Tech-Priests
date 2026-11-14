@@ -1502,3 +1502,24 @@ class OriginalRailCharacterBirthContractTests(unittest.TestCase):
         self.assertIn('if priest.type~="character" then',rail)
         self.assertIn('entity.set_driver(priest)',rail)
         self.assertIn('actual==priest',rail)
+
+class OriginalCharacterObstacleNavigationRegression(unittest.TestCase):
+    def test_character_collision_probe_is_physical_and_bounded(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        move=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text(encoding="utf-8")
+        block=move.split('if priest.type=="character" then',1)[1].split('local command = {',1)[0]
+        self.assertIn('surface.can_place_entity{',block)
+        self.assertIn('name=priest.name,position=probe,force=priest.force',block)
+        self.assertIn('if not clear_step(vectors[direct_index]) then',block)
+        self.assertIn('for index,v in ipairs(vectors)do',block)
+        self.assertIn('priest.walking_state={walking=true,direction=heading}',block)
+        self.assertNotIn('priest.teleport(',block)
+        self.assertNotIn('surface.create_entity',block)
+        self.assertNotIn('entity.set_driver',block)
+    def test_live_original_fixture_reads_both_positions_and_lease(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        block=fixture.split('emit("BOARD_NATIVE_0836 elapsed="',1)[1].split('local drills=',1)[0]
+        for key in ('priest_x=', 'priest_y=', 'loco_x=', 'loco_y=',
+                    'move_x=', 'move_y=', 'move_state='):
+            self.assertIn(key,block)
