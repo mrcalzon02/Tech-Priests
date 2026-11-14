@@ -358,11 +358,6 @@ local function nearby_storage_source(pair,item)
 end
 local function known_fetch_source(pair,item) return catalog_storage_source(pair,item) or nearby_storage_source(pair,item) or loose_ground_source(pair,item) end
 
-local function movement_root()
-  storage.tech_priests=storage.tech_priests or {}
-  storage.tech_priests.movement_controller_0419=storage.tech_priests.movement_controller_0419 or {requests={},active_request_ids={},stats={}}
-  local r=storage.tech_priests.movement_controller_0419; r.requests=r.requests or {}; r.active_request_ids=r.active_request_ids or {}; return r
-end
 local function publish_leaf(pair,src,item,phase)
   local label
   if phase=="deposited" then label="Fetched "..safe(item).." from "..safe(src.source and src.source.name) else label="Fetching "..(clean_item(item) or safe(item)).." from "..safe(src.source and src.source.name) end
@@ -374,16 +369,25 @@ end
 local function request_move(pair,src,item)
   if not (valid_pair(pair) and src and valid(src.source)) then return false end
   local pos=src.source.position
-  local key=pair_key(pair)
-  if key then
-    local mr=movement_root()
-    local req={x=pos.x,y=pos.y,radius=1.15,reason="known-source-fetch-0527",owner="logistics-fetch-0527",priority=M.fetch_priority,distraction=defines and defines.distraction and defines.distraction.none or nil,issued_tick=now(),updated_tick=now(),expires_tick=now()+M.fetch_ttl,item=item,target_name=src.source.name,target_unit=src.source.unit_number,logistics_fetch_0527=true}
-    mr.requests[key]=req; mr.active_request_ids[key]=true; pair.movement_request_0418=req; pair.movement_controller_owner_0418=req.owner; pair.movement_controller_reason_0418=req.reason; pair.movement_controller_clamp_0418=nil; pair.movement_controller_state_0418="logistics-fetch-0527"
-  end
-  local ok=false
-  if _G.tech_priests_request_movement_0418 then local ok_call,res=pcall(_G.tech_priests_request_movement_0418,pair,pos,"known-source-fetch-0527",{owner="logistics-fetch-0527",priority=M.fetch_priority,ttl=M.fetch_ttl,radius=1.15,distraction=defines and defines.distraction and defines.distraction.none or nil}); ok=ok_call and res~=false end
-  if not ok and defines and defines.command then pcall(function() local command={type=defines.command.go_to_location,destination={x=pos.x,y=pos.y},radius=1.15,distraction=defines.distraction and defines.distraction.none or nil}; if pair.priest.commandable and pair.priest.commandable.valid then pair.priest.commandable.set_command(command); ok=true elseif pair.priest.set_command then pair.priest.set_command(command); ok=true end end) end
-  if ok then
+  -- 0418 alone owns the live movement lease and engine command. A fetch
+  -- must not prewrite its request table (or issue a fallback set_command):
+  -- both paths bypass the original 0338 rail builder and recovery routes.
+  local move=rawget(_G,"tech_priests_request_movement_0418")
+  if type(move)~="function" then return false end
+  local called,accepted=pcall(move,pair,pos,"known-source-fetch-0527",{
+    owner="logistics-fetch-0527",priority=M.fetch_priority,
+    ttl=M.fetch_ttl,radius=1.15,
+    distraction=defines and defines.distraction and defines.distraction.none or nil})
+  if not(called and accepted==true) then return false end
+  -- 0418 may accept an already-owned same-destination request without
+  -- transferring its lease to logistics. Such a route is NOT our fetch.
+  local live=pair.movement_request_0418
+  if not(live and live.owner=="logistics-fetch-0527"
+      and live.reason=="known-source-fetch-0527"
+      and type(live.x)=="number" and type(live.y)=="number"
+      and math.abs(live.x-pos.x)<0.5 and math.abs(live.y-pos.y)<0.5)
+  then return false end
+  do
     pair.mode="moving-to-known-source"
     pair.logistics_fetch_0527={phase="moving-to-source",item=item,source=src.source,source_unit=src.source.unit_number,source_name=src.source.name,inventory_id=src.inventory_id,source_kind=src.kind,x=pos.x,y=pos.y,tick=now()}
     pair.logistics_fetch_0526=pair.logistics_fetch_0527
@@ -403,6 +407,17 @@ function M.service_pair(pair,reason)
   local need_total=math.max(1,tonumber(req.count) or 1)
   local need_remaining=math.max(1,need_total-have_station)
   if have_station>=need_total then return false,"already-in-station" end
+  -- An already admitted 0338 rail build owns the original Magos until its
+  -- source, carried rail and destination are reconciled. The generic
+  -- fetcher may not redirect its priest or debit unrelated storage mid-build.
+  local mission=pair.remote_rail_outpost_0835
+  local pending=mission and mission.pending_rail_0836
+  local builder=pair.construction_task_0338
+  local custody=pair.construction_custody_0338
+  if pending and pending.request and (
+      (builder and builder.request_value==pending.request)
+      or (custody and custody.request_value==pending.request))
+  then return false,"original-rail-builder-owns-physical-work" end
   local src=known_fetch_source(pair,item)
   if not (src and valid(src.source)) then return false,"no-known-fetch-source" end
   local key=tostring(station_unit(pair))..":"..tostring(item)..":"..tostring(src.source.unit_number or src.source.name)..":"..safe(src.inventory_id or src.kind)
