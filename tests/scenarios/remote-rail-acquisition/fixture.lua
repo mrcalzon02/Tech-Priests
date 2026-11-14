@@ -1048,23 +1048,88 @@ local function inspect(s,elapsed)
   local homeward=objective and objective.first_return_0836
   local home_state=objective and objective.first_stop_0836
   local home_entity=home_state and home_state.built_entity
+  -- The original Magos must physically leave the train to build the remote
+  -- mining site. After a REAL 0338 source-debited build, native get_driver()
+  -- correctly returns nil. Do not mistake that for a counterfeit outward
+  -- arrival, or accept a Magos who has been dragged home by 0566 instead.
+  -- Require the exact original completed 0338 entity, counted supply debit,
+  -- same engine, original priest still alive ON SITE, and native paid stop.
+  local remote_drill=objective and objective.first_remote_drill_0836
+  local last_builder=p.construction_last_task_0338
+  local supply=p.rail_remote_drill_supply_0836
+  local ride=p.train_transport_rail_0835
+  local foot_native=false
+  if outbound and moving_train and moving_train.valid
+      and remote_drill and remote_drill.disembark_confirmed==true
+      and remote_drill.disembark_priest_unit==p.priest.unit_number
+      and type(remote_drill.disembark_tick)=="number"
+      and type(outbound.arrived_tick)=="number"
+      and remote_drill.disembark_tick>=outbound.arrived_tick
+      and outbound.highest_x and outbound.origin_x
+      and outbound.highest_x>outbound.origin_x+32
+      and outbound.train_id==moving_train.id
+      and remote_drill.train_id==moving_train.id
+      and ride and ride.train_id==moving_train.id
+      and ride.physical_boarding_confirmed==true
+      and ride.disembark_confirmed==true
+      and ride.boarded_priest_unit==p.priest.unit_number
+      and driver_read and native_driver==nil
+      and remote_entity and remote_entity.valid
+      and remote.phase=="native-paid-original-train-stop-verified"
+      and remote_receipt and remote_receipt.native_0338_paid==true
+      and remote_receipt.before-remote_receipt.after==1
+      and moving_train.station==remote_entity
+      and math.abs(tonumber(moving_train.speed)or 0)<0.01
+      and p.priest.valid and p.priest.type=="character"
+      and p.priest.surface==remote_entity.surface
+      and p.priest.force==remote_entity.force
+      and last_builder and last_builder.phase=="complete"
+      and last_builder.request_value==remote_drill.request
+      and last_builder.request_field=="remote_drill_request_1011"
+      and last_builder.creative_build~=true
+      and last_builder.built_entity and last_builder.built_entity.valid
+      and last_builder.built_entity.name=="burner-mining-drill"
+      and last_builder.built_entity.type=="mining-drill"
+      and last_builder.built_entity.force==remote_entity.force
+      and supply and not supply.quarantine
+      and supply.source_before and supply.source_after
+      and supply.source_before-supply.source_after==1 then
+    local dx=p.priest.position.x-remote_entity.position.x
+    local dy=p.priest.position.y-remote_entity.position.y
+    foot_native=dx*dx+dy*dy<=96*96
+  end
+  emit("ORIGINAL_REMOTE_NATIVE_DISEMBARK_0836 elapsed="..elapsed..
+    " on_site="..tostring(foot_native)..
+    " original_priest_unit="..tostring(p.priest.unit_number)..
+    " original_native_driver="..tostring(native_driver==p.priest)..
+    " drill_built="..tostring(last_builder
+      and last_builder.phase=="complete" and last_builder.built_entity
+      and last_builder.built_entity.valid)..
+    " original_source_debit="..tostring(supply and supply.source_before
+      and supply.source_after
+      and supply.source_before-supply.source_after)..
+    " priest_x="..tostring(p.priest.position.x)..
+    " train_station="..tostring(moving_train and moving_train.valid
+      and moving_train.station and moving_train.station.unit_number))
   if outbound and outbound.phase==
       "native-original-outbound-arrived-at-paid-remote-stop"
       and not(moving_train and moving_train.valid
-        and native_driver==p.priest
-        and (moving_train.station==remote_entity
-          or (homeward and homeward.home_order_written==true
-            and outbound.arrived_tick~=nil
-            and outbound.highest_x and outbound.origin_x
-            and outbound.highest_x>outbound.origin_x+32
-            and homeward.train_id==moving_train.id
-            and outbound.train_id==moving_train.id
-            and homeward.priest_unit==p.priest.unit_number
-            and homeward.remote_stop_unit==remote_entity.unit_number
-            and home_entity and home_entity.valid
-            and homeward.home_stop_unit==home_entity.unit_number)))then
+        and ((native_driver==p.priest
+            and (moving_train.station==remote_entity
+              or (homeward and homeward.home_order_written==true
+                and outbound.arrived_tick~=nil
+                and outbound.highest_x and outbound.origin_x
+                and outbound.highest_x>outbound.origin_x+32
+                and homeward.train_id==moving_train.id
+                and outbound.train_id==moving_train.id
+                and homeward.priest_unit==p.priest.unit_number
+                and homeward.remote_stop_unit==remote_entity.unit_number
+                and home_entity and home_entity.valid
+                and homeward.home_stop_unit==home_entity.unit_number)))
+          or foot_native))then
     fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")
   end
+  if foot_native then s.ride_proof=true end
   local home_schedule
   if moving_train and moving_train.valid then
     local observed,records=pcall(function()

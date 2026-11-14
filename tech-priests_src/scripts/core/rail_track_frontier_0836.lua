@@ -2790,6 +2790,87 @@ function M.authorized_original_remote_drill_walk_0836(pair,point,movement)
     and dx*dx+dy*dy<=96*96
 end
 
+-- Native remote site duty continues after the original 0338 builder has
+-- physically placed its own item and released construction movement. The
+-- standard 0566 leash would otherwise march the original Magos 400 tiles
+-- home before it can service this real, paid railway outpost.
+-- This grants NO new cargo or movement authority: only an original on-foot
+-- Magos inside the same 96-tile site boundary can remain for a bounded duty.
+function M.authorized_original_remote_drill_hold_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  local state=m and m.first_remote_drill_0836
+  local loco=m and m.first_locomotive_0836
+  local wagon=m and m.first_wagon_0836
+  local far=m and m.remote_stop_0836
+  local train_engine=loco and loco.built_entity
+  local stop=far and far.built_entity
+  local priest=pair and pair.priest
+  local ride=pair and pair.train_transport_rail_0835
+  local completion=pair and pair.construction_last_task_0338
+  local original_supply=pair and pair.rail_remote_drill_supply_0836
+  if not(eligible(pair,m) and m.status=="rail-track-established"
+      and state and state.disembark_confirmed==true
+      and state.priest_unit==priest.unit_number
+      and state.disembark_priest_unit==priest.unit_number
+      and state.station_unit==pair.station.unit_number
+      and type(state.disembark_tick)=="number"
+      and now()>=state.disembark_tick
+      and now()-state.disembark_tick<=60*600
+      and valid(priest) and priest.type=="character"
+      and storage and storage.tech_priests
+      and storage.tech_priests.pairs_by_station
+      and storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair
+      and loco and loco.phase=="native-paid-locomotive-verified"
+      and valid(train_engine) and train_engine.unit_number==loco.built_unit
+      and wagon and wagon.phase=="native-paid-wagon-verified"
+      and valid(wagon.built_entity)
+      and far and far.phase=="native-paid-original-train-stop-verified"
+      and far.paid_completion_0836
+      and far.paid_completion_0836.native_0338_paid==true
+      and valid(stop) and stop.unit_number==far.built_unit
+      and train_engine.train and train_engine.train.valid
+      and wagon.built_entity.train and wagon.built_entity.train.valid
+      and train_engine.train.id==wagon.built_entity.train.id
+      and train_engine.train.id==state.train_id
+      and train_engine.train.station==stop
+      and math.abs(tonumber(train_engine.train.speed)or 0)<0.01
+      and priest.surface==stop.surface and priest.force==stop.force
+      and ride and ride.physical_boarding_confirmed==true
+      and ride.disembark_confirmed==true
+      and ride.train_id==state.train_id
+      and ride.boarded_priest_unit==priest.unit_number
+      and completion and completion.phase=="complete"
+      and completion.request_value==state.request
+      and completion.request_field=="remote_drill_request_1011"
+      and completion.site_reason=="original-remote-rail-drill-0836"
+      and completion.item_name=="burner-mining-drill"
+      and completion.creative_build~=true
+      and valid(completion.built_entity)
+      and completion.built_entity.name=="burner-mining-drill"
+      and completion.built_entity.type=="mining-drill"
+      and completion.built_entity.force==stop.force
+      and completion.built_entity.surface==stop.surface
+      and close(completion.built_entity.position,state.position)
+      and original_supply and not original_supply.quarantine
+      and original_supply.station_unit==pair.station.unit_number
+      and original_supply.priest_unit==priest.unit_number
+      and original_supply.source_before and original_supply.source_after
+      and original_supply.source_before-original_supply.source_after==1
+      and original_supply.wagon_request==wagon.request
+      and original_supply.inventory and original_supply.inventory.valid
+      and original_supply.inventory.get_item_count("burner-mining-drill")==0
+      and not pair.construction_task_0338
+      and not pair.construction_custody_0338
+      and not pair.machine_logistics_custody_0528
+      and not pair.item_family_custody_0702
+      and not pair.direct_acquisition_custody_0513)then return false end
+  local read,driver=pcall(function()return train_engine.get_driver()end)
+  if not(read and driver==nil)then return false end
+  local dx,dy=priest.position.x-stop.position.x,
+    priest.position.y-stop.position.y
+  return dx*dx+dy*dy<=96*96
+end
+
 -- remote stop may ask Factorio to take it home. A schedule or route receipt is
 -- never evidence of a return journey; single-headed trains may have no path.
 function M.service_first_train_return_0836(pair)

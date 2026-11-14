@@ -2397,3 +2397,47 @@ class OriginalNativeRailDisembarkAndDrillWalk0836Tests(unittest.TestCase):
         self.assertIn('frontier.authorized_original_remote_drill_walk_0836,pair,pos',corridor)
         self.assertIn('return false,"original-native-remote-drill-contact-owned-0836"',movement)
         self.assertIn('M.stop(pair,"original-remote-drill-construction-safety-handoff-0836")',movement)
+
+
+class NativePaidRemoteDrillCompletionHold0836Tests(unittest.TestCase):
+    """Native paid drill completes before 0566 can recall the original Magos."""
+
+    def test_completed_original_drill_not_generic_permanent_remote_leash(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        source=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        controller=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        body=source.split("function M.authorized_original_remote_drill_hold_0836(pair)",1)[1].split(
+            "function M.service_first_train_return_0836(pair)",1)[0]
+        for token in ('state.disembark_confirmed==true',
+                      'now()-state.disembark_tick<=60*600',
+                      'storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair',
+                      'train_engine.train.station==stop',
+                      'ride.disembark_confirmed==true',
+                      'completion.phase=="complete"',
+                      'completion.request_value==state.request',
+                      'completion.request_field=="remote_drill_request_1011"',
+                      'completion.creative_build~=true',
+                      'completion.built_entity.name=="burner-mining-drill"',
+                      'completion.built_entity.type=="mining-drill"',
+                      'original_supply.source_before-original_supply.source_after==1',
+                      'original_supply.inventory.get_item_count("burner-mining-drill")==0',
+                      'not pair.construction_task_0338',
+                      'driver==nil',
+                      'return dx*dx+dy*dy<=96*96'):
+            self.assertIn(token,body)
+        for forbidden in ('teleport(', 'create_entity(', 'bounds_exempt', 'remove_item(', 'insert('):
+            self.assertNotIn(forbidden,body)
+        enforcement=controller.split("function M.enforce_pair(pair, reason)",1)[1]
+        self.assertIn('rail.authorized_original_remote_drill_hold_0836,pair',enforcement)
+        self.assertLess(enforcement.index('rail.authorized_original_remote_drill_hold_0836,pair'),
+                        enforcement.index('if distance > M.hard_leash(pair)'))
+        self.assertIn('M.stop(pair,"original-native-remote-drill-completion-safety-handoff-0836")',
+                      enforcement)
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text()
+        self.assertIn('ORIGINAL_REMOTE_NATIVE_DISEMBARK_0836 elapsed=',fixture)
+        self.assertIn('moving_train.station==remote_entity',fixture)
+        self.assertIn('last_builder.request_value==remote_drill.request',fixture)
+        self.assertIn('supply.source_before-supply.source_after==1',fixture)
+        self.assertIn('foot_native=dx*dx+dy*dy<=96*96',fixture)
+        self.assertIn('if foot_native then s.ride_proof=true end',fixture)
+        self.assertIn('fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)

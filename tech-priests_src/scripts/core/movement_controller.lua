@@ -1533,6 +1533,25 @@ function M.enforce_pair(pair, reason)
       end
     end
   end
+  -- After the ORIGINAL 0338 physically builds its paid remote drill, the
+  -- original Magos must not be recalled 400 tiles before the expedition can
+  -- acquire ore. No new movement owner or distance waiver is granted: this
+  -- read-only native duty check expires and demands the same completed item.
+  do
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if rail and
+        type(rail.authorized_original_remote_drill_hold_0836)=="function"then
+      local checked,authorized=pcall(
+        rail.authorized_original_remote_drill_hold_0836,pair)
+      if checked and authorized==true then
+        if enforcement_return then
+          M.stop(pair,"original-native-remote-drill-completion-safety-handoff-0836")
+          return true,"original-native-remote-drill-completion-safety-handoff-0836"
+        end
+        return false,"original-native-remote-drill-paid-site-duty-owned-0836"
+      end
+    end
+  end
   if distance > M.hard_leash(pair) then
     -- 0836 original paid rail construction is a physically verified track
     -- contact, not a general overleash exemption.  Require the same live
