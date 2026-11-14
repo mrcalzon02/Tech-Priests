@@ -116,12 +116,25 @@ end
 -- stop, never builds an entity and never changes inventory or pair custody.
 local function authorized_paid_stop_contact_0836(pair,point)
   local mission=pair.remote_rail_outpost_0835
-  local stop=mission and mission.first_stop_0836
   local route=mission and mission.rail_frontier_0836
   local task=pair.construction_task_0338
+  local role=task and task.request_value and task.request_value.rail_stop_role_0836
+  if role~=nil and role~="home" and role~="remote" then return false end
+  -- The remote build cannot borrow the original home-stop movement writ.
+  -- A nil remote state must fail closed, not fall back to the home receipt.
+  local stop
+  if mission then
+    if role=="remote" then stop=mission.remote_stop_0836
+    else stop=mission.first_stop_0836 end
+  end
   local debit=task and task.original_stop_debit_0836
   if not(mission and mission.status=="rail-track-established"
     and stop and stop.phase=="awaiting-original-0338"
+    and stop.request and stop.request.rail_stop_role_0836==role
+    and (role~="remote" or (mission.first_stop_0836
+      and mission.first_stop_0836.phase=="native-paid-original-train-stop-verified"
+      and valid(mission.first_stop_0836.built_entity)
+      and mission.first_stop_0836.built_entity.unit_number==mission.first_stop_0836.built_unit))
     and route and route.chain_audit_completed_tick_0836
     and type(route.built_units)=="table"
     and route.segment==#route.built_units and route.segment>=24
@@ -154,7 +167,11 @@ local function authorized_paid_stop_contact_0836(pair,point)
   -- A planned line, a ghost or an arbitrary nearby rail is insufficient:
   -- require the exact original native anchor AND both connected neighbors,
   -- each matching the conserved original rail construction-unit ledger.
-  for _,index in ipairs({16,18,20,14,22,12})do
+  local indices=role=="remote"
+    and {route.segment-16,route.segment-18,route.segment-14,
+         route.segment-20,route.segment-12,route.segment-22}
+    or {16,18,20,14,22,12}
+  for _,index in ipairs(indices)do
     if index>=2 and index+1<=route.segment then
       local anchor=pos(route.start_position.x+(index-1)*M.segment_step,
         route.start_position.y)
