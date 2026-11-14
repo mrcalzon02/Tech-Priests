@@ -105,10 +105,10 @@ class OriginalRailItemFamilyAdmissionTests(unittest.TestCase):
         self.assertIn('if original_rail_expedition_reserved_0836(pair) then', discover)
         self.assertIn('if original_rail_expedition_reserved_0836(pair) then', service)
         self.assertLess(service.index("return continue_task(pair,task)"),
-                        service.index('if original_rail_expedition_reserved_0836(pair) then'))
+                        service.rindex('if original_rail_expedition_reserved_0836(pair) then'))
         self.assertLess(service.index("if reversal_future_worker_reserved_0962(pair) then"),
-                        service.index('if original_rail_expedition_reserved_0836(pair) then'))
-        self.assertLess(service.index('if original_rail_expedition_reserved_0836(pair) then'),
+                        service.rindex('if original_rail_expedition_reserved_0836(pair) then'))
+        self.assertLess(service.rindex('if original_rail_expedition_reserved_0836(pair) then'),
                         service.index("return begin_task(pair, candidate"))
         self.assertNotIn("pair.item_family_candidate_0702 = nil", guard)
         self.assertNotIn("pair.item_family_logistics_0702 = nil", service)
