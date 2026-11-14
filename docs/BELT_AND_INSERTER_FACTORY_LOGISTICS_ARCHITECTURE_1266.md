@@ -78,7 +78,7 @@ Sample flow edge: iron-ore from a particular built miner and its drop receiver -
 | quality_sorting — Quality Reliquary Sorting Rite | Per-quality filter-separated lanes and destinations | Phase 4, Space Age/modded availability only |
 | space_platform — Void Platform Axiomata | Compact closed-loop asteroid/product handling on platform surfaces | Phase 4 with native Space Age world rules |
 
-Social doctrine can express preferences; **no automatic personality-driven retasking**. Future profile selection must be an explicit engineering setting or confidently observed **player** factory style, never involuntary ideology-based construction.
+Social doctrine can express preferences; **no automatic personality-driven retasking**. The original 1268/1269 manual-preview interfaces still accept an explicit engineering style. The 1410 opt-in/current-object workflow now reads the **actual registered planning priest's current Conclave doctrine** as a *soft site-ranking preference only* (see [Priest-Doctrinal JIT 1410](PRIEST_DOCTRINAL_FACTORY_JIT_1410.md)); it NEVER issues construction, reassigns workers, overrides the player's native structures, changes social scores, or replans an unfinished object. These are distinct boundaries. Future full factory style detection may use explicit engineering settings or observed player infrastructure, not involuntary ideology-based physical construction.
 
 ## Route correctness rules and acceptance state machine
 
