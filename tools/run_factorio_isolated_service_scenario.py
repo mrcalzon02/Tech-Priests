@@ -695,11 +695,44 @@ def reset_rail_smoke_diagnostics(output: pathlib.Path) -> None:
         (output / name).unlink(missing_ok=True)
 
 
+def original_rail_native_refusals(log: str | None) -> dict[str, object]:
+    """Bounded original Factorio receipts; never evidence of a constructed rail.
+
+    Quota-blocked artifacts must not erase a genuine 0469/0836/0338
+    admission refusal. Preserve the last two observations of each distinct
+    authority, plus the FIRST native fixture failure, without processing
+    arbitrary unrelated log lines as acceptance markers.
+    """
+    prefix = "[TP-REMOTE-RAIL-TEST] "
+    keys = ("RAIL_ADMISSION_DIAG", "RAIL_LIVE_ADMISSION",
+            "RAIL_PREWRIT_GAP", "RAIL_PREWRIT_0338_OWNER",
+            "RAIL_ORIGINAL_CUSTODY_DIAG")
+    receipts: dict[str, list[str]] = {key: [] for key in keys}
+    first_failure = None
+    for raw in (log or "").splitlines():
+        if prefix not in raw:
+            continue
+        line = raw.split(prefix, 1)[1][:1200]
+        if line.startswith("FAIL ") and first_failure is None:
+            first_failure = line
+        for key in keys:
+            if line.startswith(key + " "):
+                receipts[key].append(line)
+                if len(receipts[key]) > 2:
+                    receipts[key].pop(0)
+                break
+    return {"native_first_fixture_failure": first_failure,
+            "native_admission_refusal_receipts": {
+                key: samples for key, samples in receipts.items() if samples}}
+
+
 def rail_smoke_evidence(create_exit_code: int, benchmark_exit_code: int | None,
                         log: str | None, engine_version: str,
                         required_series: str, ticks_requested: int,
                         engine_mode: str = "benchmark",
-                        driver_stop_reason: str | None = None) -> dict:
+                        driver_stop_reason: str | None = None,
+                        create_process_wall_minutes: float | None = None,
+                        test_process_wall_minutes: float | None = None) -> dict:
     """Retain the real engine's partial observation, including create failures."""
     prefix = "[TP-REMOTE-RAIL-TEST] "
     attempted = benchmark_exit_code is not None
@@ -716,6 +749,13 @@ def rail_smoke_evidence(create_exit_code: int, benchmark_exit_code: int | None,
                     and rail_connected_smoke_verdict(benchmark_exit_code, contents))
     return {
         "scenario": "remote-rail-acquisition",
+        "native_create_process_wall_minutes": create_process_wall_minutes,
+        "native_test_process_wall_minutes": test_process_wall_minutes,
+        "native_factorio_process_wall_minutes": (
+            round(create_process_wall_minutes + test_process_wall_minutes, 6)
+            if create_process_wall_minutes is not None
+            and test_process_wall_minutes is not None else None),
+        **original_rail_native_refusals(contents),
         "gate": "two-original-connected-item-debited-rails-only",
         "ticks_requested": ticks_requested,
         "engine_version": engine_version,
@@ -1356,7 +1396,8 @@ def main() -> int:
                     print("NATIVE_CREATE_TAIL " + line[:1200])
         if args.rail_connected_smoke:
             evidence = rail_smoke_evidence(
-                created, None, None, engine_version, required_series, tick_count)
+                created, None, None, engine_version, required_series, tick_count,
+                create_process_wall_minutes=create_engine_wall_minutes)
             rail_result_path.write_text(
                 json.dumps(evidence, indent=2, sort_keys=True), encoding="utf-8")
         print("FAIL headless save creation; see " + str(output / "create.log"))
@@ -1369,9 +1410,12 @@ def main() -> int:
         # credit, public listener, Steam restart or second controller.
         engine_mode = "native-player-test-save"
         native_log = output / "native-test-save.log"
+        native_engine_started = time.monotonic()
         engine_status = run(
             rail_native_player_test_command(factorio, mods, save, tick_count),
             native_log, args.timeout_seconds)
+        native_engine_minutes = round(
+            (time.monotonic() - native_engine_started) / 60, 6)
         contents = native_log.read_text(encoding="utf-8", errors="replace")
         for line in contents.splitlines():
             if scenario["prefix"] in line:
@@ -1381,7 +1425,11 @@ def main() -> int:
         # have been independently observed by the original Lua fixture.
         evidence = rail_smoke_evidence(
             0, engine_status, contents, engine_version, required_series,
-            tick_count, engine_mode=engine_mode)
+            tick_count, engine_mode=engine_mode,
+            create_process_wall_minutes=create_engine_wall_minutes,
+            test_process_wall_minutes=native_engine_minutes)
+        print("NATIVE_RAIL_ENGINE_PROCESS_MINUTES " +
+              str(evidence["native_factorio_process_wall_minutes"]))
         rail_result_path.write_text(
             json.dumps(evidence, indent=2, sort_keys=True), encoding="utf-8")
         if not evidence["accepted"]:
