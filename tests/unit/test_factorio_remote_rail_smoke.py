@@ -2473,3 +2473,50 @@ class OriginalPaidRemoteDrillBuildPhaseCorridor0836Tests(unittest.TestCase):
             self.assertIn(reason,corridor)
         for forbidden in ('teleport(', 'create_entity(', 'bounds_exempt'):
             self.assertNotIn(forbidden,permit)
+
+
+class OriginalNativeEjectionFootfallCorridor0836Tests(unittest.TestCase):
+    """The original Magos must walk from the ACTUAL engine-ejected position."""
+
+    def test_0338_remote_walk_uses_native_ejection_not_paid_stop_as_start(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        source=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        eject=source.split("function M.service_original_remote_drill_disembark_0836(pair)",1)[1].split(
+            "function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[0]
+        walk=source.split("function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[1].split(
+            "function M.authorized_original_remote_drill_hold_0836(pair)",1)[0]
+        self.assertIn('engine.set_driver(nil)',eject)
+        self.assertIn('after==nil',eject)
+        self.assertIn('dx*dx+dy*dy<=16*16',eject)
+        self.assertIn('state.disembark_position={x=priest.position.x,y=priest.position.y}',eject)
+        self.assertLess(eject.index('after==nil'),eject.index('state.disembark_position={'))
+        for proof in ('state.disembark_confirmed==true',
+                      'state.disembark_position',
+                      'type(state.disembark_position.x)=="number"',
+                      'type(state.disembark_position.y)=="number"',
+                      'state.priest_unit==priest.unit_number',
+                      'engine.train.station==stop',
+                      'task.request_value==state.request',
+                      'custody.request_value==state.request',
+                      'pair.rail_remote_drill_supply_0836.source_before',
+                      'driver==nil',
+                      'local foot=state.disembark_position',
+                      'if ex*ex+ey*ey>16*16 then return false end',
+                      'local sx,sy=foot.x,foot.y',
+                      'dot>=-0.10 and dot<=1.20 and cross<=10',
+                      'dx*dx+dy*dy<=96*96'):
+            self.assertIn(proof,walk)
+        self.assertNotIn('local sx,sy=stop.position.x,stop.position.y',walk)
+        for bypass in ('teleport(', 'create_entity(', 'bounds_exempt'):
+            self.assertNotIn(bypass,walk)
+
+    def test_engine_ejection_fourteen_tiles_behind_stop_is_no_longer_start_denial(self):
+        # Regression of native stationary train: its driver exits at the
+        # locomotive, not the paid stop. This proves only the narrow geometry
+        # calculation, NOT a physical ore-delivery acceptance.
+        stop_x, foot_x, drill_x=386,372,438
+        old_dot=(foot_x-stop_x)/(drill_x-stop_x)
+        new_dot=(foot_x-foot_x)/(drill_x-foot_x)
+        self.assertLess(old_dot,-0.10)
+        self.assertEqual(new_dot,0)
+        self.assertLessEqual((foot_x-stop_x)**2,16**2)
