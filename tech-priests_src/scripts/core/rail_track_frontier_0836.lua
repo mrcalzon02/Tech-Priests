@@ -1313,7 +1313,10 @@ end
 -- First native train stop: one real train-stop item, original 0338
 -- physical builder, exact source debit, live connection to counted 0836 rail.
 -- This is route infrastructure ONLY, never a claim that a unit Magos boarded.
-function M.service_first_train_stop_0836(pair)
+function M.service_first_train_stop_0836(pair,role)
+  -- Two independently paid 0338 stops on the same audited original rail.
+  -- A home-only stop cannot prove an outward expedition.
+  local remote=role=="remote"
   local m=pair and pair.remote_rail_outpost_0835
   local route=m and m.rail_frontier_0836
   local loco=m and m.first_locomotive_0836
@@ -1332,7 +1335,13 @@ function M.service_first_train_stop_0836(pair)
     and loco.built_entity.train.id==wagon.built_entity.train.id)then
     return false,"original-paid-fueled-train-and-track-unavailable"
   end
-  local state=m.first_stop_0836
+  if remote and not(m.first_stop_0836
+    and m.first_stop_0836.phase=="native-paid-original-train-stop-verified"
+    and valid(m.first_stop_0836.built_entity)
+    and m.first_stop_0836.built_entity.unit_number==m.first_stop_0836.built_unit)then
+    return false,"original-home-stop-not-verified"
+  end
+  local state=remote and m.remote_stop_0836 or m.first_stop_0836
   local function connected_original(stop)
     if not(valid(stop) and stop.name=="train-stop"
       and stop.force==pair.station.force
@@ -1451,7 +1460,12 @@ function M.service_first_train_stop_0836(pair)
     return false,"original-native-train-stop-requires-horizontal-track"
   end
   local chosen,direction
-  for _,index in ipairs({16,18,20,14,22,12})do
+  -- The far stop must lie near the paid distant frontier, not home.
+  local indices=remote
+    and {route.segment-16,route.segment-18,route.segment-14,
+         route.segment-20,route.segment-12,route.segment-22}
+    or {16,18,20,14,22,12}
+  for _,index in ipairs(indices)do
     if index>=2 and index+1<=route.segment then
       local origin=pos(route.start_position.x+(index-1)*M.segment_step,
         route.start_position.y)
@@ -1492,13 +1506,18 @@ function M.service_first_train_stop_0836(pair)
   local request={item_name="train-stop",entity_name="train-stop",
     category="rail",position=chosen,direction=direction,
     site_reason="original-first-train-stop-0836",
+    rail_stop_role_0836=remote and "remote" or "home",
     rail_mission_station_unit_0836=m.root_station_unit}
-  m.first_stop_0836={phase="awaiting-original-0338",
+  local record={phase="awaiting-original-0338",
     request=request,position=chosen,issued_tick=now()}
+  if remote then m.remote_stop_0836=record
+  else m.first_stop_0836=record end
   pair.construction_request=request
-  m.next_step="existing-0338-physical-first-train-stop"
+  m.next_step=remote and "existing-0338-physical-remote-train-stop"
+    or "existing-0338-physical-first-train-stop"
   m.last_update_tick=now()
-  return true,"original-first-train-stop-request-issued"
+  return true,remote and "original-remote-train-stop-request-issued"
+    or "original-first-train-stop-request-issued"
 end
 
 function M.service_first_train_board_0836(pair)
@@ -1686,6 +1705,10 @@ function M.service_pair(pair)
           local stop=m.first_stop_0836
           if not(stop and stop.phase=="native-paid-original-train-stop-verified")then
             return M.service_first_train_stop_0836(pair)
+          end
+          local far=m.remote_stop_0836
+          if not(far and far.phase=="native-paid-original-train-stop-verified")then
+            return M.service_first_train_stop_0836(pair,"remote")
           end
           return M.service_first_train_board_0836(pair)
         end
