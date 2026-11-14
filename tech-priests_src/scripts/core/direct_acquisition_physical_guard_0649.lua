@@ -100,6 +100,9 @@ end
 function M.guard_pair(pair, reason)
   if root().enabled == false then return false, "disabled" end
   if not valid_pair(pair) then return false, "invalid-pair" end
+  -- A depleted rock/tree may already be gone while its real native mining
+  -- inventory is still returning. Target repair cannot retire that owner.
+  if pair.direct_acquisition_custody_0513 then return false,"physical-custody-owned" end
   local task, cur, key = current_direct_task(pair)
   if not (task and cur and DIRECT_KINDS[tostring(cur.kind or "")]) then return false, "no-direct-task" end
   local item = output_item(task, cur)
@@ -150,6 +153,9 @@ local function wrap_direct_executor()
   Exec.physical_guard_0649_wrapped = true
   Exec.TECH_PRIESTS_0649_PRE_SERVICE_PAIR = Exec.service_pair
   Exec.service_pair = function(pair, reason, ...)
+    if pair and pair.direct_acquisition_custody_0513 then
+      return Exec.TECH_PRIESTS_0649_PRE_SERVICE_PAIR(pair, reason, ...)
+    end
     local _, cur = current_direct_task(pair)
     if cur and DIRECT_KINDS[tostring(cur.kind or "")] and not target_entity(cur) then local acted, why = M.guard_pair(pair, reason or "pre-0513"); if acted and why ~= "adopted" then return false, why end end
     return Exec.TECH_PRIESTS_0649_PRE_SERVICE_PAIR(pair, reason, ...)

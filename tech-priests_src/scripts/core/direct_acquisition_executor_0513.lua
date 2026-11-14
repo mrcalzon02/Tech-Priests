@@ -339,6 +339,38 @@ local function service_custody(p,t,cur,key,state)
   if c.native_inventory then return false,"native-mining-custody-metadata-invalid"end
   return fail_unsafe(p,t,key,state,"invalid-custody-metadata")
  end
+ -- Fulfil an exact independent material request at the real patch before
+ -- walking home. Each additional unit retains the normal native work timer
+ -- and physical resource debit; no repeated station trip per single stone.
+ local target=cur and entity(cur)
+ local op=p.independent_emergency_operation_0184
+ if t and t.bootstrap_resource_0637==true and op and op.enabled==true
+     and c.source_kind=="resource"and not c.native_inventory
+     and c.parent_key==key and valid(target)and target.type=="resource"
+     and same_target(c.target,target)and target.name==c.item
+     and not valid(p.combat_target)
+     and c.count<math.min(20,math.max(0,required(t)-(tonumber(t.gathered_units)or 0)))
+     and dist2(p.priest.position,target.position)<=M.close_distance_sq
+     and within_bounds(p,target.position)then
+   local clamped=clamp_for_work(p)
+   if clamped then
+     t.direct_due_tick_0513=t.direct_due_tick_0513 or(now()+M.laser_work_ticks(target))
+     if now()<t.direct_due_tick_0513 then
+       p.mode="direct-acquisition-working";phase(p,"work-material-batch",c.item)
+       return true,"working-material-batch"
+     end
+     local ok,amount=extract(t,cur,target,c.item)
+     clear_due(t)
+     if ok then
+       c.count=c.count+amount
+       stat("extracted-item:"..c.item,amount)
+       visual(p,target,true)
+       return true,"material-batch-unit-extracted"
+     end
+   end
+ end
+ if t then clear_due(t)end
+ release_clamp(p,"material-batch-return")
  if dist2(p.priest.position,p.station.position)>M.station_distance_sq then
   p.target=p.station;p.mode="direct-acquisition-returning-with-custody";phase(p,"return-with-custody",c.item)
   if not state.next_return_retry_tick or now()>=state.next_return_retry_tick then -- The custody return must win over non-safety acquisition-contract retargets

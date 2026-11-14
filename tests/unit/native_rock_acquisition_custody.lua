@@ -38,6 +38,11 @@ assert(mined==1 and not rock.valid and bag.valid and bag.get_item_count("stone")
 assert(pair.direct_acquisition_custody_0513.native_inventory==bag and pair.direct_acquisition_custody_0513.count==13)
 package.loaded["scripts.core.direct_acquisition_executor_0513"]=nil
 Direct=require("scripts.core.direct_acquisition_executor_0513")
+local Guard=require("scripts.core.direct_acquisition_physical_guard_0649")
+local parent=pair.emergency_craft
+local _,guard_reason=Guard.service_pair(pair,"rock-already-consumed")
+assert(guard_reason=="physical-custody-owned"and pair.emergency_craft==parent,
+ "physical target guard retired the parent while actual mined cargo was held")
 blocked=false;game.tick=1100;Direct.service_pair(pair)
 assert(deposited.stone==13 and deposited.coal==7 and not bag.valid and not pair.direct_acquisition_custody_0513,
  "multi-item native mining custody did not survive reload and exact return")
