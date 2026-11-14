@@ -967,6 +967,14 @@ local function inspect(s,elapsed)
     " item_family_phase_0702="..tostring(first_board and first_board.item_family_phase_0702)..
     " item_family_item_0702="..tostring(first_board and first_board.item_family_item_0702)..
     " item_family_custody_0702="..tostring(first_board and first_board.item_family_custody_0702)..
+    " item_family_yield_0836="..tostring(first_board and first_board.last_item_family_yield_0836)..
+    " item_family_yield_reason_0836="..tostring(first_board and first_board.last_item_family_yield_reason_0836)..
+    " item_family_source_valid_0702="..tostring(p.item_family_logistics_0702 and p.item_family_logistics_0702.source_entity and p.item_family_logistics_0702.source_entity.valid)..
+    " item_family_target_valid_0702="..tostring(p.item_family_logistics_0702 and p.item_family_logistics_0702.target and p.item_family_logistics_0702.target.valid)..
+    " item_family_held_0702="..tostring(p.item_family_logistics_0702 and p.item_family_logistics_0702.carried~=nil)..
+    " item_family_relay_0702="..tostring(p.item_family_logistics_0702 and p.item_family_logistics_0702.relay_paused_order_1042~=nil)..
+    " item_family_custody_present_0702="..tostring(p.item_family_custody_0702~=nil)..
+    " rail_resource_unit_0835="..tostring(objective and objective.resource_unit)..
     " movement_owner="..tostring(p.movement_request_0418 and p.movement_request_0418.owner))
   -- Read actual native locomotive/schedule/stop movement. The persisted
   -- 0836 phase is diagnostic ONLY; train coordinates and original driver
