@@ -3029,6 +3029,20 @@ function M.service_original_remote_drill_fuel_0836(pair)
       and fuel_before>=0)then
     return false,"native-remote-drill-fuel-pretransfer-count-unreadable"
   end
+  -- A burner immediately moves one real coal from the fuel inventory into
+  -- its actively burning slot. Observe BEFORE as well as AFTER to prove
+  -- that one fewer inventory item was consumed natively, not invented.
+  local initial_burn_ok,initial_burn_name,initial_energy=pcall(function()
+    local burner=drill.burner
+    if not(burner and burner.valid)then return nil,nil end
+    local active=burner.currently_burning
+    return active and active.name or nil,
+      tonumber(burner.remaining_burning_fuel) or 0
+  end)
+  if not(initial_burn_ok and initial_energy
+      and initial_burn_name==nil and initial_energy==0)then
+    return false,"native-remote-drill-fuel-preexisting-burner-unreconciled"
+  end
   -- Record intent BEFORE any native debit. A post-mutation error leaves the
   -- real inventories quarantined, never blindly restoring imaginary items.
   supply.fuel_transfer_attempt_tick_0836=now()
@@ -3049,8 +3063,20 @@ function M.service_original_remote_drill_fuel_0836(pair)
   local after_ok,held_after,fuel_after=pcall(function()
     return hold.get_item_count("coal"),drill_fuel.get_item_count("coal")
   end)
+  local burner_ok,active_name,remaining_j=pcall(function()
+    local burner=drill.burner
+    if not(burner and burner.valid)then return nil,nil end
+    local active=burner.currently_burning
+    return active and active.name or nil,
+      tonumber(burner.remaining_burning_fuel) or 0
+  end)
+  local native_burning_count=(burner_ok and active_name=="coal"
+    and remaining_j and remaining_j>0) and 1 or 0
+  -- Every one of the five source-debited coal must be in EITHER the
+  -- original fuel inventory OR the native active burner, not a Lua counter.
   if not(inserted_ok and inserted==5 and returned_ok and returned==0
-      and after_ok and held_after==0 and fuel_after==fuel_before+5)then
+      and after_ok and held_after==0
+      and fuel_after+native_burning_count==fuel_before+5)then
     supply.quarantine="native-remote-fuel-transfer-uncertain"
     return false,supply.quarantine
   end
@@ -3058,7 +3084,10 @@ function M.service_original_remote_drill_fuel_0836(pair)
     native_inventory_verified=true,drill_unit=drill.unit_number,
     priest_unit=priest.unit_number,source_coal_debit=5,
     held_before=held_before,held_after=held_after,
-    drill_before=fuel_before,drill_after=fuel_after,delivered_tick=now()}
+    drill_before=fuel_before,drill_after=fuel_after,
+    native_burning_coal_count=native_burning_count,
+    native_remaining_burning_j=remaining_j,
+    delivered_tick=now()}
   m.next_step="native-original-remote-drill-fueled-output-still-unverified"
   return true,"original-remote-drill-received-five-source-debited-coal"
 end

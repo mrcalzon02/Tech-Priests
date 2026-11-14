@@ -1157,6 +1157,13 @@ class OriginalRemoteNativeFuelSourceRegressions(unittest.TestCase):
         self.assertIn('"native-remote-fuel-transfer-uncertain"', frontier)
         self.assertIn('drill.unit_number==state.built_unit', frontier)
         self.assertIn('dx*dx+dy*dy>9', frontier)
+        # The live engine consumed one of five real fuel items immediately
+        # into its native burner. Require simultaneous physical accounting.
+        self.assertIn("initial_burn_name==nil and initial_energy==0", frontier)
+        self.assertIn('active_name=="coal"', frontier)
+        self.assertIn("remaining_j>0", frontier)
+        self.assertIn("fuel_after+native_burning_count==fuel_before+5", frontier)
+        self.assertIn("native_burning_coal_count=native_burning_count", frontier)
 
 if __name__ == "__main__":
     unittest.main()

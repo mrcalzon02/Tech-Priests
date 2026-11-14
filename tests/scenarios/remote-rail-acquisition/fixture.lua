@@ -823,11 +823,29 @@ local function inspect(s,elapsed)
       if counted and type(n)=="number"then native_drill_coal=n end
     end
   end
+  local native_burning_name="unmeasured"
+  local native_burning_remaining="unmeasured"
+  if built_drill and built_drill.valid then
+    local observed,name,energy=pcall(function()
+      local burner=built_drill.burner
+      if not(burner and burner.valid)then return nil,nil end
+      local active=burner.currently_burning
+      return active and active.name or nil,
+        tonumber(burner.remaining_burning_fuel)
+    end)
+    if observed then
+      native_burning_name=name or "none"
+      native_burning_remaining=energy or "unmeasured"
+    end
+  end
   emit("REMOTE_DRILL_FUEL_NATIVE_0836 elapsed="..elapsed..
     " original_source_coal_before="..tostring(supply and supply.fuel_source_before)..
     " original_source_coal_after="..tostring(supply and supply.fuel_source_after)..
     " held_coal="..tostring(native_held_coal)..
     " native_drill_coal="..tostring(native_drill_coal)..
+    " native_burning_item="..tostring(native_burning_name)..
+    " native_burning_remaining_j="..tostring(native_burning_remaining)..
+    " receipt_native_burning_coal="..tostring(delivery and delivery.native_burning_coal_count)..
     " fuel_paid="..tostring(delivery and delivery.native_inventory_verified)..
     " native_drill_unit="..tostring(built_drill and built_drill.unit_number)..
     " receipt_drill_unit="..tostring(delivery and delivery.drill_unit)..
