@@ -2452,6 +2452,164 @@ function M.service_first_train_outbound_0836(pair)
 end
 
 -- Only the same original Magos/native train at the independently paid
+-- The original first remote ORE drill must enter the EXISTING 0338 physical
+-- construction pipeline. 1404/1405 are read-only outpost plans; their presence
+-- has never meant a real miner. This single object request spends no item,
+-- does not disembark/teleport the Magos, and cannot count as a mined cargo.
+-- 0338 alone may approach a source, debit a real drill and build the entity.
+function M.offer_first_remote_drill_0836(pair)
+  local m=pair and pair.remote_rail_outpost_0835
+  local far=m and m.remote_stop_0836
+  local loco=m and m.first_locomotive_0836
+  local wagon=m and m.first_wagon_0836
+  local outward=m and m.first_outbound_0836
+  local remote=far and far.built_entity
+  local engine=loco and loco.built_entity
+  local priest=pair and pair.priest
+  if not(eligible(pair,m) and m.status=="rail-track-established"
+      and type(m.item)=="string" and m.item=="iron-ore"
+      and outward and outward.phase==
+        "native-original-outbound-arrived-at-paid-remote-stop"
+      and far and far.phase=="native-paid-original-train-stop-verified"
+      and valid(remote) and remote.unit_number==far.built_unit
+      and loco and loco.phase=="native-paid-locomotive-verified"
+      and valid(engine) and engine.unit_number==loco.built_unit
+      and wagon and wagon.phase=="native-paid-wagon-verified"
+      and valid(wagon.built_entity) and valid(priest)
+      and engine.train and engine.train.valid
+      and wagon.built_entity.train and wagon.built_entity.train.valid
+      and engine.train.id==wagon.built_entity.train.id
+      and engine.train.id==outward.train_id
+      and engine.train.station==remote
+      and math.abs(tonumber(engine.train.speed)or 0)<0.01)then
+    return false,"original-remote-drill-native-expedition-not-at-site"
+  end
+  local read,driver=pcall(function()return engine.get_driver()end)
+  if not(read and driver==priest
+      and pair.train_transport_rail_0835
+      and pair.train_transport_rail_0835.train_id==engine.train.id
+      and pair.train_transport_rail_0835.boarded_priest_unit==
+        priest.unit_number)then
+    return false,"original-remote-drill-native-driver-missing"
+  end
+  local state=m.first_remote_drill_0836
+  if state then
+    if state.station_unit~=pair.station.unit_number
+        or state.priest_unit~=priest.unit_number
+        or state.train_id~=engine.train.id then
+      return false,"original-remote-drill-identity-changed"
+    end
+    if state.phase=="native-0338-drill-built"then
+      local built=state.built_entity
+      if valid(built) and built.unit_number==state.built_unit
+          and built.name=="burner-mining-drill"
+          and built.type=="mining-drill"
+          and built.surface==pair.station.surface
+          and built.force==pair.station.force then
+        return false,"original-remote-drill-native-entity-still-present"
+      end
+      state.phase="native-drill-lost"
+      state.last_blocker="original-paid-drill-lost-no-automatic-recreation"
+      return false,state.last_blocker
+    end
+    local task=pair.construction_last_task_0338
+    if task and task.request_value==state.request then
+      if task.phase=="complete" and task.creative_build~=true
+          and valid(task.built_entity)
+          and task.built_entity.name=="burner-mining-drill"
+          and task.built_entity.type=="mining-drill"
+          and task.built_entity.force==pair.station.force
+          and task.built_entity.surface==pair.station.surface
+          and close(task.built_entity.position,state.position) then
+        state.phase="native-0338-drill-built"
+        state.built_entity=task.built_entity
+        state.built_unit=task.built_entity.unit_number
+        state.built_tick=now()
+        state.last_blocker=nil
+        -- Generic 0338 completion is physical placement evidence, NOT yet
+        -- provenance of ore, fuel, transfer or a counted wagon deposit.
+        return false,"original-remote-drill-0338-physical-build-observed"
+      elseif task.phase=="aborted" then
+        state.last_blocker="original-remote-drill-0338-aborted:"..
+          tostring(task.result)
+        return false,state.last_blocker
+      end
+    end
+    if pair.remote_drill_request_1011~=state.request
+        and not(pair.construction_task_0338
+          and pair.construction_task_0338.request_value==state.request)
+        and not(pair.construction_custody_0338
+          and pair.construction_custody_0338.request_value==state.request)then
+      state.last_blocker="original-remote-drill-request-not-owned"
+      return false,state.last_blocker
+    end
+    return false,"original-remote-drill-awaiting-existing-0338"
+  end
+  -- Never preempt legitimate construction, material cargo or another 1011
+  -- terminal's request. A remote site does not confer new rank privileges.
+  if pair.remote_drill_request_1011 or pair.construction_request
+      or pair.construction_task_0338 or pair.construction_custody_0338
+      or pair.machine_logistics_custody_0528
+      or pair.direct_acquisition_custody_0513
+      or pair.inventory_transfer_custody_0687
+      or pair.robot_network_task_0338 or pair.robot_network_request_0338 then
+    return false,"original-remote-drill-other-physical-work-owned"
+  end
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if not(authority and type(authority.generic_item_count)=="function")then
+    return false,"original-remote-drill-source-authority-unavailable"
+  end
+  local stocked,number=pcall(authority.generic_item_count,pair,
+    "burner-mining-drill")
+  if not(stocked and type(number)=="number" and number>=1)then
+    return false,"original-remote-drill-no-real-source-item"
+  end
+  local scan=rawget(_G,"TechPriestsScanRouting0610")
+  if not(scan and type(scan.find_entities)=="function")then
+    return false,"original-remote-drill-canonical-ore-scan-unavailable"
+  end
+  local scanned,ores=pcall(scan.find_entities,pair.station.surface,{
+    name=m.item,type="resource",position=m.target,radius=8,limit=12},
+    {category="construction",limit=12,record_negative=false,
+      require_fresh=true})
+  if not(scanned and type(ores)=="table")then
+    return false,"original-remote-drill-ore-unobservable"
+  end
+  local chosen
+  for _,ore in ipairs(ores)do
+    if valid(ore) and ore.name==m.resource_name
+        and ore.surface==pair.station.surface
+        and (tonumber(ore.amount)or 0)>0 then
+      local dx=ore.position.x-m.target.x
+      local dy=ore.position.y-m.target.y
+      if dx*dx+dy*dy<=64 then
+        local site=pos(ore.position.x,ore.position.y)
+        local possible,allowed=pcall(function()
+          return pair.station.surface.can_place_entity{
+            name="burner-mining-drill",position=site,
+            direction=defines.direction.north,force=pair.station.force}
+        end)
+        if possible and allowed==true then chosen=site;break end
+      end
+    end
+  end
+  if not chosen then return false,"original-remote-drill-no-native-ore-site"end
+  local request={item_name="burner-mining-drill",
+    entity_name="burner-mining-drill",category="miner",
+    position=chosen,direction=defines.direction.north,
+    site_reason="original-remote-rail-drill-0836",
+    remote_drill_root_1011=pair.station.unit_number,
+    remote_drill_terminal_1011=pair.station.unit_number,
+    original_rail_mission_station_unit_0836=m.root_station_unit}
+  state={phase="awaiting-existing-0338",request=request,
+    station_unit=pair.station.unit_number,priest_unit=priest.unit_number,
+    train_id=engine.train.id,position=chosen,issued_tick=now()}
+  m.first_remote_drill_0836=state
+  pair.remote_drill_request_1011=request
+  m.next_step="native-0338-real-remote-drill-required"
+  return true,"original-remote-drill-real-0338-request-issued"
+end
+
 -- remote stop may ask Factorio to take it home. A schedule or route receipt is
 -- never evidence of a return journey; single-headed trains may have no path.
 function M.service_first_train_return_0836(pair)
@@ -2712,6 +2870,10 @@ function M.service_pair(pair)
             local outward=m.first_outbound_0836
             if outward and outward.phase==
                 "native-original-outbound-arrived-at-paid-remote-stop"then
+              -- Begin one genuinely supplied and native-site-verified 0338
+              -- mining build. The existing empty-wagon return refusal
+              -- remains authoritative until physical ore appears.
+              M.offer_first_remote_drill_0836(pair)
               return M.service_first_train_return_0836(pair)
             end
             return M.service_first_train_outbound_0836(pair)
