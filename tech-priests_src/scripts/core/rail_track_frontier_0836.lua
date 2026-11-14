@@ -2199,7 +2199,20 @@ function M.service_first_train_board_0836(pair)
     -- If a 0702 task or item custody exists, it refuses and nothing changes.
     local family=rawget(_G,"TechPriestsItemFamilyLogistics0702")
       or package.loaded["scripts.core.item_family_logistics_0702"]
-    if family and type(family.release_orphaned_movement_for_rail_0836)=="function" then
+    -- A live, unladen 0702 source approach is NOT an orphan. Ask its
+    -- original owner to pause only that verified task without destroying
+    -- its reservations or inventory. Do not treat a refused pause as a
+    -- movement lease grant; canonical 0418 still decides admission.
+    if pair.item_family_logistics_0702 then
+      if family and type(family.pause_unladen_for_original_rail_0836)=="function" then
+        local called,paused,why=pcall(family.pause_unladen_for_original_rail_0836,pair)
+        state.last_item_family_yield_0836=called and paused==true
+        state.last_item_family_yield_reason_0836=called and tostring(why)
+          or "original-0702-pause-call-failed"
+      else
+        state.last_item_family_yield_reason_0836="original-0702-pause-unavailable"
+      end
+    elseif family and type(family.release_orphaned_movement_for_rail_0836)=="function" then
       pcall(family.release_orphaned_movement_for_rail_0836,pair)
     end
     local task=pair.item_family_logistics_0702
