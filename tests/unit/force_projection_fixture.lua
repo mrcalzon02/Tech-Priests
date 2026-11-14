@@ -26,6 +26,11 @@ for _,preset in ipairs(presets) do
     local entity={valid=true,unit_number=created,name=args.name,
       position=args.position,force=args.force,type="container"}
     local inv={valid=true}
+    local contents={}
+    inv.get_item_count=function(name)return contents[name]or 0 end
+    inv.insert=function(stack)
+      contents[stack.name]=(contents[stack.name]or 0)+stack.count;return stack.count
+    end
     for i=1,48 do inv[i]={set_stack=function(stack)
       assert(stack.count>=1 and stack.count<=100);return true end}end
     entity.get_inventory=function()return inv end
@@ -37,6 +42,7 @@ for _,preset in ipairs(presets) do
     return entity
   end
   prototypes={item={a={hidden=false,stack_size=100,type="item"},
+    ["senior-cogitator-station"]={hidden=false,stack_size=1,type="item"},
     b={hidden=false,stack_size=100,type="ammo"},
     hidden={hidden=true,stack_size=100,type="item"}},
     entity={["steel-chest"]={hidden=false,type="container",
@@ -68,6 +74,13 @@ for _,preset in ipairs(presets) do
     if s.finished then break end
   end
   assert(s.finished,"fixture did not terminate")
+  for _,p in ipairs(s.participants)do
+    if p.kind=="p"then
+      assert(p.expansion_stock.count>=1 and p.expansion_stock.count<=5)
+      assert(p.station.get_inventory(1).get_item_count("senior-cogitator-station")==p.expansion_stock.count)
+      assert(p.expansion_stock.deployed==0)
+    end
+  end
   assert(chunks==(s.side/32)^2)
   local counts={}
   for _,r in ipairs(records)do

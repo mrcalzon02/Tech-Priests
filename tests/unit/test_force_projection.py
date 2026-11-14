@@ -18,6 +18,9 @@ def observations():
             ("READY", {"tick": 30000, "participants": 4})]
     for i in (0, 2):
         rows.append(("SUPPLY", {"force": "f"+str(i), "refills": 0,
+                               "expansion_stock": {"name":"senior-cogitator-station",
+                                   "count":3,"inserted":3,"native_count":3,
+                                   "location":"magos-station","deployed":0},
                                "stock": [{"slot": 1, "count": 10}]}))
     for cell in range(64):
         for name in ("iron-ore", "copper-ore", "coal", "stone", "crude-oil", "water"):
@@ -35,6 +38,21 @@ def encode(rows):
 
 
 class Verdict(unittest.TestCase):
+    def test_expansion_kits_must_be_one_to_five_real_undeployed_items(self):
+        for count in (1,5):
+            rows=copy.deepcopy(observations())
+            for kind,record in rows:
+                if kind=="SUPPLY":
+                    for field in ("count","inserted","native_count"):
+                        record["expansion_stock"][field]=count
+            self.assertTrue(arena.parse_observations(encode(rows),"2p2b",42,3600)["observation_complete"])
+        for field,value in (("count",0),("count",6),("inserted",2),
+                            ("native_count",2),("deployed",1),("location","chest")):
+            rows=copy.deepcopy(observations())
+            next(x[1] for x in rows if x[0]=="SUPPLY")["expansion_stock"][field]=value
+            with self.assertRaises(ValueError):
+                arena.parse_observations(encode(rows),"2p2b",42,3600)
+
     def test_create_and_loaded_server_have_distinct_native_evidence(self):
         rows = observations()
         initial = encode([x for x in rows if x[0] == "CONFIG"])

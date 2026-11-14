@@ -58,6 +58,13 @@ def parse_observations(log: str, preset: str, seed: int, ticks: int) -> dict:
     if set(supplies) != priests or len(events.get("SUPPLY", [])) != len(priests):
         raise ValueError("Original priest supply manifests missing/duplicated")
     for stock in supplies.values():
+        kits=stock.get("expansion_stock",{})
+        if (kits.get("name") != "senior-cogitator-station"
+                or type(kits.get("count")) is not int or not 1 <= kits["count"] <= 5
+                or kits.get("inserted") != kits["count"]
+                or kits.get("native_count") != kits["count"]
+                or kits.get("location") != "magos-station" or kits.get("deployed") != 0):
+            raise ValueError("Original Magos expansion stock missing or inconsistent")
         if (not stock["stock"] or stock["refills"] != 0 or
                 len({x["slot"] for x in stock["stock"]}) != len(stock["stock"]) or
                 any(x["count"] <= 0 for x in stock["stock"])):

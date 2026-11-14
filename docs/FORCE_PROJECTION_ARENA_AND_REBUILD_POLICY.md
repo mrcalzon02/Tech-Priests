@@ -61,7 +61,16 @@ provider with 48–256 normal-quality slots in the installed modpack. No infinit
 containers, hidden helpers or planner tools. Every slot independently selects a
 random visible item from the installed game/modpack, across technology tiers,
 with a random quantity from one to its native stack limit. Duplicates and missing
-essentials are intentional. No curated bootstrap subset, refill, fixture research
+essentials are intentional. In addition to that chest, each Magos station starts
+with a separate seeded random count of **one to five Senior Cogitator station
+kits** in its own real inventory. Seniors are the Magos's immediate subsidiary
+rank. An independent random stream preserves the existing chest draws and map
+layout for paired comparisons. Initial inserted and native readback counts are
+logged and must agree. Kits are not deployed priests: the ordinary expansion
+system must spend, place and pair them. Sampling records remaining Senior kits
+in the Magos inventory; no inventory count alone establishes successful growth.
+This explicit expansion-stock profile differs from the earlier chest-only
+baseline and must be labelled when comparing runs. No refill, fixture research
 unlock, production reward, teleported cargo, or later fixture-built machinery.
 This is a randomized-stock stress test; a resource-starved start is diagnostic,
 not evidence that the scenario or combat succeeded. Enabled DLC/mods determine

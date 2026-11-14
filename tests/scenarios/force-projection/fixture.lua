@@ -36,6 +36,7 @@ local function init()
     side=side,chunk=0,cell=0,patch=0,tile=0,participants={},
     random=game.create_random_generator(c.seed),
     supply_random=game.create_random_generator(c.seed+100003),
+    expansion_random=game.create_random_generator(c.seed+200003),
     started=nil,failed=false,finished=false,census_cursor=0,census={},
     checkpoints=0,setup_entities=0,resource_tiles=0,resource_amount=0}
   local s=state(); local rows=math.ceil(#roster/2)
@@ -66,7 +67,8 @@ local function init()
   game.map_settings.enemy_evolution.destroy_factor=0
   emit("CONFIG",{seed=s.seed,preset=s.preset,side=side,
     active_ticks=c.active_ticks,participants=s.participants,
-    novice_evolution=0,fixture_supply_only=true})
+    novice_evolution=0,fixture_supply_only=true,
+    stock_profile="random-chest-plus-1-to-5-senior-kits"})
 end
 local function owner(force)
   if not force then return nil end
@@ -190,6 +192,21 @@ local function seed_participant(s,surface)
     assert(pair and pair.priest and pair.priest.valid,"original Magos pairing absent")
     p.station=station;p.priest=pair.priest
     p.initial[station.unit_number]=true;p.initial[pair.priest.unit_number]=true
+    -- Immediate direct subordinates of a Planetary Magos are Seniors. Kits
+    -- are real inventory items; canonical expansion still pays and deploys
+    -- each station and registers its original priest. No free deployed units.
+    local station_inv=station.get_inventory(defines.inventory.chest)
+    assert(station_inv and station_inv.valid,"Magos inventory unavailable")
+    local kit="senior-cogitator-station"
+    assert(prototypes.item[kit],"senior station kit prototype unavailable")
+    local wanted=s.expansion_random(1,5)
+    local before=station_inv.get_item_count(kit)
+    assert(before==0,"unexpected preexisting Magos expansion kits")
+    local accepted=station_inv.insert{name=kit,count=wanted}
+    local after=station_inv.get_item_count(kit)
+    assert(accepted==wanted and after-before==wanted,"Magos expansion kit capacity/debit mismatch")
+    p.expansion_stock={name=kit,count=wanted,inserted=accepted,
+      native_count=after,quality="normal",location="magos-station",deployed=0}
     local chest=surface.create_entity{name=chest_name(),
       position={x=p.origin.x+8,y=p.origin.y+8},force=force,raise_built=true}
     assert(chest and chest.valid,"supply chest creation refused")
@@ -204,7 +221,8 @@ local function seed_participant(s,surface)
     end
     emit("SUPPLY",{force=p.force,chest=chest.name,unit=chest.unit_number,
       station=station.unit_number,priest=pair.priest.unit_number,
-      stock=p.stock,pool_size=#pool,refills=0,randomized=true})
+      stock=p.stock,pool_size=#pool,refills=0,randomized=true,
+      expansion_stock=p.expansion_stock})
     force.chart(surface,{{p.origin.x-160,p.origin.y-160},
       {p.origin.x+160,p.origin.y+160}})
   else
@@ -291,7 +309,10 @@ local function sample(s,p)
     ore_production=mined,station_alive=p.station and p.station.valid or false,
     priest_alive=p.priest and p.priest.valid or false,
     current_task=pair and tostring(pair.current_task or pair.task or "unknown") or "none",
-    supply_remaining=p.chest and p.chest.valid and p.chest.get_item_count() or 0})
+    supply_remaining=p.chest and p.chest.valid and p.chest.get_item_count() or 0,
+    initial_expansion_kits=p.expansion_stock and p.expansion_stock.count,
+    senior_kits_in_magos=p.station and p.station.valid
+      and p.station.get_inventory(defines.inventory.chest).get_item_count("senior-cogitator-station") or 0})
 end
 local function tick(event)
   local s=state();if not s or s.failed or s.finished then return end
