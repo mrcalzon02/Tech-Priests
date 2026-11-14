@@ -20,6 +20,9 @@
 -- arterial planner, not the final factory generator.
 
 local A = {}
+-- Preload read-only doctrine resolver during control registration; do not
+-- dynamically load a new planner during Factorio runtime on first placement.
+local PriestFactory1410=require("scripts.core.priest_factory_doctrine_1410")
 A.version = "0.1.360"
 A.storage_key = "arterial_planner_0360"
 A.default_product = "automation-science-pack"
@@ -368,8 +371,7 @@ end
 -- no broker registration, no new scanning, no inventory mutation and no
 -- construction authority. Current 0510/0338 custody always takes priority.
 function A.preview_next_priest_factory_object(pair, observation)
-  local advisor=require("scripts.core.priest_factory_doctrine_1410")
-  return advisor.next_factory_object(pair,observation)
+  return PriestFactory1410.next_factory_object(pair,observation)
 end
 
 -- 1267: explicit physical producer/consumer and real inserter handoff
