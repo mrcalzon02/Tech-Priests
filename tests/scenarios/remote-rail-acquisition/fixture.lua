@@ -971,6 +971,42 @@ local function inspect(s,elapsed)
         and native_driver==p.priest)then
     fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")
   end
+  local homeward=objective and objective.first_return_0836
+  local home_entity=objective and objective.first_stop_0836
+    and objective.first_stop_0836.built_entity
+  local home_schedule
+  if moving_train and moving_train.valid then
+    local observed,records=pcall(function()
+      return moving_train.get_schedule().get_records()
+    end)
+    if observed and type(records)=="table" and #records==2 then
+      home_schedule=records[2].station
+    end
+  end
+  emit("RETURN_NATIVE_0836 elapsed="..elapsed..
+    " phase="..tostring(homeward and homeward.phase)..
+    " original_priest_driver="..tostring(native_driver==p.priest)..
+    " locomotive_x="..tostring(loco_entity and loco_entity.valid
+      and loco_entity.position.x)..
+    " remote_x="..tostring(homeward and homeward.remote_x)..
+    " lowest_x="..tostring(homeward and homeward.lowest_x)..
+    " home_stop_unit="..tostring(home_entity and home_entity.valid
+      and home_entity.unit_number)..
+    " native_station_unit="..tostring(moving_train and moving_train.valid
+      and moving_train.station and moving_train.station.unit_number)..
+    " home_schedule="..tostring(home_schedule)..
+    " has_path="..tostring(moving_train and moving_train.valid
+      and moving_train.has_path)..
+    " train_state="..tostring(moving_train and moving_train.valid
+      and moving_train.state)..
+    " blocker="..tostring(homeward and homeward.last_blocker))
+  if homeward and homeward.phase=="native-original-home-arrived-after-roundtrip"
+    and not(moving_train and moving_train.valid
+      and moving_train.station==home_entity
+      and native_driver==p.priest
+      and homeward.lowest_x<homeward.remote_x-32)then
+    fail("HOMEWARD_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")
+  end
   local drills=surface.find_entities_filtered{
     type="mining-drill",
     area={{s.natural_ore_x-32,s.natural_ore_y-24},
@@ -986,7 +1022,15 @@ local function inspect(s,elapsed)
     if loco.valid and loco.train and loco.train.valid then
       local train=loco.train
       if loco.position.x>=s.natural_ore_x-37 then s.outbound=true end
-      if s.outbound and loco.position.x<=28 then s.returned=true end
+      local homeward=objective and objective.first_return_0836
+      if s.outbound and homeward
+          and homeward.phase=="native-original-home-arrived-after-roundtrip"
+          and train.station==(objective.first_stop_0836
+            and objective.first_stop_0836.built_entity)
+          and homeward.lowest_x<homeward.remote_x-32
+          and loco.get_driver()==p.priest then
+        s.returned=true
+      end
       local ride=p.train_transport_rail_0835
       local native_boarded=false
       local observed,actual_driver=pcall(function()return loco.get_driver()end)
