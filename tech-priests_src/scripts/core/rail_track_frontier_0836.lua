@@ -1553,6 +1553,31 @@ function M.service_first_train_board_0836(pair)
     m.next_step="native-rail-expedition-outbound"
     return false,"native-original-magos-onboard"
   end
+  -- A prior 0528 delivery receipt is historical, not proof of current
+  -- traction fuel. Read the ORIGINAL locomotive's live native fuel before
+  -- requesting boarding/movement. An already-burning fuel item also counts;
+  -- otherwise fail closed with the train and original priest untouched.
+  local fuel_slot=defines and defines.inventory and defines.inventory.fuel
+  local fuel_read,fuel_now=pcall(function()
+    if not fuel_slot then return nil end
+    local inv=entity.get_inventory(fuel_slot)
+    if not(inv and inv.valid)then return nil end
+    local coal=inv.get_item_count("coal")
+    if type(coal)~="number" or coal<0 then return nil end
+    if coal>0 then return true end
+    local burner=entity.burner
+    if not(burner and burner.valid)then return nil end
+    local energy=tonumber(burner.remaining_burning_fuel)
+    if not energy then return nil end
+    return energy>0
+  end)
+  if not fuel_read or fuel_now~=true then
+    state.phase="native-boarding-fuel-blocked"
+    state.last_blocker=(fuel_read and fuel_now==false)
+      and "original-train-out-of-live-fuel"
+      or "original-train-live-fuel-unobservable"
+    return false,state.last_blocker
+  end
   if pair.construction_task_0338 or pair.construction_custody_0338
       or pair.machine_logistics_custody_0528
       or pair.direct_acquisition_custody_0513
