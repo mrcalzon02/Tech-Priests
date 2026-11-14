@@ -96,6 +96,14 @@ class OriginalRailItemFamilyAdmissionTests(unittest.TestCase):
         self.assertIn('mission.force_index==pair.station.force.index', guard)
         self.assertIn('valid(pair.combat_target)', guard)
         self.assertIn('mission.resource_unit', guard)
+        # Genuine natural ore entities need not have a Factorio unit_number.
+        # The original charted prototype/coordinates and rail mission must
+        # still be owned by the exact registered Magos before yielding 0702.
+        self.assertIn('mission.resource_unit==nil or type(mission.resource_unit)=="number"', guard)
+        self.assertIn('mission.resource_name==mission.item', guard)
+        self.assertIn('type(mission.target.x)=="number"', guard)
+        self.assertIn('type(mission.target.y)=="number"', guard)
+        self.assertNotIn('and type(mission.resource_unit)=="number"', guard)
         self.assertIn('back.phase=="native-original-home-arrived-after-roundtrip"', guard)
         self.assertNotIn("pair.item_family_logistics_0702=", guard)
         self.assertNotIn("pair.item_family_custody_0702=", guard)
