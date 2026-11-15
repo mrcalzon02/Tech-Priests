@@ -492,3 +492,7 @@ flowchart LR
 ```
 
 One hostile force per planet owns colony entities and research. The initial world-generation grant is finite and explicit. No colony tick owner, replenishment cheat, replacement research system or private movement controller is introduced. All subsequent worker operations use existing ordinary priest authorities.
+
+## Colony modifiers and population admission
+
+The existing seeder reads enemy_colony_options before placement. The canonical create_pair owner reads the same admission rules before creating a new renegade priest, covering ordinary expansion. Neither module installs a population tick service. Slot counts derive from existing bound valid stations; colony counts derive from surviving original station records. Existing-pair recovery keeps its reserved slot. Friendly forces bypass enemy-only admission checks.

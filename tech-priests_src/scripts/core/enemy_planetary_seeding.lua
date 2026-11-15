@@ -3,9 +3,9 @@
 local M = {}
 local Registry = require("scripts.core.runtime_event_registry")
 local Colony = require("scripts.core.enemy_colony")
+local Options = require("scripts.core.enemy_colony_options")
 local NAME = "planetary-magos-cogitator-station"
 -- One candidate chunk per square region: priority planets have twice the density.
-local regions = {fulgora = 16, vulcanus = 16, nauvis = 24, gleba = 24}
 
 local function enabled()
   local setting = settings.global["tech-priests-enemy-planetary-spawning"]
@@ -14,10 +14,11 @@ end
 
 function M.seed_chunk(surface, chunk)
   if not enabled() or not (surface and surface.valid) or surface.platform
-      or surface.peaceful_mode then return false end
+      or (surface.peaceful_mode and Options.get("respect-peaceful",true)) then return false end
   local planet = surface.planet and surface.planet.name or surface.name
-  local size = regions[planet]
-  if not size then return false end
+  if not Options.allowed_planet(planet)then return false end
+  local size=Options.get((planet=="fulgora"or planet=="vulcanus")
+    and "priority-spacing"or "other-spacing",24)
   local seed = surface.map_gen_settings.seed or 0
   local rx, ry = math.floor(chunk.x / size), math.floor(chunk.y / size)
   -- Coordinate hash avoids consuming gameplay RNG or depending on exploration order.
@@ -25,12 +26,13 @@ function M.seed_chunk(surface, chunk)
   if chunk.x % size ~= hash % size
       or chunk.y % size ~= math.floor(hash / size) % size then return false end
   local center = {x = chunk.x * 32 + 16, y = chunk.y * 32 + 16}
-  if center.x * center.x + center.y * center.y < 384 * 384 then return false end
+  local clearance=Options.get("spawn-clearance",384)
+  if center.x * center.x + center.y * center.y < clearance^2 then return false end
   for _, force in pairs(game.forces) do
     if force.name ~= "enemy" and force.name ~= "neutral" then
       local spawn = force.get_spawn_position(surface)
-      if (center.x-spawn.x)^2 + (center.y-spawn.y)^2 < 384^2 then return false end
-      if surface.count_entities_filtered{position = center, radius = 96,
+      if (center.x-spawn.x)^2 + (center.y-spawn.y)^2 < clearance^2 then return false end
+      if surface.count_entities_filtered{position = center, radius = Options.get("base-clearance",96),
           force = force, limit = 1} > 0 then return false end
     end
   end
@@ -41,10 +43,11 @@ function M.seed_chunk(surface, chunk)
   root.enemy_planetary_seeding[surface.index] = seeded
   local key = chunk.x .. ":" .. chunk.y
   if seeded[key] then return false end
+  if not Options.admit_colony(surface,planet)then return false end
   -- Stay inside the delivered chunk: never force terrain generation or landfill.
   local position = center
   if not Colony.can_place(surface,position) then return false end
-  if surface.count_entities_filtered{position = position, radius = 192,
+  if surface.count_entities_filtered{position = position, radius = Options.get("colony-clearance",192),
       name = NAME, limit = 1} > 0 then return false end
   local colony=Colony.create(surface,position,planet)
   if not colony then return false end

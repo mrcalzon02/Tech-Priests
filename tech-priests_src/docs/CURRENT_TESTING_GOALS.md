@@ -729,3 +729,7 @@ Accepted additional coverage: native chart-event delivery on previously generate
 The current seeder creates normal bound station/priest clusters with finite starter machinery, stock and ore, on a separate hostile force per planet. Spawner-only proof above is superseded. Reproduce with python tools/run_enemy_planetary_probe.py. The current fixture checks original pair identity, structural seed contents, native manufacturing and actual own-force research progress after load; long-term growth and planetary resource sustainability still require endurance evidence.
 
 Accepted current focused result: all four colonies retained ordinary station/priest pairs and made real own-force manufacturing and paid research progress in a separate native 1,201-tick loaded session. Long-term growth, completed construction chains and natural-terrain full-cluster frequency remain unverified. The earlier longer run timed out; it is not a pass.
+
+## Enemy colony modifier controls
+
+Check Settings > Mod settings > Map for the colony options. Focused native coverage includes blank planet-list rejection, priest/colony limits globally and per planet, canonical pair creation at capacity, zero/unlimited limits, ordinary pair persistence and paid research/production. Existing factories and priests must survive reductions. Remaining broad playtest coverage includes changed spacing on existing maps, non-default supply/richness values and additional allowed planets' terrain/environment suitability.

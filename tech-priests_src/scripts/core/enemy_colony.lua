@@ -1,5 +1,9 @@
 -- Initial world generation only. All subsequent work belongs to normal priests.
 local M={}
+local Options=require("scripts.core.enemy_colony_options")
+local function amount(value)
+ return math.max(1,math.floor(value*Options.get("starter-stock-multiplier",1)))
+end
 local layout={
  {"planetary-magos-cogitator-station",0,0},
  {"senior-cogitator-station",-4,0},{"intermediate-cogitator-station",4,0},
@@ -63,6 +67,7 @@ local function colony_force(planet)
 end
 function M.create(surface,center,planet)
   if not M.can_place(surface,center)then return nil end
+  if not Options.admit_colony(surface,planet)then return nil end
   local force=colony_force(planet)
   local colony={force=force.name,position=center,stations={},entities={}}
   -- Stage and stock physical entities before notifying normal station ownership.
@@ -73,21 +78,22 @@ function M.create(surface,center,planet)
     colony.entities[#colony.entities+1]=entity
     if entry[1]:find("cogitator%-station$")then
       colony.stations[#colony.stations+1]=entity
-    elseif entry[1]=="gun-turret"then entity.insert{name="firearm-magazine",count=30}
-    elseif entry[1]=="stone-furnace"then entity.insert{name="coal",count=20}
+    elseif entry[1]=="gun-turret"then entity.insert{name="firearm-magazine",count=amount(30)}
+    elseif entry[1]=="stone-furnace"then entity.insert{name="coal",count=amount(20)}
     elseif entry[1]=="assembling-machine-1"then
       entity.set_recipe(entry[2]==-4 and "iron-gear-wheel" or "copper-cable")
-      entity.insert{name=entry[2]==-4 and "iron-plate" or "copper-plate",count=20}
-    elseif entry[1]=="lab"then entity.insert{name="automation-science-pack",count=20}
+      entity.insert{name=entry[2]==-4 and "iron-plate" or "copper-plate",count=amount(20)}
+    elseif entry[1]=="lab"then entity.insert{name="automation-science-pack",count=amount(20)}
     end
   end
   local chests={colony.entities[4],colony.entities[5]}
   for i,entry in ipairs(stock)do
-    assert(chests[(i-1)%2+1].insert{name=entry[1],count=entry[2]}==entry[2],
+    local wanted=amount(entry[2])
+    assert(chests[(i-1)%2+1].insert{name=entry[1],count=wanted}==wanted,
       "Colony starter stock capacity exceeded")
   end
   for _,patch in ipairs(patches)do for x=-1,1 do for y=-1,1 do
-    assert(surface.create_entity{name=patch[1],amount=1500,
+    assert(surface.create_entity{name=patch[1],amount=Options.get("ore-per-tile",1500),
       position=position(center,patch[2]+x,patch[3]+y)},"Colony ore placement failed")
   end end end
   for _,station in ipairs(colony.stations)do

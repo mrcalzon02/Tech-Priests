@@ -16,9 +16,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--factorio", type=Path, default=Path(
         r"C:\Program Files (x86)\Steam\steamapps\common\Factorio\bin\x64\factorio.exe"))
+    parser.add_argument("--output-dir",type=Path)
     args = parser.parse_args()
     source = ROOT / "tech-priests_src"
-    output = ROOT / "build/enemy-planets-probe"
+    output = (args.output_dir or ROOT / "build/enemy-planets-probe").resolve()
     mod = output / "mods/tech-priests"
     mod.mkdir(parents=True, exist_ok=True)
     (output / "user-data").mkdir(exist_ok=True)

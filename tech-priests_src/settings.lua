@@ -6,6 +6,31 @@ data:extend({{
   default_value = true,
   order = "e[enemy-planets]"
 }})
+-- Colony controls are runtime-global: changing a limit never deletes existing
+-- colonies, priests, inventory or research. Stock/ore changes affect new seeds.
+local enemy_options={}
+local function enemy_option(kind,key,value,min,max)
+ enemy_options[#enemy_options+1]={type=kind.."-setting",
+  name="tech-priests-enemy-"..key,setting_type="runtime-global",
+  default_value=value,minimum_value=min,maximum_value=max,
+  order="e[enemy-planets]-"..string.format("%02d",#enemy_options+1)}
+end
+enemy_options[1]={type="string-setting",name="tech-priests-enemy-allowed-planets",
+ setting_type="runtime-global",default_value="nauvis,fulgora,vulcanus,gleba",
+ allow_blank=true,order="e[enemy-planets]-01"}
+enemy_option("int","max-priests",96,0,10000)
+enemy_option("int","max-priests-per-planet",24,0,10000)
+enemy_option("int","max-colonies",24,0,10000)
+enemy_option("int","max-colonies-per-planet",6,0,10000)
+enemy_option("int","priority-spacing",16,2,128)
+enemy_option("int","other-spacing",24,2,128)
+enemy_option("int","spawn-clearance",384,64,10000)
+enemy_option("int","base-clearance",96,32,2000)
+enemy_option("int","colony-clearance",192,32,4000)
+enemy_option("double","starter-stock-multiplier",1,0.1,3)
+enemy_option("int","ore-per-tile",1500,100,100000)
+enemy_option("bool","respect-peaceful",true)
+data:extend(enemy_options)
 -- 0.1.479 retired legacy status-symbol settings from the player-facing settings list;
 -- the canonical overhead governor now owns visible priest task text. Legacy runtime
 -- reads keep safe defaults inside the script, but the old configurable glyph spam is gone.
