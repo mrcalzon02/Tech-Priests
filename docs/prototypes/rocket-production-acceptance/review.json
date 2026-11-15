@@ -1,0 +1,31 @@
+{
+  "status": "NATIVE_MAIN_ROCKET_INTEGRATED",
+  "normal_data_registration": true,
+  "all_headings": 64,
+  "reload_frames": 95,
+  "moving_shadow_cell": 256,
+  "scope": "Actual bunker and modeled top, 23-site native combat/recipe, serialized mid-reload recovery, previous weapon regression, finite full-mod graphical benchmark",
+  "damage_counter_explained": {
+    "cumulative_total": 9000,
+    "shots": 36,
+    "base_shots": 18,
+    "base_damage": 200,
+    "research_boosted_shots": 18,
+    "boosted_damage": 300,
+    "weapon_damage_modifier": 1
+  },
+  "visual_review": "Viewed native firing and reload PNGs. No blank or gun-turret body stand-ins. Original shutter mesh sweep remains candidate-v02 evidence.",
+  "visual_acceptance": "Technical delivery verified; owner has not provided blanket model approval.",
+  "concurrent_local_slice": "Acceptance also loaded the separately edited local Martian infrastructure; that work is excluded from the rocket checkpoint.",
+  "remaining_goal": [
+    "artillery: three-shell rolling barrage followed by long reload",
+    "radium",
+    "grav",
+    "plasma",
+    "flamer"
+  ],
+  "code_sha256": {
+    "tech-priests_src/prototypes/bunker_rocket_salvo.lua": "9cc192685a1c7445184b9daa8b90518c0613344cc5334c5ef92ca14debbc7577",
+    "tech-priests_src/scripts/rocket_salvo_controller.lua": "0b2c0b8c62833e017b64043fb4d02829567a21a049f0652898e07cc9dd42cf63"
+  }
+}

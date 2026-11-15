@@ -1,0 +1,9 @@
+{
+  "status": "ACTUAL_BUNKER_COMBAT_VERIFIED",
+  "weapon_art": "Real shared bunker foundation and all 64 modeled turret top headings",
+  "enemy_art": "Stationary big-biter models",
+  "scope": "23-site native ammo/cadence/damage/research/recipe and separate-process reload checks; full main registry preserves 180 routes",
+  "blank_art_fallback_removed": true,
+  "main_production_activated": true,
+  "remaining": "Superseded by final moving-shadow production acceptance in ../rocket-production-acceptance"
+}

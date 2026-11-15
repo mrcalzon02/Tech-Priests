@@ -16,13 +16,13 @@ end
 function M.register(mod_name,options)
   if data.raw['ammo-turret'][NAME] then return end
   options=options or {}
-  local headless=options.headless==true
-  local foundation=data.raw['ammo-turret']['tech-priests-bunker-autocannon']
-  assert(foundation or headless,'Rocket turret requires the family foundation')
-  local t=table.deepcopy(foundation or data.raw['ammo-turret']['gun-turret'])
+  assert(not options.headless,'Rocket combat prototypes require the actual bunker art')
+  local foundation=assert(data.raw['ammo-turret']['tech-priests-bunker-autocannon'],'Rocket turret requires the family foundation')
+  local t=table.deepcopy(foundation)
   local path='__'..mod_name..'__/graphics/entity/bunker-rocket-salvo/'
   t.name=NAME;t.localised_name={'','Fortified six-cell rocket salvo'}
-  t.icon=headless and '__base__/graphics/icons/rocket-launcher.png' or path..'icon.png';t.icon_size=headless and 64 or 128;t.icons=nil
+  t.localised_description={'','Six native rockets, ten ticks apart, followed by a cassette reload. Base cycle: four seconds. Uses existing rocket ammunition.'}
+  t.icon=path..'icon.png';t.icon_size=128;t.icons=nil
   t.minable={mining_time=1.5,result=NAME};t.max_health=2500
   t.collision_box={{-1.4,-1.4},{1.4,1.4}};t.selection_box={{-1.5,-1.5},{1.5,1.5}}
   t.tile_width=3;t.tile_height=3;t.rotation_speed=.007
@@ -42,7 +42,6 @@ function M.register(mod_name,options)
     return best
   end
   local function native()
-    if headless then return {filename='__core__/graphics/empty.png',width=1,height=1,frame_count=1,direction_count=1} end
     local stripes={};for d=0,63 do stripes[#stripes+1]={filename=path..string.format('native-%02d.png',nearest(d)),width_in_frames=1,height_in_frames=1}end
     return {width=256,height=256,frame_count=1,direction_count=64,stripes=stripes,
       scale=.774999976158,shift={0,-1.110906519093},apply_projection=true}
@@ -51,7 +50,7 @@ function M.register(mod_name,options)
     t[state]=native()
   end
   local records={t,
-    {type='item',name=NAME,icon=t.icon,icon_size=t.icon_size,subgroup='gun',order='i[rocket-salvo]',place_result=NAME,stack_size=10},
+    {type='item',name=NAME,icon=t.icon,icon_size=t.icon_size,subgroup=data.raw['item-subgroup']['tech-priests-bunker-weapons'] and 'tech-priests-bunker-weapons' or 'gun',order='i[rocket-salvo]',place_result=NAME,stack_size=10},
     {type='recipe',name=NAME,enabled=false,energy_required=30,ingredients={
       {type='item',name='rocket-launcher',amount=2},{type='item',name='concrete',amount=150},
       {type='item',name='steel-plate',amount=120},{type='item',name='engine-unit',amount=12},
@@ -60,15 +59,21 @@ function M.register(mod_name,options)
     {type='technology',name=NAME,icon=t.icon,icon_size=t.icon_size,prerequisites={'rocketry','concrete'},
       effects={{type='unlock-recipe',recipe=NAME}},unit={count=250,time=30,
         ingredients={{'automation-science-pack',1},{'logistic-science-pack',1},{'military-science-pack',1},{'chemical-science-pack',1}}}}}
-  if not headless then
+  do
     for _,d in ipairs(headings) do
       for mode,frames in pairs({idle=1,reload=95}) do records[#records+1]={type='animation',name=string.format('tp-rocket-%s-body-%02d',mode,d),
         filename=path..string.format('%s-body-%02d.png',mode,d),width=256,height=256,frame_count=frames,line_length=frames==1 and 1 or 8,
         scale=.774999976158,shift={0,-1.110906519093}}end
       records[#records+1]={type='animation',name=string.format('tp-rocket-noses-%02d',d),filename=path..string.format('noses-%02d.png',d),
         width=256,height=256,frame_count=6,line_length=6,scale=.774999976158,shift={0,-1.110906519093}}
-      records[#records+1]={type='animation',name=string.format('tp-rocket-shadow-%02d',d),filename=path..string.format('shadow-%02d.png',d),
-        width=512,height=512,frame_count=1,scale=.774999976158,shift={0,-1.110906519093},draw_as_shadow=true}
+      for mode,frames in pairs({idle=1,reload=95}) do
+        local cell=options.shadow_cell or (options.static_shadow_pilot and 512 or 256)
+        records[#records+1]={type='animation',name=string.format('tp-rocket-%s-shadow-%02d',mode,d),
+          filename=path..(options.static_shadow_pilot and string.format('shadow-%02d.png',d) or string.format('%s-shadow-%02d.png',mode,d)),
+          width=cell,height=cell,frame_count=options.static_shadow_pilot and 1 or frames,
+          line_length=options.static_shadow_pilot and 1 or (frames==1 and 1 or 8),
+          scale=.774999976158*512/cell,shift={0,-1.110906519093},draw_as_shadow=true}
+      end
     end
   end
   data:extend(records)

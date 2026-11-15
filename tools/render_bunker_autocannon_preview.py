@@ -19,7 +19,7 @@ for y in range(54,431,64):draw.line((16,y,464,y),fill=(49,55,58),width=1)
 draw.rectangle((144,214,336,406),outline=(157,123,67),width=2)
 draw.text((16,14),'BUNKER AUTOCANNON · 3×3',font=font,fill=(238,222,190))
 draw.text((16,36),'Sprite assembly preview — not an in-game screenshot',font=font,fill=(176,186,192))
-draw.text((16,438),'320 rounds/min · 552.5 physical damage/round',font=font,fill=(225,231,233))
+draw.text((16,438),'320 rounds/min · 73.4375 physical damage/round',font=font,fill=(225,231,233))
 draw.text((16,458),'20 rounds: 16 iron · exactly 2× rifle resources/round',font=font,fill=(203,212,219))
 def put(canvas,im,scale,shift):
  size=round(im.width*scale*2)

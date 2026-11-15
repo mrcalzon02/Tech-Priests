@@ -29,6 +29,7 @@ script.on_init(function()
     check(inv.can_insert{name=AMMO,count=1},'accept autocannon ammo')
     local target=s.create_entity{name='tp-bunker-test-target',position={x+off[1],y+off[2]},force='enemy'}
     check(target and target.valid,'create target '..i)
+    target.disabled_by_script=true
     storage.bunker_test.fixtures[i]={gun=gun,target=target,target_number=target.unit_number}
     storage.bunker_test.hits[target.unit_number]=0;storage.bunker_test.ticks[target.unit_number]={}
     if i==1 then
@@ -43,7 +44,7 @@ end)
 script.on_event(defines.events.on_entity_damaged,function(e)
   local t=storage.bunker_test
   if not t or not e.entity.valid or not t.hits[e.entity.unit_number] then return end
-  check(math.abs(e.final_damage_amount-552.5)<0.01,'552.5 physical impact, got '..e.final_damage_amount)
+  check(math.abs(e.final_damage_amount-73.4375)<0.001,'73.4375 physical impact, got '..e.final_damage_amount)
   check(e.damage_type.name=='physical','physical autocannon damage')
   local id=e.entity.unit_number;t.hits[id]=t.hits[id]+1
   if e.tick>=600 and e.tick<=2100 then t.ticks[id][#t.ticks[id]+1]=e.tick end
@@ -75,6 +76,10 @@ script.on_event(defines.events.on_tick,function(e)
       for j=21,#ticks do check(ticks[j]-ticks[j-20]==225,'exact 20-shot / 225-tick cadence '..i) end
       report.stats[i]={hits=t.hits[f.target_number],measured_shots_per_second=rate,first_tick=ticks[1],last_tick=ticks[#ticks],samples=#ticks}
       report.stats[i].complete_magazine_average=20*60/(ticks[21]-ticks[1])
+      report.stats[i].complete_magazine_dps=73.4375*report.stats[i].complete_magazine_average
+      -- Vanilla basic gun: 5*10 = 50 DPS. Tank: 1100*(60/90).
+      -- Measure an entire real magazine, including its reload, at every aim.
+      check(math.abs(report.stats[i].complete_magazine_dps-(50+1100*60/90)/2)<0.001,'midpoint sustained DPS '..i)
       if i>1 then
         local stack=f.gun.get_inventory(defines.inventory.turret_ammo)[1]
         local remaining=stack.valid_for_read and ((stack.count-1)*MAG+stack.ammo) or 0

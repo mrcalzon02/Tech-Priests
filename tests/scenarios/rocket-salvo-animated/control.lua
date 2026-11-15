@@ -49,6 +49,10 @@ script.on_event(defines.events.on_tick,function(e)
   for _,site in ipairs(p.sites) do
     local entry=storage.rocket_salvo.guns[site.gun.unit_number];check(entry and entry.visual,'actual graphics state')
     check(entry.objects.body.valid and entry.objects.shadow.valid,'real native body and shadow objects')
+    if MOVING_SHADOWS then
+      check(entry.objects.shadow.animation_offset==entry.objects.body.animation_offset,'real body and moving shadow stay on the same pose')
+      check(entry.objects.shadow.animation==string.format('tp-rocket-%s-shadow-%02d',entry.visual.mode,entry.visual.heading),'correct shadow mode/direction')
+    end
     for i=0,5 do check(entry.objects['nose'..i] and entry.objects['nose'..i].valid,'actual rocket nose layer')end
     p.poses[entry.visual.mode]=true
   end

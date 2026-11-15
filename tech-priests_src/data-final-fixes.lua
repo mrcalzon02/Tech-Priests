@@ -603,6 +603,7 @@ require("prototypes.bunker_autocannon").finalize()
 require("prototypes.bunker_family").finalize_grenades()
 require("prototypes.bunker_bullet_weapons").finalize()
 require("prototypes.bunker_twin_cannon").finalize()
+require("prototypes.bunker_rocket_salvo").finalize()
 
 -- 1274: Do not hand 2.0 recipe prototype fields to Factorio 2.1.
 -- This must run LAST: the preceding systems inject zero-probability

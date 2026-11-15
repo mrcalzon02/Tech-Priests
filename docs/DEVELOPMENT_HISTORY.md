@@ -1108,3 +1108,16 @@ Eight actual-art sites across four headings pass with real body, shadow and per-
 ## 2026-11-15 - Turret sparse and delivery-byte reconciliation
 
 Published the native rocket pilot on current main while preserving concurrent factory deliveries. Repaired this worktree sparse metadata without deleting local files: retain active code and every materialized tracked asset, exclude absent archives. This prevents absent art being mistaken for deletions during rebase. Native rocket capture tools retain their original LF bytes; checked generated tables and candidate artifacts retain their writer bytes on every platform. Git-index SHA verification now proves the three exercised native modules and both candidate manifests match their original checked bytes. No turret behavior change.
+
+
+## 2026-11-15 - Actual bunker art required in combat tests
+
+The owner correctly questioned a visible stripped gun-turret physics fixture. Replaced the default rocket combat setup with the real bunker foundation, all 64 modeled tops and native biter target art. Removed the rocket constructor blank-art fallback. Test loading now validates the actual foundation and top sprite paths. Corrected setup passes 23-site combat/recipe checks, main-mod event ownership and separate-process reload. Actual firing/reload PNGs were viewed; evidence: docs/prototypes/rocket-real-bunker-combat. The old stripped fixtures remain historical mechanics evidence, not visual acceptance.
+
+## 2026-11-15 - Rocket production integration and native DPS correction
+
+Enabled normal rocket registration/finalization with all 64 modeled turret headings and 95 reload poses, including moving shadows. Verified all 449 delivered PNG hashes. Finite full-mod graphics acceptance passes 23 combat/recipe sites and exits automatically; a localhost-only server writes a mid-reload save which passes separate-process recovery. Prior 32 cannon sites, five earlier weapons and 64-heading regression pass, preserving 180 pre-existing event routes. Actual firing/reload PNGs were viewed. Evidence: docs/prototypes/rocket-production-acceptance. No blanket owner visual approval or whole-family completion claim.
+
+Investigated the owner-visible 9,000 damage counter: it is cumulative damage from 36 native rockets (18 at 200 and 18 at 300 after fixture research), not per-shot damage. Found a separate autocannon issue: averaging shot damage and firing rate independently produced 2,946.67 base DPS. Owner selected sustained DPS halfway between vanilla gun turret and tank cannon instead. Autocannon now deals 73.4375 physical damage per round, 391.67 sustained base DPS, retaining its 20-round/225-tick rhythm and recipe. Eight-direction engine checks verify each impact, full-magazine DPS, ammo consumption and real inserter supply. Current tooltips and prototype builder describe the new baseline. Evidence: docs/prototypes/autocannon-dps-balance.
+
+Artillery remains next: approved three-shell rolling barrage followed by a long reload. Radium, grav, plasma and flamer remain in the development goal. Concurrent Martian infrastructure source edits are preserved separately.

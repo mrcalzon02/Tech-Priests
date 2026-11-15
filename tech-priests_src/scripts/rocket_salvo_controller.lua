@@ -51,6 +51,8 @@ function M.effect(e)
     local gap=native_gap(gun)
     entry.last_cell=entry.next_cell;entry.next_cell=(entry.next_cell+1)%6
     entry.shots=entry.shots+1;entry.last_shot=e.tick;entry.native_gap=gap
+    local nose=entry.objects['nose'..entry.last_cell]
+    if nose and nose.valid then nose.visible=false end
     if entry.next_cell==0 and not gun.disabled_by_script then
       entry.reload_start=e.tick;entry.reload_gap=19*gap
       -- The native cooldown freezes while disabled. Release early enough for
@@ -117,16 +119,20 @@ function M.tick(e)
         if not(obj and obj.valid) then
           obj=rendering.draw_animation{animation=animation,target=gun,surface=gun.surface,animation_speed=0,
             animation_offset=offset,render_layer=layer or 'object'};entry.objects[pass]=obj
-        else obj.animation=animation;obj.animation_offset=offset end
+        else
+          if obj.animation~=animation then obj.animation=animation end
+          if obj.animation_offset~=offset then obj.animation_offset=offset end
+        end
         return obj
       end
-      draw('shadow',string.format('tp-rocket-shadow-%02d',d),0,'object-under')
+      draw('shadow',string.format('tp-rocket-%s-shadow-%02d',mode,d),frame,'object-under')
       draw('body',string.format('tp-rocket-%s-body-%02d',mode,d),frame)
       local count=gun.get_inventory(defines.inventory.turret_ammo).get_item_count()
       local start=entry.next_cell
       for cell=0,5 do
         local nose=draw('nose'..cell,string.format('tp-rocket-noses-%02d',d),cell)
-        nose.visible=(not reload or source_frame>=180) and cell>=start and cell<start+count
+        local visible=(not reload or source_frame>=180) and cell>=start and cell<start+count
+        if nose.visible~=visible then nose.visible=visible end
       end
       entry.visual={heading=d,mode=mode,frame=frame,source_frame=source_frame,ammo=count}
     end

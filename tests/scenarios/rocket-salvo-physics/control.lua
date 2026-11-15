@@ -17,10 +17,10 @@ local function add_site(s,p,offset,ammo,count,mode)
   return site
 end
 script.on_init(function()
-  if GRAPHICAL then game.speed=12 end
+  if GRAPHICAL then game.speed=1 end
   local s=game.create_surface('rocket-native',{water=0,default_enable_all_autoplace_controls=false,
     autoplace_settings={entity={treat_missing_as_default=false,settings={}},decorative={treat_missing_as_default=false,settings={}}}})
-  storage.probe={sites={},guns={},targets={},origins={},headings={},stock_unchanged=0}
+  storage.probe={sites={},guns={},targets={},origins={},headings={},stock_unchanged=0,actual_art=true}
   local t=storage.probe
   game.forces.player.technologies[NAME].researched=true
   check(game.forces.player.recipes[NAME].enabled,'native technology unlocks turret recipe')
@@ -37,7 +37,16 @@ script.on_init(function()
   t.external=add_site(s,{x=880.5,y=.5},{0,-26},'rocket',12,'external-disable')
   t.external.gun.disabled_by_script=true
   t.destroyed=add_site(s,{x=960.5,y=.5},{0,-26},'rocket',12,'destroyed')
-  rocket.init({graphics_enabled=false})
+  rocket.init({graphics_enabled=GRAPHICAL})
+  -- Native conversion gate, with a powered test buffer; this does not claim
+  -- a new power-network implementation or an automatic placement workflow.
+  s.request_to_generate_chunks({1120.5,.5},1);s.force_generate_chunk_requests()
+  local assembler=s.create_entity{name='assembling-machine-3',position={1120.5,.5},force='player'}
+  assembler.set_recipe(NAME)
+  for _,ingredient in ipairs(prototypes.recipe[NAME].ingredients) do
+    check(ingredient.type=='item' and assembler.insert{name=ingredient.name,count=ingredient.amount}==ingredient.amount,'exact recipe inputs supplied')
+  end
+  t.assembler=assembler
 end)
 script.on_event(defines.events.on_script_trigger_effect,function(e)
   local t=storage.probe
@@ -86,7 +95,7 @@ end)
 local function camera(player)
   if not GRAPHICAL then return end
   player.set_controller{type=defines.controllers.god}
-  player.teleport({520.5,40},game.surfaces['rocket-native']);player.zoom=.035
+  player.teleport({.5,-5},game.surfaces['rocket-native']);player.zoom=1.25
 end
 script.on_event(defines.events.on_player_created,function(e)camera(game.get_player(e.player_index))end)
 script.on_event(defines.events.on_player_joined_game,function(e)camera(game.get_player(e.player_index))end)
@@ -107,8 +116,18 @@ script.on_event(defines.events.on_tick,function(e)
     end
   end
   rocket.tick(e)
+  t.assembler.energy=500000
+  if GRAPHICAL and (e.tick==2 or e.tick==95 or e.tick==140 or e.tick==1700) then
+    local gun=t.sites[1].gun
+    game.take_screenshot{surface=gun.surface,position={gun.position.x,gun.position.y-1.2},resolution={960,720},zoom=3,
+      show_gui=false,show_entity_info=false,path='rocket-salvo-physics/actual-bunker-'..e.tick..'.png'}
+  end
   for _,site in ipairs(t.sites) do
     if site.gun.valid then
+      if GRAPHICAL and site.mode~='stock' then
+        local entry=storage.rocket_salvo.guns[site.gun.unit_number]
+        if entry and entry.shots>0 then check(entry.objects.body and entry.objects.body.valid,'Actual turret top is rendered during combat')end
+      end
       local left=site.gun.get_inventory(defines.inventory.turret_ammo).get_item_count(site.ammo)
       check(left+#site.launches==site.initial+site.inserted,'exact one native ammunition item per rocket')
     end
@@ -120,7 +139,7 @@ script.on_event(defines.events.on_tick,function(e)
     local site=t.lost;check(#site.launches==2,'no phantom shots after target loss')
     site.target=target(site.gun.surface,site.gun.position,{0,26});t.targets[site.target.unit_number]=site
   end
-  if e.tick==320 then game.auto_save('rocket-salvo-mid-reload') end
+  if e.tick==320 then game.auto_save('rocket-salvo-actual-art-mid-reload') end
   if e.tick==350 then
     check(#t.partial.launches==3,'partial salvo stops with empty ammo')
     check(t.partial.gun.insert{name='rocket',count=3}==3,'partial real resupply');t.partial.inserted=3
@@ -162,10 +181,12 @@ script.on_event(defines.events.on_tick,function(e)
     check(t.stock_unchanged==72,'stock rocket origins preserved')
     if GRAPHICAL then check((t.muzzle_effects or 0)>0,'visible native launch effects exercised')end
     check(next(storage.rocket_salvo.pending)==nil,'no orphaned projectile origin queues')
+    check(t.assembler.get_output_inventory().get_item_count(NAME)==1,'native assembler produced exactly one turret')
+    check(t.assembler.get_inventory(defines.inventory.crafter_input).is_empty(),'native recipe consumed exact inputs')
     if t.resume then check(t.resume.saved_tick and t.resume.tick==t.resume.saved_tick+1,'reload begins immediately after actual saved tick')end
     helpers.write_file('rocket-salvo-physics/'..(GRAPHICAL and 'result-graphical.json' or 'result.json'),helpers.table_to_json({status='PASS',
-      scope='Native combat physics only; no final art acceptance',sites=rows,headings=heading_count,
-      stock_unchanged=t.stock_unchanged,muzzle_effects=t.muzzle_effects or 0,resume=t.resume}),false)
+      scope='Actual bunker foundations and all 64 modeled turret headings; combat and recipe checks',actual_art=true,sites=rows,headings=heading_count,
+      stock_unchanged=t.stock_unchanged,muzzle_effects=t.muzzle_effects or 0,recipe_outputs=1,resume=t.resume}),false)
     if GRAPHICAL then game.tick_paused=true end
   end
   t.last_completed_tick=e.tick

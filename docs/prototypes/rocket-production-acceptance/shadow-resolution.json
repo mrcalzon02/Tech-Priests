@@ -1,0 +1,56 @@
+{
+  "status": "PASS_NUMERIC_COMPARISON",
+  "source_sha256": "3054dd0caa90d2c9db2449d8b0ee21b0a989ccb02af61099946347984a2c01c4",
+  "comparisons": [
+    {
+      "direction": 0,
+      "source_frame": 114,
+      "alpha_rms_255": 1.3296777238577917,
+      "alpha_mean_abs_255": 0.8713347407928689,
+      "bounds_drift_pixels": 1,
+      "passed": true,
+      "seconds": {
+        "512": 2.5,
+        "256": 0.6880000000019209
+      }
+    },
+    {
+      "direction": 16,
+      "source_frame": 94,
+      "alpha_rms_255": 1.2114619168253378,
+      "alpha_mean_abs_255": 0.8062913907284768,
+      "bounds_drift_pixels": 1,
+      "passed": true,
+      "seconds": {
+        "512": 2.0,
+        "256": 0.6090000000003783
+      }
+    },
+    {
+      "direction": 32,
+      "source_frame": 140,
+      "alpha_rms_255": 1.1616150383577395,
+      "alpha_mean_abs_255": 0.7806031933767001,
+      "bounds_drift_pixels": 1,
+      "passed": true,
+      "seconds": {
+        "512": 1.8909999999996217,
+        "256": 0.5459999999984575
+      }
+    },
+    {
+      "direction": 48,
+      "source_frame": 196,
+      "alpha_rms_255": 1.1752913624322268,
+      "alpha_mean_abs_255": 0.8021339220014717,
+      "bounds_drift_pixels": 1,
+      "passed": true,
+      "seconds": {
+        "512": 1.875,
+        "256": 0.5630000000019209
+      }
+    }
+  ],
+  "criteria": "RMS alpha <=3/255 and coverage bounds drift <=2 pixels in the nontrivial shadow region",
+  "visual_review": "Required before adopting resolution; full direction/pose counts remain unchanged"
+}

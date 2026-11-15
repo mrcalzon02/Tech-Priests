@@ -35,7 +35,16 @@ function M.finalize()
   turret.attacking_speed = 1 / shot_ticks -- complete the recoil cycle between shots
   local rifle_ammo = assert(data.raw.ammo['firearm-magazine'])
   local shell = assert(data.raw.ammo['cannon-shell'])
-  local hit = (damage(rifle_ammo.ammo_type, {}) + damage(shell.ammo_type, {})) / 2
+  -- Balance sustained output, rather than independently averaging damage
+  -- and cadence (which combined a cannon-sized hit with near-rifle speed).
+  -- These are unarmoured, unresearched donor values, including native
+  -- per-magazine reload time and attack damage modifiers.
+  local function period(attack, ammo)
+    return math.ceil(attack.cooldown) + (ammo.reload_time or 0) / (ammo.magazine_size or 1)
+  end
+  local rifle_dps = 60 * damage(rifle_ammo.ammo_type, {}) * (gun.damage_modifier or 1) / period(gun, rifle_ammo)
+  local cannon_dps = 60 * damage(shell.ammo_type, {}) * (cannon.damage_modifier or 1) / period(cannon, shell)
+  local hit = ((rifle_dps + cannon_dps) / 2) * cooldown / 60
   assert(hit > 0)
   data.raw.projectile[PROJECTILE].action.action_delivery.target_effects[1].damage.amount = hit
 
@@ -133,7 +142,7 @@ function M.register(mod_name)
   projectile.name=PROJECTILE;projectile.piercing_damage=nil;projectile.final_action=nil
   projectile.collision_box={{-0.05,-0.15},{0.05,0.15}}
   projectile.action={type='direct',action_delivery={type='instant',target_effects={
-    {type='damage',damage={amount=552.5,type='physical'}},
+    {type='damage',damage={amount=73.4375,type='physical'}},
     {type='create-entity',entity_name='explosion-hit'}}}}
   if projectile.animation then projectile.animation.scale=0.25 end
   local ammo_recipe=table.deepcopy(data.raw.recipe['firearm-magazine'])

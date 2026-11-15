@@ -1,0 +1,1053 @@
+{
+  "ammo": {
+    "cannon-shell": {
+      "ammo_type": {
+        "action": {
+          "action_delivery": {
+            "inherit_speed": true,
+            "projectile": "cannon-projectile",
+            "source_effects": {
+              "1": {
+                "entity_name": "explosion-gunshot",
+                "trigger_created_entity": true,
+                "type": "create-entity"
+              },
+              "2": {
+                "effect_id": "tp-twin-cannon-fire",
+                "type": "script"
+              }
+            },
+            "starting_speed": 1,
+            "type": "projectile"
+          },
+          "type": "direct"
+        },
+        "clamp_position": true,
+        "range_modifier": 1.25,
+        "target_type": "position"
+      },
+      "magazine_size": 1,
+      "reload_time": 0
+    },
+    "explosive-cannon-shell": {
+      "ammo_type": {
+        "action": {
+          "action_delivery": {
+            "inherit_speed": true,
+            "projectile": "explosive-cannon-projectile",
+            "source_effects": {
+              "1": {
+                "entity_name": "explosion-gunshot",
+                "trigger_created_entity": true,
+                "type": "create-entity"
+              },
+              "2": {
+                "effect_id": "tp-twin-cannon-fire",
+                "type": "script"
+              }
+            },
+            "starting_speed": 1,
+            "type": "projectile"
+          },
+          "type": "direct"
+        },
+        "clamp_position": true,
+        "target_type": "position"
+      },
+      "magazine_size": 1,
+      "reload_time": 0
+    },
+    "explosive-rocket": {
+      "ammo_type": {
+        "action": {
+          "action_delivery": {
+            "inherit_speed": true,
+            "projectile": "explosive-rocket",
+            "source_effects": {
+              "1": {
+                "entity_name": "explosion-hit",
+                "only_when_visible": true,
+                "trigger_created_entity": true,
+                "type": "create-entity"
+              },
+              "2": {
+                "effect_id": "tp-rocket-salvo-fire",
+                "type": "script"
+              }
+            },
+            "starting_speed": 0.1,
+            "type": "projectile"
+          },
+          "type": "direct"
+        }
+      },
+      "magazine_size": 1,
+      "reload_time": 0
+    },
+    "explosive-uranium-cannon-shell": {
+      "ammo_type": {
+        "action": {
+          "action_delivery": {
+            "inherit_speed": true,
+            "projectile": "explosive-uranium-cannon-projectile",
+            "source_effects": {
+              "1": {
+                "entity_name": "explosion-gunshot",
+                "trigger_created_entity": true,
+                "type": "create-entity"
+              },
+              "2": {
+                "effect_id": "tp-twin-cannon-fire",
+                "type": "script"
+              }
+            },
+            "starting_speed": 1,
+            "type": "projectile"
+          },
+          "type": "direct"
+        },
+        "clamp_position": true,
+        "target_type": "position"
+      },
+      "magazine_size": 1,
+      "reload_time": 0
+    },
+    "firearm-magazine": {
+      "ammo_type": {
+        "action": {
+          "1": {
+            "action_delivery": {
+              "1": {
+                "source_effects": {
+                  "1": {
+                    "entity_name": "explosion-gunshot",
+                    "only_when_visible": true,
+                    "trigger_created_entity": true,
+                    "type": "create-entity"
+                  }
+                },
+                "target_effects": {
+                  "1": {
+                    "entity_name": "explosion-hit",
+                    "offset_deviation": {
+                      "1": {
+                        "1": -0.5,
+                        "2": -0.5
+                      },
+                      "2": {
+                        "1": 0.5,
+                        "2": 0.5
+                      }
+                    },
+                    "offsets": {
+                      "1": {
+                        "1": 0,
+                        "2": 1
+                      }
+                    },
+                    "only_when_visible": true,
+                    "type": "create-entity"
+                  },
+                  "2": {
+                    "deliver_category": "bullet",
+                    "type": "activate-impact"
+                  },
+                  "3": {
+                    "damage": {
+                      "amount": 5,
+                      "type": "physical"
+                    },
+                    "type": "damage"
+                  }
+                },
+                "type": "instant"
+              }
+            },
+            "type": "direct"
+          }
+        }
+      },
+      "magazine_size": 10,
+      "reload_time": 0
+    },
+    "piercing-rounds-magazine": {
+      "ammo_type": {
+        "action": {
+          "action_delivery": {
+            "source_effects": {
+              "entity_name": "explosion-gunshot",
+              "only_when_visible": true,
+              "trigger_created_entity": true,
+              "type": "create-entity"
+            },
+            "target_effects": {
+              "1": {
+                "entity_name": "explosion-hit",
+                "offset_deviation": {
+                  "1": {
+                    "1": -0.5,
+                    "2": -0.5
+                  },
+                  "2": {
+                    "1": 0.5,
+                    "2": 0.5
+                  }
+                },
+                "offsets": {
+                  "1": {
+                    "1": 0,
+                    "2": 1
+                  }
+                },
+                "only_when_visible": true,
+                "type": "create-entity"
+              },
+              "2": {
+                "deliver_category": "bullet",
+                "type": "activate-impact"
+              },
+              "3": {
+                "damage": {
+                  "amount": 8,
+                  "type": "physical"
+                },
+                "type": "damage"
+              }
+            },
+            "type": "instant"
+          },
+          "type": "direct"
+        }
+      },
+      "magazine_size": 10,
+      "reload_time": 0
+    },
+    "rocket": {
+      "ammo_type": {
+        "action": {
+          "action_delivery": {
+            "inherit_speed": true,
+            "projectile": "rocket",
+            "source_effects": {
+              "1": {
+                "entity_name": "explosion-hit",
+                "only_when_visible": true,
+                "trigger_created_entity": true,
+                "type": "create-entity"
+              },
+              "2": {
+                "effect_id": "tp-rocket-salvo-fire",
+                "type": "script"
+              }
+            },
+            "starting_speed": 0.1,
+            "type": "projectile"
+          },
+          "type": "direct"
+        }
+      },
+      "magazine_size": 1,
+      "reload_time": 0
+    },
+    "tech-priests-autocannon-magazine": {
+      "ammo_type": {
+        "action": {
+          "action_delivery": {
+            "direction_deviation": 0,
+            "max_range": 32,
+            "projectile": "tech-priests-autocannon-projectile",
+            "range_deviation": 0,
+            "starting_speed": 1,
+            "type": "projectile"
+          },
+          "type": "direct"
+        },
+        "target_type": "entity"
+      },
+      "magazine_size": 20,
+      "reload_time": 5
+    },
+    "tech-priests-lobber-grenade-magazine": {
+      "ammo_type": {
+        "action": {
+          "1": {
+            "action_delivery": {
+              "max_range": 32,
+              "projectile": "grenade",
+              "source_effects": {
+                "1": {
+                  "effect_id": "tech-priests-lobber-shot",
+                  "type": "script"
+                }
+              },
+              "starting_speed": 0.3,
+              "type": "projectile"
+            },
+            "type": "direct"
+          },
+          "2": {
+            "action_delivery": {
+              "target_effects": {
+                "1": {
+                  "sound": {
+                    "category": "weapon",
+                    "priority": 64,
+                    "switch_vibration_data": {
+                      "filename": "__base__/sound/fight/throw-projectile.bnvib"
+                    },
+                    "variations": {
+                      "1": {
+                        "filename": "__base__/sound/fight/throw-projectile-1.ogg",
+                        "volume": 0.4
+                      },
+                      "2": {
+                        "filename": "__base__/sound/fight/throw-projectile-2.ogg",
+                        "volume": 0.4
+                      },
+                      "3": {
+                        "filename": "__base__/sound/fight/throw-projectile-3.ogg",
+                        "volume": 0.4
+                      },
+                      "4": {
+                        "filename": "__base__/sound/fight/throw-projectile-4.ogg",
+                        "volume": 0.4
+                      },
+                      "5": {
+                        "filename": "__base__/sound/fight/throw-projectile-5.ogg",
+                        "volume": 0.4
+                      },
+                      "6": {
+                        "filename": "__base__/sound/fight/throw-projectile-6.ogg",
+                        "volume": 0.4
+                      }
+                    }
+                  },
+                  "type": "play-sound"
+                },
+                "2": {
+                  "sound": {
+                    "category": "weapon",
+                    "priority": 64,
+                    "variations": {
+                      "1": {
+                        "filename": "__base__/sound/fight/throw-grenade-1.ogg",
+                        "volume": 0.4
+                      },
+                      "2": {
+                        "filename": "__base__/sound/fight/throw-grenade-2.ogg",
+                        "volume": 0.4
+                      },
+                      "3": {
+                        "filename": "__base__/sound/fight/throw-grenade-3.ogg",
+                        "volume": 0.4
+                      },
+                      "4": {
+                        "filename": "__base__/sound/fight/throw-grenade-4.ogg",
+                        "volume": 0.4
+                      },
+                      "5": {
+                        "filename": "__base__/sound/fight/throw-grenade-5.ogg",
+                        "volume": 0.4
+                      }
+                    }
+                  },
+                  "type": "play-sound"
+                }
+              },
+              "type": "instant"
+            },
+            "type": "direct"
+          }
+        },
+        "target_type": "position"
+      },
+      "magazine_size": 6,
+      "reload_time": 0
+    },
+    "uranium-cannon-shell": {
+      "ammo_type": {
+        "action": {
+          "action_delivery": {
+            "inherit_speed": true,
+            "projectile": "uranium-cannon-projectile",
+            "source_effects": {
+              "1": {
+                "entity_name": "explosion-gunshot",
+                "trigger_created_entity": true,
+                "type": "create-entity"
+              },
+              "2": {
+                "effect_id": "tp-twin-cannon-fire",
+                "type": "script"
+              }
+            },
+            "starting_speed": 1,
+            "type": "projectile"
+          },
+          "type": "direct"
+        },
+        "clamp_position": true,
+        "range_modifier": 1.25,
+        "target_type": "position"
+      },
+      "magazine_size": 1,
+      "reload_time": 0
+    },
+    "uranium-rounds-magazine": {
+      "ammo_type": {
+        "action": {
+          "action_delivery": {
+            "source_effects": {
+              "entity_name": "explosion-gunshot",
+              "trigger_created_entity": true,
+              "type": "create-entity"
+            },
+            "target_effects": {
+              "1": {
+                "entity_name": "explosion-hit",
+                "offset_deviation": {
+                  "1": {
+                    "1": -0.5,
+                    "2": -0.5
+                  },
+                  "2": {
+                    "1": 0.5,
+                    "2": 0.5
+                  }
+                },
+                "offsets": {
+                  "1": {
+                    "1": 0,
+                    "2": 1
+                  }
+                },
+                "type": "create-entity"
+              },
+              "2": {
+                "deliver_category": "bullet",
+                "type": "activate-impact"
+              },
+              "3": {
+                "damage": {
+                  "amount": 24,
+                  "type": "physical"
+                },
+                "type": "damage"
+              }
+            },
+            "type": "instant"
+          },
+          "type": "direct"
+        }
+      },
+      "magazine_size": 10,
+      "reload_time": 0
+    }
+  },
+  "beams": {
+    "laser-beam": {
+      "action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "damage": {
+                "amount": 10,
+                "type": "laser"
+              },
+              "type": "damage"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      },
+      "damage_interval": 20
+    },
+    "tech-priests-dish-zap": {
+      "action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "damage": {
+                "amount": 60,
+                "type": "electric"
+              },
+              "type": "damage"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      },
+      "damage_interval": 120
+    }
+  },
+  "projectiles": {
+    "cannon-projectile": {
+      "action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "damage": {
+                "amount": 1000,
+                "type": "physical"
+              },
+              "type": "damage"
+            },
+            "2": {
+              "damage": {
+                "amount": 100,
+                "type": "explosion"
+              },
+              "type": "damage"
+            },
+            "3": {
+              "entity_name": "explosion",
+              "type": "create-entity"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      },
+      "final_action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "check_buildability": true,
+              "entity_name": "small-scorchmark-tintable",
+              "type": "create-entity"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      },
+      "piercing_damage": 1000
+    },
+    "explosive-cannon-projectile": {
+      "action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "damage": {
+                "amount": 180,
+                "type": "physical"
+              },
+              "type": "damage"
+            },
+            "2": {
+              "entity_name": "explosion",
+              "type": "create-entity"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      },
+      "final_action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "entity_name": "big-explosion",
+              "type": "create-entity"
+            },
+            "2": {
+              "action": {
+                "action_delivery": {
+                  "target_effects": {
+                    "1": {
+                      "damage": {
+                        "amount": 300,
+                        "type": "explosion"
+                      },
+                      "type": "damage"
+                    },
+                    "2": {
+                      "entity_name": "explosion",
+                      "type": "create-entity"
+                    }
+                  },
+                  "type": "instant"
+                },
+                "radius": 4,
+                "type": "area"
+              },
+              "type": "nested-result"
+            },
+            "3": {
+              "check_buildability": true,
+              "entity_name": "medium-scorchmark-tintable",
+              "type": "create-entity"
+            },
+            "4": {
+              "repeat_count": 1,
+              "type": "invoke-tile-trigger"
+            },
+            "5": {
+              "decoratives_with_trigger_only": false,
+              "from_render_layer": "decorative",
+              "include_decals": false,
+              "include_soft_decoratives": true,
+              "invoke_decorative_trigger": true,
+              "radius": 2,
+              "to_render_layer": "object",
+              "type": "destroy-decoratives"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      },
+      "piercing_damage": 100
+    },
+    "explosive-rocket": {
+      "action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "entity_name": "big-explosion",
+              "only_when_visible": true,
+              "type": "create-entity"
+            },
+            "2": {
+              "damage": {
+                "amount": 50,
+                "type": "explosion"
+              },
+              "type": "damage"
+            },
+            "3": {
+              "check_buildability": true,
+              "entity_name": "medium-scorchmark-tintable",
+              "type": "create-entity"
+            },
+            "4": {
+              "repeat_count": 1,
+              "type": "invoke-tile-trigger"
+            },
+            "5": {
+              "decoratives_with_trigger_only": false,
+              "from_render_layer": "decorative",
+              "include_decals": false,
+              "include_soft_decoratives": true,
+              "invoke_decorative_trigger": true,
+              "radius": 3.5,
+              "to_render_layer": "object",
+              "type": "destroy-decoratives"
+            },
+            "6": {
+              "action": {
+                "action_delivery": {
+                  "target_effects": {
+                    "1": {
+                      "damage": {
+                        "amount": 100,
+                        "type": "explosion"
+                      },
+                      "type": "damage"
+                    },
+                    "2": {
+                      "entity_name": "explosion",
+                      "only_when_visible": true,
+                      "type": "create-entity"
+                    }
+                  },
+                  "type": "instant"
+                },
+                "radius": 6.5,
+                "type": "area"
+              },
+              "type": "nested-result"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      }
+    },
+    "explosive-uranium-cannon-projectile": {
+      "action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "damage": {
+                "amount": 350,
+                "type": "physical"
+              },
+              "type": "damage"
+            },
+            "2": {
+              "entity_name": "uranium-cannon-explosion",
+              "type": "create-entity"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      },
+      "final_action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "entity_name": "uranium-cannon-shell-explosion",
+              "type": "create-entity"
+            },
+            "2": {
+              "action": {
+                "action_delivery": {
+                  "target_effects": {
+                    "1": {
+                      "damage": {
+                        "amount": 315,
+                        "type": "explosion"
+                      },
+                      "type": "damage"
+                    },
+                    "2": {
+                      "entity_name": "uranium-cannon-explosion",
+                      "type": "create-entity"
+                    }
+                  },
+                  "type": "instant"
+                },
+                "radius": 4.25,
+                "type": "area"
+              },
+              "type": "nested-result"
+            },
+            "3": {
+              "check_buildability": true,
+              "entity_name": "medium-scorchmark-tintable",
+              "type": "create-entity"
+            },
+            "4": {
+              "repeat_count": 1,
+              "type": "invoke-tile-trigger"
+            },
+            "5": {
+              "decoratives_with_trigger_only": false,
+              "from_render_layer": "decorative",
+              "include_decals": false,
+              "include_soft_decoratives": true,
+              "invoke_decorative_trigger": true,
+              "radius": 3.25,
+              "to_render_layer": "object",
+              "type": "destroy-decoratives"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      },
+      "piercing_damage": 150
+    },
+    "grenade": {
+      "action": {
+        "1": {
+          "action_delivery": {
+            "target_effects": {
+              "1": {
+                "entity_name": "grenade-explosion",
+                "type": "create-entity"
+              },
+              "2": {
+                "check_buildability": true,
+                "entity_name": "small-scorchmark-tintable",
+                "type": "create-entity"
+              },
+              "3": {
+                "repeat_count": 1,
+                "type": "invoke-tile-trigger"
+              },
+              "4": {
+                "decoratives_with_trigger_only": false,
+                "from_render_layer": "decorative",
+                "include_decals": false,
+                "include_soft_decoratives": true,
+                "invoke_decorative_trigger": true,
+                "radius": 2.25,
+                "to_render_layer": "object",
+                "type": "destroy-decoratives"
+              }
+            },
+            "type": "instant"
+          },
+          "type": "direct"
+        },
+        "2": {
+          "action_delivery": {
+            "target_effects": {
+              "1": {
+                "damage": {
+                  "amount": 35,
+                  "type": "explosion"
+                },
+                "type": "damage"
+              },
+              "2": {
+                "entity_name": "explosion",
+                "type": "create-entity"
+              }
+            },
+            "type": "instant"
+          },
+          "radius": 6.5,
+          "type": "area"
+        }
+      }
+    },
+    "rocket": {
+      "action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "entity_name": "explosion",
+              "only_when_visible": true,
+              "type": "create-entity"
+            },
+            "2": {
+              "damage": {
+                "amount": 200,
+                "type": "explosion"
+              },
+              "type": "damage"
+            },
+            "3": {
+              "check_buildability": true,
+              "entity_name": "small-scorchmark-tintable",
+              "type": "create-entity"
+            },
+            "4": {
+              "repeat_count": 1,
+              "type": "invoke-tile-trigger"
+            },
+            "5": {
+              "decoratives_with_trigger_only": false,
+              "from_render_layer": "decorative",
+              "include_decals": false,
+              "include_soft_decoratives": true,
+              "invoke_decorative_trigger": true,
+              "radius": 1.5,
+              "to_render_layer": "object",
+              "type": "destroy-decoratives"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      }
+    },
+    "tech-priests-autocannon-projectile": {
+      "action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "damage": {
+                "amount": 552.5,
+                "type": "physical"
+              },
+              "type": "damage"
+            },
+            "2": {
+              "entity_name": "explosion-hit",
+              "type": "create-entity"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      }
+    },
+    "uranium-cannon-projectile": {
+      "action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "damage": {
+                "amount": 2000,
+                "type": "physical"
+              },
+              "type": "damage"
+            },
+            "2": {
+              "damage": {
+                "amount": 200,
+                "type": "explosion"
+              },
+              "type": "damage"
+            },
+            "3": {
+              "entity_name": "uranium-cannon-explosion",
+              "type": "create-entity"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      },
+      "final_action": {
+        "action_delivery": {
+          "target_effects": {
+            "1": {
+              "check_buildability": true,
+              "entity_name": "small-scorchmark-tintable",
+              "type": "create-entity"
+            }
+          },
+          "type": "instant"
+        },
+        "type": "direct"
+      },
+      "piercing_damage": 2200
+    }
+  },
+  "weapons": {
+    "gun-turret": {
+      "ammo_category": "bullet",
+      "ammo_consumption_modifier": 1,
+      "cooldown": 6,
+      "damage_modifier": 1,
+      "kind": "ammo-turret",
+      "min_range": 0,
+      "range": 18
+    },
+    "laser-turret": {
+      "ammo_category": "laser",
+      "ammo_consumption_modifier": 1,
+      "ammo_type": {
+        "action": {
+          "action_delivery": {
+            "beam": "laser-beam",
+            "duration": 40,
+            "max_length": 24,
+            "source_offset": {
+              "1": 0,
+              "2": -1.31439
+            },
+            "type": "beam"
+          },
+          "type": "direct"
+        },
+        "energy_consumption": "800kJ"
+      },
+      "cooldown": 40,
+      "damage_modifier": 2,
+      "kind": "electric-turret",
+      "min_range": 0,
+      "range": 24
+    },
+    "rocket-launcher": {
+      "ammo_category": "rocket",
+      "ammo_consumption_modifier": 1,
+      "cooldown": 60,
+      "damage_modifier": 1,
+      "kind": "gun",
+      "min_range": 0,
+      "range": 36
+    },
+    "submachine-gun": {
+      "ammo_category": "bullet",
+      "ammo_consumption_modifier": 1,
+      "cooldown": 6,
+      "damage_modifier": 1,
+      "kind": "gun",
+      "min_range": 0,
+      "range": 18
+    },
+    "tank-cannon": {
+      "ammo_category": "cannon-shell",
+      "ammo_consumption_modifier": 1,
+      "cooldown": 90,
+      "damage_modifier": 1,
+      "kind": "gun",
+      "min_range": 5,
+      "range": 30
+    },
+    "tech-priests-bunker-autocannon": {
+      "ammo_category": "tech-priests-autocannon",
+      "ammo_consumption_modifier": 1,
+      "cooldown": 11,
+      "damage_modifier": 1,
+      "kind": "ammo-turret",
+      "min_range": 0,
+      "range": 24
+    },
+    "tech-priests-bunker-chicago-piano": {
+      "ammo_category": "bullet",
+      "ammo_consumption_modifier": 1,
+      "cooldown": 6,
+      "damage_modifier": 1,
+      "kind": "ammo-turret",
+      "min_range": 0,
+      "range": 18
+    },
+    "tech-priests-bunker-energy-dish": {
+      "ammo_category": "laser",
+      "ammo_consumption_modifier": 1,
+      "ammo_type": {
+        "action": {
+          "action_delivery": {
+            "beam": "tech-priests-dish-zap",
+            "duration": 6,
+            "max_length": 28,
+            "source_effects": {
+              "1": {
+                "effect_id": "tech-priests-dish-discharge",
+                "type": "script"
+              }
+            },
+            "source_offset": {
+              "1": 0,
+              "2": -2.0223253941935
+            },
+            "type": "beam"
+          },
+          "type": "direct"
+        },
+        "energy_consumption": "800kJ"
+      },
+      "cooldown": 120,
+      "damage_modifier": 4,
+      "kind": "electric-turret",
+      "min_range": 0,
+      "range": 28
+    },
+    "tech-priests-bunker-lobber": {
+      "ammo_category": "tech-priests-lobber-grenade",
+      "ammo_consumption_modifier": 1,
+      "cooldown": 80,
+      "damage_modifier": 1,
+      "kind": "ammo-turret",
+      "min_range": 6,
+      "range": 28
+    },
+    "tech-priests-bunker-rocket-salvo": {
+      "ammo_category": "rocket",
+      "ammo_consumption_modifier": 1,
+      "cooldown": 10,
+      "damage_modifier": 1,
+      "kind": "ammo-turret",
+      "min_range": 8,
+      "range": 36
+    },
+    "tech-priests-bunker-twin-cannon": {
+      "ammo_category": "cannon-shell",
+      "ammo_consumption_modifier": 1,
+      "cooldown": 45,
+      "damage_modifier": 1,
+      "kind": "ammo-turret",
+      "min_range": 8,
+      "range": 36
+    },
+    "tech-priests-bunker-twin-minigun": {
+      "ammo_category": "bullet",
+      "ammo_consumption_modifier": 2,
+      "cooldown": 6,
+      "damage_modifier": 2,
+      "kind": "ammo-turret",
+      "min_range": 0,
+      "range": 18
+    }
+  }
+}

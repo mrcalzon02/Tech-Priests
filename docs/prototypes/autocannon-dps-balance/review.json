@@ -1,0 +1,24 @@
+{
+  "status": "APPROVED_BASELINE_IMPLEMENTED_AND_ENGINE_VERIFIED",
+  "decision": "User selected halfway between vanilla gun turret and tank cannon sustained DPS",
+  "before": {
+    "damage_per_round": 552.5,
+    "base_dps": 2946.6666666666665
+  },
+  "after": {
+    "damage_per_round": 73.4375,
+    "base_dps": 391.6666666666667
+  },
+  "vanilla_donors": {
+    "gun_turret_dps": 50,
+    "tank_cannon_dps": 733.3333333333334
+  },
+  "unchanged": [
+    "20 rounds per magazine",
+    "20 shots per 225 ticks",
+    "ammunition recipe and cost",
+    "recoil animation",
+    "placement and supply"
+  ],
+  "verification": "Eight actual bunker turrets against disabled biter targets: each impact, complete magazine DPS, native ammo and real burner-inserter supply; full-mod prior weapon regression passes. Unarmoured, unresearched baseline; AoE victim count not multiplied into DPS."
+}
