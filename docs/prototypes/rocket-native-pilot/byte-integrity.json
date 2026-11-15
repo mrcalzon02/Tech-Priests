@@ -1,0 +1,6 @@
+{
+  "status": "PASS_STAGED_REPOSITORY_BYTES",
+  "native_modules": 3,
+  "candidate_files": 42,
+  "scope": "Git index objects match original checked bytes; not a new gameplay test"
+}
