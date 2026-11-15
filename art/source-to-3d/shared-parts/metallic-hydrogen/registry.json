@@ -490,6 +490,40 @@
           "model_source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
           "runtime_export_sha256": "378095b1903a6b99700ff50ed6061782786ecbe37e03045d9833ca69c216c7df",
           "status": "Unchanged appended shared master; source/export bores, sampled motion, dedicated finish and four-direction captures pass; native pending"
+        },
+        {
+          "machine": "canister-assembler",
+          "machine_revision": "V01 three-indexed-nest construction pilot",
+          "instance": "front right cogitator",
+          "transform": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              1.2899999618530273
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -1.2899999618530273
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.800000011920929
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "5813b40a94cea798408382393058dfa97d4ecf3cf4a093a30bcd832a1ec6080c",
+          "runtime_export_sha256": "51aeb589afde90d958e3bc49e3a73dfe7cb1c5969c2a007a32b73573b92c11dc",
+          "status": "Actual unchanged appended assembly retained in source and independently imported GLB; full motion, finish and native pending"
         }
       ],
       "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
@@ -1959,10 +1993,48 @@
         "runtime_export_sha256": "378095b1903a6b99700ff50ed6061782786ecbe37e03045d9833ca69c216c7df",
         "status": "Unchanged appended shared master; source/export bores, sampled motion, dedicated finish and four-direction captures pass; native pending"
       }
+    ],
+    "canister-assembler": [
+      {
+        "part_id": "tp.mh7.cogitator-console",
+        "revision": "v1",
+        "machine": "canister-assembler",
+        "machine_revision": "V01 three-indexed-nest construction pilot",
+        "instance": "front right cogitator",
+        "transform": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            1.2899999618530273
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -1.2899999618530273
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.800000011920929
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "model_source_sha256": "5813b40a94cea798408382393058dfa97d4ecf3cf4a093a30bcd832a1ec6080c",
+        "runtime_export_sha256": "51aeb589afde90d958e3bc49e3a73dfe7cb1c5969c2a007a32b73573b92c11dc",
+        "status": "Actual unchanged appended assembly retained in source and independently imported GLB; full motion, finish and native pending"
+      }
     ]
   },
   "last_checkpoint_sha256": null,
   "inventory_source": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
   "material_index": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
-  "previous_registry_sha256": "b3fa6b7d45879a4e2162eaab0bc39733c50d45fa61745624a29ba5113ec3a2eb"
+  "previous_registry_sha256": "5fc1245f9876b2590c8b09b5bfcfe7b1215f2797c177afe67dbc893b43a30245"
 }

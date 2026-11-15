@@ -1,0 +1,1330 @@
+{
+  "source_sha256": "5813b40a94cea798408382393058dfa97d4ecf3cf4a093a30bcd832a1ec6080c",
+  "glb_sha256": "51aeb589afde90d958e3bc49e3a73dfe7cb1c5969c2a007a32b73573b92c11dc",
+  "recorded_contacts_passed": true,
+  "contacts": [
+    {
+      "a": "TP Canister Assembler V01 | bed grounded pedestal -1.3",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "bed pedestal grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | three-station bored mounting bed",
+      "b": "TP Canister Assembler V01 | bed grounded pedestal -1.3",
+      "label": "bed seated on end pedestal",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | bed grounded pedestal 1.3",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "bed pedestal grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | three-station bored mounting bed",
+      "b": "TP Canister Assembler V01 | bed grounded pedestal 1.3",
+      "label": "bed seated on end pedestal",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | indexed canister nest -1.0",
+      "b": "TP Canister Assembler V01 | three-station bored mounting bed",
+      "label": "annular nest seated on mounting bed",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | canister closed bottom -1.0",
+      "b": "TP Canister Assembler V01 | indexed canister nest -1.0",
+      "label": "canister supported in indexed nest",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | hollow canister shell -1.0",
+      "b": "TP Canister Assembler V01 | canister closed bottom -1.0",
+      "label": "hollow canister shell closed by bottom plate",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window side flange (-1.0, -0.069)",
+      "b": "TP Canister Assembler V01 | hollow canister shell -1.0",
+      "label": "witness flange seated on actual shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window side flange (-1.0, 0.069)",
+      "b": "TP Canister Assembler V01 | hollow canister shell -1.0",
+      "label": "witness flange seated on actual shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window end flange (-1.0, 0.683)",
+      "b": "TP Canister Assembler V01 | hollow canister shell -1.0",
+      "label": "witness end flange seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window end flange (-1.0, 1.037)",
+      "b": "TP Canister Assembler V01 | hollow canister shell -1.0",
+      "label": "witness end flange seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | recessed witness pane -1.0",
+      "b": "TP Canister Assembler V01 | hollow canister shell -1.0",
+      "label": "recessed pressure witness pane retained inside front wall",
+      "gap_tiles": 0.009999990463256836,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | canister retaining band (-1.0, 0.6)",
+      "b": "TP Canister Assembler V01 | hollow canister shell -1.0",
+      "label": "retaining band seated on cylindrical shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 0.6, 0)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 0.6, 1)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 0.6, 2)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 0.6, 3)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 0.6, 4)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 0.6, 5)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 0.6, 6)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 0.6, 7)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | canister retaining band (-1.0, 1.14)",
+      "b": "TP Canister Assembler V01 | hollow canister shell -1.0",
+      "label": "retaining band seated on cylindrical shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 1.14, 0)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 1.14, 1)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 1.14, 2)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 1.14, 3)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 1.14, 4)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 1.14, 5)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 1.14, 6)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (-1.0, 1.14, 7)",
+      "b": "TP Canister Assembler V01 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear cap rail support (-1.0, -0.145)",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap transfer rail (-1.0, -0.145)",
+      "b": "TP Canister Assembler V01 | rear cap rail support (-1.0, -0.145)",
+      "label": "cap rail held by rear support",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear cap rail support (-1.0, 0.145)",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap transfer rail (-1.0, 0.145)",
+      "b": "TP Canister Assembler V01 | rear cap rail support (-1.0, 0.145)",
+      "label": "cap rail held by rear support",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap locking lip -1.0",
+      "b": "TP Canister Assembler V01 | pressure cap plate -1.0",
+      "label": "locking lip seated on cap underside",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap rim lifting jaw (-1.0, -0.14)",
+      "b": "TP Canister Assembler V01 | pressure cap plate -1.0",
+      "label": "cap jaw engages outer locking lip",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap jaw lift guide (-1.0, -0.14)",
+      "b": "TP Canister Assembler V01 | cap carrier rear saddle -1.0",
+      "label": "short jaw guide retained in carrier",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap rim lifting jaw (-1.0, 0.14)",
+      "b": "TP Canister Assembler V01 | pressure cap plate -1.0",
+      "label": "cap jaw engages outer locking lip",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap jaw lift guide (-1.0, 0.14)",
+      "b": "TP Canister Assembler V01 | cap carrier rear saddle -1.0",
+      "label": "short jaw guide retained in carrier",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap actuator rear mount -1.0",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "cap actuator mount grounded",
+      "gap_tiles": 7.450580596923828e-09,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap actuator mounting collar -1.0",
+      "b": "TP Canister Assembler V01 | cap actuator rear mount -1.0",
+      "label": "actuator collar seated on grounded cradle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap slide actuator -1.0",
+      "b": "TP Canister Assembler V01 | cap actuator mounting collar -1.0",
+      "label": "cap cylinder held in actual collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | indexed canister nest 0.0",
+      "b": "TP Canister Assembler V01 | three-station bored mounting bed",
+      "label": "annular nest seated on mounting bed",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | canister closed bottom 0.0",
+      "b": "TP Canister Assembler V01 | indexed canister nest 0.0",
+      "label": "canister supported in indexed nest",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | hollow canister shell 0.0",
+      "b": "TP Canister Assembler V01 | canister closed bottom 0.0",
+      "label": "hollow canister shell closed by bottom plate",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window side flange (0.0, -0.069)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 0.0",
+      "label": "witness flange seated on actual shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window side flange (0.0, 0.069)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 0.0",
+      "label": "witness flange seated on actual shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window end flange (0.0, 0.683)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 0.0",
+      "label": "witness end flange seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window end flange (0.0, 1.037)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 0.0",
+      "label": "witness end flange seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | recessed witness pane 0.0",
+      "b": "TP Canister Assembler V01 | hollow canister shell 0.0",
+      "label": "recessed pressure witness pane retained inside front wall",
+      "gap_tiles": 0.009999997913837433,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | canister retaining band (0.0, 0.6)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 0.0",
+      "label": "retaining band seated on cylindrical shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 0.6, 0)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 0.6, 1)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 0.6, 2)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 0.6, 3)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 0.6, 4)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 0.6, 5)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 0.6, 6)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 0.6, 7)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | canister retaining band (0.0, 1.14)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 0.0",
+      "label": "retaining band seated on cylindrical shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 1.14, 0)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 1.14, 1)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 1.14, 2)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 1.14, 3)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 1.14, 4)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 1.14, 5)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 1.14, 6)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (0.0, 1.14, 7)",
+      "b": "TP Canister Assembler V01 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear cap rail support (0.0, -0.145)",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap transfer rail (0.0, -0.145)",
+      "b": "TP Canister Assembler V01 | rear cap rail support (0.0, -0.145)",
+      "label": "cap rail held by rear support",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear cap rail support (0.0, 0.145)",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap transfer rail (0.0, 0.145)",
+      "b": "TP Canister Assembler V01 | rear cap rail support (0.0, 0.145)",
+      "label": "cap rail held by rear support",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap locking lip 0.0",
+      "b": "TP Canister Assembler V01 | pressure cap plate 0.0",
+      "label": "locking lip seated on cap underside",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap rim lifting jaw (0.0, -0.14)",
+      "b": "TP Canister Assembler V01 | pressure cap plate 0.0",
+      "label": "cap jaw engages outer locking lip",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap jaw lift guide (0.0, -0.14)",
+      "b": "TP Canister Assembler V01 | cap carrier rear saddle 0.0",
+      "label": "short jaw guide retained in carrier",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap rim lifting jaw (0.0, 0.14)",
+      "b": "TP Canister Assembler V01 | pressure cap plate 0.0",
+      "label": "cap jaw engages outer locking lip",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap jaw lift guide (0.0, 0.14)",
+      "b": "TP Canister Assembler V01 | cap carrier rear saddle 0.0",
+      "label": "short jaw guide retained in carrier",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap actuator rear mount 0.0",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "cap actuator mount grounded",
+      "gap_tiles": 1.49197759924391e-07,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap actuator mounting collar 0.0",
+      "b": "TP Canister Assembler V01 | cap actuator rear mount 0.0",
+      "label": "actuator collar seated on grounded cradle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap slide actuator 0.0",
+      "b": "TP Canister Assembler V01 | cap actuator mounting collar 0.0",
+      "label": "cap cylinder held in actual collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | indexed canister nest 1.0",
+      "b": "TP Canister Assembler V01 | three-station bored mounting bed",
+      "label": "annular nest seated on mounting bed",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | canister closed bottom 1.0",
+      "b": "TP Canister Assembler V01 | indexed canister nest 1.0",
+      "label": "canister supported in indexed nest",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | hollow canister shell 1.0",
+      "b": "TP Canister Assembler V01 | canister closed bottom 1.0",
+      "label": "hollow canister shell closed by bottom plate",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window side flange (1.0, -0.069)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 1.0",
+      "label": "witness flange seated on actual shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window side flange (1.0, 0.069)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 1.0",
+      "label": "witness flange seated on actual shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window end flange (1.0, 0.683)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 1.0",
+      "label": "witness end flange seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | witness window end flange (1.0, 1.037)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 1.0",
+      "label": "witness end flange seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | recessed witness pane 1.0",
+      "b": "TP Canister Assembler V01 | hollow canister shell 1.0",
+      "label": "recessed pressure witness pane retained inside front wall",
+      "gap_tiles": 0.009999990463256836,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | canister retaining band (1.0, 0.6)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 1.0",
+      "label": "retaining band seated on cylindrical shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 0.6, 0)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 0.6, 1)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 0.6, 2)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 0.6, 3)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 0.6, 4)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 0.6, 5)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 0.6, 6)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 0.6, 7)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | canister retaining band (1.0, 1.14)",
+      "b": "TP Canister Assembler V01 | hollow canister shell 1.0",
+      "label": "retaining band seated on cylindrical shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 1.14, 0)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 1.14, 1)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 1.14, 2)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 1.14, 3)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 1.14, 4)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 1.14, 5)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 1.14, 6)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | band retaining head (1.0, 1.14, 7)",
+      "b": "TP Canister Assembler V01 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear cap rail support (1.0, -0.145)",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap transfer rail (1.0, -0.145)",
+      "b": "TP Canister Assembler V01 | rear cap rail support (1.0, -0.145)",
+      "label": "cap rail held by rear support",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear cap rail support (1.0, 0.145)",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap transfer rail (1.0, 0.145)",
+      "b": "TP Canister Assembler V01 | rear cap rail support (1.0, 0.145)",
+      "label": "cap rail held by rear support",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap locking lip 1.0",
+      "b": "TP Canister Assembler V01 | pressure cap plate 1.0",
+      "label": "locking lip seated on cap underside",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap rim lifting jaw (1.0, -0.14)",
+      "b": "TP Canister Assembler V01 | pressure cap plate 1.0",
+      "label": "cap jaw engages outer locking lip",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap jaw lift guide (1.0, -0.14)",
+      "b": "TP Canister Assembler V01 | cap carrier rear saddle 1.0",
+      "label": "short jaw guide retained in carrier",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap rim lifting jaw (1.0, 0.14)",
+      "b": "TP Canister Assembler V01 | pressure cap plate 1.0",
+      "label": "cap jaw engages outer locking lip",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap jaw lift guide (1.0, 0.14)",
+      "b": "TP Canister Assembler V01 | cap carrier rear saddle 1.0",
+      "label": "short jaw guide retained in carrier",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap actuator rear mount 1.0",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "cap actuator mount grounded",
+      "gap_tiles": 7.450580596923828e-09,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap actuator mounting collar 1.0",
+      "b": "TP Canister Assembler V01 | cap actuator rear mount 1.0",
+      "label": "actuator collar seated on grounded cradle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | cap slide actuator 1.0",
+      "b": "TP Canister Assembler V01 | cap actuator mounting collar 1.0",
+      "label": "cap cylinder held in actual collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | gantry grounded shoe -1.62",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "gantry shoe grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | red gantry upright -1.62",
+      "b": "TP Canister Assembler V01 | gantry grounded shoe -1.62",
+      "label": "gantry upright on shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | gantry grounded shoe 1.62",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "gantry shoe grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | red gantry upright 1.62",
+      "b": "TP Canister Assembler V01 | gantry grounded shoe 1.62",
+      "label": "gantry upright on shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | spanning head guide beam",
+      "b": "TP Canister Assembler V01 | red gantry upright -1.62",
+      "label": "guide beam carried by end upright",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | spanning head guide beam",
+      "b": "TP Canister Assembler V01 | red gantry upright 1.62",
+      "label": "guide beam carried by end upright",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | linear guide standoff -1.25",
+      "b": "TP Canister Assembler V01 | spanning head guide beam",
+      "label": "linear guide standoff seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | linear guide standoff 0",
+      "b": "TP Canister Assembler V01 | spanning head guide beam",
+      "label": "linear guide standoff seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | linear guide standoff 1.25",
+      "b": "TP Canister Assembler V01 | spanning head guide beam",
+      "label": "linear guide standoff seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | retained travelling head carriage",
+      "b": "TP Canister Assembler V01 | ground head linear guide",
+      "label": "carriage retained on actual X guide",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | moving head rear crosshead",
+      "b": "TP Canister Assembler V01 | retained travelling head carriage",
+      "label": "rear crosshead mounted under actual carriage",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | open cantilever side arm -0.18",
+      "b": "TP Canister Assembler V01 | moving head rear crosshead",
+      "label": "cantilever arm carried by rear crosshead",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | open cantilever side arm -0.18",
+      "b": "TP Canister Assembler V01 | carriage annular tool bracket",
+      "label": "annular tool mount held between side arms",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | open cantilever side arm 0.18",
+      "b": "TP Canister Assembler V01 | moving head rear crosshead",
+      "label": "cantilever arm carried by rear crosshead",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | open cantilever side arm 0.18",
+      "b": "TP Canister Assembler V01 | carriage annular tool bracket",
+      "label": "annular tool mount held between side arms",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | hollow electric press housing",
+      "b": "TP Canister Assembler V01 | carriage annular tool bracket",
+      "label": "annular press housing mounted under carriage bracket",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | moving hopper bracket",
+      "b": "TP Canister Assembler V01 | open cantilever side arm 0.18",
+      "label": "hopper bracket seated on cantilever side arm",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | open metered pellet hopper",
+      "b": "TP Canister Assembler V01 | moving hopper bracket",
+      "label": "hopper bracket meets outside wall, clear of throat",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | carriage pellet feed bore",
+      "b": "TP Canister Assembler V01 | open metered pellet hopper",
+      "label": "true-radius feed joins actual hopper throat",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | stationary nozzle guide sleeve",
+      "b": "TP Canister Assembler V01 | carriage pellet feed bore",
+      "label": "stationary guide seated inside fixed feed end",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | meter eccentric pin",
+      "b": "TP Canister Assembler V01 | meter eccentric arm",
+      "label": "eccentric pin retained on crank arm",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | meter spindle bearing 2.33",
+      "b": "TP Canister Assembler V01 | supported pellet metering spindle",
+      "label": "offset metering shaft retained in bearing",
+      "gap_tiles": 0.0009968603262677789,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | meter bearing standoff 2.33",
+      "b": "TP Canister Assembler V01 | meter spindle bearing 2.33",
+      "label": "offset bearing supported outside flow core",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | meter bearing standoff 2.33",
+      "b": "TP Canister Assembler V01 | open cantilever side arm 0.18",
+      "label": "bearing standoff grounded on head side arm",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | meter spindle bearing 2.47",
+      "b": "TP Canister Assembler V01 | supported pellet metering spindle",
+      "label": "offset metering shaft retained in bearing",
+      "gap_tiles": 0.0009968603262677789,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | meter bearing standoff 2.47",
+      "b": "TP Canister Assembler V01 | meter spindle bearing 2.47",
+      "label": "offset bearing supported outside flow core",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | meter bearing standoff 2.47",
+      "b": "TP Canister Assembler V01 | open cantilever side arm 0.18",
+      "label": "bearing standoff grounded on head side arm",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | gate connecting-rod lug",
+      "b": "TP Canister Assembler V01 | actual sliding pellet gate",
+      "label": "connecting-rod lug retained on gate edge",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | gate guide bracket",
+      "b": "TP Canister Assembler V01 | meter gate guide mount",
+      "label": "gate mount supported by bracket",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | gate guide bracket",
+      "b": "TP Canister Assembler V01 | open cantilever side arm 0.18",
+      "label": "gate guide bracket grounded on side arm",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | pellet gate linear way 0.535",
+      "b": "TP Canister Assembler V01 | meter gate guide mount",
+      "label": "gate way supported by end mount",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | pellet gate linear way 0.725",
+      "b": "TP Canister Assembler V01 | meter gate guide mount",
+      "label": "gate way supported by end mount",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor mounting foot (-1.3, 2.5)",
+      "b": "TP Canister Assembler V01 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor insulator (-1.3, 2.5)",
+      "b": "TP Canister Assembler V01 | rear conductor mounting foot (-1.3, 2.5)",
+      "label": "conductor insulator grounded on rear mounting foot",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | conductor rear support tab (-1.3, 2.5)",
+      "b": "TP Canister Assembler V01 | rear conductor insulator (-1.3, 2.5)",
+      "label": "conductor tab supported on insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | insulated conductor rail 2.5",
+      "b": "TP Canister Assembler V01 | conductor rear support tab (-1.3, 2.5)",
+      "label": "conductor rail supported from behind",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor mounting foot (0, 2.5)",
+      "b": "TP Canister Assembler V01 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor insulator (0, 2.5)",
+      "b": "TP Canister Assembler V01 | rear conductor mounting foot (0, 2.5)",
+      "label": "conductor insulator grounded on rear mounting foot",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | conductor rear support tab (0, 2.5)",
+      "b": "TP Canister Assembler V01 | rear conductor insulator (0, 2.5)",
+      "label": "conductor tab supported on insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | insulated conductor rail 2.5",
+      "b": "TP Canister Assembler V01 | conductor rear support tab (0, 2.5)",
+      "label": "conductor rail supported from behind",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor mounting foot (1.3, 2.5)",
+      "b": "TP Canister Assembler V01 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor insulator (1.3, 2.5)",
+      "b": "TP Canister Assembler V01 | rear conductor mounting foot (1.3, 2.5)",
+      "label": "conductor insulator grounded on rear mounting foot",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | conductor rear support tab (1.3, 2.5)",
+      "b": "TP Canister Assembler V01 | rear conductor insulator (1.3, 2.5)",
+      "label": "conductor tab supported on insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | insulated conductor rail 2.5",
+      "b": "TP Canister Assembler V01 | conductor rear support tab (1.3, 2.5)",
+      "label": "conductor rail supported from behind",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | conductive sliding pad 2.5",
+      "b": "TP Canister Assembler V01 | sliding current collector 2.5",
+      "label": "spring pad retained in collector",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | conductive sliding pad 2.5",
+      "b": "TP Canister Assembler V01 | insulated conductor rail 2.5",
+      "label": "pad bears on conductor front face",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | carriage mounted power lead 2.5",
+      "b": "TP Canister Assembler V01 | sliding current collector 2.5",
+      "label": "lead attached to sliding current shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | carriage mounted power lead 2.5",
+      "b": "TP Canister Assembler V01 | retained travelling head carriage",
+      "label": "lead terminates in moving head carriage",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor mounting foot (-1.3, 2.57)",
+      "b": "TP Canister Assembler V01 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor insulator (-1.3, 2.57)",
+      "b": "TP Canister Assembler V01 | rear conductor mounting foot (-1.3, 2.57)",
+      "label": "conductor insulator grounded on rear mounting foot",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | conductor rear support tab (-1.3, 2.57)",
+      "b": "TP Canister Assembler V01 | rear conductor insulator (-1.3, 2.57)",
+      "label": "conductor tab supported on insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | insulated conductor rail 2.57",
+      "b": "TP Canister Assembler V01 | conductor rear support tab (-1.3, 2.57)",
+      "label": "conductor rail supported from behind",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor mounting foot (0, 2.57)",
+      "b": "TP Canister Assembler V01 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor insulator (0, 2.57)",
+      "b": "TP Canister Assembler V01 | rear conductor mounting foot (0, 2.57)",
+      "label": "conductor insulator grounded on rear mounting foot",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | conductor rear support tab (0, 2.57)",
+      "b": "TP Canister Assembler V01 | rear conductor insulator (0, 2.57)",
+      "label": "conductor tab supported on insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | insulated conductor rail 2.57",
+      "b": "TP Canister Assembler V01 | conductor rear support tab (0, 2.57)",
+      "label": "conductor rail supported from behind",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor mounting foot (1.3, 2.57)",
+      "b": "TP Canister Assembler V01 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | rear conductor insulator (1.3, 2.57)",
+      "b": "TP Canister Assembler V01 | rear conductor mounting foot (1.3, 2.57)",
+      "label": "conductor insulator grounded on rear mounting foot",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | conductor rear support tab (1.3, 2.57)",
+      "b": "TP Canister Assembler V01 | rear conductor insulator (1.3, 2.57)",
+      "label": "conductor tab supported on insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | insulated conductor rail 2.57",
+      "b": "TP Canister Assembler V01 | conductor rear support tab (1.3, 2.57)",
+      "label": "conductor rail supported from behind",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | conductive sliding pad 2.57",
+      "b": "TP Canister Assembler V01 | sliding current collector 2.57",
+      "label": "spring pad retained in collector",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | conductive sliding pad 2.57",
+      "b": "TP Canister Assembler V01 | insulated conductor rail 2.57",
+      "label": "pad bears on conductor front face",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | carriage mounted power lead 2.57",
+      "b": "TP Canister Assembler V01 | sliding current collector 2.57",
+      "label": "lead attached to sliding current shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | carriage mounted power lead 2.57",
+      "b": "TP Canister Assembler V01 | retained travelling head carriage",
+      "label": "lead terminates in moving head carriage",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | loading roller support (-1.0, -0.38)",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "loading roller stand grounded",
+      "gap_tiles": 7.450580596923828e-09,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | loading roller support (-1.0, 0.38)",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "loading roller stand grounded",
+      "gap_tiles": 6.006850128414953e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | loading roller support (0.0, -0.38)",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "loading roller stand grounded",
+      "gap_tiles": 6.006850128414953e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Canister Assembler V01 | loading roller support (0.0, 0.38)",
+      "b": "TP Canister Assembler V01 | full 4x4 equipment footing",
+      "label": "loading roller stand grounded",
+      "gap_tiles": 2.9811633339704713e-07,
+      "passed": true
+    }
+  ],
+  "work_loop_matrix_error": 0.0,
+  "work_loop_passed": true,
+  "views": [
+    {
+      "view": "first-station-fill",
+      "source_frame": 43,
+      "sha256": "31ab4a66a50a18d9be899765a8cebc1c915996cdfdfe184b8b577ec7dcde9d8f"
+    },
+    {
+      "view": "second-station-cap",
+      "source_frame": 175,
+      "sha256": "e6377c78d2c26ee3924ed9419b59ad42deaecceb8798240a83d5fb1c5cc6a65c"
+    },
+    {
+      "view": "third-station",
+      "source_frame": 247,
+      "sha256": "41f7512b01ce1e27df940acd306c81196eb789de686815eb168a11665989924d"
+    }
+  ],
+  "centerline_obstructions": [],
+  "scope": "Recorded static contacts, actual 14-second first/last object matrices and three real GLB indexed-phase views. Two bounded vertical core probes are diagnostic only. Full swept cap/press/guide clearance, complete granular path, dedicated finish/audio/four-direction/native remain open."
+}

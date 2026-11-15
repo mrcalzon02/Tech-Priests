@@ -1,0 +1,22 @@
+{
+  ".gitattributes": "308a40fa1d89ae5ea4390b4c9b46a0108b09f171f07898f25d451fa0c69c4e9f",
+  "assembler-v01.blend": "5813b40a94cea798408382393058dfa97d4ecf3cf4a093a30bcd832a1ec6080c",
+  "assembler-v01.glb": "51aeb589afde90d958e3bc49e3a73dfe7cb1c5969c2a007a32b73573b92c11dc",
+  "CHECKPOINT.json": "cad68538b44815643ef06cfe0cc0c03cb27f6970dcf4c305f9b1b1b9c22aab5b",
+  "construction-receipt.json": "ef0f2fc319e601e20f0d0967a7788f66278f4cbd222de5c288331a33c64ddeff",
+  "export-readback.json": "fa73cfc237c883ae1c1bd6df71b81b66c6fb989fd10ecddb28e36c0b2a7af6b1",
+  "indexed-stations.png": "aa7671a773c85aec4c7e4a3316bfe2f3c3c6f80c0650f5157f1b1cc15cf4ea78",
+  "inspection/assembler-readback.json": "141ca1d1b07dae51956e278ee76fe73c5de96355f899812ec4674b5cee9fd4cf",
+  "inspection/first-station-fill.png": "31ab4a66a50a18d9be899765a8cebc1c915996cdfdfe184b8b577ec7dcde9d8f",
+  "inspection/second-station-cap.png": "e6377c78d2c26ee3924ed9419b59ad42deaecceb8798240a83d5fb1c5cc6a65c",
+  "inspection/third-station.png": "41f7512b01ce1e27df940acd306c81196eb789de686815eb168a11665989924d",
+  "part_provenance.json": "6c81884aff0290bb0dfed57de35d555d1cac5a336caaa6198c4af17260a405c4",
+  "port_manifest.json": "8e6816342ad479be40728bbb1e329d987532d32915ee12430c155a19b50ab857",
+  "portable-rebuild-readback.json": "2d27be570d984f1e8abf84fa0575fe0b17fd3dba122f0aed20018f91234093e5",
+  "README.md": "78607b71384893644683625ce0dc0b4214e86167c1d8cbcbbeb643675ce07bec",
+  "RESULTS.md": "663653bc3fa1e9cdb65e97f31bf44633742f5465f7b68914946f13082180d2ef",
+  "seven-stage-gallery-sources.json": "58cf7efbaa5661d59321b90da193158bb69471de490578b11ff9d2b1144c81a4",
+  "seven-stage-gallery.png": "8083dafe291ad3b170da3faac57fedeace84f756e8d9f9963df7d5d1da1146ae",
+  "VISUAL_REVIEW.json": "f59421f491a410debf9b4c92fd50adca228ba3942660865db0875e3bad13579a",
+  "working-front.png": "eeb2bb5a2dff6766a02fb43fbcdaac4d99351da62c9367a1286f22c6895c8ac6"
+}

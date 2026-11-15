@@ -23,7 +23,7 @@ def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
 class MachineScene:
-    def __init__(self,name,donor,registry):
+    def __init__(self,name,donor,registry,material_prefix='TP Library | '):
         bpy.ops.wm.read_factory_settings(use_empty=True)
         self.name=name;self.prefix='TP '+name+' | ';self.scene=bpy.context.scene
         self.registry_path=Path(registry).resolve();self.registry=json.loads(self.registry_path.read_text())
@@ -31,7 +31,7 @@ class MachineScene:
         self.cols={k:bpy.data.collections.new(k) for k in ('FRAME','PROCESS','PIPING','CONTROLS','PORT_MARKERS')}
         for col in self.cols.values():self.scene.collection.children.link(col)
         keys=('ferrocrete_dark','iron','machine_steel','brass','martian_red','gunmetal_dark','dark_recess')
-        with bpy.data.libraries.load(str(Path(donor).resolve()),link=False) as (fr,to):to.materials=['TP Library | '+k for k in keys]
+        with bpy.data.libraries.load(str(Path(donor).resolve()),link=False) as (fr,to):to.materials=[material_prefix+k for k in keys]
         self.mats={}
         for key,mat in zip(keys,to.materials):
             if mat is None:raise RuntimeError('Actual packed donor material missing '+key)

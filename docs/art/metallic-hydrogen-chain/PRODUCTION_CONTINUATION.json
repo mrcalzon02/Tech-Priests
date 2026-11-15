@@ -3,7 +3,7 @@
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
   "current_machine": "canister-assembler",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pressure-vessel-fabricator\\v04-native-review",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\canister-assembler\\v01-indexed-construction",
   "queue": [
     {
       "id": "water-purifier",
@@ -59,7 +59,7 @@
         4,
         4
       ],
-      "status": "next: three indexed stations with state-preserving sealing"
+      "status": "V01 three-indexed-station source/export pilot saved; full mechanics/finish/audio/capture/native next"
     }
   ],
   "purifier": {
@@ -104,15 +104,17 @@
     "body_render_layer": "lower-object",
     "next_shape_action": "none; owner called done"
   },
-  "library_registry_sha256": "5fc1245f9876b2590c8b09b5bfcfe7b1215f2797c177afe67dbc893b43a30245",
+  "library_registry_sha256": "120c0dd1d51d657a623ff3844c42487c13244f450d0b95081a7e965fc95ed4f9",
   "reactors": {
     "status": "V14 native bytes still unrecovered",
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Build canister assembler with state-preserving pellet/shell sealing",
-    "Refine three reactors and remaining sprite-only buildings",
-    "Integrate ordinary chain recipes/UI/economy and final fluid identity without exposing review internals"
+    "Audit complete cap/press/guide/meter/nozzle motion and granular path; slow the short head-index transitions",
+    "Finish assembler-specific surfaces and relevant metering/sealing sound",
+    "Capture four idle/working directions after pilot refinement",
+    "Implement live pellet/shell assembly through the existing seal operation; preserve HP, quality, phase and remaining deadline",
+    "Refine three reactors, remaining sprite-only buildings and ordinary chain/UI/economy integration"
   ],
   "original_goal_complete": false,
   "concurrent_work_preserved": "model-production bunker/data.lua work untouched",
@@ -431,5 +433,39 @@
     ],
     "safe_prototype_normal_load_verified": true
   },
-  "native_clock_followup": "Long-run fabricator tests exposed fractional-rate drift. Earlier short native samples do not establish exact full-cycle cadence. Apply independently verified exact sequences during ordinary integration, preserving accepted geometry and placement."
+  "native_clock_followup": "Long-run fabricator tests exposed fractional-rate drift. Earlier short native samples do not establish exact full-cycle cadence. Apply independently verified exact sequences during ordinary integration, preserving accepted geometry and placement.",
+  "assembler": {
+    "status": "saved_source_export_and_indexed_construction_pilot; full_motion_finish_native_pending",
+    "source_sha256": "5813b40a94cea798408382393058dfa97d4ecf3cf4a093a30bcd832a1ec6080c",
+    "glb_sha256": "51aeb589afde90d958e3bc49e3a73dfe7cb1c5969c2a007a32b73573b92c11dc",
+    "library_registry_sha256": "120c0dd1d51d657a623ff3844c42487c13244f450d0b95081a7e965fc95ed4f9",
+    "footprint": [
+      4,
+      4
+    ],
+    "primary_canisters": 3,
+    "recorded_contacts": 186,
+    "recorded_contacts_passed": true,
+    "work_cycle_seconds": 14,
+    "station_seconds": 4,
+    "return_seconds": 2,
+    "source_loop_matrix_error": 0.0,
+    "triangles": 38612,
+    "actual_glb_phase_views": 3,
+    "bounded_vertical_core_probes_passed": true,
+    "complete_granular_path_verified": false,
+    "full_swept_clearance_verified": false,
+    "dedicated_surfaces_complete": false,
+    "audio_implemented": false,
+    "native_verified": false,
+    "owner_approved": false,
+    "native_contract": "Use existing live-stack seal operation. Never heal integrity, improve quality, reset decay stage or refresh remaining instability. Return original shell condition on unseal.",
+    "next": [
+      "Audit complete cap/press/guide/meter/nozzle motion and granular path; slow the short head-index transitions",
+      "Finish assembler-specific surfaces and relevant metering/sealing sound",
+      "Capture four idle/working directions after pilot refinement",
+      "Implement live pellet/shell assembly through the existing seal operation; preserve HP, quality, phase and remaining deadline",
+      "Refine three reactors, remaining sprite-only buildings and ordinary chain/UI/economy integration"
+    ]
+  }
 }

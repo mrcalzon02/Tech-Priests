@@ -1,0 +1,34 @@
+{
+  "status": "saved_source_export_and_indexed_construction_pilot; full_motion_finish_native_pending",
+  "source_sha256": "5813b40a94cea798408382393058dfa97d4ecf3cf4a093a30bcd832a1ec6080c",
+  "glb_sha256": "51aeb589afde90d958e3bc49e3a73dfe7cb1c5969c2a007a32b73573b92c11dc",
+  "library_registry_sha256": "120c0dd1d51d657a623ff3844c42487c13244f450d0b95081a7e965fc95ed4f9",
+  "footprint": [
+    4,
+    4
+  ],
+  "primary_canisters": 3,
+  "recorded_contacts": 186,
+  "recorded_contacts_passed": true,
+  "work_cycle_seconds": 14,
+  "station_seconds": 4,
+  "return_seconds": 2,
+  "source_loop_matrix_error": 0.0,
+  "triangles": 38612,
+  "actual_glb_phase_views": 3,
+  "bounded_vertical_core_probes_passed": true,
+  "complete_granular_path_verified": false,
+  "full_swept_clearance_verified": false,
+  "dedicated_surfaces_complete": false,
+  "audio_implemented": false,
+  "native_verified": false,
+  "owner_approved": false,
+  "native_contract": "Use existing live-stack seal operation. Never heal integrity, improve quality, reset decay stage or refresh remaining instability. Return original shell condition on unseal.",
+  "next": [
+    "Audit complete cap/press/guide/meter/nozzle motion and granular path; slow the short head-index transitions",
+    "Finish assembler-specific surfaces and relevant metering/sealing sound",
+    "Capture four idle/working directions after pilot refinement",
+    "Implement live pellet/shell assembly through the existing seal operation; preserve HP, quality, phase and remaining deadline",
+    "Refine three reactors, remaining sprite-only buildings and ordinary chain/UI/economy integration"
+  ]
+}

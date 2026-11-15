@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "source_sha256": "5813b40a94cea798408382393058dfa97d4ecf3cf4a093a30bcd832a1ec6080c",
+  "rebuilt_source_sha256": "1168405b3b09464113764bd8f90555daca76d2ffd9c62cb96dbd93fe55fead11",
+  "original_render_sha256": "eeb2bb5a2dff6766a02fb43fbcdaac4d99351da62c9367a1286f22c6895c8ac6",
+  "rebuilt_render_sha256": "0d7f1f911d5ec170cdb71a3d3e3b24034eb22179f89373c3c62c3e6f77ab2457",
+  "packed_material_donor": "art\\source-to-3d\\metallic-hydrogen-chain\\canister-assembler\\v01-indexed-construction\\assembler-v01.blend",
+  "material_prefix": "TP Canister Assembler V01 | ",
+  "scope": "Actual fresh Blender reconstruction using only the packaged source as material donor plus the frozen registered console. Pilot render is pixel-identical; no private material-donor file is required."
+}
