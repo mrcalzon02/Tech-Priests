@@ -1,5 +1,16 @@
 # Current Testing Goals
 
+## 2026-11-14 - Physical intake clearance, first-craft fairness and paid output automation
+
+The blocked arena intake now admits only its exact observed neutral wood tree through the original raw acquisition and direct executor. Native mining, carried wood and actual return remain under their original owners; the strict infrastructure parent and matching adopted production order survive. The original priest harvested and deposited four real wood at tick 98180. A genuine compact-arena continuation now proves red output for all four factions (89/74/10/75 at tick 120068). This does not pass the original 108000-tick deadline or default-spacing combat gate.
+
+Item-family and laboratory fetching now select collision-clear stable contacts around actual storage footprints. Native diagnosis then exposed coal-first multi-input starvation: seventy coal and zero iron in a grenade assembler still selected coal-buffer top-ups. Ingredient discovery now completes one craft before transport-buffer top-ups and yields when an unavailable first-craft ingredient is missing. Existing stock, custody and native insertable-space limits remain authoritative. Native recovery resumed military production from fifty to fifty-two packs after this correction; sustained throughput remains unproven.
+
+The ratio planner now coordinates funded output chests and inserters for exact owned configured recipe machines through original 0338 construction. Dedicated builds retain each real paid configuration receipt, separately from the general emergency workshop ledger. Output links verify original construction identity, exact grid-aligned positions, current native recipe, actual inserter pickup/drop targets, power and chest space. Their verified outgoing inserters permit manual ingredient supply; foreign or incoming automation remains excluded. Unpowered or full output storage retains manual collection fallback. Output siting uses actual machine footprints; the first native integer-position request exposed engine snapping and was refused, preserved, and corrected. Functional native output-link verification remains open.
+
+Verification: 56 Lua groups and seven Python tests pass. Native all-rank maintenance passes with the output coordination changes. Strict science acceptance is recorded before optional visual rendering so a missing Pillow installation cannot conceal its native result. The completed fresh warm-plant run still fails simultaneous red/green/military 5 SPM despite working generation and actual research. Fresh full science and unchanged default-spacing four-way factory/combat runs continue, with exact copied source manifests. No continuation or partial construction substitutes for those gates.
+
+
 ## 2026-11-14 - Validate connected plants, warm boiler reserves and usable recipe service
 
 The native fluid-aware plant run reached powered labs, research completions and red production in three factions by tick 48843. The fourth has an actually observed tree covering its original pump outlet. A paid replacement was physically built, but its water route still refuses; complete physical obstruction/route recovery before accepting all factions. Preserve the prior actual five-damage faction contact and require fresh repeatable combat rather than extrapolating it.

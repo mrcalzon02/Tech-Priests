@@ -113,6 +113,7 @@ end
 -- a site; LuaEntity electric_network_id verifies a real installed connection.
 local NativeElectric=require("scripts.core.native_electric_authority_1263")
 local NativeFluidbox=require("scripts.core.native_fluidbox_1279")
+local PumpClearance=require("scripts.core.native_pump_clearance_1252")
 M.supply_distance=NativeElectric.supply_distance
 local pole_supplies_entity=NativeElectric.coverage_at
 local function plant_ports(item,position,direction)
@@ -409,10 +410,10 @@ function M.service_pair(pair,opts)
   return false,"physical-engine-scan-unavailable"
  end
  local r=radius(pair)
- local loads=find(pair,{"lab","assembling-machine","mining-drill"},r)
+ local loads=find(pair,{"lab","assembling-machine","mining-drill","inserter"},r)
  local load
  for _,e in ipairs(loads)do
-  local electric=e.type=="lab"or
+  local electric=e.type=="lab"or(e.type=="inserter"and e.name~="burner-inserter")or
     (e.type=="mining-drill"and e.name=="electric-mining-drill")or
     (e.type=="assembling-machine"and e.name~="tech-priests-emergency-assembler")
   if electric then
@@ -427,9 +428,15 @@ function M.service_pair(pair,opts)
  local machines=find(pair,{"offshore-pump","boiler","generator"},r)
  local pump,boiler,engine
  for _,e in ipairs(machines)do
+  if e.name=="offshore-pump"and not usable_installed_pump(pair,e,r)then
+   PumpClearance.observe(pair,e,load)
+  end
   if e.name=="offshore-pump"and not pump and usable_installed_pump(pair,e,r)then pump=e
   elseif e.name=="boiler"and not boiler then boiler=e
   elseif e.name=="steam-engine"and not engine then engine=e end
+ end
+ if PumpClearance.valid_request(pair,pair.power_setup_tree_clearance_1252)then
+  return false,update(pair,"native-pump-outlet-awaiting-physical-tree-clearance",load)
  end
  local item,stage,site=nil,nil,nil
  if not pump then

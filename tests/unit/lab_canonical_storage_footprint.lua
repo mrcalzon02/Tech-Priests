@@ -101,3 +101,36 @@ stock=0
 pair.independent_emergency_operation_0184.enabled=false
 assert(Items.recommend_action(pair).active,"player assistance behavior changed")
 print("PASS independent source-less laboratory request yields and resumes without discarding custody")
+pair.item_family_logistics_0702=nil;pair.item_family_candidate_0702=nil
+pair.independent_emergency_operation_0184.enabled=true
+pair.priest.name="test-priest";pair.priest.position={x=0,y=0};stock=5
+surface.find_entities_filtered=function(spec)
+ for _,kind in ipairs(spec.type or{})do if kind=="lab"then return{lab}end end
+ return{}
+end
+surface.can_place_entity=function(spec)
+ local p=spec.position
+ return p.x>8 and p.y==0 -- Closest face is blocked by other real machinery.
+end
+delivered=0;game.tick=game.tick+1000
+services.item_family_discovery_0702.fn(nil,1)
+Items.service_pair(pair)
+local source_contact=pair.movement_request_0418
+assert(source_contact and source_contact.x>8 and source_contact.radius==.25
+ and stock==5,"science pickup did not choose a real clear side of its blocked source")
+game.tick=game.tick+5;pair.priest.position={x=0,y=1}
+Items.service_pair(pair)
+assert(pair.movement_request_0418.x==source_contact.x and pair.movement_request_0418.y==source_contact.y,
+ "moving priest changed its science source contact before reaching it")
+pair.priest.position={x=source_contact.x,y=source_contact.y};game.tick=game.tick+5
+Items.service_pair(pair)
+assert(stock==0 and pair.item_family_custody_0702.count==5,
+ "collision-clear source arrival did not pick up exact science stock")
+local lab_contact=pair.movement_request_0418
+assert(lab_contact and lab_contact.x>11.5 and lab_contact.radius==.25,
+ "science delivery retained the source route or aimed into a blocked laboratory")
+pair.priest.position={x=lab_contact.x,y=lab_contact.y};game.tick=game.tick+5
+Items.service_pair(pair)
+assert(delivered==5 and not pair.item_family_custody_0702 and not pair.movement_request_0418,
+ "walkable laboratory contact failed actual science delivery and terminal route release")
+print("PASS obstructed science sources and labs use stable walkable contacts within original physical reach")

@@ -1157,6 +1157,11 @@ function M.service_pair(pair,reason)
    pcall(logistics.yield_for_bootstrap,pair,"dispatcher-bootstrap-prerequisite-0510")
   end
  end
+ local raw_governor=rawget(_G,"TechPriestsBootstrapResourceGovernor0637")
+ if pair.power_setup_tree_clearance_1252 and raw_governor
+     and type(raw_governor.admit_pump_clearance)=="function"then
+  pcall(raw_governor.admit_pump_clearance,pair)
+ end
  local action=classifier(pair);local family=family_for(pair,action);publish_action(pair,action,family,"selected",reason or action.reason)
  relinquish_unladen_direct_movement(pair,family)
  if type(_G.tech_priests_0507_action_claim)=="function"then pcall(_G.tech_priests_0507_action_claim,pair,family,"single-dispatcher_0510",action.reason or reason or"service")end

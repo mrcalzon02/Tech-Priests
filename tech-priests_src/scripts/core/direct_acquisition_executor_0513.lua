@@ -4,6 +4,8 @@
 -- extraction, persistent custody, real return travel, atomic deposit, and
 -- truthful terminal or station-craft handoff.
 
+local PumpClearance=require("scripts.core.native_pump_clearance_1252")
+local ProductionOrder=require("scripts.core.production_order_ownership_0514")
 local M={version="0.1.674-dev",storage_key="direct_acquisition_executor_0513",
   close_distance_sq=2.25,station_distance_sq=4,move_refresh_ticks=120,
   stall_ticks=240,work_ticks=90,visual_ticks=18,max_pairs_per_pulse=24,
@@ -40,7 +42,7 @@ local function expedition(p)
  if not (task.target_unit and task.position and task.doctrine) then return nil end
  return task
 end
-function M.direct_radius(p)if expedition(p) then return math.huge end;local cap=M.direct_radius_by_tier[tier_key(p)]or M.default_direct_radius;return math.max(8,math.min(runtime_radius(p)or cap,cap))end
+function M.direct_radius(p)if expedition(p) then return math.huge end;if PumpClearance.authorized_task(p)then return math.max(8,math.min(96,runtime_radius(p)or 28))end;local cap=M.direct_radius_by_tier[tier_key(p)]or M.default_direct_radius;return math.max(8,math.min(runtime_radius(p)or cap,cap))end
 function M.hard_leash(p)if expedition(p) then return math.huge end;local cap=M.hard_leash_by_tier[tier_key(p)]or M.default_hard_leash;local direct=M.direct_radius(p);local runtime=runtime_radius(p)or cap;return math.max(direct+6,math.min(math.max(runtime,direct+6),cap))end
 function M.target_within_bounds(p,pos)
  if not(valid(p and p.station)and pos)then return true,nil,nil end
@@ -154,8 +156,8 @@ local function explicit_item(task,cur)
 end
 local function required(task)local n=task and task.recipe and tonumber(task.recipe.units)or tonumber(task and task.required_count)or tonumber(task and task.count)or 1;return math.max(1,math.min(50,math.floor(n)))end
 local function clear_due(t)if not t then return end;for _,k in ipairs{"direct_due_tick_0273","direct_due_tick_0312","direct_due_tick_0315","direct_due_tick_0336","direct_started_tick_0336","next_direct_laser_tick_0315","direct_last_visual_tick_0306","direct_last_visual_tick_0336","direct_due_tick_0513","direct_started_tick_0513","direct_remaining_ticks_0513","direct_last_visual_tick_0513","scan_due_tick"}do t[k]=nil end end
-local function clear_parent(p,key,t)clear_due(t);if t then t.current=nil end;if key then p[key]=nil end;p.target=nil end
-local function queue_terminal(p,status,why,item)local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");if not q then return false end;local f=status=="complete"and q.complete_current or q.fail_current;if type(f)~="function"then return false end;local ok,d=pcall(f,p,why,item);return ok and d==true end
+local function clear_parent(p,key,t)clear_due(t);if t then t.current=nil;if t.pump_clearance_1252==p.power_setup_tree_clearance_1252 then p.power_setup_tree_clearance_1252=nil end end;if key then p[key]=nil end;p.target=nil end
+local function queue_terminal(p,status,why,item)local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");if not q then return false end;local order=p.order_queue_0469 and p.order_queue_0469.current or p.active_order_0469;if ProductionOrder.matches(p,order,p.emergency_craft)then return false end;local f=status=="complete"and q.complete_current or q.fail_current;if type(f)~="function"then return false end;local ok,d=pcall(f,p,why,item);return ok and d==true end
 
 local function release_clamp(p,why)
  p.movement_controller_clamp_0418=nil;if p.movement_controller_state_0418=="work-clamped"then p.movement_controller_state_0418="idle"end
@@ -423,6 +425,9 @@ function M.service_pair(p,reason)
  local t,cur,key=current_task(p);local state=p.dispatcher_direct_0513 or{};p.dispatcher_direct_0513=state;state.version=M.version;state.reason=safe(reason);state.last_seen_tick=now()
  if p.direct_acquisition_custody_0513 then return service_custody(p,t,cur,key,state)end
  if not(t and cur)then phase(p,"none","no-direct-task");return false,"no-direct-task"end
+ if t.pump_clearance_1252 and not PumpClearance.authorized_task(p)then
+  return fail_unsafe(p,t,key,state,"native-pump-clearance-context-changed")
+ end
  if not state.next_overleash_retry_tick or now()>=state.next_overleash_retry_tick then local returning,why=recover_overleash(p,state);if returning then return true,why end end
  if M.machine_route_has_movement(p) then
   phase(p,"waiting-machine-logistics-route","machine-output-or-supply-custody-owned")

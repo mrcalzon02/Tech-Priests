@@ -8,6 +8,7 @@
 -- uses the existing acquisition/construction ladder instead of bypassing it.
 
 TECH_PRIESTS_MAGOS_RATIO_PLANNER_VERSION_0257 = "0.1.257"
+local FactoryOutputLinks1282=require("scripts.core.factory_output_links_1282")
 -- 1133: The old constant yielded 0.5 packs/minute and silently kept every
 -- factory at a token-size pilot rate. This is the conservative *starting*
 -- science throughput objective, not proof of production or research.
@@ -1393,6 +1394,12 @@ function tech_priests_1172_service_autonomous_science_component(pair)
   op.magos_ratio_component_job_1150=science.magos_ratio_component_job_1150
   op.magos_ratio_component_machine_1150=
     science.magos_ratio_component_machine_1150
+  local linked,link_reason=FactoryOutputLinks1282.service(pair,plan)
+  op.factory_output_link_reason_1282=link_reason
+  if linked then
+    op.magos_ratio_phase_0257=link_reason
+    return true,link_reason
+  end
   -- A functioning starter factory must be able to consume its real science
   -- before every target-ratio mining drill has been built. Request only an
   -- actually stocked standard lab through the original construction owner.

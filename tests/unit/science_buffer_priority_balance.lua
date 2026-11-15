@@ -78,3 +78,24 @@ assert(offer("logistic-science-pack",3).count==50,
  "stale service interval exceeded the ten-minute buffer or fifty-item physical trip cap")
 assert(stocks["iron-plate"]==50,"transport capacity discovery consumed uncollected stock")
 print("PASS measured service rounds size bounded physical batches and skip full native input slots")
+local recipe={name="grenade",ingredients={{name="coal",amount=10,type="item"},
+ {name="iron-plate",amount=5,type="item"}},products={{name="grenade",type="item",amount=1}}}
+local counts={coal=70,["iron-plate"]=0}
+local machine={valid=true,type="assembling-machine",name="assembling-machine-1",unit_number=6,
+ force=force,surface=surface,position={x=5,y=0},get_recipe=function()return recipe end,
+ get_inventory=function(n)if n==2 then return{valid=true,
+ get_item_count=function(item)return counts[item]or 0 end,
+ get_insertable_count=function()return 100 end}end end}
+stocks.coal=500;stocks["iron-plate"]=50
+pair.independent_emergency_operation_0184.magos_ratio_plan_0257.factory_component_jobs_1150.grenade=
+ {output_item="grenade",output_deficient=true,researched=true,required_per_minute=5}
+pair.factory_component_last_receipt_1150={configured=true,built_entity=machine,entity_unit=6,station_unit=1,recipe="grenade"}
+pair.machine_logistics_candidate_0528=nil
+assert(M.offer_factory_component_feed_1153(pair,machine,"grenade"))
+assert(pair.machine_logistics_candidate_0528.item=="iron-plate",
+ "coal transport top-up starved the missing second native grenade ingredient")
+assert(counts.coal==70 and counts["iron-plate"]==0 and stocks.coal==500)
+stocks["iron-plate"]=0;pair.machine_logistics_candidate_0528=nil
+assert(not M.offer_factory_component_feed_1153(pair,machine,"grenade"),
+ "missing unavailable first-craft ingredient triggered another useless coal top-up")
+print("PASS real first-craft ingredients precede partial transport-buffer top-ups")

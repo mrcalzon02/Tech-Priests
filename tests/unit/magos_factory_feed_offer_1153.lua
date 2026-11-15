@@ -112,6 +112,21 @@ end
 ok,why=M.offer_factory_component_feed_1153(pair,machine,"iron-gear-wheel")
 assert(not ok and why=="real-inserter-or-loader-already-connected",
  "manual priest feed stole an already automated machine")
+local chest={valid=true,force=force,surface=surface}
+local arm={valid=true,type="inserter",force=force,surface=surface,
+ pickup_target=machine,drop_target=chest,position={x=6,y=5},energy=100}
+pair.independent_emergency_operation_0184={enabled=true}
+pair.factory_output_links_1282={[machine.unit_number]={machine=machine,chest=chest,
+ inserter=arm,recipe="iron-gear-wheel"}}
+surface.find_entities_filtered=function()return {arm}end
+ok,why=M.offer_factory_component_feed_1153(pair,machine,"iron-gear-wheel")
+assert(ok,"verified paid output inserter incorrectly blocked manual ingredients: "..tostring(why))
+pair.machine_logistics_candidate_0528=nil
+arm.drop_target=machine
+ok,why=M.offer_factory_component_feed_1153(pair,machine,"iron-gear-wheel")
+assert(not ok and why=="real-inserter-or-loader-already-connected",
+ "input or redirected inserter bypassed player automation isolation")
+pair.independent_emergency_operation_0184=nil
 assert(station_stock==5 and machine_input_count==0,
  "read-only candidate discovery modified real stock or machine contents")
 defines.inventory={crafter_input=33,crafter_output=34}

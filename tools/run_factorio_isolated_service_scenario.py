@@ -1656,6 +1656,14 @@ def main() -> int:
                   str(partial.get("last_elapsed")) +
                   "; FULL SCIENCE OBJECTIVE UNTESTED")
             return 1
+        if args.require_factory_objective:
+            from midgame_checkpoint_audit import factory_objective
+            objective = factory_objective(partial)
+            (output / "science-factory-objective.json").write_text(
+                json.dumps(objective, indent=2, sort_keys=True), encoding="utf-8")
+            print("MIDGAME_FACTORY_OBJECTIVE " + json.dumps(objective, sort_keys=True))
+            if not objective["accepted"]:
+                return 1
         try:
             report = assemble(checkpoints, output / "visual-history",
                               screenshots)
@@ -1690,14 +1698,6 @@ def main() -> int:
               str(report["all_three_sciences_produced_at_end"]) +
               " advanced_chemical_output=" +
               str(report["chemical_science_produced_at_end"]))
-        if args.require_factory_objective:
-            from midgame_checkpoint_audit import factory_objective
-            objective = factory_objective(partial)
-            (output / "science-factory-objective.json").write_text(
-                json.dumps(objective, indent=2, sort_keys=True), encoding="utf-8")
-            print("MIDGAME_FACTORY_OBJECTIVE " + json.dumps(objective, sort_keys=True))
-            if not objective["accepted"]:
-                return 1
     fatal = scenario["prefix"] + " FAIL "
     if benchmark or fatal in contents or scenario["prefix"] + " " + scenario["pass"] not in contents:
         print("FAIL scenario=" + args.scenario + " exit=" + str(benchmark) +

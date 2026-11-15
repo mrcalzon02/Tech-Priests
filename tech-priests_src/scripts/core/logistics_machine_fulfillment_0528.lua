@@ -5,6 +5,7 @@
 -- stock, dedicated target-machine inventories, persistent custody, and atomic return.
 
 local CrafterInventory=require("scripts.core.native_crafter_inventory_1277")
+local FactoryOutputLinks=require("scripts.core.factory_output_links_1282")
 local M = {
   version = "0.1.674-dev",
   storage_key = "logistics_machine_fulfillment_0528",
@@ -578,7 +579,7 @@ local function loader_connected(loader, machine)
   if container == machine then return true end
   return dist_sq(loader.position, machine.position) <= 2.75
 end
-local function machine_automated(machine)
+local function machine_automated(pair,machine)
   if not valid(machine) then return false end
   local box = machine_box(machine)
   local position = machine.position
@@ -599,15 +600,16 @@ local function machine_automated(machine)
   end)
   if not (ok and entities) then return false end
   for _, entity in pairs(entities) do
-    if inserter_connected(entity, machine) or loader_connected(entity, machine) then
+    if (inserter_connected(entity, machine) or loader_connected(entity, machine))
+      and not FactoryOutputLinks.owns_output_inserter(pair,entity,machine)then
       return true
     end
   end
   return false
 end
 
-local function output_candidate(machine)
-  local output = machine_output(machine)
+local function output_candidate(pair,machine)
+  local output = not FactoryOutputLinks.output_automated(pair,machine)and machine_output(machine)
   local best
   if output then
     each_inventory_item(output, function(item, count)
@@ -708,6 +710,11 @@ local function ingredient_candidate(pair, machine)
       and generic_count(pair,planned.output_item)>=factory_job_buffer(planned)then
     return nil -- Preserve stocked intermediates instead of feeding endless surplus.
   end
+  -- Complete one real craft before topping up an earlier ingredient's
+  -- transport buffer. Otherwise coal-first grenades can repeatedly refill
+  -- coal while iron remains empty, preserving their waiting credit forever.
+  local blocked_first_craft=false
+  for pass=1,2 do
   for _, ingredient in ipairs(recipe_ingredients(recipe)) do
     local job=deficient_factory_job(pair,machine)
     local cycles=job and 5 or 1
@@ -727,7 +734,9 @@ local function ingredient_candidate(pair, machine)
     local read,capacity=pcall(function()return input.get_insertable_count(ingredient.name)end)
     if read and type(capacity)=="number"then missing=math.min(missing,math.max(0,capacity))end
     local available = generic_count(pair, ingredient.name)
-    if missing > 0 and available > 0 then
+    local needs_first_craft=count_inventory(input,ingredient.name)<ingredient.amount
+    if pass==1 and needs_first_craft then blocked_first_craft=true end
+    if missing > 0 and available > 0 and(pass==2 or needs_first_craft)then
       return {
         action = "supply-ingredient",
         item = ingredient.name,
@@ -735,6 +744,8 @@ local function ingredient_candidate(pair, machine)
         machine = machine,
       }
     end
+  end
+  if pass==1 and blocked_first_craft then return nil end
   end
   return nil
 end
@@ -856,7 +867,7 @@ local function discover_candidate(pair)
       or nil
     local eligible=is_machine(machine) and machine ~= pair.station
       and (not is_receiver or drill_source)
-    local automated=eligible and machine_automated(machine) or false
+    local automated=eligible and machine_automated(pair,machine) or false
     -- Count only *observed* completed Electronics stacks during the normal
     -- bounded discovery scan. These counters diagnose whether collection is
     -- never discovered, excluded as automated, or superseded by another job.
@@ -868,7 +879,7 @@ local function discover_candidate(pair)
       if automated then stat("electronics-output-automated-excluded-0528") end
     end
     if eligible and not automated then
-      local task = output_candidate(machine)
+      local task = output_candidate(pair,machine)
         or fuel_candidate(pair, machine)
         or ingredient_candidate(pair, machine)
       if task then
@@ -1188,7 +1199,7 @@ function M.offer_factory_component_feed_1153(pair,machine,recipe_name)
       or future_ranked_ore_courier_reserved(pair)then
     return false,"existing-machine-or-construction-custody"
   end
-  if machine_automated(machine)then
+  if machine_automated(pair,machine)then
     return false,"real-inserter-or-loader-already-connected"
   end
   local pending=pair.machine_logistics_candidate_0528
@@ -1380,7 +1391,7 @@ local function discover_pairs(budget)
             and receipt.entity_unit==retained.machine.unit_number
             and receipt.station_unit==station_unit(pair)
             and live and live.name==receipt.recipe
-            and not machine_automated(retained.machine)
+            and not machine_automated(pair,retained.machine)
             and candidate and candidate.action=="supply-ingredient"
             and candidate.item==retained.item
         end

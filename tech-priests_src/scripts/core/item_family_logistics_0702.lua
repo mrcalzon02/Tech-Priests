@@ -727,20 +727,30 @@ local function discover_pair(pair)
   return true, "candidate-discovered"
 end
 
+local release_owned_movement
 local function request_move(pair, target, reason)
   if not (valid_pair(pair) and valid(target)) then return false end
   local request = rawget(_G, "tech_priests_request_movement_0418")
   if type(request) ~= "function" then return false end
+  local task=pair.item_family_logistics_0702
+  local contact=task and task.move_contact_0702
+  local position=contact and contact.target==target and contact.reason==reason and contact.position
+  if not position then
+    position=FetchGeometry.approach_position(pair,target)
+    if not position then return false end
+    release_owned_movement(pair)
+    if task then task.move_contact_0702={target=target,reason=reason,position=position}end
+  end
   local ok, accepted = pcall(
     request,
     pair,
-    FetchGeometry.pickup_position(pair,target),
+    position,
     reason or "item-family-logistics-0702",
     {
       owner = "item-family-logistics-0702",
       priority = M.move_priority,
       ttl = M.move_ttl,
-      radius = 1.2,
+      radius = .25,
       distraction = defines and defines.distraction and defines.distraction.none or nil,
     }
   )
@@ -864,7 +874,7 @@ local function sync_custody(pair, task, reason)
   return false
 end
 
-local function release_owned_movement(pair)
+release_owned_movement=function(pair)
   local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
   if not(controller and type(controller.request_status)=="function"and type(controller.stop)=="function")then return false end
   local ok,status=pcall(controller.request_status,pair)

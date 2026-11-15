@@ -14,6 +14,7 @@
 -- leaves through the current 0513 physical-custody owner.
 
 local M = {}
+local PumpClearance=require("scripts.core.native_pump_clearance_1252")
 M.version = "0.1.638"
 M.storage_key = "bootstrap_resource_governor_0637"
 M.service_interval = 73
@@ -218,6 +219,7 @@ local function operating_radius(pair)
 end
 
 local function find_nearest_source(pair, spec)
+  if spec.pump_clearance_1252 then return spec.pump_clearance_1252.tree end
   if not (valid_pair(pair) and pair.station.surface) then return nil end
   local r = operating_radius(pair)
   -- Ore and trees are neutral world resources, not entities of the station force.
@@ -442,6 +444,7 @@ local function assign_direct(pair, spec, have, deficit, strict_fuel,strict_mater
   local cur = { kind="direct-mine-0336", entity=source, output_item=spec.item, item_name=spec.item, requested_item=spec.item, bootstrap_resource_0637=true }
   local task = { kind="direct-mine-0336", current=cur, output_item=spec.item, item_name=spec.item, requested_item=spec.item, required_count=need, count=need, gathered_units=0, bootstrap_resource_0637=true, fuel_for_strict_recipe_0637=strict_fuel or nil, started_tick=now(), reason="bootstrap-resource-governor-0637" }
   task.material_for_strict_recipe_0637=strict_material or nil
+  task.pump_clearance_1252=spec.pump_clearance_1252
   -- A facility-only smelting request must survive acquisition of its ore/fuel.
   -- The direct executor recognizes the separate raw task and clears only that
   -- alias on physical deposit, leaving the machine-production task intact.
@@ -461,9 +464,28 @@ local function assign_direct(pair, spec, have, deficit, strict_fuel,strict_mater
     op.last_blocker_0264="bootstrap reserve "..spec.item.." "..tostring(have or 0).."/"..tostring(M.reserve_floor)
   end
   record("bootstrap-assigned-direct-0637", pair, "item="..spec.item.." have="..safe(have).." need="..safe(need).." source="..safe(source.name), true)
-  local okD, Direct = pcall(require, "scripts.core.direct_acquisition_executor_0513")
-  if okD and Direct and type(Direct.service_pair)=="function" then pcall(Direct.service_pair, pair, "bootstrap-resource-governor-0637") end
+  if not spec.pump_clearance_1252 then
+    local okD, Direct = pcall(require, "scripts.core.direct_acquisition_executor_0513")
+    if okD and Direct and type(Direct.service_pair)=="function" then pcall(Direct.service_pair, pair, "bootstrap-resource-governor-0637") end
+  end
   return true, "assigned"
+end
+
+function M.admit_pump_clearance(pair)
+  local request=pair and pair.power_setup_tree_clearance_1252
+  if not valid_pair(pair)or M.root().recipe_acquisition_disabled
+      or not PumpClearance.valid_request(pair,request)then return false end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+  if order and order.status=="active"and not ProductionOrder.matches(pair,order,pair.emergency_craft)then return false end
+  for _,field in ipairs{"direct_acquisition_task_0336","direct_acquisition_custody_0513",
+    "construction_task_0338","construction_custody_0338","machine_logistics_custody_0528",
+    "item_family_custody_0702","energy_family_custody_0707","inventory_transfer_custody_0687",
+    "repair_pack_custody_0516","emergency_production_custody_0514","station_cargo_custody_0824",
+    "emergency_facility_feed_custody_0357","consecration_refund_custody_0515",
+    "defense_task_0259","combat_target"}do if pair[field]then return false end end
+  local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if not(stock and stock.generic_item_count and stock.generic_item_count(pair,"pipe")>=1)then return false end
+  return assign_direct(pair,{item="wood",type="tree",pump_clearance_1252=request},0,1,nil,true)
 end
 
 strict_assembler_needs_coal=function(pair, item)
@@ -543,6 +565,7 @@ end
 
 local function retire_satisfied_reserve(pair)
   local task=pair.direct_acquisition_task_0336
+  if task and task.pump_clearance_1252 then return false end
   if not(type(task)=="table"and task.bootstrap_resource_0637==true)
       or pair.direct_acquisition_custody_0513 or task.direct_due_tick_0513 then return false end
   local order=pair.order_queue_0469 and pair.order_queue_0469.current
@@ -578,6 +601,25 @@ local function retarget_owned_raw_task(pair)
   if not(op and op.enabled==true)or pair.direct_acquisition_custody_0513
       or pair.construction_custody_0338 or pair.machine_logistics_custody_0528 then return false end
   local task,cur=current_direct_task(pair)
+  if task and task.pump_clearance_1252 then
+    if task.direct_due_tick_0513 or task.direct_remaining_ticks_0513 then return false end
+    local request=task.pump_clearance_1252
+    if PumpClearance.valid_request(pair,request)then
+      if cur and cur.entity==request.tree then return false end
+      task.current={kind="direct-mine-0336",entity=request.tree,output_item="wood",
+        item_name="wood",bootstrap_resource_0637=true}
+      return true
+    end
+    if pair.direct_acquisition_task_0336==task then pair.direct_acquisition_task_0336=nil end
+    if pair.power_setup_tree_clearance_1252==request then pair.power_setup_tree_clearance_1252=nil end
+    local movement=pair.movement_request_0418
+    local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+    if movement and movement.owner=="direct-acquisition-0513"and controller and controller.stop then
+      pcall(controller.stop,pair,"native-pump-clearance-no-longer-needed")
+    end
+    pair.mode="infrastructure-first-0637"
+    return true
+  end
   if not(type(task)=="table"and task.bootstrap_resource_0637==true)
       or task.direct_due_tick_0513 or task.direct_remaining_ticks_0513 then return false end
   local order=pair.order_queue_0469 and pair.order_queue_0469.current

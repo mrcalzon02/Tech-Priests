@@ -1412,6 +1412,10 @@ local function finish(pair,task,built,reason)
     configured=configured==true,reason=why,tick=now(),
     built_entity=built,
   }
+  -- Preserve each original paid recipe receipt. The terminal slot is replaced
+  -- by the next build and cannot establish ownership for output automation.
+  pair.factory_component_receipts_1282=pair.factory_component_receipts_1282 or{}
+  pair.factory_component_receipts_1282[built.unit_number]=pair.factory_component_last_receipt_1150
   if not configured then
    -- The entity WAS built with a real item. Do not claim recipe production,
    -- issue a duplicate machine or roll back item custody on configuration
@@ -1497,6 +1501,12 @@ local function finish(pair,task,built,reason)
  task.result=reason
  task.built_entity=built
  pair.construction_last_task_0338=task
+ local output_link=pair.factory_output_link_plan_1282
+ if output_link and output_link.request==task.request_value
+   and type(task.request_value)=="table"
+   and task.request_value.source=="factory-output-links-1282"then
+  output_link.receipt=task
+ end
  -- The generic terminal slot is overwritten by unrelated subsequent work.
  -- Preserve THIS exact original paid 0836 completion inside its pending writ
  -- so a later native scan can verify it after indexed scans catch up. This
