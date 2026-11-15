@@ -1,0 +1,83 @@
+{
+  "status": "source/interface reconciliation; no model or runtime edits yet",
+  "asset": "tech-priests-emergency-steam-engine",
+  "distinct_from_closed_boiler": true,
+  "closed_boiler_action": "none",
+  "authoritative_prototype_type": "generator",
+  "reference_sprite": "tech-priests_src/graphics/entity/martian-micro/tech-priests-emergency-steam-engine.png",
+  "reference_sprite_sha256": "c656a3c72250757a7bc63e8f1ac4a1eaf86fec309831a38e667ed1b3112f12e9",
+  "reference_viewed": true,
+  "source_identity": "No named editable source/package match in tracked art lookup; not proof of global absence.",
+  "preserve_visible_character": [
+    "Paired guarded circular fan housings",
+    "Low front vent banks and supported perimeter pipes",
+    "Central green sight indicator and two amber lamps",
+    "Dark worn metal and mounted fasteners appropriate to the existing emergency family"
+  ],
+  "actual_current_runtime": {
+    "collision_box": [
+      [
+        -0.96,
+        -0.96
+      ],
+      [
+        0.96,
+        0.96
+      ]
+    ],
+    "selection_box": [
+      [
+        -1.12,
+        -1.12
+      ],
+      [
+        1.12,
+        1.12
+      ]
+    ],
+    "fluid_box": {
+      "production_type": "input-output",
+      "filter": "steam",
+      "volume": 100,
+      "pipe_connections": [
+        {
+          "flow_direction": "input-output",
+          "direction": 12,
+          "position": [
+            0,
+            0
+          ]
+        },
+        {
+          "flow_direction": "input-output",
+          "direction": 4,
+          "position": [
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    "max_power_output": "300kW",
+    "energy_source": {
+      "type": "electric",
+      "usage_priority": "secondary-output"
+    },
+    "two_direction_only": true
+  },
+  "native_schema": {
+    "api_version": "Factorio 2.1.24",
+    "prototype_api_sha256": "5badae841b4dc137bc1acb8adafceb03b834c04c2da50bf5a2afe4745d3f826b",
+    "visual_field": "pictures",
+    "direction_fields": [
+      "north",
+      "east",
+      "south",
+      "west"
+    ],
+    "per_direction_animation_field": "animation",
+    "current_pictures_source": "Inherited base steam-engine V/H animations. Custom horizontal_animation/vertical_animation remain raw legacy fields.",
+    "next_native_gate": "Observe current generator graphics, read actual pipe/wire connection frames, then decide required runtime cardinal states before modeling. Do not inherit or invent boiler sockets."
+  },
+  "next_model_gate": "Editable construction pilot with visible mechanism, real supported flow paths and practical service mounts. Reuse the authored-3D source/export/render workflow, then finish surfacing, relevant motion, directions and native fitting. Do not claim completion from this contract."
+}

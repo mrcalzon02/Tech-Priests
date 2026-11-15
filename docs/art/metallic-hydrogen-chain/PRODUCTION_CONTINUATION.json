@@ -358,7 +358,12 @@
     "starting_register": "docs/art/MODEL_COMPLETION_LEDGER.md#prioritized-asset-work",
     "inventory": "docs/art/model-inventory.json",
     "mounting_policy": "Practical mounts for necessary hardware and actual fluid interfaces are allowed; use the real prototype schema and preserve accepted work unless a demonstrated necessary correction is required.",
-    "completion_policy": "Each distinct building and variant requires editable source, finish, actual export inspection, relevant states/directions, prototype integration and visual interface review; shared sprites/meshes do not close a family."
+    "completion_policy": "Each distinct building and variant requires editable source, finish, actual export inspection, relevant states/directions, prototype integration and visual interface review; shared sprites/meshes do not close a family.",
+    "current_runtime_reconciliation": "docs/art/follow-on-runtime-reconciliation-20261115.json",
+    "closed_assets_excluded_from_queue": [
+      "tech-priests-emergency-boiler",
+      "water-purifier"
+    ]
   },
   "fabricator": {
     "status": "reviewed_dedicated_finish_four_direction_states_and_original_audio; native_pending",
@@ -590,5 +595,9 @@
     ],
     "goal_complete": false,
     "goal_tracker_status": "active; user resumed the full existing goal"
+  },
+  "owner_closed_assets": {
+    "boiler": "Finished and integrated; no modeling, capture or integration work. Latest owner explicitly reiterated closure.",
+    "purifier": "Finished; owner explicitly reiterated closure. Move on."
   }
 }

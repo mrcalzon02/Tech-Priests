@@ -1,0 +1,4183 @@
+{
+  "schema": "tech-priests.follow-on-runtime-reconciliation.v1",
+  "source_dump_sha256": "f4ebbfdf9e8ebf81c4772ad18a59c82a6b44b2b69902f551c40ebd5e46a57726",
+  "tested_main_commit": "12e434995b7af0c6b477ccaeacd689a4b82a0c78",
+  "published_main_before_our_merge": "4b76b9a5ddefc1e0bff5110d0886e0aa8bf55f71",
+  "runtime_delta_between_these_main_commits": "Only docs/CURRENT_TESTING_GOALS.md differs under tech-priests_src; native code/assets unchanged.",
+  "working_source_index_head": "c75f918d116a4769861a457e8f11ef5b0014f8e4",
+  "scope": "Current native building definitions with Tech Priests names or entity visuals. Excludes items, characters, asteroids, effects and destructive fixtures. This is a starting current-state reconciliation, not completed model acceptance.",
+  "building_records": [
+    {
+      "type": "accumulator",
+      "name": "tech-priests-stone-cache-primitive-acclimator-battery-bank",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": {
+        "type": "electric",
+        "buffer_capacity": "1MJ",
+        "usage_priority": "tertiary",
+        "input_flow_limit": "500kW",
+        "output_flow_limit": "500kW",
+        "render_no_network_icon": true
+      },
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-primitive-acclimator-battery-bank.png"
+      ],
+      "visual_schema": {},
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "ammo-turret",
+      "name": "tech-priests-bunker-autocannon",
+      "collision_box": [
+        [
+          -1.4,
+          -1.4
+        ],
+        [
+          1.4,
+          1.4
+        ]
+      ],
+      "selection_box": [
+        [
+          -1.5,
+          -1.5
+        ],
+        [
+          1.5,
+          1.5
+        ]
+      ],
+      "tile_width": 3,
+      "tile_height": 3,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-00.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-01.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-02.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-03.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-04.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-05.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-06.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-07.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-08.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-09.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-10.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-11.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-12.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-13.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-14.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-15.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-16.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-17.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-18.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-19.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-20.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-21.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-22.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-23.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-24.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-25.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-26.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-27.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-28.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-29.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-30.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-31.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-32.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-33.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-34.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-35.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-36.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-37.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-38.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-39.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-40.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-41.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-42.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-43.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-44.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-45.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-46.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-47.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-48.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-49.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-50.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-51.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-52.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-53.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-54.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-55.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-56.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-57.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-58.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-59.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-60.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-61.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-62.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/firing-63.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/icon.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/idle-00.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/idle-01.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/idle-02.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/idle-03.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/idle-04.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/idle-05.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/idle-06.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/idle-07.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "ammo-turret",
+      "name": "tech-priests-bunker-chicago-piano",
+      "collision_box": [
+        [
+          -1.4,
+          -1.4
+        ],
+        [
+          1.4,
+          1.4
+        ]
+      ],
+      "selection_box": [
+        [
+          -1.5,
+          -1.5
+        ],
+        [
+          1.5,
+          1.5
+        ]
+      ],
+      "tile_width": 3,
+      "tile_height": 3,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/icon.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-00.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-01.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-02.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-03.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-04.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-05.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-06.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-07.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-08.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-09.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-10.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-11.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-12.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-13.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-14.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-15.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-16.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-17.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-18.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-19.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-20.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-21.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-22.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-23.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-24.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-25.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-26.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-27.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-28.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-29.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-30.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-31.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-32.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-33.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-34.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-35.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-36.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-37.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-38.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-39.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-40.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-41.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-42.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-43.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-44.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-45.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-46.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-47.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-48.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-49.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-50.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-51.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-52.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-53.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-54.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-55.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-56.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-57.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-58.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-59.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-60.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-61.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-62.png",
+        "__tech-priests__/graphics/entity/bunker-chicago-piano/native-63.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "ammo-turret",
+      "name": "tech-priests-bunker-lobber",
+      "collision_box": [
+        [
+          -1.4,
+          -1.4
+        ],
+        [
+          1.4,
+          1.4
+        ]
+      ],
+      "selection_box": [
+        [
+          -1.5,
+          -1.5
+        ],
+        [
+          1.5,
+          1.5
+        ]
+      ],
+      "tile_width": 3,
+      "tile_height": 3,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/icon.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-00.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-01.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-02.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-03.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-04.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-05.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-06.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-07.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-08.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-09.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-10.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-11.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-12.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-13.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-14.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-15.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-16.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-17.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-18.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-19.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-20.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-21.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-22.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-23.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-24.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-25.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-26.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-27.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-28.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-29.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-30.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-31.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-32.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-33.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-34.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-35.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-36.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-37.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-38.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-39.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-40.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-41.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-42.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-43.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-44.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-45.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-46.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-47.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-48.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-49.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-50.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-51.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-52.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-53.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-54.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-55.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-56.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-57.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-58.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-59.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-60.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-61.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-62.png",
+        "__tech-priests__/graphics/entity/bunker-lobber/native-63.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "ammo-turret",
+      "name": "tech-priests-bunker-twin-cannon",
+      "collision_box": [
+        [
+          -1.4,
+          -1.4
+        ],
+        [
+          1.4,
+          1.4
+        ]
+      ],
+      "selection_box": [
+        [
+          -1.5,
+          -1.5
+        ],
+        [
+          1.5,
+          1.5
+        ]
+      ],
+      "tile_width": 3,
+      "tile_height": 3,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/icon.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-00.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-01.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-02.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-03.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-04.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-05.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-06.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-07.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-08.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-09.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-10.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-11.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-12.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-13.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-14.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-15.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-16.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-17.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-18.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-19.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-20.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-21.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-22.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-23.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-24.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-25.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-26.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-27.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-28.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-29.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-30.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-31.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-32.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-33.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-34.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-35.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-36.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-37.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-38.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-39.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-40.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-41.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-42.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-43.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-44.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-45.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-46.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-47.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-48.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-49.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-50.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-51.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-52.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-53.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-54.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-55.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-56.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-57.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-58.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-59.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-60.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-61.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-62.png",
+        "__tech-priests__/graphics/entity/bunker-twin-cannon/native-63.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "ammo-turret",
+      "name": "tech-priests-bunker-twin-minigun",
+      "collision_box": [
+        [
+          -1.4,
+          -1.4
+        ],
+        [
+          1.4,
+          1.4
+        ]
+      ],
+      "selection_box": [
+        [
+          -1.5,
+          -1.5
+        ],
+        [
+          1.5,
+          1.5
+        ]
+      ],
+      "tile_width": 3,
+      "tile_height": 3,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/icon.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-00.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-01.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-02.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-03.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-04.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-05.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-06.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-07.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-08.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-09.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-10.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-11.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-12.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-13.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-14.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-15.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-16.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-17.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-18.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-19.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-20.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-21.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-22.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-23.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-24.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-25.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-26.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-27.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-28.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-29.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-30.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-31.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-32.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-33.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-34.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-35.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-36.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-37.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-38.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-39.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-40.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-41.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-42.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-43.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-44.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-45.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-46.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-47.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-48.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-49.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-50.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-51.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-52.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-53.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-54.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-55.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-56.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-57.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-58.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-59.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-60.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-61.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-62.png",
+        "__tech-priests__/graphics/entity/bunker-twin-minigun/native-63.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "assembling-machine",
+      "name": "citadel-manufactoreo",
+      "collision_box": [
+        [
+          -2.45,
+          -2.45
+        ],
+        [
+          2.45,
+          2.45
+        ]
+      ],
+      "selection_box": [
+        [
+          -2.5,
+          -2.5
+        ],
+        [
+          2.5,
+          2.5
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": {
+        "type": "electric",
+        "usage_priority": "secondary-input"
+      },
+      "flags": [
+        "placeable-neutral",
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/citadel-manufactoreo/citadel-manufactoreo-active.png",
+        "__tech-priests__/graphics/entity/citadel-manufactoreo/citadel-manufactoreo-idle.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "assembling-machine",
+      "name": "orbital-trader",
+      "collision_box": [
+        [
+          -2.7,
+          -2.7
+        ],
+        [
+          2.7,
+          2.7
+        ]
+      ],
+      "selection_box": [
+        [
+          -3,
+          -3
+        ],
+        [
+          3,
+          3
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": [
+        {
+          "production_type": "input",
+          "pipe_picture": {
+            "north": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 52,
+              "height": 20,
+              "shift": [
+                0.015625,
+                0.34375
+              ],
+              "line_length": 1,
+              "filename": "__base__/graphics/entity/assembling-machine-3/assembling-machine-3-pipe-N.png"
+            },
+            "east": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 32,
+              "height": 74,
+              "shift": [
+                -0.71875,
+                0.0625
+              ],
+              "line_length": 1,
+              "filename": "__base__/graphics/entity/assembling-machine-3/assembling-machine-3-pipe-E.png"
+            },
+            "south": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 64,
+              "height": 70,
+              "shift": [
+                0,
+                -0.765625
+              ],
+              "line_length": 1,
+              "filename": "__base__/graphics/entity/assembling-machine-3/assembling-machine-3-pipe-S.png"
+            },
+            "west": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 32,
+              "height": 72,
+              "shift": [
+                0.734375,
+                0.015625
+              ],
+              "line_length": 1,
+              "filename": "__base__/graphics/entity/assembling-machine-3/assembling-machine-3-pipe-W.png"
+            }
+          },
+          "pipe_covers": {
+            "north": {
+              "layers": [
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-north.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5
+                },
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-north-shadow.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5,
+                  "draw_as_shadow": true
+                }
+              ]
+            },
+            "east": {
+              "layers": [
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-east.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5
+                },
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-east-shadow.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5,
+                  "draw_as_shadow": true
+                }
+              ]
+            },
+            "south": {
+              "layers": [
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-south.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5
+                },
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-south-shadow.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5,
+                  "draw_as_shadow": true
+                }
+              ]
+            },
+            "west": {
+              "layers": [
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-west.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5
+                },
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-west-shadow.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5,
+                  "draw_as_shadow": true
+                }
+              ]
+            }
+          },
+          "volume": 1000,
+          "pipe_connections": [
+            {
+              "flow_direction": "input",
+              "direction": 0,
+              "position": [
+                0,
+                -1
+              ]
+            }
+          ],
+          "secondary_draw_orders": {
+            "north": -1
+          },
+          "pipe_covers_frozen": {
+            "north": {
+              "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-north.png",
+              "priority": "extra-high",
+              "width": 128,
+              "height": 128,
+              "scale": 0.5
+            },
+            "east": {
+              "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-east.png",
+              "priority": "extra-high",
+              "width": 128,
+              "height": 128,
+              "scale": 0.5
+            },
+            "south": {
+              "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-south.png",
+              "priority": "extra-high",
+              "width": 128,
+              "height": 128,
+              "scale": 0.5
+            },
+            "west": {
+              "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-west.png",
+              "priority": "extra-high",
+              "width": 128,
+              "height": 128,
+              "scale": 0.5
+            }
+          },
+          "pipe_picture_frozen": {
+            "north": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 50,
+              "height": 22,
+              "shift": [
+                0,
+                0.34375
+              ],
+              "line_length": 1,
+              "filename": "__space-age__/graphics/entity/frozen/assembling-machine/assembling-machine-pipe-N-frozen.png"
+            },
+            "east": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 32,
+              "height": 62,
+              "shift": [
+                -0.71875,
+                -0.03125
+              ],
+              "line_length": 1,
+              "filename": "__space-age__/graphics/entity/frozen/assembling-machine/assembling-machine-pipe-E-frozen.png"
+            },
+            "south": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 60,
+              "height": 48,
+              "shift": [
+                -0.03125,
+                -0.921875
+              ],
+              "line_length": 1,
+              "filename": "__space-age__/graphics/entity/frozen/assembling-machine/assembling-machine-pipe-S-frozen.png"
+            },
+            "west": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 32,
+              "height": 70,
+              "shift": [
+                0.71875,
+                0
+              ],
+              "line_length": 1,
+              "filename": "__space-age__/graphics/entity/frozen/assembling-machine/assembling-machine-pipe-W-frozen.png"
+            }
+          }
+        },
+        {
+          "production_type": "output",
+          "pipe_picture": {
+            "north": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 52,
+              "height": 20,
+              "shift": [
+                0.015625,
+                0.34375
+              ],
+              "line_length": 1,
+              "filename": "__base__/graphics/entity/assembling-machine-3/assembling-machine-3-pipe-N.png"
+            },
+            "east": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 32,
+              "height": 74,
+              "shift": [
+                -0.71875,
+                0.0625
+              ],
+              "line_length": 1,
+              "filename": "__base__/graphics/entity/assembling-machine-3/assembling-machine-3-pipe-E.png"
+            },
+            "south": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 64,
+              "height": 70,
+              "shift": [
+                0,
+                -0.765625
+              ],
+              "line_length": 1,
+              "filename": "__base__/graphics/entity/assembling-machine-3/assembling-machine-3-pipe-S.png"
+            },
+            "west": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 32,
+              "height": 72,
+              "shift": [
+                0.734375,
+                0.015625
+              ],
+              "line_length": 1,
+              "filename": "__base__/graphics/entity/assembling-machine-3/assembling-machine-3-pipe-W.png"
+            }
+          },
+          "pipe_covers": {
+            "north": {
+              "layers": [
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-north.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5
+                },
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-north-shadow.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5,
+                  "draw_as_shadow": true
+                }
+              ]
+            },
+            "east": {
+              "layers": [
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-east.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5
+                },
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-east-shadow.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5,
+                  "draw_as_shadow": true
+                }
+              ]
+            },
+            "south": {
+              "layers": [
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-south.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5
+                },
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-south-shadow.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5,
+                  "draw_as_shadow": true
+                }
+              ]
+            },
+            "west": {
+              "layers": [
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-west.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5
+                },
+                {
+                  "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-west-shadow.png",
+                  "priority": "extra-high",
+                  "width": 128,
+                  "height": 128,
+                  "scale": 0.5,
+                  "draw_as_shadow": true
+                }
+              ]
+            }
+          },
+          "volume": 1000,
+          "pipe_connections": [
+            {
+              "flow_direction": "output",
+              "direction": 8,
+              "position": [
+                0,
+                1
+              ]
+            }
+          ],
+          "secondary_draw_orders": {
+            "north": -1
+          },
+          "pipe_covers_frozen": {
+            "north": {
+              "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-north.png",
+              "priority": "extra-high",
+              "width": 128,
+              "height": 128,
+              "scale": 0.5
+            },
+            "east": {
+              "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-east.png",
+              "priority": "extra-high",
+              "width": 128,
+              "height": 128,
+              "scale": 0.5
+            },
+            "south": {
+              "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-south.png",
+              "priority": "extra-high",
+              "width": 128,
+              "height": 128,
+              "scale": 0.5
+            },
+            "west": {
+              "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-west.png",
+              "priority": "extra-high",
+              "width": 128,
+              "height": 128,
+              "scale": 0.5
+            }
+          },
+          "pipe_picture_frozen": {
+            "north": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 50,
+              "height": 22,
+              "shift": [
+                0,
+                0.34375
+              ],
+              "line_length": 1,
+              "filename": "__space-age__/graphics/entity/frozen/assembling-machine/assembling-machine-pipe-N-frozen.png"
+            },
+            "east": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 32,
+              "height": 62,
+              "shift": [
+                -0.71875,
+                -0.03125
+              ],
+              "line_length": 1,
+              "filename": "__space-age__/graphics/entity/frozen/assembling-machine/assembling-machine-pipe-E-frozen.png"
+            },
+            "south": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 60,
+              "height": 48,
+              "shift": [
+                -0.03125,
+                -0.921875
+              ],
+              "line_length": 1,
+              "filename": "__space-age__/graphics/entity/frozen/assembling-machine/assembling-machine-pipe-S-frozen.png"
+            },
+            "west": {
+              "priority": "extra-high",
+              "scale": 0.5,
+              "width": 32,
+              "height": 70,
+              "shift": [
+                0.71875,
+                0
+              ],
+              "line_length": 1,
+              "filename": "__space-age__/graphics/entity/frozen/assembling-machine/assembling-machine-pipe-W-frozen.png"
+            }
+          }
+        }
+      ],
+      "energy_source": {
+        "type": "electric",
+        "usage_priority": "secondary-input",
+        "emissions_per_minute": {
+          "pollution": 2
+        }
+      },
+      "flags": [
+        "placeable-neutral",
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/orbital-trader/orbital-trader-shadow.png",
+        "__tech-priests__/graphics/entity/orbital-trader/orbital-trader.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "assembling-machine",
+      "name": "tech-priests-atmospheric-water-condenser",
+      "collision_box": [
+        [
+          -0.96,
+          -0.96
+        ],
+        [
+          0.96,
+          0.96
+        ]
+      ],
+      "selection_box": [
+        [
+          -1.12,
+          -1.12
+        ],
+        [
+          1.12,
+          1.12
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": [
+        {
+          "production_type": "output",
+          "volume": 100,
+          "pipe_connections": [
+            {
+              "flow_direction": "output",
+              "direction": 4,
+              "position": [
+                0.5,
+                0.5
+              ]
+            }
+          ]
+        }
+      ],
+      "energy_source": {
+        "type": "burner",
+        "fuel_categories": [
+          "chemical"
+        ],
+        "effectivity": 0.6,
+        "fuel_inventory_size": 1,
+        "emissions_per_minute": {
+          "pollution": 18
+        }
+      },
+      "flags": [
+        "placeable-neutral",
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-00.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-01.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-02.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-03.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-04.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-05.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-06.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-07.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-08.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-09.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-10.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-east-hr-11.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-00.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-01.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-02.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-03.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-04.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-05.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-06.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-07.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-08.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-09.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-10.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-north-hr-11.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-00.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-01.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-02.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-03.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-04.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-05.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-06.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-07.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-08.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-09.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-10.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-south-hr-11.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-00.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-01.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-02.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-03.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-04.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-05.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-06.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-07.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-08.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-09.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-10.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/active-west-hr-11.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/icon-64.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/idle-east-hr.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/idle-north-hr.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/idle-south-hr.png",
+        "__tech-priests__/graphics/entity/atmospheric-water-condenser-v24/idle-west-hr.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "assembling-machine",
+      "name": "tech-priests-emergency-assembler",
+      "collision_box": [
+        [
+          -0.35,
+          -0.35
+        ],
+        [
+          0.35,
+          0.35
+        ]
+      ],
+      "selection_box": [
+        [
+          -0.5,
+          -0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": {
+        "type": "burner",
+        "fuel_categories": [
+          "chemical"
+        ],
+        "effectivity": 0.75,
+        "fuel_inventory_size": 1,
+        "emissions_per_minute": {
+          "pollution": 20
+        }
+      },
+      "flags": [
+        "placeable-neutral",
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/timber-workbench/icon.png",
+        "__tech-priests__/graphics/entity/timber-workbench/idle-east.png",
+        "__tech-priests__/graphics/entity/timber-workbench/idle-north.png",
+        "__tech-priests__/graphics/entity/timber-workbench/idle-south.png",
+        "__tech-priests__/graphics/entity/timber-workbench/idle-west.png",
+        "__tech-priests__/graphics/entity/timber-workbench/working-east.png",
+        "__tech-priests__/graphics/entity/timber-workbench/working-north.png",
+        "__tech-priests__/graphics/entity/timber-workbench/working-south.png",
+        "__tech-priests__/graphics/entity/timber-workbench/working-west.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "assembling-machine",
+      "name": "tech-priests-emergency-miner",
+      "collision_box": [
+        [
+          -0.35,
+          -0.35
+        ],
+        [
+          0.35,
+          0.35
+        ]
+      ],
+      "selection_box": [
+        [
+          -0.5,
+          -0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": {
+        "type": "void"
+      },
+      "flags": [
+        "placeable-neutral",
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/emergency-miner-v25/activity-hr.png",
+        "__tech-priests__/graphics/entity/emergency-miner-v25/icon-128.png",
+        "__tech-priests__/graphics/entity/emergency-miner-v25/idle-hr.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "boiler",
+      "name": "sterling-steam-catalyzer",
+      "collision_box": [
+        [
+          -1.85,
+          -0.9
+        ],
+        [
+          1.85,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -2,
+          -1
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": {
+        "volume": 200,
+        "pipe_covers": {
+          "north": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-north.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-north-shadow.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5,
+                "draw_as_shadow": true
+              }
+            ]
+          },
+          "east": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-east.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-east-shadow.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5,
+                "draw_as_shadow": true
+              }
+            ]
+          },
+          "south": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-south.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-south-shadow.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5,
+                "draw_as_shadow": true
+              }
+            ]
+          },
+          "west": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-west.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-west-shadow.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5,
+                "draw_as_shadow": true
+              }
+            ]
+          }
+        },
+        "pipe_connections": [
+          {
+            "flow_direction": "input",
+            "direction": 12,
+            "position": [
+              -1.5,
+              0
+            ]
+          }
+        ],
+        "production_type": "input",
+        "filter": "water"
+      },
+      "fluid_boxes": null,
+      "energy_source": {
+        "type": "burner",
+        "fuel_categories": [
+          "chemical"
+        ],
+        "effectivity": 1,
+        "fuel_inventory_size": 1,
+        "emissions_per_minute": {
+          "pollution": 30
+        },
+        "light_flicker": {
+          "color": [
+            0,
+            0,
+            0
+          ],
+          "minimum_intensity": 0.6,
+          "maximum_intensity": 0.95
+        },
+        "smoke": [
+          {
+            "name": "smoke",
+            "north_position": [
+              -1.1875,
+              -1.484375
+            ],
+            "south_position": [
+              1.203125,
+              -1
+            ],
+            "east_position": [
+              0.625,
+              -2.1875
+            ],
+            "west_position": [
+              -0.59375,
+              -0.265625
+            ],
+            "frequency": 15,
+            "starting_vertical_speed": 0,
+            "starting_frame_deviation": 60
+          }
+        ]
+      },
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/sterling-steam-catalyzer/sterling-steam-catalyzer-shadow.png",
+        "__tech-priests__/graphics/entity/sterling-steam-catalyzer/sterling-steam-catalyzer.png"
+      ],
+      "visual_schema": {
+        "pictures": {
+          "north": {},
+          "east": {},
+          "south": {},
+          "west": {}
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "boiler",
+      "name": "tech-priests-emergency-boiler",
+      "collision_box": [
+        [
+          -0.85,
+          -0.85
+        ],
+        [
+          0.85,
+          0.85
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": {
+        "production_type": "input-output",
+        "filter": "water",
+        "volume": 100,
+        "pipe_connections": [
+          {
+            "flow_direction": "input-output",
+            "direction": 12,
+            "position": [
+              -0.5,
+              -0.5
+            ]
+          }
+        ]
+      },
+      "fluid_boxes": null,
+      "energy_source": {
+        "type": "burner",
+        "fuel_categories": [
+          "chemical"
+        ],
+        "effectivity": 1,
+        "fuel_inventory_size": 1,
+        "emissions_per_minute": {
+          "pollution": 60
+        },
+        "light_flicker": {
+          "color": [
+            0,
+            0,
+            0
+          ],
+          "minimum_intensity": 0.6,
+          "maximum_intensity": 0.95
+        }
+      },
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/emergency-boiler-v08-activity.png",
+        "__tech-priests__/graphics/entity/emergency-boiler-v08-cold.png"
+      ],
+      "visual_schema": {
+        "pictures": {
+          "north": {},
+          "east": {},
+          "south": {},
+          "west": {}
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review.",
+      "work_status": "owner_closed_finished_and_integrated",
+      "next_action": "none; do not reopen"
+    },
+    {
+      "type": "container",
+      "name": "intermediate-cogitator-station",
+      "collision_box": [
+        [
+          -0.7,
+          -0.7
+        ],
+        [
+          0.7,
+          0.7
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/cogitator-station/cogitator-station.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__base__/graphics/entity/substation/substation-shadow.png",
+              "width": 370,
+              "height": 104,
+              "direction_count": 4,
+              "shift": [
+                1.9375,
+                0.3125
+              ],
+              "scale": 0.5
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/cogitator-station/cogitator-station.png",
+              "width": 184,
+              "height": 270,
+              "shift": [
+                0,
+                -0.875
+              ],
+              "scale": 0.5
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "junior-cogitator-station",
+      "collision_box": [
+        [
+          -0.7,
+          -0.7
+        ],
+        [
+          0.7,
+          0.7
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/cogitator-station/junior-cogitator-station.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__base__/graphics/entity/substation/substation-shadow.png",
+              "width": 370,
+              "height": 104,
+              "direction_count": 4,
+              "shift": [
+                1.9375,
+                0.3125
+              ],
+              "scale": 0.5
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/cogitator-station/junior-cogitator-station.png",
+              "width": 1027,
+              "height": 1532,
+              "shift": [
+                0,
+                -0.6875
+              ],
+              "scale": 0.09
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "planetary-magos-cogitator-station",
+      "collision_box": [
+        [
+          -0.7,
+          -0.7
+        ],
+        [
+          0.7,
+          0.7
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/cogitator-station/planetary-magos-cogitator-station.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__base__/graphics/entity/substation/substation-shadow.png",
+              "width": 370,
+              "height": 104,
+              "direction_count": 4,
+              "shift": [
+                1.9375,
+                0.3125
+              ],
+              "scale": 0.5
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/cogitator-station/planetary-magos-cogitator-station.png",
+              "width": 1024,
+              "height": 1536,
+              "shift": [
+                0,
+                -0.5625
+              ],
+              "scale": 0.092
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "senior-cogitator-station",
+      "collision_box": [
+        [
+          -0.7,
+          -0.7
+        ],
+        [
+          0.7,
+          0.7
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/cogitator-station/senior-cogitator-station.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__base__/graphics/entity/substation/substation-shadow.png",
+              "width": 370,
+              "height": 104,
+              "direction_count": 4,
+              "shift": [
+                1.9375,
+                0.3125
+              ],
+              "scale": 0.5
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/cogitator-station/senior-cogitator-station.png",
+              "width": 1024,
+              "height": 1536,
+              "shift": [
+                0,
+                -0.9375
+              ],
+              "scale": 0.09
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-advanced-space-cargo-inventory",
+      "collision_box": [
+        [
+          -2.2,
+          -1.9
+        ],
+        [
+          2.2,
+          1.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -2.5,
+          -2.2
+        ],
+        [
+          2.5,
+          2.2
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory-shadow.png",
+              "width": 1315,
+              "height": 1196,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.12
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-advanced-space-cargo-inventory.png",
+              "width": 1315,
+              "height": 1196,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.12
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-basic-space-cargo-inventory",
+      "collision_box": [
+        [
+          -2.7,
+          -1.1
+        ],
+        [
+          2.7,
+          1.1
+        ]
+      ],
+      "selection_box": [
+        [
+          -3,
+          -1.3
+        ],
+        [
+          3,
+          1.3
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-basic-space-cargo-inventory-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-basic-space-cargo-inventory.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-basic-space-cargo-inventory-shadow.png",
+              "width": 1889,
+              "height": 833,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.11000000000000001
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-basic-space-cargo-inventory.png",
+              "width": 1889,
+              "height": 833,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.11000000000000001
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-conclave-center",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/martian-micro/future/emm13.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/martian-micro/future/emm13.png",
+              "width": 1024,
+              "height": 1024,
+              "scale": 0.0625,
+              "shift": [
+                0,
+                -0.25
+              ]
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-martian-stone-cache",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-martian-stone-cache-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-martian-stone-cache.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-martian-stone-cache-shadow.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.055
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-martian-stone-cache.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.055
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-stone-cache-coal",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-coal-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-coal.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-coal-shadow.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.055
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-coal.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.055
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-stone-cache-copper-cable",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-cable-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-cable.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-cable-shadow.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.055
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-cable.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.055
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-stone-cache-copper-ore",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-ore-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-ore.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-ore-shadow.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.055
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-ore.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.055
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-stone-cache-copper-plate",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-plate-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-plate.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-plate-shadow.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.055
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-copper-plate.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.055
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-stone-cache-iron-gear-wheel",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-gear-wheel-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-gear-wheel.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-gear-wheel-shadow.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.068
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-gear-wheel.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.068
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-stone-cache-iron-ore",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-ore-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-ore.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-ore-shadow.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.055
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-ore.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.055
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-stone-cache-iron-plate",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-plate-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-plate.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-plate-shadow.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.055
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-plate.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.055
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-stone-cache-iron-stick",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-stick-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-stick.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-stick-shadow.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.055
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-iron-stick.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.055
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-stone-cache-item-vault",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-item-vault-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-item-vault.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-item-vault-shadow.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.068
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-item-vault.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.068
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-stone-cache-stone",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-stone-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-stone.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-stone-shadow.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.055
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-stone.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.055
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "tech-priests-stone-cache-wood",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-wood-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-wood.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-wood-shadow.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.055
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-wood.png",
+              "width": 1254,
+              "height": 1254,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.055
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "container",
+      "name": "void-cogitator-station",
+      "collision_box": [
+        [
+          -0.7,
+          -0.7
+        ],
+        [
+          0.7,
+          0.7
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/cogitator-station/void-cogitator-station.png"
+      ],
+      "visual_schema": {
+        "picture": {
+          "layers": [
+            {
+              "filename": "__base__/graphics/entity/substation/substation-shadow.png",
+              "width": 370,
+              "height": 104,
+              "direction_count": 4,
+              "shift": [
+                1.9375,
+                0.3125
+              ],
+              "scale": 0.5
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/cogitator-station/void-cogitator-station.png",
+              "width": 1024,
+              "height": 1536,
+              "shift": [
+                0,
+                -0.625
+              ],
+              "scale": 0.092
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "electric-pole",
+      "name": "tech-priests-emergency-power-grid",
+      "collision_box": [
+        [
+          -0.35,
+          -0.35
+        ],
+        [
+          0.35,
+          0.35
+        ]
+      ],
+      "selection_box": [
+        [
+          -0.5,
+          -0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-power-grid-shadow.png",
+        "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-power-grid.png"
+      ],
+      "visual_schema": {
+        "pictures": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-power-grid-shadow.png",
+              "width": 1254,
+              "height": 1254,
+              "direction_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.034
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-power-grid.png",
+              "width": 1254,
+              "height": 1254,
+              "direction_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.034
+            }
+          ]
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "electric-turret",
+      "name": "tech-priests-bunker-energy-dish",
+      "collision_box": [
+        [
+          -1.4,
+          -1.4
+        ],
+        [
+          1.4,
+          1.4
+        ]
+      ],
+      "selection_box": [
+        [
+          -1.5,
+          -1.5
+        ],
+        [
+          1.5,
+          1.5
+        ]
+      ],
+      "tile_width": 3,
+      "tile_height": 3,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": {
+        "type": "electric",
+        "buffer_capacity": "1600kJ",
+        "input_flow_limit": "2400kW",
+        "drain": "48kW",
+        "usage_priority": "primary-input"
+      },
+      "flags": [
+        "placeable-player",
+        "placeable-enemy",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-east.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-north.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-south.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-glow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-shadow.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west-team-mask.png",
+        "__tech-priests__/graphics/entity/bunker-autocannon/base-west.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-00.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-01.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-02.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-03.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-04.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-05.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-06.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-07.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-08.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-09.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-10.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-11.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-12.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-13.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-14.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-15.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-16.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-17.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-18.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-19.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-20.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-21.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-22.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-23.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-24.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-25.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-26.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-27.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-28.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-29.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-30.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-31.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-32.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-33.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-34.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-35.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-36.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-37.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-38.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-39.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-40.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-41.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-42.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-43.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-44.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-45.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-46.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-47.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-48.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-49.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-50.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-51.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-52.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-53.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-54.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-55.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-56.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-57.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-58.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-59.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-60.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-61.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-62.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/emission-63.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/icon.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-00.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-01.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-02.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-03.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-04.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-05.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-06.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-07.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-08.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-09.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-10.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-11.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-12.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-13.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-14.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-15.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-16.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-17.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-18.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-19.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-20.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-21.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-22.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-23.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-24.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-25.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-26.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-27.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-28.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-29.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-30.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-31.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-32.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-33.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-34.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-35.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-36.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-37.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-38.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-39.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-40.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-41.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-42.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-43.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-44.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-45.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-46.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-47.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-48.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-49.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-50.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-51.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-52.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-53.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-54.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-55.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-56.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-57.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-58.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-59.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-60.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-61.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-62.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/idle-63.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-00.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-01.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-02.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-03.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-04.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-05.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-06.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-07.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-08.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-09.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-10.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-11.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-12.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-13.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-14.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-15.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-16.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-17.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-18.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-19.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-20.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-21.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-22.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-23.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-24.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-25.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-26.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-27.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-28.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-29.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-30.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-31.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-32.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-33.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-34.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-35.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-36.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-37.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-38.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-39.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-40.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-41.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-42.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-43.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-44.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-45.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-46.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-47.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-48.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-49.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-50.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-51.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-52.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-53.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-54.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-55.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-56.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-57.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-58.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-59.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-60.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-61.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-62.png",
+        "__tech-priests__/graphics/entity/bunker-energy-dish/shadow-63.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "furnace",
+      "name": "tech-priests-emergency-smelter",
+      "collision_box": [
+        [
+          -0.35,
+          -0.35
+        ],
+        [
+          0.35,
+          0.35
+        ]
+      ],
+      "selection_box": [
+        [
+          -0.5,
+          -0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": {
+        "type": "burner",
+        "fuel_categories": [
+          "chemical"
+        ],
+        "effectivity": 0.75,
+        "fuel_inventory_size": 1,
+        "emissions_per_minute": {
+          "pollution": 18
+        },
+        "smoke": [
+          {
+            "name": "smoke",
+            "deviation": [
+              0.08,
+              0.08
+            ],
+            "frequency": 4,
+            "position": [
+              0,
+              -0.4
+            ],
+            "starting_vertical_speed": 0.05
+          }
+        ]
+      },
+      "flags": [
+        "placeable-neutral",
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-smelter-shadow.png",
+        "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-smelter.png"
+      ],
+      "visual_schema": {
+        "graphics_set": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "generator",
+      "name": "tech-priests-emergency-steam-engine",
+      "collision_box": [
+        [
+          -0.96,
+          -0.96
+        ],
+        [
+          0.96,
+          0.96
+        ]
+      ],
+      "selection_box": [
+        [
+          -1.12,
+          -1.12
+        ],
+        [
+          1.12,
+          1.12
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": {
+        "production_type": "input-output",
+        "filter": "steam",
+        "volume": 100,
+        "pipe_connections": [
+          {
+            "flow_direction": "input-output",
+            "direction": 12,
+            "position": [
+              0,
+              0
+            ]
+          },
+          {
+            "flow_direction": "input-output",
+            "direction": 4,
+            "position": [
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "fluid_boxes": null,
+      "energy_source": {
+        "type": "electric",
+        "usage_priority": "secondary-output"
+      },
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-steam-engine-shadow.png",
+        "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-steam-engine.png"
+      ],
+      "visual_schema": {
+        "horizontal_animation": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-steam-engine-shadow.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.063
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-steam-engine.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.063
+            }
+          ]
+        },
+        "vertical_animation": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-steam-engine-shadow.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.063
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-steam-engine.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.063
+            }
+          ]
+        },
+        "pictures": {
+          "north": {},
+          "east": {}
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review.",
+      "two_direction_only": true,
+      "native_generator_pictures": {
+        "north": {
+          "animation": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/steam-engine/steam-engine-V.png",
+                "width": 225,
+                "height": 391,
+                "frame_count": 32,
+                "line_length": 8,
+                "shift": [
+                  0.1484375,
+                  -0.1953125
+                ],
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/steam-engine/steam-engine-V-shadow.png",
+                "width": 330,
+                "height": 307,
+                "frame_count": 32,
+                "line_length": 8,
+                "draw_as_shadow": true,
+                "shift": [
+                  1.265625,
+                  0.2890625
+                ],
+                "scale": 0.5
+              }
+            ]
+          }
+        },
+        "east": {
+          "animation": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/steam-engine/steam-engine-H.png",
+                "width": 352,
+                "height": 257,
+                "frame_count": 32,
+                "line_length": 8,
+                "shift": [
+                  0.03125,
+                  -0.1484375
+                ],
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/steam-engine/steam-engine-H-shadow.png",
+                "width": 508,
+                "height": 160,
+                "frame_count": 32,
+                "line_length": 8,
+                "draw_as_shadow": true,
+                "shift": [
+                  1.5,
+                  0.75
+                ],
+                "scale": 0.5
+              }
+            ]
+          }
+        }
+      },
+      "native_schema_finding": "Factorio 2.1.24 GeneratorPrototype uses pictures with GeneratorPictures.animation. Existing custom horizontal_animation/vertical_animation fields are legacy Lua fields while pictures still contains inherited base steam-engine sheets. Actual replacement must target pictures; do not infer a custom-art runtime pass from the legacy fields.",
+      "next_action": "Verify actual generator native view and fluid/wire frames before authoring its separate source. Do not touch the completed boiler."
+    },
+    {
+      "type": "generator",
+      "name": "void-steam-engine",
+      "collision_box": [
+        [
+          -0.9,
+          -0.9
+        ],
+        [
+          0.9,
+          0.9
+        ]
+      ],
+      "selection_box": [
+        [
+          -1,
+          -1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": {
+        "volume": 200,
+        "pipe_covers": {
+          "north": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-north.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-north-shadow.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5,
+                "draw_as_shadow": true
+              }
+            ]
+          },
+          "east": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-east.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-east-shadow.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5,
+                "draw_as_shadow": true
+              }
+            ]
+          },
+          "south": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-south.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-south-shadow.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5,
+                "draw_as_shadow": true
+              }
+            ]
+          },
+          "west": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-west.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/pipe-covers/pipe-cover-west-shadow.png",
+                "priority": "extra-high",
+                "width": 128,
+                "height": 128,
+                "scale": 0.5,
+                "draw_as_shadow": true
+              }
+            ]
+          }
+        },
+        "pipe_connections": [
+          {
+            "flow_direction": "input",
+            "direction": 12,
+            "position": [
+              -0.5,
+              0
+            ]
+          }
+        ],
+        "production_type": "input",
+        "filter": "steam",
+        "pipe_covers_frozen": {
+          "north": {
+            "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-north.png",
+            "priority": "extra-high",
+            "width": 128,
+            "height": 128,
+            "scale": 0.5
+          },
+          "east": {
+            "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-east.png",
+            "priority": "extra-high",
+            "width": 128,
+            "height": 128,
+            "scale": 0.5
+          },
+          "south": {
+            "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-south.png",
+            "priority": "extra-high",
+            "width": 128,
+            "height": 128,
+            "scale": 0.5
+          },
+          "west": {
+            "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-west.png",
+            "priority": "extra-high",
+            "width": 128,
+            "height": 128,
+            "scale": 0.5
+          }
+        }
+      },
+      "fluid_boxes": null,
+      "energy_source": {
+        "type": "electric",
+        "usage_priority": "secondary-output"
+      },
+      "flags": [
+        "placeable-neutral",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/void-steam-engine/void-steam-engine-shadow.png",
+        "__tech-priests__/graphics/entity/void-steam-engine/void-steam-engine.png"
+      ],
+      "visual_schema": {
+        "horizontal_animation": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/void-steam-engine/void-steam-engine-shadow.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.07400000000000001
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/void-steam-engine/void-steam-engine.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.07400000000000001
+            }
+          ]
+        },
+        "vertical_animation": {
+          "layers": [
+            {
+              "filename": "__tech-priests__/graphics/entity/void-steam-engine/void-steam-engine-shadow.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0.08,
+                0.08
+              ],
+              "scale": 0.07400000000000001
+            },
+            {
+              "filename": "__tech-priests__/graphics/entity/void-steam-engine/void-steam-engine.png",
+              "width": 1024,
+              "height": 1024,
+              "frame_count": 1,
+              "line_length": 1,
+              "shift": [
+                0,
+                0
+              ],
+              "scale": 0.07400000000000001
+            }
+          ]
+        },
+        "pictures": {
+          "north": {},
+          "east": {}
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review.",
+      "two_direction_only": true,
+      "native_generator_pictures": {
+        "north": {
+          "animation": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/steam-engine/steam-engine-V.png",
+                "width": 225,
+                "height": 391,
+                "frame_count": 32,
+                "line_length": 8,
+                "shift": [
+                  0.1484375,
+                  -0.1953125
+                ],
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/steam-engine/steam-engine-V-shadow.png",
+                "width": 330,
+                "height": 307,
+                "frame_count": 32,
+                "line_length": 8,
+                "draw_as_shadow": true,
+                "shift": [
+                  1.265625,
+                  0.2890625
+                ],
+                "scale": 0.5
+              }
+            ]
+          }
+        },
+        "east": {
+          "animation": {
+            "layers": [
+              {
+                "filename": "__base__/graphics/entity/steam-engine/steam-engine-H.png",
+                "width": 352,
+                "height": 257,
+                "frame_count": 32,
+                "line_length": 8,
+                "shift": [
+                  0.03125,
+                  -0.1484375
+                ],
+                "scale": 0.5
+              },
+              {
+                "filename": "__base__/graphics/entity/steam-engine/steam-engine-H-shadow.png",
+                "width": 508,
+                "height": 160,
+                "frame_count": 32,
+                "line_length": 8,
+                "draw_as_shadow": true,
+                "shift": [
+                  1.5,
+                  0.75
+                ],
+                "scale": 0.5
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "lab",
+      "name": "tech-priests-emergency-laboratorium",
+      "collision_box": [
+        [
+          -0.35,
+          -0.35
+        ],
+        [
+          0.35,
+          0.35
+        ]
+      ],
+      "selection_box": [
+        [
+          -0.5,
+          -0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": {
+        "type": "burner",
+        "fuel_categories": [
+          "chemical"
+        ],
+        "effectivity": 0.75,
+        "fuel_inventory_size": 1,
+        "emissions_per_minute": {
+          "pollution": 6
+        }
+      },
+      "flags": [
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-laboratorium-shadow.png",
+        "__tech-priests__/graphics/entity/martian-micro/tech-priests-emergency-laboratorium.png"
+      ],
+      "visual_schema": {},
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "logistic-container",
+      "name": "tech-priests-cogitator-requester-cache",
+      "collision_box": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "selection_box": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-off-grid",
+        "not-on-map",
+        "not-deconstructable",
+        "not-blueprintable",
+        "not-repairable",
+        "not-flammable",
+        "hide-alt-info"
+      ],
+      "own_entity_visual_paths": [],
+      "visual_schema": {
+        "picture": {
+          "filename": "__core__/graphics/empty.png",
+          "width": 1,
+          "height": 1,
+          "frame_count": 1,
+          "direction_count": 1
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "logistic-container",
+      "name": "tech-priests-cogitator-return-cache",
+      "collision_box": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "selection_box": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": null,
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-off-grid",
+        "not-on-map",
+        "not-deconstructable",
+        "not-blueprintable",
+        "not-repairable",
+        "not-flammable",
+        "hide-alt-info"
+      ],
+      "own_entity_visual_paths": [],
+      "visual_schema": {
+        "picture": {
+          "filename": "__core__/graphics/empty.png",
+          "width": 1,
+          "height": 1,
+          "frame_count": 1,
+          "direction_count": 1
+        }
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    },
+    {
+      "type": "storage-tank",
+      "name": "tech-priests-stone-cache-pressurized-fluid-vault",
+      "collision_box": [
+        [
+          -1.1,
+          -1.1
+        ],
+        [
+          1.1,
+          1.1
+        ]
+      ],
+      "selection_box": [
+        [
+          -1.15,
+          -1.15
+        ],
+        [
+          1.15,
+          1.15
+        ]
+      ],
+      "tile_width": null,
+      "tile_height": null,
+      "fluid_box": {
+        "volume": 1000,
+        "pipe_connections": [
+          {
+            "flow_direction": "input-output",
+            "direction": 0,
+            "position": [
+              0,
+              -1
+            ]
+          },
+          {
+            "flow_direction": "input-output",
+            "direction": 8,
+            "position": [
+              0,
+              1
+            ]
+          }
+        ],
+        "pipe_covers_frozen": {
+          "north": {
+            "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-north.png",
+            "priority": "extra-high",
+            "width": 128,
+            "height": 128,
+            "scale": 0.5
+          },
+          "east": {
+            "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-east.png",
+            "priority": "extra-high",
+            "width": 128,
+            "height": 128,
+            "scale": 0.5
+          },
+          "south": {
+            "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-south.png",
+            "priority": "extra-high",
+            "width": 128,
+            "height": 128,
+            "scale": 0.5
+          },
+          "west": {
+            "filename": "__space-age__/graphics/entity/frozen/pipe-covers/pipe-cover-west.png",
+            "priority": "extra-high",
+            "width": 128,
+            "height": 128,
+            "scale": 0.5
+          }
+        }
+      },
+      "fluid_boxes": null,
+      "energy_source": null,
+      "flags": [
+        "placeable-player",
+        "player-creation"
+      ],
+      "own_entity_visual_paths": [
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-pressurized-fluid-vault-shadow.png",
+        "__tech-priests__/graphics/entity/stone-cache/tech-priests-stone-cache-pressurized-fluid-vault.png"
+      ],
+      "visual_schema": {
+        "pictures": {}
+      },
+      "named_source_matches": [],
+      "source_match_scope": "Tracked art model/package filenames only; a missing named match means unlocated identity, not proven absence. Any match still requires source/export/visual review."
+    }
+  ],
+  "reactor_source_status": "Actual V14 Minoris/Majoris/Maximus native package/reference still unrecovered; do not invent preserved geometry.",
+  "next_independent_source_checks": [
+    "tech-priests-emergency-steam-engine",
+    "tech-priests-emergency-smelter",
+    "tech-priests-emergency-laboratorium"
+  ],
+  "closed_asset_policy": "Owner explicitly closed the completed/integrated boiler and purifier. Keep both out of the work queue. Their inventory records are reference facts only, not new work. Preserve concurrent bunker/thruster work and the excluded Tanks for Bob workbench.",
+  "reactor_source_access_recheck": {
+    "result": "Exact Library URL still presents Log in/Sign up; package bytes remain unrecovered.",
+    "method": "Fresh in-app browser observation, 2026-11-15",
+    "package": "https://chatgpt.com/library?file_id=libfile_a3796cbd07d48191a3fe03c7f4645781&account_id=personal",
+    "owner_path_question": "Already asked once; no duplicate request in this turn."
+  }
+}
