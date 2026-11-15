@@ -1348,7 +1348,8 @@ local function inspect(s,elapsed)
     " authenticated="..tostring(authentic_past_ride)..
     " native_home_ejected="..tostring(native_home_ejected)..
     " original_priest_unit="..tostring(p.priest.unit_number)..
-    " original_train_id="..tostring(moving_train.id)..
+    " original_train_id="..tostring(moving_train and moving_train.valid
+      and moving_train.id)..
     " reboard_tick="..tostring(reboard and reboard.boarded_tick)..
     " native_reboard_driver_confirmed="..tostring(reboard
       and reboard.native_original_driver_confirmed)..
