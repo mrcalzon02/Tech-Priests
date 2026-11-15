@@ -298,8 +298,12 @@ local function finish_deposit(p,t,cur,key,state,c)
  end
  if t.recipe and item_exists(t.output_item)then
   local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");local transitioned=true
-  if q and type(q.transition_current)=="function"then local ok_transition,d=pcall(q.transition_current,p,{kind="emergency_craft",item=t.output_item,purpose="station-craft-handoff",source="emergency_production_executor_0514",clear_target=true,clear_task=true,priority=540},"direct-materials-ready-0513");transitioned=ok_transition and d==true
-  elseif p.order_queue_0469 and p.order_queue_0469.current then transitioned=false end
+  local order=p.order_queue_0469 and p.order_queue_0469.current or p.active_order_0469
+  -- A legacy autonomous task can legitimately have no adopted queue order.
+  -- Keep its existing owner and recipe handoff; a loaded queue module alone
+  -- does not imply that transition_current has an order to transition.
+  if order and q and type(q.transition_current)=="function"then local ok_transition,d=pcall(q.transition_current,p,{kind="emergency_craft",item=t.output_item,purpose="station-craft-handoff",source="emergency_production_executor_0514",clear_target=true,clear_task=true,priority=540},"direct-materials-ready-0513");transitioned=ok_transition and d==true
+  elseif order then transitioned=false end
   if not transitioned then return fail_unsafe(p,t,key,state,"station-craft-order-transition-failed")end
   clear_due(t);t.current=nil;if key~="emergency_craft"then p.emergency_craft=t;p[key]=nil end;t.station_craft_pending_0337=true;t.station_craft_pending_0513=true;p.target=nil;p.mode="emergency-production-station-craft";phase(p,"station-craft-handoff",t.output_item);record("station-craft-handoff-0513",p,t.output_item);return true,"ready-to-craft"
  end
@@ -453,6 +457,14 @@ function M.service_pair(p,reason)
   local due=not state.last_move_tick or now()-state.last_move_tick>=M.move_refresh_ticks;local stalled=not progress and now()-(tonumber(state.last_progress_tick)or 0)>=M.stall_ticks
   if due or stalled then
    local contact=state.contact_target_0513==e and state.contact_position_0513
+   -- A paid drill or another real build can occupy a previously clear
+   -- cached ore contact. Revalidate before refreshing the old path; native
+   -- wandering is not progress toward an inaccessible mining position.
+   if contact and e.surface and e.surface.can_place_entity then
+    local checked,clear=pcall(function()return e.surface.can_place_entity{
+      name=p.priest.name,position=contact,force=p.station.force}end)
+    if not(checked and clear)then contact=nil end
+   end
    if not contact then
     contact=M.target_contact_position(p,e)
     if not contact then return replan(p,t,state,"physical-target-contact-blocked")end

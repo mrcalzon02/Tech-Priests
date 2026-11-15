@@ -191,4 +191,91 @@ scenario("0340 direct mining recalls the actual priest to its station",function(
   defines.distraction=old_distraction
 end)
 
+scenario("new drill invalidates cached ore contact without remote extraction",function()
+ local Direct=require("scripts.core.direct_acquisition_executor_0513")
+ local p=pair();local surface=p.station.surface
+ local e={valid=true,type="resource",name="iron-ore",amount=100,
+   position={x=10,y=0},surface=surface}
+ local parent={output_item="iron-ore",required_count=3,
+   current={kind="direct-mine-0336",entity=e,output_item="iron-ore"}}
+ p.emergency_craft=parent
+ local built,closed=false,false
+ surface.can_place_entity=function(spec)
+  local pos=spec.position
+  return not closed and not(built and pos.x>=8 and pos.x<=10.5
+    and pos.y>=-1 and pos.y<=1)
+ end
+ local old_move=_G.tech_priests_request_movement_0418
+ local old_controller=_G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418
+ local stops=0
+ _G.tech_priests_request_movement_0418=function(actual,pos,reason,opts)
+  check(actual==p,"wrong direct worker")
+  p.movement_request_0418={x=pos.x,y=pos.y,owner=opts.owner,priority=opts.priority}
+  return true
+ end
+ _G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418={stop=function(actual)
+  check(actual==p,"wrong stopped worker");stops=stops+1
+  p.movement_request_0418=nil;return true
+ end}
+ game.tick=20000
+ check(Direct.service_pair(p),"initial physical approach refused")
+ local original=p.movement_request_0418
+ check(original and original.x==8.75 and original.y==0,"initial ore contact not cached")
+ built=true;game.tick=21000
+ check(Direct.service_pair(p),"clear replacement contact refused")
+ local replacement=p.movement_request_0418
+ check(replacement and(replacement.x~=original.x or replacement.y~=original.y)
+   and surface.can_place_entity{position=replacement} and stops==1,
+   "new drill left the cached native path inside its collision box")
+ check((replacement.x-10)^2+replacement.y^2<=2.25
+   and e.amount==100 and p.emergency_craft==parent
+   and not p.direct_acquisition_custody_0513 and not parent.direct_due_tick_0513,
+   "route repair changed mining reach, parent ownership or real ore custody")
+ closed=true;game.tick=22000
+ local _,why=Direct.service_pair(p)
+ check(why=="physical-target-contact-blocked"and parent.current==nil and e.amount==100,
+   "fully blocked ore contact fabricated extraction or retained the inaccessible target")
+ _G.tech_priests_request_movement_0418=old_move
+ _G.TECH_PRIESTS_MOVEMENT_CONTROLLER_0418=old_controller
+end)
+
+scenario("physical materials hand off with loaded queue and no adopted order",function()
+ local Direct=require("scripts.core.direct_acquisition_executor_0513")
+ local Queue=require("scripts.core.order_queue_0469")
+ local old_queue=_G.TECH_PRIESTS_ORDER_QUEUE_0469
+ local old_deposit=_G.tech_priests_safe_deposit_item
+ _G.TECH_PRIESTS_ORDER_QUEUE_0469=Queue
+ prototypes.item["iron-plate"]={}
+ for _,adopted in ipairs{false,true}do
+  local p=pair();p.priest.position={x=1,y=0}
+  local e={valid=true,name="iron-ore",type="resource",amount=3,
+    position={x=1,y=0},surface=p.station.surface}
+  local parent={output_item="iron-plate",recipe={name="iron-plate"},required_count=1,
+    current={kind="direct-mine-0336",entity=e,output_item="iron-ore"}}
+  p.emergency_craft=parent
+  if adopted then
+   check(Queue.submit(p,{kind="acquisition",item="iron-ore",source="test",task=parent}),
+    "actual acquisition order not accepted")
+  else p.order_queue_0469={current=nil}end
+  local deposits=0
+  _G.tech_priests_safe_deposit_item=function(_,name,n)
+   check(name=="iron-ore"and n==1,"incorrect handoff material")
+   deposits=deposits+n;return true,"deposited",n
+  end
+  game.tick=23000;check(Direct.service_pair(p),"physical extraction did not start")
+  game.tick=23100;local ok,why=Direct.service_pair(p)
+  check(ok and why=="ready-to-craft"and deposits==1 and e.amount==2
+    and p.emergency_craft==parent and parent.current==nil
+    and parent.station_craft_pending_0513 and not p.direct_acquisition_custody_0513,
+    "real material deposit lost its recipe handoff: "..tostring(why))
+  if adopted then
+   check(p.order_queue_0469.current.kind=="emergency_craft"
+     and p.order_queue_0469.current.item=="iron-plate",
+     "existing real queue order was not transitioned")
+  else check(p.order_queue_0469.current==nil,"legacy handoff fabricated a queue order")end
+ end
+ _G.TECH_PRIESTS_ORDER_QUEUE_0469=old_queue
+ _G.tech_priests_safe_deposit_item=old_deposit
+end)
+
 print("[physical-guard-regression] PASS scenarios="..count)

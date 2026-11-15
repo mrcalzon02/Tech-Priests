@@ -36,20 +36,37 @@ assert(Energy.install())
 services.energy_family_discovery_0707.fn(nil,1)
 assert(pair.energy_family_candidate_0707.source.entity==cache and stock==2,
  "canonical fuel storage disappeared behind an identical inventory display name")
-Energy.service_pair(pair)
+local Arbiter=require("scripts.core.action_state_arbiter_0488")
+local Dispatcher=require("scripts.core.single_dispatcher_0510")
+TECH_PRIESTS_ACTION_STATE_ARBITER_0488=Arbiter
+-- Independent strict batches can lack the facility-only compatibility flag.
+-- The original dispatcher must send them to physical fuel service, preserving
+-- their parent task through pickup, counted custody and delivery.
+local parent={output_item="stone-wall",strict_recipe_0647=true,count=5}
+pair.emergency_craft=parent
+local crafts=0
+TechPriestsEmergencyProductionExecutor0514={service_pair=function()
+ crafts=crafts+1;return true,"parent-resumed"end}
+Dispatcher.service_pair(pair,"strict-batch-fuel")
 assert(moves[#moves].x==2,"fuel pickup still targets the solid cargo center")
 -- Pickup reach is greater than the movement completion radius. Arriving
 -- within item reach must hand off the owned source route before delivery.
-pair.priest.position={x=.5,y=0};Energy.service_pair(pair)
+pair.priest.position={x=.5,y=0};Dispatcher.service_pair(pair,"strict-batch-fuel")
 assert(stock==0 and pair.energy_family_custody_0707.count==2 and delivered==0,
  "physical edge pickup failed to retain exact fuel custody")
 assert(moves[#moves].x==8.5,"boiler delivery did not use its actual footprint")
 assert(pair.movement_request_0418.x==8.5,
  "native movement debounce sent counted coal back to its source")
-pair.priest.position={x=8,y=0};Energy.service_pair(pair)
+pair.priest.position={x=8,y=0};Dispatcher.service_pair(pair,"strict-batch-fuel")
 assert(delivered==2 and not pair.energy_family_custody_0707 and not pair.energy_family_logistics_0707,
  "counted coal never reached the physical boiler")
 assert(not pair.movement_request_0418,"completed fuel duty retained its movement lease")
+assert(pair.emergency_craft==parent and crafts==0,
+ "fuel service replaced the strict parent or manufactured while holding coal")
+Dispatcher.service_pair(pair,"strict-batch-resume")
+assert(crafts==1 and pair.emergency_craft==parent,
+ "strict parent did not resume after its physical boiler delivery")
+pair.emergency_craft=nil
 print("PASS canonical fuel storage, distinct inventory identity and physical footprint delivery")
 station.bounding_box={left_top={x=-.7,y=-.7},right_bottom={x=.7,y=.7}}
 local backing={valid=true,name="tech-priests-cogitator-return-cache",position={x=0,y=0},force=force,surface=surface,

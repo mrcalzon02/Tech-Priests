@@ -21,6 +21,20 @@ print("PASS energy prerequisites before routine discovery and incumbent machine 
 pair.machine_logistics_custody_0528=nil
 pair.emergency_craft={output_item="logistic-science-pack",strict_recipe_0647=true,facility_only_0647=true}
 assert(Arbiter.action(pair).kind=="energy-family-logistics","strict engine task starved its fuel prerequisite")
+-- Strict native recipes need their power supply even when the facility-only
+-- compatibility flag is absent. This is the shape of independent batch work.
+pair.emergency_craft.facility_only_0647=nil
+assert(Arbiter.action(pair).kind=="energy-family-logistics",
+ "strict batch without facility-only flag starved its boiler fuel")
+for _,field in ipairs{"construction_custody_0338","emergency_production_custody_0514",
+ "emergency_facility_feed_custody_0357","station_cargo_custody_0824",
+ "consecration_refund_custody_0515","rocket_silo_custody_0710",
+ "artillery_custody_0713","roboport_repair_custody_0715"}do
+ pair[field]={item="iron-plate",count=1}
+ assert(Arbiter.action(pair).kind~="energy-family-logistics",
+  "strict fuel service displaced physical cargo: "..field)
+ pair[field]=nil
+end
 pair.direct_acquisition_custody_0513={item="iron-ore",count=1}
 assert(Arbiter.action(pair).kind~="energy-family-logistics","energy displaced real acquisition cargo")
 pair.direct_acquisition_custody_0513=nil

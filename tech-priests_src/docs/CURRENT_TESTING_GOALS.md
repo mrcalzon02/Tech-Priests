@@ -1,5 +1,18 @@
 # Current Testing Goals
 
+## 2026-11-15 - Revalidate occupied mining contacts and preserve autonomous recipe handoff
+
+Continued native behavior validation against the rocket/space-science campaign goal. The failed earlier factory run had an empty boiler while a strict manufacturing task retained the priest. The arbiter now permits existing canonical fuel service for strict recipes even without the separate facility-only flag. Physical construction, recipe-feed, station cargo, silo/artillery/roboport cargo and refund holds retain their protection. The dispatcher regression executes the original fuel owner through real-shaped source debit, counted coal custody, delivery and resumption of the same strict parent. This establishes admission/custody behavior; it is not an end-to-end native rocket or throughput result.
+
+A fresh isolated baseline reproduced another hard blocker: Senior station 2 repeatedly routed to an old ore contact at approximately 81.3838,20.6162, now inside an actually constructed electric mining drill. The engine reported can_place_entity=false there, and native unit AI wandered away. The direct-acquisition owner now rechecks a cached contact before refreshing its path and selects another clear point within the unchanged 1.5-tile mining reach. A completely blocked target replans without extracting remote ore, teleporting or expanding authority.
+
+The protected tick-67211 checkpoint was replayed with the contact fix. The original Senior physically mined and deposited ore, exposing a subsequent station-craft-order-transition-failed at tick 70840: an autonomous legacy task had no queue current, but the loaded queue module was treated as proof that there was an order to transition. The handoff now preserves that task's existing recipe owner when no order exists; actual current orders still use the original transition/refusal path. Tests execute both branches against the genuine queue module.
+
+The final matched native replay of the same protected save records station-craft-handoff at tick 70840 and a real iron-ore deposit. It completed to tick 79294, with red production rising 82 to 102; green remained 12 and military remained zero. This is narrow physical recovery evidence, not the 5-SPM factory gate. A separate established-factory continuation reached tick 582046 with red 569 to 586, green 179 to 195 and military 80 to 90, completing flammables research and progressing landfill. That earlier continuation predates the last handoff change and must not be cited as exact-final-source acceptance.
+
+All 58 Lua regression groups and seven Python tests pass. The exact-final-source isolated four-rank maintenance scenario passes: native production, naturally occurring degradation, paid repair and consecration all complete. Evidence is retained under arena-evidence/cached-ore-contact-handoff-native-recovery and maintenance-fuel-contact-handoff. The original baseline save is hash-verified unchanged. Campaign acceptance remains OPEN: sustained factory throughput, four-way arena completion, autonomous launching and orbital space-science operation are still unproven or missing.
+
+
 ## 2026-11-15 - Campaign goal is autonomous rocket launch and space-science research
 
 The user clarified the final goal: autonomous operation all the way through actual rocket launching and space science. Early red/green/military throughput and four-way arena results are prerequisite tests. They cannot establish campaign completion. Standard player mode remains autonomous maintenance and assistance; independent player mode and non-player factions must plan, construct, supply, research and defend their own force-wide industry through the endpoint.

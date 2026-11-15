@@ -463,7 +463,14 @@ end
 local function item_family_recommendation(p,k)if k~="idle"and k~="item-family-logistics"then return nil end;return recommendation("TechPriestsItemFamilyLogistics0702","scripts.core.item_family_logistics_0702",p,"item-family-logistics")end
 local function strict_engine_work(p,k)
   local task=p.emergency_craft
-  if not(type(task)=="table"and task.facility_only_0647==true)then return false end
+  if not(type(task)=="table"and(task.facility_only_0647==true
+      or task.strict_recipe_0647==true))then return false end
+  for _,field in ipairs{"construction_custody_0338","emergency_production_custody_0514",
+    "emergency_facility_feed_custody_0357","station_cargo_custody_0824",
+    "consecration_refund_custody_0515","rocket_silo_custody_0710",
+    "artillery_custody_0713","roboport_repair_custody_0715"}do
+    if p[field]then return false end
+  end
   if k=="idle"or k=="crafting"then return true end
   local direct=p.direct_acquisition_task_0336
   return k=="acquisition"and type(direct)=="table"
