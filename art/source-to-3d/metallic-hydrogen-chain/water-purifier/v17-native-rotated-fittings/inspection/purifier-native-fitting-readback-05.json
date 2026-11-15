@@ -1,0 +1,523 @@
+{
+  "passed": true,
+  "source_sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+  "preserved_meshes": 889,
+  "core_rays": 72,
+  "poses": [
+    {
+      "angle": 0,
+      "passed": true,
+      "accepted_meshes_unchanged": true,
+      "body_pose_error": 0.0,
+      "rigid_mouth_pose_errors": [
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-water-in / reusable machine collar",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-water-in / reusable machine throat",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 00",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 01",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 02",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 03",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 04",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 05",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 06",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 07",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine collar",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine throat",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 00",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 01",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 02",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 03",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 04",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 05",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 06",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 07",
+          "error": 1.1920928955078125e-07
+        }
+      ],
+      "camera_error": 0.0,
+      "core_rays": 18,
+      "obstructions": [],
+      "mouth_extension_contacts": [],
+      "changes": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mouth_center": [
+            -1.5,
+            0.0,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mouth_center": [
+            1.5,
+            0.0,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    },
+    {
+      "angle": 90,
+      "passed": true,
+      "accepted_meshes_unchanged": true,
+      "body_pose_error": 2.384185791015625e-07,
+      "rigid_mouth_pose_errors": [
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-water-in / reusable machine collar",
+          "error": 2.52881093842916e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-water-in / reusable machine throat",
+          "error": 2.52881093842916e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 00",
+          "error": 2.682209014892578e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 01",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 02",
+          "error": 2.4823192035228203e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 03",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 04",
+          "error": 2.682209014892578e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 05",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 06",
+          "error": 2.4823192035228203e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 07",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine collar",
+          "error": 2.52881093842916e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine throat",
+          "error": 2.52881093842916e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 00",
+          "error": 2.682209014892578e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 01",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 02",
+          "error": 2.4823192035228203e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 03",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 04",
+          "error": 2.682209014892578e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 05",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 06",
+          "error": 2.4823192035228203e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 07",
+          "error": 2.384185791015625e-07
+        }
+      ],
+      "camera_error": 0.0,
+      "core_rays": 18,
+      "obstructions": [],
+      "mouth_extension_contacts": [
+        {
+          "role": "raw-water-in",
+          "gap": 0.0
+        },
+        {
+          "role": "purified-water-out",
+          "gap": 0.0
+        }
+      ],
+      "changes": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            -0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            -1.1324685544877866e-07,
+            -2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            1.1324685544877866e-07,
+            2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    },
+    {
+      "angle": 180,
+      "passed": true,
+      "accepted_meshes_unchanged": true,
+      "body_pose_error": 2.6226831550957286e-07,
+      "rigid_mouth_pose_errors": [
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-water-in / reusable machine collar",
+          "error": 2.622683226150002e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-water-in / reusable machine throat",
+          "error": 2.622683226150002e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 00",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 01",
+          "error": 2.5331974029541016e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 02",
+          "error": 2.5544935766674826e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 03",
+          "error": 2.5331974029541016e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 04",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 05",
+          "error": 2.5331974029541016e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 06",
+          "error": 2.5544934345589354e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 07",
+          "error": 2.5331974029541016e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine collar",
+          "error": 2.940548569085877e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine throat",
+          "error": 2.940548569085877e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 00",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 01",
+          "error": 2.5331974029541016e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 02",
+          "error": 2.5544934345589354e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 03",
+          "error": 2.5331974029541016e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 04",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 05",
+          "error": 2.5331974029541016e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 06",
+          "error": 2.5544935766674826e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 07",
+          "error": 2.5331974029541016e-07
+        }
+      ],
+      "camera_error": 0.0,
+      "core_rays": 18,
+      "obstructions": [],
+      "mouth_extension_contacts": [],
+      "changes": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            -5.431754601659122e-08,
+            0.0
+          ],
+          "mouth_center": [
+            1.5,
+            -1.85451710876805e-07,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            5.431754601659122e-08,
+            0.0
+          ],
+          "mouth_center": [
+            -1.5,
+            1.85451710876805e-07,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    },
+    {
+      "angle": 270,
+      "passed": true,
+      "accepted_meshes_unchanged": true,
+      "body_pose_error": 1.1920928955078125e-07,
+      "rigid_mouth_pose_errors": [
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-water-in / reusable machine collar",
+          "error": 1.827823226108194e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-water-in / reusable machine throat",
+          "error": 1.827823226108194e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 00",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 01",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 02",
+          "error": 1.323793927809902e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 03",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 04",
+          "error": 1.4901161193847656e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 05",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 06",
+          "error": 1.323793927809902e-07
+        },
+        {
+          "object": "FMPL_PROCESS | raw-water-in / actual flange bolt 07",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine collar",
+          "error": 1.3485874816865362e-07
+        },
+        {
+          "object": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine throat",
+          "error": 1.3485874816865362e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 00",
+          "error": 1.4901161193847656e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 01",
+          "error": 1.1920928955078125e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 02",
+          "error": 1.323793927809902e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 03",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 04",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 05",
+          "error": 2.384185791015625e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 06",
+          "error": 1.323793927809902e-07
+        },
+        {
+          "object": "FMPL_PROCESS | purified-water-out / actual flange bolt 07",
+          "error": 1.1920928955078125e-07
+        }
+      ],
+      "camera_error": 0.0,
+      "core_rays": 18,
+      "obstructions": [],
+      "mouth_extension_contacts": [
+        {
+          "role": "raw-water-in",
+          "gap": 0.0
+        },
+        {
+          "role": "purified-water-out",
+          "gap": 0.0
+        }
+      ],
+      "changes": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            -1.1324685544877866e-07,
+            2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            -0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            1.1324685544877866e-07,
+            -2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    }
+  ],
+  "scope": "Original accepted meshes, body poses and camera remain unchanged. Twenty mouth meshes move rigidly; only two new constant-bore sleeves parameterize axial extension. Four poses and bounded hollow-core rays are geometric evidence; actual native pipe seating remains a separate review."
+}

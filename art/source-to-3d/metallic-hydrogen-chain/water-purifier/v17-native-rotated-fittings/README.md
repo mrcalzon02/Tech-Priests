@@ -1,0 +1,11 @@
+# Purifier V17 native rotated fittings
+
+Preserves the owner-accepted V16 source, camera and machine body. The native capture derivative moves the two **visible UV-surfaced** mouth assemblies rigidly and adds real constant-bore axial sleeves. Hidden historical donor collars remain untouched. This corrects the earlier adapter selecting hidden collars while moving visible bolts.
+
+Four idle plus 32 working captures, six atlases and the independently reopened editable master pass. The four-second source cycle is retained. Four-pose geometry checks verify unchanged meshes/body/camera, every rendered mouth world transform and 72 bounded bore rays. Actual main-mod pipe views were inspected in all four rotations: bolts remain seated, exposed front pipes meet the receivers, and rear pipes draw behind the vessel. These are agent-reviewed views, not owner acceptance or continuous manufacturing proof. Native game screenshots remain private; inspection records contain their hashes only.
+
+The composed addon uses object depth and a whole-sprite shift of +4 native pixels. Its actual seven-machine line produces six collected contained pellets from only water, steel and electricity; continuous/reloaded histories match, electricity interruptions stop production, inert material is not revived, and live formation/sealing preserves condition and remaining lifetime. All seven native clocks pass a 32-second counter study. Production and counter sprites differ only within private counter masks. The main-mod native graphics/pipe prototype definitions match the graphical profile exactly.
+
+`native-sprites` contains clean sprites only. Rebuild the composed addon with `tools/fmpl/production_smoke/build_hydrogen_production_addon.py --purifier-capture <this directory>/captures --out <fresh candidate>`. The saved master and the source-capture manifest preserve the actual authoring/capture lineage. Use `purifier_native_fittings.py` for directional fitting reconstruction; the original accepted V16 file is not rewritten.
+
+Ordinary forge/assembler player controls and final economy tuning remain unfinished. Graphics-to-process/audio phase synchronization is not claimed. This checkpoint does not complete the full production-chain/reactor/building goal.

@@ -1,0 +1,35 @@
+{
+  "status": "agent_visual_pass_for_four_rotated_pipe_joins",
+  "owner_approved": false,
+  "accepted_source_sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+  "capture_manifest_sha256": "19b23ad58ccf64bc895b38b42958dfb2c1c2cbca3011e320ef6d2a97b28d0a32",
+  "capture_qa_sha256": "3157e62be96491861e61f0eca766f4aa8f933fdbd65dfceaef7431a8a14d1ba6",
+  "capture_reopen_qa_sha256": "c253fda4e2e1bda6f227419619a980cb316377e0d596a60f085a8dcdd488f94d",
+  "geometry_audit_sha256": "b2cb4a7aae8c032d9aae754185e48bd00483ef51e6e1a2f620b1eee547b2cbb1",
+  "fitting_adapter_sha256": "bd1482098cf4f47e3c75b096c947cbddc8af014bc5631229613e0920e35a6987",
+  "native_views": {
+    "purifier-rotation-0.png": "263fa4721661b15c1abc18e909c35a246ae795b0e583acb2fd22f0e04ece187e",
+    "purifier-rotation-1.png": "3e16c90c9c3a1e90384cde3c6d5728f45020a3edb75c3dbc397b04b34b533400",
+    "purifier-rotation-2.png": "b60e717fed213ba08fa84e9af92cad553580efc328260fd39abf08bb2cf32c91",
+    "purifier-rotation-3.png": "213e0df9bff36a2ae3737c12f13b84e3c1b337495e710bd4a8c8fe22e99fae4b"
+  },
+  "findings": [
+    "All four native rotations were viewed at actual 900x900 capture size.",
+    "Visible UV-surfaced flanges and all eight bolts move together; no floating bolt ring remains.",
+    "Front native pipe meets the receiver, retaining its exposed barrel.",
+    "Rear native pipe draws behind the vessel rather than across its bowl.",
+    "Accepted machine body/camera/source are preserved; only rigid mouths and two axial sleeves differ.",
+    "The four actual main-mod views were separately viewed; both production and graphical profiles enable the same published main/Space Age content."
+  ],
+  "limits": [
+    "Sampled native visual review, not owner acceptance or continuous geometric proof.",
+    "Player GUI and economy remain unfinished.",
+    "Native animation-to-process/sound phase synchronization is not asserted."
+  ],
+  "main_mod_loaded": true,
+  "main_mod_snapshot": {
+    "commit": "12e434995b7af0c6b477ccaeacd689a4b82a0c78",
+    "scope": "Exact read-only published tech-priests_src snapshot for native interoperability tests"
+  },
+  "native_profile": "build/hc-cm-04"
+}

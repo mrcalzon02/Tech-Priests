@@ -1,0 +1,823 @@
+{
+  "schema": 1,
+  "source_sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+  "source_file": "water-purifier-v16.blend",
+  "camera_policy": "fmpl.factorio45.v1",
+  "persistent_camera_count": 1,
+  "camera_cleanup": {
+    "policy": "fmpl.factorio45.v1",
+    "removed_camera_objects": [
+      "FMPL_CAPTURE_CAMERA"
+    ],
+    "persistent_camera_count": 1,
+    "name": "FMPL_CAPTURE_CAMERA"
+  },
+  "blender": "5.0.0",
+  "config": {
+    "schema": 1,
+    "asset": "tp-water-purifier-native-fittings-v17",
+    "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\water-purifier\\v16-owner-accepted\\water-purifier-v16.blend",
+    "adapter": "mh7-purifier-native-fittings-v1",
+    "source_size": 256,
+    "sizes": [
+      64,
+      128,
+      256
+    ],
+    "samples": 24,
+    "seed": 4362,
+    "columns": 4,
+    "fps": 2,
+    "directions": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "exclude_rotation": [],
+    "hide_render": [],
+    "animated_lights": [],
+    "states": {
+      "idle": [
+        1
+      ],
+      "working": [
+        1,
+        13,
+        25,
+        37,
+        49,
+        61,
+        73,
+        85
+      ]
+    },
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "entity",
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 8.48528137423857,
+      "target": [
+        0,
+        0,
+        1.65
+      ],
+      "ortho_scale": 5.8,
+      "shift_x": 0,
+      "shift_y": 0
+    },
+    "orientation_policy": "rotatable",
+    "source_timeline_fps": 24,
+    "cycle_seconds": 4,
+    "threads": 6,
+    "workers": 1,
+    "owner_request": "2026-11-14: current shape done; four angles idle and animated; then next machine"
+  },
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        -0.7071067690849304,
+        -5.999999523162842
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        0.7071067690849304,
+        7.649999618530273
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 5.800000190734863,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      256,
+      256
+    ]
+  },
+  "daylight": [
+    {
+      "name": "Left studio softbox",
+      "type": "AREA",
+      "energy": 1250.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          0.6246951222419739,
+          0.6035502552986145,
+          -0.49546244740486145,
+          -5.0
+        ],
+        [
+          -0.7808687686920166,
+          0.48284032940864563,
+          -0.3963700532913208,
+          -4.0
+        ],
+        [
+          7.999510387435294e-09,
+          0.634501576423645,
+          0.7729215621948242,
+          9.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Right rim softbox",
+      "type": "AREA",
+      "energy": 1050.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          -0.37139084935188293,
+          -0.6804137229919434,
+          0.6317483186721802,
+          5.0
+        ],
+        [
+          0.9284766316413879,
+          -0.2721656560897827,
+          0.25269946455955505,
+          2.0
+        ],
+        [
+          1.985578990115755e-08,
+          0.6804138422012329,
+          0.7328280806541443,
+          7.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "world": {
+    "name": "World",
+    "color_management": {
+      "view_transform": "AgX",
+      "look": "None",
+      "exposure": 0.0,
+      "gamma": 1.0
+    }
+  },
+  "material_changes": [
+    {
+      "state": "idle",
+      "angle": 0,
+      "native_fitting_pose": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mouth_center": [
+            -1.5,
+            0.0,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mouth_center": [
+            1.5,
+            0.0,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    },
+    {
+      "state": "idle",
+      "angle": 90,
+      "native_fitting_pose": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            -0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            -1.1324685544877866e-07,
+            -2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            1.1324685544877866e-07,
+            2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    },
+    {
+      "state": "idle",
+      "angle": 180,
+      "native_fitting_pose": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            -5.431754601659122e-08,
+            0.0
+          ],
+          "mouth_center": [
+            1.5,
+            -1.85451710876805e-07,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            5.431754601659122e-08,
+            0.0
+          ],
+          "mouth_center": [
+            -1.5,
+            1.85451710876805e-07,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    },
+    {
+      "state": "idle",
+      "angle": 270,
+      "native_fitting_pose": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            -1.1324685544877866e-07,
+            2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            -0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            1.1324685544877866e-07,
+            -2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 0,
+      "native_fitting_pose": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mouth_center": [
+            -1.5,
+            0.0,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "mouth_center": [
+            1.5,
+            0.0,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 90,
+      "native_fitting_pose": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            -0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            -1.1324685544877866e-07,
+            -2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            1.1324685544877866e-07,
+            2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 180,
+      "native_fitting_pose": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            -5.431754601659122e-08,
+            0.0
+          ],
+          "mouth_center": [
+            1.5,
+            -1.85451710876805e-07,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            5.431754601659122e-08,
+            0.0
+          ],
+          "mouth_center": [
+            -1.5,
+            1.85451710876805e-07,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 270,
+      "native_fitting_pose": [
+        {
+          "role": "raw-water-in",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            -1.1324685544877866e-07,
+            2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        },
+        {
+          "role": "purified-water-out",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            -0.621320366859436,
+            0.0
+          ],
+          "mouth_center": [
+            1.1324685544877866e-07,
+            -2.1213202476501465,
+            0.36000001430511475
+          ],
+          "method": "Original ten-mesh mouth moved rigidly; original receiving throat remains connected by an actual constant-bore axial sleeve. Accepted body/camera unchanged."
+        }
+      ]
+    }
+  ],
+  "mesh_count": 891,
+  "master_sha256": "d98ddac05d44eda86c7ba3c68e4a32dd32cbf27c3f793506ce4cf5f7d64a618d",
+  "frames": [
+    {
+      "state": "idle",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 1,
+      "path": "frames/idle/d00/f000.png",
+      "sha256": "b30958e61fc40c01acc1b3845c58958d05b26269e0f6a115d48370d5120503ac"
+    },
+    {
+      "state": "idle",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 1,
+      "path": "frames/idle/d01/f000.png",
+      "sha256": "6b0095548043294ffb2210e7e227bcc42a53260c019c04195191d9dec9fefe1b"
+    },
+    {
+      "state": "idle",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 1,
+      "path": "frames/idle/d02/f000.png",
+      "sha256": "e388a4a42cf787b61acac07a3dbceeb766c2192c64a065a5bfd0f7cb891e9ae1"
+    },
+    {
+      "state": "idle",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 1,
+      "path": "frames/idle/d03/f000.png",
+      "sha256": "2d8149dda239b76280e40a8e2430bca0f27ccef6ebf06dd058f21e4a16b3dd60"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 1,
+      "path": "frames/working/d00/f000.png",
+      "sha256": "b7c6f5565be73bbe5fbe6b76a090bd54b1a7ed0ab1ca14310e4ac38223396e82"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 1,
+      "timeline_frame": 13,
+      "path": "frames/working/d00/f001.png",
+      "sha256": "aa101326d043c0e1dbdd0c5cae58673859a195542a8ddca5caee8d742df97081"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 2,
+      "timeline_frame": 25,
+      "path": "frames/working/d00/f002.png",
+      "sha256": "1c0fc76c76f41e4dfc8b7232c0c49ed1132a892f5dccb715a6e64c2f749429ff"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 3,
+      "timeline_frame": 37,
+      "path": "frames/working/d00/f003.png",
+      "sha256": "c251d82fcb3eb3c8d3d7daf77f49ea0c4f42ace1afc0cf4bb33fb30b68c9acb2"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 4,
+      "timeline_frame": 49,
+      "path": "frames/working/d00/f004.png",
+      "sha256": "31c1517d23d48a55d432e61401aa620e84ae8e66975715aa3703779e08d30041"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 5,
+      "timeline_frame": 61,
+      "path": "frames/working/d00/f005.png",
+      "sha256": "26b7201f21249fa99cfb5def788e5877efa213b8ecae9b4365196b70df9bb971"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 6,
+      "timeline_frame": 73,
+      "path": "frames/working/d00/f006.png",
+      "sha256": "7ac923fc01817ccb0169ef1fc99f9d3dd696adc014907ac39bbd2ffbdee6a113"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 7,
+      "timeline_frame": 85,
+      "path": "frames/working/d00/f007.png",
+      "sha256": "a3472a1e12b14ac8efcdcc81d3e825729ecfbb582bebdc5a6d1a622960fde6e0"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 1,
+      "path": "frames/working/d01/f000.png",
+      "sha256": "22d136e36e0ae353c28711705754c57ff5ae0763dfb49695ae31baadd92645fd"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 1,
+      "timeline_frame": 13,
+      "path": "frames/working/d01/f001.png",
+      "sha256": "d3dd90b54cb654bf593868ef8c31c0c115b1b2a8cb16b42ef02cd088a0762ce6"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 2,
+      "timeline_frame": 25,
+      "path": "frames/working/d01/f002.png",
+      "sha256": "3712161bc85c834a5b73d49cb0818dd11c93e30aa84502594851604b9897709c"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 3,
+      "timeline_frame": 37,
+      "path": "frames/working/d01/f003.png",
+      "sha256": "56e51b3c225e118240719884d4ee64bae2dd2d2bb7ba21cc09c1dbdb6ca92b24"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 4,
+      "timeline_frame": 49,
+      "path": "frames/working/d01/f004.png",
+      "sha256": "ef9cee0bc9564e6fdc243f2c9c4cbfee87194ab4b3c81f9adf41b0f5a52b956b"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 5,
+      "timeline_frame": 61,
+      "path": "frames/working/d01/f005.png",
+      "sha256": "a5a81a78e03592c4be488e4046d720bdbbdc64d48af3b14ad1c0da756adfb0ab"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 6,
+      "timeline_frame": 73,
+      "path": "frames/working/d01/f006.png",
+      "sha256": "e85ec07730c2754653c47b6f11d1a45d4383c9dace7c458c23db22bd14ee61bd"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 7,
+      "timeline_frame": 85,
+      "path": "frames/working/d01/f007.png",
+      "sha256": "4610a82faba7eef416dbf0b24bdec4c5b5612a5c4eedc61f1ccb4c849db0faf4"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 1,
+      "path": "frames/working/d02/f000.png",
+      "sha256": "fb75706cda2f39066664da5d00a6c4dd52eb3954b99bf7157d158e483cf23afa"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 1,
+      "timeline_frame": 13,
+      "path": "frames/working/d02/f001.png",
+      "sha256": "b0a8c32f0a038f45d8bb5e4c478addbc376a0a4c04c1d343ff363fc7d78b0792"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 2,
+      "timeline_frame": 25,
+      "path": "frames/working/d02/f002.png",
+      "sha256": "941d48965481783265850f9bd57ffd42b0b1cc39c5558e4377a4b6c026ecf125"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 3,
+      "timeline_frame": 37,
+      "path": "frames/working/d02/f003.png",
+      "sha256": "3cbedda8e4676949b2a646a2a1d19a93d3256a45d28f5b64d7c06c62a698ceec"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 4,
+      "timeline_frame": 49,
+      "path": "frames/working/d02/f004.png",
+      "sha256": "016b8dfeb48f5103b5d76e3afb3e674dca3c8d0b1736a19482573b2bad77fbb0"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 5,
+      "timeline_frame": 61,
+      "path": "frames/working/d02/f005.png",
+      "sha256": "4be2c91061a98320c657d6ff283bf33f8a1d3a8a680d502fcacd554cde485892"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 6,
+      "timeline_frame": 73,
+      "path": "frames/working/d02/f006.png",
+      "sha256": "112207d1e689ad972a96a4641924b0e032f1d21800c102a7bf75300ef80786dd"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 7,
+      "timeline_frame": 85,
+      "path": "frames/working/d02/f007.png",
+      "sha256": "6f384aad63d113a78e052a4579e166eca4aa8c0eece9aa2ea0365c71436f0324"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 1,
+      "path": "frames/working/d03/f000.png",
+      "sha256": "f0c50dd2dbbc4fdaae0f9d38da1cebb788e9d22bbef924aedaac90bbbc4f4602"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 1,
+      "timeline_frame": 13,
+      "path": "frames/working/d03/f001.png",
+      "sha256": "b243ccce5ac249a9112c2ba1ea72b24e3c7e74617686b53cc308b4403dcf44fb"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 2,
+      "timeline_frame": 25,
+      "path": "frames/working/d03/f002.png",
+      "sha256": "a1a6446a7277a21d7ed7265baaee749a4669cbfcabd31df5353cea5de28385a4"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 3,
+      "timeline_frame": 37,
+      "path": "frames/working/d03/f003.png",
+      "sha256": "a9f790616e9ec5a30e0a4a8e9e9c11e7a58a5dcef0717ab7c24093098321f62f"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 4,
+      "timeline_frame": 49,
+      "path": "frames/working/d03/f004.png",
+      "sha256": "cd99061c6a4940d213c05ec33c4b721062c35e5ad8374bdf0fd5d14ac27b65b9"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 5,
+      "timeline_frame": 61,
+      "path": "frames/working/d03/f005.png",
+      "sha256": "20e4d3b6a5e9fc7db79c60cfe68e7ce5ad9848b9d869ad7efd521986b7018cb6"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 6,
+      "timeline_frame": 73,
+      "path": "frames/working/d03/f006.png",
+      "sha256": "ac73f8f5d415970015aaf1bb7af4d378991716e910fbd05ac457c5f586f2434b"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 7,
+      "timeline_frame": 85,
+      "path": "frames/working/d03/f007.png",
+      "sha256": "156eb880c07b9ae47bdda325f3dc03d02c9a57e4d7d36395e906428716bb53a7"
+    }
+  ],
+  "art_accepted": false,
+  "engine_integration": "outside Blender-only scope"
+}

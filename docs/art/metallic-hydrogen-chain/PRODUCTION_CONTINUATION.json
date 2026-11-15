@@ -3,7 +3,7 @@
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
   "current_machine": "ordinary-hydrogen-chain-integration",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\production-addon-v07-clean",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\production-addon-v11-visible-fittings",
   "queue": [
     {
       "id": "water-purifier",
@@ -71,7 +71,8 @@
     "cycle_seconds": 4,
     "shape_locked_by_owner": true,
     "next_shape_action": "none; owner requested move on",
-    "native_physical_jig": "passed isolated 2.1.24 pipe and flow test; graphical seating/ordinary runtime not claimed"
+    "native_physical_jig": "passed isolated 2.1.24 pipe and flow test; graphical seating/ordinary runtime not claimed",
+    "native_rotated_fitting_delivery": "art/source-to-3d/metallic-hydrogen-chain/water-purifier/v17-native-rotated-fittings"
   },
   "electrolyzer": {
     "status": "owner_accepted_model_and_reviewed_native_placement",
@@ -110,10 +111,9 @@
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Complete rigid purifier native mouth capture derivative and actual four-direction pipe seating; preserve V16 body/camera",
-    "Resolve purifier counter boundary sample without lowering the native period gate",
     "Finish normal forge/assembler player controls without exposing clock/filter recipes or refreshing live stock",
-    "Publish verified normal-chain candidate, then recover/refine three actual reactors and finish remaining sprite-only buildings"
+    "Review final energy/recipe economy and process/audio phase-offset policy; retain verified current integration",
+    "Recover/refine actual three-reactor V14 sources, then reconcile and finish remaining sprite-only buildings"
   ],
   "original_goal_complete": false,
   "concurrent_work_preserved": "model-production bunker/data.lua work untouched",
@@ -541,7 +541,7 @@
     "constraint": "Use actual containment-ring center, projected ellipse and tilt as anchor. Preserve established ring/camera placement unless demonstrated evidence requires correction; reported completion is not source verification."
   },
   "ordinary_chain_integration": {
-    "status": "connected electric line and reload pass; graphical purifier fit/clock and player GUI still open",
+    "status": "Main-mod connected line/reload, exact native clocks and purifier rotated pipe fitting pass; player UI and economy remain open",
     "current_worklog": "ORDINARY_CHAIN_INTEGRATION.md",
     "real_seven_machine_chain_verified": true,
     "external_inputs": [
@@ -556,26 +556,30 @@
     "native_expiration_and_inert_inserter_flow_verified": true,
     "ordinary_player_interface_complete": false,
     "final_recipe_energy_balance_approved": false,
-    "purifier_rotated_pipe_fit_complete": false,
-    "all_seven_native_clocks_verified": false,
-    "accepted_source_geometry_changed": false
+    "purifier_rotated_pipe_fit_complete": true,
+    "all_seven_native_clocks_verified": true,
+    "accepted_source_geometry_changed": false,
+    "graphical_main_prototype_equivalence_verified": true,
+    "readback": "build/hydrogen-integration-readback-04.json",
+    "native_profile": "build/hc-cm-04",
+    "purifier_native_delivery": "art/source-to-3d/metallic-hydrogen-chain/water-purifier/v17-native-rotated-fittings",
+    "private_native_images": 487
   },
   "resume_reconciliation": {
     "date": "2026-11-15",
     "owner_request": "Reconcile and resume the existing goal. Preserve open-frame hydroforming with exposed welded sheets and edge clamps.",
     "accepted_work_policy": "Preserve accepted machine bodies, captures and placement; repair demonstrated integration defects only.",
     "first_unresolved_issue": "Purifier rotated fitting adapter selected hidden historical collars instead of rendered UV-surfaced replacements.",
-    "repair_status": "Visible ten-mesh mouth assemblies now selected explicitly; four-pose rigid-transform, unchanged mesh/body/camera and 72 bore-ray audit passes. Four-angle pilot visually reviewed; full 36-frame capture in progress.",
+    "repair_status": "Completed full 36-frame capture and reopened-master QA; all four main-mod pipe views visually inspected; strict main-mod integration and all seven native clocks pass.",
     "audit": "build/purifier-native-fitting-readback-05.json",
     "pilot": "build/model-completion/metallic-hydrogen-chain/purifier-native-fitting-pilot-05",
     "pending": [
-      "Finish full capture and native pipe seating review",
-      "Offset-sample purifier clock without relaxing period gate",
       "Normal forge/assembler player interface",
-      "Ordinary-chain candidate review and final tuning",
+      "Final economy and phase-sync policy",
       "Recover actual reactor V14 source; refine three reactors",
       "Reconcile remaining sprite-only building inventory and finish those assets"
     ],
-    "goal_complete": false
+    "goal_complete": false,
+    "goal_tracker_status": "App goal API still reports paused; work resumed in this turn, automatic continuation requires the user-controlled Resume action."
   }
 }

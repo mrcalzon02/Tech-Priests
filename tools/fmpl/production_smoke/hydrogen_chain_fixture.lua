@@ -125,8 +125,16 @@ script.on_event(defines.events.on_tick,function(event)
  if event.tick>=180 and event.tick<=2100 and (event.tick-180)%30==0 then
   local index=(event.tick-180)/30
   for _,site in ipairs(p.clocks) do
-   local path='tp-hydrogen-chain-review/clock-'..site.key..'-frame'..index..'.png';game.take_screenshot{player=game.players[1],surface=site.entity.surface,position=site.entity.position,resolution={900,900},zoom=3,daytime=0,show_gui=false,force_render=true,path=path};p.shots[#p.shots+1]={path=path,tick=event.tick,machine=site.key,kind='clock',crafting=site.entity.is_crafting()}
+   if site.key~='purifier' then local path='tp-hydrogen-chain-review/clock-'..site.key..'-frame'..index..'.png';game.take_screenshot{player=game.players[1],surface=site.entity.surface,position=site.entity.position,resolution={900,900},zoom=3,daytime=0,show_gui=false,force_render=true,path=path};p.shots[#p.shots+1]={path=path,tick=event.tick,machine=site.key,kind='clock',crafting=site.entity.is_crafting()} end
   end
+ end
+ -- Probe the purifier eight ticks off the previous near-boundary phase. The
+ -- cadence gate is unchanged; the failed boundary study remains preserved.
+ if event.tick>=188 and event.tick<=2108 and (event.tick-188)%30==0 then
+  local index=(event.tick-188)/30
+  for _,site in ipairs(p.clocks) do if site.key=='purifier' then
+   local path='tp-hydrogen-chain-review/clock-purifier-frame'..index..'.png';game.take_screenshot{player=game.players[1],surface=site.entity.surface,position=site.entity.position,resolution={900,900},zoom=3,daytime=0,show_gui=false,force_render=true,path=path};p.shots[#p.shots+1]={path=path,tick=event.tick,machine=site.key,kind='clock',crafting=site.entity.is_crafting()}
+  end end
  end
  if event.tick==10000 then
   write('diagnostic',{history=p.history,forge_seen=p.forge_seen,assembler_seen=p.assembler_seen,blocked=p.blocked})
