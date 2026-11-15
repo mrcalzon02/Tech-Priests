@@ -1,0 +1,18 @@
+{
+  "status": "NATIVE_PILOT_VERIFIED",
+  "sources": {
+    "scripts/rocket_salvo_controller.lua": "9d88de5213d7f6cbedaaddbaa1e56a402c7fa605fecc7ccf0a79df9db86cf6a4",
+    "scripts/rocket_salvo_geometry.lua": "71ae43f34f5775a2453f71c0532c3af252bec3d2c25c2bb6b056e0380c469464",
+    "prototypes/bunker_rocket_salvo.lua": "76b9b49e720dc22c2833fe7e6e5928f4fb2307b20f8ddc8f6f21ad6a9f85af98"
+  },
+  "socket_model_sha256": "3054dd0caa90d2c9db2449d8b0ee21b0a989ccb02af61099946347984a2c01c4",
+  "scope": "23 native physics sites / 8 directions, 8 actual-art sites / 4 directions",
+  "main_mod_registered": false,
+  "production_complete": false,
+  "remaining": [
+    "Full 64 heading capture/pack",
+    "Moving reload shadows",
+    "Full main-mod registration and regression",
+    "Final native preview/effect review and delivery"
+  ]
+}

@@ -762,3 +762,8 @@ Turret checkout reconciliation is verified and checkpointed. Rocket source/expor
 ### Rocket shutter repair
 
 Owner-reported collision confirmed and repaired in candidate-v02: zero evaluated shutter/structure intersections in 481 half-frame samples. Candidate-v01 is superseded. This is sampled mesh evidence, not native gameplay acceptance or acceptance of every other moving interface. Native firing pilot remains next.
+
+
+### Rocket native pilot progress
+
+PASS: 23 native physics sites/eight directions, exact paid ammo and native damage/research, interrupted salvos and real mid-reload save/resume. PASS: eight actual-art sites/four headings with visible turret preview and empty nose layers. PASS: six-weapon main-mod regression after adding the rocket callbacks to the existing owner (180 routes preserved). Still open: final 64-heading art, moving reload shadows, full-mod rocket registration/acceptance and delivery. See docs/prototypes/rocket-native-pilot.

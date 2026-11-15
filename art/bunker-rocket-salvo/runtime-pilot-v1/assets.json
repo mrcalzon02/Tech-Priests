@@ -1,0 +1,97 @@
+{
+  "status": "PARTIAL_RUNTIME_PILOT",
+  "directions": [
+    0,
+    16,
+    32,
+    48
+  ],
+  "identity": {
+    "source_sha256": "3054dd0caa90d2c9db2449d8b0ee21b0a989ccb02af61099946347984a2c01c4",
+    "script_sha256": "286d5602b857ed6a19a9c0965390c591a3d0111f832c3b010a7b6a2391f3498f",
+    "headings": 64,
+    "cell": 256,
+    "reload_frames": 95,
+    "source_reload_frames": [
+      52,
+      240
+    ],
+    "nose_holdout_poses": [
+      1,
+      94,
+      140,
+      196,
+      237
+    ],
+    "scale": 0.774999976158,
+    "shift": [
+      0,
+      -1.110906519093
+    ],
+    "base_included": false
+  },
+  "files": [
+    {
+      "file": "idle-body-00.png",
+      "frames": 1,
+      "sha256": "ef5dd96d424042d3cf7aff5d06de8a5b1250f903c81a3671e51367ccd2b67b84"
+    },
+    {
+      "file": "reload-body-00.png",
+      "frames": 95,
+      "sha256": "02ff1c04d4d69e5652ba92717c062cfa2fa2090b637597da29d1d9db802c8c1d"
+    },
+    {
+      "file": "noses-00.png",
+      "frames": 6,
+      "sha256": "fe8ae06c379ab2988eb5cb697342063dc943a836489a2495282e90f76e9fe63f"
+    },
+    {
+      "file": "idle-body-16.png",
+      "frames": 1,
+      "sha256": "583545661f51b9ce8c246f436fce7fff31c809af64fea51fbc70c1ae47e0ea82"
+    },
+    {
+      "file": "reload-body-16.png",
+      "frames": 95,
+      "sha256": "b085fe23879864738784857cc73001e8ddc2de4531c61b2554f15dc23891a148"
+    },
+    {
+      "file": "noses-16.png",
+      "frames": 6,
+      "sha256": "5c188c7276b541164ed7785077f50755aec86d0bf8c86d848465960cd1a65b87"
+    },
+    {
+      "file": "idle-body-32.png",
+      "frames": 1,
+      "sha256": "fa8c28d5a4772ecf94aa2715430d8a91d8c2a3e08324a7302b55decc98535bd6"
+    },
+    {
+      "file": "reload-body-32.png",
+      "frames": 95,
+      "sha256": "7abd40159aa08674909508b5627486e0329392f137e3131fe37e5595b8ada132"
+    },
+    {
+      "file": "noses-32.png",
+      "frames": 6,
+      "sha256": "8c6b7db9fd16c986c2f99e361c82b26c8ccc2530f58bb9fac784830b0507ec3f"
+    },
+    {
+      "file": "idle-body-48.png",
+      "frames": 1,
+      "sha256": "89ecf28918290b9fe7bb70fdc5b83ed89dccaf6e222afbfd3d8614874e275f46"
+    },
+    {
+      "file": "reload-body-48.png",
+      "frames": 95,
+      "sha256": "9c0ad467f2657699fdffac8cccdd937b8fad908b104871f701eb15e1ed75f73b"
+    },
+    {
+      "file": "noses-48.png",
+      "frames": 6,
+      "sha256": "17bb0527351ba7ee487947ac39c88fdff5ceda417d97994b5f64c3ede24e0718"
+    }
+  ],
+  "shadows": "Settled cap only; moving reload shadow remains open",
+  "nose_occlusion": "Minimum alpha across five actual holdout poses; in-engine visual check remains required"
+}

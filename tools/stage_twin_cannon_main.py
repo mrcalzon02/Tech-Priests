@@ -16,7 +16,7 @@ with tarfile.open(base_archive) as tar:
         target.parent.mkdir(parents=True,exist_ok=True)
         with tar.extractfile(member) as source,target.open('wb') as dest:shutil.copyfileobj(source,dest)
 paths=[Path(p) for p in ('data.lua','data-final-fixes.lua','control.lua')]
-for folder,pattern in [('prototypes','bunker*.lua'),('scripts','bunker*.lua'),('scripts','bullet_turret_controller.lua'),('scripts','twin_cannon_controller.lua'),('locale/en','bunker*.cfg')]:
+for folder,pattern in [('prototypes','bunker*.lua'),('scripts','bunker*.lua'),('scripts','bullet_turret_controller.lua'),('scripts','twin_cannon_controller.lua'),('scripts','rocket_salvo*.lua'),('locale/en','bunker*.cfg')]:
     paths.extend(path.relative_to(ROOT/'tech-priests_src') for path in (ROOT/'tech-priests_src'/folder).glob(pattern))
 for suffix in ('autocannon','lobber','energy-dish','chicago-piano','twin-minigun','twin-cannon'):
     paths.extend(path.relative_to(ROOT/'tech-priests_src') for path in (ROOT/'tech-priests_src/graphics/entity'/('bunker-'+suffix)).rglob('*') if path.is_file())
