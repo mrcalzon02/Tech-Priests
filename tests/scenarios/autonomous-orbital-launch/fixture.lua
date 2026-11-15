@@ -79,8 +79,18 @@ local function pulse()
    assert((doctrine.stats["input-items-delivered"]or 0)>=s.required_deliveries,
     "full native rocket recipe and starter pack were not supplied by the actor")
    assert(r.platform.hub.force==s.station.force and r.platform.space_location.name==s.station.surface.planet.name)
+   local stations=r.platform.surface.find_entities_filtered{name="void-cogitator-station",force=s.station.force}
+   assert(#stations==1,"new native platform must contain exactly one startup Void Cogitator")
+   local void=storage.tech_priests.pairs_by_station[stations[1].unit_number]
+   assert(void and void.priest and void.priest.valid and void.priest.surface==r.platform.surface
+    and void.priest.force==s.station.force,"native startup Void Priest was not bound on the platform")
+   assert(r.platform.surface.count_entities_filtered{name={"void-tech-priest","void-tech-priest-belt-immune"},force=s.station.force}==1,
+    "native starter produced duplicate Void Priests")
+   assert(void.independent_emergency_operation_0184 and void.independent_emergency_operation_0184.enabled,
+    "independent ship did not inherit its local Void Priest autonomy")
    emit("PASS autonomous native rocket launch and paid platform starter delivery parts_peak="..s.max_parts..
-     " delivered_items="..tostring(doctrine.stats["input-items-delivered"]).." hub="..r.platform.hub.unit_number)
+     " delivered_items="..tostring(doctrine.stats["input-items-delivered"]).." hub="..r.platform.hub.unit_number..
+     " void_station="..stations[1].unit_number.." void_priest="..void.priest.unit_number)
    s.finished=true;return
   end
   if game.tick>=(s.next_log or 0)then

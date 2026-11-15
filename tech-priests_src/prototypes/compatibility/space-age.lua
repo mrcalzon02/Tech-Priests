@@ -10,6 +10,7 @@
 --     prototype fields from entities that already exist in data.raw.
 
 local kilogram = _G.kg or 1000
+require("prototypes.compatibility.platform-void-startup_1290")
 local ton = _G.ton or (1000 * kilogram)
 
 local function platform_safe_surface_conditions()

@@ -1233,6 +1233,7 @@ do
 end
 -- Colony placement uses the shared event registry; ordinary bound priests own work.
 assert(require("scripts.core.enemy_planetary_seeding").install())
+assert(require("scripts.core.void_platform_startup_1290").install())
 assert(require("scripts.core.enemy_research_announcements").install())
 
 -- Native bunker weapons share the canonical event registry with priest services.

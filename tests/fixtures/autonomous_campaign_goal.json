@@ -8,6 +8,7 @@
     "non_player_force": "Coordinate production, construction, research and supply-chain defense across the force."
   },
   "required_milestones": [
+    "Every new Space Age platform starts with one native starter-pack Void Cogitator and exactly one bound Void Priest; a physically present local Void Priest must manage and build all subsequent orbital structures, while ground priests may supply materials.",
     "Sustain the actual science chains required by native progression to the endpoint, retaining unlocked terrestrial science capacity.",
     "Research rocket prerequisites with real produced science and native research progress.",
     "Construct, power and supply an owned rocket silo through paid construction and actual material transfers.",
