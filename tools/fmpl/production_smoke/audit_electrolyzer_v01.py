@@ -31,18 +31,19 @@ def port_probe(scene,ports,offsets=None,max_radius=.205):
     return dict(passed=not hits,rays=count,hits=hits)
 
 def mesh_stats(scene):
-    triangles=0;degenerate=0;finite=True;uv=[]
+    triangles=0;degenerate=0;finite=True;uv=[];degenerate_objects=[]
     dg=bpy.context.evaluated_depsgraph_get()
     for ob in scene.objects:
         if ob.type!='MESH' or ob.hide_render:continue
         evaluated=ob.evaluated_get(dg);mesh=evaluated.to_mesh()
         try:
             mesh.calc_loop_triangles();triangles+=len(mesh.loop_triangles)
-            degenerate+=sum(t.area<1e-12 for t in mesh.loop_triangles)
+            count=sum(t.area<1e-12 for t in mesh.loop_triangles);degenerate+=count
+            if count:degenerate_objects.append(dict(object=ob.name,triangles=count))
             finite=finite and all(math.isfinite(c) for v in mesh.vertices for c in v.co)
             if not mesh.uv_layers:uv.append(ob.name)
         finally:evaluated.to_mesh_clear()
-    return dict(triangles=triangles,degenerate_triangles=degenerate,finite=finite,missing_uv=uv)
+    return dict(triangles=triangles,degenerate_triangles=degenerate,degenerate_objects=degenerate_objects,finite=finite,missing_uv=uv)
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--dir',required=True)

@@ -3,7 +3,7 @@
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
   "current_machine": "hydrogen-compressor",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\hydrogen-compressor\\v01-construction-pilot",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\hydrogen-compressor\\v04-finish-and-states",
   "queue": [
     {
       "id": "water-purifier",
@@ -27,7 +27,7 @@
         3,
         4
       ],
-      "status": "candidate_native; independent QA pending"
+      "status": "visual_reviewed_candidate; native prototype pending"
     },
     {
       "id": "metallization-crucible",
@@ -104,29 +104,47 @@
     "body_render_layer": "lower-object",
     "next_shape_action": "none; owner called done"
   },
-  "library_registry_sha256": "d39eff16a7130e703fa00cf0425e86c166aab3049875af6d0e892861a44a12bb",
+  "library_registry_sha256": "d9d33e61214cd95895228e515c9b3f01f07279218e15e973c226bbcdc093cb62",
   "reactors": {
     "status": "V14 native bytes still unrecovered",
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Refine and verify compressor construction",
-    "Continue remaining four precursor machines",
+    "Verify compressor actual native prototype and pipe-placement images",
+    "Build metallization crucible, pelletization forge, vessel fabricator and canister assembler",
     "Integrate chain prototypes/economy as a whole",
     "Recover and refine three plasma reactors"
   ],
   "original_goal_complete": false,
   "concurrent_work_preserved": "model-production bunker/data.lua work untouched",
   "compressor": {
-    "status": "candidate_native; independent QA and finishing pending",
-    "source_sha256": "b6a8c59905d3a1b6c3c2d598686d0cfa411dd3e3ae8cf687398fb8750378b19c",
-    "provenance": "new reconstruction from authorized process packet",
-    "next": [
-      "independent mechanical support/moving clearance audit",
-      "actual GLB export/reimport and diagnostic renders",
-      "finishing and state capture",
-      "native prototype/pipe fitting"
+    "status": "visual_reviewed_candidate",
+    "machine": "hydrogen-compressor",
+    "planned_footprint": [
+      3,
+      4
     ],
-    "owner_approved": false
+    "source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+    "glb_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
+    "registry_sha256": "d9d33e61214cd95895228e515c9b3f01f07279218e15e973c226bbcdc093cb62",
+    "contacts": 86,
+    "motion_poses": 17,
+    "disjoint_surface_pair_checks": 4454,
+    "source_and_export_mouth_rays_each": 74,
+    "process_core_rays_each": 234,
+    "opposite_pressure_wall_checks_each": 8,
+    "capture_frames": 36,
+    "atlas_count": 6,
+    "cycle_seconds": 4,
+    "native_ports_verified": false,
+    "owner_approved": false,
+    "actual_reused_master_parts": 2,
+    "actual_reused_instances": 3,
+    "no_new_verified_parts": "Machine completion prioritized; existing frozen master console and mouths reused with independent native/export readback.",
+    "next": [
+      "actual native compressor prototype and two fluid assignments",
+      "native pipe fitting and idle/working placement review",
+      "then metallization crucible"
+    ]
   }
 }

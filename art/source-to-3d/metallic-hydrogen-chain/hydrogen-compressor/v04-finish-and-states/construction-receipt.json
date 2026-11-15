@@ -1,0 +1,947 @@
+{
+  "status": "candidate_native; finishing and mechanical/export readback pending",
+  "revision": "V03 guarded/instrumented/surfaced candidate",
+  "native_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+  "provenance": "new reconstruction from MH7 process packet; historical v0.2 not recovered",
+  "contacts": [
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (-0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.05)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (-0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.8)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | front pressure closure and piston passage -0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder -0.72",
+      "label": "front head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | rear pressure head -0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder -0.72",
+      "label": "rear head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | piston rod compression gland -0.72",
+      "b": "TP Hydrogen Compressor V01 | front pressure closure and piston passage -0.72",
+      "label": "rod gland seated on head"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (-0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.79)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (-0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.36)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0, 0.05)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0, 0.8)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0",
+      "label": "front head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | rear pressure head 0",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0",
+      "label": "rear head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | piston rod compression gland 0",
+      "b": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0",
+      "label": "rod gland seated on head"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.79)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.36)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.05)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.8)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0.72",
+      "label": "front head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | rear pressure head 0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0.72",
+      "label": "rear head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | piston rod compression gland 0.72",
+      "b": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0.72",
+      "label": "rod gland seated on head"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.79)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.36)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing sole -1.18",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "shaft tower grounded"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing tower -1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing sole -1.18",
+      "label": "shaft tower on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing cap seat -1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing tower -1.18",
+      "label": "bearing cap supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing housing -1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing cap seat -1.18",
+      "label": "bearing casing seated"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing sole 1.18",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "shaft tower grounded"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing tower 1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing sole 1.18",
+      "label": "shaft tower on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing cap seat 1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing tower 1.18",
+      "label": "bearing cap supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing housing 1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing cap seat 1.18",
+      "label": "bearing casing seated"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard sole -0.93",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "crank guard anchored to footing"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright -0.93",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard sole -0.93",
+      "label": "guard upright supported"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard sole 0.93",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "crank guard anchored to footing"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright 0.93",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard sole 0.93",
+      "label": "guard upright supported"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright -0.93",
+      "label": "guard rail seated on uprights"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright 0.93",
+      "label": "guard rail seated on uprights"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright -0.93",
+      "label": "guard rail seated on uprights"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright 0.93",
+      "label": "guard rail seated on uprights"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire -0.6",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "label": "guard wire retained in frame"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire -0.6",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "label": "guard wire retained in frame"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire -0.3",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "label": "guard wire retained in frame"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire -0.3",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "label": "guard wire retained in frame"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "label": "guard wire retained in frame"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "label": "guard wire retained in frame"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0.3",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "label": "guard wire retained in frame"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0.3",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "label": "guard wire retained in frame"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0.6",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "label": "guard wire retained in frame"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0.6",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "label": "guard wire retained in frame"
+    },
+    {
+      "a": "TP Compressor V03 | discharge gauge pressure tap",
+      "b": "TP Hydrogen Compressor V01 | discharge independent pressure header",
+      "label": "pressure tap at drilled manifold"
+    },
+    {
+      "a": "TP Compressor V03 | discharge gauge pressure tap",
+      "b": "FMPL_PROCESS | TP Compressor V03 | pressure gauge cast case",
+      "label": "gauge stem seated in case"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | pressure gauge seated enamel dial",
+      "b": "FMPL_PROCESS | TP Compressor V03 | pressure gauge cast case",
+      "label": "dial plate on case recess"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | pressure gauge lens retaining bezel",
+      "b": "FMPL_PROCESS | TP Compressor V03 | pressure gauge cast case",
+      "label": "lens bezel seated on casting"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | pressure gauge recessed lens",
+      "b": "FMPL_PROCESS | TP Compressor V03 | pressure gauge lens retaining bezel",
+      "label": "lens retained by bezel"
+    },
+    {
+      "a": "TP Compressor V03 | relief threaded pressure stem",
+      "b": "TP Hydrogen Compressor V01 | discharge independent pressure header",
+      "label": "relief stem at pressure manifold"
+    },
+    {
+      "a": "TP Compressor V03 | normally closed relief valve body",
+      "b": "TP Compressor V03 | relief threaded pressure stem",
+      "label": "relief body threaded on stem"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | relief spring bonnet",
+      "b": "TP Compressor V03 | normally closed relief valve body",
+      "label": "normally closed spring bonnet"
+    },
+    {
+      "a": "TP Compressor V03 | normally closed relief outlet stub",
+      "b": "TP Compressor V03 | normally closed relief valve body",
+      "label": "relief discharge stub on body"
+    }
+  ],
+  "kinematics": [
+    {
+      "frame": 0,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.1299999952316284,
+            0.7799999713897705
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.46000000834465027,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999660876251
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.309999942779541,
+            0.8839230537414551
+          ],
+          "crosshead": [
+            0.0,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999459321353
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.309999942779541,
+            0.6760769486427307
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999368969155
+        }
+      ]
+    },
+    {
+      "frame": 1,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.1299999952316284,
+            0.7799999713897705
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.46000000834465027,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999660876251
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.309999942779541,
+            0.8839230537414551
+          ],
+          "crosshead": [
+            0.0,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999459321353
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.309999942779541,
+            0.6760769486427307
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999368969155
+        }
+      ]
+    },
+    {
+      "frame": 13,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.1651471853256226,
+            0.864852786064148
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.5005420446395874,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999865906229
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.3659111261367798,
+            0.8110582828521729
+          ],
+          "crosshead": [
+            0.0,
+            -0.6966313719749451,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000157378918
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.2189416885375977,
+            0.6640889048576355
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.5590443015098572,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999521872874
+        }
+      ]
+    },
+    {
+      "frame": 25,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.25,
+            0.8999999761581421
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.590833842754364,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.67000000709362
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.3539230823516846,
+            0.7200000286102295
+          ],
+          "crosshead": [
+            0.0,
+            -0.6866150498390198,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000044873068
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.1460769176483154,
+            0.7200000286102295
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.478768914937973,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999377656866
+        }
+      ]
+    },
+    {
+      "frame": 37,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.3348528146743774,
+            0.864852786064148
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.6702476739883423,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999865906229
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.2810583114624023,
+            0.6640889048576355
+          ],
+          "crosshead": [
+            0.0,
+            -0.6211608648300171,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.670000018908906
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.1340888738632202,
+            0.8110582828521729
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.4648091495037079,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999490162728
+        }
+      ]
+    },
+    {
+      "frame": 49,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.3700000047683716,
+            0.7799999713897705
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.699999988079071,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000105687041
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.190000057220459,
+            0.6760769486427307
+          ],
+          "crosshead": [
+            0.0,
+            -0.5281087756156921,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000480996122
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.190000057220459,
+            0.8839230537414551
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.5281087756156921,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000571348305
+        }
+      ]
+    },
+    {
+      "frame": 61,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.3348528146743774,
+            0.6951471567153931
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.6702476739883423,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999865906229
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.1340888738632202,
+            0.7489417195320129
+          ],
+          "crosshead": [
+            0.0,
+            -0.4648091495037079,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999462796437
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.2810583114624023,
+            0.8959110975265503
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6211608648300171,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000293341584
+        }
+      ]
+    },
+    {
+      "frame": 73,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.25,
+            0.6600000262260437
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.590833842754364,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999966683672
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.1460769176483154,
+            0.8399999737739563
+          ],
+          "crosshead": [
+            0.0,
+            -0.478768914937973,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999429783134
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.3539230823516846,
+            0.8399999737739563
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6866150498390198,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.670000009699933
+        }
+      ]
+    },
+    {
+      "frame": 85,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.1651471853256226,
+            0.6951471567153931
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.5005420446395874,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999865906229
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.2189416885375977,
+            0.8959110975265503
+          ],
+          "crosshead": [
+            0.0,
+            -0.5590443015098572,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999626125407
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.3659111261367798,
+            0.7489417195320129
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6966313719749451,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.670000013001263
+        }
+      ]
+    },
+    {
+      "frame": 97,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.1299999952316284,
+            0.7799999713897705
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.46000000834465027,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999660876251
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.309999942779541,
+            0.8839230537414551
+          ],
+          "crosshead": [
+            0.0,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999459321353
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.309999942779541,
+            0.6760769486427307
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999368969155
+        }
+      ]
+    }
+  ],
+  "dimensions": {
+    "crank_radius": 0.12,
+    "connecting_rod_length": 0.67,
+    "phase_degrees": [
+      0,
+      120,
+      240
+    ]
+  },
+  "pending": [
+    "actual source/export mechanical contact and moving clearance audit",
+    "source/export front/rear/clay review",
+    "model-specific finishing",
+    "state capture",
+    "native prototype/pipe fitting"
+  ],
+  "source_sha256": "26db074eefb07740a7c40ddc926b47e4b85ec67746afe112971023292b6a4e11",
+  "surface_assignments": [
+    {
+      "object": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder -0.72",
+      "material": "TP Compressor V03 | cylinder 1 machined steel",
+      "plan": "Axial Y/circumferential U machined compressor shell; dirt only at .05/.45/.9 retaining bands and actual head ends; warm discharge region at rear/top nozzle. No generic stripes or lettering."
+    },
+    {
+      "object": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0",
+      "material": "TP Compressor V03 | cylinder 2 machined steel",
+      "plan": "Axial Y/circumferential U machined compressor shell; dirt only at .05/.45/.9 retaining bands and actual head ends; warm discharge region at rear/top nozzle. No generic stripes or lettering."
+    },
+    {
+      "object": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0.72",
+      "material": "TP Compressor V03 | cylinder 3 machined steel",
+      "plan": "Axial Y/circumferential U machined compressor shell; dirt only at .05/.45/.9 retaining bands and actual head ends; warm discharge region at rear/top nozzle. No generic stripes or lettering."
+    }
+  ],
+  "textures": [
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-v04-sealed-finish\\textures\\cylinder-1\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "f8dd26ec7b3c339e3fb1ea223193f477b5bd427f456156c260112aa1965bcd75"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-v04-sealed-finish\\textures\\cylinder-1\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "7e6bab5a9f99ef36ae837547cc505a8e47a1e0d93c37a04448cf152d55ad15b9"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-v04-sealed-finish\\textures\\cylinder-1\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "709dad34871eceff843a150fc32f97b6474a33f4247e8392670edbb177f77c4a"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-v04-sealed-finish\\textures\\cylinder-2\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "0069e987680a363323db61ed6edebd6de233886830c690600555fa98cfa9a3be"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-v04-sealed-finish\\textures\\cylinder-2\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "7e6bab5a9f99ef36ae837547cc505a8e47a1e0d93c37a04448cf152d55ad15b9"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-v04-sealed-finish\\textures\\cylinder-2\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "a2e86aec439d4ce4c45c806b2da7d549a7b2ac5054914a6db81134930b2a1a56"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-v04-sealed-finish\\textures\\cylinder-3\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "057e6566e6666f21abe8380cffdd37900c782bbf914261996e37fa613b4ce5ef"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-v04-sealed-finish\\textures\\cylinder-3\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "7e6bab5a9f99ef36ae837547cc505a8e47a1e0d93c37a04448cf152d55ad15b9"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-v04-sealed-finish\\textures\\cylinder-3\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "4488e08be487b919760b33401c2d3fbd92455bf4ac882de8a1a46787f0f5ca79"
+    }
+  ],
+  "added_objects": [
+    "FMPL_PROCESS | TP Compressor V03 | front crank guard sole -0.93",
+    "FMPL_PROCESS | TP Compressor V03 | front crank guard upright -0.93",
+    "FMPL_PROCESS | TP Compressor V03 | front crank guard sole 0.93",
+    "FMPL_PROCESS | TP Compressor V03 | front crank guard upright 0.93",
+    "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+    "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+    "FMPL_PROCESS | TP Compressor V03 | front crank guard wire -0.6",
+    "FMPL_PROCESS | TP Compressor V03 | front crank guard wire -0.3",
+    "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0",
+    "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0.3",
+    "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0.6",
+    "TP Compressor V03 | discharge gauge pressure tap",
+    "FMPL_PROCESS | TP Compressor V03 | pressure gauge cast case",
+    "FMPL_PROCESS | TP Compressor V03 | pressure gauge seated enamel dial",
+    "FMPL_PROCESS | TP Compressor V03 | pressure gauge recessed lens",
+    "FMPL_PROCESS | TP Compressor V03 | pressure gauge lens retaining bezel",
+    "FMPL_PROCESS | TP Compressor V03 | gauge radial tick 0",
+    "FMPL_PROCESS | TP Compressor V03 | gauge radial tick 1",
+    "FMPL_PROCESS | TP Compressor V03 | gauge radial tick 2",
+    "FMPL_PROCESS | TP Compressor V03 | gauge radial tick 3",
+    "FMPL_PROCESS | TP Compressor V03 | gauge radial tick 4",
+    "FMPL_PROCESS | TP Compressor V03 | gauge radial tick 5",
+    "FMPL_PROCESS | TP Compressor V03 | gauge radial tick 6",
+    "FMPL_PROCESS | TP Compressor V03 | gauge radial tick 7",
+    "FMPL_PROCESS | TP Compressor V03 | gauge radial tick 8",
+    "FMPL_PROCESS | TP Compressor V03 | gauge mechanical needle",
+    "FMPL_PROCESS | TP Compressor V03 | gauge needle pivot",
+    "TP Compressor V03 | relief threaded pressure stem",
+    "TP Compressor V03 | normally closed relief valve body",
+    "FMPL_PROCESS | TP Compressor V03 | relief spring bonnet",
+    "FMPL_PROCESS | TP Compressor V03 | relief bonnet retaining rib 1.57",
+    "FMPL_PROCESS | TP Compressor V03 | relief bonnet retaining rib 1.59",
+    "FMPL_PROCESS | TP Compressor V03 | relief bonnet retaining rib 1.61",
+    "TP Compressor V03 | normally closed relief outlet stub"
+  ],
+  "service_hardware": "Manifold gauge and normally closed pressure relief; neither creates an additional native gameplay fluid port"
+}

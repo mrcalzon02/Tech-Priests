@@ -1,0 +1,1592 @@
+{
+  "passed": true,
+  "errors": [],
+  "source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+  "native_stats": {
+    "triangles": 67932,
+    "degenerate_triangles": 0,
+    "degenerate_objects": [],
+    "finite": true,
+    "missing_uv": []
+  },
+  "bounds": [
+    [
+      -1.5000001192092896,
+      -1.9500000476837158,
+      0.0
+    ],
+    [
+      1.5000001192092896,
+      1.9500000476837158,
+      1.7000000476837158
+    ]
+  ],
+  "external_bores": {
+    "passed": true,
+    "rays": 74,
+    "hits": []
+  },
+  "contacts": [
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (-0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.05)",
+      "label": "saddle seated on sole",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (-0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.8)",
+      "label": "saddle seated on sole",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | front pressure closure and piston passage -0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder -0.72",
+      "label": "front head seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | rear pressure head -0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder -0.72",
+      "label": "rear head seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | piston rod compression gland -0.72",
+      "b": "TP Hydrogen Compressor V01 | front pressure closure and piston passage -0.72",
+      "label": "rod gland seated on head",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing",
+      "gap_tiles": 6.006850128414953e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (-0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.79)",
+      "label": "crosshead guide supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing",
+      "gap_tiles": 8.462232869987929e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (-0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.36)",
+      "label": "crosshead guide supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0, 0.05)",
+      "label": "saddle seated on sole",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0, 0.8)",
+      "label": "saddle seated on sole",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0",
+      "label": "front head seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | rear pressure head 0",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0",
+      "label": "rear head seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | piston rod compression gland 0",
+      "b": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0",
+      "label": "rod gland seated on head",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing",
+      "gap_tiles": 7.48774056091861e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.79)",
+      "label": "crosshead guide supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing",
+      "gap_tiles": 1.7457269052556512e-07,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.36)",
+      "label": "crosshead guide supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.05)",
+      "label": "saddle seated on sole",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.8)",
+      "label": "saddle seated on sole",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0.72",
+      "label": "front head seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | rear pressure head 0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0.72",
+      "label": "rear head seated on shell",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | piston rod compression gland 0.72",
+      "b": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0.72",
+      "label": "rod gland seated on head",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing",
+      "gap_tiles": 6.006850128414953e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.79)",
+      "label": "crosshead guide supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing",
+      "gap_tiles": 8.462232869987929e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.36)",
+      "label": "crosshead guide supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing sole -1.18",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "shaft tower grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing tower -1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing sole -1.18",
+      "label": "shaft tower on sole",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing cap seat -1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing tower -1.18",
+      "label": "bearing cap supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing housing -1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing cap seat -1.18",
+      "label": "bearing casing seated",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing sole 1.18",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "shaft tower grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing tower 1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing sole 1.18",
+      "label": "shaft tower on sole",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing cap seat 1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing tower 1.18",
+      "label": "bearing cap supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing housing 1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing cap seat 1.18",
+      "label": "bearing casing seated",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard sole -0.93",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "crank guard anchored to footing",
+      "gap_tiles": 1.1944189282075968e-07,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright -0.93",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard sole -0.93",
+      "label": "guard upright supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard sole 0.93",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "crank guard anchored to footing",
+      "gap_tiles": 1.1944189282075968e-07,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright 0.93",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard sole 0.93",
+      "label": "guard upright supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright -0.93",
+      "label": "guard rail seated on uprights",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright 0.93",
+      "label": "guard rail seated on uprights",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright -0.93",
+      "label": "guard rail seated on uprights",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard upright 0.93",
+      "label": "guard rail seated on uprights",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire -0.6",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "label": "guard wire retained in frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire -0.6",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "label": "guard wire retained in frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire -0.3",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "label": "guard wire retained in frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire -0.3",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "label": "guard wire retained in frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "label": "guard wire retained in frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "label": "guard wire retained in frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0.3",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "label": "guard wire retained in frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0.3",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "label": "guard wire retained in frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0.6",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.5",
+      "label": "guard wire retained in frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | front crank guard wire 0.6",
+      "b": "FMPL_PROCESS | TP Compressor V03 | front crank guard transverse rail 0.98",
+      "label": "guard wire retained in frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Compressor V03 | discharge gauge pressure tap",
+      "b": "TP Hydrogen Compressor V01 | discharge independent pressure header",
+      "label": "pressure tap at drilled manifold",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Compressor V03 | discharge gauge pressure tap",
+      "b": "FMPL_PROCESS | TP Compressor V03 | pressure gauge cast case",
+      "label": "gauge stem seated in case",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | pressure gauge seated enamel dial",
+      "b": "FMPL_PROCESS | TP Compressor V03 | pressure gauge cast case",
+      "label": "dial plate on case recess",
+      "gap_tiles": 5.960464477539063e-08,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | pressure gauge lens retaining bezel",
+      "b": "FMPL_PROCESS | TP Compressor V03 | pressure gauge cast case",
+      "label": "lens bezel seated on casting",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | pressure gauge recessed lens",
+      "b": "FMPL_PROCESS | TP Compressor V03 | pressure gauge lens retaining bezel",
+      "label": "lens retained by bezel",
+      "gap_tiles": 0.0005169595242477953,
+      "passed": true
+    },
+    {
+      "a": "TP Compressor V03 | relief threaded pressure stem",
+      "b": "TP Hydrogen Compressor V01 | discharge independent pressure header",
+      "label": "relief stem at pressure manifold",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Compressor V03 | normally closed relief valve body",
+      "b": "TP Compressor V03 | relief threaded pressure stem",
+      "label": "relief body threaded on stem",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP Compressor V03 | relief spring bonnet",
+      "b": "TP Compressor V03 | normally closed relief valve body",
+      "label": "normally closed spring bonnet",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Compressor V03 | normally closed relief outlet stub",
+      "b": "TP Compressor V03 | normally closed relief valve body",
+      "label": "relief discharge stub on body",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (-0.72, -0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (-0.72, -0.79)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (-0.72, 0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (-0.72, -0.79)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.0033137116115540266,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (-0.72, -0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (-0.72, -0.36)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.012300251983106136,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (-0.72, 0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (-0.72, -0.36)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder -0.72",
+      "b": "TP Hydrogen Compressor V01 | machined concave saddle (-0.72, 0.05)",
+      "label": "cylinder seated on machined saddle",
+      "gap_tiles": 0.001993797952309251,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder -0.72",
+      "b": "TP Hydrogen Compressor V01 | machined concave saddle (-0.72, 0.8)",
+      "label": "cylinder seated on machined saddle",
+      "gap_tiles": 0.0019938177429139614,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (0, -0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (0, -0.79)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (0, 0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (0, -0.79)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (0, -0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (0, -0.36)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (0, 0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (0, -0.36)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0",
+      "b": "TP Hydrogen Compressor V01 | machined concave saddle (0, 0.05)",
+      "label": "cylinder seated on machined saddle",
+      "gap_tiles": 0.001993823330849409,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0",
+      "b": "TP Hydrogen Compressor V01 | machined concave saddle (0, 0.8)",
+      "label": "cylinder seated on machined saddle",
+      "gap_tiles": 0.0019938291516155005,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (0.72, -0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (0.72, -0.79)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.0033137116115540266,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (0.72, 0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (0.72, -0.79)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (0.72, -0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (0.72, -0.36)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | crosshead guide (0.72, 0.13)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing tie (0.72, -0.36)",
+      "label": "guide rail carried at bearing tie",
+      "gap_tiles": 0.012300251983106136,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0.72",
+      "b": "TP Hydrogen Compressor V01 | machined concave saddle (0.72, 0.05)",
+      "label": "cylinder seated on machined saddle",
+      "gap_tiles": 0.001993797952309251,
+      "passed": true
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0.72",
+      "b": "TP Hydrogen Compressor V01 | machined concave saddle (0.72, 0.8)",
+      "label": "cylinder seated on machined saddle",
+      "gap_tiles": 0.0019938177429139614,
+      "passed": true
+    }
+  ],
+  "motion": [
+    {
+      "frame": 1,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.1299999952316284,
+            0.7799999713897705
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.46000000834465027,
+            0.7799999713897705
+          ],
+          "radius": 0.120000004768375,
+          "rod_length": 0.6699999660876251,
+          "endpoint_error": 5.960464477539063e-08,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.3100000619888306,
+            0.8839229941368103
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "radius": 0.1199999839542615,
+          "rod_length": 0.6700000480996122,
+          "endpoint_error": 1.6858739404357614e-07,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.309999942779541,
+            0.6760768294334412
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "radius": 0.12000007714228471,
+          "rod_length": 0.6699999556623718,
+          "endpoint_error": 5.960464477539063e-08,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 7,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.139134407043457,
+            0.8259220123291016
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.47071006894111633,
+            0.7799999713897705
+          ],
+          "radius": 0.12000004549149147,
+          "rod_length": 0.6699999820730133,
+          "endpoint_error": 6.664001874625056e-08,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.3452023267745972,
+            0.8530511856079102
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.6791967749595642,
+            0.7799999713897705
+          ],
+          "radius": 0.11999982809162069,
+          "rod_length": 0.6699999115287977,
+          "endpoint_error": 2.6656007498500226e-07,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.2656631469726562,
+            0.6610265970230103
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.6063109636306763,
+            0.7799999713897705
+          ],
+          "radius": 0.12000001995421597,
+          "rod_length": 0.6699999820730133,
+          "endpoint_error": 0.0,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 13,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.1651471853256226,
+            0.864852786064148
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.5005420446395874,
+            0.7799999713897705
+          ],
+          "radius": 0.11999998108754976,
+          "rod_length": 0.6699999865906229,
+          "endpoint_error": 0.0,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.3659113645553589,
+            0.8110581040382385
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.6966313719749451,
+            0.7799999713897705
+          ],
+          "radius": 0.12000020941454792,
+          "rod_length": 0.6700002298464799,
+          "endpoint_error": 2.980232238769531e-07,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.2189416885375977,
+            0.6640888452529907
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.5590443015098572,
+            0.7799999713897705
+          ],
+          "radius": 0.12000006044032116,
+          "rod_length": 0.6699999626125407,
+          "endpoint_error": 1.6858739404357614e-07,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 19,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.204077959060669,
+            0.8908655643463135
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.5433141589164734,
+            0.7799999713897705
+          ],
+          "radius": 0.12000003000774694,
+          "rod_length": 0.6699999785979289,
+          "endpoint_error": 5.960464477539063e-08,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.3689733743667603,
+            0.7643367648124695
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.6991565227508545,
+            0.7799999713897705
+          ],
+          "radius": 0.12000000310313821,
+          "rod_length": 0.6699999685636228,
+          "endpoint_error": 1.6858739404357614e-07,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.1769486665725708,
+            0.6847976446151733
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.5137469172477722,
+            0.7799999713897705
+          ],
+          "radius": 0.11999994077641986,
+          "rod_length": 0.6700000335042593,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 25,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.25,
+            0.8999999761581421
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.590833842754364,
+            0.7799999713897705
+          ],
+          "radius": 0.11999997615814206,
+          "rod_length": 0.67000000709362,
+          "endpoint_error": 5.960464477539063e-08,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.3539233207702637,
+            0.7199999690055847
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.6866150498390198,
+            0.7799999713897705
+          ],
+          "radius": 0.12000025132994478,
+          "rod_length": 0.6700002543458149,
+          "endpoint_error": 2.6656007498500226e-07,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.1460769176483154,
+            0.7199999094009399
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.478768914937973,
+            0.7799999713897705
+          ],
+          "radius": 0.1200000746556869,
+          "rod_length": 0.6699999483646945,
+          "endpoint_error": 1.7881393432617188e-07,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 31,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.295922040939331,
+            0.8908654451370239
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.6351581811904907,
+            0.7799999713897705
+          ],
+          "radius": 0.11999991987274014,
+          "rod_length": 0.6700000251640574,
+          "endpoint_error": 1.7881393432617188e-07,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.3230514526367188,
+            0.6847976446151733
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.6598496437072754,
+            0.7799999713897705
+          ],
+          "radius": 0.1200000133464726,
+          "rod_length": 0.6700001002258699,
+          "endpoint_error": 1.6858739404357614e-07,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.1310266256332397,
+            0.7643368244171143
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.4612097144126892,
+            0.7799999713897705
+          ],
+          "radius": 0.11999999532313989,
+          "rod_length": 0.6700000116546679,
+          "endpoint_error": 8.429369702178807e-08,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 37,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.3348528146743774,
+            0.864852786064148
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.6702476739883423,
+            0.7799999713897705
+          ],
+          "radius": 0.11999998108754976,
+          "rod_length": 0.6699999865906229,
+          "endpoint_error": 0.0,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.281058430671692,
+            0.6640888452529907
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.6211608648300171,
+            0.7799999713897705
+          ],
+          "radius": 0.12000009129402123,
+          "rod_length": 0.6700001405368398,
+          "endpoint_error": 1.6858739404357614e-07,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.1340888738632202,
+            0.8110582828521729
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.4648091495037079,
+            0.7799999713897705
+          ],
+          "radius": 0.12000002540008917,
+          "rod_length": 0.6699999490162728,
+          "endpoint_error": 2.9802322387695312e-08,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 43,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.3608654737472534,
+            0.8259220123291016
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.6924411654472351,
+            0.7799999713897705
+          ],
+          "radius": 0.11999993535647047,
+          "rod_length": 0.6699999153513908,
+          "endpoint_error": 1.3328003749250113e-07,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.2343366146087646,
+            0.6610265970230103
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.5749846696853638,
+            0.7799999713897705
+          ],
+          "radius": 0.12000005107432064,
+          "rod_length": 0.669999737427032,
+          "endpoint_error": 2.384185791015625e-07,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.1547975540161133,
+            0.8530513048171997
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.48879197239875793,
+            0.7799999713897705
+          ],
+          "radius": 0.11999999523670944,
+          "rod_length": 0.6699999692152011,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 49,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.3700000047683716,
+            0.7799999713897705
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.699999988079071,
+            0.7799999713897705
+          ],
+          "radius": 0.120000004768375,
+          "rod_length": 0.6700000105687041,
+          "endpoint_error": 8.429369702178807e-08,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.190000057220459,
+            0.6760768890380859
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.5281087756156921,
+            0.7799999713897705
+          ],
+          "radius": 0.12000002552312439,
+          "rod_length": 0.6700000571348305,
+          "endpoint_error": 1.8960848981746466e-15,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.190000057220459,
+            0.8839229941368103
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.5281087756156921,
+            0.7799999713897705
+          ],
+          "radius": 0.11999992434959157,
+          "rod_length": 0.6700000480996122,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 55,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.3608654737472534,
+            0.7340779304504395
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.6924411654472351,
+            0.7799999713897705
+          ],
+          "radius": 0.11999995725381578,
+          "rod_length": 0.6699999153513908,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.1547975540161133,
+            0.7069486379623413
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.48879197239875793,
+            0.7799999713897705
+          ],
+          "radius": 0.12000003007029604,
+          "rod_length": 0.6699999692152011,
+          "endpoint_error": 6.664001874625087e-08,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.2343368530273438,
+            0.8989732265472412
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.5749846696853638,
+            0.7799999713897705
+          ],
+          "radius": 0.11999984503385079,
+          "rod_length": 0.66999996052749,
+          "endpoint_error": 2.980232238769531e-07,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 61,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.334852695465088,
+            0.6951471567153931
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.6702476739883423,
+            0.7799999713897705
+          ],
+          "radius": 0.11999993725487117,
+          "rod_length": 0.6699998753879159,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.1340888738632202,
+            0.7489416599273682
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.4648091495037079,
+            0.7799999713897705
+          ],
+          "radius": 0.12000004020984212,
+          "rod_length": 0.6699999490162728,
+          "endpoint_error": 5.960464477539064e-08,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.2810581922531128,
+            0.8959110975265503
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.6211608648300171,
+            0.7799999713897705
+          ],
+          "radius": 0.11999997431600043,
+          "rod_length": 0.6699998958909164,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 67,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.2959219217300415,
+            0.6691343784332275
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.6351581811904907,
+            0.7799999713897705
+          ],
+          "radius": 0.1200000372531895,
+          "rod_length": 0.6699999341168478,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.1310266256332397,
+            0.7956631183624268
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.4612097144126892,
+            0.7799999713897705
+          ],
+          "radius": 0.11999998785436887,
+          "rod_length": 0.6700000116546679,
+          "endpoint_error": 8.429369702178807e-08,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.3230513334274292,
+            0.875202476978302
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.6598496437072754,
+            0.7799999713897705
+          ],
+          "radius": 0.12000003724303401,
+          "rod_length": 0.6699999918032493,
+          "endpoint_error": 5.960464477539063e-08,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 73,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.25,
+            0.6599999666213989
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.590833842754364,
+            0.7799999713897705
+          ],
+          "radius": 0.1200000333786011,
+          "rod_length": 0.67000000709362,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.1460769176483154,
+            0.8399999141693115
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.478768914937973,
+            0.7799999713897705
+          ],
+          "radius": 0.11999998644083157,
+          "rod_length": 0.6699999377656866,
+          "endpoint_error": 6.664001874625067e-08,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.3539232015609741,
+            0.8399999737739563
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.6866150498390198,
+            0.7799999713897705
+          ],
+          "radius": 0.12000011948143341,
+          "rod_length": 0.6700001209026177,
+          "endpoint_error": 1.3328003749250113e-07,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 79,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.204077959060669,
+            0.6691344976425171
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.5433141589164734,
+            0.7799999713897705
+          ],
+          "radius": 0.11999997273754129,
+          "rod_length": 0.6699999584424394,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.1769485473632812,
+            0.8752023577690125
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.5137469172477722,
+            0.7799999713897705
+          ],
+          "radius": 0.12000001523797321,
+          "rod_length": 0.6699999306417632,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.3689734935760498,
+            0.795663058757782
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.6991565227508545,
+            0.7799999713897705
+          ],
+          "radius": 0.12000009826387682,
+          "rod_length": 0.6700000769862472,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 85,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.1651471853256226,
+            0.6951471567153931
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.5005420446395874,
+            0.7799999713897705
+          ],
+          "radius": 0.12000002154852436,
+          "rod_length": 0.6699999865906229,
+          "endpoint_error": 0.0,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.2189416885375977,
+            0.8959110975265503
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.5590443015098572,
+            0.7799999713897705
+          ],
+          "radius": 0.12000000516960423,
+          "rod_length": 0.6699999626125407,
+          "endpoint_error": 8.429369702178808e-08,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.3659110069274902,
+            0.7489416599273682
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.6966313719749451,
+            0.7799999713897705
+          ],
+          "radius": 0.11999992506252635,
+          "rod_length": 0.669999882294647,
+          "endpoint_error": 1.3328003749250113e-07,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 91,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.1391345262527466,
+            0.7340779304504395
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.47071006894111633,
+            0.7799999713897705
+          ],
+          "radius": 0.11999995725381578,
+          "rod_length": 0.6700000932757024,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.2656631469726562,
+            0.8989733457565308
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.6063109636306763,
+            0.7799999713897705
+          ],
+          "radius": 0.1199999632232862,
+          "rod_length": 0.6699999820730133,
+          "endpoint_error": 1.788139343261719e-07,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.3452023267745972,
+            0.7069486379623413
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.6791967749595642,
+            0.7799999713897705
+          ],
+          "radius": 0.11999993549520878,
+          "rod_length": 0.6699999247341194,
+          "endpoint_error": 1.3328003749250113e-07,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "frame": 97,
+      "units": [
+        {
+          "x": -0.72,
+          "actual_pin": [
+            -0.7200000286102295,
+            -1.1299999952316284,
+            0.7800000309944153
+          ],
+          "actual_wrist": [
+            -0.7200000286102295,
+            -0.46000000834465027,
+            0.7799999713897705
+          ],
+          "radius": 0.12000000476837559,
+          "rod_length": 0.6699999660876278,
+          "endpoint_error": 5.960464477539063e-08,
+          "passed": true
+        },
+        {
+          "x": 0,
+          "actual_pin": [
+            0.0,
+            -1.3100000619888306,
+            0.8839228749275208
+          ],
+          "actual_wrist": [
+            0.0,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "radius": 0.11999988071604333,
+          "rod_length": 0.6700000293341584,
+          "endpoint_error": 2.6656007498500226e-07,
+          "passed": true
+        },
+        {
+          "x": 0.72,
+          "actual_pin": [
+            0.7200000286102295,
+            -1.3100000619888306,
+            0.6760768890380859
+          ],
+          "actual_wrist": [
+            0.7200000286102295,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "radius": 0.12000008512774404,
+          "rod_length": 0.6700000571348305,
+          "endpoint_error": 1.1920928955078125e-07,
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "loop_world_matrix_error": 2.682209014892578e-07,
+  "disjoint_surface_pair_checks": 4454,
+  "collisions": [],
+  "bearing_core_blockers": [],
+  "scope": "17 actual poses, named disjoint moving/static surface pairs, actual crank endpoints and support contacts; no structural/pressure certification or native integration claimed"
+}

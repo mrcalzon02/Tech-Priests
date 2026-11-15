@@ -22,13 +22,18 @@ def main():
     if out.exists():raise FileExistsError('Retain prior compressor candidates')
     out.mkdir(parents=True);m=MachineScene('Hydrogen Compressor V01',args.material_donor,args.registry);s=m.scene
     def drill(ob,label,center,radius,depth,axis):
+        bpy.context.view_layer.objects.active=ob
+        # Apply the authored bevel before the cut. Applying a later Boolean
+        # while retaining the earlier bevel used to evaluate that bevel twice.
+        for modifier in list(ob.modifiers):bpy.ops.object.modifier_apply(modifier=modifier.name)
         bpy.ops.mesh.primitive_cylinder_add(vertices=40,radius=radius,depth=depth,location=center);cut=bpy.context.object
         if axis=='X':cut.rotation_euler.y=math.pi/2
         if axis=='Y':cut.rotation_euler.x=math.pi/2
         bpy.context.view_layer.objects.active=ob;mod=ob.modifiers.new(label,'BOOLEAN');mod.operation='DIFFERENCE';mod.solver='EXACT';mod.object=cut
         bpy.ops.object.modifier_apply(modifier=mod.name);bpy.data.objects.remove(cut,do_unlink=True)
         bm=bmesh.new();bm.from_mesh(ob.data);bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=1e-6)
-        bmesh.ops.dissolve_degenerate(bm,edges=list(bm.edges),dist=1e-7);bm.to_mesh(ob.data);bm.free();ob.data.update()
+        bmesh.ops.triangulate(bm,faces=list(bm.faces))
+        bmesh.ops.dissolve_degenerate(bm,edges=list(bm.edges),dist=1e-6);bm.to_mesh(ob.data);bm.free();ob.data.update()
     def root(label,center,objects):
         ob=bpy.data.objects.new(m.prefix+label,None);m.cols['PROCESS'].objects.link(ob);ob.location=center
         bpy.context.view_layer.update()
@@ -37,7 +42,9 @@ def main():
     def joint(a,b,label):contacts.append(dict(a=a.name,b=b.name,label=label))
     contacts=[];kinematics=[];cylinders=[]
     base=m.box('equipment footing',(0,0,.05),(2.90,3.90,.10),'ferrocrete_dark')
-    for x in (-1.25,1.25):m.box('longitudinal bed rail '+str(x),(x,0,.18),(.14,3.55,.16))
+    for x in (-1.25,1.25):
+        rail=m.box('longitudinal bed rail '+str(x),(x,0,.18),(.14,3.55,.16))
+        drill(rail,'Full fluid-mouth relief through bed rail',(x,.5,.36),.25,.40,'X')
     for y in (-1.7,1.5):m.box('transverse bed tie '+str(y),(0,y,.18),(2.5,.14,.16),'martian_red')
     for x in (-.72,0,.72):
         for y in (.05,.8):
@@ -83,6 +90,7 @@ def main():
         tower=m.box('shaft bearing tower '+str(x),(x,-1.25,.43),(.16,.30,.56),'martian_red')
         housing=m.sleeve('shaft bearing housing '+str(x),(x,-1.25,.78),(1,0,0),.15,.105,.044,'brass')
         support=m.box('shaft bearing cap seat '+str(x),(x,-1.25,.705),(.20,.28,.11),'iron')
+        drill(support,'Clear shaft core through bearing seat',(x,-1.25,.78),.046,.40,'X')
         joint(foot,base,'shaft tower grounded');joint(tower,foot,'shaft tower on sole');joint(support,tower,'bearing cap supported');joint(housing,support,'bearing casing seated')
     # Side-mounted drive motor and a protected, visible supported flywheel.
     motor=m.cyl('cast electric drive motor',(-1.03,-1.25,.78),.24,.24,'gunmetal_dark','X')
@@ -112,7 +120,7 @@ def main():
         m.cyl(label+' closed header end',(-sign*1.,y,height),.080,.027,'iron','X','PIPING')
         for x in (-.72,0,.72):
             branch=m.pipe(label+' cell branch '+str(x),[(x,y,height),(x,y,.99)],.045,'iron' if sign<0 else 'brass')
-            drill(header,'Open branch passage '+str(x),(x,y,height),.034,.25,'Z')
+            drill(header,'Open lower branch passage only '+str(x),(x,y,height-.075),.034,.15,'Z')
             drill(branch,'Open header intersection '+str(x),(x,y,height),.058,.24,'X')
             drill(cylinders[(-.72,0,.72).index(x)],label+' actual chamber nozzle',(x,y,1.03),.034,.22,'Z')
             compression_joint(m.cols['PIPING'],m.prefix+label+' cell nozzle '+str(x),(x,y,1.03),(0,0,1),.045,m.mats['iron'],m.mats['brass'])

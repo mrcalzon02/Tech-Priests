@@ -1,0 +1,218 @@
+{
+  "native_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+  "glb_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
+  "meshes": 284,
+  "triangles": 67932,
+  "degenerate_triangles": 0,
+  "nonfinite_vertices": 0,
+  "missing_UV": [],
+  "bounds_error": 0.0,
+  "bores": {
+    "passed": true,
+    "rays": 74,
+    "hits": []
+  },
+  "material_channels": [
+    {
+      "name": "TP Hydrogen Compressor V01 | ferrocrete_dark",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | iron",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | martian_red",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | gunmetal_dark",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | brass",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Compressor V03 | cylinder 1 machined steel",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | machine_steel",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Compressor V03 | polished piston rod",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": []
+    },
+    {
+      "name": "TP Compressor V03 | cylinder 2 machined steel",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Compressor V03 | cylinder 3 machined steel",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Compressor V03 | gauge enamel",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": []
+    },
+    {
+      "name": "TP Compressor V03 | seated clear gauge lens",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": [
+        "KHR_materials_transmission"
+      ]
+    },
+    {
+      "name": "TP Compressor V03 | gauge physical tick marks",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor TP Library | brass.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor TP Library | machine_steel.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor TP Library | iron.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor TP Library | brass.003",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor TP Library | machine_steel.003",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor TP Library | iron.003",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor TP Library | iron.004",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor MH7 green.001",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor TP Library | martian_red.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor MH7 amber.001",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor TP Library | dark_recess.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor TP Water Purifier V14 | iron.001",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor TP Water Purifier V14 | brass.001",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Hydrogen Compressor V01 | donor FMPL | live green CRT level bars V13.001",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": [
+        "KHR_materials_emissive_strength"
+      ]
+    }
+  ],
+  "geometry_passed": true,
+  "render_sha256": {
+    "clay.png": "41ec6e5f8ef260aa38634020b3f61b397752dcf9a38dc75cddb44ab6c27c0451",
+    "front.png": "c1b8773cb52046f93bf7a9f2e50898172e41358df85b235bbf1b38b9c6a9cfe7",
+    "rear-inspection.png": "7d8a381897338e510ef31c87bbc3030adce45840254b465cfb6a13bf52651c26"
+  },
+  "visual_approval": false,
+  "note": "Rear is a diagnostic inspection view. Accepted capture directions belong to the asset capture manifest; volume parity requires separate assessment where present."
+}
