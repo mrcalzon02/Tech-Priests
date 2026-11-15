@@ -76,8 +76,8 @@ for bank,x in enumerate((-.90,.90)):
         for y in (-.65,.23,.49):bolt('Pod cheek captive bolt',(x+sign*.51,y,2.43),(x+sign*.54,y,2.43),.025,pivot)
     # A three-round cassette and guide rails follow the same elevation axis.
     for dx in (-.38,.38):
-        cylinder('Reload guide rail',(x+dx,.61,2.27),(x+dx,1.49,2.27),.033,'steel',pivot)
-        box('Rail terminal lug',(x+dx,1.48,2.27),(.105,.12,.13),'dark',pivot)
+        cylinder('Reload guide rail',(x+dx,.61,2.27),(x+dx,2.49,2.27),.033,'steel',pivot)
+        box('Rail terminal lug',(x+dx,2.48,2.27),(.105,.12,.13),'dark',pivot)
     loader=empty('SLIDING_THREE_ROUND_CASSETTE_'+str(bank),(x,1.05,2.43),pivot);loaders.append(loader)
     for dx,dz in offsets:
         cylinder('Cassette cartridge sleeve',(x+dx,.93,2.43+dz),(x+dx,1.34,2.43+dz),.184,'dark',loader)
@@ -85,11 +85,19 @@ for bank,x in enumerate((-.90,.90)):
         cylinder('Cartridge base',(x+dx,1.34,2.43+dz),(x+dx,1.375,2.43+dz),.155,'steel',loader)
     for a,b in ((offsets[0],offsets[1]),(offsets[1],offsets[2]),(offsets[2],offsets[0])):
         cylinder('Cassette connected rear frame',(x+a[0],1.40,2.43+a[1]),(x+b[0],1.40,2.43+b[1]),.047,'red',loader)
-    cylinder('Cassette central loading ram',(x,.69,2.58),(x,1.31,2.58),.043,'steel',loader)
+    # The drive is outboard of the shutter; no shaft passes through the panel.
+    outboard=x+(-.46 if bank==0 else .46)
+    cylinder('Outboard cassette loading ram',(outboard,.69,2.58),(outboard,1.31,2.58),.043,'steel',loader)
+    cylinder('Cassette drive attachment',(outboard,1.35,2.58),(x+(-.245 if bank==0 else .245),1.35,2.43),.040,'dark',loader)
+    for dx in (-.38,.38):
+        tube('Cassette linear bearing',(x+dx,1.17,2.27),(x+dx,1.33,2.27),.055,.020,'dark',loader)
+        cylinder('Cassette bearing support',(x+dx,1.24,2.30),(x+(-.245 if dx<0 else .245),1.24,2.36),.031,'steel',loader)
     # Articulated blast shutter mounted to a real transverse hinge.
     door=empty('HINGED_RELOAD_SHUTTER_'+str(bank),(x,.78,3.14),pivot);doors.append(door)
     cylinder('Breech shutter hinge',(x-.39,.78,3.14),(x+.39,.78,3.14),.047,'steel',pivot)
-    panel=armor('Faceted breech blast shutter',x,.80,2.27,.82,.065,.79,door)
+    # Narrow service panel clears both guide rails. Hinge arms remain inside
+    # the rail inner faces; the two actual pivot pins are intended contacts.
+    panel=armor('Faceted breech blast shutter',x,.80,2.27,.64,.065,.79,door)
     for dx in (-.29,.29):
         box('Shutter hinge arm',(x+dx,.80,3.06),(.08,.10,.22),'dark',door)
         bolt('Breech shutter latch',(x+dx,.76,2.42),(x+dx,.87,2.42),.032,door)
@@ -120,11 +128,14 @@ for tick,index in zip(shot_ticks,order):
     for frame,scale in ((1,1),(tick+1,1),(tick+2,0),(179,0),(180,1),(241,1)):
         ob.scale=(scale,scale,scale);ob.keyframe_insert('scale',frame=frame)
 for door in doors:
-    for frame,angle in ((1,0),(57,0),(83,105),(171,105),(212,0),(241,0)):
+    for frame,angle in ((1,0),(82,0),(106,105),(174,105),(211,0),(241,0)):
         door.rotation_euler.x=math.radians(angle);door.keyframe_insert('rotation_euler',frame=frame)
 for loader in loaders:
     rest=loader.location.copy()
-    for frame,dy,dz in ((1,0,0),(70,0,0),(97,.27,0),(115,.27,-.16),(138,.27,0),(178,0,0),(241,0,0)):
+    # Retract before opening; feed only under the fully raised shutter;
+    # retract again before closure, then park behind the closed panel.
+    for frame,dy,dz in ((1,0,0),(52,0,0),(82,.95,0),(114,.95,0),
+                         (140,0,0),(150,0,0),(174,.95,0),(213,.95,0),(237,0,0),(241,0,0)):
         loader.location=rest+Vector((0,dy,dz));loader.keyframe_insert('location',frame=frame)
 S.frame_set(1)
 S['variant']='rocket-salvo';S['base_included']=False;S['mount_socket']=[0,0,1.70]

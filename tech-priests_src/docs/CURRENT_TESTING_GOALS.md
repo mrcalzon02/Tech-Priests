@@ -757,3 +757,8 @@ Next weapon design backlog: rocket, artillery, radium, grav, plasma and flamer.
 ### 2026-11-15 - Rocket candidate gate
 
 Turret checkout reconciliation is verified and checkpointed. Rocket source/export and source-animation checks pass for the new six-cell salvo candidate. These are model-study gates only. Full moving-part collision review, gameplay-scale readability and native rocket ammo/cadence/effects/research/save-load remain open. Existing six integrated bunker weapons are unchanged. See docs/prototypes/rocket-salvo-design.md and art/bunker-rocket-salvo/candidate-v01/review.json.
+
+
+### Rocket shutter repair
+
+Owner-reported collision confirmed and repaired in candidate-v02: zero evaluated shutter/structure intersections in 481 half-frame samples. Candidate-v01 is superseded. This is sampled mesh evidence, not native gameplay acceptance or acceptance of every other moving interface. Native firing pilot remains next.

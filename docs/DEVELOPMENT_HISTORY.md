@@ -1089,3 +1089,10 @@ against the resulting GitHub main commit.
 Reconciled model-production to published main without changing other worktrees. Preserved local-only art and archived two superseded purifier helper variants. The six completed weapons remain unchanged. Recovery checkpoint da98a0ce is published.
 
 The owner selected staggered rocket salvo followed by visible reload. Added a two-pod, six-cell model and editable source animation candidate, independently imported static GLB and reviewed front/rear/quarter/clay renders. Export has 45,100 triangles, zero degenerates and UVs on all 232 meshes. All 241 source frames pass socket-height and mechanism ownership checks; 12 used source images are packed. Repaired collapsed louvre faces and the measured cassette drop clearance. Native ammo consumption, effects, targeting, research and save/load are not implemented for this new weapon yet. Candidate evidence: art/bunker-rocket-salvo/candidate-v01; design/map: docs/prototypes/rocket-salvo-design.md. No release/version bump.
+
+
+## 2026-11-15 - Rocket shutter collision repair
+
+Confirmed the owner-reported flap penetration using evaluated world-space shutter triangles against launcher structure at 481 half-frame samples. The original study has 2,048 frame/part intersection records, including closed panel/guide rail/central ram interference. Candidate-v01 is explicitly superseded.
+
+Candidate-v02 narrows the service panels, moves the drive outboard, extends linear guides, and interlocks withdrawal, flap opening, feed, withdrawal, closure and parking. The same sweep now reports zero intersections; only intended hinge pins are exempt. Independent export remains free of degenerate triangles with UVs on all 242 meshes. Source cycle checks pass. Actual rear-quarter source frames and GIF were reviewed. Full failure and repair evidence is retained in art/bunker-rocket-salvo/candidate-v02. No native firing or continuous collision-solver claim.

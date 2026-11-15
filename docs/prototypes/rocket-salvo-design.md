@@ -51,3 +51,19 @@ flowchart LR
 This is the intended runtime ownership map, not implemented runtime code.
 Use the existing bunker owner and canonical event registry when integrating.
 Keep the six previously completed weapons unchanged while reviewing the model.
+
+## Shutter correction
+
+Candidate-v01 is superseded after the owner identified structural penetration.
+The original source timing/height tests did not prove clearance. Evaluated mesh
+sweeps confirm the original problem, including closed-panel interference with
+guide rails and the loading drive.
+
+Candidate-v02 uses narrower panels, outboard loading drives and extended linear
+guides. The cassette withdraws before the flap opens; it feeds under the fully
+raised flap, withdraws again before closure, and returns behind the closed flap.
+The new evaluated shutter sweep reports zero intersections at 481 half-frame
+samples against all other launcher meshes, exempting only intended hinge pins.
+This closes that sampled shutter-intersection check, not continuous collision
+proof, acceptance of all other moving interfaces, or native gameplay testing.
+See candidate-v02/shutter-clearance.gif and shutter-sweep-check.json.
