@@ -92,7 +92,8 @@ function M.register(mod_name)
       return {filename=path .. 'base-' .. direction .. suffix .. '.png',width=g.base_size,height=g.base_size,
         scale=g.base_scale,shift=g.base_shift,draw_as_shadow=shadow or nil,draw_as_glow=glow or nil}
     end
-    base[direction] = {layers={layer('-shadow',true),layer(''),layer('-glow',false,true)}}
+    local team=layer('-team-mask');team.apply_runtime_tint=true
+    base[direction] = {layers={layer('-shadow',true),layer(''),team,layer('-glow',false,true)}}
   end
   local turret=table.deepcopy(assert(data.raw['ammo-turret']['gun-turret']))
   turret.name=NAME;turret.icon=icon;turret.icon_size=128;turret.icons=nil
@@ -122,7 +123,7 @@ function M.register(mod_name)
 
   local ammo=table.deepcopy(data.raw.ammo['firearm-magazine'])
   ammo.name=AMMO;ammo.localised_name={'item-name.' .. AMMO};ammo.localised_description={'item-description.' .. AMMO}
-  ammo.icon='__base__/graphics/icons/cannon-shell.png';ammo.icon_size=64;ammo.icons=nil
+  ammo.icon=path..'autocannon-magazine-icon.png';ammo.icon_size=128;ammo.icons=nil
   ammo.subgroup='tech-priests-bunker-weapons';ammo.order='b[autocannon-rounds]'
   ammo.ammo_type={target_type='entity',action={type='direct',action_delivery={type='projectile',
     projectile=PROJECTILE,starting_speed=1,direction_deviation=0,range_deviation=0,max_range=32}}}
