@@ -464,3 +464,39 @@ flowchart LR
 ```
 
 The smoke fixture is never a `dist/` ZIP and does not invoke or bypass the canonical release packager. This diagram represents the **validation boundary**, not an additional gameplay runtime authority; the movement ownership diagram above remains unchanged. A narrow smoke pass cannot satisfy migration, save/reload, profiler, complete behavioral, or packaged-load gates.
+
+## Requested enemy planetary outposts (2026-11-14)
+
+```mermaid
+flowchart LR
+  Chunk[Chunk generated or charted] --> Registry[Shared runtime event registry]
+  Registry --> Seeder[enemy_planetary_seeding: one candidate chunk]
+  Seeder --> Safety[Planet, setting, peaceful, terrain, spawn and base clearance]
+  Safety --> Once[Persist successful surface/chunk placement]
+  Once --> Outpost[Native enemy cogitator spawner]
+  Outpost --> Native[Factorio reinforcement and combat AI]
+  Deleted[Surface deleted via registry] --> Cleanup[Remove surface placement records]
+```
+
+Placement is event-driven with one bounded terrain search and bounded-radius entity queries, only for deterministic candidate chunks. No broker service, periodic scan, friendly pair task or friendly resource custody authority is added. Native spawner limits govern local recruitment. Destroyed outposts remain recorded to preserve cleared territory. No on_load storage writes.
+
+## Clarified colony authority (supersedes native-spawner path)
+
+```mermaid
+flowchart LR
+ Chunk[Shared chunk/chart event] --> Seed[One-time enemy_colony starter layout]
+ Seed --> Built[Existing canonical on_built station lifecycle]
+ Built --> Pairs[Normal Magos / Senior / Intermediate bound pairs]
+ Pairs --> Runtime[Existing scheduler / planner / physical executors]
+ Runtime --> Factory[Own-force construction, logistics, defense and research]
+```
+
+One hostile force per planet owns colony entities and research. The initial world-generation grant is finite and explicit. No colony tick owner, replenishment cheat, replacement research system or private movement controller is introduced. All subsequent worker operations use existing ordinary priest authorities.
+
+## Colony modifiers and population admission
+
+The existing seeder reads enemy_colony_options before placement. The canonical create_pair owner reads the same admission rules before creating a new renegade priest, covering ordinary expansion. Neither module installs a population tick service. Slot counts derive from existing bound valid stations; colony counts derive from surviving original station records. Existing-pair recovery keeps its reserved slot. Friendly forces bypass enemy-only admission checks.
+
+## Enemy research intercept authority
+
+Shared on_research_finished event -> enemy_research_announcements -> mode / colony-force / by-script filters -> localized transmission -> hostile connected players' chat. The observer has no gameplay write path, periodic service, research ownership or persistent notification queue. Variant selection hashes technology name and force identity without consuming gameplay RNG.

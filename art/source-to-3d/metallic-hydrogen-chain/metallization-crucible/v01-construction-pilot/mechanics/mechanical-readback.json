@@ -1,0 +1,602 @@
+{
+  "passed": true,
+  "errors": [],
+  "source_sha256": "82e2ad3d5a54ecd2ab8cdecf94417e985a20ad5891d64425f5dbeef85e0f10ab",
+  "contacts": [
+    {
+      "a": "TP Metallization Crucible V01 | thick annular pressure plinth",
+      "b": "TP Metallization Crucible V01 | full footprint equipment footing",
+      "label": "central plinth grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | vessel lower pressure closure",
+      "b": "TP Metallization Crucible V01 | thick annular pressure plinth",
+      "label": "pressure closure carried by plinth",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "b": "TP Metallization Crucible V01 | vessel lower pressure closure",
+      "label": "vessel seated on lower closure",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | closed graded pressure crown",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "crown seated on pressure wall",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | crown service hatch retaining flange",
+      "b": "TP Metallization Crucible V01 | closed graded pressure crown",
+      "label": "crown flange seated",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | closed crown service hatch",
+      "b": "TP Metallization Crucible V01 | crown service hatch retaining flange",
+      "label": "crown cover closes service bore",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | seated pressure retaining band 0",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "pressure band has full circumferential seat",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "pressure band has full circumferential seat",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "pressure band has full circumferential seat",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch grounded shoe 0",
+      "b": "TP Metallization Crucible V01 | full footprint equipment footing",
+      "label": "haunch shoe on foundation",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 0",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 0",
+      "label": "tapered casting seated in shoe",
+      "gap_tiles": 0.010000020265579224,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 0",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "haunch loads upper pressure collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 0",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 0",
+      "label": "back brace grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 0",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "back brace supports middle collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch upper mounting cheek 0",
+      "b": "TP Metallization Crucible V01 | tapered pressure haunch 0",
+      "label": "haunch cap retained on casting",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch grounded shoe 1",
+      "b": "TP Metallization Crucible V01 | full footprint equipment footing",
+      "label": "haunch shoe on foundation",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 1",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 1",
+      "label": "tapered casting seated in shoe",
+      "gap_tiles": 0.010000020265579224,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 1",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "haunch loads upper pressure collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 1",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 1",
+      "label": "back brace grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 1",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "back brace supports middle collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch upper mounting cheek 1",
+      "b": "TP Metallization Crucible V01 | tapered pressure haunch 1",
+      "label": "haunch cap retained on casting",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch grounded shoe 2",
+      "b": "TP Metallization Crucible V01 | full footprint equipment footing",
+      "label": "haunch shoe on foundation",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 2",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 2",
+      "label": "tapered casting seated in shoe",
+      "gap_tiles": 0.010000020265579224,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 2",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "haunch loads upper pressure collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 2",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 2",
+      "label": "back brace grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 2",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "back brace supports middle collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch upper mounting cheek 2",
+      "b": "TP Metallization Crucible V01 | tapered pressure haunch 2",
+      "label": "haunch cap retained on casting",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch grounded shoe 3",
+      "b": "TP Metallization Crucible V01 | full footprint equipment footing",
+      "label": "haunch shoe on foundation",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 3",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 3",
+      "label": "tapered casting seated in shoe",
+      "gap_tiles": 0.010000020265579224,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 3",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "haunch loads upper pressure collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 3",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 3",
+      "label": "back brace grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 3",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "back brace supports middle collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch upper mounting cheek 3",
+      "b": "TP Metallization Crucible V01 | tapered pressure haunch 3",
+      "label": "haunch cap retained on casting",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "maintenance collar seated through real shell opening",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | closed front pressure hatch",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "closed pressure lid on collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch grounded hinge lug 0.93",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "hinge lug attached to retaining collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch bronze hinge knuckle 0.93",
+      "b": "TP Metallization Crucible V01 | hatch grounded hinge lug 0.93",
+      "label": "hinge knuckle supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch grounded hinge lug 1.23",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "hinge lug attached to retaining collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch bronze hinge knuckle 1.23",
+      "b": "TP Metallization Crucible V01 | hatch grounded hinge lug 1.23",
+      "label": "hinge knuckle supported",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch latch keeper 0",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "latch keeper anchored in collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch closed latch dog 0",
+      "b": "TP Metallization Crucible V01 | pressure hatch latch keeper 0",
+      "label": "closed dog straddles cover edge",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch latch keeper 1",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "latch keeper anchored in collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch closed latch dog 1",
+      "b": "TP Metallization Crucible V01 | pressure hatch latch keeper 1",
+      "label": "closed dog straddles cover edge",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch latch keeper 2",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "latch keeper anchored in collar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch closed latch dog 2",
+      "b": "TP Metallization Crucible V01 | pressure hatch latch keeper 2",
+      "label": "closed dog straddles cover edge",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel spoke 0",
+      "b": "TP Metallization Crucible V01 | hatch handwheel supported spindle",
+      "label": "actual spoke reaches supported spindle",
+      "gap_tiles": 0.0024999380111694336,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel rim",
+      "b": "TP Metallization Crucible V01 | hatch handwheel spoke 0",
+      "label": "actual spoke reaches handwheel rim",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel spoke 1",
+      "b": "TP Metallization Crucible V01 | hatch handwheel supported spindle",
+      "label": "actual spoke reaches supported spindle",
+      "gap_tiles": 0.0024999380111694336,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel rim",
+      "b": "TP Metallization Crucible V01 | hatch handwheel spoke 1",
+      "label": "actual spoke reaches handwheel rim",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel spoke 2",
+      "b": "TP Metallization Crucible V01 | hatch handwheel supported spindle",
+      "label": "actual spoke reaches supported spindle",
+      "gap_tiles": 0.0024999380111694336,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel rim",
+      "b": "TP Metallization Crucible V01 | hatch handwheel spoke 2",
+      "label": "actual spoke reaches handwheel rim",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel supported spindle",
+      "b": "TP Metallization Crucible V01 | closed front pressure hatch",
+      "label": "handwheel spindle seated in lid",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | conditioned_hydrogen_input seated pressure nozzle",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "actual pressure nozzle at route end",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | conditioned_hydrogen_input smooth circular elbow process route",
+      "b": "TP Metallization Crucible V01 | conditioned_hydrogen_input seated pressure nozzle",
+      "label": "process tube enters chamber through drilled nozzle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | conditioned_hydrogen_input grounded riser support",
+      "b": "TP Metallization Crucible V01 | conditioned_hydrogen_input offset riser support foot",
+      "label": "riser support grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | conditioned_hydrogen_input offset clamp tie",
+      "b": "TP Metallization Crucible V01 | conditioned_hydrogen_input grounded riser support",
+      "label": "offset clamp tie mounted on post",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | conditioned_hydrogen_input straight riser clamp",
+      "b": "TP Metallization Crucible V01 | conditioned_hydrogen_input offset clamp tie",
+      "label": "riser clamp retained outside pipe bore",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | metallicized_intermediate_output seated pressure nozzle",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "actual pressure nozzle at route end",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | metallicized_intermediate_output smooth circular elbow process route",
+      "b": "TP Metallization Crucible V01 | metallicized_intermediate_output seated pressure nozzle",
+      "label": "process tube enters chamber through drilled nozzle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | metallicized_intermediate_output grounded riser support",
+      "b": "TP Metallization Crucible V01 | metallicized_intermediate_output offset riser support foot",
+      "label": "riser support grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | metallicized_intermediate_output offset clamp tie",
+      "b": "TP Metallization Crucible V01 | metallicized_intermediate_output grounded riser support",
+      "label": "offset clamp tie mounted on post",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | metallicized_intermediate_output straight riser clamp",
+      "b": "TP Metallization Crucible V01 | metallicized_intermediate_output offset clamp tie",
+      "label": "riser clamp retained outside pipe bore",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | protected product transfer pressure housing",
+      "b": "TP Metallization Crucible V01 | metallicized_intermediate_output seated pressure nozzle",
+      "label": "transfer shield mounted on vessel pressure nozzle; process tube retains radial clearance",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | seated thermal contact band 1.72",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "thermal band seated on vessel skin",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | thermal bus contact strap (-0.32, 1.72)",
+      "b": "TP Metallization Crucible V01 | seated thermal contact band 1.72",
+      "label": "thermal strap overlaps actual seated ring",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | thermal bus contact strap (0.32, 1.72)",
+      "b": "TP Metallization Crucible V01 | seated thermal contact band 1.72",
+      "label": "thermal strap overlaps actual seated ring",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | seated thermal contact band 1.93",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "thermal band seated on vessel skin",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | thermal bus contact strap (-0.32, 1.93)",
+      "b": "TP Metallization Crucible V01 | seated thermal contact band 1.93",
+      "label": "thermal strap overlaps actual seated ring",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | thermal bus contact strap (0.32, 1.93)",
+      "b": "TP Metallization Crucible V01 | seated thermal contact band 1.93",
+      "label": "thermal strap overlaps actual seated ring",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | rear power and closed cooling cabinet",
+      "b": "TP Metallization Crucible V01 | rear service cabinet grounded foot -0.45",
+      "label": "power cabinet on grounded feet",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | rear power and closed cooling cabinet",
+      "b": "TP Metallization Crucible V01 | rear service cabinet grounded foot 0.45",
+      "label": "power cabinet on grounded feet",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | cooling fan protective shroud",
+      "b": "TP Metallization Crucible V01 | rear power and closed cooling cabinet",
+      "label": "fan shroud attached to cabinet rear",
+      "gap_tiles": 0.005000114440917969,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | cooling fan bearing hub",
+      "b": "TP Metallization Crucible V01 | rear power and closed cooling cabinet",
+      "label": "fan bearing supported by cabinet",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | process witness metal bezel -0.23",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "witness bezel seated on drilled wall",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | closed process witness lens -0.23",
+      "b": "TP Metallization Crucible V01 | process witness metal bezel -0.23",
+      "label": "small inspection lens retained by bezel",
+      "gap_tiles": 0.0009967961814254522,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | process witness metal bezel 0.23",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "witness bezel seated on drilled wall",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Metallization Crucible V01 | closed process witness lens 0.23",
+      "b": "TP Metallization Crucible V01 | process witness metal bezel 0.23",
+      "label": "small inspection lens retained by bezel",
+      "gap_tiles": 0.0009967961814254522,
+      "passed": true
+    }
+  ],
+  "core_rays": 290,
+  "core_hits": [],
+  "transitions": [
+    {
+      "route": "conditioned_hydrogen_input",
+      "axis": [
+        1.0,
+        2.4253263841700345e-09,
+        0.0
+      ],
+      "ring_plane_error": 1.431202692636635e-06,
+      "reducer_radius_error": 8.403743817497755e-08,
+      "constant_tube_radius_error": 7.347887366615513e-08,
+      "passed": true
+    },
+    {
+      "route": "metallicized_intermediate_output",
+      "axis": [
+        -1.0,
+        -1.4551957416841788e-09,
+        0.0
+      ],
+      "ring_plane_error": 1.4309262053868732e-06,
+      "reducer_radius_error": 4.7333383906833504e-08,
+      "constant_tube_radius_error": 6.572673842686338e-08,
+      "passed": true
+    }
+  ],
+  "fan_surface_pair_checks": 204,
+  "fan_collisions": [],
+  "fan_loop_error": 1.1602668337218347e-06,
+  "external_bores": {
+    "passed": true,
+    "rays": 90,
+    "hits": []
+  },
+  "mesh_stats": {
+    "triangles": 50384,
+    "degenerate_triangles": 0,
+    "degenerate_objects": [],
+    "finite": true,
+    "missing_uv": []
+  },
+  "bounds": [
+    [
+      -2.5,
+      -2.440000057220459,
+      0.0
+    ],
+    [
+      2.5,
+      2.440000057220459,
+      2.690000057220459
+    ]
+  ],
+  "scope": "Actual evaluated contacts, five core paths per curved process segment into drilled vessel and 17 fan poses. This is a targeted geometry audit, not structural/pressure certification or native seating proof."
+}

@@ -20,7 +20,8 @@ class PurifierCameraChain(unittest.TestCase):
     def test_measured_camera_fixture_matches_factorio_grid(self):
         c=purifier_profile(512)
         self.assertEqual(validate_capture_profile(c),"entity")
-        self.assertEqual(c["directions"],[0,90,180,270])
+        self.assertEqual(c["directions"],[0])
+        self.assertEqual(c["orientation_policy"],"fixed")
         self.assertEqual(c["camera_override"]["elevation_deg"],45)
         self.assertEqual(c["camera_override"]["azimuth_deg"],0)
         self.assertAlmostEqual(c["camera_override"]["distance"],6*math.sqrt(2),places=6)

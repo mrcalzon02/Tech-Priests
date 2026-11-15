@@ -1,0 +1,43 @@
+{
+  "machine": "pressure-vessel-fabricator",
+  "footprint": [
+    4,
+    4
+  ],
+  "ports": [
+    {
+      "id": "forming_fluid_intake",
+      "fluid": "water",
+      "fluid_identity_final": false,
+      "production_type": "input",
+      "native_position": [
+        -1.5,
+        -0.5
+      ],
+      "native_direction": "west",
+      "native_target": [
+        -2.5,
+        -0.5
+      ],
+      "effective_plane": [
+        -2,
+        -0.5
+      ],
+      "engineering_model_mouth_center": [
+        -2,
+        0.5,
+        0.36
+      ],
+      "model_outward_normal": [
+        -1,
+        0,
+        0
+      ],
+      "native_axis_note": "Model +Y projects toward native screen north; off-center native row is -0.5.",
+      "native_physical_connection_verified": true,
+      "agent_native_graphical_review": true,
+      "owner_approved": false
+    }
+  ],
+  "native_target": "tp-mh7-review-fabricator"
+}

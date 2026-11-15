@@ -1,5 +1,14 @@
 # Current Testing Goals
 
+## 2026-11-15 - Reconcile autonomy validation with current main and native process state
+
+Resumed the autonomous rocket/space-science goal and reconciled the validation checkout with main 12e434995b7af0c6b477ccaeacd689a4b82a0c78. The published behavior tip 80fd71ae was 34 commits ahead of, and missing 78 commits from, main. Integration retains the behavior fixes and main's colony/research, remote-rail, combat and asset deliveries. The sole content conflict in the original 0338 terminal path was resolved by retaining both the factory-output-link receipt and the independently verified paid remote-drill receipt; neither owner replaces the other.
+
+The existing 58 Lua behavior groups and seven Python tests pass on the combined source. Additional construction/dispatcher handoff checks pass. Three additional rail checks fail identically on a clean archived main snapshot and the integrated checkout: rail_track_frontier_0836's fixture source-string assertion, remote_rail_outpost_0835's diagonal clearance expectation, and movement_overleash_return_continuity's included rail_expedition_transit_1401 waypoint assertion. These are preserved as existing failures, not silently reported as a fully passing suite. The native maintenance and factory evidence from 80fd71ae remains attributed to that exact source until the integrated source is run natively.
+
+The old parent-output matrix's running status was stale: its isolated default arena process is absent and there is no final result. Reconciliation must mark it interrupted/incomplete, preserve its failed science and timed-out contact evidence, and keep each run's original source identity. No live validation server was found for those job names. Existing recovery saves remain protected. The full campaign goal is active and unaccepted; no merge, early-science recovery or maintenance result proves rocket launching or orbital space science.
+
+
 ## 2026-11-15 - Revalidate occupied mining contacts and preserve autonomous recipe handoff
 
 Continued native behavior validation against the rocket/space-science campaign goal. The failed earlier factory run had an empty boiler while a strict manufacturing task retained the priest. The arbiter now permits existing canonical fuel service for strict recipes even without the separate facility-only flag. Physical construction, recipe-feed, station cargo, silo/artillery/roboport cargo and refund holds retain their protection. The dispatcher regression executes the original fuel owner through real-shaped source debit, counted coal custody, delivery and resumption of the same strict parent. This establishes admission/custody behavior; it is not an end-to-end native rocket or throughput result.
@@ -836,3 +845,40 @@ The authored model/static GLB, 18 PBR maps, 7+7 source poses, exact atlas cells,
 ## 2026-11-13 — local machine art integration
 
 V24 condenser scale/registration and Beach Pump V12 have combined current-source graphical/runtime proof in docs/art/local-machine-alignment/integrated-source-validation.json. Alignment accepted by the owner. Underwater sprite separation remains an open visual defect. Next art target: resume timber workbench V7 finish, measure its native eight-second clock, independently inspect animated interchange, preserve the current burner/collision/recipe interfaces, and promote only after real capture review.
+
+## 2026-11-14 - Requested hostile planetary seeding
+
+- Reproduce focused native proof: python tools/run_enemy_planetary_probe.py with a local Factorio 2.1 installation and Space Age. Disposable profile and unedited logs: build/enemy-planets-probe/.
+- Accepted: four-planet placement, untouched Fulgora/Vulcanus terrain, peaceful and occupied-site rejection, duplicate and cleared-site protection, runtime disabling, actual exploration event delivery, create/save/load, ranged damage and recruitment after load. Fixed seed 4242; 2,200 loaded ticks.
+- Before release: real existing-save upgrade coverage, player travel/charting playthrough on priority planets, long-term combat/population balance and ordinary release gates. No installed package or gameplay save changed.
+
+Accepted additional coverage: native chart-event delivery on previously generated terrain, using an engine-created player in --test-save mode. Benchmark execution skips chart processing and cannot prove this path.
+
+## Owner clarification - working hostile colonies
+
+The current seeder creates normal bound station/priest clusters with finite starter machinery, stock and ore, on a separate hostile force per planet. Spawner-only proof above is superseded. Reproduce with python tools/run_enemy_planetary_probe.py. The current fixture checks original pair identity, structural seed contents, native manufacturing and actual own-force research progress after load; long-term growth and planetary resource sustainability still require endurance evidence.
+
+Accepted current focused result: all four colonies retained ordinary station/priest pairs and made real own-force manufacturing and paid research progress in a separate native 1,201-tick loaded session. Long-term growth, completed construction chains and natural-terrain full-cluster frequency remain unverified. The earlier longer run timed out; it is not a pass.
+
+## Enemy colony modifier controls
+
+Check Settings > Mod settings > Map for the colony options. Focused native coverage includes blank planet-list rejection, priest/colony limits globally and per planet, canonical pair creation at capacity, zero/unlimited limits, ordinary pair persistence and paid research/production. Existing factories and priests must survive reductions. Remaining broad playtest coverage includes changed spacing on existing maps, non-default supply/richness values and additional allowed planets' terrain/environment suitability.
+
+## Enemy research chat intercepts
+
+The default Map setting announces all enemy colony technologies; Off and Major discoveries only are available. Focused native validation passed settings filters, starter-grant silence, hostile recipient selection and one native powered-lab completion in a separate real-player session. Run python tools/run_enemy_planetary_probe.py --research-intercepts. The test accelerates the initial research fraction; long-form factory research-chain proof remains separate. Confirm notification wording in ordinary multiplayer play and repeated infinite-level announcements during broader playtesting.
+
+## Actual colony research from zero
+
+Accepted: ordinary Vulcanus colony, three bound priests, Automation progress 0 at start, native paid completion at tick 6647, two new physical structures by tick 12000, hostile intercept eligibility and unchanged player research. Run python tools/run_enemy_planetary_probe.py --full-research. Hash-bound unedited logs: tests/evidence/enemy-research-from-zero. This uses normal planetary power/day rules and finite initial supplies, without forced research progress or worker instructions. Science produced was 0; sustained science manufacture and later research chains remain open.
+
+
+## 2026-11-15 â€” Owner-authorized bunker weapon integration
+
+PASS in the real Tech Priests 0.1.681 mod on Factorio 2.1.24 with official
+Space Age mods: 32 cannon setups, four existing ammunition types, 64 headings,
+five legacy weapons, graphics and separate-process mid-fire save/reload.
+All 180 existing event routes survive canonical-registry installation.
+Evidence: docs/prototypes/twin-cannon-main-evidence. These focused combat
+checks do not close or alter the unrelated logistics/recovery goals above.
+Next weapon design backlog: rocket, artillery, radium, grav, plasma and flamer.

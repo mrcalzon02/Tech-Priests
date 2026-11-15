@@ -1,0 +1,136 @@
+{
+  "source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+  "glb_sha256": "378095b1903a6b99700ff50ed6061782786ecbe37e03045d9833ca69c216c7df",
+  "scope": "Center plus eight offset rays along authored bores and reservoir interior, plus actual blind-end obstruction. Geometry continuity evidence only; does not simulate hydraulic performance or certify every seal.",
+  "source": {
+    "passed": true,
+    "paths": [
+      {
+        "path": "external mouth",
+        "rays": 9,
+        "probe_radius": 0.12,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "coaxial reducer",
+        "rays": 9,
+        "probe_radius": 0.015,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "local forming-fluid feed",
+        "rays": 126,
+        "probe_radius": 0.015,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "reservoir suction standpipe",
+        "rays": 9,
+        "probe_radius": 0.02,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "supported high-pressure forming line",
+        "rays": 657,
+        "probe_radius": 0.02,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "reservoir interior",
+        "rays": 27,
+        "probe_radius": 0.015,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "cap to mandrel into blank",
+        "rays": 9,
+        "probe_radius": 0.02,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "exposed workpiece pressure volume",
+        "rays": 9,
+        "probe_radius": 0.04,
+        "passed": true,
+        "failures": []
+      }
+    ],
+    "blind_end": {
+      "passed": true,
+      "object": "TP Vessel Fabricator V02 | welded closed blind end"
+    }
+  },
+  "runtime": {
+    "passed": true,
+    "paths": [
+      {
+        "path": "external mouth",
+        "rays": 9,
+        "probe_radius": 0.12,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "coaxial reducer",
+        "rays": 9,
+        "probe_radius": 0.015,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "local forming-fluid feed",
+        "rays": 126,
+        "probe_radius": 0.015,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "reservoir suction standpipe",
+        "rays": 9,
+        "probe_radius": 0.02,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "supported high-pressure forming line",
+        "rays": 657,
+        "probe_radius": 0.02,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "reservoir interior",
+        "rays": 27,
+        "probe_radius": 0.015,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "cap to mandrel into blank",
+        "rays": 9,
+        "probe_radius": 0.02,
+        "passed": true,
+        "failures": []
+      },
+      {
+        "path": "exposed workpiece pressure volume",
+        "rays": 9,
+        "probe_radius": 0.04,
+        "passed": true,
+        "failures": []
+      }
+    ],
+    "blind_end": {
+      "passed": true,
+      "object": "TP Vessel Fabricator V02 | welded closed blind end"
+    }
+  },
+  "passed": true
+}

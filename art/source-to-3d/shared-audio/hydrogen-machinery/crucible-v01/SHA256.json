@@ -1,0 +1,19 @@
+{
+  ".gitattributes": "308a40fa1d89ae5ea4390b4c9b46a0108b09f171f07898f25d451fa0c69c4e9f",
+  "audio-receipt.json": "4028624cb65a14849566ed4e25e0a40a48a9e6e8c875ccf5bbd90f0267d0558f",
+  "masters/crucible-idle.ogg": "7d4f30586c047933c2240741570915c04a2c45922296c1e09d20a5cbecf3b378",
+  "masters/crucible-idle.wav": "8fb6fe36f36a6eb905e39b65ff1051ce44cdfe0d4f73fcfad928edfa94c85bd5",
+  "masters/crucible-start.ogg": "05c29cba09487fd4fa01d31da6a0a351af3a0faa039dd348477be959aae58ae8",
+  "masters/crucible-start.wav": "882f58fc7732d2a9c97ee4c32beac60578bd979a556fd0dedcca90e4d4b16667",
+  "masters/crucible-stop.ogg": "8cf57bfd1e4849e5efbb07b5657d5c48900d61461a311e4579478c69c507df23",
+  "masters/crucible-stop.wav": "05bb5d5fea70390a28ab541fde21f5186eb3d3c6d9071d456d8c35df74ab5e93",
+  "masters/crucible-working.ogg": "4854cf37ecb0f9a3cd019b93d31f7d5f49c0abab7d0ebcb5c7478943580adb23",
+  "masters/crucible-working.wav": "7c3c7bb7b3fc0274b4cb486d016315e1c155131aa41576b9b72434164825f2a1",
+  "README.md": "ba43534f7f764c9a27b6f0088825bd0c6cdee8e76a7a5d6c1afb0695bdd6c8d8",
+  "review-mod/tp-mh7-crucible-audio_0.0.1/data-updates.lua": "5ecdfeb796ecdee62c0f780e267cf95925e6c0846349608c6ba3229c0dc39098",
+  "review-mod/tp-mh7-crucible-audio_0.0.1/info.json": "53cadaf811c44d16d01c33eb472a6336657c9949cb150d4b838f3d6d3bbc1113",
+  "review-mod/tp-mh7-crucible-audio_0.0.1/sound/crucible-idle.ogg": "7d4f30586c047933c2240741570915c04a2c45922296c1e09d20a5cbecf3b378",
+  "review-mod/tp-mh7-crucible-audio_0.0.1/sound/crucible-start.ogg": "05c29cba09487fd4fa01d31da6a0a351af3a0faa039dd348477be959aae58ae8",
+  "review-mod/tp-mh7-crucible-audio_0.0.1/sound/crucible-stop.ogg": "8cf57bfd1e4849e5efbb07b5657d5c48900d61461a311e4579478c69c507df23",
+  "review-mod/tp-mh7-crucible-audio_0.0.1/sound/crucible-working.ogg": "4854cf37ecb0f9a3cd019b93d31f7d5f49c0abab7d0ebcb5c7478943580adb23"
+}

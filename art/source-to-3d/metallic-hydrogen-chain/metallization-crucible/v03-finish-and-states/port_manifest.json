@@ -1,0 +1,52 @@
+{
+  "machine": "metallization-crucible",
+  "footprint": [
+    5,
+    5
+  ],
+  "ports": [
+    {
+      "id": "conditioned_hydrogen_input",
+      "model_mouth_center": [
+        -2.5,
+        0,
+        0.36
+      ],
+      "outward_normal": [
+        -1,
+        0,
+        0
+      ],
+      "bore_diameter": 0.49,
+      "flange_outer_diameter": 0.68,
+      "native_position": null,
+      "native_direction": null,
+      "verified_native": false,
+      "interface_kind": "fluid"
+    },
+    {
+      "id": "metallicized_intermediate_output",
+      "model_mouth_center": [
+        2.5,
+        0,
+        0.36
+      ],
+      "outward_normal": [
+        1,
+        0,
+        0
+      ],
+      "bore_diameter": 0.49,
+      "flange_outer_diameter": 0.68,
+      "native_position": null,
+      "native_direction": null,
+      "verified_native": false,
+      "interface_kind": "sealed_item_transfer",
+      "payload": "tp-mh7-raw-metallicized-pellet",
+      "native_fluid_box": null,
+      "owner_override": "Raw solid pellets leave this device; no second gameplay fluid connection."
+    }
+  ],
+  "native_target": null,
+  "native_fluidbox_verified": false
+}

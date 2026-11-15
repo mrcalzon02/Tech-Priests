@@ -1,0 +1,81 @@
+{
+  "passed": true,
+  "generator_sha256": "a69d5eaa4a62072e37e165f3a04da6fbb51b968c38287fe18621e2bb1f2e7fc9",
+  "provenance": "Original oscillators, seeded filtered noise and resonances; no sampled or third-party recordings",
+  "assets": [
+    {
+      "name": "fabricator-working",
+      "seconds": 12.0,
+      "loop": true,
+      "sample_rate": 48000,
+      "channels": 1,
+      "plan": "Twelve-second source cycle: exposed seam welding .36\u20133s, clamp drive 4.2\u20136s, loaded forming pump 6\u20138.16s, restrained pressure return and clamp opening 9\u201310.8s. Quiet continuous cabinet motor; no compressor roar or invented repeated press impacts.",
+      "wav_sha256": "b5fe71df6f1cda6dac4d69818c30d6c9aab4acbb8f3ce659efc0d51b8c7dd3fd",
+      "ogg_sha256": "4ebb3eae25b7bf8614c75448016e6e0d3c5b5e098daee2cb8b9348a0028d759f",
+      "decoded_peak": 0.5230438709259033,
+      "decoded_rms": 0.10414604097604752,
+      "decoded_rms_dbfs": -19.647144694821357,
+      "loop_seam_step": 0.0015663602389395237,
+      "ordinary_99_9_percent_step": 0.13524768283963198
+    },
+    {
+      "name": "fabricator-idle",
+      "seconds": 12.0,
+      "loop": true,
+      "sample_rate": 48000,
+      "channels": 1,
+      "plan": "Powered standby cabinet hum; welding arc and forming pressure cycle stopped.",
+      "wav_sha256": "c5fc354b01fbf0200570324801dce90b81068a9902ca128ccd95dbf5e789ecc5",
+      "ogg_sha256": "15b41ce1a60e3f82b2a519a1451258112bec549ea8cf6b88eb9002ce28130e29",
+      "decoded_peak": 0.05200762301683426,
+      "decoded_rms": 0.018060116097331047,
+      "decoded_rms_dbfs": -34.86558924405139,
+      "loop_seam_step": 4.005152732133865e-06,
+      "ordinary_99_9_percent_step": 0.0005564410295337438
+    },
+    {
+      "name": "fabricator-start",
+      "seconds": 1.4,
+      "loop": false,
+      "sample_rate": 48000,
+      "channels": 1,
+      "plan": "Contactor click and pump cabinet spin-up. No welding or clamp impact triggered by startup alone.",
+      "wav_sha256": "c171a62042880b736e595631a10a2dae82e550cecdf4b349c471c69dc4b1a1c3",
+      "ogg_sha256": "ea7f23deb78ff493d05858ffbc28367903c5156fb74006b8bea26fc17f131cd3",
+      "decoded_peak": 0.21808567643165588,
+      "decoded_rms": 0.08537975698709488,
+      "decoded_rms_dbfs": -21.37290171289816,
+      "loop_seam_step": 0.19370169937610626,
+      "ordinary_99_9_percent_step": 0.023289973013102507
+    },
+    {
+      "name": "fabricator-stop",
+      "seconds": 1.6,
+      "loop": false,
+      "sample_rate": 48000,
+      "channels": 1,
+      "plan": "Motor rundown and restrained closed-circuit return wash.",
+      "wav_sha256": "748cdae4ebe2e87762527ba4eeee832d1602d8cbbfc3421be121a7f1dd53b55d",
+      "ogg_sha256": "a14e300f0adfe115c76a7b7dc4159618547cf34f83c381eb28ff4135a75dd43f",
+      "decoded_peak": 0.37582558393478394,
+      "decoded_rms": 0.06537740677595139,
+      "decoded_rms_dbfs": -23.691446197973328,
+      "loop_seam_step": 0.0001471579889766872,
+      "ordinary_99_9_percent_step": 0.009381292745471125
+    }
+  ],
+  "native_mix": {
+    "working_gain": 0.7,
+    "audible_distance_modifier": 1.8,
+    "priority": 30,
+    "idle_gain": 0.08,
+    "start_gain": 0.55,
+    "stop_gain": 0.45
+  },
+  "compressor_comparison": {
+    "receipt_sha256": "224afba3c44e893010cb17b4359dcd446f330aeace163d50941f2c28de2ac099",
+    "effective_rms_difference_db": -10.014333080304922
+  },
+  "native_binding_verified": false,
+  "owner_audition_approved": false
+}

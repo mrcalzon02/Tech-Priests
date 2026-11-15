@@ -1,0 +1,283 @@
+{
+  "schema": 1,
+  "source_sha256": "724175240b04311637904348c29fa435914f08e705975737bf44370439e7a24f",
+  "source_file": "water-purifier-v14.blend",
+  "camera_policy": "fmpl.factorio45.v1",
+  "persistent_camera_count": 1,
+  "camera_cleanup": {
+    "policy": "fmpl.factorio45.v1",
+    "removed_camera_objects": [
+      "FMPL_CAPTURE_CAMERA"
+    ],
+    "persistent_camera_count": 1,
+    "name": "FMPL_CAPTURE_CAMERA"
+  },
+  "blender": "5.0.0",
+  "config": {
+    "schema": 1,
+    "asset": "tp-water-purifier-v14-candidate",
+    "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\model-completion\\metallic-hydrogen-chain\\v14-pilot-03-surface-repair\\water-purifier-v14.blend",
+    "adapter": null,
+    "source_size": 256,
+    "sizes": [
+      64,
+      128,
+      256
+    ],
+    "samples": 24,
+    "seed": 4362,
+    "columns": 4,
+    "fps": 8,
+    "directions": [
+      0
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "exclude_rotation": [],
+    "hide_render": [],
+    "animated_lights": [],
+    "states": {
+      "idle": [
+        1
+      ],
+      "working": [
+        1,
+        13,
+        25,
+        37,
+        49,
+        61,
+        73,
+        85
+      ]
+    },
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "entity",
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 8.48528137423857,
+      "target": [
+        0,
+        0,
+        1.65
+      ],
+      "ortho_scale": 5.8,
+      "shift_x": 0,
+      "shift_y": 0
+    },
+    "orientation_policy": "fixed"
+  },
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        -0.7071067690849304,
+        -5.999999523162842
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        0.7071067690849304,
+        7.649999618530273
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 5.800000190734863,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      256,
+      256
+    ]
+  },
+  "daylight": [
+    {
+      "name": "Left studio softbox",
+      "type": "AREA",
+      "energy": 1250.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          0.6246951222419739,
+          0.6035502552986145,
+          -0.49546244740486145,
+          -5.0
+        ],
+        [
+          -0.7808687686920166,
+          0.48284032940864563,
+          -0.3963700532913208,
+          -4.0
+        ],
+        [
+          7.999510387435294e-09,
+          0.634501576423645,
+          0.7729215621948242,
+          9.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Right rim softbox",
+      "type": "AREA",
+      "energy": 1050.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          -0.37139084935188293,
+          -0.6804137229919434,
+          0.6317483186721802,
+          5.0
+        ],
+        [
+          0.9284766316413879,
+          -0.2721656560897827,
+          0.25269946455955505,
+          2.0
+        ],
+        [
+          1.985578990115755e-08,
+          0.6804138422012329,
+          0.7328280806541443,
+          7.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "world": {
+    "name": "World",
+    "color_management": {
+      "view_transform": "AgX",
+      "look": "None",
+      "exposure": 0.0,
+      "gamma": 1.0
+    }
+  },
+  "material_changes": [],
+  "mesh_count": 749,
+  "master_sha256": "13cbeab3d2d74540fe9c55b17eb90dabff18d3f90bb36650c33da2885c19239a",
+  "frames": [
+    {
+      "state": "idle",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 1,
+      "path": "frames/idle/d00/f000.png",
+      "sha256": "98ae79bfe2bbeabeb237cd907f96c2dd9b1f72e375aadd84986e9bfbdd5e00b0"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 1,
+      "path": "frames/working/d00/f000.png",
+      "sha256": "27d624bc57f85e1ca043bbb03d393977f8f6ed5cc051cd5c4cdb78a090b8b66b"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 1,
+      "timeline_frame": 13,
+      "path": "frames/working/d00/f001.png",
+      "sha256": "0ba2f5b46b1f97310481e28ed8cd527821525a25febd1dd741b11ae324824e02"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 2,
+      "timeline_frame": 25,
+      "path": "frames/working/d00/f002.png",
+      "sha256": "e439a3d5995920ca9c06956ba090de7bc0b67583b9c58ae9068c3f713854a6f7"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 3,
+      "timeline_frame": 37,
+      "path": "frames/working/d00/f003.png",
+      "sha256": "b007d5f35d6f5538e2acaaf886d18fa61dfedc2926597cd532e193b7e5c199be"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 4,
+      "timeline_frame": 49,
+      "path": "frames/working/d00/f004.png",
+      "sha256": "a5629df351a71cf2cf3e8c2c7e72a8e0514c3ed08342236c9981a0282bfcaf97"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 5,
+      "timeline_frame": 61,
+      "path": "frames/working/d00/f005.png",
+      "sha256": "8694135123a8dd6ab926901f2c62e097b6abe677dac43e0b82a2b64230251715"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 6,
+      "timeline_frame": 73,
+      "path": "frames/working/d00/f006.png",
+      "sha256": "64c015ec07efd78d30bf8cab4ecdab259c2d9dc615a49479c202cf1760f82fd4"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 7,
+      "timeline_frame": 85,
+      "path": "frames/working/d00/f007.png",
+      "sha256": "0a8cbcd4018b7e6eee0777f0306f9ace84f2b4c61abd52f442285fd28f4bee4f"
+    }
+  ],
+  "art_accepted": false,
+  "engine_integration": "outside Blender-only scope"
+}

@@ -1,0 +1,21 @@
+{
+  ".gitattributes": "308a40fa1d89ae5ea4390b4c9b46a0108b09f171f07898f25d451fa0c69c4e9f",
+  "assembler-v02.blend": "61b39408ebabf4061834a5ce68b213beb1a52348765fe8bb9899f036a3761545",
+  "assembler-v02.glb": "606916a9e15173269ada45d940afe1a451ec1c7ce634a7e98853e53ab121b13a",
+  "CHECKPOINT.json": "ef81f8c7bbcd93ee4a85b6d6fbe70288def69c5d695cfa6efe120d0456ec1c1e",
+  "construction-receipt.json": "1e21101913476a5318b88bd5048ffadee2d26d911b623f04d73e99cc5e2ad86e",
+  "export-readback.json": "e61b882525519e5b82b1110b0df045e196b6a206966f97fa80a4f90c7d5ee9d2",
+  "feed-readback.json": "bb41a9a3c35776462b7f186ceec917dd180043de8119735d1328fccc31af70e0",
+  "indexed-stations.png": "f7e82c1619884b55e090323217790237fd938a3c32ef28cc01555ec74ff58d2c",
+  "inspection/assembler-readback.json": "c6778cf02b1836128ff4d2c29aa5c411ca9f838a5e9d4b924d8d21253084afae",
+  "inspection/first-station-fill.png": "90ed00addfb85f71be99c2e23c3d16fe23e6f017873f7b008913c91df304f172",
+  "inspection/second-station-cap.png": "8d5febbc6f3912addd8e026e2729f7d30b8ce3c4858e98df16ef9a186fb06232",
+  "inspection/third-station.png": "53c504e223472f5f233b30f2b934520ad8c5c07334b1fdd13b32db0c7cc19747",
+  "part_provenance.json": "aa337e153f37bb1b774af28d9f98bb87059caac4a77cc866fe1054bc72a41275",
+  "port_manifest.json": "8e6816342ad479be40728bbb1e329d987532d32915ee12430c155a19b50ab857",
+  "README.md": "57357e230dad67df351dee04c8bae29e94108968c11a408bcb2b883853d6f906",
+  "runtime-motion.json": "6886f77fcca61010cb00132c193bc062f730cbe80599cabd95ea066dde60ac11",
+  "source-motion.json": "3942547dbf478f5f59a8a7cab2b7bc5c183d5518c96740f5ce45e067967e99f4",
+  "VISUAL_REVIEW.json": "96af1dba51fca23c9215715d7d8a32d163b007b8555c14f9d5ccdfd243b75bfa",
+  "working-front.png": "82323dfef02cf234aba71453b6e6f0ad4e3602052dd5bb7c08f88d6891bb91d9"
+}

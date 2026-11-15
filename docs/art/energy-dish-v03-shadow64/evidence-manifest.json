@@ -1,0 +1,31 @@
+{
+  "files": {
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/capture_dish_shadows.py": "ff60e818607594c45b232bd19294b9d840363ed3b899ee618bf77b1a0c814a6f",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/capture_dish_shadows_sharp.py": "7b894c09bbca46aaee3c1fff57c55a14ca25fe81f0fa0604a70d08855defde5b",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/compose_dish_shadow_mount.py": "a9664f1e528a25934a1e954547ae3252f9a5119f146a37199aefd92eec90e349",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/idle-shadow-1280-1.png": "e1fe22cabfcc71bb79bb36db298b7f5a8dc10cb313c9284e2365a28ecd41c697",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/idle-shadow-1280-2.png": "c449e8b7a010cb9702dc28acf9d1764686d0779426c4c4ecd2ac1199890978a4",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/idle-shadow-1280-3.png": "ba0c0774ab7a7ee1937eb01c21aff62ec2c6492ed2d254032ed3d36e40019659",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/idle-shadow-1280-4.png": "d33daf868d603e5354e44a5a58b51ba761958b5a59a0c7c19a5d2ca92a09a69a",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/idle-shadow-512-1.png": "0729afb207d5480975f04fd783788633288b4dc3aba882b7b9758d6787821061",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/idle-shadow-512-2.png": "8cf20f573e324f05b962c3a0bd30978c7e455f9ed674e7e300edb0a062f11994",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/idle-shadow-512-3.png": "f3ec59ed4c25a50bc2b8da928d8033c0e5793ef8fc9711333071b26132855ab6",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/idle-shadow-512-4.png": "b3f8f677dc1acf956435d32c868fbe33dd44c1e12c9415f4ae02c7f42702893c",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/package_dish_shadow64.py": "92f55b526f8cc294cb07d4f06dcb39694b023072b2472d486435122c6cd0f699",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/source-shadow64.zip": "0ae09da12974a24f5c6e49ed6ff893dc67213a384fa63ebdbda6b0712c24a706",
+    "art/source-to-3d/martian-bunker/alternatives/energy-dish-v03-shadow64/verify_dish_shadow_delivery.py": "5af5f5d31251c2cec2640c74240e58e1b3220234b1283c3afd1b5e0b7f128dbf",
+    "docs/art/energy-dish-v03-shadow64/CHECKPOINT.json": "2c5fbf84dda8e05af09423f6c173cb0ab082675b75ccd220c8f8970bded77bb2",
+    "docs/art/energy-dish-v03-shadow64/eight-headings-shadow-composition.png": "d2b479441a6d411d50e101d6be554d9f23736e0fad9ca4bb2fa2f6f4d87aeca6",
+    "docs/art/energy-dish-v03-shadow64/independent-delivery-proof.json": "b2db8cd7f031fa52a1d6765db931cc4c099314443caa5ec4bc29cba2fdd9d576",
+    "docs/art/energy-dish-v03-shadow64/mounted-cardinal-shadows.png": "39c4d72ee8a1cca6349b655d7c858e114456bd5a82425f21cbf1e5718f91c4d5",
+    "docs/art/energy-dish-v03-shadow64/mounted-composition-receipt.json": "812c6dd3b18817cf070897c9cde05ecdd86f1b17d8a028264ef0a2189ee9455e",
+    "docs/art/energy-dish-v03-shadow64/README.md": "867a741aed7f783370be4be262be3ebaacd1b1bbc0865bb119b77927ffc4a6c9",
+    "docs/art/energy-dish-v03-shadow64/rejected-studio-identity.json": "45ea713af65b0696f79475d93c0012640315e80fb63e9cbc137cada6fa02a34a",
+    "docs/art/energy-dish-v03-shadow64/rejected-studio-pilot.png": "4db871d0eedad9baec9ee855bbc74fb8310fb0482e47605b3a11b40fc2a5651b",
+    "docs/art/energy-dish-v03-shadow64/shadow64-validation.json": "a37c549cc6676aa65ef951a509b137e5af5c2be85a36045882ac60eb090b7531",
+    "docs/art/energy-dish-v03-shadow64/single-key-raw-pilot.png": "a150d8b9f672750268291d62d10960581d3b97f57e6588aa78855c5139874a4f",
+    "docs/art/energy-dish-v03-shadow64/source-preservation.json": "b2116853df2f29a083172c0da14a7ebefc133dcdcc0e4d4d22982ac416c79faf",
+    "docs/art/energy-dish-v03-shadow64/source-shadow64-archive.json": "bdff0ca149f39c1939a67ff91028f0ecb883bb434876a3b5af6738ed664a6e0e",
+    "docs/art/energy-dish-v03-shadow64/visual-review.json": "a7f2bd8828547515c5188ca5a73c95bdda5e8a3f8aaa74ac20977191ea047811"
+  }
+}

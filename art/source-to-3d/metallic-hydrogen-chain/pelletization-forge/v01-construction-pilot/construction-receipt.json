@@ -1,0 +1,311 @@
+{
+  "status": "construction pilot; independent mechanics, finishing and native work pending",
+  "source_sha256": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
+  "provenance": "new_reconstruction_from_reference; historical v0.2 native bytes unrecovered",
+  "contacts": [
+    {
+      "a": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "press shoe on footing"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column web -0.89",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "label": "column web seated on shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (-0.89, -0.27)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "label": "column flange on grounded shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (-0.89, 0.07)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "label": "column flange on grounded shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "press shoe on footing"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column web 0.89",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "label": "column web seated on shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (0.89, -0.27)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "label": "column flange on grounded shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (0.89, 0.07)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "label": "column flange on grounded shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "b": "TP Pelletization Forge V01 | red press column web -0.89",
+      "label": "crossbeam carried by grounded columns"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "b": "TP Pelletization Forge V01 | red press column web 0.89",
+      "label": "crossbeam carried by grounded columns"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die bed grounded pier -0.45",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "die pier grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "b": "TP Pelletization Forge V01 | die bed grounded pier -0.45",
+      "label": "die bed on pier"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die bed grounded pier 0.45",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "die pier grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "b": "TP Pelletization Forge V01 | die bed grounded pier 0.45",
+      "label": "die bed on pier"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open tapered pellet die",
+      "b": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "label": "die seated over drilled bed core"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide lower socket -0.3",
+      "b": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "label": "lower guide socket seated on bed"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | fixed press guide rod -0.3",
+      "b": "TP Pelletization Forge V01 | guide lower socket -0.3",
+      "label": "guide supported in close-fitting lower socket"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide upper socket -0.3",
+      "b": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "label": "upper guide socket carried by crossbeam"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | moving crosshead guide bearing -0.3",
+      "b": "TP Pelletization Forge V01 | guided moving crosshead",
+      "label": "moving bearing retained in crosshead"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide lower socket 0.3",
+      "b": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "label": "lower guide socket seated on bed"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | fixed press guide rod 0.3",
+      "b": "TP Pelletization Forge V01 | guide lower socket 0.3",
+      "label": "guide supported in close-fitting lower socket"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide upper socket 0.3",
+      "b": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "label": "upper guide socket carried by crossbeam"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | moving crosshead guide bearing 0.3",
+      "b": "TP Pelletization Forge V01 | guided moving crosshead",
+      "label": "moving bearing retained in crosshead"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | on-axis press punch",
+      "b": "TP Pelletization Forge V01 | punch mounting shank",
+      "label": "press punch on retained shank"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | punch mounting shank",
+      "b": "TP Pelletization Forge V01 | guided moving crosshead",
+      "label": "punch shank carried by crosshead"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | actuator seated mounting flange",
+      "b": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "label": "actuator flange supported by crossbeam"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | closed hydraulic press cylinder",
+      "b": "TP Pelletization Forge V01 | actuator seated mounting flange",
+      "label": "actuator seated through flange"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | closed actuator pressure head",
+      "b": "TP Pelletization Forge V01 | closed hydraulic press cylinder",
+      "label": "closed cylinder head on body"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | actuator piston gland",
+      "b": "TP Pelletization Forge V01 | closed hydraulic press cylinder",
+      "label": "piston gland seated in cylinder"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper grounded foot -0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "hopper foot grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper supported upright -0.48",
+      "b": "TP Pelletization Forge V01 | hopper grounded foot -0.48",
+      "label": "hopper post on foot"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open raw pellet hopper",
+      "b": "TP Pelletization Forge V01 | hopper supported upright -0.48",
+      "label": "open hopper rim carried by posts"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper rear diagonal brace -0.48",
+      "b": "TP Pelletization Forge V01 | hopper back brace grounded shoe -0.48",
+      "label": "hopper brace on actual rear shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper back brace grounded shoe -0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "rear brace shoe grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper grounded foot 0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "hopper foot grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper supported upright 0.48",
+      "b": "TP Pelletization Forge V01 | hopper grounded foot 0.48",
+      "label": "hopper post on foot"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open raw pellet hopper",
+      "b": "TP Pelletization Forge V01 | hopper supported upright 0.48",
+      "label": "open hopper rim carried by posts"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper rear diagonal brace 0.48",
+      "b": "TP Pelletization Forge V01 | hopper back brace grounded shoe 0.48",
+      "label": "hopper brace on actual rear shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper back brace grounded shoe 0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "rear brace shoe grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | short auger feed housing",
+      "b": "TP Pelletization Forge V01 | open raw pellet hopper",
+      "label": "hopper enters drilled upper feed port"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supporting pedestal 0.27",
+      "b": "TP Pelletization Forge V01 | auger grounded foot 0.27",
+      "label": "auger pedestal grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supported saddle 0.27",
+      "b": "TP Pelletization Forge V01 | auger supporting pedestal 0.27",
+      "label": "auger saddle on pedestal"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | short auger feed housing",
+      "b": "TP Pelletization Forge V01 | auger supported saddle 0.27",
+      "label": "auger housing retained in saddle"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supporting pedestal 0.94",
+      "b": "TP Pelletization Forge V01 | auger grounded foot 0.94",
+      "label": "auger pedestal grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supported saddle 0.94",
+      "b": "TP Pelletization Forge V01 | auger supporting pedestal 0.94",
+      "label": "auger saddle on pedestal"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | short auger feed housing",
+      "b": "TP Pelletization Forge V01 | auger supported saddle 0.94",
+      "label": "auger housing retained in saddle"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | feeder motor grounded leg -0.11",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "motor leg grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rear feeder drive motor",
+      "b": "TP Pelletization Forge V01 | feeder motor grounded leg -0.11",
+      "label": "motor supported on legs"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | feeder motor grounded leg 0.11",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "motor leg grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rear feeder drive motor",
+      "b": "TP Pelletization Forge V01 | feeder motor grounded leg 0.11",
+      "label": "motor supported on legs"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger rear bearing closure",
+      "b": "TP Pelletization Forge V01 | short auger feed housing",
+      "label": "feed bearing closure on housing"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger keyed drive coupling",
+      "b": "TP Pelletization Forge V01 | rear feeder drive motor",
+      "label": "drive coupling retained by motor"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open die feed shoe floor",
+      "b": "TP Pelletization Forge V01 | short auger feed housing",
+      "label": "open feed shoe meets lower auger lip"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.32",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "extraction chute support grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.32",
+      "b": "TP Pelletization Forge V01 | inclined product chute floor",
+      "label": "chute floor carried on grounded pedestal"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.85",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "extraction chute support grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.85",
+      "b": "TP Pelletization Forge V01 | inclined product chute floor",
+      "label": "chute floor carried on grounded pedestal"
+    }
+  ],
+  "press": {
+    "center": [
+      0,
+      -0.1
+    ],
+    "crosshead_idle_z": 1.32,
+    "stroke": 0.34,
+    "punch_radius": 0.05,
+    "die_minimum_radius": 0.055,
+    "guide_radius": 0.0345,
+    "guide_hole_radius": 0.036
+  },
+  "pending": [
+    "Independent ram/guide/actuator contacts and full swept collision audit",
+    "Verify hopper-auger-die-tray material path and pellet support",
+    "Machine-specific surfaces and working sound",
+    "Four idle/working rotations and native item interfaces",
+    "Processing must preserve remaining instability, HP and quality; no timer refresh"
+  ]
+}

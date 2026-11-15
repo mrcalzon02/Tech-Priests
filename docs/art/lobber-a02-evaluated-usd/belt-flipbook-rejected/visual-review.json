@@ -1,0 +1,29 @@
+{
+  "status": "REJECTED_STUDY_NOT_OWNER_APPROVED",
+  "source_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+  "glb_sha256": "e35c7e3949be991e636bd1fe5758ec8e63f512f475aed714de7a69adb8d30584",
+  "renders": [
+    {
+      "file": "actual-import-front.png",
+      "sha256": "eea187751ba403e800a458ee4b5221d8c143da294a61289d2b0d428bee819efb"
+    },
+    {
+      "file": "actual-import-rear.png",
+      "sha256": "c897e04f05ffab5fb38f224b21f0b43046d259a713c6543ea7292875cfc1735f"
+    }
+  ],
+  "agent_review": {
+    "isolated_belt_shape_readability": 4,
+    "exact_sample_geometry_preservation": 5,
+    "normal_correspondence": 2,
+    "whole_cap_export_completion": 0
+  },
+  "scale": "0..5; final required>=4for every applicable gate",
+  "observations": [
+    "Actual imported front/rear views inspected: segmented belt links and bent route are legible; diagnostic closeups do not establish whole-cap fidelity.",
+    "All193discrete pose positions/triangle counts match;192STEPmidpoints keep exactly one selected sample visible.",
+    "Raw buffer normal comparison and actual Blender import both exceed existing strict tolerance. No final surface pass.",
+    "Flat areas and rounded seams are visible, but closeup appearance cannot waive the measured normal discrepancy or full-cap size cost."
+  ],
+  "delivery": "Only scripts, compact receipts and diagnostic images published. GLB and193source NPZreferences remain local; no runtime or gameplay edits."
+}

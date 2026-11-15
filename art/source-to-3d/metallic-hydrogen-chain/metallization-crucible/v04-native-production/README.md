@@ -1,0 +1,9 @@
+# Crucible native production checkpoint
+
+The owner accepted restrained animation and directed no further intricate motion. Preserve the six seated fan blades, status movement and current engineering model. Actual native input alignment was lowered three additional pixels to +7 overall, with normal object depth and unchanged body proportions/coaxial reducers. The editable native-fitting master, 36 actual state/orientation frames and six atlases are included; engineering source/GLB and original sound remain in V03 and the audio supplement.
+
+Factorio 2.1.24 passes eight connected/disconnected input/rotation cases. There is exactly one fluid box; a pipe placed at the pellet-transfer edge does not connect. Real inserters collect actual produced solid pellets in all four orientations. Those pellets receive separate random deadlines, lose real HP and quality and become inert; even blocked machine output decays. Actual produced pellets sealed in pressure shells remain stable without healing. Native pressure/cooling sound loads at the intended .65 gain. The fixture deliberately clamps output to legendary to prove quality loss; it is not final balancing.
+
+Native states now use eight working frames and the source eight-second rate. A private per-cell counter proves visible source-frame advancement in every direction. East/west complete uninterrupted eight-second loops; north/south include a held sample. The strict all-direction cadence report remains false and is preserved honestly. Counter graphics are excluded from this final mod. Base-game graphical views remain private with hashes.
+
+Use the isolated fresh-world review runner with pellet-decay 0.0.2 and the crucible-audio add-on. This fixture is separate from ordinary mod/economy integration. Continue the forge; do not add ornamental animation or restart the closed model review.

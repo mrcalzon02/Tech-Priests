@@ -522,12 +522,18 @@ local function stage_original_wagon_drill_0836(pair,task)
    and type(held.source_before)=="number"
    and type(held.source_after)=="number"
    and held.source_before-held.source_after==1
+   and type(held.fuel_source_before)=="number"
+   and type(held.fuel_source_after)=="number"
+   and held.fuel_source_before-held.fuel_source_after==5
+   and held.fuel_staged_count==5
+   and item_count(held.inventory,"coal")==5
    and item_count(held.inventory,"burner-mining-drill")==1
  end
  local before=item_count(task.source_inv,"burner-mining-drill")
- if before<1 or not(game and type(game.create_inventory)=="function")
+ local fuel_before=item_count(task.source_inv,"coal")
+ if before<1 or fuel_before<5 or not(game and type(game.create_inventory)=="function")
    then return false end
- local ok,inventory=pcall(function()return game.create_inventory(1)end)
+ local ok,inventory=pcall(function()return game.create_inventory(2)end)
  if not(ok and inventory and inventory.valid)then return false end
  held={inventory=inventory,station_unit=pair.station.unit_number,
    priest_unit=pair.priest.unit_number,
@@ -535,7 +541,9 @@ local function stage_original_wagon_drill_0836(pair,task)
    force_index=pair.station.force.index,
    wagon_request=task.request_value,
    source_unit=task.source_entity.unit_number,
-   source_before=before,source_after=nil,stage_tick=now()}
+   source_before=before,source_after=nil,
+    fuel_source_before=fuel_before,fuel_source_after=nil,
+    fuel_staged_count=nil,stage_tick=now()}
  pair.rail_remote_drill_supply_0836=held
  local removed=remove_item(task.source_inv,"burner-mining-drill",1)
  local inserted=insert_item(inventory,"burner-mining-drill",removed)
@@ -546,6 +554,20 @@ local function stage_original_wagon_drill_0836(pair,task)
    or before-after~=1 then
   held.quarantine="native-remote-drill-debit-unreconciled"
   record(pair,"remote-drill-supply-quarantined-0836",held.quarantine)
+  return false
+ end
+ local removed_fuel=remove_item(task.source_inv,"coal",5)
+ local inserted_fuel=insert_item(inventory,"coal",removed_fuel)
+ local fuel_refunded=insert_item(task.source_inv,"coal",removed_fuel-inserted_fuel)
+ local fuel_after=item_count(task.source_inv,"coal")
+ local held_fuel=item_count(inventory,"coal")
+ held.fuel_source_after=fuel_after
+ held.fuel_staged_count=held_fuel
+ if removed_fuel~=5 or inserted_fuel~=5 or fuel_refunded~=0
+    or fuel_before-fuel_after~=5 or held_fuel~=5 then
+  -- Preserve and quarantine the real native hold on any ambiguous debit.
+  held.quarantine="native-remote-fuel-debit-unreconciled"
+  record(pair,"remote-drill-fuel-quarantined-0836",held.quarantine)
   return false
  end
  record(pair,"original-remote-drill-physical-cargo-staged-0836",
@@ -1506,6 +1528,67 @@ local function finish(pair,task,built,reason)
    and type(task.request_value)=="table"
    and task.request_value.source=="factory-output-links-1282"then
   output_link.receipt=task
+ end
+
+ -- Original 0338 remote-drill completion is transient in the generic last
+ -- task slot. Record its actual paid entity at the sole physical builder
+ -- terminal boundary, before unrelated rail/stop builds overwrite it.
+ if built and task.request_field=="remote_drill_request_1011"
+     and task.item_name=="burner-mining-drill"
+     and task.entity_name=="burner-mining-drill"
+     and task.site_reason=="original-remote-rail-drill-0836"
+     and task.creative_build~=true then
+  local mission=pair.remote_rail_outpost_0835
+  local state=mission and mission.first_remote_drill_0836
+  local wagon=mission and mission.first_wagon_0836
+  local supply=pair.rail_remote_drill_supply_0836
+  local ride=pair.train_transport_rail_0835
+  local priest=pair.priest
+  local dx=(valid(built) and state and state.position)
+    and built.position.x-state.position.x or math.huge
+  local dy=(valid(built) and state and state.position)
+    and built.position.y-state.position.y or math.huge
+  if state and state.phase=="awaiting-existing-0338"
+      and state.request==task.request_value
+      and valid(pair.station) and valid(priest)
+      and state.station_unit==pair.station.unit_number
+      and state.priest_unit==priest.unit_number
+      and state.disembark_confirmed==true
+      and state.disembark_priest_unit==priest.unit_number
+      and ride and ride.disembark_confirmed==true
+      and ride.boarded_priest_unit==priest.unit_number
+      and wagon and wagon.phase=="native-paid-wagon-verified"
+      and supply and not supply.quarantine
+      and supply.station_unit==pair.station.unit_number
+      and supply.priest_unit==priest.unit_number
+      and supply.wagon_request==wagon.request
+      and type(supply.source_before)=="number"
+      and type(supply.source_after)=="number"
+      and supply.source_before-supply.source_after==1
+      and supply.inventory and supply.inventory.valid
+      and supply.inventory.get_item_count("burner-mining-drill")==0
+      and valid(built) and built.name=="burner-mining-drill"
+      and built.type=="mining-drill" and built.unit_number
+      and built.force==pair.station.force
+      and built.surface==pair.station.surface
+      and dx*dx+dy*dy<=1 then
+   state.paid_drill_completion_0836={
+    request_value=task.request_value,phase="complete",
+    request_field=task.request_field,site_reason=task.site_reason,
+    item_name=task.item_name,creative_build=false,
+    built_entity=built,built_unit=built.unit_number,
+    source_before=supply.source_before,
+    source_after=supply.source_after,completed_tick=now(),
+    native_0338_paid=true,
+   }
+   state.phase="native-0338-drill-built"
+   state.built_entity=built
+   state.built_unit=built.unit_number
+   state.built_tick=now()
+   state.last_blocker=nil
+   record(pair,"original-remote-drill-paid-build-preserved-0836",
+     safe(built.unit_number))
+  end
  end
  -- The generic terminal slot is overwritten by unrelated subsequent work.
  -- Preserve THIS exact original paid 0836 completion inside its pending writ

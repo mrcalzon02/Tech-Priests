@@ -1,5 +1,14 @@
 # Tech Priests Development History
 
+## 2026-11-15 - Reconcile autonomy validation with current main and native process state
+
+Resumed the autonomous rocket/space-science goal and reconciled the validation checkout with main 12e434995b7af0c6b477ccaeacd689a4b82a0c78. The published behavior tip 80fd71ae was 34 commits ahead of, and missing 78 commits from, main. Integration retains the behavior fixes and main's colony/research, remote-rail, combat and asset deliveries. The sole content conflict in the original 0338 terminal path was resolved by retaining both the factory-output-link receipt and the independently verified paid remote-drill receipt; neither owner replaces the other.
+
+The existing 58 Lua behavior groups and seven Python tests pass on the combined source. Additional construction/dispatcher handoff checks pass. Three additional rail checks fail identically on a clean archived main snapshot and the integrated checkout: rail_track_frontier_0836's fixture source-string assertion, remote_rail_outpost_0835's diagonal clearance expectation, and movement_overleash_return_continuity's included rail_expedition_transit_1401 waypoint assertion. These are preserved as existing failures, not silently reported as a fully passing suite. The native maintenance and factory evidence from 80fd71ae remains attributed to that exact source until the integrated source is run natively.
+
+The old parent-output matrix's running status was stale: its isolated default arena process is absent and there is no final result. Reconciliation must mark it interrupted/incomplete, preserve its failed science and timed-out contact evidence, and keep each run's original source identity. No live validation server was found for those job names. Existing recovery saves remain protected. The full campaign goal is active and unaccepted; no merge, early-science recovery or maintenance result proves rocket launching or orbital space science.
+
+
 ## 2026-11-15 - Revalidate occupied mining contacts and preserve autonomous recipe handoff
 
 Continued native behavior validation against the rocket/space-science campaign goal. The failed earlier factory run had an empty boiler while a strict manufacturing task retained the priest. The arbiter now permits existing canonical fuel service for strict recipes even without the separate facility-only flag. Physical construction, recipe-feed, station cargo, silo/artillery/roboport cargo and refund holds retain their protection. The dispatcher regression executes the original fuel owner through real-shaped source debit, counted coal custody, delivery and resumption of the same strict parent. This establishes admission/custody behavior; it is not an end-to-end native rocket or throughput result.
@@ -1150,3 +1159,82 @@ The actual tracked mod copy loads through the real late import in isolated Facto
 ## 2026-11-13 � V24 condenser native alignment integration
 
 Integrated the owner-accepted four-facing V24 96-frame Cycles condenser at HR .24 / SD .48 scale with measured per-facing shifts. The original 105 PNGs and 12-second animation are unchanged. Current-main Tech Priests and Tanks 1.8.103 ran together in the local Factorio 2.1.24 Steam client: 104 genuine PNGs, 20 connected pipes, real fuel-fed condenser water and pump water/full-output/landfill checks passed. Every production file in the isolated runtime matches the integrated source by SHA-256. Evidence: docs/art/local-machine-alignment/integrated-source-validation.json. The Beach Pump underwater-layer visual defect remains open. No release or general runtime-completion claim.
+
+## 2026-11-14 - Requested automatic hostile planetary outposts
+
+Implemented the owner's request for automatic enemy Tech-Priest seeding, particularly Fulgora and Vulcanus. Native ranged enemy units reuse Senior priest artwork; native unit-spawner outposts reuse cogitator artwork and recruit up to six local defenders. They use the existing enemy force and remain outside friendly station/pair task ownership.
+
+The sole placement owner, scripts/core/enemy_planetary_seeding.lua, uses shared registry chunk-generation/chart events. One candidate per 8x8 chunk region on Fulgora/Vulcanus; one per 12x12 on Nauvis/Gleba. Placement requires valid terrain, 384 tiles from origin/force spawn, 96 tiles from player-force entities and 192 tiles from other outposts. Successful placements persist per surface/chunk, including after destruction. No forced terrain changes, friendly inventory grants, periodic scan or new scheduler. Peaceful surfaces and space platforms are excluded. The default-enabled runtime setting stops future placement when disabled. Existing saves receive placements through generation/chart events; no retroactive full-map sweep. Aquilo and modded planets are outside this first scope.
+
+Validation: python tools/run_enemy_planetary_probe.py uses a disposable profile and Factorio 2.1.24 with Space Age, seed 4242. Native create/save and separate-process reload passed four-planet placement, duplicate/cleared-site protection, peaceful and occupied-site rejection, runtime disabling, actual chunk-generated delivery, native ranged damage and reinforcement recruitment over 2,200 ticks. Untouched native terrain accepted 17 of 48 Fulgora candidates and 48 of 48 Vulcanus candidates. Evidence: build/enemy-planets-probe/space-age-create.log and space-age-reload.log. A base-only exploratory load exposed an existing emergency-miner surface-condition requirement; no base-only compatibility claim is made. Installation, release packaging, publication, existing-user-save migration and long-run balance remain unclaimed.
+
+Additional accepted proof: real on_chunk_charted delivery seeded previously generated terrain in a native --test-save player session. The runner uses --test-save/--test-ticks for loaded gameplay because benchmark mode does not process chart updates. Both native chunk generation and charting routes are now exercised without manufactured events.
+
+## 2026-11-14 - Owner clarification: working enemy colonies replace combat nests
+
+The owner clarified that seeding means clustered autonomous factories with the same bound station/priest behavior as friendly priests. This supersedes the combat-spawner design above. enemy_colony.lua seeds three standard stations (Magos, Senior, Intermediate) through the existing on_built lifecycle owner, uses the canonical independent/emergency operation authorization, and delegates all subsequent planning, paid construction, logistics, research and defense to normal runtime authorities. No alternate colony scheduler or recurring supplies are added.
+
+Each initial cluster contains two stocked steel chests, two assemblers with starter ingredients, two fueled furnaces, two loaded turrets, a lab with finite starter science, solar panels, accumulators, poles, and four nine-tile ore deposits (iron/copper/coal/stone). One hostile research force per planet avoids exhausting Factorio's force limit. Colony forces ally with one another and native enemies; they are hostile to player forces. Candidate spacing is now 16x16 chunks on Fulgora/Vulcanus and 24x24 on Nauvis/Gleba to account for normal worker cost. Full footprints are collision-checked before initial placement; the seeder does not terraform. Native combat-spawner prototypes remain for compatibility but are no longer seeded.
+
+The updated probe checks actual colony structures, all three original bound pairs, separate forces, ore patches, physical production statistics and native research progress after a separate-process load. Old combat-outpost test results do not establish the clarified colony behavior. No package or user installation has been changed.
+
+Correction to the implementation note above: the unused combat-spawner prototype module was removed before packaging. Colonies now use only standard priest and station prototypes; no special enemy-worker type remains.
+
+Colony initialization establishes the three introductory 2.1 trigger technologies (steam-power, electronics, automation-science-pack) as explicit starting knowledge for the already-built settlement, then queues Automation through LuaForce.add_research. It does not grant Automation or recurring research progress. Real lab packs and electricity pay research costs; later selection uses ordinary priest authorities. This is a finite initial settlement baseline, alongside its finite physical starter stock.
+
+Clarified colony validation result: native Factorio 2.1.24 create/save and a separate --test-save session passed on all four planets. The 1,201-tick focused check confirms clustered seed contents, ordinary bound pairs after load, own-force item production and paid native research progress beyond the introductory seeded baseline. Full-structure power coverage was corrected during testing. An earlier 12,001-tick attempt exceeded the 180-second test timeout and is not accepted endurance evidence. Long-term colony growth, completed construction/research chains and natural-terrain colony-fit frequency remain separate validation work; the prior single-spawner terrain counts do not apply to the larger colony footprint. No installed mod or user gameplay save changed.
+
+## 2026-11-14 - Runtime controls for integrated enemy colonies
+
+Added runtime-global options for allowed planet names (blank disables new seeding), global/per-planet priest binding caps, global/per-planet active seeded colony caps, Fulgora/Vulcanus and other-planet spacing, spawn/base/colony clearance distances, starter stock multiplier, per-tile starter ore and peaceful-mode respect. Defaults retain the four initial planets, 16/24 chunk spacing, 384/96/192 tile clearances, 1x supplies and 1500 ore per tile; new population defaults are 96 priests globally / 24 per planet and 24 colonies globally / 6 per planet. Population and colony limit value 0 means unlimited.
+
+The read-only enemy_colony_options module is shared by the existing seeder and canonical create_pair owner. Admission checks include normal enemy expansion, not just initial groups of three. Existing valid bound stations reserve their priest slots during recovery; friendly forces and existing-pair recovery remain unaffected. Reducing a limit does not cull priests, delete factories, withdraw research or rewrite inventory. Stations built at capacity remain unbound while capacity is unavailable. Active colony slots count while an original station survives; destroyed sites remain recorded. Supply, ore, planet and spacing controls apply to future seeding; there is no automatic whole-map reseed or retroactive resource grant.
+
+The focused native fixture exercises empty allowed-planets, global and per-planet seed admission, global and per-planet colony admission, actual canonical new-pair rejection at capacity and zero-as-unlimited behavior on all four planets. Source settings load through Factorio 2.1.24; native production/research and separate-process persistence remain part of the same focused scenario. No new tick handler, movement authority, inventory owner or independent population controller was added.
+
+Validation accepted: Factorio 2.1.24 loaded all new setting prototypes, passed all four planets' admission/canonical expansion-cap checks, and retained normal own-force production, paid research and bound pairs in the separate 1,201-tick loaded session. Evidence: local-validation/integration-staging/colony-default/space-age-create.log and space-age-reload.log in the workspace. General endurance and non-default terrain/supply balance are not claimed.
+
+## 2026-11-14 - Enemy research noospheric chat intercepts
+
+Added a default-on Map setting, Enemy research intercepts in chat, with Off / All technologies / Major discoveries only. Eight localized Martian Gothic transmissions name the renegade planetary synod and the completed technology (including its icon). Major discoveries include automation tiers, new science packs, planet discoveries and selected named military/energy/space advances. Only connected players hostile to the completing colony force receive the message; friendly research, allied/cease-fire recipients and scripted starter research grants are excluded.
+
+The enemy_research_announcements module subscribes once, by stable owner/route, to the shared on_research_finished event. It is read-only and adds no tick loop, timer, persisted backlog, research mutation or gameplay RNG consumption. Normal save/reload does not replay old completions. Each genuine engine completion is eligible for a transmission, including repeated technology levels.
+
+Validation accepted: native Factorio 2.1.24 settings/load and a separate 601-tick real-player test-save session passed off/all/milestone filters, scripted-grant silence, friendly-force exclusion, recipient friendship/cease-fire exclusion and exactly one actual powered-lab Automation completion event. The observer-only test begins at 0.999 research progress to shorten execution; the final completion is engine-driven, not a fabricated event. This does not claim a full from-zero research chain. Reproduce with python tools/run_enemy_planetary_probe.py --research-intercepts; no test fixture is part of the installed mod.
+
+## 2026-11-14 - Real colony research and construction verified from zero
+
+Added a reproducible full-research native fixture and hash-bound, unedited evidence under tests/evidence/enemy-research-from-zero. The installed ordinary colony implementation completed Automation from exactly zero progress at tick 6647, through a real powered lab using its finite initial science stock. The ordinary research-finished event generated an eligible noospheric intercept. By tick 12000 the three normal bound priests had built two new physical structures. Player research was unchanged. No forced progress/completion, fabricated research event, direct worker command or recurring supply was used. The disposable Vulcanus terrain pad was cleared; its normal power/day cycle remained active.
+
+Reproduce with python tools/run_enemy_planetary_probe.py --full-research. Evidence is from source b2d3a867e95959e9eb0de92b837cfbcac873e01c, Factorio 2.1.24 and seed 4242. This verifies a complete initial paid cycle, not just the earlier accelerated notification observer. Native science production remained zero during this run; sustained science production, longer research chains and indefinite colony self-sufficiency remain unverified. No gameplay change was necessary for the demonstrated capability. An optional starting-inventory redistribution comparison was not promoted; normal colony starting inventories remain unchanged.
+
+
+## 2026-11-14 — Bunker stanchion ownership masks and twin-cannon runtime pilot
+
+Recovered the original four corner-buttress meshes and rendered calibrated depth-occluded coverage. Registered neutral force-tinted stanchion masks on the shared bunker foundation. Actual Factorio graphical evidence shows all six bunker weapons across four forces/base orientations; red armour and concrete are unchanged. Hash-bound evidence: docs/prototypes/bunker-team-colour-assets.json. Earlier render delivery masks had not been wired into the prototypes.
+
+The twin cannon now has a real animated two-heading runtime pilot: four native ammunition types, strict independent shot-driven recoil/settle states, separate depth-occluded flexible aerials, actual static cap shadows, and a visible native inventory preview. Physics tests cover 36 sites and unarmed traverse-driven aerial flex. A user-requested 0.08-tile flash lead is confirmed by before/after native pixel movement; projectile launch points are unchanged. Full 64-direction body/aerial capture and final package verification remain in progress. No full-goal completion, release-version change or remote publication is claimed. See docs/prototypes/twin-cannon-progress.md.
+
+
+## 2026-11-15 — Six bunker weapons integrated into Tech Priests main
+
+Registered the lobber, energy dish, Chicago piano, twin minigun and completed
+twin siege cannon alongside the existing autocannon in the actual main mod.
+Finalization runs before the existing recipe-schema sanitizer. Weapon callbacks
+use the canonical runtime event registry; all 180 pre-existing event routes are
+preserved. Added the original cannon source/GLB and all runtime atlases, native
+preview cores, icons, recipe/technology and shared force-coloured stanchions.
+
+The full 0.1.681 Tech Priests source, based on ab7e878, passed Factorio 2.1.24
+headless, graphical and separate-process mid-fire reload tests with official
+Space Age/Quality/Elevated Rails/Recycler enabled: 32 cannon sites, four native
+shell types, all 64 headings, research, ammo exhaustion and all five older
+weapon regressions. Final native flash lead is 0.16 tile with facing-dependent
+depth; projectile origins remain unchanged. Main evidence is retained under
+docs/prototypes/twin-cannon-main-evidence. The earlier two-heading pilot entry
+is historical and superseded by these full-direction results.
+
+This is source integration, not a new full-mod release/version bump or a claim
+about unrelated priest logistics gates. Rocket, artillery, radium, grav, plasma
+and flamer weapon families remain unbuilt. Publication is verified separately
+against the resulting GitHub main commit.

@@ -1,0 +1,65 @@
+{
+  "machine": "electrolyzer",
+  "footprint": [
+    3,
+    4
+  ],
+  "ports": [
+    {
+      "id": "hydrogen_output",
+      "model_mouth_center": [
+        -1.5,
+        0.5,
+        0.36
+      ],
+      "outward_normal": [
+        -1.0,
+        8.742277657347586e-08,
+        0.0
+      ],
+      "bore_diameter": 0.49,
+      "flange_outer_diameter": 0.68,
+      "native_position": null,
+      "native_direction": null,
+      "verified_native": false
+    },
+    {
+      "id": "oxygen_output",
+      "model_mouth_center": [
+        1.5,
+        0.5,
+        0.36
+      ],
+      "outward_normal": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "bore_diameter": 0.49,
+      "flange_outer_diameter": 0.68,
+      "native_position": null,
+      "native_direction": null,
+      "verified_native": false
+    },
+    {
+      "id": "water_input",
+      "model_mouth_center": [
+        0,
+        -2,
+        0.36
+      ],
+      "outward_normal": [
+        -4.371138828673793e-08,
+        -1.0,
+        0.0
+      ],
+      "bore_diameter": 0.49,
+      "flange_outer_diameter": 0.68,
+      "native_position": null,
+      "native_direction": null,
+      "verified_native": false
+    }
+  ],
+  "native_target": null,
+  "native_fluidbox_verified": false
+}

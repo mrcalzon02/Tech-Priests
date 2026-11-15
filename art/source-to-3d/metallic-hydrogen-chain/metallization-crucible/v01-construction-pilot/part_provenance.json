@@ -1,0 +1,104 @@
+{
+  "registry_sha256": "d9d33e61214cd95895228e515c9b3f01f07279218e15e973c226bbcdc093cb62",
+  "instances": [
+    {
+      "part_id": "tp.mh7.factorio-fluid-mouth",
+      "revision": "v1",
+      "source_blend": "components/fluid-mouth/v1/part.blend",
+      "source_sha256": "086c2bc479956a97d4869ab1e1f2ffa5e1b0880da19da53618d7e85ae27649fe",
+      "instance": "conditioned_hydrogen_input",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -2.5
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "part_id": "tp.mh7.factorio-fluid-mouth",
+      "revision": "v1",
+      "source_blend": "components/fluid-mouth/v1/part.blend",
+      "source_sha256": "086c2bc479956a97d4869ab1e1f2ffa5e1b0880da19da53618d7e85ae27649fe",
+      "instance": "metallicized_intermediate_output",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          2.5
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "part_id": "tp.mh7.cogitator-console",
+      "revision": "v1",
+      "source_blend": "components/cogitator-console/v1/part.blend",
+      "source_sha256": "dce4f658c500c0b85ed97187aa121eb5644ee0f2566c907eba1e01994f0f0740",
+      "instance": "reachable service cogitator",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.0299999713897705
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -1.909999966621399
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8999999761581421
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ]
+}

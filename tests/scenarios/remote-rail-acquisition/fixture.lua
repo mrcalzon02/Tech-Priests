@@ -802,6 +802,150 @@ local function inspect(s,elapsed)
       "burner-mining-drill")
     if counted and type(n)=="number"then held_drill=n end
   end
+  -- Observe the REAL paid miner fuel slot and the original home-debited
+  -- engine-owned carried coal, not a projected mission fuel counter.
+  local native_held_coal="unmeasured"
+  if supply and supply.inventory and supply.inventory.valid then
+    local ok,n=pcall(supply.inventory.get_item_count,"coal")
+    if ok and type(n)=="number"then native_held_coal=n end
+  end
+  local paid_drill=objective and objective.first_remote_drill_0836
+  local delivery=paid_drill and paid_drill.fuel_delivery_0836
+  local built_drill=paid_drill and paid_drill.built_entity
+  local native_drill_coal="unmeasured"
+  if built_drill and built_drill.valid
+      and defines and defines.inventory and defines.inventory.fuel then
+    local ok,inv=pcall(function()
+      return built_drill.get_inventory(defines.inventory.fuel)
+    end)
+    if ok and inv and inv.valid then
+      local counted,n=pcall(inv.get_item_count,"coal")
+      if counted and type(n)=="number"then native_drill_coal=n end
+    end
+  end
+  local native_burning_name="unmeasured"
+  local native_burning_remaining="unmeasured"
+  if built_drill and built_drill.valid then
+    local observed,name,energy=pcall(function()
+      local burner=built_drill.burner
+      if not(burner and burner.valid)then return nil,nil end
+      local active=burner.currently_burning
+      local item=active and active.name
+      local burning_name=type(item)=="string" and item
+        or (item and item.name) or nil
+      return burning_name,
+        tonumber(burner.remaining_burning_fuel)
+    end)
+    if observed then
+      native_burning_name=name or "none"
+      native_burning_remaining=energy or "unmeasured"
+    end
+  end
+  emit("REMOTE_DRILL_FUEL_NATIVE_0836 elapsed="..elapsed..
+    " original_source_coal_before="..tostring(supply and supply.fuel_source_before)..
+    " original_source_coal_after="..tostring(supply and supply.fuel_source_after)..
+    " held_coal="..tostring(native_held_coal)..
+    " native_drill_coal="..tostring(native_drill_coal)..
+    " native_burning_item="..tostring(native_burning_name)..
+    " native_burning_remaining_j="..tostring(native_burning_remaining)..
+    " receipt_native_burning_coal="..tostring(delivery and delivery.native_burning_coal_count)..
+    " fuel_paid="..tostring(delivery and delivery.native_inventory_verified)..
+    " native_drill_unit="..tostring(built_drill and built_drill.unit_number)..
+    " receipt_drill_unit="..tostring(delivery and delivery.drill_unit)..
+    " receipt_tick="..tostring(delivery and delivery.delivered_tick)..
+    " fuel_quarantine="..tostring(supply and supply.quarantine))
+  -- Observe native drill output tile and the original ground-item custody
+  -- independently; a pending/recovered stack is not wagon delivery.
+  local pickup=paid_drill and paid_drill.ore_pickup_0836
+  local ground_count="unmeasured"
+  local native_drop="unmeasured"
+  if built_drill and built_drill.valid then
+    local observed,position,number=pcall(function()
+      local point=built_drill.drop_position
+      local nearby=point and built_drill.surface.find_entities_filtered{
+        type="item-entity",position=point,radius=0.7,limit=8}
+      local n=0
+      for _,item in ipairs(nearby or {})do
+        if item.valid and item.stack.valid_for_read
+          and item.stack.name=="iron-ore" then n=n+item.stack.count end
+      end
+      return point,n
+    end)
+    if observed and position then
+      native_drop=tostring(position.x)..","..tostring(position.y)
+      ground_count=number
+    end
+  end
+  local held_ore="unmeasured"
+  if pickup and pickup.inventory and pickup.inventory.valid then
+    local observed,n=pcall(pickup.inventory.get_item_count,"iron-ore")
+    if observed then held_ore=n end
+  end
+  emit("REMOTE_DRILL_GROUND_NATIVE_0836 elapsed="..elapsed..
+    " drop_position="..tostring(native_drop)..
+    " native_ground_iron="..tostring(ground_count)..
+    " pickup_phase="..tostring(pickup and pickup.phase)..
+    " held_original_ore="..tostring(held_ore)..
+    " source_ground_before="..tostring(pickup and pickup.ground_before)..
+    " source_ground_after="..tostring(pickup and pickup.ground_after)..
+    " native_collected_tick="..tostring(pickup and pickup.collected_tick)..
+    " quarantine="..tostring(pickup and pickup.quarantine))
+  -- Native wagon proof remains separate from ground pickup and full
+  -- train-return acceptance. Report real inventory, original identity and
+  -- transfer quarantine from the same physical cargo hold.
+  local wagon_transfer=pickup and pickup.wagon_delivery_0836
+  local original_wagon_ore="unmeasured"
+  if wagon_entity and wagon_entity.valid and defines
+      and defines.inventory and defines.inventory.cargo_wagon then
+    local opened,inv=pcall(function()
+      return wagon_entity.get_inventory(defines.inventory.cargo_wagon)
+    end)
+    if opened and inv and inv.valid then
+      local counted,n=pcall(inv.get_item_count,"iron-ore")
+      if counted then original_wagon_ore=n end
+    end
+  end
+  emit("REMOTE_DRILL_WAGON_NATIVE_0836 elapsed="..elapsed..
+    " transfer_phase="..tostring(wagon_transfer and wagon_transfer.phase)..
+    " original_ore_wagon="..tostring(original_wagon_ore)..
+    " receipt_held_before="..tostring(wagon_transfer and wagon_transfer.held_before)..
+    " receipt_held_after="..tostring(wagon_transfer and wagon_transfer.held_after)..
+    " receipt_wagon_before="..tostring(wagon_transfer and wagon_transfer.wagon_before)..
+    " receipt_wagon_after="..tostring(wagon_transfer and wagon_transfer.wagon_after)..
+    " receipt_magos_unit="..tostring(wagon_transfer and wagon_transfer.priest_unit)..
+    " receipt_wagon_unit="..tostring(wagon_transfer and wagon_transfer.wagon_unit)..
+    " receipt_train_id="..tostring(wagon_transfer and wagon_transfer.train_id)..
+    " loaded_tick="..tostring(wagon_transfer and wagon_transfer.loaded_tick)..
+    " movement_owner="..tostring(p.movement_request_0418
+      and p.movement_request_0418.owner)..
+    " movement_reason="..tostring(p.movement_request_0418
+      and p.movement_request_0418.reason)..
+    " last_walk_reason="..tostring(pickup
+      and pickup.last_wagon_carry_reason_0836)..
+    " quarantine="..tostring(wagon_transfer and wagon_transfer.quarantine))
+  local reboard=paid_drill and paid_drill.reboard_0836
+  local native_reboard_driver="unmeasured"
+  if loco_entity and loco_entity.valid then
+    local observed,driver=pcall(function()return loco_entity.get_driver()end)
+    if observed then
+      native_reboard_driver=driver and driver.valid
+        and driver.unit_number or "none"
+    end
+  end
+  emit("REMOTE_REBOARD_NATIVE_0836 elapsed="..elapsed..
+    " receipt_phase="..tostring(reboard and reboard.phase)..
+    " native_driver_unit="..tostring(native_reboard_driver)..
+    " original_priest_unit="..tostring(p.priest and p.priest.unit_number)..
+    " paid_locomotive_unit="..tostring(reboard and reboard.locomotive_unit)..
+    " paid_wagon_unit="..tostring(reboard and reboard.wagon_unit)..
+    " loaded_real_ore="..tostring(reboard and reboard.wagon_ore_count)..
+    " boarded_tick="..tostring(reboard and reboard.boarded_tick)..
+    " native_original_driver_confirmed="..tostring(reboard
+      and reboard.native_original_driver_confirmed)..
+    " current_disembark="..tostring(p.train_transport_rail_0835
+      and p.train_transport_rail_0835.disembark_confirmed)..
+    " last_reboard_reason="..tostring(paid_drill
+      and paid_drill.last_reboard_reason_0836))
   emit("REMOTE_DRILL_SUPPLY_NATIVE_0836 elapsed="..elapsed..
     " source_unit="..tostring(supply and supply.source_unit)..
     " source_before="..tostring(supply and supply.source_before)..
@@ -1048,23 +1192,169 @@ local function inspect(s,elapsed)
   local homeward=objective and objective.first_return_0836
   local home_state=objective and objective.first_stop_0836
   local home_entity=home_state and home_state.built_entity
+  -- The original Magos must physically leave the train to build the remote
+  -- mining site. After a REAL 0338 source-debited build, native get_driver()
+  -- correctly returns nil. Do not mistake that for a counterfeit outward
+  -- arrival, or accept a Magos who has been dragged home by 0566 instead.
+  -- Require the exact original completed 0338 entity, counted supply debit,
+  -- same engine, original priest still alive ON SITE, and native paid stop.
+  local remote_drill=objective and objective.first_remote_drill_0836
+  local last_builder=p.construction_last_task_0338
+  local supply=p.rail_remote_drill_supply_0836
+  local ride=p.train_transport_rail_0835
+  local foot_native=false
+  if outbound and moving_train and moving_train.valid
+      and remote_drill and remote_drill.disembark_confirmed==true
+      and remote_drill.disembark_priest_unit==p.priest.unit_number
+      and type(remote_drill.disembark_tick)=="number"
+      and type(outbound.arrived_tick)=="number"
+      and remote_drill.disembark_tick>=outbound.arrived_tick
+      and outbound.highest_x and outbound.origin_x
+      and outbound.highest_x>outbound.origin_x+32
+      and outbound.train_id==moving_train.id
+      and remote_drill.train_id==moving_train.id
+      and ride and ride.train_id==moving_train.id
+      and ride.physical_boarding_confirmed==true
+      and ride.disembark_confirmed==true
+      and ride.boarded_priest_unit==p.priest.unit_number
+      and driver_read and native_driver==nil
+      and remote_entity and remote_entity.valid
+      and remote.phase=="native-paid-original-train-stop-verified"
+      and remote_receipt and remote_receipt.native_0338_paid==true
+      and remote_receipt.before-remote_receipt.after==1
+      and moving_train.station==remote_entity
+      and math.abs(tonumber(moving_train.speed)or 0)<0.01
+      and p.priest.valid and p.priest.type=="character"
+      and p.priest.surface==remote_entity.surface
+      and p.priest.force==remote_entity.force
+      and last_builder and last_builder.phase=="complete"
+      and last_builder.request_value==remote_drill.request
+      and last_builder.request_field=="remote_drill_request_1011"
+      and last_builder.creative_build~=true
+      and last_builder.built_entity and last_builder.built_entity.valid
+      and last_builder.built_entity.name=="burner-mining-drill"
+      and last_builder.built_entity.type=="mining-drill"
+      and last_builder.built_entity.force==remote_entity.force
+      and supply and not supply.quarantine
+      and supply.source_before and supply.source_after
+      and supply.source_before-supply.source_after==1 then
+    local dx=p.priest.position.x-remote_entity.position.x
+    local dy=p.priest.position.y-remote_entity.position.y
+    foot_native=dx*dx+dy*dy<=96*96
+  end
+  emit("ORIGINAL_REMOTE_NATIVE_DISEMBARK_0836 elapsed="..elapsed..
+    " on_site="..tostring(foot_native)..
+    " original_priest_unit="..tostring(p.priest.unit_number)..
+    " original_native_driver="..tostring(native_driver==p.priest)..
+    " drill_built="..tostring(last_builder
+      and last_builder.phase=="complete" and last_builder.built_entity
+      and last_builder.built_entity.valid)..
+    " original_source_debit="..tostring(supply and supply.source_before
+      and supply.source_after
+      and supply.source_before-supply.source_after)..
+    " priest_x="..tostring(p.priest.position.x)..
+    " train_station="..tostring(moving_train and moving_train.valid
+      and moving_train.station and moving_train.station.unit_number))
+  local home_unload=objective and objective.home_ore_0836
+  local native_home_ejected=homeward
+    and homeward.phase=="native-original-home-arrived-after-roundtrip"
+    and home_unload and home_unload.native_original_driver_ejected==true
+    and home_unload.arrival_tick==homeward.arrival_tick
+    and home_unload.priest_unit==p.priest.unit_number
+    and home_unload.station_unit==station.unit_number
+    and home_unload.train_id==moving_train.id
+    and home_unload.wagon_unit==wagon_entity.unit_number
+    and home_unload.locomotive_unit==loco_entity.unit_number
+    and moving_train.station==home_entity
+    and homeward.lowest_x<homeward.remote_x-32
+  -- Departure and return credit remain gated in the native train-loop below.
   if outbound and outbound.phase==
       "native-original-outbound-arrived-at-paid-remote-stop"
       and not(moving_train and moving_train.valid
-        and native_driver==p.priest
-        and (moving_train.station==remote_entity
-          or (homeward and homeward.home_order_written==true
-            and outbound.arrived_tick~=nil
-            and outbound.highest_x and outbound.origin_x
-            and outbound.highest_x>outbound.origin_x+32
-            and homeward.train_id==moving_train.id
-            and outbound.train_id==moving_train.id
-            and homeward.priest_unit==p.priest.unit_number
-            and homeward.remote_stop_unit==remote_entity.unit_number
-            and home_entity and home_entity.valid
-            and homeward.home_stop_unit==home_entity.unit_number)))then
+        and ((native_driver==p.priest
+            and (moving_train.station==remote_entity
+              or (homeward and homeward.home_order_written==true
+                and outbound.arrived_tick~=nil
+                and outbound.highest_x and outbound.origin_x
+                and outbound.highest_x>outbound.origin_x+32
+                and homeward.train_id==moving_train.id
+                and outbound.train_id==moving_train.id
+                and homeward.priest_unit==p.priest.unit_number
+                and homeward.remote_stop_unit==remote_entity.unit_number
+                and home_entity and home_entity.valid
+                and homeward.home_stop_unit==home_entity.unit_number)))
+          or foot_native or native_home_ejected))then
     fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")
   end
+  -- At 90k the original train has already returned and 0338/0836 has
+  -- physically ejected the SAME original native driver before depositing
+  -- counted ore. A CURRENT get_driver()==priest test would now be false.
+  -- Recognize only the authenticated historical *native* roundtrip, never a
+  -- route plan or a generic mission phase. Production wrote these receipts
+  -- only after original locomotive.set_driver/get_driver confirmed the
+  -- character, genuine remote train travel, exact loaded wagon and native
+  -- home driver ejection. Cross-check every original identity, ordered tick,
+  -- counted item and present native home depot before allowing full proof.
+  local reboard=remote_drill and remote_drill.reboard_0836
+  local return_receipt=objective and objective.home_ore_0836
+  local authentic_past_ride=native_home_ejected
+    and first_board and first_board.phase=="native-original-magos-boarded"
+    and first_board.priest_unit==p.priest.unit_number
+    and first_board.locomotive_unit==loco_entity.unit_number
+    and first_board.wagon_unit==wagon_entity.unit_number
+    and first_board.train_id==moving_train.id
+    and type(first_board.confirmed_tick)=="number"
+    and ride and ride.physical_boarding_confirmed==true
+    and ride.boarded_priest_unit==p.priest.unit_number
+    and ride.train_id==moving_train.id
+    and outbound and outbound.phase==
+      "native-original-outbound-arrived-at-paid-remote-stop"
+    and outbound.priest_unit==p.priest.unit_number
+    and outbound.train_id==moving_train.id
+    and type(outbound.arrived_tick)=="number"
+    and outbound.arrived_tick>=first_board.confirmed_tick
+    and outbound.highest_x and outbound.origin_x
+    and outbound.highest_x>outbound.origin_x+32
+    and reboard and reboard.phase==
+      "native-original-magos-reboarded-with-ground-ore"
+    and reboard.native_original_driver_confirmed==true
+    and reboard.priest_unit==p.priest.unit_number
+    and reboard.train_id==moving_train.id
+    and reboard.locomotive_unit==loco_entity.unit_number
+    and reboard.wagon_unit==wagon_entity.unit_number
+    and type(reboard.boarded_tick)=="number"
+    and reboard.boarded_tick>outbound.arrived_tick
+    and reboard.wagon_ore_count>0
+    and homeward and homeward.phase=="native-original-home-arrived-after-roundtrip"
+    and type(homeward.arrival_tick)=="number"
+    and homeward.arrival_tick>reboard.boarded_tick
+    and homeward.train_id==moving_train.id
+    and homeward.priest_unit==p.priest.unit_number
+    and homeward.lowest_x<homeward.remote_x-32
+    and moving_train.station==home_entity
+    and return_receipt and return_receipt.phase=="home-station-ore-deposited"
+    and return_receipt.native_original_driver_ejected==true
+    and return_receipt.wagon_before>0
+    and return_receipt.wagon_final==0
+    and return_receipt.held_final==0
+    and return_receipt.station_after-return_receipt.station_before==
+        return_receipt.wagon_before-return_receipt.wagon_final
+    and return_receipt.quarantine==nil
+  if authentic_past_ride then
+    s.ride_proof=true
+    s.outbound=true
+  end
+  emit("NATIVE_HISTORIC_RIDE_0836 elapsed="..elapsed..
+    " authenticated="..tostring(authentic_past_ride)..
+    " native_home_ejected="..tostring(native_home_ejected)..
+    " original_priest_unit="..tostring(p.priest.unit_number)..
+    " original_train_id="..tostring(moving_train and moving_train.valid
+      and moving_train.id)..
+    " reboard_tick="..tostring(reboard and reboard.boarded_tick)..
+    " native_reboard_driver_confirmed="..tostring(reboard
+      and reboard.native_original_driver_confirmed)..
+    " native_home_arrival_tick="..tostring(homeward and homeward.arrival_tick))
+  if foot_native then s.ride_proof=true end
   local home_schedule
   if moving_train and moving_train.valid then
     local observed,records=pcall(function()
@@ -1108,7 +1398,7 @@ local function inspect(s,elapsed)
   if homeward and homeward.phase=="native-original-home-arrived-after-roundtrip"
     and not(moving_train and moving_train.valid
       and moving_train.station==home_entity
-      and native_driver==p.priest
+      and (native_driver==p.priest or native_home_ejected)
       and homeward.lowest_x<homeward.remote_x-32)then
     fail("HOMEWARD_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")
   end
@@ -1133,7 +1423,7 @@ local function inspect(s,elapsed)
           and train.station==(objective.first_stop_0836
             and objective.first_stop_0836.built_entity)
           and homeward.lowest_x<homeward.remote_x-32
-          and loco.get_driver()==p.priest then
+          and (loco.get_driver()==p.priest or native_home_ejected) then
         s.returned=true
       end
       local ride=p.train_transport_rail_0835
@@ -1153,6 +1443,16 @@ local function inspect(s,elapsed)
   end
   local delivered=station.get_inventory(defines.inventory.chest)
       .get_item_count("iron-ore")-s.start_ore
+  emit("HOME_ORE_NATIVE_0836 elapsed="..elapsed..
+    " phase="..tostring(home_unload and home_unload.phase)..
+    " ejected="..tostring(home_unload and home_unload.native_original_driver_ejected)..
+    " wagon_before="..tostring(home_unload and home_unload.wagon_before)..
+    " wagon_final="..tostring(home_unload and home_unload.wagon_final)..
+    " station_before="..tostring(home_unload and home_unload.station_before)..
+    " station_after="..tostring(home_unload and home_unload.station_after)..
+    " held_final="..tostring(home_unload and home_unload.held_final)..
+    " delivered="..tostring(delivered)..
+    " quarantine="..tostring(home_unload and home_unload.quarantine))
   emit("CHECKPOINT elapsed="..elapsed..
     " starvation="..tostring(objective and objective.status)..
     " natural_target="..tostring(s.natural_ore_x)..
@@ -1177,6 +1477,176 @@ local function inspect(s,elapsed)
     s.finished=true
   end
 end
+-- TEST-ONLY external track interruption. The original 0836/0338 builders
+-- must first produce the complete physically paid rail and genuinely return
+-- a newly mined ore item in the original wagon with the original Magos aboard.
+-- One actual midpoint rail is then physically MINED into a persistent native
+-- inventory. This fixture cannot repair it, spawn a replacement, credit ore,
+-- or claim the normal 90k positive gate. A stationary, intact stranded train
+-- is the only accepted negative result; restoration and process reload are
+-- distinct future native gates.
+local function inspect_blocked_return_0836(s,elapsed)
+  if rawget(_G,"TP_CI_0836_BLOCKED_RETURN")~=true then return end
+  -- The independent S4 reload is never equivalent to an in-process marker.
+  -- Its second Factorio process must reload the original engine save, not a
+  -- recreated fixture, and re-read this same original paid cargo/rail state.
+  -- The isolated new-world engine tick starts before first Magos birth.
+  -- Only after the original 1,800-tick native chart/pair acceptance can
+  -- loss of that established original pair be a functional failure.
+  if not s.chart_verified then return end
+  local pairs=storage.tech_priests and storage.tech_priests.pairs_by_station
+  local pair=pairs and pairs[s.station_unit]
+  if not(pair and pair.priest and pair.priest.valid and pair.station
+      and pair.station.valid)then fail("BLOCKED_RETURN_ORIGINAL_PAIR_LOST")end
+  local mission=pair.remote_rail_outpost_0835
+  local frontier=mission and mission.rail_frontier_0836
+  local lead=mission and mission.first_locomotive_0836
+  local wagon=mission and mission.first_wagon_0836
+  local remote=mission and mission.first_remote_drill_0836
+  local reboard=remote and remote.reboard_0836
+  local locomotive=lead and lead.built_entity
+  local cargo=wagon and wagon.built_entity
+  local train=locomotive and locomotive.valid and locomotive.train
+  local surface=pair.station.surface
+  local held=s.blocked_return_rail_hold_0836
+  if not held then
+    if not(reboard and reboard.phase==
+          "native-original-magos-reboarded-with-ground-ore"
+        and reboard.native_original_driver_confirmed==true
+        and reboard.priest_unit==pair.priest.unit_number
+        and lead.paid_completion_0836
+        and lead.paid_completion_0836.native_0338_paid==true
+        and wagon.paid_completion_0836
+        and wagon.paid_completion_0836.native_0338_paid==true
+        and cargo and cargo.valid and train and train.valid
+        and cargo.train and cargo.train.valid and cargo.train.id==train.id
+        and reboard.train_id==train.id
+        and locomotive.get_driver()==pair.priest
+        and frontier and type(frontier.built_units)=="table"
+        and #frontier.built_units>=32)then return end
+    local cargo_inventory=cargo.get_inventory(defines.inventory.cargo_wagon)
+    local ore_count=cargo_inventory and cargo_inventory.valid
+      and cargo_inventory.get_item_count("iron-ore") or 0
+    if ore_count~=1 or reboard.wagon_ore_count~=ore_count then
+      fail("BLOCKED_RETURN_WAGON_NOT_ONE_GENUINE_ORE")
+    end
+    local mid_unit=frontier.built_units[math.floor(#frontier.built_units/2)]
+    local rails=surface.find_entities_filtered{
+      name="straight-rail",force=pair.station.force,
+      area={{-24,s.station_y-4},{s.natural_ore_x+28,s.station_y+5}}}
+    local rail
+    for _,candidate in ipairs(rails)do
+      if candidate.valid and candidate.unit_number==mid_unit then
+        rail=candidate;break
+      end
+    end
+    if not(rail and rail.valid and rail.position.x>60
+        and locomotive.position.x>rail.position.x+24)then
+      fail("BLOCKED_RETURN_RAIL_NOT_AHEAD_OF_NATIVE_TRAIN")
+    end
+    -- LuaEntity.mine is a real Factorio inventory transaction. The physical
+    -- rail is not destroyed for free or teleported back into the depot.
+    held=game.create_inventory(1)
+    s.blocked_return_rail_hold_0836=held
+    local before=held.get_item_count("rail")
+    local point={x=rail.position.x,y=rail.position.y}
+    local mined=rail.mine{inventory=held,force=true}
+    local after=held.get_item_count("rail")
+    if not(mined==true and not rail.valid and before==0 and after==1)then
+      fail("BLOCKED_RETURN_NATIVE_RAIL_MINE_OR_CUSTODY_REFUSED")
+    end
+    s.blocked_return_0836={rail_unit=mid_unit,rail_position=point,
+      cut_tick=game.tick,train_id=train.id,
+      priest_unit=pair.priest.unit_number,
+      locomotive_unit=locomotive.unit_number,wagon_unit=cargo.unit_number,
+      wagon_ore=ore_count,
+      station_ore=pair.station.get_inventory(defines.inventory.chest)
+        .get_item_count("iron-ore")}
+    emit("BLOCKED_RETURN_NATIVE_0836 phase=paid-middle-rail-mined"..
+      " tick="..game.tick.." original_rail_unit="..mid_unit..
+      " retained_rail_items="..after.." original_train_id="..train.id..
+      " wagon_ore="..ore_count.." original_driver=true")
+    return
+  end
+  local claim=s.blocked_return_0836
+  if not(claim and held.valid and held.get_item_count("rail")==1
+      and train and train.valid and train.id==claim.train_id
+      and locomotive and locomotive.valid
+      and locomotive.unit_number==claim.locomotive_unit
+      and cargo and cargo.valid and cargo.unit_number==claim.wagon_unit
+      and cargo.train and cargo.train.valid and cargo.train.id==train.id
+      and pair.priest.unit_number==claim.priest_unit
+      and locomotive.get_driver()==pair.priest)then
+    fail("BLOCKED_RETURN_ORIGINAL_DRIVER_OR_RAIL_CUSTODY_LOST")
+  end
+  local cargo_inventory=cargo.get_inventory(defines.inventory.cargo_wagon)
+  local ore_now=cargo_inventory and cargo_inventory.valid
+    and cargo_inventory.get_item_count("iron-ore") or -1
+  local station_now=pair.station.get_inventory(defines.inventory.chest)
+    .get_item_count("iron-ore")
+  if ore_now~=claim.wagon_ore or station_now~=claim.station_ore then
+    fail("BLOCKED_RETURN_ORE_INVENTORY_DISCREPANCY")
+  end
+  local original_rail=surface.find_entities_filtered{
+    name="straight-rail",position=claim.rail_position,radius=0.25,
+    force=pair.station.force}
+  if #original_rail~=0 then fail("BLOCKED_RETURN_RAIL_REAPPEARED_UNPAID")end
+  local stopped=math.abs(tonumber(train.speed)or 0)<0.01
+  local short_of_gap=locomotive.position.x>claim.rail_position.x+4
+  local at_home=mission.first_stop_0836
+    and train.station==mission.first_stop_0836.built_entity
+  emit("BLOCKED_RETURN_NATIVE_0836 phase=physical-rail-gap"..
+    " elapsed="..elapsed.." since_cut="..(game.tick-claim.cut_tick)..
+    " speed="..tostring(train.speed)..
+    " train_x="..locomotive.position.x..
+    " gap_x="..claim.rail_position.x..
+    " stationary="..tostring(stopped)..
+    " before_gap="..tostring(short_of_gap)..
+    " station_ore="..station_now.." wagon_ore="..ore_now..
+    " original_driver=true rail_hold=1 at_home="..tostring(at_home))
+  if at_home or not short_of_gap then
+    fail("BLOCKED_RETURN_TRAIN_CROSSED_BROKEN_NATIVE_TRACK")
+  end
+  if game.tick-claim.cut_tick>=900 then
+    if not stopped then fail("BLOCKED_RETURN_TRAIN_DID_NOT_STOP")end
+    if rawget(_G,"TP_CI_0836_BLOCKED_RELOAD_MODE")==true then
+      if rawget(_G,"TP_CI_0836_BLOCKED_RELOAD_PROBE")==true then
+        if not s.blocked_return_save_requested_0836 then
+          fail("BLOCKED_RETURN_RELOAD_WITHOUT_ORIGINAL_SAVE_REQUEST")
+        end
+        emit("PASS INDEPENDENT_BLOCKED_RAIL_RELOAD original_train_id="..train.id..
+          " original_priest="..pair.priest.unit_number..
+          " original_locomotive="..locomotive.unit_number..
+          " original_wagon="..cargo.unit_number..
+          " original_rail="..claim.rail_unit..
+          " wagon_ore="..ore_now.." station_ore="..station_now..
+          " rail_hold="..held.get_item_count("rail")..
+          " native_driver=true restored_track=false")
+        s.finished=true
+        return
+      end
+      if not s.blocked_return_save_requested_0836 then
+        s.blocked_return_save_requested_0836=true
+        -- This is a genuine Factorio save request, never proof of a ZIP.
+        -- The external runner must find and CRC-check the independently
+        -- created native save before launching the second engine process.
+        game.auto_save("tech-priests-ci-0836-stranded",true)
+        emit("BLOCKED_RETURN_NATIVE_SAVE_REQUEST_0836 tick="..game.tick..
+          " original_train_id="..train.id..
+          " original_priest="..pair.priest.unit_number..
+          " original_locomotive="..locomotive.unit_number..
+          " original_wagon="..cargo.unit_number..
+          " original_rail="..claim.rail_unit..
+          " wagon_ore="..ore_now.." station_ore="..station_now..
+          " rail_hold="..held.get_item_count("rail"))
+      end
+      return
+    end
+    emit("PASS blocked original ore-loaded return retains native driver and cargo")
+    s.finished=true
+  end
+end
+
 local function pulse()
   local s=root()
   if s.finished or s.failed then return {processed=0} end
@@ -1248,6 +1718,8 @@ local function pulse()
         s["chart_diag_"..mark]=true
       end
     end
+    inspect_blocked_return_0836(s,elapsed)
+    if s.finished then return end
     -- Read-only 0469/0338/0836 sampling around the observed 36k-60k stall.
     -- Never plan, yield, cancel, debit or credit work from this diagnostic.
     if elapsed>=36000 and elapsed<=60000 and elapsed%600==0 then

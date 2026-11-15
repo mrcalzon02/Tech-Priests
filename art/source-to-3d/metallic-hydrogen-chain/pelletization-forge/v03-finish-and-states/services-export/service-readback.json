@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "errors": [],
+  "source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+  "glb_sha256": "2f0da21dafac79f9fb348f5318fd5ec19b6ddbdc7ab74e1b8f187b681b757a4b",
+  "poses": 65,
+  "moving_service_pair_checks": 399,
+  "collisions": [],
+  "route_static_pair_checks": 48,
+  "route_collisions": [],
+  "core_rays": 36,
+  "core_hits": [],
+  "scope": "Source or actual GLB service mouths to nearby chamber/ reservoir cavity, and 65 poses of moving components against added services. Full hydraulic pressure/force simulation is outside this art check."
+}

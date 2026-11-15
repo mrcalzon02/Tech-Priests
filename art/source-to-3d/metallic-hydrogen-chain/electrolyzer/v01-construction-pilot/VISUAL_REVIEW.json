@@ -1,0 +1,35 @@
+{
+  "status": "VISUALLY_REVIEWED_CONSTRUCTION_PILOT; NOT_FINAL",
+  "source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
+  "export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
+  "images": {
+    "working-front.png": "c74c598e349fb44605a498e75c78c2504f0801e259a3db5619fe80b1965ede6e",
+    "export-inspection\\clay.png": "6b6f2be817e6c1fc82b6f9f1f331d765c74774282c2a20424dac5cb3c36f105b",
+    "export-inspection\\front.png": "d99db845574debf9178129862b79df892db4d724c7a00f49f6e69dae697103e0",
+    "export-inspection\\rear-inspection.png": "d114f0c12ee8dcf6775405602623e5d06bf74bae0ca06161df8b60122e15d43a"
+  },
+  "scale": "0 to 5; final threshold 4 per criterion",
+  "scores": {
+    "silhouette": {
+      "score": 4,
+      "reason": "Two closed cell stacks, rear rectifier and separate gas paths read clearly."
+    },
+    "construction": {
+      "score": 3,
+      "reason": "Frames, caps, cell windows, busbars and donor mouths exist; full contact/line audit remains."
+    },
+    "surfaces": {
+      "score": 3,
+      "reason": "Loaded packed PBR and coherent material roles; individual wear, finishing and closeups remain."
+    },
+    "motion_states": {
+      "score": 2,
+      "reason": "Real keyed gas nucleation and donor green bars; no final state/loop capture yet."
+    },
+    "native_integration": {
+      "score": 0,
+      "reason": "Actual target, native fluid IDs and prototype interfaces remain unassigned. Model-space bores alone are not game connectivity."
+    }
+  },
+  "owner_approved": false
+}

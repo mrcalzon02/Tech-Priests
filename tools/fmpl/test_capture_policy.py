@@ -28,6 +28,20 @@ def receipt():
 
 
 class CameraPolicyTests(unittest.TestCase):
+    def test_fixed_machine_requires_explicit_policy_and_one_grid_view(self):
+        c=cfg(); c['directions']=[0]
+        with self.assertRaises(ValueError):
+            p.validate_capture_profile(c)
+        c['orientation_policy']='fixed'
+        self.assertEqual(p.validate_capture_profile(c),'entity')
+        self.assertTrue(p.verify_camera_receipt(receipt(),c))
+        c['directions']=[0,90,180,270]
+        with self.assertRaises(ValueError):
+            p.validate_capture_profile(c)
+        c['orientation_policy']='guessed'
+        with self.assertRaises(ValueError):
+            p.validate_capture_profile(c)
+
     def test_entity_and_item(self):
         for kind in ("entity","item"):
             c=cfg(kind)

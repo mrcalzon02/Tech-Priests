@@ -1,0 +1,13 @@
+{
+  ".gitattributes": "308a40fa1d89ae5ea4390b4c9b46a0108b09f171f07898f25d451fa0c69c4e9f",
+  "audio-receipt.json": "aeefbdc7124c69bf1bf76d80618c068b01a25a546be5413a5faac687761dd137",
+  "masters/assembler-idle.ogg": "8f6dcebb1edcc6179dd081d8621518169384035217434347d8ad7d89099a50fe",
+  "masters/assembler-idle.wav": "d480703aed9272b0a4c476a62ff2ab7467fd15b0a03c29aaedff2ee1b01057a0",
+  "masters/assembler-start.ogg": "036fa84805f99c60b26d256817a921797bc48b0350871af53d176e7cbb37fda1",
+  "masters/assembler-start.wav": "7f04d0aafcad2db8edeb587be042eed0b754259fb2564f36d2b9bfaa7b8ab212",
+  "masters/assembler-stop.ogg": "2dd55dbb7beb9cce208a4757bd3978d3df2b9bc1598ec470b0b699f5c8167596",
+  "masters/assembler-stop.wav": "9c416e0913c495d94209d89a78c3ffba76fb5ceca976abc18c507c2ceaeb63f2",
+  "masters/assembler-working.ogg": "fb77d7672a799bb11771b9a38df01f3554f36d1b90605daf2482f7cce0e884a1",
+  "masters/assembler-working.wav": "f14f1c0c98def676322a988853a8b723b593d3ba538c7364f05b6b530240f97f",
+  "README.md": "caf9fe3ec8452293a51ed7bbaf63ff0b2813d7ac6a1f46ee1b4dd388b93d14d4"
+}

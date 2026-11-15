@@ -1,0 +1,15 @@
+{
+  "machine": "canister-assembler",
+  "footprint": [
+    4,
+    4
+  ],
+  "ports": [],
+  "native_target": null,
+  "item_inputs": [
+    "formed metallicized pellet",
+    "empty pressure shell"
+  ],
+  "item_output": "contained metallicized pellet",
+  "native_verified": false
+}

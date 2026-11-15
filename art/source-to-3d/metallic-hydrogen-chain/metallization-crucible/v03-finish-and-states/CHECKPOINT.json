@@ -1,0 +1,27 @@
+{
+  "status": "surfaced_six_blade_state_candidate; native_placement_pending",
+  "source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
+  "glb_sha256": "0eab1d215ac61ad3e3fd62e555f8899f000b61a1bd781fb5ff53779dc60c5f2f",
+  "surface_map_count": 12,
+  "assembly_contacts": 111,
+  "core_rays_each": 290,
+  "fan_blades": 6,
+  "fan_root_contacts_per_artifact": 102,
+  "fan_surface_pair_checks_each": 969,
+  "source_and_export_passed": true,
+  "capture_frames": 36,
+  "atlas_count": 6,
+  "cycle_seconds": 8,
+  "source_of_owner_correction": "One original blade floated .1076 tile from the bearing. Rebuilt in a common rotor-local frame with six pitched roots seated into a real rotating hub and supported fixed spindle.",
+  "owner_approved": false,
+  "native_pipe_verified": false,
+  "native_audio_binding_verified": false,
+  "output": "Raw solid metallicized pellets, with tested random HP/quality decay to inert; no second gameplay fluid box",
+  "decay_delivery": "../../pellet-instability/v01-native-behavior",
+  "next": [
+    "Native 5x5 crucible with one hydrogen fluid input and raw pellet item output",
+    "Native inlet fitting, item pickup access and actual animation clocks",
+    "Owner finish/audio review and ordinary chain integration"
+  ],
+  "registry_sha256": "108f7123a43eb0a44a4eb684723fde1aa84a35b34a51b73b32d0f9a2e8d0a274"
+}

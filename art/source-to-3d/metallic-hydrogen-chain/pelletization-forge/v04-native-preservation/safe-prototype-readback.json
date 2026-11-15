@@ -1,0 +1,92 @@
+{
+  "passed": true,
+  "normal_adapter_sha256": "8345f413bf33373491b94ae64bb86b46dc2b4c64ab96d2b4405c0088c3e514aa",
+  "stages": [
+    {
+      "name": "tp-mh7-raw-metallicized-pellet",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-raw-metallicized-pellet-waning",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-raw-metallicized-pellet-waning",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-raw-metallicized-pellet-degraded",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-raw-metallicized-pellet-degraded",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-raw-metallicized-pellet-critical",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-raw-metallicized-pellet-critical",
+      "spoil_ticks": 1800,
+      "quality_change": -128,
+      "result": "tp-mh7-inert-pellet",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-forged-metallicized-pellet",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-forged-metallicized-pellet-waning",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-forged-metallicized-pellet-waning",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-forged-metallicized-pellet-degraded",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-forged-metallicized-pellet-degraded",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-forged-metallicized-pellet-critical",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-forged-metallicized-pellet-critical",
+      "spoil_ticks": 1800,
+      "quality_change": -128,
+      "result": "tp-mh7-inert-pellet",
+      "stack_size": 1
+    }
+  ],
+  "contained_spoils": false,
+  "inert_is_fuel": false,
+  "commands": [
+    {
+      "stage": "create",
+      "exit_code": 0,
+      "log_sha256": "bb30be18e3058c4a66bf0ec70c56706324db43960fed4ff10e8e3e2d4c93fe6a"
+    },
+    {
+      "stage": "runtime",
+      "exit_code": 0,
+      "log_sha256": "7701428da42a184fd032c0a5db056bbde975b4470b7818d9d37112a9842f1e1f"
+    },
+    {
+      "stage": "data",
+      "exit_code": 0,
+      "log_sha256": "746554b06e90f8fb25b5713061a4811177ea2a5ee0cbdc766ae661dc0ec146c3"
+    }
+  ],
+  "additional_mods": [
+    {
+      "name": "tp-mh7-forge-review",
+      "has_control_script": false
+    },
+    {
+      "name": "tp-mh7-forge-audio",
+      "has_control_script": false
+    }
+  ],
+  "scope": "Actual normal-timing add-on data load, safe runtime initialization and default prototypes. The separate accelerated native fixture proves the decay and containment behavior; ordinary chain integration remains open."
+}

@@ -1,0 +1,13 @@
+{
+  "name": "tp-mh7-machinery-audio",
+  "version": "0.0.1",
+  "title": "Metallic hydrogen authored machinery audio",
+  "author": "Tech Priests",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.24",
+    "? tp-mh7-purifier-review >= 0.0.1",
+    "? tp-mh7-electrolyzer-review >= 0.0.1",
+    "? tp-mh7-compressor-review >= 0.0.1"
+  ]
+}

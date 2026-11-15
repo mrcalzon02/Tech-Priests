@@ -1,0 +1,9 @@
+# Open-frame fabricator V03 finish and state candidate
+
+The welded two-sheet blank remains exposed in narrow supported clamps. The seam tool traverses its real edge, parks clear, the upper frame clamps and the blank expands while its necks stay fixed. The rear lift uses a grounded clevis/trunnion; a bored reservoir/pump and constant-radius inlet elbow feed the sealed mandrel through a low service corridor. Native crafting owns output: the displayed blank never shrinks through its mandrel.
+
+24 dedicated PBR maps follow actual rolling direction, seam heat and bead travel, frame edges, clamp/guide mating strips, pump cabinet and motor, turned shafts and bronze retainers. Added motor saddles, seated cooling rings, closed service cap, screws and grounded anchors supply 34 mounted details. Preserved source geometry and morph digests are unchanged. Source and actual GLB pass all recorded contacts, 1,154 quarter-frame motion samples each, actual core bore probes and twelve deformed-vertex comparisons. These are geometric checks, not continuous collision proof or hydraulic certification. Actual exported front/rear/clay and weld/clamp/pump/lift/conductor closeups were viewed.
+
+Four actual model rotations produce four idle and 48 working frames, six 64/128/256 atlases and a reopened source-bound master. Twelve working cells each display for one second, preserving the real twelve-second clock. The four-view preview pairs actual captures with original welding, clamp-drive and forming-pump audio at the matching .25-second source phase. Compressor mix priority remains preserved.
+
+This is agent-reviewed art, not owner approval or native completion. Native 4x4 fluid/item interfaces, actual graphical pipe seating, sound binding, playback clock and ordinary-chain integration remain required. The rejected cube and failed studies remain private. Accepted prior machines are unchanged.

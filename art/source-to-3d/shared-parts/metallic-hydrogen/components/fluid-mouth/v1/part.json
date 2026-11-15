@@ -1,0 +1,742 @@
+{
+  "part_id": "tp.mh7.factorio-fluid-mouth",
+  "revision": "v1",
+  "family": "fluid-mouth",
+  "status": "verified",
+  "source_blend": "part.blend",
+  "source_sha256": "086c2bc479956a97d4869ab1e1f2ffa5e1b0880da19da53618d7e85ae27649fe",
+  "collection": "TP LIB | fluid-mouth | v1",
+  "mesh_count": 10,
+  "donor": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\water-purifier\\v16-owner-accepted\\water-purifier-v16.blend",
+    "sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+    "machine": "water-purifier",
+    "revision": "V16 owner shape accepted"
+  },
+  "license": "user-authored Tech-Priests geometry and FMPL material provenance; no third-party mesh donor",
+  "axes": "+X right, +Y back, +Z up; fluid mouth outward +X",
+  "units": "Factorio tile",
+  "anchors": {
+    "mating_plane": {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "connector_class": "fluid .49 bore / .68 flange; native cell unassigned"
+    },
+    "throat_back": {
+      "position": [
+        -0.3,
+        0,
+        0
+      ],
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "connector_class": "machine-side receiving throat"
+    }
+  },
+  "native_port_cells": null,
+  "source_instance_frame": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      1.5
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.36000001430511475
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "objects": [
+    "tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 00",
+    "tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 01",
+    "tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 02",
+    "tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 03",
+    "tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 04",
+    "tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 05",
+    "tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 06",
+    "tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 07",
+    "tp.mh7.factorio-fluid-mouth | TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine collar",
+    "tp.mh7.factorio-fluid-mouth | TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine throat"
+  ],
+  "surface_plan": "retained source-authored placement and packed FMPL PBR; copy materials per consumer",
+  "consumers": [
+    {
+      "machine": "water-purifier",
+      "source_sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.5
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "machine": "electrolyzer",
+      "machine_revision": "V01 pilot",
+      "instance": "hydrogen_output",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -1.5
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
+      "runtime_export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
+      "status": "actual saved/rendered/reimported candidate; final machine review open"
+    },
+    {
+      "machine": "electrolyzer",
+      "machine_revision": "V01 pilot",
+      "instance": "oxygen_output",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.5
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
+      "runtime_export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
+      "status": "actual saved/rendered/reimported candidate; final machine review open"
+    },
+    {
+      "machine": "electrolyzer",
+      "machine_revision": "V01 pilot",
+      "instance": "water_input",
+      "transform": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          -2.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
+      "runtime_export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
+      "status": "actual saved/rendered/reimported candidate; final machine review open"
+    },
+    {
+      "machine": "electrolyzer",
+      "machine_revision": "V05 finish and state candidate",
+      "instance": "hydrogen_output",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -1.5
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+      "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+      "status": "actual saved/rendered/reimported candidate; native integration open"
+    },
+    {
+      "machine": "electrolyzer",
+      "machine_revision": "V05 finish and state candidate",
+      "instance": "oxygen_output",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.5
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+      "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+      "status": "actual saved/rendered/reimported candidate; native integration open"
+    },
+    {
+      "machine": "electrolyzer",
+      "machine_revision": "V05 finish and state candidate",
+      "instance": "water_input",
+      "transform": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          -2.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+      "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+      "status": "actual saved/rendered/reimported candidate; native integration open"
+    },
+    {
+      "machine": "hydrogen-compressor",
+      "machine_revision": "V04 finish/state candidate",
+      "instance": "hydrogen_suction",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -1.5
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+      "runtime_export_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
+      "status": "actual appended, saved/rendered/exported/reimported candidate; native review open"
+    },
+    {
+      "machine": "hydrogen-compressor",
+      "machine_revision": "V04 finish/state candidate",
+      "instance": "hydrogen_discharge",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.5
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+      "runtime_export_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
+      "status": "actual appended, saved/rendered/exported/reimported candidate; native review open"
+    },
+    {
+      "machine": "metallization-crucible",
+      "machine_revision": "V01 construction pilot",
+      "instance": "conditioned_hydrogen_input",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -2.5
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "82e2ad3d5a54ecd2ab8cdecf94417e985a20ad5891d64425f5dbeef85e0f10ab",
+      "runtime_export_sha256": "6fc4f1ce6574a937557672d0db3e4b1ea7744c68a83452a3184db04eb3bc0bf6",
+      "status": "actual appended saved and independently reimported construction candidate; native fitting provisional"
+    },
+    {
+      "machine": "metallization-crucible",
+      "machine_revision": "V01 construction pilot",
+      "instance": "metallicized_intermediate_output",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          2.5
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "82e2ad3d5a54ecd2ab8cdecf94417e985a20ad5891d64425f5dbeef85e0f10ab",
+      "runtime_export_sha256": "6fc4f1ce6574a937557672d0db3e4b1ea7744c68a83452a3184db04eb3bc0bf6",
+      "status": "actual appended saved and independently reimported construction candidate; native fitting provisional"
+    },
+    {
+      "machine": "metallization-crucible",
+      "machine_revision": "V03 finish/state candidate",
+      "instance": "conditioned_hydrogen_input",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -2.5
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
+      "runtime_export_sha256": "0eab1d215ac61ad3e3fd62e555f8899f000b61a1bd781fb5ff53779dc60c5f2f",
+      "status": "Derived from actual V01 appended instances and retained in V03 source/export; local CRT state retimed, masters unchanged"
+    },
+    {
+      "machine": "metallization-crucible",
+      "machine_revision": "V03 finish/state candidate",
+      "instance": "metallicized_intermediate_output",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          2.5
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
+      "runtime_export_sha256": "0eab1d215ac61ad3e3fd62e555f8899f000b61a1bd781fb5ff53779dc60c5f2f",
+      "status": "Derived from actual V01 appended instances and retained in V03 source/export; local CRT state retimed, masters unchanged"
+    },
+    {
+      "machine": "pressure-vessel-fabricator",
+      "machine_revision": "V01 open-frame hydroforming construction pilot",
+      "instance": "forming-fluid intake",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -2.0
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
+      "runtime_export_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
+      "status": "Actual unchanged library assembly retained in source and independently imported GLB; final surfaces and native integration pending"
+    },
+    {
+      "machine": "pressure-vessel-fabricator",
+      "machine_revision": "V02 measured open-frame mechanism and bored circuit",
+      "instance": "forming-fluid intake",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -2.0
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "f51833329c74bc1482e9378513729429d616a9734eabdc12ebc401a26311c806",
+      "runtime_export_sha256": "c65459f5bdf90a28d141f34fbfe8581d025d80820aa9f5cf15cf76a5ebe991b5",
+      "status": "Unchanged appended shared master; source/runtime bores and sampled motion pass; dedicated finish/native pending"
+    },
+    {
+      "machine": "pressure-vessel-fabricator",
+      "machine_revision": "V03 dedicated finish, states and original audio",
+      "instance": "forming-fluid intake",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -2.0
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+      "runtime_export_sha256": "378095b1903a6b99700ff50ed6061782786ecbe37e03045d9833ca69c216c7df",
+      "status": "Unchanged appended shared master; source/export bores, sampled motion, dedicated finish and four-direction captures pass; native pending"
+    }
+  ],
+  "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
+  "verification_scope": "clean append, actual render, bounds/packed maps; model-space geometry only",
+  "thumbnail": "thumbnail.png",
+  "verification": "verification.json",
+  "dimensions_tiles": [
+    0.2900001579915994,
+    0.6800000369548798,
+    0.6799999475479126
+  ],
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "materials": [
+    {
+      "id": "TP Library | brass",
+      "packed_maps": [
+        {
+          "name": "brass_albedo.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "57034a31f8c7859a6b3661f57c67e60139bb8dbfc7273cd45be7b98904e35038"
+        },
+        {
+          "name": "brass_normal.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "8b48a33b75fd08e7cfa0e405c921b48a43682dafd33f49b582482e188f5eb674"
+        },
+        {
+          "name": "brass_orm.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "acc155e0e7406452e674e70673dcb149cd3d42fa9b0a0e0a069f61b6d91dc1e0"
+        }
+      ]
+    },
+    {
+      "id": "TP Library | iron",
+      "packed_maps": [
+        {
+          "name": "iron_albedo.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "cbd2e4fd0e9368d69a4b6d255e7440443414155f4cd8c8434c149063fd65cbb7"
+        },
+        {
+          "name": "iron_normal.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "f26a49e578f648a434e460e5d0484bec4f0440cf4170895aeda380975e282997"
+        },
+        {
+          "name": "iron_orm.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "1c9011a45f77e6f0d5f35cbfbb3e4e0d8f8ed5f8d62a6afd33a04d8477c3a617"
+        }
+      ]
+    },
+    {
+      "id": "TP Library | machine_steel",
+      "packed_maps": [
+        {
+          "name": "machine_steel_albedo.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "55e9cb3d4079baeafe2b9ac0e34924afabc93e7a128d95cd755878b7bb29354a"
+        },
+        {
+          "name": "machine_steel_normal.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "518e4d4d9359646d11984692d452e1faab751bbb53d873f94f7d7df4bf514015"
+        },
+        {
+          "name": "machine_steel_orm.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "a89ad9e908dd1e53ec461e8617bb2f6add873af9389031d98d28839e3c082684"
+        }
+      ]
+    }
+  ],
+  "parameters": {
+    "uniform_scale": {
+      "default": 1.0,
+      "safe_range": [
+        1.0,
+        1.0
+      ]
+    },
+    "placement": "rigid transform only"
+  }
+}

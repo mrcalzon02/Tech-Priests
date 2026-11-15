@@ -1,0 +1,38 @@
+{
+  "status": "reviewed_dedicated_finish_four_direction_states_and_original_audio; native_pending",
+  "source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+  "glb_sha256": "378095b1903a6b99700ff50ed6061782786ecbe37e03045d9833ca69c216c7df",
+  "registry_sha256": "5fc1245f9876b2590c8b09b5bfcfe7b1215f2797c177afe67dbc893b43a30245",
+  "footprint": [
+    4,
+    4
+  ],
+  "cycle_seconds": 12,
+  "owner_process": "Weld steel plates together, clamp the exposed blank in an open frame, and pump high-pressure forming material through a sealed mandrel to expand it.",
+  "contacts": 170,
+  "motion_samples_per_artifact": 1154,
+  "motion_step_frames": 0.25,
+  "unexpected_sampled_intersections": 0,
+  "source_and_runtime_core_rays": 1710,
+  "deformed_vertex_pose_samples": 12,
+  "maximum_deformed_world_vertex_error": 0,
+  "triangles": 41748,
+  "sampled_motion_clearance_verified": true,
+  "full_continuous_swept_clearance_verified": false,
+  "pressure_core_bore_probes_passed": true,
+  "hydraulic_simulation_or_seal_certification": false,
+  "item_visual_transition": "Full-size workpiece retained; native crafting owns item removal. No scaling the neck through the mandrel.",
+  "owner_approved": false,
+  "dedicated_surfaces_complete": true,
+  "authored_maps": 24,
+  "mounted_details": 34,
+  "capture_frames": 52,
+  "atlas_count": 6,
+  "audio_implemented": true,
+  "native_audio_binding_verified": false,
+  "native_prototype_verified": false,
+  "next": [
+    "Build native 4x4 fluid/item prototype, real pipe joins and actual animation clock",
+    "Build canister assembler, refine three reactors, then remaining sprite-only buildings"
+  ]
+}

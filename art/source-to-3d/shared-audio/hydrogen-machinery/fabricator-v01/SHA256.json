@@ -1,0 +1,19 @@
+{
+  ".gitattributes": "308a40fa1d89ae5ea4390b4c9b46a0108b09f171f07898f25d451fa0c69c4e9f",
+  "audio-receipt.json": "864ce88cbbbb16fee3a6f0b5a529debe5df7da7b888b764cb3d5aed88bac84f9",
+  "masters/fabricator-idle.ogg": "15b41ce1a60e3f82b2a519a1451258112bec549ea8cf6b88eb9002ce28130e29",
+  "masters/fabricator-idle.wav": "c5fc354b01fbf0200570324801dce90b81068a9902ca128ccd95dbf5e789ecc5",
+  "masters/fabricator-start.ogg": "ea7f23deb78ff493d05858ffbc28367903c5156fb74006b8bea26fc17f131cd3",
+  "masters/fabricator-start.wav": "c171a62042880b736e595631a10a2dae82e550cecdf4b349c471c69dc4b1a1c3",
+  "masters/fabricator-stop.ogg": "a14e300f0adfe115c76a7b7dc4159618547cf34f83c381eb28ff4135a75dd43f",
+  "masters/fabricator-stop.wav": "748cdae4ebe2e87762527ba4eeee832d1602d8cbbfc3421be121a7f1dd53b55d",
+  "masters/fabricator-working.ogg": "4ebb3eae25b7bf8614c75448016e6e0d3c5b5e098daee2cb8b9348a0028d759f",
+  "masters/fabricator-working.wav": "b5fe71df6f1cda6dac4d69818c30d6c9aab4acbb8f3ce659efc0d51b8c7dd3fd",
+  "README.md": "3afd3e0c6c33636da0ee3139b90741ed27f7480afa463437d3c447ebd7d2f813",
+  "review-mod/tp-mh7-fabricator-audio_0.0.1/data-updates.lua": "0d7834e32dfa587f481e9e680788dd65f5f61ef8c5cd5a61242906d8d689eae6",
+  "review-mod/tp-mh7-fabricator-audio_0.0.1/info.json": "18b699270ffbcea1b1242160a64bc7924f4f33b091498a2845c4d9603ec01fb2",
+  "review-mod/tp-mh7-fabricator-audio_0.0.1/sound/fabricator-idle.ogg": "15b41ce1a60e3f82b2a519a1451258112bec549ea8cf6b88eb9002ce28130e29",
+  "review-mod/tp-mh7-fabricator-audio_0.0.1/sound/fabricator-start.ogg": "ea7f23deb78ff493d05858ffbc28367903c5156fb74006b8bea26fc17f131cd3",
+  "review-mod/tp-mh7-fabricator-audio_0.0.1/sound/fabricator-stop.ogg": "a14e300f0adfe115c76a7b7dc4159618547cf34f83c381eb28ff4135a75dd43f",
+  "review-mod/tp-mh7-fabricator-audio_0.0.1/sound/fabricator-working.ogg": "4ebb3eae25b7bf8614c75448016e6e0d3c5b5e098daee2cb8b9348a0028d759f"
+}

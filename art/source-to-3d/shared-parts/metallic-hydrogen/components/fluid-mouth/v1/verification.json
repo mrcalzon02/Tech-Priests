@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "source_sha256": "086c2bc479956a97d4869ab1e1f2ffa5e1b0880da19da53618d7e85ae27649fe",
+  "thumbnail_sha256": "8b39f244bea9d61d6580a7ddf0acc707bf00b9eeed98c8b2ee81c060a5894c2a",
+  "mesh_count": 10,
+  "bounds": [
+    [
+      -0.2900000512599945,
+      -0.3400000333786011,
+      -0.3399999737739563
+    ],
+    [
+      1.067316048875e-07,
+      0.3400000035762787,
+      0.3399999737739563
+    ]
+  ],
+  "dimensions": [
+    0.2900001579915994,
+    0.6800000369548798,
+    0.6799999475479126
+  ],
+  "packed_images": 9,
+  "loaded_packed_images": true,
+  "bore": {
+    "rays": 37,
+    "hits": [],
+    "passed": true
+  },
+  "native_socket_connectivity": "not claimed by reusable geometry validation"
+}

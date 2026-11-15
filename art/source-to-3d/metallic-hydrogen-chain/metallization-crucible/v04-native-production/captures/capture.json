@@ -1,0 +1,923 @@
+{
+  "schema": 1,
+  "source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
+  "source_file": "crucible-v03.blend",
+  "camera_policy": "fmpl.factorio45.v1",
+  "persistent_camera_count": 1,
+  "camera_cleanup": {
+    "policy": "fmpl.factorio45.v1",
+    "removed_camera_objects": [
+      "FMPL_CAPTURE_CAMERA"
+    ],
+    "persistent_camera_count": 1,
+    "name": "FMPL_CAPTURE_CAMERA"
+  },
+  "blender": "5.0.0",
+  "config": {
+    "schema": 1,
+    "asset": "tp-crucible-v04-native-fitting",
+    "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\metallization-crucible\\v03-finish-and-states\\crucible-v03.blend",
+    "source_size": 256,
+    "sizes": [
+      64,
+      128,
+      256
+    ],
+    "samples": 24,
+    "seed": 4362,
+    "columns": 4,
+    "fps": 1,
+    "directions": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "exclude_rotation": [],
+    "hide_render": [],
+    "animated_lights": [],
+    "states": {
+      "idle": [
+        0
+      ],
+      "working": [
+        7,
+        31,
+        55,
+        79,
+        103,
+        127,
+        151,
+        175
+      ]
+    },
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "entity",
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 8.48528137423857,
+      "target": [
+        0,
+        0,
+        1.2
+      ],
+      "ortho_scale": 7.7,
+      "shift_x": 0,
+      "shift_y": 0
+    },
+    "orientation_policy": "rotatable",
+    "source_timeline_fps": 24,
+    "cycle_seconds": 8,
+    "threads": 6,
+    "workers": 1,
+    "sampling_note": "Eight uniform working poses over the real eight-second source loop, plus idle.",
+    "adapter": "mh7-crucible-native-fittings-v1"
+  },
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071068286895752,
+        -0.7071067094802856,
+        -5.999999523162842
+      ],
+      [
+        0.0,
+        0.7071067094802856,
+        0.7071068286895752,
+        7.199999809265137
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 7.699999809265137,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      256,
+      256
+    ]
+  },
+  "daylight": [
+    {
+      "name": "Fill",
+      "type": "AREA",
+      "energy": 700.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          0.4472135603427887,
+          -0.596284806728363,
+          0.6666666865348816,
+          4.0
+        ],
+        [
+          0.8944272398948669,
+          0.29814231395721436,
+          -0.3333333432674408,
+          -2.0
+        ],
+        [
+          7.548435121407238e-08,
+          0.745356023311615,
+          0.6666666269302368,
+          5.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Key",
+      "type": "AREA",
+      "energy": 1150.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          0.800000011920929,
+          0.46093273162841797,
+          -0.384110689163208,
+          -3.0
+        ],
+        [
+          -0.6000000238418579,
+          0.6145769953727722,
+          -0.5121475458145142,
+          -4.0
+        ],
+        [
+          4.873782089021006e-08,
+          0.6401844620704651,
+          0.7682212591171265,
+          7.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Rim",
+      "type": "AREA",
+      "energy": 1000.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          -1.0,
+          -1.504815259067982e-07,
+          6.305878486045913e-08,
+          0.0
+        ],
+        [
+          1.5099580252808664e-07,
+          -0.7071067690849304,
+          0.7071067690849304,
+          5.0
+        ],
+        [
+          -6.181721801112872e-08,
+          0.7071067690849304,
+          0.7071067690849304,
+          6.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "world": {
+    "name": "Neutral industrial world",
+    "color_management": {
+      "view_transform": "AgX",
+      "look": "None",
+      "exposure": 0.0,
+      "gamma": 1.0
+    }
+  },
+  "material_changes": [
+    {
+      "state": "idle",
+      "angle": 0,
+      "native_fitting_pose": [
+        {
+          "role": "conditioned_hydrogen_input",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "posed_mouth_center": [
+            -2.5,
+            0.0,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            -2.5,
+            -0.2545584412271571
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        },
+        {
+          "role": "metallicized_intermediate_output",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "posed_mouth_center": [
+            2.5,
+            0.0,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            2.5,
+            -0.2545584412271571
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        }
+      ]
+    },
+    {
+      "state": "idle",
+      "angle": 90,
+      "native_fitting_pose": [
+        {
+          "role": "conditioned_hydrogen_input",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            -1.0355339050292969,
+            0.0
+          ],
+          "posed_mouth_center": [
+            -1.8874474960739462e-07,
+            -3.535533905029297,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            -1.8874474960739462e-07,
+            2.2454415587728427
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        },
+        {
+          "role": "metallicized_intermediate_output",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            1.0355339050292969,
+            0.0
+          ],
+          "posed_mouth_center": [
+            1.8874474960739462e-07,
+            3.535533905029297,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            1.8874474960739462e-07,
+            -2.7545584412271573
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        }
+      ]
+    },
+    {
+      "state": "idle",
+      "angle": 180,
+      "native_fitting_pose": [
+        {
+          "role": "conditioned_hydrogen_input",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            -9.05292552033643e-08,
+            0.0
+          ],
+          "posed_mouth_center": [
+            2.5,
+            -3.090862037424813e-07,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            2.5,
+            -0.25455822267020856
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        },
+        {
+          "role": "metallicized_intermediate_output",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            9.05292552033643e-08,
+            0.0
+          ],
+          "posed_mouth_center": [
+            -2.5,
+            3.090862037424813e-07,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            -2.5,
+            -0.25455865978410563
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        }
+      ]
+    },
+    {
+      "state": "idle",
+      "angle": 270,
+      "native_fitting_pose": [
+        {
+          "role": "conditioned_hydrogen_input",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            1.0355339050292969,
+            0.0
+          ],
+          "posed_mouth_center": [
+            -1.8874474960739462e-07,
+            3.535533905029297,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            -1.8874474960739462e-07,
+            -2.7545584412271573
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        },
+        {
+          "role": "metallicized_intermediate_output",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            -1.0355339050292969,
+            0.0
+          ],
+          "posed_mouth_center": [
+            1.8874474960739462e-07,
+            -3.535533905029297,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            1.8874474960739462e-07,
+            2.2454415587728427
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 0,
+      "native_fitting_pose": [
+        {
+          "role": "conditioned_hydrogen_input",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "posed_mouth_center": [
+            -2.5,
+            0.0,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            -2.5,
+            -0.2545584412271571
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        },
+        {
+          "role": "metallicized_intermediate_output",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "posed_mouth_center": [
+            2.5,
+            0.0,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            2.5,
+            -0.2545584412271571
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 90,
+      "native_fitting_pose": [
+        {
+          "role": "conditioned_hydrogen_input",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            -1.0355339050292969,
+            0.0
+          ],
+          "posed_mouth_center": [
+            -1.8874474960739462e-07,
+            -3.535533905029297,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            -1.8874474960739462e-07,
+            2.2454415587728427
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        },
+        {
+          "role": "metallicized_intermediate_output",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            1.0355339050292969,
+            0.0
+          ],
+          "posed_mouth_center": [
+            1.8874474960739462e-07,
+            3.535533905029297,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            1.8874474960739462e-07,
+            -2.7545584412271573
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 180,
+      "native_fitting_pose": [
+        {
+          "role": "conditioned_hydrogen_input",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            -9.05292552033643e-08,
+            0.0
+          ],
+          "posed_mouth_center": [
+            2.5,
+            -3.090862037424813e-07,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            2.5,
+            -0.25455822267020856
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        },
+        {
+          "role": "metallicized_intermediate_output",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            9.05292552033643e-08,
+            0.0
+          ],
+          "posed_mouth_center": [
+            -2.5,
+            3.090862037424813e-07,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            -2.5,
+            -0.25455865978410563
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 270,
+      "native_fitting_pose": [
+        {
+          "role": "conditioned_hydrogen_input",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            1.0355339050292969,
+            0.0
+          ],
+          "posed_mouth_center": [
+            -1.8874474960739462e-07,
+            3.535533905029297,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            -1.8874474960739462e-07,
+            -2.7545584412271573
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        },
+        {
+          "role": "metallicized_intermediate_output",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            -1.0355339050292969,
+            0.0
+          ],
+          "posed_mouth_center": [
+            1.8874474960739462e-07,
+            -3.535533905029297,
+            0.36000001430511475
+          ],
+          "projected_native_relative": [
+            1.8874474960739462e-07,
+            2.2454415587728427
+          ],
+          "method": "rigid donor mouth/barrel; full-bore straight axial extension or offset receiving taper; fixed camera unchanged"
+        }
+      ]
+    }
+  ],
+  "mesh_count": 223,
+  "master_sha256": "6e54b1dc9c94a8fc57fdfcd88fbc93db44c6efb423136109b320c26a9390267d",
+  "frames": [
+    {
+      "state": "idle",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d00/f000.png",
+      "sha256": "76ec2c4dc0cffb307b45ade4f4df85fccf8aaa156bcbc01d4d625f12acbcf476"
+    },
+    {
+      "state": "idle",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d01/f000.png",
+      "sha256": "700aae788f6bcd182acddeb3ed80499de78ad78a5b2db75aae6aa94c3b79b733"
+    },
+    {
+      "state": "idle",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d02/f000.png",
+      "sha256": "51b2a7d5a7ff536874bbdf1a9630e3c39cfd3d7478b10e6e2e80ca66f8eb7dfa"
+    },
+    {
+      "state": "idle",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d03/f000.png",
+      "sha256": "7f1a88c9e83c2a24abeb31dbbbe04c628f3cfdde4936569facc27104912f1fcb"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d00/f000.png",
+      "sha256": "24aa61b6ae179e6b249d491263699ec056fb462b80ac44149449d9bad8e7f42b"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d00/f001.png",
+      "sha256": "61e061cee2d8cf7a3aa6efd117bbf14e7b772d32d847d32eaf1295fd86440bec"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d00/f002.png",
+      "sha256": "0b4a52a79ffefe48551b322788fd1e8b9fe607ed0a9ba87fb086d741ff25c678"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d00/f003.png",
+      "sha256": "c1a21a2fb5082dcd490aae10aa54d5e2f1e1628763bd58d4f3d38a6934b81b91"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d00/f004.png",
+      "sha256": "aec6ebfd810f8ebe11529c3215fc2c76ec8db58d14756e52d2106df570d09193"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d00/f005.png",
+      "sha256": "8cba824d02e89ad4a75a96b8ec5146113bfbca20c23fc6f9f20716e6915c068a"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d00/f006.png",
+      "sha256": "2962869a5c718be6e7333d51e00fa81a4e35ef48bac1f474807c5ecdcd027a1d"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d00/f007.png",
+      "sha256": "8665611e4c497f627d3f507920ae4b68fb8953564ff52449ddc88ec0016d1b3a"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d01/f000.png",
+      "sha256": "a7ee14f76622c488fdf95091821fff2786807f15fa68b964cdbd2b412bf469b6"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d01/f001.png",
+      "sha256": "5fe8c574e777058fe111e14fdfa9d3deb72538c02702baaca73458c1e398f2b6"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d01/f002.png",
+      "sha256": "f102e852fad19e25eb66d6b90e684402547d634b4c52aac8c968b69b124dbca0"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d01/f003.png",
+      "sha256": "9054bf4d987cab9953096f938884e9235f7b16555911839786bc25dfe3d178b5"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d01/f004.png",
+      "sha256": "67e0c85e0c17f1b3ef6652bad981166b589b2270a1c5c099b92c8107bf12577a"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d01/f005.png",
+      "sha256": "447d83698a4588cd8d6cc5523ba5782ac769ac04eb550d5b8d26fa2c628ec67e"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d01/f006.png",
+      "sha256": "29551371188e854a264a51d163821110df2ba77a17607c504eadf2fb3040c61f"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d01/f007.png",
+      "sha256": "815f7f03276fe8033f260cc7ef3a4f2e74246778f2c4bae8577572692c9c2816"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d02/f000.png",
+      "sha256": "a1a81d7f6b4f04ac7765c4aaca2d22f02aae37955669f7a655af93fe42bdb85b"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d02/f001.png",
+      "sha256": "21904f649a6a34773ce6c2b67b62cb61e24c4e78c0ccb04ed865f94e60a69fcf"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d02/f002.png",
+      "sha256": "6fea7bafc21af91fedcf6fcdb85b1cb7558d6ae6d4985f290ce4b78713e79b42"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d02/f003.png",
+      "sha256": "355ba8496898298150a0d6d9fed44bba77b7c5ddf782b2e6ed5f07061b195903"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d02/f004.png",
+      "sha256": "57ade6b9c3d67c6d62c3e76d81c8c684a113c5e528a9584e806cac35ed897f28"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d02/f005.png",
+      "sha256": "911365d243a88b5d32e5cf63d83e8fda88fc9f62e262755134805ae5e0369ced"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d02/f006.png",
+      "sha256": "5c291d531ecdcd466becc0e45aeb911f452c78974b47ae400d8257d9a543ed37"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d02/f007.png",
+      "sha256": "42f24c7e35bfd38891e17409e876e44d5dd114a6cba26edf799c77b288198eaf"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d03/f000.png",
+      "sha256": "3cd77dc81f443d82a1fc6dd72b694af3cb2f71ef0a13b615d19f7399d5c85dc6"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d03/f001.png",
+      "sha256": "19b90a024f89c5726b396c1e6967a4498355a9d2f816ff619e5cd8d50295c523"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d03/f002.png",
+      "sha256": "6fdb954c99b596786036951e76c6aa49408d03b5a17b878be9311337745b0423"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d03/f003.png",
+      "sha256": "c5adf75fcd4a7f4eb0da79c3077c07b856eddc43d563687d5964123bb36c26ec"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d03/f004.png",
+      "sha256": "fe28b8483543fc07be343eb6803b649e76e26978d4388b437aa5cdf79c3967a1"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d03/f005.png",
+      "sha256": "ed95679d9503181f68b9670fe563a8e72fbdb18d386f44113a0a529e56c30d6f"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d03/f006.png",
+      "sha256": "bf91beb938a137fdec66feefe6456231c3197dbb3cd694cc2c9fafc6e07070b2"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d03/f007.png",
+      "sha256": "a38a2b9de40a43d8e7de6a3b773e396c538a9b19bf3af070c1862a1c19199c75"
+    }
+  ],
+  "art_accepted": false,
+  "engine_integration": "outside Blender-only scope"
+}

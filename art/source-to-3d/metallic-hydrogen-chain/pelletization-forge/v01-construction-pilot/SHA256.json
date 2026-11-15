@@ -1,0 +1,17 @@
+{
+  ".gitattributes": "308a40fa1d89ae5ea4390b4c9b46a0108b09f171f07898f25d451fa0c69c4e9f",
+  "CHECKPOINT.json": "a3b9890e0537b91912f74e6b537906737c1e193f2dbf661fe404231d805ab2bc",
+  "construction-receipt.json": "350f848e0fcbcf556a1953dd01cd4d844136d8ef152f4f53d13a275f1b267f5e",
+  "export-inspection/clay.png": "9fee2bbcf7f02bd86463ec9a97256ab9553acd013cf7c927a387fc34765583bb",
+  "export-inspection/export-inspection.json": "fbd2232a8803bb5d5fd78703acf69030860901b131b71bf057cb039013d521d1",
+  "export-inspection/front.png": "e3ea717699720aee70ae2b5b1ed13fa2381758f3ee9bbbf3e5502fd8e38a4978",
+  "export-inspection/rear-inspection.png": "8661791f68f39f8db106c47c5e2d513e1bf895c858f3bf67ac51f75ba537a1c6",
+  "export-readback.json": "dc32ec13bc950deb2af47ba472c614baebeac5b5458d4028166d0d0151e8df1d",
+  "forge-v01.blend": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
+  "forge-v01.glb": "c4bc56f95257fe62c6086a55e3d3f851d0b2c9991b7d2cf6899d4b8fd0c8a707",
+  "mechanics/mechanical-readback.json": "87f7bb75560699827786120ef8fdf3a26f33d8fd9f896b4a5443e5bcbe62e99d",
+  "part_provenance.json": "31f71e6f34869626b59cf74a75945cf16a5577871e8fe9b5547845d356460774",
+  "port_manifest.json": "99a925caa2cc8b907858bb0d6a8087f1f7a2d5524802c76428bfb7718b20aae9",
+  "README.md": "ab2464df00be1bb65b081a5d63d150a2433426ccdec4dcef5ad9dba7d5362c9f",
+  "working-front.png": "9864f78ce1de76ad282f6a06c50de27ecc4e6ead9bcb0ed4ce58eba19a150d57"
+}

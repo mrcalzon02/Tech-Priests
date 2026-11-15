@@ -48,7 +48,8 @@
     "thetazine_v03": "docs/art/thetazine-thruster-v03: technical source/export and full local rendered loop pass; no V03 native integration/final appearance claim.",
     "thetazine_v04_safety": "Superseded: source35 normal-prototype integration/native review published at fff09c4e64cbf88f3b4c7deefeaf751fb8d8a968; wider family gates remain open.",
     "thetazine_v04": "Source35 ordinary-prototype integration verified: warm liner, 64-frame body/light/shadow, idle/cap/restart views; source33 physical geometry preserved exactly. Earlier V03-runtime labels corrected; baseline was legacy two-frame art.",
-    "a02_evaluated_usd": "docs/art/lobber-a02-evaluated-usd:68252evaluated mesh samples pass;4actual import views,8motion poses and clay reviewed. Archives local only; GLTF/native/final gates remain open."
+    "a02_evaluated_usd": "docs/art/lobber-a02-evaluated-usd:68252evaluated mesh samples pass;4actual import views,8motion poses and clay reviewed. Archives local only; GLTF/native/final gates remain open.",
+    "energy_dish_shadow": "docs/art/energy-dish-v03-shadow64:64shadowPNG,128exactRGBAatlas cells,8bounded sheets; calibrated shift equals existingbeauty. Idle source-export only; native/working/final gates open."
   },
   "open_defects": [
     "Condenser V21 exact source restored from tracked19parts; upstream V22C normal import,41atlas/icon hashes and native contact sheet reconciled. Per-gate final fidelity review remains open.",
@@ -660,5 +661,45 @@
     "local_export_directory": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\a02-evaluated-usd-20261114",
     "local_archive_directory": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\a02-usd-delivery-20261114",
     "next_step": "Do not rerun source captures, assembly or USD export. Ground native alternate-cap target without inventing gameplay; GLTF adapter and full effect/final acceptance remain open. Exclude workbench and other-chat steam engine."
+  },
+  "a02_rejected_belt_flipbook": {
+    "status": "REJECTED_ONE_BELT_DISCRETE_GLTF_STUDY_DO_NOT_EXPAND",
+    "checkpoint": "docs/art/lobber-a02-evaluated-usd/belt-flipbook-rejected/CHECKPOINT.json",
+    "discrete_samples": 193,
+    "geometry_positions": "exact",
+    "normal_gate": "FAILED",
+    "glb_bytes": 162908036,
+    "binary_remote": false,
+    "next_step": "Do not repeat this193pose study or expand full-cap flipbook meshes. Keep verified USD as faithful geometry-cache option; ground native alternate-cap target or select another source-grounded asset. GLTF full gate remains open."
+  },
+  "energy_dish_shadow64": {
+    "status": "IDLE_SHADOW64_SOURCE_EXPORT_VERIFIED_NATIVE_AND_WORKING_GATES_OPEN",
+    "source_dish_sha256": "b4851a3cfca888e51eff8f77ba12e0adc8d216b65304448aaefc40bb1cdc5c71",
+    "source_camera_sha256": "0c9ebf42b16ddd53a8162d836bb88a052c77f16c28f4e7265172300797e372ed",
+    "directions": 64,
+    "mapping": "N0/E16/S32/W48 clockwise",
+    "source_shadow_png": 64,
+    "atlas_exact_cells": 128,
+    "atlas_sheets": 8,
+    "camera_registration": {
+      "world_origin_pixel_at1280": [
+        640.0,
+        754.6742346542837
+      ],
+      "factorio_shift": [
+        0.0,
+        -1.1109066140377886
+      ],
+      "factorio_scale_at1280": 0.3099999904632568,
+      "factorio_scale_at512": 0.7749999761581421,
+      "camera_and_shift_equal_existing_beauty": true
+    },
+    "working_or_emission_states": false,
+    "native_prototype_integration": false,
+    "owner_final_approval": false,
+    "local_checkpoint": "C:\\Users\\Admin\\Documents\\Codex\\2026-11-07\\referenced-chatgpt-conversation-this-is-an\\work\\energy-dish-v03-shadow64-sharp\\loader-metadata",
+    "source_unchanged": true,
+    "beauty_unchanged": "64original image hashes verified",
+    "next_step": "Do not repeat64idlebeauty or64shadow captures. Refine dish surfaces or recover intended emitter/working source design; ground exact native target without replacing autocannon or inventing ammo/weapon interfaces. Full goal open; workbench/other-chat steam engine excluded."
   }
 }

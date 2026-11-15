@@ -1,0 +1,68 @@
+{
+  "status": "SOURCE_COMPOSITION_NOT_NATIVE",
+  "graphics_module_sha256": "4bc27a359d85312ff7ec46251de070af88bc0fe65eb457ff3623b8e591df0e3d",
+  "base_scale": 0.315463840961,
+  "base_shift": [
+    0.0,
+    -1.110906552544
+  ],
+  "shadow_scale_at1280": 0.1549999952316284,
+  "shadow_shift": [
+    0.0,
+    -1.1109066140377881
+  ],
+  "shadow_alpha_transform": "round(raw_alpha*177/255), same as export authoring",
+  "pixels_per_tile": 48,
+  "base_sources": [
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-shadow.png",
+      "sha256": "735fb344a878a8f487bd18a8f82902ae8b362c44915409a4cb7ebeff266894ab"
+    },
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north.png",
+      "sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48"
+    },
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-glow.png",
+      "sha256": "8e9f135e43d7c4f595fecc5590a610b6d9b575e0648359dd8b81251429775deb"
+    },
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-shadow.png",
+      "sha256": "735fb344a878a8f487bd18a8f82902ae8b362c44915409a4cb7ebeff266894ab"
+    },
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north.png",
+      "sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48"
+    },
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-glow.png",
+      "sha256": "8e9f135e43d7c4f595fecc5590a610b6d9b575e0648359dd8b81251429775deb"
+    },
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-shadow.png",
+      "sha256": "735fb344a878a8f487bd18a8f82902ae8b362c44915409a4cb7ebeff266894ab"
+    },
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north.png",
+      "sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48"
+    },
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-glow.png",
+      "sha256": "8e9f135e43d7c4f595fecc5590a610b6d9b575e0648359dd8b81251429775deb"
+    },
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-shadow.png",
+      "sha256": "735fb344a878a8f487bd18a8f82902ae8b362c44915409a4cb7ebeff266894ab"
+    },
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north.png",
+      "sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48"
+    },
+    {
+      "file": "tech-priests_src/graphics/entity/bunker-autocannon/base-north-glow.png",
+      "sha256": "8e9f135e43d7c4f595fecc5590a610b6d9b575e0648359dd8b81251429775deb"
+    }
+  ],
+  "preview_sha256": "39c4d72ee8a1cca6349b655d7c858e114456bd5a82425f21cbf1e5718f91c4d5",
+  "native_integration": false
+}

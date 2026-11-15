@@ -1,0 +1,25 @@
+{
+  "status": "mechanism and bore checkpoint; final art gate remains open",
+  "source_sha256": "f51833329c74bc1482e9378513729429d616a9734eabdc12ebc401a26311c806",
+  "glb_sha256": "c65459f5bdf90a28d141f34fbfe8581d025d80820aa9f5cf15cf76a5ebe991b5",
+  "owner_approved": false,
+  "final_threshold_unchanged": 4,
+  "scores": {
+    "silhouette": 3,
+    "construction": 3,
+    "surfaces": 2,
+    "states": 3,
+    "native": 0
+  },
+  "findings": [
+    "Exposed blank and narrow open clamps retained. Actual export shows welding, clamped expansion and exposed formed part.",
+    "Rear lift arm, trunnion/clevis, extended torch parking and front-face conductor pads resolve measured clashes.",
+    "Bored reservoir and pump head, matched inlet reducer, constant-radius inlet elbow, low pressure corridor and mandrel glands pass geometry probes.",
+    "Family donor PBR remains provisional. Dedicated finish, closeup/rear/clay review, sound, four-direction final capture and native integration remain open."
+  ],
+  "render_hashes": {
+    "plate-welding-open": "fb2fdf5ee3c12a19241d69ad26f15c4131a09ae7da475bbc02b4f0f96a21e9a4",
+    "clamped-expanding": "8aecc82e2718b5ea95c95c1ca655bd6b9c7438a7f426e4ad129c40b68de0a2ae",
+    "formed-vessel-exposed": "2ceb5029876e24c9410efcff005a7cd278fe99341b880067cdace801a5dd3a56"
+  }
+}

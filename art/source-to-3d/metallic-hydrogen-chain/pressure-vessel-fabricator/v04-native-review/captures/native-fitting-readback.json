@@ -1,0 +1,89 @@
+{
+  "passed": true,
+  "errors": [],
+  "source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+  "master_sha256": "62f0c1317e4403d95be9b6d1fbadce9c918895d23930d4cb2bac71d80eb9f7bc",
+  "poses": [
+    {
+      "angle": 0,
+      "projection_error_tiles": 2.831220635712839e-08,
+      "unchanged_reducer_vertex_error": 0.0,
+      "throat_barrel_gap": 0.0,
+      "large_bore": {
+        "passed": true,
+        "rays": 81,
+        "hits": []
+      },
+      "small_feed_rays": 126,
+      "small_feed_obstructions": [],
+      "mesh_stats": {
+        "triangles": 41748,
+        "degenerate_triangles": 0,
+        "degenerate_objects": [],
+        "finite": true,
+        "missing_uv": []
+      }
+    },
+    {
+      "angle": 90,
+      "projection_error_tiles": 1.6832297027313814e-06,
+      "unchanged_reducer_vertex_error": 0.0,
+      "throat_barrel_gap": 0.0,
+      "large_bore": {
+        "passed": true,
+        "rays": 81,
+        "hits": []
+      },
+      "small_feed_rays": 126,
+      "small_feed_obstructions": [],
+      "mesh_stats": {
+        "triangles": 41940,
+        "degenerate_triangles": 0,
+        "degenerate_objects": [],
+        "finite": true,
+        "missing_uv": []
+      }
+    },
+    {
+      "angle": 180,
+      "projection_error_tiles": 2.3902009116394396e-07,
+      "unchanged_reducer_vertex_error": 0.0,
+      "throat_barrel_gap": 0.0,
+      "large_bore": {
+        "passed": true,
+        "rays": 81,
+        "hits": []
+      },
+      "small_feed_rays": 126,
+      "small_feed_obstructions": [],
+      "mesh_stats": {
+        "triangles": 41748,
+        "degenerate_triangles": 0,
+        "degenerate_objects": [],
+        "finite": true,
+        "missing_uv": []
+      }
+    },
+    {
+      "angle": 270,
+      "projection_error_tiles": 1.5682036695885415e-06,
+      "unchanged_reducer_vertex_error": 0.0,
+      "throat_barrel_gap": 0.0,
+      "large_bore": {
+        "passed": true,
+        "rays": 81,
+        "hits": []
+      },
+      "small_feed_rays": 126,
+      "small_feed_obstructions": [],
+      "mesh_stats": {
+        "triangles": 41940,
+        "degenerate_triangles": 0,
+        "degenerate_objects": [],
+        "finite": true,
+        "missing_uv": []
+      }
+    }
+  ],
+  "scope": "Actual rim projection and matching barrel, unchanged 64-section cast reducer, .235-radius receiving core and constant-radius small-feed probes in four capture poses. Native screenshots separately establish visible seating; no owner approval inferred."
+}

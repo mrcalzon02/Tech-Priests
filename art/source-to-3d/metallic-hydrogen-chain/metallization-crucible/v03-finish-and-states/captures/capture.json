@@ -1,0 +1,569 @@
+{
+  "schema": 1,
+  "source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
+  "source_file": "crucible-v03.blend",
+  "camera_policy": "fmpl.factorio45.v1",
+  "persistent_camera_count": 1,
+  "camera_cleanup": {
+    "policy": "fmpl.factorio45.v1",
+    "removed_camera_objects": [
+      "FMPL_CAPTURE_CAMERA"
+    ],
+    "persistent_camera_count": 1,
+    "name": "FMPL_CAPTURE_CAMERA"
+  },
+  "blender": "5.0.0",
+  "config": {
+    "schema": 1,
+    "asset": "tp-metallization-crucible-v03-six-blade",
+    "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v03-fan-02\\crucible-v03.blend",
+    "source_size": 256,
+    "sizes": [
+      64,
+      128,
+      256
+    ],
+    "samples": 24,
+    "seed": 4362,
+    "columns": 4,
+    "fps": 1,
+    "directions": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "exclude_rotation": [],
+    "hide_render": [],
+    "animated_lights": [],
+    "states": {
+      "idle": [
+        0
+      ],
+      "working": [
+        7,
+        31,
+        55,
+        79,
+        103,
+        127,
+        151,
+        175
+      ]
+    },
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "entity",
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 8.48528137423857,
+      "target": [
+        0,
+        0,
+        1.2
+      ],
+      "ortho_scale": 7.7,
+      "shift_x": 0,
+      "shift_y": 0
+    },
+    "orientation_policy": "rotatable",
+    "source_timeline_fps": 24,
+    "cycle_seconds": 8,
+    "threads": 6,
+    "workers": 1,
+    "sampling_note": "Eight uniform working poses over the real eight-second source loop, plus idle."
+  },
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071068286895752,
+        -0.7071067094802856,
+        -5.999999523162842
+      ],
+      [
+        0.0,
+        0.7071067094802856,
+        0.7071068286895752,
+        7.199999809265137
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 7.699999809265137,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      256,
+      256
+    ]
+  },
+  "daylight": [
+    {
+      "name": "Fill",
+      "type": "AREA",
+      "energy": 700.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          0.4472135603427887,
+          -0.596284806728363,
+          0.6666666865348816,
+          4.0
+        ],
+        [
+          0.8944272398948669,
+          0.29814231395721436,
+          -0.3333333432674408,
+          -2.0
+        ],
+        [
+          7.548435121407238e-08,
+          0.745356023311615,
+          0.6666666269302368,
+          5.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Key",
+      "type": "AREA",
+      "energy": 1150.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          0.800000011920929,
+          0.46093273162841797,
+          -0.384110689163208,
+          -3.0
+        ],
+        [
+          -0.6000000238418579,
+          0.6145769953727722,
+          -0.5121475458145142,
+          -4.0
+        ],
+        [
+          4.873782089021006e-08,
+          0.6401844620704651,
+          0.7682212591171265,
+          7.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Rim",
+      "type": "AREA",
+      "energy": 1000.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          -1.0,
+          -1.504815259067982e-07,
+          6.305878486045913e-08,
+          0.0
+        ],
+        [
+          1.5099580252808664e-07,
+          -0.7071067690849304,
+          0.7071067690849304,
+          5.0
+        ],
+        [
+          -6.181721801112872e-08,
+          0.7071067690849304,
+          0.7071067690849304,
+          6.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "world": {
+    "name": "Neutral industrial world",
+    "color_management": {
+      "view_transform": "AgX",
+      "look": "None",
+      "exposure": 0.0,
+      "gamma": 1.0
+    }
+  },
+  "material_changes": [],
+  "mesh_count": 221,
+  "master_sha256": "c03a8997717b0bdb458acf6832d03cd2125496a6745400b7961e0b7fca548d97",
+  "frames": [
+    {
+      "state": "idle",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d00/f000.png",
+      "sha256": "d4ae319c010b1e7ec8d77da1b88b5aca8617f5b1570208b5e48a8b8be4349fb3"
+    },
+    {
+      "state": "idle",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d01/f000.png",
+      "sha256": "77548d1eeb41b9a7ae3701caa62cf9e5dcb2c46e1da294bf843f87e62b026c31"
+    },
+    {
+      "state": "idle",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d02/f000.png",
+      "sha256": "844c54178986a47490e9a548dbb20a5cd5332c9711701cf13c60491379316011"
+    },
+    {
+      "state": "idle",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d03/f000.png",
+      "sha256": "9ca5ade2d4ab62f74b95243cf80d7d835b9da98b820fd0a6e62827eabfd04ef2"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d00/f000.png",
+      "sha256": "cfb9080cf6c7b0d8b0a2918593226fa9445e8a7a4b77e23d8225c6f294387eae"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d00/f001.png",
+      "sha256": "ea6e51a66319dfb559706403fd4bf8713631f20047838eca5e53a617270d3aaf"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d00/f002.png",
+      "sha256": "2a74e75ef768e9afeba6f680a82a72eaab45804522f199cb85f45d49d383e79d"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d00/f003.png",
+      "sha256": "2c3acc2dbaedebdcef8fe328a78e6c1f0e42d382b366523ebe37832d84317d28"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d00/f004.png",
+      "sha256": "10b1a64f428764c5135343f86451b76309a90cc37feead89b045a035a14ce0e2"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d00/f005.png",
+      "sha256": "66420cb76809802b715585dad24300c08c7c896dba4a3a356d4b3318ca861bb0"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d00/f006.png",
+      "sha256": "7d612456c9e631d8f89d0cf03504cb26cd343d66c7d15b32821ea3f15eaa933f"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d00/f007.png",
+      "sha256": "e49c02d86835265e50979d5a6d6a49f0f63908d66a56d9d65bac5243e297ecd4"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d01/f000.png",
+      "sha256": "5db1127bde0233c7880aded0b60d80762412464ab0d31b15678caf6c5e0d0682"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d01/f001.png",
+      "sha256": "6eecd82da74a56a916a3c5b870f972d473938b00f1764d94a4a1ffc08820ca28"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d01/f002.png",
+      "sha256": "e5ea5df73e988f55ace26a0956a3f958f32f59531bd039ea1db6a1c3cb05da2b"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d01/f003.png",
+      "sha256": "7b278dc02f3f0245ad4668cb52161e4d3afbe58e7db3c91c2ef741f28eefed31"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d01/f004.png",
+      "sha256": "7db48ba6cb019f06c1c6b660d70bd28d76524236a3fa2210ca74a33853f8b6e0"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d01/f005.png",
+      "sha256": "14a6f9d6907f90d9e28d4517b22419acf999e8ea89a84578c3a1020ca0321b15"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d01/f006.png",
+      "sha256": "eee5ea6ea4a9ac397876e88730a0a78df3a841a05724f72c0c0d6f8c66844ecb"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d01/f007.png",
+      "sha256": "ab4e5d115ba9099bcf944c977eb7f1d3772b919d8fdabbf851f5bee7cba6f931"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d02/f000.png",
+      "sha256": "0b17cca7999a7c15a246da353727a36eb97789d5c5285ec5c1f1a954919bda71"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d02/f001.png",
+      "sha256": "97348296ed915b446448f19219a71ca5e7c884df30bcca914566e94dac647faa"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d02/f002.png",
+      "sha256": "dea15d73e1e7716ed066f05a17c40fc6795f83e25d9f883a3ac0ea9fc1de45a2"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d02/f003.png",
+      "sha256": "14dbafc3a3fd4e0f8e2ca9b3d745fd29b56ba259e85382315580d28c8c244253"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d02/f004.png",
+      "sha256": "148e7026551a34a1888e934ca9e9e751e981a2fb267088596de1f96944e86396"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d02/f005.png",
+      "sha256": "d6fee05247e6d30c48f3024a8ac1a1a79b17031b57ca0c44d7a3999e7dc684b7"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d02/f006.png",
+      "sha256": "a483c1ca4f1de6777043538b89bb8d7c8258a8572ce29d82e21948d1c13599a3"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d02/f007.png",
+      "sha256": "4b0ef2572989f8775d6a72cc162ef6168b03f782ca578b0b9989b0cbbf99c4bd"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d03/f000.png",
+      "sha256": "99e871a0b50ea97265c5ca5794815cb80835d79546053a2ad9b31b9bd5fe2293"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d03/f001.png",
+      "sha256": "ea72184d5e0b852edd206084034e661a064d34319bf9699b261908a965814f7b"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d03/f002.png",
+      "sha256": "fb14dc46d15940af39c7778921bb04c1ff5fcb54f7d926d98263e7d619a81fed"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d03/f003.png",
+      "sha256": "d65f24dbb5938e62edfaa1634bfd73d5ccacbbe6cc53bdd72fe301e4f5d227cd"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d03/f004.png",
+      "sha256": "642af5a619a527e280ec76adc902ad16d2d9e48c4432e482f5100368a3715547"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d03/f005.png",
+      "sha256": "6cd03cea01deeeff5c6de2b7a37e1fcc57a8d43a9e3c4177fc343200be0cdbed"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d03/f006.png",
+      "sha256": "2695e0451a7f3d7096d2eb6d09b79866afdf06c938e7cdbaf2e51b0058370d61"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d03/f007.png",
+      "sha256": "c3861aaf993106346c4782af4ae757fa401023613c775dc30bf6d3bbc1de945d"
+    }
+  ],
+  "art_accepted": false,
+  "engine_integration": "outside Blender-only scope"
+}

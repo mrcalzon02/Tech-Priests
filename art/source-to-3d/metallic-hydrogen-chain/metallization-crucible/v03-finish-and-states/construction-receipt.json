@@ -1,0 +1,1067 @@
+{
+  "status": "finished surface/state candidate; independent audit and review pending",
+  "provenance": "new_reconstruction_from_reference; historical v0.2 native bytes not recovered",
+  "source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
+  "contacts": [
+    {
+      "a": "TP Metallization Crucible V01 | thick annular pressure plinth",
+      "b": "TP Metallization Crucible V01 | full footprint equipment footing",
+      "label": "central plinth grounded"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | vessel lower pressure closure",
+      "b": "TP Metallization Crucible V01 | thick annular pressure plinth",
+      "label": "pressure closure carried by plinth"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "b": "TP Metallization Crucible V01 | vessel lower pressure closure",
+      "label": "vessel seated on lower closure"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | closed graded pressure crown",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "crown seated on pressure wall"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | crown service hatch retaining flange",
+      "b": "TP Metallization Crucible V01 | closed graded pressure crown",
+      "label": "crown flange seated"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | closed crown service hatch",
+      "b": "TP Metallization Crucible V01 | crown service hatch retaining flange",
+      "label": "crown cover closes service bore"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | seated pressure retaining band 0",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "pressure band has full circumferential seat"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "pressure band has full circumferential seat"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "pressure band has full circumferential seat"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch grounded shoe 0",
+      "b": "TP Metallization Crucible V01 | full footprint equipment footing",
+      "label": "haunch shoe on foundation"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 0",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 0",
+      "label": "tapered casting seated in shoe"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 0",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "haunch loads upper pressure collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 0",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 0",
+      "label": "back brace grounded"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 0",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "back brace supports middle collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch upper mounting cheek 0",
+      "b": "TP Metallization Crucible V01 | tapered pressure haunch 0",
+      "label": "haunch cap retained on casting"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch grounded shoe 1",
+      "b": "TP Metallization Crucible V01 | full footprint equipment footing",
+      "label": "haunch shoe on foundation"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 1",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 1",
+      "label": "tapered casting seated in shoe"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 1",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "haunch loads upper pressure collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 1",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 1",
+      "label": "back brace grounded"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 1",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "back brace supports middle collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch upper mounting cheek 1",
+      "b": "TP Metallization Crucible V01 | tapered pressure haunch 1",
+      "label": "haunch cap retained on casting"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch grounded shoe 2",
+      "b": "TP Metallization Crucible V01 | full footprint equipment footing",
+      "label": "haunch shoe on foundation"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 2",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 2",
+      "label": "tapered casting seated in shoe"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 2",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "haunch loads upper pressure collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 2",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 2",
+      "label": "back brace grounded"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 2",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "back brace supports middle collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch upper mounting cheek 2",
+      "b": "TP Metallization Crucible V01 | tapered pressure haunch 2",
+      "label": "haunch cap retained on casting"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch grounded shoe 3",
+      "b": "TP Metallization Crucible V01 | full footprint equipment footing",
+      "label": "haunch shoe on foundation"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 3",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 3",
+      "label": "tapered casting seated in shoe"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | tapered pressure haunch 3",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "haunch loads upper pressure collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 3",
+      "b": "TP Metallization Crucible V01 | haunch grounded shoe 3",
+      "label": "back brace grounded"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch steel back brace 3",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "back brace supports middle collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | haunch upper mounting cheek 3",
+      "b": "TP Metallization Crucible V01 | tapered pressure haunch 3",
+      "label": "haunch cap retained on casting"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "maintenance collar seated through real shell opening"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | closed front pressure hatch",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "closed pressure lid on collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch grounded hinge lug 0.93",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "hinge lug attached to retaining collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch bronze hinge knuckle 0.93",
+      "b": "TP Metallization Crucible V01 | hatch grounded hinge lug 0.93",
+      "label": "hinge knuckle supported"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch grounded hinge lug 1.23",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "hinge lug attached to retaining collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch bronze hinge knuckle 1.23",
+      "b": "TP Metallization Crucible V01 | hatch grounded hinge lug 1.23",
+      "label": "hinge knuckle supported"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch latch keeper 0",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "latch keeper anchored in collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch closed latch dog 0",
+      "b": "TP Metallization Crucible V01 | pressure hatch latch keeper 0",
+      "label": "closed dog straddles cover edge"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch latch keeper 1",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "latch keeper anchored in collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch closed latch dog 1",
+      "b": "TP Metallization Crucible V01 | pressure hatch latch keeper 1",
+      "label": "closed dog straddles cover edge"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch latch keeper 2",
+      "b": "TP Metallization Crucible V01 | front pressure hatch receiving collar",
+      "label": "latch keeper anchored in collar"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | pressure hatch closed latch dog 2",
+      "b": "TP Metallization Crucible V01 | pressure hatch latch keeper 2",
+      "label": "closed dog straddles cover edge"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel spoke 0",
+      "b": "TP Metallization Crucible V01 | hatch handwheel supported spindle",
+      "label": "actual spoke reaches supported spindle"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel rim",
+      "b": "TP Metallization Crucible V01 | hatch handwheel spoke 0",
+      "label": "actual spoke reaches handwheel rim"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel spoke 1",
+      "b": "TP Metallization Crucible V01 | hatch handwheel supported spindle",
+      "label": "actual spoke reaches supported spindle"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel rim",
+      "b": "TP Metallization Crucible V01 | hatch handwheel spoke 1",
+      "label": "actual spoke reaches handwheel rim"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel spoke 2",
+      "b": "TP Metallization Crucible V01 | hatch handwheel supported spindle",
+      "label": "actual spoke reaches supported spindle"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel rim",
+      "b": "TP Metallization Crucible V01 | hatch handwheel spoke 2",
+      "label": "actual spoke reaches handwheel rim"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | hatch handwheel supported spindle",
+      "b": "TP Metallization Crucible V01 | closed front pressure hatch",
+      "label": "handwheel spindle seated in lid"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | conditioned_hydrogen_input seated pressure nozzle",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "actual pressure nozzle at route end"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | conditioned_hydrogen_input smooth circular elbow process route",
+      "b": "TP Metallization Crucible V01 | conditioned_hydrogen_input seated pressure nozzle",
+      "label": "process tube enters chamber through drilled nozzle"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | conditioned_hydrogen_input grounded riser support",
+      "b": "TP Metallization Crucible V01 | conditioned_hydrogen_input offset riser support foot",
+      "label": "riser support grounded"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | conditioned_hydrogen_input offset clamp tie",
+      "b": "TP Metallization Crucible V01 | conditioned_hydrogen_input grounded riser support",
+      "label": "offset clamp tie mounted on post"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | conditioned_hydrogen_input straight riser clamp",
+      "b": "TP Metallization Crucible V01 | conditioned_hydrogen_input offset clamp tie",
+      "label": "riser clamp retained outside pipe bore"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | metallicized_intermediate_output seated pressure nozzle",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "actual pressure nozzle at route end"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | metallicized_intermediate_output smooth circular elbow process route",
+      "b": "TP Metallization Crucible V01 | metallicized_intermediate_output seated pressure nozzle",
+      "label": "process tube enters chamber through drilled nozzle"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | metallicized_intermediate_output grounded riser support",
+      "b": "TP Metallization Crucible V01 | metallicized_intermediate_output offset riser support foot",
+      "label": "riser support grounded"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | metallicized_intermediate_output offset clamp tie",
+      "b": "TP Metallization Crucible V01 | metallicized_intermediate_output grounded riser support",
+      "label": "offset clamp tie mounted on post"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | metallicized_intermediate_output straight riser clamp",
+      "b": "TP Metallization Crucible V01 | metallicized_intermediate_output offset clamp tie",
+      "label": "riser clamp retained outside pipe bore"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | protected product transfer pressure housing",
+      "b": "TP Metallization Crucible V01 | metallicized_intermediate_output seated pressure nozzle",
+      "label": "transfer shield mounted on vessel pressure nozzle; process tube retains radial clearance"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | seated thermal contact band 1.72",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "thermal band seated on vessel skin"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | thermal bus contact strap (-0.32, 1.72)",
+      "b": "TP Metallization Crucible V01 | seated thermal contact band 1.72",
+      "label": "thermal strap overlaps actual seated ring"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | thermal bus contact strap (0.32, 1.72)",
+      "b": "TP Metallization Crucible V01 | seated thermal contact band 1.72",
+      "label": "thermal strap overlaps actual seated ring"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | seated thermal contact band 1.93",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "thermal band seated on vessel skin"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | thermal bus contact strap (-0.32, 1.93)",
+      "b": "TP Metallization Crucible V01 | seated thermal contact band 1.93",
+      "label": "thermal strap overlaps actual seated ring"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | thermal bus contact strap (0.32, 1.93)",
+      "b": "TP Metallization Crucible V01 | seated thermal contact band 1.93",
+      "label": "thermal strap overlaps actual seated ring"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | rear power and closed cooling cabinet",
+      "b": "TP Metallization Crucible V01 | rear service cabinet grounded foot -0.45",
+      "label": "power cabinet on grounded feet"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | rear power and closed cooling cabinet",
+      "b": "TP Metallization Crucible V01 | rear service cabinet grounded foot 0.45",
+      "label": "power cabinet on grounded feet"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | cooling fan protective shroud",
+      "b": "TP Metallization Crucible V01 | rear power and closed cooling cabinet",
+      "label": "fan shroud attached to cabinet rear"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | cooling fan bearing hub",
+      "b": "TP Metallization Crucible V01 | rear power and closed cooling cabinet",
+      "label": "fan bearing supported by cabinet"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | process witness metal bezel -0.23",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "witness bezel seated on drilled wall"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | closed process witness lens -0.23",
+      "b": "TP Metallization Crucible V01 | process witness metal bezel -0.23",
+      "label": "small inspection lens retained by bezel"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | process witness metal bezel 0.23",
+      "b": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "label": "witness bezel seated on drilled wall"
+    },
+    {
+      "a": "TP Metallization Crucible V01 | closed process witness lens 0.23",
+      "b": "TP Metallization Crucible V01 | process witness metal bezel 0.23",
+      "label": "small inspection lens retained by bezel"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, -18, 1.54)",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "cover bracket grounded on pressure collar"
+    },
+    {
+      "a": "TP Crucible V02 | removable curved side shield 0",
+      "b": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, -18, 1.54)",
+      "label": "curved cover supported by actual collar standoff"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover retaining head (0, -18, 1.54)",
+      "b": "TP Crucible V02 | removable curved side shield 0",
+      "label": "cover fastener enters shield and bracket"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, -18, 2.04)",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "cover bracket grounded on pressure collar"
+    },
+    {
+      "a": "TP Crucible V02 | removable curved side shield 0",
+      "b": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, -18, 2.04)",
+      "label": "curved cover supported by actual collar standoff"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover retaining head (0, -18, 2.04)",
+      "b": "TP Crucible V02 | removable curved side shield 0",
+      "label": "cover fastener enters shield and bracket"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, 18, 1.54)",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "cover bracket grounded on pressure collar"
+    },
+    {
+      "a": "TP Crucible V02 | removable curved side shield 0",
+      "b": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, 18, 1.54)",
+      "label": "curved cover supported by actual collar standoff"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover retaining head (0, 18, 1.54)",
+      "b": "TP Crucible V02 | removable curved side shield 0",
+      "label": "cover fastener enters shield and bracket"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, 18, 2.04)",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "cover bracket grounded on pressure collar"
+    },
+    {
+      "a": "TP Crucible V02 | removable curved side shield 0",
+      "b": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, 18, 2.04)",
+      "label": "curved cover supported by actual collar standoff"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover retaining head (0, 18, 2.04)",
+      "b": "TP Crucible V02 | removable curved side shield 0",
+      "label": "cover fastener enters shield and bracket"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, -18, 1.54)",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "cover bracket grounded on pressure collar"
+    },
+    {
+      "a": "TP Crucible V02 | removable curved side shield 1",
+      "b": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, -18, 1.54)",
+      "label": "curved cover supported by actual collar standoff"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover retaining head (1, -18, 1.54)",
+      "b": "TP Crucible V02 | removable curved side shield 1",
+      "label": "cover fastener enters shield and bracket"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, -18, 2.04)",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "cover bracket grounded on pressure collar"
+    },
+    {
+      "a": "TP Crucible V02 | removable curved side shield 1",
+      "b": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, -18, 2.04)",
+      "label": "curved cover supported by actual collar standoff"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover retaining head (1, -18, 2.04)",
+      "b": "TP Crucible V02 | removable curved side shield 1",
+      "label": "cover fastener enters shield and bracket"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, 18, 1.54)",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 1",
+      "label": "cover bracket grounded on pressure collar"
+    },
+    {
+      "a": "TP Crucible V02 | removable curved side shield 1",
+      "b": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, 18, 1.54)",
+      "label": "curved cover supported by actual collar standoff"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover retaining head (1, 18, 1.54)",
+      "b": "TP Crucible V02 | removable curved side shield 1",
+      "label": "cover fastener enters shield and bracket"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, 18, 2.04)",
+      "b": "TP Metallization Crucible V01 | seated pressure retaining band 2",
+      "label": "cover bracket grounded on pressure collar"
+    },
+    {
+      "a": "TP Crucible V02 | removable curved side shield 1",
+      "b": "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, 18, 2.04)",
+      "label": "curved cover supported by actual collar standoff"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V02 | cover retaining head (1, 18, 2.04)",
+      "b": "TP Crucible V02 | removable curved side shield 1",
+      "label": "cover fastener enters shield and bracket"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V03 | fixed fan spindle",
+      "b": "TP Metallization Crucible V01 | cooling fan bearing hub",
+      "label": "fan spindle seated in cabinet bearing"
+    },
+    {
+      "a": "TP Crucible V03 | six blade rotating hub",
+      "b": "TP Metallization Crucible V01 | cooling fan bearing hub",
+      "label": "rotor hub on supported bearing face"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V03 | fan spindle retaining washer",
+      "b": "FMPL_PROCESS | TP Crucible V03 | fixed fan spindle",
+      "label": "retaining washer held on spindle"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Crucible V03 | fan spindle retained cap",
+      "b": "FMPL_PROCESS | TP Crucible V03 | fixed fan spindle",
+      "label": "retaining cap closes spindle end"
+    },
+    {
+      "a": "TP Crucible V03 | cooling fan swept blade 0",
+      "b": "TP Crucible V03 | six blade rotating hub",
+      "label": "pitched blade root seats into rotating hub"
+    },
+    {
+      "a": "TP Crucible V03 | cooling fan swept blade 1",
+      "b": "TP Crucible V03 | six blade rotating hub",
+      "label": "pitched blade root seats into rotating hub"
+    },
+    {
+      "a": "TP Crucible V03 | cooling fan swept blade 2",
+      "b": "TP Crucible V03 | six blade rotating hub",
+      "label": "pitched blade root seats into rotating hub"
+    },
+    {
+      "a": "TP Crucible V03 | cooling fan swept blade 3",
+      "b": "TP Crucible V03 | six blade rotating hub",
+      "label": "pitched blade root seats into rotating hub"
+    },
+    {
+      "a": "TP Crucible V03 | cooling fan swept blade 4",
+      "b": "TP Crucible V03 | six blade rotating hub",
+      "label": "pitched blade root seats into rotating hub"
+    },
+    {
+      "a": "TP Crucible V03 | cooling fan swept blade 5",
+      "b": "TP Crucible V03 | six blade rotating hub",
+      "label": "pitched blade root seats into rotating hub"
+    }
+  ],
+  "process_routes": [
+    {
+      "id": "conditioned_hydrogen_input",
+      "mesh": "TP Metallization Crucible V01 | conditioned_hydrogen_input smooth circular elbow process route",
+      "points": [
+        [
+          -1.78,
+          0,
+          0.36
+        ],
+        [
+          -1.76,
+          0,
+          0.36
+        ],
+        [
+          -1.7338947615559896,
+          0,
+          0.361711027725238
+        ],
+        [
+          -1.7082361909794959,
+          0,
+          0.36681483474218635
+        ],
+        [
+          -1.683463313526982,
+          0,
+          0.37522409349774266
+        ],
+        [
+          -1.66,
+          0,
+          0.38679491924311227
+        ],
+        [
+          -1.6382477141982559,
+          0,
+          0.401329331941753
+        ],
+        [
+          -1.6185786437626906,
+          0,
+          0.4185786437626905
+        ],
+        [
+          -1.601329331941753,
+          0,
+          0.4382477141982559
+        ],
+        [
+          -1.5867949192431123,
+          0,
+          0.46
+        ],
+        [
+          -1.5752240934977426,
+          0,
+          0.4834633135269821
+        ],
+        [
+          -1.5668148347421864,
+          0,
+          0.5082361909794959
+        ],
+        [
+          -1.561711027725238,
+          0,
+          0.5338947615559897
+        ],
+        [
+          -1.56,
+          0,
+          0.56
+        ],
+        [
+          -1.56,
+          0,
+          0.8500000000000001
+        ],
+        [
+          -1.5582889722747622,
+          0,
+          0.8761052384440104
+        ],
+        [
+          -1.5531851652578137,
+          0,
+          0.9017638090205042
+        ],
+        [
+          -1.5447759065022575,
+          0,
+          0.926536686473018
+        ],
+        [
+          -1.5332050807568878,
+          0,
+          0.9500000000000001
+        ],
+        [
+          -1.5186706680582471,
+          0,
+          0.9717522858017442
+        ],
+        [
+          -1.5014213562373095,
+          0,
+          0.9914213562373096
+        ],
+        [
+          -1.4817522858017442,
+          0,
+          1.0086706680582471
+        ],
+        [
+          -1.4600000000000002,
+          0,
+          1.0232050807568878
+        ],
+        [
+          -1.436536686473018,
+          0,
+          1.0347759065022575
+        ],
+        [
+          -1.4117638090205042,
+          0,
+          1.0431851652578137
+        ],
+        [
+          -1.3861052384440105,
+          0,
+          1.0482889722747621
+        ],
+        [
+          -1.36,
+          0,
+          1.05
+        ],
+        [
+          -0.98,
+          0,
+          1.05
+        ]
+      ],
+      "sampled_path": true,
+      "bend_radius": 0.2,
+      "reducer": "TP Metallization Crucible V01 | conditioned_hydrogen_input straight coaxial cast reducer",
+      "reducer_axes_parallel": true,
+      "nozzle": "TP Metallization Crucible V01 | conditioned_hydrogen_input seated pressure nozzle",
+      "classification": "source-backed symbolic process, straight coaxial reducer plus two true circular elbows"
+    },
+    {
+      "id": "metallicized_intermediate_output",
+      "mesh": "TP Metallization Crucible V01 | metallicized_intermediate_output smooth circular elbow process route",
+      "points": [
+        [
+          1.78,
+          0,
+          0.36
+        ],
+        [
+          1.76,
+          0,
+          0.36
+        ],
+        [
+          1.7338947615559896,
+          0,
+          0.361711027725238
+        ],
+        [
+          1.7082361909794959,
+          0,
+          0.36681483474218635
+        ],
+        [
+          1.683463313526982,
+          0,
+          0.37522409349774266
+        ],
+        [
+          1.66,
+          0,
+          0.38679491924311227
+        ],
+        [
+          1.6382477141982559,
+          0,
+          0.401329331941753
+        ],
+        [
+          1.6185786437626906,
+          0,
+          0.4185786437626905
+        ],
+        [
+          1.601329331941753,
+          0,
+          0.4382477141982559
+        ],
+        [
+          1.5867949192431123,
+          0,
+          0.46
+        ],
+        [
+          1.5752240934977426,
+          0,
+          0.4834633135269821
+        ],
+        [
+          1.5668148347421864,
+          0,
+          0.5082361909794959
+        ],
+        [
+          1.561711027725238,
+          0,
+          0.5338947615559897
+        ],
+        [
+          1.56,
+          0,
+          0.56
+        ],
+        [
+          1.56,
+          0,
+          0.7
+        ],
+        [
+          1.5582889722747622,
+          0,
+          0.7261052384440103
+        ],
+        [
+          1.5531851652578137,
+          0,
+          0.7517638090205041
+        ],
+        [
+          1.5447759065022575,
+          0,
+          0.7765366864730179
+        ],
+        [
+          1.5332050807568878,
+          0,
+          0.7999999999999999
+        ],
+        [
+          1.5186706680582471,
+          0,
+          0.8217522858017441
+        ],
+        [
+          1.5014213562373095,
+          0,
+          0.8414213562373095
+        ],
+        [
+          1.4817522858017442,
+          0,
+          0.858670668058247
+        ],
+        [
+          1.4600000000000002,
+          0,
+          0.8732050807568876
+        ],
+        [
+          1.436536686473018,
+          0,
+          0.8847759065022573
+        ],
+        [
+          1.4117638090205042,
+          0,
+          0.8931851652578137
+        ],
+        [
+          1.3861052384440105,
+          0,
+          0.898288972274762
+        ],
+        [
+          1.36,
+          0,
+          0.8999999999999999
+        ],
+        [
+          0.98,
+          0,
+          0.9
+        ]
+      ],
+      "sampled_path": true,
+      "bend_radius": 0.2,
+      "reducer": "TP Metallization Crucible V01 | metallicized_intermediate_output straight coaxial cast reducer",
+      "reducer_axes_parallel": true,
+      "nozzle": "TP Metallization Crucible V01 | metallicized_intermediate_output seated pressure nozzle",
+      "classification": "source-backed symbolic process, straight coaxial reducer plus two true circular elbows"
+    }
+  ],
+  "assemblies": [
+    {
+      "name": "TP Metallization Crucible V01 | tapered pressure haunch 0",
+      "classification": "new_reconstruction_from_reference",
+      "role": "Four red diagonal load paths into grounded shoes"
+    },
+    {
+      "name": "TP Metallization Crucible V01 | tapered pressure haunch 1",
+      "classification": "new_reconstruction_from_reference",
+      "role": "Four red diagonal load paths into grounded shoes"
+    },
+    {
+      "name": "TP Metallization Crucible V01 | tapered pressure haunch 2",
+      "classification": "new_reconstruction_from_reference",
+      "role": "Four red diagonal load paths into grounded shoes"
+    },
+    {
+      "name": "TP Metallization Crucible V01 | tapered pressure haunch 3",
+      "classification": "new_reconstruction_from_reference",
+      "role": "Four red diagonal load paths into grounded shoes"
+    }
+  ],
+  "cycle_seconds": 8,
+  "design": "Closed thick-walled pressure vessel, three seated pressure bands, four tapered red haunches and steel back braces, real closed hinged hatch, separate supported injector/product transfer, rear thermal cabinet and guarded fan, clear front maintenance corridor",
+  "pending": [
+    "Actual source/export mechanical and surface readback",
+    "Machine-specific audio",
+    "Four-angle idle/working captures",
+    "Native 5x5 prototype and pipe fitting"
+  ],
+  "revision": "V03 six seated pitched fan blades and proper spindle/hub",
+  "previous_source_sha256": "35c520c0d9fdf71b8094e2df7117c4cbbfc41c430e64b20ba114ce703d3ab7e1",
+  "surface_assignments": [
+    {
+      "object": "TP Metallization Crucible V01 | thick wall central pressure vessel",
+      "material": "TP Crucible V02 | pressure-shell",
+      "plan": "Circumferential U / actual vessel Z. Dirt follows three pressure-band seats, lower plinth, true hatch collar and two drilled nozzles. Restrained thermal discoloration follows the two seated contact bands; no uniform decorative striping."
+    },
+    {
+      "object": "TP Metallization Crucible V01 | closed graded pressure crown",
+      "material": "TP Crucible V02 | turned-pressure-crown",
+      "plan": "Azimuth U / actual graded crown Z. Concentric lathe marks follow pressure-crown rings; restrained dirt only at the lower seated rim and service-hatch collar, replacing broad generic donor clouds."
+    },
+    {
+      "object": "TP Metallization Crucible V01 | tapered pressure haunch 0",
+      "material": "TP Crucible V02 | red-haunch-castings",
+      "plan": "Four instances of the same tapered casting. Face UV follows the actual inclined haunch width and height; exposed longitudinal edges wear through red enamel, dirt sits at the grounded shoe and upper collar seat. Fine cast grain, no random black scratch stamp."
+    },
+    {
+      "object": "TP Metallization Crucible V01 | tapered pressure haunch 1",
+      "material": "TP Crucible V02 | red-haunch-castings",
+      "plan": "Four instances of the same tapered casting. Face UV follows the actual inclined haunch width and height; exposed longitudinal edges wear through red enamel, dirt sits at the grounded shoe and upper collar seat. Fine cast grain, no random black scratch stamp."
+    },
+    {
+      "object": "TP Metallization Crucible V01 | tapered pressure haunch 2",
+      "material": "TP Crucible V02 | red-haunch-castings",
+      "plan": "Four instances of the same tapered casting. Face UV follows the actual inclined haunch width and height; exposed longitudinal edges wear through red enamel, dirt sits at the grounded shoe and upper collar seat. Fine cast grain, no random black scratch stamp."
+    },
+    {
+      "object": "TP Metallization Crucible V01 | tapered pressure haunch 3",
+      "material": "TP Crucible V02 | red-haunch-castings",
+      "plan": "Four instances of the same tapered casting. Face UV follows the actual inclined haunch width and height; exposed longitudinal edges wear through red enamel, dirt sits at the grounded shoe and upper collar seat. Fine cast grain, no random black scratch stamp."
+    },
+    {
+      "object": "TP Crucible V02 | removable curved side shield 0",
+      "material": "TP Crucible V02 | rolled-side-shields",
+      "plan": "Separate detachable flank shields. Rolled grain follows arc U; dirt follows the real top/bottom lips and four mounting-head locations. Covers stay between haunches with front/rear maintenance openings."
+    },
+    {
+      "object": "TP Crucible V02 | removable curved side shield 1",
+      "material": "TP Crucible V02 | rolled-side-shields",
+      "plan": "Separate detachable flank shields. Rolled grain follows arc U; dirt follows the real top/bottom lips and four mounting-head locations. Covers stay between haunches with front/rear maintenance openings."
+    }
+  ],
+  "textures": [
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\pressure-shell\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "266874db18b1514b9d1ea508e64c42e1e55e35b270a809ed97b8dfe0e288da49"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\pressure-shell\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "750599ddf752684ebf117e0554836fadc3f5dc8f3fb628104320b1e5eef9337d"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\pressure-shell\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "2160603e0cfad12fd4400dcb0dcde4c9b3d5eb44b6d63d52f806bf64969b38f3"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\turned-pressure-crown\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "aeeb4ac8fddfecf7e23c0a9e315d9c53c3b21d5cc3cedff75bcf740462f2e04a"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\turned-pressure-crown\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "4211f8a5e3a757e744b35b54766398917a40da32bb45af24bc3e78248e64f83d"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\turned-pressure-crown\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "cdcf91c7d77e4340a9eb4de8841d116efbe0f37823e44c9ca92f05954fae4d94"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\red-haunch-castings\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "c10f5720e7cd47a2c7ebe291c99dd93a77fc31c0ccbc1e7b19fe62246fa6c6f2"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\red-haunch-castings\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "7dfc5dff5c48102f79425689e5b9723d88bb935ae463ba6baa6c9ae7f1e59612"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\red-haunch-castings\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "9488e1f70e8f21e47de263d8f1d4ace2f2ffd22cc29b9886053b5e79c48aa89b"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\rolled-side-shields\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "15c7bb2f9262f879d2b8b7aaeb8d1615ab091e80fd97edf447dcb7268ffbac74"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\rolled-side-shields\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "0e88782e0e9bbeea3f39f9aae9f660e2f6311c382bbc38bcd30243b8bdb20f94"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\crucible-v02-finish-01\\textures\\rolled-side-shields\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "b2e7c25d52b545d18e3263739412ab35d5bd51b553b012afa1a210304884232d"
+    }
+  ],
+  "added_objects": [
+    "TP Crucible V02 | removable curved side shield 0",
+    "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, -18, 1.54)",
+    "FMPL_PROCESS | TP Crucible V02 | cover retaining head (0, -18, 1.54)",
+    "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, -18, 2.04)",
+    "FMPL_PROCESS | TP Crucible V02 | cover retaining head (0, -18, 2.04)",
+    "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, 18, 1.54)",
+    "FMPL_PROCESS | TP Crucible V02 | cover retaining head (0, 18, 1.54)",
+    "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (0, 18, 2.04)",
+    "FMPL_PROCESS | TP Crucible V02 | cover retaining head (0, 18, 2.04)",
+    "TP Crucible V02 | removable curved side shield 1",
+    "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, -18, 1.54)",
+    "FMPL_PROCESS | TP Crucible V02 | cover retaining head (1, -18, 1.54)",
+    "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, -18, 2.04)",
+    "FMPL_PROCESS | TP Crucible V02 | cover retaining head (1, -18, 2.04)",
+    "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, 18, 1.54)",
+    "FMPL_PROCESS | TP Crucible V02 | cover retaining head (1, 18, 1.54)",
+    "FMPL_PROCESS | TP Crucible V02 | cover collar standoff (1, 18, 2.04)",
+    "FMPL_PROCESS | TP Crucible V02 | cover retaining head (1, 18, 2.04)"
+  ],
+  "console_bars": [
+    "TP Metallization Crucible V01 | reachable service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6",
+    "TP Metallization Crucible V01 | reachable service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7",
+    "TP Metallization Crucible V01 | reachable service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8",
+    "TP Metallization Crucible V01 | reachable service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9",
+    "TP Metallization Crucible V01 | reachable service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10"
+  ],
+  "state_scope": "Idle reduced CRT bars/stopped fan; working closed vessel with fan and restrained coherent eight-second process readout",
+  "fan_revision": 3,
+  "fan_blade_count": 6,
+  "fan_rotor_hub": "TP Crucible V03 | six blade rotating hub",
+  "fan_bearing": "TP Metallization Crucible V01 | cooling fan bearing hub",
+  "fan_before": [
+    {
+      "name": "TP Metallization Crucible V01 | cooling fan swept blade 0",
+      "gap_to_old_bearing": 0.10762649029493332,
+      "radial_min": 0.1850675312229258
+    },
+    {
+      "name": "TP Metallization Crucible V01 | cooling fan swept blade 1",
+      "gap_to_old_bearing": 0.0016577484784647822,
+      "radial_min": 0.06813575467214478
+    },
+    {
+      "name": "TP Metallization Crucible V01 | cooling fan swept blade 2",
+      "gap_to_old_bearing": 0.0016577484784647822,
+      "radial_min": 0.06813570862443936
+    }
+  ],
+  "fan_description": "Six broad pitched blades constructed in a common rotor-local frame; roots penetrate the real rotating hub. Separate fixed cabinet bearing, spindle and retaining cap. No stale world-matrix parenting.",
+  "owner_correction": "Fan looked sparse and a blade appeared to float free; add blades and attach them properly."
+}

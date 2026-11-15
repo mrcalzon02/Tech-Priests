@@ -15,11 +15,152 @@ from run_factorio_isolated_service_scenario import (
     factorio_runtime_compatible, rail_connected_smoke_verdict,
     rail_smoke_evidence, original_rail_native_refusals, reset_rail_smoke_diagnostics,
     run_rail_live_server, private_rail_server_settings,
-    rail_native_player_test_command)
+    rail_native_player_test_command, verify_rail_blocked_reload_0836_log)
 P = "[TP-REMOTE-RAIL-TEST] "
 A = P + "PASS first physical rail built and exact stock debited"
 B = P + "PASS two distinct 0338-debited native-connected rails"
 
+
+
+
+class BlockedNativeReturnS4Tests(unittest.TestCase):
+    def test_original_ore_laden_track_cut_is_separate_real_engine_mode(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        runner = (root / "tools/run_factorio_isolated_service_scenario.py").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        self.assertIn('ap.add_argument("--rail-blocked-return"', runner)
+        self.assertIn('"_G.TP_CI_0836_BLOCKED_RETURN=true\\n"', runner)
+        self.assertIn('if args.rail_blocked_return:', runner)
+        self.assertIn('benchmark == 0 and negative in contents and fatal not in contents', runner)
+        self.assertIn('if rawget(_G,"TP_CI_0836_BLOCKED_RETURN")~=true then return end', fixture)
+        self.assertIn('if not s.chart_verified then return end', fixture)
+        self.assertLess(fixture.index('if not s.chart_verified then return end', fixture.index('local function inspect_blocked_return_0836')),
+                        fixture.index('fail("BLOCKED_RETURN_ORIGINAL_PAIR_LOST")'))
+        self.assertIn('reboard.native_original_driver_confirmed==true', fixture)
+        self.assertIn('locomotive.get_driver()==pair.priest', fixture)
+        self.assertIn('held=game.create_inventory(1)', fixture)
+        self.assertIn('rail.mine{inventory=held,force=true}', fixture)
+        self.assertIn('held.get_item_count("rail")==1', fixture)
+        self.assertIn('wagon_ore=ore_count', fixture)
+        self.assertIn('if at_home or not short_of_gap then', fixture)
+        self.assertIn('if not stopped then fail("BLOCKED_RETURN_TRAIN_DID_NOT_STOP")end', fixture)
+        self.assertIn('emit("PASS blocked original ore-loaded return retains native driver and cargo")', fixture)
+        self.assertIn('if s.finished then return end', fixture)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', fixture)
+
+
+class IndependentOriginalBlockedRailReload0836Tests(unittest.TestCase):
+    """Contract test only. A real Factorio checkpoint and reload remain mandatory."""
+
+    def test_native_saved_original_cargo_and_identity_comparison(self):
+        prefix = "[TP-REMOTE-RAIL-TEST] "
+        receipt = ("original_train_id=6 original_priest=26 "
+                   "original_locomotive=240 original_wagon=241 "
+                   "original_rail=136 wagon_ore=1 station_ore=0 rail_hold=1")
+        first = (prefix + "BLOCKED_RETURN_NATIVE_0836 phase=paid-middle-rail-mined\n" +
+                 prefix + "BLOCKED_RETURN_NATIVE_SAVE_REQUEST_0836 tick=30060 " + receipt)
+        second = (prefix + "BLOCKED_RETURN_NATIVE_0836 phase=physical-rail-gap "
+                  "stationary=true original_driver=true rail_hold=1 at_home=false\n" +
+                  prefix + "PASS INDEPENDENT_BLOCKED_RAIL_RELOAD " + receipt +
+                  " native_driver=true restored_track=false")
+        self.assertTrue(verify_rail_blocked_reload_0836_log(first, second)["accepted"])
+        for bad in (
+            second.replace("original_train_id=6", "original_train_id=7"),
+            second.replace("wagon_ore=1", "wagon_ore=0"),
+            second.replace("original_priest=26", "original_priest=27"),
+            second.replace("rail_hold=1", "rail_hold=0"),
+            second.replace("stationary=true", "stationary=false"),
+            second.replace("native_driver=true", "native_driver=false"),
+            second.replace("PASS INDEPENDENT_BLOCKED_RAIL_RELOAD", "PASS source-only"),
+            second + "\n" + prefix + "FAIL broken rail",
+        ):
+            with self.assertRaises(ValueError):
+                verify_rail_blocked_reload_0836_log(first, bad)
+
+    def test_original_native_save_request_rejected_without_crc_and_second_engine(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        runner = (root / "tools/run_factorio_isolated_service_scenario.py").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        self.assertIn('ap.add_argument("--rail-blocked-reload"', runner)
+        self.assertIn('game.auto_save("tech-priests-ci-0836-stranded",true)', fixture)
+        self.assertIn('zipfile.ZipFile(checkpoint)', runner)
+        self.assertIn('archive.testzip() is not None', runner)
+        self.assertIn('rail_native_player_test_command(\n            factorio, mods, checkpoint, 2400)', runner)
+        # S4 original save occurs at 30,060; the generic 36k positive
+        # intact-rail fixture is inapplicable to a *physically cut* track.
+        # The S4 engine still asserts native cargo/driver/gap conservation.
+        self.assertIn('robot_saveable_server_command(\n                    factorio, mods, initial, settings, port)', runner)
+        self.assertIn('robot_real_loopback_client_command_1381(\n                            factorio, mods, port)', runner)
+        self.assertIn('if marker in current:', runner)
+        self.assertIn('verified_source = candidates[0]', runner)
+        self.assertIn('no unique CRC-valid stranded rail autosave', runner)
+        self.assertIn('if not first and first_log.is_file():', runner)
+        self.assertIn('NATIVE_RAIL_SERVER_DIAG', runner)
+        self.assertIn('real_client_log_tail', runner)
+        self.assertNotIn('factorio, mods, initial, 30660), first_log, timeout)', runner)
+        self.assertIn('if not s.blocked_return_save_requested_0836 then', fixture)
+        self.assertIn('restored_track=false', fixture)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', fixture)
+
+
+class OriginalFullRailNativePlayerModeTests(unittest.TestCase):
+    def test_full_90k_rail_runs_real_native_player_not_benchmark_or_smoke(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        runner = (root / "tools/run_factorio_isolated_service_scenario.py").read_text(
+            encoding="utf-8")
+        body = runner.split("    native_mode = (", 1)[1].split(
+            "    command = (", 1)[0]
+        self.assertIn('"remote-rail-acquisition"', body)
+        self.assertIn('"native-player-test-save"', body)
+        self.assertIn("rail_native_player_test_command", runner)
+        self.assertIn('"ticks": 93000', runner)
+        self.assertIn('scenario["prefix"] + " " + scenario["pass"] not in contents', runner)
+        self.assertIn("NATIVE_RAIL_FULL_PROCESS_MINUTES", runner)
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(
+            encoding="utf-8")
+        self.assertIn("if elapsed>=90000 then", fixture)
+        self.assertIn('fail("NO_GENUINE_ORE_DELIVERED_BY_RAIL")', fixture)
+        self.assertIn('fail("TRAIN_ROUND_TRIP_NOT_PROVEN")', fixture)
+        self.assertIn('emit("PASS planetary Magos built rail, rode train, mined and returned real ore")', fixture)
+
+
+class OriginalNativeRideHistoricalReceiptTests(unittest.TestCase):
+    def test_genuine_past_native_driver_and_home_ejection_survive_90k_checkpoint(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        lua = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(
+            encoding="utf-8")
+        section = lua.split("local authentic_past_ride=native_home_ejected", 1)[1].split(
+            'emit("NATIVE_HISTORIC_RIDE_0836', 1)[0]
+        for authority in (
+            'first_board.phase=="native-original-magos-boarded"',
+            "first_board.confirmed_tick", "first_board.priest_unit==p.priest.unit_number",
+            "first_board.locomotive_unit==loco_entity.unit_number",
+            "first_board.wagon_unit==wagon_entity.unit_number",
+            "outbound.highest_x>outbound.origin_x+32",
+            "outbound.arrived_tick>=first_board.confirmed_tick",
+            'reboard.phase==', '"native-original-magos-reboarded-with-ground-ore"',
+            "reboard.native_original_driver_confirmed==true",
+            "reboard.train_id==moving_train.id",
+            "reboard.boarded_tick>outbound.arrived_tick",
+            "homeward.arrival_tick>reboard.boarded_tick",
+            "moving_train.station==home_entity",
+            'return_receipt.phase=="home-station-ore-deposited"',
+            "return_receipt.native_original_driver_ejected==true",
+            "return_receipt.wagon_before>0",
+            "return_receipt.wagon_final==0",
+            "return_receipt.held_final==0",
+            "return_receipt.quarantine==nil",
+            "s.ride_proof=true",
+            "s.outbound=true",
+        ):
+            self.assertIn(authority, section)
+        # The first 1,800-tick checkpoint precedes any paid locomotive.
+        # Native identity diagnostics must not crash the entire fixture.
+        self.assertIn('" original_train_id="..tostring(moving_train and moving_train.valid', lua)
+        self.assertNotIn('" original_train_id="..tostring(moving_train.id)', lua)
+        self.assertIn('fail("MAGOS_PHYSICAL_TRAIN_RIDE_NOT_PROVEN")', lua)
+        self.assertIn('fail("TRAIN_ROUND_TRIP_NOT_PROVEN")', lua)
+        self.assertIn('fail("NO_GENUINE_ORE_DELIVERED_BY_RAIL")', lua)
 
 
 class OriginalNativeRailFailureRetentionTests(unittest.TestCase):
@@ -124,7 +265,9 @@ class OriginalNativeDrillWagonCustodyTests(unittest.TestCase):
         )[1].split("-- Exact post-audit locomotive ownership.", 1)[0]
         self.assertIn('wagon.request==task.request_value', stage)
         self.assertIn('within_entity_reach(pair.priest.position,task.source_entity,', stage)
-        self.assertIn('game.create_inventory(1)', stage)
+        self.assertIn('game.create_inventory(2)', stage)
+        self.assertIn('fuel_before=item_count(task.source_inv,"coal")', stage)
+        self.assertIn('held.fuel_source_before-held.fuel_source_after==5', stage)
         self.assertIn('pair.rail_remote_drill_supply_0836=held', stage)
         self.assertIn('remove_item(task.source_inv,"burner-mining-drill",1)', stage)
         self.assertIn('insert_item(inventory,"burner-mining-drill",removed)', stage)
@@ -1122,6 +1265,94 @@ class NativeRailPrewritAdmissionTraceTests(unittest.TestCase):
                           "game.create_inventory"):
             self.assertNotIn(forbidden, sampler)
 
+
+
+class OriginalRemoteNativeFuelSourceRegressions(unittest.TestCase):
+    """Focused source guards, not substitutes for native Factorio evidence."""
+
+    def test_original_remote_drill_coal_debit_and_real_fuel_slot(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        builder = (root / "tech-priests_src/scripts/core/construction_planner.lua").read_text(encoding="utf-8")
+        frontier = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        native = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        self.assertIn("game.create_inventory(2)", builder)
+        self.assertIn('removed_fuel=remove_item(task.source_inv,"coal",5)', builder)
+        self.assertIn('held.quarantine="native-remote-fuel-debit-unreconciled"', builder)
+        self.assertIn('held.fuel_source_before-held.fuel_source_after==5', builder)
+        self.assertIn('item_count(held.inventory,"coal")==5', builder)
+        self.assertIn("function M.service_original_remote_drill_fuel_0836(pair)", frontier)
+        self.assertIn("M.authorized_original_remote_drill_hold_0836(pair)", frontier)
+        self.assertIn('return hold.remove{name="coal",count=5}', frontier)
+        self.assertIn('return drill_fuel.insert{name="coal",count=removed}', frontier)
+        self.assertIn('supply.quarantine="native-remote-fuel-transfer-uncertain"', frontier)
+        self.assertIn('M.service_original_remote_drill_fuel_0836(pair)', frontier)
+        self.assertIn("REMOTE_DRILL_FUEL_NATIVE_0836 elapsed=", native)
+        self.assertIn("fuel_paid=", native)
+
+    def test_fail_closed_if_original_drill_or_fuel_custody_is_unavailable(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        frontier = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        self.assertIn('"native-remote-fuel-original-physical-custody-missing"', frontier)
+        self.assertIn('"native-remote-drill-real-fuel-slot-missing"', frontier)
+        self.assertIn('"native-remote-fuel-removal-uncertain"', frontier)
+        self.assertIn('"native-remote-fuel-transfer-uncertain"', frontier)
+        self.assertIn('drill.unit_number==state.built_unit', frontier)
+        self.assertIn('dx*dx+dy*dy>9', frontier)
+        # The live engine consumed one of five real fuel items immediately
+        # into its native burner. Require simultaneous physical accounting.
+        self.assertIn("initial_burn_name==nil and initial_energy==0", frontier)
+        self.assertIn('active_name=="coal"', frontier)
+        self.assertIn("remaining_j>0", frontier)
+        self.assertIn("fuel_after+native_burning_count==fuel_before+5", frontier)
+        # The native engine consumed one coal while inserting the other four;
+        # no refund remains. A count=0 LuaInventory.insert is not a legal
+        # accounting operation and must never quarantine a correct transfer.
+        self.assertIn("local refund_count=removed-inserted", frontier)
+        self.assertIn("local returned_ok,returned=true,0", frontier)
+        self.assertIn("if refund_count>0 then", frontier)
+        self.assertIn('return hold.insert{name="coal",count=refund_count}', frontier)
+        self.assertNotIn('return hold.insert{name="coal",count=removed-inserted}', frontier)
+        self.assertIn("native_burning_coal_count=native_burning_count", frontier)
+        # Factorio 2.1 returns a quality-aware item pair: its name is a
+        # LuaItemPrototype, not a string. Factorio 2.0 returned a prototype
+        # directly. Require both native shapes to be resolved before the
+        # exact five-coal inventory + actively burning reconciliation.
+        self.assertEqual(frontier.count("local item=active and active.name"), 2)
+        self.assertEqual(frontier.count('type(item)=="string" and item'), 2)
+        self.assertEqual(frontier.count("or (item and item.name) or nil"), 2)
+        native = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        self.assertIn("native_burning_item=", native)
+        self.assertIn("native_burning_remaining_j=", native)
+        self.assertIn("local burning_name=type(item)==\"string\" and item", native)
+
+
+class OriginalHomeRailOreTests(unittest.TestCase):
+    def test_original_magos_wagon_unloading_is_native_and_physically_counted(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        rail = (root / "tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text(encoding="utf-8")
+        movement = (root / "tech-priests_src/scripts/core/movement_controller.lua").read_text(encoding="utf-8")
+        corridor = (root / "tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        actual = rail.split("function M.service_home_ore_unload_0836(pair)", 1)[1].split(
+            "\n-- remote stop may ask Factorio", 1)[0]
+        for check in (
+            'back.phase=="native-original-home-arrived-after-roundtrip"',
+            "engine.train.station==stop.built_entity",
+            "engine.set_driver(nil)",
+            "home-station-full-retain-original-wagon-ore",
+            "pickup.inventory[1].transfer_stack(from,1)",
+            "target.transfer_stack(pickup.inventory[1],1)",
+            "station_after==u.station_before+1",
+            'u.phase="home-station-ore-deposited"',
+        ):
+            self.assertIn(check, actual)
+        self.assertNotIn("surface.create_entity", actual)
+        self.assertNotIn("teleport(", actual)
+        self.assertIn("M.service_home_ore_unload_0836(pair)", rail)
+        self.assertIn("authorized_home_ore_walk_0836", movement)
+        self.assertIn("authorized_home_ore_walk_0836", corridor)
+        self.assertIn("HOME_ORE_NATIVE_0836 elapsed=", fixture)
+        self.assertIn('if delivered<=0 then fail("NO_GENUINE_ORE_DELIVERED_BY_RAIL")end', fixture)
 
 if __name__ == "__main__":
     unittest.main()
@@ -2340,3 +2571,406 @@ class NativeRailBoardingLeashAuthority0836Tests(unittest.TestCase):
         self.assertIn('frontier.authorized_original_train_boarding_walk_0836,pair,pos',auth)
         self.assertNotIn('bounds_exempt',auth)
 
+
+class OriginalNativeRailDisembarkAndDrillWalk0836Tests(unittest.TestCase):
+    """Source guards for the next genuine native engine boundary."""
+
+    def test_original_paid_train_ejection_cannot_preempt_0338_cargo(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        eject=rail.split("function M.service_original_remote_drill_disembark_0836(pair)",1)[1].split(
+            "function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[0]
+        for predicate in ('engine.train.station==stop',
+                          'engine.train.id==wagon.built_entity.train.id',
+                          'task.phase=="move-site"',
+                          'task.request_field=="remote_drill_request_1011"',
+                          'task.request_value==state.request',
+                          'task.carried.count==1',
+                          'custody.count==1',
+                          'supply.source_before-supply.source_after==1',
+                          'supply.inventory.get_item_count("burner-mining-drill")==0',
+                          'driver==priest','engine.set_driver(nil)',
+                          'after==nil','priest.unit_number==state.priest_unit',
+                          'state.disembark_confirmed=true'):
+            self.assertIn(predicate,eject)
+        self.assertLess(eject.index('supply.inventory.get_item_count("burner-mining-drill")==0'),
+                        eject.index('engine.set_driver(nil)'))
+        self.assertLess(eject.index('after==nil'),eject.index('state.disembark_confirmed=true'))
+        for forbidden in ('teleport(', 'create_entity(', 'remove_item(', 'inventory.insert(', 'bounds_exempt'):
+            self.assertNotIn(forbidden,eject)
+        service=rail.split("function M.service_pair(pair)",1)[1]
+        self.assertLess(service.index('M.offer_first_remote_drill_0836(pair)'),
+                        service.index('M.service_original_remote_drill_disembark_0836(pair)'))
+        self.assertLess(service.index('M.service_original_remote_drill_disembark_0836(pair)'),
+                        service.index('M.service_first_train_return_0836(pair)'))
+
+    def test_only_original_0338_drill_corridor_admitted_in_both_movement_authorities(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        movement=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        corridor=(root/"tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text()
+        permit=rail.split("function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[1].split(
+            "function M.service_first_train_return_0836(pair)",1)[0]
+        for predicate in ('storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair',
+                          'state.disembark_confirmed==true',
+                          'ride.disembark_confirmed==true',
+                          'movement.owner=="construction-planner-0338"',
+                          'movement.reason=="construction-site-standoff-0338"',
+                          'movement.owner=="movement-controller-enforcement-0566"',
+                          'task.request_value==state.request',
+                          'custody.request_value==state.request',
+                          'engine.train.station==stop',
+                          'driver==nil',
+                          'dot>=-0.10 and dot<=1.20 and cross<=10'):
+            self.assertIn(predicate,permit)
+        self.assertNotIn('teleport(',permit)
+        self.assertIn('rail.authorized_original_remote_drill_walk_0836,pair,pos',movement)
+        self.assertIn('frontier.authorized_original_remote_drill_walk_0836,pair,pos',corridor)
+        self.assertIn('return false,"original-native-remote-drill-contact-owned-0836"',movement)
+        self.assertIn('M.stop(pair,"original-remote-drill-construction-safety-handoff-0836")',movement)
+
+
+class OriginalPaidRemoteDrillStaleReturn0566Regression(unittest.TestCase):
+    """The actual canonical stale-return cannot discard original paid drill custody."""
+
+    def test_all_canonical_0566_returns_respect_same_native_builder_identity(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        controller=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        permit=rail.split("function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[1].split(
+            "function M.authorized_original_remote_drill_hold_0836(pair)",1)[0]
+        for reason in ('movement-enforcement-overleash-return-0566',
+                       'movement-enforcement-return-0566',
+                       'movement-enforcement-stale-return-0566'):
+            self.assertIn(reason,permit)
+        for invariant in ('pair.movement_request_0418==movement',
+                          'task.request_value==state.request',
+                          'task.carried.count==1',
+                          'custody.request_value==state.request',
+                          'state.disembark_priest_unit==priest.unit_number',
+                          'engine.train.station==stop',
+                          'pair.rail_remote_drill_supply_0836.source_before'):
+            self.assertIn(invariant,permit)
+        self.assertNotIn('bounds_exempt',permit)
+        self.assertNotIn('teleport(',permit)
+        self.assertIn('[TP-0836-0566-BOUNDARY]',controller)
+
+
+class NativePaidRemoteDrillCompletionHold0836Tests(unittest.TestCase):
+    """Native paid drill completes before 0566 can recall the original Magos."""
+
+    def test_completed_original_drill_not_generic_permanent_remote_leash(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        source=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        controller=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        body=source.split("function M.authorized_original_remote_drill_hold_0836(pair)",1)[1].split(
+            "function M.service_first_train_return_0836(pair)",1)[0]
+        for token in ('state.disembark_confirmed==true',
+                      'now()-state.disembark_tick<=60*600',
+                      'storage.tech_priests.pairs_by_station[pair.station.unit_number]==pair',
+                      'train_engine.train.station==stop',
+                      'ride.disembark_confirmed==true',
+                      'state.paid_drill_completion_0836.phase=="complete"',
+                      'state.paid_drill_completion_0836.request_value==state.request',
+                      'state.paid_drill_completion_0836.request_field=="remote_drill_request_1011"',
+                      'state.paid_drill_completion_0836.site_reason=="original-remote-rail-drill-0836"',
+                      'state.paid_drill_completion_0836.native_0338_paid==true',
+                      'state.paid_drill_completion_0836.creative_build==false',
+                      'state.built_entity.name=="burner-mining-drill"',
+                      'state.built_entity.type=="mining-drill"',
+                      'original_supply.source_before-original_supply.source_after==1',
+                      'original_supply.inventory.get_item_count("burner-mining-drill")==0',
+                      'not pair.construction_task_0338',
+                      'driver==nil',
+                      'return dx*dx+dy*dy<=96*96'):
+            self.assertIn(token,body)
+        for forbidden in ('teleport(', 'create_entity(', 'bounds_exempt', 'remove_item(', 'insert('):
+            self.assertNotIn(forbidden,body)
+        enforcement=controller.split("function M.enforce_pair(pair, reason)",1)[1]
+        self.assertIn('rail.authorized_original_remote_drill_hold_0836,pair',enforcement)
+        self.assertLess(enforcement.index('rail.authorized_original_remote_drill_hold_0836,pair'),
+                        enforcement.index('if distance > M.hard_leash(pair)'))
+        self.assertIn('M.stop(pair,"original-native-remote-drill-completion-safety-handoff-0836")',
+                      enforcement)
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text()
+        self.assertIn('ORIGINAL_REMOTE_NATIVE_DISEMBARK_0836 elapsed=',fixture)
+        self.assertIn('moving_train.station==remote_entity',fixture)
+        self.assertIn('last_builder.request_value==remote_drill.request',fixture)
+        self.assertIn('supply.source_before-supply.source_after==1',fixture)
+        self.assertIn('foot_native=dx*dx+dy*dy<=96*96',fixture)
+        self.assertIn('if foot_native then s.ride_proof=true end',fixture)
+        self.assertIn('fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)
+
+
+class OriginalPaidRemoteDrillBuildPhaseCorridor0836Tests(unittest.TestCase):
+    """The original source-debited 0338 drill must not be recalled mid-build."""
+
+    def test_live_0338_build_and_clear_preserve_only_paid_site_corridor(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        controller=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        corridor=(root/"tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text()
+        permit=rail.split("function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[1].split(
+            "function M.authorized_original_remote_drill_hold_0836(pair)",1)[0]
+        for token in ('task.phase=="move-site"', 'task.phase=="build"',
+                      'task.phase=="move-clear-site"',
+                      'state.disembark_confirmed==true',
+                      'engine.train.station==stop',
+                      'task.request_value==state.request',
+                      'task.carried.count==1',
+                      'custody.request_value==state.request',
+                      'pair.rail_remote_drill_supply_0836.source_before',
+                      '-pair.rail_remote_drill_supply_0836.source_after==1',
+                      'driver==nil',
+                      'dot>=-0.10 and dot<=1.20 and cross<=10'):
+            self.assertIn(token,permit)
+        for reason in ('construction-site-standoff-0338',
+                       'construction-clear-occupied-site-0338',
+                       'construction-clear-ghost-footprint-0338'):
+            self.assertIn(reason,permit)
+            self.assertIn(reason,controller)
+            self.assertIn(reason,corridor)
+        for forbidden in ('teleport(', 'create_entity(', 'bounds_exempt'):
+            self.assertNotIn(forbidden,permit)
+
+
+class OriginalNativeEjectionFootfallCorridor0836Tests(unittest.TestCase):
+    """The original Magos must walk from the ACTUAL engine-ejected position."""
+
+    def test_0338_remote_walk_uses_native_ejection_not_paid_stop_as_start(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        source=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        eject=source.split("function M.service_original_remote_drill_disembark_0836(pair)",1)[1].split(
+            "function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[0]
+        walk=source.split("function M.authorized_original_remote_drill_walk_0836(pair,point,movement)",1)[1].split(
+            "function M.authorized_original_remote_drill_hold_0836(pair)",1)[0]
+        self.assertIn('engine.set_driver(nil)',eject)
+        self.assertIn('after==nil',eject)
+        self.assertIn('dx*dx+dy*dy<=16*16',eject)
+        self.assertIn('state.disembark_position={x=priest.position.x,y=priest.position.y}',eject)
+        self.assertLess(eject.index('after==nil'),eject.index('state.disembark_position={'))
+        for proof in ('state.disembark_confirmed==true',
+                      'state.disembark_position',
+                      'type(state.disembark_position.x)=="number"',
+                      'type(state.disembark_position.y)=="number"',
+                      'state.priest_unit==priest.unit_number',
+                      'engine.train.station==stop',
+                      'task.request_value==state.request',
+                      'custody.request_value==state.request',
+                      'pair.rail_remote_drill_supply_0836.source_before',
+                      'driver==nil',
+                      'local foot=state.disembark_position',
+                      'if ex*ex+ey*ey>16*16 then return false end',
+                      'local sx,sy=foot.x,foot.y',
+                      'dot>=-0.10 and dot<=1.20 and cross<=10',
+                      'dx*dx+dy*dy<=96*96'):
+            self.assertIn(proof,walk)
+        self.assertNotIn('local sx,sy=stop.position.x,stop.position.y',walk)
+        for bypass in ('teleport(', 'create_entity(', 'bounds_exempt'):
+            self.assertNotIn(bypass,walk)
+
+    def test_engine_ejection_fourteen_tiles_behind_stop_is_no_longer_start_denial(self):
+        # Regression of native stationary train: its driver exits at the
+        # locomotive, not the paid stop. This proves only the narrow geometry
+        # calculation, NOT a physical ore-delivery acceptance.
+        stop_x, foot_x, drill_x=386,372,438
+        old_dot=(foot_x-stop_x)/(drill_x-stop_x)
+        new_dot=(foot_x-foot_x)/(drill_x-foot_x)
+        self.assertLess(old_dot,-0.10)
+        self.assertEqual(new_dot,0)
+        self.assertLessEqual((foot_x-stop_x)**2,16**2)
+
+class OriginalPaidRemoteDrillTerminalReceipt0836Tests(unittest.TestCase):
+    """The original source-paid 0338 terminal receipt must survive unrelated builds."""
+
+    def test_native_0338_drill_receipt_is_not_generic_last_task(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        builder=(root/"tech-priests_src/scripts/core/construction_planner.lua").read_text()
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        finish=builder.split("local function finish(pair,task,built,reason)",1)[1].split(
+            "pair.construction_last_task_0338=task",1)[1].split(
+            " -- The generic terminal slot",1)[0]
+        hold=rail.split("function M.authorized_original_remote_drill_hold_0836(pair)",1)[1].split(
+            "\nfunction ",1)[0]
+        for proof in ('state.request==task.request_value',
+                      'task.request_field=="remote_drill_request_1011"',
+                      'task.creative_build~=true',
+                      'supply.source_before-supply.source_after==1',
+                      'supply.inventory.get_item_count("burner-mining-drill")==0',
+                      'valid(built) and built.name=="burner-mining-drill"',
+                      'state.paid_drill_completion_0836={',
+                      'state.phase="native-0338-drill-built"'):
+            self.assertIn(proof,finish)
+        for proof in ('state.paid_drill_completion_0836.native_0338_paid==true',
+                      'state.paid_drill_completion_0836.request_value==state.request',
+                      'state.built_entity.unit_number==state.built_unit',
+                      'original_supply.source_before-original_supply.source_after==1',
+                      'not pair.construction_custody_0338'):
+            self.assertIn(proof,hold)
+        self.assertNotIn('and completion and completion.phase=="complete"',hold)
+        for forbidden in ('teleport(', 'create_entity(', 'bounds_exempt'):
+            self.assertNotIn(forbidden,finish)
+
+    def test_original_paid_drill_hold_rechecks_same_one_tile_native_builder_snap(self):
+        # The native paid 0338 builder accepts the original actual drill
+        # within one square tile of the requested ore site. Holding that
+        # original Magos after build must not reuse rail-center close(<.25).
+        # This is a contract check, not proof of engine return or ore delivery.
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        hold=rail.split("function M.authorized_original_remote_drill_hold_0836(pair)",1)[1].split(
+            "\nfunction ",1)[0]
+        for paid in (
+            'state.paid_drill_completion_0836.native_0338_paid==true',
+            'state.paid_drill_completion_0836.built_entity==state.built_entity',
+            'state.built_entity.unit_number==state.built_unit',
+            'original_supply.source_before-original_supply.source_after==1',
+            'not pair.construction_task_0338',
+            'not pair.construction_custody_0338',
+            'train_engine.train.station==stop',
+            'and (state.built_entity.position.x-state.position.x)^2',
+            '+(state.built_entity.position.y-state.position.y)^2<=1',
+        ):
+            self.assertIn(paid,hold)
+        self.assertNotIn('and close(state.built_entity.position,state.position)',hold)
+        self.assertIn('" built_site_sq="',hold)
+        for forbidden in ('teleport(', 'create_entity(', 'bounds_exempt'):
+            self.assertNotIn(forbidden,hold)
+        # A legitimate half-tile native snap passes the same <=1 receipt
+        # contract; a different construction 2 tiles away still fails.
+        self.assertLessEqual(0.5**2+0.5**2,1)
+        self.assertGreater(2**2,1)
+
+
+class OriginalRemoteNativeDrillWorldOrePickup0836(unittest.TestCase):
+    """Only the original drill's real ground stack can enter physical custody."""
+
+    def test_native_ground_pickup_never_credits_remote_wagon(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text()
+        pickup=rail.split("function M.service_original_remote_drill_output_pickup_0836(pair)",1)[1].split(
+            "\nfunction M.service_first_train_return_0836(pair)",1)[0]
+        for proof in (
+            'M.authorized_original_remote_drill_hold_0836(pair)',
+            'state.fuel_delivery_0836.native_inventory_verified==true',
+            'type="mining-drill"',
+            'type="resource",name=m.item',
+            'type="item-entity",position=output',
+            'game.create_inventory(1)',
+            'state.ore_pickup_0836=receipt',
+            'hold[1].transfer_stack(world_item.stack,1)',
+            'held_after==1 and ground_after==world_before-1',
+            'native-ground-transfer-quarantined',
+            'native-ground-item-in-original-carrier',
+        ):
+            self.assertIn(proof,pickup)
+        for forbidden in ('teleport(', 'surface.create_entity(', 'wagon.built_entity.get_inventory',
+                          'bounds_exempt', 'source_inventory.insert('):
+            self.assertNotIn(forbidden,pickup)
+        self.assertIn('M.service_original_remote_drill_output_pickup_0836(pair)',rail)
+        self.assertIn('REMOTE_DRILL_GROUND_NATIVE_0836 elapsed=',fixture)
+        self.assertIn('held_original_ore=',fixture)
+        self.assertIn('native_ground_iron=',fixture)
+        # No new native PASS marker or weakening of the original return gate.
+        self.assertIn('fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)
+
+
+
+class OriginalNativePaidOreWagonCarry0836(unittest.TestCase):
+    """A source-debited natural item must walk into the exact paid wagon."""
+
+    def test_ground_hold_requires_physical_wagon_walk_and_atomic_native_transfer(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        movement=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        corridor=(root/"tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text()
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text()
+        authorization=rail.split("function M.authorized_original_remote_wagon_carry_0836(pair,point,movement)",1)[1].split(
+            "\nfunction M.service_original_remote_wagon_ore_delivery_0836(pair)",1)[0]
+        delivery=rail.split("function M.service_original_remote_wagon_ore_delivery_0836(pair)",1)[1].split(
+            "\n-- remote stop may ask Factorio",1)[0]
+        for required in (
+            'M.authorized_original_remote_drill_hold_0836(pair)',
+            'pickup.phase=="native-ground-item-in-original-carrier"',
+            'pickup.ground_before==1 and pickup.ground_after==0',
+            'pickup.inventory.get_item_count',
+            'pickup.drill_unit==state.built_unit',
+            'wagon.paid_completion_0836.native_0338_paid==true',
+            'engine.train.station==stop',
+            'engine.train.id==wagon_entity.train.id',
+            'movement.owner=="rail-track-frontier-0836"',
+            'movement.reason=="original-rail-ore-wagon-carry-0836"',
+        ):
+            self.assertIn(required,authorization)
+        for required in (
+            'tech_priests_request_movement_0418',
+            'dx*dx+dy*dy>16',
+            'defines.inventory.cargo_wagon',
+            'wagon_before==original_before',
+            'pickup.wagon_delivery_0836=receipt',
+            'target.transfer_stack(pickup.inventory[1],1)',
+            'held_after==0 and wagon_after==wagon_before+1',
+            'native-original-wagon-transfer-quarantined',
+            'native-original-wagon-received-ground-mined-ore',
+        ):
+            self.assertIn(required,delivery)
+        for forbidden in ('teleport(', 'surface.create_entity(', 'create_inventory(', 'bounds_exempt',
+                          'pickup.inventory.insert(', 'wagon_entity.insert('):
+            self.assertNotIn(forbidden,delivery)
+        self.assertIn('M.service_original_remote_wagon_ore_delivery_0836(pair)',rail)
+        self.assertIn('original-rail-ore-wagon-carry-0836',movement)
+        self.assertIn('authorized_original_remote_wagon_carry_0836',corridor)
+        self.assertIn('REMOTE_DRILL_WAGON_NATIVE_0836 elapsed=',fixture)
+        self.assertIn('receipt_wagon_after=',fixture)
+        self.assertIn('fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)
+
+
+class OriginalNativeOreLoadedReboarding0836(unittest.TestCase):
+    """Loading one real wagon item must lead to original native driver reboarding."""
+
+    def test_native_loaded_reboard_preserves_movement_custody_and_ore_gate(self):
+        root=pathlib.Path(__file__).resolve().parents[2]
+        rail=(root/"tech-priests_src/scripts/core/rail_track_frontier_0836.lua").read_text()
+        movement=(root/"tech-priests_src/scripts/core/movement_controller.lua").read_text()
+        corridor=(root/"tech-priests_src/scripts/core/authority_corridor_pathing_0574.lua").read_text()
+        fixture=(root/"tests/scenarios/remote-rail-acquisition/fixture.lua").read_text()
+        authorization=rail.split(
+            "function M.authorized_original_remote_train_reboarding_walk_0836(pair,point,movement)",1
+        )[1].split("\nfunction M.service_original_remote_wagon_reboard_0836(pair)",1)[0]
+        reboard=rail.split(
+            "function M.service_original_remote_wagon_reboard_0836(pair)",1
+        )[1].split("\n-- remote stop may ask Factorio",1)[0]
+        for required in (
+            "M.authorized_original_remote_drill_hold_0836(pair)",
+            'pickup.phase=="native-ground-ore-loaded-into-original-paid-wagon"',
+            'receipt.phase=="native-original-wagon-received-ground-mined-ore"',
+            'receipt.held_before==1 and receipt.held_after==0',
+            'receipt.wagon_after==receipt.wagon_before+1',
+            'engine.train.station==stop',
+            'engine.train.id==state.train_id',
+            'ride.disembark_confirmed==true',
+            'receipt.wagon_before==original.departure_wagon_item_count_0836',
+            'loaded==receipt.wagon_after',
+            'movement.reason=="original-rail-ore-loaded-reboard-0836"',
+        ):
+            self.assertIn(required,authorization)
+        for required in (
+            'tech_priests_request_movement_0418',
+            'dx*dx+dy*dy>3.3*3.3',
+            'engine.set_driver(priest)',
+            'actual==priest',
+            'ride.disembark_confirmed=false',
+            'native_original_driver_confirmed=true',
+            'native-original-magos-physically-reboarded-with-real-ore',
+        ):
+            self.assertIn(required,reboard)
+        for forbidden in ("teleport(", "surface.create_entity(", "create_inventory(",
+                          "bounds_exempt", "pickup.inventory.insert("):
+            self.assertNotIn(forbidden,reboard)
+        self.assertIn('M.service_original_remote_wagon_reboard_0836(pair)',rail)
+        self.assertIn('native-homeward-original-loaded-reboarding-unverified',rail)
+        self.assertIn('original-rail-ore-loaded-reboard-0836',movement)
+        self.assertIn('authorized_original_remote_train_reboarding_walk_0836',corridor)
+        self.assertIn('REMOTE_REBOARD_NATIVE_0836 elapsed=',fixture)
+        self.assertIn('fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")',fixture)

@@ -1,0 +1,33 @@
+{
+  "status": "native_production_verified; restrained_animation_accepted",
+  "source_delivery": "../v03-finish-and-states",
+  "source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
+  "capture_master_sha256": "6e54b1dc9c94a8fc57fdfcd88fbc93db44c6efb423136109b320c26a9390267d",
+  "native_input_cases": 8,
+  "native_fluid_box_count": 1,
+  "actual_item_pickup_orientations": 4,
+  "actual_produced_pellet_decay_verified": true,
+  "blocked_machine_output_decays": true,
+  "actual_produced_pellet_containment_verified": true,
+  "native_audio_binding_verified": true,
+  "whole_sprite_shift_native_pixels": 7,
+  "body_render_layer": "object",
+  "owner_instruction": "We're good Not every every building has to be intricately animated. its okay",
+  "owner_accepted_restrained_animation": true,
+  "next_shape_action": "none; preserve restrained fan/readout and current model. Continue forge.",
+  "native_frames_advance_all_directions": true,
+  "uninterrupted_eight_second_loops": [
+    "east",
+    "west"
+  ],
+  "strict_cadence_all_directions": false,
+  "clock_note": "All four directions advance through real source cells. East/west complete uninterrupted eight-second loops; north/south contain a held sample in the production capture. Strict all-direction cadence diagnostic remains false, not relabeled as a pass.",
+  "ordinary_chain_integrated": false,
+  "gameplay_balanced": false,
+  "fixture_quality": "Legendary output is clamped solely to exercise native quality loss; this is not an economy recipe.",
+  "next": [
+    "Build/refine pelletization forge with state-preserving processing",
+    "Complete pressure-vessel fabricator and canister assembler",
+    "Integrate chain and recover/refine reactor sources"
+  ]
+}

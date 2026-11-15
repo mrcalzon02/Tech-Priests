@@ -1,0 +1,847 @@
+{
+  "schema": 1,
+  "source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+  "source_file": "fabricator-v03.blend",
+  "camera_policy": "fmpl.factorio45.v1",
+  "persistent_camera_count": 1,
+  "camera_cleanup": {
+    "policy": "fmpl.factorio45.v1",
+    "removed_camera_objects": [
+      "FMPL_CAPTURE_CAMERA"
+    ],
+    "persistent_camera_count": 1,
+    "name": "FMPL_CAPTURE_CAMERA"
+  },
+  "blender": "5.0.0",
+  "config": {
+    "schema": 1,
+    "asset": "tp-pressure-vessel-fabricator-native-v04",
+    "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\fabricator-v03.blend",
+    "source_size": 256,
+    "sizes": [
+      64,
+      128,
+      256
+    ],
+    "samples": 24,
+    "seed": 4362,
+    "columns": 4,
+    "fps": 1,
+    "directions": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "exclude_rotation": [],
+    "hide_render": [],
+    "animated_lights": [],
+    "states": {
+      "idle": [
+        0
+      ],
+      "working": [
+        7,
+        31,
+        55,
+        79,
+        103,
+        127,
+        151,
+        175,
+        199,
+        223,
+        247,
+        271
+      ]
+    },
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "entity",
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 8.48528137423857,
+      "target": [
+        0,
+        0,
+        1.05
+      ],
+      "ortho_scale": 6.7,
+      "shift_x": 0,
+      "shift_y": 0
+    },
+    "orientation_policy": "rotatable",
+    "source_timeline_fps": 24,
+    "cycle_seconds": 12,
+    "threads": 6,
+    "workers": 1,
+    "sampling_note": "Rigid native intake fitting poses; engineering geometry/camera preserved. Twelve one-second working samples and four idle directions.",
+    "adapter": "mh7-fabricator-native-fittings-v1"
+  },
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        -0.7071067690849304,
+        -5.999999523162842
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        0.7071067690849304,
+        7.049999237060547
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 6.699999809265137,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      256,
+      256
+    ]
+  },
+  "daylight": [
+    {
+      "name": "Fill",
+      "type": "AREA",
+      "energy": 700.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          0.4472135603427887,
+          -0.596284806728363,
+          0.6666666865348816,
+          4.0
+        ],
+        [
+          0.8944272398948669,
+          0.29814231395721436,
+          -0.3333333432674408,
+          -2.0
+        ],
+        [
+          7.548435121407238e-08,
+          0.745356023311615,
+          0.6666666269302368,
+          5.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Key",
+      "type": "AREA",
+      "energy": 1150.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          0.800000011920929,
+          0.46093273162841797,
+          -0.384110689163208,
+          -3.0
+        ],
+        [
+          -0.6000000238418579,
+          0.6145769953727722,
+          -0.5121475458145142,
+          -4.0
+        ],
+        [
+          4.873782089021006e-08,
+          0.6401844620704651,
+          0.7682212591171265,
+          7.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Rim",
+      "type": "AREA",
+      "energy": 1000.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          -1.0,
+          -1.504815259067982e-07,
+          6.305878486045913e-08,
+          0.0
+        ],
+        [
+          1.5099580252808664e-07,
+          -0.7071067690849304,
+          0.7071067690849304,
+          5.0
+        ],
+        [
+          -6.181721801112872e-08,
+          0.7071067690849304,
+          0.7071067690849304,
+          6.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "world": {
+    "name": "Neutral industrial world",
+    "color_management": {
+      "view_transform": "AgX",
+      "look": "None",
+      "exposure": 0.0,
+      "gamma": 1.0
+    }
+  },
+  "material_changes": [
+    {
+      "state": "idle",
+      "angle": 0,
+      "native_fitting_pose": [
+        {
+          "role": "forming_fluid_intake",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.2071067839860916,
+            0.0
+          ],
+          "method": "unchanged rigid mouth and reducer; full-bore axial extension or intact lateral intake with constant-radius small feed; supported plate shifted .12"
+        }
+      ]
+    },
+    {
+      "state": "idle",
+      "angle": 90,
+      "native_fitting_pose": [
+        {
+          "role": "forming_fluid_intake",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            -0.8284271359443665,
+            0.0
+          ],
+          "method": "unchanged rigid mouth and reducer; full-bore axial extension or intact lateral intake with constant-radius small feed; supported plate shifted .12"
+        }
+      ]
+    },
+    {
+      "state": "idle",
+      "angle": 180,
+      "native_fitting_pose": [
+        {
+          "role": "forming_fluid_intake",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            -0.20710685849189758,
+            0.0
+          ],
+          "method": "unchanged rigid mouth and reducer; full-bore axial extension or intact lateral intake with constant-radius small feed; supported plate shifted .12"
+        }
+      ]
+    },
+    {
+      "state": "idle",
+      "angle": 270,
+      "native_fitting_pose": [
+        {
+          "role": "forming_fluid_intake",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            0.8284271359443665,
+            0.0
+          ],
+          "method": "unchanged rigid mouth and reducer; full-bore axial extension or intact lateral intake with constant-radius small feed; supported plate shifted .12"
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 0,
+      "native_fitting_pose": [
+        {
+          "role": "forming_fluid_intake",
+          "source_yaw": 0,
+          "rigid_world_offset": [
+            0.0,
+            0.2071067839860916,
+            0.0
+          ],
+          "method": "unchanged rigid mouth and reducer; full-bore axial extension or intact lateral intake with constant-radius small feed; supported plate shifted .12"
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 90,
+      "native_fitting_pose": [
+        {
+          "role": "forming_fluid_intake",
+          "source_yaw": 90,
+          "rigid_world_offset": [
+            0.0,
+            -0.8284271359443665,
+            0.0
+          ],
+          "method": "unchanged rigid mouth and reducer; full-bore axial extension or intact lateral intake with constant-radius small feed; supported plate shifted .12"
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 180,
+      "native_fitting_pose": [
+        {
+          "role": "forming_fluid_intake",
+          "source_yaw": 180,
+          "rigid_world_offset": [
+            0.0,
+            -0.20710685849189758,
+            0.0
+          ],
+          "method": "unchanged rigid mouth and reducer; full-bore axial extension or intact lateral intake with constant-radius small feed; supported plate shifted .12"
+        }
+      ]
+    },
+    {
+      "state": "working",
+      "angle": 270,
+      "native_fitting_pose": [
+        {
+          "role": "forming_fluid_intake",
+          "source_yaw": 270,
+          "rigid_world_offset": [
+            0.0,
+            0.8284271359443665,
+            0.0
+          ],
+          "method": "unchanged rigid mouth and reducer; full-bore axial extension or intact lateral intake with constant-radius small feed; supported plate shifted .12"
+        }
+      ]
+    }
+  ],
+  "mesh_count": 181,
+  "master_sha256": "62f0c1317e4403d95be9b6d1fbadce9c918895d23930d4cb2bac71d80eb9f7bc",
+  "frames": [
+    {
+      "state": "idle",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d00/f000.png",
+      "sha256": "a745b0689d49838c22978785033c968a3be8b34e1e6e5f2c5721b179b98a401d"
+    },
+    {
+      "state": "idle",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d01/f000.png",
+      "sha256": "9f30e1a88817c666ce7311f86f7a7f1b1fd560393bc1209251af4e9034112c1a"
+    },
+    {
+      "state": "idle",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d02/f000.png",
+      "sha256": "fe2d688a29c6907530b29a87dd754502b87fe877fab0b5c9a43ba0ac2902e89d"
+    },
+    {
+      "state": "idle",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d03/f000.png",
+      "sha256": "f8fc8c0064d757bf2bb8649b554d82df91107869e5b87275b9ef44cb4d528cc6"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d00/f000.png",
+      "sha256": "6e6722dda6b2fc9b2f87bfde136f644d9799a8cbdb205cad4dd52b44acba8b34"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d00/f001.png",
+      "sha256": "5fa5990893bd09a6879194ec78f5432eb574f3cea39e0ddeecbe5f6f6b3ca903"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d00/f002.png",
+      "sha256": "4ee733e8532ed43556f80680970aeaf757a2f3a9009bfddf66888b49b169986f"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d00/f003.png",
+      "sha256": "35b3e3cdf68a46e5482058c96e394e11e1d711de5ec8c174d4832ac9223d3f63"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d00/f004.png",
+      "sha256": "a349a700585a5db962c4a292200bf8905fd24b6b2265522d811fa34fd449d82d"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d00/f005.png",
+      "sha256": "da3c32504e2fffa99b634c0c8a9b5ad27ae42be4b5b4a97f8bf65bb8c770159a"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d00/f006.png",
+      "sha256": "3924eaff41e8d37407bd5772478845346d47acc1d1cbaf4a165c3e3134b06d2c"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d00/f007.png",
+      "sha256": "ad41f43f43e49dd74959e356691dc378297aa03d3db26c2537fd4c131d1d8d2d"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 8,
+      "timeline_frame": 199,
+      "path": "frames/working/d00/f008.png",
+      "sha256": "febd62a6c787882d5e6ac5c92d2102dfa882a904522ceb83de742c8380da84c8"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 9,
+      "timeline_frame": 223,
+      "path": "frames/working/d00/f009.png",
+      "sha256": "e545989ac30fdc35afed1091a817593aedc81cec7d2b7471d1e58045f8c47308"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 10,
+      "timeline_frame": 247,
+      "path": "frames/working/d00/f010.png",
+      "sha256": "050db3a153ad8838204aa383f3ca395c374d406e44971b511e48770e8f7766f5"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 11,
+      "timeline_frame": 271,
+      "path": "frames/working/d00/f011.png",
+      "sha256": "fb2648f399af632b9a27663e6b92c2ef43c933f87d5044c74c4c3c9fa60a4175"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d01/f000.png",
+      "sha256": "4ed259a3ea7dfb697013c5283fce5849e5e2a5528055b9fdfc837b4b8361d62a"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d01/f001.png",
+      "sha256": "d8393562032c0aa502505ad040370346c9dfdc73142d3958b0d0cf3ce98822ad"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d01/f002.png",
+      "sha256": "999ac1df5eee41c45515252066fbdf9da47a9e36ec0671ff5bacef71ae209867"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d01/f003.png",
+      "sha256": "cf884be93a60270616db1ae2a5f1459d8ced81f8da9fcd2382feb1ad5f685fa8"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d01/f004.png",
+      "sha256": "2d2f7fe5dc8d4e4770214ff3d1eb01f2c5e0241da9723a593f15d98297bf9864"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d01/f005.png",
+      "sha256": "2908c035dc1cd44c4002b169c34376ffbf4a8778023a1f2e4c922abcb6c0bcf5"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d01/f006.png",
+      "sha256": "399f12af23058c3183dec3600549c93b0947a436e4666bcb8eb180fb7fc5434c"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d01/f007.png",
+      "sha256": "54d4ede1d1d645e63905adc6c65ce858bade5a49401e190ce4af74b5ea26d000"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 8,
+      "timeline_frame": 199,
+      "path": "frames/working/d01/f008.png",
+      "sha256": "8366964d8c23840c689774bb2d567f21ba5b220dca96db873b456b884fc267b5"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 9,
+      "timeline_frame": 223,
+      "path": "frames/working/d01/f009.png",
+      "sha256": "ca370a034c7e1b74e214921bf9a6567b3897879d48fc41ad5f0f2518268fcff7"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 10,
+      "timeline_frame": 247,
+      "path": "frames/working/d01/f010.png",
+      "sha256": "bd258dbf0b425c605cf7a52eb802a5fbd13f473ad1d1063bf898b8ef090895a9"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 11,
+      "timeline_frame": 271,
+      "path": "frames/working/d01/f011.png",
+      "sha256": "7bf5179436adc33b19f1ba2b7b0f1bccaefcc1ebd335877f6ff6c05a856bc970"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d02/f000.png",
+      "sha256": "4b050bacfda49c906de01d89d70b3570317ef5c2d0eeb165a459726abe201c4c"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d02/f001.png",
+      "sha256": "95d14871841a4a6d923cf7526a9829eb69abcf45f12e7cc6f302eea09ded0744"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d02/f002.png",
+      "sha256": "b1baad5cb4f26a355427d51a8f777a29afc5926566e04536aaece1bd4a9aa1e1"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d02/f003.png",
+      "sha256": "833274554fd9327ea8df312ea99fe96d822d20fb4223987ff8989f6f945d71ec"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d02/f004.png",
+      "sha256": "48b35c18a017fac2a1e659fd601ccc5011a7f67b83e53e31fdce0cf748f312ad"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d02/f005.png",
+      "sha256": "a9d91fc2b584ead36cd1a1bdc164c7b597d6346d3a8d2637215de37c1690b1aa"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d02/f006.png",
+      "sha256": "341853e18975786697ea70144c9fe99e82cf2446fb87db0fa2c26fb730c8fb99"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d02/f007.png",
+      "sha256": "7c7878681eb69e81750da3c659d9e5ddd92f6554372e7e96c804effb2d865066"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 8,
+      "timeline_frame": 199,
+      "path": "frames/working/d02/f008.png",
+      "sha256": "30f2259e0c83e3c5b79dadfc9a548e124a47af8cb46c0cf0ba9d9a1b10a5f7dc"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 9,
+      "timeline_frame": 223,
+      "path": "frames/working/d02/f009.png",
+      "sha256": "97c9a1961bf5c4a42e10e0b6209ba63beaa12dda8c113ccd5057acd399470f59"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 10,
+      "timeline_frame": 247,
+      "path": "frames/working/d02/f010.png",
+      "sha256": "047263f307385155078b21af51cec72a5c1d188d51b2b259a15d10d2e492d46a"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 11,
+      "timeline_frame": 271,
+      "path": "frames/working/d02/f011.png",
+      "sha256": "d5fa3311a06a3688e0f6840452440143381a4c2a9541cdf61624a9e552921424"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 7,
+      "path": "frames/working/d03/f000.png",
+      "sha256": "399379eb49358cfcf16c396bde871eda55c2b8c45d7c5fbc8b80561265558262"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 1,
+      "timeline_frame": 31,
+      "path": "frames/working/d03/f001.png",
+      "sha256": "304c5ed270e60ed8e766bd83f62d196616ed4ea1c7819d59d5a081eb07823f1d"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 2,
+      "timeline_frame": 55,
+      "path": "frames/working/d03/f002.png",
+      "sha256": "f8775ad9d92be1a63dc24944311f88918d4cc04c1e669cbbf61e495d75e54761"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 3,
+      "timeline_frame": 79,
+      "path": "frames/working/d03/f003.png",
+      "sha256": "8f639d82c8efdb525c1fa15d8cc79b119c2cd5e492354fe987089b9f9c4ab86c"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 4,
+      "timeline_frame": 103,
+      "path": "frames/working/d03/f004.png",
+      "sha256": "73e7dee4829120bad2a42a3845bf99f2fc349dd9ecd111e466e5115b97a20b8e"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 5,
+      "timeline_frame": 127,
+      "path": "frames/working/d03/f005.png",
+      "sha256": "06a4d1d6e6ccd4b6612868b7a34d4016a83f49e970e50ff862cd11e3d78968b9"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 6,
+      "timeline_frame": 151,
+      "path": "frames/working/d03/f006.png",
+      "sha256": "b39f4674d94a24686359e03b0ac556b13c1c96775ef23d6f6f6fc2bc7e5d696c"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 7,
+      "timeline_frame": 175,
+      "path": "frames/working/d03/f007.png",
+      "sha256": "cea5dbe321fee99b1bfd03896356664ea7275ec83ca5010d66cc0a232beaf137"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 8,
+      "timeline_frame": 199,
+      "path": "frames/working/d03/f008.png",
+      "sha256": "84cbfe6b8e9b820a84d0827fb233247b65710fa7b0518e93caaffd094f028e2c"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 9,
+      "timeline_frame": 223,
+      "path": "frames/working/d03/f009.png",
+      "sha256": "b295c6af151605a0802293559869f7f422de5a6a28e6b44d0a36bf53a999f754"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 10,
+      "timeline_frame": 247,
+      "path": "frames/working/d03/f010.png",
+      "sha256": "a3b86022f783bc9516f2d17f2b03a280a2cb85c025c2045460edd8d837188df5"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 11,
+      "timeline_frame": 271,
+      "path": "frames/working/d03/f011.png",
+      "sha256": "9fa7651855a039885ca1f17180e4f2fcafe0a942492607863098ec22345a6d50"
+    }
+  ],
+  "art_accepted": false,
+  "engine_integration": "outside Blender-only scope"
+}

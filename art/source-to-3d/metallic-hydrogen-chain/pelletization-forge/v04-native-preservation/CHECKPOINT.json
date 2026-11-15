@@ -1,0 +1,35 @@
+{
+  "status": "native_processing_decay_clock_audio_verified; graphical_item_handoff_and_ordinary_chain_pending",
+  "engineering_delivery": "../v03-finish-and-states",
+  "source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+  "native_sites": 24,
+  "orientations": 4,
+  "gameplay_fluid_boxes": 0,
+  "processing_cases": [
+    "state-conserving fresh formation",
+    "real decay during processing",
+    "inert during processing",
+    "blocked decaying output",
+    "formed containment/unseal",
+    "four sequential mixed-quality inputs per direction"
+  ],
+  "native_cycle_ticks": 480,
+  "dispatch_overhead_ticks": 1,
+  "save_reload_identical": true,
+  "damaged_stock_never_heals": true,
+  "normal_build_event_registration_verified": true,
+  "live_stock_released_on_destroy": true,
+  "native_eight_cells_all_directions": true,
+  "native_source_frame_period_ticks": 60,
+  "native_full_loop_boundary_observed": false,
+  "native_audio_binding_verified": true,
+  "owner_approved": false,
+  "ordinary_chain_integrated": false,
+  "graphical_item_handoff_verified": false,
+  "next": [
+    "Refine native item handoff: tall hopper receiving point versus standard inserter hand position; preserve source proportions and real process path",
+    "Complete player-facing chain/UI/economy integration without exposing clock/filter recipes",
+    "Build vessel fabricator and canister assembler; recover/refine three reactors"
+  ],
+  "safe_prototype_addon_loaded": true
+}

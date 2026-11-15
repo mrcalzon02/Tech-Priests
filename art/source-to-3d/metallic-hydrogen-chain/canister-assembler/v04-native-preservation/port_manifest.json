@@ -1,0 +1,17 @@
+{
+  "machine": "canister-assembler",
+  "native_entity": "tp-mh7-canister-assembler",
+  "footprint": [
+    4,
+    4
+  ],
+  "ports": [],
+  "native_verified": true,
+  "fluid_boxes": 0,
+  "item_inputs": [
+    "live formed metallicized pellet",
+    "empty pressure shell"
+  ],
+  "item_output": "contained metallicized pellet; spent inputs return inert without consuming shell",
+  "engineering_source_sha256": "750fbca12ea7e09de7736ec938ef44fbe2ecced2d4a7f7fe39d5830591437845"
+}

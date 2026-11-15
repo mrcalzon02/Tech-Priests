@@ -1,0 +1,10 @@
+{
+  "source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+  "route_count": 5,
+  "segment_probes": 1179,
+  "glb_sha256": null,
+  "blockers": [],
+  "fluid_or_glass_occupants": [],
+  "passed": true,
+  "scope": "actual stored path segments: centre plus eight offsets at 70% bore radius; endpoint hits remain failures; discrete sampled core, not complete swept-volume proof"
+}

@@ -93,7 +93,7 @@ def main():
     changes = []
     if cfg.get('adapter') == 'campfire-matte-stones':
         changes = matte_stones(model)
-    elif cfg.get('adapter'):
+    elif cfg.get('adapter') and cfg.get('adapter') not in ('mh7-electrolyzer-native-fittings-v1','mh7-compressor-native-fittings-v1','mh7-crucible-native-fittings-v1','mh7-fabricator-native-fittings-v1'):
         raise ValueError('Unknown adapter')
     model.name = 'MODEL'
     model.use_fake_user = True
@@ -133,6 +133,23 @@ def main():
     for root in roots:
         root.parent = pivot
         root.matrix_parent_inverse = Matrix.Translation(cfg['pivot']).inverted()
+    native_fittings=None
+    if cfg.get('adapter')=='mh7-electrolyzer-native-fittings-v1':
+        from production_smoke.electrolyzer_native_fittings import NativeFittings
+        bpy.context.view_layer.update()
+        native_fittings=NativeFittings(scene)
+    elif cfg.get('adapter')=='mh7-compressor-native-fittings-v1':
+        from production_smoke.compressor_native_fittings import CompressorNativeFittings
+        bpy.context.view_layer.update()
+        native_fittings=CompressorNativeFittings(scene)
+    elif cfg.get('adapter')=='mh7-crucible-native-fittings-v1':
+        from production_smoke.crucible_native_fittings import CrucibleNativeFittings
+        bpy.context.view_layer.update()
+        native_fittings=CrucibleNativeFittings(scene)
+    elif cfg.get('adapter')=='mh7-fabricator-native-fittings-v1':
+        from production_smoke.fabricator_native_fittings import FabricatorNativeFittings
+        bpy.context.view_layer.update()
+        native_fittings=FabricatorNativeFittings(scene)
     # A named export profile can override the source camera without modifying its
     # authoring file. Camera and daylight remain stationary across all directions.
     override = cfg.get('camera_override')
@@ -175,6 +192,8 @@ def main():
     for state, frames in cfg['states'].items():
         for direction, angle in enumerate(cfg['directions']):
             pivot.rotation_euler.z = math.radians(angle)
+            if native_fittings:
+                changes.append({'state':state,'angle':angle,'native_fitting_pose':native_fittings.apply(angle)})
             for index, frame in enumerate(frames):
                 ordinal += 1
                 if ordinal % args.partition_count != args.partition:
@@ -213,6 +232,7 @@ def main():
                 temporary.write_text(json.dumps({'source_sha256':source_hash,'config':cfg,'frames':records}))
                 temporary.replace(partial)
     pivot.rotation_euler.z = 0
+    if native_fittings:native_fittings.apply(0)
     scene.frame_set(next(iter(cfg['states'].values()))[0])
     model.frame_set(scene.frame_current)
     bpy.context.view_layer.update()

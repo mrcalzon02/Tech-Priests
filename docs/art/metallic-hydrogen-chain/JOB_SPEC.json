@@ -258,15 +258,6 @@
           "model_mouth_center": null,
           "model_outward_normal": null,
           "verified": false
-        },
-        {
-          "id": "metallicized_intermediate_output",
-          "fluid_id": null,
-          "native_position": null,
-          "native_direction": null,
-          "model_mouth_center": null,
-          "model_outward_normal": null,
-          "verified": false
         }
       ],
       "item_access_edges": [],
@@ -288,7 +279,29 @@
         444
       ],
       "deliverable_status": "not_started",
-      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review"
+      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review",
+      "historical_symbolic_fluid_output": {
+        "id": "metallicized_intermediate_output",
+        "fluid_id": null,
+        "native_position": null,
+        "native_direction": null,
+        "model_mouth_center": null,
+        "model_outward_normal": null,
+        "verified": false
+      },
+      "symbolic_item_ports": [
+        {
+          "id": "raw_metallicized_pellet_output",
+          "item_id": "tp-mh7-raw-metallicized-pellet",
+          "native_pickup_verified": false
+        }
+      ],
+      "owner_process_override": {
+        "output": "raw solid pellets",
+        "behavior_contract": "art/source-to-3d/metallic-hydrogen-chain/pellet-instability/v01-native-behavior/CONTRACT.json",
+        "requirement": "Random decay cooldown lowers HP and quality until inert; get pellets into appropriate containment promptly.",
+        "preserve_products_in_machine_output": false
+      }
     },
     {
       "stage": 5,
@@ -337,17 +350,30 @@
       "target_native_prototype": null,
       "prototype_kind": null,
       "prototype_footprint_verified": false,
-      "symbolic_fluid_ports": [],
+      "symbolic_fluid_ports": [
+        {
+          "id": "forming_fluid_intake",
+          "fluid_id": null,
+          "native_position": null,
+          "native_direction": null,
+          "model_mouth_center": null,
+          "model_outward_normal": null,
+          "verified": false
+        }
+      ],
       "item_access_edges": [],
       "must_have_visible_assemblies": [
-        "tube_blank_on_rollers",
-        "driven_rotation",
-        "on_axis_welding_seam_head",
-        "gantry_rail",
-        "endcap_fixture"
+        "welded_steel_plate_blank",
+        "open_edge_clamping_frame",
+        "guided_longitudinal_seam_tool",
+        "sealed_pressure_injection_mandrel",
+        "supported_pressure_pump_and_forming_circuit",
+        "plate_loading_rollers"
       ],
       "specific_design_hazards": [
-        "Seam head must align with actual tube seam and be supported on its guide."
+        "Keep the pressure blank exposed in an open clamping frame; do not replace it with giant cube die blocks.",
+        "Weld the steel plate edges before clamping and pressure expansion; preserve fixed round pressure necks.",
+        "Park the welding tool clear before moving the clamp; mount necessary rails, hydraulic hardware and fluid interfaces on real supports."
       ],
       "style_board_crop_pixels": [
         550,
@@ -356,7 +382,25 @@
         887
       ],
       "deliverable_status": "not_started",
-      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review"
+      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review",
+      "superseded_process_contract": {
+        "must_have_visible_assemblies": [
+          "tube_blank_on_rollers",
+          "driven_rotation",
+          "on_axis_welding_seam_head",
+          "gantry_rail",
+          "endcap_fixture"
+        ],
+        "specific_design_hazards": [
+          "Seam head must align with actual tube seam and be supported on its guide."
+        ],
+        "reason": "Owner clarified welded-plate hydroforming and rejected solid die blocks."
+      },
+      "owner_process_override": {
+        "process": "Steel plates are welded together and forming material is pumped inside under high pressure.",
+        "enclosure": "Open air, material clamped in place; large cube molds rejected.",
+        "authority": "Latest owner directions in the active production conversation."
+      }
     },
     {
       "stage": 7,

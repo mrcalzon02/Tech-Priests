@@ -1,0 +1,113 @@
+{
+  "status": "ORIGINAL_AUTHORED_AUDIO; NATIVE_INTEGRATION_AND_OWNER_AUDITION_PENDING",
+  "generator_sha256": "76a7a087e0ac947a66e72659d794293c502b7b7db42f2d5699bf5d6d5b38bbd7",
+  "provenance": "Entirely procedural oscillators, filtered seeded noise and resonators; no sampled recordings or third-party music",
+  "assets": [
+    {
+      "name": "compressor-working",
+      "seconds": 8.0,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": true,
+      "plan": "Heavy motor rumble, 27Hz dry mechanical chatter, loaded three-phase body knocks, rattling metal resonances and short pressure chuffs. Eight-second periodic bed.",
+      "wav_sha256": "f758adbfca33122acb8588f04a8c8cae2ceec9f6a846dcd73f0ed9becead1b43",
+      "ogg_sha256": "cc0e31f04619b0e1d28ec6c085808648821b27131dd8a807796f99319649233f",
+      "decoded_rms": 0.20079810917377472,
+      "decoded_rms_dbfs": -13.944807621303532,
+      "decoded_peak": 0.83037269115448,
+      "loop_seam_step": 0.0031671024262206818,
+      "ordinary_99_9_percent_step": 0.18990092476130896
+    },
+    {
+      "name": "compressor-idle",
+      "seconds": 8.0,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": true,
+      "plan": "Quiet powered-cabinet resonance; no working strokes or continuous discharge.",
+      "wav_sha256": "6b5afa069eb4909ffcdfe7038908e9179d6f66272c76bc62bb85fa5b12a60745",
+      "ogg_sha256": "d1891f46fa86e0cf574d379a6284d92b3b971cc4c7bd7db2a361484054027ccf",
+      "decoded_rms": 0.06500419229269028,
+      "decoded_rms_dbfs": -23.741172673029013,
+      "decoded_peak": 0.23897205293178558,
+      "loop_seam_step": 0.0010104756067349993,
+      "ordinary_99_9_percent_step": 0.0031920723082467387
+    },
+    {
+      "name": "compressor-start",
+      "seconds": 1.8,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": false,
+      "plan": "Contactor clack and heavy motor run-up into the working bed.",
+      "wav_sha256": "1b65a674d0d8d628f699fa2d3b22d937bf9a4a769dbee45fb401057f290bb6b2",
+      "ogg_sha256": "35ab38cbfd934faafeab8ddc4a92b6b2628483289b513fdaa40fc339e0520e59",
+      "decoded_rms": 0.21363520622253418,
+      "decoded_rms_dbfs": -13.406543515243063,
+      "decoded_peak": 0.7780327200889587,
+      "loop_seam_step": 0.39966664958845205,
+      "ordinary_99_9_percent_step": 0.10566816697208424
+    },
+    {
+      "name": "compressor-stop",
+      "seconds": 2.0,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": false,
+      "plan": "Decelerating motor and short unloading bleed, then silence.",
+      "wav_sha256": "589077c5d24d7035254b94bdc189466e400aab67b9a8e446c5266f318c83e9f1",
+      "ogg_sha256": "9e81174257db70f08f07622b50ae9e18860440fe5f6d22d242001b236fa95125",
+      "decoded_rms": 0.1402253657579422,
+      "decoded_rms_dbfs": -17.063468370430407,
+      "decoded_peak": 0.7318421602249146,
+      "loop_seam_step": 1.5124827518407598e-05,
+      "ordinary_99_9_percent_step": 0.11977257706538304
+    },
+    {
+      "name": "purifier-working",
+      "seconds": 4.0,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": true,
+      "plan": "Low pump motor with flowing water/filter burble; quieter than compressor.",
+      "wav_sha256": "d9fe1e89e320ff9870087f5b1afd81bd25a46cd5ffa834bae7819158022c9367",
+      "ogg_sha256": "dc0ff25af7306ad47c75a7aa00c374446b2c11b80a8b95a53280a85a4e158cad",
+      "decoded_rms": 0.12683258950710297,
+      "decoded_rms_dbfs": -17.93538281164243,
+      "decoded_peak": 0.5203004479408264,
+      "loop_seam_step": 0.009689592230336053,
+      "ordinary_99_9_percent_step": 0.07940866414275137
+    },
+    {
+      "name": "electrolyzer-working",
+      "seconds": 4.0,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": true,
+      "plan": "Rectifier hum and restrained fine electrode/process fizz; no invented UI beeps.",
+      "wav_sha256": "bdc745ea93d2500e69f5ee876bc3f22a5adb7b8c79aa7bbf8cb6e20f7151d353",
+      "ogg_sha256": "3925021b33fcf69d3f6455122aa849ae38987ce47ea89d275baebec97e38aa21",
+      "decoded_rms": 0.14395157992839813,
+      "decoded_rms_dbfs": -16.835671283947274,
+      "decoded_peak": 0.4232189655303955,
+      "loop_seam_step": 0.021828054679080958,
+      "ordinary_99_9_percent_step": 0.061794318788480206
+    }
+  ],
+  "comparison": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\tech-priests_src\\sound\\operation\\0531\\machine_running.ogg",
+    "source_sha256": "fc0285b789f9e96573eef820f4f29fdc72a20196793cddf098625b9392226fd1",
+    "rms": 0.2318626344203949,
+    "existing_native_gain": 0.38,
+    "compressor_native_gain": 1.15,
+    "effective_rms_difference_db": 8.368861933328338
+  },
+  "native_mix": {
+    "compressor_working_gain": 1.15,
+    "compressor_audible_distance_modifier": 3.5,
+    "priority": 16,
+    "purifier_working_gain": 0.46,
+    "electrolyzer_working_gain": 0.4
+  },
+  "owner_request": "Compressor should be the loudest machinery nearby, an ungodly racket. Add machinery sounds to chain."
+}

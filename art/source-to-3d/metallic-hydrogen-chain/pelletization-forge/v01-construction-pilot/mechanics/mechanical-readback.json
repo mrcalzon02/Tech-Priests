@@ -1,0 +1,618 @@
+{
+  "passed": true,
+  "errors": [],
+  "source_sha256": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
+  "contacts": [
+    {
+      "a": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "press shoe on footing",
+      "gap_tiles": 6.006850128414953e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column web -0.89",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "label": "column web seated on shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (-0.89, -0.27)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "label": "column flange on grounded shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (-0.89, 0.07)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "label": "column flange on grounded shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "press shoe on footing",
+      "gap_tiles": 3.0719530030864917e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column web 0.89",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "label": "column web seated on shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (0.89, -0.27)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "label": "column flange on grounded shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (0.89, 0.07)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "label": "column flange on grounded shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "b": "TP Pelletization Forge V01 | red press column web -0.89",
+      "label": "crossbeam carried by grounded columns",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "b": "TP Pelletization Forge V01 | red press column web 0.89",
+      "label": "crossbeam carried by grounded columns",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die bed grounded pier -0.45",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "die pier grounded",
+      "gap_tiles": 8.97168703772877e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "b": "TP Pelletization Forge V01 | die bed grounded pier -0.45",
+      "label": "die bed on pier",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die bed grounded pier 0.45",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "die pier grounded",
+      "gap_tiles": 3.0719530030864917e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "b": "TP Pelletization Forge V01 | die bed grounded pier 0.45",
+      "label": "die bed on pier",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open tapered pellet die",
+      "b": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "label": "die seated over drilled bed core",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide lower socket -0.3",
+      "b": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "label": "lower guide socket seated on bed",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | fixed press guide rod -0.3",
+      "b": "TP Pelletization Forge V01 | guide lower socket -0.3",
+      "label": "guide supported in close-fitting lower socket",
+      "gap_tiles": 0.0004984307452104986,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide upper socket -0.3",
+      "b": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "label": "upper guide socket carried by crossbeam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | moving crosshead guide bearing -0.3",
+      "b": "TP Pelletization Forge V01 | guided moving crosshead",
+      "label": "moving bearing retained in crosshead",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide lower socket 0.3",
+      "b": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "label": "lower guide socket seated on bed",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | fixed press guide rod 0.3",
+      "b": "TP Pelletization Forge V01 | guide lower socket 0.3",
+      "label": "guide supported in close-fitting lower socket",
+      "gap_tiles": 0.0004984307452104986,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide upper socket 0.3",
+      "b": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "label": "upper guide socket carried by crossbeam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | moving crosshead guide bearing 0.3",
+      "b": "TP Pelletization Forge V01 | guided moving crosshead",
+      "label": "moving bearing retained in crosshead",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | on-axis press punch",
+      "b": "TP Pelletization Forge V01 | punch mounting shank",
+      "label": "press punch on retained shank",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | punch mounting shank",
+      "b": "TP Pelletization Forge V01 | guided moving crosshead",
+      "label": "punch shank carried by crosshead",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | actuator seated mounting flange",
+      "b": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "label": "actuator flange supported by crossbeam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | closed hydraulic press cylinder",
+      "b": "TP Pelletization Forge V01 | actuator seated mounting flange",
+      "label": "actuator seated through flange",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | closed actuator pressure head",
+      "b": "TP Pelletization Forge V01 | closed hydraulic press cylinder",
+      "label": "closed cylinder head on body",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | actuator piston gland",
+      "b": "TP Pelletization Forge V01 | closed hydraulic press cylinder",
+      "label": "piston gland seated in cylinder",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper grounded foot -0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "hopper foot grounded",
+      "gap_tiles": 3.0719530030864917e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper supported upright -0.48",
+      "b": "TP Pelletization Forge V01 | hopper grounded foot -0.48",
+      "label": "hopper post on foot",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open raw pellet hopper",
+      "b": "TP Pelletization Forge V01 | hopper supported upright -0.48",
+      "label": "open hopper rim carried by posts",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper rear diagonal brace -0.48",
+      "b": "TP Pelletization Forge V01 | hopper back brace grounded shoe -0.48",
+      "label": "hopper brace on actual rear shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper back brace grounded shoe -0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "rear brace shoe grounded",
+      "gap_tiles": 7.450580596923828e-09,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper grounded foot 0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "hopper foot grounded",
+      "gap_tiles": 8.462232869987929e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper supported upright 0.48",
+      "b": "TP Pelletization Forge V01 | hopper grounded foot 0.48",
+      "label": "hopper post on foot",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open raw pellet hopper",
+      "b": "TP Pelletization Forge V01 | hopper supported upright 0.48",
+      "label": "open hopper rim carried by posts",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper rear diagonal brace 0.48",
+      "b": "TP Pelletization Forge V01 | hopper back brace grounded shoe 0.48",
+      "label": "hopper brace on actual rear shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper back brace grounded shoe 0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "rear brace shoe grounded",
+      "gap_tiles": 1.3348812899494078e-07,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | short auger feed housing",
+      "b": "TP Pelletization Forge V01 | open raw pellet hopper",
+      "label": "hopper enters drilled upper feed port",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supporting pedestal 0.27",
+      "b": "TP Pelletization Forge V01 | auger grounded foot 0.27",
+      "label": "auger pedestal grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supported saddle 0.27",
+      "b": "TP Pelletization Forge V01 | auger supporting pedestal 0.27",
+      "label": "auger saddle on pedestal",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | short auger feed housing",
+      "b": "TP Pelletization Forge V01 | auger supported saddle 0.27",
+      "label": "auger housing retained in saddle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supporting pedestal 0.94",
+      "b": "TP Pelletization Forge V01 | auger grounded foot 0.94",
+      "label": "auger pedestal grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supported saddle 0.94",
+      "b": "TP Pelletization Forge V01 | auger supporting pedestal 0.94",
+      "label": "auger saddle on pedestal",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | short auger feed housing",
+      "b": "TP Pelletization Forge V01 | auger supported saddle 0.94",
+      "label": "auger housing retained in saddle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | feeder motor grounded leg -0.11",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "motor leg grounded",
+      "gap_tiles": 0.009999997913837433,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rear feeder drive motor",
+      "b": "TP Pelletization Forge V01 | feeder motor grounded leg -0.11",
+      "label": "motor supported on legs",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | feeder motor grounded leg 0.11",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "motor leg grounded",
+      "gap_tiles": 0.009999997913837433,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rear feeder drive motor",
+      "b": "TP Pelletization Forge V01 | feeder motor grounded leg 0.11",
+      "label": "motor supported on legs",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger rear bearing closure",
+      "b": "TP Pelletization Forge V01 | short auger feed housing",
+      "label": "feed bearing closure on housing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger keyed drive coupling",
+      "b": "TP Pelletization Forge V01 | rear feeder drive motor",
+      "label": "drive coupling retained by motor",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open die feed shoe floor",
+      "b": "TP Pelletization Forge V01 | short auger feed housing",
+      "label": "open feed shoe meets lower auger lip",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.32",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "extraction chute support grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.32",
+      "b": "TP Pelletization Forge V01 | inclined product chute floor",
+      "label": "chute floor carried on grounded pedestal",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.85",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "extraction chute support grounded",
+      "gap_tiles": 8.97168703772877e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.85",
+      "b": "TP Pelletization Forge V01 | inclined product chute floor",
+      "label": "chute floor carried on grounded pedestal",
+      "gap_tiles": 0.0,
+      "passed": true
+    }
+  ],
+  "sampled_motion": [
+    {
+      "frame": 1,
+      "crosshead_z": 1.3200000524520874,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.9399999976158142
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 7.629394538355427e-08
+    },
+    {
+      "frame": 13,
+      "crosshead_z": 1.3200000524520874,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.9399999976158142
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 7.629394538355427e-08
+    },
+    {
+      "frame": 25,
+      "crosshead_z": 1.3200000524520874,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.9399999976158142
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 7.629394538355427e-08
+    },
+    {
+      "frame": 37,
+      "crosshead_z": 1.2993450164794922,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.919344961643219
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 5.245208734017126e-08
+    },
+    {
+      "frame": 49,
+      "crosshead_z": 1.2003200054168701,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.8203199505805969
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 5.245208734017126e-08
+    },
+    {
+      "frame": 61,
+      "crosshead_z": 1.07579505443573,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.6957949995994568
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 7.629394538355427e-08
+    },
+    {
+      "frame": 73,
+      "crosshead_z": 0.9895200133323669,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.6095199584960938
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 4.2915344167226976e-08
+    },
+    {
+      "frame": 85,
+      "crosshead_z": 0.9800000190734863,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.5999999642372131
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 5.245208734017126e-08
+    },
+    {
+      "frame": 97,
+      "crosshead_z": 0.9800000190734863,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.5999999642372131
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 5.245208734017126e-08
+    },
+    {
+      "frame": 109,
+      "crosshead_z": 1.0588574409484863,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.6788573861122131
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 5.245208734017126e-08
+    },
+    {
+      "frame": 121,
+      "crosshead_z": 1.2124218940734863,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.8324218392372131
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 5.245208734017126e-08
+    },
+    {
+      "frame": 133,
+      "crosshead_z": 1.3161816596984863,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.9361816048622131
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 5.245208734017126e-08
+    },
+    {
+      "frame": 145,
+      "crosshead_z": 1.3200000524520874,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.9399999976158142
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 7.629394538355427e-08
+    },
+    {
+      "frame": 157,
+      "crosshead_z": 1.3200000524520874,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.9399999976158142
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 7.629394538355427e-08
+    },
+    {
+      "frame": 169,
+      "crosshead_z": 1.3200000524520874,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.9399999976158142
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 7.629394538355427e-08
+    },
+    {
+      "frame": 181,
+      "crosshead_z": 1.3200000524520874,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.9399999976158142
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 7.629394538355427e-08
+    },
+    {
+      "frame": 193,
+      "crosshead_z": 1.3200000524520874,
+      "punch_center": [
+        0.0,
+        -0.10000000149011612,
+        0.9399999976158142
+      ],
+      "punch_axis_error": 1.4901161138336505e-09,
+      "piston_endpoint_error": 7.629394538355427e-08
+    }
+  ],
+  "moving_fixed_pair_checks": 1428,
+  "collisions": [],
+  "loop_world_matrix_error": 0.0,
+  "mesh_stats": {
+    "triangles": 17400,
+    "degenerate_triangles": 0,
+    "degenerate_objects": [],
+    "finite": true,
+    "missing_uv": []
+  },
+  "bounds": [
+    [
+      -1.465000033378601,
+      -1.440000057220459,
+      0.0
+    ],
+    [
+      1.440000057220459,
+      1.440000057220459,
+      2.4700000286102295
+    ]
+  ],
+  "scope": "Recorded assembly contacts, on-axis punch/telescoping endpoints and named guided-ram/static surfaces at 17 actual poses. Full solid-material feed/ejection path and working-part finishing remain separate gates."
+}

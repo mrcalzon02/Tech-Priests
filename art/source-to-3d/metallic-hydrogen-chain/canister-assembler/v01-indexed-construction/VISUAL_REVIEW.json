@@ -1,0 +1,26 @@
+{
+  "status": "construction pilot; below final gate",
+  "source_sha256": "5813b40a94cea798408382393058dfa97d4ecf3cf4a093a30bcd832a1ec6080c",
+  "glb_sha256": "51aeb589afde90d958e3bc49e3a73dfe7cb1c5969c2a007a32b73573b92c11dc",
+  "owner_approved": false,
+  "final_threshold_unchanged": 4,
+  "reference_sha256": "b01eb8526b5825865e7f8b6d848b529dfda9aaa469cb2b0ce0307e74b0e01e94",
+  "scores": {
+    "silhouette": 3,
+    "construction": 3,
+    "surfaces": 2,
+    "states": 3,
+    "native": 0
+  },
+  "findings": [
+    "Three distinct supported canister nests retain the requested three-canister layout. Hollow formed bodies, front witness apertures and supported cap slides establish loading/closing mechanics.",
+    "Rear gantry and open cantilever keep the tool bore clear; offset crank drives an actual sliding pellet gate, rather than rotating a shaft through the feed core.",
+    "Recorded contacts, fourteen-second object-matrix loop and source/export validity pass. Three actual GLB indexed phases were viewed. Packed donor PBR is provisional.",
+    "Full motion and granular-path review, dedicated finish/sound, final four-angle capture and live-state native containment remain required."
+  ],
+  "render_hashes": {
+    "first-station-fill": "31ab4a66a50a18d9be899765a8cebc1c915996cdfdfe184b8b577ec7dcde9d8f",
+    "second-station-cap": "e6377c78d2c26ee3924ed9419b59ad42deaecceb8798240a83d5fb1c5cc6a65c",
+    "third-station": "41f7512b01ce1e27df940acd306c81196eb789de686815eb168a11665989924d"
+  }
+}

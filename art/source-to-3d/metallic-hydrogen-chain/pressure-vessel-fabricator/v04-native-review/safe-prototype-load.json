@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "normal_prototype_has_no_control_lua": true,
+  "log_sha256": "eb3f06efb2aeca9f6ed38fa27c57532bb3a22923faf1105893eee76c1fd5c909",
+  "prototype_files": {
+    "data.lua": "343ae058896478866d7f948ca5ee2e4ba15f480a821c494c4ef84acff846acc5",
+    "info.json": "158345771e425c12c2584c9d86b848fbcfd515ab6403ba8a1ea9ec7c21307b8d",
+    "native-data.lua": "5799cdee6f195dac682dbf7a3d8da644af454191b922318154ac4076c62fdfd9",
+    "spec.lua": "611fad7ac2688fbb1e370c5ddcb25c640ab64be42fac30a34c7390cc63428221",
+    "graphics/animation-clock.png": "589658e546ddbed8d221d2679f2c04f4f3af450ef4adce152e25e19d81358d04",
+    "graphics/idle-east.png": "85eb05a28615a3fbe402d9851c69d70d66109be0b05e7eba96c005bfc16659b1",
+    "graphics/idle-north.png": "5eb8712ea2d087063c09fa98fcb9d6423268c0a353e0983ca6caeec753158c45",
+    "graphics/idle-south.png": "146ba16d3f1101444bb5182d74e71a374f8c9fa7870431a8dee7a0de2a1bd933",
+    "graphics/idle-west.png": "0c3514d5fb7820a92650a11c3a3dcaf26370aa079a6ea7fa2eb48a41e54e240d",
+    "graphics/working-east.png": "77530e56db075103f5a5ec3cbeebdfa58200a69967958a62ae455b41f808222a",
+    "graphics/working-north.png": "68f4bf84746c01e69cc644079ce5b004c28c80c4cd007a2d272dd5c3d02f3133",
+    "graphics/working-south.png": "4355e1f4852187f00d1b7ad4d4f942d624702c0239e16138e1bcc0c8b2c3b549",
+    "graphics/working-west.png": "931339fd65cb27220469462bc31ae2208cc1e595cc59797a3ef600b2225bda03"
+  },
+  "scope": "Actual fresh map creation with only safe prototype, existing production-facing pellet adapter and original sound add-on; isolated world-clearing control omitted."
+}

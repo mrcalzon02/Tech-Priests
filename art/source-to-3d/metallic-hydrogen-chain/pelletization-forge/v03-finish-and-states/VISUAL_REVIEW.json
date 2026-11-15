@@ -1,0 +1,38 @@
+{
+  "status": "reviewed engineering/finish candidate; owner and native pending",
+  "source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+  "glb_sha256": "2f0da21dafac79f9fb348f5318fd5ec19b6ddbdc7ab74e1b8f187b681b757a4b",
+  "reference_sha256": "a695b8a0422b8d38e16c9e6df149ff4e6f56181268652289eb0b54aba3303ce1",
+  "render_hashes": {
+    "details/die-loading.png": "08339bc17e1c5f09c71384ea3efc709fc895b1c457ba83714ed6c836350983e8",
+    "details/discharge.png": "f06227c01431ccdacc4c2d08a69f32d5483c550e42b398fd2ad9132e1e19589e",
+    "details/hopper-auger.png": "ae191f080f8ab8441c039837ca71b803dacbcfd03fa120cbe008e45eb1b52cab",
+    "details/hydraulic-services.png": "2893d8419078b02b4996b18dcfb0157bb274f9345f25bf3d6b18121dd4d600e5",
+    "details/press-compressed.png": "93fac09408816b441ba70c6dd0ac2b31b45e5cc147bec1fbc6a86580645d8df1",
+    "export-inspection/clay.png": "a6c1f679cf8fc0c0a63ddd3977a32b15a1dbdca949eb9d25cdc2b3e496f914ce",
+    "export-inspection/front.png": "791e0ffc6d5615e98e26e5d6569206988cc0379ce2eae156ee94f47c734ce631",
+    "export-inspection/rear-inspection.png": "1b221bf0b180a94e6ff904590678c15cb111256f02c17e6645870e706dc23111"
+  },
+  "scores": {
+    "silhouette": {
+      "score": 4,
+      "reason": "Distinct open-hopper/guided press with accessible tray and compact side hydraulic pack; coherent red frame, dark iron and brass family at gameplay scale."
+    },
+    "construction": {
+      "score": 4,
+      "reason": "Raw stock fits the enlarged supported auger and continuous die/discharge route. Die studs now clamp an actual retained flange; hose mouths are straight/coaxial at drilled interfaces, with mounted standoffs and a closed local hydraulic circuit. Source and actual GLB checks pass."
+    },
+    "surfaces": {
+      "score": 4,
+      "reason": "24 maps distinguish frame enamel, tapered hopper flow wear, ground guides/ram, die annuli, bored crosshead, guide/die seat dirt, chutes and reservoir. Actual export closeups, rear and clay were inspected against accepted family reference."
+    },
+    "states": {
+      "score": 4,
+      "reason": "Eight-second actual source/GLB press/feed/material cycle, idle plus eight working poses per direction, six atlases and reopened capture master. No ornamental extra motion."
+    },
+    "native_integration": {
+      "score": 0,
+      "reason": "Actual item handling, state-preserving processing, native animation/sound binding and final ordinary chain still required."
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "machine": "pelletization-forge",
+  "footprint": [
+    3,
+    3
+  ],
+  "ports": [],
+  "item_interfaces": [
+    {
+      "id": "raw_pellet_feed",
+      "kind": "solid item",
+      "model_access_edge": [
+        0,
+        1.5,
+        1.2
+      ],
+      "opening_center": [
+        0,
+        0.8,
+        1.6
+      ],
+      "native_pickup_verified": false
+    },
+    {
+      "id": "finished_pellet_pickup",
+      "kind": "solid item",
+      "model_access_edge": [
+        0,
+        -1.5,
+        0.2
+      ],
+      "tray_center": [
+        0,
+        -1.08,
+        0.18
+      ],
+      "native_pickup_verified": false
+    }
+  ],
+  "native_fluidbox_count": 0,
+  "native_target": null
+}

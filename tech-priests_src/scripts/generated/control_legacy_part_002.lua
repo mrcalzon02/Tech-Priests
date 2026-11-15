@@ -1,4 +1,5 @@
 local LegacyStock=require("scripts.core.legacy_station_stock_guard_0846")
+local ColonyOptions=require("scripts.core.enemy_colony_options")
 -- Auto-split control.lua fragment 002 for Tech Priests 0.1.438.
 -- Generated mechanically from 0.1.437 monolithic control.lua.
 -- Purpose: reduce Lua main-chunk local/register pressure without deleting behavior.
@@ -71,6 +72,10 @@ create_pair = function(station)
       and _G.tech_priests_relocation_claim_0823(station) then return end
   ensure_storage()
   if storage.tech_priests.pairs_by_station[station.unit_number] then return end
+  -- The existing pair creator enforces colony population limits for expansion
+  -- as well as initial seeding. Friendly forces and existing recovery are exempt.
+  if ColonyOptions.is_enemy_force(station.force)
+      and not ColonyOptions.admit_priests(station.force.name,1)then return end
   -- 1406: opt-in only; factorio LuaProfiler stays in module locals. Never
   -- change station authority or material custody to collect a benchmark.
   local cold = rawget(_G, "TechPriestsFirstStationColdProfile1406")

@@ -1,0 +1,5107 @@
+{
+  "passed": true,
+  "errors": [],
+  "source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+  "glb_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+  "maximum_export_pose_error": 0,
+  "maximum_loop_closure_error": 0,
+  "exported_clips": [
+    {
+      "name": "working",
+      "start_seconds": 0,
+      "end_seconds": 4,
+      "channels": 63
+    },
+    {
+      "name": "idle",
+      "start_seconds": 0,
+      "end_seconds": 0.041666666666666664,
+      "channels": 63
+    }
+  ],
+  "native": {
+    "0": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.454270839691162
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9730208516120911
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.0417708158493042
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.110520839691162
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.17927086353302
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.248020887374878
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3167707920074463
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3855208158493042
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.454270839691162
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9730208516120911
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.0417708158493042
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.110520839691162
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.17927086353302
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.248020887374878
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3167707920074463
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3855208158493042
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.18000000715255737
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.18000000715255737
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.18000000715255737
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.18000000715255737
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.18000000715255737
+        ]
+      }
+    },
+    "1": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.49000000953674316
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6983798146247864
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9195923209190369
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7248353958129883
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4916292130947113
+        ]
+      }
+    },
+    "13": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7049999833106995
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9198980331420898
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7182340621948242
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4909169375896454
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6785820722579956
+        ]
+      }
+    },
+    "25": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7116201519966125
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.49040767550468445
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6851646304130554
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.91837078332901
+        ]
+      }
+    },
+    "37": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7049999833106995
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4901019334793091
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6917659640312195
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9190830588340759
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7314178943634033
+        ]
+      }
+    },
+    "49": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.49000000953674316
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6983798146247864
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9195923209190369
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7248353958129883
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4916292130947113
+        ]
+      }
+    },
+    "61": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7049999833106995
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9198980331420898
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7182340621948242
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4909169375896454
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6785820722579956
+        ]
+      }
+    },
+    "73": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7116201519966125
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.49040767550468445
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6851646304130554
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.91837078332901
+        ]
+      }
+    },
+    "85": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7049999833106995
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4901019334793091
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6917659640312195
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9190830588340759
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7314178943634033
+        ]
+      }
+    },
+    "97": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.49000000953674316
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6983798146247864
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9195923209190369
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7248353958129883
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4916292130947113
+        ]
+      }
+    }
+  },
+  "runtime": {
+    "0": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.454270839691162
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9730208516120911
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.0417708158493042
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.110520839691162
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.17927086353302
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.248020887374878
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3167707920074463
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3855208158493042
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.454270839691162
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9730208516120911
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.0417708158493042
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.110520839691162
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.17927086353302
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.248020887374878
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3167707920074463
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3855208158493042
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.18000000715255737
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.18000000715255737
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.18000000715255737
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.18000000715255737
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.18000000715255737
+        ]
+      }
+    },
+    "1": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.49000000953674316
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6983798146247864
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9195923209190369
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7248353958129883
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4916292130947113
+        ]
+      }
+    },
+    "13": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7049999833106995
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9198980331420898
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7182340621948242
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4909169375896454
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6785820722579956
+        ]
+      }
+    },
+    "25": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7116201519966125
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.49040767550468445
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6851646304130554
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.91837078332901
+        ]
+      }
+    },
+    "37": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7049999833106995
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4901019334793091
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6917659640312195
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9190830588340759
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7314178943634033
+        ]
+      }
+    },
+    "49": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.49000000953674316
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6983798146247864
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9195923209190369
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7248353958129883
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4916292130947113
+        ]
+      }
+    },
+    "61": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7049999833106995
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9198980331420898
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7182340621948242
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4909169375896454
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6785820722579956
+        ]
+      }
+    },
+    "73": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7116201519966125
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.49040767550468445
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6851646304130554
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.91837078332901
+        ]
+      }
+    },
+    "85": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7049999833106995
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4901019334793091
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6917659640312195
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9190830588340759
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7314178943634033
+        ]
+      }
+    },
+    "97": {
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 0)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 1)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 2)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 3)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 4)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 5)": {
+        "location": [
+          -0.5809999704360962,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 6)": {
+        "location": [
+          -0.6589999794960022,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (1, 7)": {
+        "location": [
+          -0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 0)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          0.9100000262260437
+        ],
+        "scale": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 1)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          0.9787499904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 2)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.0475000143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 3)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.1162500381469727
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 4)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.184999942779541
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 5)": {
+        "location": [
+          0.6589999794960022,
+          -0.28299999237060547,
+          1.253749966621399
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 6)": {
+        "location": [
+          0.5809999704360962,
+          -0.28299999237060547,
+          1.3224999904632568
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | visible electrode gas bubble (2, 7)": {
+        "location": [
+          0.6200000047683716,
+          -0.28299999237060547,
+          1.3912500143051147
+        ],
+        "scale": [
+          1.0,
+          1.0,
+          0.9200000166893005
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": {
+        "location": [
+          0.6129999160766602,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.49000000953674316
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": {
+        "location": [
+          0.684999942779541,
+          -1.775999903678894,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.6983798146247864
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": {
+        "location": [
+          0.7569999694824219,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.9195923209190369
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": {
+        "location": [
+          0.8289997577667236,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.7248353958129883
+        ]
+      },
+      "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": {
+        "location": [
+          0.900999903678894,
+          -1.7759997844696045,
+          0.9290001392364502
+        ],
+        "scale": [
+          0.9999998211860657,
+          0.9999998211860657,
+          0.4916292130947113
+        ]
+      }
+    }
+  },
+  "scope": "10 sampled actual source/imported local poses, standby hidden tracers and loop boundary; rendered timing requires capture review"
+}

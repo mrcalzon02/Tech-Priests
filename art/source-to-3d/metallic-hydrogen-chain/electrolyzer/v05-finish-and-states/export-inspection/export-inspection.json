@@ -1,0 +1,243 @@
+{
+  "native_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+  "glb_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+  "meshes": 246,
+  "triangles": 65892,
+  "degenerate_triangles": 0,
+  "nonfinite_vertices": 0,
+  "missing_UV": [],
+  "bounds_error": 0.0,
+  "bores": {
+    "passed": true,
+    "rays": 111,
+    "hits": []
+  },
+  "material_channels": [
+    {
+      "name": "TP Electrolyzer V01 | ferrocrete_dark",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | iron",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | martian_red",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | brass",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | machine_steel",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | gunmetal_dark",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V04 | cell-1-machined-wrap",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | clear pressure window",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": [
+        "KHR_materials_transmission"
+      ]
+    },
+    {
+      "name": "TP Electrolyzer V01 | inspection electrolyte",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": [
+        "KHR_materials_transmission"
+      ]
+    },
+    {
+      "name": "TP Electrolyzer V01 | gas nucleation tracers",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": [
+        "KHR_materials_transmission"
+      ]
+    },
+    {
+      "name": "TP Electrolyzer V04 | cell-2-machined-wrap",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V04 | rectifier-retained-oxide-cover",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | electrical porcelain",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | brass.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | machine_steel.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | iron.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | brass.003",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | machine_steel.003",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | iron.003",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | brass.004",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | machine_steel.004",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | iron.004",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | iron.005",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor MH7 green.001",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | martian_red.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor MH7 amber.001",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Library | dark_recess.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Water Purifier V14 | iron.001",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor TP Water Purifier V14 | brass.001",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Electrolyzer V01 | donor FMPL | live green CRT level bars V13.001",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": [
+        "KHR_materials_emissive_strength"
+      ]
+    }
+  ],
+  "geometry_passed": true,
+  "render_sha256": {
+    "clay.png": "792892365e898f3985a644ea0d00d5ff501ee8c6bd90a8425e04db8145f280e5",
+    "front.png": "593c81777e8eeb3fe2760830ba9b25ee6e71189146ee3f09d55dd1869800e444",
+    "rear-inspection.png": "f75db8d2517d60393541105c85777ea717a3bc4c04a0b01e787e8aa37b38f2be"
+  },
+  "visual_approval": false,
+  "note": "Rear is a diagnostic inspection view. Accepted capture directions belong to the asset capture manifest; volume parity requires separate assessment where present."
+}

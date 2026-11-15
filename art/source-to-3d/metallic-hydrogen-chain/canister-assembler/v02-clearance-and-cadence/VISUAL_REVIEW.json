@@ -1,0 +1,25 @@
+{
+  "status": "mechanics checkpoint; below final surface/native gate",
+  "source_sha256": "61b39408ebabf4061834a5ce68b213beb1a52348765fe8bb9899f036a3761545",
+  "glb_sha256": "606916a9e15173269ada45d940afe1a451ec1c7ce634a7e98853e53ab121b13a",
+  "owner_approved": false,
+  "final_threshold_unchanged": 4,
+  "scores": {
+    "silhouette": 3,
+    "construction": 4,
+    "surfaces": 2,
+    "states": 4,
+    "native": 0
+  },
+  "findings": [
+    "Three indexed hollow vessels, exposed necks, supported lid rails and rear gantry retain distinct three-station construction.",
+    "Outboard metering bearings and separate crank/pivot planes clear adjacent tools. Real slots receive lids/jaws/shutter. A bored slotted valve body connects hopper and bend without blocking its moving blade.",
+    "Nozzle and annular punch clear cap hardware; landed punch meets the closed cap. Raised true-radius feed clears the tool flange and passes all authored core segments.",
+    "Three actual GLB phase renders inspected; donor finish remains provisional. Full four-angle capture, dedicated sound/surfaces and live-state native assembly are still required."
+  ],
+  "render_hashes": {
+    "first-station-fill": "90ed00addfb85f71be99c2e23c3d16fe23e6f017873f7b008913c91df304f172",
+    "second-station-cap": "8d5febbc6f3912addd8e026e2729f7d30b8ce3c4858e98df16ef9a186fb06232",
+    "third-station": "53c504e223472f5f233b30f2b934520ad8c5c07334b1fdd13b32db0c7cc19747"
+  }
+}

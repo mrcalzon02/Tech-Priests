@@ -1,0 +1,517 @@
+{
+  "passed": true,
+  "errors": [],
+  "native_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+  "glb_sha256": "2d3a79d3edc6e00b4aa814cef84d172f447e2f9493c91bd246317ae40d26896d",
+  "native_stats": {
+    "triangles": 33328,
+    "degenerate_triangles": 0,
+    "degenerate_objects": [],
+    "finite": true,
+    "missing_uv": []
+  },
+  "runtime_stats": {
+    "triangles": 33328,
+    "degenerate_triangles": 0,
+    "degenerate_objects": [],
+    "finite": true,
+    "missing_uv": []
+  },
+  "native_bounds": [
+    [
+      -1.465000033378601,
+      -1.440000057220459,
+      0.0
+    ],
+    [
+      1.440000057220459,
+      1.440000057220459,
+      2.4700000286102295
+    ]
+  ],
+  "runtime_bounds": [
+    [
+      -1.465000033378601,
+      -1.440000057220459,
+      0.0
+    ],
+    [
+      1.440000057220459,
+      1.440000057220459,
+      2.4700000286102295
+    ]
+  ],
+  "bounds_error": 0.0,
+  "native_bores": {
+    "passed": true,
+    "rays": 0,
+    "hits": []
+  },
+  "runtime_bores": {
+    "passed": true,
+    "rays": 0,
+    "hits": []
+  },
+  "source_images": [
+    {
+      "name": "brass_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_albedo.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_normal.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_orm.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "dark_recess_albedo.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "dark_recess_normal.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "dark_recess_orm.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "ferrocrete_dark_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "ferrocrete_dark_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "ferrocrete_dark_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "gunmetal_dark_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "gunmetal_dark_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "gunmetal_dark_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_albedo.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_normal.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_orm.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "machine_steel_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "machine_steel_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "machine_steel_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_albedo.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_normal.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_orm.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | cast-die-bed albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | cast-die-bed normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | cast-die-bed orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | ground-press-tooling albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | ground-press-tooling normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | ground-press-tooling orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | hopper-flow-steel albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | hopper-flow-steel normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | hopper-flow-steel orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | hydraulic-reservoir albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | hydraulic-reservoir normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | hydraulic-reservoir orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | machined-crosshead albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | machined-crosshead normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | machined-crosshead orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | pellet-contact-chutes albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | pellet-contact-chutes normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | pellet-contact-chutes orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | press-frame-enamel albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | press-frame-enamel normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | press-frame-enamel orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | turned-die-faces albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | turned-die-faces normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Forge V03 | turned-die-faces orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    }
+  ],
+  "maximum_sampled_world_pose_error": 3.5762786865234375e-07,
+  "missing_objects": [],
+  "clips": [
+    {
+      "name": "working",
+      "duration": 8,
+      "channels": 27
+    },
+    {
+      "name": "idle",
+      "duration": 0.041666666666666664,
+      "channels": 27
+    }
+  ],
+  "inspected_frames": [
+    0,
+    1,
+    25,
+    49,
+    73,
+    97,
+    121,
+    145,
+    169,
+    193
+  ],
+  "expected_cycle_seconds": 8.0,
+  "scope": "Actual GLB reimport and ten selected state poses for every exported object; visual and native engine acceptance remain separate"
+}

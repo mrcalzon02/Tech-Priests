@@ -1,0 +1,19 @@
+{
+  ".gitattributes": "308a40fa1d89ae5ea4390b4c9b46a0108b09f171f07898f25d451fa0c69c4e9f",
+  "CHECKPOINT.json": "32083da52d072130e4f1f09b430bed08c7b555b430d70224f6438a6d8661e23e",
+  "construction-receipt.json": "acc18f46cae437f5b6d73027a5c8d3ca93c00b72e6699f60e1366e8c9cace06e",
+  "existing-forge-export-regression.json": "df4d5e05d6867bfd0afd6e6b48fa3843190725d3496e49b9d242cf88e73f4f3d",
+  "export-readback.json": "ca184cc0edd8121f482e5bfc37cbbf1ac5999f6e80cd9aa4ba126894dea02f64",
+  "fabricator-v01.blend": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
+  "fabricator-v01.glb": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
+  "hydroforming-phases.png": "706d6c77fab64a01ac318a41aecc960715bef0b03e24bae84706600a1182178b",
+  "inspection/clamped-expanding.png": "da6cb8265e78beb6a7f4c0e5a47d8cad44533ac21f1122f87444924697b084c7",
+  "inspection/formed-vessel-exposed.png": "7c0b80ccaba5d170e7215e7fd9bb0c20a78922af77b513116845d8f3445bbf88",
+  "inspection/hydroforming-readback.json": "005093a14846c10543dd2b61d6bff0b4bda99473e60eca707ef95a95bb36ddf4",
+  "inspection/plate-welding-open.png": "93d35f8492f9f519860de1e41879a4e870fa68a269e9dc24f4b1c515b185c896",
+  "part_provenance.json": "c8a5cc9680778d45f4f711abb9c3f225268cac0d4e0cb7ae7c65524ca91f8ed9",
+  "port_manifest.json": "8c29ae972f4a1e1d7173999848febe0df6785d9ff06b3cdb95797c417f839735",
+  "README.md": "112b4cf81a123991895770a8789128ec6c6d0190fe1502ff8403a96148d7d171",
+  "VISUAL_REVIEW.json": "69694f8d49540d9a73e3816e6b99159bda19f59033fe6828e9c7ce4f7796fe87",
+  "working-front.png": "89b05a5581532bed4ff24fb085bc948555b09cccc4898457b63eee2adca1ebd4"
+}

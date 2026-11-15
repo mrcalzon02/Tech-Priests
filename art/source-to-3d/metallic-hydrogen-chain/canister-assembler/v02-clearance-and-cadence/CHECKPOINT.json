@@ -1,0 +1,47 @@
+{
+  "status": "sampled_source_and_export_mechanics_and_complete_bore_review_pass; finish_audio_capture_native_pending",
+  "source_sha256": "61b39408ebabf4061834a5ce68b213beb1a52348765fe8bb9899f036a3761545",
+  "glb_sha256": "606916a9e15173269ada45d940afe1a451ec1c7ce634a7e98853e53ab121b13a",
+  "library_registry_sha256": "522ea8b8d81a75c04bf42da868842c330ca5b19b5549f4cf9ed1592cca5857d0",
+  "footprint": [
+    4,
+    4
+  ],
+  "primary_canisters": 3,
+  "recorded_contacts": 201,
+  "recorded_contacts_passed": true,
+  "work_cycle_seconds": 16,
+  "station_seconds": 4,
+  "station_start_seconds": [
+    0,
+    5,
+    10
+  ],
+  "between_station_index_seconds": 1,
+  "return_seconds": 2,
+  "source_loop_matrix_error": 0.0,
+  "triangles": 41274,
+  "motion_samples_per_artifact": 1538,
+  "sample_interval_frames": 0.25,
+  "unexpected_sampled_pairs": 0,
+  "maximum_head_index_speed_tiles_per_second": 1.4991320371627808,
+  "previous_v01_maximum_speed_tiles_per_second": 6.078426361083984,
+  "complete_authored_bore_ray_review": true,
+  "source_and_export_open_core_rays": 1512,
+  "closed_gate_lids_and_bottoms_verified": true,
+  "landed_punch_verified": true,
+  "continuous_swept_clearance_verified": false,
+  "granular_dynamics_simulated": false,
+  "actual_glb_phase_views": 3,
+  "dedicated_surfaces_complete": false,
+  "audio_implemented": false,
+  "native_verified": false,
+  "owner_approved": false,
+  "native_contract": "Use live pellet/shell seal operation. Preserve HP, quality, decay phase, remaining lifetime and original shell condition.",
+  "next": [
+    "Author assembler-specific vessel, gantry, guide, valve and sealing-tool surfaces and appropriate sound",
+    "Capture four idle/working directions and reopen packed source",
+    "Implement live pellet/shell assembly with existing seal operation, retaining HP, quality, phase and remaining decay time",
+    "Refine three reactors, remaining sprite-only buildings and ordinary chain/UI/economy integration"
+  ]
+}

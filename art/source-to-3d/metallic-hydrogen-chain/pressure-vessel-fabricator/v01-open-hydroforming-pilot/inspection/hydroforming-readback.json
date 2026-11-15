@@ -1,0 +1,929 @@
+{
+  "morph_passed": true,
+  "errors": [],
+  "source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
+  "glb_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
+  "recorded_contacts_passed": true,
+  "contacts": [
+    {
+      "a": "TP Vessel Fabricator V01 | clamp land support (-0.65, -0.65)",
+      "b": "TP Vessel Fabricator V01 | open lower frame side -0.65",
+      "label": "clamping land post on open side beam",
+      "gap_tiles": 5.960464477539063e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | fixed front clamping land",
+      "b": "TP Vessel Fabricator V01 | clamp land support (-0.65, -0.65)",
+      "label": "lower clamping land carried by post",
+      "gap_tiles": 5.960464477539063e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | clamp land support (0.65, -0.65)",
+      "b": "TP Vessel Fabricator V01 | open lower frame side -0.65",
+      "label": "clamping land post on open side beam",
+      "gap_tiles": 5.960464477539063e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | fixed front clamping land",
+      "b": "TP Vessel Fabricator V01 | clamp land support (0.65, -0.65)",
+      "label": "lower clamping land carried by post",
+      "gap_tiles": 5.960464477539063e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | clamp land support (-0.65, 0.65)",
+      "b": "TP Vessel Fabricator V01 | open lower frame side 0.65",
+      "label": "clamping land post on open side beam",
+      "gap_tiles": 5.960464477539063e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | fixed rear clamping land",
+      "b": "TP Vessel Fabricator V01 | clamp land support (-0.65, 0.65)",
+      "label": "lower clamping land carried by post",
+      "gap_tiles": 5.960464477539063e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | clamp land support (0.65, 0.65)",
+      "b": "TP Vessel Fabricator V01 | open lower frame side 0.65",
+      "label": "clamping land post on open side beam",
+      "gap_tiles": 5.960464477539063e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | fixed rear clamping land",
+      "b": "TP Vessel Fabricator V01 | clamp land support (0.65, 0.65)",
+      "label": "lower clamping land carried by post",
+      "gap_tiles": 5.960464477539063e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | clamping frame grounded foot -0.9",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "forming-frame foot grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | low open-frame cross tie -0.9",
+      "b": "TP Vessel Fabricator V01 | clamping frame grounded foot -0.9",
+      "label": "cross tie on foot",
+      "gap_tiles": 0.003313732799142599,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | open lower frame side -0.65",
+      "b": "TP Vessel Fabricator V01 | low open-frame cross tie -0.9",
+      "label": "open side beam carried by low cross tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | open lower frame side 0.65",
+      "b": "TP Vessel Fabricator V01 | low open-frame cross tie -0.9",
+      "label": "open side beam carried by low cross tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | clamping frame grounded foot 0.9",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "forming-frame foot grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | low open-frame cross tie 0.9",
+      "b": "TP Vessel Fabricator V01 | clamping frame grounded foot 0.9",
+      "label": "cross tie on foot",
+      "gap_tiles": 0.003313732799142599,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | open lower frame side -0.65",
+      "b": "TP Vessel Fabricator V01 | low open-frame cross tie 0.9",
+      "label": "open side beam carried by low cross tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | open lower frame side 0.65",
+      "b": "TP Vessel Fabricator V01 | low open-frame cross tie 0.9",
+      "label": "open side beam carried by low cross tie",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | raised upper end bridge -1.26",
+      "b": "TP Vessel Fabricator V01 | open upper front frame",
+      "label": "upper bridge joins front side",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | raised upper end bridge -1.26",
+      "b": "TP Vessel Fabricator V01 | open upper rear frame",
+      "label": "upper bridge joins rear side",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | raised upper end bridge 1.26",
+      "b": "TP Vessel Fabricator V01 | open upper front frame",
+      "label": "upper bridge joins front side",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | raised upper end bridge 1.26",
+      "b": "TP Vessel Fabricator V01 | open upper rear frame",
+      "label": "upper bridge joins rear side",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | upper jaw standoff (-0.6, -0.55)",
+      "b": "TP Vessel Fabricator V01 | open upper front frame",
+      "label": "jaw standoff carried by open upper frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | upper flange clamping land -0.55",
+      "b": "TP Vessel Fabricator V01 | upper jaw standoff (-0.6, -0.55)",
+      "label": "upper flange land supported by standoff",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | upper jaw standoff (0.6, -0.55)",
+      "b": "TP Vessel Fabricator V01 | open upper front frame",
+      "label": "jaw standoff carried by open upper frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | upper flange clamping land -0.55",
+      "b": "TP Vessel Fabricator V01 | upper jaw standoff (0.6, -0.55)",
+      "label": "upper flange land supported by standoff",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | upper jaw standoff (-0.6, 0.55)",
+      "b": "TP Vessel Fabricator V01 | open upper rear frame",
+      "label": "jaw standoff carried by open upper frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | upper flange clamping land 0.55",
+      "b": "TP Vessel Fabricator V01 | upper jaw standoff (-0.6, 0.55)",
+      "label": "upper flange land supported by standoff",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | upper jaw standoff (0.6, 0.55)",
+      "b": "TP Vessel Fabricator V01 | open upper rear frame",
+      "label": "jaw standoff carried by open upper frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | upper flange clamping land 0.55",
+      "b": "TP Vessel Fabricator V01 | upper jaw standoff (0.6, 0.55)",
+      "label": "upper flange land supported by standoff",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | welded sheet flange -0.535",
+      "b": "TP Vessel Fabricator V01 | welded two-plate pressure blank",
+      "label": "sheet edge joins pressure blank",
+      "gap_tiles": 0.01499589066952467,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | actual longitudinal weld seam -0.535",
+      "b": "TP Vessel Fabricator V01 | welded two-plate pressure blank",
+      "label": "weld bead follows actual plate edge",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | welded sheet flange 0.535",
+      "b": "TP Vessel Fabricator V01 | welded two-plate pressure blank",
+      "label": "sheet edge joins pressure blank",
+      "gap_tiles": 0.01499589066952467,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | actual longitudinal weld seam 0.535",
+      "b": "TP Vessel Fabricator V01 | welded two-plate pressure blank",
+      "label": "weld bead follows actual plate edge",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | welded closed blind end",
+      "b": "TP Vessel Fabricator V01 | welded two-plate pressure blank",
+      "label": "blind end welded to round blank neck",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear hinge grounded foot -1.32",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "hinge foot grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear hinge pedestal -1.32",
+      "b": "TP Vessel Fabricator V01 | rear hinge grounded foot -1.32",
+      "label": "hinge pedestal on foot",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | hinge bearing support -1.32",
+      "b": "TP Vessel Fabricator V01 | rear hinge pedestal -1.32",
+      "label": "hinge tie seated on pedestal",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | fixed hinge bearing -1.32",
+      "b": "TP Vessel Fabricator V01 | hinge bearing support -1.32",
+      "label": "hinge bearing carried by tie",
+      "gap_tiles": 0.013287078589200974,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | fixed full die hinge shaft",
+      "b": "TP Vessel Fabricator V01 | fixed hinge bearing -1.32",
+      "label": "fixed hinge shaft seated in bearing",
+      "gap_tiles": 0.0009998972527682781,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear hinge grounded foot 1.32",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "hinge foot grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear hinge pedestal 1.32",
+      "b": "TP Vessel Fabricator V01 | rear hinge grounded foot 1.32",
+      "label": "hinge pedestal on foot",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | hinge bearing support 1.32",
+      "b": "TP Vessel Fabricator V01 | rear hinge pedestal 1.32",
+      "label": "hinge tie seated on pedestal",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | fixed hinge bearing 1.32",
+      "b": "TP Vessel Fabricator V01 | hinge bearing support 1.32",
+      "label": "hinge bearing carried by tie",
+      "gap_tiles": 0.013287078589200974,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | fixed full die hinge shaft",
+      "b": "TP Vessel Fabricator V01 | fixed hinge bearing 1.32",
+      "label": "fixed hinge shaft seated in bearing",
+      "gap_tiles": 0.0009999275207519531,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | upper frame hinge arm -0.98",
+      "b": "TP Vessel Fabricator V01 | open upper rear frame",
+      "label": "hinge arm attached to rear open frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | moving upper die hinge lug -0.98",
+      "b": "TP Vessel Fabricator V01 | upper frame hinge arm -0.98",
+      "label": "hinge lug supported by actual arm",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | upper frame hinge arm 0.98",
+      "b": "TP Vessel Fabricator V01 | open upper rear frame",
+      "label": "hinge arm attached to rear open frame",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | moving upper die hinge lug 0.98",
+      "b": "TP Vessel Fabricator V01 | upper frame hinge arm 0.98",
+      "label": "hinge lug supported by actual arm",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | upper die lift arm",
+      "b": "TP Vessel Fabricator V01 | open upper front frame",
+      "label": "lift arm mounted on upper die side",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | lift ram grounded clevis foot",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "lift ram clevis foot grounded",
+      "gap_tiles": 7.450580596923828e-09,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | weld gantry grounded shoe -1.5",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "gantry shoe grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | red weld gantry column -1.5",
+      "b": "TP Vessel Fabricator V01 | weld gantry grounded shoe -1.5",
+      "label": "gantry column on shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | weld gantry grounded shoe 1.5",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "gantry shoe grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | red weld gantry column 1.5",
+      "b": "TP Vessel Fabricator V01 | weld gantry grounded shoe 1.5",
+      "label": "gantry column on shoe",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rigid spanning seam-tool rail",
+      "b": "TP Vessel Fabricator V01 | red weld gantry column -1.5",
+      "label": "seam rail carried by gantry",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rigid spanning seam-tool rail",
+      "b": "TP Vessel Fabricator V01 | red weld gantry column 1.5",
+      "label": "seam rail carried by gantry",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | linear guide mounting standoff -1.2",
+      "b": "TP Vessel Fabricator V01 | rigid spanning seam-tool rail",
+      "label": "linear guide standoff seated on gantry",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | welding tool linear guide",
+      "b": "TP Vessel Fabricator V01 | linear guide mounting standoff -1.2",
+      "label": "linear guide supported by actual standoff",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | linear guide mounting standoff 0",
+      "b": "TP Vessel Fabricator V01 | rigid spanning seam-tool rail",
+      "label": "linear guide standoff seated on gantry",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | welding tool linear guide",
+      "b": "TP Vessel Fabricator V01 | linear guide mounting standoff 0",
+      "label": "linear guide supported by actual standoff",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | linear guide mounting standoff 1.2",
+      "b": "TP Vessel Fabricator V01 | rigid spanning seam-tool rail",
+      "label": "linear guide standoff seated on gantry",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | welding tool linear guide",
+      "b": "TP Vessel Fabricator V01 | linear guide mounting standoff 1.2",
+      "label": "linear guide supported by actual standoff",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | guided welding carriage",
+      "b": "TP Vessel Fabricator V01 | welding tool linear guide",
+      "label": "carriage retained on actual linear guide",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | torch carriage mounting saddle",
+      "b": "TP Vessel Fabricator V01 | guided welding carriage",
+      "label": "torch saddle carried on carriage",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | supported seam welding torch",
+      "b": "TP Vessel Fabricator V01 | torch carriage mounting saddle",
+      "label": "torch seated in saddle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | actual welding contact tip",
+      "b": "TP Vessel Fabricator V01 | supported seam welding torch",
+      "label": "contact tip retained in torch",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | bus insulation standoff (-1.35, 2.2)",
+      "b": "TP Vessel Fabricator V01 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | insulated welding supply rail 2.2",
+      "b": "TP Vessel Fabricator V01 | bus insulation standoff (-1.35, 2.2)",
+      "label": "supply rail carried by insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | bus insulation standoff (0, 2.2)",
+      "b": "TP Vessel Fabricator V01 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | insulated welding supply rail 2.2",
+      "b": "TP Vessel Fabricator V01 | bus insulation standoff (0, 2.2)",
+      "label": "supply rail carried by insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | bus insulation standoff (1.35, 2.2)",
+      "b": "TP Vessel Fabricator V01 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | insulated welding supply rail 2.2",
+      "b": "TP Vessel Fabricator V01 | bus insulation standoff (1.35, 2.2)",
+      "label": "supply rail carried by insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | moving current collector 2.2",
+      "b": "TP Vessel Fabricator V01 | insulated welding supply rail 2.2",
+      "label": "sliding collector touches supported supply rail",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | carriage-mounted welding lead 2.2",
+      "b": "TP Vessel Fabricator V01 | moving current collector 2.2",
+      "label": "weld lead attached to collector",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | carriage-mounted welding lead 2.2",
+      "b": "TP Vessel Fabricator V01 | torch carriage mounting saddle",
+      "label": "weld lead attached to torch saddle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | bus insulation standoff (-1.35, 2.27)",
+      "b": "TP Vessel Fabricator V01 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam",
+      "gap_tiles": 2.384185791015625e-07,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | insulated welding supply rail 2.27",
+      "b": "TP Vessel Fabricator V01 | bus insulation standoff (-1.35, 2.27)",
+      "label": "supply rail carried by insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | bus insulation standoff (0, 2.27)",
+      "b": "TP Vessel Fabricator V01 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam",
+      "gap_tiles": 2.413114259525173e-07,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | insulated welding supply rail 2.27",
+      "b": "TP Vessel Fabricator V01 | bus insulation standoff (0, 2.27)",
+      "label": "supply rail carried by insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | bus insulation standoff (1.35, 2.27)",
+      "b": "TP Vessel Fabricator V01 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam",
+      "gap_tiles": 2.384185791015625e-07,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | insulated welding supply rail 2.27",
+      "b": "TP Vessel Fabricator V01 | bus insulation standoff (1.35, 2.27)",
+      "label": "supply rail carried by insulator",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | moving current collector 2.27",
+      "b": "TP Vessel Fabricator V01 | insulated welding supply rail 2.27",
+      "label": "sliding collector touches supported supply rail",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | carriage-mounted welding lead 2.27",
+      "b": "TP Vessel Fabricator V01 | moving current collector 2.27",
+      "label": "weld lead attached to collector",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | carriage-mounted welding lead 2.27",
+      "b": "TP Vessel Fabricator V01 | torch carriage mounting saddle",
+      "label": "weld lead attached to torch saddle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | internal neck pressure seal",
+      "b": "TP Vessel Fabricator V01 | hollow pressure injection mandrel",
+      "label": "internal pressure seal retained on mandrel",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | internal neck pressure seal",
+      "b": "TP Vessel Fabricator V01 | welded two-plate pressure blank",
+      "label": "pressure seal closes actual blank neck bore",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | external neck restraint",
+      "b": "TP Vessel Fabricator V01 | welded two-plate pressure blank",
+      "label": "close-fitting neck restraint on round neck",
+      "gap_tiles": 0.0009999866597354412,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | fixed pressure tailstock head",
+      "b": "TP Vessel Fabricator V01 | hollow pressure injection mandrel",
+      "label": "mandrel seated in pressure head",
+      "gap_tiles": 0.0009967961814254522,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | grounded pressure tailstock",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "tailstock grounded",
+      "gap_tiles": 1.666000493116826e-08,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | fixed pressure tailstock head",
+      "b": "TP Vessel Fabricator V01 | grounded pressure tailstock",
+      "label": "pressure head supported outside bore",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | closed annular tailstock pressure cap",
+      "b": "TP Vessel Fabricator V01 | fixed pressure tailstock head",
+      "label": "pressure cap closes tailstock around feed bore",
+      "gap_tiles": 1.1920928955078125e-07,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | closed forming-fluid reservoir",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "forming reservoir grounded",
+      "gap_tiles": 0.005000002682209015,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | forming reservoir service lid",
+      "b": "TP Vessel Fabricator V01 | closed forming-fluid reservoir",
+      "label": "reservoir lid seated on housing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | forming pressure pump motor",
+      "b": "TP Vessel Fabricator V01 | forming reservoir service lid",
+      "label": "pump carried on reservoir lid",
+      "gap_tiles": 0.005000054836273193,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | straight forming inlet reducer",
+      "b": "TP Vessel Fabricator V01 | forming-fluid receiving barrel",
+      "label": "straight coaxial reducer joins receiving barrel",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | local forming-fluid feed",
+      "b": "TP Vessel Fabricator V01 | closed forming-fluid reservoir",
+      "label": "forming-fluid line enters reservoir wall",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | supported high-pressure forming line",
+      "b": "TP Vessel Fabricator V01 | closed annular tailstock pressure cap",
+      "label": "pressure line reaches open annular tailstock feed",
+      "gap_tiles": 0.0028443036135286093,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear pressure line support -0.9",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "rear pressure-line stanchion grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear pressure line saddle -0.9",
+      "b": "TP Vessel Fabricator V01 | rear pressure line support -0.9",
+      "label": "pressure saddle carried by stanchion",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear pressure line saddle -0.9",
+      "b": "TP Vessel Fabricator V01 | supported high-pressure forming line",
+      "label": "pressure line held in external saddle",
+      "gap_tiles": 0.0009998917812481523,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear pressure line support 0.5",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "rear pressure-line stanchion grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear pressure line saddle 0.5",
+      "b": "TP Vessel Fabricator V01 | rear pressure line support 0.5",
+      "label": "pressure saddle carried by stanchion",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear pressure line saddle 0.5",
+      "b": "TP Vessel Fabricator V01 | supported high-pressure forming line",
+      "label": "pressure line held in external saddle",
+      "gap_tiles": 0.0009998917812481523,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear pressure line support 1.5",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "rear pressure-line stanchion grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear pressure line saddle 1.5",
+      "b": "TP Vessel Fabricator V01 | rear pressure line support 1.5",
+      "label": "pressure saddle carried by stanchion",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | rear pressure line saddle 1.5",
+      "b": "TP Vessel Fabricator V01 | supported high-pressure forming line",
+      "label": "pressure line held in external saddle",
+      "gap_tiles": 0.0009998917812481523,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | loading roller support (-1.02, -1.12)",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "loading roller support grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | plate loading roller -1.12",
+      "b": "TP Vessel Fabricator V01 | loading roller support (-1.02, -1.12)",
+      "label": "loading roller supported at both ends",
+      "gap_tiles": 0.004999995231628418,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | loading roller support (0.62, -1.12)",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "loading roller support grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | plate loading roller -1.12",
+      "b": "TP Vessel Fabricator V01 | loading roller support (0.62, -1.12)",
+      "label": "loading roller supported at both ends",
+      "gap_tiles": 0.004999995231628418,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | loading roller support (-1.02, -1.48)",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "loading roller support grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | plate loading roller -1.48",
+      "b": "TP Vessel Fabricator V01 | loading roller support (-1.02, -1.48)",
+      "label": "loading roller supported at both ends",
+      "gap_tiles": 0.004999995231628418,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | loading roller support (0.62, -1.48)",
+      "b": "TP Vessel Fabricator V01 | full 4x4 equipment footing",
+      "label": "loading roller support grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP Vessel Fabricator V01 | plate loading roller -1.48",
+      "b": "TP Vessel Fabricator V01 | loading roller support (0.62, -1.48)",
+      "label": "loading roller supported at both ends",
+      "gap_tiles": 0.004999995231628418,
+      "passed": true
+    }
+  ],
+  "maximum_deformed_world_vertex_error": 0,
+  "morph_samples": [
+    {
+      "source_frame": 0,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.2600000500679016
+      ]
+    },
+    {
+      "source_frame": 1,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.2600000500679016
+      ]
+    },
+    {
+      "source_frame": 25,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.2600000500679016
+      ]
+    },
+    {
+      "source_frame": 73,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.2600000500679016
+      ]
+    },
+    {
+      "source_frame": 109,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.2600000500679016
+      ]
+    },
+    {
+      "source_frame": 145,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.2600000500679016
+      ]
+    },
+    {
+      "source_frame": 163,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.45457565784454346
+      ]
+    },
+    {
+      "source_frame": 181,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.8038741946220398
+      ]
+    },
+    {
+      "source_frame": 199,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.9599999189376831
+      ]
+    },
+    {
+      "source_frame": 217,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.9599999189376831
+      ]
+    },
+    {
+      "source_frame": 253,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.9599999189376831
+      ]
+    },
+    {
+      "source_frame": 289,
+      "world_vertex_error": 0.0,
+      "extent": [
+        2.359999895095825,
+        0.9599999785423279,
+        0.2600000500679016
+      ]
+    }
+  ],
+  "views": [
+    {
+      "name": "plate-welding-open",
+      "source_frame": 49,
+      "sha256": "93d35f8492f9f519860de1e41879a4e870fa68a269e9dc24f4b1c515b185c896"
+    },
+    {
+      "name": "clamped-expanding",
+      "source_frame": 175,
+      "sha256": "da6cb8265e78beb6a7f4c0e5a47d8cad44533ac21f1122f87444924697b084c7"
+    },
+    {
+      "name": "formed-vessel-exposed",
+      "source_frame": 255,
+      "sha256": "7c0b80ccaba5d170e7215e7fd9bb0c20a78922af77b513116845d8f3445bbf88"
+    }
+  ],
+  "scope": "Actual runtime deformed vertices versus source at 12 idle/working phases; recorded static assembly contacts. Full moving-frame/pressure-route clearance, dedicated finish and native prototype remain open; diagnostic cameras are not production capture."
+}

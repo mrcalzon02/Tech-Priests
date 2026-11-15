@@ -1,0 +1,10 @@
+{
+  "status": "PASS_ORIGINAL_SOURCE_GLB_AND_ALL64BEAUTY_HASHES_UNCHANGED",
+  "source_files": {
+    "energy_dish_v03.blend": "b4851a3cfca888e51eff8f77ba12e0adc8d216b65304448aaefc40bb1cdc5c71",
+    "energy_dish_v03.glb": "abfd314c61095428d5bf0c821242923a8aed6c22170e77419315f71a29f872d8"
+  },
+  "beauty_hashes": "All64checked against original idle64-validation.json; see shadow64-validation.json",
+  "raw_shadow_rgb_maximum": 1,
+  "authoring": "Authored RGB explicitly zero; alpha scaled from reference peak177; raw pixels retained"
+}

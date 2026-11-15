@@ -1,0 +1,61 @@
+{
+  "status": "Seven different saved model sources; mixed delivery stages, not full goal completion",
+  "rows": [
+    {
+      "stage": 1,
+      "label": "Water purifier",
+      "image": "art\\source-to-3d\\metallic-hydrogen-chain\\water-purifier\\v16-owner-accepted\\captures\\frames\\working\\d00\\f003.png",
+      "image_sha256": "32c2131ab75d0331e1a92acc685385a453636f4abd04da9e20d119e286b6114c",
+      "model_source_sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+      "status": "Owner-accepted art"
+    },
+    {
+      "stage": 2,
+      "label": "Electrolyzer",
+      "image": "art\\source-to-3d\\metallic-hydrogen-chain\\electrolyzer\\v06-owner-accepted-native\\captures\\frames\\working\\d00\\f003.png",
+      "image_sha256": "ca9bbc0d539a945c083bf761efa0033280a5f2faa608dca92b53ce8203ff6d3f",
+      "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+      "status": "Owner-accepted native placement"
+    },
+    {
+      "stage": 3,
+      "label": "Hydrogen compressor",
+      "image": "art\\source-to-3d\\metallic-hydrogen-chain\\hydrogen-compressor\\v05-slow-and-audio\\captures\\frames\\working\\d00\\f003.png",
+      "image_sha256": "74e6e916b829d5c42bcb4e2b3a6d608e7c4be07454422a79d44ce84b9cea9267",
+      "model_source_sha256": "29e62716acc5fa52bb4cedc8f3b4f713ac3fb857cb42b46714749910da4013ad",
+      "status": "V05 art / V06 native accepted"
+    },
+    {
+      "stage": 4,
+      "label": "Metallization crucible",
+      "image": "art\\source-to-3d\\metallic-hydrogen-chain\\metallization-crucible\\v04-native-production\\captures\\frames\\working\\d00\\f003.png",
+      "image_sha256": "c1a21a2fb5082dcd490aae10aa54d5e2f1e1628763bd58d4f3d38a6934b81b91",
+      "model_source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
+      "status": "Restrained animation accepted"
+    },
+    {
+      "stage": 5,
+      "label": "Pelletization forge",
+      "image": "art\\source-to-3d\\metallic-hydrogen-chain\\pelletization-forge\\v03-finish-and-states\\captures\\frames\\working\\d00\\f003.png",
+      "image_sha256": "6afca7f886173fa1538ec9bf72325f3bb5f5bc6f1a3b61a0379b615d32e29881",
+      "model_source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+      "status": "V03 art / V04 native checkpoint"
+    },
+    {
+      "stage": 6,
+      "label": "Pressure-vessel fabricator",
+      "image": "art\\source-to-3d\\metallic-hydrogen-chain\\pressure-vessel-fabricator\\v04-native-review\\captures\\frames\\working\\d00\\f003.png",
+      "image_sha256": "35b3e3cdf68a46e5482058c96e394e11e1d711de5ec8c174d4832ac9223d3f63",
+      "model_source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+      "status": "V03 art / V04 native checkpoint"
+    },
+    {
+      "stage": 7,
+      "label": "Canister assembler",
+      "image": "art\\source-to-3d\\metallic-hydrogen-chain\\canister-assembler\\v01-indexed-construction\\working-front.png",
+      "image_sha256": "eeb2bb5a2dff6766a02fb43fbcdaac4d99351da62c9367a1286f22c6895c8ac6",
+      "model_source_sha256": "5813b40a94cea798408382393058dfa97d4ecf3cf4a093a30bcd832a1ec6080c",
+      "status": "Construction pilot; finish/native open"
+    }
+  ]
+}

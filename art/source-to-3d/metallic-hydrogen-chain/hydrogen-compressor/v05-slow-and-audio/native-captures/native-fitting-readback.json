@@ -1,0 +1,212 @@
+{
+  "passed": true,
+  "errors": [],
+  "master_sha256": "c316a7a5e8aaa6bdf52bdd0221402c56721302808b8aca50879ff506311918e5",
+  "poses": [
+    {
+      "angle": 0,
+      "mouths": [
+        {
+          "role": "hydrogen_suction",
+          "actual_mouth_center": [
+            -1.5,
+            0.7071068286895752,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            -1.5000000298023224,
+            -0.7545582965901962
+          ],
+          "desired_before_whole_sprite_shift": [
+            -1.5,
+            -0.7545584412271571
+          ],
+          "error_tiles": 1.4463696085265099e-07
+        },
+        {
+          "role": "hydrogen_discharge",
+          "actual_mouth_center": [
+            1.5,
+            0.7071068286895752,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            1.5000000298023224,
+            -0.7545582965901962
+          ],
+          "desired_before_whole_sprite_shift": [
+            1.5,
+            -0.7545584412271571
+          ],
+          "error_tiles": 1.4463696085265099e-07
+        }
+      ],
+      "bores": {
+        "passed": true,
+        "rays": 162,
+        "hits": []
+      },
+      "mesh_stats": {
+        "triangles": 68140,
+        "degenerate_triangles": 0,
+        "degenerate_objects": [],
+        "finite": true,
+        "missing_uv": []
+      }
+    },
+    {
+      "angle": 90,
+      "mouths": [
+        {
+          "role": "hydrogen_suction",
+          "actual_mouth_center": [
+            -0.4999999403953552,
+            -2.121320962905884,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            -0.4999999493360519,
+            1.2454421370335944
+          ],
+          "desired_before_whole_sprite_shift": [
+            -0.5000001192092896,
+            1.245441558772843
+          ],
+          "error_tiles": 5.782607515047999e-07
+        },
+        {
+          "role": "hydrogen_discharge",
+          "actual_mouth_center": [
+            -0.5000001192092896,
+            2.121320962905884,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            -0.5000001311302185,
+            -1.7545585588506332
+          ],
+          "desired_before_whole_sprite_shift": [
+            -0.49999988079071045,
+            -1.754558441227157
+          ],
+          "error_tiles": 2.503395080122317e-07
+        }
+      ],
+      "bores": {
+        "passed": true,
+        "rays": 162,
+        "hits": []
+      },
+      "mesh_stats": {
+        "triangles": 68524,
+        "degenerate_triangles": 0,
+        "degenerate_objects": [],
+        "finite": true,
+        "missing_uv": []
+      }
+    },
+    {
+      "angle": 180,
+      "mouths": [
+        {
+          "role": "hydrogen_suction",
+          "actual_mouth_center": [
+            1.5,
+            -0.7071067690849304,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            1.5000000298023224,
+            0.24544178387607418
+          ],
+          "desired_before_whole_sprite_shift": [
+            1.5,
+            0.24544167798213246
+          ],
+          "error_tiles": 1.0589394172644262e-07
+        },
+        {
+          "role": "hydrogen_discharge",
+          "actual_mouth_center": [
+            -1.5,
+            -0.7071070075035095,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            -1.5000000298023224,
+            0.2454419656702408
+          ],
+          "desired_before_whole_sprite_shift": [
+            -1.5,
+            0.24544143956355335
+          ],
+          "error_tiles": 5.261066874373554e-07
+        }
+      ],
+      "bores": {
+        "passed": true,
+        "rays": 162,
+        "hits": []
+      },
+      "mesh_stats": {
+        "triangles": 68140,
+        "degenerate_triangles": 0,
+        "degenerate_objects": [],
+        "finite": true,
+        "missing_uv": []
+      }
+    },
+    {
+      "angle": 270,
+      "mouths": [
+        {
+          "role": "hydrogen_suction",
+          "actual_mouth_center": [
+            0.5000000596046448,
+            2.121320962905884,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            0.5000001311302185,
+            -1.7545585588506332
+          ],
+          "desired_before_whole_sprite_shift": [
+            0.49999988079071045,
+            -1.754558441227157
+          ],
+          "error_tiles": 2.503395080122317e-07
+        },
+        {
+          "role": "hydrogen_discharge",
+          "actual_mouth_center": [
+            0.4999999701976776,
+            -2.121320962905884,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            0.5000001311302185,
+            1.2454421370335944
+          ],
+          "desired_before_whole_sprite_shift": [
+            0.5000001192092896,
+            1.245441558772843
+          ],
+          "error_tiles": 5.782607515047999e-07
+        }
+      ],
+      "bores": {
+        "passed": true,
+        "rays": 162,
+        "hits": []
+      },
+      "mesh_stats": {
+        "triangles": 68524,
+        "degenerate_triangles": 0,
+        "degenerate_objects": [],
+        "finite": true,
+        "missing_uv": []
+      }
+    }
+  ],
+  "scope": "Measured real throat rims, camera mapping and .235-radius bore samples. Native whole-sprite offset and visible pipe occlusion require separate actual screenshots; numerical geometry is not visual approval."
+}

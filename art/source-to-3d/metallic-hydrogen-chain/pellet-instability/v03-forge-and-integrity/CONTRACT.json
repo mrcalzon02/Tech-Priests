@@ -1,0 +1,58 @@
+{
+  "status": "native_raw_and_forged_instability_and_processing_verified; ordinary_chain_pending",
+  "owner_requirement": "Raw metallicized pellets leave the crucible with a random decay cooldown that reduces both HP and quality and ends as inert pellets; rush them into suitable containment.",
+  "output_kind": "solid item, not a second gameplay fluid box",
+  "raw_item": "tp-mh7-raw-metallicized-pellet",
+  "inert_item": "tp-mh7-inert-pellet",
+  "prototype_tuning": {
+    "random_step_seconds": [
+      15,
+      30
+    ],
+    "steps": 4,
+    "total_uncontained_seconds": [
+      60,
+      120
+    ],
+    "health": [
+      1,
+      0.75,
+      0.5,
+      0.25,
+      0
+    ],
+    "quality": "One native tier down per decay transition, floor normal; terminal inert is always normal"
+  },
+  "randomization": "Separate native spoil deadline per individual raw pellet; tagged, nonstacking raw units prevent timer refresh through merge/split",
+  "containment": "Requires an actual empty pressure shell. Sealing preserves HP, quality, phase and remaining lifetime. Unsealing resumes that remaining lifetime and returns the same shell condition/quality. No restoration of decayed/inert pellets.",
+  "verified": [
+    "Independent random cooldowns",
+    "Actual item health and native quality decrease",
+    "Chest-to-chest movement preserves timer/condition",
+    "Belt, ground, inserter, character and registered script inventories",
+    "Inert terminal, non-fuel, cannot be revived by containment",
+    "Shell consumption and state-conserving return",
+    "Paused containment and resumed remaining lifetime",
+    "Actual save/reload history equals continuous run",
+    "Damaged stock never heals across chest, belt, ground, inserter, character and work inventories",
+    "Real four-direction feed, native press clock and pickup",
+    "Mixed-quality sequential feeds preserve each current unit condition",
+    "Decay during forging and blocked output; inert cannot be revived",
+    "Mid-cycle destruction releases original live stock without refresh",
+    "Forge full continuous/save-reload results are identical"
+  ],
+  "normal_adapter": "Safe event adapter registers real built/revived/cloned review forges and crucible producers; it creates no fixtures. Automatic quality handoff inspects only actual neighboring intake sources.",
+  "limitations": [
+    "Final ordinary-chain/economy/UI integration remains open",
+    "Normal 15\u201330 second per-stage tuning is not owner balance approval",
+    "Existing hidden intake/clock/dispatch recipes are prototype implementation and are not the final player-facing crafting UI"
+  ],
+  "owner_balance_approved": false,
+  "formed_items": "Four forged stages share the same remaining instability and native HP/quality decline; forging never refreshes a timer.",
+  "integrity_guard": "A due-only scheduler retains a real LuaItem reference through logistics and invokes native spoilage at its exact deadline. Damage ceilings and custom tags survive native result replacement; damaged stock cannot heal at a stage transition.",
+  "forging": "Actual native eight-second press consumes only a private clock token. The real unit remains in a registered decaying work inventory; disabled output-slot recipes accept its current phase/quality. Current deadline, HP, quality and tags are copied exactly at dispatch. An expired unit leaves inert.",
+  "normal_adapter_verified": true,
+  "native_crucible_regression_verified": true,
+  "actual_native_forge_orientations_verified": true,
+  "production_pickup_race_fixed": true
+}

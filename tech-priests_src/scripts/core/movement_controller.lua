@@ -403,6 +403,48 @@ function M.position_allowed(pair, pos, reason, opts)
       if ok and allowed==true then return true,nil,nil end
     end
   end
+  -- Original 0836 counted ore carrier: no station-radius exemption without
+  -- the SAME paid drill, source-ground cargo, train, and native remote stop.
+  if opts and opts.owner=="rail-track-frontier-0836"
+      and reason=="original-rail-ore-wagon-carry-0836" then
+    local frontier=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if frontier and
+        type(frontier.authorized_original_remote_wagon_carry_0836)=="function"then
+      local checked,allowed=pcall(
+        frontier.authorized_original_remote_wagon_carry_0836,pair,pos,{
+          owner=opts.owner,reason=reason,
+          ground_route_final_destination=
+            opts.ground_route_final_destination or pos})
+      if checked and allowed==true then return true,nil,nil end
+    end
+  end
+  if opts and opts.owner=="rail-track-frontier-0836"
+      and (reason=="original-home-wagon-pickup-0836"
+        or reason=="original-home-station-deposit-0836")then
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if rail and type(rail.authorized_home_ore_walk_0836)=="function"then
+      local ok,yes=pcall(rail.authorized_home_ore_walk_0836,
+        pair,pos,{owner=opts.owner,reason=reason,
+          ground_route_final_destination=
+            opts.ground_route_final_destination or pos})
+      if ok and yes==true then return true,nil,nil end
+    end
+  end
+  -- Post-load original-Magos reboarding is a real short walking leg,
+  -- verified against the same native mined ore and the same paid train.
+  if opts and opts.owner=="rail-track-frontier-0836"
+      and reason=="original-rail-ore-loaded-reboard-0836" then
+    local frontier=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if frontier and
+        type(frontier.authorized_original_remote_train_reboarding_walk_0836)=="function"then
+      local checked,allowed=pcall(
+        frontier.authorized_original_remote_train_reboarding_walk_0836,pair,pos,{
+          owner=opts.owner,reason=reason,
+          ground_route_final_destination=
+            opts.ground_route_final_destination or pos})
+      if checked and allowed==true then return true,nil,nil end
+    end
+  end
   -- Only the original no-cargo Magos may approach the exact native-paid,
   -- fueled locomotive after 0836's read-only physical rail verification.
   if opts and opts.owner=="rail-track-frontier-0836"
@@ -415,6 +457,18 @@ function M.position_allowed(pair, pos, reason, opts)
           owner=opts.owner,reason=reason,
           ground_route_final_destination=opts.ground_route_final_destination or pos})
       if ok and allowed==true then return true,nil,nil end
+    end
+  end
+  -- Authenticated original 0338 drill walk after native paid-stop ejection.
+  -- It is not a new owner or general Magos territory expansion.
+  if opts and opts.owner=="construction-planner-0338"
+      and reason=="construction-site-standoff-0338" then
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if rail and type(rail.authorized_original_remote_drill_walk_0836)=="function"then
+      local checked,allowed=pcall(
+        rail.authorized_original_remote_drill_walk_0836,pair,pos,{
+          owner=opts.owner,reason=reason})
+      if checked and allowed==true then return true,nil,nil end
     end
   end
   local distance_sq = dist_sq(pair.station.position, pos) or 0
@@ -1505,6 +1559,37 @@ function M.enforce_pair(pair, reason)
     and request.owner == "movement-controller-enforcement-0566"
     and (tonumber(request.priority) or 0) >= 840
     and (dist_sq(request.ground_route_final_destination or request, pair.station.position) or math.huge) <= 0.04
+  -- Release ONLY a prior 0566 home-return on a verified original paid
+  -- ore-unload walk. The original movement owner still issues the walk.
+  do
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    local mission=pair.remote_rail_outpost_0835
+    local u=mission and mission.home_ore_0836
+    if rail and u and type(rail.authorized_home_ore_walk_0836)=="function"then
+      local reason=u.phase=="home-driver-ejected"
+        and "original-home-wagon-pickup-0836"
+        or "original-home-station-deposit-0836"
+      local goal=reason=="original-home-wagon-pickup-0836"
+        and mission.first_wagon_0836 and mission.first_wagon_0836.built_entity
+        and mission.first_wagon_0836.built_entity.position
+        or pair.station.position
+      local active=request and request.owner=="rail-track-frontier-0836"
+        and request.reason==reason
+      local proof=active and request or {
+        owner="rail-track-frontier-0836",reason=reason,
+        ground_route_final_destination=goal}
+      local point=active and pair.priest.position or goal
+      local checked,allowed=pcall(
+        rail.authorized_home_ore_walk_0836,pair,point,proof)
+      if checked and allowed==true then
+        if enforcement_return then
+          M.stop(pair,"original-home-ore-paid-unload-handoff-0836")
+          return true,"original-home-ore-paid-unload-handoff-0836"
+        end
+        if active then return false,"original-home-ore-unload-owned-0836" end
+      end
+    end
+  end
   -- The controller alone releases its own priority-840 home return.
   -- A competing cargo or task lease is never preempted. Every call checks
   -- original priest/train identities, both counted stops and live fuel.
@@ -1526,7 +1611,69 @@ function M.enforce_pair(pair, reason)
       end
     end
   end
+  -- Release only our own overleash return when the original 0338 drill
+  -- carries a real paid item and the same Magos was natively ejected.
+  if enforcement_return then
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if rail and type(rail.authorized_original_remote_drill_walk_0836)=="function"then
+      local checked,allowed=pcall(
+        rail.authorized_original_remote_drill_walk_0836,
+        pair,pair.priest.position,request)
+      if checked and allowed==true then
+        M.stop(pair,"original-remote-drill-construction-safety-handoff-0836")
+        return true,"original-remote-drill-construction-safety-handoff-0836"
+      end
+    end
+  end
+  -- After the ORIGINAL 0338 physically builds its paid remote drill, the
+  -- original Magos must not be recalled 400 tiles before the expedition can
+  -- acquire ore. No new movement owner or distance waiver is granted: this
+  -- read-only native duty check expires and demands the same completed item.
+  do
+    local rail=rawget(_G,"TechPriestsRailTrackFrontier0836")
+    if rail and
+        type(rail.authorized_original_remote_drill_hold_0836)=="function"then
+      local checked,authorized=pcall(
+        rail.authorized_original_remote_drill_hold_0836,pair)
+      if checked and authorized==true then
+        if enforcement_return then
+          M.stop(pair,"original-native-remote-drill-completion-safety-handoff-0836")
+          return true,"original-native-remote-drill-completion-safety-handoff-0836"
+        end
+        return false,"original-native-remote-drill-paid-site-duty-owned-0836"
+      end
+    end
+  end
   if distance > M.hard_leash(pair) then
+    -- Sample actual native 0566/0338 contention before a return replaces
+    -- the original movement. Observation only; no admission or custody change.
+    local mission=pair.remote_rail_outpost_0835
+    local remote=mission and mission.first_remote_drill_0836
+    if remote and remote.disembark_confirmed==true
+        and type(remote.disembark_tick)=="number"
+        and now()-remote.disembark_tick<=15000
+        and (not remote.last_0566_site_probe_tick_0836
+          or now()-remote.last_0566_site_probe_tick_0836>=600)
+        and type(log)=="function" then
+      remote.last_0566_site_probe_tick_0836=now()
+      local task=pair.construction_task_0338
+      local req=pair.movement_request_0418
+      log("[TP-0836-0566-BOUNDARY] tick="..tostring(now())..
+        " dist="..tostring(distance)..
+        " priest_x="..tostring(pair.priest.position.x)..
+        " priest_y="..tostring(pair.priest.position.y)..
+        " phase="..tostring(remote.phase)..
+        " task_phase="..tostring(task and task.phase)..
+        " task_owned="..tostring(task and task.request_value==remote.request)..
+        " custody="..tostring(pair.construction_custody_0338~=nil)..
+        " request_owner="..tostring(request and request.owner)..
+        " request_reason="..tostring(request and request.reason)..
+        " pair_owner="..tostring(req and req.owner)..
+        " canonical_same="..tostring(request==req)..
+        " enforcement_return="..tostring(enforcement_return)..
+        " paid_receipt="..tostring(remote.paid_drill_completion_0836 and
+          remote.paid_drill_completion_0836.native_0338_paid))
+    end
     -- 0836 original paid rail construction is a physically verified track
     -- contact, not a general overleash exemption.  Require the same live
     -- 0338 owner and authentic last connected rail that 0574 checked.
@@ -1544,6 +1691,21 @@ function M.enforce_pair(pair, reason)
         root.stats.original_paid_rail_contacts_preserved_0836=
           (root.stats.original_paid_rail_contacts_preserved_0836 or 0)+1
         return false,"original-paid-rail-contact-owned-0836"
+      end
+    end
+    -- The physically ejected original Magos may walk ONLY from its real
+    -- paid remote stop to the exact current 0338 drill site with counted cargo.
+    if request and request.owner=="construction-planner-0338"
+      and (request.reason=="construction-site-standoff-0338"
+        or request.reason=="construction-clear-occupied-site-0338"
+        or request.reason=="construction-clear-ghost-footprint-0338")
+      and frontier
+      and type(frontier.authorized_original_remote_drill_walk_0836)=="function"then
+      local checked,authorized=pcall(
+        frontier.authorized_original_remote_drill_walk_0836,pair,
+        pair.priest.position,request)
+      if checked and authorized==true then
+        return false,"original-native-remote-drill-contact-owned-0836"
       end
     end
     -- Unlike a build-site contact, the *journey* can take many ticks

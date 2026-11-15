@@ -1,0 +1,30 @@
+{
+  "status": "actual_source_export_and_guided_ram_pilot; finish_material_path_and_native_pending",
+  "source_sha256": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
+  "glb_sha256": "c4bc56f95257fe62c6086a55e3d3f851d0b2c9991b7d2cf6899d4b8fd0c8a707",
+  "footprint": [
+    3,
+    3
+  ],
+  "registry_sha256": "925446df748c72a5b66a2a13e82b9483208e06ecc7570cfc4d0ab53fc0661254",
+  "contacts": 57,
+  "motion_poses": 17,
+  "guided_ram_static_pair_checks": 1428,
+  "triangles": 17400,
+  "maximum_sampled_world_pose_error": 2.3233243950926408e-07,
+  "cycle_seconds": 8,
+  "actual_library_parts": 1,
+  "actual_library_instances": 1,
+  "no_new_verified_parts": "New actuator/auger assemblies remain machine-local pending complete material-path and finishing proof.",
+  "owner_approved": false,
+  "full_material_path_verified": false,
+  "model_specific_finish_complete": false,
+  "audio_implemented": false,
+  "native_item_interfaces_verified": false,
+  "next": [
+    "Audit hopper-auger-feed-shoe and pellet compression/ejection support through the whole cycle",
+    "Finish cast frame, hopper, ram/die surfaces and authored working sound",
+    "Capture four idle/working rotations and create actual native item-handling fixture",
+    "Preserve pellet remaining lifetime, HP and quality through processing; no recipe refresh"
+  ]
+}

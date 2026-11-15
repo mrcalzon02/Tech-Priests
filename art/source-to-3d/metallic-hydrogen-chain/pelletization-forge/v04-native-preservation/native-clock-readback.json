@@ -1,0 +1,885 @@
+{
+  "passed": true,
+  "all_eight_source_cells_each_direction": true,
+  "sample_interval_ticks": 30,
+  "source_frame_period_ticks": 60,
+  "nominal_cycle_seconds": 8,
+  "full_loop_boundary_observed": false,
+  "point": [
+    206,
+    147
+  ],
+  "rows": [
+    {
+      "direction": "north",
+      "passed": true,
+      "cells": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        0,
+        0
+      ],
+      "samples": [
+        {
+          "capture_index": 0,
+          "source_cell": 1,
+          "rgb": [
+            48,
+            211,
+            58
+          ],
+          "brightness_gain": 1.001799856011519,
+          "distance_squared": 4.838012958963274,
+          "sha256": "33ab03d03c2c97b2329c69619fdae7f81de09394885ec54a344d7e30e6479d63"
+        },
+        {
+          "capture_index": 1,
+          "source_cell": 1,
+          "rgb": [
+            48,
+            211,
+            58
+          ],
+          "brightness_gain": 1.001799856011519,
+          "distance_squared": 4.838012958963274,
+          "sha256": "962d6689b048aab8660b4426e2a56d0de9f059f7914ed0b58e56203f77aadf39"
+        },
+        {
+          "capture_index": 2,
+          "source_cell": 2,
+          "rgb": [
+            76,
+            189,
+            81
+          ],
+          "brightness_gain": 0.997721435081614,
+          "distance_squared": 1.7493578589775316,
+          "sha256": "d08490260a89f0b2419872f5d57719252e056d1df643b605170f776146b49eac"
+        },
+        {
+          "capture_index": 3,
+          "source_cell": 2,
+          "rgb": [
+            76,
+            189,
+            81
+          ],
+          "brightness_gain": 0.997721435081614,
+          "distance_squared": 1.7493578589775316,
+          "sha256": "a30a05dc28d34f0e0db25b0f497c13a15c83a61eaccd8d8b79c7462e9eda4d15"
+        },
+        {
+          "capture_index": 4,
+          "source_cell": 3,
+          "rgb": [
+            104,
+            170,
+            100
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "222faa9b95611bb056479d51bf40480597cb80c403db3446684ea515a2d7aac1"
+        },
+        {
+          "capture_index": 5,
+          "source_cell": 3,
+          "rgb": [
+            104,
+            170,
+            100
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "5ee86795cb6227e8b0df75c52a816166672d3acc52ea5102cef9ab9c56da64d0"
+        },
+        {
+          "capture_index": 6,
+          "source_cell": 4,
+          "rgb": [
+            132,
+            150,
+            120
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "3650efce2912c812be64a5a2f41cbe25d414f36d87188aa9c8ada0720152a716"
+        },
+        {
+          "capture_index": 7,
+          "source_cell": 4,
+          "rgb": [
+            132,
+            150,
+            120
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "61c1acb891951040e527db93b5691b238c9cc94c71edc579772e56488f90b1f2"
+        },
+        {
+          "capture_index": 8,
+          "source_cell": 5,
+          "rgb": [
+            159,
+            130,
+            140
+          ],
+          "brightness_gain": 0.9974235104669887,
+          "distance_squared": 0.587761674718187,
+          "sha256": "93daffe557d90d862e7cc34f3da854072b913844e4782c7874b26e6c8c3f7deb"
+        },
+        {
+          "capture_index": 9,
+          "source_cell": 5,
+          "rgb": [
+            159,
+            130,
+            140
+          ],
+          "brightness_gain": 0.9974235104669887,
+          "distance_squared": 0.587761674718187,
+          "sha256": "21c92db81c68f4ef25f2e3c364227fda19e144d29fa987a0247fb43727f56f86"
+        },
+        {
+          "capture_index": 10,
+          "source_cell": 6,
+          "rgb": [
+            187,
+            110,
+            161
+          ],
+          "brightness_gain": 0.9996166694047424,
+          "distance_squared": 1.989266743332739,
+          "sha256": "a101908638bfe10732cb887a7e88ce525c458dbe22b945da50b875333e8b2ab3"
+        },
+        {
+          "capture_index": 11,
+          "source_cell": 6,
+          "rgb": [
+            187,
+            110,
+            161
+          ],
+          "brightness_gain": 0.9996166694047424,
+          "distance_squared": 1.989266743332739,
+          "sha256": "5977f0f90235df387e8f70db4100e3d1a24079d96ddd2cc73eda8572533b3d77"
+        },
+        {
+          "capture_index": 12,
+          "source_cell": 7,
+          "rgb": [
+            216,
+            90,
+            179
+          ],
+          "brightness_gain": 0.9979347377116894,
+          "distance_squared": 0.628252788104079,
+          "sha256": "08079eaa67d6f0d0e90d04befb34acc19f76fad09afce8f10cd817e26f6dc694"
+        },
+        {
+          "capture_index": 13,
+          "source_cell": 7,
+          "rgb": [
+            216,
+            90,
+            179
+          ],
+          "brightness_gain": 0.9979347377116894,
+          "distance_squared": 0.628252788104079,
+          "sha256": "4a83b13b8c0e8b649ac4c338b16e79b25b4e5dfb7109ec2bec6c014c35834910"
+        },
+        {
+          "capture_index": 14,
+          "source_cell": 0,
+          "rgb": [
+            18,
+            229,
+            44
+          ],
+          "brightness_gain": 0.9979963570127505,
+          "distance_squared": 20.779599271402578,
+          "sha256": "1aaf92315cbf12f5f591052bbdaf7ae06dd3986fe32d6577e09b782fb70d733d"
+        },
+        {
+          "capture_index": 15,
+          "source_cell": 0,
+          "rgb": [
+            18,
+            229,
+            44
+          ],
+          "brightness_gain": 0.9979963570127505,
+          "distance_squared": 20.779599271402578,
+          "sha256": "fb9bd88126aec2ebbd9717ff9caf082022c6dd0e0c63da97a08707efb755d823"
+        }
+      ]
+    },
+    {
+      "direction": "east",
+      "passed": true,
+      "cells": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        0,
+        0
+      ],
+      "samples": [
+        {
+          "capture_index": 0,
+          "source_cell": 1,
+          "rgb": [
+            48,
+            211,
+            58
+          ],
+          "brightness_gain": 1.001799856011519,
+          "distance_squared": 4.838012958963274,
+          "sha256": "94b3afa54dd7a3d29bb3fef1f25a0e10be88eae20f534ddc0a894c2c2b07977a"
+        },
+        {
+          "capture_index": 1,
+          "source_cell": 1,
+          "rgb": [
+            48,
+            211,
+            58
+          ],
+          "brightness_gain": 1.001799856011519,
+          "distance_squared": 4.838012958963274,
+          "sha256": "08a91f37538e76a0a20dcaf1f21ac6ff3ac6bde730ac7d4ec25219436ae468b9"
+        },
+        {
+          "capture_index": 2,
+          "source_cell": 2,
+          "rgb": [
+            76,
+            189,
+            81
+          ],
+          "brightness_gain": 0.997721435081614,
+          "distance_squared": 1.7493578589775316,
+          "sha256": "22df93eb483839e2ce7b2bfe080c7f7bb55371c5f98da078bef55714d0e9bd73"
+        },
+        {
+          "capture_index": 3,
+          "source_cell": 2,
+          "rgb": [
+            76,
+            189,
+            81
+          ],
+          "brightness_gain": 0.997721435081614,
+          "distance_squared": 1.7493578589775316,
+          "sha256": "eb489ad6d87acd9ed60cc8510e7fd28498dddf0bab42d0cef2febf5a5ab8ab20"
+        },
+        {
+          "capture_index": 4,
+          "source_cell": 3,
+          "rgb": [
+            104,
+            170,
+            100
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "115a64b9862e4724c7f9184e3c9ca1412af2a0a764017402cdae32b8534a3dea"
+        },
+        {
+          "capture_index": 5,
+          "source_cell": 3,
+          "rgb": [
+            104,
+            170,
+            100
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "9a8501d007a080968df21d88564c40a9aada28a3ccb1b0dcac276645eab866c9"
+        },
+        {
+          "capture_index": 6,
+          "source_cell": 4,
+          "rgb": [
+            132,
+            150,
+            120
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "8b09d0f3515a0197f2c613cff00405b690e9332f96b5dd84951d4a5de7751acc"
+        },
+        {
+          "capture_index": 7,
+          "source_cell": 4,
+          "rgb": [
+            132,
+            150,
+            120
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "2b6cd1743bc775e5a2af974009d18c5c5d0ec14993376e03439452c06656b816"
+        },
+        {
+          "capture_index": 8,
+          "source_cell": 5,
+          "rgb": [
+            159,
+            130,
+            140
+          ],
+          "brightness_gain": 0.9974235104669887,
+          "distance_squared": 0.587761674718187,
+          "sha256": "a9dbc4a6a6cb9b1789e6f1498ffc0c6a3544fc2beed089d8248c9f8c94c13c28"
+        },
+        {
+          "capture_index": 9,
+          "source_cell": 5,
+          "rgb": [
+            159,
+            130,
+            140
+          ],
+          "brightness_gain": 0.9974235104669887,
+          "distance_squared": 0.587761674718187,
+          "sha256": "7d479c35e67af60f129654a9c414a7b333d97b56dde62c7413457ff0a51e866e"
+        },
+        {
+          "capture_index": 10,
+          "source_cell": 6,
+          "rgb": [
+            187,
+            110,
+            161
+          ],
+          "brightness_gain": 0.9996166694047424,
+          "distance_squared": 1.989266743332739,
+          "sha256": "f3976dda16f49ce33d3e1bc9a2ae4c6433bb83f70f856d23079f1d3978ce46b0"
+        },
+        {
+          "capture_index": 11,
+          "source_cell": 6,
+          "rgb": [
+            187,
+            110,
+            161
+          ],
+          "brightness_gain": 0.9996166694047424,
+          "distance_squared": 1.989266743332739,
+          "sha256": "e08aa1e64d3a0d04bfc825526e2f3c195d0d7c8a8901d9754d3650a66da28910"
+        },
+        {
+          "capture_index": 12,
+          "source_cell": 7,
+          "rgb": [
+            216,
+            90,
+            179
+          ],
+          "brightness_gain": 0.9979347377116894,
+          "distance_squared": 0.628252788104079,
+          "sha256": "28aaf4880e641dcc620dd187a6dc1deda2b60b079a2b03e6fac550042a0ee8b0"
+        },
+        {
+          "capture_index": 13,
+          "source_cell": 7,
+          "rgb": [
+            216,
+            90,
+            179
+          ],
+          "brightness_gain": 0.9979347377116894,
+          "distance_squared": 0.628252788104079,
+          "sha256": "8dd6ac098cb62347dcafa30de188340255d311b0432457d2680a64d7e8ec9707"
+        },
+        {
+          "capture_index": 14,
+          "source_cell": 0,
+          "rgb": [
+            18,
+            229,
+            44
+          ],
+          "brightness_gain": 0.9979963570127505,
+          "distance_squared": 20.779599271402578,
+          "sha256": "ab038d63e62750bd32d3a5a7f65975b6f04d16c196422f39f74ae358eb65e1bd"
+        },
+        {
+          "capture_index": 15,
+          "source_cell": 0,
+          "rgb": [
+            18,
+            229,
+            44
+          ],
+          "brightness_gain": 0.9979963570127505,
+          "distance_squared": 20.779599271402578,
+          "sha256": "8fdadaf8ebe4eb79fe5f1f8c54632a684c108fe4558de3bb10cc6f6b5a24f463"
+        }
+      ]
+    },
+    {
+      "direction": "south",
+      "passed": true,
+      "cells": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        0,
+        0
+      ],
+      "samples": [
+        {
+          "capture_index": 0,
+          "source_cell": 1,
+          "rgb": [
+            48,
+            211,
+            58
+          ],
+          "brightness_gain": 1.001799856011519,
+          "distance_squared": 4.838012958963274,
+          "sha256": "328038d6e9749603f56061cfd265cc52ec2a1aae7fdecab5b06ac879cac68973"
+        },
+        {
+          "capture_index": 1,
+          "source_cell": 1,
+          "rgb": [
+            48,
+            211,
+            58
+          ],
+          "brightness_gain": 1.001799856011519,
+          "distance_squared": 4.838012958963274,
+          "sha256": "c38949e5137c48226a4fb23ed802c8da37ecb3c3d2eea85161964ed3b982ef1d"
+        },
+        {
+          "capture_index": 2,
+          "source_cell": 2,
+          "rgb": [
+            76,
+            189,
+            81
+          ],
+          "brightness_gain": 0.997721435081614,
+          "distance_squared": 1.7493578589775316,
+          "sha256": "2b0b50d35d3f2807a5f1c15e578685b7bf76ebf84c501afef0103b1cab1a0fd9"
+        },
+        {
+          "capture_index": 3,
+          "source_cell": 2,
+          "rgb": [
+            76,
+            189,
+            81
+          ],
+          "brightness_gain": 0.997721435081614,
+          "distance_squared": 1.7493578589775316,
+          "sha256": "6d45af1fe1fb60f060fb29aa1329d40764cdf715ac0d00ee94f40293ffe2e73d"
+        },
+        {
+          "capture_index": 4,
+          "source_cell": 3,
+          "rgb": [
+            104,
+            170,
+            100
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "c3df17c37e02b7c9bfb1da4ad05002da5fba1522de42cba2f81663d95aa012b2"
+        },
+        {
+          "capture_index": 5,
+          "source_cell": 3,
+          "rgb": [
+            104,
+            170,
+            100
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "c3df17c37e02b7c9bfb1da4ad05002da5fba1522de42cba2f81663d95aa012b2"
+        },
+        {
+          "capture_index": 6,
+          "source_cell": 4,
+          "rgb": [
+            132,
+            150,
+            120
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "289252e08d027f0875cee96c55b8b8abef81821a6d1b169132f909ee51060011"
+        },
+        {
+          "capture_index": 7,
+          "source_cell": 4,
+          "rgb": [
+            132,
+            150,
+            120
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "289252e08d027f0875cee96c55b8b8abef81821a6d1b169132f909ee51060011"
+        },
+        {
+          "capture_index": 8,
+          "source_cell": 5,
+          "rgb": [
+            159,
+            130,
+            140
+          ],
+          "brightness_gain": 0.9974235104669887,
+          "distance_squared": 0.587761674718187,
+          "sha256": "1b3a663b956d73cae65a0333e2978cec68b1ccb152bc974c5621d6c3f50b58bb"
+        },
+        {
+          "capture_index": 9,
+          "source_cell": 5,
+          "rgb": [
+            159,
+            130,
+            140
+          ],
+          "brightness_gain": 0.9974235104669887,
+          "distance_squared": 0.587761674718187,
+          "sha256": "1b3a663b956d73cae65a0333e2978cec68b1ccb152bc974c5621d6c3f50b58bb"
+        },
+        {
+          "capture_index": 10,
+          "source_cell": 6,
+          "rgb": [
+            187,
+            110,
+            161
+          ],
+          "brightness_gain": 0.9996166694047424,
+          "distance_squared": 1.989266743332739,
+          "sha256": "503f7314eda1e250e10f5710b255f999f0cd64265a5c5548401c6fa08749d6ef"
+        },
+        {
+          "capture_index": 11,
+          "source_cell": 6,
+          "rgb": [
+            187,
+            110,
+            161
+          ],
+          "brightness_gain": 0.9996166694047424,
+          "distance_squared": 1.989266743332739,
+          "sha256": "503f7314eda1e250e10f5710b255f999f0cd64265a5c5548401c6fa08749d6ef"
+        },
+        {
+          "capture_index": 12,
+          "source_cell": 7,
+          "rgb": [
+            216,
+            90,
+            179
+          ],
+          "brightness_gain": 0.9979347377116894,
+          "distance_squared": 0.628252788104079,
+          "sha256": "b544c3569237f53ae59a6e8d7d94e58efecab45c9237cc4bd9066ee3437e341e"
+        },
+        {
+          "capture_index": 13,
+          "source_cell": 7,
+          "rgb": [
+            216,
+            90,
+            179
+          ],
+          "brightness_gain": 0.9979347377116894,
+          "distance_squared": 0.628252788104079,
+          "sha256": "b544c3569237f53ae59a6e8d7d94e58efecab45c9237cc4bd9066ee3437e341e"
+        },
+        {
+          "capture_index": 14,
+          "source_cell": 0,
+          "rgb": [
+            18,
+            229,
+            44
+          ],
+          "brightness_gain": 0.9979963570127505,
+          "distance_squared": 20.779599271402578,
+          "sha256": "a28e93cbb1624ae96a51307165037bc9afbdedd849762e0e541740080ea867ea"
+        },
+        {
+          "capture_index": 15,
+          "source_cell": 0,
+          "rgb": [
+            18,
+            229,
+            44
+          ],
+          "brightness_gain": 0.9979963570127505,
+          "distance_squared": 20.779599271402578,
+          "sha256": "a28e93cbb1624ae96a51307165037bc9afbdedd849762e0e541740080ea867ea"
+        }
+      ]
+    },
+    {
+      "direction": "west",
+      "passed": true,
+      "cells": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        0,
+        0
+      ],
+      "samples": [
+        {
+          "capture_index": 0,
+          "source_cell": 1,
+          "rgb": [
+            48,
+            211,
+            58
+          ],
+          "brightness_gain": 1.001799856011519,
+          "distance_squared": 4.838012958963274,
+          "sha256": "43e18c5a93dc8e4427ce8f37bd6c30c6c6e4faf853756878efc382ddcf088a47"
+        },
+        {
+          "capture_index": 1,
+          "source_cell": 1,
+          "rgb": [
+            48,
+            211,
+            58
+          ],
+          "brightness_gain": 1.001799856011519,
+          "distance_squared": 4.838012958963274,
+          "sha256": "c3d49bb8d5adb91c8dcc493cda6987df58084e5a311633a0ebfc0149b1723f6b"
+        },
+        {
+          "capture_index": 2,
+          "source_cell": 2,
+          "rgb": [
+            76,
+            189,
+            81
+          ],
+          "brightness_gain": 0.997721435081614,
+          "distance_squared": 1.7493578589775316,
+          "sha256": "be61a3f30e979c51be8d1157cf6007c492a3117086a6e7226cd74e7d9ebdffa0"
+        },
+        {
+          "capture_index": 3,
+          "source_cell": 2,
+          "rgb": [
+            76,
+            189,
+            81
+          ],
+          "brightness_gain": 0.997721435081614,
+          "distance_squared": 1.7493578589775316,
+          "sha256": "c554700ee548d1992be6cc77c5a5d648e93b90bac8ec38120527aa3885cc606f"
+        },
+        {
+          "capture_index": 4,
+          "source_cell": 3,
+          "rgb": [
+            104,
+            170,
+            100
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "2675c89cc25e8523558cbb32048d6f7e3821afb36b39f524ffad0010347387de"
+        },
+        {
+          "capture_index": 5,
+          "source_cell": 3,
+          "rgb": [
+            104,
+            170,
+            100
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "515e5f64bd29940f98b20089a00c243444096ad127295b7fbbb224dc5f0adff5"
+        },
+        {
+          "capture_index": 6,
+          "source_cell": 4,
+          "rgb": [
+            132,
+            150,
+            120
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "b486e71c573ede5fa07f38934b508375970029a0de1147aef53b62a80e908ab7"
+        },
+        {
+          "capture_index": 7,
+          "source_cell": 4,
+          "rgb": [
+            132,
+            150,
+            120
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "2ea73ce4d21764bc9a44978588c0e3f22c6c6e958a4fd51bef43ad1dccf8f08b"
+        },
+        {
+          "capture_index": 8,
+          "source_cell": 5,
+          "rgb": [
+            159,
+            130,
+            140
+          ],
+          "brightness_gain": 0.9974235104669887,
+          "distance_squared": 0.587761674718187,
+          "sha256": "d1dd6c696444b1ee391349174598fc22cff41ae9db8a88a950f7b91984012902"
+        },
+        {
+          "capture_index": 9,
+          "source_cell": 5,
+          "rgb": [
+            159,
+            130,
+            140
+          ],
+          "brightness_gain": 0.9974235104669887,
+          "distance_squared": 0.587761674718187,
+          "sha256": "27c8c74e13d33f5c75e3e276be0f76ca3f0100d97837b1fa94315ad345c9bad7"
+        },
+        {
+          "capture_index": 10,
+          "source_cell": 6,
+          "rgb": [
+            187,
+            110,
+            161
+          ],
+          "brightness_gain": 0.9996166694047424,
+          "distance_squared": 1.989266743332739,
+          "sha256": "09da1a0b813ec63298d74e070092752a7da0a7ddbe2c16e3839a40af329c11fa"
+        },
+        {
+          "capture_index": 11,
+          "source_cell": 6,
+          "rgb": [
+            187,
+            110,
+            161
+          ],
+          "brightness_gain": 0.9996166694047424,
+          "distance_squared": 1.989266743332739,
+          "sha256": "e7323e955fb98d14f4498e23d909fa4480f4f8f5ad0dd34886553d7a86ef620f"
+        },
+        {
+          "capture_index": 12,
+          "source_cell": 7,
+          "rgb": [
+            216,
+            90,
+            179
+          ],
+          "brightness_gain": 0.9979347377116894,
+          "distance_squared": 0.628252788104079,
+          "sha256": "2095ad18074b803c31673a86d60045750276f35aa4cc29483546cdbb3aa3c19d"
+        },
+        {
+          "capture_index": 13,
+          "source_cell": 7,
+          "rgb": [
+            215,
+            90,
+            178
+          ],
+          "brightness_gain": 0.9933911606774061,
+          "distance_squared": 1.1933085501858687,
+          "sha256": "179863fabb7da9eda1f91e394d2f3b75168a9a5d8fb2547d9c8cbd199f42550f"
+        },
+        {
+          "capture_index": 14,
+          "source_cell": 0,
+          "rgb": [
+            17,
+            222,
+            43
+          ],
+          "brightness_gain": 0.9675774134790528,
+          "distance_squared": 24.287795992714024,
+          "sha256": "4b123e69b1fc3abbf1b70c222334a82d418f479ba4411ac967cbcdf3efa10c59"
+        },
+        {
+          "capture_index": 15,
+          "source_cell": 0,
+          "rgb": [
+            18,
+            225,
+            43
+          ],
+          "brightness_gain": 0.9805100182149362,
+          "distance_squared": 17.145719489981786,
+          "sha256": "886334e1d33f66568491accc7eaa4e1891ab93ec0c0f7927f7e7d0f2a86afec6"
+        }
+      ]
+    }
+  ],
+  "fixture_hashes": {
+    "data.lua": "1f14781604a1ef7fd5b8da95b7566bc7691f1583250d3f419d21d51e3b148e16",
+    "native-data.lua": "e22318dcba475b84c51ba12af75c6ad114cff5bf7be1e0c43eea7399c03ccb2a",
+    "control.lua": "d4b9b6bf9e77a05abd1c147b0ea2f66e715e25f48e2ef8fd6632fe99a665ca9c",
+    "spec.lua": "61ee46071bc0f6faadc575a2ba4270cff7ffe8a99bd15eda63e67587a689ddb5"
+  },
+  "scope": "Actual native half-second snapshots traverse all eight working cells at one cell per second in each direction. Source/GLB separately prove eight-second loop closure; a stopped single native craft does not establish a continuous-loop boundary. Private counters are excluded from final artwork."
+}

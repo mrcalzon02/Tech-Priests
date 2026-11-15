@@ -1,0 +1,55 @@
+{
+  "schema": "fmpl.witness.visual-readback.v12",
+  "passed": true,
+  "actual_cycles_render": true,
+  "frame": 25,
+  "source_blend_sha256": "724175240b04311637904348c29fa435914f08e705975737bf44370439e7a24f",
+  "single_original_camera": true,
+  "visible_bubble_meshes": 24,
+  "visible_foam_meshes": 26,
+  "minimum_bubble_pixels_per_tank": 12,
+  "minimum_foam_pixels_per_tank": 12,
+  "rgb_change_threshold": 0.045,
+  "samples_per_pixel": 24,
+  "images": {
+    "all-effects.png": "b3ad8c0a454a8b7de8a625e42219be7bddfec990314b86969b9dc35f5b6b0ad2",
+    "no-bubbles.png": "4bb20329b7ebe92f2de69648d6095ac2732dceb1671c877d79cac26bd844abf2",
+    "no-foam.png": "c09d60c47e452929c0848e691e2adaab0c37203fa61f63e54be54ce6c7cd5a62"
+  },
+  "tanks": {
+    "raw_water": {
+      "roi": [
+        208,
+        314,
+        277,
+        426
+      ],
+      "bubble_contribution": {
+        "changed_pixels": 212,
+        "maximum_color_delta": 0.4588
+      },
+      "foam_contribution": {
+        "changed_pixels": 317,
+        "maximum_color_delta": 0.4
+      }
+    },
+    "clean_water": {
+      "roi": [
+        271,
+        314,
+        337,
+        426
+      ],
+      "bubble_contribution": {
+        "changed_pixels": 213,
+        "maximum_color_delta": 0.4824
+      },
+      "foam_contribution": {
+        "changed_pixels": 315,
+        "maximum_color_delta": 0.4471
+      }
+    }
+  },
+  "owner_approved": false,
+  "native_factorio_fluidbox_verified": false
+}

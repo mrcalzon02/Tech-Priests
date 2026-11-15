@@ -1,0 +1,2289 @@
+{
+  "requested": [
+    {
+      "path": "tp-mh7-fabricator-review/north-case0-frame0.png",
+      "tick": 180,
+      "direction": "north",
+      "case": 0,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame0.png",
+      "tick": 180,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.0944444444444445,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case2-frame0.png",
+      "tick": 180,
+      "direction": "north",
+      "case": 2,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case3-frame0.png",
+      "tick": 180,
+      "direction": "north",
+      "case": 3,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case4-frame0.png",
+      "tick": 180,
+      "direction": "north",
+      "case": 4,
+      "crafting": true,
+      "progress": 0.0944444444444445,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case0-frame0.png",
+      "tick": 180,
+      "direction": "east",
+      "case": 0,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame0.png",
+      "tick": 180,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.0944444444444445,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case2-frame0.png",
+      "tick": 180,
+      "direction": "east",
+      "case": 2,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case3-frame0.png",
+      "tick": 180,
+      "direction": "east",
+      "case": 3,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case4-frame0.png",
+      "tick": 180,
+      "direction": "east",
+      "case": 4,
+      "crafting": true,
+      "progress": 0.0944444444444445,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case0-frame0.png",
+      "tick": 180,
+      "direction": "south",
+      "case": 0,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame0.png",
+      "tick": 180,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.0944444444444445,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case2-frame0.png",
+      "tick": 180,
+      "direction": "south",
+      "case": 2,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case3-frame0.png",
+      "tick": 180,
+      "direction": "south",
+      "case": 3,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case4-frame0.png",
+      "tick": 180,
+      "direction": "south",
+      "case": 4,
+      "crafting": true,
+      "progress": 0.0944444444444445,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case0-frame0.png",
+      "tick": 180,
+      "direction": "west",
+      "case": 0,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame0.png",
+      "tick": 180,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.0944444444444445,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case2-frame0.png",
+      "tick": 180,
+      "direction": "west",
+      "case": 2,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case3-frame0.png",
+      "tick": 180,
+      "direction": "west",
+      "case": 3,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case4-frame0.png",
+      "tick": 180,
+      "direction": "west",
+      "case": 4,
+      "crafting": true,
+      "progress": 0.0944444444444445,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame1.png",
+      "tick": 210,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.13611111111111104,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame1.png",
+      "tick": 210,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.13611111111111104,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame1.png",
+      "tick": 210,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.13611111111111104,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame1.png",
+      "tick": 210,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.13611111111111104,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame2.png",
+      "tick": 240,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.17777777777777756,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame2.png",
+      "tick": 240,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.17777777777777756,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame2.png",
+      "tick": 240,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.17777777777777756,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame2.png",
+      "tick": 240,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.17777777777777756,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame3.png",
+      "tick": 270,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.21944444444444405,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame3.png",
+      "tick": 270,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.21944444444444405,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame3.png",
+      "tick": 270,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.21944444444444405,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame3.png",
+      "tick": 270,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.21944444444444405,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame4.png",
+      "tick": 300,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.26111111111111057,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame4.png",
+      "tick": 300,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.26111111111111057,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame4.png",
+      "tick": 300,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.26111111111111057,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame4.png",
+      "tick": 300,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.26111111111111057,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame5.png",
+      "tick": 330,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3027777777777771,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame5.png",
+      "tick": 330,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3027777777777771,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame5.png",
+      "tick": 330,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3027777777777771,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame5.png",
+      "tick": 330,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3027777777777771,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame6.png",
+      "tick": 360,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.34444444444444366,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame6.png",
+      "tick": 360,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.34444444444444366,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame6.png",
+      "tick": 360,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.34444444444444366,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame6.png",
+      "tick": 360,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.34444444444444366,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame7.png",
+      "tick": 390,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3861111111111102,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame7.png",
+      "tick": 390,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3861111111111102,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame7.png",
+      "tick": 390,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3861111111111102,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame7.png",
+      "tick": 390,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3861111111111102,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame8.png",
+      "tick": 420,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.4277777777777767,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame8.png",
+      "tick": 420,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.4277777777777767,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame8.png",
+      "tick": 420,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.4277777777777767,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame8.png",
+      "tick": 420,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.4277777777777767,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame9.png",
+      "tick": 450,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.4694444444444432,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame9.png",
+      "tick": 450,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.4694444444444432,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame9.png",
+      "tick": 450,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.4694444444444432,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame9.png",
+      "tick": 450,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.4694444444444432,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame10.png",
+      "tick": 480,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5111111111111097,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame10.png",
+      "tick": 480,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5111111111111097,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame10.png",
+      "tick": 480,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5111111111111097,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame10.png",
+      "tick": 480,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5111111111111097,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame11.png",
+      "tick": 510,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5527777777777763,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame11.png",
+      "tick": 510,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5527777777777763,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame11.png",
+      "tick": 510,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5527777777777763,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame11.png",
+      "tick": 510,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5527777777777763,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame12.png",
+      "tick": 540,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5944444444444428,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame12.png",
+      "tick": 540,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5944444444444428,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame12.png",
+      "tick": 540,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5944444444444428,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame12.png",
+      "tick": 540,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5944444444444428,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame13.png",
+      "tick": 570,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6361111111111093,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame13.png",
+      "tick": 570,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6361111111111093,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame13.png",
+      "tick": 570,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6361111111111093,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame13.png",
+      "tick": 570,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6361111111111093,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame14.png",
+      "tick": 600,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6777777777777764,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame14.png",
+      "tick": 600,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6777777777777764,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame14.png",
+      "tick": 600,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6777777777777764,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame14.png",
+      "tick": 600,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6777777777777764,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame15.png",
+      "tick": 630,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7194444444444451,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame15.png",
+      "tick": 630,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7194444444444451,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame15.png",
+      "tick": 630,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7194444444444451,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame15.png",
+      "tick": 630,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7194444444444451,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame16.png",
+      "tick": 660,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7611111111111138,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame16.png",
+      "tick": 660,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7611111111111138,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame16.png",
+      "tick": 660,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7611111111111138,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame16.png",
+      "tick": 660,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7611111111111138,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame17.png",
+      "tick": 690,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8027777777777827,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame17.png",
+      "tick": 690,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8027777777777827,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame17.png",
+      "tick": 690,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8027777777777827,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame17.png",
+      "tick": 690,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8027777777777827,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame18.png",
+      "tick": 720,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8444444444444514,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame18.png",
+      "tick": 720,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8444444444444514,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame18.png",
+      "tick": 720,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8444444444444514,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame18.png",
+      "tick": 720,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8444444444444514,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame19.png",
+      "tick": 750,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8861111111111202,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame19.png",
+      "tick": 750,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8861111111111202,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame19.png",
+      "tick": 750,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8861111111111202,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame19.png",
+      "tick": 750,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8861111111111202,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame20.png",
+      "tick": 780,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9277777777777889,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame20.png",
+      "tick": 780,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9277777777777889,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame20.png",
+      "tick": 780,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9277777777777889,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame20.png",
+      "tick": 780,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9277777777777889,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame21.png",
+      "tick": 810,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9694444444444577,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame21.png",
+      "tick": 810,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9694444444444577,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame21.png",
+      "tick": 810,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9694444444444577,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame21.png",
+      "tick": 810,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9694444444444577,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame22.png",
+      "tick": 840,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.011111111111125697,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame22.png",
+      "tick": 840,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.011111111111125697,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame22.png",
+      "tick": 840,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.011111111111125697,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame22.png",
+      "tick": 840,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.011111111111125697,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame23.png",
+      "tick": 870,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.052777777777792384,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame23.png",
+      "tick": 870,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.052777777777792384,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame23.png",
+      "tick": 870,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.052777777777792384,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame23.png",
+      "tick": 870,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.052777777777792384,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame24.png",
+      "tick": 900,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.0944444444444591,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame24.png",
+      "tick": 900,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.0944444444444591,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame24.png",
+      "tick": 900,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.0944444444444591,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame24.png",
+      "tick": 900,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.0944444444444591,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame25.png",
+      "tick": 930,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.13611111111112564,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame25.png",
+      "tick": 930,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.13611111111112564,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame25.png",
+      "tick": 930,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.13611111111112564,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame25.png",
+      "tick": 930,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.13611111111112564,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame26.png",
+      "tick": 960,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.17777777777779216,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame26.png",
+      "tick": 960,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.17777777777779216,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame26.png",
+      "tick": 960,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.17777777777779216,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame26.png",
+      "tick": 960,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.17777777777779216,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame27.png",
+      "tick": 990,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.21944444444445868,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame27.png",
+      "tick": 990,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.21944444444445868,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame27.png",
+      "tick": 990,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.21944444444445868,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame27.png",
+      "tick": 990,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.21944444444445868,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame28.png",
+      "tick": 1020,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.2611111111111252,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame28.png",
+      "tick": 1020,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.2611111111111252,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame28.png",
+      "tick": 1020,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.2611111111111252,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame28.png",
+      "tick": 1020,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.2611111111111252,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame29.png",
+      "tick": 1050,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.30277777777779175,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame29.png",
+      "tick": 1050,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.30277777777779175,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame29.png",
+      "tick": 1050,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.30277777777779175,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame29.png",
+      "tick": 1050,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.30277777777779175,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame30.png",
+      "tick": 1080,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.34444444444445826,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame30.png",
+      "tick": 1080,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.34444444444445826,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame30.png",
+      "tick": 1080,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.34444444444445826,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame30.png",
+      "tick": 1080,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.34444444444445826,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame31.png",
+      "tick": 1110,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3861111111111248,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame31.png",
+      "tick": 1110,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3861111111111248,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame31.png",
+      "tick": 1110,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3861111111111248,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame31.png",
+      "tick": 1110,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.3861111111111248,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame32.png",
+      "tick": 1140,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.42777777777779125,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame32.png",
+      "tick": 1140,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.42777777777779125,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame32.png",
+      "tick": 1140,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.42777777777779125,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame32.png",
+      "tick": 1140,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.42777777777779125,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame33.png",
+      "tick": 1170,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.46944444444445776,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame33.png",
+      "tick": 1170,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.46944444444445776,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame33.png",
+      "tick": 1170,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.46944444444445776,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame33.png",
+      "tick": 1170,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.46944444444445776,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame34.png",
+      "tick": 1200,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5111111111111243,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame34.png",
+      "tick": 1200,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5111111111111243,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame34.png",
+      "tick": 1200,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5111111111111243,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame34.png",
+      "tick": 1200,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5111111111111243,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame35.png",
+      "tick": 1230,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5527777777777908,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame35.png",
+      "tick": 1230,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5527777777777908,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame35.png",
+      "tick": 1230,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5527777777777908,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame35.png",
+      "tick": 1230,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5527777777777908,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame36.png",
+      "tick": 1260,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5944444444444573,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame36.png",
+      "tick": 1260,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5944444444444573,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame36.png",
+      "tick": 1260,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5944444444444573,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame36.png",
+      "tick": 1260,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.5944444444444573,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame37.png",
+      "tick": 1290,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6361111111111238,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame37.png",
+      "tick": 1290,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6361111111111238,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame37.png",
+      "tick": 1290,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6361111111111238,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame37.png",
+      "tick": 1290,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.6361111111111238,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame38.png",
+      "tick": 1320,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.677777777777791,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame38.png",
+      "tick": 1320,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.677777777777791,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame38.png",
+      "tick": 1320,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.677777777777791,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame38.png",
+      "tick": 1320,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.677777777777791,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame39.png",
+      "tick": 1350,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7194444444444598,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame39.png",
+      "tick": 1350,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7194444444444598,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame39.png",
+      "tick": 1350,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7194444444444598,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame39.png",
+      "tick": 1350,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7194444444444598,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame40.png",
+      "tick": 1380,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7611111111111285,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame40.png",
+      "tick": 1380,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7611111111111285,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame40.png",
+      "tick": 1380,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7611111111111285,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame40.png",
+      "tick": 1380,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.7611111111111285,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame41.png",
+      "tick": 1410,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8027777777777972,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame41.png",
+      "tick": 1410,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8027777777777972,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame41.png",
+      "tick": 1410,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8027777777777972,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame41.png",
+      "tick": 1410,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8027777777777972,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame42.png",
+      "tick": 1440,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.844444444444466,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame42.png",
+      "tick": 1440,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.844444444444466,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame42.png",
+      "tick": 1440,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.844444444444466,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame42.png",
+      "tick": 1440,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.844444444444466,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame43.png",
+      "tick": 1470,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8861111111111347,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame43.png",
+      "tick": 1470,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8861111111111347,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame43.png",
+      "tick": 1470,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8861111111111347,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame43.png",
+      "tick": 1470,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.8861111111111347,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame44.png",
+      "tick": 1500,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9277777777778035,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame44.png",
+      "tick": 1500,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9277777777778035,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame44.png",
+      "tick": 1500,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9277777777778035,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame44.png",
+      "tick": 1500,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9277777777778035,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame45.png",
+      "tick": 1530,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9694444444444722,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame45.png",
+      "tick": 1530,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9694444444444722,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame45.png",
+      "tick": 1530,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9694444444444722,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame45.png",
+      "tick": 1530,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.9694444444444722,
+      "products_finished": 1
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame46.png",
+      "tick": 1560,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.011111111111140352,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame46.png",
+      "tick": 1560,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.011111111111140352,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame46.png",
+      "tick": 1560,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.011111111111140352,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame46.png",
+      "tick": 1560,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.011111111111140352,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame47.png",
+      "tick": 1590,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.05277777777780704,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame47.png",
+      "tick": 1590,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.05277777777780704,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame47.png",
+      "tick": 1590,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.05277777777780704,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame47.png",
+      "tick": 1590,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.05277777777780704,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case0-frame48.png",
+      "tick": 1620,
+      "direction": "north",
+      "case": 0,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case1-frame48.png",
+      "tick": 1620,
+      "direction": "north",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.09444444444447375,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case2-frame48.png",
+      "tick": 1620,
+      "direction": "north",
+      "case": 2,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case3-frame48.png",
+      "tick": 1620,
+      "direction": "north",
+      "case": 3,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/north-case4-frame48.png",
+      "tick": 1620,
+      "direction": "north",
+      "case": 4,
+      "crafting": true,
+      "progress": 0.09444444444447375,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case0-frame48.png",
+      "tick": 1620,
+      "direction": "east",
+      "case": 0,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case1-frame48.png",
+      "tick": 1620,
+      "direction": "east",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.09444444444447375,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case2-frame48.png",
+      "tick": 1620,
+      "direction": "east",
+      "case": 2,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case3-frame48.png",
+      "tick": 1620,
+      "direction": "east",
+      "case": 3,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/east-case4-frame48.png",
+      "tick": 1620,
+      "direction": "east",
+      "case": 4,
+      "crafting": true,
+      "progress": 0.09444444444447375,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case0-frame48.png",
+      "tick": 1620,
+      "direction": "south",
+      "case": 0,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case1-frame48.png",
+      "tick": 1620,
+      "direction": "south",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.09444444444447375,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case2-frame48.png",
+      "tick": 1620,
+      "direction": "south",
+      "case": 2,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case3-frame48.png",
+      "tick": 1620,
+      "direction": "south",
+      "case": 3,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/south-case4-frame48.png",
+      "tick": 1620,
+      "direction": "south",
+      "case": 4,
+      "crafting": true,
+      "progress": 0.09444444444447375,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case0-frame48.png",
+      "tick": 1620,
+      "direction": "west",
+      "case": 0,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case1-frame48.png",
+      "tick": 1620,
+      "direction": "west",
+      "case": 1,
+      "crafting": true,
+      "progress": 0.09444444444447375,
+      "products_finished": 2
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case2-frame48.png",
+      "tick": 1620,
+      "direction": "west",
+      "case": 2,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case3-frame48.png",
+      "tick": 1620,
+      "direction": "west",
+      "case": 3,
+      "crafting": false,
+      "progress": 0,
+      "products_finished": 0
+    },
+    {
+      "path": "tp-mh7-fabricator-review/west-case4-frame48.png",
+      "tick": 1620,
+      "direction": "west",
+      "case": 4,
+      "crafting": true,
+      "progress": 0.09444444444447375,
+      "products_finished": 2
+    }
+  ],
+  "screenshots": {
+    "tp-mh7-fabricator-review/north-case0-frame0.png": "df12c410b5ecb5b66b5968d41e277e4036ff0fa1952045d0c0b9fd00e414a3ee",
+    "tp-mh7-fabricator-review/north-case1-frame0.png": "9fe130cb836b6a73a3bfc154674b2ea0638c8f1b8c5dab302b853497ba6b3ecd",
+    "tp-mh7-fabricator-review/north-case2-frame0.png": "5f8bda20d4bff044818d5de475e7f496c51affa920fed2ec2536f4e1d7fe161a",
+    "tp-mh7-fabricator-review/north-case3-frame0.png": "7db33e8115e48ceafadcda889d4c84951b445f2a0177ac67380edd9ebd1247ef",
+    "tp-mh7-fabricator-review/north-case4-frame0.png": "a691e13389a31bff441d62e077a7c3c04183c2fc3577ba799b57409fc7207ff4",
+    "tp-mh7-fabricator-review/east-case0-frame0.png": "6ac073b1b13a7f7c59717b47a1978637c2769c8bd4217d0d281ebd2f9bc490c1",
+    "tp-mh7-fabricator-review/east-case1-frame0.png": "25057f69e8ae9d4ba9940b4e2bcdda74afdd7194ed33bcebb79d2c26490cf4e5",
+    "tp-mh7-fabricator-review/east-case2-frame0.png": "212654f81701ff4aee8784b1900df27bc072b69e791555522e9493381b0cb845",
+    "tp-mh7-fabricator-review/east-case3-frame0.png": "436d50dcfcd6c9923527db444ad56d2a7d07d3258c7e68e76e765ec660926fc3",
+    "tp-mh7-fabricator-review/east-case4-frame0.png": "79b86bec22d2c1f52993466df65ebb05580e580eebf195e84924f08501fae8b1",
+    "tp-mh7-fabricator-review/south-case0-frame0.png": "cfa52f0c3059c40db7614415b163be82686028cfd9072ea450615f724dcd3701",
+    "tp-mh7-fabricator-review/south-case1-frame0.png": "5f383b8bf1d162948b9f9975b02d8314444cc015267bb33b6d13f6e55376f7c7",
+    "tp-mh7-fabricator-review/south-case2-frame0.png": "7cce39da3d29b45d7b5a8d361c42b8cb744e40a79d6bf9947eee5a5af94f7e49",
+    "tp-mh7-fabricator-review/south-case3-frame0.png": "e71e9e2802170eaa37949b0a3533c82179beab54179592986bf5bf80193c19ac",
+    "tp-mh7-fabricator-review/south-case4-frame0.png": "3c1ad247160a1789d367d77ed362cb0bf970002142e02e674789f7b712280f79",
+    "tp-mh7-fabricator-review/west-case0-frame0.png": "31c6ba08f52cc610059c374ebc60199063b82611a1e85d375384ed058a7ab09d",
+    "tp-mh7-fabricator-review/west-case1-frame0.png": "67dd96f0bc8af919f6fb470c55e8bb9c00e05c5051b70bd9d0fea6dc188260cd",
+    "tp-mh7-fabricator-review/west-case2-frame0.png": "d10974a35c0232cbafb4c3e988c6a781f498cf9238d7cc9cf9c133e83c9b0ef4",
+    "tp-mh7-fabricator-review/west-case3-frame0.png": "7fb20dc977801c1c84ebe4162541951ec0993a117018c2f747105866f3775bf2",
+    "tp-mh7-fabricator-review/west-case4-frame0.png": "22c17efbdf76a6bfe1931bcfe8db5f02ec74f60824589cdd95b6dc6471f674c2",
+    "tp-mh7-fabricator-review/north-case1-frame1.png": "aea96b44610b6b7158ef5a1b849399dba9a7155e05457919751c081753efe187",
+    "tp-mh7-fabricator-review/east-case1-frame1.png": "aa0cabf7382a9c317db24cbbdfa4c707fac4cd5975b81d6a3ff8bc9ebb0f80c8",
+    "tp-mh7-fabricator-review/south-case1-frame1.png": "115b0e0f0746aab04918f1007ab44950e573dfdc93cc61e4f65c97c420974e2f",
+    "tp-mh7-fabricator-review/west-case1-frame1.png": "1024a451bcc63e877b4ddccbc8fdd5c03984e545bb5bf026fc9be52f18e31a6c",
+    "tp-mh7-fabricator-review/north-case1-frame2.png": "b1933d71587cca4393a00024259468929f7dc3dd0177408fe927e7dcbd152a0b",
+    "tp-mh7-fabricator-review/east-case1-frame2.png": "e5eef6f15a62fcd375f2093d1aebeec6d5ec463be87d32d2c000b55d58340b8b",
+    "tp-mh7-fabricator-review/south-case1-frame2.png": "0037ea9af7cd3a68738e2833f1c59ba7606a870e1b1c5a1a194d007f1785239f",
+    "tp-mh7-fabricator-review/west-case1-frame2.png": "0bab4a294a2b6b8317855d6bdbe1bd02acfcd99f9a9fbfaca9520156f3e43a90",
+    "tp-mh7-fabricator-review/north-case1-frame3.png": "3d4d5025b7552650f5a0d389d63a79fdb9dcb2b43fab74bb6e62c230a44fc9e5",
+    "tp-mh7-fabricator-review/east-case1-frame3.png": "2778eb3b56884efc024626036b88e738253d7b4cfeedaeb09fab7d22ed975cbb",
+    "tp-mh7-fabricator-review/south-case1-frame3.png": "c41b0b65ae2428d86f3260281f866edcc39ff6033a51d8c651cb9bf8a6e0bddc",
+    "tp-mh7-fabricator-review/west-case1-frame3.png": "e8881acb69d0e41eadf3b30e8fc1c166316dbed4e8687020e6b95cd5f95b4a79",
+    "tp-mh7-fabricator-review/north-case1-frame4.png": "26b9b86a1c56863075a18e02bfc3f80a749c5e6cd9a57d27202a42254b4e5cee",
+    "tp-mh7-fabricator-review/east-case1-frame4.png": "0dbd69661ee37e7244e5736595b404722b3167497a5f9880658b42992e9b5d0d",
+    "tp-mh7-fabricator-review/south-case1-frame4.png": "d2ace80ba87ef2281a385b23cd52656a0c5d5ee3ba827c7ff5edd10748b1944b",
+    "tp-mh7-fabricator-review/west-case1-frame4.png": "5ea82d897857697f5f825d622cc600cfa554f76027e4214b0586f53cb5a9640f",
+    "tp-mh7-fabricator-review/north-case1-frame5.png": "2b74148f61fd9b54492829d84bdb822de00477ad1281edfe2b949b2796238cd7",
+    "tp-mh7-fabricator-review/east-case1-frame5.png": "5f44d302d77b3b55c1b7402d68efdc247c454d069950807b3df688638f66f11b",
+    "tp-mh7-fabricator-review/south-case1-frame5.png": "e382b720495bcb997074b5d1433c633fc4461a126a15863a8ed893545a10351a",
+    "tp-mh7-fabricator-review/west-case1-frame5.png": "2d9f3ca14ba70112b4a8cb808293d2fa37acd0d67ae102634cae2710e15dcf32",
+    "tp-mh7-fabricator-review/north-case1-frame6.png": "c749dbc17b5c531973e888ffcee40a4a77788b82bb982b81169a35f794d63094",
+    "tp-mh7-fabricator-review/east-case1-frame6.png": "c689a3f8a58fdd42739e613061043daf5e8c891e93a22da05e8233fc60e7f2c4",
+    "tp-mh7-fabricator-review/south-case1-frame6.png": "753154193b43f5365d9e82d39178c17964b771e4364b73e4071b98d3d1b6f90d",
+    "tp-mh7-fabricator-review/west-case1-frame6.png": "abac667a021b3a5b58b64d464fadd9beeb65a6697f097855ee0dbbb9e898f44d",
+    "tp-mh7-fabricator-review/north-case1-frame7.png": "ba359d529d29aadf92b71fa42d9132576b0393aeaa2ef65dd01de445d8b011a5",
+    "tp-mh7-fabricator-review/east-case1-frame7.png": "b69605066a689f122afc927c2ecfd1db97115fd58912a0c82317a75ccd012361",
+    "tp-mh7-fabricator-review/south-case1-frame7.png": "6397b8fe39ae349ab1731e867e2eec31d891a8e667270c369aa72afdb3e66266",
+    "tp-mh7-fabricator-review/west-case1-frame7.png": "a48c4a10706be331eee92e5e21db65e2a6e228f9b0666275ae788e6f8e70ad6d",
+    "tp-mh7-fabricator-review/north-case1-frame8.png": "8f9c5dab80fbeb4b6daaebade1eeb51c317099bd7f8042b13d2c8c812a50c8f7",
+    "tp-mh7-fabricator-review/east-case1-frame8.png": "705e1bbdb031eb488885d2961ad5fa0224508b5e721a3ba411190301e8114a3d",
+    "tp-mh7-fabricator-review/south-case1-frame8.png": "dbdc5d1366752309b73f07bafcc369299a72f9b962d5a5778da7cbc10061ec6d",
+    "tp-mh7-fabricator-review/west-case1-frame8.png": "a6b413417e23660b6e6d9b95597039e718fc53daf44e081b9998863ccb0fe9b5",
+    "tp-mh7-fabricator-review/north-case1-frame9.png": "f3ed465c3d28af750266f53af6dd37e66b2d7e09a984ea29cb66f5b619cf99fd",
+    "tp-mh7-fabricator-review/east-case1-frame9.png": "663d7ab0054dc08e565f13a4ab6058dc08ff4adb438541ce4d54cc788bbc3765",
+    "tp-mh7-fabricator-review/south-case1-frame9.png": "60155bed09f5c2cbe1f5ec291fde9ca28d2ad5f19a005dbbe4be9f1d2f2bfb10",
+    "tp-mh7-fabricator-review/west-case1-frame9.png": "56b967a6a3374e95ae13b41efd16f90380df7e445f04a0e5268e714ba7c0580d",
+    "tp-mh7-fabricator-review/north-case1-frame10.png": "5e01691fc4d14aa27906086df6dc815c29c1ed21b3470ea92f8ce914145e7cab",
+    "tp-mh7-fabricator-review/east-case1-frame10.png": "038d9579735b6d064239adf4bac4554869d5fe7b943534cc87b6e71a3486708f",
+    "tp-mh7-fabricator-review/south-case1-frame10.png": "78672913607f37686ae3d863e1225d8319219ed68cfc4a4662922568204daf1d",
+    "tp-mh7-fabricator-review/west-case1-frame10.png": "d131e4268bb8c7fbae6e9f8c2a52fe74a66bcec050e2cdcbfd556bdc4edd93b1",
+    "tp-mh7-fabricator-review/north-case1-frame11.png": "5312dbca300ee72306b13ed4db1a053dd1ac0fee86e4950329a61b8419fd7854",
+    "tp-mh7-fabricator-review/east-case1-frame11.png": "689d167bd9237e0012229a1710138635768f47565febe12166c9b27b0162c9cf",
+    "tp-mh7-fabricator-review/south-case1-frame11.png": "5234fb63eba63161cda03a75f642564d1fb3e8455ecf2dcf13837c5b1edf7f91",
+    "tp-mh7-fabricator-review/west-case1-frame11.png": "da4c34b2ec1e55026dc264eae91d7ae7346c948b5f4a985dc9c6b59939bfa189",
+    "tp-mh7-fabricator-review/north-case1-frame12.png": "ad016fc0b219c1559c30f7cc2bd9aa3f516fc44690b91b38fd0bad1d41264798",
+    "tp-mh7-fabricator-review/east-case1-frame12.png": "381b6337c3b651c8af4d829c0bd0707cbd7be3defef3ab46c48c7729186bb890",
+    "tp-mh7-fabricator-review/south-case1-frame12.png": "600eb2730647bfe317892d46d74b648356d37ea4e1bd7ddd1f08a117b0da1f14",
+    "tp-mh7-fabricator-review/west-case1-frame12.png": "ba545fe7cfecb40648f3d9041f6c8bad0660db5da304ff3d8b4b40d279edba72",
+    "tp-mh7-fabricator-review/north-case1-frame13.png": "5d61ad3d43f1dc1641c3464dffd67a720cbdf71c6a88850e62ea42ec703a382f",
+    "tp-mh7-fabricator-review/east-case1-frame13.png": "2f1b5711babcd18cdde52159f204f8d76ef2c97e253c1d0c859dd166ce47ce56",
+    "tp-mh7-fabricator-review/south-case1-frame13.png": "40281ba093c0997af425dc941b737f4330c73111ea6a9023f2719d34f1067aab",
+    "tp-mh7-fabricator-review/west-case1-frame13.png": "ad12cce7765e84459255c4a47ae081fabcd313b3f5bf44207994a39d9aa65664",
+    "tp-mh7-fabricator-review/north-case1-frame14.png": "8f5be99d8523fd8eb0c4372fc89344ac26368ecc039fbd23f3e0d8c1cf7e3104",
+    "tp-mh7-fabricator-review/east-case1-frame14.png": "e34b23de93173186f48cf19674a8ae9e0c3ab881fd491d395ceec5f124208edf",
+    "tp-mh7-fabricator-review/south-case1-frame14.png": "0e47a75e19565b5756e8831ed1e7d4349da2230477bc59e5913238656fe5fb5f",
+    "tp-mh7-fabricator-review/west-case1-frame14.png": "e7df44410224fb0010b0e75239fc8b24d72d06cc194c678e018ba619156a1d5e",
+    "tp-mh7-fabricator-review/north-case1-frame15.png": "f1647223304a63f227fa1cae719d09a615b1996272a03569136134df9364e7e4",
+    "tp-mh7-fabricator-review/east-case1-frame15.png": "99a5ba938175c7d71bd6d7ed8cf4dd12617b59a78659fb6c827033fdda672f06",
+    "tp-mh7-fabricator-review/south-case1-frame15.png": "70abc410231482b9ca4c7959d230444207e01a450040261b8e07fc5e88e3e595",
+    "tp-mh7-fabricator-review/west-case1-frame15.png": "bca26359db9bb3e0c7d621aad7ae02da5f2fa5f080e88e2b5d71ab36d0f0c7e9",
+    "tp-mh7-fabricator-review/north-case1-frame16.png": "6690a1673d593267c7587b5915a5dcf7d639279548e9077d7164ae56a37ca5fe",
+    "tp-mh7-fabricator-review/east-case1-frame16.png": "1de4be89e0e302801f33d652118423bc7c4a63b539075dac98e5bd340c5e91bf",
+    "tp-mh7-fabricator-review/south-case1-frame16.png": "7c252af2158129194623b204d491448df6be984ae59799f730bcbac8376c8aaf",
+    "tp-mh7-fabricator-review/west-case1-frame16.png": "c798306eb75409e92010e6e28960103cba40ec545983097dad1efe60bf583d66",
+    "tp-mh7-fabricator-review/north-case1-frame17.png": "6dbbdadf559b410e5e0953e79689b3255b5b486ba9bb206ccf74e2865bff5bef",
+    "tp-mh7-fabricator-review/east-case1-frame17.png": "ca36144cdb475352c40172adecbc0f278669883d5832a65a775be7e4515403e7",
+    "tp-mh7-fabricator-review/south-case1-frame17.png": "484ae16c696e2ef64d129485377ed6bbd303d312efca7e8f8ef817630fba7206",
+    "tp-mh7-fabricator-review/west-case1-frame17.png": "8c4f77b42ad067046a559da98e13a4d539701e49cd0eba89b4c236a63804f53e",
+    "tp-mh7-fabricator-review/north-case1-frame18.png": "5fd09258b7294effe33ee5dfb8fd5805df2043d6498fbcca056406b955f08a82",
+    "tp-mh7-fabricator-review/east-case1-frame18.png": "984c2fc73e6e11d29821dd97a8c435c1382f84bbcaf054a893ed641cf336ed09",
+    "tp-mh7-fabricator-review/south-case1-frame18.png": "3729b3b8202a10e254c892035c537769ff5abc2c250ca550679468105afb47b8",
+    "tp-mh7-fabricator-review/west-case1-frame18.png": "af84e40e7c99c68d5ff93a8426a859e80901ca20ef5609fdea96d51f5a52064e",
+    "tp-mh7-fabricator-review/north-case1-frame19.png": "8be35039da7362c43f5fb59e0ec2f2eaa6471c940a0a29e4233d3dbf50a1fbad",
+    "tp-mh7-fabricator-review/east-case1-frame19.png": "9077d015320bb4d27ae4fef80dc9c3e581a4022a9d94509ce7f191acb3e05cd6",
+    "tp-mh7-fabricator-review/south-case1-frame19.png": "1ecf83985a0d114f9a468705e5a03c994a631cc86dbb81fdcea9620490ae0fdb",
+    "tp-mh7-fabricator-review/west-case1-frame19.png": "3f48e27d965b2906f2d3a59248672e40bc710659164f18f3bb4fd0d0308b0a37",
+    "tp-mh7-fabricator-review/north-case1-frame20.png": "5e9413d205e0fd312356972622d2d7decebc26495a82e0f0323ac469e086a159",
+    "tp-mh7-fabricator-review/east-case1-frame20.png": "df9a82e2ea3212fcaae2b82b569b74c9686dedb9abc656ef9d6e4a1b2fc7e98d",
+    "tp-mh7-fabricator-review/south-case1-frame20.png": "a24ab5b6359922f0afc93be6c4e6ee16d4029b43954629a3a39a4a69c77e1fb7",
+    "tp-mh7-fabricator-review/west-case1-frame20.png": "af09a5a2d7a0c00bd2ef5c79f34e86eba7c3d02e3b2369a4230f01826ea03dc5",
+    "tp-mh7-fabricator-review/north-case1-frame21.png": "8ab945d2b282db9946b3e14c34a2be0f8130d3d6de62a272f7ab58728291fc22",
+    "tp-mh7-fabricator-review/east-case1-frame21.png": "fb59fe74c9b073a50aff309a37385640259b382397d216328d492d6b5381f429",
+    "tp-mh7-fabricator-review/south-case1-frame21.png": "2633d1b5553b6f881848096fe09cbbe7cedfa76e4bee1bbd41e8301764b061b6",
+    "tp-mh7-fabricator-review/west-case1-frame21.png": "1999357937e7562cae7bc949192eb9525d68d1beec2ebec6168ce14f1a4d50bd",
+    "tp-mh7-fabricator-review/north-case1-frame22.png": "f70f87577a7907ad54e43f64f87c24daeb91157f8770dccc4d29b3a1d2c6cb39",
+    "tp-mh7-fabricator-review/east-case1-frame22.png": "1e588777563203ae1b0221c6da40d96cdfaeb534ab60d96430a3e5550baff172",
+    "tp-mh7-fabricator-review/south-case1-frame22.png": "6591972b0db6ec883cafd58f931eddf75157cb6665f77759149c730f5541c10b",
+    "tp-mh7-fabricator-review/west-case1-frame22.png": "af1b4f043a8965a2b1750d4b240b58be40cc3c7fc1929c6d023826490e255fab",
+    "tp-mh7-fabricator-review/north-case1-frame23.png": "c2a842d3bd17ea72784db77a4650dbfc0fe35cbc63f65557dbbfce9a2702cb0f",
+    "tp-mh7-fabricator-review/east-case1-frame23.png": "8aac20bc1220650d155bb69b62909d9a5b14f61a4e61fb6ec38cb6d00e50eca3",
+    "tp-mh7-fabricator-review/south-case1-frame23.png": "b98e83043fd987456f66e5deca6013819c4aff216e278b61395de16844a81831",
+    "tp-mh7-fabricator-review/west-case1-frame23.png": "bfa930141b98a980e76b225d7fb4c02f1d89c474067b961a48f20e47b1d07a65",
+    "tp-mh7-fabricator-review/north-case1-frame24.png": "29d8d301f17aab04d33993d1915b8c29114073496b6ccdc86a12ddb5e239a3c3",
+    "tp-mh7-fabricator-review/east-case1-frame24.png": "7a2969c73cd26be8c980cd8751c64966089a0799b62b71b3c8e8839302136cb0",
+    "tp-mh7-fabricator-review/south-case1-frame24.png": "6d602d5c9f6139e42355c6eacd1c75036f8d712d715989011b3e3f243fbab23a",
+    "tp-mh7-fabricator-review/west-case1-frame24.png": "667cfac86659726b2267811eb8bc794f6861a48b40772e2786b845c3885579f0",
+    "tp-mh7-fabricator-review/north-case1-frame25.png": "ba397360dc0451ac914c1842027682ff49c515bdbcdcd98d3552f2e5c601ca4a",
+    "tp-mh7-fabricator-review/east-case1-frame25.png": "e5b68269745f47b40dd2fee89ef206025f25a29cb35f06a6adbf771f80453f6f",
+    "tp-mh7-fabricator-review/south-case1-frame25.png": "b17ee1135515ca340abe776c7301abd1c3a5b0c147b3407d9f7eac0e58012ece",
+    "tp-mh7-fabricator-review/west-case1-frame25.png": "9aad1f4d382139423b50ce2a089ed79e43d51b9f087df3178094b733d95ff1d5",
+    "tp-mh7-fabricator-review/north-case1-frame26.png": "74aec46b07d410748400b881117ffe09c20e966fc9ab854e1670fe312d3650fa",
+    "tp-mh7-fabricator-review/east-case1-frame26.png": "8d8ebd9db8667f11afb91720e0cd73cde0cc89ba43067491669cbd82b85d7378",
+    "tp-mh7-fabricator-review/south-case1-frame26.png": "0780f6a5a08f83e2fb655036b83ea8ec86f60710c5fe25bd90a44fdea3a33c61",
+    "tp-mh7-fabricator-review/west-case1-frame26.png": "41fb3424e30d7eca542f3881e5e22dc36a48910a481ac5b5b91fad4ef52124df",
+    "tp-mh7-fabricator-review/north-case1-frame27.png": "2f9cf81d1d3f42cce7384c21dee34231b822de355dd221646c60a2d15a227279",
+    "tp-mh7-fabricator-review/east-case1-frame27.png": "d586026ef6e4f23f5e0771aa83e0f921e72ef8761a388b05f7b546ca1a3a65ab",
+    "tp-mh7-fabricator-review/south-case1-frame27.png": "7fdc7f6c606bda429fdb77f3ccfd02299384e5ac5e0123aaed2e1bb32d16e6f6",
+    "tp-mh7-fabricator-review/west-case1-frame27.png": "f7f0c3a6d140c5f21412ad32fe8005e2efb1dfb030b5b46e5fa1af2fb7853858",
+    "tp-mh7-fabricator-review/north-case1-frame28.png": "12bc5616e5fc7305bdfa529c17fe15841ff68f11820740c76108a5c6c96c928c",
+    "tp-mh7-fabricator-review/east-case1-frame28.png": "22e4d65c512af2ae35cb7e6300e2c7564189f0c3abde60c3d0238aa7cb075bd9",
+    "tp-mh7-fabricator-review/south-case1-frame28.png": "5b98a870451f275e1df47f97cd3962fc8e8aa8511dbdeea790b333c10cd61eba",
+    "tp-mh7-fabricator-review/west-case1-frame28.png": "df748932af424c53dac7a496ce7cbf189a581f903f7f8b66220f8b7b558b5b3a",
+    "tp-mh7-fabricator-review/north-case1-frame29.png": "7613236e5fbd380c29deda3a5db1115e919af2766f50fbc5033bfca6c4bc65ca",
+    "tp-mh7-fabricator-review/east-case1-frame29.png": "b4c838977719403e93814b6a86df87c1a8a6c74a6e35002cbc556aca5448da2b",
+    "tp-mh7-fabricator-review/south-case1-frame29.png": "4874e88c74ac14a0c9c78908f6da57eb752825ffa9830f6b38b462a40b3dcf3a",
+    "tp-mh7-fabricator-review/west-case1-frame29.png": "df748932af424c53dac7a496ce7cbf189a581f903f7f8b66220f8b7b558b5b3a",
+    "tp-mh7-fabricator-review/north-case1-frame30.png": "4d39180112ef2dec32b1995a50a56e9c045940ac74ac57ec0ed7d05f6ff5b758",
+    "tp-mh7-fabricator-review/east-case1-frame30.png": "dced6ad586414deab397175f73687b91a318e915b6b4ec883073f51b054f16a8",
+    "tp-mh7-fabricator-review/south-case1-frame30.png": "3d9487ecf0cf3e8269c363cf58f3b72c70c999f7af17e73a79faf26efbaa504a",
+    "tp-mh7-fabricator-review/west-case1-frame30.png": "5a3739ec8be19e5e130df60861122705a321df3638d887407bed901c48a52602",
+    "tp-mh7-fabricator-review/north-case1-frame31.png": "c0f260ceae7482012e82ff94974b4399bb7e970d8d2bc462a92f300f60018bdb",
+    "tp-mh7-fabricator-review/east-case1-frame31.png": "8981324ac0ab957e5ba8a1442846300fdfbd5366736c912743871d77dd17c074",
+    "tp-mh7-fabricator-review/south-case1-frame31.png": "480575c1327910595e4bf574d6b28e4533a61cd7226d6022e557557d6c29d00b",
+    "tp-mh7-fabricator-review/west-case1-frame31.png": "5a3739ec8be19e5e130df60861122705a321df3638d887407bed901c48a52602",
+    "tp-mh7-fabricator-review/north-case1-frame32.png": "a81f6b201842729f3afa1ce828fe844b245887a3ec7a4944ac0423948ffe6928",
+    "tp-mh7-fabricator-review/east-case1-frame32.png": "cf89ecd916a00843d3b3d7e1f4da6f203b90b083f1a2349668db006de390ff9d",
+    "tp-mh7-fabricator-review/south-case1-frame32.png": "77bf2e7fddf2a448cb3c815ac6f020ea37d5e93386a5e910897fc31fd23ac257",
+    "tp-mh7-fabricator-review/west-case1-frame32.png": "44ce5142b66466c0ab5db954fcee8658c5777f6c0ef46cd2ec32e0c641b429c7",
+    "tp-mh7-fabricator-review/north-case1-frame33.png": "a4344bc1ad4735e7f218f7d175075402b412c5c78030b14800e65b938e1332f0",
+    "tp-mh7-fabricator-review/east-case1-frame33.png": "3ba6fcb6186e95dc122258a4c9bd42a781fc91abb33971011aa99492308eb88e",
+    "tp-mh7-fabricator-review/south-case1-frame33.png": "6bba66080a98dbd349227158ff7b7a886581b972143c56e0dc999a516341f288",
+    "tp-mh7-fabricator-review/west-case1-frame33.png": "186e8d6b56fb6cf53711abc979a06cee98f958f4349a98e2f2111a2cfa3cdfad",
+    "tp-mh7-fabricator-review/north-case1-frame34.png": "2f1da10cde807564c8a7ef56926c9314b409aae7e8fd25c2c1013ebcb67dd0aa",
+    "tp-mh7-fabricator-review/east-case1-frame34.png": "8e9819eac01f8536da6a5bfc5632b793fb423071db0d4376608da3f18ebe5e2c",
+    "tp-mh7-fabricator-review/south-case1-frame34.png": "6b86080df72b6c6897b2500ef0ea2efff1afded9a9dad863437f7aca3d540663",
+    "tp-mh7-fabricator-review/west-case1-frame34.png": "99940a1d954487d8015f695997f7bdf4f1da4695fa43c91d0f66dbd5126fff27",
+    "tp-mh7-fabricator-review/north-case1-frame35.png": "253f80c66ac1d9bf466df45443af1cb921b7d758c4c872aed910ed0a328d33ce",
+    "tp-mh7-fabricator-review/east-case1-frame35.png": "172f2c7d726d7c3fc327a214e16ac6ad2bec8b465e4e686ee91f5f176cd969a0",
+    "tp-mh7-fabricator-review/south-case1-frame35.png": "9f2ab7fde61f713f8e663c491757750ab30c2b6d39469557f8b1696cf27a7c32",
+    "tp-mh7-fabricator-review/west-case1-frame35.png": "7d279fa3108d586b461137a4172b0d3506662d583f1499b6f4a61e80523fd48e",
+    "tp-mh7-fabricator-review/north-case1-frame36.png": "2d16989a37b2e1ff33ccbb613d0e1f300decb39253eefa2b3221380b515be8a6",
+    "tp-mh7-fabricator-review/east-case1-frame36.png": "a98e0ec7c75d42acd00e04b8dea81542cc3b350161af17b8de5fa3596fe693a7",
+    "tp-mh7-fabricator-review/south-case1-frame36.png": "8ad8295a72c38ac3f38908e5af6249c3b701e7d0d3df732fd337d62a6acb7977",
+    "tp-mh7-fabricator-review/west-case1-frame36.png": "5876c978a0b59b0af43dc40131d3b96909bb4cd79ace538d56ffe99d7ba49b9b",
+    "tp-mh7-fabricator-review/north-case1-frame37.png": "d115e6fdd9d673da674748acb8bf11527e66484359474f69309902ded730116f",
+    "tp-mh7-fabricator-review/east-case1-frame37.png": "77c2cefbc9352c329e15585b80831db57342341efb4863690c479847a8d743d6",
+    "tp-mh7-fabricator-review/south-case1-frame37.png": "c3c846dc715810dadf91aed87070b2d4ec8b97822f02855e7a2e229f9bb7b017",
+    "tp-mh7-fabricator-review/west-case1-frame37.png": "23fc7ffc357298aba4ce5e0136e10a8fe2b6fef40b7aaad6ab2272af2f468a78",
+    "tp-mh7-fabricator-review/north-case1-frame38.png": "8bc33daae524bc4a5d0f2f5f941cda776e31c7ea9920b8182c031ed846d1bdad",
+    "tp-mh7-fabricator-review/east-case1-frame38.png": "7a7829054a38c4b998172e5a185b50cffb6dc9c97512ffa87396a476db12e788",
+    "tp-mh7-fabricator-review/south-case1-frame38.png": "9c75dcb1295ead26729435d9891d2e2ecb91e4021dba5739348e5aad07049a98",
+    "tp-mh7-fabricator-review/west-case1-frame38.png": "513a28cacace0facf63cf8656202969a741d9b6bb5e5afef004b27a1f9a73f30",
+    "tp-mh7-fabricator-review/north-case1-frame39.png": "4242fc9a97e8cb93f359cb75d24b283264f489041c92af6718142274e49a5396",
+    "tp-mh7-fabricator-review/east-case1-frame39.png": "1b8a345ccf0d477e27a479e9540a069c9df7c09e8828954fc5e9b688a2646070",
+    "tp-mh7-fabricator-review/south-case1-frame39.png": "5942595b1993c9290fa9f5872c11e569ba9192472ef05ddbeabae2f572ac749c",
+    "tp-mh7-fabricator-review/west-case1-frame39.png": "5488f8b6ce1dd6f94e0481db363dc3071733300a47fd0e4c80a6bed7095364f5",
+    "tp-mh7-fabricator-review/north-case1-frame40.png": "c9c1dd3f73a720b0c0fd216547fae53211f769c4b7bb49b81a8d06408d4923cd",
+    "tp-mh7-fabricator-review/east-case1-frame40.png": "75c309a64a9a5356bb93d2cfb3d7528b711fa5626fdfbf9b465a8d29abb25b3c",
+    "tp-mh7-fabricator-review/south-case1-frame40.png": "bcbdf6ba6e76918ed721efd5af06ca3664250ca1957ee1652baa7b4a13a5c0ec",
+    "tp-mh7-fabricator-review/west-case1-frame40.png": "2a7ad7f82d0e9ffe5da32f69b147b6c997c814c4caef4e8df8b1b7c279e22b50",
+    "tp-mh7-fabricator-review/north-case1-frame41.png": "66f4ca7a48d7a45cc762342c32016fc27ba3fb452805eade21bbc35ebc291d2c",
+    "tp-mh7-fabricator-review/east-case1-frame41.png": "bb819bb025517af4fe9bf997bbc90cff9f0bb56a6624afc4fced48d2401122cd",
+    "tp-mh7-fabricator-review/south-case1-frame41.png": "dafecb9af1b12a98e2231fe24c9491669a8ea7d3249c23a4aace5ea601c87124",
+    "tp-mh7-fabricator-review/west-case1-frame41.png": "2a7ad7f82d0e9ffe5da32f69b147b6c997c814c4caef4e8df8b1b7c279e22b50",
+    "tp-mh7-fabricator-review/north-case1-frame42.png": "96ac0f6e0814269b14ee15fddb829e1428da20e3f98ca63f84e9d92619a2c42e",
+    "tp-mh7-fabricator-review/east-case1-frame42.png": "ea3cebaa0c378e285b227db0c4e8c0d244aefbee59a5ca0ae62e6f70f27a786b",
+    "tp-mh7-fabricator-review/south-case1-frame42.png": "f878abf8a01175543ab3cb40dce37155b4904dba5c932c6cf6bbbb507763d56c",
+    "tp-mh7-fabricator-review/west-case1-frame42.png": "f4725c2abc0cc538f804b376327fa16788f39661971f4bf5f693133449cda914",
+    "tp-mh7-fabricator-review/north-case1-frame43.png": "dfadb489bf01163222cc8420f0f81a49777a46df112546385f05b223f9613879",
+    "tp-mh7-fabricator-review/east-case1-frame43.png": "673ac4ec3b5fadfbae887210200eca33d7cbce694ba77a957e9ccc7cbaa78ea8",
+    "tp-mh7-fabricator-review/south-case1-frame43.png": "3faeb85653815fec2b03964c9c6b4571a8f9c1aff0f62266699d60cd234609b9",
+    "tp-mh7-fabricator-review/west-case1-frame43.png": "f4725c2abc0cc538f804b376327fa16788f39661971f4bf5f693133449cda914",
+    "tp-mh7-fabricator-review/north-case1-frame44.png": "9b7635710a8a6b5e0d5a1e76780e3c0ee008530f746cb916bfb0f94c8193b4dc",
+    "tp-mh7-fabricator-review/east-case1-frame44.png": "4a03e80df7cb61fd8b95507f4a05e3352f0c78cb2ebfad28fa3ec0a0337f0d30",
+    "tp-mh7-fabricator-review/south-case1-frame44.png": "780cbcd1c264dae036a1a3b33260f96d2694a295ab222d7f5f7515190c2fc113",
+    "tp-mh7-fabricator-review/west-case1-frame44.png": "1999357937e7562cae7bc949192eb9525d68d1beec2ebec6168ce14f1a4d50bd",
+    "tp-mh7-fabricator-review/north-case1-frame45.png": "d279adda6732f2077ab8cae32ed6b0dfa1e975753ccc4754146ef9c91228eb00",
+    "tp-mh7-fabricator-review/east-case1-frame45.png": "9517265ab879f1eee01433e9d26e4e27f5b79413c177e87904d8c2caaa1c90a2",
+    "tp-mh7-fabricator-review/south-case1-frame45.png": "51602b8204a216509096ca31efbde3e6b7069f31db8eb548fdb6575cc74bd1e7",
+    "tp-mh7-fabricator-review/west-case1-frame45.png": "1999357937e7562cae7bc949192eb9525d68d1beec2ebec6168ce14f1a4d50bd",
+    "tp-mh7-fabricator-review/north-case1-frame46.png": "16b88a90b59bee6f747925ca2bcc0a16eb394037a198702a0dde22a90b5cbe0f",
+    "tp-mh7-fabricator-review/east-case1-frame46.png": "a404b92bc4d2d8aceb3be8da128df4cd2e08bde9535692d6e82346b1bc01be46",
+    "tp-mh7-fabricator-review/south-case1-frame46.png": "119726ff642192df6dfa33bb7596537ba3a948cb6aa9c46e21bce7a5ef65e99b",
+    "tp-mh7-fabricator-review/west-case1-frame46.png": "c3bd374a53ef99b031dbe7e01aed75144d696b5fc577e20b8051bb9a65639992",
+    "tp-mh7-fabricator-review/north-case1-frame47.png": "28f5131b688e959b91044e5615bf2ee8537c3ee05c044d6590da5074078a9ca8",
+    "tp-mh7-fabricator-review/east-case1-frame47.png": "05a9e6716957650fef119c1535f59f9a6866fbc526e5ae2932cfa57760527433",
+    "tp-mh7-fabricator-review/south-case1-frame47.png": "107b8c54af0803f6dd948ed56cec5a39837194bf10b79366b17292f78977f038",
+    "tp-mh7-fabricator-review/west-case1-frame47.png": "f42d3db45cb68a50293e0df1021cb320684d9fda37c43da47dac34189e07ec0c",
+    "tp-mh7-fabricator-review/north-case0-frame48.png": "9f447e08397d7a338deaf8021b44f0400a3fc4f34c44d84bb13839b9bdfbaf01",
+    "tp-mh7-fabricator-review/north-case1-frame48.png": "fddeb955d39f613c0a556020b7352ded198df55a3c4d13dbca8d1a6aedbc12ca",
+    "tp-mh7-fabricator-review/north-case2-frame48.png": "0ad2bb0bbc86b88a8384f13469a35b178a7b9b63bf16fa35a211fbfe215d4c30",
+    "tp-mh7-fabricator-review/north-case3-frame48.png": "b59083e0a4c7ff56eff445d6de8642c72976d1b7e7fe28c3fa287cef4756fc72",
+    "tp-mh7-fabricator-review/north-case4-frame48.png": "6efbdad7c7b727e1406124d086a6972f57d891a9641ee00f5ad37ef23e38dd90",
+    "tp-mh7-fabricator-review/east-case0-frame48.png": "7dbc874282d557f1a50b2ccd312005bd1110eaefa1975f5dfc517a79b00b2216",
+    "tp-mh7-fabricator-review/east-case1-frame48.png": "3992856c529494c6a479174d0f5c07e52fd02a06a15f31678c1a7f56cfe3f314",
+    "tp-mh7-fabricator-review/east-case2-frame48.png": "a7ac5a50af844490aa65e066984dc8724457b9610186dc89fb0d0fe0a5dfbbed",
+    "tp-mh7-fabricator-review/east-case3-frame48.png": "238ef4e4bca28d0ccffa5b602ef34ea455e47fcfbe784847002b3c6d53557fcb",
+    "tp-mh7-fabricator-review/east-case4-frame48.png": "600332aee349de05e607994bf6ab0530bdf23287e2ea287984ae203859d0d806",
+    "tp-mh7-fabricator-review/south-case0-frame48.png": "8c758714e8e3b795c1509c6320493432b7d858bd88c1690b29c90a380855bf10",
+    "tp-mh7-fabricator-review/south-case1-frame48.png": "8952a23107bdafeb87d51f89f369b220430dc751347b2d15c2b715ee0247dbf6",
+    "tp-mh7-fabricator-review/south-case2-frame48.png": "fe17c99289edf6a5fbc97099fe738e9256c6f4d9569d6f882bce63896d414710",
+    "tp-mh7-fabricator-review/south-case3-frame48.png": "a55fd730339b24b5acdeb7079a7cf32892d8bb057adc1c060b5a3671810bdd3f",
+    "tp-mh7-fabricator-review/south-case4-frame48.png": "82e2430c83ee2dab1e7dd48b6e09f9f0b4216fd3a924a2839bbc2e181a880f77",
+    "tp-mh7-fabricator-review/west-case0-frame48.png": "1d923f58556289610cf74be2ad855003f96f32699f2de075a7709327ba7ad967",
+    "tp-mh7-fabricator-review/west-case1-frame48.png": "7caa33287024580a7b021c7c64544d303afa8d6826562dbaea26c598985d6a10",
+    "tp-mh7-fabricator-review/west-case2-frame48.png": "ea57bafd728de722bd668a64419aa7dd046e418728b36ae2f9cf513b360cdce7",
+    "tp-mh7-fabricator-review/west-case3-frame48.png": "d45a9ae7bc9361d8cbb8ff8b4c5c3618e14784cf34712f24a2475b6dce52b31b",
+    "tp-mh7-fabricator-review/west-case4-frame48.png": "4451acedca8aa36dfd4951ac8b855aca95b7e0786a2159397f01b5e8b5d4006e"
+  },
+  "graphics_log_sha256": "3a30f2da20c713fba1d38f4e4bf4c18f98d31bcc43ddffeeff84149ad8b29071",
+  "inspection": "Actual clean four-direction connected/disconnected and working views inspected; rigid mouth/reducer, straight axial receiving extension, correct off-center native row, normal object layer and +4px body shift. No pipe gap or hidden attached pipe remains in the reviewed views.",
+  "publication": "Native screenshot bytes contain base-game pixels and remain private. Only own captures/prototype art and native screenshot hashes are published."
+}

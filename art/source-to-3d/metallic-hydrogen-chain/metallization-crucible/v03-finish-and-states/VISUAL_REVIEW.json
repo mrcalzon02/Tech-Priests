@@ -1,0 +1,34 @@
+{
+  "status": "reviewed_candidate; owner_and_native_pending",
+  "source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
+  "glb_sha256": "0eab1d215ac61ad3e3fd62e555f8899f000b61a1bd781fb5ff53779dc60c5f2f",
+  "reference_sha256": "651e7a893aba714e3d66ae352afe87d614b70424671b22c2996a67c1d189db2a",
+  "render_hashes": {
+    "fan-closeup.png": "223904016cbe767456fc8c9245d4b94ede4c03bd4df946c0b5530bf595ed6514",
+    "injector-joint.png": "f76eba0c5d8a820c13ed8dde8a6f3420c1d032e2969524d85bb8889f3144635c",
+    "rear-services.png": "dc0b34b9598ed7e3a1c2bb24e9d7247dd07804ca7522c738bb9a99760ed86b9d",
+    "transfer-joint.png": "0220ea742edcb43ca7d3b186689bc046eff256b179556969a2f90a408569a34c"
+  },
+  "scores": {
+    "silhouette": {
+      "score": 4,
+      "reason": "Dominant closed graded pressure chamber, four heavy grounded haunches, reachable hatch/corridor, independent injector and protected pellet transfer."
+    },
+    "construction": {
+      "score": 4,
+      "reason": "Actual source/export contacts and traced cores pass. Six pitched blades visibly seat into the rotor hub; fixed spindle, bearing, retaining cap and guard support the cooling assembly. Earlier floating blade is excluded."
+    },
+    "surfaces": {
+      "score": 4,
+      "reason": "Twelve packed image maps follow real shell/crown, cast-haunch and rolled-cover regions; band/hatch/nozzle contact dirt, crown turning and casting edge wear replace generic donor clouds. Actual exported closeups inspected."
+    },
+    "states": {
+      "score": 4,
+      "reason": "True idle/stopped fan and lowered CRT versus closed working vessel with coherent eight-second fan/readout; 36 actual renders, six atlases and reopened master pass."
+    },
+    "native_integration": {
+      "score": 0,
+      "reason": "Actual crucible native placement and one-fluid/item-output fixture still required; raw-pellet decay behavior is independently native-tested in its own fixture."
+    }
+  }
+}
