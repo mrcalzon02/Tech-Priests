@@ -1270,6 +1270,8 @@ def main() -> int:
                     help="Native full Magos inventory refusal and recovery; reload remains a separate gate")
     ap.add_argument("--rail-blocked-return", action="store_true",
                     help="Isolated native S4 cut-track negative after physical ore loading; not full rail acceptance")
+    ap.add_argument("--rail-blocked-reload", action="store_true",
+                    help="Separate genuine engine-process original blocked-rail cargo reload, not a restoration pass")
     ap.add_argument("--rail-connected-smoke", action="store_true",
                     help="Genuine 36k+ paid-connected-rail gate with extended 60k physical ledger; "
                          "does not accept train travel or ore delivery")
@@ -1290,6 +1292,8 @@ def main() -> int:
         ap.error("--robot-storage-only requires remote-robot-acquisition")
     if args.rail_blocked_return and (args.scenario != "remote-rail-acquisition" or args.rail_connected_smoke):
         ap.error("--rail-blocked-return is exclusive to the native original rail fixture")
+    if args.rail_blocked_reload and (args.scenario != "remote-rail-acquisition" or args.rail_connected_smoke or args.rail_blocked_return):
+        ap.error("--rail-blocked-reload requires its own genuine original rail fixture")
     if args.rail_connected_smoke and args.scenario != "remote-rail-acquisition":
         ap.error("--rail-connected-smoke requires remote-rail-acquisition")
     if args.no_verbose_timing and not scenario.get("case"):
@@ -1355,10 +1359,13 @@ def main() -> int:
         ap.error("Fixture missing explicit install contract")
     dest = mods / "tech-priests" / "scripts" / "core"
     (dest / (scenario["module"] + ".lua")).write_text(content, encoding="utf-8")
-    if args.rail_blocked_return:
+    if args.rail_blocked_return or args.rail_blocked_reload:
         isolated_control = mods / "tech-priests" / "control.lua"
         isolated_control.write_text(
             "_G.TP_CI_0836_BLOCKED_RETURN=true\n" +
+            ("_G.TP_CI_0836_BLOCKED_RELOAD_MODE=true\n"
+             "_G.TP_CI_0836_BLOCKED_RELOAD_PROBE=false\n"
+             if args.rail_blocked_reload else "") +
             isolated_control.read_text(encoding="utf-8"), encoding="utf-8")
     if args.scenario == "remote-robot-acquisition":
         isolated_control = mods / "tech-priests" / "control.lua"
@@ -1411,6 +1418,10 @@ def main() -> int:
                 json.dumps(evidence, indent=2, sort_keys=True), encoding="utf-8")
         print("FAIL headless save creation; see " + str(output / "create.log"))
         return 1
+    if args.rail_blocked_reload:
+        return run_rail_blocked_reload_0836(
+            factorio, mods, save, output, args.timeout_seconds,
+            engine_version, create_engine_wall_minutes)
     if args.rail_connected_smoke:
         # Use Factorio's native headless test-save mode with an actual player.
         # The Steam graphical --mp-connect client restarted before joining;
