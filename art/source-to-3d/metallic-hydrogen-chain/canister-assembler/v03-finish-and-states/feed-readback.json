@@ -1,0 +1,116 @@
+{
+  "source_sha256": "750fbca12ea7e09de7736ec938ef44fbe2ecced2d4a7f7fe39d5830591437845",
+  "glb_sha256": "111c0c04041633ffb4a5f0f21c317f265867366fd5233410bca64d8da47d7480",
+  "source": {
+    "passed": true,
+    "errors": [],
+    "open_station_probes": [
+      {
+        "station": 0,
+        "center_x": -1.0,
+        "source_fill_frame": 39.400000000000006,
+        "open_core_rays": 252,
+        "obstructions": [],
+        "closed_bottom_verified": true,
+        "landed_punch_gap": 0.0,
+        "passed": true
+      },
+      {
+        "station": 1,
+        "center_x": 0.0,
+        "source_fill_frame": 159.39999999999998,
+        "open_core_rays": 252,
+        "obstructions": [],
+        "closed_bottom_verified": true,
+        "landed_punch_gap": 0.0,
+        "passed": true
+      },
+      {
+        "station": 2,
+        "center_x": 1.0,
+        "source_fill_frame": 279.4,
+        "open_core_rays": 252,
+        "obstructions": [],
+        "closed_bottom_verified": true,
+        "landed_punch_gap": 0.0,
+        "passed": true
+      }
+    ],
+    "closed_lids": [
+      {
+        "x": -1.0,
+        "closed_lid": true,
+        "obstruction": "TP Canister Assembler V02 | pressure cap plate -1.0"
+      },
+      {
+        "x": 0.0,
+        "closed_lid": true,
+        "obstruction": "TP Canister Assembler V02 | pressure cap plate 0.0"
+      },
+      {
+        "x": 1.0,
+        "closed_lid": true,
+        "obstruction": "TP Canister Assembler V02 | pressure cap plate 1.0"
+      }
+    ],
+    "closed_metering_gate": true,
+    "closed_gate_object": "TP Canister Assembler V02 | actual sliding pellet gate"
+  },
+  "runtime": {
+    "passed": true,
+    "errors": [],
+    "open_station_probes": [
+      {
+        "station": 0,
+        "center_x": -1.0,
+        "source_fill_frame": 39.400000000000006,
+        "open_core_rays": 252,
+        "obstructions": [],
+        "closed_bottom_verified": true,
+        "landed_punch_gap": 0.0,
+        "passed": true
+      },
+      {
+        "station": 1,
+        "center_x": 0.0,
+        "source_fill_frame": 159.39999999999998,
+        "open_core_rays": 252,
+        "obstructions": [],
+        "closed_bottom_verified": true,
+        "landed_punch_gap": 0.0,
+        "passed": true
+      },
+      {
+        "station": 2,
+        "center_x": 1.0,
+        "source_fill_frame": 279.4,
+        "open_core_rays": 252,
+        "obstructions": [],
+        "closed_bottom_verified": true,
+        "landed_punch_gap": 0.0,
+        "passed": true
+      }
+    ],
+    "closed_lids": [
+      {
+        "x": -1.0,
+        "closed_lid": true,
+        "obstruction": "TP Canister Assembler V02 | pressure cap plate -1.0"
+      },
+      {
+        "x": 0.0,
+        "closed_lid": true,
+        "obstruction": "TP Canister Assembler V02 | pressure cap plate 0.0"
+      },
+      {
+        "x": 1.0,
+        "closed_lid": true,
+        "obstruction": "TP Canister Assembler V02 | pressure cap plate 1.0"
+      }
+    ],
+    "closed_metering_gate": true,
+    "closed_gate_object": "TP Canister Assembler V02 | actual sliding pellet gate"
+  },
+  "passed": true,
+  "scope": "Center plus eight .025-radius offset rays traverse hopper/gate, every authored curved-feed segment and the guide/nozzle/neck at all three actual filling positions in source and GLB. Closed metering gate, closed lids, vessel bottoms and landed punch are independently checked. This is geometric bore evidence, not granular-flow simulation or pressure certification."
+}

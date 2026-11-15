@@ -1,0 +1,82 @@
+{
+  "passed": true,
+  "generator_sha256": "7d19c10947a45c5f4fe81d9c970b5d9434473133445442ce755586e9c3413574",
+  "provenance": "Original oscillators, seeded filtered noise and resonances; no borrowed samples",
+  "assets": [
+    {
+      "name": "assembler-working",
+      "seconds": 16.0,
+      "loop": true,
+      "sample_rate": 48000,
+      "channels": 1,
+      "plan": "Actual sixteen-second source cycle: supported cap lift/slide, brief pellet-gate linkage and granular patter, restrained electric sealing drive and seated-cap clunk. Head index at 4\u20135/9\u201310s and return at 14\u201316s. No compressor roar or hydraulic forming pump.",
+      "wav_sha256": "f14f1c0c98def676322a988853a8b723b593d3ba538c7364f05b6b530240f97f",
+      "ogg_sha256": "fb77d7672a799bb11771b9a38df01f3554f36d1b90605daf2482f7cce0e884a1",
+      "decoded_peak": 0.35444238781929016,
+      "decoded_rms": 0.07451096922159195,
+      "decoded_rms_dbfs": -22.55559574725391,
+      "loop_seam_step": 8.014217019081116e-05,
+      "ordinary_99_9_percent_step": 0.04081728598475453
+    },
+    {
+      "name": "assembler-idle",
+      "seconds": 16.0,
+      "loop": true,
+      "sample_rate": 48000,
+      "channels": 1,
+      "plan": "Quiet powered controls and electric-drive standby. No lid movement, pellet rattle or sealing clunk while idle.",
+      "wav_sha256": "d480703aed9272b0a4c476a62ff2ab7467fd15b0a03c29aaedff2ee1b01057a0",
+      "ogg_sha256": "8f6dcebb1edcc6179dd081d8621518169384035217434347d8ad7d89099a50fe",
+      "decoded_peak": 0.04129311814904213,
+      "decoded_rms": 0.014039060100913048,
+      "decoded_rms_dbfs": -37.05323933507973,
+      "loop_seam_step": 0.0005046282894909382,
+      "ordinary_99_9_percent_step": 0.00041652198322117255
+    },
+    {
+      "name": "assembler-start",
+      "seconds": 1.1,
+      "loop": false,
+      "sample_rate": 48000,
+      "channels": 1,
+      "plan": "Contactor and electric servo enable; process impacts remain in the working loop.",
+      "wav_sha256": "7f04d0aafcad2db8edeb587be042eed0b754259fb2564f36d2b9bfaa7b8ab212",
+      "ogg_sha256": "036fa84805f99c60b26d256817a921797bc48b0350871af53d176e7cbb37fda1",
+      "decoded_peak": 0.13751021027565002,
+      "decoded_rms": 0.05508963018655777,
+      "decoded_rms_dbfs": -25.178602860203338,
+      "loop_seam_step": 0.09126632660627365,
+      "ordinary_99_9_percent_step": 0.015697471246123227
+    },
+    {
+      "name": "assembler-stop",
+      "seconds": 1.3,
+      "loop": false,
+      "sample_rate": 48000,
+      "channels": 1,
+      "plan": "Short electric-drive rundown; no invented pressure release from the solid pellet feed.",
+      "wav_sha256": "9c416e0913c495d94209d89a78c3ffba76fb5ceca976abc18c507c2ceaeb63f2",
+      "ogg_sha256": "2dd55dbb7beb9cce208a4757bd3978d3df2b9bc1598ec470b0b699f5c8167596",
+      "decoded_peak": 0.27738842368125916,
+      "decoded_rms": 0.04513934254646301,
+      "decoded_rms_dbfs": -26.908895414036454,
+      "loop_seam_step": 0.00022911312407813966,
+      "ordinary_99_9_percent_step": 0.005143090128898612
+    }
+  ],
+  "native_mix": {
+    "working_gain": 0.65,
+    "idle_gain": 0.07,
+    "start_gain": 0.45,
+    "stop_gain": 0.4,
+    "audible_distance_modifier": 1.5,
+    "priority": 25
+  },
+  "compressor_comparison": {
+    "receipt_sha256": "224afba3c44e893010cb17b4359dcd446f330aeace163d50941f2c28de2ac099",
+    "effective_rms_difference_db": -13.566477800165504
+  },
+  "native_binding_verified": false,
+  "native_phase_synchronization_verified": false,
+  "owner_audition_approved": false
+}

@@ -138,6 +138,14 @@ The [V02 checkpoint](../../../art/source-to-3d/metallic-hydrogen-chain/canister-
 
 Source and actual GLB each pass 1,538 quarter-frame motion samples with no undeclared intersection pairs. All 201 recorded static attachments, the closed object-matrix loop, 1,512 combined complete-path rays, closed gate/lids/bottoms and landed-punch checks pass. Three actual exported phase renders were viewed. These are sampled geometry checks, not continuous collision proof, granular simulation or pressure certification. Dedicated finish, sound, full four-direction captures and state-preserving native assembly remain required. V01 and rejected private studies are preserved.
 
+## Assembler V03 dedicated finish, four-view states and original sound
+
+The [V03 art checkpoint](../../../art/source-to-3d/metallic-hydrogen-chain/canister-assembler/v03-finish-and-states/README.md) preserves the V02 mechanism and sixteen-second clock. Thirty dedicated PBR maps follow vessel circumference and band seats, bare formed shoulders, red gantry members, ground slide/tool lands, cast housings, hopper/feed, bronze retainers, current contacts and footing. Actual round normals repair faceted shoulders and hopper surfaces without changing source vertices or motion. The shared cogitator remains unchanged.
+
+Fresh source and GLB checks pass all 201 attachments, 1,538 quarter-frame motion samples per artifact, 1,512 combined core-path rays and the closed matrix loop. Ten authored materials retain actual exported PBR channels; front/rear, five joint/surface closeups and corrected neutral clay were viewed against the surfaced forge family. Four idle plus 64 working model rotations, six atlases and a source-bound reopened master pass. Original cap/slide/gate/sealer/index sound has separate idle/start/stop cues; planned gain sits 13.57 dB below the compressor. The sixteen-second MP4 uses matching .25-second capture/audio phase.
+
+This is agent-reviewed art, not native implementation or owner approval. Next build actual live formed-pellet/shell assembly through the existing seal operation; verify HP, quality, decay phase, remaining lifetime and shell condition through waiting, blockage and save/reload. Bind sound and prove the exact native sixteen-second clock in all four directions. No external gameplay fluid ports are assigned to this solid-input assembler. Ordinary-chain work, three reactors and remaining sprite-only buildings stay in the full goal.
+
 ## Resume here
 
 Use `PRODUCTION_CONTINUATION.json`, not the superseded V14 continuation. Authoring now lives in the dedicated `hydrogen-production` checkout, keeping the concurrent bunker work in `model-production` untouched. The accepted purifier captures, registered component sources and electrolyzer pilot are self-contained tracked artifacts. Model generators, independent verifiers and isolated native fixtures are under `tools/fmpl/production_smoke/`.

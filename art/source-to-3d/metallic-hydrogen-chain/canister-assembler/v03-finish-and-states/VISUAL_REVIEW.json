@@ -1,0 +1,40 @@
+{
+  "status": "agent-reviewed art/state candidate; owner/native pending",
+  "source_sha256": "750fbca12ea7e09de7736ec938ef44fbe2ecced2d4a7f7fe39d5830591437845",
+  "glb_sha256": "111c0c04041633ffb4a5f0f21c317f265867366fd5233410bca64d8da47d7480",
+  "owner_approved": false,
+  "final_threshold_unchanged": 4,
+  "reference_sha256": "791e0ffc6d5615e98e26e5d6569206988cc0379ce2eae156ee94f47c734ce631",
+  "scores": {
+    "silhouette": {
+      "score": 4,
+      "reason": "Three distinct supported vessels, rear gantry, exposed cap slides and open hollow travelling head remain legible in four canonical views."
+    },
+    "construction": {
+      "score": 4,
+      "reason": "All 201 recorded contacts, source/export quarter-frame motion and complete authored core probes pass. No attachment threshold was relaxed."
+    },
+    "surfaces": {
+      "score": 4,
+      "reason": "Thirty actual maps follow canister circumference and band seats, bare formed shoulders, gantry members, slide lands, tool housing, electrical contacts and metering hardware. Corrected round normals remove shoulder/hopper faceting. Actual exported front/rear/joint/clay views inspected against surfaced forge family."
+    },
+    "states": {
+      "score": 4,
+      "reason": "Actual sixteen-second source/export, four idle and 64 working captures, six atlases and source-bound reopened master. Original sound preview matches sampled phase."
+    },
+    "native": {
+      "score": 0,
+      "reason": "Live-stack assembly, inserter cases, sound binding and exact native clock remain open."
+    }
+  },
+  "render_hashes": {
+    "front-fill": "70e8135e9c58e624abd47fd3b563c4c7f2d733a32ce3b3a78a9e5b2a18bf40cf",
+    "rear-seal": "b6035efbb09950b4fa4ae08f87283b4d840f416ff97ade4de5da3cb353f7152c",
+    "canister-shoulder-and-window": "8df466d4e7033e2d7ee8d69c7ec09516eb95cd4aa204a27190149cdcc0624823",
+    "hopper-valve-linkage": "96fe47b30e94d8b0c2d0809cd62ade66c56cc1ae80d6109cc709eaf5632b1edd",
+    "cap-rails-and-open-neck": "1aae61abfc13e7cf0553dfd811e34fd9b1187419bf57774f6ea292843cbb3a1b",
+    "landed-sealing-tool": "a0580c37dfce6922f10c6e1f9445ab15b6a9f267daff6e7d460dd9a62a3ec586",
+    "rear-gantry-and-conductors": "3c8b17cd612c423a7269f982b4dfb43e36bda5c4d5a794427db48674e62bca2b",
+    "clay-three-stations": "c596b2421cf5e6f8a1d97676946bae65e71d1421dc15fe4042dbf5262d516c34"
+  }
+}

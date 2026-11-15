@@ -339,6 +339,12 @@ Latest upstream reconciliation: condenser V23 adds eight actual inlet recesses i
 This is a construction checkpoint. Dedicated surfaces, relevant audio, final four-direction capture, closeup/rear/clay review and native fluid/item/pipe integration remain open. Sampled intersections are not continuous collision proof; bore geometry is not hydraulic simulation. Accepted prior machines are preserved; ordinary Factorio pickup needs no precision hand-to-socket work.
 
 
+## Hydrogen assembler V03 dedicated finish, states and sound — 2026-11-15
+
+[V03 art delivery](../../art/source-to-3d/metallic-hydrogen-chain/canister-assembler/v03-finish-and-states/README.md) preserves the V02 proven mechanism and sixteen-second clock. Thirty model-specific PBR maps distinguish vessels/shoulders, gantry, guide lands, cast tooling, feed/meter, retainers, electrical contacts and footing. Corrected round normals remove the observed hopper/shoulder faceting. All 201 attachments, 1,538 motion samples per source/export, 1,512 combined core rays and the exact source loop pass fresh checks. Actual GLB material links and eight front/rear/joint/clay views were inspected against the surfaced forge family.
+
+Four idle plus 64 working captures, six atlases, reopened source-bound master and phase-aligned sixteen-second original sound preview are saved. Planned sound gain is 13.57 dB below the compressor. Native live-state pellet/shell assembly, inserters, blocked output, reload, audio binding and exact sixteen-second in-game cadence remain required; this is agent review, not owner approval. Full chain/reactor/remaining-building scope remains active.
+
 ## Hydrogen assembler V02 mechanics and cadence — 2026-11-15
 
 [V02 source and export](../../art/source-to-3d/metallic-hydrogen-chain/canister-assembler/v02-clearance-and-cadence/README.md) pass 1,538 quarter-frame motion samples each, all 201 recorded attachments, the closed matrix loop and 1,512 combined core-path rays over all three filling stations. Actual channels, separate linkage planes, outboard bearings, raised feed and slotted bored valve repair the demonstrated defects. The punch lands on the cap; lids, gate and vessel bottoms close. The sixteen-second cycle gives each inter-station move one second and reduces maximum sampled speed from 6.078 to 1.499 tiles/second.

@@ -545,6 +545,40 @@
       "model_source_sha256": "61b39408ebabf4061834a5ce68b213beb1a52348765fe8bb9899f036a3761545",
       "runtime_export_sha256": "606916a9e15173269ada45d940afe1a451ec1c7ce634a7e98853e53ab121b13a",
       "status": "Unchanged appended console; source/export sampled mechanics pass. Dedicated finish and native remain open."
+    },
+    {
+      "machine": "canister-assembler",
+      "machine_revision": "V03 dedicated surfaces, four-view states and original sound",
+      "instance": "front right cogitator",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.2899999618530273
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -1.2899999618530273
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.800000011920929
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "750fbca12ea7e09de7736ec938ef44fbe2ecced2d4a7f7fe39d5830591437845",
+      "runtime_export_sha256": "111c0c04041633ffb4a5f0f21c317f265867366fd5233410bca64d8da47d7480",
+      "status": "Unchanged appended console; actual source/export mechanics, surfaces and captures pass agent review; native pending"
     }
   ],
   "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",

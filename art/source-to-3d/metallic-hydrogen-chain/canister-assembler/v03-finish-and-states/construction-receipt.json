@@ -1,0 +1,2336 @@
+{
+  "status": "assembler-specific surface candidate; independent export and visual review pending",
+  "source_sha256": "750fbca12ea7e09de7736ec938ef44fbe2ecced2d4a7f7fe39d5830591437845",
+  "contacts": [
+    {
+      "a": "TP Canister Assembler V02 | bed grounded pedestal -1.3",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "bed pedestal grounded"
+    },
+    {
+      "a": "TP Canister Assembler V02 | three-station bored mounting bed",
+      "b": "TP Canister Assembler V02 | bed grounded pedestal -1.3",
+      "label": "bed seated on end pedestal"
+    },
+    {
+      "a": "TP Canister Assembler V02 | bed grounded pedestal 1.3",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "bed pedestal grounded"
+    },
+    {
+      "a": "TP Canister Assembler V02 | three-station bored mounting bed",
+      "b": "TP Canister Assembler V02 | bed grounded pedestal 1.3",
+      "label": "bed seated on end pedestal"
+    },
+    {
+      "a": "TP Canister Assembler V02 | indexed canister nest -1.0",
+      "b": "TP Canister Assembler V02 | three-station bored mounting bed",
+      "label": "annular nest seated on mounting bed"
+    },
+    {
+      "a": "TP Canister Assembler V02 | canister closed bottom -1.0",
+      "b": "TP Canister Assembler V02 | indexed canister nest -1.0",
+      "label": "canister supported in indexed nest"
+    },
+    {
+      "a": "TP Canister Assembler V02 | hollow canister shell -1.0",
+      "b": "TP Canister Assembler V02 | canister closed bottom -1.0",
+      "label": "hollow canister shell closed by bottom plate"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window side flange (-1.0, -0.069)",
+      "b": "TP Canister Assembler V02 | hollow canister shell -1.0",
+      "label": "witness flange seated on actual shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window side flange (-1.0, 0.069)",
+      "b": "TP Canister Assembler V02 | hollow canister shell -1.0",
+      "label": "witness flange seated on actual shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window end flange (-1.0, 0.683)",
+      "b": "TP Canister Assembler V02 | hollow canister shell -1.0",
+      "label": "witness end flange seated on shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window end flange (-1.0, 1.037)",
+      "b": "TP Canister Assembler V02 | hollow canister shell -1.0",
+      "label": "witness end flange seated on shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | recessed witness pane -1.0",
+      "b": "TP Canister Assembler V02 | hollow canister shell -1.0",
+      "label": "recessed pressure witness pane retained inside front wall"
+    },
+    {
+      "a": "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)",
+      "b": "TP Canister Assembler V02 | hollow canister shell -1.0",
+      "label": "retaining band seated on cylindrical shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 0)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 1)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 2)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 3)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 4)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 5)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 6)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 7)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)",
+      "b": "TP Canister Assembler V02 | hollow canister shell -1.0",
+      "label": "retaining band seated on cylindrical shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 0)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 1)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 2)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 3)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 4)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 5)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 6)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 7)",
+      "b": "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear cap rail support (-1.0, -0.145)",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap transfer rail (-1.0, -0.145)",
+      "b": "TP Canister Assembler V02 | rear cap rail support (-1.0, -0.145)",
+      "label": "cap rail held by rear support"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear cap rail support (-1.0, 0.145)",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap transfer rail (-1.0, 0.145)",
+      "b": "TP Canister Assembler V02 | rear cap rail support (-1.0, 0.145)",
+      "label": "cap rail held by rear support"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap locking lip -1.0",
+      "b": "TP Canister Assembler V02 | pressure cap plate -1.0",
+      "label": "locking lip seated on cap underside"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap rim lifting jaw (-1.0, -0.14)",
+      "b": "TP Canister Assembler V02 | pressure cap plate -1.0",
+      "label": "cap jaw engages outer locking lip"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap jaw lift guide (-1.0, -0.14)",
+      "b": "TP Canister Assembler V02 | cap carrier rear saddle -1.0",
+      "label": "short jaw guide retained in carrier"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap rim lifting jaw (-1.0, 0.14)",
+      "b": "TP Canister Assembler V02 | pressure cap plate -1.0",
+      "label": "cap jaw engages outer locking lip"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap jaw lift guide (-1.0, 0.14)",
+      "b": "TP Canister Assembler V02 | cap carrier rear saddle -1.0",
+      "label": "short jaw guide retained in carrier"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap actuator rear mount -1.0",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "cap actuator mount grounded"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap actuator mounting collar -1.0",
+      "b": "TP Canister Assembler V02 | cap actuator rear mount -1.0",
+      "label": "actuator collar seated on grounded cradle"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap slide actuator -1.0",
+      "b": "TP Canister Assembler V02 | cap actuator mounting collar -1.0",
+      "label": "cap cylinder held in actual collar"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap slide piston -1.0",
+      "b": "TP Canister Assembler V02 | cap carrier rear saddle -1.0",
+      "label": "piston nose seated in sliding cap saddle"
+    },
+    {
+      "a": "TP Canister Assembler V02 | indexed canister nest 0.0",
+      "b": "TP Canister Assembler V02 | three-station bored mounting bed",
+      "label": "annular nest seated on mounting bed"
+    },
+    {
+      "a": "TP Canister Assembler V02 | canister closed bottom 0.0",
+      "b": "TP Canister Assembler V02 | indexed canister nest 0.0",
+      "label": "canister supported in indexed nest"
+    },
+    {
+      "a": "TP Canister Assembler V02 | hollow canister shell 0.0",
+      "b": "TP Canister Assembler V02 | canister closed bottom 0.0",
+      "label": "hollow canister shell closed by bottom plate"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window side flange (0.0, -0.069)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 0.0",
+      "label": "witness flange seated on actual shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window side flange (0.0, 0.069)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 0.0",
+      "label": "witness flange seated on actual shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window end flange (0.0, 0.683)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 0.0",
+      "label": "witness end flange seated on shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window end flange (0.0, 1.037)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 0.0",
+      "label": "witness end flange seated on shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | recessed witness pane 0.0",
+      "b": "TP Canister Assembler V02 | hollow canister shell 0.0",
+      "label": "recessed pressure witness pane retained inside front wall"
+    },
+    {
+      "a": "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 0.0",
+      "label": "retaining band seated on cylindrical shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 0)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 1)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 2)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 3)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 4)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 5)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 6)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 7)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 0.0",
+      "label": "retaining band seated on cylindrical shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 0)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 1)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 2)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 3)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 4)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 5)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 6)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 7)",
+      "b": "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear cap rail support (0.0, -0.145)",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap transfer rail (0.0, -0.145)",
+      "b": "TP Canister Assembler V02 | rear cap rail support (0.0, -0.145)",
+      "label": "cap rail held by rear support"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear cap rail support (0.0, 0.145)",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap transfer rail (0.0, 0.145)",
+      "b": "TP Canister Assembler V02 | rear cap rail support (0.0, 0.145)",
+      "label": "cap rail held by rear support"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap locking lip 0.0",
+      "b": "TP Canister Assembler V02 | pressure cap plate 0.0",
+      "label": "locking lip seated on cap underside"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap rim lifting jaw (0.0, -0.14)",
+      "b": "TP Canister Assembler V02 | pressure cap plate 0.0",
+      "label": "cap jaw engages outer locking lip"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap jaw lift guide (0.0, -0.14)",
+      "b": "TP Canister Assembler V02 | cap carrier rear saddle 0.0",
+      "label": "short jaw guide retained in carrier"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap rim lifting jaw (0.0, 0.14)",
+      "b": "TP Canister Assembler V02 | pressure cap plate 0.0",
+      "label": "cap jaw engages outer locking lip"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap jaw lift guide (0.0, 0.14)",
+      "b": "TP Canister Assembler V02 | cap carrier rear saddle 0.0",
+      "label": "short jaw guide retained in carrier"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap actuator rear mount 0.0",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "cap actuator mount grounded"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap actuator mounting collar 0.0",
+      "b": "TP Canister Assembler V02 | cap actuator rear mount 0.0",
+      "label": "actuator collar seated on grounded cradle"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap slide actuator 0.0",
+      "b": "TP Canister Assembler V02 | cap actuator mounting collar 0.0",
+      "label": "cap cylinder held in actual collar"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap slide piston 0.0",
+      "b": "TP Canister Assembler V02 | cap carrier rear saddle 0.0",
+      "label": "piston nose seated in sliding cap saddle"
+    },
+    {
+      "a": "TP Canister Assembler V02 | indexed canister nest 1.0",
+      "b": "TP Canister Assembler V02 | three-station bored mounting bed",
+      "label": "annular nest seated on mounting bed"
+    },
+    {
+      "a": "TP Canister Assembler V02 | canister closed bottom 1.0",
+      "b": "TP Canister Assembler V02 | indexed canister nest 1.0",
+      "label": "canister supported in indexed nest"
+    },
+    {
+      "a": "TP Canister Assembler V02 | hollow canister shell 1.0",
+      "b": "TP Canister Assembler V02 | canister closed bottom 1.0",
+      "label": "hollow canister shell closed by bottom plate"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window side flange (1.0, -0.069)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 1.0",
+      "label": "witness flange seated on actual shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window side flange (1.0, 0.069)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 1.0",
+      "label": "witness flange seated on actual shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window end flange (1.0, 0.683)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 1.0",
+      "label": "witness end flange seated on shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | witness window end flange (1.0, 1.037)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 1.0",
+      "label": "witness end flange seated on shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | recessed witness pane 1.0",
+      "b": "TP Canister Assembler V02 | hollow canister shell 1.0",
+      "label": "recessed pressure witness pane retained inside front wall"
+    },
+    {
+      "a": "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 1.0",
+      "label": "retaining band seated on cylindrical shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 0)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 1)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 2)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 3)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 4)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 5)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 6)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 7)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)",
+      "b": "TP Canister Assembler V02 | hollow canister shell 1.0",
+      "label": "retaining band seated on cylindrical shell"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 0)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 1)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 2)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 3)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 4)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 5)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 6)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 7)",
+      "b": "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)",
+      "label": "retaining head mounted in actual band"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear cap rail support (1.0, -0.145)",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap transfer rail (1.0, -0.145)",
+      "b": "TP Canister Assembler V02 | rear cap rail support (1.0, -0.145)",
+      "label": "cap rail held by rear support"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear cap rail support (1.0, 0.145)",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "rear cap rail post grounded on footing"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap transfer rail (1.0, 0.145)",
+      "b": "TP Canister Assembler V02 | rear cap rail support (1.0, 0.145)",
+      "label": "cap rail held by rear support"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap locking lip 1.0",
+      "b": "TP Canister Assembler V02 | pressure cap plate 1.0",
+      "label": "locking lip seated on cap underside"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap rim lifting jaw (1.0, -0.14)",
+      "b": "TP Canister Assembler V02 | pressure cap plate 1.0",
+      "label": "cap jaw engages outer locking lip"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap jaw lift guide (1.0, -0.14)",
+      "b": "TP Canister Assembler V02 | cap carrier rear saddle 1.0",
+      "label": "short jaw guide retained in carrier"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap rim lifting jaw (1.0, 0.14)",
+      "b": "TP Canister Assembler V02 | pressure cap plate 1.0",
+      "label": "cap jaw engages outer locking lip"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap jaw lift guide (1.0, 0.14)",
+      "b": "TP Canister Assembler V02 | cap carrier rear saddle 1.0",
+      "label": "short jaw guide retained in carrier"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap actuator rear mount 1.0",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "cap actuator mount grounded"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap actuator mounting collar 1.0",
+      "b": "TP Canister Assembler V02 | cap actuator rear mount 1.0",
+      "label": "actuator collar seated on grounded cradle"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap slide actuator 1.0",
+      "b": "TP Canister Assembler V02 | cap actuator mounting collar 1.0",
+      "label": "cap cylinder held in actual collar"
+    },
+    {
+      "a": "TP Canister Assembler V02 | cap slide piston 1.0",
+      "b": "TP Canister Assembler V02 | cap carrier rear saddle 1.0",
+      "label": "piston nose seated in sliding cap saddle"
+    },
+    {
+      "a": "TP Canister Assembler V02 | gantry grounded shoe -1.62",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "gantry shoe grounded"
+    },
+    {
+      "a": "TP Canister Assembler V02 | red gantry upright -1.62",
+      "b": "TP Canister Assembler V02 | gantry grounded shoe -1.62",
+      "label": "gantry upright on shoe"
+    },
+    {
+      "a": "TP Canister Assembler V02 | gantry grounded shoe 1.62",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "gantry shoe grounded"
+    },
+    {
+      "a": "TP Canister Assembler V02 | red gantry upright 1.62",
+      "b": "TP Canister Assembler V02 | gantry grounded shoe 1.62",
+      "label": "gantry upright on shoe"
+    },
+    {
+      "a": "TP Canister Assembler V02 | spanning head guide beam",
+      "b": "TP Canister Assembler V02 | red gantry upright -1.62",
+      "label": "guide beam carried by end upright"
+    },
+    {
+      "a": "TP Canister Assembler V02 | spanning head guide beam",
+      "b": "TP Canister Assembler V02 | red gantry upright 1.62",
+      "label": "guide beam carried by end upright"
+    },
+    {
+      "a": "TP Canister Assembler V02 | linear guide standoff -1.25",
+      "b": "TP Canister Assembler V02 | spanning head guide beam",
+      "label": "linear guide standoff seated on beam"
+    },
+    {
+      "a": "TP Canister Assembler V02 | linear guide standoff 0",
+      "b": "TP Canister Assembler V02 | spanning head guide beam",
+      "label": "linear guide standoff seated on beam"
+    },
+    {
+      "a": "TP Canister Assembler V02 | linear guide standoff 1.25",
+      "b": "TP Canister Assembler V02 | spanning head guide beam",
+      "label": "linear guide standoff seated on beam"
+    },
+    {
+      "a": "TP Canister Assembler V02 | retained travelling head carriage",
+      "b": "TP Canister Assembler V02 | ground head linear guide",
+      "label": "carriage retained on actual X guide"
+    },
+    {
+      "a": "TP Canister Assembler V02 | moving head rear crosshead",
+      "b": "TP Canister Assembler V02 | retained travelling head carriage",
+      "label": "rear crosshead mounted under actual carriage"
+    },
+    {
+      "a": "TP Canister Assembler V02 | open cantilever side arm -0.18",
+      "b": "TP Canister Assembler V02 | moving head rear crosshead",
+      "label": "cantilever arm carried by rear crosshead"
+    },
+    {
+      "a": "TP Canister Assembler V02 | open cantilever side arm -0.18",
+      "b": "TP Canister Assembler V02 | carriage annular tool bracket",
+      "label": "annular tool mount held between side arms"
+    },
+    {
+      "a": "TP Canister Assembler V02 | open cantilever side arm 0.18",
+      "b": "TP Canister Assembler V02 | moving head rear crosshead",
+      "label": "cantilever arm carried by rear crosshead"
+    },
+    {
+      "a": "TP Canister Assembler V02 | open cantilever side arm 0.18",
+      "b": "TP Canister Assembler V02 | carriage annular tool bracket",
+      "label": "annular tool mount held between side arms"
+    },
+    {
+      "a": "TP Canister Assembler V02 | hollow electric press housing",
+      "b": "TP Canister Assembler V02 | carriage annular tool bracket",
+      "label": "annular press housing mounted under carriage bracket"
+    },
+    {
+      "a": "TP Canister Assembler V02 | open metered pellet hopper",
+      "b": "TP Canister Assembler V02 | moving hopper bracket",
+      "label": "hopper bracket meets outside wall, clear of throat"
+    },
+    {
+      "a": "TP Canister Assembler V02 | bored sliding gate valve body",
+      "b": "TP Canister Assembler V02 | open metered pellet hopper",
+      "label": "bored valve inlet seated around hopper throat"
+    },
+    {
+      "a": "TP Canister Assembler V02 | carriage pellet feed bore",
+      "b": "TP Canister Assembler V02 | bored sliding gate valve body",
+      "label": "true-radius feed seated in bored valve outlet"
+    },
+    {
+      "a": "TP Canister Assembler V02 | stationary nozzle guide sleeve",
+      "b": "TP Canister Assembler V02 | carriage pellet feed bore",
+      "label": "stationary guide seated inside fixed feed end"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter eccentric pin",
+      "b": "TP Canister Assembler V02 | meter eccentric arm",
+      "label": "eccentric pin retained on crank arm"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter spindle bearing 2.18",
+      "b": "TP Canister Assembler V02 | supported pellet metering spindle",
+      "label": "offset metering shaft retained in bearing"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter bearing outboard bridge 2.18",
+      "b": "TP Canister Assembler V02 | open cantilever side arm 0.18",
+      "label": "bearing bridge grounded on head side arm"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter bearing outboard riser 2.18",
+      "b": "TP Canister Assembler V02 | meter bearing outboard bridge 2.18",
+      "label": "outboard bearing riser carried by bridge"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter bearing radial seat 2.18",
+      "b": "TP Canister Assembler V02 | meter bearing outboard riser 2.18",
+      "label": "radial bearing seat carried by outboard riser"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter bearing radial seat 2.18",
+      "b": "TP Canister Assembler V02 | meter spindle bearing 2.18",
+      "label": "bearing supported outside its shaft bore"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter spindle bearing 2.32",
+      "b": "TP Canister Assembler V02 | supported pellet metering spindle",
+      "label": "offset metering shaft retained in bearing"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter bearing outboard bridge 2.32",
+      "b": "TP Canister Assembler V02 | open cantilever side arm 0.18",
+      "label": "bearing bridge grounded on head side arm"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter bearing outboard riser 2.32",
+      "b": "TP Canister Assembler V02 | meter bearing outboard bridge 2.32",
+      "label": "outboard bearing riser carried by bridge"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter bearing radial seat 2.32",
+      "b": "TP Canister Assembler V02 | meter bearing outboard riser 2.32",
+      "label": "radial bearing seat carried by outboard riser"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter bearing radial seat 2.32",
+      "b": "TP Canister Assembler V02 | meter spindle bearing 2.32",
+      "label": "bearing supported outside its shaft bore"
+    },
+    {
+      "a": "TP Canister Assembler V02 | gate offset drive arm 0",
+      "b": "TP Canister Assembler V02 | actual sliding pellet gate",
+      "label": "offset drive arm connected above and outside fixed ways"
+    },
+    {
+      "a": "TP Canister Assembler V02 | gate offset drive arm 1",
+      "b": "TP Canister Assembler V02 | gate offset drive arm 0",
+      "label": "offset drive arm connected above and outside fixed ways"
+    },
+    {
+      "a": "TP Canister Assembler V02 | gate offset drive arm 2",
+      "b": "TP Canister Assembler V02 | gate offset drive arm 1",
+      "label": "offset drive arm connected above and outside fixed ways"
+    },
+    {
+      "a": "TP Canister Assembler V02 | gate offset drive arm 3",
+      "b": "TP Canister Assembler V02 | gate offset drive arm 2",
+      "label": "offset drive arm connected above and outside fixed ways"
+    },
+    {
+      "a": "TP Canister Assembler V02 | gate offset drive arm 4",
+      "b": "TP Canister Assembler V02 | gate offset drive arm 3",
+      "label": "offset drive arm connected above and outside fixed ways"
+    },
+    {
+      "a": "TP Canister Assembler V02 | gate connecting-rod pivot",
+      "b": "TP Canister Assembler V02 | gate offset drive arm 4",
+      "label": "drive pivot retained on lower offset arm"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter connecting rod",
+      "b": "TP Canister Assembler V02 | meter eccentric pin",
+      "label": "connecting rod seated on eccentric pin"
+    },
+    {
+      "a": "TP Canister Assembler V02 | meter connecting rod",
+      "b": "TP Canister Assembler V02 | gate connecting-rod pivot",
+      "label": "connecting rod seated on gate drive pivot"
+    },
+    {
+      "a": "TP Canister Assembler V02 | moving hopper bracket",
+      "b": "TP Canister Assembler V02 | meter gate guide mount",
+      "label": "hopper bracket grounded on gate frame mount"
+    },
+    {
+      "a": "TP Canister Assembler V02 | gate guide bracket",
+      "b": "TP Canister Assembler V02 | meter gate guide mount",
+      "label": "gate mount supported by bracket"
+    },
+    {
+      "a": "TP Canister Assembler V02 | gate guide bracket",
+      "b": "TP Canister Assembler V02 | open cantilever side arm 0.18",
+      "label": "gate guide bracket grounded on side arm"
+    },
+    {
+      "a": "TP Canister Assembler V02 | pellet gate linear way 0.385",
+      "b": "TP Canister Assembler V02 | meter gate guide mount",
+      "label": "gate way supported by end mount"
+    },
+    {
+      "a": "TP Canister Assembler V02 | pellet gate linear way 0.575",
+      "b": "TP Canister Assembler V02 | meter gate guide mount",
+      "label": "gate way supported by end mount"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor mounting foot (-1.3, 2.5)",
+      "b": "TP Canister Assembler V02 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor insulator (-1.3, 2.5)",
+      "b": "TP Canister Assembler V02 | rear conductor mounting foot (-1.3, 2.5)",
+      "label": "conductor insulator grounded on rear mounting foot"
+    },
+    {
+      "a": "TP Canister Assembler V02 | conductor rear support tab (-1.3, 2.5)",
+      "b": "TP Canister Assembler V02 | rear conductor insulator (-1.3, 2.5)",
+      "label": "conductor tab supported on insulator"
+    },
+    {
+      "a": "TP Canister Assembler V02 | insulated conductor rail 2.5",
+      "b": "TP Canister Assembler V02 | conductor rear support tab (-1.3, 2.5)",
+      "label": "conductor rail supported from behind"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor mounting foot (0, 2.5)",
+      "b": "TP Canister Assembler V02 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor insulator (0, 2.5)",
+      "b": "TP Canister Assembler V02 | rear conductor mounting foot (0, 2.5)",
+      "label": "conductor insulator grounded on rear mounting foot"
+    },
+    {
+      "a": "TP Canister Assembler V02 | conductor rear support tab (0, 2.5)",
+      "b": "TP Canister Assembler V02 | rear conductor insulator (0, 2.5)",
+      "label": "conductor tab supported on insulator"
+    },
+    {
+      "a": "TP Canister Assembler V02 | insulated conductor rail 2.5",
+      "b": "TP Canister Assembler V02 | conductor rear support tab (0, 2.5)",
+      "label": "conductor rail supported from behind"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor mounting foot (1.3, 2.5)",
+      "b": "TP Canister Assembler V02 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor insulator (1.3, 2.5)",
+      "b": "TP Canister Assembler V02 | rear conductor mounting foot (1.3, 2.5)",
+      "label": "conductor insulator grounded on rear mounting foot"
+    },
+    {
+      "a": "TP Canister Assembler V02 | conductor rear support tab (1.3, 2.5)",
+      "b": "TP Canister Assembler V02 | rear conductor insulator (1.3, 2.5)",
+      "label": "conductor tab supported on insulator"
+    },
+    {
+      "a": "TP Canister Assembler V02 | insulated conductor rail 2.5",
+      "b": "TP Canister Assembler V02 | conductor rear support tab (1.3, 2.5)",
+      "label": "conductor rail supported from behind"
+    },
+    {
+      "a": "TP Canister Assembler V02 | conductive sliding pad 2.5",
+      "b": "TP Canister Assembler V02 | sliding current collector 2.5",
+      "label": "spring pad retained in collector"
+    },
+    {
+      "a": "TP Canister Assembler V02 | conductive sliding pad 2.5",
+      "b": "TP Canister Assembler V02 | insulated conductor rail 2.5",
+      "label": "pad bears on conductor front face"
+    },
+    {
+      "a": "TP Canister Assembler V02 | carriage mounted power lead 2.5",
+      "b": "TP Canister Assembler V02 | sliding current collector 2.5",
+      "label": "lead attached to sliding current shoe"
+    },
+    {
+      "a": "TP Canister Assembler V02 | carriage mounted power lead 2.5",
+      "b": "TP Canister Assembler V02 | retained travelling head carriage",
+      "label": "lead terminates in moving head carriage"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor mounting foot (-1.3, 2.57)",
+      "b": "TP Canister Assembler V02 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor insulator (-1.3, 2.57)",
+      "b": "TP Canister Assembler V02 | rear conductor mounting foot (-1.3, 2.57)",
+      "label": "conductor insulator grounded on rear mounting foot"
+    },
+    {
+      "a": "TP Canister Assembler V02 | conductor rear support tab (-1.3, 2.57)",
+      "b": "TP Canister Assembler V02 | rear conductor insulator (-1.3, 2.57)",
+      "label": "conductor tab supported on insulator"
+    },
+    {
+      "a": "TP Canister Assembler V02 | insulated conductor rail 2.57",
+      "b": "TP Canister Assembler V02 | conductor rear support tab (-1.3, 2.57)",
+      "label": "conductor rail supported from behind"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor mounting foot (0, 2.57)",
+      "b": "TP Canister Assembler V02 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor insulator (0, 2.57)",
+      "b": "TP Canister Assembler V02 | rear conductor mounting foot (0, 2.57)",
+      "label": "conductor insulator grounded on rear mounting foot"
+    },
+    {
+      "a": "TP Canister Assembler V02 | conductor rear support tab (0, 2.57)",
+      "b": "TP Canister Assembler V02 | rear conductor insulator (0, 2.57)",
+      "label": "conductor tab supported on insulator"
+    },
+    {
+      "a": "TP Canister Assembler V02 | insulated conductor rail 2.57",
+      "b": "TP Canister Assembler V02 | conductor rear support tab (0, 2.57)",
+      "label": "conductor rail supported from behind"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor mounting foot (1.3, 2.57)",
+      "b": "TP Canister Assembler V02 | spanning head guide beam",
+      "label": "rear conductor foot seated on beam"
+    },
+    {
+      "a": "TP Canister Assembler V02 | rear conductor insulator (1.3, 2.57)",
+      "b": "TP Canister Assembler V02 | rear conductor mounting foot (1.3, 2.57)",
+      "label": "conductor insulator grounded on rear mounting foot"
+    },
+    {
+      "a": "TP Canister Assembler V02 | conductor rear support tab (1.3, 2.57)",
+      "b": "TP Canister Assembler V02 | rear conductor insulator (1.3, 2.57)",
+      "label": "conductor tab supported on insulator"
+    },
+    {
+      "a": "TP Canister Assembler V02 | insulated conductor rail 2.57",
+      "b": "TP Canister Assembler V02 | conductor rear support tab (1.3, 2.57)",
+      "label": "conductor rail supported from behind"
+    },
+    {
+      "a": "TP Canister Assembler V02 | conductive sliding pad 2.57",
+      "b": "TP Canister Assembler V02 | sliding current collector 2.57",
+      "label": "spring pad retained in collector"
+    },
+    {
+      "a": "TP Canister Assembler V02 | conductive sliding pad 2.57",
+      "b": "TP Canister Assembler V02 | insulated conductor rail 2.57",
+      "label": "pad bears on conductor front face"
+    },
+    {
+      "a": "TP Canister Assembler V02 | carriage mounted power lead 2.57",
+      "b": "TP Canister Assembler V02 | sliding current collector 2.57",
+      "label": "lead attached to sliding current shoe"
+    },
+    {
+      "a": "TP Canister Assembler V02 | carriage mounted power lead 2.57",
+      "b": "TP Canister Assembler V02 | retained travelling head carriage",
+      "label": "lead terminates in moving head carriage"
+    },
+    {
+      "a": "TP Canister Assembler V02 | loading roller support (-1.0, -0.38)",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "loading roller stand grounded"
+    },
+    {
+      "a": "TP Canister Assembler V02 | loading roller support (-1.0, 0.38)",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "loading roller stand grounded"
+    },
+    {
+      "a": "TP Canister Assembler V02 | loading roller support (0.0, -0.38)",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "loading roller stand grounded"
+    },
+    {
+      "a": "TP Canister Assembler V02 | loading roller support (0.0, 0.38)",
+      "b": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "label": "loading roller stand grounded"
+    }
+  ],
+  "provenance": "new_reconstruction_from_reference; historical v0.2 native bytes unrecovered",
+  "three_primary_canisters": true,
+  "indexing": "One guided head indexes across three fixed supported canister nests; independent cap slides expose and reseat each neck.",
+  "cycle_seconds": 16,
+  "station_seconds": 4,
+  "station_start_seconds": [
+    0,
+    5,
+    10
+  ],
+  "between_station_index_seconds": 1,
+  "return_seconds": 2,
+  "feed_start_z": 2.47,
+  "hopper_base_z": 2.49,
+  "hopper_top_z": 2.88,
+  "native_contract": "Use live pellet references and the existing seal operation; preserve health, quality, decay stage and remaining lifetime. Never convert through an ordinary recipe that refreshes pellet state.",
+  "pending": [
+    "Independent source/export geometry, PBR and visual review",
+    "Relevant metering/index/sealing sound",
+    "Four idle and working capture directions",
+    "State-preserving native pellet/shell assembly"
+  ],
+  "previous_source_sha256": "61b39408ebabf4061834a5ce68b213beb1a52348765fe8bb9899f036a3761545",
+  "preserved_geometry_and_morph_digests": {
+    "TP Canister Assembler V02 | full 4x4 equipment footing": "23335805bf526c3c8e4774f2f55642f1de13324f9f8bfbc03892f323df2bd5a2",
+    "TP Canister Assembler V02 | three-station bored mounting bed": "e5896d7d5a6ff042f897598ab9b437b27cd9b1479eec2e559f5677682a8dac8d",
+    "TP Canister Assembler V02 | bed grounded pedestal -1.3": "8522225a2a01497ef1df6ac89e4b8df01587b6fd331fb5fe95af2c10cf60c75b",
+    "TP Canister Assembler V02 | bed grounded pedestal 1.3": "8522225a2a01497ef1df6ac89e4b8df01587b6fd331fb5fe95af2c10cf60c75b",
+    "TP Canister Assembler V02 | recessed witness pane -1.0": "e60af796650476a5424a54bd7dd605787f85540da54eef63682f69058cd9aa64",
+    "TP Canister Assembler V02 | witness window side flange (-1.0, -0.069)": "afdf219ec95bcc1e9ba531415e47215ebd78abbeb321592e0b0219c388ace6ba",
+    "TP Canister Assembler V02 | witness window side flange (-1.0, 0.069)": "afdf219ec95bcc1e9ba531415e47215ebd78abbeb321592e0b0219c388ace6ba",
+    "TP Canister Assembler V02 | witness window end flange (-1.0, 0.683)": "98ad8633c621c487788ded5e802c00037262d51dccb9e74a6ee07860e0d571f8",
+    "TP Canister Assembler V02 | witness window end flange (-1.0, 1.037)": "98ad8633c621c487788ded5e802c00037262d51dccb9e74a6ee07860e0d571f8",
+    "TP Canister Assembler V02 | cap transfer rail (-1.0, -0.145)": "c6676b8e07e9b6326cd0985952c5263fa20d98dbd5ac1f8119202e5e609313cb",
+    "TP Canister Assembler V02 | rear cap rail support (-1.0, -0.145)": "a1af815f5788b20bcd25aa6a3bffd5c4037f9d29cfbdfc524e585a96a29d99e4",
+    "TP Canister Assembler V02 | cap transfer rail (-1.0, 0.145)": "c6676b8e07e9b6326cd0985952c5263fa20d98dbd5ac1f8119202e5e609313cb",
+    "TP Canister Assembler V02 | rear cap rail support (-1.0, 0.145)": "a1af815f5788b20bcd25aa6a3bffd5c4037f9d29cfbdfc524e585a96a29d99e4",
+    "TP Canister Assembler V02 | cap carrier rear saddle -1.0": "36763e05aba78a25898e8222ba11f3e6873b49ffe745332e49b0825d3802a07d",
+    "TP Canister Assembler V02 | cap rim lifting jaw (-1.0, -0.14)": "22f703f7f8fa3396cc2915bbac0f621f9505143ced26a1e961438c542c8af08f",
+    "TP Canister Assembler V02 | cap jaw lift guide (-1.0, -0.14)": "721ab47c4f02d04303e05725ddc8d8783efef74a45fc65794cccabaead9346b9",
+    "TP Canister Assembler V02 | cap rim lifting jaw (-1.0, 0.14)": "22f703f7f8fa3396cc2915bbac0f621f9505143ced26a1e961438c542c8af08f",
+    "TP Canister Assembler V02 | cap jaw lift guide (-1.0, 0.14)": "33debe3b0a4162ee56eaebc5ccb9d796e311b775eae17885236c8b53ef9534da",
+    "TP Canister Assembler V02 | cap actuator rear mount -1.0": "acafe43a5bddb7e98a9d8b07fa8b645ec1802a638951fe8ba98426cb627f44d5",
+    "TP Canister Assembler V02 | recessed witness pane 0.0": "e60af796650476a5424a54bd7dd605787f85540da54eef63682f69058cd9aa64",
+    "TP Canister Assembler V02 | witness window side flange (0.0, -0.069)": "afdf219ec95bcc1e9ba531415e47215ebd78abbeb321592e0b0219c388ace6ba",
+    "TP Canister Assembler V02 | witness window side flange (0.0, 0.069)": "afdf219ec95bcc1e9ba531415e47215ebd78abbeb321592e0b0219c388ace6ba",
+    "TP Canister Assembler V02 | witness window end flange (0.0, 0.683)": "98ad8633c621c487788ded5e802c00037262d51dccb9e74a6ee07860e0d571f8",
+    "TP Canister Assembler V02 | witness window end flange (0.0, 1.037)": "98ad8633c621c487788ded5e802c00037262d51dccb9e74a6ee07860e0d571f8",
+    "TP Canister Assembler V02 | cap transfer rail (0.0, -0.145)": "c6676b8e07e9b6326cd0985952c5263fa20d98dbd5ac1f8119202e5e609313cb",
+    "TP Canister Assembler V02 | rear cap rail support (0.0, -0.145)": "a1af815f5788b20bcd25aa6a3bffd5c4037f9d29cfbdfc524e585a96a29d99e4",
+    "TP Canister Assembler V02 | cap transfer rail (0.0, 0.145)": "c6676b8e07e9b6326cd0985952c5263fa20d98dbd5ac1f8119202e5e609313cb",
+    "TP Canister Assembler V02 | rear cap rail support (0.0, 0.145)": "a1af815f5788b20bcd25aa6a3bffd5c4037f9d29cfbdfc524e585a96a29d99e4",
+    "TP Canister Assembler V02 | cap carrier rear saddle 0.0": "358171ac88951c9ad4ae9a3a7cf4317914080ac7fc826cc3ea47a465bce1ceda",
+    "TP Canister Assembler V02 | cap rim lifting jaw (0.0, -0.14)": "22f703f7f8fa3396cc2915bbac0f621f9505143ced26a1e961438c542c8af08f",
+    "TP Canister Assembler V02 | cap jaw lift guide (0.0, -0.14)": "721ab47c4f02d04303e05725ddc8d8783efef74a45fc65794cccabaead9346b9",
+    "TP Canister Assembler V02 | cap rim lifting jaw (0.0, 0.14)": "22f703f7f8fa3396cc2915bbac0f621f9505143ced26a1e961438c542c8af08f",
+    "TP Canister Assembler V02 | cap jaw lift guide (0.0, 0.14)": "33debe3b0a4162ee56eaebc5ccb9d796e311b775eae17885236c8b53ef9534da",
+    "TP Canister Assembler V02 | cap actuator rear mount 0.0": "acafe43a5bddb7e98a9d8b07fa8b645ec1802a638951fe8ba98426cb627f44d5",
+    "TP Canister Assembler V02 | recessed witness pane 1.0": "e60af796650476a5424a54bd7dd605787f85540da54eef63682f69058cd9aa64",
+    "TP Canister Assembler V02 | witness window side flange (1.0, -0.069)": "afdf219ec95bcc1e9ba531415e47215ebd78abbeb321592e0b0219c388ace6ba",
+    "TP Canister Assembler V02 | witness window side flange (1.0, 0.069)": "afdf219ec95bcc1e9ba531415e47215ebd78abbeb321592e0b0219c388ace6ba",
+    "TP Canister Assembler V02 | witness window end flange (1.0, 0.683)": "98ad8633c621c487788ded5e802c00037262d51dccb9e74a6ee07860e0d571f8",
+    "TP Canister Assembler V02 | witness window end flange (1.0, 1.037)": "98ad8633c621c487788ded5e802c00037262d51dccb9e74a6ee07860e0d571f8",
+    "TP Canister Assembler V02 | cap transfer rail (1.0, -0.145)": "c6676b8e07e9b6326cd0985952c5263fa20d98dbd5ac1f8119202e5e609313cb",
+    "TP Canister Assembler V02 | rear cap rail support (1.0, -0.145)": "a1af815f5788b20bcd25aa6a3bffd5c4037f9d29cfbdfc524e585a96a29d99e4",
+    "TP Canister Assembler V02 | cap transfer rail (1.0, 0.145)": "c6676b8e07e9b6326cd0985952c5263fa20d98dbd5ac1f8119202e5e609313cb",
+    "TP Canister Assembler V02 | rear cap rail support (1.0, 0.145)": "a1af815f5788b20bcd25aa6a3bffd5c4037f9d29cfbdfc524e585a96a29d99e4",
+    "TP Canister Assembler V02 | cap carrier rear saddle 1.0": "36763e05aba78a25898e8222ba11f3e6873b49ffe745332e49b0825d3802a07d",
+    "TP Canister Assembler V02 | cap rim lifting jaw (1.0, -0.14)": "22f703f7f8fa3396cc2915bbac0f621f9505143ced26a1e961438c542c8af08f",
+    "TP Canister Assembler V02 | cap jaw lift guide (1.0, -0.14)": "721ab47c4f02d04303e05725ddc8d8783efef74a45fc65794cccabaead9346b9",
+    "TP Canister Assembler V02 | cap rim lifting jaw (1.0, 0.14)": "22f703f7f8fa3396cc2915bbac0f621f9505143ced26a1e961438c542c8af08f",
+    "TP Canister Assembler V02 | cap jaw lift guide (1.0, 0.14)": "33debe3b0a4162ee56eaebc5ccb9d796e311b775eae17885236c8b53ef9534da",
+    "TP Canister Assembler V02 | cap actuator rear mount 1.0": "acafe43a5bddb7e98a9d8b07fa8b645ec1802a638951fe8ba98426cb627f44d5",
+    "TP Canister Assembler V02 | gantry grounded shoe -1.62": "c3c0c8cedbf7b453824432091586b6a0cf3d5ef68f9d39844409d499f0230f85",
+    "TP Canister Assembler V02 | red gantry upright -1.62": "01a345d4ad6e26815874fefd39096bc4bc6518b83a7b332e9d80549a381cdc80",
+    "TP Canister Assembler V02 | gantry grounded shoe 1.62": "c3c0c8cedbf7b453824432091586b6a0cf3d5ef68f9d39844409d499f0230f85",
+    "TP Canister Assembler V02 | red gantry upright 1.62": "01a345d4ad6e26815874fefd39096bc4bc6518b83a7b332e9d80549a381cdc80",
+    "TP Canister Assembler V02 | spanning head guide beam": "fc7112d6f9f81cde608e92cfbdc5dca7fb8ac728f641e597e0bb164910512314",
+    "TP Canister Assembler V02 | ground head linear guide": "ef28856a195ddddd6d41f6b4263733d94c197a4ce97a26ff1ec145fb14304832",
+    "TP Canister Assembler V02 | linear guide standoff -1.25": "d6ca4276660f6fb15b8e05383b0d4461d8d6a8511502542cd29559acf2cad793",
+    "TP Canister Assembler V02 | linear guide standoff 0": "d6ca4276660f6fb15b8e05383b0d4461d8d6a8511502542cd29559acf2cad793",
+    "TP Canister Assembler V02 | linear guide standoff 1.25": "d6ca4276660f6fb15b8e05383b0d4461d8d6a8511502542cd29559acf2cad793",
+    "TP Canister Assembler V02 | retained travelling head carriage": "b56c33f9a52920a64e28d1d16bc44a1142e8ac3668449021fe921a08485e4bf5",
+    "TP Canister Assembler V02 | moving head rear crosshead": "8e0b74c2de5e68c64c64f2e814f7d7e04dc5b71cfc8cc0ea77bdfb41dfa04ac0",
+    "TP Canister Assembler V02 | open cantilever side arm -0.18": "1eec293047e1a4ff7e095d149f9b13fb369132cc4b67413932092cacfd5c6451",
+    "TP Canister Assembler V02 | open cantilever side arm 0.18": "1eec293047e1a4ff7e095d149f9b13fb369132cc4b67413932092cacfd5c6451",
+    "TP Canister Assembler V02 | moving hopper bracket": "72bd6924dbcc55f2967a7ee7a2cad2ac6d3f04fcb41c17924690ef39594a533a",
+    "TP Canister Assembler V02 | meter eccentric arm": "585ce6cea7051ee9276fc521803ba0400379b7cbd217e7441516b81ff93f8ee2",
+    "TP Canister Assembler V02 | meter bearing outboard bridge 2.18": "052f0f953f65c9360779e0a2eb9330addf4f08ab4534d8bf4e11cbdff42db7ac",
+    "TP Canister Assembler V02 | meter bearing outboard riser 2.18": "26db2b33db65fe96f4d9308d599c1c90a837965540de341fcb630b29f29cced2",
+    "TP Canister Assembler V02 | meter bearing radial seat 2.18": "7b4ee8db9a42a6f6fca826a309313ba8d72c61c86b185585a0b481179a07cb36",
+    "TP Canister Assembler V02 | meter bearing outboard bridge 2.32": "052f0f953f65c9360779e0a2eb9330addf4f08ab4534d8bf4e11cbdff42db7ac",
+    "TP Canister Assembler V02 | meter bearing outboard riser 2.32": "26db2b33db65fe96f4d9308d599c1c90a837965540de341fcb630b29f29cced2",
+    "TP Canister Assembler V02 | meter bearing radial seat 2.32": "7b4ee8db9a42a6f6fca826a309313ba8d72c61c86b185585a0b481179a07cb36",
+    "TP Canister Assembler V02 | actual sliding pellet gate": "fae9af4277b84d1d43c2dc58749b3a31b00f4d0436aec983330e08a815bed8d9",
+    "TP Canister Assembler V02 | gate offset drive arm 0": "67a1bc5d9166bd024c5c9e05dc8510de1309985bb3995b087bb6375fb4499016",
+    "TP Canister Assembler V02 | gate offset drive arm 1": "4535426a7058f06577bb99976efe9afb3df0bc3e6c1ab60bd75545d7fa67c5a4",
+    "TP Canister Assembler V02 | gate offset drive arm 2": "ab4d3e9596fe33b277c0db433c32f64fb20089c25590ce88aacd263d052f2688",
+    "TP Canister Assembler V02 | gate offset drive arm 3": "0924b16422cfa7268032860c814b2f1800fb902fe0bcc12e9795e2f6bb67af67",
+    "TP Canister Assembler V02 | gate offset drive arm 4": "7e316bb0448188019189f793beb6c3b91a381e4b39a6af421e7bea1825e0190b",
+    "TP Canister Assembler V02 | meter connecting rod": "5c1512fb823365f2afbd0c0380ce14df3c6ae42c0fb4574e3e0a237cc9e5ca7e",
+    "TP Canister Assembler V02 | meter gate guide mount": "1ef0bea88620e026398157bcee7721b0a1f8bb6329bfd78b226c0f293280bed0",
+    "TP Canister Assembler V02 | gate guide bracket": "0b6f169c27a7b26a14e9244255e30ea047b23536f993950031d25dc2f0478f7a",
+    "TP Canister Assembler V02 | pellet gate linear way 0.385": "7997366c260a38b56588255f2211eb3a4647cd70e48cb0daee6c075b502c61d7",
+    "TP Canister Assembler V02 | pellet gate linear way 0.575": "95405ec514099af3f3f89efe6d43f73e919f5e86356c51b599eddc06a74cc29a",
+    "TP Canister Assembler V02 | insulated conductor rail 2.5": "4cac63f4eb783af3940733dd07933145ab23222cfebe52e822f05a629300c3b8",
+    "TP Canister Assembler V02 | rear conductor mounting foot (-1.3, 2.5)": "a37081aae873e73058f0a9c82fd97df90a09148c391345b9931a487bc29878a4",
+    "TP Canister Assembler V02 | rear conductor insulator (-1.3, 2.5)": "ee53378c6c4cacff8f1bab23cdc41de4d60658ddfe0b2ce9df018bcb03a80a42",
+    "TP Canister Assembler V02 | conductor rear support tab (-1.3, 2.5)": "288dec53720932267b622dc55728ccd9f156ec1cd572a4f57e22c62d40e85f7a",
+    "TP Canister Assembler V02 | rear conductor mounting foot (0, 2.5)": "a37081aae873e73058f0a9c82fd97df90a09148c391345b9931a487bc29878a4",
+    "TP Canister Assembler V02 | rear conductor insulator (0, 2.5)": "ee53378c6c4cacff8f1bab23cdc41de4d60658ddfe0b2ce9df018bcb03a80a42",
+    "TP Canister Assembler V02 | conductor rear support tab (0, 2.5)": "288dec53720932267b622dc55728ccd9f156ec1cd572a4f57e22c62d40e85f7a",
+    "TP Canister Assembler V02 | rear conductor mounting foot (1.3, 2.5)": "a37081aae873e73058f0a9c82fd97df90a09148c391345b9931a487bc29878a4",
+    "TP Canister Assembler V02 | rear conductor insulator (1.3, 2.5)": "ee53378c6c4cacff8f1bab23cdc41de4d60658ddfe0b2ce9df018bcb03a80a42",
+    "TP Canister Assembler V02 | conductor rear support tab (1.3, 2.5)": "288dec53720932267b622dc55728ccd9f156ec1cd572a4f57e22c62d40e85f7a",
+    "TP Canister Assembler V02 | sliding current collector 2.5": "2c7d0a0a5a4fefd9c9c0c7d796d8de9ff26655ed59b879a76f71c8b58ed85159",
+    "TP Canister Assembler V02 | conductive sliding pad 2.5": "b2e8355874f99a9f6a30f8812261210a0b27d2377f73a2e80cfff14d94d22fc2",
+    "TP Canister Assembler V02 | insulated conductor rail 2.57": "4cac63f4eb783af3940733dd07933145ab23222cfebe52e822f05a629300c3b8",
+    "TP Canister Assembler V02 | rear conductor mounting foot (-1.3, 2.57)": "a37081aae873e73058f0a9c82fd97df90a09148c391345b9931a487bc29878a4",
+    "TP Canister Assembler V02 | rear conductor insulator (-1.3, 2.57)": "1bb3174670e6ce44be045018b7291039624a8cfaf6e60031d49a825133fb3b0d",
+    "TP Canister Assembler V02 | conductor rear support tab (-1.3, 2.57)": "288dec53720932267b622dc55728ccd9f156ec1cd572a4f57e22c62d40e85f7a",
+    "TP Canister Assembler V02 | rear conductor mounting foot (0, 2.57)": "a37081aae873e73058f0a9c82fd97df90a09148c391345b9931a487bc29878a4",
+    "TP Canister Assembler V02 | rear conductor insulator (0, 2.57)": "1bb3174670e6ce44be045018b7291039624a8cfaf6e60031d49a825133fb3b0d",
+    "TP Canister Assembler V02 | conductor rear support tab (0, 2.57)": "288dec53720932267b622dc55728ccd9f156ec1cd572a4f57e22c62d40e85f7a",
+    "TP Canister Assembler V02 | rear conductor mounting foot (1.3, 2.57)": "a37081aae873e73058f0a9c82fd97df90a09148c391345b9931a487bc29878a4",
+    "TP Canister Assembler V02 | rear conductor insulator (1.3, 2.57)": "1bb3174670e6ce44be045018b7291039624a8cfaf6e60031d49a825133fb3b0d",
+    "TP Canister Assembler V02 | conductor rear support tab (1.3, 2.57)": "288dec53720932267b622dc55728ccd9f156ec1cd572a4f57e22c62d40e85f7a",
+    "TP Canister Assembler V02 | sliding current collector 2.57": "2c7d0a0a5a4fefd9c9c0c7d796d8de9ff26655ed59b879a76f71c8b58ed85159",
+    "TP Canister Assembler V02 | conductive sliding pad 2.57": "b2e8355874f99a9f6a30f8812261210a0b27d2377f73a2e80cfff14d94d22fc2",
+    "TP Canister Assembler V02 | cogitator grounded pedestal": "aabfbbaf5bf04a87e4900964432dc8c253ad7d3146551e3b668cd42cafa4d051",
+    "TP Canister Assembler V02 | cogitator mounting sole": "9240295b71841cdae5b108539289200018b8f8f865da6765ed0c4bd466dad62a",
+    "TP Canister Assembler V02 | loading roller support (-1.0, -0.38)": "7d57c756d42b6df786988ca38bc0c9f2710dce73a24c494294e518375ef09f61",
+    "TP Canister Assembler V02 | loading roller support (-1.0, 0.38)": "7d57c756d42b6df786988ca38bc0c9f2710dce73a24c494294e518375ef09f61",
+    "TP Canister Assembler V02 | loading roller support (0.0, -0.38)": "7d57c756d42b6df786988ca38bc0c9f2710dce73a24c494294e518375ef09f61",
+    "TP Canister Assembler V02 | loading roller support (0.0, 0.38)": "7d57c756d42b6df786988ca38bc0c9f2710dce73a24c494294e518375ef09f61",
+    "TP Canister Assembler V02 | indexed canister nest -1.0": "fffdc523b73ef182de89ba39a656bbd61ab10265ec9cb4074b658cca7bf2263e",
+    "TP Canister Assembler V02 | canister closed bottom -1.0": "493867af33c50a76e8dca78bd63207c7b3a5b5757bc4c96d56078f598ac69fc9",
+    "TP Canister Assembler V02 | hollow canister shell -1.0": "016707b38648293c6036f1be8987f4d6554a91e1ad5e30eaa76fecf3ac92ac48",
+    "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)": "2373d668ef4b15bd664ebf9f0d7c96e0a722dda9e41ef5154fdde868f281fea6",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 0)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 1)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 2)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 3)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 4)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 5)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 6)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 7)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)": "965b0ae51bad4e51d6416b7d385c4518720f100b28cc39e1b2ab413820486419",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 0)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 1)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 2)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 3)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 4)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 5)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 6)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 7)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | pressure cap plate -1.0": "04aab0ed30d8edecc6d892c7247399f2e1f9a0ea801b775fe2be3fbba33b2b53",
+    "TP Canister Assembler V02 | cap locking lip -1.0": "4e6a732d4b184413cc2643442d23f19e6614bbe2b143d255b7fc0874b4f19833",
+    "TP Canister Assembler V02 | cap slide actuator -1.0": "3b01dd5cd95b20c8d96d36f0c05735421b1ca47750958dd38b287a4238154645",
+    "TP Canister Assembler V02 | cap actuator mounting collar -1.0": "baa08ebb45edbf5f824210b0f82077ed7ff4ae79e0039bd19a72ea5ee4b1ddd8",
+    "TP Canister Assembler V02 | cap slide piston -1.0": "6147617fa3a726e5cb2a3d728888fb46816e21eaffe45d0066fe84e2d973452c",
+    "TP Canister Assembler V02 | indexed canister nest 0.0": "4554a3eb74409aa83d1427d4d2d2475ee08fba78694f14e660b59e787f4266af",
+    "TP Canister Assembler V02 | canister closed bottom 0.0": "493867af33c50a76e8dca78bd63207c7b3a5b5757bc4c96d56078f598ac69fc9",
+    "TP Canister Assembler V02 | hollow canister shell 0.0": "5be086b319539b9e2e6eba9ecc07416f730c2243ad6ad925dce8faf021715650",
+    "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)": "02ef99294c74b4d4ceba6b96776d6e87130d51968bdbeadf967b0749ee556088",
+    "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 0)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 1)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 2)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 3)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 4)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 5)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 6)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 7)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)": "8d526724b59a2af6423d7a53c7dbb2924fb91db2aa7e2b4c8191ebe5d2b3c858",
+    "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 0)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 1)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 2)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 3)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 4)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 5)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 6)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 7)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | pressure cap plate 0.0": "04aab0ed30d8edecc6d892c7247399f2e1f9a0ea801b775fe2be3fbba33b2b53",
+    "TP Canister Assembler V02 | cap locking lip 0.0": "d7571d2e873ec62f23f0c642a9933570320b9cdb9086c0984b6ae1253049cd0b",
+    "TP Canister Assembler V02 | cap slide actuator 0.0": "a449a9e224c44b69aafbc5f1b1e1c70d7d264069cd3dacb80ce9708a96b01002",
+    "TP Canister Assembler V02 | cap actuator mounting collar 0.0": "89a66148b5f06445fc09d1f771d24193f018ff1c677f130f2b68858e28dbac4a",
+    "TP Canister Assembler V02 | cap slide piston 0.0": "6147617fa3a726e5cb2a3d728888fb46816e21eaffe45d0066fe84e2d973452c",
+    "TP Canister Assembler V02 | indexed canister nest 1.0": "92098f5c7dd9938c79f7ebcfed677dd746dc4eb9fcc794d7984d5a7765a27a4e",
+    "TP Canister Assembler V02 | canister closed bottom 1.0": "493867af33c50a76e8dca78bd63207c7b3a5b5757bc4c96d56078f598ac69fc9",
+    "TP Canister Assembler V02 | hollow canister shell 1.0": "1af9700024a07ae961611c6fe3ce7227202a5f398af015afc95358c1cb34caf7",
+    "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)": "c5a79e91062afd73a040b61c3c3c70b36d33a4e7af8db432f329de36cf002281",
+    "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 0)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 1)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 2)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 3)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 4)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 5)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 6)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 7)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)": "6d3f01078e022ecaaaf7e15e5f96500b22fcc7f1c166c7f243737400516aecf6",
+    "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 0)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 1)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 2)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 3)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 4)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 5)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 6)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 7)": "95a57b33a3b14ad33f1aa5a2773896ee5c75e1bd1171dea155f25a87e42d87e1",
+    "TP Canister Assembler V02 | pressure cap plate 1.0": "04aab0ed30d8edecc6d892c7247399f2e1f9a0ea801b775fe2be3fbba33b2b53",
+    "TP Canister Assembler V02 | cap locking lip 1.0": "b46be4696fd2f850af421bb0d88159d4cbfd588de1bbbf84f9174d7daadaa6bf",
+    "TP Canister Assembler V02 | cap slide actuator 1.0": "af3d10cec639f5a0265167885683122f00d87b4919ec3d88690f44806286fa68",
+    "TP Canister Assembler V02 | cap actuator mounting collar 1.0": "70373395a62f0da603532266aad497badddfcde3dea70e1cfcd1a3d6db1f53d1",
+    "TP Canister Assembler V02 | cap slide piston 1.0": "6147617fa3a726e5cb2a3d728888fb46816e21eaffe45d0066fe84e2d973452c",
+    "TP Canister Assembler V02 | carriage annular tool bracket": "14c03066b6c368ba643ad2b75bf41c4ba6235994765f62a5793c677ca0c141ae",
+    "TP Canister Assembler V02 | hollow electric press housing": "38412364df917847e028fde951eb6bb2745f294d1c6d1661c194ce05e8ea04dd",
+    "TP Canister Assembler V02 | annular cap sealing punch": "b8bf57ce08d3ff0639f9c8cc3c84ad34f657c3500d084673a0c797267d6e9cd5",
+    "TP Canister Assembler V02 | telescoping hollow sealing ram": "4f3ad2932fb6f8e883d96aaa8c1fa6d701344f1b01fed19dbace75247c36260e",
+    "TP Canister Assembler V02 | telescoping pellet fill tube": "c331f4882420ee47877a1a2b8d25037e7b5ec8e87ae0cace10074fd0d3d6d59b",
+    "TP Canister Assembler V02 | open metered pellet hopper": "a076f405f6184c3a495ff94f6e79ca7ca4d058c1aad75a7f1f5ad613ae921572",
+    "TP Canister Assembler V02 | bored sliding gate valve body": "f2964e0341054a8568303fd43c12940964d293bc9b65ebfd123da39ba80a01e6",
+    "TP Canister Assembler V02 | stationary nozzle guide sleeve": "65272251be78847529c787c5cdfcbae72676354405c1f422821862af7ebc8c40",
+    "TP Canister Assembler V02 | supported pellet metering spindle": "1bc7e83083c1725a9b1d6a5f529c4f8454234b229eb89f8bf1ecbe76ab18c233",
+    "TP Canister Assembler V02 | meter eccentric pin": "b3317634a98b1c449b66f335535bb35a1802e902c5e11f760ebb3a8b3275372d",
+    "TP Canister Assembler V02 | meter spindle bearing 2.18": "e7de1c08c37ba90f473c15c7166a543129544977e7c12727fc68973afcfcd4ac",
+    "TP Canister Assembler V02 | meter spindle bearing 2.32": "62750369250c47b8a1792fee4b1f3771d0947d5be441525758640eec0296d255",
+    "TP Canister Assembler V02 | gate connecting-rod pivot": "89e2208b89d5b4c9159d085fb6944bd231bb0b9b14951e5c907d6c882cac1c96",
+    "TP Canister Assembler V02 | shell loading roller -1.0": "61dec8aaf65bd7da478741053eb89103768c0696694b637c040dcef4dbccf198",
+    "TP Canister Assembler V02 | shell loading roller 0.0": "61dec8aaf65bd7da478741053eb89103768c0696694b637c040dcef4dbccf198",
+    "TP Canister Assembler V02 | carriage pellet feed bore": "bdefe43d38c14747d06a80d7c3292be0b85e575641ed9a6173af95d6590f8a21",
+    "TP Canister Assembler V02 | carriage mounted power lead 2.5": "72d04055511bcd43c0748185cb9fa9fb9be7043d3b1aa7ed81c9da51395ade56",
+    "TP Canister Assembler V02 | carriage mounted power lead 2.57": "15844ace7f6ff173239a2c99e4efa849d2084a7a007162484dd6000895980f68",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / service interface casting": "836130ebff2d1898622e10ae3ea7262dbdb0b3748806f523d7c64eada8d5010c",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / service inset CRT": "07e18c5aa505b731d0760b030e9e99294790ba8f5fe5f0a9bc94e06b1858b87e",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button": "3ed339e413855d4b2b0efb40ea84d3e20f34af85f1bffaa44e07c64175919071",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button.001": "3ed339e413855d4b2b0efb40ea84d3e20f34af85f1bffaa44e07c64175919071",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button.002": "3ed339e413855d4b2b0efb40ea84d3e20f34af85f1bffaa44e07c64175919071",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button.003": "3ed339e413855d4b2b0efb40ea84d3e20f34af85f1bffaa44e07c64175919071",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console cast side extension": "10e5a8bf36b82674c5083c728f52c3bcf1f3920842bc40f29bab92e86e1017b0",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | CRT lower retaining edge": "5189b13d285214f3a5462d03c1088b08e0f78aff5fcbadb302eeac164d38eca2",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | CRT upper retaining edge": "5189b13d285214f3a5462d03c1088b08e0f78aff5fcbadb302eeac164d38eca2",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | CRT left retaining edge": "facf42f8ef6a007d8b265e1b41af2e14053fd95bf5e2a48d86628df782d3c837",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | CRT right retaining edge": "facf42f8ef6a007d8b265e1b41af2e14053fd95bf5e2a48d86628df782d3c837",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 0": "efa2b8862d79da1319ddb3f165cf5ef2f52d12e972a40a242eb08bc20c280012",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 1": "30ca088d936c2c8bbad5178a6c4dd75c5c71a4a447951ba9f1bbc9decd2ee70b",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 2": "670907db3f179995c8b37f255d4ead9f8b902ac537476d26983db7316c8eee8f",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 3": "027b290bf4d7855d6b289bc520c87e202070b30a91ca0c9dc55adec762f083db",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": "cb78af354a4d2ed27b58884c92990f5f63babe08f509e9c2f690bd611b3e5f2d",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": "cb78af354a4d2ed27b58884c92990f5f63babe08f509e9c2f690bd611b3e5f2d",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": "cb78af354a4d2ed27b58884c92990f5f63babe08f509e9c2f690bd611b3e5f2d",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": "cb78af354a4d2ed27b58884c92990f5f63babe08f509e9c2f690bd611b3e5f2d",
+    "TP Canister Assembler V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": "cb78af354a4d2ed27b58884c92990f5f63babe08f509e9c2f690bd611b3e5f2d"
+  },
+  "surface_assignments": [
+    {
+      "object": "TP Canister Assembler V02 | three-station bored mounting bed",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear cap rail support (-1.0, -0.145)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear cap rail support (-1.0, 0.145)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap carrier rear saddle -1.0",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (-1.0, -0.14)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (-1.0, 0.14)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear cap rail support (0.0, -0.145)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear cap rail support (0.0, 0.145)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap carrier rear saddle 0.0",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (0.0, -0.14)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (0.0, 0.14)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear cap rail support (1.0, -0.145)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear cap rail support (1.0, 0.145)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap carrier rear saddle 1.0",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (1.0, -0.14)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (1.0, 0.14)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | gantry grounded shoe -1.62",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | gantry grounded shoe 1.62",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | linear guide standoff -1.25",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | linear guide standoff 0",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | linear guide standoff 1.25",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | retained travelling head carriage",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | moving head rear crosshead",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | open cantilever side arm -0.18",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | open cantilever side arm 0.18",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | moving hopper bracket",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter bearing outboard bridge 2.18",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter bearing outboard riser 2.18",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter bearing radial seat 2.18",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter bearing outboard bridge 2.32",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter bearing outboard riser 2.32",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter bearing radial seat 2.32",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | gate offset drive arm 0",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | gate offset drive arm 1",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | gate offset drive arm 2",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | gate offset drive arm 3",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | gate offset drive arm 4",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter connecting rod",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter gate guide mount",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | gate guide bracket",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | pellet gate linear way 0.385",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | pellet gate linear way 0.575",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear conductor mounting foot (-1.3, 2.5)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear conductor mounting foot (0, 2.5)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear conductor mounting foot (1.3, 2.5)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | sliding current collector 2.5",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear conductor mounting foot (-1.3, 2.57)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear conductor mounting foot (0, 2.57)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | rear conductor mounting foot (1.3, 2.57)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | sliding current collector 2.57",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cogitator grounded pedestal",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cogitator mounting sole",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | loading roller support (-1.0, -0.38)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | loading roller support (-1.0, 0.38)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | loading roller support (0.0, -0.38)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | loading roller support (0.0, 0.38)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | indexed canister nest -1.0",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap actuator mounting collar -1.0",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | indexed canister nest 0.0",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap actuator mounting collar 0.0",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | indexed canister nest 1.0",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap actuator mounting collar 1.0",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | carriage annular tool bracket",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | open metered pellet hopper",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | bored sliding gate valve body",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | carriage pellet feed bore",
+      "material": "TP Assembler V03 | machined-cast-frame"
+    },
+    {
+      "object": "TP Canister Assembler V02 | bed grounded pedestal -1.3",
+      "material": "TP Assembler V03 | gantry-red-enamel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | bed grounded pedestal 1.3",
+      "material": "TP Assembler V03 | gantry-red-enamel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap actuator rear mount -1.0",
+      "material": "TP Assembler V03 | gantry-red-enamel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap actuator rear mount 0.0",
+      "material": "TP Assembler V03 | gantry-red-enamel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap actuator rear mount 1.0",
+      "material": "TP Assembler V03 | gantry-red-enamel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | red gantry upright -1.62",
+      "material": "TP Assembler V03 | gantry-red-enamel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | red gantry upright 1.62",
+      "material": "TP Assembler V03 | gantry-red-enamel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | spanning head guide beam",
+      "material": "TP Assembler V03 | gantry-red-enamel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | hollow canister shell -1.0",
+      "material": "TP Assembler V03 | canister-body-enamel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | hollow canister shell -1.0",
+      "material": "TP Assembler V03 | turned-shoulder-and-cap",
+      "region": "formed shoulder and neck above Z1.165"
+    },
+    {
+      "object": "TP Canister Assembler V02 | hollow canister shell 0.0",
+      "material": "TP Assembler V03 | canister-body-enamel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | hollow canister shell 0.0",
+      "material": "TP Assembler V03 | turned-shoulder-and-cap",
+      "region": "formed shoulder and neck above Z1.165"
+    },
+    {
+      "object": "TP Canister Assembler V02 | hollow canister shell 1.0",
+      "material": "TP Assembler V03 | canister-body-enamel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | hollow canister shell 1.0",
+      "material": "TP Assembler V03 | turned-shoulder-and-cap",
+      "region": "formed shoulder and neck above Z1.165"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister closed bottom -1.0",
+      "material": "TP Assembler V03 | turned-shoulder-and-cap"
+    },
+    {
+      "object": "TP Canister Assembler V02 | pressure cap plate -1.0",
+      "material": "TP Assembler V03 | turned-shoulder-and-cap"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister closed bottom 0.0",
+      "material": "TP Assembler V03 | turned-shoulder-and-cap"
+    },
+    {
+      "object": "TP Canister Assembler V02 | pressure cap plate 0.0",
+      "material": "TP Assembler V03 | turned-shoulder-and-cap"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister closed bottom 1.0",
+      "material": "TP Assembler V03 | turned-shoulder-and-cap"
+    },
+    {
+      "object": "TP Canister Assembler V02 | pressure cap plate 1.0",
+      "material": "TP Assembler V03 | turned-shoulder-and-cap"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap transfer rail (-1.0, -0.145)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap transfer rail (-1.0, 0.145)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap carrier rear saddle -1.0",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (-1.0, -0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap jaw lift guide (-1.0, -0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (-1.0, 0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap jaw lift guide (-1.0, 0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap transfer rail (0.0, -0.145)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap transfer rail (0.0, 0.145)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap carrier rear saddle 0.0",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (0.0, -0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap jaw lift guide (0.0, -0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (0.0, 0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap jaw lift guide (0.0, 0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap transfer rail (1.0, -0.145)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap transfer rail (1.0, 0.145)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap carrier rear saddle 1.0",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (1.0, -0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap jaw lift guide (1.0, -0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap rim lifting jaw (1.0, 0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap jaw lift guide (1.0, 0.14)",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | ground head linear guide",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | actual sliding pellet gate",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap slide piston -1.0",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap slide piston 0.0",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap slide piston 1.0",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | annular cap sealing punch",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | telescoping hollow sealing ram",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | stationary nozzle guide sleeve",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | supported pellet metering spindle",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter eccentric pin",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | gate connecting-rod pivot",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | shell loading roller -1.0",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | shell loading roller 0.0",
+      "material": "TP Assembler V03 | ground-guides-and-ram"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window side flange (-1.0, -0.069)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window side flange (-1.0, 0.069)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window end flange (-1.0, 0.683)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window end flange (-1.0, 1.037)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window side flange (0.0, -0.069)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window side flange (0.0, 0.069)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window end flange (0.0, 0.683)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window end flange (0.0, 1.037)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window side flange (1.0, -0.069)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window side flange (1.0, 0.069)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window end flange (1.0, 0.683)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | witness window end flange (1.0, 1.037)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter eccentric arm",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (-1.0, 0.6)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 0)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 1)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 2)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 3)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 4)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 5)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 6)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 0.6, 7)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (-1.0, 1.14)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 0)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 1)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 2)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 3)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 4)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 5)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 6)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (-1.0, 1.14, 7)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap locking lip -1.0",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (0.0, 0.6)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 0)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 1)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 2)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 3)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 4)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 5)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 6)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 0.6, 7)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (0.0, 1.14)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 0)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 1)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 2)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 3)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 4)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 5)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 6)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (0.0, 1.14, 7)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap locking lip 0.0",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (1.0, 0.6)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 0)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 1)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 2)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 3)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 4)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 5)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 6)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 0.6, 7)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | canister retaining band (1.0, 1.14)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 0)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 1)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 2)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 3)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 4)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 5)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 6)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | band retaining head (1.0, 1.14, 7)",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap locking lip 1.0",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | telescoping pellet fill tube",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter spindle bearing 2.18",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | meter spindle bearing 2.32",
+      "material": "TP Assembler V03 | retaining-and-meter-bronze"
+    },
+    {
+      "object": "TP Canister Assembler V02 | open metered pellet hopper",
+      "material": "TP Assembler V03 | hopper-and-meter-steel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | bored sliding gate valve body",
+      "material": "TP Assembler V03 | hopper-and-meter-steel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | carriage pellet feed bore",
+      "material": "TP Assembler V03 | hopper-and-meter-steel"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap slide actuator -1.0",
+      "material": "TP Assembler V03 | tool-and-actuator-casting"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap slide actuator 0.0",
+      "material": "TP Assembler V03 | tool-and-actuator-casting"
+    },
+    {
+      "object": "TP Canister Assembler V02 | cap slide actuator 1.0",
+      "material": "TP Assembler V03 | tool-and-actuator-casting"
+    },
+    {
+      "object": "TP Canister Assembler V02 | hollow electric press housing",
+      "material": "TP Assembler V03 | tool-and-actuator-casting"
+    },
+    {
+      "object": "TP Canister Assembler V02 | insulated conductor rail 2.5",
+      "material": "TP Assembler V03 | conductor-contact-brass"
+    },
+    {
+      "object": "TP Canister Assembler V02 | conductive sliding pad 2.5",
+      "material": "TP Assembler V03 | conductor-contact-brass"
+    },
+    {
+      "object": "TP Canister Assembler V02 | insulated conductor rail 2.57",
+      "material": "TP Assembler V03 | conductor-contact-brass"
+    },
+    {
+      "object": "TP Canister Assembler V02 | conductive sliding pad 2.57",
+      "material": "TP Assembler V03 | conductor-contact-brass"
+    },
+    {
+      "object": "TP Canister Assembler V02 | full 4x4 equipment footing",
+      "material": "TP Assembler V03 | equipment-footing"
+    }
+  ],
+  "surface_plans": [
+    {
+      "region": "machined-cast-frame",
+      "plan": "Fine cast steel belongs to actual nests, mounting bed, crosshead, carriage, bearing bridges and guide mounts. Per-face UV follows each member, with restrained end-seam oil; no repeated painted stripes on unrelated parts."
+    },
+    {
+      "region": "gantry-red-enamel",
+      "plan": "Longitudinal member UV directs fine enamel texture along actual upright, shoe and spanning beam. Narrow edge exposure and seated-end grime replace the donor cloud pattern. Cap actuator uprights receive the same structural enamel."
+    },
+    {
+      "region": "turned-shoulder-and-cap",
+      "plan": "Cylindrical U wraps the actual vessel axis; V follows its formed shoulder. Fine circumferential turning follows shell necks and cap perimeters. Planar cap faces retain their own projection, avoiding collapsed polar UV on closed ends."
+    },
+    {
+      "region": "canister-body-enamel",
+      "plan": "U is actual shell circumference and V is .52..1.45 vessel height, independently centered for each of three vessels. Fine axial manufacturing grain and slight darkening under actual retaining bands distinguish the body enamel from bare formed shoulders. No painted pseudo-window or generic front ellipse."
+    },
+    {
+      "region": "ground-guides-and-ram",
+      "plan": "Per-face V follows rails, carrier channels and jaw lift lands; cylindrical U/V follows actual primitive shaft axes on rods and hollow tools. Polished mating strips remain on guides and tooling rather than the red frame."
+    },
+    {
+      "region": "retaining-and-meter-bronze",
+      "plan": "Restrained bronze belongs to actual retaining bands, window flanges, lid locking lips, metering bearings and eccentric arm. Sleeve U/V follows real bores and seating faces; it is not repeated across painted frames or bare tools."
+    },
+    {
+      "region": "hopper-and-meter-steel",
+      "plan": "Actual hopper circumference and throat-height UV carry fine rolled steel. Existing route UV follows the curved feed arc length; the valve retains machined per-face projection. Throat-end darkening stays localized to feed and metering hardware."
+    },
+    {
+      "region": "tool-and-actuator-casting",
+      "plan": "Dedicated dark cast housing finish follows the actual hollow press and cap-slide cylinders, distinct from machined rods and bronze seals. Existing bore UV remains cylindrical; mild seated-end oil explains service joints."
+    },
+    {
+      "region": "conductor-contact-brass",
+      "plan": "Linear guide-length UV follows real current rails and contact pads. Fine contact rub distinguishes electrical brass from worn vessel retainers; supports and insulation keep their original material identity."
+    },
+    {
+      "region": "equipment-footing",
+      "plan": "Fine low-contrast mineral variation on the actual equipment footing, separate from metal tooling. Full footing-face UV prevents scaling another machine concrete atlas over individual bolts or shells."
+    }
+  ],
+  "textures": [
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\machined-cast-frame\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "1133a4c57dcfb97d6a3f047136a6790ceaf7d40d242dc17d329bd37a64540537"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\machined-cast-frame\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "ac67683ba9a2ef06c7557f2166321627935da82b78ab9d3b4c54ee3763240a25"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\machined-cast-frame\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "608370855b2c0fa95b9e97ea2e94e71a62e5f739249fb3aa6c96961df4882d82"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\gantry-red-enamel\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "259b23be017e6188e5828faeed79d2f1ee998fd2e357f35fb60a0ced2a696189"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\gantry-red-enamel\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "8d6bcfccf582e828848056bc2427a042d3678b4b94094ba0eeb5ca3182faed76"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\gantry-red-enamel\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "6310d202252c669a11d7c5195eb83716386f9a0a3d3d5caa91efd0529828acd6"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\turned-shoulder-and-cap\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "c8495bb7270189961213e5551bb4edd3a7b27dfed31e89a75c2263b7b7a0b4af"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\turned-shoulder-and-cap\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "7aeed017e024cae08cca63cf06450f1d138e08db087ac3da34af02133eba68b7"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\turned-shoulder-and-cap\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "2a512658ec79fe6b8b42bb3b0a5f355d4457ee907e4fa99a9aaea6dc019651e5"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\canister-body-enamel\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "d825def70af68a2f8618355b25936fe7c21d9f4e7534dcdb5c14be30d93ad39b"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\canister-body-enamel\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "450777899619d1cd50d3ff963d1875d09eaf89b97e31b4b08cf2ca77d9a96d61"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\canister-body-enamel\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "c3c1c0c8f3a761d3ad02b012657ebf8b9939baff38293f1a5b9ccaeb2323febf"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\ground-guides-and-ram\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "1ab8d7352a15249a5a2258996b493e21530a94997727c95537f880bed5de980b"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\ground-guides-and-ram\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "7dc57455d7bc520444d6279a18659ed87854c05ceaa1fd7886399a12121bafa1"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\ground-guides-and-ram\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "b29981fb2927b7ac2c07ff6cc3e9076adccbed9a76cd6c211619725900f32469"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\retaining-and-meter-bronze\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "60575586f8cdfd58c1f98337c4545522c212230c176febd1f41c12c836bc2a05"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\retaining-and-meter-bronze\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "679495b428371029fec3ca41d3c16837499503eddc693306828b329ccc347840"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\retaining-and-meter-bronze\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "c14f279da80e7c93ff59df17a7e29870c580aac9499544366995c2020fe0f905"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\hopper-and-meter-steel\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "41a59b7c120b40feb975da547fd0883e5d60c66f0905a13ab542f37bdd1af6cd"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\hopper-and-meter-steel\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "4d87e397872263622ddf3e6c6f228417f34106a17c6899be3ea47fd2100fca96"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\hopper-and-meter-steel\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "74a4a19b5b1d5f9a19975d2f5170331545b5e0e506b53d59d27ebd7183a06f7a"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\tool-and-actuator-casting\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "66ee1530ad75353b78f88a38b79bd15ca3007551f9acbea9db7ed52d485acd53"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\tool-and-actuator-casting\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "e3f3abe15e9e2c2c9316ed3df733e074412a1f67cb02b7bc6e014a217062502d"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\tool-and-actuator-casting\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "1dd3c98d21f4b13afa3e5d4bc170f4feb4b5086a47dcb26d0fecce60a4648d57"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\conductor-contact-brass\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "8f44cc0b8549683e56799dcd0573a5eba7f393cba5a17e48a5ea93bb084b839f"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\conductor-contact-brass\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "637878ed3f81938b475b1494557327026e779bfb19160d5fd386dc3b052f93f5"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\conductor-contact-brass\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "eb4184e121da0b636e249c49fa3a0bd6dfc9175d93ddc68fb18669bd52ef4627"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\equipment-footing\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "f07b54a5886e22114387cef0f87908ffc7d9772627068e996a1083df86da95a2"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\equipment-footing\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "3a3d7dcba465cc842ab1f7f2fb65798c3be8b9d763529eb26c9db0e8a483df27"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\assembler-v03-finish-04\\textures\\equipment-footing\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "508399b0f23ae19d9cec52dc7161b47b7803aca88fbc617b9fd2cfb7a3ace8ec"
+    }
+  ]
+}

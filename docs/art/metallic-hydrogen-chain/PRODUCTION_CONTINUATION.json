@@ -3,7 +3,7 @@
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
   "current_machine": "canister-assembler",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\canister-assembler\\v02-clearance-and-cadence",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\canister-assembler\\v03-finish-and-states",
   "queue": [
     {
       "id": "water-purifier",
@@ -59,7 +59,7 @@
         4,
         4
       ],
-      "status": "V02 source/export cadence, sampled mechanics and complete authored bore review pass; finish/audio/four-angle/native next"
+      "status": "V03 dedicated finish, four-direction states and original sound saved; live-state native assembly next"
     }
   ],
   "purifier": {
@@ -104,16 +104,15 @@
     "body_render_layer": "lower-object",
     "next_shape_action": "none; owner called done"
   },
-  "library_registry_sha256": "522ea8b8d81a75c04bf42da868842c330ca5b19b5549f4cf9ed1592cca5857d0",
+  "library_registry_sha256": "f2829c56b75dc7f24c28622a6b5418a01136f679f27a6a70885cafd95621ba29",
   "reactors": {
     "status": "V14 native bytes still unrecovered",
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Author assembler-specific vessel, gantry, guide, valve and sealing-tool surfaces and appropriate sound",
-    "Capture four idle/working directions and reopen packed source",
-    "Implement live pellet/shell assembly with existing seal operation, retaining HP, quality, phase and remaining decay time",
-    "Refine three reactors, remaining sprite-only buildings and ordinary chain/UI/economy integration"
+    "Implement native live formed-pellet and shell sealing without HP/quality/decay reset; verify actual inserters, output blocks and mid-cycle reload",
+    "Bind appropriate original sound and prove exact sixteen-second native clock in all four directions",
+    "Refine three reactors, then remaining sprite-only buildings and ordinary chain/UI/economy integration"
   ],
   "original_goal_complete": false,
   "concurrent_work_preserved": "model-production bunker/data.lua work untouched",
@@ -434,10 +433,10 @@
   },
   "native_clock_followup": "Long-run fabricator tests exposed fractional-rate drift. Earlier short native samples do not establish exact full-cycle cadence. Apply independently verified exact sequences during ordinary integration, preserving accepted geometry and placement.",
   "assembler": {
-    "status": "sampled_source_and_export_mechanics_and_complete_bore_review_pass; finish_audio_capture_native_pending",
-    "source_sha256": "61b39408ebabf4061834a5ce68b213beb1a52348765fe8bb9899f036a3761545",
-    "glb_sha256": "606916a9e15173269ada45d940afe1a451ec1c7ce634a7e98853e53ab121b13a",
-    "library_registry_sha256": "522ea8b8d81a75c04bf42da868842c330ca5b19b5549f4cf9ed1592cca5857d0",
+    "status": "dedicated_finish_four_direction_states_and_original_sound_saved; native_pending",
+    "source_sha256": "750fbca12ea7e09de7736ec938ef44fbe2ecced2d4a7f7fe39d5830591437845",
+    "glb_sha256": "111c0c04041633ffb4a5f0f21c317f265867366fd5233410bca64d8da47d7480",
+    "library_registry_sha256": "f2829c56b75dc7f24c28622a6b5418a01136f679f27a6a70885cafd95621ba29",
     "footprint": [
       4,
       4
@@ -468,16 +467,23 @@
     "continuous_swept_clearance_verified": false,
     "granular_dynamics_simulated": false,
     "actual_glb_phase_views": 3,
-    "dedicated_surfaces_complete": false,
-    "audio_implemented": false,
+    "dedicated_surfaces_complete": true,
+    "audio_implemented": true,
     "native_verified": false,
     "owner_approved": false,
     "native_contract": "Use live pellet/shell seal operation. Preserve HP, quality, decay phase, remaining lifetime and original shell condition.",
     "next": [
-      "Author assembler-specific vessel, gantry, guide, valve and sealing-tool surfaces and appropriate sound",
-      "Capture four idle/working directions and reopen packed source",
-      "Implement live pellet/shell assembly with existing seal operation, retaining HP, quality, phase and remaining decay time",
-      "Refine three reactors, remaining sprite-only buildings and ordinary chain/UI/economy integration"
-    ]
+      "Implement native live formed-pellet and shell sealing without HP/quality/decay reset; verify actual inserters, output blocks and mid-cycle reload",
+      "Bind appropriate original sound and prove exact sixteen-second native clock in all four directions",
+      "Refine three reactors, then remaining sprite-only buildings and ordinary chain/UI/economy integration"
+    ],
+    "authored_maps": 30,
+    "preserved_geometry_meshes": 227,
+    "actual_glb_diagnostic_views": 8,
+    "capture_frames": 68,
+    "atlas_count": 6,
+    "native_audio_binding_verified": false,
+    "native_phase_synchronization_verified": false,
+    "audio_delivery": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\shared-audio\\hydrogen-machinery\\assembler-v01"
   }
 }
