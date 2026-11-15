@@ -1,0 +1,362 @@
+{
+  "status": "EXACT_CELL_PACK_PASS",
+  "direction_count": 64,
+  "phases": 16,
+  "base_included": false,
+  "occlusion": "Actual 33-mesh dish depth at each heading; no screen-space filaments",
+  "source_capture": {
+    "status": "COMPLETE",
+    "backend": "OPTIX",
+    "headings": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "phases": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "base_included": false,
+    "mesh_occluders": 33,
+    "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\bunker-family\\dish-v04\\energy_dish_v04.blend",
+    "cell": 256,
+    "scale": 0.774999976158,
+    "shift": [
+      0,
+      -1.110906519093
+    ]
+  },
+  "files": [
+    {
+      "name": "electrical-00.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-01.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-02.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-03.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-04.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-05.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-06.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-07.png",
+      "sha256": "02afe34971cca779c82b81cec7e0657783a26f96d3b063ee223409ff8f8dd45f"
+    },
+    {
+      "name": "electrical-08.png",
+      "sha256": "a63ca26921065d307ba58757a92bad4eee365beda6714d595207fa0c9b210f19"
+    },
+    {
+      "name": "electrical-09.png",
+      "sha256": "c9c1c2898db508fa8cf1aab29ece15ed6749d49c58cb03eac9c066c0d27ffeff"
+    },
+    {
+      "name": "electrical-10.png",
+      "sha256": "62dc0def2ad402efc8c26d260a796704d05b4f9bae0237227b1494116bdad681"
+    },
+    {
+      "name": "electrical-11.png",
+      "sha256": "c93540a474bb46f37dcee4b130aeaed998d5d2a47cc8ef5ef202513bda091356"
+    },
+    {
+      "name": "electrical-12.png",
+      "sha256": "8af6b1ff518128458f38f662b75a43257c1577cd3adaeccfa7babb84770c4f69"
+    },
+    {
+      "name": "electrical-13.png",
+      "sha256": "0642d35cfa618dd5f7f323b82f3d86d7c334a3ca71e4273d7534ad99dd90aa10"
+    },
+    {
+      "name": "electrical-14.png",
+      "sha256": "b270c3cc682a4b23b5b7486ca0129d8a39348f82eb26a7082780158b6c48b701"
+    },
+    {
+      "name": "electrical-15.png",
+      "sha256": "8461994581bc14a9af014434acbb8b3995f44dee10a503edf2830fd24dfa7793"
+    },
+    {
+      "name": "electrical-16.png",
+      "sha256": "b6932ab979767777582d747841bbfbfbd7a823b1c1fdd178b47f9e066e9cedfd"
+    },
+    {
+      "name": "electrical-17.png",
+      "sha256": "d32053a739049891fffd364b3a72b99d388deb6949ca15c3a8c9de47e5d643ae"
+    },
+    {
+      "name": "electrical-18.png",
+      "sha256": "1e23193f121f7a97a84abf177221febcbc447ec1399d3bb4a1bf26176eee6576"
+    },
+    {
+      "name": "electrical-19.png",
+      "sha256": "5f2a75a74d2faf6a9d10abddb3d8ed9934687e8ca7eb6b4705a787432deaa9dc"
+    },
+    {
+      "name": "electrical-20.png",
+      "sha256": "8c3bc9d976e0fc19b8bca5e316a701b17ddee1a5151852d9c585e88666037beb"
+    },
+    {
+      "name": "electrical-21.png",
+      "sha256": "4f389584c4fcad62112b0bac576de132ff214bc7c46830ee7e95171e289d7af0"
+    },
+    {
+      "name": "electrical-22.png",
+      "sha256": "c8b8cf0e5714fe91fb1ab988f4d938a2e8bd461b39f9723c44140146e3036c22"
+    },
+    {
+      "name": "electrical-23.png",
+      "sha256": "3ee91bc0fd4a04945ff18872647f1621f1bb34610a8f255e345fda30683883d6"
+    },
+    {
+      "name": "electrical-24.png",
+      "sha256": "aaf03ffb54fefae1517719a159c6d5ea28da87d1f073c93f2660f572c039f54a"
+    },
+    {
+      "name": "electrical-25.png",
+      "sha256": "fba0b0d6355cddd535aba827104c3a07cf75134b3bf73df0ac6ebae22c6ae2b8"
+    },
+    {
+      "name": "electrical-26.png",
+      "sha256": "4256a0bded6c312d6458cb36acc5aa824727cc0f5f918fe5f9f7ea3d60fa4108"
+    },
+    {
+      "name": "electrical-27.png",
+      "sha256": "dcbcf2e1fb5fdae3e217bd1252c2251879d0d34b1789538009964509cd6c1f0d"
+    },
+    {
+      "name": "electrical-28.png",
+      "sha256": "0c72b05213247062a7485e0879bad5587495fb536e8c58734f0417b837fa6a0f"
+    },
+    {
+      "name": "electrical-29.png",
+      "sha256": "54992f72dd5b70a53a7bb90494554b041a02032d26636fd4c4bb26eefaf93fb8"
+    },
+    {
+      "name": "electrical-30.png",
+      "sha256": "4e5b6e14da6d60251ec3c5c56b60158435cdb82074afe315df3541798bfb7166"
+    },
+    {
+      "name": "electrical-31.png",
+      "sha256": "f60608d9df01569facf9e60103e0b38f4f81ebbab74150ff640b33a2dba105fe"
+    },
+    {
+      "name": "electrical-32.png",
+      "sha256": "4014642be08b64380ac25d376bb7a64b892370d8e90f63dafe0dc3aabb6b1e92"
+    },
+    {
+      "name": "electrical-33.png",
+      "sha256": "84478b515e4291ef27ba7fe6baa15226edea6c873260174b64ffd1dd62deef24"
+    },
+    {
+      "name": "electrical-34.png",
+      "sha256": "6fa814f8e127bf893299b0a932fe01d2167e505c7744e443b369f6a2c51fd007"
+    },
+    {
+      "name": "electrical-35.png",
+      "sha256": "fabc66ae39458f2c02e8e8e5787376f30bf36328f1bc5f2e04f326b2c2cec35e"
+    },
+    {
+      "name": "electrical-36.png",
+      "sha256": "1437ab7df2a7f0b72b06091b9aa9a82cf91a38a41aa06468e753b9a558b75388"
+    },
+    {
+      "name": "electrical-37.png",
+      "sha256": "d8bd13780d6a07393e3790083f9cdc9bff85858e0bd7d00426fc0896ab96ee6d"
+    },
+    {
+      "name": "electrical-38.png",
+      "sha256": "ddc19d931f26ee81c6167af0f79570d6540824939172f4a2152ddafbb40254a9"
+    },
+    {
+      "name": "electrical-39.png",
+      "sha256": "0c65d39098061da2ad60a7852b07c51373463cd8f30350608b42bbbc8ea101db"
+    },
+    {
+      "name": "electrical-40.png",
+      "sha256": "15d708630edee7518c3ee8bdb4c6328cc65fd8a359cfa34277158ded18884cd2"
+    },
+    {
+      "name": "electrical-41.png",
+      "sha256": "0e39f94aedcf0541a54b7df2de600b59282ef2a8b9f1e4971b17acf042e17ddd"
+    },
+    {
+      "name": "electrical-42.png",
+      "sha256": "d113e8d791c846b503b28327dfb74f3cecff070d0b8cd95c8e768ddbf9309e9d"
+    },
+    {
+      "name": "electrical-43.png",
+      "sha256": "66a2206926568c36e7b13f7ec41b4bed8e255a1f9d22c2720eaeda31caa2bba2"
+    },
+    {
+      "name": "electrical-44.png",
+      "sha256": "48936d181bd8d8c43272b162ed11af229ff1fce20a58a85a492d66e71ce3280e"
+    },
+    {
+      "name": "electrical-45.png",
+      "sha256": "b5d4bbd348645bab261aa06e6ae6e1346ffbba90c852deac333c81ee4cdd1d7f"
+    },
+    {
+      "name": "electrical-46.png",
+      "sha256": "145300fb9b5d67fe73a148af371718e774659f6f42fa706c57742a70693cb335"
+    },
+    {
+      "name": "electrical-47.png",
+      "sha256": "9b96526704ed0064db76229434db47a44514f67e2f7f061d8eef9da42c663c15"
+    },
+    {
+      "name": "electrical-48.png",
+      "sha256": "31b1eee3692ed7e99a9cfedac9b8dafe999d89f174723aacc059105289422222"
+    },
+    {
+      "name": "electrical-49.png",
+      "sha256": "4c3a4d5cfbb65f4ebcdeb71f549fb45c4c14a0171b9fc1324a0427eaa172da0a"
+    },
+    {
+      "name": "electrical-50.png",
+      "sha256": "dfc2f25abf63efb6d7ad2ddd48d2f9b90fb9b8070377ab23094746a8cecc1fc9"
+    },
+    {
+      "name": "electrical-51.png",
+      "sha256": "46d24d2d88019fa5bca7a37060b86d84fbab92c0df8230ad5eeea614ae261408"
+    },
+    {
+      "name": "electrical-52.png",
+      "sha256": "30bce555b2aae469b798e7f528d67e402a51299a115bfef80eb4f83c8be2df65"
+    },
+    {
+      "name": "electrical-53.png",
+      "sha256": "73b497cc3613707300abf1ccae522409a0b115e999a234b87753ba9db2addb05"
+    },
+    {
+      "name": "electrical-54.png",
+      "sha256": "f48c2db8ad40928ef47a5bffbbd80ff2b419fbeb2dcf20275e147234b34a0b09"
+    },
+    {
+      "name": "electrical-55.png",
+      "sha256": "c3d3f97918077d78547abac46eee13535a1081b841c6ad150f3ae29bc1f8e4d8"
+    },
+    {
+      "name": "electrical-56.png",
+      "sha256": "78e86f3afeb8be284170ed2fc0efd1c966d71340fec031aa3f059da13a0ffe95"
+    },
+    {
+      "name": "electrical-57.png",
+      "sha256": "a768ef62c8f2615a662a14c0cf5bbcdf725536c7991ff47b80cb322550426631"
+    },
+    {
+      "name": "electrical-58.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-59.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-60.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-61.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-62.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    },
+    {
+      "name": "electrical-63.png",
+      "sha256": "032ff9dfe5184b882b931cd64930026009d0c5370f5fe326c16865d1081512ae"
+    }
+  ]
+}
