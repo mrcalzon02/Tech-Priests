@@ -1477,6 +1477,136 @@ local function inspect(s,elapsed)
     s.finished=true
   end
 end
+-- TEST-ONLY external track interruption. The original 0836/0338 builders
+-- must first produce the complete physically paid rail and genuinely return
+-- a newly mined ore item in the original wagon with the original Magos aboard.
+-- One actual midpoint rail is then physically MINED into a persistent native
+-- inventory. This fixture cannot repair it, spawn a replacement, credit ore,
+-- or claim the normal 90k positive gate. A stationary, intact stranded train
+-- is the only accepted negative result; restoration and process reload are
+-- distinct future native gates.
+local function inspect_blocked_return_0836(s,elapsed)
+  if rawget(_G,"TP_CI_0836_BLOCKED_RETURN")~=true then return end
+  local pairs=storage.tech_priests and storage.tech_priests.pairs_by_station
+  local pair=pairs and pairs[s.station_unit]
+  if not(pair and pair.priest and pair.priest.valid and pair.station
+      and pair.station.valid)then fail("BLOCKED_RETURN_ORIGINAL_PAIR_LOST")end
+  local mission=pair.remote_rail_outpost_0835
+  local frontier=mission and mission.rail_frontier_0836
+  local lead=mission and mission.first_locomotive_0836
+  local wagon=mission and mission.first_wagon_0836
+  local remote=mission and mission.first_remote_drill_0836
+  local reboard=remote and remote.reboard_0836
+  local locomotive=lead and lead.built_entity
+  local cargo=wagon and wagon.built_entity
+  local train=locomotive and locomotive.valid and locomotive.train
+  local surface=pair.station.surface
+  local held=s.blocked_return_rail_hold_0836
+  if not held then
+    if not(reboard and reboard.phase==
+          "native-original-magos-reboarded-with-ground-ore"
+        and reboard.native_original_driver_confirmed==true
+        and reboard.priest_unit==pair.priest.unit_number
+        and lead.paid_completion_0836
+        and lead.paid_completion_0836.native_0338_paid==true
+        and wagon.paid_completion_0836
+        and wagon.paid_completion_0836.native_0338_paid==true
+        and cargo and cargo.valid and train and train.valid
+        and cargo.train and cargo.train.valid and cargo.train.id==train.id
+        and reboard.train_id==train.id
+        and locomotive.get_driver()==pair.priest
+        and frontier and type(frontier.built_units)=="table"
+        and #frontier.built_units>=32)then return end
+    local cargo_inventory=cargo.get_inventory(defines.inventory.cargo_wagon)
+    local ore_count=cargo_inventory and cargo_inventory.valid
+      and cargo_inventory.get_item_count("iron-ore") or 0
+    if ore_count~=1 or reboard.wagon_ore_count~=ore_count then
+      fail("BLOCKED_RETURN_WAGON_NOT_ONE_GENUINE_ORE")
+    end
+    local mid_unit=frontier.built_units[math.floor(#frontier.built_units/2)]
+    local rails=surface.find_entities_filtered{
+      name="straight-rail",force=pair.station.force,
+      area={{-24,s.station_y-4},{s.natural_ore_x+28,s.station_y+5}}}
+    local rail
+    for _,candidate in ipairs(rails)do
+      if candidate.valid and candidate.unit_number==mid_unit then
+        rail=candidate;break
+      end
+    end
+    if not(rail and rail.valid and rail.position.x>60
+        and locomotive.position.x>rail.position.x+24)then
+      fail("BLOCKED_RETURN_RAIL_NOT_AHEAD_OF_NATIVE_TRAIN")
+    end
+    -- LuaEntity.mine is a real Factorio inventory transaction. The physical
+    -- rail is not destroyed for free or teleported back into the depot.
+    held=game.create_inventory(1)
+    s.blocked_return_rail_hold_0836=held
+    local before=held.get_item_count("rail")
+    local point={x=rail.position.x,y=rail.position.y}
+    local mined=rail.mine{inventory=held,force=true}
+    local after=held.get_item_count("rail")
+    if not(mined==true and not rail.valid and before==0 and after==1)then
+      fail("BLOCKED_RETURN_NATIVE_RAIL_MINE_OR_CUSTODY_REFUSED")
+    end
+    s.blocked_return_0836={rail_unit=mid_unit,rail_position=point,
+      cut_tick=game.tick,train_id=train.id,
+      priest_unit=pair.priest.unit_number,
+      locomotive_unit=locomotive.unit_number,wagon_unit=cargo.unit_number,
+      wagon_ore=ore_count,
+      station_ore=pair.station.get_inventory(defines.inventory.chest)
+        .get_item_count("iron-ore")}
+    emit("BLOCKED_RETURN_NATIVE_0836 phase=paid-middle-rail-mined"..
+      " tick="..game.tick.." original_rail_unit="..mid_unit..
+      " retained_rail_items="..after.." original_train_id="..train.id..
+      " wagon_ore="..ore_count.." original_driver=true")
+    return
+  end
+  local claim=s.blocked_return_0836
+  if not(claim and held.valid and held.get_item_count("rail")==1
+      and train and train.valid and train.id==claim.train_id
+      and locomotive and locomotive.valid
+      and locomotive.unit_number==claim.locomotive_unit
+      and cargo and cargo.valid and cargo.unit_number==claim.wagon_unit
+      and cargo.train and cargo.train.valid and cargo.train.id==train.id
+      and pair.priest.unit_number==claim.priest_unit
+      and locomotive.get_driver()==pair.priest)then
+    fail("BLOCKED_RETURN_ORIGINAL_DRIVER_OR_RAIL_CUSTODY_LOST")
+  end
+  local cargo_inventory=cargo.get_inventory(defines.inventory.cargo_wagon)
+  local ore_now=cargo_inventory and cargo_inventory.valid
+    and cargo_inventory.get_item_count("iron-ore") or -1
+  local station_now=pair.station.get_inventory(defines.inventory.chest)
+    .get_item_count("iron-ore")
+  if ore_now~=claim.wagon_ore or station_now~=claim.station_ore then
+    fail("BLOCKED_RETURN_ORE_INVENTORY_DISCREPANCY")
+  end
+  local original_rail=surface.find_entities_filtered{
+    name="straight-rail",position=claim.rail_position,radius=0.25,
+    force=pair.station.force}
+  if #original_rail~=0 then fail("BLOCKED_RETURN_RAIL_REAPPEARED_UNPAID")end
+  local stopped=math.abs(tonumber(train.speed)or 0)<0.01
+  local short_of_gap=locomotive.position.x>claim.rail_position.x+4
+  local at_home=mission.first_stop_0836
+    and train.station==mission.first_stop_0836.built_entity
+  emit("BLOCKED_RETURN_NATIVE_0836 phase=physical-rail-gap"..
+    " elapsed="..elapsed.." since_cut="..(game.tick-claim.cut_tick)..
+    " speed="..tostring(train.speed)..
+    " train_x="..locomotive.position.x..
+    " gap_x="..claim.rail_position.x..
+    " stationary="..tostring(stopped)..
+    " before_gap="..tostring(short_of_gap)..
+    " station_ore="..station_now.." wagon_ore="..ore_now..
+    " original_driver=true rail_hold=1 at_home="..tostring(at_home))
+  if at_home or not short_of_gap then
+    fail("BLOCKED_RETURN_TRAIN_CROSSED_BROKEN_NATIVE_TRACK")
+  end
+  if game.tick-claim.cut_tick>=900 then
+    if not stopped then fail("BLOCKED_RETURN_TRAIN_DID_NOT_STOP")end
+    emit("PASS blocked original ore-loaded return retains native driver and cargo")
+    s.finished=true
+  end
+end
+
 local function pulse()
   local s=root()
   if s.finished or s.failed then return {processed=0} end
@@ -1548,6 +1678,8 @@ local function pulse()
         s["chart_diag_"..mark]=true
       end
     end
+    inspect_blocked_return_0836(s,elapsed)
+    if s.finished then return end
     -- Read-only 0469/0338/0836 sampling around the observed 36k-60k stall.
     -- Never plan, yield, cancel, debit or credit work from this diagnostic.
     if elapsed>=36000 and elapsed<=60000 and elapsed%600==0 then

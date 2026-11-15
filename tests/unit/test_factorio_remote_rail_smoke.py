@@ -22,6 +22,29 @@ B = P + "PASS two distinct 0338-debited native-connected rails"
 
 
 
+
+class BlockedNativeReturnS4Tests(unittest.TestCase):
+    def test_original_ore_laden_track_cut_is_separate_real_engine_mode(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        runner = (root / "tools/run_factorio_isolated_service_scenario.py").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        self.assertIn('ap.add_argument("--rail-blocked-return"', runner)
+        self.assertIn('"_G.TP_CI_0836_BLOCKED_RETURN=true\\n"', runner)
+        self.assertIn('if args.rail_blocked_return:', runner)
+        self.assertIn('benchmark == 0 and negative in contents and fatal not in contents', runner)
+        self.assertIn('if rawget(_G,"TP_CI_0836_BLOCKED_RETURN")~=true then return end', fixture)
+        self.assertIn('reboard.native_original_driver_confirmed==true', fixture)
+        self.assertIn('locomotive.get_driver()==pair.priest', fixture)
+        self.assertIn('held=game.create_inventory(1)', fixture)
+        self.assertIn('rail.mine{inventory=held,force=true}', fixture)
+        self.assertIn('held.get_item_count("rail")==1', fixture)
+        self.assertIn('wagon_ore=ore_count', fixture)
+        self.assertIn('if at_home or not short_of_gap then', fixture)
+        self.assertIn('if not stopped then fail("BLOCKED_RETURN_TRAIN_DID_NOT_STOP")end', fixture)
+        self.assertIn('emit("PASS blocked original ore-loaded return retains native driver and cargo")', fixture)
+        self.assertIn('if s.finished then return end', fixture)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', fixture)
+
 class OriginalFullRailNativePlayerModeTests(unittest.TestCase):
     def test_full_90k_rail_runs_real_native_player_not_benchmark_or_smoke(self):
         root = pathlib.Path(__file__).resolve().parents[2]
