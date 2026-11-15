@@ -339,6 +339,12 @@ Latest upstream reconciliation: condenser V23 adds eight actual inlet recesses i
 This is a construction checkpoint. Dedicated surfaces, relevant audio, final four-direction capture, closeup/rear/clay review and native fluid/item/pipe integration remain open. Sampled intersections are not continuous collision proof; bore geometry is not hydraulic simulation. Accepted prior machines are preserved; ordinary Factorio pickup needs no precision hand-to-socket work.
 
 
+## Hydrogen assembler V04 actual native preservation — 2026-11-15
+
+[V04 native addon and evidence](../../art/source-to-3d/metallic-hydrogen-chain/canister-assembler/v04-native-preservation/README.md) verifies 36 four-direction 4x4 sites and 73 real seals with live stock. Actual mixed-quality inserters, three-station batches, decay before seal, inert output without shell use, blocked containment, missing partners, unformed rejection, original contents/shell on unseal and identical tick-400 reload histories pass. In-flight destruction releases the original stock unchanged. The production adapters load on a normal map; destructive fixture control is separately packaged.
+
+Sound binding and actual sixteen-second native cadence pass. Sixteen cells hold sixty ticks each, with two observed 960-tick wraps in every direction. Engine visual phases vary by entity; no exact graphics-to-seal or sound-to-seal synchronization is claimed. Sixty-four clean production views were reviewed; 324 native game images stay private with hashes public. Ordinary chain/energy/recipe/UI integration remains open, together with three reactor refinements and remaining sprite-only buildings. The V14 reactor Library link is currently signed out in the available in-app browser; actual native source recovery remains required before modifying preserved rings.
+
 ## Hydrogen assembler V03 dedicated finish, states and sound — 2026-11-15
 
 [V03 art delivery](../../art/source-to-3d/metallic-hydrogen-chain/canister-assembler/v03-finish-and-states/README.md) preserves the V02 proven mechanism and sixteen-second clock. Thirty model-specific PBR maps distinguish vessels/shoulders, gantry, guide lands, cast tooling, feed/meter, retainers, electrical contacts and footing. Corrected round normals remove the observed hopper/shoulder faceting. All 201 attachments, 1,538 motion samples per source/export, 1,512 combined core rays and the exact source loop pass fresh checks. Actual GLB material links and eight front/rear/joint/clay views were inspected against the surfaced forge family.

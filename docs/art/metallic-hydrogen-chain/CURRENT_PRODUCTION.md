@@ -146,6 +146,18 @@ Fresh source and GLB checks pass all 201 attachments, 1,538 quarter-frame motion
 
 This is agent-reviewed art, not native implementation or owner approval. Next build actual live formed-pellet/shell assembly through the existing seal operation; verify HP, quality, decay phase, remaining lifetime and shell condition through waiting, blockage and save/reload. Bind sound and prove the exact native sixteen-second clock in all four directions. No external gameplay fluid ports are assigned to this solid-input assembler. Ordinary-chain work, three reactors and remaining sprite-only buildings stay in the full goal.
 
+## Assembler V04 actual native preservation review
+
+The [V04 native checkpoint](../../../art/source-to-3d/metallic-hydrogen-chain/canister-assembler/v04-native-preservation/README.md) verifies 36 real 4x4 sites in four directions: actual formed-pellet and shell inserters, mixed qualities, three-station batches, live decay before sealing, inert expiration without shell consumption, blocked containment, missing partners and unformed-stock rejection. Seventy-three actual seals preserve pellet HP, quality, decay phase, remaining lifetime and shell condition. Collected contents unseal after a long wait without repair or timer refresh. Destruction releases the original live stock identically. Complete histories match after an actual tick-400 save/reload.
+
+Native sealing follows actual crafting progress at the three station phases. Separate safe production adapters load in a normal map; destructive fixture control and the continuous no-stock clock probe are packaged separately. Actual sound binding loads at .65 gain. Sixteen cells at sixty ticks each and two real 960-tick wraps per direction pass actual private counter screenshots. Engine visual phases vary by entity: exact graphics-to-seal and sound-to-seal phase synchronization is **not** established. Sixty-four clean working/stopped production images were reviewed; their game pixels and the 260 counter images remain private, with hashes public. No external gameplay fluid ports are invented.
+
+The review addon still uses void power and hidden clock/presentation recipes. Ordinary chain, final energy/recipe/UI integration and any required process-synchronous presentation remain open; no owner approval is inferred. The unchanged V03 source/art/captures remain the engineering authority.
+
+## Reactor source access recheck
+
+The current `Rebuild Plasma Reactors` chat was read again through the connected app. It confirms the reported V14 package and the owner's explicit ring/camera anchor constraints, but exposes no native attachments. A fresh permitted-workspace/download search finds no reactor `.blend`, `.glb` or archive. The exact Library link currently opens a signed-out ChatGPT page in the in-app browser; no ZIP bytes were recovered. Do not recreate a supposedly preserved V14 ring or claim source verification from the chat's completion text. Recover the actual V14 ZIP and original reference images before those geometry refinements. Meanwhile ordinary seven-machine chain integration and the remaining source/inventory reconciliation are independent work; this source gap does not shrink or complete the full goal.
+
 ## Resume here
 
 Use `PRODUCTION_CONTINUATION.json`, not the superseded V14 continuation. Authoring now lives in the dedicated `hydrogen-production` checkout, keeping the concurrent bunker work in `model-production` untouched. The accepted purifier captures, registered component sources and electrolyzer pilot are self-contained tracked artifacts. Model generators, independent verifiers and isolated native fixtures are under `tools/fmpl/production_smoke/`.
