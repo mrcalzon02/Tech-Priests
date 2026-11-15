@@ -1,0 +1,24 @@
+{
+  "schema": "tech-priests.enemy-research-from-zero.v1",
+  "source_commit": "b2d3a867e95959e9eb0de92b837cfbcac873e01c",
+  "factorio": "2.1.24",
+  "planet": "vulcanus",
+  "seed": 4242,
+  "starting_priests": 3,
+  "initial_automation_progress": 0,
+  "initial_lab_science": 20,
+  "completion_tick": 6647,
+  "verified_ticks": 12000,
+  "new_physical_structures": 2,
+  "science_produced": 0,
+  "forced_research_progress": false,
+  "forced_completion": false,
+  "worker_commands": false,
+  "recurring_supplies": false,
+  "terrain_fixture": "cleared volcanic-soil-dark pad; normal planetary day and power rules",
+  "scope": "initial paid research cycle and construction; long-term self-sufficiency unverified",
+  "logs": {
+    "create.log": "5be581e7872f6c83fe02dd67feb19f8c364907f460f119e9526ffae3cec86a0e",
+    "native-test-save.log": "fb45fa3a148285b06b9a8afed5d914dbaf19d52b75635022ff6a73e03aeabd3f"
+  }
+}

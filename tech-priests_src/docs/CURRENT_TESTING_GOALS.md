@@ -737,3 +737,7 @@ Check Settings > Mod settings > Map for the colony options. Focused native cover
 ## Enemy research chat intercepts
 
 The default Map setting announces all enemy colony technologies; Off and Major discoveries only are available. Focused native validation passed settings filters, starter-grant silence, hostile recipient selection and one native powered-lab completion in a separate real-player session. Run python tools/run_enemy_planetary_probe.py --research-intercepts. The test accelerates the initial research fraction; long-form factory research-chain proof remains separate. Confirm notification wording in ordinary multiplayer play and repeated infinite-level announcements during broader playtesting.
+
+## Actual colony research from zero
+
+Accepted: ordinary Vulcanus colony, three bound priests, Automation progress 0 at start, native paid completion at tick 6647, two new physical structures by tick 12000, hostile intercept eligibility and unchanged player research. Run python tools/run_enemy_planetary_probe.py --full-research. Hash-bound unedited logs: tests/evidence/enemy-research-from-zero. This uses normal planetary power/day rules and finite initial supplies, without forced research progress or worker instructions. Science produced was 0; sustained science manufacture and later research chains remain open.
