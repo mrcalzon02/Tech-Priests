@@ -22,6 +22,9 @@
     "space_age": "Observe an owned platform, paid orbital construction, asteroid/material processing, zero-gravity science production and return delivery to research. Follow its native earlier rocket unlock rather than inventing production/utility science prerequisites."
   },
   "evidence_rules": [
+    "The Tech-Priests' own runtime behavior must choose and execute planning, building, supply, research and defense; an agent manually driving their tasks cannot satisfy acceptance.",
+    "No injected tasks, forced leases, manual executor calls or directed movement/build/research/attack commands may be used to make an acceptance run succeed.",
+    "Declared starting presets, passive telemetry, time acceleration and save checkpoints are permitted; staged diagnostic scenarios and assisted recoveries are never fresh autonomous campaign acceptance.",
     "Recipes, costs, launch readiness and surface conditions come from the running engine.",
     "A planned build, a ready silo or a launch request is not a successful launch.",
     "A completed early-science or arena test is only prerequisite evidence.",

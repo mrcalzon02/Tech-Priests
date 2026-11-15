@@ -2823,4 +2823,23 @@ scenario("real canonical recipe completes its exact adopted assignment once",fun
    and f.source.get_item_count("iron-plate")==4,"automatic task survived or stock was invented")
  TECH_PRIESTS_ORDER_QUEUE_0469=old
 end)
+scenario("later science cannot become timed station output without a native recipe machine",function()
+ for _,name in ipairs{"military-science-pack","chemical-science-pack","production-science-pack",
+   "utility-science-pack","space-science-pack"}do
+  local f=fixture();prototypes.item[name]={type="tool"}
+  f.force.recipes[name]={enabled=true,products={{name=name,type="item"}}}
+  f.source.insert{name="iron-plate",count=10}
+  local parent={output_item=name,item_name=name,count=1,required_count=1,
+   strict_recipe_0647=true,infrastructure_first_0640=true,
+   strict_recipe_ingredients_0647={{name="iron-plate",count=1}}}
+  f.pair.emergency_craft=parent
+  Production.service_pair(f.pair,"unconfigured-native-science")
+  game.tick=game.tick+Production.facility_wait_ticks*3+1000
+  Production.service_pair(f.pair,"elapsed-time-is-not-native-science")
+  check(parent.facility_only_0647==true and f.pair.emergency_craft==parent
+    and f.source.get_item_count(name)==0 and f.source.get_item_count("iron-plate")==10
+    and not f.pair.emergency_production_custody_0514,
+    "science fell back to timed station output without a real native machine: "..name)
+ end
+end)
 print("[bootstrap-production-regression] PASS scenarios="..total)

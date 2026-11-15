@@ -1,5 +1,12 @@
 # Current Testing Goals
 
+## 2026-11-15 - Require autonomous decisions and native science production
+
+The user reiterated that completion must be driven by the Tech-Priests' own autonomous behavior, not by the agent issuing their actions. The campaign acceptance specification now explicitly excludes injected tasks, forced leases, manual executor calls and directed movement/build/research/attack commands. Declared starting presets, passive telemetry, time acceleration and save checkpoints remain diagnostic infrastructure; recovery observations do not become fresh campaign acceptance. Current native recovery inspection reads the actors' own planning/dispatch decisions and does not issue their jobs.
+
+Inspection also found a science fidelity gap: the governor marked only red/green packs as facility-only, so later science could take the existing ingredient-conserving timed station fallback. All science-pack families are now native-facility-only, both at request creation and when loading legacy tasks into the original production owner. Elapsed time is not substituted for a real compatible factory or required orbital surface. The regression reproduced the previous military failure before the change, then verifies military, chemical, production, utility and space science retain their parent and ingredients and produce no timed fallback output when no native machine exists. This prevents a shortcut; it does not implement the still-missing orbital factory and launch chain.
+
+
 ## 2026-11-15 - Install and commission paid mining capacity for planned raw deficits
 
 A long bootstrap hand-mining batch excluded the Magos science planner from installing stocked equipment for that same resource. Existing generic miner siting also always favored iron before other resources. The existing capacity-request coordinator now allows an explicitly independent, unladen, non-extracting planned raw batch to publish one funded original-0338 miner request. It retains the raw parent, checks actual researched hardware stock, subtracts native resource-specific installed capacity using native mining yields and speed, and refuses foreign orders, cargo, construction and combat. Resource-name intent survives original construction normalization and native siting; requested stone cannot be silently placed on an iron patch. All native placement, territory, collision, source pickup and paid construction gates remain unchanged.

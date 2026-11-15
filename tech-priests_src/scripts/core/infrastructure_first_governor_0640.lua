@@ -1408,8 +1408,8 @@ local function assign_local_step(pair, item, why, high_item, high_source,stock_t
       strict_recipe_0647 = true,
       -- Science must be crafted by a real compatible assembler. A timed
       -- station fallback may not claim science production in its place.
-      facility_only_0647 = (item=="automation-science-pack"
-        or item=="logistic-science-pack" or item=="lab"or item=="stone-brick") or nil,
+      facility_only_0647 = (item:match("science%-pack$")~=nil
+        or item=="lab"or item=="stone-brick") or nil,
       strict_recipe_ingredients_0647 = ingredients,
       -- The station may already contain some units. A one-unit transaction
       -- must finish only after the parent's required physical stock exists.

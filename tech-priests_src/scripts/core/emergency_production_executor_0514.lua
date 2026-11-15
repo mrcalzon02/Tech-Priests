@@ -296,6 +296,10 @@ function M.service_pair(p,reason)
   local r=M.root();if r.enabled==false then return false,"disabled" end;if not valid_pair(p)then return false,"invalid-pair" end
   local t,s=current_task(p);clear_retired_0505_state(p,t);if p.emergency_production_custody_0514 then return service_custody(p,t,s) end;if not t then phase(p,"none","no-production-task");return false,"no-production-task" end
   local n=task_item(t);if not item_exists(n)then phase(p,"need-item",n);return false,"invalid-item" end
+  -- Every science family must come from a real compatible native recipe
+  -- machine, including old tasks saved without the facility-only marker.
+  -- A timer cannot substitute for a factory or an orbital surface condition.
+  if n:match("science%-pack$")then t.facility_only_0647=true end
   local need=math.max(1,math.floor(tonumber(t.count or t.required_count)or 1))
   local goal=math.max(need,math.floor(tonumber(t.target_stock_0647) or need))
   if t.native_plate_trigger_0647==true and t.facility_only_0647==true
