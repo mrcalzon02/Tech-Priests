@@ -12,7 +12,17 @@ An isolated Factorio **2.1.24** review prototype passes disconnected, both-conne
 
 V15's actual procedural water/glass color, roughness and tangent normals were baked and independently reimported, fixing their earlier opaque-white GLB appearance. Its volume-steam GLB approximation remains a separate failed interchange study in ignored staging. That historical study does not invalidate the accepted native Blender/PNG capture delivery or reopen the owner's closed shape review.
 
-## Current machine: electrolyzer V05 finish and state candidate
+## Electrolyzer accepted: preserve current native placement
+
+The owner stopped the premature progression, rejected the overlapping pipe images, directed a small whole-sprite downward shift, and then accepted the current result: **“Good enough, done.”** The accepted [native fitting delivery](../../../art/source-to-3d/metallic-hydrogen-chain/electrolyzer/v06-owner-accepted-native/README.md) freezes the editable capture master, four directions/states, six sheets and the actual runnable review prototype. The final placement uses **+4 native pixels downward** and the **lower-object body depth layer**. Do not reopen speculative geometry or positioning changes after this acceptance.
+
+Actual Factorio 2.1.24 tests pass all 32 pipe-mask/rotation sites and genuine isolated hydrogen/oxygen delivery in all four rotations. Native graphical views were produced and owner-reviewed; local screenshot hashes bind the accepted profile. Physical connectivity alone did not establish visual fit: the earlier numerical projection checks did not excuse the user-observed overlap. Original engineering V05 and failed fitting studies remain preserved. This is reviewed native art/prototype placement, not a claim of ordinary mod installation or final chain economy.
+
+## Current machine: hydrogen compressor
+
+The [V01 compressor construction pilot](../../../art/source-to-3d/metallic-hydrogen-chain/hydrogen-compressor/v01-construction-pilot/README.md) now has a real saved editable 3x4 scene and rendered front view: three horizontal pressure cylinders, phased slider-crank drives, twin crank cheeks with interrupted main journals, supported guides, a bearing-supported guarded flywheel, independent suction/discharge headers and real library console/mouth instances. Independent source/export mechanical QA, finishing, complete state captures and native fitting remain open. Continue from this exact saved source rather than restarting its construction.
+
+### Historical electrolyzer V05 finish and state candidate
 
 The [V05 candidate](../../../art/source-to-3d/metallic-hydrogen-chain/electrolyzer/v05-finish-and-states/README.md) now has real opened water tee/nozzle bores, wider unobstructed gas returns, valve stems seated outside the flow core, supported handwheel hubs/spokes, insulated rectifier-to-cell terminals, console conduit and grounded cell plinths. Its **59 targeted assembly contacts**, **1,179 sampled process-core rays in both source and actual GLB**, and **111 external-mouth rays per artifact** pass. These are sampled geometry/contact checks, not structural or manufacturing certification.
 
@@ -20,7 +30,7 @@ Nine packed PBR maps follow the actual cell circumference and band heights, fron
 
 Standby hides the gas tracers and lowers the green readout; working bubbles rise and fade before resetting. The actual GLB contains coherent `idle` and **four-second `working` clips**, with zero error at ten sampled source/imported poses and the working-loop boundary. Four actual model rotations produce 36 rendered frames and six 64/128/256 review sheets; the master independently reopens. The first capture had two indistinguishable west-view cells at 64px. A three-source-frame sampling phase offset preserves the same uniform spacing and clock while passing all existing unique-cell, clipping, hash, atlas and GIF gates. Failed studies remain preserved in staging.
 
-**Next:** actual isolated electrolyzer prototype and fluid assignments, rotated physical pipe cases and graphical connected/disconnected seating. The ordinary mod is unchanged. Continue the compressor and remaining machines afterward.
+The V05 native-alignment tasks described here are superseded by the accepted fitting delivery above. The ordinary mod is unchanged. Continue the compressor and remaining machines.
 
 ### Preserved V01 construction checkpoint
 
@@ -34,4 +44,4 @@ The original V01 pilot passed 111 rays through its three mouths in both native s
 
 Use `PRODUCTION_CONTINUATION.json`, not the superseded V14 continuation. Authoring now lives in the dedicated `hydrogen-production` checkout, keeping the concurrent bunker work in `model-production` untouched. The accepted purifier captures, registered component sources and electrolyzer pilot are self-contained tracked artifacts. Model generators, independent verifiers and isolated native fixtures are under `tools/fmpl/production_smoke/`.
 
-Continue electrolyzer native prototype/pipe fitting, then the compressor, metallization crucible, pelletization forge, vessel fabricator and canister assembler. Reactor V14 native source recovery remains required for Minoris/Majoris/Maximus; no source package was recovered by the earlier browser attempt. The complete chain/reactor goal remains active. Do not declare it achieved from this checkpoint.
+Continue compressor mechanical QA and finishing, then the metallization crucible, pelletization forge, vessel fabricator and canister assembler. Reactor V14 native source recovery remains required for Minoris/Majoris/Maximus; no source package was recovered by the earlier browser attempt. The complete chain/reactor goal remains active. Do not declare it achieved from this checkpoint.

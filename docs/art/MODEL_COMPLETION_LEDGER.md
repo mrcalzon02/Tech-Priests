@@ -1,3 +1,9 @@
+## 2026-11-14 electrolyzer native fit owner-accepted; compressor source saved
+
+After rejecting overlapping native pipe imagery and directing the small downward shift, the owner accepted the current electrolyzer: **“Good enough, done.”** Freeze the +4-native-pixel whole-sprite shift, lower-object body depth, editable fitting master and current model. All 32 native connection/rotation cases and four real split-flow orientations pass; actual graphical screenshots and their hashes are preserved locally. Do not mistake the earlier physical/projection proof for visual acceptance of rejected images. The [accepted native delivery](../../art/source-to-3d/metallic-hydrogen-chain/electrolyzer/v06-owner-accepted-native/README.md) contains the tested runnable prototype and four-direction captures. Ordinary chain/economy integration remains open.
+
+The distinct three-cylinder compressor is now saved and rendered as a construction pilot, with actual phased slider-crank geometry, twin cheeks/interrupted journals, guarded supported flywheel, suction/discharge branches and registered-master instances. Its independent mechanical/export QA and finishing are next. [Authoritative continuation](metallic-hydrogen-chain/PRODUCTION_CONTINUATION.json).
+
 ## 2026-11-14 electrolyzer V05 finish, state clips and four-angle captures
 
 The distinct 3x4 electrolyzer now has repaired water tee/inlet bores and gas returns, insulated electrical connections, supported handwheels/conduit and grounded cell plinths. Nine packed model-specific maps finish the cell wraps and retained rectifier cover. Independent checks pass 59 contacts, 1,179 sampled process-core rays per source/export, 111 mouth rays per source/export, zero sampled source/GLB state-pose error and a closed four-second working clip. Native, exported front/rear/clay and oblique closeup renders were viewed.

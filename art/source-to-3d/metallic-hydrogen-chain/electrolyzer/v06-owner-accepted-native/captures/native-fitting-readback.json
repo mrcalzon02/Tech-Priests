@@ -1,0 +1,344 @@
+{
+  "passed": true,
+  "errors": [],
+  "master_sha256": "3b62bb78387a7a40777b08a0ec08ad5d05e4f599cf514b611232a052e270c6d8",
+  "poses": [
+    {
+      "source_yaw": 0,
+      "mouths": [
+        {
+          "role": "water_input",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            -2.444721758365631e-09,
+            -2.8284294605255127,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            0.0,
+            1.7454433734601214
+          ],
+          "desired_native_tiles": [
+            0.0,
+            1.745441558772843
+          ],
+          "maximum_error_tiles": 1.8146872784452484e-06
+        },
+        {
+          "role": "hydrogen_output",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            -1.5,
+            0.7071068286895752,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            -1.5000000417232513,
+            -0.7545582258070039
+          ],
+          "desired_native_tiles": [
+            -1.5,
+            -0.7545584412271571
+          ],
+          "maximum_error_tiles": 2.1542015316011742e-07
+        },
+        {
+          "role": "oxygen_output",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            1.5,
+            0.7071068286895752,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            1.5000000417232513,
+            -0.7545582258070039
+          ],
+          "desired_native_tiles": [
+            1.5,
+            -0.7545584412271571
+          ],
+          "maximum_error_tiles": 2.1542015316011742e-07
+        }
+      ],
+      "bores": {
+        "passed": true,
+        "rays": 243,
+        "hits": []
+      },
+      "mesh_stats": {
+        "triangles": 66084,
+        "degenerate_triangles": 0,
+        "finite": true,
+        "missing_uv": []
+      },
+      "support_contacts": [
+        {
+          "shoe": "TP_ELECTROLYZER_V01 | column shoe (-1.13, 1.0)",
+          "column": "TP_ELECTROLYZER_V01 | red upright web (-1.13, 1.0)",
+          "gap_tiles": 8.940696716308594e-08,
+          "passed": true
+        },
+        {
+          "shoe": "TP_ELECTROLYZER_V01 | column shoe (1.13, 1.0)",
+          "column": "TP_ELECTROLYZER_V01 | red upright web (1.13, 1.0)",
+          "gap_tiles": 8.940696716308594e-08,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "source_yaw": 90,
+      "mouths": [
+        {
+          "role": "water_input",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            2.0,
+            3.271270543336868e-08,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            2.0000001817941664,
+            -0.25455827498083583
+          ],
+          "desired_native_tiles": [
+            2.0,
+            -0.25455829023135457
+          ],
+          "maximum_error_tiles": 1.8179416638730572e-07
+        },
+        {
+          "role": "hydrogen_output",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            -0.4999999403953552,
+            -2.121320962905884,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            -0.49999995082616805,
+            1.2454421452319098
+          ],
+          "desired_native_tiles": [
+            -0.5000001192092896,
+            1.245441558772843
+          ],
+          "maximum_error_tiles": 5.864590668647196e-07
+        },
+        {
+          "role": "oxygen_output",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            -0.5000001192092896,
+            2.121320962905884,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            -0.5000001400709152,
+            -1.7545586951935814
+          ],
+          "desired_native_tiles": [
+            -0.49999988079071045,
+            -1.754558441227157
+          ],
+          "maximum_error_tiles": 2.5928020475074476e-07
+        }
+      ],
+      "bores": {
+        "passed": true,
+        "rays": 243,
+        "hits": []
+      },
+      "mesh_stats": {
+        "triangles": 66276,
+        "degenerate_triangles": 0,
+        "finite": true,
+        "missing_uv": []
+      },
+      "support_contacts": [
+        {
+          "shoe": "TP_ELECTROLYZER_V01 | column shoe (-1.13, 1.0)",
+          "column": "TP_ELECTROLYZER_V01 | red upright web (-1.13, 1.0)",
+          "gap_tiles": 8.940696716308594e-08,
+          "passed": true
+        },
+        {
+          "shoe": "TP_ELECTROLYZER_V01 | column shoe (1.13, 1.0)",
+          "column": "TP_ELECTROLYZER_V01 | red upright web (1.13, 1.0)",
+          "gap_tiles": 8.940696716308594e-08,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "source_yaw": 180,
+      "mouths": [
+        {
+          "role": "water_input",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            -3.2444950193166733e-07,
+            2.8284294605255127,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            -3.7848949432373045e-07,
+            -2.2545599707329798
+          ],
+          "desired_native_tiles": [
+            1.7484555314695172e-07,
+            -2.2545584412271573
+          ],
+          "maximum_error_tiles": 1.529505822439603e-06
+        },
+        {
+          "role": "hydrogen_output",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            1.5,
+            -0.7071067690849304,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            1.5000000417232513,
+            0.24544167584533227
+          ],
+          "desired_native_tiles": [
+            1.5,
+            0.24544167798213246
+          ],
+          "maximum_error_tiles": 4.1723251298364517e-08
+        },
+        {
+          "role": "oxygen_output",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            -1.5,
+            -0.7071070075035095,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            -1.5000000417232513,
+            0.24544186509007926
+          ],
+          "desired_native_tiles": [
+            -1.5,
+            0.24544143956355335
+          ],
+          "maximum_error_tiles": 4.2552652590455153e-07
+        }
+      ],
+      "bores": {
+        "passed": true,
+        "rays": 243,
+        "hits": []
+      },
+      "mesh_stats": {
+        "triangles": 66084,
+        "degenerate_triangles": 0,
+        "finite": true,
+        "missing_uv": []
+      },
+      "support_contacts": [
+        {
+          "shoe": "TP_ELECTROLYZER_V01 | column shoe (-1.13, 1.0)",
+          "column": "TP_ELECTROLYZER_V01 | red upright web (-1.13, 1.0)",
+          "gap_tiles": 8.940696716308594e-08,
+          "passed": true
+        },
+        {
+          "shoe": "TP_ELECTROLYZER_V01 | column shoe (1.13, 1.0)",
+          "column": "TP_ELECTROLYZER_V01 | red upright web (1.13, 1.0)",
+          "gap_tiles": 8.940696716308594e-08,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "source_yaw": 270,
+      "mouths": [
+        {
+          "role": "water_input",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            -2.0,
+            -9.557697921991348e-08,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            -1.9999999925494192,
+            -0.25455827498083583
+          ],
+          "desired_native_tiles": [
+            -2.0,
+            -0.25455829023135457
+          ],
+          "maximum_error_tiles": 1.5250518736742436e-08
+        },
+        {
+          "role": "hydrogen_output",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            0.5000000596046448,
+            2.121320962905884,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            0.5000001400709152,
+            -1.7545586951935814
+          ],
+          "desired_native_tiles": [
+            0.49999988079071045,
+            -1.754558441227157
+          ],
+          "maximum_error_tiles": 2.5928020475074476e-07
+        },
+        {
+          "role": "oxygen_output",
+          "rim_vertices": 128,
+          "actual_mouth_center": [
+            0.4999999701976776,
+            -2.121320962905884,
+            0.35999998450279236
+          ],
+          "projected_native_tiles": [
+            0.5000001400709152,
+            1.2454421452319098
+          ],
+          "desired_native_tiles": [
+            0.5000001192092896,
+            1.245441558772843
+          ],
+          "maximum_error_tiles": 5.864590668647196e-07
+        }
+      ],
+      "bores": {
+        "passed": true,
+        "rays": 243,
+        "hits": []
+      },
+      "mesh_stats": {
+        "triangles": 66276,
+        "degenerate_triangles": 0,
+        "finite": true,
+        "missing_uv": []
+      },
+      "support_contacts": [
+        {
+          "shoe": "TP_ELECTROLYZER_V01 | column shoe (-1.13, 1.0)",
+          "column": "TP_ELECTROLYZER_V01 | red upright web (-1.13, 1.0)",
+          "gap_tiles": 8.940696716308594e-08,
+          "passed": true
+        },
+        {
+          "shoe": "TP_ELECTROLYZER_V01 | column shoe (1.13, 1.0)",
+          "column": "TP_ELECTROLYZER_V01 | red upright web (1.13, 1.0)",
+          "gap_tiles": 8.940696716308594e-08,
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "scope": "actual throat rim geometry, camera projection, rear shoe/column contact and denser .235-radius mouth rays per pose; native screenshot seating is a separate visual gate"
+}

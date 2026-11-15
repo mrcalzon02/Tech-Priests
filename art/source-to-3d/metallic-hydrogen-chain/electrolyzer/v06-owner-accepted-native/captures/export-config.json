@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "asset": "tp-electrolyzer-native-fitting-v06",
+  "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\electrolyzer\\v05-finish-and-states\\electrolyzer-v05.blend",
+  "adapter": "mh7-electrolyzer-native-fittings-v1",
+  "source_size": 256,
+  "sizes": [
+    64,
+    128,
+    256
+  ],
+  "samples": 24,
+  "seed": 4362,
+  "columns": 4,
+  "fps": 2,
+  "directions": [
+    0,
+    90,
+    180,
+    270
+  ],
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "exclude_rotation": [],
+  "hide_render": [],
+  "animated_lights": [],
+  "states": {
+    "idle": [
+      0
+    ],
+    "working": [
+      4,
+      16,
+      28,
+      40,
+      52,
+      64,
+      76,
+      88
+    ]
+  },
+  "camera_policy": "fmpl.factorio45.v1",
+  "capture_kind": "entity",
+  "camera_override": {
+    "type": "ORTHO",
+    "elevation_deg": 45,
+    "azimuth_deg": 0,
+    "distance": 8.48528137423857,
+    "target": [
+      0,
+      0,
+      1.3
+    ],
+    "ortho_scale": 6.35,
+    "shift_x": 0,
+    "shift_y": 0
+  },
+  "orientation_policy": "rotatable",
+  "source_timeline_fps": 24,
+  "cycle_seconds": 4,
+  "threads": 6,
+  "workers": 1,
+  "sampling_note": "Uniform 12-frame spacing, phase offset 3 source frames to avoid 64px temporal aliasing; source loop stays four seconds."
+}

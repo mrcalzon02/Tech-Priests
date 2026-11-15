@@ -1,0 +1,12 @@
+{
+  "status": "candidate_native; independent QA and finishing pending",
+  "source_sha256": "b6a8c59905d3a1b6c3c2d598686d0cfa411dd3e3ae8cf687398fb8750378b19c",
+  "provenance": "new reconstruction from authorized process packet",
+  "next": [
+    "independent mechanical support/moving clearance audit",
+    "actual GLB export/reimport and diagnostic renders",
+    "finishing and state capture",
+    "native prototype/pipe fitting"
+  ],
+  "owner_approved": false
+}
