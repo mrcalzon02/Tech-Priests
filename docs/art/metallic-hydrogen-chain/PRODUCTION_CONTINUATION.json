@@ -2,8 +2,8 @@
   "schema": "tech-priests.mh7.production-continuation.v2",
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
-  "current_machine": "pelletization-forge",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pelletization-forge\\v04-native-preservation",
+  "current_machine": "pressure-vessel-fabricator",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pressure-vessel-fabricator\\v01-open-hydroforming-pilot",
   "queue": [
     {
       "id": "water-purifier",
@@ -43,7 +43,7 @@
         3,
         3
       ],
-      "status": "source/art/native state preservation and sound verified; graphical item handoff plus ordinary integration open"
+      "status": "native/art checkpoint retained; owner closed precision inserter alignment and requested move on"
     },
     {
       "id": "pressure-vessel-fabricator",
@@ -51,7 +51,7 @@
         4,
         4
       ],
-      "status": "not_started_in_this_run"
+      "status": "real open-frame plate hydroforming pilot saved/exported; full clearance, pressure circuit, finish/audio/native next"
     },
     {
       "id": "canister-assembler",
@@ -104,16 +104,17 @@
     "body_render_layer": "lower-object",
     "next_shape_action": "none; owner called done"
   },
-  "library_registry_sha256": "2087260ed3b9df3a07f0e768c4d0a6d72ee79a0f8e4c160e9e5d6876b7bb8b16",
+  "library_registry_sha256": "9a635c6beabb8478f62c8b7fad56657e1e40dcb5d67e61a85a3b112638134adc",
   "reactors": {
     "status": "V14 native bytes still unrecovered",
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Refine native item handoff: tall hopper receiving point versus standard inserter hand position; preserve source proportions and real process path",
-    "Complete player-facing chain/UI/economy integration without exposing clock/filter recipes",
-    "Build vessel fabricator and canister assembler; recover/refine three reactors",
-    "After the chain and reactors, reconcile and finish the remaining sprite-only building variants with practical hardware mounts and actual fluid interfaces."
+    "Check full open-frame/torch/pressure-blank swept clearances and actual pressure circuit",
+    "Finish model-specific surfaces and relevant welding/pump sound",
+    "Capture four directions with idle/welding/clamping/forming states",
+    "Build actual 4x4 fluid/item prototype and pipe fittings; ordinary chain integration",
+    "Build canister assembler, refine three reactors, then remaining sprite-only buildings"
   ],
   "original_goal_complete": false,
   "concurrent_work_preserved": "model-production bunker/data.lua work untouched",
@@ -287,7 +288,7 @@
     "native_quality_decay_preserved": true
   },
   "forge": {
-    "status": "native_processing_decay_clock_audio_verified; graphical_item_handoff_and_ordinary_chain_pending",
+    "status": "preserved; owner directed standard anywhere-on-object inserter logic and move on",
     "source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
     "glb_sha256": "2f0da21dafac79f9fb348f5318fd5ec19b6ddbdc7ab74e1b8f187b681b757a4b",
     "registry_sha256": "2087260ed3b9df3a07f0e768c4d0a6d72ee79a0f8e4c160e9e5d6876b7bb8b16",
@@ -343,9 +344,12 @@
     "native_full_loop_boundary_observed": false,
     "graphical_item_handoff_verified": false,
     "native_delivery": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pelletization-forge\\v04-native-preservation",
-    "safe_prototype_addon_loaded": true
+    "safe_prototype_addon_loaded": true,
+    "graphical_item_handoff_required": false,
+    "owner_requested_move_on": true,
+    "inserter_owner_instruction": "It's standard factorial logic you can put an inserter anywhere on the object and it'll pick it up we don't need to worry about that. We do need to worry about moving on."
   },
-  "active_goal_scope": "Complete the metallicized hydrogen production-chain models and plasma reactor refinement to the emergency-machine visual standard, including geometry detail, texturing and finish, relevant animation states and capture orientations, prototype implementation, and pipe-fitting adjustment; then finish the other sprite-only buildings, allowing practical mounting of necessary hardware and fluid interfaces.",
+  "active_goal_scope": "Complete the metallicized hydrogen production-chain models and plasma reactor refinement to the emergency-machine visual standard, including geometry detail, texturing and finish, relevant animation states and capture orientations, prototype implementation, and pipe-fitting adjustment; then finish the other sprite-only buildings, allowing practical mounting of necessary hardware and fluid interfaces. Checkpoint regularly.",
   "follow_on_buildings": {
     "order": "after hydrogen chain and three plasma reactor refinements",
     "status": "authorized; current inventory/source reconciliation required before each asset",
@@ -354,5 +358,36 @@
     "inventory": "docs/art/model-inventory.json",
     "mounting_policy": "Practical mounts for necessary hardware and actual fluid interfaces are allowed; use the real prototype schema and preserve accepted work unless a demonstrated necessary correction is required.",
     "completion_policy": "Each distinct building and variant requires editable source, finish, actual export inspection, relevant states/directions, prototype integration and visual interface review; shared sprites/meshes do not close a family."
-  }
+  },
+  "fabricator": {
+    "status": "actual_open_hydroforming_source_export_and_morph_pilot; finish_pressure_path_and_native_pending",
+    "source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
+    "glb_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
+    "registry_sha256": "9a635c6beabb8478f62c8b7fad56657e1e40dcb5d67e61a85a3b112638134adc",
+    "footprint": [
+      4,
+      4
+    ],
+    "owner_process": "Weld steel plates together, clamp the exposed blank in an open frame, and pump high-pressure forming material through a sealed mandrel to expand it.",
+    "rejected_design": "Large solid die blocks from the first private study; not promoted",
+    "contacts": 113,
+    "deformed_vertex_pose_samples": 12,
+    "maximum_deformed_world_vertex_error": 0,
+    "triangles": 31296,
+    "cycle_seconds": 12,
+    "shared_parts": 2,
+    "owner_approved": false,
+    "dedicated_surfaces_complete": false,
+    "full_swept_clearance_verified": false,
+    "pressure_circuit_verified": false,
+    "native_prototype_verified": false,
+    "next": [
+      "Check full open-frame/torch/pressure-blank swept clearances and actual pressure circuit",
+      "Finish model-specific surfaces and relevant welding/pump sound",
+      "Capture four directions with idle/welding/clamping/forming states",
+      "Build actual 4x4 fluid/item prototype and pipe fittings; ordinary chain integration",
+      "Build canister assembler, refine three reactors, then remaining sprite-only buildings"
+    ]
+  },
+  "checkpoint_policy": "Save source/export/readbacks at each stage; retain failures; commit and verify publication of concrete progress regularly."
 }

@@ -1,0 +1,30 @@
+{
+  "status": "actual_open_hydroforming_source_export_and_morph_pilot; finish_pressure_path_and_native_pending",
+  "source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
+  "glb_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
+  "registry_sha256": "9a635c6beabb8478f62c8b7fad56657e1e40dcb5d67e61a85a3b112638134adc",
+  "footprint": [
+    4,
+    4
+  ],
+  "owner_process": "Weld steel plates together, clamp the exposed blank in an open frame, and pump high-pressure forming material through a sealed mandrel to expand it.",
+  "rejected_design": "Large solid die blocks from the first private study; not promoted",
+  "contacts": 113,
+  "deformed_vertex_pose_samples": 12,
+  "maximum_deformed_world_vertex_error": 0,
+  "triangles": 31296,
+  "cycle_seconds": 12,
+  "shared_parts": 2,
+  "owner_approved": false,
+  "dedicated_surfaces_complete": false,
+  "full_swept_clearance_verified": false,
+  "pressure_circuit_verified": false,
+  "native_prototype_verified": false,
+  "next": [
+    "Check full open-frame/torch/pressure-blank swept clearances and actual pressure circuit",
+    "Finish model-specific surfaces and relevant welding/pump sound",
+    "Capture four directions with idle/welding/clamping/forming states",
+    "Build actual 4x4 fluid/item prototype and pipe fittings; ordinary chain integration",
+    "Build canister assembler, refine three reactors, then remaining sprite-only buildings"
+  ]
+}

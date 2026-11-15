@@ -1,0 +1,36 @@
+{
+  "status": "construction pilot; below final finish gate",
+  "source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
+  "glb_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
+  "reference_sha256": "b01eb8526b5825865e7f8b6d848b529dfda9aaa469cb2b0ce0307e74b0e01e94",
+  "owner_override": "Open-air clamping and exposed welded-plate hydroforming take precedence over the illustrated closed-block silhouette.",
+  "final_threshold_unchanged": 4,
+  "scores": {
+    "silhouette": {
+      "score": 3,
+      "reason": "The pressure blank and open clamping frame are readable and distinct from the rejected cube; final camera/detail refinement remains."
+    },
+    "construction": {
+      "score": 3,
+      "reason": "113 recorded contacts and current deformation export pass; full moving assembly and pressure-path clearance remain unverified."
+    },
+    "surfaces": {
+      "score": 2,
+      "reason": "Actual packed family PBR is present, but donor maps are not a dedicated fabricator surface finish."
+    },
+    "states": {
+      "score": 3,
+      "reason": "Actual twelve-second idle/working clips and three exported phase views show exposed formation; final four-direction states/native clocks remain open."
+    },
+    "native": {
+      "score": 0,
+      "reason": "The forming-medium prototype, flow and graphical pipe joins are not yet implemented or reviewed."
+    }
+  },
+  "render_hashes": {
+    "clamped-expanding.png": "da6cb8265e78beb6a7f4c0e5a47d8cad44533ac21f1122f87444924697b084c7",
+    "formed-vessel-exposed.png": "7c0b80ccaba5d170e7215e7fd9bb0c20a78922af77b513116845d8f3445bbf88",
+    "plate-welding-open.png": "93d35f8492f9f519860de1e41879a4e870fa68a269e9dc24f4b1c515b185c896"
+  },
+  "owner_approved": false
+}

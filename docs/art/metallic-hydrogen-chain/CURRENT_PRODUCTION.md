@@ -24,7 +24,7 @@ Actual Factorio 2.1.24 tests pass all 32 pipe-mask/rotation sites and genuine is
 
 The owner accepted the corrected compressor joint: **“fixed !”**. The [V06 native checkpoint](../../../art/source-to-3d/metallic-hydrogen-chain/hydrogen-compressor/v06-owner-accepted-native/README.md) freezes the runnable profile at normal **object** depth, with the previous whole-sprite +4-pixel shift preserved. In actual four-direction screenshots the rear native pipe now sits behind the receiving neck, the front pipe remains visible, and side connections retain their exposed ends. No geometry, camera, sprite scale or accepted prior machine was changed. The separate collar overlay remains excluded. All 16 connection/rotation sites and four genuine fluid-delivery orientations pass. Do not reopen speculative alignment work. Owner audio audition and exact native frame-clock verification remain separate from this accepted placement.
 
-## Current machine: pelletization forge
+## Preserved forge: owner directed move on
 
 The owner accepted the crucible's restrained animation: **“We're good Not every every building has to be intricately animated. its okay”**. Preserve that model and move on; do not add ornamental motion.
 
@@ -40,7 +40,15 @@ The item-only engine initially discarded the requested directions despite the fo
 
 The [V03 instability revision](../../../art/source-to-3d/metallic-hydrogen-chain/pellet-instability/v03-forge-and-integrity/README.md) repairs a newly exposed no-healing defect: native spoilage constructs a new result item, potentially increasing an already-damaged pellet to the next stage's HP cap. A due-only scheduler follows real LuaItem references through logistics, invokes native spoilage at the exact deadline and retains the lower damage ceiling and custom tags. Damaged chest/belt/ground/inserter/character/work-inventory histories remain monotonic and match after actual save/reload. Both raw and forged phases keep native quality loss and random deadlines. The accepted crucible also passes a fresh production/decay/audio regression with this module; its geometry and placement are unchanged.
 
-**Remaining forge gate:** graphical item handoff. The tall hopper receiving point and standard ground-level inserter hand position need refinement. Native transfer success, correct rotations and source proportions do not certify that visual interface. Ordinary player-facing chain/UI/economy integration and owner acceptance remain open. The safe prototype omits the isolated fixture's control.lua; private clock/filter/dispatch recipes are not the final player-facing crafting flow.
+**Owner closed the precise inserter-alignment requirement:** standard Factorio logic allows pickup anywhere on the object, and the owner explicitly directed moving on. Preserve V03 art and V04 native behavior; the attempted low-pan/lift study remains private and unpromoted. No extra precision inserter hardware is required. Full-chain/economy work remains open.
+
+## Current machine: open-frame hydroforming fabricator
+
+The owner clarified welded-plate hydroforming and rejected a giant cube mold. The [4x4 open-frame construction pilot](../../../art/source-to-3d/metallic-hydrogen-chain/pressure-vessel-fabricator/v01-open-hydroforming-pilot/README.md) now has narrow supported clamping lands, an open hinged upper frame, a guided seam torch with mounted sliding supply contacts, a sealed hollow pressure mandrel/tailstock, pump/reservoir circuit and plate-loading rollers. The visible flattened welded blank expands while its round necks remain fixed, then the open frame exposes the formed vessel. The first closed-block study is rejected and stays private.
+
+Editable source and actual GLB pass **113 recorded contacts**, coherent idle/12-second working clips, 31,296 finite/UV-bearing triangles without degenerates, and **12 evaluated deformation samples with zero measured source/export world-vertex error**. Actual exported welding, clamped expansion and formed-vessel views were inspected. Two unchanged registered library assemblies retain consumer lineage. These are construction/morph checks, not full pressure or movement certification.
+
+Next: full moving-frame/torch/blank clearances and pressure-path review, dedicated surfaces and welding/pump audio, four-direction final states and the real fluid/item prototype. Forming-medium identity and native connection cells remain provisional. Checkpoint after each saved source, export and reviewed stage, then publish verified work regularly.
 
 ## Crucible native production saved; restrained animation accepted
 

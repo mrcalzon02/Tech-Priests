@@ -375,6 +375,40 @@
       "model_source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
       "runtime_export_sha256": "2f0da21dafac79f9fb348f5318fd5ec19b6ddbdc7ab74e1b8f187b681b757a4b",
       "status": "Retained actual V01 appended console; unchanged frozen library master. Source/export/geometry/captures pass; native item handling pending"
+    },
+    {
+      "machine": "pressure-vessel-fabricator",
+      "machine_revision": "V01 open-frame hydroforming construction pilot",
+      "instance": "front right cogitator",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          1.350000023841858
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -1.350000023841858
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.800000011920929
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
+      "runtime_export_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
+      "status": "Actual unchanged library assembly retained in source and independently imported GLB; final surfaces and native integration pending"
     }
   ],
   "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",

@@ -522,6 +522,40 @@
       "model_source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
       "runtime_export_sha256": "0eab1d215ac61ad3e3fd62e555f8899f000b61a1bd781fb5ff53779dc60c5f2f",
       "status": "Derived from actual V01 appended instances and retained in V03 source/export; local CRT state retimed, masters unchanged"
+    },
+    {
+      "machine": "pressure-vessel-fabricator",
+      "machine_revision": "V01 open-frame hydroforming construction pilot",
+      "instance": "forming-fluid intake",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -2.0
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
+      "runtime_export_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
+      "status": "Actual unchanged library assembly retained in source and independently imported GLB; final surfaces and native integration pending"
     }
   ],
   "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
