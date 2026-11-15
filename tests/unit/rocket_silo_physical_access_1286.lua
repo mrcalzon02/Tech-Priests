@@ -39,6 +39,11 @@ assert(Silo.service_pair(pair).detail=="moving-to-source"and stock==10 and input
 priest.position={x=3.2,y=0}
 assert(Silo.service_pair(pair).detail=="delivering-silo-input"and stock==7 and input==0
  and pair.rocket_silo_custody_0710.count==3,"large storage edge failed exact physical pickup")
+TechPriestsRocketSiloLogistics0710=Silo
+pair.emergency_craft={output_item="lab",strict_recipe_0647=true,facility_only_0647=true}
+local Arbiter=require("scripts.core.action_state_arbiter_0488")
+assert(Arbiter.action(pair).kind=="rocket-silo-logistics","strict crafting stranded counted silo cargo")
+pair.emergency_craft=nil
 local first=moves[#moves].position
 assert(first.x<15.5 and first.x>=13.9 and first.y==0,"delivery routed into the solid silo center")
 -- Real approach progress keeps the same contact; lateral stalls rotate it.
@@ -71,4 +76,16 @@ silo.force=force;source.force=enemy;pair.rocket_silo_logistics_0710=task()
 Silo.service_pair(pair)
 assert(stock==7 and input==3 and not pair.rocket_silo_custody_0710,
  "cached foreign source was debited after reassignment")
+-- Distinct native inventories may stringify identically. Discovery must
+-- retain managed stock behind an empty operational station inventory.
+source.force=force;pair.rocket_silo_logistics_0710=nil
+local empty=setmetatable({valid=true,get_item_count=function()return 0 end},{__tostring=function()return"LuaInventory"end})
+setmetatable(inv,{__tostring=function()return"LuaInventory"end})
+tech_priests_inventory_steward_sources_for_pair=function()return{{entity=station,inv=empty}}end
+TechPriestsStorageRoleAuthority0686={generic_storage_sources=function()return{{entity=station,inv=empty},{entity=source,inv=inv}}end}
+pair.rocket_silo_reports_0709={report}
+local discovery
+TechPriestsRuntimeTickBroker0600={register_service=function(spec)discovery=spec.fn;return true end}
+assert(Silo.install());game.tick=game.tick+10000;discovery(nil,1)
+assert(pair.rocket_silo_candidate_0710.source.inv==inv,"empty station hid identically stringified managed stock")
 print("PASS physical silo access, stalled contact retry, reload restitution and ownership guards")

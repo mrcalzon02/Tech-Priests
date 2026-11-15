@@ -20,6 +20,13 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CASES = {
+    "autonomous-orbital-launch": {
+        "fixture": "tests/scenarios/autonomous-orbital-launch/fixture.lua",
+        "module": "ci_orbital_launch_1287",
+        "prefix": "[TP-ORBITAL-LAUNCH]",
+        "pass": "PASS autonomous native rocket launch and paid platform starter delivery",
+        "ticks": 60000,
+    },
     "rocket-silo-access": {
         "fixture": "tests/scenarios/rocket-silo-access/fixture.lua",
         "module": "ci_rocket_silo_access_1286",

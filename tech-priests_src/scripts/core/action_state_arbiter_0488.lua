@@ -486,7 +486,15 @@ local function energy_family_recommendation(p,k)
   if k~="idle"and k~="energy-family-logistics"and not strict_engine_work(p,k)then return nil end
   return recommendation("TechPriestsEnergyFamilyLogistics0707","scripts.core.energy_family_logistics_0707",p,"energy-family-logistics")
 end
-local function rocket_silo_recommendation(p,k)if k~="idle"and k~="rocket-silo-logistics"then return nil end;return recommendation("TechPriestsRocketSiloLogistics0710","scripts.core.rocket_silo_logistics_0710",p,"rocket-silo-logistics")end
+local function rocket_silo_recommendation(p,k)
+ local task=p.rocket_silo_logistics_0710 or p.rocket_silo_candidate_0710
+ local campaign=task and(task.campaign_1287==true or task.family=="rocket-silo-launch"or task.family=="rocket-silo-payload")
+ if k~="idle"and k~="rocket-silo-logistics"and not p.rocket_silo_custody_0710 and not campaign then return nil end
+ local rec=recommendation("TechPriestsRocketSiloLogistics0710","scripts.core.rocket_silo_logistics_0710",p,"rocket-silo-logistics")
+ if k~="idle"and k~="rocket-silo-logistics"and not p.rocket_silo_custody_0710
+   and not(rec and rec.campaign_1287)then return nil end
+ return rec
+end
 local function artillery_recommendation(p,k)if k~="idle"and k~="artillery-logistics"then return nil end;return recommendation("TechPriestsArtilleryLogistics0713","scripts.core.artillery_logistics_0713",p,"artillery-logistics")end
 local function roboport_recommendation(p,k)if k~="idle"and k~="roboport-repair-pack-logistics"then return nil end;return recommendation("TechPriestsRoboportRepairPackLogistics0715","scripts.core.roboport_repair_pack_logistics_0715",p,"roboport-repair-pack-logistics")end
 
@@ -597,6 +605,17 @@ function M.action(p)
     kind,reason="construction","active-construction-custody"
     target=active_construction.target
     position=valid(target)and target.position or active_construction.position
+  elseif silo_rec and(p.rocket_silo_custody_0710 or silo_rec.campaign_1287)
+      and not(active_construction or active_item or active_energy or combat_rec)
+      and not(p.machine_logistics_custody_0528 or p.inventory_transfer_custody_0687
+        or p.direct_acquisition_custody_0513 or p.direct_acquisition_task_0336
+        or p.item_family_custody_0702 or p.emergency_facility_feed_custody_0357
+        or p.emergency_production_custody_0514 or p.repair_pack_custody_0516)
+      and not(machine_rec and machine_rec.active)and not valid(p.combat_target)
+      and(not o or o.status~="active"or order_kind=="rocket-silo-logistics"
+        or ProductionOrder.matches(p,o,p.emergency_craft))then
+    kind,reason="rocket-silo-logistics","independent-native-rocket-campaign"
+    target=silo_rec.target;position=silo_rec.position;selected=silo_rec
   elseif machine_rec and(order_kind=="crafting"or strict_machine_output
       or(p.machine_logistics_0528 and p.machine_logistics_0528.custody))then
     -- Only 0528's exact real-output/strict-ingredient probe can authorize

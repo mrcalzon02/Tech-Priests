@@ -177,7 +177,9 @@ end
 local function launch_active(status)
   if not (defines and defines.rocket_silo_status) then return false end
   local building = defines.rocket_silo_status.building_rocket
-  return status ~= nil and status ~= building
+  -- rocket_ready is the stationary state in which real payload loading and
+  -- launch are permitted. It is not an already executing launch sequence.
+  return status ~= nil and status ~= building and status~=defines.rocket_silo_status.rocket_ready
 end
 local function position_inside_box(position, box, padding)
   if not (position and box and box.left_top and box.right_bottom) then return false end
@@ -305,17 +307,31 @@ local function fluid_report(entity)
   end
   return out
 end
-local function item_ingredient_report(recipe, input_inv)
+local function item_ingredient_report(recipe, input_inv,cycles)
   local missing, sufficient = {}, {}
   for _, ingredient in ipairs(recipe_members(recipe, "ingredients")) do
     if ingredient.type == "item" then
       local have = item_count(input_inv, ingredient.name)
-      local target = math.max(1, math.ceil(ingredient.amount * M.ingredient_cycles))
+      local target = math.max(1, math.ceil(ingredient.amount * (cycles or M.ingredient_cycles)))
       local rec = { name=ingredient.name,amount_per_craft=ingredient.amount,have=have,target=target,missing=math.max(0,target-have) }
       if rec.missing > 0 then missing[#missing + 1] = rec else sufficient[#sufficient + 1] = rec end
     end
   end
   return missing, sufficient
+end
+local function independent_input_cycles(pair,recipe,parts,required)
+  local op=pair.independent_emergency_operation_0184
+  if not(op and op.enabled==true and required>parts)then return M.ingredient_cycles end
+  local cycles=math.min(10,required-parts)
+  for _,ingredient in ipairs(recipe_members(recipe,"ingredients"))do
+    if ingredient.type=="item"then
+      local proto=prototypes and prototypes.item and prototypes.item[ingredient.name]
+      local stack=proto and tonumber(proto.stack_size)
+      if not(stack and stack>0 and ingredient.amount>0)then return M.ingredient_cycles end
+      cycles=math.min(cycles,math.floor(math.min(stack,20)/ingredient.amount))
+    end
+  end
+  return math.max(1,cycles)
 end
 
 function M.inspect_silo(pair, silo, force)
@@ -331,10 +347,11 @@ function M.inspect_silo(pair, silo, force)
   local rocket_inv = inventory(silo, ids.rocket_silo_rocket)
   local silo_trash = inventory(silo, ids.rocket_silo_trash)
   local attached_cargo = inventory(silo, ids.rocket_silo_attached_cargo_unit)
-  local recipe = recipe_of(silo); local missing, sufficient = item_ingredient_report(recipe, input_inv)
+  local parts, required = rocket_parts(silo), parts_required(silo)
+  local recipe = recipe_of(silo)
+  local missing, sufficient = item_ingredient_report(recipe, input_inv,independent_input_cycles(pair,recipe,parts,required))
   local status_value, status_label = rocket_status(silo); local entity_status
   pcall(function() entity_status = silo.status end)
-  local parts, required = rocket_parts(silo), parts_required(silo)
   local automated, automation_reasons = M.connected_item_automation(silo)
   local logistics = logistics_state(silo); local fluids = fluid_report(silo)
   local rocket_contents, attached_contents = contents(rocket_inv), contents(attached_cargo)
@@ -354,7 +371,8 @@ function M.inspect_silo(pair, silo, force)
   elseif output_inv and output_inv.valid and empty_slots(output_inv)<=0 and #contents(output_inv)>0 then readiness_state,severity="crafter-output-blocked","blocked"
   elseif #crafter_trash_contents>0 or #trash_contents>0 then readiness_state,severity="trash-needs-clearing","eligible"
   elseif automation_owned then readiness_state,severity="external-logistics-owned","monitor"
-  elseif required>0 and parts>=required then readiness_state,severity="rocket-ready-monitor","monitor"
+  elseif defines and defines.rocket_silo_status and status_value==defines.rocket_silo_status.rocket_ready
+      or required>0 and parts>=required then readiness_state,severity="rocket-ready-monitor","monitor"
   elseif #missing>0 then readiness_state,severity="manual-input-service-eligible","eligible"
   else readiness_state,severity="building-ready","ready" end
   local report = {

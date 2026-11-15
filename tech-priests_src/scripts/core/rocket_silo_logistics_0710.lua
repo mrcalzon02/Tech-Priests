@@ -4,6 +4,7 @@
 -- discovery only; action_state_arbiter_0488 recommends cached work and
 -- single_dispatcher_0510 alone calls service_pair. Removed items retain custody.
 
+local Campaign=require("scripts.core.orbital_campaign_1287")
 local M = {
   version = "0.1.674-dev",
   storage_key = "rocket_silo_logistics_0710",
@@ -145,11 +146,19 @@ local function home_sources(pair)
     if entity.surface~=pair.station.surface or entity.force~=pair.station.force then return end
     if source.authority_source_station_0573 and tostring(source.authority_source_station_0573)~=tostring(home)then return end
     if dist_sq(entity.position,pair.station.position)>radius*radius then return end
-    local key=safe(inv);if seen[key]then return end;seen[key]=true
+    -- Native inventories can have identical diagnostic string values. Use
+    -- the real container identity so an empty station cannot hide its store.
+    local key=entity.unit_number and(tostring(entity.surface.index)..":"..tostring(entity.unit_number))or inv
+    if seen[key]then return end;seen[key]=true
     out[#out+1]={inv=inv,entity=entity,label=source.source or source.inventory_id or"home-source"}
   end
   local source_fn=rawget(_G,"tech_priests_inventory_steward_sources_for_pair")
   if type(source_fn)=="function"then local ok,sources=pcall(source_fn,pair);if ok and type(sources)=="table"then for _,source in ipairs(sources)do add(source)end end end
+  local authority=storage_authority()
+  if authority and type(authority.generic_storage_sources)=="function"then
+    local ok,sources=pcall(authority.generic_storage_sources,pair)
+    if ok and type(sources)=="table"then for _,source in ipairs(sources)do add(source)end end
+  end
   if defines and defines.inventory and pair.station.get_inventory then
     local ok,inv=pcall(function()return pair.station.get_inventory(defines.inventory.chest)end)
     if ok and inv and inv.valid then add({inv=inv,entity=pair.station,source="station-chest"})end
@@ -288,7 +297,7 @@ end
 local function return_custody(pair,task)
   local carried=task.carried
   if not(carried and carried.item and(tonumber(carried.count)or 0)>0)then return finish_task(pair,task,"empty-custody")end
-  local return_source=task.family=="rocket-silo-input"and valid(task.source_entity)
+  local return_source=(task.family=="rocket-silo-input"or task.family=="rocket-silo-payload")and valid(task.source_entity)
     and task.source_entity.force==pair.station.force and task.source_entity.surface==pair.station.surface
     and task.source_entity or nil
   local target=return_source or pair.station
@@ -323,14 +332,25 @@ local function source_current(pair,task)
   if task.source_inv and task.source_inv.valid and valid(task.source_entity)
     and task.source_entity.force==pair.station.force and task.source_entity.surface==pair.station.surface
     and item_count(task.source_inv,task.item)>0 then return{inv=task.source_inv,entity=task.source_entity,count=item_count(task.source_inv,task.item),label=task.source_label}end
-  if task.family~="rocket-silo-input"or not task.report then return nil end
-  return source_for_item(pair,task.item,task.report.input_inventory)
+  if(task.family~="rocket-silo-input"and task.family~="rocket-silo-payload")or not task.report then return nil end
+  return source_for_item(pair,task.item,task.family=="rocket-silo-payload"
+    and Campaign.payload_inventory(task.report)or task.report.input_inventory)
 end
 local function candidate_from_reports(pair)
   local reports=pair.rocket_silo_reports_0709;if type(reports)~="table"then reports=refresh_reports(pair)end
-  local trash,supply
+  local trash,supply,orbital
   for _,report in ipairs(reports or{})do
     if manual_report(report)then
+      local need=Campaign.requirement(pair,report)
+      if need then
+        local score=dist_sq(pair.priest.position,report.silo.position)
+        if not orbital or score<orbital.score then
+          orbital={family=need.loaded and"rocket-silo-launch"or"rocket-silo-payload",
+            target=report.silo,target_name=report.silo_name,target_unit=report.silo_unit,
+            item=need.item,count=1,source=not need.loaded and source_for_item(pair,need.item,need.inventory)or nil,
+            report=report,score=score}
+        end
+      end
       for _,source in ipairs({{inv=report.crafter_trash_inventory,label="crafter-trash"},{inv=report.silo_trash_inventory,label="silo-trash"}})do
         local entry=contents(source.inv)[1]
         if entry then local score=dist_sq(pair.priest.position,report.silo.position);if not trash or score<trash.score then trash={family="rocket-silo-trash",target=report.silo,target_name=report.silo_name,target_unit=report.silo_unit,item=entry.name,count=math.min(entry.count,M.max_trash_transfer),source_inv=source.inv,source_entity=report.silo,source_label=source.label,report=report,score=score}end end
@@ -339,12 +359,12 @@ local function candidate_from_reports(pair)
         local missing=report.item_ingredients_missing and report.item_ingredients_missing[1]
         if missing and missing.name and(tonumber(missing.missing)or 0)>0 then
           local source=source_for_item(pair,missing.name,report.input_inventory);local score=dist_sq(pair.priest.position,report.silo.position)
-          if not supply or score<supply.score then supply={family="rocket-silo-input",target=report.silo,target_name=report.silo_name,target_unit=report.silo_unit,item=missing.name,count=math.min(math.max(1,missing.missing),M.max_input_transfer),source=source,report=report,score=score}end
+          if not supply or score<supply.score then supply={family="rocket-silo-input",campaign_1287=Campaign.owns_silo(pair,report),target=report.silo,target_name=report.silo_name,target_unit=report.silo_unit,item=missing.name,count=math.min(math.max(1,missing.missing),M.max_input_transfer),source=source,report=report,score=score}end
         end
       end
     end
   end
-  return trash or supply
+  return trash or orbital or supply
 end
 local function revalidate_target(pair,task)
   if not valid(task.target)then return nil,"target-invalid"end
@@ -354,7 +374,15 @@ local function revalidate_target(pair,task)
   if not report then return nil,"readiness-failed"end
   if report.launch_sequence_active then return report,"launch-sequence-active"end
   if report.automation_owned then return report,"external-logistics-owned"end
-  if task.family=="rocket-silo-input"then
+  if task.family=="rocket-silo-payload"or task.family=="rocket-silo-launch"then
+    local need,why=Campaign.requirement(pair,report)
+    if not need then return report,"orbital-intent-revoked:"..safe(why)end
+    if task.family=="rocket-silo-launch"and not need.loaded then return report,"payload-no-longer-loaded"end
+    if task.family=="rocket-silo-payload"then
+      if need.loaded then return report,"payload-already-loaded"end
+      if task.item~=need.item or not inv_can_insert(need.inventory,task.item,1)then return report,"payload-inventory-rejects-item"end
+    end
+  elseif task.family=="rocket-silo-input"then
     if report.state~="manual-input-service-eligible"then return report,"target-not-eligible:"..safe(report.state)end
     local still_missing=false
     for _,missing in ipairs(report.item_ingredients_missing or{})do if missing.name==task.item and(tonumber(missing.missing)or 0)>0 then still_missing=true break end end
@@ -371,6 +399,12 @@ local function candidate_valid(pair,selected)
   if selected.target.surface~=pair.station.surface or selected.target.force~=pair.station.force then return false end
   local doctrine=readiness();local report=doctrine and type(doctrine.inspect_silo)=="function"and doctrine.inspect_silo(pair,selected.target,true)or nil
   if not manual_report(report)then return false end
+  if selected.family=="rocket-silo-launch"or selected.family=="rocket-silo-payload"then
+    local need=Campaign.requirement(pair,report)
+    return need and((selected.family=="rocket-silo-launch"and need.loaded)
+      or(selected.family=="rocket-silo-payload"and not need.loaded and selected.item==need.item
+        and inv_can_insert(need.inventory,need.item,1)))or false
+  end
   if selected.family=="rocket-silo-trash"then return selected.source_inv and selected.source_inv.valid and item_count(selected.source_inv,selected.item)>0 end
   if selected.family=="rocket-silo-input"then
     local missing=false;for _,entry in ipairs(report.item_ingredients_missing or{})do if entry.name==selected.item and(tonumber(entry.missing)or 0)>0 then missing=true break end end
@@ -380,6 +414,7 @@ local function candidate_valid(pair,selected)
 end
 local function discover_pair(pair)
   if not valid_pair(pair)then return false,"invalid-pair"end
+  Campaign.observe(pair)
   if pair.rocket_silo_logistics_0710 or pair.rocket_silo_custody_0710 then pair.rocket_silo_candidate_0710=nil;return false,"active-task"end
   local state=M.root();local key=tostring(station_unit(pair)or"?");local existing=pair.rocket_silo_candidate_0710
   if candidate_valid(pair,existing)then return false,"candidate-retained"end
@@ -395,6 +430,11 @@ local function begin_task(pair,selected,reason)
   local task={version=M.version,family=selected.family,phase="new",target=selected.target,target_name=selected.target_name,target_unit=selected.target_unit,item=selected.item,count=math.max(1,tonumber(selected.count)or 1),source_inv=selected.source_inv or(selected.source and selected.source.inv),source_entity=selected.source_entity or(selected.source and selected.source.entity),source_label=selected.source_label or(selected.source and selected.source.label),report=selected.report,started_tick=now(),reason=reason}
   local claimed,why=claim_target(pair,task);if not claimed then return{processed=1,blocked=1,detail="target-reserved:"..safe(why)}end
   pair.rocket_silo_candidate_0710=nil;pair.rocket_silo_logistics_0710=task
+  task.campaign_1287=selected.campaign_1287
+  if task.family=="rocket-silo-launch"then
+    task.phase="move-to-launch"
+    return{processed=1,waiting=1,detail="autonomous-native-launch-selected"}
+  end
   if task.family=="rocket-silo-trash"then
     task.phase="move-to-source"
     if not request_move(pair,task.target,"rocket-silo-trash-pickup-0710")then return{processed=1,blocked=1,detail="source-movement-blocked"}end
@@ -410,6 +450,13 @@ end
 local function continue_task(pair,task)
   if TERMINAL[lower(task.phase)]then return finish_task(pair,task,task.phase)end
   if task.phase=="return-custody"then return return_custody(pair,task)end
+  if(task.campaign_1287 or task.family=="rocket-silo-payload"or task.family=="rocket-silo-launch")
+    and not Campaign.order_allows(pair)then
+    if task.carried and(tonumber(task.carried.count)or 0)>0 then
+      task.phase="return-custody";sync_custody(pair,task,"foreign-order-owned");return return_custody(pair,task)
+    end
+    return abort_without_custody(pair,task,"foreign-order-owned")
+  end
   if valid(pair.combat_target)then
     if task.carried and(tonumber(task.carried.count)or 0)>0 then task.phase="return-custody";sync_custody(pair,task,"combat-suspended");return return_custody(pair,task)end
     return abort_without_custody(pair,task,"combat-priority")
@@ -424,6 +471,31 @@ local function continue_task(pair,task)
       task.phase="return-custody";sync_custody(pair,task,ownership_reason);return return_custody(pair,task)
     end
     return abort_without_custody(pair,task,ownership_reason)
+  end
+  if ownership_reason~="ready"then
+    if task.carried and(tonumber(task.carried.count)or 0)>0 then
+      task.phase="return-custody";sync_custody(pair,task,ownership_reason);return return_custody(pair,task)
+    end
+    return abort_without_custody(pair,task,ownership_reason)
+  end
+  if task.family=="rocket-silo-launch"then
+    if physical_distance_sq(pair,task.target,pair.priest.position)>M.target_reach_sq then
+      if not request_move(pair,task.target,"autonomous-silo-launch-contact-1287")then
+        return{processed=1,blocked=1,detail="launch-contact-movement-blocked"}
+      end
+      return{processed=1,waiting=1,detail="moving-to-launch-contact"}
+    end
+    if now()-(tonumber(task.started_tick)or now())>M.request_timeout then
+      return abort_without_custody(pair,task,"native-launch-readiness-timeout")
+    end
+    if now()<(task.next_launch_tick_1287 or 0)then return{processed=1,waiting=1,detail="awaiting-native-launch-retry"}end
+    task.next_launch_tick_1287=now()+60
+    local launched,why=Campaign.request_launch(pair,report)
+    if launched then
+      record(pair,"native-launch-requested-1287",why,true)
+      return finish_task(pair,task,"native-launch-requested-not-delivery-proof")
+    end
+    return{processed=1,waiting=1,detail=why}
   end
   if ownership_reason=="launch-sequence-active"or ownership_reason=="external-logistics-owned"then
     if task.carried and(tonumber(task.carried.count)or 0)>0 then task.phase="return-custody";sync_custody(pair,task,ownership_reason);record(pair,"unsafe-silo-custody-return",ownership_reason);return return_custody(pair,task)end
@@ -440,7 +512,7 @@ local function continue_task(pair,task)
     local source
     if task.family=="rocket-silo-trash"then source={inv=task.source_inv,entity=task.target,count=item_count(task.source_inv,task.item),label=task.source_label}else source=source_current(pair,task)end
     if not(source and source.inv and source.inv.valid and valid(source.entity)and(tonumber(source.count)or 0)>0)then
-      if task.family=="rocket-silo-input"then task.phase="waiting-source";task.request_tick=now();create_request(pair,task);return{processed=1,waiting=1,detail="source-lost"}end
+      if task.family=="rocket-silo-input"or task.family=="rocket-silo-payload"then task.phase="waiting-source";task.request_tick=now();create_request(pair,task);return{processed=1,waiting=1,detail="source-lost"}end
       return abort_without_custody(pair,task,"silo-trash-source-empty")
     end
     if physical_distance_sq(pair,source.entity,pair.priest.position)>M.pickup_reach_sq then
@@ -469,7 +541,8 @@ local function continue_task(pair,task)
     local fresh,why=revalidate_target(pair,task)
     if not fresh or why~="ready"then task.phase="return-custody";sync_custody(pair,task,why);record(pair,"silo-target-became-ineligible",safe(why));return return_custody(pair,task)end
     local carried=task.carried;if not(carried and carried.item and(tonumber(carried.count)or 0)>0)then return abort_without_custody(pair,task,"custody-missing")end
-    local inserted=inv_insert(fresh.input_inventory,carried.item,carried.count)
+    local destination=task.family=="rocket-silo-payload"and Campaign.payload_inventory(fresh)or fresh.input_inventory
+    local inserted=inv_insert(destination,carried.item,carried.count)
     if inserted>0 then carried.count=carried.count-inserted;stat("input-items-delivered",inserted);record(pair,"silo-input-delivered",carried.item.." x"..safe(inserted).." -> "..safe(task.target_name))end
     if carried.count<=0 then return finish_task(pair,task,"input-delivered")end
     task.phase="return-custody";sync_custody(pair,task,inserted>0 and"input-partial"or"input-insert-blocked")
@@ -496,17 +569,17 @@ end
 local function action_target(pair,task)
   if task.phase=="move-to-source"and valid(task.source_entity or task.target)then local target=task.source_entity or task.target;return target,"collect-silo-item","Collecting "..safe(task.item).." for "..safe(task.target_name)end
   if task.phase=="move-to-target"and valid(task.target)then return task.target,"deliver-silo-input","Delivering "..safe(task.item).." to "..safe(task.target_name)end
-  if task.phase=="return-custody"then local target=task.family=="rocket-silo-input"and valid(task.source_entity)and task.source_entity or pair.station;return target,"return-silo-custody","Returning "..safe(task.item)end
+  if task.phase=="return-custody"then local target=(task.family=="rocket-silo-input"or task.family=="rocket-silo-payload")and valid(task.source_entity)and task.source_entity or pair.station;return target,"return-silo-custody","Returning "..safe(task.item)end
   if task.phase=="waiting-source"and valid(task.target)then return task.target,"waiting-silo-source","Waiting for "..safe(task.item)end
   return valid(task.target)and task.target or pair.station,task.phase or"silo-logistics","Rocket silo logistics"
 end
 function M.recommend_action(pair)
   if M.root().enabled==false or not valid_pair(pair)then return nil end
   local task=pair.rocket_silo_logistics_0710;local custody=pair.rocket_silo_custody_0710
-  if type(task)=="table"then local target,phase,label=action_target(pair,task);return{kind="rocket-silo-logistics",family="rocket-silo-logistics",active=true,target=target,position=valid(target)and target.position or nil,item=task.item,phase=phase,label=label,reason=task.reason or task.phase,source="rocket_silo_logistics_0710"}end
+  if type(task)=="table"then local target,phase,label=action_target(pair,task);return{kind="rocket-silo-logistics",family="rocket-silo-logistics",active=true,campaign_1287=task.campaign_1287==true or task.family=="rocket-silo-launch"or task.family=="rocket-silo-payload",target=target,position=valid(target)and target.position or nil,item=task.item,phase=phase,label=label,reason=task.reason or task.phase,source="rocket_silo_logistics_0710"}end
   if type(custody)=="table"and custody.item and(tonumber(custody.count)or 0)>0 then local target=custody.family=="rocket-silo-input"and valid(custody.source_entity)and custody.source_entity or pair.station;return{kind="rocket-silo-logistics",family="rocket-silo-logistics",active=true,target=target,position=target.position,item=custody.item,phase="return-silo-custody",label="Returning silo custody",reason=custody.reason or"orphan-custody",source="rocket_silo_logistics_0710"}end
   local selected=pair.rocket_silo_candidate_0710;if not candidate_valid(pair,selected)then return nil end
-  return{kind="rocket-silo-logistics",family="rocket-silo-logistics",active=false,target=selected.target,position=selected.target.position,item=selected.item,phase="candidate",label=selected.family=="rocket-silo-input"and"Rocket silo input delivery"or"Rocket silo trash evacuation",reason="broker-discovered-candidate",source="rocket_silo_logistics_0710"}
+  return{kind="rocket-silo-logistics",family="rocket-silo-logistics",active=false,campaign_1287=selected.campaign_1287==true or selected.family=="rocket-silo-launch"or selected.family=="rocket-silo-payload",target=selected.target,position=selected.target.position,item=selected.item,phase="candidate",label=selected.family=="rocket-silo-input"and"Rocket silo input delivery"or"Rocket silo service",reason="broker-discovered-candidate",source="rocket_silo_logistics_0710"}
 end
 local function discover_pairs(budget)
   local state=M.root();if state.enabled==false then return{processed=0,acted=0,detail="disabled"}end
