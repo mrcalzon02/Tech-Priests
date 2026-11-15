@@ -341,6 +341,40 @@
       "model_source_sha256": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
       "runtime_export_sha256": "c4bc56f95257fe62c6086a55e3d3f851d0b2c9991b7d2cf6899d4b8fd0c8a707",
       "status": "actual appended console in saved and independently reimported pilot; finish/native pending"
+    },
+    {
+      "machine": "pelletization-forge",
+      "machine_revision": "V03 finish/state candidate",
+      "instance": "front left cogitator",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -1.0499999523162842
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -0.9200000166893005
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.7699999809265137
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+      "runtime_export_sha256": "2f0da21dafac79f9fb348f5318fd5ec19b6ddbdc7ab74e1b8f187b681b757a4b",
+      "status": "Retained actual V01 appended console; unchanged frozen library master. Source/export/geometry/captures pass; native item handling pending"
     }
   ],
   "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",

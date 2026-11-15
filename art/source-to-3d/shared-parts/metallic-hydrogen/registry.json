@@ -354,6 +354,40 @@
           "model_source_sha256": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
           "runtime_export_sha256": "c4bc56f95257fe62c6086a55e3d3f851d0b2c9991b7d2cf6899d4b8fd0c8a707",
           "status": "actual appended console in saved and independently reimported pilot; finish/native pending"
+        },
+        {
+          "machine": "pelletization-forge",
+          "machine_revision": "V03 finish/state candidate",
+          "instance": "front left cogitator",
+          "transform": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0499999523162842
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -0.9200000166893005
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.7699999809265137
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+          "runtime_export_sha256": "2f0da21dafac79f9fb348f5318fd5ec19b6ddbdc7ab74e1b8f187b681b757a4b",
+          "status": "Retained actual V01 appended console; unchanged frozen library master. Source/export/geometry/captures pass; native item handling pending"
         }
       ],
       "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
@@ -1615,7 +1649,7 @@
         "part_id": "tp.mh7.cogitator-console",
         "revision": "v1",
         "machine": "pelletization-forge",
-        "machine_revision": "V01 construction pilot",
+        "machine_revision": "V03 finish/state candidate",
         "instance": "front left cogitator",
         "transform": [
           [
@@ -1643,14 +1677,14 @@
             1.0
           ]
         ],
-        "model_source_sha256": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
-        "runtime_export_sha256": "c4bc56f95257fe62c6086a55e3d3f851d0b2c9991b7d2cf6899d4b8fd0c8a707",
-        "status": "actual appended console in saved and independently reimported pilot; finish/native pending"
+        "model_source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+        "runtime_export_sha256": "2f0da21dafac79f9fb348f5318fd5ec19b6ddbdc7ab74e1b8f187b681b757a4b",
+        "status": "Retained actual V01 appended console; unchanged frozen library master. Source/export/geometry/captures pass; native item handling pending"
       }
     ]
   },
   "last_checkpoint_sha256": null,
   "inventory_source": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
   "material_index": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
-  "previous_registry_sha256": "108f7123a43eb0a44a4eb684723fde1aa84a35b34a51b73b32d0f9a2e8d0a274"
+  "previous_registry_sha256": "925446df748c72a5b66a2a13e82b9483208e06ecc7570cfc4d0ab53fc0661254"
 }

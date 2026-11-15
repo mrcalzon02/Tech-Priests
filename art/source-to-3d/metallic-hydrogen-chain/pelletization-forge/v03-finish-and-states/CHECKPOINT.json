@@ -1,0 +1,35 @@
+{
+  "status": "surfaced_material_path_and_state_candidate; native_item_processing_pending",
+  "source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+  "glb_sha256": "2f0da21dafac79f9fb348f5318fd5ec19b6ddbdc7ab74e1b8f187b681b757a4b",
+  "registry_sha256": "2087260ed3b9df3a07f0e768c4d0a6d72ee79a0f8e4c160e9e5d6876b7bb8b16",
+  "footprint": [
+    3,
+    3
+  ],
+  "surface_map_count": 24,
+  "contacts": 94,
+  "guided_ram_static_pair_checks_each": 1224,
+  "visible_stock_poses_each": 743,
+  "stock_surface_pair_checks_each": 1825,
+  "rotor_static_pair_checks_each": 4912,
+  "hydraulic_core_rays_each": 36,
+  "triangles": 33328,
+  "maximum_sampled_world_pose_error": 3.5762786865234375e-07,
+  "capture_frames": 36,
+  "atlas_count": 6,
+  "cycle_seconds": 8,
+  "audio_implemented": true,
+  "native_audio_binding_verified": false,
+  "native_item_interfaces_verified": false,
+  "ordinary_chain_integrated": false,
+  "owner_approved": false,
+  "material_path_scope": "Quarter-frame sampled stock/auger checks in source and actual GLB, not a physical force/volume simulation or continuous mathematical clearance proof.",
+  "no_new_verified_parts": "Machine-local press/auger/hydraulic assemblies are not automatically library-approved.",
+  "next": [
+    "Native 3x3 forge with actual inserter feed/pickup and zero gameplay fluid boxes",
+    "Preserve incoming raw pellet HP, quality, stage and remaining instability throughout processing, blockage and save/reload",
+    "Verify native animation/audio binding and four orientations",
+    "Build vessel fabricator and canister assembler; integrate full chain; recover/refine three reactor sources"
+  ]
+}

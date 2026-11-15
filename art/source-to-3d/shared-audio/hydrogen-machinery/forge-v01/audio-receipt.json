@@ -1,0 +1,82 @@
+{
+  "passed": true,
+  "provenance": "Entirely authored oscillators, seeded filtered noise and resonances; no sampled or third-party recordings",
+  "generator_sha256": "989eb1ae37172fcff6cc5d75986a418356a71f36980dc508dc54c19e6bad1845",
+  "assets": [
+    {
+      "name": "forge-working",
+      "seconds": 8.0,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": true,
+      "plan": "Closed hydraulic pump/motor bed; short auger grit during feed, pressure-load rise and two restrained press-frame knocks, return-valve wash and small die/tray metal ticks. Eight-second source-phase preview; no compressor roar.",
+      "wav_sha256": "7b16ed4414272455e40ad70c8e28ac8e5bcb3f0fd4c1293dc2e48d13b533b757",
+      "ogg_sha256": "ecac4f71ae3d4a90760d466e151c72209a477cc52bd86f07de8361f70106e112",
+      "decoded_peak": 0.5892988443374634,
+      "decoded_rms": 0.14473454654216766,
+      "decoded_rms_dbfs": -16.788555903960663,
+      "loop_seam_step": 0.0034365160390734673,
+      "ordinary_99_9_percent_step": 0.030440744459627498
+    },
+    {
+      "name": "forge-idle",
+      "seconds": 8.0,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": true,
+      "plan": "Powered idle hydraulic cabinet hum; auger and press loading stopped.",
+      "wav_sha256": "9e45936851677dfe89c9a65dbeee1680fd29c598c0ff8bb33d002e5cb81439c6",
+      "ogg_sha256": "6ef999505bc64610914c4e6f290c23814d2c309035d86fd9022e3f9f19fc2fd2",
+      "decoded_peak": 0.06844424456357956,
+      "decoded_rms": 0.025065721943974495,
+      "decoded_rms_dbfs": -32.01839564605818,
+      "loop_seam_step": 0.0004385504871606827,
+      "ordinary_99_9_percent_step": 0.0007672131024300973
+    },
+    {
+      "name": "forge-start",
+      "seconds": 1.6,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": false,
+      "plan": "Power contactor and hydraulic drive spin-up, with no unsupported press impact at startup.",
+      "wav_sha256": "e495e70c927ebd177837c09a63098fb3265cfc0913d99186dca58e50783beaa8",
+      "ogg_sha256": "3e0b66d1fd37f77e70b179b8720ddcecb2a981de7b80c4f43471cd69c85960cf",
+      "decoded_peak": 0.32634788751602173,
+      "decoded_rms": 0.12027571350336075,
+      "decoded_rms_dbfs": -18.396441161648138,
+      "loop_seam_step": 0.11015032976865768,
+      "ordinary_99_9_percent_step": 0.04805094909668043
+    },
+    {
+      "name": "forge-stop",
+      "seconds": 1.8,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": false,
+      "plan": "Drive rundown with a brief closed-circuit valve release; no continuous atmospheric vent.",
+      "wav_sha256": "449e1afa402ea830109f509ef5ec0d02c55dc542d6ff3585f9456a08f5e0cc6a",
+      "ogg_sha256": "7cd9aa15bb360ced66b084760fae5bb7cba7a197438f9294006760344cfc9993",
+      "decoded_peak": 0.4813006520271301,
+      "decoded_rms": 0.08519221842288971,
+      "decoded_rms_dbfs": -21.39200144981594,
+      "loop_seam_step": 0.00012732126924674958,
+      "ordinary_99_9_percent_step": 0.016479464322328566
+    }
+  ],
+  "native_mix": {
+    "working_gain": 0.7,
+    "audible_distance_modifier": 2.0,
+    "priority": 40,
+    "idle_gain": 0.09,
+    "start_gain": 0.65,
+    "stop_gain": 0.55
+  },
+  "compressor_comparison": {
+    "receipt_sha256": "224afba3c44e893010cb17b4359dcd446f330aeace163d50941f2c28de2ac099",
+    "effective_rms_difference_db": -7.155744289444231,
+    "compressor_gain": 1.15
+  },
+  "owner_audition_approved": false,
+  "native_binding_verified": false
+}

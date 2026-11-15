@@ -1,0 +1,792 @@
+{
+  "status": "forge surface/service candidate; independent export, mechanics and native work pending",
+  "source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+  "provenance": "new_reconstruction_from_reference; historical v0.2 native bytes unrecovered",
+  "contacts": [
+    {
+      "a": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "press shoe on footing"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column web -0.89",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "label": "column web seated on shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (-0.89, -0.27)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "label": "column flange on grounded shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (-0.89, 0.07)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe -0.89",
+      "label": "column flange on grounded shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "press shoe on footing"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column web 0.89",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "label": "column web seated on shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (0.89, -0.27)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "label": "column flange on grounded shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | red press column flange (0.89, 0.07)",
+      "b": "TP Pelletization Forge V01 | press column grounded shoe 0.89",
+      "label": "column flange on grounded shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "b": "TP Pelletization Forge V01 | red press column web -0.89",
+      "label": "crossbeam carried by grounded columns"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "b": "TP Pelletization Forge V01 | red press column web 0.89",
+      "label": "crossbeam carried by grounded columns"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die bed grounded pier -0.45",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "die pier grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "b": "TP Pelletization Forge V01 | die bed grounded pier -0.45",
+      "label": "die bed on pier"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die bed grounded pier 0.45",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "die pier grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "b": "TP Pelletization Forge V01 | die bed grounded pier 0.45",
+      "label": "die bed on pier"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open tapered pellet die",
+      "b": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "label": "die seated over drilled bed core"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide lower socket -0.3",
+      "b": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "label": "lower guide socket seated on bed"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | fixed press guide rod -0.3",
+      "b": "TP Pelletization Forge V01 | guide lower socket -0.3",
+      "label": "guide supported in close-fitting lower socket"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide upper socket -0.3",
+      "b": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "label": "upper guide socket carried by crossbeam"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | moving crosshead guide bearing -0.3",
+      "b": "TP Pelletization Forge V01 | guided moving crosshead",
+      "label": "moving bearing retained in crosshead"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide lower socket 0.3",
+      "b": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "label": "lower guide socket seated on bed"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | fixed press guide rod 0.3",
+      "b": "TP Pelletization Forge V01 | guide lower socket 0.3",
+      "label": "guide supported in close-fitting lower socket"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | guide upper socket 0.3",
+      "b": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "label": "upper guide socket carried by crossbeam"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | moving crosshead guide bearing 0.3",
+      "b": "TP Pelletization Forge V01 | guided moving crosshead",
+      "label": "moving bearing retained in crosshead"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | on-axis press punch",
+      "b": "TP Pelletization Forge V01 | punch mounting shank",
+      "label": "press punch on retained shank"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | punch mounting shank",
+      "b": "TP Pelletization Forge V01 | guided moving crosshead",
+      "label": "punch shank carried by crosshead"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | actuator seated mounting flange",
+      "b": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "label": "actuator flange supported by crossbeam"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | closed hydraulic press cylinder",
+      "b": "TP Pelletization Forge V01 | actuator seated mounting flange",
+      "label": "actuator seated through flange"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | closed actuator pressure head",
+      "b": "TP Pelletization Forge V01 | closed hydraulic press cylinder",
+      "label": "closed cylinder head on body"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | actuator piston gland",
+      "b": "TP Pelletization Forge V01 | closed hydraulic press cylinder",
+      "label": "piston gland seated in cylinder"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper grounded foot -0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "hopper foot grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper supported upright -0.48",
+      "b": "TP Pelletization Forge V01 | hopper grounded foot -0.48",
+      "label": "hopper post on foot"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open raw pellet hopper",
+      "b": "TP Pelletization Forge V01 | hopper supported upright -0.48",
+      "label": "open hopper rim carried by posts"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper rear diagonal brace -0.48",
+      "b": "TP Pelletization Forge V01 | hopper back brace grounded shoe -0.48",
+      "label": "hopper brace on actual rear shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper back brace grounded shoe -0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "rear brace shoe grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper grounded foot 0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "hopper foot grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper supported upright 0.48",
+      "b": "TP Pelletization Forge V01 | hopper grounded foot 0.48",
+      "label": "hopper post on foot"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open raw pellet hopper",
+      "b": "TP Pelletization Forge V01 | hopper supported upright 0.48",
+      "label": "open hopper rim carried by posts"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper rear diagonal brace 0.48",
+      "b": "TP Pelletization Forge V01 | hopper back brace grounded shoe 0.48",
+      "label": "hopper brace on actual rear shoe"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | hopper back brace grounded shoe 0.48",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "rear brace shoe grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open hopper drop neck",
+      "b": "TP Pelletization Forge V01 | open raw pellet hopper",
+      "label": "hopper outlet seated on open neck"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open hopper drop neck",
+      "b": "TP Pelletization Forge V01 | short auger feed housing",
+      "label": "drop neck enters drilled auger roof without projecting into rotating flight"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supporting pedestal 0.27",
+      "b": "TP Pelletization Forge V01 | auger grounded foot 0.27",
+      "label": "auger pedestal grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supported saddle 0.27",
+      "b": "TP Pelletization Forge V01 | auger supporting pedestal 0.27",
+      "label": "auger saddle on pedestal"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | short auger feed housing",
+      "b": "TP Pelletization Forge V01 | auger supported saddle 0.27",
+      "label": "auger housing retained in saddle"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supporting pedestal 0.94",
+      "b": "TP Pelletization Forge V01 | auger grounded foot 0.94",
+      "label": "auger pedestal grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger supported saddle 0.94",
+      "b": "TP Pelletization Forge V01 | auger supporting pedestal 0.94",
+      "label": "auger saddle on pedestal"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | short auger feed housing",
+      "b": "TP Pelletization Forge V01 | auger supported saddle 0.94",
+      "label": "auger housing retained in saddle"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | feeder motor grounded leg -0.11",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "motor leg grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rear feeder drive motor",
+      "b": "TP Pelletization Forge V01 | feeder motor grounded leg -0.11",
+      "label": "motor supported on legs"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | feeder motor grounded leg 0.11",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "motor leg grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | rear feeder drive motor",
+      "b": "TP Pelletization Forge V01 | feeder motor grounded leg 0.11",
+      "label": "motor supported on legs"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger rear bearing closure",
+      "b": "TP Pelletization Forge V01 | short auger feed housing",
+      "label": "feed bearing closure on housing"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | auger keyed drive coupling",
+      "b": "TP Pelletization Forge V01 | rear feeder drive motor",
+      "label": "drive coupling retained by motor"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | feed shoe lip support crossbar",
+      "b": "TP Pelletization Forge V01 | short auger feed housing",
+      "label": "crossbar retained at both outer auger wall lands"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | open die feed shoe floor",
+      "b": "TP Pelletization Forge V01 | feed shoe lip support crossbar",
+      "label": "open shoe carried by lower outlet crossbar"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.32",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "extraction chute support grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.32",
+      "b": "TP Pelletization Forge V01 | inclined product chute floor",
+      "label": "chute floor carried on grounded pedestal"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.85",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "extraction chute support grounded"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | product chute grounded support -0.85",
+      "b": "TP Pelletization Forge V01 | inclined product chute floor",
+      "label": "chute floor carried on grounded pedestal"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | powerpack grounded skid 0.73",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "hydraulic skid on footing"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | closed hydraulic reservoir",
+      "b": "FMPL_PROCESS | TP Forge V03 | powerpack grounded skid 0.73",
+      "label": "reservoir supported by skid"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | powerpack grounded skid 1.15",
+      "b": "TP Pelletization Forge V01 | full equipment footing",
+      "label": "hydraulic skid on footing"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | closed hydraulic reservoir",
+      "b": "FMPL_PROCESS | TP Forge V03 | powerpack grounded skid 1.15",
+      "label": "reservoir supported by skid"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | removable reservoir lid",
+      "b": "FMPL_PROCESS | TP Forge V03 | closed hydraulic reservoir",
+      "label": "service lid seated on reservoir"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | hydraulic pump foot flange",
+      "b": "FMPL_PROCESS | TP Forge V03 | removable reservoir lid",
+      "label": "pump mounting flange on reservoir lid"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | hydraulic powerpack motor",
+      "b": "FMPL_PROCESS | TP Forge V03 | hydraulic pump foot flange",
+      "label": "pump motor seated on flange"
+    },
+    {
+      "a": "TP Forge V03 | powerpack cooling ring 0.72",
+      "b": "FMPL_PROCESS | TP Forge V03 | hydraulic powerpack motor",
+      "label": "motor cooling ring retained on housing"
+    },
+    {
+      "a": "TP Forge V03 | powerpack cooling ring 0.77",
+      "b": "FMPL_PROCESS | TP Forge V03 | hydraulic powerpack motor",
+      "label": "motor cooling ring retained on housing"
+    },
+    {
+      "a": "TP Forge V03 | powerpack cooling ring 0.82",
+      "b": "FMPL_PROCESS | TP Forge V03 | hydraulic powerpack motor",
+      "label": "motor cooling ring retained on housing"
+    },
+    {
+      "a": "TP Forge V03 | powerpack cooling ring 0.87",
+      "b": "FMPL_PROCESS | TP Forge V03 | hydraulic powerpack motor",
+      "label": "motor cooling ring retained on housing"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | lid retaining head (0.7, 0.51)",
+      "b": "FMPL_PROCESS | TP Forge V03 | removable reservoir lid",
+      "label": "lid fastener seats on actual flange"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | lid retaining head (0.7, 1.17)",
+      "b": "FMPL_PROCESS | TP Forge V03 | removable reservoir lid",
+      "label": "lid fastener seats on actual flange"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | lid retaining head (1.18, 0.51)",
+      "b": "FMPL_PROCESS | TP Forge V03 | removable reservoir lid",
+      "label": "lid fastener seats on actual flange"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | lid retaining head (1.18, 1.17)",
+      "b": "FMPL_PROCESS | TP Forge V03 | removable reservoir lid",
+      "label": "lid fastener seats on actual flange"
+    },
+    {
+      "a": "TP Forge V03 | pressure supply reservoir port",
+      "b": "FMPL_PROCESS | TP Forge V03 | removable reservoir lid",
+      "label": "hydraulic reservoir port on service lid"
+    },
+    {
+      "a": "TP Forge V03 | pressure supply hose",
+      "b": "TP Forge V03 | pressure supply reservoir port",
+      "label": "hose seated in reservoir coupling"
+    },
+    {
+      "a": "TP Forge V03 | pressure supply actuator coupling",
+      "b": "TP Pelletization Forge V01 | closed hydraulic press cylinder",
+      "label": "actuator coupling seated in drilled cylinder wall"
+    },
+    {
+      "a": "TP Forge V03 | pressure supply hose",
+      "b": "TP Forge V03 | pressure supply actuator coupling",
+      "label": "hose terminates in actuator coupling"
+    },
+    {
+      "a": "TP Forge V03 | pressure supply riser clamp",
+      "b": "TP Forge V03 | pressure supply hose",
+      "label": "riser pipe supported by external clamp"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | pressure supply frame standoff",
+      "b": "TP Pelletization Forge V01 | red press column flange (0.89, 0.07)",
+      "label": "riser standoff grounded on rear press flange"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | pressure supply frame standoff",
+      "b": "TP Forge V03 | pressure supply riser clamp",
+      "label": "external clamp carried by frame standoff"
+    },
+    {
+      "a": "TP Forge V03 | pressure return reservoir port",
+      "b": "FMPL_PROCESS | TP Forge V03 | removable reservoir lid",
+      "label": "hydraulic reservoir port on service lid"
+    },
+    {
+      "a": "TP Forge V03 | pressure return hose",
+      "b": "TP Forge V03 | pressure return reservoir port",
+      "label": "hose seated in reservoir coupling"
+    },
+    {
+      "a": "TP Forge V03 | pressure return actuator coupling",
+      "b": "TP Pelletization Forge V01 | closed hydraulic press cylinder",
+      "label": "actuator coupling seated in drilled cylinder wall"
+    },
+    {
+      "a": "TP Forge V03 | pressure return hose",
+      "b": "TP Forge V03 | pressure return actuator coupling",
+      "label": "hose terminates in actuator coupling"
+    },
+    {
+      "a": "TP Forge V03 | pressure return riser clamp",
+      "b": "TP Forge V03 | pressure return hose",
+      "label": "riser pipe supported by external clamp"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | pressure return frame standoff",
+      "b": "TP Pelletization Forge V01 | red press column flange (0.89, 0.07)",
+      "label": "riser standoff grounded on rear press flange"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Forge V03 | pressure return frame standoff",
+      "b": "TP Forge V03 | pressure return riser clamp",
+      "label": "external clamp carried by frame standoff"
+    },
+    {
+      "a": "TP Forge V03 | bolted die retaining flange",
+      "b": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "label": "die retaining flange seated on bed"
+    },
+    {
+      "a": "TP Forge V03 | bolted die retaining flange",
+      "b": "TP Pelletization Forge V01 | open tapered pellet die",
+      "label": "close-fitting flange retains die body"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die flange stud 0",
+      "b": "TP Forge V03 | bolted die retaining flange",
+      "label": "die retaining head seats through actual flange"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die flange stud 1",
+      "b": "TP Forge V03 | bolted die retaining flange",
+      "label": "die retaining head seats through actual flange"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die flange stud 2",
+      "b": "TP Forge V03 | bolted die retaining flange",
+      "label": "die retaining head seats through actual flange"
+    },
+    {
+      "a": "TP Pelletization Forge V01 | die flange stud 3",
+      "b": "TP Forge V03 | bolted die retaining flange",
+      "label": "die retaining head seats through actual flange"
+    }
+  ],
+  "press": {
+    "center": [
+      0,
+      -0.1
+    ],
+    "crosshead_idle_z": 1.32,
+    "stroke": 0.34,
+    "punch_radius": 0.05,
+    "die_minimum_radius": 0.055,
+    "guide_radius": 0.0345,
+    "guide_hole_radius": 0.036
+  },
+  "pending": [
+    "Independent source/export material-path and service clearance checks",
+    "Machine-specific sound",
+    "Four-angle idle/working captures",
+    "Native age/HP/quality-preserving item processing"
+  ],
+  "revision": "V03 model-specific finish and closed hydraulic powerpack",
+  "previous_source_sha256": "5a2f6ed46d5d9713fb7e9165b1fadb1c1d4edc301f2c176fd480f595f6f92017",
+  "surface_assignments": [
+    {
+      "object": "TP Pelletization Forge V01 | red press column web -0.89",
+      "material": "TP Forge V03 | press-frame-enamel",
+      "plan": "Per-face UV along the actual I-section and crossbeam length. Red enamel has fine cast/rolled grain, narrow exposed edge wear and grime at actual member ends; no repeated generic cloudy patches."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | red press column flange (-0.89, -0.27)",
+      "material": "TP Forge V03 | press-frame-enamel",
+      "plan": "Per-face UV along the actual I-section and crossbeam length. Red enamel has fine cast/rolled grain, narrow exposed edge wear and grime at actual member ends; no repeated generic cloudy patches."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | red press column flange (-0.89, 0.07)",
+      "material": "TP Forge V03 | press-frame-enamel",
+      "plan": "Per-face UV along the actual I-section and crossbeam length. Red enamel has fine cast/rolled grain, narrow exposed edge wear and grime at actual member ends; no repeated generic cloudy patches."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | red press column web 0.89",
+      "material": "TP Forge V03 | press-frame-enamel",
+      "plan": "Per-face UV along the actual I-section and crossbeam length. Red enamel has fine cast/rolled grain, narrow exposed edge wear and grime at actual member ends; no repeated generic cloudy patches."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | red press column flange (0.89, -0.27)",
+      "material": "TP Forge V03 | press-frame-enamel",
+      "plan": "Per-face UV along the actual I-section and crossbeam length. Red enamel has fine cast/rolled grain, narrow exposed edge wear and grime at actual member ends; no repeated generic cloudy patches."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | red press column flange (0.89, 0.07)",
+      "material": "TP Forge V03 | press-frame-enamel",
+      "plan": "Per-face UV along the actual I-section and crossbeam length. Red enamel has fine cast/rolled grain, narrow exposed edge wear and grime at actual member ends; no repeated generic cloudy patches."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | rigid overhead press crossbeam",
+      "material": "TP Forge V03 | press-frame-enamel",
+      "plan": "Per-face UV along the actual I-section and crossbeam length. Red enamel has fine cast/rolled grain, narrow exposed edge wear and grime at actual member ends; no repeated generic cloudy patches."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | hopper supported upright -0.48",
+      "material": "TP Forge V03 | press-frame-enamel",
+      "plan": "Per-face UV along the actual I-section and crossbeam length. Red enamel has fine cast/rolled grain, narrow exposed edge wear and grime at actual member ends; no repeated generic cloudy patches."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | hopper supported upright 0.48",
+      "material": "TP Forge V03 | press-frame-enamel",
+      "plan": "Per-face UV along the actual I-section and crossbeam length. Red enamel has fine cast/rolled grain, narrow exposed edge wear and grime at actual member ends; no repeated generic cloudy patches."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | open raw pellet hopper",
+      "material": "TP Forge V03 | hopper-flow-steel",
+      "plan": "Separate tapered wall UVs run from the real upper lip to offset throat. Grain and polished feed tracks follow descent; dirt sits in actual corner folds and throat, with no opaque cap over the opening."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | fixed press guide rod -0.3",
+      "material": "TP Forge V03 | ground-press-tooling",
+      "plan": "Cylindrical U / actual axial V. Fine circumferential grinding on ram and guide surfaces, restrained oil at seated axial ends. Bore and stroke dimensions are unchanged."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | fixed press guide rod 0.3",
+      "material": "TP Forge V03 | ground-press-tooling",
+      "plan": "Cylindrical U / actual axial V. Fine circumferential grinding on ram and guide surfaces, restrained oil at seated axial ends. Bore and stroke dimensions are unchanged."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | on-axis press punch",
+      "material": "TP Forge V03 | ground-press-tooling",
+      "plan": "Cylindrical U / actual axial V. Fine circumferential grinding on ram and guide surfaces, restrained oil at seated axial ends. Bore and stroke dimensions are unchanged."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | punch mounting shank",
+      "material": "TP Forge V03 | ground-press-tooling",
+      "plan": "Cylindrical U / actual axial V. Fine circumferential grinding on ram and guide surfaces, restrained oil at seated axial ends. Bore and stroke dimensions are unchanged."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | telescoping press piston rod",
+      "material": "TP Forge V03 | ground-press-tooling",
+      "plan": "Cylindrical U / actual axial V. Fine circumferential grinding on ram and guide surfaces, restrained oil at seated axial ends. Bore and stroke dimensions are unchanged."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | die supporting transverse bed",
+      "material": "TP Forge V03 | cast-die-bed",
+      "plan": "Planar faces use actual component dimensions. Contact dirt follows the two real guide seats and actual die retaining flange."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | guided moving crosshead",
+      "material": "TP Forge V03 | machined-crosshead",
+      "plan": "Planar faces use actual component dimensions. Contact dirt follows the two real guide seats; restrained longitudinal ground grain follows the bored crosshead."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | open tapered pellet die",
+      "material": "TP Forge V03 | turned-die-faces",
+      "plan": "Actual top/bottom annuli map in XY at .54-tile width; concentric tooling marks follow the true die axis. Cylinder/conical bores separately use circumferential/axial ground-tool UVs and material."
+    },
+    {
+      "object": "TP Forge V03 | bolted die retaining flange",
+      "material": "TP Forge V03 | turned-die-faces",
+      "plan": "Actual top/bottom annuli map in XY at .54-tile width; concentric tooling marks follow the true die axis. Cylinder/conical bores separately use circumferential/axial ground-tool UVs and material."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | inclined product chute floor",
+      "material": "TP Forge V03 | pellet-contact-chutes",
+      "plan": "U spans actual chute width; V follows stock travel. Central polished contact lane and dirt at side folds, separately mapped to the small feed shoe, discharge ramp and accessible tray."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | open die feed shoe floor",
+      "material": "TP Forge V03 | pellet-contact-chutes",
+      "plan": "U spans actual chute width; V follows stock travel. Central polished contact lane and dirt at side folds, separately mapped to the small feed shoe, discharge ramp and accessible tray."
+    },
+    {
+      "object": "TP Pelletization Forge V01 | open front item pickup tray",
+      "material": "TP Forge V03 | pellet-contact-chutes",
+      "plan": "U spans actual chute width; V follows stock travel. Central polished contact lane and dirt at side folds, separately mapped to the small feed shoe, discharge ramp and accessible tray."
+    },
+    {
+      "object": "FMPL_PROCESS | TP Forge V03 | closed hydraulic reservoir",
+      "material": "TP Forge V03 | hydraulic-reservoir",
+      "plan": "Flat cabinet faces follow each physical edge. Dark painted reservoir has restrained oil around lid seams and softened exposed edges; motor and brass fittings retain their distinct library metals."
+    },
+    {
+      "object": "FMPL_PROCESS | TP Forge V03 | removable reservoir lid",
+      "material": "TP Forge V03 | hydraulic-reservoir",
+      "plan": "Flat cabinet faces follow each physical edge. Dark painted reservoir has restrained oil around lid seams and softened exposed edges; motor and brass fittings retain their distinct library metals."
+    }
+  ],
+  "textures": [
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\press-frame-enamel\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "1e1105739bf1348ebb41ee632c2bd732926e008a183c5fa7c2ea636fffb9ebb6"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\press-frame-enamel\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "f00441aec4135e35604a4fb810e1b90619af4bbcfde8d937d0c77faae0790384"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\press-frame-enamel\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "3b06170ba180219ddbb8639767ca451f5a84a51b03ad531d16cf6f52440354b7"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\hopper-flow-steel\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "e1af3ff764778684e3e1599f21328ff5adb1adeb02b1d00f072eb8a35b927c9c"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\hopper-flow-steel\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "59f76f8800e48b516502f18ea9861856541d22b82f6c1111acc54b9c05cdf5e9"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\hopper-flow-steel\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "fd7cddfe324f3e70aef421e80f95a6427be17db92b3de960c186ead689a81c07"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\ground-press-tooling\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "7747d6965c922152873e942649fcea419068aa8803e18eec3338e47f98a37a26"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\ground-press-tooling\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "5819b19a62a0dc9b899bf0d99c54b8aadf9037994209e323b60e7023259a878e"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\ground-press-tooling\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "758fb67d67fd5b186774cef0f64452a843751eac708a7c82b7d3ec785ce51147"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\cast-die-bed\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "e252b880438e05e17d69b2b7aef8ccca793ff12041c5634edbf4046b4064de49"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\cast-die-bed\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "69640baa14923bc12a9dd42684f7a826f3f334087688c446fded93cbc6df2523"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\cast-die-bed\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "3a55fdf3d634e48fe508e5e91fd20d05bcb63b835e95282c8bca3197aa952587"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\machined-crosshead\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "8ccbe84515964636f2d914a3a48a2395fbaf85e4f70b07026c9ae11fbe4b22cb"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\machined-crosshead\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "a267937dd9d205f38a42d3d7334cdb6b442450f1800706ebfd17fb53dfa6e552"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\machined-crosshead\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "3a55fdf3d634e48fe508e5e91fd20d05bcb63b835e95282c8bca3197aa952587"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\turned-die-faces\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "a3bb3ee1e6f9de76d7acf3c0bec5a68832caf958c3e779fe805dc4d0fb18d572"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\turned-die-faces\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "98c6776679aeae271a512c2c18740e3c3cc4bb211d0540f9151136a29fc61c95"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\turned-die-faces\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "644387797f0314a81380e93411b6effc957334968fa2779039378f17c87163d4"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\pellet-contact-chutes\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "54531d48085159d83eaae32cd38f9ab52a1ebd60b7a89c44d7dab06a9ffed694"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\pellet-contact-chutes\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "c3cccb4a3c2375afc1d2bb8f008a261503d96bfd6d9677960cb746c059e7932e"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\pellet-contact-chutes\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "1cd2b2d6355eb83d806e417e9dd8a0db374946b750b51e57f6b0f545f0609e13"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\hydraulic-reservoir\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "5437e320327f420fcba1ffa71f602b6a0e0cb9459d8134993b359e605c0c4199"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\hydraulic-reservoir\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "0fca1d83c3519f20c0d601b9e940922588937179a7307a9c28bcccada3ee847c"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\forge-v03-finish-06\\textures\\hydraulic-reservoir\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "929a2330b0eb1a86b31e250064b93b075a2704cf2c01efda2c4d37d091910302"
+    }
+  ],
+  "added_objects": [
+    "FMPL_PROCESS | TP Forge V03 | closed hydraulic reservoir",
+    "FMPL_PROCESS | TP Forge V03 | powerpack grounded skid 0.73",
+    "FMPL_PROCESS | TP Forge V03 | powerpack grounded skid 1.15",
+    "FMPL_PROCESS | TP Forge V03 | removable reservoir lid",
+    "FMPL_PROCESS | TP Forge V03 | hydraulic pump foot flange",
+    "FMPL_PROCESS | TP Forge V03 | hydraulic powerpack motor",
+    "TP Forge V03 | powerpack cooling ring 0.72",
+    "TP Forge V03 | powerpack cooling ring 0.77",
+    "TP Forge V03 | powerpack cooling ring 0.82",
+    "TP Forge V03 | powerpack cooling ring 0.87",
+    "FMPL_PROCESS | TP Forge V03 | lid retaining head (0.7, 0.51)",
+    "FMPL_PROCESS | TP Forge V03 | lid retaining head (0.7, 1.17)",
+    "FMPL_PROCESS | TP Forge V03 | lid retaining head (1.18, 0.51)",
+    "FMPL_PROCESS | TP Forge V03 | lid retaining head (1.18, 1.17)",
+    "TP Forge V03 | pressure supply reservoir port",
+    "TP Forge V03 | pressure supply hose",
+    "TP Forge V03 | pressure supply actuator coupling",
+    "TP Forge V03 | pressure supply riser clamp",
+    "FMPL_PROCESS | TP Forge V03 | pressure supply frame standoff",
+    "TP Forge V03 | pressure return reservoir port",
+    "TP Forge V03 | pressure return hose",
+    "TP Forge V03 | pressure return actuator coupling",
+    "TP Forge V03 | pressure return riser clamp",
+    "FMPL_PROCESS | TP Forge V03 | pressure return frame standoff",
+    "TP Forge V03 | bolted die retaining flange"
+  ]
+}

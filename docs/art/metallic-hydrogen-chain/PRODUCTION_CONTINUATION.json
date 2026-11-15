@@ -3,7 +3,7 @@
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
   "current_machine": "pelletization-forge",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pelletization-forge\\v01-construction-pilot",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pelletization-forge\\v03-finish-and-states",
   "queue": [
     {
       "id": "water-purifier",
@@ -43,7 +43,7 @@
         3,
         3
       ],
-      "status": "real 3x3 guided-press pilot saved/exported; finishing/audio/material path/native pending"
+      "status": "24-map/source-export material-path and four-angle state candidate with own sound; native state-preserving processing next"
     },
     {
       "id": "pressure-vessel-fabricator",
@@ -104,17 +104,16 @@
     "body_render_layer": "lower-object",
     "next_shape_action": "none; owner called done"
   },
-  "library_registry_sha256": "925446df748c72a5b66a2a13e82b9483208e06ecc7570cfc4d0ab53fc0661254",
+  "library_registry_sha256": "2087260ed3b9df3a07f0e768c4d0a6d72ee79a0f8e4c160e9e5d6876b7bb8b16",
   "reactors": {
     "status": "V14 native bytes still unrecovered",
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Audit hopper-auger-feed-shoe and pellet compression/ejection support through the whole cycle",
-    "Finish cast frame, hopper, ram/die surfaces and authored working sound",
-    "Capture four idle/working rotations and create actual native item-handling fixture",
-    "Preserve pellet remaining lifetime, HP and quality through processing; no recipe refresh",
-    "Build vessel fabricator and canister assembler, integrate full chain, recover/refine three reactor sources"
+    "Native 3x3 forge with actual inserter feed/pickup and zero gameplay fluid boxes",
+    "Preserve incoming raw pellet HP, quality, stage and remaining instability throughout processing, blockage and save/reload",
+    "Verify native animation/audio binding and four orientations",
+    "Build vessel fabricator and canister assembler; integrate full chain; recover/refine three reactor sources"
   ],
   "original_goal_complete": false,
   "concurrent_work_preserved": "model-production bunker/data.lua work untouched",
@@ -285,33 +284,39 @@
     "production_pickup_race_fixed": true
   },
   "forge": {
-    "status": "actual_source_export_and_guided_ram_pilot; finish_material_path_and_native_pending",
-    "source_sha256": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
-    "glb_sha256": "c4bc56f95257fe62c6086a55e3d3f851d0b2c9991b7d2cf6899d4b8fd0c8a707",
+    "status": "surfaced_material_path_and_state_candidate; native_item_processing_pending",
+    "source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+    "glb_sha256": "2f0da21dafac79f9fb348f5318fd5ec19b6ddbdc7ab74e1b8f187b681b757a4b",
+    "registry_sha256": "2087260ed3b9df3a07f0e768c4d0a6d72ee79a0f8e4c160e9e5d6876b7bb8b16",
     "footprint": [
       3,
       3
     ],
-    "registry_sha256": "925446df748c72a5b66a2a13e82b9483208e06ecc7570cfc4d0ab53fc0661254",
-    "contacts": 57,
-    "motion_poses": 17,
-    "guided_ram_static_pair_checks": 1428,
-    "triangles": 17400,
-    "maximum_sampled_world_pose_error": 2.3233243950926408e-07,
+    "surface_map_count": 24,
+    "contacts": 94,
+    "guided_ram_static_pair_checks_each": 1224,
+    "visible_stock_poses_each": 743,
+    "stock_surface_pair_checks_each": 1825,
+    "rotor_static_pair_checks_each": 4912,
+    "hydraulic_core_rays_each": 36,
+    "triangles": 33328,
+    "maximum_sampled_world_pose_error": 3.5762786865234375e-07,
+    "capture_frames": 36,
+    "atlas_count": 6,
     "cycle_seconds": 8,
-    "actual_library_parts": 1,
-    "actual_library_instances": 1,
-    "no_new_verified_parts": "New actuator/auger assemblies remain machine-local pending complete material-path and finishing proof.",
-    "owner_approved": false,
-    "full_material_path_verified": false,
-    "model_specific_finish_complete": false,
-    "audio_implemented": false,
+    "audio_implemented": true,
+    "native_audio_binding_verified": false,
     "native_item_interfaces_verified": false,
+    "ordinary_chain_integrated": false,
+    "owner_approved": false,
+    "material_path_scope": "Quarter-frame sampled stock/auger checks in source and actual GLB, not a physical force/volume simulation or continuous mathematical clearance proof.",
+    "no_new_verified_parts": "Machine-local press/auger/hydraulic assemblies are not automatically library-approved.",
     "next": [
-      "Audit hopper-auger-feed-shoe and pellet compression/ejection support through the whole cycle",
-      "Finish cast frame, hopper, ram/die surfaces and authored working sound",
-      "Capture four idle/working rotations and create actual native item-handling fixture",
-      "Preserve pellet remaining lifetime, HP and quality through processing; no recipe refresh"
-    ]
+      "Native 3x3 forge with actual inserter feed/pickup and zero gameplay fluid boxes",
+      "Preserve incoming raw pellet HP, quality, stage and remaining instability throughout processing, blockage and save/reload",
+      "Verify native animation/audio binding and four orientations",
+      "Build vessel fabricator and canister assembler; integrate full chain; recover/refine three reactor sources"
+    ],
+    "audio_delivery": "art/source-to-3d/shared-audio/hydrogen-machinery/forge-v01"
   }
 }

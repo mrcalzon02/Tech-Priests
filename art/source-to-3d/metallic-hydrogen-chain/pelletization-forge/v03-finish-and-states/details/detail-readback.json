@@ -1,0 +1,88 @@
+{
+  "source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
+  "glb_sha256": "2f0da21dafac79f9fb348f5318fd5ec19b6ddbdc7ab74e1b8f187b681b757a4b",
+  "views": [
+    {
+      "view": "hopper-auger",
+      "source_frame": 50,
+      "sha256": "ae191f080f8ab8441c039837ca71b803dacbcfd03fa120cbe008e45eb1b52cab",
+      "target": [
+        0.0,
+        0.6000000238418579,
+        1.0499999523162842
+      ],
+      "camera_offset": [
+        2,
+        3,
+        2.3
+      ],
+      "ortho_scale": 2.15
+    },
+    {
+      "view": "die-loading",
+      "source_frame": 101,
+      "sha256": "08339bc17e1c5f09c71384ea3efc709fc895b1c457ba83714ed6c836350983e8",
+      "target": [
+        0.0,
+        -0.029999999329447746,
+        0.800000011920929
+      ],
+      "camera_offset": [
+        2,
+        -3,
+        2.5
+      ],
+      "ortho_scale": 1.25
+    },
+    {
+      "view": "press-compressed",
+      "source_frame": 145,
+      "sha256": "93fac09408816b441ba70c6dd0ac2b31b45e5cc147bec1fbc6a86580645d8df1",
+      "target": [
+        0.0,
+        -0.10000000149011612,
+        0.6800000071525574
+      ],
+      "camera_offset": [
+        2,
+        -3,
+        1.5
+      ],
+      "ortho_scale": 1.2
+    },
+    {
+      "view": "discharge",
+      "source_frame": 175,
+      "sha256": "f06227c01431ccdacc4c2d08a69f32d5483c550e42b398fd2ad9132e1e19589e",
+      "target": [
+        0.0,
+        -0.800000011920929,
+        0.33000001311302185
+      ],
+      "camera_offset": [
+        1.5,
+        -3,
+        2.5
+      ],
+      "ortho_scale": 1.5
+    },
+    {
+      "view": "hydraulic-services",
+      "source_frame": 75,
+      "sha256": "2893d8419078b02b4996b18dcfb0157bb274f9345f25bf3d6b18121dd4d600e5",
+      "target": [
+        0.6499999761581421,
+        0.15000000596046448,
+        1.600000023841858
+      ],
+      "camera_offset": [
+        3,
+        2,
+        2.0
+      ],
+      "ortho_scale": 2.8
+    }
+  ],
+  "visual_approval": false,
+  "scope": "Diagnostic closeups of actual reimported GLB working clip; four canonical sprite directions are a separate delivery."
+}

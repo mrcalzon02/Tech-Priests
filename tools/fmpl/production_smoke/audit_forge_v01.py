@@ -13,10 +13,15 @@ from audit_electrolyzer_v01 import mesh_stats
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--source',required=True);ap.add_argument('--out',required=True);args=ap.parse_args(sys.argv[sys.argv.index('--')+1:])
+    ap=argparse.ArgumentParser();ap.add_argument('--source',required=True);ap.add_argument('--out',required=True);ap.add_argument('--glb');args=ap.parse_args(sys.argv[sys.argv.index('--')+1:])
     source=Path(args.source).resolve();out=Path(args.out).resolve()
     if out.exists():raise FileExistsError('Preserve forge readbacks')
-    out.mkdir(parents=True);bpy.ops.wm.open_mainfile(filepath=str(source));s=bpy.context.scene;s.frame_set(1);bpy.context.view_layer.update()
+    out.mkdir(parents=True);bpy.ops.wm.open_mainfile(filepath=str(source));s=bpy.context.scene
+    if args.glb:
+        bpy.ops.wm.read_factory_settings(use_empty=True);bpy.ops.import_scene.gltf(filepath=str(Path(args.glb).resolve()));s=bpy.context.scene;s.render.fps=24
+        from electrolyzer_state_clips import activate_imported_clip
+        activate_imported_clip(s,'working')
+    s.frame_set(0 if args.glb else 1);bpy.context.view_layer.update()
     receipt=json.loads((source.parent/'construction-receipt.json').read_text());contacts=[]
     for pair in receipt['contacts']:
         a,b=(s.objects.get(pair[k]) for k in ('a','b'));distance=gap(a,b) if a and b else None
@@ -28,7 +33,7 @@ def main():
     prefix='TP Pelletization Forge V01 | ';ram=s.objects[prefix+'complete guided ram'];punch=s.objects[prefix+'on-axis press punch'];piston=s.objects[prefix+'telescoping press piston rod']
     rows=[];collisions=[];checks=0;loop={}
     for frame in range(1,194,12):
-        s.frame_set(frame);bpy.context.view_layer.update();cache={o:tree(o) for o in moving+fixed}
+        s.frame_set(frame-1 if args.glb else frame);bpy.context.view_layer.update();cache={o:tree(o) for o in moving+fixed}
         for a in moving:
             for b in fixed:
                 checks+=1;overlap=cache[a].overlap(cache[b])
@@ -44,7 +49,7 @@ def main():
     if any(r['punch_axis_error']>1e-5 or r['piston_endpoint_error']>1e-5 for r in rows):errors.append('punch/piston axis attachment')
     if loop_error>1e-5:errors.append('working loop closure')
     if stats['degenerate_triangles'] or not stats['finite'] or stats['missing_uv']:errors.append('mesh validity')
-    report=dict(passed=not errors,errors=errors,source_sha256=sha(source),contacts=contacts,sampled_motion=rows,moving_fixed_pair_checks=checks,collisions=collisions,loop_world_matrix_error=loop_error,
+    report=dict(passed=not errors,errors=errors,source_sha256=sha(source),glb_sha256=sha(args.glb) if args.glb else None,contacts=contacts,sampled_motion=rows,moving_fixed_pair_checks=checks,collisions=collisions,loop_world_matrix_error=loop_error,
         mesh_stats=stats,bounds=bounds(meshes),scope='Recorded assembly contacts, on-axis punch/telescoping endpoints and named guided-ram/static surfaces at 17 actual poses. Full solid-material feed/ejection path and working-part finishing remain separate gates.')
     (out/'mechanical-readback.json').write_text(json.dumps(report,indent=2)+'\n');print('FORGE_MECHANICS',not errors,errors,'failed_contacts',sum(not r['passed'] for r in contacts),'collisions',len(collisions),flush=True)
 
