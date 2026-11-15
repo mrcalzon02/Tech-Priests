@@ -439,7 +439,7 @@ end
 local function machine_logistics_recommendation(p,order_kind,mode_kind)
   local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
     or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
-  local strict_output=order_kind=="crafting" and logistics
+  local strict_output=logistics
     and type(logistics.strict_prerequisite_output_ready_1044)=="function"
     and logistics.strict_prerequisite_output_ready_1044(p)==true
   if (order_kind~="idle" and order_kind~="acquisition"
@@ -458,7 +458,7 @@ local function machine_logistics_recommendation(p,order_kind,mode_kind)
     if not (mining_output or needed_output)
         or p.direct_acquisition_custody_0513 then return nil end
   end
-  return rec
+  return rec,strict_output
 end
 local function item_family_recommendation(p,k)if k~="idle"and k~="item-family-logistics"then return nil end;return recommendation("TechPriestsItemFamilyLogistics0702","scripts.core.item_family_logistics_0702",p,"item-family-logistics")end
 local function strict_engine_work(p,k)
@@ -547,7 +547,7 @@ end
 function M.action(p)
   if not valid_pair(p)then return{kind="invalid",family="invalid"}end
   local o=current_order(p);local target,position=current_target(p,o);local order_kind=normalize_kind(o and(o.kind or o.type or o.source));local mode_kind=normalize_kind(p.mode)
-  local combat_rec=combat_repair_recommendation(p,order_kind,mode_kind);local construction_rec,queued_frontier_rec=construction_recommendation(p,order_kind,mode_kind);local machine_rec=machine_logistics_recommendation(p,order_kind,mode_kind)
+  local combat_rec=combat_repair_recommendation(p,order_kind,mode_kind);local construction_rec,queued_frontier_rec=construction_recommendation(p,order_kind,mode_kind);local machine_rec,strict_machine_output=machine_logistics_recommendation(p,order_kind,mode_kind)
   local item_rec=item_family_recommendation(p,order_kind);local energy_rec=energy_family_recommendation(p,order_kind);local silo_rec=rocket_silo_recommendation(p,order_kind);local artillery_rec=artillery_recommendation(p,order_kind);local roboport_rec=roboport_recommendation(p,order_kind)
   local active_construction=construction_rec and construction_rec.active==true and construction_rec or nil
   local build_task=p.construction_task_0338
@@ -578,9 +578,11 @@ function M.action(p)
     kind,reason="construction","active-construction-custody"
     target=active_construction.target
     position=valid(target)and target.position or active_construction.position
-  elseif machine_rec and order_kind=="crafting" then
+  elseif machine_rec and(order_kind=="crafting"or strict_machine_output
+      or(p.machine_logistics_0528 and p.machine_logistics_0528.custody))then
     -- Only 0528's exact real-output/strict-ingredient probe can authorize
     -- this collection ahead of an otherwise blocked strict recipe.
+    -- Counted incumbent output cargo must also finish its original return.
     kind,reason="machine-logistics","strict-ingredient-physical-output-1044"
     target=machine_rec.target
     position=valid(target)and target.position or machine_rec.position

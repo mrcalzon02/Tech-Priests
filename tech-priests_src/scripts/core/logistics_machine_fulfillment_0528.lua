@@ -6,6 +6,7 @@
 
 local CrafterInventory=require("scripts.core.native_crafter_inventory_1277")
 local FactoryOutputLinks=require("scripts.core.factory_output_links_1282")
+local ProductionOrder=require("scripts.core.production_order_ownership_0514")
 local M = {
   version = "0.1.674-dev",
   storage_key = "logistics_machine_fulfillment_0528",
@@ -663,6 +664,47 @@ local function output_candidate(pair,machine)
   end
   return best
 end
+local function strict_parent_output_candidate(pair,machine)
+  local craft=pair.emergency_craft
+  local op=pair.independent_emergency_operation_0184
+  if not(op and op.enabled==true and type(craft)=="table"
+      and craft.facility_only_0647==true
+      and(craft.strict_recipe_0647==true or craft.infrastructure_first_0640==true))then return nil end
+  if not(valid(machine)and(machine.type=="furnace"or machine.type=="assembling-machine")
+      and machine.force==pair.station.force and machine.surface==pair.station.surface)
+      or FactoryOutputLinks.output_automated(pair,machine)then return nil end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+  if order and order.status=="active"and not ProductionOrder.matches(pair,order,craft)then return nil end
+  local wanted=craft.output_item or craft.item_name
+  if type(wanted)~="string"then return nil end
+  local item=wanted
+  local output=machine_output(machine)
+  local count=count_inventory(output,item)
+  if count<1 then
+    -- Native full_output can be a previous recipe's product, not the item
+    -- now being manufactured. Empty that real obstruction before waiting
+    -- for an impossible new product (iron ore + fuel behind old bricks).
+    local full=defines and defines.entity_status and defines.entity_status.full_output
+    local recipe=get_recipe(machine)
+    if not(machine.type=="furnace"and full~=nil and machine.status==full
+        and recipe and recipe.name==wanted)then return nil end
+    each_inventory_item(output,function(name,n)
+      if n>count then item,count=name,n end
+    end)
+    if count<1 then return nil end
+  end
+  local target=tonumber(craft.target_stock_0647)or tonumber(craft.required_count)or 1
+  if generic_count(pair,wanted)>=target then return nil end
+  local ledger=storage and storage.tech_priests and storage.tech_priests.emergency_facility_doctrine_0343
+  local owned=false
+  for key in pairs(ledger and ledger.by_station and ledger.by_station[station_unit(pair)]or{})do
+    local r=ledger.facilities and ledger.facilities[key]
+    if r and r.entity==machine and r.station_unit==station_unit(pair)then owned=true;break end
+  end
+  if not owned then return nil end
+  return{action="clear-output",item=item,count=math.min(M.max_transfer,count),
+    machine=machine,source_inventory=output,kind=WASTE_ITEMS[item]and"waste"or"retention",strict_parent_output_1283=true}
+end
 local function fuel_candidate(pair, machine, requested_floor)
   -- Only the original counted 0836 railway explicitly requests a larger
   -- initial load. All normal drills/furnaces retain the three-item policy.
@@ -880,7 +922,7 @@ local function discover_candidate(pair)
     })
   end)
   if not (ok and machines) then return nil end
-  local best, best_score
+  local best, best_score, parent_output, parent_score
   for _, machine in pairs(machines) do
     local is_receiver=machine.type=="container"
       or machine.type=="logistic-container"
@@ -900,18 +942,24 @@ local function discover_candidate(pair)
       if automated then stat("electronics-output-automated-excluded-0528") end
     end
     if eligible and not automated then
-      local task = output_candidate(pair,machine)
+      local task = strict_parent_output_candidate(pair,machine)or output_candidate(pair,machine)
         or fuel_candidate(pair, machine)
         or ingredient_candidate(pair, machine)
       if task then
         if drill_source then task.drill_source_0983=drill_source end
         local score = task_score(pair, task)
-        if not best_score or score > best_score then
+        if task.strict_parent_output_1283 then
+          local distance=dist_sq(pair.priest.position,machine.position)
+          if not parent_score or distance<parent_score then parent_output,parent_score=task,distance end
+        elseif not best_score or score > best_score then
           best, best_score = task, score
         end
       end
     end
   end
+  -- This transaction completes the incumbent strict production dependency;
+  -- unrelated aged factory jobs must not hide its already-produced output.
+  if parent_output then best,best_score=parent_output,task_score(pair,parent_output)end
   if best then
     if best.action=="clear-output"
         and best.machine.name=="tech-priests-emergency-assembler"
@@ -1954,8 +2002,8 @@ end
 function M.strict_prerequisite_output_ready_1044(pair)
   if not valid_pair(pair) then return false end
   local craft=pair.emergency_craft
-  if type(craft)~="table" or craft.strict_recipe_0647~=true
-      or type(craft.strict_recipe_ingredients_0647)~="table" then
+  if type(craft)~="table"or not(craft.strict_recipe_0647==true
+      or(craft.facility_only_0647==true and craft.infrastructure_first_0640==true))then
     return false
   end
   if pair.emergency_production_custody_0514
@@ -1963,6 +2011,10 @@ function M.strict_prerequisite_output_ready_1044(pair)
       or pair.machine_logistics_custody_0528
       or pair.construction_custody_0338 or pair.defense_task_0259
       or valid(pair.combat_target) then return false end
+  for _,field in ipairs{"inventory_transfer_custody_0687","item_family_custody_0702",
+    "energy_family_custody_0707","repair_pack_custody_0516","station_cargo_custody_0824",
+    "rocket_silo_custody_0710","artillery_custody_0713","roboport_repair_custody_0715",
+    "consecration_refund_custody_0515"}do if pair[field]then return false end end
   local order=pair.order_queue_0469 and pair.order_queue_0469.current
   if order and order.status=="active"
       and order.kind~="crafting" and order.kind~="craft"
@@ -1970,12 +2022,19 @@ function M.strict_prerequisite_output_ready_1044(pair)
     return false
   end
   local movement=pair.movement_request_0418
-  if movement and (tonumber(movement.expires_tick) or (now()+1))>now()
-      and movement.owner~="logistics_machine_fulfillment_0528" then
-    return false
-  end
   local state=active_state(pair)
   local candidate=state or pair.machine_logistics_candidate_0528
+  local parent=candidate and valid(candidate.machine)
+    and strict_parent_output_candidate(pair,candidate.machine)
+  local exact_parent=parent and parent.item==candidate.item
+  local production=pair.dispatcher_emergency_production_0514
+  local production_move=exact_parent and movement and movement.owner=="move_priest_to"
+    and production and production.phase=="feed-machine"
+    and now()-(tonumber(production.tick)or -1000000)<=60
+  if movement and (tonumber(movement.expires_tick) or (now()+1))>now()
+      and movement.owner~="logistics_machine_fulfillment_0528"and not production_move then
+    return false
+  end
   if type(candidate)~="table" or candidate.action~="clear-output"
       or type(candidate.item)~="string" then return false end
   if candidate~=state and (tonumber(candidate.expires_tick) or 0)<now()
@@ -1993,7 +2052,8 @@ function M.strict_prerequisite_output_ready_1044(pair)
   if not output or (candidate.source_inventory
       and candidate.source_inventory~=output)
       or count_inventory(output,candidate.item)<1 then return false end
-  for _,ingredient in ipairs(craft.strict_recipe_ingredients_0647) do
+  if exact_parent then return true end
+  for _,ingredient in ipairs(craft.strict_recipe_ingredients_0647 or{}) do
     if type(ingredient)=="table" and ingredient.name==candidate.item
         and (tonumber(ingredient.count) or 0)>0 then return true end
   end

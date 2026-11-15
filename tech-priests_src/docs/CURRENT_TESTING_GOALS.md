@@ -1,5 +1,16 @@
 # Current Testing Goals
 
+## 2026-11-14 - Collect real parent output and unblock previous furnace products
+
+The native factory exposed a definite material-flow deadlock: its owned furnace held iron ore and coal but remained in full_output because two old stone bricks occupied its result slots. A facility-only iron parent had no strict_recipe flag, ordinary output collection could not preempt it, and collecting only ingredients or the requested product could never clear the old bricks. The native before state had zero stored iron; no missing-resource assumption was needed.
+
+Original 0528 discovery now prioritizes an owned strict/facility parent's actual completed output over unrelated aged jobs. It may also collect a previous furnace product only when the real engine reports full_output and the furnace's current recipe matches the parent. Already functioning paid output automation is preserved. The canonical classifier handles such production surfaces without requiring an explicit queued crafting order, and counted output cargo retains its original return journey. Foreign explicit orders, other physical cargo, foreign movement leases and unowned machines remain protected; only the recently serviced parent's own legacy move may yield. No product cleanup credits the parent's desired output or completes its order.
+
+Native recovery proves the two old bricks moved into real general storage (50 to 52), the furnace changed from full_output to working, and real iron stock rose from zero to three. Subsequent actual smelting and science continued with the original owners. All 58 Lua groups and seven Python tests pass, including full discovery/classification/pickup/return/deposit coverage, prior-product cleanup, absent queue orders, foreign custody/order refusal and no imaginary iron credit. Native maintenance still passes all four ranks.
+
+The fresh 1eb2ab1 compact contact diagnostic also records actual five-damage hits in both directions: faction 1 to faction 2 at tick 41887 and the return hit at 48324. That confirms fresh participant combat at 64-tile spacing; full four-factory acceptance and the unchanged default-spacing combat gate remain separate and open. Full science and arena reruns of this further furnace correction are still required; do not count earlier source snapshots or partial rates as acceptance.
+
+
 ## 2026-11-14 - Native output flow, measured staffing and counted-stock fetch recovery
 
 Native paid output automation now works: original construction placed two verified powered inserters, with twenty-nine real gears and twelve red science packs observed in their respective output chests at tick 541176. Recovery later reached 534 red, 152 green and seventy-four military packs. Temporarily occupied inserter sites retain their paid chest for bounded retry. Optional mining-capacity requests refused by the original builder with no-miner-site yield for one minute, retaining strategic intent, so an impossible extra drill cannot monopolize the shared construction request slot.
