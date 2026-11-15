@@ -15,7 +15,7 @@ from run_factorio_isolated_service_scenario import (
     factorio_runtime_compatible, rail_connected_smoke_verdict,
     rail_smoke_evidence, original_rail_native_refusals, reset_rail_smoke_diagnostics,
     run_rail_live_server, private_rail_server_settings,
-    rail_native_player_test_command)
+    rail_native_player_test_command, verify_rail_blocked_reload_0836_log)
 P = "[TP-REMOTE-RAIL-TEST] "
 A = P + "PASS first physical rail built and exact stock debited"
 B = P + "PASS two distinct 0338-debited native-connected rails"
@@ -47,6 +47,49 @@ class BlockedNativeReturnS4Tests(unittest.TestCase):
         self.assertIn('emit("PASS blocked original ore-loaded return retains native driver and cargo")', fixture)
         self.assertIn('if s.finished then return end', fixture)
         self.assertNotIn('surface.create_entity{name="straight-rail"', fixture)
+
+
+class IndependentOriginalBlockedRailReload0836Tests(unittest.TestCase):
+    """Contract test only. A real Factorio checkpoint and reload remain mandatory."""
+
+    def test_native_saved_original_cargo_and_identity_comparison(self):
+        prefix = "[TP-REMOTE-RAIL-TEST] "
+        receipt = ("original_train_id=6 original_priest=26 "
+                   "original_locomotive=240 original_wagon=241 "
+                   "original_rail=136 wagon_ore=1 station_ore=0 rail_hold=1")
+        first = (prefix + "BLOCKED_RETURN_NATIVE_0836 phase=paid-middle-rail-mined\n" +
+                 prefix + "BLOCKED_RETURN_NATIVE_SAVE_REQUEST_0836 tick=30060 " + receipt)
+        second = (prefix + "BLOCKED_RETURN_NATIVE_0836 phase=physical-rail-gap "
+                  "stationary=true original_driver=true rail_hold=1 at_home=false\n" +
+                  prefix + "PASS INDEPENDENT_BLOCKED_RAIL_RELOAD " + receipt +
+                  " native_driver=true restored_track=false")
+        self.assertTrue(verify_rail_blocked_reload_0836_log(first, second)["accepted"])
+        for bad in (
+            second.replace("original_train_id=6", "original_train_id=7"),
+            second.replace("wagon_ore=1", "wagon_ore=0"),
+            second.replace("original_priest=26", "original_priest=27"),
+            second.replace("rail_hold=1", "rail_hold=0"),
+            second.replace("stationary=true", "stationary=false"),
+            second.replace("native_driver=true", "native_driver=false"),
+            second.replace("PASS INDEPENDENT_BLOCKED_RAIL_RELOAD", "PASS source-only"),
+            second + "\n" + prefix + "FAIL broken rail",
+        ):
+            with self.assertRaises(ValueError):
+                verify_rail_blocked_reload_0836_log(first, bad)
+
+    def test_original_native_save_request_rejected_without_crc_and_second_engine(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        runner = (root / "tools/run_factorio_isolated_service_scenario.py").read_text(encoding="utf-8")
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(encoding="utf-8")
+        self.assertIn('ap.add_argument("--rail-blocked-reload"', runner)
+        self.assertIn('game.auto_save("tech-priests-ci-0836-stranded",true)', fixture)
+        self.assertIn('zipfile.ZipFile(checkpoint)', runner)
+        self.assertIn('archive.testzip() is not None', runner)
+        self.assertIn('rail_native_player_test_command(\n            factorio, mods, checkpoint, 2400)', runner)
+        self.assertIn('if not s.blocked_return_save_requested_0836 then', fixture)
+        self.assertIn('restored_track=false', fixture)
+        self.assertNotIn('surface.create_entity{name="straight-rail"', fixture)
+
 
 class OriginalFullRailNativePlayerModeTests(unittest.TestCase):
     def test_full_90k_rail_runs_real_native_player_not_benchmark_or_smoke(self):
