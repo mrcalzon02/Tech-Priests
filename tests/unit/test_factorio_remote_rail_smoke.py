@@ -33,6 +33,9 @@ class BlockedNativeReturnS4Tests(unittest.TestCase):
         self.assertIn('if args.rail_blocked_return:', runner)
         self.assertIn('benchmark == 0 and negative in contents and fatal not in contents', runner)
         self.assertIn('if rawget(_G,"TP_CI_0836_BLOCKED_RETURN")~=true then return end', fixture)
+        self.assertIn('if not s.chart_verified then return end', fixture)
+        self.assertLess(fixture.index('if not s.chart_verified then return end', fixture.index('local function inspect_blocked_return_0836')),
+                        fixture.index('fail("BLOCKED_RETURN_ORIGINAL_PAIR_LOST")'))
         self.assertIn('reboard.native_original_driver_confirmed==true', fixture)
         self.assertIn('locomotive.get_driver()==pair.priest', fixture)
         self.assertIn('held=game.create_inventory(1)', fixture)

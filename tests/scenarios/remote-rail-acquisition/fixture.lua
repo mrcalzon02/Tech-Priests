@@ -1487,6 +1487,10 @@ end
 -- distinct future native gates.
 local function inspect_blocked_return_0836(s,elapsed)
   if rawget(_G,"TP_CI_0836_BLOCKED_RETURN")~=true then return end
+  -- The isolated new-world engine tick starts before first Magos birth.
+  -- Only after the original 1,800-tick native chart/pair acceptance can
+  -- loss of that established original pair be a functional failure.
+  if not s.chart_verified then return end
   local pairs=storage.tech_priests and storage.tech_priests.pairs_by_station
   local pair=pairs and pairs[s.station_unit]
   if not(pair and pair.priest and pair.priest.valid and pair.station
