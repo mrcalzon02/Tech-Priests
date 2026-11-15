@@ -1051,3 +1051,34 @@ Validation accepted: native Factorio 2.1.24 settings/load and a separate 601-tic
 Added a reproducible full-research native fixture and hash-bound, unedited evidence under tests/evidence/enemy-research-from-zero. The installed ordinary colony implementation completed Automation from exactly zero progress at tick 6647, through a real powered lab using its finite initial science stock. The ordinary research-finished event generated an eligible noospheric intercept. By tick 12000 the three normal bound priests had built two new physical structures. Player research was unchanged. No forced progress/completion, fabricated research event, direct worker command or recurring supply was used. The disposable Vulcanus terrain pad was cleared; its normal power/day cycle remained active.
 
 Reproduce with python tools/run_enemy_planetary_probe.py --full-research. Evidence is from source b2d3a867e95959e9eb0de92b837cfbcac873e01c, Factorio 2.1.24 and seed 4242. This verifies a complete initial paid cycle, not just the earlier accelerated notification observer. Native science production remained zero during this run; sustained science production, longer research chains and indefinite colony self-sufficiency remain unverified. No gameplay change was necessary for the demonstrated capability. An optional starting-inventory redistribution comparison was not promoted; normal colony starting inventories remain unchanged.
+
+
+## 2026-11-14 — Bunker stanchion ownership masks and twin-cannon runtime pilot
+
+Recovered the original four corner-buttress meshes and rendered calibrated depth-occluded coverage. Registered neutral force-tinted stanchion masks on the shared bunker foundation. Actual Factorio graphical evidence shows all six bunker weapons across four forces/base orientations; red armour and concrete are unchanged. Hash-bound evidence: docs/prototypes/bunker-team-colour-assets.json. Earlier render delivery masks had not been wired into the prototypes.
+
+The twin cannon now has a real animated two-heading runtime pilot: four native ammunition types, strict independent shot-driven recoil/settle states, separate depth-occluded flexible aerials, actual static cap shadows, and a visible native inventory preview. Physics tests cover 36 sites and unarmed traverse-driven aerial flex. A user-requested 0.08-tile flash lead is confirmed by before/after native pixel movement; projectile launch points are unchanged. Full 64-direction body/aerial capture and final package verification remain in progress. No full-goal completion, release-version change or remote publication is claimed. See docs/prototypes/twin-cannon-progress.md.
+
+
+## 2026-11-15 — Six bunker weapons integrated into Tech Priests main
+
+Registered the lobber, energy dish, Chicago piano, twin minigun and completed
+twin siege cannon alongside the existing autocannon in the actual main mod.
+Finalization runs before the existing recipe-schema sanitizer. Weapon callbacks
+use the canonical runtime event registry; all 180 pre-existing event routes are
+preserved. Added the original cannon source/GLB and all runtime atlases, native
+preview cores, icons, recipe/technology and shared force-coloured stanchions.
+
+The full 0.1.681 Tech Priests source, based on ab7e878, passed Factorio 2.1.24
+headless, graphical and separate-process mid-fire reload tests with official
+Space Age/Quality/Elevated Rails/Recycler enabled: 32 cannon sites, four native
+shell types, all 64 headings, research, ammo exhaustion and all five older
+weapon regressions. Final native flash lead is 0.16 tile with facing-dependent
+depth; projectile origins remain unchanged. Main evidence is retained under
+docs/prototypes/twin-cannon-main-evidence. The earlier two-heading pilot entry
+is historical and superseded by these full-direction results.
+
+This is source integration, not a new full-mod release/version bump or a claim
+about unrelated priest logistics gates. Rocket, artillery, radium, grav, plasma
+and flamer weapon families remain unbuilt. Publication is verified separately
+against the resulting GitHub main commit.

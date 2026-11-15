@@ -1,0 +1,167 @@
+{
+  "status": "PASS",
+  "delivery": "local playable prototypes, not a published full-mod release",
+  "engine": "2.1.24",
+  "prototype_archive": {
+    "path": "build\\bullet-turrets\\delivery-0.3.0\\tech-priests-bunker-family-prototype_0.3.0.zip",
+    "bytes": 443436056,
+    "sha256": "943df9343a7fc2ceaa0fbcf5d6fe9e03984246de18a3a0f2651f928f29fb8ac5"
+  },
+  "editable_sources": {
+    "path": "build\\bullet-turrets\\delivery-0.3.0\\bullet-turrets-editable-sources.zip",
+    "sha256": "bdc8d1f5ecf7b8407f3119b70fcfcb01ad0ec8e3891ac80f0381c16a0ca02147"
+  },
+  "proofs": {
+    "native_combat": {
+      "path": "build\\bullet-turrets\\graphical-fixed-points\\user-data\\script-output\\bullet-turrets\\result.json",
+      "sha256": "6a60d9334c98973e36b3d5875c51b5020eb460a70a2ccbfc1db7a52a889e3082"
+    },
+    "research": {
+      "path": "build\\bullet-turrets\\graphical-fixed-points\\user-data\\script-output\\bullet-turrets\\upgrades.json",
+      "sha256": "d3290d9ca6be82c931db23f5e62aae3e2b379778eb8d0218ea7657441b76c048"
+    },
+    "physical_inserters": {
+      "path": "build\\bullet-turrets\\graphical-fixed-points\\user-data\\script-output\\bullet-turrets\\inserters.json",
+      "sha256": "15c7c2b97215269d7f884639c2ed8cfabbe1ac3165b344752d26a98d2ad43ae3"
+    },
+    "native_muzzle_suppression": {
+      "path": "build\\bullet-turrets\\graphical-fixed-points\\user-data\\script-output\\bullet-turrets\\muzzle-effects.json",
+      "sha256": "c7d8fab37db0bd71dee3defafcb2bd2e98ddc7fac6e0c83157e384a74385c88f"
+    },
+    "save_reload": {
+      "path": "build\\bullet-turrets\\reload-fixed-points\\user-data\\script-output\\bullet-turrets\\continued.json",
+      "sha256": "579ff4c003d1d4904f70a59cc8e151af1e0d8f1e0f5d0256342de452c3ade392"
+    },
+    "older_family_regression": {
+      "path": "build\\bullet-turrets\\final-regression\\user-data\\script-output\\bunker-family\\result.json",
+      "sha256": "364b3e15398ca2793bdcd4e10493413b8df82c8b7847db2386bd16f01b1b640d"
+    },
+    "actual_export_inspection": {
+      "path": "build\\bullet-turrets\\candidate-v5\\independent-export-inspection.json",
+      "sha256": "dd5a73892e4aa13c70d9352dd251c1ee690044f532bb8277fb8b360ff1030671"
+    },
+    "fixed_rotary_muzzles": {
+      "path": "build\\bullet-turrets\\candidate-v5\\twin-minigun\\fixed-muzzle-repair.json",
+      "sha256": "2fb4d1ee5212dbcb21266ba9d63dc6070f64eb330cf8d09e382aa4b7b32185e4"
+    },
+    "sprite_cell_readback": {
+      "path": "docs\\prototypes\\bullet-turret-assets.json",
+      "sha256": "6c39bee72102e40d0af1dfc79de28a125141dbc40b8693ce071d8756dab375e0"
+    },
+    "native_direction_mapping": {
+      "path": "build/bullet-turrets/projection-probe/user-data/script-output/mapping.json",
+      "sha256": "5a1804e32fbc00f8355faba5b72422e4d995545d5e7d6246921b55733014989b",
+      "headings": 64
+    }
+  },
+  "fixed_flash_game_centroids": [
+    [
+      [
+        455.9816513761468,
+        379.1743119266055
+      ],
+      [
+        456.2087912087912,
+        378.8131868131868
+      ],
+      [
+        456.1588785046729,
+        379.25233644859816
+      ],
+      [
+        456.0090909090909,
+        379.22727272727275
+      ],
+      [
+        456.1142857142857,
+        379.2
+      ],
+      [
+        455.9816513761468,
+        379.1743119266055
+      ]
+    ],
+    [
+      [
+        522.7326732673267,
+        378.6930693069307
+      ],
+      [
+        522.6736842105263,
+        378.3263157894737
+      ],
+      [
+        522.71,
+        378.46
+      ],
+      [
+        522.8137254901961,
+        378.7156862745098
+      ],
+      [
+        522.8942307692307,
+        378.65384615384613
+      ],
+      [
+        522.8761904761905,
+        378.6952380952381
+      ]
+    ]
+  ],
+  "game_screenshots": [
+    {
+      "path": "build\\bullet-turrets\\graphical-fixed-points\\user-data\\script-output\\bullet-turrets\\weapon-2-tick-601.png",
+      "sha256": "b6a23a29701966c0b13eea539cbed4f1628878c6b451a50ee4544e5e2d632bf5"
+    },
+    {
+      "path": "build\\bullet-turrets\\graphical-fixed-points\\user-data\\script-output\\bullet-turrets\\weapon-2-tick-607.png",
+      "sha256": "0e0739bf5413221b71fc89cae2b9a5da16bf26d6a4ff9cb7516c2bff71e2eac5"
+    },
+    {
+      "path": "build\\bullet-turrets\\graphical-fixed-points\\user-data\\script-output\\bullet-turrets\\weapon-2-tick-613.png",
+      "sha256": "22b19197236f944a962ead6dcd9e2a3c87802625e97cf7dd6a62030e599b75c1"
+    },
+    {
+      "path": "build\\bullet-turrets\\graphical-fixed-points\\user-data\\script-output\\bullet-turrets\\weapon-2-tick-619.png",
+      "sha256": "ab0b5cc01d8974239389ec769ae79353fc4b44e8a26673710a36b6287b6175a3"
+    },
+    {
+      "path": "build\\bullet-turrets\\graphical-fixed-points\\user-data\\script-output\\bullet-turrets\\weapon-2-tick-625.png",
+      "sha256": "9e1501948910e5699c3ca27e0e57d764b13c9f536995c3b3836fc7421e0edbd2"
+    },
+    {
+      "path": "build\\bullet-turrets\\graphical-fixed-points\\user-data\\script-output\\bullet-turrets\\weapon-2-tick-631.png",
+      "sha256": "e93589f022d909fab1e2ac67ec03abcd51fa3a99fa78df6705bcf41eaafb51c1"
+    }
+  ],
+  "art_review": {
+    "reviewer": "Codex, with owner visual review",
+    "owner_response": "yerp its good",
+    "owner_review_scope": "Latest fixed-point rotary firing preview; earlier mechanical direction accepted with Chicago side-feed correction implemented.",
+    "scores_out_of_5": {
+      "mechanical_construction": 4,
+      "material_coherence": 4,
+      "silhouette_at_game_scale": 4,
+      "faction_identity": 4,
+      "functional_reference_match": 4
+    },
+    "findings": "Stepped quad receivers and four lower side-entry belt tracks replace the rear ramps. Twin rotary drives use rounded armor, exposed bearings and drums. Native preview cores remain legible; foundations stay fixed. Two stationary minigun muzzle points are visible in actual game captures, with duplicate stock effects suppressed.",
+    "sources": [
+      {
+        "name": "chicago-piano",
+        "blend_sha256": "06e48bcbdf92b8a582994a75e1928c0898d79c939386650145e1d524788f8cbc",
+        "glb_sha256": "dc2beec6150695fd8e70e4ff59faa10ce158245bf2cc3d7b4250441d993cdfde"
+      },
+      {
+        "name": "twin-minigun",
+        "blend_sha256": "0a3f387ffe0c00d04e2c1d094a6f8a3399edbfa04834360d3aabd4a029e8e07e",
+        "glb_sha256": "72869e48678e6416cdfe4393c068c0546deffbdda0c5a620e1e778a7fc9f100e"
+      }
+    ]
+  },
+  "limitations": [
+    "Provisional recipes and balance.",
+    "Fractional speed research quantizes the piano recycle to 29\u201331 ticks, averaging 30.",
+    "Twin volleys use one doubled native damage impact, so flat armor is applied once."
+  ]
+}
