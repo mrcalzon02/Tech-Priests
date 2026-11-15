@@ -1307,15 +1307,106 @@ def run_rail_blocked_reload_0836(
             prior = folder / name
             if prior.is_file():
                 prior.unlink()  # Test-specific basename only; never unrelated saves.
+        # --test-save legitimately advances the original player and rail, but
+        # does not persist game.auto_save. Use the existing real, SAVE-CAPABLE
+        # private Factorio server path instead. The only charting authority is
+        # the real native client (if it actually connects), never a test flag.
         started = time.monotonic()
-        first_exit = run(rail_native_player_test_command(
-            factorio, mods, initial, 30660), first_log, timeout)
-        result["first_minutes"] = round((time.monotonic()-started)/60, 6)
-        result["first_exit"] = first_exit
+        port = free_loopback_udp_port()
+        settings = private_robot_server_settings(output)
+        client_log = output / "rail-stranded-real-client.log"
+        marker = "[TP-REMOTE-RAIL-TEST] BLOCKED_RETURN_NATIVE_SAVE_REQUEST_0836 "
+        result["native_first_backend"] = "save-capable-private-server"
+        result["native_private_port"] = port
+        result["real_client_attempted"] = False
+        process = None
+        client = None
+        client_handle = None
+        host_seen = None
+        first_exit = None
+        verified_source = None
+        try:
+            with first_log.open("w", encoding="utf-8") as handle:
+                process = subprocess.Popen(robot_saveable_server_command(
+                    factorio, mods, initial, settings, port),
+                    stdin=subprocess.DEVNULL, stdout=handle,
+                    stderr=subprocess.STDOUT, cwd=output)
+                deadline = time.monotonic() + timeout
+                while time.monotonic() < deadline:
+                    handle.flush()
+                    current = first_log.read_text(
+                        encoding="utf-8", errors="replace")
+                    first_exit = process.poll()
+                    fatal = native_server_startup_failure_1381(current)
+                    if fatal:
+                        raise RuntimeError("native saveable rail server startup: " + fatal)
+                    if "[TP-REMOTE-RAIL-TEST] FAIL " in current:
+                        raise RuntimeError("genuine rail fixture failed before native save")
+                    if "Error while running event" in current:
+                        raise RuntimeError("genuine Factorio event error before rail save")
+                    if "Hosting game at IP ADDR:" in current and host_seen is None:
+                        host_seen = time.monotonic()
+                    if host_seen is not None and not result["real_client_attempted"]:
+                        result["real_client_attempted"] = True
+                        client_handle = client_log.open("w", encoding="utf-8")
+                        client = subprocess.Popen(robot_real_loopback_client_command_1381(
+                            factorio, mods, port), stdin=subprocess.DEVNULL,
+                            stdout=client_handle, stderr=subprocess.STDOUT, cwd=output)
+                    if marker in current:
+                        candidates = []
+                        for folder in roots:
+                            native = folder / name
+                            if not native.is_file() or native.stat().st_size <= 2048:
+                                continue
+                            try:
+                                with zipfile.ZipFile(native) as archive:
+                                    if archive.testzip() is None:
+                                        candidates.append(native)
+                            except (OSError, zipfile.BadZipFile, EOFError):
+                                pass
+                        if len(candidates) == 1:
+                            verified_source = candidates[0]
+                            break
+                    if first_exit is not None:
+                        raise RuntimeError("save-capable rail server exited before checkpoint: " +
+                                           str(first_exit))
+                    if host_seen is None and time.monotonic()-started > 90:
+                        raise RuntimeError("private saveable rail server never hosted")
+                    if host_seen is not None and time.monotonic()-host_seen > 150 and (
+                            "CHART_LIVE_REQUEST elapsed=" not in current or
+                            "CHART_NATIVE_DIAG elapsed=1800" not in current):
+                        raise RuntimeError(
+                            "no genuine rail chart/player progression on private server; "
+                            "client launch is not proof of connection")
+                    time.sleep(0.5)
+                if verified_source is None:
+                    raise RuntimeError(
+                        "no unique CRC-valid stranded rail autosave from genuine server "
+                        "within bounded engine timeout")
+        finally:
+            if client is not None and client.poll() is None:
+                client.terminate()
+                try:
+                    client.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    client.kill()
+                    client.wait(timeout=10)
+            if client_handle is not None:
+                client_handle.close()
+            stop_robot_real_loopback_client_1381(port)
+            if process is not None and process.poll() is None:
+                process.terminate()
+                try:
+                    process.wait(timeout=20)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    process.wait(timeout=10)
+            result["first_exit"] = process.returncode if process else None
+            result["first_minutes"] = round((time.monotonic()-started)/60, 6)
         first = first_log.read_text(encoding="utf-8", errors="replace")
-        if (first_exit != 0 or "[TP-REMOTE-RAIL-TEST] FAIL " in first
-                or "[TP-REMOTE-RAIL-TEST] BLOCKED_RETURN_NATIVE_SAVE_REQUEST_0836 " not in first):
-            raise RuntimeError("native first process did not reach original stranded ore save request")
+        if (marker not in first or "[TP-REMOTE-RAIL-TEST] FAIL " in first
+                or verified_source is None):
+            raise RuntimeError("genuine original stranded rail save and custody not proven")
         valid = []
         for folder in roots:
             source = folder / name
