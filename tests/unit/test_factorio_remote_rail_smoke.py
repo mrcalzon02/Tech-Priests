@@ -73,6 +73,10 @@ class OriginalNativeRideHistoricalReceiptTests(unittest.TestCase):
             "s.outbound=true",
         ):
             self.assertIn(authority, section)
+        # The first 1,800-tick checkpoint precedes any paid locomotive.
+        # Native identity diagnostics must not crash the entire fixture.
+        self.assertIn('" original_train_id="..tostring(moving_train and moving_train.valid', lua)
+        self.assertNotIn('" original_train_id="..tostring(moving_train.id)', lua)
         self.assertIn('fail("MAGOS_PHYSICAL_TRAIN_RIDE_NOT_PROVEN")', lua)
         self.assertIn('fail("TRAIN_ROUND_TRIP_NOT_PROVEN")', lua)
         self.assertIn('fail("NO_GENUINE_ORE_DELIVERED_BY_RAIL")', lua)
