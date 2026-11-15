@@ -2,8 +2,8 @@
   "schema": "tech-priests.mh7.production-continuation.v2",
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
-  "current_machine": "ordinary-hydrogen-chain-integration",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\production-addon-v11-visible-fittings",
+  "current_machine": "reactor-source-recovery-and-follow-on-inventory",
+  "current_candidate": "art/source-to-3d/metallic-hydrogen-chain/ordinary-integration/v01-player-controls",
   "queue": [
     {
       "id": "water-purifier",
@@ -70,9 +70,11 @@
     "atlas_count": 6,
     "cycle_seconds": 4,
     "shape_locked_by_owner": true,
-    "next_shape_action": "none; owner requested move on",
+    "next_shape_action": "none; owner explicitly closed purifier again; move on",
     "native_physical_jig": "passed isolated 2.1.24 pipe and flow test; graphical seating/ordinary runtime not claimed",
-    "native_rotated_fitting_delivery": "art/source-to-3d/metallic-hydrogen-chain/water-purifier/v17-native-rotated-fittings"
+    "native_rotated_fitting_delivery": "art/source-to-3d/metallic-hydrogen-chain/water-purifier/v17-native-rotated-fittings",
+    "native_rotated_fittings_owner_closed": true,
+    "latest_owner_instruction": "Yes the purifier is done move on ffs, there is much to do and not enough time to do it resume goal"
   },
   "electrolyzer": {
     "status": "owner_accepted_model_and_reviewed_native_placement",
@@ -111,9 +113,9 @@
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Finish normal forge/assembler player controls without exposing clock/filter recipes or refreshing live stock",
-    "Review final energy/recipe economy and process/audio phase-offset policy; retain verified current integration",
-    "Recover/refine actual three-reactor V14 sources, then reconcile and finish remaining sprite-only buildings"
+    "Recover actual V14 reactor sources/reference and refine Minoris, Majoris, Maximus without replacing preserved rings",
+    "While source access is unresolved, reconcile current runtime/source status for the remaining sprite-only buildings",
+    "Finish remaining building models, relevant states/captures, native prototypes and interfaces; preserve accepted work"
   ],
   "original_goal_complete": false,
   "concurrent_work_preserved": "model-production bunker/data.lua work untouched",
@@ -541,7 +543,7 @@
     "constraint": "Use actual containment-ring center, projected ellipse and tilt as anchor. Preserve established ring/camera placement unless demonstrated evidence requires correction; reported completion is not source verification."
   },
   "ordinary_chain_integration": {
-    "status": "Main-mod connected line/reload, exact native clocks and purifier rotated pipe fitting pass; player UI and economy remain open",
+    "status": "Seven-machine electric production prototype and normal player controls verified; models/captures/fittings remain unchanged",
     "current_worklog": "ORDINARY_CHAIN_INTEGRATION.md",
     "real_seven_machine_chain_verified": true,
     "external_inputs": [
@@ -554,7 +556,7 @@
     "power_pause_verified": true,
     "tick3500_reload_identical": true,
     "native_expiration_and_inert_inserter_flow_verified": true,
-    "ordinary_player_interface_complete": false,
+    "ordinary_player_interface_complete": true,
     "final_recipe_energy_balance_approved": false,
     "purifier_rotated_pipe_fit_complete": true,
     "all_seven_native_clocks_verified": true,
@@ -563,23 +565,30 @@
     "readback": "build/hydrogen-integration-readback-04.json",
     "native_profile": "build/hc-cm-04",
     "purifier_native_delivery": "art/source-to-3d/metallic-hydrogen-chain/water-purifier/v17-native-rotated-fittings",
-    "private_native_images": 487
+    "private_native_images": 487,
+    "prototype_scope_complete": true,
+    "ordinary_mod_installed": false,
+    "prototype_delivery": "art/source-to-3d/metallic-hydrogen-chain/ordinary-integration/v01-player-controls",
+    "player_controls_validation": "build/hydrogen-player-controls-validation-01.json",
+    "player_controls_continuous": "build/hui-07/controls-receipt.json",
+    "player_controls_main_reload": "build/hui-rm-08/controls-receipt.json",
+    "player_controls_checks": 15,
+    "working_phase_policy": "Native free-running working loops gated by actual activity; exact source cycle lengths preserved. Per-instance press/seal/audio phase alignment not asserted.",
+    "economy_policy": "Documented starting prototype values; final game-wide economy balancing is separate tuning, not a source/art completion claim."
   },
   "resume_reconciliation": {
     "date": "2026-11-15",
     "owner_request": "Reconcile and resume the existing goal. Preserve open-frame hydroforming with exposed welded sheets and edge clamps.",
     "accepted_work_policy": "Preserve accepted machine bodies, captures and placement; repair demonstrated integration defects only.",
     "first_unresolved_issue": "Purifier rotated fitting adapter selected hidden historical collars instead of rendered UV-surfaced replacements.",
-    "repair_status": "Completed full 36-frame capture and reopened-master QA; all four main-mod pipe views visually inspected; strict main-mod integration and all seven native clocks pass.",
+    "repair_status": "Purifier owner closed. Seven-machine normal prototype including real-stack player controls now passes native validation and exact active-job/UI save/reload. Move on.",
     "audit": "build/purifier-native-fitting-readback-05.json",
     "pilot": "build/model-completion/metallic-hydrogen-chain/purifier-native-fitting-pilot-05",
     "pending": [
-      "Normal forge/assembler player interface",
-      "Final economy and phase-sync policy",
-      "Recover actual reactor V14 source; refine three reactors",
-      "Reconcile remaining sprite-only building inventory and finish those assets"
+      "Recover actual V14 reactor source/reference and refine the three models",
+      "Reconcile current remaining sprite-only building sources/prototypes and finish those assets"
     ],
     "goal_complete": false,
-    "goal_tracker_status": "App goal API still reports paused; work resumed in this turn, automatic continuation requires the user-controlled Resume action."
+    "goal_tracker_status": "active; user resumed the full existing goal"
   }
 }

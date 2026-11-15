@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "native_ui_continuous_and_main_reload_identical": true,
+  "native_ui_checks": {
+    "real_native_gui_open_intercepted": true,
+    "manual_round_trip_preserves_exact_stack": true,
+    "wrong_material_rejected": true,
+    "window_ownership_checked": true,
+    "active_forge_material_locked": true,
+    "reach_checked": true,
+    "out_of_reach_window_closes": true,
+    "manual_formed_and_shell_loading": true,
+    "active_assembler_pair_locked": true,
+    "reopening_preserves_active_stock": true,
+    "full_inventory_is_lossless": true,
+    "repeated_output_collection_is_lossless": true,
+    "sealed_transfer_preserves_tags_health_quality": true,
+    "waiting_with_open_gui_decays_to_inert": true,
+    "original_lifetime_and_shell_restored": true
+  },
+  "build_receipt_sha256": "3d0defcc88af98032d29890c3116fae75e7895d5cb428dc533dca0f6deadf314",
+  "continuous_receipt_sha256": "373898d49ed4823db449a729cd6c70ce6d974ac0b027d83fa04f6324801a57d5",
+  "main_reload_receipt_sha256": "46c7da63450c60da4f0bb902b1182985048318c5d08b90049412a61b36cf4a56",
+  "chain_receipt_sha256": "8a6dff489c089cf9a2914a1b1b91e2f81d10cb7f0e872cebeaaea75e389dc382",
+  "actual_connected_chain_contained": 6,
+  "preserved_art_audio_specs_files": 105,
+  "ui_images": {
+    "build\\hui-07\\user-data\\script-output\\tp-hydrogen-player-review\\assembler-controls.png": "2feefffcfe0e60ce4ac0a78f10f9beb37f71224d0d9a949f703eeb7b51621287",
+    "build\\hui-07\\user-data\\script-output\\tp-hydrogen-player-review\\forge-controls.png": "321f371a3390de76fac9bba2c495d99364d17fa07a4c9eb85aa808354621a59b",
+    "build\\hui-rm-08\\user-data\\script-output\\tp-hydrogen-player-review\\assembler-controls.png": "24d3d125217e342cdd4011b2fe76dd09f8f55b47b875fc0f28c67a76ddee8c4d",
+    "build\\hui-rm-08\\user-data\\script-output\\tp-hydrogen-player-review\\forge-controls.png": "5a4942d910c9c9621a1131ed9c424c402aede5780586a4883dac78ad5e2e0b19"
+  },
+  "ui_crops_privately_viewed": [
+    "forge-controls-review-crop.png",
+    "assembler-controls-review-crop.png"
+  ],
+  "multiple_connected_players_tested": false,
+  "physical_mouse_clicks_simulated": false,
+  "scope": "Actual native GUI open events and real GUI elements through the registered click handler; original stock, original native animation/sound assets, main-mod production, and a real tick-600 UI/active-stock save/reload. No source geometry or accepted fitting edits.",
+  "native_visual_prototypes_identical_to_previous_clock_proof": [
+    "purifier",
+    "electrolyzer",
+    "compressor",
+    "crucible",
+    "forge",
+    "fabricator",
+    "assembler"
+  ],
+  "native_pipe_graphics_identical_to_previous_proof": true
+}

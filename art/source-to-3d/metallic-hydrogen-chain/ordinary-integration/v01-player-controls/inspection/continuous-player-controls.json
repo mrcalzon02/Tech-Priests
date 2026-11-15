@@ -1,0 +1,94 @@
+{
+  "passed": true,
+  "save_reload_exercised": false,
+  "main_mod_loaded": false,
+  "results": {
+    "passed": true,
+    "checks": {
+      "real_native_gui_open_intercepted": true,
+      "manual_round_trip_preserves_exact_stack": true,
+      "wrong_material_rejected": true,
+      "window_ownership_checked": true,
+      "active_forge_material_locked": true,
+      "reach_checked": true,
+      "out_of_reach_window_closes": true,
+      "manual_formed_and_shell_loading": true,
+      "active_assembler_pair_locked": true,
+      "reopening_preserves_active_stock": true,
+      "full_inventory_is_lossless": true,
+      "repeated_output_collection_is_lossless": true,
+      "sealed_transfer_preserves_tags_health_quality": true,
+      "waiting_with_open_gui_decays_to_inert": true,
+      "original_lifetime_and_shell_restored": true
+    },
+    "original": {
+      "name": "tp-mh7-raw-metallicized-pellet",
+      "count": 1,
+      "quality": "legendary",
+      "health": 0.6100000143051147,
+      "spoil_tick": 1000,
+      "tags": {
+        "mh7_birth_tick": 2,
+        "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+        "mh7_initialized_tick": 2,
+        "mh7_integrity_ceiling": 0.6100000143051147,
+        "mh7_rolled_interval": 1416
+      }
+    },
+    "contained": {
+      "name": "tp-mh7-contained-metallicized-pellet",
+      "count": 1,
+      "quality": "legendary",
+      "health": 0.6100000143051147,
+      "spoil_tick": 0,
+      "tags": {
+        "mh7_integrity": 0.6100000143051147,
+        "mh7_raw_name": "tp-mh7-forged-metallicized-pellet",
+        "mh7_remaining_ticks": 268,
+        "mh7_shell_health": 0.7699999809265137,
+        "mh7_shell_quality": "rare"
+      }
+    },
+    "unsealed": {
+      "pellet": {
+        "name": "tp-mh7-forged-metallicized-pellet",
+        "count": 1,
+        "quality": "legendary",
+        "health": 0.6100000143051147,
+        "spoil_tick": 1968,
+        "tags": {
+          "mh7_decay_phase": "tp-mh7-forged-metallicized-pellet",
+          "mh7_integrity_ceiling": 0.6100000143051147
+        }
+      },
+      "shell": {
+        "name": "tp-mh7-empty-pressure-shell",
+        "count": 1,
+        "quality": "rare",
+        "health": 0.7699999809265137,
+        "spoil_tick": 0
+      }
+    },
+    "fixture_only": true,
+    "transfer_path": "real cursor/inventory and original controller stock through native GUI open and shared click handler"
+  },
+  "commands": [
+    {
+      "stage": "create",
+      "exit_code": 0,
+      "log_sha256": "965d19399c62083d577c847287e4c99c5d39eabaf96d9ae16a952913b0e159d3"
+    },
+    {
+      "stage": "controls",
+      "exit_code": 0,
+      "log_sha256": "985b0e089ec62f1cacc022f512c348a97e4fa16ed99918237484e9a7a071f478"
+    }
+  ],
+  "build_receipt_sha256": "3d0defcc88af98032d29890c3116fae75e7895d5cb428dc533dca0f6deadf314",
+  "fixture_sha256": "ab3ef5a1e37ea162852abb3f1efb389023ebf36f98fda5271b760f7f4c35d440",
+  "graphics_reviewed": false,
+  "actual_native_gui_open_events": true,
+  "click_handler_invoked_with_real_gui_elements": true,
+  "physical_mouse_clicks_simulated": false,
+  "multiple_connected_players_tested": false
+}

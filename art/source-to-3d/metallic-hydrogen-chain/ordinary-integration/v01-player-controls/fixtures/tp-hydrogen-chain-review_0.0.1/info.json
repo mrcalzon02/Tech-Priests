@@ -1,0 +1,1 @@
+{"name": "tp-hydrogen-chain-review", "version": "0.0.1", "title": "Isolated connected hydrogen chain review", "author": "Tech Priests", "factorio_version": "2.1", "dependencies": ["tp-hydrogen-production >= 0.1.0"]}

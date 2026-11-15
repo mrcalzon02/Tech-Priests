@@ -9,7 +9,7 @@ from run_compressor_native_jig import lua,sha
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--out',required=True);ap.add_argument('--repo',default='.');ap.add_argument('--debug-counters',action='store_true');ap.add_argument('--purifier-capture',required=True)
+    ap=argparse.ArgumentParser();ap.add_argument('--out',required=True);ap.add_argument('--repo',default='.');ap.add_argument('--debug-counters',action='store_true');ap.add_argument('--purifier-capture',required=True);ap.add_argument('--resource-icon-root')
     args=ap.parse_args();repo=Path(args.repo).resolve();out=Path(args.out).resolve();here=Path(__file__).resolve().parent
     if out.exists():raise FileExistsError('Preserve integration candidates')
     out.mkdir(parents=True);mod=out/'tp-hydrogen-production_0.1.0';mod.mkdir();family=repo/'art/source-to-3d/metallic-hydrogen-chain';audio=repo/'art/source-to-3d/shared-audio/hydrogen-machinery'
@@ -82,9 +82,15 @@ def main():
     runtime=(here/'assembler_native/runtime.lua').read_text()
     runtime=runtime.replace("local function register(event)A.register(event.created_entity or event.entity or event.destination);A.invalidate(event) end", "local function configure(e)\n if e and e.valid and e.name=='tp-mh7-review-fabricator' and not e.get_recipe() then e.set_recipe('tp-mh7-review-hydroform') end\n A.register(e)\nend\nlocal function register(event)configure(event.created_entity or event.entity or event.destination);A.invalidate(event) end")
     runtime=runtime.replace("for _,surface in pairs(game.surfaces) do for _,e in pairs(surface.find_entities_filtered{name='tp-mh7-canister-assembler'}) do A.register(e) end end", "for _,surface in pairs(game.surfaces) do for _,e in pairs(surface.find_entities_filtered{name={'tp-mh7-canister-assembler','tp-mh7-review-fabricator'}}) do configure(e) end end")
+    runtime=runtime.replace("local A=require('assembler')", "local A=require('assembler');local U=require('player-controls')")
+    runtime=runtime.replace('script.on_event(defines.events.on_tick,A.on_tick)', 'script.on_event(defines.events.on_tick,function(event)A.on_tick(event);U.on_tick(event) end)')
+    runtime+="\nscript.on_event(defines.events.on_gui_opened,U.on_opened)\nscript.on_event(defines.events.on_gui_closed,U.on_closed)\nscript.on_event(defines.events.on_gui_click,U.on_click)\nremote.add_interface('tp-hydrogen-player-controls',{open=U.open,inspect=U.inspect,interact=U.on_click})\n"
     (mod/'control.lua').write_text(runtime,encoding='utf-8')
+    shutil.copy2(here/'hydrogen_player_controls.lua',mod/'player-controls.lua')
+    shutil.copy2(here/'hydrogen_stock_access.lua',mod/'stock-access.lua')
     assembler=(here/'assembler_native/assembler.lua').read_text().replace("(s.name==c.shell and shells<3))", "(s.name==c.shell and shells<3) or s.name==c.inert)")
     assembler=assembler.replace("state()[e.unit_number]=job;e.disabled_by_script=true;recipe(job,accept)", "state()[e.unit_number]=job;e.disabled_by_script=true\n local input=e.get_inventory(defines.inventory.crafter_input);if input then for i=1,#input do if input[i].valid_for_read and input[i].name=='tp-mh7-assembler-cycle-token' then input[i].clear() end end end\n recipe(job,accept)")
+    assembler=assembler.replace('return A\n',(here/'hydrogen_assembler_player_access.lua').read_text(encoding='utf-8')+'\nreturn A\n')
     (mod/'assembler.lua').write_text(assembler,encoding='utf-8')
     sound_sources={'purifier':('v01',.46),'electrolyzer':('v01',.40),'compressor':('v01',1.15),'crucible':('crucible-v01',.65),'forge':('forge-v01',.70),'fabricator':('fabricator-v01',.70),'assembler':('assembler-v01',.65)}
     mixes={}
@@ -93,17 +99,24 @@ def main():
         mixes[key]=dict(gain=gain,distance=3.5 if key=='compressor' else 1.8,priority=16 if key=='compressor' else 30)
     (mod/'audio.lua').write_text('return '+lua(mixes)+'\n')
     shutil.copy2(here/'hydrogen_production_data.lua',mod/'data.lua')
-    (mod/'info.json').write_text(json.dumps(dict(name='tp-hydrogen-production',version='0.1.0',title='Tech Priests metallicized hydrogen production',author='Tech Priests',factorio_version='2.1',dependencies=['base >= 2.1.24','tp-mh7-pellet-decay >= 0.0.4','? tech-priests >= 0.1.681']),indent=2)+'\n')
-    dependency=out/'tp-mh7-pellet-decay_0.0.4';shutil.copytree(family/'canister-assembler/v04-native-preservation/prototype-mods/tp-mh7-pellet-decay_0.0.3',dependency)
-    info=json.loads((dependency/'info.json').read_text());info['version']='0.0.4';(dependency/'info.json').write_text(json.dumps(info,indent=2)+'\n')
+    (mod/'info.json').write_text(json.dumps(dict(name='tp-hydrogen-production',version='0.1.0',title='Tech Priests metallicized hydrogen production',author='Tech Priests',factorio_version='2.1',dependencies=['base >= 2.1.24','tp-mh7-pellet-decay >= 0.0.5','? tech-priests >= 0.1.681']),indent=2)+'\n')
+    dependency=out/'tp-mh7-pellet-decay_0.0.5';shutil.copytree(family/'canister-assembler/v04-native-preservation/prototype-mods/tp-mh7-pellet-decay_0.0.3',dependency)
+    info=json.loads((dependency/'info.json').read_text());info['version']='0.0.5';(dependency/'info.json').write_text(json.dumps(info,indent=2)+'\n')
     forge=(dependency/'forge.lua').read_text()
     for expression in ('inserter.held_stack','items[j]','inv[j]'):
         forge=forge.replace('if D.is_raw('+expression+') then', 'if D.is_raw('+expression+') or ('+expression+'.valid_for_read and '+expression+'.name==c.inert) then')
     forge=forge.replace("all[e.unit_number]=job;e.disabled_by_script=true", "all[e.unit_number]=job;e.disabled_by_script=true\n local input=e.get_inventory(defines.inventory.crafter_input);if input then for i=1,#input do if input[i].valid_for_read and input[i].name=='tp-mh7-forge-cycle-token' then input[i].clear() end end end")
+    forge=forge.replace('return F\n',(here/'hydrogen_forge_player_access.lua').read_text(encoding='utf-8')+'\nreturn F\n')
     (dependency/'forge.lua').write_text(forge,encoding='utf-8')
+    shutil.copy2(here/'hydrogen_stock_access.lua',dependency/'stock-access.lua')
+    adapter=(dependency/'control.lua').read_text(encoding='utf-8').replace('inspect_forge=F.inspect,','inspect_forge=F.inspect,\n forge_player_view=F.player_view,\n forge_player_transfer=F.player_transfer,')
+    (dependency/'control.lua').write_text(adapter,encoding='utf-8')
     resource_names=['purified-water','hydrogen-gas','oxygen-gas','compressed-hydrogen','pellet-fresh','pellet-waning','pellet-degraded','pellet-critical','pellet-inert','empty-pressure-shell','charged-fuel-canister'];resource_sources=[]
     for name in resource_names:
-        source=repo/'tech-priests_src/graphics/icons/hydrogen-chain-v02'/(name+'.png');shutil.copy2(source,mod/'icons'/source.name);resource_sources.append(dict(source=str(source.relative_to(repo)),sha256=sha(source)))
+        icon_root=Path(args.resource_icon_root).resolve() if args.resource_icon_root else repo/'tech-priests_src/graphics/icons/hydrogen-chain-v02'
+        source=icon_root/(name+'.png')
+        if not source.exists():source=family/'ordinary-integration/v01-player-controls/prototype-mods/tp-hydrogen-production_0.1.0/icons'/(name+'.png')
+        shutil.copy2(source,mod/'icons'/source.name);resource_sources.append(dict(source=source.relative_to(repo).as_posix() if source.is_relative_to(repo) else str(source),sha256=sha(source)))
     (mod/'resource-icons.lua').write_text("""local function icon(kind,name,image)
  local p=data.raw[kind] and data.raw[kind][name];if p then p.icon='__tp-hydrogen-production__/icons/'..image..'.png';p.icon_size=64;p.icons=nil end
 end
@@ -111,7 +124,7 @@ for name,image in pairs({['tp-mh7-review-purified-water']='purified-water',['tp-
 for _,group in ipairs{'raw','forged'} do for i,suffix in ipairs{'','-waning','-degraded','-critical'} do icon('item-with-tags','tp-mh7-'..group..'-metallicized-pellet'..suffix,({'pellet-fresh','pellet-waning','pellet-degraded','pellet-critical'})[i]) end end
 icon('item','tp-mh7-inert-pellet','pellet-inert');icon('item','tp-mh7-empty-pressure-shell','empty-pressure-shell');icon('item-with-tags','tp-mh7-contained-metallicized-pellet','charged-fuel-canister')
 """,encoding='utf-8')
-    (out/'BUILD_RECEIPT.json').write_text(json.dumps(dict(status='normal-game integration candidate; actual combined native tests pending',source_records=records,specs=specs,diagnostic_frame_counters=args.debug_counters,generator_sha256=sha(__file__),source_data_sha256=sha(here/'hydrogen_production_data.lua'),resource_icon_sources=resource_sources,production_addon_hashes={p.relative_to(mod).as_posix():sha(p) for p in mod.rglob('*') if p.is_file()},dependency_addon_hashes={p.relative_to(dependency).as_posix():sha(p) for p in dependency.rglob('*') if p.is_file()},dependency_revision='0.0.4 accepts inert logistics without revival; decay/seal implementation unchanged',fixture_controls_included=False,electricity_enabled=True,research_and_machine_recipes_enabled=True,economy_tuning_final=False),indent=2)+'\n')
+    (out/'BUILD_RECEIPT.json').write_text(json.dumps(dict(status='normal-game integration candidate; actual combined native tests pending',source_records=records,specs=specs,diagnostic_frame_counters=args.debug_counters,generator_sha256=sha(__file__),source_data_sha256=sha(here/'hydrogen_production_data.lua'),resource_icon_sources=resource_sources,production_addon_hashes={p.relative_to(mod).as_posix():sha(p) for p in mod.rglob('*') if p.is_file()},dependency_addon_hashes={p.relative_to(dependency).as_posix():sha(p) for p in dependency.rglob('*') if p.is_file()},dependency_revision='0.0.5 adds guarded real-stack player transfers; original decay/seal implementation unchanged',fixture_controls_included=False,electricity_enabled=True,research_and_machine_recipes_enabled=True,economy_tuning_final=False),indent=2)+'\n')
     print('HYDROGEN_PRODUCTION_ADDON',mod,flush=True)
 
 

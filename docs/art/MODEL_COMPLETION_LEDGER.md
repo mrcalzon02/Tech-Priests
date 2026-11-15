@@ -1,3 +1,11 @@
+## 2026-11-15 seven-machine normal prototype and player controls verified; purifier closed
+
+The owner explicitly directed moving on from the completed purifier. Its accepted source, captures and fittings remain locked. The [normal chain/player-controls delivery](../../art/source-to-3d/metallic-hydrogen-chain/ordinary-integration/v01-player-controls/README.md) contains the seven electric, research-gated prototypes, original audio and real live-stock forge/assembler controls. Production addons and destructive fixtures are packaged separately. No real-mod installation was made automatically.
+
+Fifteen actual native control checks pass, including exact stack round trips, active/reserved-material locks, full inventory/repeated output handling, real decay while open, and exact remaining lifetime/original shell restoration. A real active-job/UI save/reload alongside main yields identical results to continuous execution. The actual main-mod line still collects six contained pellets from water, steel and electricity. All 105 art/audio/spec files and seven visual prototype definitions are unchanged. Native GUI images were viewed privately; public records contain hashes. Physical mouse automation and two connected players are not claimed.
+
+Working loops retain the previously verified exact periods with normal engine phase offsets. Initial power/recipe/research values are documented prototype tuning. **Next: actual V14 reactor source/reference recovery and three-model refinement; continue remaining-building source/runtime inventory reconciliation while access is unresolved.** Do not reopen purifier art or restart historical assembler pilots. The full model/reactor/building goal remains active.
+
 ## 2026-11-15 owner closed precision inserter work; open hydroforming fabricator constructed
 
 The owner specified standard Factorio anywhere-on-object inserter behavior and explicitly directed moving on. The forge's V03 art/V04 native state-preserving implementation remain intact; the additional low-pan/lift study is private and unpromoted. No precision inserter socket is required.

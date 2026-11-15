@@ -1,0 +1,12 @@
+{
+  "name": "tp-hydrogen-production",
+  "version": "0.1.0",
+  "title": "Tech Priests metallicized hydrogen production",
+  "author": "Tech Priests",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.24",
+    "tp-mh7-pellet-decay >= 0.0.5",
+    "? tech-priests >= 0.1.681"
+  ]
+}
