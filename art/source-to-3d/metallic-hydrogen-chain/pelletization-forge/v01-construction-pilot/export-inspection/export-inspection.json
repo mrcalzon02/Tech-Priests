@@ -1,0 +1,125 @@
+{
+  "native_sha256": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
+  "glb_sha256": "c4bc56f95257fe62c6086a55e3d3f851d0b2c9991b7d2cf6899d4b8fd0c8a707",
+  "meshes": 106,
+  "triangles": 17400,
+  "degenerate_triangles": 0,
+  "nonfinite_vertices": 0,
+  "missing_UV": [],
+  "bounds_error": 0.0,
+  "bores": {
+    "passed": true,
+    "rays": 0,
+    "hits": []
+  },
+  "material_channels": [
+    {
+      "name": "TP Pelletization Forge V01 | ferrocrete_dark",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | iron",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | martian_red",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | gunmetal_dark",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | machine_steel",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | brass",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | donor TP Library | iron.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | donor MH7 green.001",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | donor TP Library | martian_red.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | donor MH7 amber.001",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | donor TP Library | dark_recess.002",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | donor TP Water Purifier V14 | iron.001",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | donor TP Water Purifier V14 | brass.001",
+      "base_color_texture": true,
+      "metallic_roughness_texture": true,
+      "normal_texture": true,
+      "extensions": []
+    },
+    {
+      "name": "TP Pelletization Forge V01 | donor FMPL | live green CRT level bars V13.001",
+      "base_color_texture": false,
+      "metallic_roughness_texture": false,
+      "normal_texture": false,
+      "extensions": [
+        "KHR_materials_emissive_strength"
+      ]
+    }
+  ],
+  "geometry_passed": true,
+  "render_sha256": {
+    "clay.png": "9fee2bbcf7f02bd86463ec9a97256ab9553acd013cf7c927a387fc34765583bb",
+    "front.png": "e3ea717699720aee70ae2b5b1ed13fa2381758f3ee9bbbf3e5502fd8e38a4978",
+    "rear-inspection.png": "8661791f68f39f8db106c47c5e2d513e1bf895c858f3bf67ac51f75ba537a1c6"
+  },
+  "visual_approval": false,
+  "note": "Rear is a diagnostic inspection view. Accepted capture directions belong to the asset capture manifest; volume parity requires separate assessment where present."
+}

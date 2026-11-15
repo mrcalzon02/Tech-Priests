@@ -320,6 +320,40 @@
           "model_source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
           "runtime_export_sha256": "0eab1d215ac61ad3e3fd62e555f8899f000b61a1bd781fb5ff53779dc60c5f2f",
           "status": "Derived from actual V01 appended instances and retained in V03 source/export; local CRT state retimed, masters unchanged"
+        },
+        {
+          "machine": "pelletization-forge",
+          "machine_revision": "V01 construction pilot",
+          "instance": "front left cogitator",
+          "transform": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0499999523162842
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -0.9200000166893005
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.7699999809265137
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
+          "runtime_export_sha256": "c4bc56f95257fe62c6086a55e3d3f851d0b2c9991b7d2cf6899d4b8fd0c8a707",
+          "status": "actual appended console in saved and independently reimported pilot; finish/native pending"
         }
       ],
       "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
@@ -1575,10 +1609,48 @@
         "runtime_export_sha256": "0eab1d215ac61ad3e3fd62e555f8899f000b61a1bd781fb5ff53779dc60c5f2f",
         "status": "Derived from actual V01 appended instances and retained in V03 source/export; local CRT state retimed, masters unchanged"
       }
+    ],
+    "pelletization-forge": [
+      {
+        "part_id": "tp.mh7.cogitator-console",
+        "revision": "v1",
+        "machine": "pelletization-forge",
+        "machine_revision": "V01 construction pilot",
+        "instance": "front left cogitator",
+        "transform": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            -1.0499999523162842
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -0.9200000166893005
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.7699999809265137
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "model_source_sha256": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
+        "runtime_export_sha256": "c4bc56f95257fe62c6086a55e3d3f851d0b2c9991b7d2cf6899d4b8fd0c8a707",
+        "status": "actual appended console in saved and independently reimported pilot; finish/native pending"
+      }
     ]
   },
   "last_checkpoint_sha256": null,
   "inventory_source": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
   "material_index": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
-  "previous_registry_sha256": "09c34c15db45101327f893bbc6387f96f9dd05f60bab1d7ff36750f2a64b570a"
+  "previous_registry_sha256": "108f7123a43eb0a44a4eb684723fde1aa84a35b34a51b73b32d0f9a2e8d0a274"
 }

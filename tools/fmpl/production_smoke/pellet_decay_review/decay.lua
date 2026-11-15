@@ -3,6 +3,7 @@ local c=require('config')
 local M={};local stages={};for i,row in ipairs(c.stages) do stages[row.name]={index=i,health=row.health} end
 local function state()
  storage.mh7_pellet_decay=storage.mh7_pellet_decay or {pending={},dedup={},producers={},inventories={}}
+ storage.mh7_pellet_decay.producer_counts=storage.mh7_pellet_decay.producer_counts or {}
  return storage.mh7_pellet_decay
 end
 function M.touch_stack(stack)
@@ -13,8 +14,10 @@ function M.touch_stack(stack)
  stack.health=math.min(stack.health,stage.health)
  if tags.mh7_decay_phase~=stack.name then
   local interval=math.random(c.interval_min_ticks,c.interval_max_ticks)
-  stack.spoil_tick=game.tick+interval
+  local elapsed=math.max(0,math.floor(stack.spoil_percent*c.interval_max_ticks+.5))
+  stack.spoil_tick=game.tick+math.max(1,interval-elapsed)
   tags.mh7_decay_phase=stack.name;tags.mh7_rolled_interval=interval;tags.mh7_initialized_tick=game.tick
+  tags.mh7_birth_tick=game.tick-elapsed
   stack.tags=tags
  end
  stack.custom_description={'','Uncontained — integrity ',math.floor(stack.health*100+.5),'%. Quality falls as decay progresses. Containment preserves; it does not repair.'}
@@ -75,7 +78,21 @@ function M.on_tick(event)
  s.pending=keep
  -- No world-wide inventory scan. Only explicitly registered pellet producers.
  if event.tick%15==0 then
-  for id,e in pairs(s.producers) do if e.valid then M.touch_entity(e) else s.producers[id]=nil end end
+  for id,e in pairs(s.producers) do
+   if e.valid then
+    M.touch_entity(e)
+    if e.type=='assembling-machine' then
+     local completed=e.products_finished
+     if completed>(s.producer_counts[id] or 0) then
+      -- A native inserter may already hold the new output. Inspect the local
+      -- carrier neighborhood only when production advances, never the world.
+      for _,carrier in pairs(e.surface.find_entities_filtered{position=e.position,radius=6,
+       type={'container','logistic-container','inserter','transport-belt','underground-belt','splitter','loader','loader-1x1','logistic-robot','character','item-entity','cargo-wagon','car','spider-vehicle','assembling-machine'}}) do M.touch_entity(carrier) end
+     end
+     s.producer_counts[id]=completed
+    end
+   else s.producers[id]=nil;s.producer_counts[id]=nil end
+  end
   for i=#s.inventories,1,-1 do local inv=s.inventories[i];if inv.valid then M.touch_inventory(inv) else table.remove(s.inventories,i) end end
  end
 end

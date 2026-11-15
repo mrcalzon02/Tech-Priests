@@ -1,0 +1,7 @@
+# Pelletization forge V01 construction pilot
+
+Distinct 3x3 editable machine: true open tapered hopper, supported short auger/motor, grounded red I-section press frame, a drilled crossbeam with seated actuator, two real guides and bored crosshead bearings, an on-axis punch and narrowing open die, open rear feed shoe, inclined extraction chute and accessible front pickup tray. One actual registered cogitator console is appended locally; no fluid mouths are invented for this item-processing machine.
+
+The saved source passes 57 recorded contacts, 1,428 guided-ram/static surface pairs over 17 actual poses, on-axis punch/telescoping piston endpoint checks and loop closure. The actual GLB reimport has 17,400 triangles, no degenerate/nonfinite geometry or missing UV/maps, and a maximum sampled world-pose difference of 2.4e-7. Exported front/rear/clay views were inspected. These are bounded construction checks; the complete material feed/compression/ejection path is still a separate open gate.
+
+Current packed donor surfaces establish the family palette, not final model-specific finish. Machine-specific maps, sound, four-angle states, actual native item access and state-preserving pellet processing remain required. Processing must not reset unstable pellet lifetime or restore HP/quality. The crucible is preserved at its restrained native checkpoint; do not restart ornamental animation there.

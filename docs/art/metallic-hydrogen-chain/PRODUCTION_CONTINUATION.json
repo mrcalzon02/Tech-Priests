@@ -2,8 +2,8 @@
   "schema": "tech-priests.mh7.production-continuation.v2",
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
-  "current_machine": "metallization-crucible",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\metallization-crucible\\v03-finish-and-states",
+  "current_machine": "pelletization-forge",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pelletization-forge\\v01-construction-pilot",
   "queue": [
     {
       "id": "water-purifier",
@@ -35,7 +35,7 @@
         5,
         5
       ],
-      "status": "surfaced six-blade/four-angle/audio candidate; native one-fluid/item-output fixture next"
+      "status": "native production/decay/pickup/audio verified; restrained animation accepted; move to forge"
     },
     {
       "id": "pelletization-forge",
@@ -43,7 +43,7 @@
         3,
         3
       ],
-      "status": "not_started_in_this_run"
+      "status": "real 3x3 guided-press pilot saved/exported; finishing/audio/material path/native pending"
     },
     {
       "id": "pressure-vessel-fabricator",
@@ -104,16 +104,17 @@
     "body_render_layer": "lower-object",
     "next_shape_action": "none; owner called done"
   },
-  "library_registry_sha256": "108f7123a43eb0a44a4eb684723fde1aa84a35b34a51b73b32d0f9a2e8d0a274",
+  "library_registry_sha256": "925446df748c72a5b66a2a13e82b9483208e06ecc7570cfc4d0ab53fc0661254",
   "reactors": {
     "status": "V14 native bytes still unrecovered",
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Implement native 5x5 crucible: one hydrogen fluid input, raw pellet item output; bind decay and authored audio",
-    "Review native inlet fitting, item access, state clocks and final crucible finish",
-    "Build remaining forge/fabricator/assembler with state-preserving pellet containment",
-    "Integrate full chain and recover/refine three reactor sources"
+    "Audit hopper-auger-feed-shoe and pellet compression/ejection support through the whole cycle",
+    "Finish cast frame, hopper, ram/die surfaces and authored working sound",
+    "Capture four idle/working rotations and create actual native item-handling fixture",
+    "Preserve pellet remaining lifetime, HP and quality through processing; no recipe refresh",
+    "Build vessel fabricator and canister assembler, integrate full chain, recover/refine three reactor sources"
   ],
   "original_goal_complete": false,
   "concurrent_work_preserved": "model-production bunker/data.lua work untouched",
@@ -217,13 +218,13 @@
   },
   "machinery_audio": {
     "path": "art/source-to-3d/shared-audio/hydrogen-machinery/v01",
-    "native_bindings_verified": 3,
+    "native_bindings_verified": 4,
     "owner_audition_approved": false,
     "required_on_all_remaining_machinery": true,
     "ordinary_chain_integrated": false
   },
   "crucible": {
-    "status": "surfaced_six_blade_state_candidate; native_placement_pending",
+    "status": "native_production_verified; restrained_animation_accepted",
     "source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
     "glb_sha256": "0eab1d215ac61ad3e3fd62e555f8899f000b61a1bd781fb5ff53779dc60c5f2f",
     "surface_map_count": 12,
@@ -239,22 +240,78 @@
     "source_of_owner_correction": "One original blade floated .1076 tile from the bearing. Rebuilt in a common rotor-local frame with six pitched roots seated into a real rotating hub and supported fixed spindle.",
     "owner_approved": false,
     "native_pipe_verified": false,
-    "native_audio_binding_verified": false,
+    "native_audio_binding_verified": true,
     "output": "Raw solid metallicized pellets, with tested random HP/quality decay to inert; no second gameplay fluid box",
     "decay_delivery": "../../pellet-instability/v01-native-behavior",
     "next": [
-      "Native 5x5 crucible with one hydrogen fluid input and raw pellet item output",
-      "Native inlet fitting, item pickup access and actual animation clocks",
-      "Owner finish/audio review and ordinary chain integration"
+      "Build/refine pelletization forge with state-preserving processing",
+      "Complete pressure-vessel fabricator and canister assembler",
+      "Integrate chain and recover/refine reactor sources"
     ],
-    "registry_sha256": "108f7123a43eb0a44a4eb684723fde1aa84a35b34a51b73b32d0f9a2e8d0a274"
+    "registry_sha256": "108f7123a43eb0a44a4eb684723fde1aa84a35b34a51b73b32d0f9a2e8d0a274",
+    "source_delivery": "../v03-finish-and-states",
+    "capture_master_sha256": "6e54b1dc9c94a8fc57fdfcd88fbc93db44c6efb423136109b320c26a9390267d",
+    "native_input_cases": 8,
+    "native_fluid_box_count": 1,
+    "actual_item_pickup_orientations": 4,
+    "actual_produced_pellet_decay_verified": true,
+    "blocked_machine_output_decays": true,
+    "actual_produced_pellet_containment_verified": true,
+    "whole_sprite_shift_native_pixels": 7,
+    "body_render_layer": "object",
+    "owner_instruction": "We're good Not every every building has to be intricately animated. its okay",
+    "owner_accepted_restrained_animation": true,
+    "next_shape_action": "none; preserve restrained fan/readout and current model. Continue forge.",
+    "native_frames_advance_all_directions": true,
+    "uninterrupted_eight_second_loops": [
+      "east",
+      "west"
+    ],
+    "strict_cadence_all_directions": false,
+    "clock_note": "All four directions advance through real source cells. East/west complete uninterrupted eight-second loops; north/south contain a held sample in the production capture. Strict all-direction cadence diagnostic remains false, not relabeled as a pass.",
+    "ordinary_chain_integrated": false,
+    "gameplay_balanced": false,
+    "fixture_quality": "Legendary output is clamped solely to exercise native quality loss; this is not an economy recipe.",
+    "native_delivery": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\metallization-crucible\\v04-native-production"
   },
   "pellet_instability": {
-    "path": "art/source-to-3d/metallic-hydrogen-chain/pellet-instability/v01-native-behavior",
+    "path": "art/source-to-3d/metallic-hydrogen-chain/pellet-instability/v02-production-pickup",
     "native_continuous_and_reload_verified": true,
     "ordinary_chain_integrated": false,
     "normal_addon_verified": true,
     "raw_item_output": true,
-    "balance_owner_approved": false
+    "balance_owner_approved": false,
+    "native_crucible_production_verified": true,
+    "production_pickup_race_fixed": true
+  },
+  "forge": {
+    "status": "actual_source_export_and_guided_ram_pilot; finish_material_path_and_native_pending",
+    "source_sha256": "b1d100c4f839fdfc8e58121f31c1b68620237d48624459c31a04f660b83b0b34",
+    "glb_sha256": "c4bc56f95257fe62c6086a55e3d3f851d0b2c9991b7d2cf6899d4b8fd0c8a707",
+    "footprint": [
+      3,
+      3
+    ],
+    "registry_sha256": "925446df748c72a5b66a2a13e82b9483208e06ecc7570cfc4d0ab53fc0661254",
+    "contacts": 57,
+    "motion_poses": 17,
+    "guided_ram_static_pair_checks": 1428,
+    "triangles": 17400,
+    "maximum_sampled_world_pose_error": 2.3233243950926408e-07,
+    "cycle_seconds": 8,
+    "actual_library_parts": 1,
+    "actual_library_instances": 1,
+    "no_new_verified_parts": "New actuator/auger assemblies remain machine-local pending complete material-path and finishing proof.",
+    "owner_approved": false,
+    "full_material_path_verified": false,
+    "model_specific_finish_complete": false,
+    "audio_implemented": false,
+    "native_item_interfaces_verified": false,
+    "next": [
+      "Audit hopper-auger-feed-shoe and pellet compression/ejection support through the whole cycle",
+      "Finish cast frame, hopper, ram/die surfaces and authored working sound",
+      "Capture four idle/working rotations and create actual native item-handling fixture",
+      "Preserve pellet remaining lifetime, HP and quality through processing; no recipe refresh"
+    ]
   }
 }

@@ -1,0 +1,517 @@
+{
+  "passed": false,
+  "native_frames_advance_all_directions": true,
+  "point": [
+    127,
+    66
+  ],
+  "rows": [
+    {
+      "direction": "north",
+      "passed": false,
+      "cells": [
+        7,
+        0,
+        1,
+        2,
+        3,
+        4,
+        4,
+        5,
+        6
+      ],
+      "samples": [
+        {
+          "capture_index": 0,
+          "source_cell": 7,
+          "rgb": [
+            216,
+            90,
+            179
+          ],
+          "brightness_gain": 0.9979347377116894,
+          "distance_squared": 0.628252788104079,
+          "sha256": "5d2c341c14d1e27be0d501338ccab09e16305daade33484629e7dbf8f1622bd8"
+        },
+        {
+          "capture_index": 1,
+          "source_cell": 0,
+          "rgb": [
+            18,
+            229,
+            44
+          ],
+          "brightness_gain": 0.9979963570127505,
+          "distance_squared": 20.779599271402578,
+          "sha256": "1383158bef4acc62a6ea4e5da417180a3d85878c664d92f716dc2753dd62f867"
+        },
+        {
+          "capture_index": 2,
+          "source_cell": 1,
+          "rgb": [
+            48,
+            211,
+            58
+          ],
+          "brightness_gain": 1.001799856011519,
+          "distance_squared": 4.838012958963274,
+          "sha256": "3e3e60f9a0472fa796e218e0d0f0dbad84c4e7a29ccbaa76dd1337b0a3f039c3"
+        },
+        {
+          "capture_index": 3,
+          "source_cell": 2,
+          "rgb": [
+            67,
+            166,
+            71
+          ],
+          "brightness_gain": 0.8764603529704201,
+          "distance_squared": 1.2095451155853858,
+          "sha256": "4453f9e4516821bb786a397ac5a6a55a055ac1ecbbd907037e50ab396617d34d"
+        },
+        {
+          "capture_index": 4,
+          "source_cell": 3,
+          "rgb": [
+            81,
+            132,
+            78
+          ],
+          "brightness_gain": 0.777697320782042,
+          "distance_squared": 0.11078928312816923,
+          "sha256": "4bdd65dff167e106227e6f6d24168d1aad36468a0030d6975cae2533283ed356"
+        },
+        {
+          "capture_index": 5,
+          "source_cell": 4,
+          "rgb": [
+            100,
+            114,
+            91
+          ],
+          "brightness_gain": 0.7587806494367131,
+          "distance_squared": 0.061630218687871746,
+          "sha256": "bc84614474558cd8c4b92965648ee7ba94020b53c5721e07f0b9c26145bad3b5"
+        },
+        {
+          "capture_index": 6,
+          "source_cell": 4,
+          "rgb": [
+            99,
+            112,
+            90
+          ],
+          "brightness_gain": 0.7486193947426552,
+          "distance_squared": 0.14645460569913432,
+          "sha256": "c92239679af3b23f307322a4b1fda7c19283a2267bc0eff9d30fdc7875d530b7"
+        },
+        {
+          "capture_index": 7,
+          "source_cell": 5,
+          "rgb": [
+            119,
+            97,
+            105
+          ],
+          "brightness_gain": 0.7463768115942029,
+          "distance_squared": 0.4347826086956555,
+          "sha256": "031d5254296cc3a1945d8e3899adb8313641c8f317bc6a2df77e7190132d92ee"
+        },
+        {
+          "capture_index": 8,
+          "source_cell": 6,
+          "rgb": [
+            140,
+            82,
+            121
+          ],
+          "brightness_gain": 0.7488636985926291,
+          "distance_squared": 2.155686983188215,
+          "sha256": "69c191a9d2e1b53c4255c792f5584e5b5b3268519a411b4f34d89a2cd8b4855a"
+        }
+      ]
+    },
+    {
+      "direction": "east",
+      "passed": true,
+      "cells": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0,
+        1
+      ],
+      "samples": [
+        {
+          "capture_index": 0,
+          "source_cell": 1,
+          "rgb": [
+            36,
+            158,
+            43
+          ],
+          "brightness_gain": 0.7497000239980801,
+          "distance_squared": 4.2455003599712064,
+          "sha256": "8115a6484ab07716c6c840534d7f252b469e5518172223b368a664ee7571d7d3"
+        },
+        {
+          "capture_index": 1,
+          "source_cell": 2,
+          "rgb": [
+            58,
+            144,
+            62
+          ],
+          "brightness_gain": 0.760792112022537,
+          "distance_squared": 1.6273096362581827,
+          "sha256": "99f36c1640255b9f717d4c6952f69338e1ef20dd6f00267da19b453bba164fe6"
+        },
+        {
+          "capture_index": 2,
+          "source_cell": 3,
+          "rgb": [
+            80,
+            131,
+            77
+          ],
+          "brightness_gain": 0.7701745916807466,
+          "distance_squared": 0.014884544211117312,
+          "sha256": "6b707a279a30f91e17ebeb985ad1eead4ca4b645c718f66a36a65c66625c6919"
+        },
+        {
+          "capture_index": 3,
+          "source_cell": 4,
+          "rgb": [
+            101,
+            115,
+            92
+          ],
+          "brightness_gain": 0.7661806936160813,
+          "distance_squared": 0.02717031146454811,
+          "sha256": "9a5ccc30cc47ce97e6bd18867bcadbdc074434d9dc59d8e04b90344d5a917754"
+        },
+        {
+          "capture_index": 4,
+          "source_cell": 5,
+          "rgb": [
+            120,
+            98,
+            105
+          ],
+          "brightness_gain": 0.7510466988727859,
+          "distance_squared": 0.181964573268923,
+          "sha256": "c14935d38606dc8718f34d699a5b0b75578e1eeeb4aaf72d46a5ed35228c313d"
+        },
+        {
+          "capture_index": 5,
+          "source_cell": 6,
+          "rgb": [
+            140,
+            82,
+            121
+          ],
+          "brightness_gain": 0.7488636985926291,
+          "distance_squared": 2.155686983188215,
+          "sha256": "b63b06fde898c35f5a3c47aa793f35902bb3956c943f37c4180e74ab0e41074d"
+        },
+        {
+          "capture_index": 6,
+          "source_cell": 7,
+          "rgb": [
+            162,
+            67,
+            134
+          ],
+          "brightness_gain": 0.7474184221396117,
+          "distance_squared": 0.6691449814126458,
+          "sha256": "079314d66b53f53910909a310dbe845ce9e75978ef89e93006c9cd0afb9bbadd"
+        },
+        {
+          "capture_index": 7,
+          "source_cell": 0,
+          "rgb": [
+            15,
+            195,
+            37
+          ],
+          "brightness_gain": 0.8493624772313297,
+          "distance_squared": 13.227686703096559,
+          "sha256": "abf640656d820c2bbb3ce29ab3e4ebea090d446b69c7c44beae0d7c523349839"
+        },
+        {
+          "capture_index": 8,
+          "source_cell": 1,
+          "rgb": [
+            45,
+            199,
+            55
+          ],
+          "brightness_gain": 0.9449244060475162,
+          "distance_squared": 3.3218142548596292,
+          "sha256": "73c4811bc151d740066f35358dbe3723889ee74a2aefa90a92cd27b7cfc8e696"
+        }
+      ]
+    },
+    {
+      "direction": "south",
+      "passed": false,
+      "cells": [
+        1,
+        2,
+        3,
+        3,
+        4,
+        5,
+        6,
+        7,
+        0
+      ],
+      "samples": [
+        {
+          "capture_index": 0,
+          "source_cell": 1,
+          "rgb": [
+            48,
+            211,
+            58
+          ],
+          "brightness_gain": 1.001799856011519,
+          "distance_squared": 4.838012958963274,
+          "sha256": "53e5adb88cd892ed697a0e8cda93861455c97e04b3aebd8aa499eab9c64e7bf6"
+        },
+        {
+          "capture_index": 1,
+          "source_cell": 2,
+          "rgb": [
+            76,
+            189,
+            81
+          ],
+          "brightness_gain": 0.997721435081614,
+          "distance_squared": 1.7493578589775316,
+          "sha256": "d932897746bbb16032b32abd8a15fc5a709d39708dbf35fbe2384caeef3a19a1"
+        },
+        {
+          "capture_index": 2,
+          "source_cell": 3,
+          "rgb": [
+            104,
+            170,
+            100
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "f503074dd4f46d6dee5c148f9cf968a1cd44b1a294ec46a3f37b130c6a90b7e7"
+        },
+        {
+          "capture_index": 3,
+          "source_cell": 3,
+          "rgb": [
+            104,
+            170,
+            100
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "e2871c1a759796d3fc4759f9ff8854542aa6ed076c711ebe9d187f9342defe8d"
+        },
+        {
+          "capture_index": 4,
+          "source_cell": 4,
+          "rgb": [
+            132,
+            150,
+            120
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "df8b673cb54fa6833645b6434975b5775e7f1ad9dc952856c9039f88a2049e20"
+        },
+        {
+          "capture_index": 5,
+          "source_cell": 5,
+          "rgb": [
+            159,
+            130,
+            140
+          ],
+          "brightness_gain": 0.9974235104669887,
+          "distance_squared": 0.587761674718187,
+          "sha256": "026adc940b7b0c7dcd9b67e5fe74fbb7f866c86e9b3b8bb4873ac488125d82a9"
+        },
+        {
+          "capture_index": 6,
+          "source_cell": 6,
+          "rgb": [
+            184,
+            108,
+            158
+          ],
+          "brightness_gain": 0.9823120311045397,
+          "distance_squared": 1.1471441870653205,
+          "sha256": "492cea15b6d7bf5044472927144d79f35ac60434b588255784f0de03c2059051"
+        },
+        {
+          "capture_index": 7,
+          "source_cell": 7,
+          "rgb": [
+            195,
+            81,
+            161
+          ],
+          "brightness_gain": 0.899421726559273,
+          "distance_squared": 1.3308550185873689,
+          "sha256": "0002cb6a4eeaa37953ce4019b6c1f0b8af4e4868798e305f4abb1b73f1cec9a2"
+        },
+        {
+          "capture_index": 8,
+          "source_cell": 0,
+          "rgb": [
+            14,
+            179,
+            34
+          ],
+          "brightness_gain": 0.7797814207650273,
+          "distance_squared": 10.557377049180326,
+          "sha256": "facdc343ff1123b141725f0d56ba744f7a52ed081b4d0dda0a321e7043e811bc"
+        }
+      ]
+    },
+    {
+      "direction": "west",
+      "passed": true,
+      "cells": [
+        7,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "samples": [
+        {
+          "capture_index": 0,
+          "source_cell": 7,
+          "rgb": [
+            188,
+            78,
+            156
+          ],
+          "brightness_gain": 0.8686493184634448,
+          "distance_squared": 0.29739776951672864,
+          "sha256": "b4b3c5d072c7225452d60997a2114a7c55e0a434e43390127a0e97e5ef2fc64b"
+        },
+        {
+          "capture_index": 1,
+          "source_cell": 0,
+          "rgb": [
+            15,
+            194,
+            37
+          ],
+          "brightness_gain": 0.8451730418943534,
+          "distance_squared": 13.97085610200365,
+          "sha256": "c68cd930bed169450e34cd9108480f29ae30798cc48395c5b19ba738913973bc"
+        },
+        {
+          "capture_index": 2,
+          "source_cell": 1,
+          "rgb": [
+            43,
+            189,
+            52
+          ],
+          "brightness_gain": 0.8974082073434125,
+          "distance_squared": 3.704103671706271,
+          "sha256": "669e149ade39488d305df5d2e5f8f560d073397820b6424937c3ad8f47a07df6"
+        },
+        {
+          "capture_index": 3,
+          "source_cell": 2,
+          "rgb": [
+            72,
+            179,
+            77
+          ],
+          "brightness_gain": 0.945438727317922,
+          "distance_squared": 2.2856077554064003,
+          "sha256": "b8162faf6114d99da0ccacc656749be9e7d611671ac6fba1f955a5f7b8ef3b38"
+        },
+        {
+          "capture_index": 4,
+          "source_cell": 3,
+          "rgb": [
+            103,
+            168,
+            99
+          ],
+          "brightness_gain": 0.9890578485799341,
+          "distance_squared": 0.04746962748411003,
+          "sha256": "1d5e5249740d72beebe9aa663896b46b0e8db8e55d27f168d0aa65baced2309f"
+        },
+        {
+          "capture_index": 5,
+          "source_cell": 4,
+          "rgb": [
+            132,
+            150,
+            120
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "05738ac67a2ab6062c273236e8d02357e15fdba8ed0a8ce9b98735910887712d"
+        },
+        {
+          "capture_index": 6,
+          "source_cell": 5,
+          "rgb": [
+            159,
+            130,
+            140
+          ],
+          "brightness_gain": 0.9974235104669887,
+          "distance_squared": 0.587761674718187,
+          "sha256": "6ab8a77ffe6bf18c24c06565df5354eb93c435b728d0b23da02447f07a2ec1c7"
+        },
+        {
+          "capture_index": 7,
+          "source_cell": 6,
+          "rgb": [
+            187,
+            110,
+            161
+          ],
+          "brightness_gain": 0.9996166694047424,
+          "distance_squared": 1.989266743332739,
+          "sha256": "35dcaca99b01a727a1747ac2940e8051c337281af39c711caa9194866c40fac6"
+        },
+        {
+          "capture_index": 8,
+          "source_cell": 7,
+          "rgb": [
+            216,
+            90,
+            179
+          ],
+          "brightness_gain": 0.9979347377116894,
+          "distance_squared": 0.628252788104079,
+          "sha256": "bdbd8f00ee4ee4cc00088c75a51a4d258c0b95e86a13e593280b17625db6f8ef"
+        }
+      ]
+    }
+  ],
+  "fixture_hashes": {
+    "data.lua": "086e8df661c9c4776b9678ca62d3685d3d0a0333e2d3fad0bed99df8eaf2fb76",
+    "control.lua": "33cb44f271ed84aaad162be13425bcd787554c2bd0b38ada57bf326483220eba",
+    "spec.lua": "4dc9a461dca12a8f12df9f5ad2d61727461729afcd8df9770eb73bfa0a9f4d6e"
+  },
+  "primary_animation_clock": false,
+  "scope": "Temporary counters in real frame cells decoded from native 60-tick screenshot intervals. Diagnostic graphic pixels are never promoted as final artwork."
+}

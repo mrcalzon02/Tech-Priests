@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "normal_adapter_sha256": "a95e8c31828b5fdfe516728ab6db1b846d66d5d5f1583b6bfd59776a720f2caf",
+  "stages": [
+    {
+      "name": "tp-mh7-raw-metallicized-pellet",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-raw-metallicized-pellet-waning",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-raw-metallicized-pellet-waning",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-raw-metallicized-pellet-degraded",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-raw-metallicized-pellet-degraded",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-raw-metallicized-pellet-critical",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-raw-metallicized-pellet-critical",
+      "spoil_ticks": 1800,
+      "quality_change": -128,
+      "result": "tp-mh7-inert-pellet",
+      "stack_size": 1
+    }
+  ],
+  "contained_spoils": false,
+  "inert_is_fuel": false,
+  "commands": [
+    {
+      "stage": "create",
+      "exit_code": 0,
+      "log_sha256": "ca3ba351a5f904659da434534d6647e52edad36560c1358eb38388831be3a085"
+    },
+    {
+      "stage": "runtime",
+      "exit_code": 0,
+      "log_sha256": "c63027b0babf3cb8dd04b2a67777d3d92ae2d3c2ca2b8187f5434bd15da46886"
+    },
+    {
+      "stage": "data",
+      "exit_code": 0,
+      "log_sha256": "0e88546b5a173352931fd873ff0035aac29f7bd2c31ee9fe01db937d41d55f79"
+    }
+  ],
+  "scope": "Actual normal-timing add-on data load, safe runtime initialization and default prototypes. The separate accelerated native fixture proves the decay and containment behavior; ordinary chain integration remains open."
+}

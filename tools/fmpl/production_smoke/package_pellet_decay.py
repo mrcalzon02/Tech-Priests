@@ -11,7 +11,7 @@ def write(p,d):Path(p).write_text(json.dumps(d,indent=2)+'\n')
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--normal',required=True);ap.add_argument('--reload',required=True);ap.add_argument('--out',required=True);args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--normal',required=True);ap.add_argument('--reload',required=True);ap.add_argument('--out',required=True);ap.add_argument('--version',default='0.0.1');args=ap.parse_args()
     normal=Path(args.normal);reload=Path(args.reload);out=Path(args.out);src=Path(__file__).with_name('pellet_decay_review')
     if out.exists():raise FileExistsError('Preserve decay revisions')
     reports=[json.loads((p/'native-decay-readback.json').read_text()) for p in (normal,reload)]
@@ -23,10 +23,10 @@ def main():
     if reports[0]['behavior']['histories']!=reports[1]['behavior']['histories']:raise RuntimeError('Save/reload behavior differs')
     out.mkdir(parents=True);(out/'.gitattributes').write_bytes(b'* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol\n')
     shutil.copytree(src,out/'source')
-    mod=out/'review-mod/tp-mh7-pellet-decay_0.0.1';mod.mkdir(parents=True)
+    mod=out/('review-mod/tp-mh7-pellet-decay_'+args.version);mod.mkdir(parents=True)
     for name in ('config.lua','data.lua','decay.lua'):shutil.copy2(src/name,mod/name)
     shutil.copy2(src/'runtime.lua',mod/'control.lua')
-    write(mod/'info.json',dict(name='tp-mh7-pellet-decay',version='0.0.1',title='Metallicized pellet instability prototype',author='Tech Priests',factorio_version='2.1',
+    write(mod/'info.json',dict(name='tp-mh7-pellet-decay',version=args.version,title='Metallicized pellet instability prototype',author='Tech Priests',factorio_version='2.1',
         dependencies=['base >= 2.1.24','quality >= 2.1.24'],expansion_required=True,quality_required=True,spoiling_required=True))
     for name,path in (('native-continuous.json',normal),('native-save-reload.json',reload)):shutil.copy2(path/'native-decay-readback.json',out/name)
     contract=dict(status='native_behavior_verified; chain_recipe_and_machine_integration_pending',

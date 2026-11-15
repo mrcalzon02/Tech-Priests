@@ -1,0 +1,5585 @@
+{
+  "passed": true,
+  "save_reload_exercised": true,
+  "native_version": "2.1.24",
+  "behavior": {
+    "passed": true,
+    "checks": {
+      "transfer_preserved": true,
+      "containment_preserved": true,
+      "unseal_remaining_preserved": true,
+      "random_timers_differ": true,
+      "all_physical_carriers_inert": true,
+      "health_and_quality_decreased": true,
+      "inert_cannot_be_revived": true
+    },
+    "initial_timers": [
+      106,
+      76,
+      61,
+      109,
+      94,
+      114,
+      117,
+      147
+    ],
+    "histories": [
+      {
+        "tick": 0,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 106,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 106
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 126,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 126
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 100,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 100
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 101,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 101
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 108,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 108
+          }
+        },
+        "contained": {
+          "empty": true
+        }
+      },
+      {
+        "tick": 15,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 106,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 106
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 126,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 126
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 100,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 100
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 101,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 101
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 108,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 108
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 30,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 106,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 106
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 126,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 126
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 100,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 100
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 101,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 101
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 108,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 108
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 45,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 106,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 106
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 126,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 126
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 100,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 100
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 101,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 101
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 108,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 108
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 60,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 106,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 106
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 126,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 126
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 100,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 100
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 101,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 101
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 108,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 108
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 75,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 106,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 106
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 126,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 126
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 100,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 100
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 101,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 101
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 108,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 108
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 90,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 106,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 106
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 126,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 126
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 100,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 100
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 101,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 101
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 108,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 108
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 105,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 106,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 106
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 126,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 126
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 243,
+          "tags": {
+            "mh7_birth_tick": 101,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 101,
+            "mh7_rolled_interval": 142
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 102,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 105,
+            "mh7_rolled_interval": 112
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 108,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 108
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 120,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 196,
+          "tags": {
+            "mh7_birth_tick": 107,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 107,
+            "mh7_rolled_interval": 89
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 126,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 126
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 243,
+          "tags": {
+            "mh7_birth_tick": 101,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 101,
+            "mh7_rolled_interval": 142
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 102,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 105,
+            "mh7_rolled_interval": 112
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 241,
+          "tags": {
+            "mh7_birth_tick": 109,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 109,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 135,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 196,
+          "tags": {
+            "mh7_birth_tick": 107,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 107,
+            "mh7_rolled_interval": 89
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet",
+          "count": 1,
+          "quality": "legendary",
+          "health": 1,
+          "spoil_tick": 147,
+          "tags": {
+            "mh7_birth_tick": 0,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet",
+            "mh7_initialized_tick": 0,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 240,
+          "tags": {
+            "mh7_birth_tick": 127,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 127,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 243,
+          "tags": {
+            "mh7_birth_tick": 101,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 101,
+            "mh7_rolled_interval": 142
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 102,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 105,
+            "mh7_rolled_interval": 112
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 241,
+          "tags": {
+            "mh7_birth_tick": 109,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 109,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 150,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 196,
+          "tags": {
+            "mh7_birth_tick": 107,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 107,
+            "mh7_rolled_interval": 89
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 66
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 269,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 121
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 240,
+          "tags": {
+            "mh7_birth_tick": 127,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 127,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 243,
+          "tags": {
+            "mh7_birth_tick": 101,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 101,
+            "mh7_rolled_interval": 142
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 102,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 105,
+            "mh7_rolled_interval": 112
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 241,
+          "tags": {
+            "mh7_birth_tick": 109,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 109,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 165,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 196,
+          "tags": {
+            "mh7_birth_tick": 107,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 107,
+            "mh7_rolled_interval": 89
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 66
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 269,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 121
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 240,
+          "tags": {
+            "mh7_birth_tick": 127,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 127,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 243,
+          "tags": {
+            "mh7_birth_tick": 101,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 101,
+            "mh7_rolled_interval": 142
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 102,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 105,
+            "mh7_rolled_interval": 112
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 241,
+          "tags": {
+            "mh7_birth_tick": 109,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 109,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 180,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 196,
+          "tags": {
+            "mh7_birth_tick": 107,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 107,
+            "mh7_rolled_interval": 89
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 66
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 269,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 121
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 240,
+          "tags": {
+            "mh7_birth_tick": 127,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 127,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 243,
+          "tags": {
+            "mh7_birth_tick": 101,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 101,
+            "mh7_rolled_interval": 142
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 102,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 105,
+            "mh7_rolled_interval": 112
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 241,
+          "tags": {
+            "mh7_birth_tick": 109,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 109,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 195,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 196,
+          "tags": {
+            "mh7_birth_tick": 107,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 107,
+            "mh7_rolled_interval": 89
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 66
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 269,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 121
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 240,
+          "tags": {
+            "mh7_birth_tick": 127,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 127,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 243,
+          "tags": {
+            "mh7_birth_tick": 101,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 101,
+            "mh7_rolled_interval": 142
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 102,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 105,
+            "mh7_rolled_interval": 112
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 241,
+          "tags": {
+            "mh7_birth_tick": 109,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 109,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 210,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 310,
+          "tags": {
+            "mh7_birth_tick": 197,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 197,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 66
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 269,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 121
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 240,
+          "tags": {
+            "mh7_birth_tick": 127,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 127,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 243,
+          "tags": {
+            "mh7_birth_tick": 101,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 101,
+            "mh7_rolled_interval": 142
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 214,
+          "tags": {
+            "mh7_birth_tick": 102,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 105,
+            "mh7_rolled_interval": 112
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 241,
+          "tags": {
+            "mh7_birth_tick": 109,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 109,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 225,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 310,
+          "tags": {
+            "mh7_birth_tick": 197,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 197,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.5,
+          "spoil_tick": 347,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 215,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 269,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 121
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 240,
+          "tags": {
+            "mh7_birth_tick": 127,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 127,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 243,
+          "tags": {
+            "mh7_birth_tick": 101,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 101,
+            "mh7_rolled_interval": 142
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 326,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 225,
+            "mh7_rolled_interval": 111
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 241,
+          "tags": {
+            "mh7_birth_tick": 109,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 109,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 240,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 310,
+          "tags": {
+            "mh7_birth_tick": 197,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 197,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.5,
+          "spoil_tick": 347,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 215,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 269,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 121
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 240,
+          "tags": {
+            "mh7_birth_tick": 127,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 127,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 243,
+          "tags": {
+            "mh7_birth_tick": 101,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 101,
+            "mh7_rolled_interval": 142
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 326,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 225,
+            "mh7_rolled_interval": 111
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 241,
+          "tags": {
+            "mh7_birth_tick": 109,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 109,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 255,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 310,
+          "tags": {
+            "mh7_birth_tick": 197,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 197,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.5,
+          "spoil_tick": 347,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 215,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "epic",
+          "health": 0.75,
+          "spoil_tick": 269,
+          "tags": {
+            "mh7_birth_tick": 148,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_initialized_tick": 148,
+            "mh7_rolled_interval": 121
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 348,
+          "tags": {
+            "mh7_birth_tick": 241,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 241,
+            "mh7_rolled_interval": 107
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 385,
+          "tags": {
+            "mh7_birth_tick": 244,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 244,
+            "mh7_rolled_interval": 141
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 326,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 225,
+            "mh7_rolled_interval": 111
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 389,
+          "tags": {
+            "mh7_birth_tick": 242,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 242,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 270,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 310,
+          "tags": {
+            "mh7_birth_tick": 197,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 197,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.5,
+          "spoil_tick": 347,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 215,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 379,
+          "tags": {
+            "mh7_birth_tick": 270,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 270,
+            "mh7_rolled_interval": 109
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 348,
+          "tags": {
+            "mh7_birth_tick": 241,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 241,
+            "mh7_rolled_interval": 107
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 385,
+          "tags": {
+            "mh7_birth_tick": 244,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 244,
+            "mh7_rolled_interval": 141
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 326,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 225,
+            "mh7_rolled_interval": 111
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 389,
+          "tags": {
+            "mh7_birth_tick": 242,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 242,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 285,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 310,
+          "tags": {
+            "mh7_birth_tick": 197,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 197,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.5,
+          "spoil_tick": 347,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 215,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 379,
+          "tags": {
+            "mh7_birth_tick": 270,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 270,
+            "mh7_rolled_interval": 109
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 348,
+          "tags": {
+            "mh7_birth_tick": 241,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 241,
+            "mh7_rolled_interval": 107
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 385,
+          "tags": {
+            "mh7_birth_tick": 244,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 244,
+            "mh7_rolled_interval": 141
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 326,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 225,
+            "mh7_rolled_interval": 111
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 389,
+          "tags": {
+            "mh7_birth_tick": 242,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 242,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 300,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 310,
+          "tags": {
+            "mh7_birth_tick": 197,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 197,
+            "mh7_rolled_interval": 113
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.5,
+          "spoil_tick": 347,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 215,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 379,
+          "tags": {
+            "mh7_birth_tick": 270,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 270,
+            "mh7_rolled_interval": 109
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 348,
+          "tags": {
+            "mh7_birth_tick": 241,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 241,
+            "mh7_rolled_interval": 107
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 385,
+          "tags": {
+            "mh7_birth_tick": 244,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 244,
+            "mh7_rolled_interval": 141
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 326,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 225,
+            "mh7_rolled_interval": 111
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 389,
+          "tags": {
+            "mh7_birth_tick": 242,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 242,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 315,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 449,
+          "tags": {
+            "mh7_birth_tick": 311,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 311,
+            "mh7_rolled_interval": 138
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.5,
+          "spoil_tick": 347,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 215,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 379,
+          "tags": {
+            "mh7_birth_tick": 270,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 270,
+            "mh7_rolled_interval": 109
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 348,
+          "tags": {
+            "mh7_birth_tick": 241,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 241,
+            "mh7_rolled_interval": 107
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 385,
+          "tags": {
+            "mh7_birth_tick": 244,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 244,
+            "mh7_rolled_interval": 141
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 326,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 225,
+            "mh7_rolled_interval": 111
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 389,
+          "tags": {
+            "mh7_birth_tick": 242,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 242,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 330,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 449,
+          "tags": {
+            "mh7_birth_tick": 311,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 311,
+            "mh7_rolled_interval": 138
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.5,
+          "spoil_tick": 347,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 215,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 379,
+          "tags": {
+            "mh7_birth_tick": 270,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 270,
+            "mh7_rolled_interval": 109
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 348,
+          "tags": {
+            "mh7_birth_tick": 241,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 241,
+            "mh7_rolled_interval": 107
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 385,
+          "tags": {
+            "mh7_birth_tick": 244,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 244,
+            "mh7_rolled_interval": 141
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 399,
+          "tags": {
+            "mh7_birth_tick": 327,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 330,
+            "mh7_rolled_interval": 72
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 389,
+          "tags": {
+            "mh7_birth_tick": 242,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 242,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 345,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 449,
+          "tags": {
+            "mh7_birth_tick": 311,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 311,
+            "mh7_rolled_interval": 138
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.5,
+          "spoil_tick": 347,
+          "tags": {
+            "mh7_birth_tick": 215,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 215,
+            "mh7_rolled_interval": 132
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 379,
+          "tags": {
+            "mh7_birth_tick": 270,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 270,
+            "mh7_rolled_interval": 109
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 348,
+          "tags": {
+            "mh7_birth_tick": 241,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 241,
+            "mh7_rolled_interval": 107
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 385,
+          "tags": {
+            "mh7_birth_tick": 244,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 244,
+            "mh7_rolled_interval": 141
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 399,
+          "tags": {
+            "mh7_birth_tick": 327,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 330,
+            "mh7_rolled_interval": 72
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 389,
+          "tags": {
+            "mh7_birth_tick": 242,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 242,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 360,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 449,
+          "tags": {
+            "mh7_birth_tick": 311,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 311,
+            "mh7_rolled_interval": 138
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.25,
+          "spoil_tick": 414,
+          "tags": {
+            "mh7_birth_tick": 348,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 348,
+            "mh7_rolled_interval": 66
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 379,
+          "tags": {
+            "mh7_birth_tick": 270,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 270,
+            "mh7_rolled_interval": 109
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 484,
+          "tags": {
+            "mh7_birth_tick": 349,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 349,
+            "mh7_rolled_interval": 135
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 385,
+          "tags": {
+            "mh7_birth_tick": 244,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 244,
+            "mh7_rolled_interval": 141
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 399,
+          "tags": {
+            "mh7_birth_tick": 327,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 330,
+            "mh7_rolled_interval": 72
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 389,
+          "tags": {
+            "mh7_birth_tick": 242,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 242,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 375,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 449,
+          "tags": {
+            "mh7_birth_tick": 311,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 311,
+            "mh7_rolled_interval": 138
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.25,
+          "spoil_tick": 414,
+          "tags": {
+            "mh7_birth_tick": 348,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 348,
+            "mh7_rolled_interval": 66
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 379,
+          "tags": {
+            "mh7_birth_tick": 270,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 270,
+            "mh7_rolled_interval": 109
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 484,
+          "tags": {
+            "mh7_birth_tick": 349,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 349,
+            "mh7_rolled_interval": 135
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 385,
+          "tags": {
+            "mh7_birth_tick": 244,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 244,
+            "mh7_rolled_interval": 141
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 399,
+          "tags": {
+            "mh7_birth_tick": 327,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 330,
+            "mh7_rolled_interval": 72
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.5,
+          "spoil_tick": 389,
+          "tags": {
+            "mh7_birth_tick": 242,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 242,
+            "mh7_rolled_interval": 147
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 390,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 449,
+          "tags": {
+            "mh7_birth_tick": 311,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 311,
+            "mh7_rolled_interval": 138
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.25,
+          "spoil_tick": 414,
+          "tags": {
+            "mh7_birth_tick": 348,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 348,
+            "mh7_rolled_interval": 66
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 444,
+          "tags": {
+            "mh7_birth_tick": 380,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 380,
+            "mh7_rolled_interval": 64
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 484,
+          "tags": {
+            "mh7_birth_tick": 349,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 349,
+            "mh7_rolled_interval": 135
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 536,
+          "tags": {
+            "mh7_birth_tick": 386,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 386,
+            "mh7_rolled_interval": 150
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 399,
+          "tags": {
+            "mh7_birth_tick": 327,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 330,
+            "mh7_rolled_interval": 72
+          }
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 466,
+          "tags": {
+            "mh7_birth_tick": 390,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 390,
+            "mh7_rolled_interval": 76
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-contained-metallicized-pellet",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 0,
+          "tags": {
+            "mh7_integrity": 0.6499999761581421,
+            "mh7_raw_name": "tp-mh7-raw-metallicized-pellet-waning",
+            "mh7_remaining_ticks": 54,
+            "mh7_shell_health": 0.8999999761581421,
+            "mh7_shell_quality": "uncommon"
+          }
+        }
+      },
+      {
+        "tick": 405,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 449,
+          "tags": {
+            "mh7_birth_tick": 311,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 311,
+            "mh7_rolled_interval": 138
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.25,
+          "spoil_tick": 414,
+          "tags": {
+            "mh7_birth_tick": 348,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 348,
+            "mh7_rolled_interval": 66
+          }
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 444,
+          "tags": {
+            "mh7_birth_tick": 380,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 380,
+            "mh7_rolled_interval": 64
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 484,
+          "tags": {
+            "mh7_birth_tick": 349,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 349,
+            "mh7_rolled_interval": 135
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 536,
+          "tags": {
+            "mh7_birth_tick": 386,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 386,
+            "mh7_rolled_interval": 150
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 466,
+          "tags": {
+            "mh7_birth_tick": 390,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 390,
+            "mh7_rolled_interval": 76
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 454,
+          "tags": {
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning"
+          }
+        }
+      },
+      {
+        "tick": 420,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 449,
+          "tags": {
+            "mh7_birth_tick": 311,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 311,
+            "mh7_rolled_interval": 138
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 444,
+          "tags": {
+            "mh7_birth_tick": 380,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 380,
+            "mh7_rolled_interval": 64
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 484,
+          "tags": {
+            "mh7_birth_tick": 349,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 349,
+            "mh7_rolled_interval": 135
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 536,
+          "tags": {
+            "mh7_birth_tick": 386,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 386,
+            "mh7_rolled_interval": 150
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 466,
+          "tags": {
+            "mh7_birth_tick": 390,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 390,
+            "mh7_rolled_interval": 76
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 454,
+          "tags": {
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning"
+          }
+        }
+      },
+      {
+        "tick": 435,
+        "chest": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 449,
+          "tags": {
+            "mh7_birth_tick": 311,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 311,
+            "mh7_rolled_interval": 138
+          }
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 444,
+          "tags": {
+            "mh7_birth_tick": 380,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 380,
+            "mh7_rolled_interval": 64
+          }
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 484,
+          "tags": {
+            "mh7_birth_tick": 349,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 349,
+            "mh7_rolled_interval": 135
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 536,
+          "tags": {
+            "mh7_birth_tick": 386,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 386,
+            "mh7_rolled_interval": 150
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 466,
+          "tags": {
+            "mh7_birth_tick": 390,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 390,
+            "mh7_rolled_interval": 76
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 454,
+          "tags": {
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning"
+          }
+        }
+      },
+      {
+        "tick": 450,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 484,
+          "tags": {
+            "mh7_birth_tick": 349,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 349,
+            "mh7_rolled_interval": 135
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 536,
+          "tags": {
+            "mh7_birth_tick": 386,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 386,
+            "mh7_rolled_interval": 150
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 466,
+          "tags": {
+            "mh7_birth_tick": 390,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 390,
+            "mh7_rolled_interval": 76
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-waning",
+          "count": 1,
+          "quality": "rare",
+          "health": 0.6499999761581421,
+          "spoil_tick": 454,
+          "tags": {
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-waning"
+          }
+        }
+      },
+      {
+        "tick": 465,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 484,
+          "tags": {
+            "mh7_birth_tick": 349,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 349,
+            "mh7_rolled_interval": 135
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 536,
+          "tags": {
+            "mh7_birth_tick": 386,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 386,
+            "mh7_rolled_interval": 150
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 466,
+          "tags": {
+            "mh7_birth_tick": 390,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 390,
+            "mh7_rolled_interval": 76
+          }
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.5,
+          "spoil_tick": 588,
+          "tags": {
+            "mh7_birth_tick": 455,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 455,
+            "mh7_rolled_interval": 133
+          }
+        }
+      },
+      {
+        "tick": 480,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 484,
+          "tags": {
+            "mh7_birth_tick": 349,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 349,
+            "mh7_rolled_interval": 135
+          }
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 536,
+          "tags": {
+            "mh7_birth_tick": 386,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 386,
+            "mh7_rolled_interval": 150
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.5,
+          "spoil_tick": 588,
+          "tags": {
+            "mh7_birth_tick": 455,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 455,
+            "mh7_rolled_interval": 133
+          }
+        }
+      },
+      {
+        "tick": 495,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 536,
+          "tags": {
+            "mh7_birth_tick": 386,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 386,
+            "mh7_rolled_interval": 150
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.5,
+          "spoil_tick": 588,
+          "tags": {
+            "mh7_birth_tick": 455,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 455,
+            "mh7_rolled_interval": 133
+          }
+        }
+      },
+      {
+        "tick": 510,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 536,
+          "tags": {
+            "mh7_birth_tick": 386,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 386,
+            "mh7_rolled_interval": 150
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.5,
+          "spoil_tick": 588,
+          "tags": {
+            "mh7_birth_tick": 455,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 455,
+            "mh7_rolled_interval": 133
+          }
+        }
+      },
+      {
+        "tick": 525,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.25,
+          "spoil_tick": 536,
+          "tags": {
+            "mh7_birth_tick": 386,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 386,
+            "mh7_rolled_interval": 150
+          }
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.5,
+          "spoil_tick": 588,
+          "tags": {
+            "mh7_birth_tick": 455,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 455,
+            "mh7_rolled_interval": 133
+          }
+        }
+      },
+      {
+        "tick": 540,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.5,
+          "spoil_tick": 588,
+          "tags": {
+            "mh7_birth_tick": 455,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 455,
+            "mh7_rolled_interval": 133
+          }
+        }
+      },
+      {
+        "tick": 555,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.5,
+          "spoil_tick": 588,
+          "tags": {
+            "mh7_birth_tick": 455,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 455,
+            "mh7_rolled_interval": 133
+          }
+        }
+      },
+      {
+        "tick": 570,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.5,
+          "spoil_tick": 588,
+          "tags": {
+            "mh7_birth_tick": 455,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 455,
+            "mh7_rolled_interval": 133
+          }
+        }
+      },
+      {
+        "tick": 585,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-degraded",
+          "count": 1,
+          "quality": "uncommon",
+          "health": 0.5,
+          "spoil_tick": 588,
+          "tags": {
+            "mh7_birth_tick": 455,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-degraded",
+            "mh7_initialized_tick": 455,
+            "mh7_rolled_interval": 133
+          }
+        }
+      },
+      {
+        "tick": 600,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.25,
+          "spoil_tick": 698,
+          "tags": {
+            "mh7_birth_tick": 589,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 589,
+            "mh7_rolled_interval": 109
+          }
+        }
+      },
+      {
+        "tick": 615,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.25,
+          "spoil_tick": 698,
+          "tags": {
+            "mh7_birth_tick": 589,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 589,
+            "mh7_rolled_interval": 109
+          }
+        }
+      },
+      {
+        "tick": 630,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.25,
+          "spoil_tick": 698,
+          "tags": {
+            "mh7_birth_tick": 589,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 589,
+            "mh7_rolled_interval": 109
+          }
+        }
+      },
+      {
+        "tick": 645,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.25,
+          "spoil_tick": 698,
+          "tags": {
+            "mh7_birth_tick": 589,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 589,
+            "mh7_rolled_interval": 109
+          }
+        }
+      },
+      {
+        "tick": 660,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.25,
+          "spoil_tick": 698,
+          "tags": {
+            "mh7_birth_tick": 589,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 589,
+            "mh7_rolled_interval": 109
+          }
+        }
+      },
+      {
+        "tick": 675,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.25,
+          "spoil_tick": 698,
+          "tags": {
+            "mh7_birth_tick": 589,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 589,
+            "mh7_rolled_interval": 109
+          }
+        }
+      },
+      {
+        "tick": 690,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-raw-metallicized-pellet-critical",
+          "count": 1,
+          "quality": "normal",
+          "health": 0.25,
+          "spoil_tick": 698,
+          "tags": {
+            "mh7_birth_tick": 589,
+            "mh7_decay_phase": "tp-mh7-raw-metallicized-pellet-critical",
+            "mh7_initialized_tick": 589,
+            "mh7_rolled_interval": 109
+          }
+        }
+      },
+      {
+        "tick": 705,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 720,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 735,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 750,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 765,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 780,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 795,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 810,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 825,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 840,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 855,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 870,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 885,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 900,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 915,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 930,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 945,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 960,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 975,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      },
+      {
+        "tick": 990,
+        "chest": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "normal": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "ground": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "belt": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "inserter": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "script_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "character_inventory": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        },
+        "contained": {
+          "name": "tp-mh7-inert-pellet",
+          "count": 1,
+          "quality": "normal",
+          "health": 0,
+          "spoil_tick": 0
+        }
+      }
+    ],
+    "config": {
+      "min_ticks": 60,
+      "max_ticks": 150
+    },
+    "tick": 1000
+  },
+  "source_hashes": {
+    "config.lua": "e9a679c5e6af9aaf2288575d9a84e19b5a73b2fe4acf08342d50dea3737c8411",
+    "control.lua": "b8b6f23a3708fc82730804c404a3868fa00e2846fcff5339aae5d2efd91fcb54",
+    "data.lua": "d87548d7124111407a6f5292edca542684cdd386098ef374c3848e1c2fbf4367",
+    "decay.lua": "55a28ca5851265c9ea2542e7fb19d3a33a712ac880dae5f53450258b1c58d022",
+    "runtime.lua": "a95e8c31828b5fdfe516728ab6db1b846d66d5d5f1583b6bfd59776a720f2caf"
+  },
+  "normal_config_sha256": "e9a679c5e6af9aaf2288575d9a84e19b5a73b2fe4acf08342d50dea3737c8411",
+  "test_config_sha256": "3ba2880d4cebebe57ecbfbd6bcc52a7630d96f47907d6759946d849794a4632f",
+  "save_sha256": "6187ee1eb1f086fd1b488950d3c27defc86d11088b7be69d41471624061252b7",
+  "log_hashes": {
+    "create": "ef1a2ce2b69fae28de225958b026a5e92d97cd42b2f4667f1f8209bc6ee66513",
+    "save-at-200": "c8ae0556fa4c8f7aadba5ec3bcbe0bfda941b494b19b0847929606f1ff4ec622",
+    "runtime": "944b33715a0d8d2085395cd6417298ce9f37d338537a32ac6f23047b0a942333"
+  },
+  "scope": "Accelerated actual native quality/spoilage, item health, separate randomized timers, inventory transfer, belt/ground/inserter/script inventory, reversible containment and terminal inert result. Normal timing is configurable 15-30 seconds per stage; ordinary chain integration remains open."
+}

@@ -1,0 +1,49 @@
+{
+  "status": "native_behavior_verified; chain_recipe_and_machine_integration_pending",
+  "owner_requirement": "Raw metallicized pellets leave the crucible with a random decay cooldown that reduces both HP and quality and ends as inert pellets; rush them into suitable containment.",
+  "output_kind": "solid item, not a second gameplay fluid box",
+  "raw_item": "tp-mh7-raw-metallicized-pellet",
+  "inert_item": "tp-mh7-inert-pellet",
+  "prototype_tuning": {
+    "random_step_seconds": [
+      15,
+      30
+    ],
+    "steps": 4,
+    "total_uncontained_seconds": [
+      60,
+      120
+    ],
+    "health": [
+      1,
+      0.75,
+      0.5,
+      0.25,
+      0
+    ],
+    "quality": "One native tier down per decay transition, floor normal; terminal inert is always normal"
+  },
+  "randomization": "Separate native spoil deadline per individual raw pellet; tagged, nonstacking raw units prevent timer refresh through merge/split",
+  "containment": "Requires an actual empty pressure shell. Sealing preserves HP, quality, phase and remaining lifetime. Unsealing resumes that remaining lifetime and returns the same shell condition/quality. No restoration of decayed/inert pellets.",
+  "verified": [
+    "Independent random cooldowns",
+    "Actual item health and native quality decrease",
+    "Chest-to-chest movement preserves timer/condition",
+    "Belt, ground, inserter, character and registered script inventories",
+    "Inert terminal, non-fuel, cannot be revived by containment",
+    "Shell consumption and state-conserving return",
+    "Paused containment and resumed remaining lifetime",
+    "Actual save/reload history equals continuous run"
+  ],
+  "normal_adapter": "No test scenario creation or world clearing. Registers the provisional native crucible prototype when present and exposes sealing operations for the planned canister assembler.",
+  "limitations": [
+    "Current icons are base-game prototype placeholders; no base-game image bytes redistributed",
+    "Normal timing is initial configurable prototype tuning, not owner-approved balancing",
+    "Final crucible/forge/canister recipes and full ordinary mod integration remain open"
+  ],
+  "owner_balance_approved": false,
+  "production_pickup_race_fixed": true,
+  "production_observation": "Registered producer output plus local transport only when completed production changes. Existing native age is subtracted before assigning a random deadline, preventing late discovery from refreshing a pellet.",
+  "native_crucible_integration": "Four actual production/pickup/decay/containment orientations and uncontained blocked output pass",
+  "normal_adapter_verified": true
+}
