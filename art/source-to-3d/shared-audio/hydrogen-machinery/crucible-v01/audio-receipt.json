@@ -1,0 +1,82 @@
+{
+  "passed": true,
+  "provenance": "Entirely authored oscillators, seeded filtered noise and resonances; no sampled or third-party recordings",
+  "generator_sha256": "0beb344f7d84a5d0ef214d1bb839e328fc45e2b741109751317790348fa6e22a",
+  "assets": [
+    {
+      "name": "crucible-working",
+      "seconds": 8.0,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": true,
+      "plan": "Damped 60/120Hz induction/contactor bed, loaded cabinet resonance and closed cooling-circuit wash. Restrained half-cycle relay knocks; no compressor strokes or invented exposed discharge.",
+      "wav_sha256": "7c3c7bb7b3fc0274b4cb486d016315e1c155131aa41576b9b72434164825f2a1",
+      "ogg_sha256": "4854cf37ecb0f9a3cd019b93d31f7d5f49c0abab7d0ebcb5c7478943580adb23",
+      "decoded_peak": 0.5372324585914612,
+      "decoded_rms": 0.15930819511413574,
+      "decoded_rms_dbfs": -15.955237653933061,
+      "loop_seam_step": 0.005739737302064896,
+      "ordinary_99_9_percent_step": 0.027614869229495485
+    },
+    {
+      "name": "crucible-idle",
+      "seconds": 8.0,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": true,
+      "plan": "Powered but inactive cabinet coil; fan and process work stopped.",
+      "wav_sha256": "8fb6fe36f36a6eb905e39b65ff1051ce44cdfe0d4f73fcfad928edfa94c85bd5",
+      "ogg_sha256": "7d4f30586c047933c2240741570915c04a2c45922296c1e09d20a5cbecf3b378",
+      "decoded_peak": 0.08614251017570496,
+      "decoded_rms": 0.03207392618060112,
+      "decoded_rms_dbfs": -29.876957493539905,
+      "loop_seam_step": 0.00019080750644207,
+      "ordinary_99_9_percent_step": 0.001105611274018883
+    },
+    {
+      "name": "crucible-start",
+      "seconds": 2.4,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": false,
+      "plan": "Heavy contactor engagement followed by induction/cooling ramp-up.",
+      "wav_sha256": "882f58fc7732d2a9c97ee4c32beac60578bd979a556fd0dedcca90e4d4b16667",
+      "ogg_sha256": "05c29cba09487fd4fa01d31da6a0a351af3a0faa039dd348477be959aae58ae8",
+      "decoded_peak": 0.5844841599464417,
+      "decoded_rms": 0.1402389407157898,
+      "decoded_rms_dbfs": -17.06262754624654,
+      "loop_seam_step": 0.15275529026985168,
+      "ordinary_99_9_percent_step": 0.07353278835117742
+    },
+    {
+      "name": "crucible-stop",
+      "seconds": 2.4,
+      "sample_rate": 48000,
+      "channels": 1,
+      "loop": false,
+      "plan": "Contactor releases; closed cooling drive and coil decay. No unsupported pressure-vent hiss.",
+      "wav_sha256": "05bb5d5fea70390a28ab541fde21f5186eb3d3c6d9071d456d8c35df74ab5e93",
+      "ogg_sha256": "8cf57bfd1e4849e5efbb07b5657d5c48900d61461a311e4579478c69c507df23",
+      "decoded_peak": 0.59315425157547,
+      "decoded_rms": 0.10497771203517914,
+      "decoded_rms_dbfs": -19.57805793623937,
+      "loop_seam_step": 0.0003192930016666651,
+      "ordinary_99_9_percent_step": 0.028986252188682317
+    }
+  ],
+  "native_mix": {
+    "working_gain": 0.65,
+    "audible_distance_modifier": 2.0,
+    "priority": 40,
+    "idle_gain": 0.1,
+    "start_gain": 0.7,
+    "stop_gain": 0.6
+  },
+  "compressor_comparison": {
+    "receipt_sha256": "224afba3c44e893010cb17b4359dcd446f330aeace163d50941f2c28de2ac099",
+    "effective_rms_difference_db": -6.966119706844651,
+    "compressor_gain": 1.15
+  },
+  "owner_audition_approved": false,
+  "native_binding_verified": false
+}

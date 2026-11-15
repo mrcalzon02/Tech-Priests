@@ -1,0 +1,11 @@
+{
+  "name": "tp-mh7-crucible-audio",
+  "version": "0.0.1",
+  "title": "Crucible authored pressure and cooling audio",
+  "author": "Tech Priests",
+  "factorio_version": "2.1",
+  "dependencies": [
+    "base >= 2.1.24",
+    "? tp-mh7-crucible-review >= 0.0.1"
+  ]
+}

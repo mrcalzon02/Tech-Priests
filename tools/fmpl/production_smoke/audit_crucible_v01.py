@@ -61,14 +61,21 @@ def main():
                     if hit[0] is not None:hits.append(dict(route=route['id'],object=other.name,start=list(start),end=list(end),offset=[x,y],hit=list(hit[0])))
     # Fan blades must clear the shroud and front grill at every sampled pose.
     blades=[o for o in meshes if 'cooling fan swept blade' in o.name]
-    fixed=[o for o in meshes if 'fan front protective guard' in o.name or 'cooling fan protective shroud' in o.name]
-    collisions=[];checks=0;loop={}
+    fixed=[o for o in meshes if any(t in o.name for t in ('fan front protective guard','cooling fan protective shroud','cooling fan bearing hub','fan spindle retaining washer','fan spindle retained cap'))]
+    hub=s.objects.get(receipt.get('fan_rotor_hub',''))
+    collisions=[];checks=0;loop={};blade_contacts=[]
     for frame in range(1,194,12):
         s.frame_set(frame-1 if args.glb else frame);bpy.context.view_layer.update()
         for blade in blades:
             bvh=tree(blade)
+            if hub:
+                distance=gap(blade,hub);blade_contacts.append(dict(frame=frame,blade=blade.name,hub=hub.name,gap=distance,passed=distance<=.001))
             for other in fixed:
                 checks+=1;overlap=bvh.overlap(tree(other))
+                if overlap:collisions.append(dict(frame=frame,a=blade.name,b=other.name,pairs=len(overlap)))
+        for i,blade in enumerate(blades):
+            for other in blades[i+1:]:
+                checks+=1;overlap=tree(blade).overlap(tree(other))
                 if overlap:collisions.append(dict(frame=frame,a=blade.name,b=other.name,pairs=len(overlap)))
         if frame in (1,193):loop[frame]={o.name:[float(c) for row in o.matrix_world for c in row] for o in blades}
     loop_error=max(abs(a-b) for name,values in loop[1].items() for a,b in zip(values,loop[193][name]))
@@ -77,11 +84,12 @@ def main():
     if hits:errors.append('process route core blocked')
     if any(not t['passed'] for t in transitions):errors.append('twisted or deformed transition geometry')
     if collisions:errors.append('fan collision')
+    if receipt.get('fan_blade_count') and (len(blades)!=receipt['fan_blade_count'] or not hub or any(not r['passed'] for r in blade_contacts)):errors.append('fan blade roots not attached to hub')
     if loop_error>1e-4:errors.append('working loop closure')
     if not bores['passed']:errors.append('external mouths')
     if stats['degenerate_triangles'] or not stats['finite'] or stats['missing_uv']:errors.append('mesh validity')
     report=dict(passed=not errors,errors=errors,source_sha256=sha(source),artifact_sha256=sha(args.glb or source),runtime_artifact=bool(args.glb),contacts=contacts,core_rays=rays,core_hits=hits,transitions=transitions,
-        fan_surface_pair_checks=checks,fan_collisions=collisions,fan_loop_error=loop_error,external_bores=bores,mesh_stats=stats,bounds=bounds(meshes),
+        fan_surface_pair_checks=checks,fan_collisions=collisions,fan_blade_contacts=blade_contacts,fan_loop_error=loop_error,external_bores=bores,mesh_stats=stats,bounds=bounds(meshes),
         scope='Actual evaluated contacts, five core paths per curved process segment into drilled vessel and 17 fan poses. This is a targeted geometry audit, not structural/pressure certification or native seating proof.')
     (out/'mechanical-readback.json').write_text(json.dumps(report,indent=2)+'\n')
     print('CRUCIBLE_MECHANICS',not errors,errors,'contact_failures',sum(not c['passed'] for c in contacts),'core_hits',len(hits),'fan_collisions',len(collisions),flush=True)

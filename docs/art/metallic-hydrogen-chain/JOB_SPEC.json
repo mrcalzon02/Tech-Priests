@@ -258,15 +258,6 @@
           "model_mouth_center": null,
           "model_outward_normal": null,
           "verified": false
-        },
-        {
-          "id": "metallicized_intermediate_output",
-          "fluid_id": null,
-          "native_position": null,
-          "native_direction": null,
-          "model_mouth_center": null,
-          "model_outward_normal": null,
-          "verified": false
         }
       ],
       "item_access_edges": [],
@@ -288,7 +279,29 @@
         444
       ],
       "deliverable_status": "not_started",
-      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review"
+      "must_not_claim": "Factorio connectivity or production sprites until actual native target and game review",
+      "historical_symbolic_fluid_output": {
+        "id": "metallicized_intermediate_output",
+        "fluid_id": null,
+        "native_position": null,
+        "native_direction": null,
+        "model_mouth_center": null,
+        "model_outward_normal": null,
+        "verified": false
+      },
+      "symbolic_item_ports": [
+        {
+          "id": "raw_metallicized_pellet_output",
+          "item_id": "tp-mh7-raw-metallicized-pellet",
+          "native_pickup_verified": false
+        }
+      ],
+      "owner_process_override": {
+        "output": "raw solid pellets",
+        "behavior_contract": "art/source-to-3d/metallic-hydrogen-chain/pellet-instability/v01-native-behavior/CONTRACT.json",
+        "requirement": "Random decay cooldown lowers HP and quality until inert; get pellets into appropriate containment promptly.",
+        "preserve_products_in_machine_output": false
+      }
     },
     {
       "stage": 5,

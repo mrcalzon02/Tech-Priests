@@ -3,7 +3,7 @@
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
   "current_machine": "metallization-crucible",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\metallization-crucible\\v01-construction-pilot",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\metallization-crucible\\v03-finish-and-states",
   "queue": [
     {
       "id": "water-purifier",
@@ -35,7 +35,7 @@
         5,
         5
       ],
-      "status": "real construction pilot; source/export verified; finishing/audio/native pending"
+      "status": "surfaced six-blade/four-angle/audio candidate; native one-fluid/item-output fixture next"
     },
     {
       "id": "pelletization-forge",
@@ -104,16 +104,16 @@
     "body_render_layer": "lower-object",
     "next_shape_action": "none; owner called done"
   },
-  "library_registry_sha256": "09c34c15db45101327f893bbc6387f96f9dd05f60bab1d7ff36750f2a64b570a",
+  "library_registry_sha256": "108f7123a43eb0a44a4eb684723fde1aa84a35b34a51b73b32d0f9a2e8d0a274",
   "reactors": {
     "status": "V14 native bytes still unrecovered",
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Build and refine metallization crucible with relevant machine audio",
-    "Complete pelletization forge, vessel fabricator and canister assembler",
-    "Integrate chain prototypes/economy and exact native clocks",
-    "Recover and refine three plasma reactors including sound"
+    "Implement native 5x5 crucible: one hydrogen fluid input, raw pellet item output; bind decay and authored audio",
+    "Review native inlet fitting, item access, state clocks and final crucible finish",
+    "Build remaining forge/fabricator/assembler with state-preserving pellet containment",
+    "Integrate full chain and recover/refine three reactor sources"
   ],
   "original_goal_complete": false,
   "concurrent_work_preserved": "model-production bunker/data.lua work untouched",
@@ -223,36 +223,38 @@
     "ordinary_chain_integrated": false
   },
   "crucible": {
-    "status": "technically_verified_construction_candidate; finish_and_native_pending",
-    "source_sha256": "82e2ad3d5a54ecd2ab8cdecf94417e985a20ad5891d64425f5dbeef85e0f10ab",
-    "glb_sha256": "6fc4f1ce6574a937557672d0db3e4b1ea7744c68a83452a3184db04eb3bc0bf6",
-    "planned_footprint": [
-      5,
-      5
-    ],
-    "registry_sha256": "09c34c15db45101327f893bbc6387f96f9dd05f60bab1d7ff36750f2a64b570a",
-    "generator_sha256": "799c71275ca195151c0f753db805f075fb4fb6c6e1f84e01ce8fc9e56703a92a",
-    "provenance": "new_reconstruction_from_reference; historical native v0.2 bytes unrecovered",
-    "assembly_contacts": 77,
-    "source_and_runtime_core_rays_each": 290,
-    "fan_surface_pair_checks_each": 204,
-    "exported_triangles": 50384,
-    "maximum_sampled_world_pose_error": 2.384185791015625e-07,
+    "status": "surfaced_six_blade_state_candidate; native_placement_pending",
+    "source_sha256": "d53d084473cb02a27fe1ae1fbaed5898c371f0d42cedaeb34c88be78ab7560f2",
+    "glb_sha256": "0eab1d215ac61ad3e3fd62e555f8899f000b61a1bd781fb5ff53779dc60c5f2f",
+    "surface_map_count": 12,
+    "assembly_contacts": 111,
+    "core_rays_each": 290,
+    "fan_blades": 6,
+    "fan_root_contacts_per_artifact": 102,
+    "fan_surface_pair_checks_each": 969,
+    "source_and_export_passed": true,
+    "capture_frames": 36,
+    "atlas_count": 6,
     "cycle_seconds": 8,
+    "source_of_owner_correction": "One original blade floated .1076 tile from the bearing. Rebuilt in a common rotor-local frame with six pitched roots seated into a real rotating hub and supported fixed spindle.",
     "owner_approved": false,
     "native_pipe_verified": false,
-    "model_specific_surface_finish_complete": false,
-    "audio_implemented": false,
-    "owner_correction": "Twisting at mechanical-to-pipe inlet/outlet transitions looked wrong. Both rebuilt as straight coaxial reducers with separate .20-radius circular elbows.",
-    "render_review": "Actual GLB injector, transfer and rear-services views inspected. Smooth separate transitions replace the earlier skewed reducer; this does not approve final finish.",
-    "actual_reused_parts": 2,
-    "actual_reused_instances": 3,
-    "no_new_verified_parts": "Machine construction and owner-requested transition correction prioritized; no speculative parts harvested.",
+    "native_audio_binding_verified": false,
+    "output": "Raw solid metallicized pellets, with tested random HP/quality decay to inert; no second gameplay fluid box",
+    "decay_delivery": "../../pellet-instability/v01-native-behavior",
     "next": [
-      "Model-specific pressure-shell, crown, casting and cover surfaces",
-      "Relevant closed pressure/thermal audio and meaningful states",
-      "Four actual idle/working rotations",
-      "Actual native 5x5 prototype and pipe fitting"
-    ]
+      "Native 5x5 crucible with one hydrogen fluid input and raw pellet item output",
+      "Native inlet fitting, item pickup access and actual animation clocks",
+      "Owner finish/audio review and ordinary chain integration"
+    ],
+    "registry_sha256": "108f7123a43eb0a44a4eb684723fde1aa84a35b34a51b73b32d0f9a2e8d0a274"
+  },
+  "pellet_instability": {
+    "path": "art/source-to-3d/metallic-hydrogen-chain/pellet-instability/v01-native-behavior",
+    "native_continuous_and_reload_verified": true,
+    "ordinary_chain_integrated": false,
+    "normal_addon_verified": true,
+    "raw_item_output": true,
+    "balance_owner_approved": false
   }
 }
