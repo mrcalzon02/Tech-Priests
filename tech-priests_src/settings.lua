@@ -1,4 +1,11 @@
 -- Tech Priests - startup/runtime setting definitions.
+data:extend({{
+  type = "bool-setting",
+  name = "tech-priests-enemy-planetary-spawning",
+  setting_type = "runtime-global",
+  default_value = true,
+  order = "e[enemy-planets]"
+}})
 -- 0.1.479 retired legacy status-symbol settings from the player-facing settings list;
 -- the canonical overhead governor now owns visible priest task text. Legacy runtime
 -- reads keep safe defaults inside the script, but the old configurable glyph spam is gone.
