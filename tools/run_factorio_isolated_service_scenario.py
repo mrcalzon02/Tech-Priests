@@ -1454,8 +1454,11 @@ def main() -> int:
     # Method II needs native visibility before autonomous 0259 may select 1076.
     # Reuse the existing genuine --test-save/--test-ticks execution, not
     # force.chart(), an injected exploration goal, or a synthetic player.
+    # The full 90k rail fixture requires genuine player charting just like
+    # the 72k smoke: --benchmark cannot process its native chart requests.
     native_mode = ("native-player-test-save"
-                   if args.scenario == "remote-robot-acquisition"
+                   if args.scenario in ("remote-robot-acquisition",
+                                        "remote-rail-acquisition")
                    else "benchmark")
     command = (rail_native_player_test_command(factorio, mods, save, tick_count)
                if native_mode == "native-player-test-save"
@@ -1686,6 +1689,14 @@ def main() -> int:
               " advanced_chemical_output=" +
               str(report["chemical_science_produced_at_end"]))
     fatal = scenario["prefix"] + " FAIL "
+    if args.scenario == "remote-rail-acquisition":
+        # The existing full Lua fixture, not smoke counters, owns the 90k
+        # native train, original Magos, paid cargo and root inventory verdict.
+        print("NATIVE_RAIL_FULL_PROCESS_MINUTES " +
+              str(round(create_engine_wall_minutes +
+                        benchmark_engine_wall_minutes, 6)))
+        print("NATIVE_RAIL_FULL_TICKS " + str(tick_count))
+        print("NATIVE_RAIL_FULL_ENGINE_MODE " + native_mode)
     if benchmark or fatal in contents or scenario["prefix"] + " " + scenario["pass"] not in contents:
         print("FAIL scenario=" + args.scenario + " exit=" + str(benchmark) +
               " pass_marker=" + str(scenario["pass"] in contents))
