@@ -43,6 +43,41 @@ class OriginalFullRailNativePlayerModeTests(unittest.TestCase):
         self.assertIn('emit("PASS planetary Magos built rail, rode train, mined and returned real ore")', fixture)
 
 
+class OriginalNativeRideHistoricalReceiptTests(unittest.TestCase):
+    def test_genuine_past_native_driver_and_home_ejection_survive_90k_checkpoint(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        lua = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(
+            encoding="utf-8")
+        section = lua.split("local authentic_past_ride=native_home_ejected", 1)[1].split(
+            'emit("NATIVE_HISTORIC_RIDE_0836', 1)[0]
+        for authority in (
+            'first_board.phase=="native-original-magos-boarded"',
+            "first_board.confirmed_tick", "first_board.priest_unit==p.priest.unit_number",
+            "first_board.locomotive_unit==loco_entity.unit_number",
+            "first_board.wagon_unit==wagon_entity.unit_number",
+            "outbound.highest_x>outbound.origin_x+32",
+            "outbound.arrived_tick>=first_board.confirmed_tick",
+            'reboard.phase==', '"native-original-magos-reboarded-with-ground-ore"',
+            "reboard.native_original_driver_confirmed==true",
+            "reboard.train_id==moving_train.id",
+            "reboard.boarded_tick>outbound.arrived_tick",
+            "homeward.arrival_tick>reboard.boarded_tick",
+            "moving_train.station==home_entity",
+            'return_receipt.phase=="home-station-ore-deposited"',
+            "return_receipt.native_original_driver_ejected==true",
+            "return_receipt.wagon_before>0",
+            "return_receipt.wagon_final==0",
+            "return_receipt.held_final==0",
+            "return_receipt.quarantine==nil",
+            "s.ride_proof=true",
+            "s.outbound=true",
+        ):
+            self.assertIn(authority, section)
+        self.assertIn('fail("MAGOS_PHYSICAL_TRAIN_RIDE_NOT_PROVEN")', lua)
+        self.assertIn('fail("TRAIN_ROUND_TRIP_NOT_PROVEN")', lua)
+        self.assertIn('fail("NO_GENUINE_ORE_DELIVERED_BY_RAIL")', lua)
+
+
 class OriginalNativeRailFailureRetentionTests(unittest.TestCase):
     def test_genuine_0469_0836_0338_refusals_are_retained_without_rail_credit(self):
         log = "\n".join([
