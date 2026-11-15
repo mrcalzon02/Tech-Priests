@@ -1082,3 +1082,10 @@ This is source integration, not a new full-mod release/version bump or a claim
 about unrelated priest logistics gates. Rocket, artillery, radium, grav, plasma
 and flamer weapon families remain unbuilt. Publication is verified separately
 against the resulting GitHub main commit.
+
+
+## 2026-11-15 - Turret checkout reconciliation and rocket salvo study
+
+Reconciled model-production to published main without changing other worktrees. Preserved local-only art and archived two superseded purifier helper variants. The six completed weapons remain unchanged. Recovery checkpoint da98a0ce is published.
+
+The owner selected staggered rocket salvo followed by visible reload. Added a two-pod, six-cell model and editable source animation candidate, independently imported static GLB and reviewed front/rear/quarter/clay renders. Export has 45,100 triangles, zero degenerates and UVs on all 232 meshes. All 241 source frames pass socket-height and mechanism ownership checks; 12 used source images are packed. Repaired collapsed louvre faces and the measured cassette drop clearance. Native ammo consumption, effects, targeting, research and save/load are not implemented for this new weapon yet. Candidate evidence: art/bunker-rocket-salvo/candidate-v01; design/map: docs/prototypes/rocket-salvo-design.md. No release/version bump.

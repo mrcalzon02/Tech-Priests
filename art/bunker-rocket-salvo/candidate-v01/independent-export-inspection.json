@@ -1,0 +1,197 @@
+{
+  "status": "PASS",
+  "name": "rocket-salvo",
+  "triangles": 45100,
+  "degenerate_triangles": 0,
+  "meshes": 232,
+  "meshes_with_uv": 232,
+  "transformed_bounds": [
+    [
+      -1.440000057220459,
+      -1.1947910785675049,
+      1.7000000476837158
+    ],
+    [
+      1.440000057220459,
+      1.5607190132141113,
+      3.327653646469116
+    ]
+  ],
+  "source_bounds": [
+    [
+      -1.440000057220459,
+      -1.215107798576355,
+      1.7000000476837158
+    ],
+    [
+      1.440000057220459,
+      1.5651999711990356,
+      3.3276538848876953
+    ]
+  ],
+  "images": [
+    {
+      "name": "01_oxide_red_paint",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "01_oxide_red_paint.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "01_oxide_red_paint_Metallic.png-01_oxide_red_paint_Roughness.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "01_oxide_red_paint_Metallic.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "01_oxide_red_paint_Roughness.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "02_dark_gunmetal",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "02_dark_gunmetal.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "02_dark_gunmetal_Metallic.png-02_dark_gunmetal_Roughness.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "02_dark_gunmetal_Metallic.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "02_dark_gunmetal_Roughness.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "03_worn_machined_steel",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "03_worn_machined_steel.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "03_worn_machined_steel_Metallic.png-03_worn_machined_steel_Roughness.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "03_worn_machined_steel_Metallic.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "03_worn_machined_steel_Roughness.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "04_tarnished_brass",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "04_tarnished_brass.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "04_tarnished_brass_Metallic.png-04_tarnished_brass_Roughness.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "04_tarnished_brass_Metallic.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    },
+    {
+      "name": "04_tarnished_brass_Roughness.png.001",
+      "size": [
+        1254,
+        1254
+      ],
+      "packed": true
+    }
+  ],
+  "native_sha256": "34e139adb7f175553cb65f9a914f55fc7c4414db0ac620246025b22c6d38b847",
+  "glb_sha256": "35c592956942ee3cb31dfb461fb9ca369bb030133b67f77204a67198db658d0b",
+  "base_included": false
+}
