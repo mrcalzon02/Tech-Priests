@@ -89,7 +89,12 @@ class IndependentOriginalBlockedRailReload0836Tests(unittest.TestCase):
         # S4 original save occurs at 30,060; the generic 36k positive
         # intact-rail fixture is inapplicable to a *physically cut* track.
         # The S4 engine still asserts native cargo/driver/gap conservation.
-        self.assertIn('factorio, mods, initial, 30660), first_log, timeout)', runner)
+        self.assertIn('robot_saveable_server_command(\n                    factorio, mods, initial, settings, port)', runner)
+        self.assertIn('robot_real_loopback_client_command_1381(\n                            factorio, mods, port)', runner)
+        self.assertIn('if marker in current:', runner)
+        self.assertIn('verified_source = candidates[0]', runner)
+        self.assertIn('no unique CRC-valid stranded rail autosave', runner)
+        self.assertNotIn('factorio, mods, initial, 30660), first_log, timeout)', runner)
         self.assertIn('if not s.blocked_return_save_requested_0836 then', fixture)
         self.assertIn('restored_track=false', fixture)
         self.assertNotIn('surface.create_entity{name="straight-rail"', fixture)
