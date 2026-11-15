@@ -1309,7 +1309,7 @@ def run_rail_blocked_reload_0836(
                 prior.unlink()  # Test-specific basename only; never unrelated saves.
         started = time.monotonic()
         first_exit = run(rail_native_player_test_command(
-            factorio, mods, initial, 36060), first_log, timeout)
+            factorio, mods, initial, 30660), first_log, timeout)
         result["first_minutes"] = round((time.monotonic()-started)/60, 6)
         result["first_exit"] = first_exit
         first = first_log.read_text(encoding="utf-8", errors="replace")
