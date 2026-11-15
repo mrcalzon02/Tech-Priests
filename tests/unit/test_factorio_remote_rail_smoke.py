@@ -22,6 +22,27 @@ B = P + "PASS two distinct 0338-debited native-connected rails"
 
 
 
+class OriginalFullRailNativePlayerModeTests(unittest.TestCase):
+    def test_full_90k_rail_runs_real_native_player_not_benchmark_or_smoke(self):
+        root = pathlib.Path(__file__).resolve().parents[2]
+        runner = (root / "tools/run_factorio_isolated_service_scenario.py").read_text(
+            encoding="utf-8")
+        body = runner.split("    native_mode = (", 1)[1].split(
+            "    command = (", 1)[0]
+        self.assertIn('"remote-rail-acquisition"', body)
+        self.assertIn('"native-player-test-save"', body)
+        self.assertIn("rail_native_player_test_command", runner)
+        self.assertIn('"ticks": 93000', runner)
+        self.assertIn('scenario["prefix"] + " " + scenario["pass"] not in contents', runner)
+        self.assertIn("NATIVE_RAIL_FULL_PROCESS_MINUTES", runner)
+        fixture = (root / "tests/scenarios/remote-rail-acquisition/fixture.lua").read_text(
+            encoding="utf-8")
+        self.assertIn("if elapsed>=90000 then", fixture)
+        self.assertIn('fail("NO_GENUINE_ORE_DELIVERED_BY_RAIL")', fixture)
+        self.assertIn('fail("TRAIN_ROUND_TRIP_NOT_PROVEN")', fixture)
+        self.assertIn('emit("PASS planetary Magos built rail, rode train, mined and returned real ore")', fixture)
+
+
 class OriginalNativeRailFailureRetentionTests(unittest.TestCase):
     def test_genuine_0469_0836_0338_refusals_are_retained_without_rail_credit(self):
         log = "\n".join([
