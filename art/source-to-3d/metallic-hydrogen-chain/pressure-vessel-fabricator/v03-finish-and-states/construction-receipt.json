@@ -1,0 +1,1391 @@
+{
+  "status": "dedicated finish and mounted-detail candidate; independent export and review pending",
+  "source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+  "contacts": [
+    {
+      "a": "TP Vessel Fabricator V02 | clamp land support (-0.65, -0.65)",
+      "b": "TP Vessel Fabricator V02 | open lower frame side -0.65",
+      "label": "clamping land post on open side beam"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | fixed front clamping land",
+      "b": "TP Vessel Fabricator V02 | clamp land support (-0.65, -0.65)",
+      "label": "lower clamping land carried by post"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | clamp land support (0.65, -0.65)",
+      "b": "TP Vessel Fabricator V02 | open lower frame side -0.65",
+      "label": "clamping land post on open side beam"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | fixed front clamping land",
+      "b": "TP Vessel Fabricator V02 | clamp land support (0.65, -0.65)",
+      "label": "lower clamping land carried by post"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | clamp land support (-0.65, 0.65)",
+      "b": "TP Vessel Fabricator V02 | open lower frame side 0.65",
+      "label": "clamping land post on open side beam"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | fixed rear clamping land",
+      "b": "TP Vessel Fabricator V02 | clamp land support (-0.65, 0.65)",
+      "label": "lower clamping land carried by post"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | clamp land support (0.65, 0.65)",
+      "b": "TP Vessel Fabricator V02 | open lower frame side 0.65",
+      "label": "clamping land post on open side beam"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | fixed rear clamping land",
+      "b": "TP Vessel Fabricator V02 | clamp land support (0.65, 0.65)",
+      "label": "lower clamping land carried by post"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | clamping frame grounded foot -0.9",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "forming-frame foot grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | low open-frame cross tie -0.9",
+      "b": "TP Vessel Fabricator V02 | clamping frame grounded foot -0.9",
+      "label": "cross tie on foot"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | open lower frame side -0.65",
+      "b": "TP Vessel Fabricator V02 | low open-frame cross tie -0.9",
+      "label": "open side beam carried by low cross tie"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | open lower frame side 0.65",
+      "b": "TP Vessel Fabricator V02 | low open-frame cross tie -0.9",
+      "label": "open side beam carried by low cross tie"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | clamping frame grounded foot 0.9",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "forming-frame foot grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | low open-frame cross tie 0.9",
+      "b": "TP Vessel Fabricator V02 | clamping frame grounded foot 0.9",
+      "label": "cross tie on foot"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | open lower frame side -0.65",
+      "b": "TP Vessel Fabricator V02 | low open-frame cross tie 0.9",
+      "label": "open side beam carried by low cross tie"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | open lower frame side 0.65",
+      "b": "TP Vessel Fabricator V02 | low open-frame cross tie 0.9",
+      "label": "open side beam carried by low cross tie"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | raised upper end bridge -1.26",
+      "b": "TP Vessel Fabricator V02 | open upper front frame",
+      "label": "upper bridge joins front side"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | raised upper end bridge -1.26",
+      "b": "TP Vessel Fabricator V02 | open upper rear frame",
+      "label": "upper bridge joins rear side"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | raised upper end bridge 1.26",
+      "b": "TP Vessel Fabricator V02 | open upper front frame",
+      "label": "upper bridge joins front side"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | raised upper end bridge 1.26",
+      "b": "TP Vessel Fabricator V02 | open upper rear frame",
+      "label": "upper bridge joins rear side"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper jaw standoff (-0.6, -0.55)",
+      "b": "TP Vessel Fabricator V02 | open upper front frame",
+      "label": "jaw standoff carried by open upper frame"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper flange clamping land -0.55",
+      "b": "TP Vessel Fabricator V02 | upper jaw standoff (-0.6, -0.55)",
+      "label": "upper flange land supported by standoff"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper jaw standoff (0.6, -0.55)",
+      "b": "TP Vessel Fabricator V02 | open upper front frame",
+      "label": "jaw standoff carried by open upper frame"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper flange clamping land -0.55",
+      "b": "TP Vessel Fabricator V02 | upper jaw standoff (0.6, -0.55)",
+      "label": "upper flange land supported by standoff"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper jaw standoff (-0.6, 0.55)",
+      "b": "TP Vessel Fabricator V02 | open upper rear frame",
+      "label": "jaw standoff carried by open upper frame"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper flange clamping land 0.55",
+      "b": "TP Vessel Fabricator V02 | upper jaw standoff (-0.6, 0.55)",
+      "label": "upper flange land supported by standoff"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper jaw standoff (0.6, 0.55)",
+      "b": "TP Vessel Fabricator V02 | open upper rear frame",
+      "label": "jaw standoff carried by open upper frame"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper flange clamping land 0.55",
+      "b": "TP Vessel Fabricator V02 | upper jaw standoff (0.6, 0.55)",
+      "label": "upper flange land supported by standoff"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | welded sheet flange -0.535",
+      "b": "TP Vessel Fabricator V02 | welded two-plate pressure blank",
+      "label": "sheet edge joins pressure blank"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | actual longitudinal weld seam -0.535",
+      "b": "TP Vessel Fabricator V02 | welded two-plate pressure blank",
+      "label": "weld bead follows actual plate edge"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | welded sheet flange 0.535",
+      "b": "TP Vessel Fabricator V02 | welded two-plate pressure blank",
+      "label": "sheet edge joins pressure blank"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | actual longitudinal weld seam 0.535",
+      "b": "TP Vessel Fabricator V02 | welded two-plate pressure blank",
+      "label": "weld bead follows actual plate edge"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | welded closed blind end",
+      "b": "TP Vessel Fabricator V02 | welded two-plate pressure blank",
+      "label": "blind end welded to round blank neck"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear hinge grounded foot -1.5",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "hinge foot grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear hinge pedestal -1.5",
+      "b": "TP Vessel Fabricator V02 | rear hinge grounded foot -1.5",
+      "label": "hinge pedestal on foot"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | hinge bearing support -1.5",
+      "b": "TP Vessel Fabricator V02 | rear hinge pedestal -1.5",
+      "label": "hinge tie seated on pedestal"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | fixed hinge bearing -1.5",
+      "b": "TP Vessel Fabricator V02 | hinge bearing support -1.5",
+      "label": "hinge bearing carried by tie"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | fixed full die hinge shaft",
+      "b": "TP Vessel Fabricator V02 | fixed hinge bearing -1.5",
+      "label": "fixed hinge shaft seated in bearing"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear hinge grounded foot 1.5",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "hinge foot grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear hinge pedestal 1.5",
+      "b": "TP Vessel Fabricator V02 | rear hinge grounded foot 1.5",
+      "label": "hinge pedestal on foot"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | hinge bearing support 1.5",
+      "b": "TP Vessel Fabricator V02 | rear hinge pedestal 1.5",
+      "label": "hinge tie seated on pedestal"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | fixed hinge bearing 1.5",
+      "b": "TP Vessel Fabricator V02 | hinge bearing support 1.5",
+      "label": "hinge bearing carried by tie"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | fixed full die hinge shaft",
+      "b": "TP Vessel Fabricator V02 | fixed hinge bearing 1.5",
+      "label": "fixed hinge shaft seated in bearing"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper frame hinge arm -0.98",
+      "b": "TP Vessel Fabricator V02 | open upper rear frame",
+      "label": "hinge arm attached to rear open frame"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | moving upper die hinge lug -0.98",
+      "b": "TP Vessel Fabricator V02 | upper frame hinge arm -0.98",
+      "label": "hinge lug supported by actual arm"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper frame hinge arm 0.98",
+      "b": "TP Vessel Fabricator V02 | open upper rear frame",
+      "label": "hinge arm attached to rear open frame"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | moving upper die hinge lug 0.98",
+      "b": "TP Vessel Fabricator V02 | upper frame hinge arm 0.98",
+      "label": "hinge lug supported by actual arm"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper die lift arm",
+      "b": "TP Vessel Fabricator V02 | open upper rear frame",
+      "label": "rear lift arm mounted on upper frame clear of welding gantry"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | lift ram grounded clevis foot",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "lift ram clevis foot grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | lift ram clevis cheek 1.69",
+      "b": "TP Vessel Fabricator V02 | lift ram grounded clevis foot",
+      "label": "trunnion cheek carried on grounded foot"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | lift ram clevis cheek 1.87",
+      "b": "TP Vessel Fabricator V02 | lift ram grounded clevis foot",
+      "label": "trunnion cheek carried on grounded foot"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper die lift cylinder trunnion",
+      "b": "TP Vessel Fabricator V02 | fixed lift trunnion pin",
+      "label": "lift cylinder pivots on actual clevis pin"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper die lift cylinder",
+      "b": "TP Vessel Fabricator V02 | upper die lift cylinder trunnion",
+      "label": "cylinder seated in pivoting trunnion"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | upper die lift piston",
+      "b": "TP Vessel Fabricator V02 | upper die lift arm",
+      "label": "piston end seated in moving rear lift arm"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | weld gantry grounded shoe -1.5",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "gantry shoe grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | red weld gantry column -1.5",
+      "b": "TP Vessel Fabricator V02 | weld gantry grounded shoe -1.5",
+      "label": "gantry column on shoe"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | weld gantry grounded shoe 1.5",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "gantry shoe grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | red weld gantry column 1.5",
+      "b": "TP Vessel Fabricator V02 | weld gantry grounded shoe 1.5",
+      "label": "gantry column on shoe"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "b": "TP Vessel Fabricator V02 | red weld gantry column -1.5",
+      "label": "seam rail carried by gantry"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "b": "TP Vessel Fabricator V02 | red weld gantry column 1.5",
+      "label": "seam rail carried by gantry"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | linear guide mounting standoff -1.2",
+      "b": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "label": "linear guide standoff seated on gantry"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | welding tool linear guide",
+      "b": "TP Vessel Fabricator V02 | linear guide mounting standoff -1.2",
+      "label": "linear guide supported by actual standoff"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | linear guide mounting standoff 0",
+      "b": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "label": "linear guide standoff seated on gantry"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | welding tool linear guide",
+      "b": "TP Vessel Fabricator V02 | linear guide mounting standoff 0",
+      "label": "linear guide supported by actual standoff"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | linear guide mounting standoff 1.2",
+      "b": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "label": "linear guide standoff seated on gantry"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | welding tool linear guide",
+      "b": "TP Vessel Fabricator V02 | linear guide mounting standoff 1.2",
+      "label": "linear guide supported by actual standoff"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | guided welding carriage",
+      "b": "TP Vessel Fabricator V02 | welding tool linear guide",
+      "label": "carriage retained on actual linear guide"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | torch carriage mounting saddle",
+      "b": "TP Vessel Fabricator V02 | guided welding carriage",
+      "label": "torch saddle carried on carriage"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | supported seam welding torch",
+      "b": "TP Vessel Fabricator V02 | torch carriage mounting saddle",
+      "label": "torch seated in saddle"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | actual welding contact tip",
+      "b": "TP Vessel Fabricator V02 | supported seam welding torch",
+      "label": "contact tip retained in torch"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | bus insulation standoff (-1.35, 2.2)",
+      "b": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear conductor bracket (-1.35, 2.2)",
+      "b": "TP Vessel Fabricator V02 | bus insulation standoff (-1.35, 2.2)",
+      "label": "rear conductor bracket carried by insulator"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | insulated welding supply rail 2.2",
+      "b": "TP Vessel Fabricator V02 | rear conductor bracket (-1.35, 2.2)",
+      "label": "supply rail supported from rear"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | bus insulation standoff (0, 2.2)",
+      "b": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear conductor bracket (0, 2.2)",
+      "b": "TP Vessel Fabricator V02 | bus insulation standoff (0, 2.2)",
+      "label": "rear conductor bracket carried by insulator"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | insulated welding supply rail 2.2",
+      "b": "TP Vessel Fabricator V02 | rear conductor bracket (0, 2.2)",
+      "label": "supply rail supported from rear"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | bus insulation standoff (1.35, 2.2)",
+      "b": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear conductor bracket (1.35, 2.2)",
+      "b": "TP Vessel Fabricator V02 | bus insulation standoff (1.35, 2.2)",
+      "label": "rear conductor bracket carried by insulator"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | insulated welding supply rail 2.2",
+      "b": "TP Vessel Fabricator V02 | rear conductor bracket (1.35, 2.2)",
+      "label": "supply rail supported from rear"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | sliding conductor contact pad 2.2",
+      "b": "TP Vessel Fabricator V02 | moving current collector 2.2",
+      "label": "spring contact pad retained in moving collector"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | sliding conductor contact pad 2.2",
+      "b": "TP Vessel Fabricator V02 | insulated welding supply rail 2.2",
+      "label": "conductive pad bears on front face of supply rail"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | carriage-mounted welding lead 2.2",
+      "b": "TP Vessel Fabricator V02 | moving current collector 2.2",
+      "label": "weld lead attached to collector"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | carriage-mounted welding lead 2.2",
+      "b": "TP Vessel Fabricator V02 | torch carriage mounting saddle",
+      "label": "weld lead attached to torch saddle"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | bus insulation standoff (-1.35, 2.27)",
+      "b": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear conductor bracket (-1.35, 2.27)",
+      "b": "TP Vessel Fabricator V02 | bus insulation standoff (-1.35, 2.27)",
+      "label": "rear conductor bracket carried by insulator"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | insulated welding supply rail 2.27",
+      "b": "TP Vessel Fabricator V02 | rear conductor bracket (-1.35, 2.27)",
+      "label": "supply rail supported from rear"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | bus insulation standoff (0, 2.27)",
+      "b": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear conductor bracket (0, 2.27)",
+      "b": "TP Vessel Fabricator V02 | bus insulation standoff (0, 2.27)",
+      "label": "rear conductor bracket carried by insulator"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | insulated welding supply rail 2.27",
+      "b": "TP Vessel Fabricator V02 | rear conductor bracket (0, 2.27)",
+      "label": "supply rail supported from rear"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | bus insulation standoff (1.35, 2.27)",
+      "b": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "label": "insulator seated on beam"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear conductor bracket (1.35, 2.27)",
+      "b": "TP Vessel Fabricator V02 | bus insulation standoff (1.35, 2.27)",
+      "label": "rear conductor bracket carried by insulator"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | insulated welding supply rail 2.27",
+      "b": "TP Vessel Fabricator V02 | rear conductor bracket (1.35, 2.27)",
+      "label": "supply rail supported from rear"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | sliding conductor contact pad 2.27",
+      "b": "TP Vessel Fabricator V02 | moving current collector 2.27",
+      "label": "spring contact pad retained in moving collector"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | sliding conductor contact pad 2.27",
+      "b": "TP Vessel Fabricator V02 | insulated welding supply rail 2.27",
+      "label": "conductive pad bears on front face of supply rail"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | carriage-mounted welding lead 2.27",
+      "b": "TP Vessel Fabricator V02 | moving current collector 2.27",
+      "label": "weld lead attached to collector"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | carriage-mounted welding lead 2.27",
+      "b": "TP Vessel Fabricator V02 | torch carriage mounting saddle",
+      "label": "weld lead attached to torch saddle"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | internal neck pressure seal",
+      "b": "TP Vessel Fabricator V02 | hollow pressure injection mandrel",
+      "label": "internal pressure seal retained on mandrel"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | internal neck pressure seal",
+      "b": "TP Vessel Fabricator V02 | welded two-plate pressure blank",
+      "label": "pressure seal closes actual blank neck bore"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | external neck restraint",
+      "b": "TP Vessel Fabricator V02 | welded two-plate pressure blank",
+      "label": "close-fitting neck restraint on round neck"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | fixed pressure tailstock head",
+      "b": "TP Vessel Fabricator V02 | hollow pressure injection mandrel",
+      "label": "mandrel seated in pressure head"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | grounded pressure tailstock",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "tailstock grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | fixed pressure tailstock head",
+      "b": "TP Vessel Fabricator V02 | grounded pressure tailstock",
+      "label": "pressure head supported outside bore"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | closed annular tailstock pressure cap",
+      "b": "TP Vessel Fabricator V02 | fixed pressure tailstock head",
+      "label": "pressure cap closes tailstock around feed bore"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | tailstock mandrel gland seal",
+      "b": "TP Vessel Fabricator V02 | fixed pressure tailstock head",
+      "label": "mandrel gland seals actual head bore"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | tailstock mandrel gland seal",
+      "b": "TP Vessel Fabricator V02 | hollow pressure injection mandrel",
+      "label": "mandrel gland retains pressure around mandrel outside"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | pressure inlet gland seal",
+      "b": "TP Vessel Fabricator V02 | closed annular tailstock pressure cap",
+      "label": "pressure-line gland seals cap bore"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | closed forming-fluid reservoir",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "forming reservoir grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | forming reservoir service lid",
+      "b": "TP Vessel Fabricator V02 | closed forming-fluid reservoir",
+      "label": "reservoir lid seated on housing"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | forming pressure pump motor",
+      "b": "TP Vessel Fabricator V02 | forming reservoir service lid",
+      "label": "pump carried on reservoir lid"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | bored forming pump head",
+      "b": "TP Vessel Fabricator V02 | forming pressure pump motor",
+      "label": "bored pressure head mounted on motor face"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | reservoir suction standpipe",
+      "b": "TP Vessel Fabricator V02 | bored forming pump head",
+      "label": "suction standpipe enters bored pump chamber"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | reservoir suction standpipe",
+      "b": "TP Vessel Fabricator V02 | forming reservoir service lid",
+      "label": "standpipe seated in matching lid bore"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | straight forming inlet reducer",
+      "b": "TP Vessel Fabricator V02 | forming-fluid receiving barrel",
+      "label": "straight coaxial reducer joins receiving barrel"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | local forming-fluid feed",
+      "b": "TP Vessel Fabricator V02 | closed forming-fluid reservoir",
+      "label": "forming-fluid line passes drilled wall into reservoir cavity"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | supported high-pressure forming line",
+      "b": "TP Vessel Fabricator V02 | closed annular tailstock pressure cap",
+      "label": "pressure line reaches open annular tailstock feed"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | supported high-pressure forming line",
+      "b": "TP Vessel Fabricator V02 | bored forming pump head",
+      "label": "pressure line starts in bored pump head"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | supported high-pressure forming line",
+      "b": "TP Vessel Fabricator V02 | pressure inlet gland seal",
+      "label": "pressure feed seated in sealed cap gland"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear pressure line support -0.9",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "rear pressure-line stanchion grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear pressure line saddle -0.9",
+      "b": "TP Vessel Fabricator V02 | rear pressure line support -0.9",
+      "label": "pressure saddle carried by stanchion"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear pressure line saddle -0.9",
+      "b": "TP Vessel Fabricator V02 | supported high-pressure forming line",
+      "label": "pressure line held in external saddle"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear pressure line support 0.5",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "rear pressure-line stanchion grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear pressure line saddle 0.5",
+      "b": "TP Vessel Fabricator V02 | rear pressure line support 0.5",
+      "label": "pressure saddle carried by stanchion"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear pressure line saddle 0.5",
+      "b": "TP Vessel Fabricator V02 | supported high-pressure forming line",
+      "label": "pressure line held in external saddle"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear pressure line support 1.5",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "rear pressure-line stanchion grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear pressure line saddle 1.5",
+      "b": "TP Vessel Fabricator V02 | rear pressure line support 1.5",
+      "label": "pressure saddle carried by stanchion"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | rear pressure line saddle 1.5",
+      "b": "TP Vessel Fabricator V02 | supported high-pressure forming line",
+      "label": "pressure line held in external saddle"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | loading roller support (-1.02, -1.12)",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "loading roller support grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | plate loading roller -1.12",
+      "b": "TP Vessel Fabricator V02 | loading roller support (-1.02, -1.12)",
+      "label": "loading roller supported at both ends"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | loading roller support (0.62, -1.12)",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "loading roller support grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | plate loading roller -1.12",
+      "b": "TP Vessel Fabricator V02 | loading roller support (0.62, -1.12)",
+      "label": "loading roller supported at both ends"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | loading roller support (-1.02, -1.48)",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "loading roller support grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | plate loading roller -1.48",
+      "b": "TP Vessel Fabricator V02 | loading roller support (-1.02, -1.48)",
+      "label": "loading roller supported at both ends"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | loading roller support (0.62, -1.48)",
+      "b": "TP Vessel Fabricator V02 | full 4x4 equipment footing",
+      "label": "loading roller support grounded"
+    },
+    {
+      "a": "TP Vessel Fabricator V02 | plate loading roller -1.48",
+      "b": "TP Vessel Fabricator V02 | loading roller support (0.62, -1.48)",
+      "label": "loading roller supported at both ends"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | reservoir lid screw (-1.23, 0.95)",
+      "b": "TP Vessel Fabricator V02 | forming reservoir service lid",
+      "label": "lid screw seated on actual removable flange"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | reservoir lid screw (-1.23, 1.55)",
+      "b": "TP Vessel Fabricator V02 | forming reservoir service lid",
+      "label": "lid screw seated on actual removable flange"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | reservoir lid screw (-0.73, 0.95)",
+      "b": "TP Vessel Fabricator V02 | forming reservoir service lid",
+      "label": "lid screw seated on actual removable flange"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | reservoir lid screw (-0.73, 1.55)",
+      "b": "TP Vessel Fabricator V02 | forming reservoir service lid",
+      "label": "lid screw seated on actual removable flange"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | pump motor saddle -1.08",
+      "b": "TP Vessel Fabricator V02 | forming reservoir service lid",
+      "label": "motor saddle grounded on reservoir lid"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | pump motor saddle -1.08",
+      "b": "TP Vessel Fabricator V02 | forming pressure pump motor",
+      "label": "motor housing supported by saddle"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | pump motor saddle -0.88",
+      "b": "TP Vessel Fabricator V02 | forming reservoir service lid",
+      "label": "motor saddle grounded on reservoir lid"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | pump motor saddle -0.88",
+      "b": "TP Vessel Fabricator V02 | forming pressure pump motor",
+      "label": "motor housing supported by saddle"
+    },
+    {
+      "a": "TP Fabricator V03 | pump motor cooling ring 1.15",
+      "b": "TP Vessel Fabricator V02 | forming pressure pump motor",
+      "label": "cooling ring seated on motor housing"
+    },
+    {
+      "a": "TP Fabricator V03 | pump motor cooling ring 1.2",
+      "b": "TP Vessel Fabricator V02 | forming pressure pump motor",
+      "label": "cooling ring seated on motor housing"
+    },
+    {
+      "a": "TP Fabricator V03 | pump motor cooling ring 1.25",
+      "b": "TP Vessel Fabricator V02 | forming pressure pump motor",
+      "label": "cooling ring seated on motor housing"
+    },
+    {
+      "a": "TP Fabricator V03 | pump motor cooling ring 1.3",
+      "b": "TP Vessel Fabricator V02 | forming pressure pump motor",
+      "label": "cooling ring seated on motor housing"
+    },
+    {
+      "a": "TP Fabricator V03 | pump motor cooling ring 1.35",
+      "b": "TP Vessel Fabricator V02 | forming pressure pump motor",
+      "label": "cooling ring seated on motor housing"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | pump motor closed service cap",
+      "b": "TP Vessel Fabricator V02 | forming pressure pump motor",
+      "label": "motor service cap seated outside pump pressure chamber"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | motor cap screw 0",
+      "b": "FMPL_PROCESS | TP Fabricator V03 | pump motor closed service cap",
+      "label": "motor screw seats on closed cap"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | tailstock cap screw 0",
+      "b": "TP Vessel Fabricator V02 | closed annular tailstock pressure cap",
+      "label": "tailstock screw seats outside open pressure core"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | motor cap screw 1.5707963267948966",
+      "b": "FMPL_PROCESS | TP Fabricator V03 | pump motor closed service cap",
+      "label": "motor screw seats on closed cap"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | tailstock cap screw 1.5707963267948966",
+      "b": "TP Vessel Fabricator V02 | closed annular tailstock pressure cap",
+      "label": "tailstock screw seats outside open pressure core"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | motor cap screw 3.141592653589793",
+      "b": "FMPL_PROCESS | TP Fabricator V03 | pump motor closed service cap",
+      "label": "motor screw seats on closed cap"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | tailstock cap screw 3.141592653589793",
+      "b": "TP Vessel Fabricator V02 | closed annular tailstock pressure cap",
+      "label": "tailstock screw seats outside open pressure core"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | motor cap screw 4.71238898038469",
+      "b": "FMPL_PROCESS | TP Fabricator V03 | pump motor closed service cap",
+      "label": "motor screw seats on closed cap"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | tailstock cap screw 4.71238898038469",
+      "b": "TP Vessel Fabricator V02 | closed annular tailstock pressure cap",
+      "label": "tailstock screw seats outside open pressure core"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor clamping frame grounded foot -0.9-1",
+      "b": "TP Vessel Fabricator V02 | clamping frame grounded foot -0.9",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor clamping frame grounded foot -0.91",
+      "b": "TP Vessel Fabricator V02 | clamping frame grounded foot -0.9",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor clamping frame grounded foot 0.9-1",
+      "b": "TP Vessel Fabricator V02 | clamping frame grounded foot 0.9",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor clamping frame grounded foot 0.91",
+      "b": "TP Vessel Fabricator V02 | clamping frame grounded foot 0.9",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor rear hinge grounded foot -1.5-1",
+      "b": "TP Vessel Fabricator V02 | rear hinge grounded foot -1.5",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor rear hinge grounded foot -1.51",
+      "b": "TP Vessel Fabricator V02 | rear hinge grounded foot -1.5",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor rear hinge grounded foot 1.5-1",
+      "b": "TP Vessel Fabricator V02 | rear hinge grounded foot 1.5",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor rear hinge grounded foot 1.51",
+      "b": "TP Vessel Fabricator V02 | rear hinge grounded foot 1.5",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor lift ram grounded clevis foot-1",
+      "b": "TP Vessel Fabricator V02 | lift ram grounded clevis foot",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor lift ram grounded clevis foot1",
+      "b": "TP Vessel Fabricator V02 | lift ram grounded clevis foot",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor weld gantry grounded shoe -1.5-1",
+      "b": "TP Vessel Fabricator V02 | weld gantry grounded shoe -1.5",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor weld gantry grounded shoe -1.51",
+      "b": "TP Vessel Fabricator V02 | weld gantry grounded shoe -1.5",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor weld gantry grounded shoe 1.5-1",
+      "b": "TP Vessel Fabricator V02 | weld gantry grounded shoe 1.5",
+      "label": "anchor head seated on actual grounded plate"
+    },
+    {
+      "a": "FMPL_PROCESS | TP Fabricator V03 | ground anchor weld gantry grounded shoe 1.51",
+      "b": "TP Vessel Fabricator V02 | weld gantry grounded shoe 1.5",
+      "label": "anchor head seated on actual grounded plate"
+    }
+  ],
+  "owner_process": "Steel plates are welded together, then high-pressure forming material is pumped inside to force the blank into a shape.",
+  "process": "Weld supported two-sheet blank with clamp open; park torch; clamp exposed welded flanges in open frame; pressurize through sealed hollow mandrel; retain plastic formed shape; depressurize and open frame.",
+  "provenance": "new_reconstruction_from_reference; historical v0.2 native bytes unrecovered",
+  "cycle_seconds": 12,
+  "morph": "Initially flattened welded plates expand into an exposed vessel; edge flanges and round pressure-seal necks remain fixed",
+  "pending": [
+    "Independent exported mechanics, pressure core and material review",
+    "Relevant welding/pump sound",
+    "Final four-direction capture",
+    "Native fluid/item prototype and real pipe seating"
+  ],
+  "revision": "V03",
+  "previous_source_sha256": "f51833329c74bc1482e9378513729429d616a9734eabdc12ebc401a26311c806",
+  "preserved_geometry_and_morph_digests": {
+    "TP Vessel Fabricator V02 | full 4x4 equipment footing": "23335805bf526c3c8e4774f2f55642f1de13324f9f8bfbc03892f323df2bd5a2",
+    "TP Vessel Fabricator V02 | fixed front clamping land": "bba8aec68285e4d6144a5b5ad11586a9ce31e347aeeca9f77b5982db8a59243a",
+    "TP Vessel Fabricator V02 | fixed rear clamping land": "bba8aec68285e4d6144a5b5ad11586a9ce31e347aeeca9f77b5982db8a59243a",
+    "TP Vessel Fabricator V02 | open lower frame side -0.65": "de19ac9d0eb22d4ad6c16835deffa835f69792e594a42fe66c4bcd71a0193a61",
+    "TP Vessel Fabricator V02 | clamp land support (-0.65, -0.65)": "0c552fed1abebabcdd4becd09989600d474fbe29b317757c3a8fb21630afaf4b",
+    "TP Vessel Fabricator V02 | clamp land support (0.65, -0.65)": "0c552fed1abebabcdd4becd09989600d474fbe29b317757c3a8fb21630afaf4b",
+    "TP Vessel Fabricator V02 | open lower frame side 0.65": "de19ac9d0eb22d4ad6c16835deffa835f69792e594a42fe66c4bcd71a0193a61",
+    "TP Vessel Fabricator V02 | clamp land support (-0.65, 0.65)": "0c552fed1abebabcdd4becd09989600d474fbe29b317757c3a8fb21630afaf4b",
+    "TP Vessel Fabricator V02 | clamp land support (0.65, 0.65)": "0c552fed1abebabcdd4becd09989600d474fbe29b317757c3a8fb21630afaf4b",
+    "TP Vessel Fabricator V02 | clamping frame grounded foot -0.9": "52ff00977e6ee64abf0916be5cb0499698c9e4b775ccc722599deec7fdf0a273",
+    "TP Vessel Fabricator V02 | low open-frame cross tie -0.9": "dc94f86eb8d9c8f83027bfc33773b1424009e4a98fd511a7df33dcfdd766fa17",
+    "TP Vessel Fabricator V02 | clamping frame grounded foot 0.9": "52ff00977e6ee64abf0916be5cb0499698c9e4b775ccc722599deec7fdf0a273",
+    "TP Vessel Fabricator V02 | low open-frame cross tie 0.9": "dc94f86eb8d9c8f83027bfc33773b1424009e4a98fd511a7df33dcfdd766fa17",
+    "TP Vessel Fabricator V02 | open upper front frame": "e0f7b804947a3b794d6e9570a2f2124ed81adb662737d8064429b36b3e4643e7",
+    "TP Vessel Fabricator V02 | open upper rear frame": "e0f7b804947a3b794d6e9570a2f2124ed81adb662737d8064429b36b3e4643e7",
+    "TP Vessel Fabricator V02 | raised upper end bridge -1.26": "c91ad3a0f18811bac796b5e7baf145c378b3682b7bcce56ff0c33fd6e9df2e87",
+    "TP Vessel Fabricator V02 | raised upper end bridge 1.26": "c91ad3a0f18811bac796b5e7baf145c378b3682b7bcce56ff0c33fd6e9df2e87",
+    "TP Vessel Fabricator V02 | upper flange clamping land -0.55": "bba8aec68285e4d6144a5b5ad11586a9ce31e347aeeca9f77b5982db8a59243a",
+    "TP Vessel Fabricator V02 | upper jaw standoff (-0.6, -0.55)": "e2ac80b246bd43e87de1b0939dbf2dfa7f890c1b59d45bff194866b8f4b8f803",
+    "TP Vessel Fabricator V02 | upper jaw standoff (0.6, -0.55)": "e2ac80b246bd43e87de1b0939dbf2dfa7f890c1b59d45bff194866b8f4b8f803",
+    "TP Vessel Fabricator V02 | upper flange clamping land 0.55": "bba8aec68285e4d6144a5b5ad11586a9ce31e347aeeca9f77b5982db8a59243a",
+    "TP Vessel Fabricator V02 | upper jaw standoff (-0.6, 0.55)": "e2ac80b246bd43e87de1b0939dbf2dfa7f890c1b59d45bff194866b8f4b8f803",
+    "TP Vessel Fabricator V02 | upper jaw standoff (0.6, 0.55)": "e2ac80b246bd43e87de1b0939dbf2dfa7f890c1b59d45bff194866b8f4b8f803",
+    "TP Vessel Fabricator V02 | welded sheet flange -0.535": "e8fe2d1450407ea64657402f574ac3f048e039f9745bdcefba3add7ff36622c2",
+    "TP Vessel Fabricator V02 | welded sheet flange 0.535": "e8fe2d1450407ea64657402f574ac3f048e039f9745bdcefba3add7ff36622c2",
+    "TP Vessel Fabricator V02 | rear hinge grounded foot -1.5": "2962b9f2115e82f003b2be11be5a478ff6dd290a4695ba6a4db1e7dc549ce998",
+    "TP Vessel Fabricator V02 | rear hinge pedestal -1.5": "5d1264b406462a6ec748f03eae0cd0c36a0776f207660b81ebe4378cc2626aa5",
+    "TP Vessel Fabricator V02 | hinge bearing support -1.5": "2993b0e49d008303ac67437d25555973eaf19c31e42fa239be3484dff22aa67f",
+    "TP Vessel Fabricator V02 | rear hinge grounded foot 1.5": "2962b9f2115e82f003b2be11be5a478ff6dd290a4695ba6a4db1e7dc549ce998",
+    "TP Vessel Fabricator V02 | rear hinge pedestal 1.5": "5d1264b406462a6ec748f03eae0cd0c36a0776f207660b81ebe4378cc2626aa5",
+    "TP Vessel Fabricator V02 | hinge bearing support 1.5": "2993b0e49d008303ac67437d25555973eaf19c31e42fa239be3484dff22aa67f",
+    "TP Vessel Fabricator V02 | upper frame hinge arm -0.98": "c672d58703a5c1860e4d1b2f13166b18d7027597edce9604564c1573a2eeeab2",
+    "TP Vessel Fabricator V02 | upper frame hinge arm 0.98": "7eb6c2575b2b0d17afe783494952f19b2274fc768c47990037fb84fe41bfccfb",
+    "TP Vessel Fabricator V02 | upper die lift arm": "6b0743d8c88ef41b9a8c01a76e45ff9bd973defa559f2be321228a28f290494b",
+    "TP Vessel Fabricator V02 | lift ram grounded clevis foot": "245fe2e3234255106e01c610314ed08228dc2cf002e43775f2d8a6f78eb1e5e6",
+    "TP Vessel Fabricator V02 | lift ram clevis cheek 1.69": "6c5fd992bfe3e7b4e5da6ebe2b7f9b906cabff8d9ba6d752c39a1d053f5ab831",
+    "TP Vessel Fabricator V02 | lift ram clevis cheek 1.87": "6c5fd992bfe3e7b4e5da6ebe2b7f9b906cabff8d9ba6d752c39a1d053f5ab831",
+    "TP Vessel Fabricator V02 | weld gantry grounded shoe -1.5": "e5aac3f3a1d61d2cd6ef1e0c84a38ee13a8ae394b118ff51a47ceb0414c2a23e",
+    "TP Vessel Fabricator V02 | red weld gantry column -1.5": "f3dd3435e8abc0f73e27f6f85896874874723c9dbdc50e1d423242dac10fe6b2",
+    "TP Vessel Fabricator V02 | weld gantry grounded shoe 1.5": "e5aac3f3a1d61d2cd6ef1e0c84a38ee13a8ae394b118ff51a47ceb0414c2a23e",
+    "TP Vessel Fabricator V02 | red weld gantry column 1.5": "f3dd3435e8abc0f73e27f6f85896874874723c9dbdc50e1d423242dac10fe6b2",
+    "TP Vessel Fabricator V02 | rigid spanning seam-tool rail": "32e1fbc0b7a25a38b83fdcf3d1b22691fb5c5a282bd75f3f0c3f43f41622adff",
+    "TP Vessel Fabricator V02 | welding tool linear guide": "b4f4d71df6e27f55cea8bb97e1e9cf1f5e62ffc9a52132d40f055d3f76e8003c",
+    "TP Vessel Fabricator V02 | linear guide mounting standoff -1.2": "59fdb0673ca86687f6649e059a5475ed68563e2880efdeef7a99886dac155781",
+    "TP Vessel Fabricator V02 | linear guide mounting standoff 0": "59fdb0673ca86687f6649e059a5475ed68563e2880efdeef7a99886dac155781",
+    "TP Vessel Fabricator V02 | linear guide mounting standoff 1.2": "59fdb0673ca86687f6649e059a5475ed68563e2880efdeef7a99886dac155781",
+    "TP Vessel Fabricator V02 | guided welding carriage": "73928bbe447cb64ef77052e791b070409aff88640dd8186aba010c56a7f898c7",
+    "TP Vessel Fabricator V02 | torch carriage mounting saddle": "ebf5a852930ae5dd1c531eeb58243548a33c9ce9e28ff160beb522ba7655fdc5",
+    "TP Vessel Fabricator V02 | insulated welding supply rail 2.2": "96bc1b307608de0d2ee7b8d78d99ef61d996acc36fb63b048b1fffbd742ec398",
+    "TP Vessel Fabricator V02 | bus insulation standoff (-1.35, 2.2)": "d8af3ddbd7a8645271215cecbdf3db92aef108baa3adbddb5b8f1f508be392a2",
+    "TP Vessel Fabricator V02 | rear conductor bracket (-1.35, 2.2)": "01be1b8c57cd9cab02b8800c24f275ccbb8b3bcdb6098657247da434037931fb",
+    "TP Vessel Fabricator V02 | bus insulation standoff (0, 2.2)": "d8af3ddbd7a8645271215cecbdf3db92aef108baa3adbddb5b8f1f508be392a2",
+    "TP Vessel Fabricator V02 | rear conductor bracket (0, 2.2)": "01be1b8c57cd9cab02b8800c24f275ccbb8b3bcdb6098657247da434037931fb",
+    "TP Vessel Fabricator V02 | bus insulation standoff (1.35, 2.2)": "d8af3ddbd7a8645271215cecbdf3db92aef108baa3adbddb5b8f1f508be392a2",
+    "TP Vessel Fabricator V02 | rear conductor bracket (1.35, 2.2)": "01be1b8c57cd9cab02b8800c24f275ccbb8b3bcdb6098657247da434037931fb",
+    "TP Vessel Fabricator V02 | moving current collector 2.2": "c90d9ccf131084fc49a269de175089f801c0afb3b16c55770d57c435580c4f93",
+    "TP Vessel Fabricator V02 | sliding conductor contact pad 2.2": "b2e8355874f99a9f6a30f8812261210a0b27d2377f73a2e80cfff14d94d22fc2",
+    "TP Vessel Fabricator V02 | insulated welding supply rail 2.27": "96bc1b307608de0d2ee7b8d78d99ef61d996acc36fb63b048b1fffbd742ec398",
+    "TP Vessel Fabricator V02 | bus insulation standoff (-1.35, 2.27)": "bbf5fd45322eb40fb6f94e50779063253253f7e1f7ff293305618785230fb608",
+    "TP Vessel Fabricator V02 | rear conductor bracket (-1.35, 2.27)": "01be1b8c57cd9cab02b8800c24f275ccbb8b3bcdb6098657247da434037931fb",
+    "TP Vessel Fabricator V02 | bus insulation standoff (0, 2.27)": "bbf5fd45322eb40fb6f94e50779063253253f7e1f7ff293305618785230fb608",
+    "TP Vessel Fabricator V02 | rear conductor bracket (0, 2.27)": "01be1b8c57cd9cab02b8800c24f275ccbb8b3bcdb6098657247da434037931fb",
+    "TP Vessel Fabricator V02 | bus insulation standoff (1.35, 2.27)": "bbf5fd45322eb40fb6f94e50779063253253f7e1f7ff293305618785230fb608",
+    "TP Vessel Fabricator V02 | rear conductor bracket (1.35, 2.27)": "01be1b8c57cd9cab02b8800c24f275ccbb8b3bcdb6098657247da434037931fb",
+    "TP Vessel Fabricator V02 | moving current collector 2.27": "c90d9ccf131084fc49a269de175089f801c0afb3b16c55770d57c435580c4f93",
+    "TP Vessel Fabricator V02 | sliding conductor contact pad 2.27": "b2e8355874f99a9f6a30f8812261210a0b27d2377f73a2e80cfff14d94d22fc2",
+    "TP Vessel Fabricator V02 | grounded pressure tailstock": "4f5ab4d16d8143172906a667feab0798ef0296f927d71370303838f4f2724ab1",
+    "TP Vessel Fabricator V02 | closed forming-fluid reservoir": "ba4d6f6e4062b290651c12dad7b6a9aa52716e472c19af08fd44151aedcf7552",
+    "TP Vessel Fabricator V02 | forming reservoir service lid": "fbe423623dc995c439cf7f35796befc599bdf265e0541db1f2545c843ad2a24e",
+    "TP Vessel Fabricator V02 | rear pressure line support -0.9": "1cdc9a94bd42a86811c9614a37061447021a9f9cb6dbad2a834e817a7ac2368b",
+    "TP Vessel Fabricator V02 | rear pressure line support 0.5": "1cdc9a94bd42a86811c9614a37061447021a9f9cb6dbad2a834e817a7ac2368b",
+    "TP Vessel Fabricator V02 | rear pressure line support 1.5": "1cdc9a94bd42a86811c9614a37061447021a9f9cb6dbad2a834e817a7ac2368b",
+    "TP Vessel Fabricator V02 | loading roller support (-1.02, -1.12)": "5f3b8e1ad608b54443c98c1096e19d8e3d3356489ae35424af4638de7a5df6bf",
+    "TP Vessel Fabricator V02 | loading roller support (0.62, -1.12)": "5f3b8e1ad608b54443c98c1096e19d8e3d3356489ae35424af4638de7a5df6bf",
+    "TP Vessel Fabricator V02 | loading roller support (-1.02, -1.48)": "5f3b8e1ad608b54443c98c1096e19d8e3d3356489ae35424af4638de7a5df6bf",
+    "TP Vessel Fabricator V02 | loading roller support (0.62, -1.48)": "5f3b8e1ad608b54443c98c1096e19d8e3d3356489ae35424af4638de7a5df6bf",
+    "TP Vessel Fabricator V02 | input steel plate 0.385": "5e957cda835d0a2e7ef1d774068690148bd542b067e38b8ba3747df878ab60fd",
+    "TP Vessel Fabricator V02 | input steel plate 0.42": "5e957cda835d0a2e7ef1d774068690148bd542b067e38b8ba3747df878ab60fd",
+    "TP Vessel Fabricator V02 | cogitator pedestal": "aabfbbaf5bf04a87e4900964432dc8c253ad7d3146551e3b668cd42cafa4d051",
+    "TP Vessel Fabricator V02 | cogitator grounded sole": "9240295b71841cdae5b108539289200018b8f8f865da6765ed0c4bd466dad62a",
+    "TP Vessel Fabricator V02 | welded two-plate pressure blank": "df3e81b403404133a84e48f39f095a66badde9780b93ce5abd62544462b37b4a",
+    "TP Vessel Fabricator V02 | actual longitudinal weld seam -0.535": "9ee6f7c33196ce6f3e47d5773032e07d917c6b234098f3a89428d6b747f0447d",
+    "TP Vessel Fabricator V02 | actual longitudinal weld seam 0.535": "9ee6f7c33196ce6f3e47d5773032e07d917c6b234098f3a89428d6b747f0447d",
+    "TP Vessel Fabricator V02 | welded closed blind end": "7e7270f318ddc2007a4106a54131ded676e2ea0de4f57faaeb1c3fb00aa74d9c",
+    "TP Vessel Fabricator V02 | fixed full die hinge shaft": "c177fc1de50c96eb9286ceec725bf415787f6f5dff8487bd6d2d7373e1d35be6",
+    "TP Vessel Fabricator V02 | fixed hinge bearing -1.5": "72a3fe329152c095cc0586219acb45e7d0ce3951c5b246e65f5c305dca763969",
+    "TP Vessel Fabricator V02 | fixed hinge bearing 1.5": "1d332b2fa3a407576dad364f1d7f50be65d4b838c54009395bfabe77ac1e8c6c",
+    "TP Vessel Fabricator V02 | moving upper die hinge lug -0.98": "7420a3697c38293f6a4cfe6353961039b9917a9693e344dd338ddb6fd9fb8aeb",
+    "TP Vessel Fabricator V02 | moving upper die hinge lug 0.98": "51d7e784180f7c07f0917fa96a43fcb8685c5ddff74cf0f62e631fa93aa31bb6",
+    "TP Vessel Fabricator V02 | fixed lift trunnion pin": "2822a4147d58305b1cb7ad7126081013002fab67c214c6975020789075da8ecf",
+    "TP Vessel Fabricator V02 | upper die lift cylinder trunnion": "3e113a74f367b394db580830829e31df9259de378075814f495d981b346ba02a",
+    "TP Vessel Fabricator V02 | upper die lift cylinder": "9e09db94231089bd0250f974df46470f007035bf493780f56267c21ece528ba5",
+    "TP Vessel Fabricator V02 | upper die lift piston": "29329c63198cb2bacc7979b503460d0161fe001a4c416455fff7b8109c1e44f6",
+    "TP Vessel Fabricator V02 | supported seam welding torch": "e80d23c4cf456e8bba8bfbf1f0256318e4edf5198c89f83f8b5c15a6b3f6f5d0",
+    "TP Vessel Fabricator V02 | actual welding contact tip": "3bb409626b95467220797b3634c74f811687804f00cdc90b6421e90fbd6ed706",
+    "TP Vessel Fabricator V02 | hollow pressure injection mandrel": "83aec954f195a01a70a21e8280638d6e29809e1a9a97c212b42d5792b595740a",
+    "TP Vessel Fabricator V02 | internal neck pressure seal": "b81eaf78471b8193fae87d3d3d12a13a7a57da50fb34356b2f61e4346a4039c0",
+    "TP Vessel Fabricator V02 | external neck restraint": "946cb44715840e7a9cb93510f55f4b409ca233731d994f159508ec34c67b6321",
+    "TP Vessel Fabricator V02 | fixed pressure tailstock head": "0a980137745462aa798fd49c8c1554ef3c066e3b2bac4b2ea832cc7f57c22843",
+    "TP Vessel Fabricator V02 | closed annular tailstock pressure cap": "0aeda17615327cf9548f7d66e38307bf0e7d7963111b1817005f88c39fd48281",
+    "TP Vessel Fabricator V02 | tailstock mandrel gland seal": "ec11d2fd0ca268abae28a5d900077b1d191d1cedb0d9a45cf701aff026697fc8",
+    "TP Vessel Fabricator V02 | pressure inlet gland seal": "758f3a45ebd5c5acb83dd8cf634b7e7e8c345ff7569e2a910a346e957bc56726",
+    "TP Vessel Fabricator V02 | forming pressure pump motor": "62ae356b3cece14ef56caa70963e6de09931b3b672aaf05c632470e68754b1b6",
+    "TP Vessel Fabricator V02 | bored forming pump head": "a130cb11feecae7891b103fc24cb36794b5b63c65c493d6755afcdb11388a8bc",
+    "TP Vessel Fabricator V02 | forming-fluid receiving barrel": "b6d393d6280febf826c8b50e4028c78c03c56a85713f23d3ff7e892596614147",
+    "TP Vessel Fabricator V02 | rear pressure line saddle -0.9": "8535504f70f8396f2dae3da97c5323592ff59c77b83be0bf59f16330467b1484",
+    "TP Vessel Fabricator V02 | rear pressure line saddle 0.5": "6aaf950a22ada6b1253b4d9fcedce92d453fd3bc15e8b65a3b1ff78c1ad1a898",
+    "TP Vessel Fabricator V02 | rear pressure line saddle 1.5": "e1e171843b8ffa8f589b410d4c8dab2a8c6bf8175e79aa469d5fde5cf7cdbcd8",
+    "TP Vessel Fabricator V02 | plate loading roller -1.12": "a4d11b5a185662b09fd88936baa7d91664b26f05d4f2b1f57af913073e86fe91",
+    "TP Vessel Fabricator V02 | plate loading roller -1.48": "a4d11b5a185662b09fd88936baa7d91664b26f05d4f2b1f57af913073e86fe91",
+    "TP Vessel Fabricator V02 | carriage-mounted welding lead 2.2": "310d66f38f36afe490c12bf3810b9e14e09f5478e0b1d3ea714759c2a2fa6f47",
+    "TP Vessel Fabricator V02 | carriage-mounted welding lead 2.27": "3bcd86c1a8a94be22d73b8b825fac2927ac3d4f4cf0ad39ad04e252bd13c0682",
+    "TP Vessel Fabricator V02 | reservoir suction standpipe": "08ee49871b7a097d473d2287e3faec68447adbc7f94c7cea50787485ca9c9fe0",
+    "TP Vessel Fabricator V02 | straight forming inlet reducer": "f4fc415f6fe5f2fee68dc86d1f0bca78f007b99686304fb762c8cbf420418f79",
+    "TP Vessel Fabricator V02 | local forming-fluid feed": "68492da4c164992b0f672d8c6a5072f35e5a4d849135a9d488d95be4fd6e0bbc",
+    "TP Vessel Fabricator V02 | supported high-pressure forming line": "de65d2f1a0b819ea463788c74da560990810d8488103986e69a1646184359f79",
+    "TP Vessel Fabricator V02 | forming-fluid intake / tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 00": "1dcdaa0723ead50ca4f324e2b6bee59c6c14bf4ca3dd23c02bb30d5cfe1e5af7",
+    "TP Vessel Fabricator V02 | forming-fluid intake / tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 01": "1dcdaa0723ead50ca4f324e2b6bee59c6c14bf4ca3dd23c02bb30d5cfe1e5af7",
+    "TP Vessel Fabricator V02 | forming-fluid intake / tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 02": "1dcdaa0723ead50ca4f324e2b6bee59c6c14bf4ca3dd23c02bb30d5cfe1e5af7",
+    "TP Vessel Fabricator V02 | forming-fluid intake / tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 03": "1dcdaa0723ead50ca4f324e2b6bee59c6c14bf4ca3dd23c02bb30d5cfe1e5af7",
+    "TP Vessel Fabricator V02 | forming-fluid intake / tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 04": "1dcdaa0723ead50ca4f324e2b6bee59c6c14bf4ca3dd23c02bb30d5cfe1e5af7",
+    "TP Vessel Fabricator V02 | forming-fluid intake / tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 05": "1dcdaa0723ead50ca4f324e2b6bee59c6c14bf4ca3dd23c02bb30d5cfe1e5af7",
+    "TP Vessel Fabricator V02 | forming-fluid intake / tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 06": "1dcdaa0723ead50ca4f324e2b6bee59c6c14bf4ca3dd23c02bb30d5cfe1e5af7",
+    "TP Vessel Fabricator V02 | forming-fluid intake / tp.mh7.factorio-fluid-mouth | FMPL_PROCESS | purified-water-out / actual flange bolt 07": "1dcdaa0723ead50ca4f324e2b6bee59c6c14bf4ca3dd23c02bb30d5cfe1e5af7",
+    "TP Vessel Fabricator V02 | forming-fluid intake / tp.mh7.factorio-fluid-mouth | TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine collar": "c44ae6a583fb768101425044a2f2c85814dfc67472fb4f3615a2434018d60217",
+    "TP Vessel Fabricator V02 | forming-fluid intake / tp.mh7.factorio-fluid-mouth | TP_MH7_V14 | UV surfaced / FMPL_PROCESS | purified-water-out / reusable machine throat": "51d2e3eff797b008b093c9fbd42ebf977832bde662355f4b76979e5ca70a0962",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / service interface casting": "836130ebff2d1898622e10ae3ea7262dbdb0b3748806f523d7c64eada8d5010c",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / service inset CRT": "07e18c5aa505b731d0760b030e9e99294790ba8f5fe5f0a9bc94e06b1858b87e",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button": "3ed339e413855d4b2b0efb40ea84d3e20f34af85f1bffaa44e07c64175919071",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button.001": "3ed339e413855d4b2b0efb40ea84d3e20f34af85f1bffaa44e07c64175919071",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button.002": "3ed339e413855d4b2b0efb40ea84d3e20f34af85f1bffaa44e07c64175919071",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button.003": "3ed339e413855d4b2b0efb40ea84d3e20f34af85f1bffaa44e07c64175919071",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console cast side extension": "10e5a8bf36b82674c5083c728f52c3bcf1f3920842bc40f29bab92e86e1017b0",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | CRT lower retaining edge": "5189b13d285214f3a5462d03c1088b08e0f78aff5fcbadb302eeac164d38eca2",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | CRT upper retaining edge": "5189b13d285214f3a5462d03c1088b08e0f78aff5fcbadb302eeac164d38eca2",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | CRT left retaining edge": "facf42f8ef6a007d8b265e1b41af2e14053fd95bf5e2a48d86628df782d3c837",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | CRT right retaining edge": "facf42f8ef6a007d8b265e1b41af2e14053fd95bf5e2a48d86628df782d3c837",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 0": "efa2b8862d79da1319ddb3f165cf5ef2f52d12e972a40a242eb08bc20c280012",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 1": "30ca088d936c2c8bbad5178a6c4dd75c5c71a4a447951ba9f1bbc9decd2ee70b",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 2": "670907db3f179995c8b37f255d4ead9f8b902ac537476d26983db7316c8eee8f",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 3": "027b290bf4d7855d6b289bc520c87e202070b30a91ca0c9dc55adec762f083db",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6": "cb78af354a4d2ed27b58884c92990f5f63babe08f509e9c2f690bd611b3e5f2d",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7": "cb78af354a4d2ed27b58884c92990f5f63babe08f509e9c2f690bd611b3e5f2d",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8": "cb78af354a4d2ed27b58884c92990f5f63babe08f509e9c2f690bd611b3e5f2d",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9": "cb78af354a4d2ed27b58884c92990f5f63babe08f509e9c2f690bd611b3e5f2d",
+    "TP Vessel Fabricator V02 | front right cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10": "cb78af354a4d2ed27b58884c92990f5f63babe08f509e9c2f690bd611b3e5f2d"
+  },
+  "added_objects": [
+    "FMPL_PROCESS | TP Fabricator V03 | reservoir lid screw (-1.23, 0.95)",
+    "FMPL_PROCESS | TP Fabricator V03 | reservoir lid screw (-1.23, 1.55)",
+    "FMPL_PROCESS | TP Fabricator V03 | reservoir lid screw (-0.73, 0.95)",
+    "FMPL_PROCESS | TP Fabricator V03 | reservoir lid screw (-0.73, 1.55)",
+    "FMPL_PROCESS | TP Fabricator V03 | pump motor saddle -1.08",
+    "FMPL_PROCESS | TP Fabricator V03 | pump motor saddle -0.88",
+    "TP Fabricator V03 | pump motor cooling ring 1.15",
+    "TP Fabricator V03 | pump motor cooling ring 1.2",
+    "TP Fabricator V03 | pump motor cooling ring 1.25",
+    "TP Fabricator V03 | pump motor cooling ring 1.3",
+    "TP Fabricator V03 | pump motor cooling ring 1.35",
+    "FMPL_PROCESS | TP Fabricator V03 | pump motor closed service cap",
+    "FMPL_PROCESS | TP Fabricator V03 | motor cap screw 0",
+    "FMPL_PROCESS | TP Fabricator V03 | tailstock cap screw 0",
+    "FMPL_PROCESS | TP Fabricator V03 | motor cap screw 1.5707963267948966",
+    "FMPL_PROCESS | TP Fabricator V03 | tailstock cap screw 1.5707963267948966",
+    "FMPL_PROCESS | TP Fabricator V03 | motor cap screw 3.141592653589793",
+    "FMPL_PROCESS | TP Fabricator V03 | tailstock cap screw 3.141592653589793",
+    "FMPL_PROCESS | TP Fabricator V03 | motor cap screw 4.71238898038469",
+    "FMPL_PROCESS | TP Fabricator V03 | tailstock cap screw 4.71238898038469",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor clamping frame grounded foot -0.9-1",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor clamping frame grounded foot -0.91",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor clamping frame grounded foot 0.9-1",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor clamping frame grounded foot 0.91",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor rear hinge grounded foot -1.5-1",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor rear hinge grounded foot -1.51",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor rear hinge grounded foot 1.5-1",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor rear hinge grounded foot 1.51",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor lift ram grounded clevis foot-1",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor lift ram grounded clevis foot1",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor weld gantry grounded shoe -1.5-1",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor weld gantry grounded shoe -1.51",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor weld gantry grounded shoe 1.5-1",
+    "FMPL_PROCESS | TP Fabricator V03 | ground anchor weld gantry grounded shoe 1.51"
+  ],
+  "surface_assignments": [
+    {
+      "object": "TP Vessel Fabricator V02 | welded two-plate pressure blank",
+      "material": "TP Fabricator V03 | formed-plate-steel",
+      "plan": "U is actual X length; V is the original two-sheet angular perimeter. Fine longitudinal rolling grain expands with the real morph. Restrained weld heat follows both actual Y-edge seams, not a front ellipse or global grunge stamp. Round necks retain real dimensions."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | actual longitudinal weld seam -0.535",
+      "material": "TP Fabricator V03 | longitudinal-weld-beads",
+      "plan": "Cylinder axial V follows each actual 1.37-tile seam. Shallow repeated weld ripples follow travel and stay on supported edge beads; no seam geometry or blank thickness is changed."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | actual longitudinal weld seam 0.535",
+      "material": "TP Fabricator V03 | longitudinal-weld-beads",
+      "plan": "Cylinder axial V follows each actual 1.37-tile seam. Shallow repeated weld ripples follow travel and stay on supported edge beads; no seam geometry or blank thickness is changed."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | open lower frame side -0.65",
+      "material": "TP Fabricator V03 | fabricator-frame-enamel",
+      "plan": "Per-face longitudinal UV follows each frame member. Fine red enamel, narrow exposed manufactured edges and dirt at member ends preserve the family finish without the pilot cloud pattern."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | open lower frame side 0.65",
+      "material": "TP Fabricator V03 | fabricator-frame-enamel",
+      "plan": "Per-face longitudinal UV follows each frame member. Fine red enamel, narrow exposed manufactured edges and dirt at member ends preserve the family finish without the pilot cloud pattern."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | open upper front frame",
+      "material": "TP Fabricator V03 | fabricator-frame-enamel",
+      "plan": "Per-face longitudinal UV follows each frame member. Fine red enamel, narrow exposed manufactured edges and dirt at member ends preserve the family finish without the pilot cloud pattern."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | open upper rear frame",
+      "material": "TP Fabricator V03 | fabricator-frame-enamel",
+      "plan": "Per-face longitudinal UV follows each frame member. Fine red enamel, narrow exposed manufactured edges and dirt at member ends preserve the family finish without the pilot cloud pattern."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | rear hinge pedestal -1.5",
+      "material": "TP Fabricator V03 | fabricator-frame-enamel",
+      "plan": "Per-face longitudinal UV follows each frame member. Fine red enamel, narrow exposed manufactured edges and dirt at member ends preserve the family finish without the pilot cloud pattern."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | rear hinge pedestal 1.5",
+      "material": "TP Fabricator V03 | fabricator-frame-enamel",
+      "plan": "Per-face longitudinal UV follows each frame member. Fine red enamel, narrow exposed manufactured edges and dirt at member ends preserve the family finish without the pilot cloud pattern."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | red weld gantry column -1.5",
+      "material": "TP Fabricator V03 | fabricator-frame-enamel",
+      "plan": "Per-face longitudinal UV follows each frame member. Fine red enamel, narrow exposed manufactured edges and dirt at member ends preserve the family finish without the pilot cloud pattern."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | red weld gantry column 1.5",
+      "material": "TP Fabricator V03 | fabricator-frame-enamel",
+      "plan": "Per-face longitudinal UV follows each frame member. Fine red enamel, narrow exposed manufactured edges and dirt at member ends preserve the family finish without the pilot cloud pattern."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | rigid spanning seam-tool rail",
+      "material": "TP Fabricator V03 | fabricator-frame-enamel",
+      "plan": "Per-face longitudinal UV follows each frame member. Fine red enamel, narrow exposed manufactured edges and dirt at member ends preserve the family finish without the pilot cloud pattern."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | grounded pressure tailstock",
+      "material": "TP Fabricator V03 | fabricator-frame-enamel",
+      "plan": "Per-face longitudinal UV follows each frame member. Fine red enamel, narrow exposed manufactured edges and dirt at member ends preserve the family finish without the pilot cloud pattern."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | fixed front clamping land",
+      "material": "TP Fabricator V03 | ground-clamp-and-guide",
+      "plan": "V runs along actual clamp/guide length, U across each face. Fine axial grind and a broad polished mating strip follow the exposed clamping lands, sheet flanges and linear guide. No sockets, hinge pivots or movement dimensions change."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | fixed rear clamping land",
+      "material": "TP Fabricator V03 | ground-clamp-and-guide",
+      "plan": "V runs along actual clamp/guide length, U across each face. Fine axial grind and a broad polished mating strip follow the exposed clamping lands, sheet flanges and linear guide. No sockets, hinge pivots or movement dimensions change."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | upper flange clamping land -0.55",
+      "material": "TP Fabricator V03 | ground-clamp-and-guide",
+      "plan": "V runs along actual clamp/guide length, U across each face. Fine axial grind and a broad polished mating strip follow the exposed clamping lands, sheet flanges and linear guide. No sockets, hinge pivots or movement dimensions change."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | upper flange clamping land 0.55",
+      "material": "TP Fabricator V03 | ground-clamp-and-guide",
+      "plan": "V runs along actual clamp/guide length, U across each face. Fine axial grind and a broad polished mating strip follow the exposed clamping lands, sheet flanges and linear guide. No sockets, hinge pivots or movement dimensions change."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | welded sheet flange -0.535",
+      "material": "TP Fabricator V03 | ground-clamp-and-guide",
+      "plan": "V runs along actual clamp/guide length, U across each face. Fine axial grind and a broad polished mating strip follow the exposed clamping lands, sheet flanges and linear guide. No sockets, hinge pivots or movement dimensions change."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | welded sheet flange 0.535",
+      "material": "TP Fabricator V03 | ground-clamp-and-guide",
+      "plan": "V runs along actual clamp/guide length, U across each face. Fine axial grind and a broad polished mating strip follow the exposed clamping lands, sheet flanges and linear guide. No sockets, hinge pivots or movement dimensions change."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | welding tool linear guide",
+      "material": "TP Fabricator V03 | ground-clamp-and-guide",
+      "plan": "V runs along actual clamp/guide length, U across each face. Fine axial grind and a broad polished mating strip follow the exposed clamping lands, sheet flanges and linear guide. No sockets, hinge pivots or movement dimensions change."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | closed forming-fluid reservoir",
+      "material": "TP Fabricator V03 | forming-fluid-reservoir",
+      "plan": "Cabinet UV follows the actual hollow tank and lid edges. Dark painted steel has restrained seam oil and edge rub; bores and cavity stay open. The motor retains a separate circumferential finish."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | forming reservoir service lid",
+      "material": "TP Fabricator V03 | forming-fluid-reservoir",
+      "plan": "Cabinet UV follows the actual hollow tank and lid edges. Dark painted steel has restrained seam oil and edge rub; bores and cavity stay open. The motor retains a separate circumferential finish."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | forming pressure pump motor",
+      "material": "TP Fabricator V03 | pump-motor-casting",
+      "plan": "Axial/circumferential motor UV and real seated cooling rings. Fine cast finish and end-seam oil are confined to motor housing, separate from reservoir enamel and machined pressure fittings."
+    },
+    {
+      "object": "FMPL_PROCESS | TP Fabricator V03 | pump motor closed service cap",
+      "material": "TP Fabricator V03 | pump-motor-casting",
+      "plan": "Axial/circumferential motor UV and real seated cooling rings. Fine cast finish and end-seam oil are confined to motor housing, separate from reservoir enamel and machined pressure fittings."
+    },
+    {
+      "object": "TP Fabricator V03 | pump motor cooling ring 1.15",
+      "material": "TP Fabricator V03 | pump-motor-casting",
+      "plan": "Axial/circumferential motor UV and real seated cooling rings. Fine cast finish and end-seam oil are confined to motor housing, separate from reservoir enamel and machined pressure fittings."
+    },
+    {
+      "object": "TP Fabricator V03 | pump motor cooling ring 1.2",
+      "material": "TP Fabricator V03 | pump-motor-casting",
+      "plan": "Axial/circumferential motor UV and real seated cooling rings. Fine cast finish and end-seam oil are confined to motor housing, separate from reservoir enamel and machined pressure fittings."
+    },
+    {
+      "object": "TP Fabricator V03 | pump motor cooling ring 1.25",
+      "material": "TP Fabricator V03 | pump-motor-casting",
+      "plan": "Axial/circumferential motor UV and real seated cooling rings. Fine cast finish and end-seam oil are confined to motor housing, separate from reservoir enamel and machined pressure fittings."
+    },
+    {
+      "object": "TP Fabricator V03 | pump motor cooling ring 1.3",
+      "material": "TP Fabricator V03 | pump-motor-casting",
+      "plan": "Axial/circumferential motor UV and real seated cooling rings. Fine cast finish and end-seam oil are confined to motor housing, separate from reservoir enamel and machined pressure fittings."
+    },
+    {
+      "object": "TP Fabricator V03 | pump motor cooling ring 1.35",
+      "material": "TP Fabricator V03 | pump-motor-casting",
+      "plan": "Axial/circumferential motor UV and real seated cooling rings. Fine cast finish and end-seam oil are confined to motor housing, separate from reservoir enamel and machined pressure fittings."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | upper die lift piston",
+      "material": "TP Fabricator V03 | ground-shafts-and-tool",
+      "plan": "Circumferential fine turning on real shaft/tool axes, restrained seated-end oil. Actual bore UV is retained on the mandrel. No scale, pressure bore or attachment frame changes."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | hollow pressure injection mandrel",
+      "material": "TP Fabricator V03 | ground-shafts-and-tool",
+      "plan": "Circumferential fine turning on real shaft/tool axes, restrained seated-end oil. Actual bore UV is retained on the mandrel. No scale, pressure bore or attachment frame changes."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | fixed full die hinge shaft",
+      "material": "TP Fabricator V03 | ground-shafts-and-tool",
+      "plan": "Circumferential fine turning on real shaft/tool axes, restrained seated-end oil. Actual bore UV is retained on the mandrel. No scale, pressure bore or attachment frame changes."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | supported seam welding torch",
+      "material": "TP Fabricator V03 | ground-shafts-and-tool",
+      "plan": "Circumferential fine turning on real shaft/tool axes, restrained seated-end oil. Actual bore UV is retained on the mandrel. No scale, pressure bore or attachment frame changes."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | actual welding contact tip",
+      "material": "TP Fabricator V03 | ground-shafts-and-tool",
+      "plan": "Circumferential fine turning on real shaft/tool axes, restrained seated-end oil. Actual bore UV is retained on the mandrel. No scale, pressure bore or attachment frame changes."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | external neck restraint",
+      "material": "TP Fabricator V03 | retaining-bronze",
+      "plan": "Existing physical sleeve U/V follows circumferential and axial dimensions. Restrained bronze machining and seam darkening belong to actual neck restraint, hinge lugs and grounded trunnion, not every steel part."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | moving upper die hinge lug -0.98",
+      "material": "TP Fabricator V03 | retaining-bronze",
+      "plan": "Existing physical sleeve U/V follows circumferential and axial dimensions. Restrained bronze machining and seam darkening belong to actual neck restraint, hinge lugs and grounded trunnion, not every steel part."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | moving upper die hinge lug 0.98",
+      "material": "TP Fabricator V03 | retaining-bronze",
+      "plan": "Existing physical sleeve U/V follows circumferential and axial dimensions. Restrained bronze machining and seam darkening belong to actual neck restraint, hinge lugs and grounded trunnion, not every steel part."
+    },
+    {
+      "object": "TP Vessel Fabricator V02 | upper die lift cylinder trunnion",
+      "material": "TP Fabricator V03 | retaining-bronze",
+      "plan": "Existing physical sleeve U/V follows circumferential and axial dimensions. Restrained bronze machining and seam darkening belong to actual neck restraint, hinge lugs and grounded trunnion, not every steel part."
+    }
+  ],
+  "textures": [
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\formed-plate-steel\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "9f471392eca0607dcf18771833a925f240bc223e4804855b54c63d8e8bf05b14"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\formed-plate-steel\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "e3043a8d9a934c978ec5c134c242c3a05666a71abda746a81c247c77e61c0afe"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\formed-plate-steel\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "fbd7514a54a6e3b0d854d246f78a277a61b330ebda08cd902b9259eb5ccd1a6e"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\longitudinal-weld-beads\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "24307154af7570e4b22d84aa98d603b46fd6ad2c09ac9a5572d56131b3529938"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\longitudinal-weld-beads\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "ea919e4ac750376304c12a8ad9d775d49cb2d2ecb73c18a6d17460c596d725b7"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\longitudinal-weld-beads\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "0401d5e4b93569db748207a5c51d7dd54eadb62fce40f6b67dd7c677e7249490"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\fabricator-frame-enamel\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "88d6f4a9a7e08537968a617ccf15438fe017d4eefa6e7fa2e74b25cbbdaa2400"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\fabricator-frame-enamel\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "25b3a65bd4910588060a87a3408c4710fa7a0f78a1cc2f29ac00e5ee1228cfb0"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\fabricator-frame-enamel\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "e807074e235f7d7ac457a262e8522bd52cf9a5724b501657611a6c22501d4208"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\ground-clamp-and-guide\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "418b8b3363f36786f80bce671d040ce8195925560076a4906d86c0c365e342c8"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\ground-clamp-and-guide\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "56d4957df93a0edf11c8c30c20296d586c5a3edf20d82369124e90dd01870ab7"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\ground-clamp-and-guide\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "837b2ca555a6d96ddc9e9f353ef7cc414c8ee18e88c58151a37b47be28289a53"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\forming-fluid-reservoir\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "9d660a074169d859725a0a4fc646801537942ae921777b1bb503d2a9f63ef1a7"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\forming-fluid-reservoir\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "46260f371adf7f11cae16ecef0dd77e73528e82bff7a3a5a0484aff2265b0310"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\forming-fluid-reservoir\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "c14e8a773a152cf9e555beff9ffb0d3a2a69f635d52df1b7a919d4bb82c0c790"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\pump-motor-casting\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "b584135db4dd1284b0b82cebf5afcadc6d3356811aeca1bcab8f2c78ea152cd9"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\pump-motor-casting\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "43db74fa9541fa6fb94257f79cba041374f5a78fd86dfc29201d8fba28a2426f"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\pump-motor-casting\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "428e4a9abfe4d126e620b71beac3bcfbaf23ac08a25010a9b78e54f5d53c443d"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\ground-shafts-and-tool\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "33ef3f944181dafbb99607de7b45ea97c6514f4f352b29dd50c5fab7f9d4db25"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\ground-shafts-and-tool\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "6e0495c939f651ecfb3c280f6cad39f7afc48a2d0fa3c5e6802c0c533f391a1e"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\ground-shafts-and-tool\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "c890ea1c4a4bc2298c878e73774480a8662a7f2745c6e95a36abd3c73f298410"
+    },
+    {
+      "channel": "albedo",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\retaining-bronze\\albedo.png",
+      "color_space": "sRGB",
+      "sha256": "fc1967b4b846ac299e260c10d4b6a76fdec70eb70e55ca37b1eb39965f81cf1f"
+    },
+    {
+      "channel": "orm",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\retaining-bronze\\orm.png",
+      "color_space": "Non-Color",
+      "sha256": "2d8f46a573b8893b580875dcab52b99c1c631c25b29dc4b72e2d6d4e8858917b"
+    },
+    {
+      "channel": "normal",
+      "file": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\fabricator-v03-finish-02\\textures\\retaining-bronze\\normal.png",
+      "color_space": "Non-Color",
+      "sha256": "dea7238caa519fa57019eb60784653d02b21e6ece1286da734a88d30e54fc05f"
+    }
+  ]
+}

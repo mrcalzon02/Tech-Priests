@@ -1,0 +1,40 @@
+{
+  "status": "agent-reviewed finish/state candidate; owner and native pending",
+  "source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+  "glb_sha256": "378095b1903a6b99700ff50ed6061782786ecbe37e03045d9833ca69c216c7df",
+  "owner_approved": false,
+  "final_threshold_unchanged": 4,
+  "reference_sha256": "791e0ffc6d5615e98e26e5d6569206988cc0379ce2eae156ee94f47c734ce631",
+  "scores": {
+    "silhouette": {
+      "score": 4,
+      "reason": "Exposed welded blank, narrow clamping frame, distinct seam-tool gantry and supported pump circuit read clearly at the same family camera."
+    },
+    "construction": {
+      "score": 4,
+      "reason": "Preserved moving geometry/morph, actual supported 34-detail additions, all contacts and both sampled motion/bore readbacks pass; closeups expose mounting and joint transitions."
+    },
+    "surfaces": {
+      "score": 4,
+      "reason": "24 real maps follow plate perimeter and rolling direction, actual seam beads, frame edges, clamp wear, pump cabinet/motor, tooling and bronze retainers. Export PBR links and loaded images pass; front/rear/clay/closeups were viewed against the surfaced forge family."
+    },
+    "states": {
+      "score": 4,
+      "reason": "Actual twelve-second idle/working export, four idle and 48 working captures, six atlases, source-bound master reopen and phase-aligned original sound preview."
+    },
+    "native": {
+      "score": 0,
+      "reason": "Native 4x4 fluid/item implementation, graphical pipe seating, audio binding and actual clock remain pending."
+    }
+  },
+  "render_hashes": {
+    "front-formed": "e6061b5c967ed202f798018166861e728d3581fcd139739ad65a477d8543e653",
+    "rear-formed": "20594dd207e29dad2a7df576e33256b73442d90f8dee7072ae5c507a74d32f88",
+    "weld-edge": "cf2ef0cfd4400db393f10a45053762409000f0acc018ba1eb6ed06629231032a",
+    "plate-and-clamps": "7cf5b4da68924c450f53282427f0e67136fe96cdf817f3ff450e790d8c65f27c",
+    "pump-and-suction": "e0a3cd835081c2efd5fc95ae9e67369ba9fd57b3fcf518c26f853d7bc1d8e0a9",
+    "rear-lift-and-corridor": "fc8dd611792115c24cf94e7f8933eceb82564672462671faecc8372938cad98e",
+    "conductor-and-tool": "425b0d79b2207b60905f354fcb4c5678d100ac0cc768e044a7a03fa53bd4a050",
+    "clay-open-frame": "09d3b50e8ff263fd8ff1691108825f7a7c40d8a23c1f9c83376b468cb4816a4d"
+  }
+}

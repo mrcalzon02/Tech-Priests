@@ -1,0 +1,27 @@
+{
+  "machine": "pressure-vessel-fabricator",
+  "footprint": [
+    4,
+    4
+  ],
+  "ports": [
+    {
+      "id": "forming_fluid_intake",
+      "model_mouth_center": [
+        -2,
+        0.5,
+        0.36
+      ],
+      "outward_normal": [
+        -1,
+        0,
+        0
+      ],
+      "native_position": null,
+      "native_direction": null,
+      "verified_native": false,
+      "fluid": "forming medium; final gameplay fluid identity pending"
+    }
+  ],
+  "native_target": null
+}

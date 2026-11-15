@@ -3,7 +3,7 @@
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
   "current_machine": "pressure-vessel-fabricator",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pressure-vessel-fabricator\\v02-open-frame-mechanics",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pressure-vessel-fabricator\\v03-finish-and-states",
   "queue": [
     {
       "id": "water-purifier",
@@ -51,7 +51,7 @@
         4,
         4
       ],
-      "status": "V02 source/runtime sampled mechanics and core bores pass; dedicated finish/audio/four-angle/native next"
+      "status": "V03 dedicated finish, four-direction states and original audio saved/reviewed; native fluid/item/pipe integration next"
     },
     {
       "id": "canister-assembler",
@@ -104,14 +104,12 @@
     "body_render_layer": "lower-object",
     "next_shape_action": "none; owner called done"
   },
-  "library_registry_sha256": "b3fa6b7d45879a4e2162eaab0bc39733c50d45fa61745624a29ba5113ec3a2eb",
+  "library_registry_sha256": "5fc1245f9876b2590c8b09b5bfcfe7b1215f2797c177afe67dbc893b43a30245",
   "reactors": {
     "status": "V14 native bytes still unrecovered",
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Finish dedicated plate/weld/frame/pump/guide surfaces and appropriate welding/pump sound",
-    "Capture and inspect four idle/working directions and final hardware closeups",
     "Build native 4x4 fluid/item prototype, real pipe joins and actual animation clock",
     "Build canister assembler, refine three reactors, then remaining sprite-only buildings"
   ],
@@ -359,35 +357,39 @@
     "completion_policy": "Each distinct building and variant requires editable source, finish, actual export inspection, relevant states/directions, prototype integration and visual interface review; shared sprites/meshes do not close a family."
   },
   "fabricator": {
-    "status": "source_and_actual_export_mechanics_and_bore_checkpoint; dedicated_finish_audio_native_pending",
-    "source_sha256": "f51833329c74bc1482e9378513729429d616a9734eabdc12ebc401a26311c806",
-    "glb_sha256": "c65459f5bdf90a28d141f34fbfe8581d025d80820aa9f5cf15cf76a5ebe991b5",
-    "registry_sha256": "b3fa6b7d45879a4e2162eaab0bc39733c50d45fa61745624a29ba5113ec3a2eb",
+    "status": "reviewed_dedicated_finish_four_direction_states_and_original_audio; native_pending",
+    "source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+    "glb_sha256": "378095b1903a6b99700ff50ed6061782786ecbe37e03045d9833ca69c216c7df",
+    "registry_sha256": "5fc1245f9876b2590c8b09b5bfcfe7b1215f2797c177afe67dbc893b43a30245",
     "footprint": [
       4,
       4
     ],
     "cycle_seconds": 12,
     "owner_process": "Weld steel plates together, clamp the exposed blank in an open frame, and pump high-pressure forming material through a sealed mandrel to expand it.",
-    "contacts": 134,
+    "contacts": 170,
     "motion_samples_per_artifact": 1154,
     "motion_step_frames": 0.25,
     "unexpected_sampled_intersections": 0,
     "source_and_runtime_core_rays": 1710,
     "deformed_vertex_pose_samples": 12,
     "maximum_deformed_world_vertex_error": 0,
-    "triangles": 39256,
+    "triangles": 41748,
     "sampled_motion_clearance_verified": true,
     "full_continuous_swept_clearance_verified": false,
     "pressure_core_bore_probes_passed": true,
     "hydraulic_simulation_or_seal_certification": false,
     "item_visual_transition": "Full-size workpiece retained; native crafting owns item removal. No scaling the neck through the mandrel.",
     "owner_approved": false,
-    "dedicated_surfaces_complete": false,
+    "dedicated_surfaces_complete": true,
+    "authored_maps": 24,
+    "mounted_details": 34,
+    "capture_frames": 52,
+    "atlas_count": 6,
+    "audio_implemented": true,
+    "native_audio_binding_verified": false,
     "native_prototype_verified": false,
     "next": [
-      "Finish dedicated plate/weld/frame/pump/guide surfaces and appropriate welding/pump sound",
-      "Capture and inspect four idle/working directions and final hardware closeups",
       "Build native 4x4 fluid/item prototype, real pipe joins and actual animation clock",
       "Build canister assembler, refine three reactors, then remaining sprite-only buildings"
     ]

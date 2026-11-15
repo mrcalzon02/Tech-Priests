@@ -1,0 +1,847 @@
+{
+  "passed": true,
+  "errors": [],
+  "source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+  "glb_sha256": "378095b1903a6b99700ff50ed6061782786ecbe37e03045d9833ca69c216c7df",
+  "preserved_meshes": 146,
+  "authored_maps": 24,
+  "source_images": [
+    {
+      "name": "brass_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_albedo.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_albedo.png.002",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_normal.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_normal.png.002",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_orm.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "brass_orm.png.002",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "dark_recess_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "dark_recess_albedo.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "dark_recess_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "dark_recess_normal.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "dark_recess_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "dark_recess_orm.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "ferrocrete_dark_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "ferrocrete_dark_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "ferrocrete_dark_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "gunmetal_dark_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "gunmetal_dark_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "gunmetal_dark_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_albedo.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_albedo.png.002",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_normal.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_normal.png.002",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_orm.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "iron_orm.png.002",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "machine_steel_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "machine_steel_albedo.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "machine_steel_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "machine_steel_normal.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "machine_steel_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "machine_steel_orm.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_albedo.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_albedo.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_normal.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_normal.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_orm.png",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "martian_red_orm.png.001",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | fabricator-frame-enamel albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | fabricator-frame-enamel normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | fabricator-frame-enamel orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | formed-plate-steel albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | formed-plate-steel normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | formed-plate-steel orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | forming-fluid-reservoir albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | forming-fluid-reservoir normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | forming-fluid-reservoir orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | ground-clamp-and-guide albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | ground-clamp-and-guide normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | ground-clamp-and-guide orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | ground-shafts-and-tool albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | ground-shafts-and-tool normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | ground-shafts-and-tool orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | longitudinal-weld-beads albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | longitudinal-weld-beads normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | longitudinal-weld-beads orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | pump-motor-casting albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | pump-motor-casting normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | pump-motor-casting orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | retaining-bronze albedo",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | retaining-bronze normal",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    },
+    {
+      "name": "TP Fabricator V03 | retaining-bronze orm",
+      "size": [
+        512,
+        512
+      ],
+      "packed": true
+    }
+  ],
+  "runtime_materials": [
+    {
+      "name": "TP Fabricator V03 | fabricator-frame-enamel.001",
+      "channels": {
+        "Base Color": true,
+        "Roughness": true,
+        "Metallic": true,
+        "Normal": true
+      },
+      "images": [
+        {
+          "name": "albedo.001",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "orm.001",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "normal.001",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TP Fabricator V03 | formed-plate-steel.001",
+      "channels": {
+        "Base Color": true,
+        "Roughness": true,
+        "Metallic": true,
+        "Normal": true
+      },
+      "images": [
+        {
+          "name": "albedo.003",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "orm.003",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "normal.003",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TP Fabricator V03 | forming-fluid-reservoir.001",
+      "channels": {
+        "Base Color": true,
+        "Roughness": true,
+        "Metallic": true,
+        "Normal": true
+      },
+      "images": [
+        {
+          "name": "albedo.002",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "orm.002",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "normal.002",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TP Fabricator V03 | ground-clamp-and-guide.001",
+      "channels": {
+        "Base Color": true,
+        "Roughness": true,
+        "Metallic": true,
+        "Normal": true
+      },
+      "images": [
+        {
+          "name": "albedo",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "orm",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "normal",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TP Fabricator V03 | ground-shafts-and-tool.001",
+      "channels": {
+        "Base Color": true,
+        "Roughness": true,
+        "Metallic": true,
+        "Normal": true
+      },
+      "images": [
+        {
+          "name": "albedo.005",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "orm.005",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "normal.005",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TP Fabricator V03 | longitudinal-weld-beads.001",
+      "channels": {
+        "Base Color": true,
+        "Roughness": true,
+        "Metallic": true,
+        "Normal": true
+      },
+      "images": [
+        {
+          "name": "albedo.004",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "orm.004",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "normal.004",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TP Fabricator V03 | pump-motor-casting.001",
+      "channels": {
+        "Base Color": true,
+        "Roughness": true,
+        "Metallic": true,
+        "Normal": true
+      },
+      "images": [
+        {
+          "name": "albedo.007",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "orm.007",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "normal.007",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TP Fabricator V03 | retaining-bronze.001",
+      "channels": {
+        "Base Color": true,
+        "Roughness": true,
+        "Metallic": true,
+        "Normal": true
+      },
+      "images": [
+        {
+          "name": "albedo.006",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "orm.006",
+          "size": [
+            512,
+            512
+          ]
+        },
+        {
+          "name": "normal.006",
+          "size": [
+            512,
+            512
+          ]
+        }
+      ]
+    }
+  ],
+  "views": [
+    {
+      "view": "front-formed",
+      "source_frame": 199,
+      "sha256": "e6061b5c967ed202f798018166861e728d3581fcd139739ad65a477d8543e653",
+      "diagnostic_camera": true
+    },
+    {
+      "view": "rear-formed",
+      "source_frame": 199,
+      "sha256": "20594dd207e29dad2a7df576e33256b73442d90f8dee7072ae5c507a74d32f88",
+      "diagnostic_camera": true
+    },
+    {
+      "view": "weld-edge",
+      "source_frame": 49,
+      "sha256": "cf2ef0cfd4400db393f10a45053762409000f0acc018ba1eb6ed06629231032a",
+      "diagnostic_camera": true
+    },
+    {
+      "view": "plate-and-clamps",
+      "source_frame": 199,
+      "sha256": "7cf5b4da68924c450f53282427f0e67136fe96cdf817f3ff450e790d8c65f27c",
+      "diagnostic_camera": true
+    },
+    {
+      "view": "pump-and-suction",
+      "source_frame": 199,
+      "sha256": "e0a3cd835081c2efd5fc95ae9e67369ba9fd57b3fcf518c26f853d7bc1d8e0a9",
+      "diagnostic_camera": true
+    },
+    {
+      "view": "rear-lift-and-corridor",
+      "source_frame": 199,
+      "sha256": "fc8dd611792115c24cf94e7f8933eceb82564672462671faecc8372938cad98e",
+      "diagnostic_camera": true
+    },
+    {
+      "view": "conductor-and-tool",
+      "source_frame": 49,
+      "sha256": "425b0d79b2207b60905f354fcb4c5678d100ac0cc768e044a7a03fa53bd4a050",
+      "diagnostic_camera": true
+    },
+    {
+      "view": "clay-open-frame",
+      "source_frame": 255,
+      "sha256": "09d3b50e8ff263fd8ff1691108825f7a7c40d8a23c1f9c83376b468cb4816a4d",
+      "diagnostic_camera": true
+    }
+  ],
+  "scope": "Reopened source geometry/morph and packed-map check; actual GLB PBR links and diagnostic front/rear/closeup/clay renders. Visual judgement and final canonical captures are separate."
+}

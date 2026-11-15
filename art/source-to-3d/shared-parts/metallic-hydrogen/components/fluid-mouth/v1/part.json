@@ -590,6 +590,40 @@
       "model_source_sha256": "f51833329c74bc1482e9378513729429d616a9734eabdc12ebc401a26311c806",
       "runtime_export_sha256": "c65459f5bdf90a28d141f34fbfe8581d025d80820aa9f5cf15cf76a5ebe991b5",
       "status": "Unchanged appended shared master; source/runtime bores and sampled motion pass; dedicated finish/native pending"
+    },
+    {
+      "machine": "pressure-vessel-fabricator",
+      "machine_revision": "V03 dedicated finish, states and original audio",
+      "instance": "forming-fluid intake",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -2.0
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+      "runtime_export_sha256": "378095b1903a6b99700ff50ed6061782786ecbe37e03045d9833ca69c216c7df",
+      "status": "Unchanged appended shared master; source/export bores, sampled motion, dedicated finish and four-direction captures pass; native pending"
     }
   ],
   "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
