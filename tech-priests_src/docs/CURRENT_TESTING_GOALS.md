@@ -741,3 +741,14 @@ The default Map setting announces all enemy colony technologies; Off and Major d
 ## Actual colony research from zero
 
 Accepted: ordinary Vulcanus colony, three bound priests, Automation progress 0 at start, native paid completion at tick 6647, two new physical structures by tick 12000, hostile intercept eligibility and unchanged player research. Run python tools/run_enemy_planetary_probe.py --full-research. Hash-bound unedited logs: tests/evidence/enemy-research-from-zero. This uses normal planetary power/day rules and finite initial supplies, without forced research progress or worker instructions. Science produced was 0; sustained science manufacture and later research chains remain open.
+
+
+## 2026-11-15 — Owner-authorized bunker weapon integration
+
+PASS in the real Tech Priests 0.1.681 mod on Factorio 2.1.24 with official
+Space Age mods: 32 cannon setups, four existing ammunition types, 64 headings,
+five legacy weapons, graphics and separate-process mid-fire save/reload.
+All 180 existing event routes survive canonical-registry installation.
+Evidence: docs/prototypes/twin-cannon-main-evidence. These focused combat
+checks do not close or alter the unrelated logistics/recovery goals above.
+Next weapon design backlog: rocket, artillery, radium, grav, plasma and flamer.
