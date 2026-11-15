@@ -1286,6 +1286,73 @@ local function inspect(s,elapsed)
           or foot_native or native_home_ejected))then
     fail("OUTBOUND_CLAIM_WITHOUT_ORIGINAL_NATIVE_TRAIN_ARRIVAL")
   end
+  -- At 90k the original train has already returned and 0338/0836 has
+  -- physically ejected the SAME original native driver before depositing
+  -- counted ore. A CURRENT get_driver()==priest test would now be false.
+  -- Recognize only the authenticated historical *native* roundtrip, never a
+  -- route plan or a generic mission phase. Production wrote these receipts
+  -- only after original locomotive.set_driver/get_driver confirmed the
+  -- character, genuine remote train travel, exact loaded wagon and native
+  -- home driver ejection. Cross-check every original identity, ordered tick,
+  -- counted item and present native home depot before allowing full proof.
+  local reboard=remote_drill and remote_drill.reboard_0836
+  local return_receipt=objective and objective.home_ore_0836
+  local authentic_past_ride=native_home_ejected
+    and first_board and first_board.phase=="native-original-magos-boarded"
+    and first_board.priest_unit==p.priest.unit_number
+    and first_board.locomotive_unit==loco_entity.unit_number
+    and first_board.wagon_unit==wagon_entity.unit_number
+    and first_board.train_id==moving_train.id
+    and type(first_board.confirmed_tick)=="number"
+    and ride and ride.physical_boarding_confirmed==true
+    and ride.boarded_priest_unit==p.priest.unit_number
+    and ride.train_id==moving_train.id
+    and outbound and outbound.phase==
+      "native-original-outbound-arrived-at-paid-remote-stop"
+    and outbound.priest_unit==p.priest.unit_number
+    and outbound.train_id==moving_train.id
+    and type(outbound.arrived_tick)=="number"
+    and outbound.arrived_tick>=first_board.confirmed_tick
+    and outbound.highest_x and outbound.origin_x
+    and outbound.highest_x>outbound.origin_x+32
+    and reboard and reboard.phase==
+      "native-original-magos-reboarded-with-ground-ore"
+    and reboard.native_original_driver_confirmed==true
+    and reboard.priest_unit==p.priest.unit_number
+    and reboard.train_id==moving_train.id
+    and reboard.locomotive_unit==loco_entity.unit_number
+    and reboard.wagon_unit==wagon_entity.unit_number
+    and type(reboard.boarded_tick)=="number"
+    and reboard.boarded_tick>outbound.arrived_tick
+    and reboard.wagon_ore_count>0
+    and homeward and homeward.phase=="native-original-home-arrived-after-roundtrip"
+    and type(homeward.arrival_tick)=="number"
+    and homeward.arrival_tick>reboard.boarded_tick
+    and homeward.train_id==moving_train.id
+    and homeward.priest_unit==p.priest.unit_number
+    and homeward.lowest_x<homeward.remote_x-32
+    and moving_train.station==home_entity
+    and return_receipt and return_receipt.phase=="home-station-ore-deposited"
+    and return_receipt.native_original_driver_ejected==true
+    and return_receipt.wagon_before>0
+    and return_receipt.wagon_final==0
+    and return_receipt.held_final==0
+    and return_receipt.station_after-return_receipt.station_before==
+        return_receipt.wagon_before-return_receipt.wagon_final
+    and return_receipt.quarantine==nil
+  if authentic_past_ride then
+    s.ride_proof=true
+    s.outbound=true
+  end
+  emit("NATIVE_HISTORIC_RIDE_0836 elapsed="..elapsed..
+    " authenticated="..tostring(authentic_past_ride)..
+    " native_home_ejected="..tostring(native_home_ejected)..
+    " original_priest_unit="..tostring(p.priest.unit_number)..
+    " original_train_id="..tostring(moving_train.id)..
+    " reboard_tick="..tostring(reboard and reboard.boarded_tick)..
+    " native_reboard_driver_confirmed="..tostring(reboard
+      and reboard.native_original_driver_confirmed)..
+    " native_home_arrival_tick="..tostring(homeward and homeward.arrival_tick))
   if foot_native then s.ride_proof=true end
   local home_schedule
   if moving_train and moving_train.valid then
