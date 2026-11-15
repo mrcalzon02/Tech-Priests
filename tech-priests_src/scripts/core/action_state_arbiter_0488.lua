@@ -68,7 +68,8 @@ local function actual_crafting(p,o)
   -- Physical direct-acquisition custody must be deposited before crafting.
   -- A competing safety / repair / explicit acquisition order also keeps its
   -- queue authority; the classifier is read-only and cannot preempt it.
-  if p and p.direct_acquisition_custody_0513 or (p and p.machine_logistics_0528 and p.machine_logistics_0528.custody) then return false end
+  if p and (p.direct_acquisition_custody_0513 or p.item_family_custody_0702)
+      or (p and p.machine_logistics_0528 and p.machine_logistics_0528.custody) then return false end
   local order_kind=normalize_kind(o and o.kind)
   if o and o.status=="active" and order_kind~="idle" and order_kind~="crafting"
       and not ProductionOrder.matches(p,o,p.emergency_craft)then

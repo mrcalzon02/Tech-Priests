@@ -1,5 +1,14 @@
 # Current Testing Goals
 
+## 2026-11-15 - Deliver counted science before resuming strict manufacturing
+
+The reconciled cd34f304 source passes native four-rank maintenance. Its protected factory continuation reproduced a circular wait: at tick 107701 the Magos still held two red science packs picked up at tick 79715 for lab 65, while 0488 classified a later strict stone-brick task as crafting. The raw governor correctly refused another acquisition because item_family_custody_0702 was held. Research remained at 0.3666666667 and all downstream supply waited.
+
+The classifier now refuses the crafting surface while that counted item-family cargo exists, allowing the original 0702 delivery owner to finish. It does not clear the parent, manufacture packs, relax transfer distance or take over item custody. The regression creates a strict brick parent after an actual source pickup and uses original 0488/0510/0702 through exact lab delivery, then proves the same strict parent resumes.
+
+The exact tick-107811 protected checkpoint was replayed with the fix. Native observations confirm empty science custody and resumed canonical stone acquisition. By tick 119886 native red production rose 118 to 137 and actual research progressed 0.3666666667 to 0.9988910561. Green stayed 12 and military stayed zero: the supply-capacity bottleneck remains and this recovery is not a fresh throughput or campaign pass. All 58 Lua groups and seven Python tests pass. The three separately recorded rail checks remain pre-existing main failures. Evidence: arena-evidence/science-cargo-circular-wait-recovery. The original save remains hash-verified unchanged.
+
+
 ## 2026-11-15 - Reconcile autonomy validation with current main and native process state
 
 Resumed the autonomous rocket/space-science goal and reconciled the validation checkout with main 12e434995b7af0c6b477ccaeacd689a4b82a0c78. The published behavior tip 80fd71ae was 34 commits ahead of, and missing 78 commits from, main. Integration retains the behavior fixes and main's colony/research, remote-rail, combat and asset deliveries. The sole content conflict in the original 0338 terminal path was resolved by retaining both the factory-output-link receipt and the independently verified paid remote-drill receipt; neither owner replaces the other.

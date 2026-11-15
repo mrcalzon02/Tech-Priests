@@ -45,9 +45,28 @@ pair.priest.position={x=.5,y=0};Items.service_pair(pair)
 assert(stock==0 and delivered==0 and pair.item_family_custody_0702.count==5,
  "science packs were remotely delivered or lost at physical pickup")
 assert(pair.movement_request_0418.x==8.5,"science pickup lease blocked physical delivery")
-pair.priest.position={x=8,y=0};Items.service_pair(pair)
+-- A strict recipe can be assigned after pickup. It must not strand counted
+-- science while the raw governor correctly refuses to take another cargo.
+local parent={output_item="stone-brick",strict_recipe_0647=true,
+ facility_only_0647=true,target_stock_0647=50}
+pair.emergency_craft=parent
+local Arbiter=require("scripts.core.action_state_arbiter_0488")
+local Dispatcher=require("scripts.core.single_dispatcher_0510")
+TECH_PRIESTS_ACTION_STATE_ARBITER_0488=Arbiter
+local crafts=0
+TechPriestsEmergencyProductionExecutor0514={service_pair=function()
+ crafts=crafts+1;return true,"strict-parent-resumed"end}
+assert(Arbiter.action(pair).kind=="item-family-logistics",
+ "strict crafting stranded actual science cargo before laboratory delivery")
+pair.priest.position={x=8,y=0};Dispatcher.service_pair(pair,"science-custody-before-strict-craft")
 assert(delivered==5 and not pair.item_family_custody_0702 and not pair.movement_request_0418,
  "real laboratory did not receive the exact carried science packs")
+assert(pair.emergency_craft==parent and crafts==0,
+ "laboratory delivery replaced or executed the strict parent while carrying science")
+Dispatcher.service_pair(pair,"strict-parent-after-science-delivery")
+assert(crafts==1 and pair.emergency_craft==parent,
+ "strict parent did not resume after counted science delivery")
+pair.emergency_craft=nil
 force.current_research=nil;defines.inventory.turret_ammo=4
 prototypes.item["firearm-magazine"]={type="ammo"}
 stock=10
