@@ -28,3 +28,25 @@ M.service_pair(pair,"held-cargo")
 assert(pair.scavenge and pair.machine_logistics_custody_0528.count==1,
  "held physical work was retired with a planning-only scavenge")
 print("PASS satisfied independent scavenge intent retires while actual held cargo remains owned")
+prototypes.item["repair-pack"]={}
+TechPriestsStorageRoleAuthority0686.generic_item_count=function(_,item)
+ return item=="repair-pack"and 5 or 0 end
+local Supply=require("scripts.core.station_supply_satisfaction_0639")
+local Reserve=require("scripts.core.emergency_supply_reserve_0497")
+pair.requested_item="repair-pack"
+local supply_order={kind="logistics",source="emergency_acquire",status="active",item="repair-pack"}
+pair.order_queue_0469={current=supply_order,pending={}}
+assert(Supply.item_satisfied(pair,"repair-pack"),"real canonical repair stock was invisible")
+Supply.service_pair(pair,"canonical-repair-stock")
+assert(not pair.order_queue_0469.current and supply_order.status=="complete",
+ "already-funded maintenance supply request retained factory ownership")
+local repair_order={kind="repair",source="repair_executor_0516",status="active",item="repair-pack",
+ target={valid=true,health=50,max_health=100}}
+pair.order_queue_0469.current=repair_order;pair.requested_item="repair-pack"
+Supply.service_pair(pair,"actual-repair-not-supply")
+assert(pair.order_queue_0469.current==repair_order and repair_order.status=="active",
+ "available repair ingredients falsely completed an actual machine repair")
+pair.requested_item="repair-pack";Reserve.service_pair(pair)
+assert(pair.order_queue_0469.current==repair_order and repair_order.target.health==50,
+ "emergency stock reconciliation completed a repair without real health change")
+print("PASS canonical repair stock resolves supply intents while actual repair orders await real health change")

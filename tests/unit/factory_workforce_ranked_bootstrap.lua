@@ -51,6 +51,7 @@ denied("workforce-explicit-order-owned")
 pair.order_queue_0469=nil
 capacity=0;denied("workforce-command-capacity-full");capacity=2
 load=0;denied("workforce-no-factory-load");load=12
+load=1;denied("workforce-current-coverage-sufficient");load=12
 TechPriestsResourceReturnCourier0837={worker_reserved=function()return true end}
 denied("workforce-resource-courier-reserved")
 TechPriestsResourceReturnCourier0837=nil

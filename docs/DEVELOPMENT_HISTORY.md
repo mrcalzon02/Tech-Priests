@@ -1,5 +1,18 @@
 # Tech Priests Development History
 
+## 2026-11-14 - Retire terminal orders and unblock real power prerequisites
+
+The 0512 lease wrapper resurrected queue-expired repair requests while unrelated factory work existed, keeping requests created near tick 6000 active past tick 110000. Terminal queue decisions now remain terminal; genuinely nonterminal active-work leases remain protected. Exact adopted recipe-fanout assignments route to their canonical native production owner, complete only against actual output, and clear only the matching old assignment aliases. Unladen source-approach construction planning no longer vetoes an incumbent native furnace's exact raw child. Canonical raw tasks whose blocked targets were cleared now retarget the same task to reachable real resources, preserving counts, timers, explicit orders and actual custody.
+
+Maintenance supply/reserve accounting and repair consumption now use the canonical bounded, same-force storage authority. Native inventory equality replaces shared display-string deduplication. Existing repair packs in a nearby cargo store resolve supply intents; repair/consecration actions themselves remain open until their real executor completes. Native all-rank maintenance still passes. Paid workforce planning now accounts for the commander's own eight-machine service capacity before recruiting, avoiding duplicate early bootstrap factories. Eligible factory input trips carry a two-minute demand buffer, honoring native recipe product yield and the existing transfer cap.
+
+Native diagnosis found a fully supplied first-lab assembler with zero electricity while its strict recipe starved an existing steam pipe. The classifier now admits only the matching funded native power/steam request for an actually owned, configured, unpowered workshop, with foreign orders and held cargo protected. The original 0338 builder paid for and built the route; the assembler completed its laboratory, Factorio unlocked red science and the first recovered faction produced six actual red packs by tick 286628. All four recovered factions now have native Steam Power and Electronics. These late continuations do not pass the original fresh arena deadline.
+
+The canonical threat query also filtered only the literal enemy force. It now scans forces currently hostile under native diplomacy, retaining the original target safety checks. The actual selector regression detects a hostile priest force and drops it when diplomacy changes. A separate equal-stock 64-tile arena is under validation; smaller spacing is refused because authored resource patches can overlap. Default arena spacing and success gates remain unchanged.
+
+Verification: 49 Lua groups and seven Python tests pass, including 75 production, 25 dispatch and actual canonical repair-debit/health cases. Native recovery has reached 394 red, 92 green and 30 military packs, but fresh sustained factory throughput and real participant combat remain unaccepted. Continue native iteration; do not equate these diagnostic recoveries with full completion.
+
+
 ## 2026-11-14 - Native production ownership and starvation-free factory trips
 
 Facility-only furnace work was blocked from legacy execution but still absent from canonical craft classification. Such native tasks now receive the same canonical dispatcher ownership as strict production, while their expressly marked raw-material child and physically held construction/mining items retain priority. A redundant native plate-trigger batch may close only after the actual force technology is researched and a real plate is held; it never manufactures output. Satisfied, unladen independent legacy scavenging intents also retire against counted stock instead of indefinitely walking into a container.

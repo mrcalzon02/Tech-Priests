@@ -88,6 +88,7 @@ local function clear_retired_0505_state(p,t)
   return changed
 end
 local function clear_task(p,s) if s=="emergency_craft"then p.emergency_craft=nil elseif s=="station_crafting_task_0337"then p.station_crafting_task_0337=nil elseif s=="active_craft_0479"then p.active_craft_0479=nil end end
+local ProductionOrder=require("scripts.core.production_order_ownership_0514")
 local function finish_order(p,n,why,t)
   local q=p.order_queue_0469;local o=q and q.current
   if not o then return true,"no-current-order" end
@@ -98,14 +99,21 @@ local function finish_order(p,n,why,t)
   end
   -- Never acknowledge an unrelated acquisition, repair, or construction
   -- order when physical strict production finishes in the station inventory.
-  if not (kind=="emergency_craft" or kind=="crafting"
+  local adopted=ProductionOrder.matches(p,o,t)
+  if not (adopted or kind=="emergency_craft" or kind=="crafting"
     or kind=="station-craft" or kind=="craft") or (o.item and o.item~=n) then
     return true,"unrelated-order-untouched"
   end
   local api=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
   if not(api and type(api.complete_current)=="function")then return false,"order-queue-unavailable" end
   local ok,done,detail=pcall(api.complete_current,p,why,n)
-  if ok and done==true then return true,detail or "completed" end
+  if ok and done==true then
+    if adopted then
+      if p.active_task==o.task then p.active_task=nil end
+      if p.active_task_0285==o.task then p.active_task_0285=nil end
+    end
+    return true,detail or "completed"
+  end
   return false,ok and(detail or done or "order-completion-rejected")or done
 end
 local function finalize(p,t,s,n,why)

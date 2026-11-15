@@ -36,7 +36,7 @@ local function init()
   local compact=c.profile=="compact-capacity"
   assert(not compact or c.preset=="4p-ffa","compact capacity profile requires four priest forces")
   assert(c.force_spacing==nil or(compact and type(c.force_spacing)=="number"
-    and c.force_spacing>=48 and c.force_spacing<=192),"invalid compact force spacing")
+    and c.force_spacing>=64 and c.force_spacing<=192),"invalid compact force spacing")
   local side=compact and 512 or(#roster>4 and 3072 or 2048)
   storage[KEY]={phase="terrain",seed=c.seed,preset=c.preset,
     side=side,chunk=0,cell=0,patch=0,tile=0,participants={},

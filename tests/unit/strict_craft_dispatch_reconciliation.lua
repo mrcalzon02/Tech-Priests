@@ -425,4 +425,46 @@ test("facility-only furnace preserves its marked physical ore child",function()
   p.direct_acquisition_task_0336.material_for_strict_recipe_0637=true
   check(Arbiter.action(p).kind~="crafting","native furnace displaced its own actual ore task")
 end)
+test("adopted recipe-fanout assignment uses its canonical native recipe",function()
+  local p=make_pair();setup(p)
+  p.direct_acquisition_task_0336=nil
+  p.emergency_craft={infrastructure_first_0640=true,facility_only_0647=true,
+    output_item="iron-plate",count=4}
+  local task={item="iron-plate"};p.active_task=task
+  local o={kind="assignment",source="adopt-active",purpose="recipe-fanout",
+    status="active",item="iron-plate",task=task}
+  p.order_queue_0469={current=o}
+  check(Arbiter.action(p).kind=="crafting","automatic recipe assignment bypassed its native owner")
+  o.source="player"
+  check(Arbiter.action(p).kind~="crafting","explicit assignment was mistaken for an automatic recipe")
+end)
+test("unpowered native recipe admits its exact funded steam pipe prerequisite",function()
+  local p=make_pair();p.mode="idle";p.radius=40
+  p.emergency_craft={infrastructure_first_0640=true,facility_only_0647=true,
+    strict_recipe_0647=true,output_item="lab",count=1}
+  local boiler={valid=true,type="boiler",force=p.station.force,surface=p.station.surface}
+  local request={item_name="pipe",entity_name="pipe",source="standard-fluid-route-0691",route_plan_id="native-steam"}
+  p.construction_request=request
+  p.standard_fluid_route_plan_0691={id="native-steam",state="construction-requested",fluid="water",machine=boiler}
+  local source={valid=true,get_item_count=function()return 10 end}
+  p.construction_task_0338={phase="move-source",item_name="pipe",request_field="construction_request",
+    request_value=request,source_inv=source,position={x=2,y=1}}
+  local assembler={valid=true,type="assembling-machine",name="assembling-machine-1",unit_number=70,
+    force=p.station.force,surface=p.station.surface,energy=0,position={x=3,y=0},get_recipe=function()return{name="lab"}end}
+  storage.tech_priests.emergency_facility_doctrine_0343={by_station={[11]={[70]=true}},
+    facilities={[70]={entity=assembler,role="assembler",station_unit=11}}}
+  local old=TechPriestsStorageRoleAuthority0686
+  TechPriestsStorageRoleAuthority0686={generic_item_count=function(_,item)return item=="pipe"and 10 or 0 end}
+  check(Arbiter.action(p).kind=="construction","fully fed but unpowered lab recipe starved its steam pipe")
+  local recipe=p.emergency_craft;Dispatcher.service_pair(p,"native-power-prerequisite")
+  check(counts.construction==1 and counts.craft==0 and p.emergency_craft==recipe,
+    "power prerequisite dropped or executed the blocked parent recipe")
+  assembler.energy=1
+  check(Arbiter.action(p).kind=="crafting","powered recipe yielded to an unnecessary construction exception")
+  assembler.energy=0;p.standard_fluid_route_plan_0691.id="another-route"
+  check(Arbiter.action(p).kind=="crafting","unrelated fluid route displaced strict production")
+  p.standard_fluid_route_plan_0691.id="native-steam";boiler.force={}
+  check(Arbiter.action(p).kind=="crafting","foreign steam machinery gained production priority")
+  TechPriestsStorageRoleAuthority0686=old
+end)
 print("[strict-craft-dispatch] PASS scenarios="..total)

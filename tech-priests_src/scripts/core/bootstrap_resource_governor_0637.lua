@@ -226,14 +226,20 @@ local function find_nearest_source(pair, spec)
   if spec.type == "tree" then opts.type = "tree" end
   local ok, ents = pcall(function() return pair.station.surface.find_entities_filtered(opts) end)
   if not ok or not ents then return nil end
-  local best, bestd = nil, nil
+  local candidates={}
   for _, e in pairs(ents) do
     if valid(e) and (spec.type~="resource" or (tonumber(e.amount) or 0)>0) then
-      local d = dist_sq(e.position, pair.station.position)
-      if (not bestd) or d < bestd then best, bestd = e, d end
+      candidates[#candidates+1]={entity=e,distance=dist_sq(e.position,pair.station.position)}
     end
   end
-  return best
+  table.sort(candidates,function(a,b)return a.distance<b.distance end)
+  local direct=rawget(_G,"TechPriestsDirectAcquisitionExecutor0513")
+    or package.loaded["scripts.core.direct_acquisition_executor_0513"]
+  for _,candidate in ipairs(candidates)do
+    if not(direct and type(direct.target_contact_position)=="function")
+        or direct.target_contact_position(pair,candidate.entity)then return candidate.entity end
+  end
+  return nil
 end
 
 -- A smelter cannot make the first plate without actual burner fuel and ore.
@@ -427,6 +433,7 @@ local function clear_stale_critical(pair)
   return changed
 end
 
+local ProductionOrder=require("scripts.core.production_order_ownership_0514")
 local function assign_direct(pair, spec, have, deficit, strict_fuel,strict_material)
   if same_bootstrap_task(pair, spec.item) then return false, "already-bootstrap" end
   local source = find_nearest_source(pair, spec)
@@ -566,10 +573,41 @@ local function retire_satisfied_reserve(pair)
   return true
 end
 
+local function retarget_owned_raw_task(pair)
+  local op=pair.independent_emergency_operation_0184
+  if not(op and op.enabled==true)or pair.direct_acquisition_custody_0513
+      or pair.construction_custody_0338 or pair.machine_logistics_custody_0528 then return false end
+  local task,cur=current_direct_task(pair)
+  if not(type(task)=="table"and task.bootstrap_resource_0637==true)
+      or task.direct_due_tick_0513 or task.direct_remaining_ticks_0513 then return false end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current
+  if order and order.status=="active"and order.task~=task
+      and not ProductionOrder.matches(pair,order,pair.emergency_craft)then return false end
+  local entity=cur and(cur.entity or cur.target)
+  local direct=rawget(_G,"TechPriestsDirectAcquisitionExecutor0513")
+    or package.loaded["scripts.core.direct_acquisition_executor_0513"]
+  if valid(entity)and(not(direct and type(direct.target_contact_position)=="function")
+      or direct.target_contact_position(pair,entity))then return false end
+  local item=task.output_item or task.item_name
+  for _,spec in ipairs(RAW_RESERVES)do if spec.item==item then
+    local source=find_nearest_source(pair,spec)
+    if not source then return false end
+    -- The canonical executor deliberately clears current on a blocked or
+    -- exhausted target. Repair that SAME task instead of vetoing it forever
+    -- as an incumbent whose target no remaining owner will populate.
+    task.current={kind="direct-mine-0336",entity=source,output_item=item,
+      item_name=item,bootstrap_resource_0637=true}
+    pair.mode="bootstrap-resource-acquisition-0637"
+    record("owned-raw-task-retargeted-0637",pair,item,true)
+    return true
+  end end
+  return false
+end
 function M.service_pair(pair, reason)
   local root=M.root()
   if not valid_pair(pair) then return false,"invalid" end
   if retire_satisfied_reserve(pair)then return true,"counted-reserve-already-supplied"end
+  if retarget_owned_raw_task(pair)then return true,"canonical-resource-retargeted"end
   local strict_request,strict_material=strict_brick_material_request(pair)
   local production=pair.emergency_craft
   if not strict_request and type(production)=="table"and production.facility_only_0647
@@ -637,10 +675,16 @@ function M.service_pair(pair, reason)
         "emergency_production_custody_0514","station_crafting_task_0337",
         "energy_family_custody_0707","item_family_custody_0702",
         "scavenge","inventory_transfer_custody_0687"}) do
-      if pair[field]and not(field=="emergency_craft"and pair[field]==strict_material)then return false,"independent-recipe-incumbent-duty:"..field end
+      local planning_build=field=="construction_task_0338"and strict_material
+        and type(pair[field])=="table"and not pair[field].carried
+        and not pair.construction_custody_0338
+        and(pair[field].phase=="move-source"or pair[field].phase=="waiting-source")
+      if pair[field]and not(field=="emergency_craft"and pair[field]==strict_material)
+          and not planning_build then return false,"independent-recipe-incumbent-duty:"..field end
     end
     local order=pair.order_queue_0469 and pair.order_queue_0469.current
-    if order and order.status=="active"and not(strict_material and order.task==strict_material)then return false,"independent-recipe-active-order" end
+    if order and order.status=="active"and not(strict_material and order.task==strict_material)
+        and not ProductionOrder.matches(pair,order,strict_material)then return false,"independent-recipe-active-order" end
     for _,spec in ipairs(RAW_RESERVES) do
       if spec.item==request.missing then
         local required=1

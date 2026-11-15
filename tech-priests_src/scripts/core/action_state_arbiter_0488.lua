@@ -3,6 +3,7 @@
 -- Pure action classifier and read-only presentation gate. It never creates work,
 -- fails orders, clears executor state, requests movement, or owns a timer.
 
+local ProductionOrder=require("scripts.core.production_order_ownership_0514")
 local M = { version = "0.1.674-dev", storage_key = "action_state_arbiter_0488", close_distance_sq = 4 }
 local previous_scan_line, previous_fire_laser
 local function now() return game and game.tick or 0 end
@@ -69,7 +70,8 @@ local function actual_crafting(p,o)
   -- queue authority; the classifier is read-only and cannot preempt it.
   if p and p.direct_acquisition_custody_0513 or (p and p.machine_logistics_0528 and p.machine_logistics_0528.custody) then return false end
   local order_kind=normalize_kind(o and o.kind)
-  if o and o.status=="active" and order_kind~="idle" and order_kind~="crafting" then
+  if o and o.status=="active" and order_kind~="idle" and order_kind~="crafting"
+      and not ProductionOrder.matches(p,o,p.emergency_craft)then
     local direct=p and p.direct_acquisition_task_0336
     if not (order_kind=="acquisition" and type(direct)=="table"
         and direct.bootstrap_resource_0637==true
@@ -476,6 +478,57 @@ local function rocket_silo_recommendation(p,k)if k~="idle"and k~="rocket-silo-lo
 local function artillery_recommendation(p,k)if k~="idle"and k~="artillery-logistics"then return nil end;return recommendation("TechPriestsArtilleryLogistics0713","scripts.core.artillery_logistics_0713",p,"artillery-logistics")end
 local function roboport_recommendation(p,k)if k~="idle"and k~="roboport-repair-pack-logistics"then return nil end;return recommendation("TechPriestsRoboportRepairPackLogistics0715","scripts.core.roboport_repair_pack_logistics_0715",p,"roboport-repair-pack-logistics")end
 
+local function native_recipe_power_prerequisite(p,construction,order)
+  local production=p.emergency_craft
+  if not(construction and type(production)=="table"and production.facility_only_0647==true
+      and production.infrastructure_first_0640==true)then return false end
+  if order and order.status=="active"and not ProductionOrder.matches(p,order,production)then return false end
+  for _,field in ipairs{"direct_acquisition_custody_0513","machine_logistics_custody_0528",
+    "inventory_transfer_custody_0687","energy_family_custody_0707","item_family_custody_0702",
+    "repair_pack_custody_0516","emergency_production_custody_0514","defense_task_0259",
+    "emergency_facility_feed_custody_0357","station_cargo_custody_0824",
+    "consecration_refund_custody_0515","rocket_silo_custody_0710",
+    "artillery_custody_0713","roboport_repair_custody_0715"}do
+    if p[field]then return false end
+  end
+  local build=p.construction_task_0338 or p.construction_candidate_0338
+  local req=build and build.request_value
+  if not(type(req)=="table")then return false end
+  local power=build.request_field=="structure_construction_requested_item"
+    and req==p.structure_construction_requested_item and req.owner=="power-setup-1252"
+  local fluid=p.standard_fluid_route_plan_0691
+  local machine=fluid and fluid.machine
+  local pipe=build.request_field=="construction_request"and req==p.construction_request
+    and req.source=="standard-fluid-route-0691"and fluid and fluid.id==req.route_plan_id
+    and fluid.state=="construction-requested"and valid(machine)
+    and(machine.type=="boiler"or machine.type=="generator")
+    and machine.force==p.station.force and machine.surface==p.station.surface
+    and(fluid.fluid=="water"or fluid.fluid=="steam")
+  if not(power or pipe)then return false end
+  local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if not(stock and type(stock.generic_item_count)=="function")then return false end
+  local read,count=pcall(stock.generic_item_count,p,build.item_name)
+  if not(read and tonumber(count)and count>=1)then return false end
+  local ledger=storage and storage.tech_priests and storage.tech_priests.emergency_facility_doctrine_0343
+  local owned=ledger and ledger.by_station and ledger.by_station[p.station.unit_number]
+  local item=production.output_item or production.item_name
+  local radius=tonumber(p.radius)or 30
+  for key in pairs(owned or{})do
+    local record=ledger.facilities and ledger.facilities[key]
+    local e=record and record.entity
+    if record and record.station_unit==p.station.unit_number and record.role=="assembler"
+        and valid(e)and e.type=="assembling-machine"and e.name~="tech-priests-emergency-assembler"
+        and e.force==p.station.force and e.surface==p.station.surface
+        and dist_sq(e.position,p.station.position)<=radius*radius then
+      local ok,unpowered=pcall(function()
+        local recipe=e.get_recipe()
+        return recipe and recipe.name==item and type(e.energy)=="number"and e.energy<=0
+      end)
+      if ok and unpowered then return true end
+    end
+  end
+  return false
+end
 function M.action(p)
   if not valid_pair(p)then return{kind="invalid",family="invalid"}end
   local o=current_order(p);local target,position=current_target(p,o);local order_kind=normalize_kind(o and(o.kind or o.type or o.source));local mode_kind=normalize_kind(p.mode)
@@ -529,6 +582,9 @@ function M.action(p)
     kind,reason="energy-family-logistics","strict-engine-energy-prerequisite"
     target=energy_rec.target;position=valid(target)and target.position or energy_rec.position
     selected=energy_rec
+  elseif native_recipe_power_prerequisite(p,construction_rec,o)then
+    kind,reason="construction","funded-native-recipe-power-prerequisite"
+    target=construction_rec.target;position=construction_rec.position;selected=construction_rec
   elseif actual_crafting(p,o)then kind,reason="crafting","crafting-surface"
   elseif order_kind=="combat-repair"then kind,reason="combat-repair","order"
   elseif combat_rec then kind,reason="combat-repair","tactical-recommendation";target=combat_rec.target;position=valid(target)and target.position or combat_rec.position

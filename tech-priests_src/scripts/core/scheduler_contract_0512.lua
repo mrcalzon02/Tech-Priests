@@ -185,6 +185,7 @@ end
 local function current_has_lease(pair, cur)
   cur = cur or current_order(pair)
   if not order_active(cur) then return false end
+  if tonumber(cur.expires_tick)and now()>cur.expires_tick then return false end
   local activated = tonumber(cur.activated_tick or cur.created_tick or 0) or 0
   if now() - activated < M.active_order_lease_ticks then return true end
   local d = pair and pair.dispatcher_0510 or nil
@@ -262,7 +263,10 @@ local function protect_order_queue_tick()
     local protected = r.enabled ~= false and r.protect_dispatcher_current ~= false and valid_pair(pair) and order_active(before) and current_has_lease(pair, before)
     local result = OQ.TECH_PRIESTS_0512_PRE_TICK_PAIR(pair, reason, ...)
     local after = current_order(pair)
-    if protected and before_key and not after and active_work(pair) then
+    -- The queue's real terminal decision is authoritative. Restoring an
+    -- expired/failed/completed order here resurrected the same repair-pack
+    -- intent for 100,000+ ticks merely because unrelated production existed.
+    if protected and before_key and not after and order_active(before)and active_work(pair) then
       local q = q_of(pair)
       if q then
         before.status = before_status or "active"

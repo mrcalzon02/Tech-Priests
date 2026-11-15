@@ -2805,4 +2805,22 @@ scenario("native force trigger closes only its own obsolete plate batch",functio
  Production.service_pair(p,"native-trigger-still-required")
  check(p.emergency_craft==task,"unresearched force trigger was retired")
 end)
+scenario("real canonical recipe completes its exact adopted assignment once",function()
+ local f=fixture();local p=f.pair
+ f.source.insert{name="iron-plate",count=4}
+ local automatic={item="iron-plate"};p.active_task=automatic;p.active_task_0285=automatic
+ local order={kind="assignment",source="adopt-active",purpose="recipe-fanout",
+   status="active",item="iron-plate",task=automatic}
+ p.order_queue_0469={current=order}
+ p.emergency_craft={output_item="iron-plate",count=4,facility_only_0647=true,infrastructure_first_0640=true}
+ local old=TECH_PRIESTS_ORDER_QUEUE_0469;local completions=0
+ TECH_PRIESTS_ORDER_QUEUE_0469={complete_current=function(owner,why,item)
+   check(owner==p and item=="iron-plate","foreign recipe order completion")
+   completions=completions+1;order.status="complete";p.order_queue_0469.current=nil;return true
+ end}
+ check(Production.service_pair(p),"supplied adopted recipe did not complete")
+ check(completions==1 and not p.active_task and not p.active_task_0285
+   and f.source.get_item_count("iron-plate")==4,"automatic task survived or stock was invented")
+ TECH_PRIESTS_ORDER_QUEUE_0469=old
+end)
 print("[bootstrap-production-regression] PASS scenarios="..total)

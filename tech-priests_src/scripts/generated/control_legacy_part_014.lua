@@ -173,7 +173,19 @@ function find_enemy_target(station, radius, priest)
     { position.x + radius, position.y + radius },
   }
   local candidates = {}
-  local enemies = surface.find_entities_filtered({ area = area, force = "enemy" })
+  -- Hostile priest factions have their own force names. A literal "enemy"
+  -- filter made four-way factories invisible to the ordinary threat owner.
+  -- Read current diplomacy; the existing target predicate still revalidates
+  -- every result and excludes friends, cease-fires and neutral resources.
+  local hostile_forces={}
+  for _,candidate_force in pairs(game.forces or{})do
+    local ok,hostile=pcall(function()return station.force.is_enemy(candidate_force)end)
+    if ok and hostile==true then hostile_forces[#hostile_forces+1]=candidate_force end
+  end
+  local enemies={}
+  if #hostile_forces>0 then
+    enemies=surface.find_entities_filtered({area=area,force=hostile_forces})
+  end
   for _, entity in pairs(enemies or {}) do table.insert(candidates, entity) end
   for _, entity in pairs(find_space_asteroid_targets(surface, area) or {}) do table.insert(candidates, entity) end
 

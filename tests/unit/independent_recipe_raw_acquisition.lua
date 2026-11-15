@@ -126,3 +126,38 @@ assert(pair.emergency_craft==plate_job and pair.direct_acquisition_task_0336
  and pair.direct_acquisition_task_0336.material_for_strict_recipe_0637,
  "furnace raw task stole its parent or failed to identify the exact four-ore dependency")
 print("PASS independent native plate recipes acquire exact ore through their separate canonical owner")
+pair.direct_acquisition_task_0336=nil
+local waiting_build={phase="move-source",item_name="stone-furnace"}
+pair.construction_task_0338=waiting_build
+assert(Raw.service_pair(pair)and pair.construction_task_0338==waiting_build
+ and pair.emergency_craft==plate_job and pair.direct_acquisition_task_0336,
+ "unladen construction planning deadlocked the incumbent furnace's physical ore dependency")
+pair.direct_acquisition_task_0336=nil
+waiting_build.carried={item_name="stone-furnace",count=1}
+assert(not Raw.service_pair(pair)and not pair.direct_acquisition_task_0336,
+ "real construction cargo yielded to fresh furnace mining")
+waiting_build.carried=nil
+pair.order_queue_0469={current={kind="construction",source="player",status="active"}}
+assert(not Raw.service_pair(pair),"explicit construction order lost its authority")
+print("PASS unladen build planning yields to native material dependency; real cargo and explicit orders retain authority")
+pair.order_queue_0469=nil;pair.construction_task_0338=nil
+assert(Raw.service_pair(pair))
+local same_raw=pair.direct_acquisition_task_0336
+same_raw.current=nil
+local alternate={valid=true,name="iron-ore",type="resource",amount=100,
+ position={x=9,y=0},force=force,surface=surface}
+surface.find_entities_filtered=function()return{resource,alternate}end
+local old_direct=TechPriestsDirectAcquisitionExecutor0513
+TechPriestsDirectAcquisitionExecutor0513={target_contact_position=function(_,e)
+ if e==alternate then return e.position end end}
+local retargeted,retarget_reason=Raw.service_pair(pair)
+assert(retargeted and retarget_reason=="canonical-resource-retargeted"
+ and pair.direct_acquisition_task_0336==same_raw and same_raw.current.entity==alternate
+ and same_raw.required_count==4 and pair.emergency_craft==plate_job
+ and resource.amount==100 and alternate.amount==100,
+ "blocked target left its canonical task permanently empty or fabricated resource progress")
+same_raw.current=nil;pair.direct_acquisition_custody_0513={item="iron-ore",count=1}
+assert(not Raw.service_pair(pair)and same_raw.current==nil,
+ "actual mining custody was retargeted before physical return")
+TechPriestsDirectAcquisitionExecutor0513=old_direct
+print("PASS empty canonical raw target retargets to reachable real ore without replacing task or altering stock")

@@ -1,5 +1,12 @@
 # Current Testing Goals
 
+## 2026-11-14 - Validate terminal-order, maintenance-stock and power handoffs together
+
+Retain the existing fresh 216000-tick science and default 108000-tick four-way factory/combat gates. Recovery now proves all three science families (394/92/30 packs), all four arena forces' native Steam Power/Electronics, and actual first-lab completion plus red production after paid steam-pipe construction. None of this passes an earlier failed deadline. The fresh run still needs sustained red/green/military throughput and later research.
+
+All 49 Lua groups and seven Python tests pass. Native default maintenance passes all four ranks after canonical stock accounting. Next require natural hostile priest-force discovery and actual participant damage in the separately labeled 64-tile contact diagnostic; preserve the unchanged default arena failure when it has no contacts. Continue diagnosing real physical task handoffs, transport throughput, workforce capacity and supply-chain defense. No free output, forced research, teleports or scripted attacks may satisfy acceptance.
+
+
 ## 2026-11-14 - Sustain the now-working military chain and close fresh failures
 
 Native recovery now proves actual red, green and military production after canonical furnace dispatch, stale-intent retirement and uncapped waiting credit for eligible factory trips. The diagnostic reached 320/62/4 packs; this does not pass the fresh objective. All 47 Lua groups and seven Python tests pass. Native all-rank maintenance remains separately verified.

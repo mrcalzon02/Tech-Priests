@@ -9,8 +9,9 @@ local pair={station={valid=true,unit_number=1,force=force,surface=surface,positi
 local stocks={["iron-plate"]=50}
 TechPriestsStorageRoleAuthority0686={generic_item_count=function(_,n)return stocks[n]or 0 end}
 local M=require("scripts.core.logistics_machine_fulfillment_0528")
-local function offer(name,id)
- local recipe={name=name,ingredients={{name="iron-plate",amount=1,type="item"}}}
+local function offer(name,id,yield)
+ local recipe={name=name,ingredients={{name="iron-plate",amount=1,type="item"}},
+   products={{name=name,type="item",amount=yield or 1}}}
  local machine={valid=true,type="assembling-machine",name="assembling-machine-1",unit_number=id,
  force=force,surface=surface,position={x=5,y=0},get_recipe=function()return recipe end,
  get_inventory=function(n)if n==2 then return{valid=true,get_item_count=function()return 0 end}end end}
@@ -23,13 +24,13 @@ local function offer(name,id)
  return pair.machine_logistics_candidate_0528
 end
 local urgent=offer("logistic-science-pack",3)
-assert(urgent.count==5,"genuinely missing science lost its counted batch")
+assert(urgent.count==10,"missing science did not receive its two-minute counted input buffer")
 stocks["logistic-science-pack"]=20
 local buffered=offer("logistic-science-pack",3)
 local ammunition=offer("firearm-magazine",4)
-assert(ammunition.score>buffered.score and ammunition.count==5,
+assert(ammunition.score>buffered.score and ammunition.count==10,
  "buffered green science still monopolizes trips over missing military intermediates")
-assert(buffered.score>600 and buffered.count==5,
+assert(buffered.score>600 and buffered.count==10,
  "measured deficient science lost its priority over routine surplus once a small buffer existed")
 stocks["firearm-magazine"]=20
 local surplus,why=offer("firearm-magazine",4)
@@ -58,3 +59,7 @@ pair.factory_recipe_service_ticks_0528={["logistic-science-pack"]=9000,
 assert(offer("firearm-magazine",4).score>offer("logistic-science-pack",3).score,
  "long physical rounds saturated waiting credit and restored permanent science starvation")
 print("PASS overdue intermediates retain priority after a long native walking round")
+local military=offer("military-science-pack",5,2)
+assert(military.count==5 and stocks["iron-plate"]==50,
+ "two-pack native recipe doubled its material budget or spent stock during discovery")
+print("PASS two-minute transport buffer respects native multi-product recipe yield")

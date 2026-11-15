@@ -47,6 +47,16 @@ local function find_target(p,explicit)
 end
 local function sources(p)
  local out={};local function add(inv,label)if not(inv and inv.valid)then return end;for _,source in ipairs(out)do if source.inv==inv then return end end;out[#out+1]={inv=inv,label=label or"station"}end
+ local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+ if authority and type(authority.generic_storage_sources)=="function"then
+  local ok,list=pcall(authority.generic_storage_sources,p)
+  if ok and type(list)=="table"then for _,s in ipairs(list)do
+   local e=s.entity
+   if valid(e)and e.force==p.station.force and e.surface==p.station.surface then
+    add(s.inv,s.source or"canonical-storage")
+   end
+  end end
+ end
  local f=rawget(_G,"tech_priests_inventory_steward_sources_for_pair");if type(f)=="function"then local ok,list=pcall(f,p);if ok and type(list)=="table"then for _,s in ipairs(list)do if s then add(s.inv or s.inventory,s.label or s.source or s.kind)end end end end
  local g=rawget(_G,"get_station_inventory");if type(g)=="function"then local ok,inv=pcall(g,p.station);if ok then add(inv,"station")end end;if defines and defines.inventory and p.station.get_inventory then local ok,inv=pcall(function()return p.station.get_inventory(defines.inventory.chest)end);if ok then add(inv,"station-chest")end end;return out
 end

@@ -700,7 +700,20 @@ local function ingredient_candidate(pair, machine)
     return nil -- Preserve stocked intermediates instead of feeding endless surplus.
   end
   for _, ingredient in ipairs(recipe_ingredients(recipe)) do
-    local cycles=deficient_factory_job(pair,machine)and 5 or 1
+    local job=deficient_factory_job(pair,machine)
+    local cycles=job and 5 or 1
+    if job then
+      local yield=0
+      for _,product in pairs(recipe.products or{})do
+        if product.name==job.output_item and product.type~="fluid"then
+          yield=yield+(tonumber(product.amount)or 0)
+        end
+      end
+      -- Carry a two-minute demand buffer rather than repeatedly walking
+      -- the same route for five low-output crafts. Native insertion and
+      -- the existing per-trip cap still enforce the exact paid quantity.
+      cycles=math.max(cycles,math.ceil(factory_job_buffer(job)/math.max(1,yield)))
+    end
     local missing = ingredient.amount*cycles - count_inventory(input, ingredient.name)
     local available = generic_count(pair, ingredient.name)
     if missing > 0 and available > 0 then

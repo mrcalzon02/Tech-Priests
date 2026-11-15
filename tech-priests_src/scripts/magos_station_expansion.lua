@@ -640,7 +640,10 @@ function M.request_factory_workforce(pair)
         and child.station.surface==pair.station.surface
         and hierarchy.is_direct_subordinate(pair,child)then count=count+1 end
   end
-  local desired=math.max(1,math.ceil(load/8))
+  -- The commander already supplies one worker's capacity. Recruiting at the
+  -- first furnace split bootstrap stock into duplicate survival/plate jobs
+  -- before a functioning factory existed. Add paid staff for excess load.
+  local desired=math.max(0,math.ceil(load/8)-1)
   if count>=desired then return false,"workforce-current-coverage-sufficient"end
   local angle=count*2.3999632297
   if type(hierarchy.superior)=="function"then

@@ -117,9 +117,9 @@ local function safe_get_inventory(entity, inv_id)
 end
 
 local function add_inventory(out, seen, inv, source)
-  if inv and inv.valid and not seen[tostring(inv)] then
+  if inv and inv.valid then
+    for _,existing in ipairs(out)do if existing.inv==inv then return end end
     out[#out + 1] = { inv = inv, source = source or "inventory" }
-    seen[tostring(inv)] = true
   end
 end
 
@@ -145,16 +145,24 @@ local function station_owned_sources(pair)
   return out
 end
 
+local function counted_storage(pair,item)
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if authority and type(authority.generic_item_count)=="function"then
+    local ok,n=pcall(authority.generic_item_count,pair,item)
+    if ok and type(n)=="number"and n>=0 then return n end
+  end
+  local n=0;for _,src in ipairs(station_owned_sources(pair))do n=n+safe_count(src.inv,item)end
+  return n
+end
 local function available_count(pair, item)
   if not (valid_pair(pair) and item_exists(item)) then return 0 end
-  local total = 0
-  for _, src in ipairs(station_owned_sources(pair)) do total = total + safe_count(src.inv, item) end
+  local total = counted_storage(pair,item)
   if total > 0 then return total end
   -- Any magazine satisfies the generic survival-ammo icon/request.
   if item == "firearm-magazine" then
     for alt in pairs(AMMO_EQUIVALENTS) do
       if alt ~= item and item_exists(alt) then
-        for _, src in ipairs(station_owned_sources(pair)) do total = total + safe_count(src.inv, alt) end
+        total=total+counted_storage(pair,alt)
       end
     end
     if type(rawget(_G, "tech_priests_0293_proxy_has_ammo")) == "function" then
@@ -288,7 +296,9 @@ local function clear_request_state(pair, item, reason)
 
   local q = pair.order_queue_0469
   if q then
-    if q.current and item_matches(q.current, item) then
+    if q.current and item_matches(q.current, item)
+        and(lower(q.current.kind)=="logistics"or lower(q.current.kind)=="acquisition"
+          or lower(q.current.kind)=="scavenge"or lower(q.current.kind)=="emergency_craft")then
       complete_order(q, q.current, item, reason)
       q.current.status = "complete"
       q.current.finished_tick = now()
@@ -300,7 +310,9 @@ local function clear_request_state(pair, item, reason)
     local keep = {}
     q.pending_keys = {}
     for _, order in ipairs(q.pending or {}) do
-      if order and item_matches(order, item) then
+      if order and item_matches(order, item)
+          and(lower(order.kind)=="logistics"or lower(order.kind)=="acquisition"
+            or lower(order.kind)=="scavenge"or lower(order.kind)=="emergency_craft")then
         complete_order(q, order, item, reason)
         changed = true
       elseif order then

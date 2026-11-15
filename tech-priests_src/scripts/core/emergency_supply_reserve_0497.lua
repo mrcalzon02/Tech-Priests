@@ -189,9 +189,9 @@ local function safe_inv(entity, inv_id)
 end
 
 local function add_inv(out, seen, inv, owner, label)
-  if inv and inv.valid and not seen[tostring(inv)] then
+  if inv and inv.valid then
+    for _,existing in ipairs(out)do if existing.inv==inv then return end end
     out[#out + 1] = { inv = inv, owner = owner, label = label or "inventory" }
-    seen[tostring(inv)] = true
   end
 end
 
@@ -258,6 +258,11 @@ local function inv_remove(inv, item, count)
 end
 
 local function station_count(pair, item)
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if authority and type(authority.generic_item_count)=="function"then
+    local ok,n=pcall(authority.generic_item_count,pair,item)
+    if ok and type(n)=="number"and n>=0 then return n end
+  end
   local total = 0
   for _, s in ipairs(station_inventories(pair)) do total = total + inv_count(s.inv, item) end
   return total
@@ -355,7 +360,9 @@ local function clear_supply_state(pair, item, reason)
 
   local q = pair.order_queue_0469
   if q then
-    if q.current and q.current.item == item then
+    if q.current and q.current.item == item
+        and(q.current.kind=="logistics"or q.current.kind=="acquisition"
+          or q.current.kind=="scavenge"or q.current.kind=="emergency_craft")then
       q.history = q.history or {}
       q.history[#q.history + 1] = { key = q.current.key, kind = q.current.kind, item = q.current.item, status = "complete", reason = reason or "emergency-satisfied-0497", tick = now() }
       while #q.history > 12 do table.remove(q.history, 1) end
@@ -369,7 +376,9 @@ local function clear_supply_state(pair, item, reason)
     local keep = {}
     q.pending_keys = {}
     for _, order in ipairs(q.pending or {}) do
-      if order and order.item == item then
+      if order and order.item == item
+          and(order.kind=="logistics"or order.kind=="acquisition"
+            or order.kind=="scavenge"or order.kind=="emergency_craft")then
         q.history = q.history or {}
         q.history[#q.history + 1] = { key = order.key, kind = order.kind, item = order.item, status = "complete", reason = reason or "emergency-satisfied-0497", tick = now() }
         changed = true
