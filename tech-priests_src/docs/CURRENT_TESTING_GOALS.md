@@ -1,5 +1,11 @@
 # Current Testing Goals
 
+## 2026-11-15 - Native power commissioning and real lab production recovered
+
+The exact 8d1e4db5 runtime autonomously finished the twenty-one-tile steam route and its one-tile water reconnection, then selected and delivered real coal through original 0707. At tick 120471 the boiler held 44 coal and the actual steam engine reported 1291.666666666666 energy_generated_last_tick. At tick 120771 engine 174 contained native steam and energy, and assembler 148 was powered on the same real network. Its native lab recipe had finished three products; original output custody collected them. The strict lab parent completed at tick 119975. By tick 123471 a real lab existed, with ordinary paid power-bridge construction requested next. No science/research completion is credited from these commissioning observations.
+
+The original protected recovery remains live through target 127048. A separate fresh four-way contact diagnostic on 8d1e4db5 has started with 64-tile spacing, 108000 active ticks, and both all-force factory and participant combat gates required. It retains its own manifest and never substitutes for the default-spacing gate or the full rocket/space-science campaign. This is continued autonomous behavior validation, with no injected actor orders. Local Void Priest startup and ship-construction authority remain required.
+
 ## 2026-11-15 - Clear a strict recipe's own native pipe supply access
 
 A protected four-way continuation reached fourteen paid steam-route tiles, then stranded its pipe builder at a tree-obstructed supply container. The original source-clearance owner rejected every request whenever emergency_craft existed, even though the pending strict lab recipe depended on those very pipes for power. Original 0338 now admits clearance only for its exact active native fluid plan: the same request pointer and route ID, a pipe task, owned live endpoints, and a strict facility recipe retained by identity. A matching lower-priority adopted production order may yield through the existing lossless queue. Foreign orders, other cargo, changed requests and replacement production parents still refuse new mining.
