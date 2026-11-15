@@ -6,7 +6,7 @@
   "canonical_repo": "mrcalzon02/Tech-Priests",
   "source_commit": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
   "external_refs": {
-    "Tanks-for-bob-Fork": "3f38f801631a88460bca5599616edb0173f4a970",
+    "Tanks-for-bob-Fork": "eac7b729742959c48b9b2f7d86347ad1732ba80a",
     "HB-TTRPG-tools": "5942590d944cd5aef03a973fdd941e03fd10d833"
   },
   "asset_units": {
@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 9,
+    "model_records": 10,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -295,6 +295,44 @@
         "owner_approved": false,
         "factorio_runtime_verified": false
       }
+    },
+    {
+      "id": "tanks-primitive-steam-powered-pump-v3",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "eac7b729742959c48b9b2f7d86347ad1732ba80a",
+        "path": "models/island-survival/primitive-steam-powered-pump/candidates/v3-production02/pipe-pump-v3.blend",
+        "sha256": "1324db1d55ae14bc68724cdaff8f13ecd8fd0d67945c017c210d828839af95f1"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "eac7b729742959c48b9b2f7d86347ad1732ba80a",
+        "path": "models/island-survival/primitive-steam-powered-pump/candidates/v3-production02/pipe-pump-v3.glb",
+        "sha256": "f0b9ba976e40736613859d0ed87820dff178f9d8ec712ae3384e149ea766e74b"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "eac7b729742959c48b9b2f7d86347ad1732ba80a",
+          "path": "models/island-survival/primitive-steam-powered-pump/v3/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "eac7b729742959c48b9b2f7d86347ad1732ba80a",
+          "path": "docs/art/primitive-pipe-pump-v3/engine-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "eac7b729742959c48b9b2f7d86347ad1732ba80a",
+          "path": "docs/art/primitive-pipe-pump-v3/capture-receipt.json"
+        }
+      ],
+      "footprint": [
+        1,
+        2
+      ],
+      "purpose": "Owner-approved Tanks native two-port burner pipe pump; fixed full-bore mouths, rigid slider-crank, restrained valve/gauge motion, packed PBR, 68 true frames and native transfer/reload/graphical placement proof."
     }
   ],
   "programs": [

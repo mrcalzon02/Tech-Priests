@@ -234,6 +234,37 @@
         "game_integrated": false,
         "note": "Saved native Blender/GLB and six real RGBA atlases passed; result is technical candidate, not approved game sprite or Factorio entity."
       }
+    },
+    {
+      "event_id": "tanks-pipe-pump-v3-installed-2026-11-15",
+      "asset_id": "tanks-primitive-steam-powered-pump-v3",
+      "asset_kind": "model",
+      "revision": "v3-owner-accepted-native-integrated",
+      "state": "installed",
+      "source_sha256": "1324db1d55ae14bc68724cdaff8f13ecd8fd0d67945c017c210d828839af95f1",
+      "evidence": {
+        "source_artifact_sha256": "1324db1d55ae14bc68724cdaff8f13ecd8fd0d67945c017c210d828839af95f1",
+        "glb_sha256": "f0b9ba976e40736613859d0ed87820dff178f9d8ec712ae3384e149ea766e74b",
+        "native_reopen_verified": true,
+        "owner_visual_approval": true,
+        "factorio_runtime_verified": true,
+        "native_port_alignment_verified": true,
+        "source_repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "source_commit": "eac7b729742959c48b9b2f7d86347ad1732ba80a",
+        "source_path": "models/island-survival/primitive-steam-powered-pump/candidates/v3-production02/pipe-pump-v3.blend",
+        "runtime_path": "models/island-survival/primitive-steam-powered-pump/candidates/v3-production02/pipe-pump-v3.glb",
+        "manifest_path": "models/island-survival/primitive-steam-powered-pump/v3/FMPL_MODEL.json",
+        "native_engine": "2.1.24",
+        "production_frame_count": 68,
+        "pose_checks": 97,
+        "embedded_pbr_images": 21,
+        "native_connections": 24,
+        "water_and_oil_transfer": true,
+        "stop_restart_full_output_no_fuel": true,
+        "save_reload": true,
+        "actual_graphical_screenshots": 8,
+        "gameplay_fields_changed": false
+      }
     }
   ]
 }
