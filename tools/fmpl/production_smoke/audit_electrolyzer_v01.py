@@ -45,6 +45,7 @@ def mesh_stats(scene):
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--dir',required=True)
+    ap.add_argument('--state-clips',action='store_true')
     args=ap.parse_args(sys.argv[sys.argv.index('--')+1:]);out=Path(args.dir).resolve()
     native=out/'electrolyzer-v01.blend';manifest=json.loads((out/'port_manifest.json').read_text())
     bpy.ops.wm.open_mainfile(filepath=str(native));s=bpy.context.scene;s.frame_set(25);bpy.context.view_layer.update()
@@ -61,10 +62,18 @@ def main():
     for ob in s.objects:
         if (ob.type=='MESH' and not ob.hide_render) or ob.type=='EMPTY':ob.select_set(True)
     glb=out/'electrolyzer-v01.glb'
+    if args.state_clips:
+        from electrolyzer_state_clips import prepare_state_tracks
+        prepare_state_tracks(s)
     bpy.ops.export_scene.gltf(filepath=str(glb),export_format='GLB',use_selection=True,export_apply=True,
-        export_animations=True,export_animation_mode='ACTIONS',export_force_sampling=True,
+        export_animations=True,export_animation_mode='NLA_TRACKS' if args.state_clips else 'ACTIONS',export_force_sampling=True,
+        export_frame_range=not args.state_clips,export_anim_slide_to_zero=args.state_clips,
+        export_optimize_animation_size=not args.state_clips,export_optimize_animation_keep_anim_object=True,
         export_materials='EXPORT',export_image_format='AUTO',export_texcoords=True,export_normals=True)
     bpy.ops.wm.read_factory_settings(use_empty=True);bpy.ops.import_scene.gltf(filepath=str(glb));s=bpy.context.scene;s.frame_set(25)
+    if args.state_clips:
+        from electrolyzer_state_clips import activate_imported_clip
+        activate_imported_clip(s,'working');s.frame_set(24)
     runtime_bounds=bounds([o for o in s.objects if o.type=='MESH']);runtime_stats=mesh_stats(s)
     runtime_bores=port_probe(s,manifest['ports'])
     max_error=max(abs(native_bounds[i][j]-runtime_bounds[i][j]) for i in range(2) for j in range(3))

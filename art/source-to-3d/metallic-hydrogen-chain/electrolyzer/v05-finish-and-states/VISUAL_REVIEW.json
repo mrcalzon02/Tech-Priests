@@ -1,0 +1,41 @@
+{
+  "status": "VISUALLY_REVIEWED_FINISH_CANDIDATE; OWNER_REVIEW_AND_NATIVE_PROTOTYPE_OPEN",
+  "source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+  "export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+  "reference": {
+    "path": "art/source-to-3d/metallic-hydrogen-chain/water-purifier/v16-owner-accepted/purifier-four-angle-idle.png",
+    "sha256": "651e7a893aba714e3d66ae352afe87d614b70424671b22c2996a67c1d189db2a"
+  },
+  "images": {
+    "export-inspection/clay.png": "792892365e898f3985a644ea0d00d5ff501ee8c6bd90a8425e04db8145f280e5",
+    "export-inspection/front.png": "593c81777e8eeb3fe2760830ba9b25ee6e71189146ee3f09d55dd1869800e444",
+    "export-inspection/rear-inspection.png": "f75db8d2517d60393541105c85777ea717a3bc4c04a0b01e787e8aa37b38f2be",
+    "export-details/cell-heads-and-power.png": "2ecfc91fe51d4cd3dd70589ee6450dceaacab1da35820b92e448cd5c38ee3be0",
+    "export-details/side-routing.png": "e564c710af711588e2bef1fdf808278c7ef84141082abc78fe780403f49a854e",
+    "export-details/water-feed-and-console.png": "bee6b49900c8984fac0445c99157ad437df6737f18656ff9ca2732dc3cd99a70"
+  },
+  "scale": "0 to 5; final threshold 4 per criterion",
+  "scores": {
+    "silhouette": {
+      "score": 4,
+      "reason": "Distinct twin closed cells, rear rectifier, grounded uprights and isolated side gas lines read at game scale."
+    },
+    "construction": {
+      "score": 4,
+      "reason": "Actual opened tee/nozzle bores; wider gas returns; bonnet-seated stems; supported wheel spokes, insulated electrical lugs and corrected cell plinths. Targeted contact and sampled bore proof, not manufacturing certification."
+    },
+    "surfaces": {
+      "score": 4,
+      "reason": "Native and actual GLB front/rear/clay and oblique closeups viewed. Nine packed maps follow cell circumference, band contact levels, front window drip and actual cover retaining heads; no uniform recolor."
+    },
+    "motion_states": {
+      "score": 4,
+      "reason": "Standby hides gas tracers; working rises with hidden reset. Actual merged glTF idle/working clips match ten sampled native poses, four-second loop closes. Four real capture angles are separately recorded."
+    },
+    "native_integration": {
+      "score": 0,
+      "reason": "No actual electrolyzer prototype or fluid assignment/graphical pipe jig yet."
+    }
+  },
+  "owner_approved": false
+}

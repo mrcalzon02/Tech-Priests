@@ -184,6 +184,40 @@
           "model_source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
           "runtime_export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
           "status": "actual saved/rendered/reimported candidate; final machine review open"
+        },
+        {
+          "machine": "electrolyzer",
+          "machine_revision": "V05 finish and state candidate",
+          "instance": "front service cogitator",
+          "transform": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.800000011920929
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -1.6100000143051147
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.8700000047683716
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+          "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+          "status": "actual saved/rendered/reimported candidate; native integration open"
         }
       ],
       "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
@@ -588,6 +622,108 @@
           "model_source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
           "runtime_export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
           "status": "actual saved/rendered/reimported candidate; final machine review open"
+        },
+        {
+          "machine": "electrolyzer",
+          "machine_revision": "V05 finish and state candidate",
+          "instance": "hydrogen_output",
+          "transform": [
+            [
+              -1.0,
+              -8.742277657347586e-08,
+              0.0,
+              -1.5
+            ],
+            [
+              8.742277657347586e-08,
+              -1.0,
+              0.0,
+              0.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.36000001430511475
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+          "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+          "status": "actual saved/rendered/reimported candidate; native integration open"
+        },
+        {
+          "machine": "electrolyzer",
+          "machine_revision": "V05 finish and state candidate",
+          "instance": "oxygen_output",
+          "transform": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              1.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.36000001430511475
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+          "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+          "status": "actual saved/rendered/reimported candidate; native integration open"
+        },
+        {
+          "machine": "electrolyzer",
+          "machine_revision": "V05 finish and state candidate",
+          "instance": "water_input",
+          "transform": [
+            [
+              -4.371138828673793e-08,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              -1.0,
+              -4.371138828673793e-08,
+              0.0,
+              -2.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.36000001430511475
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+          "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+          "status": "actual saved/rendered/reimported candidate; native integration open"
         }
       ],
       "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
@@ -773,7 +909,7 @@
         "part_id": "tp.mh7.factorio-fluid-mouth",
         "revision": "v1",
         "machine": "electrolyzer",
-        "machine_revision": "V01 pilot",
+        "machine_revision": "V05 finish and state candidate",
         "instance": "hydrogen_output",
         "transform": [
           [
@@ -801,15 +937,15 @@
             1.0
           ]
         ],
-        "model_source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
-        "runtime_export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
-        "status": "actual saved/rendered/reimported candidate; final machine review open"
+        "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+        "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+        "status": "actual saved/rendered/reimported candidate; native integration open"
       },
       {
         "part_id": "tp.mh7.factorio-fluid-mouth",
         "revision": "v1",
         "machine": "electrolyzer",
-        "machine_revision": "V01 pilot",
+        "machine_revision": "V05 finish and state candidate",
         "instance": "oxygen_output",
         "transform": [
           [
@@ -837,15 +973,15 @@
             1.0
           ]
         ],
-        "model_source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
-        "runtime_export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
-        "status": "actual saved/rendered/reimported candidate; final machine review open"
+        "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+        "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+        "status": "actual saved/rendered/reimported candidate; native integration open"
       },
       {
         "part_id": "tp.mh7.factorio-fluid-mouth",
         "revision": "v1",
         "machine": "electrolyzer",
-        "machine_revision": "V01 pilot",
+        "machine_revision": "V05 finish and state candidate",
         "instance": "water_input",
         "transform": [
           [
@@ -873,15 +1009,15 @@
             1.0
           ]
         ],
-        "model_source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
-        "runtime_export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
-        "status": "actual saved/rendered/reimported candidate; final machine review open"
+        "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+        "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+        "status": "actual saved/rendered/reimported candidate; native integration open"
       },
       {
         "part_id": "tp.mh7.cogitator-console",
         "revision": "v1",
         "machine": "electrolyzer",
-        "machine_revision": "V01 pilot",
+        "machine_revision": "V05 finish and state candidate",
         "instance": "front service cogitator",
         "transform": [
           [
@@ -909,14 +1045,14 @@
             1.0
           ]
         ],
-        "model_source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
-        "runtime_export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
-        "status": "actual saved/rendered/reimported candidate; final machine review open"
+        "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+        "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+        "status": "actual saved/rendered/reimported candidate; native integration open"
       }
     ]
   },
   "last_checkpoint_sha256": null,
   "inventory_source": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
   "material_index": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
-  "previous_registry_sha256": "c62290819e372ce6f1290b46e123f2ce2abfb744e323da1611a54e8a09baab36"
+  "previous_registry_sha256": "7c7c5ccff25fdb361c516df67ef641862176aaca9effc8c3ddfc0dce835cd8fc"
 }

@@ -1,3 +1,9 @@
+## 2026-11-14 electrolyzer V05 finish, state clips and four-angle captures
+
+The distinct 3x4 electrolyzer now has repaired water tee/inlet bores and gas returns, insulated electrical connections, supported handwheels/conduit and grounded cell plinths. Nine packed model-specific maps finish the cell wraps and retained rectifier cover. Independent checks pass 59 contacts, 1,179 sampled process-core rays per source/export, 111 mouth rays per source/export, zero sampled source/GLB state-pose error and a closed four-second working clip. Native, exported front/rear/clay and oblique closeup renders were viewed.
+
+Four actual idle angles and eight working frames per angle are saved, with six size sheets and a reopened capture master. The first low-resolution sampling alias is retained as a failed study; a phase-offset uniform capture passes the original gates. No owner approval or native prototype integration is inferred. Next: actual electrolyzer prototype/pipe-fitting jig, then remaining five machines and three reactors. [Current authoritative checkpoint](metallic-hydrogen-chain/CURRENT_PRODUCTION.md).
+
 ## 2026-11-14 purifier accepted, four-angle capture delivered; electrolyzer built
 
 The owner accepted purifier V16 and requested four idle/animated angles, then the next machine. All 36 actual Blender frames, the independently reopened master, six size atlases and four-second previews are saved. Preserve this accepted source and move on. The isolated native 2.1.24 review prototype passes four pipe-connection cases and genuine output-fluid flow; ordinary graphical/runtime installation remains a later integration gate.
