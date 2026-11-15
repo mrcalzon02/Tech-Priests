@@ -86,6 +86,10 @@ class IndependentOriginalBlockedRailReload0836Tests(unittest.TestCase):
         self.assertIn('zipfile.ZipFile(checkpoint)', runner)
         self.assertIn('archive.testzip() is not None', runner)
         self.assertIn('rail_native_player_test_command(\n            factorio, mods, checkpoint, 2400)', runner)
+        # S4 original save occurs at 30,060; the generic 36k positive
+        # intact-rail fixture is inapplicable to a *physically cut* track.
+        # The S4 engine still asserts native cargo/driver/gap conservation.
+        self.assertIn('factorio, mods, initial, 30660), first_log, timeout)', runner)
         self.assertIn('if not s.blocked_return_save_requested_0836 then', fixture)
         self.assertIn('restored_track=false', fixture)
         self.assertNotIn('surface.create_entity{name="straight-rail"', fixture)
