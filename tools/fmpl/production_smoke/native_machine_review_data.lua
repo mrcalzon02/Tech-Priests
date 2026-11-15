@@ -13,7 +13,7 @@ for _,port in ipairs(spec.ports) do
 end
 machine.fluid_boxes_off_when_no_fluid_recipe=false
 local function visual(state)
- local result={name=state,always_draw=true,draw_in_states={state},draw_when_state_filter_matches=true,render_layer='lower-object',
+ local result={name=state,always_draw=true,draw_in_states={state},draw_when_state_filter_matches=true,render_layer=spec.body_render_layer or 'lower-object',
   secondary_draw_order=state=='working' and 1 or 0,constant_speed=state=='working'}
  for _,direction in ipairs{'north','east','south','west'} do
   result[direction..'_animation']={filename='__'..spec.mod_id..'__/graphics/'..state..'-'..direction..'.png',

@@ -1,0 +1,18 @@
+{
+  ".gitattributes": "308a40fa1d89ae5ea4390b4c9b46a0108b09f171f07898f25d451fa0c69c4e9f",
+  "CHECKPOINT.json": "d7a3ca14a13a5a2f811e4d8f529427e521db5faf2e99c67fae7778f4c84f8cba",
+  "construction-receipt.json": "3f31a84589d15567691cfb04f7e7303cec0d673f079c5436d030c289021f4137",
+  "crucible-v01.blend": "82e2ad3d5a54ecd2ab8cdecf94417e985a20ad5891d64425f5dbeef85e0f10ab",
+  "crucible-v01.glb": "6fc4f1ce6574a937557672d0db3e4b1ea7744c68a83452a3184db04eb3bc0bf6",
+  "export-details/injector-joint.png": "5cc895019657c2813c02e0ca903ee78e5a5629ee481c4f5f28add40b5688e9ec",
+  "export-details/inspection.json": "ff9af9712feef67d968ba6d9ba095d6d509beb39dd6151f3ec15d99192f8e58a",
+  "export-details/rear-services.png": "7af1f7b8f6d6d27fc2e441e1dd8a5c65421908b5d7fe122860e63c59ed214aca",
+  "export-details/transfer-joint.png": "44c390171807faa0a066a7be3a6e66d6ecc03464dc3f288eb9a664a00b20e1e1",
+  "export-mechanics/mechanical-readback.json": "fb701bf0c54fcc46b4b832f3601652591b70c9b016945085851a0aa58973eb54",
+  "export-readback.json": "8a9184ee609052e929ff61dac2552d7503ee376de4a973e7dfb5c379863a13ff",
+  "mechanics/mechanical-readback.json": "6a60176ae2ade71f059167118ea2acd386e9528344e68378bb027596999727ab",
+  "part_provenance.json": "f898e92640b959339701e96b205b4fc62ca4ef48e79200994bdd251920ffaeef",
+  "port_manifest.json": "1c932c8a9b2c5074215ecc8be1c14c11345c68166722c67793a2f0c67e1f9484",
+  "README.md": "d1e557adb8d85923959aaf99da4a128ed7cd5b2d5f23fb05ea5718a9114477cd",
+  "working-front.png": "6e76fdd6d9ed797cbb1b2192ab289e549a10692e86b6e748c38a49cf59880f07"
+}

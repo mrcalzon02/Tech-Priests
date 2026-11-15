@@ -1,0 +1,33 @@
+{
+  "status": "technically_verified_construction_candidate; finish_and_native_pending",
+  "source_sha256": "82e2ad3d5a54ecd2ab8cdecf94417e985a20ad5891d64425f5dbeef85e0f10ab",
+  "glb_sha256": "6fc4f1ce6574a937557672d0db3e4b1ea7744c68a83452a3184db04eb3bc0bf6",
+  "planned_footprint": [
+    5,
+    5
+  ],
+  "registry_sha256": "09c34c15db45101327f893bbc6387f96f9dd05f60bab1d7ff36750f2a64b570a",
+  "generator_sha256": "799c71275ca195151c0f753db805f075fb4fb6c6e1f84e01ce8fc9e56703a92a",
+  "provenance": "new_reconstruction_from_reference; historical native v0.2 bytes unrecovered",
+  "assembly_contacts": 77,
+  "source_and_runtime_core_rays_each": 290,
+  "fan_surface_pair_checks_each": 204,
+  "exported_triangles": 50384,
+  "maximum_sampled_world_pose_error": 2.384185791015625e-07,
+  "cycle_seconds": 8,
+  "owner_approved": false,
+  "native_pipe_verified": false,
+  "model_specific_surface_finish_complete": false,
+  "audio_implemented": false,
+  "owner_correction": "Twisting at mechanical-to-pipe inlet/outlet transitions looked wrong. Both rebuilt as straight coaxial reducers with separate .20-radius circular elbows.",
+  "render_review": "Actual GLB injector, transfer and rear-services views inspected. Smooth separate transitions replace the earlier skewed reducer; this does not approve final finish.",
+  "actual_reused_parts": 2,
+  "actual_reused_instances": 3,
+  "no_new_verified_parts": "Machine construction and owner-requested transition correction prioritized; no speculative parts harvested.",
+  "next": [
+    "Model-specific pressure-shell, crown, casting and cover surfaces",
+    "Relevant closed pressure/thermal audio and meaningful states",
+    "Four actual idle/working rotations",
+    "Actual native 5x5 prototype and pipe fitting"
+  ]
+}

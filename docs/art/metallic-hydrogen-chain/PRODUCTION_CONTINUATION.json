@@ -2,8 +2,8 @@
   "schema": "tech-priests.mh7.production-continuation.v2",
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
-  "current_machine": "hydrogen-compressor",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\hydrogen-compressor\\v05-slow-and-audio",
+  "current_machine": "metallization-crucible",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\metallization-crucible\\v01-construction-pilot",
   "queue": [
     {
       "id": "water-purifier",
@@ -27,7 +27,7 @@
         3,
         4
       ],
-      "status": "eight-second audible review candidate; native fluid passed; top seam open"
+      "status": "owner_accepted_native_pipe_placement; eight-second source/captures and audio preserved"
     },
     {
       "id": "metallization-crucible",
@@ -35,7 +35,7 @@
         5,
         5
       ],
-      "status": "not_started_in_this_run"
+      "status": "real construction pilot; source/export verified; finishing/audio/native pending"
     },
     {
       "id": "pelletization-forge",
@@ -104,21 +104,21 @@
     "body_render_layer": "lower-object",
     "next_shape_action": "none; owner called done"
   },
-  "library_registry_sha256": "d9d33e61214cd95895228e515c9b3f01f07279218e15e973c226bbcdc093cb62",
+  "library_registry_sha256": "09c34c15db45101327f893bbc6387f96f9dd05f60bab1d7ff36750f2a64b570a",
   "reactors": {
     "status": "V14 native bytes still unrecovered",
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Owner audition of compressor sound; correct top native port seam and verify native animation clock",
-    "Build remaining four chain machines with model-specific audio",
-    "Integrate chain prototypes/economy as a whole",
+    "Build and refine metallization crucible with relevant machine audio",
+    "Complete pelletization forge, vessel fabricator and canister assembler",
+    "Integrate chain prototypes/economy and exact native clocks",
     "Recover and refine three plasma reactors including sound"
   ],
   "original_goal_complete": false,
   "concurrent_work_preserved": "model-production bunker/data.lua work untouched",
   "compressor": {
-    "status": "retimed_and_audible_review_candidate",
+    "status": "owner_accepted_native_pipe_placement",
     "machine": "hydrogen-compressor",
     "planned_footprint": [
       3,
@@ -136,24 +136,84 @@
     "capture_frames": 36,
     "atlas_count": 6,
     "cycle_seconds": 8,
-    "native_ports_verified": false,
+    "native_ports_verified": true,
     "owner_approved": false,
     "actual_reused_master_parts": 2,
     "actual_reused_instances": 3,
     "no_new_verified_parts": "Machine completion prioritized; existing frozen master console and mouths reused with independent native/export readback.",
     "next": [
-      "actual native compressor prototype and two fluid assignments",
-      "native pipe fitting and idle/working placement review",
-      "then metallization crucible"
+      "Preserve accepted placement; ordinary chain integration, exact native frame clock and owner audio audition remain"
     ],
     "equivalent_pose_error": 0,
     "native_fluid_tests_passed": true,
-    "owner_animation_observation": "All appeared to be animating correctly",
-    "graphical_seating_verified": false,
+    "owner_animation_observation": "All appeared to animate correctly",
+    "graphical_seating_verified": true,
     "native_animation_clock_verified": false,
     "ordinary_mod_installed": false,
     "audio_bank": "../../../shared-audio/hydrogen-machinery/v01",
-    "top_port": "Owner reported hard clipping; separate rear-collar overlay rejected in private study. Native seam remains open."
+    "top_port": "Owner accepted corrected normal-object-depth placement: fixed !",
+    "owner_instruction": "fixed !",
+    "owner_native_placement_approved": true,
+    "approved_scope": "Corrected compressor top-port seam and four-direction native fitting; preserve shape, source, eight-second capture and sound bank.",
+    "source_delivery": "../v05-slow-and-audio",
+    "capture_master_sha256": "c316a7a5e8aaa6bdf52bdd0221402c56721302808b8aca50879ff506311918e5",
+    "body_render_layer": "object",
+    "whole_sprite_shift_native_pixels": 4,
+    "rear_collar_overlay": false,
+    "native_physical_and_flow_passed": true,
+    "owner_audio_approved": false,
+    "ordinary_chain_integrated": false,
+    "private_native_evidence": {
+      "profile": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-native-v08-object-depth",
+      "screenshots": {
+        "east-idle-end.png": "84d668ecf711c8c777190f8bc1870618182f8bec6c95c7a6fa5a04c1c9da261f",
+        "east-idle.png": "733142ecc9555baf9ac79ee233f7753370651edc1d544b325c6192494baf94e6",
+        "east-working-0.png": "06116c64d6eaa011656334dabe0f2b68f067fbb10b01908978610da60ca255c0",
+        "east-working-1.png": "e52c27a4ee57e7d953437b6384a3c27b4774e84ae39f18d760bf932f457fe14a",
+        "east-working-2.png": "e74b8f7f72c415e9f6a09265aea44a43cd06ad01e26dbd6bd5dab4fee2c90603",
+        "east-working-3.png": "809cc8c282ac667913af55702d4682f9f3080882701461f1b551bd197cf79675",
+        "east-working-4.png": "809cc8c282ac667913af55702d4682f9f3080882701461f1b551bd197cf79675",
+        "east-working-5.png": "809cc8c282ac667913af55702d4682f9f3080882701461f1b551bd197cf79675",
+        "east-working-6.png": "809cc8c282ac667913af55702d4682f9f3080882701461f1b551bd197cf79675",
+        "east-working-7.png": "809cc8c282ac667913af55702d4682f9f3080882701461f1b551bd197cf79675",
+        "east-working-8.png": "c05da3a99bbe8ab883a33b96b6a6c4c2b565baba4ad5fb85c90d7a051ef0e68d",
+        "north-idle-end.png": "886cc8f174a9998eb58cf80c541cb7e2ec6c42b5c5616dade13978d9d23935c2",
+        "north-idle.png": "8553c91314f461481bf6ea60d1c5a188cf3ba669ebc10812821998acfe8bd05a",
+        "north-working-0.png": "afd6c107ffa1ab20556cc30dba96b982b3bfcb00595a2a645293adbcb92d5ff8",
+        "north-working-1.png": "fdf9fd5f4844b8877a544eee8ff502d6d8a6ed5dc5db7ae1924660304b4d8f2b",
+        "north-working-2.png": "ce581264f6543fa0a4f2bb1389551e0ead97363f9828f4b7c88da06965f5c929",
+        "north-working-3.png": "5e349930c41161a5426d2c706d63317ffea1463769a1f999aca794a78f270313",
+        "north-working-4.png": "0c0356f841bb40f860820c32265901aa4427cf4495f9ff85cac46226424ec04f",
+        "north-working-5.png": "6e14ccd6869c90520eae21f9f8efe97201ac13e1e89d1ef33dcf0587d8adab5a",
+        "north-working-6.png": "c6866f868f0c79b5efe94782f9784f61c8c387b330fbfaf9094f33ce5fbf9aca",
+        "north-working-7.png": "40658b94ca1242c1e7ff87f7c4e0ce953adfbad2d9c8773187064c697658674c",
+        "north-working-8.png": "1db92bc0fc8e9af9f54e55db9e33c53ec3e45dbd97e0b17a162a3d3739149392",
+        "south-idle-end.png": "8d81fabb60ed3b6cb66033833cad5a2360d2808f406e38a5d45046341db72be1",
+        "south-idle.png": "f872902d942f757cf5ca6329e5e4edef4f4d9864da0708515e856e423d808fb8",
+        "south-working-0.png": "b75e2b95d3b62b205b9627d6a8d968fbad1b3c49bf6beeb654b30a2ae150f4be",
+        "south-working-1.png": "9ae9a2f7c2b81627cdea2497e71f68c72afeabf23134693e0816dd3ae1506fd5",
+        "south-working-2.png": "e5c640c1ce4ae795a45345c9415bf3517a8ed6f2c8c0581c3eae9e7f3901f841",
+        "south-working-3.png": "701984c6e91ba1ee4d5c657dae9825ae03e400a0b9b769f0259c6281485c9a79",
+        "south-working-4.png": "ff26e766844af25e1bb3c6f9c8e3db34f3955167aeb91c9e22c9e5966e210241",
+        "south-working-5.png": "af44cfb071c4e8d539e95004c134400582d58f5a73a11b55b97357b918c51720",
+        "south-working-6.png": "caf3031ef7b7461c625ec6b15e5613cfeb50042bd11e96708d48fd016607c837",
+        "south-working-7.png": "8b2f5bbf4a9109e7605dba63c5e54af3f1d8e14f1d88c6ea5c39082a9ff5c5f8",
+        "south-working-8.png": "893875bbb78c951026259dde0aaedbd5ca84973ba76c86e01beb6f83fc30f458",
+        "west-idle-end.png": "96e11f6dac5d7fe9132a27689b3c65509ac1041f9dbf7e77d141da579803c892",
+        "west-idle.png": "5aefce5db43ab363c5972c3f2ffa864534d26fb194e8e9aaea8747424890afde",
+        "west-working-0.png": "771ad51ce9f2510453d64ad822d3bea05844135fe221f4b37bc73b9bbc15944d",
+        "west-working-1.png": "727d73d82a12dad7d1f0c63e260593cef584b745ec5d0d230cf891923fae8e04",
+        "west-working-2.png": "e931511084de4b056cd75093dda2a3485d348b834853b0fef76682e1dc2f6146",
+        "west-working-3.png": "84105a057b18cf47709575bd5d22af15a3f8e7d8048e801df4e8b37211681d5d",
+        "west-working-4.png": "0fa27f4c3072c3eefb1f8fe973776adc1a099b45e7be0160b11e210e83bfac77",
+        "west-working-5.png": "45f6dfc0e38afe2498dc73406c87ad15bd574410b08b622cae949851dc6bdf32",
+        "west-working-6.png": "547ee6c8fc049eed954075d8be90a6a4cae3cee9babfe873262c4c03c078608d",
+        "west-working-7.png": "05cb8ac7c5fc5dfb5042301336651d89e275b33b4882b3508472ca26e7a9fa09",
+        "west-working-8.png": "e4387066e5bd9e5bc526bff0fbc704761d73baf5347fe2b122f51e0898e90fe9"
+      },
+      "log_sha256": "8e3c991633fb41e5a941a802b7b5e8b96897cd5ca0f2e8ee87608b57211dac62"
+    },
+    "accepted_delivery": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\hydrogen-compressor\\v06-owner-accepted-native"
   },
   "machinery_audio": {
     "path": "art/source-to-3d/shared-audio/hydrogen-machinery/v01",
@@ -161,5 +221,38 @@
     "owner_audition_approved": false,
     "required_on_all_remaining_machinery": true,
     "ordinary_chain_integrated": false
+  },
+  "crucible": {
+    "status": "technically_verified_construction_candidate; finish_and_native_pending",
+    "source_sha256": "82e2ad3d5a54ecd2ab8cdecf94417e985a20ad5891d64425f5dbeef85e0f10ab",
+    "glb_sha256": "6fc4f1ce6574a937557672d0db3e4b1ea7744c68a83452a3184db04eb3bc0bf6",
+    "planned_footprint": [
+      5,
+      5
+    ],
+    "registry_sha256": "09c34c15db45101327f893bbc6387f96f9dd05f60bab1d7ff36750f2a64b570a",
+    "generator_sha256": "799c71275ca195151c0f753db805f075fb4fb6c6e1f84e01ce8fc9e56703a92a",
+    "provenance": "new_reconstruction_from_reference; historical native v0.2 bytes unrecovered",
+    "assembly_contacts": 77,
+    "source_and_runtime_core_rays_each": 290,
+    "fan_surface_pair_checks_each": 204,
+    "exported_triangles": 50384,
+    "maximum_sampled_world_pose_error": 2.384185791015625e-07,
+    "cycle_seconds": 8,
+    "owner_approved": false,
+    "native_pipe_verified": false,
+    "model_specific_surface_finish_complete": false,
+    "audio_implemented": false,
+    "owner_correction": "Twisting at mechanical-to-pipe inlet/outlet transitions looked wrong. Both rebuilt as straight coaxial reducers with separate .20-radius circular elbows.",
+    "render_review": "Actual GLB injector, transfer and rear-services views inspected. Smooth separate transitions replace the earlier skewed reducer; this does not approve final finish.",
+    "actual_reused_parts": 2,
+    "actual_reused_instances": 3,
+    "no_new_verified_parts": "Machine construction and owner-requested transition correction prioritized; no speculative parts harvested.",
+    "next": [
+      "Model-specific pressure-shell, crown, casting and cover surfaces",
+      "Relevant closed pressure/thermal audio and meaningful states",
+      "Four actual idle/working rotations",
+      "Actual native 5x5 prototype and pipe fitting"
+    ]
   }
 }

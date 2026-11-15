@@ -386,6 +386,74 @@
       "model_source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
       "runtime_export_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
       "status": "actual appended, saved/rendered/exported/reimported candidate; native review open"
+    },
+    {
+      "machine": "metallization-crucible",
+      "machine_revision": "V01 construction pilot",
+      "instance": "conditioned_hydrogen_input",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -2.5
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "82e2ad3d5a54ecd2ab8cdecf94417e985a20ad5891d64425f5dbeef85e0f10ab",
+      "runtime_export_sha256": "6fc4f1ce6574a937557672d0db3e4b1ea7744c68a83452a3184db04eb3bc0bf6",
+      "status": "actual appended saved and independently reimported construction candidate; native fitting provisional"
+    },
+    {
+      "machine": "metallization-crucible",
+      "machine_revision": "V01 construction pilot",
+      "instance": "metallicized_intermediate_output",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          2.5
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "82e2ad3d5a54ecd2ab8cdecf94417e985a20ad5891d64425f5dbeef85e0f10ab",
+      "runtime_export_sha256": "6fc4f1ce6574a937557672d0db3e4b1ea7744c68a83452a3184db04eb3bc0bf6",
+      "status": "actual appended saved and independently reimported construction candidate; native fitting provisional"
     }
   ],
   "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",

@@ -26,6 +26,7 @@ def main():
     ap.add_argument('--source-name',default='compressor-v04.blend')
     ap.add_argument('--rear-collar',help='Directory of real rendered rear collars for joint-depth review')
     ap.add_argument('--audio-addon',help='Original machinery audio extension directory')
+    ap.add_argument('--body-render-layer',choices=('lower-object','object'),default='lower-object',help='Explicit native depth study; never changes model geometry')
     args=ap.parse_args()
     exe=Path(args.factorio).resolve();asset=Path(args.asset).resolve();capture=Path(args.capture).resolve();out=Path(args.out).resolve()
     if out.exists():raise FileExistsError('Keep previous native profiles')
@@ -33,7 +34,7 @@ def main():
     if version!='2.1.24':raise RuntimeError('Requires inspected native 2.1.24')
     cycle_seconds=json.loads((capture/'capture.json').read_text())['config']['cycle_seconds']
     spec=dict(mod_id='tp-mh7-compressor-review',entity='tp-mh7-review-compressor',title='Compressor isolated art and pipe review',cycle_seconds=cycle_seconds,rear_collar_layer=bool(args.rear_collar),
-        category='tp-mh7-review-compression',recipe='tp-mh7-review-compress',collision_box=[[-1.3,-1.8],[1.3,1.8]],selection_box=[[-1.5,-2],[1.5,2]],
+        category='tp-mh7-review-compression',recipe='tp-mh7-review-compress',body_render_layer=args.body_render_layer,collision_box=[[-1.3,-1.8],[1.3,1.8]],selection_box=[[-1.5,-2],[1.5,2]],
         sprite_scale=6.1/8,sprite_shift_y=-.82*math.sqrt(.5)+4/32,
         ports=[dict(id='hydrogen_suction',production_type='input',fluid='tp-mh7-review-hydrogen-gas',color=[.4,.7,.8],position=[-1,-.5],direction='west',target=[-2,-.5],plane=[-1.5,-.5]),
                dict(id='hydrogen_discharge',production_type='output',fluid='tp-mh7-review-compressed-hydrogen',color=[.3,.6,.75],position=[1,-.5],direction='east',target=[2,-.5],plane=[1.5,-.5])])
