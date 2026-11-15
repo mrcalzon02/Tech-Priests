@@ -1310,6 +1310,9 @@ function tech_priests_1172_service_autonomous_science_component(pair)
   if not(op and op.enabled==true) then
     return false,"emergency-operation-not-enabled"
   end
+  local raw_capacity,raw_reason=FactoryCapacityRequests1282.request_raw_capacity(
+    pair,tech_priests_native_mining_yield_per_second)
+  if raw_capacity then return true,raw_reason end
   if op.construction or pair.emergency_craft or pair.scavenge
       or pair.direct_acquisition_custody_0513
       or pair.construction_task_0338 or pair.construction_custody_0338 then

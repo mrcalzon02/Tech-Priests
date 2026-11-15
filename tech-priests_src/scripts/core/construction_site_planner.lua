@@ -495,7 +495,7 @@ local function miner_grid_positions(entity_name, resource_position)
     {x=x0,y=y0+1},{x=x0+1,y=y0+1},
   }
 end
-local function plan_resource_miner(pair, entity_name)
+local function plan_resource_miner(pair, entity_name, resource_name)
   local station = pair and pair.station
   if not valid(station) then return nil, "invalid-station" end
   local radius = radius_for(pair)
@@ -511,7 +511,8 @@ local function plan_resource_miner(pair, entity_name)
     local best,best_distance=nil,nil
     local seen={}
     for _,resource in pairs(resource_list or {}) do
-    if valid(resource) and (not resource.amount or resource.amount > 0) then
+    if valid(resource) and (not resource_name or resource.name==resource_name)
+      and (not resource.amount or resource.amount > 0) then
       for _,position in ipairs(miner_grid_positions(entity_name,resource.position)) do
         local key=string.format("%.2f:%.2f",position.x,position.y)
         if not seen[key] then
@@ -599,7 +600,7 @@ function Planner.plan_site(pair, placeable)
   if category == "deferred-network" then return nil, "deferred-network-submodule" end
   local profile = defense_profile(placeable.entity_name, category)
   if profile then return Planner.plan_defense_site(pair, placeable.entity_name, profile.category) end
-  if category == "miner" then return plan_resource_miner(pair, placeable.entity_name) end
+  if category == "miner" then return plan_resource_miner(pair, placeable.entity_name, placeable.resource_name) end
   if category == "emergency-miner" then return Planner.plan_spiral(pair, placeable.entity_name, category) end
   if category == "emergency-power-pole" or category == "emergency-powertrain"
     or category == "emergency-smelter"
@@ -607,7 +608,7 @@ function Planner.plan_site(pair, placeable)
     return Planner.plan_spiral(pair, placeable.entity_name, category)
   end
   if entity_type(placeable.entity_name) == "mining-drill" and category ~= "emergency-miner" then
-    return plan_resource_miner(pair, placeable.entity_name)
+    return plan_resource_miner(pair, placeable.entity_name, placeable.resource_name)
   end
   return Planner.plan_spiral(pair, placeable.entity_name, category)
 end

@@ -443,8 +443,12 @@ local function machine_logistics_recommendation(p,order_kind,mode_kind)
   local strict_output=logistics
     and type(logistics.strict_prerequisite_output_ready_1044)=="function"
     and logistics.strict_prerequisite_output_ready_1044(p)==true
+  local raw_fuel=logistics and type(logistics.planned_raw_mining_fuel_ready_1282)=="function"
+    and logistics.planned_raw_mining_fuel_ready_1282(p)==true
+  local raw_output=logistics and type(logistics.planned_raw_mining_output_ready_1282)=="function"
+    and logistics.planned_raw_mining_output_ready_1282(p)==true
   if (order_kind~="idle" and order_kind~="acquisition"
-      and not strict_output
+      and not strict_output and not raw_fuel and not raw_output
       and not (p.machine_logistics_0528 and p.machine_logistics_0528.custody))
       or mode_kind=="combat" or valid(p.combat_target) then return nil end
   local rec=recommendation("TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528","scripts.core.logistics_machine_fulfillment_0528",p,"machine-logistics")
@@ -459,7 +463,7 @@ local function machine_logistics_recommendation(p,order_kind,mode_kind)
     if not (mining_output or needed_output)
         or p.direct_acquisition_custody_0513 then return nil end
   end
-  return rec,strict_output
+  return rec,strict_output or raw_fuel or raw_output
 end
 local function item_family_recommendation(p,k)if k~="idle"and k~="item-family-logistics"then return nil end;return recommendation("TechPriestsItemFamilyLogistics0702","scripts.core.item_family_logistics_0702",p,"item-family-logistics")end
 local function strict_engine_work(p,k)

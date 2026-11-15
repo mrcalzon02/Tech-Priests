@@ -922,7 +922,8 @@ local function discover_candidate(pair)
     })
   end)
   if not (ok and machines) then return nil end
-  local best, best_score, parent_output, parent_score
+  local best, best_score, parent_output, parent_score, raw_fuel, raw_fuel_distance,
+    raw_output, raw_output_distance
   for _, machine in pairs(machines) do
     local is_receiver=machine.type=="container"
       or machine.type=="logistic-container"
@@ -951,6 +952,16 @@ local function discover_candidate(pair)
         if task.strict_parent_output_1283 then
           local distance=dist_sq(pair.priest.position,machine.position)
           if not parent_score or distance<parent_score then parent_output,parent_score=task,distance end
+        elseif M.planned_raw_mining_output_ready_1282(pair,task)then
+          local distance=dist_sq(pair.priest.position,machine.position)
+          if not raw_output_distance or distance<raw_output_distance then
+            raw_output,raw_output_distance=task,distance
+          end
+        elseif M.planned_raw_mining_fuel_ready_1282(pair,task)then
+          local distance=dist_sq(pair.priest.position,machine.position)
+          if not raw_fuel_distance or distance<raw_fuel_distance then
+            raw_fuel,raw_fuel_distance=task,distance
+          end
         elseif not best_score or score > best_score then
           best, best_score = task, score
         end
@@ -959,7 +970,9 @@ local function discover_candidate(pair)
   end
   -- This transaction completes the incumbent strict production dependency;
   -- unrelated aged factory jobs must not hide its already-produced output.
-  if parent_output then best,best_score=parent_output,task_score(pair,parent_output)end
+  if parent_output then best,best_score=parent_output,task_score(pair,parent_output)
+  elseif raw_output then best,best_score=raw_output,task_score(pair,raw_output)
+  elseif raw_fuel then best,best_score=raw_fuel,task_score(pair,raw_fuel)end
   if best then
     if best.action=="clear-output"
         and best.machine.name=="tech-priests-emergency-assembler"
@@ -1350,6 +1363,72 @@ end
 function M.completed_bootstrap_mining_output(pair)
   return pair and completed_machine_output_ready(pair,active_state(pair)) or false
 end
+local function planned_raw_mining_service_ready(pair,offered,collecting)
+  if not valid_pair(pair) then return false end
+  local op=pair.independent_emergency_operation_0184
+  local plan=op and op.magos_ratio_plan_0257
+  local raw=pair.direct_acquisition_task_0336 or pair.emergency_craft
+  if not(op and op.enabled==true and type(plan)=="table"and type(raw)=="table"
+      and not raw.direct_due_tick_0513
+      and not raw.direct_remaining_ticks_0513)then return false end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+  if order and order.status=="active"then return false end
+  if valid(pair.combat_target)then return false end
+  for _,field in ipairs{"direct_acquisition_custody_0513","construction_custody_0338",
+    "item_family_custody_0702","energy_family_custody_0707","inventory_transfer_custody_0687",
+    "emergency_facility_feed_custody_0357","emergency_production_custody_0514",
+    "station_cargo_custody_0824","repair_pack_custody_0516","consecration_refund_custody_0515",
+    "rocket_silo_custody_0710","artillery_custody_0713","roboport_repair_custody_0715"}do
+    if pair[field]then return false end
+  end
+  local task=offered or active_state(pair)or pair.machine_logistics_candidate_0528
+  local machine=task and(collecting and task.drill_source_0983 or task.machine)
+  if not(task and valid(machine)and machine.type=="mining-drill"
+      and machine.force==pair.station.force and machine.surface==pair.station.surface)then return false end
+  if collecting then
+    if task.action~="clear-output"or not valid(task.machine)then return false end
+    local connected=M.connected_drill_source_0983(pair,task.machine,machine)
+    if connected~=machine or count_inventory(task.source_inventory or machine_output(task.machine),task.item)<1 then return false end
+  elseif task.action~="supply-fuel"or task.item~="coal"then return false end
+  if task.expires_tick and task.expires_tick<now()then return false end
+  local read,target=pcall(function()return machine.mining_target end)
+  if not(read and valid(target))then return false end
+  local wanted=target.name
+  if collecting and task.item~=wanted then return false end
+  if (tonumber(plan.raw_items and plan.raw_items[wanted])or 0)<=0 then return false end
+  local dependency=raw.bootstrap_resource_0637==true
+    and(raw.output_item or raw.item_name)==wanted
+  if not dependency and raw==pair.emergency_craft and raw.strict_recipe_0647==true
+      and raw.facility_only_0647==true and raw.infrastructure_first_0640==true
+      and generic_count(pair,raw.output_item or raw.item_name)
+        <(tonumber(raw.target_stock_0647)or 1)then
+    for _,ingredient in ipairs(raw.strict_recipe_ingredients_0647 or{})do
+      if ingredient.name==wanted and(tonumber(ingredient.count)or 0)>0 then dependency=true;break end
+    end
+  end
+  if not dependency then return false end
+  local receipt=pair.factory_raw_mining_receipts_1282
+    and pair.factory_raw_mining_receipts_1282[machine.unit_number]
+  local request=receipt and receipt.request_value
+  if receipt and receipt.paid_original_0338==true and receipt.phase=="complete"
+      and receipt.station_unit==station_unit(pair)and receipt.built_entity==machine
+      and receipt.entity_unit==machine.unit_number and type(request)=="table"
+      and request.source=="magos-stocked-ratio-capacity"
+      and request.raw_prerequisite_1282==true and request.resource_name==wanted then return true end
+  local ledger=storage and storage.tech_priests and storage.tech_priests.emergency_facility_doctrine_0343
+  for key in pairs(ledger and ledger.by_station and ledger.by_station[station_unit(pair)]or{})do
+    local rec=ledger.facilities and ledger.facilities[key]
+    if rec and rec.entity==machine and rec.role=="miner"
+        and rec.station_unit==station_unit(pair)then return true end
+  end
+  return false
+end
+function M.planned_raw_mining_fuel_ready_1282(pair,offered)
+  return planned_raw_mining_service_ready(pair,offered,false)
+end
+function M.planned_raw_mining_output_ready_1282(pair,offered)
+  return planned_raw_mining_service_ready(pair,offered,true)
+end
 function M.recommend_action(pair)
   if not valid_pair(pair) or read_root().enabled == false then return nil end
   local state = active_state(pair)
@@ -1362,6 +1441,8 @@ function M.recommend_action(pair)
     or craft.facility_only_0647==true)
   local output_ready=completed_machine_output_ready(pair,state)
   local infrastructure_output=M.infrastructure_prerequisite_output_ready_1045(pair)
+  local raw_miner_fuel=M.planned_raw_mining_fuel_ready_1282(pair)
+    or M.planned_raw_mining_output_ready_1282(pair)
   -- Physical direct custody and strict manufacturing still own the priest.
   -- An unladen direct acquisition route may yield to real finished machine
   -- output; otherwise every new direct task indefinitely hides that output.
@@ -1369,6 +1450,7 @@ function M.recommend_action(pair)
       or (direct_active and (pair.direct_acquisition_custody_0513
         or (not output_ready and not infrastructure_output
           and not M.strict_prerequisite_output_ready_1044(pair)))))
+    and not raw_miner_fuel
     and not (state and state.custody) and not pair.machine_logistics_custody_0528
   then return nil end
   if state and valid(state.machine) then
@@ -2127,6 +2209,12 @@ function M.yield_for_bootstrap(pair, reason)
     return false,"explicit-machine-order"
   end
   local state=active_state(pair)
+  if M.planned_raw_mining_fuel_ready_1282(pair) then
+    return false,"planned-raw-miner-fuel-awaits-service-1282"
+  end
+  if M.planned_raw_mining_output_ready_1282(pair) then
+    return false,"planned-raw-miner-output-awaits-collection-1282"
+  end
   if strict and M.strict_prerequisite_output_ready_1044(pair) then
     return false,"strict-ingredient-output-awaits-collection"
   end

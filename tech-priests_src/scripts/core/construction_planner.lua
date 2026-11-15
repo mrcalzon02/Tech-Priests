@@ -278,7 +278,7 @@ local function category_for(entity_name,requested)
 end
 local function normalize_placeable(v)
  if type(v)=="string"then if item_exists(v)then local e=place_result(v);return e and{item_name=v,entity_name=e,category=category_for(e)}or nil end;if entity_exists(v)then local item=item_for_entity(v);return item and{item_name=item,entity_name=v,category=category_for(v)}or nil end;return nil end
- if type(v)~="table"then return nil end;local item=v.item_name or v.item or v.name;local entity=v.entity_name or v.entity or v.place_result;if entity and type(entity)=="table"then entity=entity.name end;if not entity and item then entity=place_result(item)end;if not item and entity then item=item_for_entity(entity)end;if not(item_exists(item)and entity_exists(entity))then return nil end;return{item_name=item,entity_name=entity,category=category_for(entity,v.category or v.class),source=v.source,direction=v.direction}
+ if type(v)~="table"then return nil end;local item=v.item_name or v.item or v.name;local entity=v.entity_name or v.entity or v.place_result;if entity and type(entity)=="table"then entity=entity.name end;if not entity and item then entity=place_result(item)end;if not item and entity then item=item_for_entity(entity)end;if not(item_exists(item)and entity_exists(entity))then return nil end;return{item_name=item,entity_name=entity,category=category_for(entity,v.category or v.class),source=v.source,direction=v.direction,resource_name=v.resource_name}
 end
 local request_fields={"structure_construction_requested_item","construction_requested_item","construction_request","pending_construction","build_request"}
 local function bootstrap_request(pair)
@@ -1523,6 +1523,17 @@ local function finish(pair,task,built,reason)
  task.result=reason
  task.built_entity=built
  pair.construction_last_task_0338=task
+ if valid(built)and built.type=="mining-drill"and task.creative_build~=true
+   and type(task.request_value)=="table"
+   and task.request_value.source=="magos-stocked-ratio-capacity"
+   and task.request_value.raw_prerequisite_1282==true
+   and type(task.request_value.resource_name)=="string"then
+  pair.factory_raw_mining_receipts_1282=pair.factory_raw_mining_receipts_1282 or{}
+  pair.factory_raw_mining_receipts_1282[built.unit_number]={
+   station_unit=station_unit(pair),built_entity=built,entity_unit=built.unit_number,
+   request_value=task.request_value,paid_original_0338=true,
+   phase="complete",tick=now()}
+ end
  local output_link=pair.factory_output_link_plan_1282
  if output_link and output_link.request==task.request_value
    and type(task.request_value)=="table"

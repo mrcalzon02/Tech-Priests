@@ -160,4 +160,28 @@ scenario("standard mining drill chooses real iron before closer coal",function()
     "closer coal was selected instead of industrial iron: "..tostring(why))
 end)
 
+scenario("explicit stone capacity uses real stone rather than closer iron",function()
+ local pair=setup();local surface=pair.station.surface
+ local old_find=surface.find_entities_filtered
+ local stone={valid=true,name="stone",type="resource",amount=200,
+  position={x=18.5,y=.5}}
+ surface.find_entities_filtered=function(filter)
+  if filter.type=="resource"then return{ore,stone}end
+  return old_find(filter)
+ end
+ local pos=Planner.plan_site(pair,{entity_name="burner-mining-drill",category="miner",
+  resource_name="stone"})
+ check(pos and math.abs(pos.x-stone.position.x)<=1
+   and math.abs(pos.y-stone.position.y)<=1,
+   "resource-specific capacity was silently sited on iron")
+end)
+
+scenario("explicit missing stone is refused even when iron is placeable",function()
+ local pair=setup()
+ local pos,why=Planner.plan_site(pair,{entity_name="burner-mining-drill",category="miner",
+  resource_name="stone"})
+ check(pos==nil and why=="no-miner-site",
+  "missing requested resource was replaced with unrelated ore")
+end)
+
 print("[miner-site-alignment] PASS scenarios="..total)
