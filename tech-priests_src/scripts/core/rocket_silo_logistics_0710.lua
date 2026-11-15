@@ -46,6 +46,28 @@ local function dist_sq(a,b)
   local dx=(a.x or 0)-(b.x or 0);local dy=(a.y or 0)-(b.y or 0)
   return dx*dx+dy*dy
 end
+local function physical_entity(pair,entity)
+  if valid(entity)and valid(pair.station)and entity.force==pair.station.force
+    and entity.surface==pair.station.surface
+    and(entity.name=="tech-priests-cogitator-return-cache"or entity.name=="tech-priests-cogitator-requester-cache")
+    and dist_sq(entity.position,pair.station.position)<.01 then return pair.station end
+  return entity
+end
+local function entity_box(entity)
+  local ok,box=pcall(function()return entity.bounding_box or entity.selection_box end)
+  if not(ok and box)then return nil end
+  local a,b=box.left_top or box[1],box.right_bottom or box[2]
+  if not(a and b and a.x and a.y and b.x and b.y)then return nil end
+  return a,b
+end
+local function physical_distance_sq(pair,entity,position)
+  entity=physical_entity(pair,entity)
+  local a,b=entity_box(entity)
+  if not a then return dist_sq(position,entity.position)end
+  local x=math.max(a.x,math.min(b.x,position.x))
+  local y=math.max(a.y,math.min(b.y,position.y))
+  return dist_sq(position,{x=x,y=y})
+end
 function M.root()
   storage.tech_priests=storage.tech_priests or{}
   local state=storage.tech_priests[M.storage_key]or{
@@ -174,7 +196,49 @@ end
 local function request_move(pair,target,reason)
   if not(valid_pair(pair)and valid(target))then return false end
   local request=rawget(_G,"tech_priests_request_movement_0418");if type(request)~="function"then return false end
-  local ok,accepted=pcall(request,pair,target.position,reason or"rocket-silo-logistics-0710",{owner="rocket-silo-logistics-0710",priority=M.move_priority,ttl=M.move_ttl,radius=1.2,distraction=defines and defines.distraction and defines.distraction.none or nil})
+  target=physical_entity(pair,target)
+  local a,b=entity_box(target);local contact=target.position
+  if a then
+    local state=pair.rocket_silo_contact_1286
+    if not(state and state.entity==target and dist_sq(state.origin,target.position)<.01)then
+      state={entity=target,origin={x=target.position.x,y=target.position.y},
+        alignment={x=pair.priest.position.x,y=pair.priest.position.y},tried={}}
+      pair.rocket_silo_contact_1286=state
+    end
+    local function key(pos)return string.format("%.3f:%.3f",pos.x,pos.y)end
+    if state.point then
+      local checked,clear=pcall(function()return pair.station.surface.can_place_entity{
+        name=pair.priest.name,position=state.point,force=pair.station.force}end)
+      local remaining=math.sqrt(dist_sq(pair.priest.position,state.point))
+      if checked and clear and(not state.best or remaining<=state.best-.2)then
+        state.best=remaining;state.progress_tick=now()
+      elseif not(checked and clear)or now()-(state.progress_tick or now())>=180 then
+        state.tried[key(state.point)]=true;state.point=nil
+      end
+    end
+    local best,score
+    if not state.point then
+    for _,gap in ipairs{.6,1,1.4}do
+      local x=math.max(a.x,math.min(b.x,state.alignment.x))
+      local y=math.max(a.y,math.min(b.y,state.alignment.y))
+      for _,point in ipairs{{x=a.x-gap,y=y},{x=b.x+gap,y=y},
+        {x=x,y=a.y-gap},{x=x,y=b.y+gap},
+        {x=a.x-gap,y=a.y-gap},{x=a.x-gap,y=b.y+gap},
+        {x=b.x+gap,y=a.y-gap},{x=b.x+gap,y=b.y+gap}}do
+        if physical_distance_sq(pair,target,point)<=math.min(M.pickup_reach_sq,M.target_reach_sq,M.return_reach_sq)then
+          local checked,clear=pcall(function()return pair.station.surface.can_place_entity{
+            name=pair.priest.name,position=point,force=pair.station.force}end)
+          local distance=dist_sq(pair.priest.position,point)
+          if checked and clear==true and not state.tried[key(point)]and(not score or distance<score)then best,score=point,distance end
+        end
+      end
+    end
+    if not best then return false end
+    state.point=best;state.best=math.sqrt(dist_sq(pair.priest.position,best));state.progress_tick=now()
+    end
+    contact=state.point
+  end
+  local ok,accepted=pcall(request,pair,contact,reason or"rocket-silo-logistics-0710",{owner="rocket-silo-logistics-0710",priority=M.move_priority,ttl=M.move_ttl,radius=a and .15 or 1.2,distraction=defines and defines.distraction and defines.distraction.none or nil})
   return ok and accepted==true
 end
 local function matching_request(request,task)
@@ -224,9 +288,11 @@ end
 local function return_custody(pair,task)
   local carried=task.carried
   if not(carried and carried.item and(tonumber(carried.count)or 0)>0)then return finish_task(pair,task,"empty-custody")end
-  local return_source=task.family=="rocket-silo-input"and valid(task.source_entity)and task.source_entity or nil
+  local return_source=task.family=="rocket-silo-input"and valid(task.source_entity)
+    and task.source_entity.force==pair.station.force and task.source_entity.surface==pair.station.surface
+    and task.source_entity or nil
   local target=return_source or pair.station
-  if dist_sq(pair.priest.position,target.position)>M.return_reach_sq then
+  if physical_distance_sq(pair,target,pair.priest.position)>M.return_reach_sq then
     task.phase="return-custody";sync_custody(pair,task,return_source and"returning-source"or"returning-station")
     if not request_move(pair,target,"rocket-silo-custody-return-0710")then return{processed=1,blocked=1,detail="return-movement-blocked"}end
     return{processed=1,waiting=1,detail="returning-custody"}
@@ -254,7 +320,9 @@ local function manual_report(report)
   return type(report)=="table"and valid(report.silo)and report.automation_owned~=true and report.launch_sequence_active~=true
 end
 local function source_current(pair,task)
-  if task.source_inv and task.source_inv.valid and valid(task.source_entity)and item_count(task.source_inv,task.item)>0 then return{inv=task.source_inv,entity=task.source_entity,count=item_count(task.source_inv,task.item),label=task.source_label}end
+  if task.source_inv and task.source_inv.valid and valid(task.source_entity)
+    and task.source_entity.force==pair.station.force and task.source_entity.surface==pair.station.surface
+    and item_count(task.source_inv,task.item)>0 then return{inv=task.source_inv,entity=task.source_entity,count=item_count(task.source_inv,task.item),label=task.source_label}end
   if task.family~="rocket-silo-input"or not task.report then return nil end
   return source_for_item(pair,task.item,task.report.input_inventory)
 end
@@ -280,6 +348,7 @@ local function candidate_from_reports(pair)
 end
 local function revalidate_target(pair,task)
   if not valid(task.target)then return nil,"target-invalid"end
+  if task.target.force~=pair.station.force or task.target.surface~=pair.station.surface then return nil,"target-ownership-changed"end
   local doctrine=readiness();if not(doctrine and type(doctrine.inspect_silo)=="function")then return nil,"readiness-unavailable"end
   local report=doctrine.inspect_silo(pair,task.target,true);task.report=report
   if not report then return nil,"readiness-failed"end
@@ -350,6 +419,12 @@ local function continue_task(pair,task)
     return abort_without_custody(pair,task,"target-invalid")
   end
   local report,ownership_reason=revalidate_target(pair,task)
+  if not report then
+    if task.carried and(tonumber(task.carried.count)or 0)>0 then
+      task.phase="return-custody";sync_custody(pair,task,ownership_reason);return return_custody(pair,task)
+    end
+    return abort_without_custody(pair,task,ownership_reason)
+  end
   if ownership_reason=="launch-sequence-active"or ownership_reason=="external-logistics-owned"then
     if task.carried and(tonumber(task.carried.count)or 0)>0 then task.phase="return-custody";sync_custody(pair,task,ownership_reason);record(pair,"unsafe-silo-custody-return",ownership_reason);return return_custody(pair,task)end
     record(pair,"unsafe-silo-task-aborted",ownership_reason);return abort_without_custody(pair,task,ownership_reason)
@@ -368,7 +443,7 @@ local function continue_task(pair,task)
       if task.family=="rocket-silo-input"then task.phase="waiting-source";task.request_tick=now();create_request(pair,task);return{processed=1,waiting=1,detail="source-lost"}end
       return abort_without_custody(pair,task,"silo-trash-source-empty")
     end
-    if dist_sq(pair.priest.position,source.entity.position)>M.pickup_reach_sq then
+    if physical_distance_sq(pair,source.entity,pair.priest.position)>M.pickup_reach_sq then
       if not request_move(pair,source.entity,"rocket-silo-item-source-0710")then return{processed=1,blocked=1,detail="source-movement-blocked"}end
       return{processed=1,waiting=1,detail="moving-to-source"}
     end
@@ -387,7 +462,7 @@ local function continue_task(pair,task)
     return{processed=1,acted=1,waiting=1,detail="delivering-silo-input"}
   end
   if task.phase=="move-to-target"then
-    if dist_sq(pair.priest.position,task.target.position)>M.target_reach_sq then
+    if physical_distance_sq(pair,task.target,pair.priest.position)>M.target_reach_sq then
       if not request_move(pair,task.target,"rocket-silo-input-delivery-0710")then task.phase="return-custody";sync_custody(pair,task,"target-movement-blocked");return{processed=1,blocked=1,detail="target-movement-blocked"}end
       sync_custody(pair,task,"moving-to-target");return{processed=1,waiting=1,detail="moving-to-target"}
     end

@@ -20,6 +20,13 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CASES = {
+    "rocket-silo-access": {
+        "fixture": "tests/scenarios/rocket-silo-access/fixture.lua",
+        "module": "ci_rocket_silo_access_1286",
+        "prefix": "[TP-SILO-ACCESS]",
+        "pass": "PASS autonomous physical silo delivery and native rocket-part production",
+        "ticks": 18000,
+    },
     "midgame-science": {
         "fixture": "tests/scenarios/midgame-science/fixture.lua",
         "module": "ci_midgame_science_1194",
