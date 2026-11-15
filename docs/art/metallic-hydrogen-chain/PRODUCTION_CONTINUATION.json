@@ -3,7 +3,7 @@
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
   "current_machine": "electrolyzer",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\electrolyzer\\v01-construction-pilot",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\electrolyzer\\v05-finish-and-states",
   "queue": [
     {
       "id": "water-purifier",
@@ -19,7 +19,7 @@
         3,
         4
       ],
-      "status": "candidate_exported"
+      "status": "visual_reviewed_candidate; native prototype pending"
     },
     {
       "id": "hydrogen-compressor",
@@ -74,39 +74,40 @@
     "native_physical_jig": "passed isolated 2.1.24 pipe and flow test; graphical seating/ordinary runtime not claimed"
   },
   "electrolyzer": {
-    "status": "candidate_exported",
+    "status": "visual_reviewed_candidate",
     "machine": "electrolyzer",
     "planned_footprint": [
       3,
       4
     ],
-    "provenance": "new reconstruction from approved style/process packet; not edited unseen v0.2 geometry",
-    "actual_reused_master_parts": 2,
-    "actual_reused_instances": 4,
-    "source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
-    "glb_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
-    "registry_sha256": "7c7c5ccff25fdb361c516df67ef641862176aaca9effc8c3ddfc0dce835cd8fc",
+    "source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+    "glb_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+    "registry_sha256": "d39eff16a7130e703fa00cf0425e86c166aab3049875af6d0e892861a44a12bb",
+    "contacts": 59,
+    "sampled_core_rays": 1179,
     "native_bore_rays": 111,
     "export_bore_rays": 111,
+    "capture_frames": 36,
+    "atlas_count": 6,
+    "cycle_seconds": 4,
     "native_ports_verified": false,
-    "no_new_verified_parts": "construction pilot only; do not delay next work with speculative harvesting",
+    "owner_approved": false,
+    "no_new_verified_parts": "Existing frozen console and mouths retained; machine completion prioritized over speculative harvesting.",
     "next": [
-      "support/contact and process route audit",
-      "model-specific finishing and closeup inspection",
-      "animation states and direction captures",
-      "actual prototype and pipe fitting jig"
+      "actual isolated electrolyzer prototype, three native fluid assignments and rotated pipe jig",
+      "graphical connected/disconnected cap seating",
+      "compressor construction"
     ]
   },
-  "library_registry_sha256": "7c7c5ccff25fdb361c516df67ef641862176aaca9effc8c3ddfc0dce835cd8fc",
+  "library_registry_sha256": "d39eff16a7130e703fa00cf0425e86c166aab3049875af6d0e892861a44a12bb",
   "reactors": {
     "status": "V14 native bytes still unrecovered",
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Refine electrolyzer finishing and complete contact/process audit",
-    "Capture relevant electrolyzer animation states/orientations after geometry review",
+    "Verify electrolyzer actual prototype and pipe-fitting jig",
     "Continue remaining five distinct precursor machines",
-    "Integrate whole chain prototypes and native pipe-fitting graphics",
+    "Whole-chain prototype integration",
     "Recover and refine three plasma reactors"
   ],
   "original_goal_complete": false,

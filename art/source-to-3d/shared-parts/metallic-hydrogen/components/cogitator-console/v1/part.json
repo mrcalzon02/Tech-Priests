@@ -171,6 +171,40 @@
       "model_source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
       "runtime_export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
       "status": "actual saved/rendered/reimported candidate; final machine review open"
+    },
+    {
+      "machine": "electrolyzer",
+      "machine_revision": "V05 finish and state candidate",
+      "instance": "front service cogitator",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.800000011920929
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -1.6100000143051147
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8700000047683716
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+      "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
+      "status": "actual saved/rendered/reimported candidate; native integration open"
     }
   ],
   "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",

@@ -1,0 +1,422 @@
+{
+  "source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+  "passed": true,
+  "contact_count": 59,
+  "contacts": [
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal insulated seat 1",
+      "b": "TP_ELECTROLYZER_V01 | top gas collector closure 1",
+      "label": "insulated cell terminal mounted to head",
+      "gap_tiles": 1.1920928955078125e-07,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal conductor 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal insulated seat 1",
+      "label": "conductor retained by porcelain",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal hex nut 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal conductor 1",
+      "label": "lug fastening",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top terminal porcelain 1",
+      "b": "TP_ELECTROLYZER_V01 | rectifier cast enclosure",
+      "label": "rectifier terminal support",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top conductor 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top terminal porcelain 1",
+      "label": "insulated rectifier conductor",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier bus rise 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top conductor 1",
+      "label": "power entry lug",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier bus rise 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 1",
+      "label": "supported bus joint",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal hex nut 1",
+      "label": "cell power terminal contact",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 1",
+      "b": "TP_ELECTROLYZER_V01 | busbar insulated bridge stud -0.62",
+      "label": "bridge-supported busbar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal insulated seat 2",
+      "b": "TP_ELECTROLYZER_V01 | top gas collector closure 2",
+      "label": "insulated cell terminal mounted to head",
+      "gap_tiles": 1.1920928955078125e-07,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal conductor 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal insulated seat 2",
+      "label": "conductor retained by porcelain",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal hex nut 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal conductor 2",
+      "label": "lug fastening",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top terminal porcelain 2",
+      "b": "TP_ELECTROLYZER_V01 | rectifier cast enclosure",
+      "label": "rectifier terminal support",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top conductor 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top terminal porcelain 2",
+      "label": "insulated rectifier conductor",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier bus rise 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top conductor 2",
+      "label": "power entry lug",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier bus rise 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 2",
+      "label": "supported bus joint",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal hex nut 2",
+      "label": "cell power terminal contact",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 2",
+      "b": "TP_ELECTROLYZER_V01 | busbar insulated bridge stud 0.62",
+      "label": "bridge-supported busbar",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub -1",
+      "b": "TP_ELECTROLYZER_V01 | gas valve operating spindle -1",
+      "label": "handwheel hub retained on spindle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (-1, 'X')",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub -1",
+      "label": "spoke at hub",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (-1, 'X')",
+      "b": "TP_ELECTROLYZER_V01 | gas isolation handwheel -1",
+      "label": "spoke at rim",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (-1, 'Z')",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub -1",
+      "label": "spoke at hub",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (-1, 'Z')",
+      "b": "TP_ELECTROLYZER_V01 | gas isolation handwheel -1",
+      "label": "spoke at rim",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub 1",
+      "b": "TP_ELECTROLYZER_V01 | gas valve operating spindle 1",
+      "label": "handwheel hub retained on spindle",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (1, 'X')",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub 1",
+      "label": "spoke at hub",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (1, 'X')",
+      "b": "TP_ELECTROLYZER_V01 | gas isolation handwheel 1",
+      "label": "spoke at rim",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (1, 'Z')",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub 1",
+      "label": "spoke at hub",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (1, 'Z')",
+      "b": "TP_ELECTROLYZER_V01 | gas isolation handwheel 1",
+      "label": "spoke at rim",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | upright conduit clamp foot",
+      "b": "TP_ELECTROLYZER_V01 | upright edge flange (1.13, -1.0, -0.055)",
+      "label": "conduit clamp grounded to upright",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | upright conduit clamp foot",
+      "b": "TP_ELECTROLYZER_V03 | upright conduit retaining hoop",
+      "label": "clamp foot to hoop",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (-0.68, 0.68)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (-0.68, 1.08)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (-0.68, 1.48)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (0.68, 0.68)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (0.68, 1.08)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (0.68, 1.48)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | red upright web (-1.13, -1.0)",
+      "b": "TP_ELECTROLYZER_V01 | column shoe (-1.13, -1.0)",
+      "label": "column seated in shoe",
+      "gap_tiles": 8.940696716308594e-08,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | red upright web (-1.13, -1.0)",
+      "b": "TP_ELECTROLYZER_V01 | overhead transverse web -1.0",
+      "label": "column carries service bridge",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | red upright web (-1.13, 1.0)",
+      "b": "TP_ELECTROLYZER_V01 | column shoe (-1.13, 1.0)",
+      "label": "column seated in shoe",
+      "gap_tiles": 8.940696716308594e-08,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | red upright web (-1.13, 1.0)",
+      "b": "TP_ELECTROLYZER_V01 | overhead transverse web 1.0",
+      "label": "column carries service bridge",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | red upright web (1.13, -1.0)",
+      "b": "TP_ELECTROLYZER_V01 | column shoe (1.13, -1.0)",
+      "label": "column seated in shoe",
+      "gap_tiles": 8.940696716308594e-08,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | red upright web (1.13, -1.0)",
+      "b": "TP_ELECTROLYZER_V01 | overhead transverse web -1.0",
+      "label": "column carries service bridge",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | red upright web (1.13, 1.0)",
+      "b": "TP_ELECTROLYZER_V01 | column shoe (1.13, 1.0)",
+      "label": "column seated in shoe",
+      "gap_tiles": 8.940696716308594e-08,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | red upright web (1.13, 1.0)",
+      "b": "TP_ELECTROLYZER_V01 | overhead transverse web 1.0",
+      "label": "column carries service bridge",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | cell bottom pressure closure 1",
+      "b": "TP_ELECTROLYZER_V01 | cell bearing plinth 1",
+      "label": "cell supported on bearing plinth",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | cell bearing plinth 1",
+      "b": "TP_ELECTROLYZER_V01 | ferrocrete equipment footing",
+      "label": "cell plinth on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | electrode chamber shell 1",
+      "b": "TP_ELECTROLYZER_V01 | cell bottom pressure closure 1",
+      "label": "closed chamber seated on base",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | electrode chamber shell 1",
+      "b": "TP_ELECTROLYZER_V01 | top gas collector closure 1",
+      "label": "cell head seated on chamber",
+      "gap_tiles": 1.1920928955078125e-07,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | cell bottom pressure closure 2",
+      "b": "TP_ELECTROLYZER_V01 | cell bearing plinth 2",
+      "label": "cell supported on bearing plinth",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | cell bearing plinth 2",
+      "b": "TP_ELECTROLYZER_V01 | ferrocrete equipment footing",
+      "label": "cell plinth on footing",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | electrode chamber shell 2",
+      "b": "TP_ELECTROLYZER_V01 | cell bottom pressure closure 2",
+      "label": "closed chamber seated on base",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | electrode chamber shell 2",
+      "b": "TP_ELECTROLYZER_V01 | top gas collector closure 2",
+      "label": "cell head seated on chamber",
+      "gap_tiles": 1.1920928955078125e-07,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | console mounting pedestal",
+      "b": "TP_ELECTROLYZER_V01 | console seated foot",
+      "label": "console pedestal grounded",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | console seated foot",
+      "b": "TP_ELECTROLYZER_V01 | front rail clear of water mouth 0.4",
+      "label": "console foot on front skid",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | front service cogitator / tp.mh7.cogitator-console | TP_MH7_V14 | console / service interface casting",
+      "b": "TP_ELECTROLYZER_V01 | console mounting pedestal",
+      "label": "donor console case seated on pedestal",
+      "gap_tiles": 0.003827039385214448,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | rectifier cast enclosure",
+      "b": "TP_ELECTROLYZER_V01 | rectifier foundation pier -0.61",
+      "label": "rectifier on foundation pier",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | rectifier foundation pier -0.61",
+      "b": "TP_ELECTROLYZER_V01 | ferrocrete equipment footing",
+      "label": "rectifier pier on foundation",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | rectifier cast enclosure",
+      "b": "TP_ELECTROLYZER_V01 | rectifier foundation pier 0.61",
+      "label": "rectifier on foundation pier",
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "a": "TP_ELECTROLYZER_V01 | rectifier foundation pier 0.61",
+      "b": "TP_ELECTROLYZER_V01 | ferrocrete equipment footing",
+      "label": "rectifier pier on foundation",
+      "gap_tiles": 0.0,
+      "passed": true
+    }
+  ],
+  "scope": "evaluated triangle surface contact/nearest-vertex distance; load-path assembly check, not structural simulation",
+  "failures": []
+}

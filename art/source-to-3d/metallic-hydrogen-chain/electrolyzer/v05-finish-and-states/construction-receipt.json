@@ -1,0 +1,285 @@
+{
+  "status": "candidate_native; state and exported-image review pending",
+  "revision": "V05 working/standby states",
+  "source_sha256": "b175232929bcd38ab2ff79261460ea226d4e162f99e44a5a6383dc26b780615c",
+  "native_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+  "surface_assignments": [
+    {
+      "object": "TP_ELECTROLYZER_V01 | electrode chamber shell 1",
+      "material": "TP Electrolyzer V04 | cell-1-machined-wrap",
+      "uv": "circumference/height",
+      "plan": "Closed steel cell wrap: circumferential machining, seated-band contact dirt at actual .55/1.04/1.81 heights, restrained condensate beneath actual front window. Cylindrical UVs; no lettering."
+    },
+    {
+      "object": "TP_ELECTROLYZER_V01 | electrode chamber shell 2",
+      "material": "TP Electrolyzer V04 | cell-2-machined-wrap",
+      "uv": "circumference/height",
+      "plan": "Closed steel cell wrap: circumferential machining, seated-band contact dirt at actual .55/1.04/1.81 heights, restrained condensate beneath actual front window. Cylindrical UVs; no lettering."
+    },
+    {
+      "object": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "material": "TP Electrolyzer V04 | rectifier-retained-oxide-cover",
+      "uv": "cover X/Z",
+      "plan": "Oxide red rectifier service cover with edge rub and deposits only at six actual retaining heads. Cover-local X/Z UV, physical pattern scale; no decals."
+    }
+  ],
+  "maps": [
+    {
+      "file": "textures\\cell-1-machined-wrap-albedo.png",
+      "sha256": "b1be2c31f042ec5e3caea30aa0dd09c90fbf9e5b94a72195749af7f118f4c3ae",
+      "color_space": "sRGB"
+    },
+    {
+      "file": "textures\\cell-1-machined-wrap-orm.png",
+      "sha256": "a2b742b051763c63b64f79da5c9a44c9e2b986bb464b6f22f47709612d40a989",
+      "color_space": "Non-Color"
+    },
+    {
+      "file": "textures\\cell-1-machined-wrap-normal.png",
+      "sha256": "915b1145724ac1fbf5769f6f58a6a101526c625255caabeea0e2bddf5ee4b879",
+      "color_space": "Non-Color"
+    },
+    {
+      "file": "textures\\cell-2-machined-wrap-albedo.png",
+      "sha256": "a03276aaea6b8826e7f1380f92c4263610b2f80dbb564699e0871586c12a4ff7",
+      "color_space": "sRGB"
+    },
+    {
+      "file": "textures\\cell-2-machined-wrap-orm.png",
+      "sha256": "eedf608eedb0eb02e26b72774086f61d42ad10d05c0be6c474568cca00ffc537",
+      "color_space": "Non-Color"
+    },
+    {
+      "file": "textures\\cell-2-machined-wrap-normal.png",
+      "sha256": "28389d3cac9529e02f34afeab8ad375c1e74c2dbf33dafbc74b9b1ad8d6e64d0",
+      "color_space": "Non-Color"
+    },
+    {
+      "file": "textures\\rectifier-retained-oxide-cover-albedo.png",
+      "sha256": "5a34a15bbcbe6f64a6018dc4fd57b2100cbce597be8b322657639c6ce03e123f",
+      "color_space": "sRGB"
+    },
+    {
+      "file": "textures\\rectifier-retained-oxide-cover-orm.png",
+      "sha256": "b4b9680f979363c0f012d040e948ffbb49d6290568257f8ea8df14b6382615af",
+      "color_space": "Non-Color"
+    },
+    {
+      "file": "textures\\rectifier-retained-oxide-cover-normal.png",
+      "sha256": "0a7bac3591786f642d663d52eaf19350ed11db4be465bf64df03a80ceb396a03",
+      "color_space": "Non-Color"
+    }
+  ],
+  "contacts": [
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal insulated seat 1",
+      "b": "TP_ELECTROLYZER_V01 | top gas collector closure 1",
+      "label": "insulated cell terminal mounted to head"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal conductor 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal insulated seat 1",
+      "label": "conductor retained by porcelain"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal hex nut 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal conductor 1",
+      "label": "lug fastening"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top terminal porcelain 1",
+      "b": "TP_ELECTROLYZER_V01 | rectifier cast enclosure",
+      "label": "rectifier terminal support"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top conductor 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top terminal porcelain 1",
+      "label": "insulated rectifier conductor"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier bus rise 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top conductor 1",
+      "label": "power entry lug"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier bus rise 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 1",
+      "label": "supported bus joint"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 1",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal hex nut 1",
+      "label": "cell power terminal contact"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 1",
+      "b": "TP_ELECTROLYZER_V01 | busbar insulated bridge stud -0.62",
+      "label": "bridge-supported busbar"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal insulated seat 2",
+      "b": "TP_ELECTROLYZER_V01 | top gas collector closure 2",
+      "label": "insulated cell terminal mounted to head"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal conductor 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal insulated seat 2",
+      "label": "conductor retained by porcelain"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal hex nut 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal conductor 2",
+      "label": "lug fastening"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top terminal porcelain 2",
+      "b": "TP_ELECTROLYZER_V01 | rectifier cast enclosure",
+      "label": "rectifier terminal support"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top conductor 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top terminal porcelain 2",
+      "label": "insulated rectifier conductor"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier bus rise 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier top conductor 2",
+      "label": "power entry lug"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | rectifier bus rise 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 2",
+      "label": "supported bus joint"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 2",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | cell terminal hex nut 2",
+      "label": "cell power terminal contact"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | insulated cell bus feed 2",
+      "b": "TP_ELECTROLYZER_V01 | busbar insulated bridge stud 0.62",
+      "label": "bridge-supported busbar"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub -1",
+      "b": "TP_ELECTROLYZER_V01 | gas valve operating spindle -1",
+      "label": "handwheel hub retained on spindle"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (-1, 'X')",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub -1",
+      "label": "spoke at hub"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (-1, 'X')",
+      "b": "TP_ELECTROLYZER_V01 | gas isolation handwheel -1",
+      "label": "spoke at rim"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (-1, 'Z')",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub -1",
+      "label": "spoke at hub"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (-1, 'Z')",
+      "b": "TP_ELECTROLYZER_V01 | gas isolation handwheel -1",
+      "label": "spoke at rim"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub 1",
+      "b": "TP_ELECTROLYZER_V01 | gas valve operating spindle 1",
+      "label": "handwheel hub retained on spindle"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (1, 'X')",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub 1",
+      "label": "spoke at hub"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (1, 'X')",
+      "b": "TP_ELECTROLYZER_V01 | gas isolation handwheel 1",
+      "label": "spoke at rim"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (1, 'Z')",
+      "b": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel seated hub 1",
+      "label": "spoke at hub"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | handwheel cross spoke (1, 'Z')",
+      "b": "TP_ELECTROLYZER_V01 | gas isolation handwheel 1",
+      "label": "spoke at rim"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | upright conduit clamp foot",
+      "b": "TP_ELECTROLYZER_V01 | upright edge flange (1.13, -1.0, -0.055)",
+      "label": "conduit clamp grounded to upright"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V03 | upright conduit clamp foot",
+      "b": "TP_ELECTROLYZER_V03 | upright conduit retaining hoop",
+      "label": "clamp foot to hoop"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (-0.68, 0.68)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (-0.68, 1.08)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (-0.68, 1.48)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (0.68, 0.68)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (0.68, 1.08)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening"
+    },
+    {
+      "a": "FMPL_PROCESS | TP_ELECTROLYZER_V04 | cover retained hex (0.68, 1.48)",
+      "b": "TP_ELECTROLYZER_V01 | rectifier service cover",
+      "label": "rectifier cover fastening"
+    }
+  ],
+  "pending": [
+    "independent contacts/route/export regression",
+    "actual closeup/front/rear/clay review",
+    "motion capture",
+    "native prototype"
+  ],
+  "states": {
+    "idle": [
+      0
+    ],
+    "working": [
+      1,
+      13,
+      25,
+      37,
+      49,
+      61,
+      73,
+      85
+    ]
+  },
+  "clock": {
+    "source_fps": 24,
+    "working_frames": [
+      1,
+      97
+    ],
+    "cycle_seconds": 4
+  },
+  "motion": "16 restrained gas tracers rise with concealed wrap; standby has no bubbles and steady low green bars"
+}

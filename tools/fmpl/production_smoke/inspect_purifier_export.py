@@ -40,6 +40,9 @@ def main():
     background=(list(bg.inputs['Color'].default_value),float(bg.inputs['Strength'].default_value)) if bg else ([.1,.1,.1,1.],1.)
     view={k:getattr(s.view_settings,k) for k in ('view_transform','look','exposure','gamma')}
     bpy.ops.wm.read_factory_settings(use_empty=True); bpy.ops.import_scene.gltf(filepath=str(glb)); s=bpy.context.scene; s.frame_set(25)
+    if args.generic_native_camera:
+        from electrolyzer_state_clips import activate_imported_clip
+        if activate_imported_clip(s,'working'):s.frame_set(24)
     meshes=[o for o in s.objects if o.type=='MESH']; imported_bounds=bounds(meshes)
     triangles=0; degenerates=0; nonfinite=0; missing=[]
     for ob in meshes:
