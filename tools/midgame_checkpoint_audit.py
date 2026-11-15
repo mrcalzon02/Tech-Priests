@@ -160,6 +160,26 @@ def validate_smoke(summary: dict) -> None:
         raise ValueError("Missing worker diagnostic record")
 
 
+def factory_objective(summary: dict) -> dict:
+    """Separate the actual factory goal from successful observer execution."""
+    blockers = []
+    if (summary.get("last_elapsed") != 216000
+            or not set(MARKS).issubset(summary.get("marks", []))):
+        blockers.append("full-native-checkpoint-sequence-incomplete")
+    paired = summary.get("last_paired_priests")
+    if _finite_count(0 if paired is None else paired) < 3:
+        blockers.append("three-physical-priest-pairs-incomplete")
+    flows = summary.get("last_science_spm") or {}
+    for name in PACKS[:3]:
+        if _finite_count(flows.get(name, 0)) < 5:
+            blockers.append(name + "-below-5-spm")
+    if _finite_count(summary.get("last_research_finishes", 0)) < 1:
+        blockers.append("no-native-research-completion")
+    return {"accepted": not blockers, "target_spm": 5,
+            "observed_spm": flows, "blockers": blockers,
+            "last_elapsed": summary.get("last_elapsed")}
+
+
 def self_test() -> None:
     with tempfile.TemporaryDirectory(prefix="tp-midgame-checkpoint-audit-") as td:
         root = Path(td)
@@ -203,6 +223,18 @@ def self_test() -> None:
         assert summary["last_science_spm"][PACKS[0]] == 0
         assert summary["last_power_readiness"]["powered_labs"] == 0
         assert summary["last_power_readiness"]["blocker"] == "no-physical-generator"
+        assert not factory_objective(summary)["accepted"]
+        full = dict(summary, marks=list(MARKS), last_elapsed=216000,
+                    last_paired_priests=3, last_research_finishes=1,
+                    last_science_spm={name: 5 for name in PACKS})
+        assert factory_objective(full)["accepted"]
+        for key, value in (("last_elapsed", 180000),
+                           ("last_paired_priests", 2),
+                           ("last_research_finishes", 0)):
+            assert not factory_objective(dict(full, **{key: value}))["accepted"]
+        for name in PACKS[:3]:
+            flows = dict(full["last_science_spm"], **{name: 4.99})
+            assert not factory_objective(dict(full, last_science_spm=flows))["accepted"]
         p = root / "checkpoint-018000.json"
         value = json.loads(p.read_text(encoding="utf-8"))
         value["visual_source"] = "synthetic"
@@ -221,17 +253,24 @@ def main() -> int:
     parser.add_argument("directory", nargs="?", type=Path)
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--smoke", action="store_true")
+    parser.add_argument("--require-factory-objective", action="store_true")
     args = parser.parse_args()
     if args.self_test:
         self_test()
         return 0
     if args.directory is None:
         parser.error("directory required unless --self-test")
+    if args.smoke and args.require_factory_objective:
+        parser.error("smoke cannot accept the full factory objective")
     try:
         summary = inspect(args.directory,
                           (0, 9000, 18000) if args.smoke else ())
         if args.smoke:
             validate_smoke(summary)
+        if args.require_factory_objective:
+            objective = factory_objective(summary)
+            print("MIDGAME_FACTORY_OBJECTIVE " + json.dumps(objective, sort_keys=True))
+            return 0 if objective["accepted"] else 1
     except (OSError, ValueError) as error:
         print("FAIL checkpoint evidence: " + str(error))
         return 1

@@ -1266,6 +1266,9 @@ def main() -> int:
     ap.add_argument("--midgame-smoke", action="store_true",
                     help="Use 18,060 native ticks to audit the three earliest "
                          "bootstrap checkpoints; never accept the factory goal")
+    ap.add_argument("--require-factory-objective", action="store_true",
+                    help="Midgame science: fail unless all three sciences reach "
+                         "5 native SPM at 216000 ticks with actual research completion")
     ap.add_argument("--robot-storage-only", action="store_true",
                     help="Native full Magos inventory refusal and recovery; reload remains a separate gate")
     ap.add_argument("--rail-connected-smoke", action="store_true",
@@ -1284,6 +1287,8 @@ def main() -> int:
         ap.error("Specify --factorio /path/to/factorio for the active mod version")
     if args.midgame_smoke and args.scenario != "midgame-science":
         ap.error("--midgame-smoke is available only for midgame-science")
+    if args.require_factory_objective and (args.scenario != "midgame-science" or args.midgame_smoke):
+        ap.error("--require-factory-objective requires full midgame-science")
     if args.robot_storage_only and args.scenario != "remote-robot-acquisition":
         ap.error("--robot-storage-only requires remote-robot-acquisition")
     if args.rail_connected_smoke and args.scenario != "remote-rail-acquisition":
@@ -1685,6 +1690,14 @@ def main() -> int:
               str(report["all_three_sciences_produced_at_end"]) +
               " advanced_chemical_output=" +
               str(report["chemical_science_produced_at_end"]))
+        if args.require_factory_objective:
+            from midgame_checkpoint_audit import factory_objective
+            objective = factory_objective(partial)
+            (output / "science-factory-objective.json").write_text(
+                json.dumps(objective, indent=2, sort_keys=True), encoding="utf-8")
+            print("MIDGAME_FACTORY_OBJECTIVE " + json.dumps(objective, sort_keys=True))
+            if not objective["accepted"]:
+                return 1
     fatal = scenario["prefix"] + " FAIL "
     if benchmark or fatal in contents or scenario["prefix"] + " " + scenario["pass"] not in contents:
         print("FAIL scenario=" + args.scenario + " exit=" + str(benchmark) +

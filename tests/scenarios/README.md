@@ -146,3 +146,17 @@ the final `MIDGAME_OBJECTIVE` marker and summary.json truthfully report
 those independent measured manufacturing goals. Continued development
 must address unbuilt machines, missing fuel/power, ingredient feeds,
 research selection, layout and fluid-routing failures.
+
+Use `--require-factory-objective` on the full midgame runner when validating
+factory behavior. It returns failure unless the final native checkpoint reaches
+5 SPM for red, green and military science simultaneously, all three priest pairs
+exist, all nine checkpoints are present, and a real research completion occurred.
+The default observer and the early smoke remain diagnostic. An already captured
+run can be checked without rerunning Factorio:
+
+```sh
+python3 tools/midgame_checkpoint_audit.py /path/to/checkpoints --require-factory-objective
+```
+
+The strict full runner also writes `science-factory-objective.json`, including
+each unmet production requirement. Stored fixture supplies never satisfy it.
