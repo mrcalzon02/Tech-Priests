@@ -715,3 +715,17 @@ The authored model/static GLB, 18 PBR maps, 7+7 source poses, exact atlas cells,
 ## 2026-11-13 — local machine art integration
 
 V24 condenser scale/registration and Beach Pump V12 have combined current-source graphical/runtime proof in docs/art/local-machine-alignment/integrated-source-validation.json. Alignment accepted by the owner. Underwater sprite separation remains an open visual defect. Next art target: resume timber workbench V7 finish, measure its native eight-second clock, independently inspect animated interchange, preserve the current burner/collision/recipe interfaces, and promote only after real capture review.
+
+## 2026-11-14 - Requested hostile planetary seeding
+
+- Reproduce focused native proof: python tools/run_enemy_planetary_probe.py with a local Factorio 2.1 installation and Space Age. Disposable profile and unedited logs: build/enemy-planets-probe/.
+- Accepted: four-planet placement, untouched Fulgora/Vulcanus terrain, peaceful and occupied-site rejection, duplicate and cleared-site protection, runtime disabling, actual exploration event delivery, create/save/load, ranged damage and recruitment after load. Fixed seed 4242; 2,200 loaded ticks.
+- Before release: real existing-save upgrade coverage, player travel/charting playthrough on priority planets, long-term combat/population balance and ordinary release gates. No installed package or gameplay save changed.
+
+Accepted additional coverage: native chart-event delivery on previously generated terrain, using an engine-created player in --test-save mode. Benchmark execution skips chart processing and cannot prove this path.
+
+## Owner clarification - working hostile colonies
+
+The current seeder creates normal bound station/priest clusters with finite starter machinery, stock and ore, on a separate hostile force per planet. Spawner-only proof above is superseded. Reproduce with python tools/run_enemy_planetary_probe.py. The current fixture checks original pair identity, structural seed contents, native manufacturing and actual own-force research progress after load; long-term growth and planetary resource sustainability still require endurance evidence.
+
+Accepted current focused result: all four colonies retained ordinary station/priest pairs and made real own-force manufacturing and paid research progress in a separate native 1,201-tick loaded session. Long-term growth, completed construction chains and natural-terrain full-cluster frequency remain unverified. The earlier longer run timed out; it is not a pass.

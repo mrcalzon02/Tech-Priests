@@ -1,1 +1,3 @@
 build/model-completion/
+# Disposable native enemy-planet validation profile (asset junctions and saves).
+/build/enemy-planets-probe/

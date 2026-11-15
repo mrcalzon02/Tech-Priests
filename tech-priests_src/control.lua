@@ -1231,3 +1231,5 @@ do
   assert(profile and profile.install()==true,
     "[Tech-Priests] first station cold profiler unavailable")
 end
+-- Colony placement uses the shared event registry; ordinary bound priests own work.
+assert(require("scripts.core.enemy_planetary_seeding").install())
