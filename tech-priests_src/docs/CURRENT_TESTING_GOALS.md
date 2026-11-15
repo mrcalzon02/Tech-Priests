@@ -1,5 +1,11 @@
 # Current Testing Goals
 
+## 2026-11-15 - Reconnect buffered native boiler water before fuel admission
+
+Protected autonomous outlet recovery exposed a second circular wait: the rotated boiler retained 200 water but had no connected inlet. The native energy owner correctly refused fuel before a physical water connection; fluid doctrine waited for that stored water to be consumed before proposing the inlet. Original 0689 now reports a disconnected vanilla boiler water inlet as a missing connection even with retained water. Other buffered recipe inputs retain their existing behavior. The observer neither drains nor inserts fluid and original paid 0691/0338 still constructs the pipe.
+
+The new regression retains the 200-water buffer and proves a valid physical water proposal without mutation. All 66 selected Lua groups and seven Python tests pass. The protected native continuation independently published its boiler-water proposal at tick 73480 while the original steam route continued. The route has 21 paid tiles; one-piece supply trips remain a measured throughput concern. The previous genuine checkpoint at tick 73048 protects actual mined/returned wood, native boiler rotation and paid pipe progress. Current continuation native-water-inlet-recovery-1288 is autonomous and remains open through real power and science; no completion is inferred from discovery alone.
+
 ## 2026-11-15 - Autonomous recovery of an unusable native steam outlet
 
 The fourth fresh-arena faction could not power its lab assembler: its paid boiler faced a two-tile pocket bounded by its own footprint, shore and the pipe planner's station interior. New boiler placement now requires steam escape inside that same interior. When an independent cold, unautomated boiler has no steam route, the original fluid planner may prove a native half-turn route and publish a prerequisite to the original construction owner. It refuses maintenance mode, foreign orders, other cargo, burning fuel and attached inserter/loader ownership. No agent supplies actor tasks or world mutations.

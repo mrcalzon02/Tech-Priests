@@ -103,7 +103,21 @@ local function source_or_sink(pair,machine,fluid,direction)
    if eligible and not wrong then for _,target in ipairs(candidate.free_targets or{})do local ok=M.validate_endpoint(e,candidate.index,target,fluid,records,direction=="output");if ok and buildable_pipe_target(pair,target)then local score=dist_sq(e.position,machine.position)-(direction=="input"and math.min(amount,100000)*.001 or math.min(free,100000)*.001);if not best or score<best.score then best={entity=e,entity_name=e.name,entity_unit=e.unit_number,fluidbox_index=candidate.index,segment_id=candidate.segment_id,interfaces={target},amount=amount,free_capacity=free,score=score}end end end end
   end end end;return best
 end
-local function report_state(records)local missing,blocked={},{};for _,rec in ipairs(records)do if rec.requirement and rec.requirement.name then local amount=tonumber(rec.contents and rec.contents[rec.requirement.name])or 0;if rec.direction=="input"and not rec.connected and amount<=.001 then missing[#missing+1]=rec elseif rec.direction=="output"and not rec.connected and amount>.001 then blocked[#blocked+1]=rec end end end;return missing,blocked end
+local function report_state(records,machine)
+ local missing,blocked={},{}
+ for _,rec in ipairs(records)do if rec.requirement and rec.requirement.name then
+  local amount=tonumber(rec.contents and rec.contents[rec.requirement.name])or 0
+  -- Native boiler fuel admission requires a connected water inlet. Retained
+  -- water after rotation cannot discharge that physical connection duty:
+  -- waiting for it to be consumed would wait forever on the fuel owner.
+  local boiler_water=machine.name=="boiler"and machine.type=="boiler"
+   and rec.requirement.name=="water"
+  if rec.direction=="input"and not rec.connected and(amount<=.001 or boiler_water)then
+   missing[#missing+1]=rec
+  elseif rec.direction=="output"and not rec.connected and amount>.001 then blocked[#blocked+1]=rec end
+ end end
+ return missing,blocked
+end
 -- 1252: boilers, generators and shoreline pumps have no craft recipe.
 -- Report their REAL fluidbox requirements to 0691's physical pipe router.
 -- This creates no water, fuel, steam, pipe, electricity or equipment.
@@ -134,7 +148,7 @@ function M.inspect_machine(pair,machine,force)
  end
  if not(inputs and outputs) then return nil,"no-recipe" end
  if#inputs==0 and#outputs==0 then return nil,"no-fluid-requirements"end
- local records=port_records(machine,inputs,outputs);local missing,blocked=report_state(records);local report={version=M.version,tick=now(),read_only=true,machine=machine,machine_name=machine.name,machine_unit=machine.unit_number,station_unit=station_unit(pair),recipe_name=recipe and recipe.name or basis,fluid_inputs=inputs,fluid_outputs=outputs,records=records,missing_inputs=missing,blocked_outputs=blocked,context_identity={surface_index=machine.surface.index,force_index=machine.force.index,machine_unit=machine.unit_number}};if key then r.reports[key]=report end;stat("machines-inspected");return report,"inspected"
+ local records=port_records(machine,inputs,outputs);local missing,blocked=report_state(records,machine);local report={version=M.version,tick=now(),read_only=true,machine=machine,machine_name=machine.name,machine_unit=machine.unit_number,station_unit=station_unit(pair),recipe_name=recipe and recipe.name or basis,fluid_inputs=inputs,fluid_outputs=outputs,records=records,missing_inputs=missing,blocked_outputs=blocked,context_identity={surface_index=machine.surface.index,force_index=machine.force.index,machine_unit=machine.unit_number}};if key then r.reports[key]=report end;stat("machines-inspected");return report,"inspected"
 end
 local function proposals_for_report(pair,report)
  local inputs,outputs={},{};for _,rec in ipairs(report.missing_inputs or{})do local fluid=rec.requirement.name;local source=source_or_sink(pair,report.machine,fluid,"input");if source then local targets={};for _,target in ipairs(rec.free_targets or{})do local ok=M.validate_endpoint(report.machine,rec.index,target,fluid,report.records,false);if ok then targets[#targets+1]=target end end;if#targets>0 then inputs[#inputs+1]={version=M.version,tick=now(),expires_tick=now()+M.proposal_ttl,read_only=true,action="connect-fluid-input",direction="input",machine=report.machine,machine_name=report.machine_name,machine_unit=report.machine_unit,report_tick=report.tick,context_identity=report.context_identity,fluid=fluid,fluidbox_index=rec.index,connection_targets=targets,source=source,state="safe-source-found",port_collision_safe=true}end end end

@@ -93,6 +93,20 @@ assert(next(pump.fluidbox.get_fluid_segment_contents(1))==nil
  and next(engine.fluidbox.get_fluid_segment_contents(1))==nil,
  "dry pipe planning fabricated water or steam")
 -- A foreign/unknown boiler-type generator cannot acquire a source contract.
+local dry_box=boiler.fluidbox
+boiler.fluidbox=fluidbox({
+ {direction="input",filter="water",x=9,y=0,contents={water=200}},
+ {direction="output",filter="steam",x=13,y=0}})
+Doctrine.scan_pair(pair,true)
+local buffered_water
+for _,p in ipairs(pair.fluid_connection_proposals_0689 or{})do
+ if p.machine==boiler and p.fluid=="water"then buffered_water=p end
+end
+assert(buffered_water and Doctrine.validate_proposal(pair,buffered_water),
+ "retained boiler water stranded inlet reconstruction behind fuel admission")
+assert(boiler.fluidbox.get_fluid_segment_contents(1).water==200,
+ "read-only connection planning consumed the real water buffer")
+boiler.fluidbox=dry_box
 local unknown=Doctrine.inspect_machine(pair,foreign,true)
 assert(unknown==nil,"unknown dry generator received fabricated steam authority")
 local spare={valid=true,unit_number=25,name="offshore-pump",type="offshore-pump",
