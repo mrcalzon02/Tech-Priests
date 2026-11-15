@@ -16,6 +16,9 @@ require("prototypes.proxy_ammo_capacity_0739")
 require("prototypes.martian_stone_cache")
 require("prototypes.conclave_center_0558")
 require("prototypes.bunker_autocannon").register("tech-priests")
+require("prototypes.bunker_family").register("tech-priests")
+require("prototypes.bunker_bullet_weapons").register("tech-priests")
+require("prototypes.bunker_twin_cannon").register("tech-priests")
 
 if mods["space-age"] then
   require("prototypes.compatibility.space-age")
