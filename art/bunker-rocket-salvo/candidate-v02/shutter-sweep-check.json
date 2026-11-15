@@ -1,0 +1,13 @@
+{
+  "status": "PASS_SAMPLED_MESH_SWEEP",
+  "native_sha256": "3054dd0caa90d2c9db2449d8b0ee21b0a989ccb02af61099946347984a2c01c4",
+  "samples": 481,
+  "step_frames": 0.5,
+  "moving_meshes": 10,
+  "obstacle_meshes": 230,
+  "narrow_phase_pairs": 7976,
+  "collision_count": 0,
+  "collisions": [],
+  "exempt_contact": "Only the two intended transverse hinge pins",
+  "scope": "Evaluated triangle intersections at every half-frame; not a continuous collision solver or a native game test"
+}

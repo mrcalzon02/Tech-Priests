@@ -1,0 +1,28 @@
+{
+  "status": "MODEL_CANDIDATE_REVIEW_PENDING",
+  "base_included": false,
+  "socket": [
+    0,
+    0,
+    1.7
+  ],
+  "cells": 6,
+  "pod_layout": "Two triangular three-cell packs with trunnions",
+  "owner_agreed": "Staggered rocket salvo, then visible reload",
+  "provisional_shot_ticks": [
+    0,
+    10,
+    20,
+    30,
+    40,
+    50
+  ],
+  "provisional_recycle_ticks": 190,
+  "native_ammo_plan": [
+    "rocket",
+    "explosive-rocket"
+  ],
+  "runtime_implemented": false,
+  "visual_approval": false,
+  "native_sha256": "3054dd0caa90d2c9db2449d8b0ee21b0a989ccb02af61099946347984a2c01c4"
+}

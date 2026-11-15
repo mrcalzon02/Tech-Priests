@@ -1,0 +1,50 @@
+{
+  "status": "TECHNICAL_CANDIDATE_OWNER_REVIEW_PENDING",
+  "owner_visual_approval": false,
+  "native_runtime_implemented": false,
+  "native_sha256": "34e139adb7f175553cb65f9a914f55fc7c4414db0ac620246025b22c6d38b847",
+  "glb_sha256": "35c592956942ee3cb31dfb461fb9ca369bb030133b67f77204a67198db658d0b",
+  "renders_viewed": [
+    "import-quarter.png",
+    "import-rear.png",
+    "import-clay.png",
+    "reload-study.png"
+  ],
+  "render_sha256": {
+    "front.png": "b653352ef4c393308652cc4895936e97c07d5b52e2cf5a531f3c5b7d0c898ec5",
+    "rear.png": "25331a8f42ee929dad0e69d16611aa7f70659e52174de6f52c2f3603b6873332",
+    "quarter.png": "bccea435275636ef71672352ecfa2a3caac796efa3dd5775f0b0d963506784ee",
+    "side.png": "f662dbeb3d968676796dd1797e5409f229889af5ff9ae47945b9e0a11b23d865",
+    "reload-study.png": "d51b82aa485b2bad67aadc4000a32511a4594a9242081e2dde0c723b37480266",
+    "import-front.png": "51e62b617c8b2519023338cedbb3ed015158049d0fc54f38a3a36f3844e9b170",
+    "import-rear.png": "141e03f1de72a8a27401c3eb28de287b1bc413e55731ccd20458156c54ea9bc2",
+    "import-quarter.png": "29ca82ca1519f29889c33399328ec3c3e17e5f11b532574626a0821b8104a878",
+    "import-clay.png": "47f3fddf943a3a8c6bd5581c2c52a5d4d0ba3e94698b282f1f8d7ef2b923173f"
+  },
+  "finish_reference_sha256": "9e586d24bf84b8019dd99154b632d03af60d4915a592ca233847583a5c5fd1fc",
+  "internal_scores_out_of_5": {
+    "distinct_pod_silhouette": 4,
+    "mechanical_readability": 3,
+    "surface_readability": 3,
+    "family_consistency": 4
+  },
+  "review": "Separate three-cell pods and loaded noses read clearly. Rear triangular cassette retainers, guide rails and hinge axes are visible. Red removable shields, dark launch tubes and steel fittings retain the family finish. Detail is strongest at close range; gameplay-size readability and all moving-part collisions are not yet accepted.",
+  "source_checks": {
+    "frames": 241,
+    "packed_used_images": 12,
+    "triangles": 45100,
+    "degenerate_triangles": 0,
+    "meshes_with_uv": 232
+  },
+  "retained_failures": [
+    {
+      "candidate": "model-v1",
+      "failure": "96 degenerate louvre triangles; repaired edge break"
+    },
+    {
+      "candidate": "model-v3",
+      "failure": "Cassette minimum Z 1.655 at frame 116; shorter drop now stays above socket"
+    }
+  ],
+  "next_gate": "Owner model review, then detailed motion/clearance and native ammo/cadence pilot"
+}

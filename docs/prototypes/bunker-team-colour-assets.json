@@ -1,0 +1,86 @@
+{
+  "status": "PASS_NATIVE_GAME_RENDER",
+  "scope": "All six bunker weapons share the four original corner-stanchion masks. Red armour, concrete, equipment, glow and shadow are excluded.",
+  "selection": {
+    "status": "COVERAGE_RENDERED",
+    "source_sha256": "f5a4453c1493da65e20f7903fe58de5edb7493c89a5d3995a6701f1b5abf88df",
+    "objects": [
+      "06_corner_armor_buttress_WS",
+      "06_corner_armor_buttress_WN",
+      "06_corner_armor_buttress_ES",
+      "06_corner_armor_buttress_EN"
+    ],
+    "mask_scope": "Four corner stanchions only; concrete feet and red armour excluded",
+    "camera_ortho": 5.047421455383301,
+    "camera_elevation": 45
+  },
+  "files": [
+    {
+      "direction": "north",
+      "mask": "base-north-team-mask.png",
+      "sha256": "6114bce6df55261e77064cd9169000641061ee3598b31dcca78e1d04e1e01092",
+      "source_base_sha256": "a42b36abbbfb151c6e4e70ded917ddb71464475fc92d2e1085aa4918918bbc48",
+      "coverage_sha256": "f740ff940bece35f08fef1f4866f5c9a50c3fbe09efea1770fdcfe38c7543975",
+      "covered_pixels": 7518,
+      "bounds": [
+        107,
+        190,
+        405,
+        434
+      ]
+    },
+    {
+      "direction": "east",
+      "mask": "base-east-team-mask.png",
+      "sha256": "ed946d66b8178f9b73b64b850cbacefcd7b68ccbe6d985843fbf8b4ddaef6e6f",
+      "source_base_sha256": "6e37217ad11a378d6a231fdc2c061f1a359dd4e45d74bbac9306b256391347f3",
+      "coverage_sha256": "d5b2c2ec224bafe3f955f3ee59990933e54a69fc07af3e209c55e7ae051321b2",
+      "covered_pixels": 7754,
+      "bounds": [
+        113,
+        184,
+        399,
+        438
+      ]
+    },
+    {
+      "direction": "south",
+      "mask": "base-south-team-mask.png",
+      "sha256": "9c83cb4b9fcae1126897d22ad66f3e61e31b200a7efcb17d0033dd2b07926c36",
+      "source_base_sha256": "276faf696bf31e7c650d7971d220a30a8470e80b2392a9c4e37cfdd56d58a610",
+      "coverage_sha256": "8f5ef0506d0b0bc6ca69e491f4f151df8d255815900e8cf5ca507605e37a571c",
+      "covered_pixels": 7187,
+      "bounds": [
+        107,
+        190,
+        405,
+        434
+      ]
+    },
+    {
+      "direction": "west",
+      "mask": "base-west-team-mask.png",
+      "sha256": "2405b8a5fd6bcbbab6add22690454131e05a042d630b70a29012eeba24d90b64",
+      "source_base_sha256": "51a01eb90484e008002d5b12ff0963870b77d76d023af5dff09d15d591a3538c",
+      "coverage_sha256": "471851b0089002225edd08ef308a57f735d6428f8a20b8ad6b79765102655626",
+      "covered_pixels": 7413,
+      "bounds": [
+        113,
+        184,
+        399,
+        438
+      ]
+    }
+  ],
+  "proof_scope": "All six actual native caps and shared bases, four distinct forces/base orientations. Static appearance only; cannon mechanism capture remains in progress.",
+  "runtime_proof": {
+    "all-six-forces.png": {
+      "path": "build\\bunker-team-colour\\runtime\\user-data\\script-output\\bunker-team-colour\\all-six-forces.png",
+      "sha256": "5727221ed2fa430e19a377868513384b85771888ab3a27f852cfe2774482609a"
+    },
+    "result.json": {
+      "path": "build\\bunker-team-colour\\runtime\\user-data\\script-output\\bunker-team-colour\\result.json",
+      "sha256": "9bbbf800a7a8f32c09a0e5e3dc0864e0cda7161c217a226a390b42de8b1d4c21"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "status": "SHUTTER_REPAIR_VERIFIED",
+  "owner_visual_approval": false,
+  "native_runtime_implemented": false,
+  "native_sha256": "3054dd0caa90d2c9db2449d8b0ee21b0a989ccb02af61099946347984a2c01c4",
+  "glb_sha256": "bdb779b606a8c7ec26d761d3100dd9bde7ec48ed3460c006d3b06b3d127fea6b",
+  "original_frame_part_collisions": 2048,
+  "repaired_collisions": 0,
+  "samples": 481,
+  "step_frames": 0.5,
+  "views_reviewed": [
+    "clearance-094.png",
+    "clearance-140.png",
+    "clearance-196.png"
+  ],
+  "next_gate": "Native firing pilot; continue general mechanical and gameplay review"
+}

@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "native_sha256": "a68804fab71799c255d97d9cbe389b98d71a8a6cc30e887186943df0dd4d7545",
+  "casting_connected_components": 1,
+  "casting_component_vertices": [
+    1238
+  ],
+  "max_recoil": [
+    0.8999999761581421,
+    0.8999999761581421
+  ],
+  "max_mantlet_seat_radial_extent": 0.4112182998657231,
+  "socket_radius": 0.422,
+  "minimum_radial_clearance": 0.010781700134276873,
+  "fire_poses": [
+    {
+      "tick": 0,
+      "bank": 0,
+      "battery_error": 0.0
+    },
+    {
+      "tick": 45,
+      "bank": 1,
+      "battery_error": 0.0
+    },
+    {
+      "tick": 90,
+      "bank": 0,
+      "battery_error": 0.0
+    },
+    {
+      "tick": 135,
+      "bank": 1,
+      "battery_error": 0.0
+    }
+  ],
+  "unobstructed_forward_optical_centre_lines": [
+    "Optical and thermal sensor glass",
+    "Optical and thermal sensor glass.001",
+    "Optical and thermal sensor glass.002",
+    "Flank tracking camera glass",
+    "Flank tracking camera glass.001"
+  ],
+  "fixed_casting_remains_stationary": true
+}
