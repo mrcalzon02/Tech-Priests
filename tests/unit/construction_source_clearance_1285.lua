@@ -111,6 +111,43 @@ local _,why=Direct.service_pair(pair,"revoked-access")
 assert(why=="construction-source-clearance-context-changed"and mined==3 and stock==1
  and pair.order_queue_0469.current==foreign and foreign.status=="active")
 print("PASS autonomous source clearance, native custody, parent resumption and foreign-order guards")
+-- A strict lab cannot strand access to its own admitted native pipe route.
+pair.order_queue_0469.current=nil;pair.active_order_0469=nil;pair.construction_task_0338=parent
+pair.direct_acquisition_task_0336=nil;pair.construction_source_clearance_1285=nil
+pair.item_family_custody_0702=nil;parent.source_clearance_count_1285=0
+local strict={output_item="lab",strict_recipe_0647=true,facility_only_0647=true,infrastructure_first_0640=true}
+pair.emergency_craft=strict;parent.item_name="pipe";parent.entity_name="pipe";prototypes.item.pipe={}
+inv.get_item_count=function(n)return n=="pipe"and stock or 0 end
+local request={source="standard-fluid-route-0691",route_plan_id="native-steam",item_name="pipe"}
+parent.request_field="construction_request";parent.request_value=request;pair.construction_request=request
+pair.standard_fluid_route_plan_0691={id="native-steam",machine={valid=true,force=force,surface=surface},
+ remote={entity={valid=true,force=force,surface=surface}}}
+request.route_plan_id="stale";attempt();assert(not pair.direct_acquisition_task_0336 and pair.emergency_craft==strict)
+request.route_plan_id="native-steam";pair.order_queue_0469.current=foreign;pair.active_order_0469=foreign
+attempt();assert(not pair.direct_acquisition_task_0336 and foreign.status=="active")
+pair.order_queue_0469.current=nil;pair.active_order_0469=nil
+pair.active_task={};local production={kind="assignment",status="active",source="adopt-active",purpose="recipe-fanout",
+ item="lab",task=pair.active_task,priority=100}
+assert(Queue.submit(pair,production))
+local admitted=attempt()
+assert(admitted.detail=="source-access-clearance-requested"and pair.emergency_craft==strict,tostring(admitted.detail))
+assert(Builder.source_clearance_active_1285(pair)and Arbiter.action(pair).kind=="acquisition")
+Dispatcher.service_pair(pair,"strict-native-route-tree-start");game.tick=game.tick+100
+Dispatcher.service_pair(pair,"strict-native-route-tree-mined");game.tick=game.tick+5
+Dispatcher.service_pair(pair,"strict-native-route-wood-return")
+assert(mined==4 and wood==8 and stock==1 and pair.emergency_craft==strict
+ and not pair.direct_acquisition_custody_0513 and pair.construction_task_0338==parent)
+tree.valid=true;priest.position={x=0,y=0};parent.source_contact_1285=nil
+parent.source_contact_tried_1285={true,true,true,true,true,true,true,true}
+local again=attempt()
+if again.detail=="moving-source"then game.tick=game.tick+181;again=Builder.service_pair(pair,"renewed-physical-stall")end
+assert(again.detail=="source-access-clearance-requested",tostring(again.detail))
+local replacement={output_item="lab",strict_recipe_0647=true,facility_only_0647=true,infrastructure_first_0640=true}
+pair.emergency_craft=replacement
+local _,revoked=Direct.service_pair(pair,"strict-parent-replaced")
+assert(revoked=="construction-source-clearance-context-changed"and mined==4 and wood==8
+ and stock==1 and pair.emergency_craft==replacement,"clearance outlived its exact strict parent")
+print("PASS strict native fluid parent retains its recipe while original mining clears and returns actual source wood")
 
 
 

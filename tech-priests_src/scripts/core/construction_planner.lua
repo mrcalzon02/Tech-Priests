@@ -8,6 +8,7 @@
 -- Already-active physical cargo/tasks continue under their original owner.
 local Recycling0822=require("scripts.core.station_recycling_0822")
 local SteamReorientation=require("scripts.core.steam_outlet_reorientation_1288")
+local ProductionOrder1291=require("scripts.core.production_order_ownership_0514")
 local M={version="0.1.674-dev",storage_key="construction_planner",discovery_interval=233,max_pairs_per_discovery=6,move_priority=968,move_ttl=60*12,reservation_ttl=60*20,request_timeout=60*20,travel_ticks_per_tile=20,max_travel_extra_ticks=60*120,max_ground_detour_extra_ticks=60*60,pickup_reach_sq=2.56,build_reach_sq=4,return_reach_sq=2.56,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true}
 -- Original 0836 rail requests must not hold 0338 indefinitely without
 -- a real source item. The 0338 physical builder, not the observer, owns
@@ -2563,6 +2564,17 @@ local function access_parent_authorized_1285(pair,parent)
    and tonumber(kit.count)==1 and tonumber(cargo.count)==1
    and ground_cargo_count(parent)==0 or false
 end
+local function strict_fluid_access_1291(pair,parent)
+ local craft=pair.emergency_craft;local plan=pair.standard_fluid_route_plan_0691
+ local request=parent and parent.request_value
+ if not(type(craft)=="table"and craft.strict_recipe_0647==true and craft.facility_only_0647==true
+   and plan and request and parent.request_field=="construction_request"
+   and request==pair.construction_request and request.source=="standard-fluid-route-0691"
+   and request.route_plan_id==plan.id and parent.item_name=="pipe"and parent.entity_name=="pipe"
+   and valid(plan.machine)and plan.remote and valid(plan.remote.entity))then return false end
+ return plan.machine.force==pair.station.force and plan.machine.surface==pair.station.surface
+   and plan.remote.entity.force==pair.station.force and plan.remote.entity.surface==pair.station.surface
+end
 function M.source_clearance_active_1285(pair,child)
  local context=pair and pair.construction_source_clearance_1285
  local parent=pair and pair.construction_task_0338
@@ -2586,6 +2598,8 @@ function M.source_clearance_active_1285(pair,child)
    and child.construction_source_clearance_1285==true
    and parent.source_entity==context.source and valid(context.source)
    and context.source.force==pair.station.force and context.source.surface==pair.station.surface)then return false end
+ if context.production_parent_1291 and(context.production_parent_1291~=pair.emergency_craft
+   or not strict_fluid_access_1291(pair,parent))then return false end
  local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
  if not(order and order.status=="active"and order.task==child
    and order.source=="construction-source-clearance-0338")or valid(pair.combat_target)then return false end
@@ -2620,8 +2634,12 @@ local function request_source_tree_clearance(pair,task)
  if now()<(tonumber(task.source_clearance_probe_tick_1285)or 0)then return false end
  task.source_clearance_probe_tick_1285=now()+120
  local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
- if order and order.status=="active"or valid(pair.combat_target)then return false end
- for _,field in ipairs{"emergency_craft","direct_acquisition_task_0336","direct_acquisition_custody_0513",
+ local prerequisite=strict_fluid_access_1291(pair,task)
+ if valid(pair.combat_target)or(order and order.status=="active"
+   and(not prerequisite or not ProductionOrder1291.matches(pair,order,pair.emergency_craft)
+    or(tonumber(order.priority)or 0)>=570))then return false end
+ if pair.emergency_craft and not prerequisite then return false end
+ for _,field in ipairs{"direct_acquisition_task_0336","direct_acquisition_custody_0513",
    "machine_logistics_custody_0528","item_family_custody_0702",
    "energy_family_custody_0707","inventory_transfer_custody_0687","emergency_facility_feed_custody_0357",
    "emergency_production_custody_0514","station_cargo_custody_0824","repair_pack_custody_0516",
@@ -2668,7 +2686,8 @@ local function request_source_tree_clearance(pair,task)
  if not(submitted and accepted==true and active and active.task==child)then return false end
  release_terminal_movement(pair)
  pair.direct_acquisition_task_0336=child
- pair.construction_source_clearance_1285={parent=task,child=child,tree=best,source=task.source_entity,phase=task.phase}
+ pair.construction_source_clearance_1285={parent=task,child=child,tree=best,source=task.source_entity,phase=task.phase,
+  production_parent_1291=prerequisite and pair.emergency_craft or nil}
  task.source_clearance_count_1285=(tonumber(task.source_clearance_count_1285)or 0)+1
  task.source_clearance_allowance_ticks_1285=math.min(3600,
    (tonumber(task.source_clearance_allowance_ticks_1285)or 0)+900)
@@ -2676,7 +2695,7 @@ local function request_source_tree_clearance(pair,task)
  return true
 end
 local function stalled_construction_tree_clearance_1285(pair,task)
- if not(task and(task.phase=="move-site"or task.phase=="return-custody")
+ if not(task and(task.phase=="move-source"or task.phase=="move-site"or task.phase=="return-custody")
    and access_parent_authorized_1285(pair,task))then return false end
  local goal=task.phase=="move-site"and task.position or physical_source(pair,task.source_entity).position
  if not goal then return false end
