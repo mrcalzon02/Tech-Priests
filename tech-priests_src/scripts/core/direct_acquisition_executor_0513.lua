@@ -175,6 +175,23 @@ end
 local function within_bounds(p,pos)
  local ok,a,d,m=pcall(M.target_within_bounds,p,pos);if not ok then return false,"bounds-authority-error:"..safe(a)end;return a==true,d,m
 end
+function M.target_contact_position(p,e)
+ local surface=e.surface
+ if not(surface and surface.can_place_entity)then return e.position end
+ local origin=e.position;local best,score
+ -- Ore may be under a working drill. Navigation needs a clear nearby
+ -- footprint; extraction still requires the original 1.5-tile target reach.
+ for _,v in ipairs{{0,0},{1.25,0},{-1.25,0},{0,1.25},{0,-1.25},
+   {.8838,.8838},{-.8838,.8838},{.8838,-.8838},{-.8838,-.8838}}do
+  local point={x=origin.x+v[1],y=origin.y+v[2]}
+  local ok,clear=pcall(function()return surface.can_place_entity{
+   name=p.priest.name,position=point,force=p.station.force}end)
+  local distance=dist2(p.priest.position,point)
+  if ok and clear and within_bounds(p,point)
+    and(not score or distance<score)then best,score=point,distance end
+ end
+ return best
+end
 local function recover_overleash(p,state)
  local maximum=M.hard_leash(p);local distance=math.sqrt(dist2(p.priest.position,p.station.position));if distance<=maximum then return false,nil end
  phase(p,"return-overleash","distance="..safe(distance).." max="..safe(maximum));p.mode="direct-acquisition-returning-overleash"
@@ -429,7 +446,21 @@ function M.service_pair(p,reason)
   if t.direct_due_tick_0513 then t.direct_remaining_ticks_0513=math.max(1,t.direct_due_tick_0513-now());t.direct_due_tick_0513=nil end
   local last=tonumber(state.last_distance);local progress=not last or state.distance<last-.05;if progress then state.last_progress_tick=now()end;state.last_distance=state.distance
   local due=not state.last_move_tick or now()-state.last_move_tick>=M.move_refresh_ticks;local stalled=not progress and now()-(tonumber(state.last_progress_tick)or 0)>=M.stall_ticks
-  if due or stalled then state.last_move_tick=now();local moved,why=request_move(p,e.position,"direct-acquisition-0513",650,.75,stalled and"direct-acquisition-repath-0513"or"direct-acquisition-travel-0513");if not moved then state.next_move_retry_tick=now()+60;p.mode="direct-acquisition-movement-failed";phase(p,"movement-request-failed",why);record("movement-failed-0513",p,why);return false,"movement-failed"end end
+  if due or stalled then
+   local contact=state.contact_target_0513==e and state.contact_position_0513
+   if not contact then
+    contact=M.target_contact_position(p,e)
+    if not contact then return replan(p,t,state,"physical-target-contact-blocked")end
+    state.contact_target_0513=e;state.contact_position_0513=contact
+    local move=p.movement_request_0418
+    local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+    if move and move.owner=="direct-acquisition-0513"and(tonumber(move.priority)or 0)<=650
+      and controller and type(controller.stop)=="function"then
+     pcall(controller.stop,p,"direct-target-walkable-contact-0513")
+    end
+   end
+   state.last_move_tick=now();local moved,why=request_move(p,contact,"direct-acquisition-0513",650,.15,stalled and"direct-acquisition-repath-0513"or"direct-acquisition-travel-0513");if not moved then state.next_move_retry_tick=now()+60;p.mode="direct-acquisition-movement-failed";phase(p,"movement-request-failed",why);record("movement-failed-0513",p,why);return false,"movement-failed"end
+  end
   p.mode="travelling-to-direct-acquisition";phase(p,"walk-to-target",state.target_label);show(p,"[item="..item.."] walking to direct target",nil,false);return true,"walking"
  end
 

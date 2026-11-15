@@ -31,3 +31,19 @@ D.service_pair(pair,"arrived")
 assert(deposits==4 and not pair.direct_acquisition_custody_0513 and not pair.emergency_craft,
  "counted material batch failed exact physical return and completion")
 print("PASS independent material mining retains exact timed resource debits and returns four units in one physical trip")
+pair.priest.position={x=0,y=0};pair.priest.name="test-priest"
+pair.emergency_craft={kind="direct-mine-0336",output_item="stone",required_count=4,
+ bootstrap_resource_0637=true,current={kind="direct-mine-0336",entity=ore,output_item="stone"}}
+surface.can_place_entity=function(spec)return spec.position.x==8 and spec.position.y>.8 end
+local goal,options
+tech_priests_request_movement_0418=function(_,position,_,opts)goal=position;options=opts;return true end
+local before=ore.amount;game.tick=game.tick+1000
+assert(D.service_pair(pair,"ore-under-solid-drill"))
+assert(goal and goal.x==8 and goal.y==1.25 and options.radius==.15,
+ "direct mining targeted the ore tile occupied by a working drill")
+assert(ore.amount==before and not pair.direct_acquisition_custody_0513,
+ "walkable mining contact credited ore before physical arrival")
+surface.can_place_entity=function()return false end
+assert(D.target_contact_position(pair,ore)==nil,
+ "blocked ore target fabricated a traversable contact")
+print("PASS direct mining uses a clear contact within original extraction reach")

@@ -534,16 +534,61 @@ local function strict_brick_material_request(pair)
   end
 end
 
+local function retire_satisfied_reserve(pair)
+  local task=pair.direct_acquisition_task_0336
+  if not(type(task)=="table"and task.bootstrap_resource_0637==true)
+      or pair.direct_acquisition_custody_0513 or task.direct_due_tick_0513 then return false end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current
+  if order and order.status=="active"then return false end
+  local item=task.output_item or task.item_name
+  if not item then return false end
+  local target=M.reserve_floor
+  local pending=pair.infrastructure_recipe_request_0647
+  if pending and pending.missing==item then
+    for _,ingredient in ipairs(pending.ingredients or{})do
+      if ingredient.name==item then target=math.max(target,tonumber(ingredient.count)or 1)end
+    end
+  end
+  if station_count(pair,item)<target then return false end
+  pair.direct_acquisition_task_0336=nil
+  if pair.emergency_craft==task then pair.emergency_craft=nil end
+  if pair.active_acquisition_0333==task then pair.active_acquisition_0333=nil end
+  local cur=task.current or task;local entity=cur.entity or cur.target
+  if entity and pair.target==entity then pair.target=nil end
+  local movement=pair.movement_request_0418
+  local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+  if movement and movement.owner=="direct-acquisition-0513"
+      and controller and type(controller.stop)=="function"then
+    pcall(controller.stop,pair,"counted-reserve-already-supplied-0637")
+  end
+  if lower(pair.mode):find("acquisition",1,true)then pair.mode="infrastructure-first-0637"end
+  record("counted-reserve-already-supplied-0637",pair,item.." real stock="..station_count(pair,item),true)
+  return true
+end
+
 function M.service_pair(pair, reason)
   local root=M.root()
   if not valid_pair(pair) then return false,"invalid" end
+  if retire_satisfied_reserve(pair)then return true,"counted-reserve-already-supplied"end
   local strict_request,strict_material=strict_brick_material_request(pair)
+  local production=pair.emergency_craft
+  if not strict_request and type(production)=="table"and production.facility_only_0647
+      and(production.output_item=="iron-plate"or production.output_item=="copper-plate")then
+    -- An authorized furnace recipe needs its actual ore/fuel even when
+    -- generic reserve sweeping is disabled. Legacy mining no longer owns
+    -- this parent; publish its bounded raw dependency to the canonical child.
+    local spec,have,deficit=missing_reserve(pair)
+    if spec then
+      strict_request={missing=spec.item,ingredients={{name=spec.item,count=have+deficit}}}
+      strict_material=production
+    end
+  end
   if root.enabled==false or strict_request then
     -- Generic reserve sweeping remains opt-in. An explicitly independent
     -- station must nevertheless execute its exact pending raw recipe leaf;
     -- otherwise 0647 waits forever while survival repeatedly requests ammo.
     local op=pair.independent_emergency_operation_0184
-    local request=pair.infrastructure_recipe_request_0647 or strict_request
+    local request=strict_request or pair.infrastructure_recipe_request_0647
     local energy=pair.energy_family_logistics_0707
     if type(energy)=="table"and energy.family=="energy-fuel"
         and energy.phase=="waiting-source"and valid(energy.target)

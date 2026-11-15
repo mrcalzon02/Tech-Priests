@@ -104,3 +104,18 @@ check(Direct.machine_route_has_movement(pair)==false,
  "machine logistics falsely owned a construction path")
 check(custody.count==3,"foreign route changed the machine cargo")
 print("[direct-machine-movement-ownership] PASS scenarios=5")
+Movement.stop(pair,"test-observer-handoff")
+pair.machine_logistics_custody_0528=nil;pair.machine_logistics_0528.custody=nil
+pair.mode="travelling-to-direct-acquisition";pair.target=ore
+check(Movement.request(pair,ore.position,"old-observer-target",
+ {owner="behavior-contract-0479",priority=700,ttl=600}),"observer fixture route failed")
+local Contracts=require("scripts.core.behavior_contracts_0479")
+Contracts.service_pair(pair)
+check(not pair.movement_request_0418 and pair.emergency_craft==task,
+ "observer retained its old priority-700 route over the canonical physical owner")
+check(Movement.request(pair,{x=12,y=1.1},"real-ore-contact",
+ {owner="direct-acquisition-0513",priority=650,ttl=600}),"physical contact route failed")
+local physical_route=pair.movement_request_0418
+Contracts.service_pair(pair)
+check(pair.movement_request_0418==physical_route,"observer stopped the genuine mining contact route")
+print("PASS movement observer retires only its own superseded physical-work route")

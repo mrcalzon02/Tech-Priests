@@ -1,5 +1,12 @@
 # Current Testing Goals
 
+## 2026-11-14 - Finish native science supply and ranked workforce
+
+Revalidate retirement of fulfilled automatic reserves, exact independent furnace ore/fuel tasks and collision-clear mining access. Native continuation proved both real brick furnaces operating and ore production resumed across all four factions. Preserve explicit orders and held inventory; no output is credited by task retirement or movement arrival.
+
+The latest completed fresh science baseline still failed its target despite eight actual research completions. Current arena factions also retain unused ranked station kits with one priest handling construction, logistics and maintenance. Continue investigating force-wide workforce planning through existing paid ranked-station construction, then validate all science families and actual participant combat in fresh runs. Diagnostic recovery is not final acceptance.
+
+
 ## 2026-11-14 - Verify prerequisite recovery through complete factory behavior
 
 Require native crafting for Steam Power and Electronics even with supplied stock. Verify a missing strict-recipe ingredient restores its original dependency/parent without debit or output credit; preserve actual held cargo and canonical furnace/raw-task ownership. Check native resource mining-time capacity and the handoff from completed first-science bootstrap to configured factory supply.

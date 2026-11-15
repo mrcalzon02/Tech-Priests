@@ -1,5 +1,14 @@
 # Tech Priests Development History
 
+## 2026-11-14 - Fulfilled reserves and physical ore access
+
+Native science recovery still retained an unladen twelve-stone bootstrap task with 403 usable stone. The raw governor now retires only its own automatic, already-funded reserve, preserving active explicit orders, timed extraction and actual mining custody. Independent furnace-only iron/copper recipes now request bounded ore/fuel through the canonical raw child when generic reserve sweeping is disabled. An obsolete parent ingredient wait cannot replace that active furnace dependency. The furnace recipe and its exact raw child remain separate owners.
+
+Native inspection also found mining waypoints inside working burner drills. Direct acquisition now selects a collision-clear approach within its unchanged 1.5-tile extraction distance, with actual authority bounds checked. Travel arrival uses the executor's precise radius. The behavior observer releases only its own obsolete route and delegates movement to the canonical mining/production owner.
+
+Observed recovery: both science furnaces changed from empty/idle to actual stone-brick recipes, with 43 real bricks measured at tick 185346. In the previously blocked arena, tick 115976 measured actual iron production 51/42/44/52 across the four forces after the mining-contact repair; two had completed Steam Power at that observation. These are diagnostic continuations, not a fresh full-factory or combat acceptance. The preceding 2f6f299 fresh science run completed eight research technologies but failed sustained science and military production. Latest source/unit verification retains all 46 Lua groups and seven Python arena tests; full fresh gates continue.
+
+
 ## 2026-11-14 - Real technology prerequisites, recipe recovery and mining capacity
 
 The repaired arena exposed a second genuine boundary: supplied copper, iron, labs and generators do not satisfy native craft-item technology triggers. The bootstrap owner now demands real ten-copper and fifty-iron production above existing stock until Factorio completes Electronics and Steam Power. Its existing completion handoff releases only an actually researched plate batch with physical plate stock present. A native diagnostic continuation at tick 163642 measured Steam Power, Electronics and red-science unlocks on three factions, with actual red output 3/2/2; the fourth remained at eight copper plates. This is late recovery evidence, not a passing original deadline or four-way combat gate.

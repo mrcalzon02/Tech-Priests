@@ -97,3 +97,32 @@ for _=1,3 do assert(Raw.service_all("fairness")==12)end
 for i=1,30 do assert(seen[i],"station starved: "..i)end
 Raw.service_pair=original
 print("PASS independent raw recipe leaf, maintenance isolation, custody priority and 30-station fairness")
+pair=fixture();resource.name="stone"
+pair.station.get_inventory=function()return{valid=true,get_item_count=function(n)return n=="stone"and 403 or 0 end}end
+local stale={bootstrap_resource_0637=true,output_item="stone",required_count=12,
+ current={kind="direct-mine-0336",entity=resource,output_item="stone"}}
+pair.direct_acquisition_task_0336=stale;pair.mode="direct-acquisition-movement-failed"
+pair.direct_acquisition_custody_0513={item="stone",count=1}
+Raw.service_pair(pair)
+assert(pair.direct_acquisition_task_0336==stale,"satisfied reserve discarded actually held ore")
+pair.direct_acquisition_custody_0513=nil
+local done,detail=Raw.service_pair(pair)
+assert(done and detail=="counted-reserve-already-supplied"and not pair.direct_acquisition_task_0336
+ and pair.mode=="infrastructure-first-0637"and resource.amount==100,
+ "403 real stone did not retire the unladen stale twelve-stone reserve")
+assert(pair.infrastructure_recipe_request_0647.item=="stone-furnace",
+ "satisfied reserve retirement erased the actual manufacturing dependency")
+print("PASS fulfilled automatic reserve yields planning while real mining custody remains protected")
+pair=fixture();resource.name="iron-ore";pair.infrastructure_recipe_request_0647=nil
+pair.station.get_inventory=function()return{valid=true,get_item_count=function(n)return n=="coal"and 10 or 0 end}end
+local plate_job={facility_only_0647=true,output_item="iron-plate",count=50,
+ current={kind="direct-mine-0273",output_item="iron-ore",entity=resource}}
+pair.emergency_craft=plate_job
+assert(Raw.root().enabled==false and Raw.service_pair(pair),
+ "native plate trigger had no canonical ore task with generic reserves disabled")
+assert(pair.emergency_craft==plate_job and pair.direct_acquisition_task_0336
+ and pair.direct_acquisition_task_0336.output_item=="iron-ore"
+ and pair.direct_acquisition_task_0336.required_count==4
+ and pair.direct_acquisition_task_0336.material_for_strict_recipe_0637,
+ "furnace raw task stole its parent or failed to identify the exact four-ore dependency")
+print("PASS independent native plate recipes acquire exact ore through their separate canonical owner")

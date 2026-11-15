@@ -143,6 +143,9 @@ local function physical_executor_owns_target(pair)
   -- observer attempting the same trip at priority 700 could continually
   -- suppress its legitimate priority-650 path.
   if pair.direct_acquisition_custody_0513 then return true end
+  local production=pair.emergency_craft
+  if type(production)=="table"and(production.strict_recipe_0647
+      or production.facility_only_0647)then return true end
   local direct = rawget(_G, "TechPriestsDirectAcquisitionExecutor0513")
     or package.loaded["scripts.core.direct_acquisition_executor_0513"]
   if direct and type(direct.current_direct_task) == "function" then
@@ -155,6 +158,15 @@ end
 local function request_move(pair, pos, reason)
   if not (valid_pair(pair) and pos) then return false end
   local controller = rawget(_G, "TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+  if physical_executor_owns_target(pair) then
+    local movement=pair.movement_request_0418
+    if movement and movement.owner=="behavior-contract-0479"
+        and controller and type(controller.stop)=="function"then
+      pcall(controller.stop,pair,"canonical-physical-owner-handoff-0479")
+    end
+    stat("movement_delegated_to_direct_executor")
+    return true
+  end
   if controller and type(controller.request_status) == "function" then
     local ok, status = pcall(controller.request_status, pair)
     if ok and type(status) == "table" and status.active == true then
