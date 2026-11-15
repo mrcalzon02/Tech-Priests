@@ -290,6 +290,18 @@ function M.service_pair(p,reason)
   local n=task_item(t);if not item_exists(n)then phase(p,"need-item",n);return false,"invalid-item" end
   local need=math.max(1,math.floor(tonumber(t.count or t.required_count)or 1))
   local goal=math.max(need,math.floor(tonumber(t.target_stock_0647) or need))
+  if t.native_plate_trigger_0647==true and t.facility_only_0647==true
+      and t.infrastructure_first_0640==true and(n=="iron-plate"or n=="copper-plate")
+      and not(p.direct_acquisition_custody_0513 or p.machine_logistics_custody_0528
+        or p.construction_custody_0338)then
+    local tech=p.station.force.technologies
+      and p.station.force.technologies[n=="iron-plate"and"steam-power"or"electronics"]
+    if tech and tech.researched==true and total(p,n)>=1 then
+      -- Another real factory may have satisfied this force-wide trigger.
+      -- Close only this obsolete trigger batch; do not credit any output.
+      return finalize(p,t,s,n,"native-force-trigger-already-researched")
+    end
+  end
   if total(p,n)>=goal then return finalize(p,t,s,n,"already-supplied-0514") end
   local got=collect_facility_output(p,n,math.max(0,goal-total(p,n)))
   if got>0 and total(p,n)>=goal then return finalize(p,t,s,n,"facility-output-collected-0514") end

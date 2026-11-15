@@ -38,3 +38,23 @@ assert(surplus==nil and why=="no-physical-local-ingredient-stock",
 assert(stocks["iron-plate"]==50 and stocks["logistic-science-pack"]==20,
  "priority discovery changed physical stock")
 print("PASS stocked science yields transport urgency to missing military intermediates without spending stock")
+
+stocks["logistic-science-pack"]=0;stocks["firearm-magazine"]=0
+pair.independent_emergency_operation_0184.started_tick=0
+game.tick=1000
+pair.factory_recipe_service_ticks_0528={["logistic-science-pack"]=1000,
+ ["firearm-magazine"]=100}
+local hungry=offer("logistic-science-pack",3)
+local overdue=offer("firearm-magazine",4)
+assert(overdue.score>hungry.score,
+ "continuously consumed science still starved a funded military intermediate")
+pair.factory_recipe_service_ticks_0528["firearm-magazine"]=1000
+local serviced=offer("firearm-magazine",4)
+assert(serviced.score<hungry.score,"completed intermediate did not surrender its aging priority")
+print("PASS eligible factory trips age past continuously hungry science and reset after service")
+game.tick=10000
+pair.factory_recipe_service_ticks_0528={["logistic-science-pack"]=9000,
+ ["firearm-magazine"]=1000}
+assert(offer("firearm-magazine",4).score>offer("logistic-science-pack",3).score,
+ "long physical rounds saturated waiting credit and restored permanent science starvation")
+print("PASS overdue intermediates retain priority after a long native walking round")

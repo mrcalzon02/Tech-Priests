@@ -115,7 +115,8 @@ local function relinquish_unladen_direct_movement(pair,family)
    or pair.direct_acquisition_custody_0513 then return false end
  if family=="station-craft" then
    local craft=pair.emergency_craft
-   if not (type(craft)=="table" and craft.strict_recipe_0647==true) then return false end
+   if not (type(craft)=="table" and(craft.strict_recipe_0647==true
+       or craft.facility_only_0647==true)) then return false end
  else
    local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
      or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]
@@ -309,7 +310,8 @@ function M.service_pair(pair,reason)
  local foreign_order=order and order_kind~="machine-logistics"
    and order_kind~="machine_logistics"
  local craft=pair.emergency_craft
- local strict_craft=type(craft)=="table" and craft.strict_recipe_0647==true
+ local strict_craft=type(craft)=="table" and(craft.strict_recipe_0647==true
+   or craft.facility_only_0647==true)
  if family_owned(r,"machine-logistics")
    and phase~="" and phase~="complete" and phase~="failed"
    and phase~="idle" and phase~="none"
@@ -1077,7 +1079,7 @@ function M.service_pair(pair,reason)
  end
  -- Only issue routine orders after defense/expansion can take a free priest.
  local craft=pair.emergency_craft
- if (type(craft)=="table" and craft.strict_recipe_0647==true)
+ if (type(craft)=="table" and(craft.strict_recipe_0647==true or craft.facility_only_0647==true))
    or direct_active(pair) then
   local logistics=rawget(_G,"TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528")
    or package.loaded["scripts.core.logistics_machine_fulfillment_0528"]

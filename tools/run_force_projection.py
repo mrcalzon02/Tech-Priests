@@ -130,6 +130,8 @@ def main() -> int:
     ap.add_argument("--factorio", required=True, type=pathlib.Path)
     ap.add_argument("--preset", choices=PRESETS, default="2p2b")
     ap.add_argument("--profile",choices=("random-stress","compact-capacity"),default="random-stress")
+    ap.add_argument("--force-spacing",type=int,default=None,
+                    help="Optional 48-192 tile separation for compact four-way contact diagnostics")
     ap.add_argument("--seed", type=int, default=None)
     ap.add_argument("--active-ticks", type=int, default=216000)
     ap.add_argument("--timeout-seconds", type=int, default=7200)
@@ -144,6 +146,9 @@ def main() -> int:
     args = ap.parse_args()
     if args.profile=="compact-capacity" and args.preset!="4p-ffa":
         ap.error("Compact capacity profile requires --preset 4p-ffa")
+    if args.force_spacing is not None and(args.profile!="compact-capacity"
+            or not 48<=args.force_spacing<=192):
+        ap.error("Force spacing requires compact-capacity and must be 48-192 tiles")
     if not 1 <= args.game_speed <= 20:
         ap.error("Game speed must be between 1 and 20")
     seed = args.seed if args.seed is not None else secrets.randbelow(2**31)
@@ -164,6 +169,7 @@ def main() -> int:
               "preset": args.preset, "observation_complete": False,
               "engine_version": engine, "active_ticks": args.active_ticks,
               "game_speed": args.game_speed,"profile":args.profile,
+              "force_spacing":args.force_spacing,
               "combat_required":args.require_combat}
     try:
         source_sha = subprocess.check_output(
@@ -192,6 +198,7 @@ def main() -> int:
         control = mods / "tech-priests/control.lua"
         config = json.dumps({"seed": seed, "preset": args.preset,
                              "profile": args.profile,
+                             "force_spacing":args.force_spacing,
                              "active_ticks": args.active_ticks,
                              "game_speed": args.game_speed})
         # table_from_json is called while control.lua loads, where helpers is

@@ -2789,4 +2789,20 @@ scenario("established science yields bootstrap priority to missing military mate
   "science bootstrap was disabled without a configured physical science producer")
  TechPriestsMasterInfrastructurePlan0644.build_plan=old_plan
 end)
+scenario("native force trigger closes only its own obsolete plate batch",function()
+ local f=fixture();local p=f.pair
+ f.source.insert{name="iron-plate",count=400}
+ f.force.technologies={["steam-power"]={researched=true}}
+ local task={output_item="iron-plate",count=50,target_stock_0647=450,
+   native_plate_trigger_0647=true,facility_only_0647=true,infrastructure_first_0640=true}
+ p.emergency_craft=task
+ local before=f.source.get_item_count("iron-plate")
+ check(Production.service_pair(p,"researched-on-another-station"),"obsolete native trigger did not close")
+ check(not p.emergency_craft and f.source.get_item_count("iron-plate")==before,
+   "force-wide trigger retirement invented plates or retained a redundant batch")
+ f.force.technologies["steam-power"].researched=false
+ p.emergency_craft=task
+ Production.service_pair(p,"native-trigger-still-required")
+ check(p.emergency_craft==task,"unresearched force trigger was retired")
+end)
 print("[bootstrap-production-regression] PASS scenarios="..total)

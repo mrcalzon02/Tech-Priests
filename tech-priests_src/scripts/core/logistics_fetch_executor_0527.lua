@@ -477,7 +477,23 @@ function M.service_pair(pair,reason)
   local have_station=station_count(pair,item)
   local need_total=math.max(1,tonumber(req.count) or 1)
   local need_remaining=math.max(1,need_total-have_station)
-  if have_station>=need_total then return false,"already-in-station" end
+  if have_station>=need_total then
+    local scav=pair.scavenge
+    local op=pair.independent_emergency_operation_0184
+    if op and op.enabled==true and type(scav)=="table"
+        and scav.item_name==item
+        and not(pair.inventory_transfer_custody_0687 or pair.direct_acquisition_custody_0513
+          or pair.machine_logistics_custody_0528 or pair.construction_custody_0338
+          or pair.item_family_custody_0702 or pair.energy_family_custody_0707)then
+      -- A legacy pre-pickup intent has no held items. Do not keep walking
+      -- into its container after canonical counted stock satisfies the need.
+      if pair.target==scav.source then pair.target=nil end
+      pair.scavenge=nil
+      if pair.mode=="moving-to-scavenge"or pair.mode=="scavenging-supplies"then pair.mode="idle"end
+      record(pair,"satisfied-legacy-scavenge-retired",item)
+    end
+    return false,"already-in-station"
+  end
   -- An already admitted 0338 rail build owns the original Magos until its
   -- source, carried rail and destination are reconciled. The generic
   -- fetcher may not redirect its priest or debit unrelated storage mid-build.

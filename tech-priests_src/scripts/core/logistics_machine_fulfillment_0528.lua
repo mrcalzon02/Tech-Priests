@@ -725,6 +725,18 @@ local function task_score(pair, task)
     -- Five-cycle counted input batches reduce repeated single-craft round trips.
     local science=science_job(job)
     base=math.max(base,(science and(buffered and 700 or 920)or 820)+(task.action=="clear-output"and 20 or 0))
+    -- A continuously consumed nearby science line must not starve the
+    -- researched intermediates for the other planned science families.
+    -- Age only real eligible trips; reset only after verified completion.
+    local op=pair.independent_emergency_operation_0184
+    local recipe=get_recipe(task.machine)
+    local serviced=recipe and pair.factory_recipe_service_ticks_0528
+      and pair.factory_recipe_service_ticks_0528[recipe.name]
+    local since=tonumber(serviced)or tonumber(op and op.started_tick)or now()
+    -- Do not cap this below the duration of a physical supply round. If
+    -- every waiting recipe saturates the same cap, science's larger base
+    -- wins forever again. Linear waiting credit guarantees eventual service.
+    base=base+math.max(0,now()-since)*.2
   end
   -- Completed Electronics parts are an actual researched-production
   -- dependency. If a priest keeps collecting easier raw ore or topping off
@@ -1242,7 +1254,8 @@ function M.recommend_action(pair)
   -- generic infrastructure gate must not starve a built miner of real fuel.
   local craft=pair.emergency_craft
   local direct_active=physical_direct_active(pair)
-  local strict=type(craft)=="table" and craft.strict_recipe_0647==true
+  local strict=type(craft)=="table" and(craft.strict_recipe_0647==true
+    or craft.facility_only_0647==true)
   local output_ready=completed_machine_output_ready(pair,state)
   local infrastructure_output=M.infrastructure_prerequisite_output_ready_1045(pair)
   -- Physical direct custody and strict manufacturing still own the priest.
@@ -1398,6 +1411,11 @@ end
 local function clear_state(pair, phase, why)
   local state = pair.machine_logistics_0528
   local machine = state and state.machine
+  if phase=="complete"and valid(machine)and planned_factory_job(pair,machine)then
+    local recipe=get_recipe(machine)
+    pair.factory_recipe_service_ticks_0528=pair.factory_recipe_service_ticks_0528 or{}
+    pair.factory_recipe_service_ticks_0528[recipe.name]=now()
+  end
   release_machine(pair, machine)
   -- Terminal machine logistics must surrender only its own movement route.
   -- Otherwise the old priority-740 return lease can prevent the dispatcher

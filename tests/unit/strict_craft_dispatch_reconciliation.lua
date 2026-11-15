@@ -409,4 +409,20 @@ test("blocked canonical production preserves its reason without a nonexistent fa
   check(result.failed==0 and result.blocked==1 and result.detail=="missing-ingredient:iron-plate",
     "canonical missing ingredient was replaced by a nonexistent crafting method error")
 end)
+test("facility-only native furnace resumes without a handcraft timer",function()
+  local p=make_pair();setup(p)
+  p.emergency_craft={facility_only_0647=true,item_name="iron-plate",
+    output_item="iron-plate",count=1,current={kind="direct-mine-0273",entity=physical}}
+  p.direct_acquisition_task_0336=nil
+  check(Arbiter.action(p).kind=="crafting","native furnace task was classified as idle acquisition")
+  Dispatcher.service_pair(p,"native-furnace")
+  check(counts.craft==1 and counts.direct==0 and counts.stops==1,
+    "canonical furnace did not receive service or kept its obsolete mining lease")
+end)
+test("facility-only furnace preserves its marked physical ore child",function()
+  local p=make_pair();setup(p)
+  p.emergency_craft={facility_only_0647=true,item_name="iron-plate",count=1}
+  p.direct_acquisition_task_0336.material_for_strict_recipe_0637=true
+  check(Arbiter.action(p).kind~="crafting","native furnace displaced its own actual ore task")
+end)
 print("[strict-craft-dispatch] PASS scenarios="..total)

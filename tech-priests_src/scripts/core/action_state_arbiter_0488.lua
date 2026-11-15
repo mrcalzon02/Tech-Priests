@@ -74,7 +74,8 @@ local function actual_crafting(p,o)
     if not (order_kind=="acquisition" and type(direct)=="table"
         and direct.bootstrap_resource_0637==true
         and type(p.emergency_craft)=="table"
-        and p.emergency_craft.strict_recipe_0647==true) then return false end
+        and(p.emergency_craft.strict_recipe_0647==true
+          or p.emergency_craft.facility_only_0647==true)) then return false end
   end
   if order_kind=="crafting" then return true end
   -- This exception is a real coal acquisition expressly authorized to power
@@ -91,7 +92,7 @@ local function actual_crafting(p,o)
   -- must not send the priest back out to mine forever while the assembler
   -- waits on its fuel or inputs. Above, real physical custody and unrelated
   -- active explicit orders still retain their higher-priority ownership.
-  if t.strict_recipe_0647==true then return true end
+  if t.strict_recipe_0647==true or t.facility_only_0647==true then return true end
   local current=type(t)=="table"and(t.current or t.entity or t.target)
   if valid(current)or type(current)=="table"then return false end
   return due~=nil or t.station_craft_pending_0514==true
@@ -460,8 +461,7 @@ end
 local function item_family_recommendation(p,k)if k~="idle"and k~="item-family-logistics"then return nil end;return recommendation("TechPriestsItemFamilyLogistics0702","scripts.core.item_family_logistics_0702",p,"item-family-logistics")end
 local function strict_engine_work(p,k)
   local task=p.emergency_craft
-  if not(type(task)=="table"and task.strict_recipe_0647==true
-      and task.facility_only_0647==true)then return false end
+  if not(type(task)=="table"and task.facility_only_0647==true)then return false end
   if k=="idle"or k=="crafting"then return true end
   local direct=p.direct_acquisition_task_0336
   return k=="acquisition"and type(direct)=="table"

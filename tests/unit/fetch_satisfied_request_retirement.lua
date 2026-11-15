@@ -17,3 +17,14 @@ acted,why=M.service_pair(pair,"physical-general-stock")
 assert(not acted and scans==0,
  "accessible real ammunition was fetched and deposited back into the same general-storage source")
 print("PASS completed survival history does not create new fetches and actual general stock satisfies physical requests")
+local source={valid=true,position={x=4,y=0}}
+pair.mode="moving-to-scavenge";pair.scavenge={item_name="firearm-magazine",source=source};pair.target=source
+M.service_pair(pair,"satisfied-scavenge")
+assert(not pair.scavenge and not pair.target and pair.mode=="idle",
+ "satisfied unladen legacy scavenge kept monopolizing the independent priest")
+pair.scavenge={item_name="firearm-magazine",source=source}
+pair.machine_logistics_custody_0528={item="firearm-magazine",count=1}
+M.service_pair(pair,"held-cargo")
+assert(pair.scavenge and pair.machine_logistics_custody_0528.count==1,
+ "held physical work was retired with a planning-only scavenge")
+print("PASS satisfied independent scavenge intent retires while actual held cargo remains owned")

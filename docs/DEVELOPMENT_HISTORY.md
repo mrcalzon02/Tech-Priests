@@ -1,5 +1,14 @@
 # Tech Priests Development History
 
+## 2026-11-14 - Native production ownership and starvation-free factory trips
+
+Facility-only furnace work was blocked from legacy execution but still absent from canonical craft classification. Such native tasks now receive the same canonical dispatcher ownership as strict production, while their expressly marked raw-material child and physically held construction/mining items retain priority. A redundant native plate-trigger batch may close only after the actual force technology is researched and a real plate is held; it never manufactures output. Satisfied, unladen independent legacy scavenging intents also retire against counted stock instead of indefinitely walking into a container.
+
+Military intermediates still starved when bounded waiting credit saturated during ordinary walking rounds. Eligible configured factory trips now receive linear waiting credit, reset only after the existing owner verifies completed supply/deposit. Native diagnostic continuation then reached 320 red, 62 green and four military packs, with actual firearm, piercing-magazine and stone-wall production. This establishes real military-chain execution, not the original fresh throughput/deadline objective. The simultaneous fresh run remained below target and still had zero military at its last recorded checkpoint.
+
+The existing arena harness accepts an explicitly labeled optional --force-spacing 48-192 only for compact four-way diagnostics. Default 192-tile spacing, supplies and all factory/combat assertions are unchanged. A 64-tile diagnostic uses identical counted supplies and unbuilt station kits, existing hostility and natural combat discovery; it issues no attacks or movement and grants no science/research. All 47 Lua groups and seven Python tests pass, including default/contact geometry and conservation checks. Preserve failed arena/science outcomes and continue native iteration.
+
+
 ## 2026-11-14 - Productive service admissions and paid ranked workforce
 
 Native inspection found that repeated fresh repair discovery starved funded factory ingredient trips. Independent commanders now alternate maintenance and funded factory-service admissions through the existing dispatcher. Existing orders, physical cargo and hostile incidents retain their owners. A source-less laboratory request also yields its recommendation while retaining its original target/request identity; it resumes when real science stock exists and the intervening carrier has finished its cargo.

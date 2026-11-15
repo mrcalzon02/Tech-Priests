@@ -1,5 +1,12 @@
 # Current Testing Goals
 
+## 2026-11-14 - Sustain the now-working military chain and close fresh failures
+
+Native recovery now proves actual red, green and military production after canonical furnace dispatch, stale-intent retirement and uncapped waiting credit for eligible factory trips. The diagnostic reached 320/62/4 packs; this does not pass the fresh objective. All 47 Lua groups and seven Python tests pass. Native all-rank maintenance remains separately verified.
+
+Continue the unchanged fresh science and default four-way gates. A separate compact 64-tile spacing diagnostic should expose natural participant combat and contested construction with identical counted supplies. Do not count closer spacing as a pass of the default arena. The accidental pre-initialization-save continuation was preserved separately as a starvation diagnostic; stocked continuations must use actual runtime checkpoint/final saves, with source hashes and private input copies.
+
+
 ## 2026-11-14 - Close factory handoff and staffed arena failures
 
 Verify independent maintenance/factory admission fairness, source-less laboratory yielding and paid ranked workforce construction together in native runs. Preserve existing physical cargo and direct rank ownership. All 47 Lua groups and seven Python tests pass, and native maintenance still passes all four ranks.

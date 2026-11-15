@@ -1,9 +1,9 @@
 -- Executable API-contract mock: verifies bounded setup and all presets.
 -- This is NOT native Factorio acceptance.
 local fixture="tests/scenarios/force-projection/fixture.lua"
-local presets={"2p2b","4p-ffa","1v4-bugs","2v2","3v1","4v4-priests","4p-ffa"}
+local presets={"2p2b","4p-ffa","1v4-bugs","2v2","3v1","4v4-priests","4p-ffa","4p-ffa"}
 for case_index,preset in ipairs(presets) do
-  local compact=case_index==7
+  local compact=case_index>=7
   local handlers,initializers,records={},{},{}
   local Registry={on_init=function(fn)initializers[#initializers+1]=fn end,
     on_event=function(id,fn)handlers[id]=fn;return true end}
@@ -22,7 +22,8 @@ for case_index,preset in ipairs(presets) do
   helpers={table_to_json=function(data)records[#records+1]=data;return "{}" end}
   log=function()end
   _G.TP_FORCE_PROJECTION_CONFIG={preset=preset,seed=42,active_ticks=3600,
-    profile=compact and "compact-capacity"or nil}
+    profile=compact and "compact-capacity"or nil,
+    force_spacing=case_index==8 and 64 or nil}
   defines={events={},inventory={chest=1}}
   for _,name in ipairs({"on_tick","on_entity_damaged","on_built_entity",
       "on_robot_built_entity","script_raised_built","script_raised_revive",
@@ -88,6 +89,12 @@ for case_index,preset in ipairs(presets) do
   local expected=preset=="4v4-priests" and 8 or preset=="1v4-bugs" and 5 or 4
   local s=storage.ci_force_projection_v1
   assert(#s.participants==expected)
+  if compact then
+    local separation=case_index==8 and 64 or 192
+    assert(s.participants[2].origin.x-s.participants[1].origin.x==separation
+      and s.participants[3].origin.y-s.participants[1].origin.y==separation,
+      "contact diagnostic changed default spacing or failed to place distinct native forces")
+  end
   for _,p in ipairs(s.participants)do
     assert(game.forces[p.force].ai_controllable==(p.kind=="b"))
     if preset=="4p-ffa" then assert(p.kind=="p") end

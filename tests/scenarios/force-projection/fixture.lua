@@ -35,6 +35,8 @@ local function init()
   local roster=PRESETS[c.preset]
   local compact=c.profile=="compact-capacity"
   assert(not compact or c.preset=="4p-ffa","compact capacity profile requires four priest forces")
+  assert(c.force_spacing==nil or(compact and type(c.force_spacing)=="number"
+    and c.force_spacing>=48 and c.force_spacing<=192),"invalid compact force spacing")
   local side=compact and 512 or(#roster>4 and 3072 or 2048)
   storage[KEY]={phase="terrain",seed=c.seed,preset=c.preset,
     side=side,chunk=0,cell=0,patch=0,tile=0,participants={},
@@ -46,7 +48,7 @@ local function init()
   local s=state(); local rows=math.ceil(#roster/2)
   for i,entry in ipairs(roster) do
     local force=game.create_force("tp-arena-"..i)
-    local inset=compact and 160 or 320
+    local inset=compact and(c.force_spacing and(side-c.force_spacing)/2 or 160)or 320
     local position={x=(i%2==1 and -1 or 1)*(side/2-inset),
       y=-side/2+inset+(math.floor((i-1)/2))*(side-2*inset)/math.max(1,rows-1)}
     local p={force=force.name,kind=entry:sub(1,1),team=entry:sub(3),
@@ -75,6 +77,7 @@ local function init()
     novice_evolution=0,fixture_supply_only=true,
     operation_profile="independent-maximum-frustration",
     game_speed=game.speed,
+    force_spacing=c.force_spacing,
     stock_profile=compact and "compact-counted-capacity"or "random-chest-plus-1-to-5-senior-kits"})
 end
 local function owner(force)
