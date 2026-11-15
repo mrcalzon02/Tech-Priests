@@ -2478,6 +2478,22 @@ local function construction_active_timeout(pair,task)
     +math.min(M.max_ground_detour_extra_ticks,
       math.max(0,tonumber(task.ground_detour_allowance_ticks_0338)or 0))
 end
+-- Access work is a dependency of this exact original paid construction task.
+-- A carried kit stays in 0338 custody while 0513 owns only the mined wood.
+local function access_parent_authorized_1285(pair,parent)
+ if not(type(parent)=="table"and valid(parent.source_entity)
+   and parent.source_entity.force==pair.station.force
+   and parent.source_entity.surface==pair.station.surface)then return false end
+ if parent.phase=="move-source"then
+  return not parent.carried and not pair.construction_custody_0338
+    and item_count(parent.source_inv,parent.item_name)>0
+ end
+ if parent.phase~="move-site"and parent.phase~="return-custody"then return false end
+ local kit,cargo=parent.carried,pair.construction_custody_0338
+ return kit and cargo and kit.item_name==parent.item_name and cargo.item_name==kit.item_name
+   and tonumber(kit.count)==1 and tonumber(cargo.count)==1
+   and ground_cargo_count(parent)==0 or false
+end
 function M.source_clearance_active_1285(pair,child)
  local context=pair and pair.construction_source_clearance_1285
  local parent=pair and pair.construction_task_0338
@@ -2486,13 +2502,12 @@ function M.source_clearance_active_1285(pair,child)
  if not(valid_pair(pair)and op and op.enabled==true and type(context)=="table"
    and pair.priest.force==pair.station.force and pair.priest.surface==pair.station.surface
    and type(parent)=="table"and type(child)=="table"
-   and parent==context.parent and parent.phase=="move-source"
-   and not parent.carried and not pair.construction_custody_0338
+   and parent==context.parent and parent.phase==context.phase
+   and access_parent_authorized_1285(pair,parent)
    and child==context.child and child==pair.direct_acquisition_task_0336
    and child.construction_source_clearance_1285==true
    and parent.source_entity==context.source and valid(context.source)
-   and context.source.force==pair.station.force and context.source.surface==pair.station.surface
-   and item_count(parent.source_inv,parent.item_name)>0)then return false end
+   and context.source.force==pair.station.force and context.source.surface==pair.station.surface)then return false end
  local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
  if not(order and order.status=="active"and order.task==child
    and order.source=="construction-source-clearance-0338")or valid(pair.combat_target)then return false end
@@ -2509,9 +2524,7 @@ end
 local function request_source_tree_clearance(pair,task)
  local op=pair.independent_emergency_operation_0184
  if not(op and op.enabled==true and task==pair.construction_task_0338
-   and task.phase=="move-source"and task.reserved_0338==true and not task.carried
-   and valid(task.source_entity)and item_count(task.source_inv,task.item_name)>0
-   and task.source_entity.force==pair.station.force and task.source_entity.surface==pair.station.surface
+   and task.reserved_0338==true and access_parent_authorized_1285(pair,task)
    and pair.priest.force==pair.station.force and pair.priest.surface==pair.station.surface
    and(tonumber(task.source_clearance_count_1285)or 0)<8)then return false end
  if now()<(tonumber(task.source_clearance_probe_tick_1285)or 0)then return false end
@@ -2519,7 +2532,7 @@ local function request_source_tree_clearance(pair,task)
  local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
  if order and order.status=="active"or valid(pair.combat_target)then return false end
  for _,field in ipairs{"emergency_craft","direct_acquisition_task_0336","direct_acquisition_custody_0513",
-   "construction_custody_0338","machine_logistics_custody_0528","item_family_custody_0702",
+   "machine_logistics_custody_0528","item_family_custody_0702",
    "energy_family_custody_0707","inventory_transfer_custody_0687","emergency_facility_feed_custody_0357",
    "emergency_production_custody_0514","station_cargo_custody_0824","repair_pack_custody_0516",
    "rocket_silo_custody_0710","artillery_custody_0713","roboport_repair_custody_0715",
@@ -2529,7 +2542,8 @@ local function request_source_tree_clearance(pair,task)
  local queue=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
  if not(direct and type(direct.target_within_bounds)=="function"
    and queue and type(queue.submit)=="function")then return false end
- local origin=pair.priest.position;local goal=task.source_entity.position
+ local origin=pair.priest.position
+ local goal=task.phase=="move-site"and task.position or physical_source(pair,task.source_entity).position
  local dx,dy=goal.x-origin.x,goal.y-origin.y;local length=dx*dx+dy*dy
  if length<.01 then return false end
  local ok,trees=pcall(function()return pair.station.surface.find_entities_filtered{
@@ -2564,12 +2578,26 @@ local function request_source_tree_clearance(pair,task)
  if not(submitted and accepted==true and active and active.task==child)then return false end
  release_terminal_movement(pair)
  pair.direct_acquisition_task_0336=child
- pair.construction_source_clearance_1285={parent=task,child=child,tree=best,source=task.source_entity}
+ pair.construction_source_clearance_1285={parent=task,child=child,tree=best,source=task.source_entity,phase=task.phase}
  task.source_clearance_count_1285=(tonumber(task.source_clearance_count_1285)or 0)+1
  task.source_clearance_allowance_ticks_1285=math.min(3600,
    (tonumber(task.source_clearance_allowance_ticks_1285)or 0)+900)
  record(pair,"source-access-tree-clearance-requested",safe(best.name))
  return true
+end
+local function stalled_construction_tree_clearance_1285(pair,task)
+ if not(task and(task.phase=="move-site"or task.phase=="return-custody")
+   and access_parent_authorized_1285(pair,task))then return false end
+ local goal=task.phase=="move-site"and task.position or physical_source(pair,task.source_entity).position
+ if not goal then return false end
+ local remaining=math.sqrt(dist_sq(pair.priest.position,goal))
+ if task.access_route_phase_1285~=task.phase or not task.access_route_best_1285
+   or remaining<=task.access_route_best_1285-.2 then
+  task.access_route_phase_1285=task.phase;task.access_route_best_1285=remaining
+  task.access_route_progress_tick_1285=now();return false
+ end
+ if now()-(tonumber(task.access_route_progress_tick_1285)or now())<180 then return false end
+ return request_source_tree_clearance(pair,task)
 end
 function M.service_pair(pair,reason)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
@@ -2605,6 +2633,7 @@ function M.service_pair(pair,reason)
   if task==access.parent then
    task.source_contact_1285=nil;task.source_contact_tried_1285={}
    task.source_contact_best_1285=nil
+   task.access_route_best_1285=nil;task.access_route_progress_tick_1285=nil
   end
  end
  if valid(pair.combat_target)then
@@ -2615,6 +2644,12 @@ function M.service_pair(pair,reason)
    return return_custody(pair,task)
   elseif task then return M.abort_pair(pair,"combat-priority")
   else return{processed=1,blocked=1,detail="combat-priority"}end
+ end
+ if M.source_clearance_active_1285(pair)then
+  return{processed=1,waiting=1,detail="construction-access-acquisition-active"}
+ end
+ if stalled_construction_tree_clearance_1285(pair,task)then
+  return{processed=1,waiting=1,detail="source-access-clearance-requested"}
  end
  if not task then
   local priority=pair.remote_drill_request_1011

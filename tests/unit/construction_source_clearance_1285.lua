@@ -80,6 +80,25 @@ priest.position={x=5,y=0}
 local picked=attempt()
 assert(picked.detail=="moving-site"and stock==0 and parent.carried.count==1
  and pair.construction_custody_0338.count==1 and pair.construction_task_0338==parent)
+-- Both outbound and restitution travel can encounter forest. Measured stall
+-- admits only the parent's tree dependency, retaining the exact paid kit.
+for _,phase in ipairs{"move-site","return-custody"}do
+ parent.phase=phase;priest.position={x=0,y=0};tree.position={x=1.2,y=0};tree.valid=true
+ parent.access_route_best_1285=nil
+ local before=mined
+ attempt();game.tick=game.tick+181
+ assert(Builder.service_pair(pair,"measured-construction-stall").detail=="source-access-clearance-requested")
+ assert(Builder.source_clearance_active_1285(pair)and Arbiter.action(pair).kind=="acquisition"
+  and stock==0 and parent.carried.count==1 and pair.construction_custody_0338.count==1)
+ Dispatcher.service_pair(pair,"paid-kit-tree-start");game.tick=game.tick+100
+ Dispatcher.service_pair(pair,"paid-kit-tree-mined");game.tick=game.tick+5
+ Dispatcher.service_pair(pair,"paid-kit-wood-return")
+ assert(mined==before+1 and not pair.direct_acquisition_custody_0513
+  and not pair.direct_acquisition_task_0336 and stock==0
+  and parent.carried.count==1 and pair.construction_custody_0338.count==1,
+  "access dependency stole the paid construction kit or failed real wood custody")
+end
+assert(wood==6 and mined==3)
 -- Revoked unladen access cannot mine, fail, or complete a foreign order.
 priest.position={x=0,y=0};stock=1;tree.valid=true;parent.carried=nil;parent.phase="move-source"
 pair.construction_custody_0338=nil;parent.source_contact_1285=nil
@@ -89,7 +108,7 @@ pair.construction_task_0338=nil
 local foreign={kind="combat",status="active",source="foreign",task={}}
 pair.order_queue_0469.current=foreign;pair.active_order_0469=foreign
 local _,why=Direct.service_pair(pair,"revoked-access")
-assert(why=="construction-source-clearance-context-changed"and mined==1 and stock==1
+assert(why=="construction-source-clearance-context-changed"and mined==3 and stock==1
  and pair.order_queue_0469.current==foreign and foreign.status=="active")
 print("PASS autonomous source clearance, native custody, parent resumption and foreign-order guards")
 

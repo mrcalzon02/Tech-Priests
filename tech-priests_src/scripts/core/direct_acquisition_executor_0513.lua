@@ -163,6 +163,15 @@ local function release_clamp(p,why)
  p.movement_controller_clamp_0418=nil;if p.movement_controller_state_0418=="work-clamped"then p.movement_controller_state_0418="idle"end
  local f=rawget(_G,"tech_priests_clear_movement_lease_0518");if type(f)=="function"then pcall(f,p,why or"direct-release-clamp")else p.movement_lease_0518=nil end
 end
+local function release_return_movement_1285(p)
+ local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+ if not(controller and type(controller.request_status)=="function"
+   and type(controller.stop)=="function")then return false end
+ local ok,status=pcall(controller.request_status,p)
+ if not(ok and status and status.active==true and status.owner=="direct-acquisition-0513")then return false end
+ local stopped,accepted=pcall(controller.stop,p,"direct-custody-deposited-0513")
+ return stopped and accepted==true
+end
 local function clamp_for_work(p)
  local f=rawget(_G,"tech_priests_stop_movement_0418");if type(f)~="function"then return false,"stop-authority-unavailable"end
  local ok,d=pcall(f,p,"direct-acquisition-work-clamp-0513");if not(ok and d==true)then return false,d end
@@ -278,7 +287,7 @@ local function atomic_deposit(p,c)
 end
 
 local function reset_target_state(state,t)
- clear_due(t);state.return_contact=nil;state.target_id=nil;state.target_label=nil;state.last_distance=nil;state.last_progress_tick=nil;state.last_move_tick=nil;state.work_started_tick=nil
+ clear_due(t);state.return_contact=nil;state.return_contact_best_1285=nil;state.return_contact_progress_tick_1285=nil;state.return_contact_tried_1285=nil;state.target_id=nil;state.target_label=nil;state.last_distance=nil;state.last_progress_tick=nil;state.last_move_tick=nil;state.work_started_tick=nil
 end
 local function fail_unsafe(p,t,key,state,why)
  release_clamp(p,why);clear_parent(p,key,t);p.direct_acquisition_custody_0513=nil;phase(p,"failed",why);p.mode="direct-acquisition-failed";queue_terminal(p,"failed",why,nil,t);record("unsafe-failure-0513",p,why);return false,why
@@ -289,6 +298,7 @@ end
 
 local function finish_deposit(p,t,cur,key,state,c)
  local ok,why=atomic_deposit(p,c);if not ok then p.mode="direct-acquisition-deposit-blocked";phase(p,"deposit-blocked",why);record("deposit-blocked-0513",p,why);return true,"deposit-blocked"end
+ release_return_movement_1285(p)
  p.direct_acquisition_custody_0513=nil;state.return_contact=nil;state.last_deposit_item=c.item;state.last_deposit_count=c.count;record("custody-deposited-0513",p,c.item.." x"..c.count);stat("deposited-item:"..c.item,c.count)
  if not t then release_clamp(p,"task-lost-after-custody");p.mode="direct-acquisition-failed";phase(p,"failed","task-lost-after-custody");queue_terminal(p,"failed","task-lost-after-custody");return false,"task-lost-after-custody"end
  t.gathered_units=(tonumber(t.gathered_units)or 0)+c.count
@@ -314,8 +324,21 @@ end
 -- Resolve a stable *reachable* contact point in the 2-tile deposit radius;
 -- the physical distance gate remains authoritative for actual inventory deposit.
 local function station_contact(p,state)
- if state.return_contact and dist2(state.return_contact,p.station.position)<=M.station_distance_sq then
-  return state.return_contact
+ local previous=state.return_contact
+ local function contact_key(pos)return string.format("%.3f:%.3f",pos.x,pos.y)end
+ if previous and dist2(previous,p.station.position)<=M.station_distance_sq then
+  local remaining=math.sqrt(dist2(previous,p.priest.position))
+  local checked,legal=pcall(function()return p.priest.surface.can_place_entity{
+   name=p.priest.name,position=previous,force=p.priest.force}end)
+  if checked and legal and(not state.return_contact_best_1285
+    or remaining<=state.return_contact_best_1285-.2)then
+   state.return_contact_best_1285=remaining;state.return_contact_progress_tick_1285=now()
+  elseif not(checked and legal)or now()-(state.return_contact_progress_tick_1285 or now())>=180 then
+   state.return_contact_tried_1285=state.return_contact_tried_1285 or{}
+   state.return_contact_tried_1285[contact_key(previous)]=true
+   state.return_contact=nil
+  end
+  if state.return_contact then return state.return_contact end
  end
  local base=p.station.position
  local surface=p.priest.surface
@@ -336,7 +359,8 @@ local function station_contact(p,state)
     return surface.can_place_entity({name=unit_name,position=pos,force=force})
    end)
    if ok and value==true then legal=true end
-   if legal and dist2(pos,base)<=M.station_distance_sq then
+   if legal and dist2(pos,base)<=M.station_distance_sq
+     and not(state.return_contact_tried_1285 and state.return_contact_tried_1285[contact_key(pos)])then
     -- Favor a legal position closer to the station, then the walking distance
     -- among equivalent contact points; never select the outermost ring first.
     local distance=dist2(pos,p.priest.position)
@@ -347,6 +371,8 @@ local function station_contact(p,state)
  end
  if best then
   state.return_contact=best
+  state.return_contact_best_1285=math.sqrt(dist2(best,p.priest.position))
+  state.return_contact_progress_tick_1285=now()
   record("station-contact-selected-0513",p,"pos="..safe(best.x)..","..safe(best.y))
   return best
  end

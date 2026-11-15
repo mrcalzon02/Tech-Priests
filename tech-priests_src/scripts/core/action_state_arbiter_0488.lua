@@ -586,6 +586,10 @@ function M.action(p)
     kind,reason="consecration","refund-custody"
   elseif p.idle_player_conversation_0181 or p.idle_conversation then kind,reason="conversation","conversation-surface"
   elseif refund_delayed and order_kind=="consecration" then kind,reason="idle","refund-retry-backoff"
+  elseif source_clearance then
+    kind,reason="acquisition","construction-source-access-clearance-1285"
+    local access=p.construction_source_clearance_1285
+    target=valid(access.tree)and access.tree or p.station;position=target.position
   elseif active_construction and physical_build_cargo then
     -- An incumbent physically carried 0338 item must reach the original
     -- builder before another strict recipe or routine order can take over.
@@ -593,10 +597,6 @@ function M.action(p)
     kind,reason="construction","active-construction-custody"
     target=active_construction.target
     position=valid(target)and target.position or active_construction.position
-  elseif source_clearance then
-    kind,reason="acquisition","construction-source-access-clearance-1285"
-    local access=p.construction_source_clearance_1285
-    target=valid(access.tree)and access.tree or p.station;position=target.position
   elseif machine_rec and(order_kind=="crafting"or strict_machine_output
       or(p.machine_logistics_0528 and p.machine_logistics_0528.custody))then
     -- Only 0528's exact real-output/strict-ingredient probe can authorize
