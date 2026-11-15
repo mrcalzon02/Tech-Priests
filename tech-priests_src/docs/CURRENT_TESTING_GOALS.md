@@ -1,5 +1,12 @@
 # Current Testing Goals
 
+## 2026-11-14 - Close factory handoff and staffed arena failures
+
+Verify independent maintenance/factory admission fairness, source-less laboratory yielding and paid ranked workforce construction together in native runs. Preserve existing physical cargo and direct rank ownership. All 47 Lua groups and seven Python tests pass, and native maintenance still passes all four ranks.
+
+The fresh workforce arena built two stations per faction but failed science and combat at tick 110040. Continue inspecting the original native failures rather than counting station growth as factory success. The diagnostic factory reached 32 green packs with zero military; require actual sustained red/green/military supply and research, then fresh full-objective and four-way participant combat acceptance.
+
+
 ## 2026-11-14 - Finish native science supply and ranked workforce
 
 Revalidate retirement of fulfilled automatic reserves, exact independent furnace ore/fuel tasks and collision-clear mining access. Native continuation proved both real brick furnaces operating and ore production resumed across all four factions. Preserve explicit orders and held inventory; no output is credited by task retirement or movement arrival.

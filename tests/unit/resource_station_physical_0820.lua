@@ -742,6 +742,39 @@ assert(Expansion.service_station_expansion_assignment(pair)
   "vacated site must allow a new owned ghost without new station items")
 print("[resource-station-ghost-site-0256] PASS occupied sites denied and carried item conserved")
 
+-- Finish the incumbent paid resource build before testing autonomous staff.
+for _=1,30 do
+  game.tick=game.tick+60
+  Expansion.service_station_expansion_assignment(pair)
+  if carried_writ.status=="complete"then break end
+end
+assert(carried_writ.status=="complete"and not pair.station_expansion_0256)
+physical=nil;ghost=nil;stock=1
+pair.independent_emergency_operation_0184={enabled=true}
+pair.priest.position={x=0,y=0}
+local enabled_children=0
+tech_priests_set_emergency_operation_0184=function(child,enabled,reason)
+  assert(child==storage.tech_priests.pairs_by_station[802]and enabled
+    and reason=="independent-factory-workforce")
+  enabled_children=enabled_children+1
+  child.independent_emergency_operation_0184={enabled=true}
+  return true
+end
+assert(Expansion.request_station_expansion(pair,"workforce:factory",
+  pair.independent_emergency_operation_0184,"paid-workforce",0))
+local staff_writ=pair.station_expansion_0256
+local builds_before_staff=built_count
+for _=1,30 do
+  game.tick=game.tick+60
+  Expansion.service_station_expansion_assignment(pair)
+  if staff_writ.status=="complete"then break end
+end
+assert(staff_writ.status=="complete"and built_count==builds_before_staff+1
+  and stock==0 and enabled_children==1 and staff_writ.workforce_child_1172
+  and storage.tech_priests.pairs_by_station[802].independent_emergency_operation_0184.enabled,
+  "workforce must debit one real kit, pair the child and confirm inherited autonomy")
+print("[factory-workforce-physical] PASS paid native station, exact rank edge and autonomous paired child")
+
 
 
 

@@ -100,7 +100,14 @@ local function execute(pair,family,reason)
   end
   return result
  end
- local spec=EXECUTORS[family];if spec then return call_module(spec[1],spec[2],"service_pair",pair,reason)end;return{processed=1,waiting=family~="idle"and 1 or 0,detail=family=="idle"and"idle"or"compatibility-leaf-family"}
+ local spec=EXECUTORS[family];if spec then
+  local result=call_module(spec[1],spec[2],"service_pair",pair,reason)
+  if family=="machine-logistics"and pair.independent_emergency_operation_0184
+      and pair.independent_emergency_operation_0184.enabled==true then
+   pair.factory_service_turn_due_0510=false
+  end
+  return result
+ end;return{processed=1,waiting=family~="idle"and 1 or 0,detail=family=="idle"and"idle"or"compatibility-leaf-family"}
 end
 local function family_owned(r,family)local key=OWNERSHIP[family];return key~=nil and r[key]~=false end
 local function relinquish_unladen_direct_movement(pair,family)
@@ -805,6 +812,22 @@ function M.service_pair(pair,reason)
    return {processed=1,acted=1,detail="ranked-physical-expansion"}
   end
  end
+ -- Each independent commander recruits only its own immediate lower rank,
+ -- using counted station kits and the original physical expansion executor.
+ -- This admission reserves future work; it does not claim a station built.
+ if expansion and type(expansion.request_factory_workforce)=="function"
+     and now()>=(pair.next_factory_workforce_plan_1172 or 0)then
+  pair.next_factory_workforce_plan_1172=now()+600
+  local ok,issued,why=pcall(expansion.request_factory_workforce,pair)
+  if not ok then
+   record("factory-workforce-admission-error",pair,safe(issued))
+   stat("failures")
+  elseif issued then
+   publish_action(pair,{kind="station-expansion",reason="independent-factory-workforce"},
+     "station-expansion","waiting",why)
+   return {processed=1,waiting=1,detail="paid-ranked-workforce-requested"}
+  end
+ end
  -- A verified 0837 courier reservation is a FUTURE-work barrier only.
  -- A busy priest must finish existing orders and physically held inventory,
  -- but an unladen priest must not immediately acquire a fresh routine order
@@ -1013,6 +1036,28 @@ function M.service_pair(pair,reason)
  local moving=pair.movement_request_0418
  if moving and (tonumber(moving.expires_tick)or now())>=now() then maintenance_free=false end
  if valid(pair.combat_target) then maintenance_free=false end
+ -- Independent factory service gets one admission between fresh maintenance
+ -- duties. Otherwise every completed repair immediately discovers another
+ -- repair, permanently starving already-funded assembler deliveries.
+ local op=pair.independent_emergency_operation_0184
+ if maintenance_free and op and op.enabled==true
+     and pair.factory_service_turn_due_0510~=false then
+  local candidate=pair.machine_logistics_candidate_0528
+  local machine=candidate and candidate.machine
+  local read,recipe=pcall(function()return valid(machine)and machine.get_recipe()end)
+  local jobs=op.magos_ratio_plan_0257 and op.magos_ratio_plan_0257.factory_component_jobs_1150
+  local job=read and recipe and jobs and jobs[recipe.name]
+  if job and job.researched==true and job.output_deficient==true
+      and(tonumber(job.configured)or 0)>0
+      and machine.force==pair.station.force and machine.surface==pair.station.surface
+      and(tonumber(candidate.expires_tick)or 0)>=now()then
+   local action=classifier(pair)
+   if family_for(pair,action)=="machine-logistics"then
+    maintenance_free=false
+    pair.maintenance_discovery_wait_0510="funded-factory-service-turn"
+   end
+  end
+ end
  if maintenance_free and now()>=(pair.next_maintenance_discovery_0510 or 0) then
   pair.next_maintenance_discovery_0510=now()+60
   local repair=rawget(_G,"TechPriestsRepairExecutor0516")
@@ -1025,8 +1070,10 @@ function M.service_pair(pair,reason)
   end
   if not accepted and rites and type(rites.submit_or_assign_consecration_task)=="function" then
    local ok,why=pcall(rites.submit_or_assign_consecration_task,pair,nil,"dispatcher-maintenance-discovery")
+   accepted=ok and why==true
    if not ok then pair.maintenance_discovery_error_0510=tostring(why) end
   end
+  if accepted and op and op.enabled==true then pair.factory_service_turn_due_0510=true end
  end
  -- Only issue routine orders after defense/expansion can take a free priest.
  local craft=pair.emergency_craft

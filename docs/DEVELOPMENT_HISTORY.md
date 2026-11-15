@@ -1,5 +1,14 @@
 # Tech Priests Development History
 
+## 2026-11-14 - Productive service admissions and paid ranked workforce
+
+Native inspection found that repeated fresh repair discovery starved funded factory ingredient trips. Independent commanders now alternate maintenance and funded factory-service admissions through the existing dispatcher. Existing orders, physical cargo and hostile incidents retain their owners. A source-less laboratory request also yields its recommendation while retaining its original target/request identity; it resumes when real science stock exists and the intervening carrier has finished its cargo.
+
+Independent commanders now request immediate lower-rank workforce stations against actual local factory load, free command capacity and counted station kits or a verified physical surplus donor. Existing 0256/0824 construction owns travel, native placement, one-kit custody/debit, pairing and exact hierarchy validation. Only after the real child is linked does the existing emergency-operation owner enable its independent planning. Player assistance mode does not recruit workers. Explicit orders, held items and reserved recovery/courier workers prevent recruitment.
+
+Validation: 47 Lua groups and seven Python arena tests pass, including paid physical station construction and inherited child autonomy. The native all-rank maintenance regression passes with 120 operations, eight repairs and natural decay at all four ranks. The first fresh workforce arena physically built two stations per faction but still FAILED factory/combat gates: zero science and zero participant contacts by tick 110040. This failure remains evidence; ranked construction alone is not autonomous factory acceptance. A diagnostic factory continuation increased green production from 12 to 32 while military remained zero; a source-less laboratory wait was then identified and repaired. Fresh science, force-wide production and actual arena combat remain open.
+
+
 ## 2026-11-14 - Fulfilled reserves and physical ore access
 
 Native science recovery still retained an unladen twelve-stone bootstrap task with 403 usable stone. The raw governor now retires only its own automatic, already-funded reserve, preserving active explicit orders, timed extraction and actual mining custody. Independent furnace-only iron/copper recipes now request bounded ore/fuel through the canonical raw child when generic reserve sweeping is disabled. An obsolete parent ingredient wait cannot replace that active furnace dependency. The furnace recipe and its exact raw child remain separate owners.

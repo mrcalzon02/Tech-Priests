@@ -197,10 +197,11 @@ end
 -- original ore, not merely the best angular candidate. When the outer
 -- perimeter is blocked, search a bounded inner band before giving up.
 -- Ordinary station placement keeps its existing perimeter-only behavior.
-local function find_station_ghost_position(pair, station_name, preferred_angle, required_target, excluded_sites, snap_margin)
+local function find_station_ghost_position(pair, station_name, preferred_angle, required_target, excluded_sites, snap_margin, support_radius)
   if not valid_pair(pair) then return nil end
   local station = pair.station
   local radius = refresh_pair_radius and refresh_pair_radius(pair) or pair.radius or 20
+  if support_radius then radius=math.min(radius,support_radius)end
   radius = math.max(8, radius or 20)
   -- 0912/0929: the Intermediate/Junior follow-up must leave room for real
   -- grid snapping in both command radius and FORWARD progress to natural ore.
@@ -357,7 +358,8 @@ local function resource_station_link_ready_0820(rec, built)
   -- Derive authority from the persisted resource objective, not a mutable
   -- bootstrap hint that older save records may not carry.
   if not (rec and type(rec.blocked_item) == "string"
-      and rec.blocked_item:sub(1, 9) == "resource:") then return true end
+      and(rec.blocked_item:sub(1, 9) == "resource:"
+        or rec.blocked_item:sub(1,10)=="workforce:")) then return true end
   local parent = get_pair_by_station_unit(rec.requester_station_unit)
   local child = built and get_pair_by_station_unit(built.unit_number)
   if not (valid_pair(parent) and valid_pair(child) and child.station == built) then
@@ -393,6 +395,31 @@ local function resource_station_link_ready_0820(rec, built)
     end
     if not peer then return false, "resource-station-not-junior-peer" end
   end
+  return true
+end
+
+local function activate_workforce_child_1172(rec,built)
+  if not(rec and rec.workforce_bootstrap_1172)then return true end
+  local linked,why=resource_station_link_ready_0820(rec,built)
+  if not linked then return false,why end
+  local parent=get_pair_by_station_unit(rec.requester_station_unit)
+  local child=get_pair_by_station_unit(built.unit_number)
+  local op=parent.independent_emergency_operation_0184
+  if not(op and op.enabled==true)then return true end
+  local child_op=child.independent_emergency_operation_0184
+  if not(child_op and child_op.enabled==true)then
+    local activate=rawget(_G,"tech_priests_set_emergency_operation_0184")
+    if type(activate)~="function"then return false,"workforce-autonomy-owner-unavailable"end
+    child.emergency_operation_auto_allowed_0190=true
+    child.logistic_frustration_due_tick=game.tick
+    local ok,enabled=pcall(activate,child,true,"independent-factory-workforce")
+    child_op=child.independent_emergency_operation_0184
+    if not(ok and enabled==true and child_op and child_op.enabled==true)then
+      return false,"workforce-autonomy-not-confirmed"
+    end
+  end
+  rec.workforce_child_1172={station_unit=built.unit_number,
+    priest_unit=child.priest.unit_number,parent_unit=station_unit(parent),tick=game.tick}
   return true
 end
 
@@ -447,7 +474,8 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
   local required_rank = M.required_worker_rank_for_pair(requester_pair)
   local resource_writ=type(blocked_item)=="string"
       and blocked_item:sub(1,9)=="resource:"
-  if resource_writ then
+  local workforce_writ=type(blocked_item)=="string"and blocked_item:sub(1,10)=="workforce:"
+  if resource_writ or workforce_writ then
     local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
     if hierarchy and type(hierarchy.direct_capacity_remaining)=="function"
         and math.floor(rank_number(requester_pair)or 1)>1 then
@@ -461,9 +489,9 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
   -- Physical remote-resource relay: the actual parent builds its immediate
   -- lower-rank successor, THEN the new paired priest builds the next link.
   -- Existing subordinates retain their own assignments and inventory.
-  local worker=resource_writ and requester_pair
+  local worker=(resource_writ or workforce_writ) and requester_pair
       or find_exact_rank_subordinate(requester_pair,required_rank)
-  local commander_bootstrap=resource_writ
+  local commander_bootstrap=resource_writ or workforce_writ
   local worker_unit=worker and station_unit(worker)
   if worker_unit
       and storage.tech_priests.station_expansion_by_worker_0256[worker_unit] then
@@ -471,7 +499,11 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
   end
   -- Reserve the physical builder BEFORE creating a ghost, otherwise a
   -- second writ for a busy commander leaves an orphan station ghost.
-  local position = find_station_ghost_position(requester_pair, station_item, preferred_angle)
+  -- Support stations retain overlap with their parent's physical supplies.
+  -- Resource-frontier station geometry keeps its original outer perimeter.
+  local support_radius=workforce_writ and .5*(refresh_pair_radius
+    and refresh_pair_radius(requester_pair)or requester_pair.radius or 20)or nil
+  local position = find_station_ghost_position(requester_pair, station_item, preferred_angle,nil,nil,nil,support_radius)
   if not position then return false end
   local ghost = create_station_ghost(requester_pair, station_item, position)
   if not (ghost and ghost.valid) then return false end
@@ -485,6 +517,7 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
     required_worker_rank = required_rank,
     worker_station_unit = worker and station_unit(worker) or nil,
     commander_bootstrap = commander_bootstrap,
+    workforce_bootstrap_1172 = workforce_writ or nil,
     station_item = station_item,
     station_entity = station_item,
     blocked_item = blocked_item,
@@ -549,6 +582,77 @@ function M.request_station_expansion(requester_pair, blocked_item, op, note, pre
   end
   diag("expansion #" .. tostring(id) .. " requester=" .. tostring(requester_unit) .. " worker=" .. tostring(rec.worker_station_unit or "none") .. " station=" .. station_item .. " blocked=" .. tostring(blocked_item))
   return true
+end
+
+function M.request_factory_workforce(pair)
+  if not valid_pair(pair)then return false,"invalid-workforce-owner"end
+  local op=pair.independent_emergency_operation_0184
+  if not(op and op.enabled==true)or rank_number(pair)<=1 then return false,"workforce-not-autonomous-commander"end
+  ensure()
+  if storage.tech_priests.pairs_by_station[station_unit(pair)]~=pair
+      or pair.priest.force~=pair.station.force or pair.priest.surface~=pair.station.surface then
+    return false,"workforce-foreign-owner"
+  end
+  if storage.tech_priests.station_expansion_by_worker_0256[station_unit(pair)]then return false,"workforce-builder-reserved"end
+  local courier=rawget(_G,"TechPriestsResourceReturnCourier0837")
+    or package.loaded["scripts.core.resource_return_courier_0837"]
+  if courier and type(courier.worker_reserved)=="function"and courier.worker_reserved(pair)then
+    return false,"workforce-resource-courier-reserved"
+  end
+  if StarvationReversal0850.future_worker_reserved(pair)
+      or StationRecycling0822.reservation_for(pair)then
+    return false,"workforce-recovery-worker-reserved"
+  end
+  for _,field in ipairs{"direct_acquisition_custody_0513","machine_logistics_custody_0528",
+    "construction_task_0338","construction_custody_0338","energy_family_custody_0707",
+    "item_family_custody_0702","inventory_transfer_custody_0687","emergency_production_custody_0514",
+    "emergency_facility_feed_custody_0357","repair_pack_custody_0516","consecration_refund_custody_0515",
+    "defense_task_0259"}do if pair[field]then return false,"workforce-incumbent:"..field end end
+  if pair.combat_target and pair.combat_target.valid then return false,"workforce-hostile-incident"end
+  if pair.emergency_craft and pair.emergency_craft.station_craft_pending_0514 then return false,"workforce-handcraft-owned"end
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current
+  if order and order.status=="active"and order.source~="emergency_acquire"
+      and order.source~="repair_executor_0516"and order.source~="consecration_executor_0515"then
+    return false,"workforce-explicit-order-owned"
+  end
+  local hierarchy=rawget(_G,"TECH_PRIESTS_COMMAND_HIERARCHY_0480")
+  local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if not(hierarchy and type(hierarchy.direct_capacity_remaining)=="function"
+      and type(hierarchy.direct_subordinates)=="function"and type(hierarchy.is_direct_subordinate)=="function"
+      and stock and type(stock.generic_item_count)=="function")then return false,"workforce-authority-unavailable"end
+  local free=hierarchy.direct_capacity_remaining(pair)
+  if not(tonumber(free)and free>0)then return false,"workforce-command-capacity-full"end
+  local item=M.allowed_station_item_for_pair(pair)
+  local available=stock.generic_item_count(pair,item)
+  if not(tonumber(available)and available>0)and not StationSurplusResupply1208.find_donor(pair,item)then
+    return false,"workforce-no-counted-kit"
+  end
+  local radius=refresh_pair_radius and refresh_pair_radius(pair)or pair.radius or 20
+  local surface=pair.station.surface
+  if not surface.count_entities_filtered then return false,"workforce-load-unreadable"end
+  local load=surface.count_entities_filtered{force=pair.station.force,position=pair.station.position,
+    radius=radius,type={"assembling-machine","furnace","mining-drill","lab"}}
+  if load<1 then return false,"workforce-no-factory-load"end
+  local children=hierarchy.direct_subordinates(pair)
+  local count=0
+  for _,child in pairs(children or{})do
+    if valid_pair(child)and child.station.force==pair.station.force
+        and child.station.surface==pair.station.surface
+        and hierarchy.is_direct_subordinate(pair,child)then count=count+1 end
+  end
+  local desired=math.max(1,math.ceil(load/8))
+  if count>=desired then return false,"workforce-current-coverage-sufficient"end
+  local angle=count*2.3999632297
+  if type(hierarchy.superior)=="function"then
+    local parent=hierarchy.superior(pair)
+    if valid_pair(parent)and hierarchy.is_direct_subordinate(parent,pair)then
+      angle=angle+math.atan(pair.station.position.y-parent.station.position.y,
+        pair.station.position.x-parent.station.position.x)
+    end
+  end
+  local issued=M.request_station_expansion(pair,"workforce:factory",op,"independent-factory-workforce",angle)
+  if issued then pair.factory_workforce_plan_1172={tick=game.tick,item=item,load=load,desired=desired,children=count}end
+  return issued==true,issued and"paid-ranked-workforce-requested"or"workforce-site-or-builder-unavailable"
 end
 
 local function find_ghost_for_record(pair, rec)
@@ -1199,6 +1303,8 @@ function M.service_station_expansion_assignment(worker_pair)
         if not done then rec.phase = why; return true end
       end
     end
+    local activated,activation_reason=activate_workforce_child_1172(rec,built)
+    if not activated then rec.phase=activation_reason;return true end
     finish_record(rec, "complete", "physical station exists and cargo reconciled")
     return false
   end
@@ -1664,6 +1770,8 @@ function M.service_station_expansion_assignment(worker_pair)
     rec.phase = cargo_reason
     return true
   end
+  local activated,activation_reason=activate_workforce_child_1172(rec,entity)
+  if not activated then rec.phase=activation_reason;return true end
   finish_record(rec, "complete", "constructed by subordinate from carried physical item")
   if tech_priests_draw_emergency_operation_status_0184 then
     tech_priests_draw_emergency_operation_status_0184(worker_pair, "[entity=" .. entity.name .. "] range Cogitator constructed")

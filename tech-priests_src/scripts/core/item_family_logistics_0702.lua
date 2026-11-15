@@ -1354,6 +1354,19 @@ function M.recommend_action(pair)
   if type(task)=="table" and task.relay_paused_order_1042 then return nil end
   if type(task)=="table" and task.rail_deferred_0836==true
       and original_rail_expedition_reserved_0836(pair) then return nil end
+  local op=pair.independent_emergency_operation_0184
+  if type(task)=="table"and task.family=="lab-science"
+      and task.phase=="waiting-source"and op and op.enabled==true
+      and not task.carried and not custody then
+    -- Keep this exact laboratory request/reservation, but a source-less
+    -- intent must not monopolize the carrier needed to feed its producers.
+    -- Recheck physical stock on every recommendation and resume only after
+    -- the intervening owner's cargo has reached its destination.
+    if pair.machine_logistics_custody_0528 or pair.direct_acquisition_custody_0513
+        or pair.construction_custody_0338 or pair.energy_family_custody_0707
+        or pair.inventory_transfer_custody_0687 or pair.repair_pack_custody_0516
+        or not source_current(task,pair)then return nil end
+  end
   if type(task) == "table" then
     local target, phase, label = action_target(pair, task)
     return {

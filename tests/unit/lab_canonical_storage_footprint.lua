@@ -80,3 +80,24 @@ assert(stock==10 and not pair.item_family_logistics_0702 and not pair.item_famil
  "proxy-owner migration discarded carried ammunition")
 print("PASS counted laboratory science from canonical storage through real movement phase handoff")
 print("PASS hidden proxy exclusion, visible turret admission and exact legacy ammunition refund")
+
+pair.independent_emergency_operation_0184={enabled=true}
+force.current_research={valid=true,name="automation",
+ research_unit_ingredients={{name="automation-science-pack",amount=1}}}
+stock=0
+local waiting={family="lab-science",phase="waiting-source",target=lab,
+ item="automation-science-pack",count=5,request_tick=game.tick}
+pair.item_family_logistics_0702=waiting
+assert(Items.recommend_action(pair)==nil and pair.item_family_logistics_0702==waiting,
+ "source-less laboratory intent monopolized factory production or lost its identity")
+stock=5
+pair.machine_logistics_custody_0528={item="iron-plate",count=2}
+assert(Items.recommend_action(pair)==nil,
+ "new science stock interrupted another physical carrier's delivery")
+pair.machine_logistics_custody_0528=nil
+assert(Items.recommend_action(pair).active and pair.item_family_logistics_0702==waiting,
+ "same laboratory request did not resume after real science stock became available")
+stock=0
+pair.independent_emergency_operation_0184.enabled=false
+assert(Items.recommend_action(pair).active,"player assistance behavior changed")
+print("PASS independent source-less laboratory request yields and resumes without discarding custody")
