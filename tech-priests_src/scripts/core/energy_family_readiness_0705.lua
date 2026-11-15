@@ -14,6 +14,7 @@ local M = {
   max_scan_entities = 160,
   max_pairs_per_scan = 8,
   minimum_fuel_items = 2,
+  minimum_boiler_coal_items = 16,
   minimum_input_fluid = 0.001,
   minimum_output_free = 0.001,
 }
@@ -136,9 +137,10 @@ local function burner_state(entity)
   pcall(function() current = burner.currently_burning end)
   pcall(function() remaining = tonumber(burner.remaining_burning_fuel) or 0 end)
   pcall(function() heat = tonumber(burner.heat) or 0 end)
+  local current_name=type(current)=="string"and current or nil
+  if current and not current_name then pcall(function()current_name=current.name end)end
   return {
-    currently_burning = type(current) == "table" and current.name
-      or type(current) == "string" and current or nil,
+    currently_burning = current_name,
     remaining_burning_fuel = remaining or 0, heat = heat or 0,
   }
 end
@@ -326,6 +328,14 @@ function M.inspect_entity(pair, entity, force)
   local fluid = fluid_prerequisites(entity); local electric, network_id = electric_ready(entity)
   local heat, heat_count = heat_ready(entity); local automated, reasons = M.connected_item_automation(entity)
   local has_item_fuel = fuel_inv ~= nil; local readiness_state, severity
+  local coal_count=0
+  if fuel_inv then pcall(function()coal_count=fuel_inv.get_item_count("coal")end)end
+  local native_coal_boiler=entity.name=="boiler"and entity.type=="boiler"
+    and fuel_count==coal_count
+    and(not burner or not burner.currently_burning or burner.currently_burning=="coal")
+  local fuel_reserve=native_coal_boiler and M.minimum_boiler_coal_items or M.minimum_fuel_items
+  local sufficient=fuel_count>=fuel_reserve
+    or(not native_coal_boiler and burner and burner.remaining_burning_fuel>0)
   if not has_item_fuel then readiness_state,severity="monitor-only","monitor"
   elseif automated then readiness_state,severity="external-item-automation-owned","monitor"
   elseif not burnt_ready then readiness_state,severity="burnt-result-blocked","blocked"
@@ -333,12 +343,12 @@ function M.inspect_entity(pair, entity, force)
   elseif not heat then readiness_state,severity="heat-network-missing","blocked"
   elseif not fluid.input_ready then readiness_state,severity="input-fluid-not-ready","blocked"
   elseif not fluid.output_ready then readiness_state,severity="output-fluid-not-ready","blocked"
-  elseif fuel_count >= M.minimum_fuel_items or (burner and burner.remaining_burning_fuel > 0) then readiness_state,severity="fuel-sufficient","ready"
+  elseif sufficient then readiness_state,severity="fuel-sufficient","ready"
   else readiness_state,severity="fuel-service-eligible","eligible" end
   local report = { version=M.version,tick=now(),read_only=true,entity=entity,
     entity_name=entity.name,entity_unit=entity.unit_number,entity_type=entity.type,
     station_unit=station_unit(pair),state=readiness_state,severity=severity,
-    has_item_fuel=has_item_fuel,fuel_inventory=fuel_inv,fuel_count=fuel_count,
+    has_item_fuel=has_item_fuel,fuel_inventory=fuel_inv,fuel_count=fuel_count,fuel_reserve_items=fuel_reserve,
     burner=burner,burnt_inventory=burnt_inv,burnt_count=burnt_count,burnt_ready=burnt_ready,
     fluid=fluid,electric_ready=electric,electric_network_id=network_id,
     heat_ready=heat,heat_neighbour_count=heat_count,

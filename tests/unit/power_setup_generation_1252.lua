@@ -49,6 +49,22 @@ for _,item in ipairs({"offshore-pump","boiler","steam-engine","small-electric-po
   prototypes.entity[item].supply_area_distance=2.5
  end
 end
+prototypes.entity["offshore-pump"].tile_width=1;prototypes.entity["offshore-pump"].tile_height=1
+prototypes.entity["offshore-pump"].fluidbox_prototypes={
+ {production_type="output",pipe_connections={{direction=8,
+ positions={{x=0,y=0},{x=0,y=0},{x=0,y=0},{x=0,y=0}}}}}}
+prototypes.entity.boiler.tile_width=3;prototypes.entity.boiler.tile_height=2
+prototypes.entity.boiler.fluidbox_prototypes={
+ {production_type="input",pipe_connections={
+  {direction=12,positions={{x=-1,y=.5},{x=-.5,y=-1},{x=1,y=-.5},{x=.5,y=1}}},
+  {direction=4,positions={{x=1,y=.5},{x=-.5,y=1},{x=-1,y=-.5},{x=.5,y=-1}}}}},
+ {production_type="output",pipe_connections={
+  {direction=0,positions={{x=0,y=-.5},{x=.5,y=0},{x=0,y=.5},{x=-.5,y=0}}}}}}
+prototypes.entity["steam-engine"].tile_width=3;prototypes.entity["steam-engine"].tile_height=5
+prototypes.entity["steam-engine"].fluidbox_prototypes={
+ {production_type="input",pipe_connections={
+  {direction=0,positions={{x=0,y=-2},{x=2,y=0},{x=0,y=2},{x=-2,y=0}}},
+  {direction=8,positions={{x=0,y=2},{x=-2,y=0},{x=0,y=-2},{x=2,y=0}}}}}}
 local Planner=require("scripts.core.power_setup_1252")
 local function check(value,msg)assert(value,"power-setup-1252 "..msg)end
 local ghost={item="tech-priests-emergency-miner",status="ghosted"}
@@ -90,6 +106,11 @@ for i,stage in ipairs(stages)do
   type=stage[3],position={x=request.position.x,y=request.position.y},
   direction=request.direction,force=force,surface=surface}
  if i==4 then built.prototype={supply_area_distance=2.5}end
+ if i==1 or i==2 then
+  built.fluidbox={valid=true,true,get_pipe_connections=function()
+   return{{target_position={x=built.position.x+1,y=built.position.y},target={owner={valid=true}}}}end}
+  if i==2 then built.fluidbox[2]=true end
+ end
  made[#made+1]=built
  game.tick=game.tick+100
 end
@@ -176,3 +197,62 @@ local foreign_load,foreign_reason=Planner.service_pair(pair)
 check(not foreign_load and foreign_reason=="no-unpowered-native-load",
  "foreign laboratory demanded our steam setup")
 print("[power-setup-generation-1252] PASS real stored staged pump/boiler/engine/pole plans; owner, site, stock, energy, foreign-force and ghost retention")
+
+lab.force=force;lab.position={x=24,y=-34};lab.energy=0
+station.position={x=32,y=-32};pair.radius=40
+local pump={valid=true,name="offshore-pump",type="offshore-pump",unit_number=90,
+ position={x=18.5,y=-67.5},force=force,surface=surface,
+ fluidbox={valid=true,true,get_pipe_connections=function()
+  return{{target_position={x=17.5,y=-67.5}}}end}}
+made={lab,pump};pair.structure_construction_requested_item=nil
+placeable=function(spec)
+ if spec.name=="boiler"then
+  return spec.position.x>=18 and spec.position.x<=18.5
+   and spec.position.y>=-61.5 and spec.position.y<=-61
+ end
+ if spec.name=="pipe"then return spec.position.x<19.5 end
+ return false
+end
+local placed=Planner.service_pair(pair)
+local oriented=pair.structure_construction_requested_item
+check(placed and oriented and oriented.item_name=="boiler"
+ and oriented.direction==defines.direction.west,
+ "shoreline boiler failed to align water toward pump and steam toward buildable land")
+check(stock.boiler==2 and not pair.construction_task_0338,
+ "fluid-aware planning consumed a boiler or bypassed its original constructor")
+pair.structure_construction_requested_item=nil
+prototypes.entity.boiler.fluidbox_prototypes=nil
+local unreadable,unreadable_reason=Planner.service_pair(pair)
+check(not unreadable and unreadable_reason=="site-not-verified:boiler",
+ "unknown native fluid ports authorized an invented steam-plant layout")
+print("PASS native prototype ports select a land-facing steam outlet and pump-facing water inlet without spending stock")
+pair.structure_construction_requested_item=nil;made={lab}
+water={{position={x=18,y=-67}}}
+placeable=function(spec)
+ if spec.name=="offshore-pump"then return true end
+ if spec.name=="pipe"then return false end
+ return true
+end
+local trapped,trapped_reason=Planner.service_pair(pair)
+check(not trapped and trapped_reason=="site-not-verified:offshore-pump"
+ and not pair.structure_construction_requested_item,
+ "engine-placeable pump with an obstructed real pipe outlet was admitted")
+placeable=function(spec)
+ if spec.name=="pipe"then return spec.position.x>19 end
+ return true
+end
+local usable=Planner.service_pair(pair)
+check(usable and pair.structure_construction_requested_item.item_name=="offshore-pump",
+ "clear native pump outlet was rejected alongside blocked shoreline directions")
+print("PASS shoreline placement requires a real buildable pump outlet and onward pipe contact")
+pair.structure_construction_requested_item=nil
+made={lab,pump}
+placeable=function(spec)
+ if spec.name=="pipe"and spec.position.x==17.5 and spec.position.y==-67.5 then return false end
+ return true
+end
+local replacement=Planner.service_pair(pair)
+check(replacement and pair.structure_construction_requested_item.item_name=="offshore-pump"
+ and pump.valid and stock["offshore-pump"]==2,
+ "blocked installed intake could not request a separately paid usable pump")
+print("PASS only engine-observed blocked pump outlets permit a new funded native intake")

@@ -5,6 +5,7 @@ game={tick=100}
 storage={tech_priests={pairs_by_station={}}}
 local f={index=1}
 local surface={index=1}
+surface.can_place_entity=function()return true end
 local pair={station={valid=true,unit_number=100,position={x=0,y=0},force=f,surface=surface},
  priest={valid=true,unit_number=101}}
 local function box(contents,flows)

@@ -71,6 +71,7 @@ local function legal(pair,item,pos,direction,r)
  end)
  return ok and clear==true
 end
+local pump_outlet_clear
 local function shoreline(pair,r)
  local surface=pair.station.surface
  if type(surface.find_tiles_filtered)~="function"then
@@ -97,7 +98,8 @@ local function shoreline(pair,r)
     local pos={x=math.floor(tile.position.x)+offset[1]+.5,
                y=math.floor(tile.position.y)+offset[2]+.5}
     for _,direction in ipairs(dirs())do
-     if legal(pair,"offshore-pump",pos,direction,r)then
+     if legal(pair,"offshore-pump",pos,direction,r)
+       and pump_outlet_clear(pair,pos,direction,r)then
       return{position=pos,direction=direction},"engine-approved-shoreline"
      end
     end
@@ -110,17 +112,115 @@ end
 -- 1251 laboratory and 1252 generator planners. Geometric coverage proposes
 -- a site; LuaEntity electric_network_id verifies a real installed connection.
 local NativeElectric=require("scripts.core.native_electric_authority_1263")
+local NativeFluidbox=require("scripts.core.native_fluidbox_1279")
 M.supply_distance=NativeElectric.supply_distance
 local pole_supplies_entity=NativeElectric.coverage_at
+local function plant_ports(item,position,direction)
+ local prototype=prototypes and prototypes.entity and prototypes.entity[item]
+ local width,height,boxes
+ local ok=pcall(function()
+  width=prototype.tile_width;height=prototype.tile_height;boxes=prototype.fluidbox_prototypes
+ end)
+ if not(ok and type(width)=="number"and type(height)=="number"and boxes)then return nil end
+ local quarter=math.floor((direction or 0)/4)%4
+ if quarter%2==1 then width,height=height,width end
+ local center={x=math.floor(position.x)+(width%2)*.5,
+  y=math.floor(position.y)+(height%2)*.5}
+ local inputs,outputs={},{}
+ local vectors={[0]={0,-1},[4]={1,0},[8]={0,1},[12]={-1,0}}
+ local read=pcall(function()
+  for _,box in pairs(boxes)do
+   local list=box.production_type=="output"and outputs or inputs
+   for _,connection in pairs(box.pipe_connections or{})do
+    local offset=connection.positions and connection.positions[quarter+1]
+    local step=vectors[((connection.direction or 0)+(direction or 0))%16]
+    if offset and step then list[#list+1]={x=center.x+offset.x+step[1],
+      y=center.y+offset.y+step[2],dx=step[1],dy=step[2]}end
+   end
+  end
+ end)
+ if not(read and((item=="offshore-pump"and #outputs>0)
+     or(#inputs>0 and(item~="boiler"or #outputs>0))))then return nil end
+ return center,inputs,outputs
+end
+local function source_output_ports(entity)
+ local box=NativeFluidbox.observe(entity);local out={}
+ if box then
+  local index=entity.name=="boiler"and 2 or 1
+  pcall(function()
+   for _,connection in pairs(box.get_pipe_connections(index)or{})do
+    local p=connection.target_position or connection.position
+    if p then out[#out+1]={x=p.x,y=p.y}end
+   end
+  end)
+ end
+ return out
+end
+local function clear_plant_port(pair,p,r)
+ if d2(p,pair.station.position)>(r-.5)^2 then return false end
+ local ok,clear=pcall(function()return pair.station.surface.can_place_entity{
+  name="pipe",position=p,force=pair.station.force,
+  build_check_type=defines and defines.build_check_type and defines.build_check_type.manual}end)
+ return ok and clear==true
+end
+pump_outlet_clear=function(pair,position,direction,r)
+ local _,_,outputs=plant_ports("offshore-pump",position,direction)
+ for _,output in ipairs(outputs or{})do
+  if clear_plant_port(pair,output,r)and clear_plant_port(pair,
+      {x=output.x+output.dx,y=output.y+output.dy},r)then return true end
+ end
+ return false
+end
+local function usable_installed_pump(pair,entity,r)
+ local box=NativeFluidbox.observe(entity)
+ if not box then return true end -- Unobserved is not proof of a failed intake.
+ local ok,connections=pcall(function()return box.get_pipe_connections(1)end)
+ if not(ok and type(connections)=="table"and next(connections))then return true end
+ for _,connection in pairs(connections)do
+  if connection.target then return true end
+  local port=connection.target_position or connection.position
+  if port and clear_plant_port(pair,port,r)then return true end
+ end
+ -- Only an engine-observed obstructed outlet permits a replacement intake.
+ -- The old machine remains untouched; 0338 must spend a real additional kit.
+ return false
+end
 local function near(pair,entity,item,r)
  -- Find real, engine-placeable sites inside this station's territory.
  -- Machines retain the bounded layout; 1256 broadens electric pole sites
  -- to the *native* supply square rather than eight easily obstructed axes.
  -- No pole, power, pipe or fluid is created by this read-only search.
  local best
+ local source_ports=(item=="boiler"or item=="steam-engine")and source_output_ports(entity)or nil
+ if source_ports and #source_ports==0 then return nil end
  local function consider(p,direction)
+  local fluid_score
+  if source_ports then
+   local center,inputs,outputs=plant_ports(item,p,direction)
+   if not center then return end
+   p=center
+   local closest=math.huge
+   for _,input in ipairs(inputs)do if clear_plant_port(pair,input,r)then
+    for _,source in ipairs(source_ports)do closest=math.min(closest,d2(input,source))end
+   end end
+   if closest==math.huge then return end
+   if item=="boiler"then
+    local clear=false
+    for _,output in ipairs(outputs)do
+     if clear_plant_port(pair,output,r)and clear_plant_port(pair,
+       {x=output.x+output.dx,y=output.y+output.dy},r)then clear=true end
+    end
+    if not clear then return end
+   end
+   fluid_score=closest
+  end
   if legal(pair,item,p,direction,r)then
-   local score=d2(p,pair.station.position)+d2(p,entity.position)*.01
+   -- Plant orientation follows its real inlet/outlet before proximity to
+   -- the station. A north-facing boiler beside an eastern lake can make
+   -- its water line enclose the steam outlet and strand a supplied factory.
+   local score=fluid_score and(fluid_score*10000+d2(p,pair.station.position)
+     +d2(p,entity.position)*.01)
+     or d2(p,pair.station.position)+d2(p,entity.position)*.01
    if not best or score<best.score then
     best={position=p,direction=direction,score=score}
    end
@@ -327,7 +427,7 @@ function M.service_pair(pair,opts)
  local machines=find(pair,{"offshore-pump","boiler","generator"},r)
  local pump,boiler,engine
  for _,e in ipairs(machines)do
-  if e.name=="offshore-pump"and not pump then pump=e
+  if e.name=="offshore-pump"and not pump and usable_installed_pump(pair,e,r)then pump=e
   elseif e.name=="boiler"and not boiler then boiler=e
   elseif e.name=="steam-engine"and not engine then engine=e end
  end

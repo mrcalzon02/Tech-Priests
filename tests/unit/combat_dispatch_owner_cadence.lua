@@ -29,7 +29,7 @@ game.tick=1110;M.service_pair(pair,"cargo-test")
 assert(calls==21 and cargo.count==3 and pair.dispatcher_0510.result=="returning-real-coal",
  "combat abandoned the incumbent physical fuel owner")
 print("PASS canonical combat cadence, friendly refusal and original physical cargo owner")
-local deliveries,discoveries,repairs=0,0,0
+local deliveries,discoveries,repairs,route_handoffs=0,0,0,0
 local factory={station={valid=true,unit_number=123,position={x=0,y=0},force=force,surface=surface},
  priest={valid=true,unit_number=124,position={x=0,y=0},force=force,surface=surface},mode="idle"}
 local machine={valid=true,unit_number=125,force=force,surface=surface,position={x=3,y=0},
@@ -44,7 +44,9 @@ end}
 TECH_PRIESTS_ORDER_QUEUE_0469={tick_pair=function()end}
 TECH_PRIESTS_MACHINE_LOGISTICS_FULFILLMENT_0528={service_pair=function()
  deliveries=deliveries+1;return{processed=1,acted=1,detail="actual-factory-delivery"}end}
-TechPriestsRepairExecutor0516={discover_pair=function(p)
+TechPriestsRepairExecutor0516={yield_to_machine_route=function(p)
+ assert(p==factory);route_handoffs=route_handoffs+1
+end,discover_pair=function(p)
  discoveries=discoveries+1;p.order_queue_0469={current={kind="repair",status="active",source="repair_executor_0516"}};return true
 end,service_pair=function(p)
  repairs=repairs+1;p.order_queue_0469.current=nil;return{processed=1,acted=1,detail="actual-maintenance"}
@@ -55,6 +57,7 @@ game.tick=2100;M.service_pair(factory,"maintenance-turn")
 assert(repairs==1 and discoveries==1,"factory delivery starved the next maintenance admission")
 game.tick=2200;M.service_pair(factory,"next-factory-turn")
 assert(deliveries==2 and discoveries==1,"completed maintenance failed to admit the waiting factory")
+assert(route_handoffs==2,"selected machine trips never requested the repair owner's route handoff")
 factory.independent_emergency_operation_0184.enabled=false
 game.tick=2300;M.service_pair(factory,"default-maintenance")
 assert(repairs==2 and deliveries==2,"maintenance mode inherited autonomous factory priority")

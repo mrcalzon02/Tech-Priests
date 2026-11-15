@@ -7,6 +7,7 @@ local pair={station={valid=true,unit_number=1,force=force,surface=surface,positi
  priest={valid=true,unit_number=2,force=force,surface=surface,position={x=0,y=0}},
  independent_emergency_operation_0184={enabled=true,magos_ratio_plan_0257={factory_component_jobs_1150={}}}}
 local stocks={["iron-plate"]=50}
+local input_capacity
 TechPriestsStorageRoleAuthority0686={generic_item_count=function(_,n)return stocks[n]or 0 end}
 local M=require("scripts.core.logistics_machine_fulfillment_0528")
 local function offer(name,id,yield)
@@ -14,7 +15,8 @@ local function offer(name,id,yield)
    products={{name=name,type="item",amount=yield or 1}}}
  local machine={valid=true,type="assembling-machine",name="assembling-machine-1",unit_number=id,
  force=force,surface=surface,position={x=5,y=0},get_recipe=function()return recipe end,
- get_inventory=function(n)if n==2 then return{valid=true,get_item_count=function()return 0 end}end end}
+ get_inventory=function(n)if n==2 then return{valid=true,get_item_count=function()return 0 end,
+  get_insertable_count=function()return input_capacity end}end end}
  pair.independent_emergency_operation_0184.magos_ratio_plan_0257.factory_component_jobs_1150[name]=
  {output_item=name,output_deficient=true,researched=true,required_per_minute=5}
  pair.factory_component_last_receipt_1150={configured=true,built_entity=machine,entity_unit=id,station_unit=1,recipe=name}
@@ -63,3 +65,16 @@ local military=offer("military-science-pack",5,2)
 assert(military.count==5 and stocks["iron-plate"]==50,
  "two-pack native recipe doubled its material budget or spent stock during discovery")
 print("PASS two-minute transport buffer respects native multi-product recipe yield")
+pair.factory_recipe_service_periods_0528={["logistic-science-pack"]=10800}
+local measured=offer("logistic-science-pack",3)
+assert(measured.count==15,"measured three-minute service round still received only two minutes of inputs")
+input_capacity=4
+assert(offer("logistic-science-pack",3).count==4,
+ "measured transport buffer exceeded real native ingredient capacity")
+input_capacity=0
+assert(not offer("logistic-science-pack",3),"full native input monopolized another futile supply trip")
+input_capacity=100;pair.factory_recipe_service_periods_0528["logistic-science-pack"]=360000
+assert(offer("logistic-science-pack",3).count==50,
+ "stale service interval exceeded the ten-minute buffer or fifty-item physical trip cap")
+assert(stocks["iron-plate"]==50,"transport capacity discovery consumed uncollected stock")
+print("PASS measured service rounds size bounded physical batches and skip full native input slots")

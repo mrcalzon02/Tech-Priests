@@ -27,6 +27,19 @@ assert(route.detail=="physical-route-owner-retained"and stopped==2
  and not pair.movement_request_0418 and pair.repair_0516==task,
  "stale repair lease kept blocking an already-selected unladen machine carrier")
 local force,surface={index=1},{index=1}
+pair.movement_request_0418={owner="repair_executor_0516"}
+pair.canonical_action_0744=nil
+assert(Repair.yield_to_machine_route(pair)and stopped==3 and pair.repair_0516==task,
+ "dispatcher handoff required an otherwise suppressed repair service pulse")
+pair.movement_request_0418={owner="repair_executor_0516"}
+pair.repair_pack_custody_0516={count=1}
+assert(not Repair.yield_to_machine_route(pair)and stopped==3,
+ "route-only handoff preempted a physically owned repair pack")
+pair.repair_pack_custody_0516=nil
+pair.order_queue_0469={current={kind="repair",status="active"}}
+assert(not Repair.yield_to_machine_route(pair)and stopped==3,
+ "routine machine route preempted an explicit repair order")
+pair.order_queue_0469=nil
 local packs=1
 local empty={valid=true,get_item_count=function()return 0 end}
 local stock={valid=true,get_item_count=function(item)return item=="repair-pack"and packs or 0 end,

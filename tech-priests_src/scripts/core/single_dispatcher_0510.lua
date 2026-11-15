@@ -101,6 +101,13 @@ local function execute(pair,family,reason)
   return result
  end
  local spec=EXECUTORS[family];if spec then
+  if family=="machine-logistics"then
+   local repair=rawget(_G,"TechPriestsRepairExecutor0516")
+     or package.loaded["scripts.core.repair_executor_0516"]
+   if repair and type(repair.yield_to_machine_route)=="function"then
+    pcall(repair.yield_to_machine_route,pair)
+   end
+  end
   local result=call_module(spec[1],spec[2],"service_pair",pair,reason)
   if family=="machine-logistics"and pair.independent_emergency_operation_0184
       and pair.independent_emergency_operation_0184.enabled==true then

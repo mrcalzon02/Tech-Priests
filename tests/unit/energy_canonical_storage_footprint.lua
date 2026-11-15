@@ -75,3 +75,38 @@ surface.can_place_entity=function()return false end
 assert(Fetch.approach_position(pair,boiler)==nil,
  "completely blocked boiler fabricated a walkable destination")
 print("PASS blocked boiler corner chooses a real clear side within original transfer reach")
+surface.can_place_entity=function()return true end
+stock=100;delivered=0;pair.priest.position={x=8,y=0}
+game.tick=2000
+services.energy_family_discovery_0707.fn(nil,1)
+assert(pair.energy_family_candidate_0707.count==50,
+ "native boiler still received a short eight-coal trip")
+Energy.service_pair(pair);Energy.service_pair(pair);Energy.service_pair(pair)
+assert(stock==50 and delivered==50 and not pair.energy_family_custody_0707,
+ "full native boiler batch was not physically debited and delivered exactly")
+
+local Readiness=require("scripts.core.energy_family_readiness_0705")
+local fuel_count=8
+local fuel={valid=true,get_contents=function()return{coal=fuel_count}end,
+ get_item_count=function(name)return name=="coal"and fuel_count or 0 end}
+boiler.get_fuel_inventory=function()return fuel end
+boiler.burner={currently_burning={name="coal"},remaining_burning_fuel=1000000}
+surface.find_entities_filtered=function()return{}end
+local warm=Readiness.inspect_entity(pair,boiler,true)
+assert(warm.state=="fuel-service-eligible"and warm.fuel_reserve_items==16
+ and warm.burner.currently_burning=="coal",
+ "burning a last coal hid the native boiler's depleted fuel reserve")
+fuel_count=16
+assert(Readiness.inspect_entity(pair,boiler,true).state=="fuel-sufficient",
+ "native boiler reserve caused continuous unnecessary refueling")
+fuel_count=0;boiler.burner.currently_burning={name="rocket-fuel"}
+assert(Readiness.inspect_entity(pair,boiler,true).state=="fuel-sufficient",
+ "coal reserve overrode another actually burning native fuel")
+boiler.burner.currently_burning={name="coal"};fuel_count=1;boiler.name="modded-boiler"
+assert(Readiness.inspect_entity(pair,boiler,true).state=="fuel-sufficient",
+ "vanilla coal reserve changed an unverified modded burner")
+boiler.name="boiler"
+surface.find_entities_filtered=function()return{{type="inserter",pickup_target=boiler}}end
+assert(Readiness.inspect_entity(pair,boiler,true).state=="external-item-automation-owned",
+ "proactive fuel reserve seized an inserter-owned boiler")
+print("PASS fifty paid coal, warm native boiler reserve, other fuels and external automation ownership")

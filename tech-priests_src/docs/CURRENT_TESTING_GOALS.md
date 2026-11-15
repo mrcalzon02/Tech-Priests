@@ -1,5 +1,14 @@
 # Current Testing Goals
 
+## 2026-11-14 - Validate connected plants, warm boiler reserves and usable recipe service
+
+The native fluid-aware plant run reached powered labs, research completions and red production in three factions by tick 48843. The fourth has an actually observed tree covering its original pump outlet. A paid replacement was physically built, but its water route still refuses; complete physical obstruction/route recovery before accepting all factions. Preserve the prior actual five-damage faction contact and require fresh repeatable combat rather than extrapolating it.
+
+Current code verifies pump/boiler/engine ports during siting, skips blocked fluid outlets, retains waiting priority until a recipe can really craft, sizes input batches to measured service periods and native inventory capacity, and keeps a warm vanilla coal-boiler reserve. Native observation confirms forty-four real coal in a working boiler, powered assemblers and cumulative recovery output of 489/122/50. All 54 Lua groups and seven Python tests pass, and native all-rank maintenance remains passing.
+
+Full science validation now has an explicit --require-factory-objective gate: all nine checkpoints, three physical pairs, actual research completion and simultaneous native red/green/military rates of at least 5 SPM at elapsed 216000. Use 216060 benchmark updates so the final scheduled observer pulse executes. The previous exact-216000-update run is failed/incomplete; do not reinterpret it as accepted. Fresh strict warm-plant science and separately labeled 64-tile arena runs continue. Default arena acceptance, physical supply-chain recovery and sustained throughput remain open.
+
+
 ## 2026-11-14 - Verify real factory growth after construction and defense handoffs
 
 Native 64-tile contact continuation now proves actual participant damage (tick 81474, faction 1 to faction 2, five damage), real paid workforce expansion and recovery of the third faction's previously blocked constructor. Exact adopted production survives defense preemption. Default maintenance still passes all four ranks. The expanded regression run passes 54 Lua groups and seven Python tests.

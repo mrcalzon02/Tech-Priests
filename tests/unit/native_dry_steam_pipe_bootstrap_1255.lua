@@ -4,6 +4,7 @@ package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
 game={tick=3000}
 local force={valid=true,index=1}
 local surface={valid=true,index=1}
+surface.can_place_entity=function()return true end
 storage={tech_priests={pairs_by_station={}}}
 local pair={station={valid=true,unit_number=10,
  position={x=0,y=0},surface=surface,force=force},
@@ -94,6 +95,25 @@ assert(next(pump.fluidbox.get_fluid_segment_contents(1))==nil
 -- A foreign/unknown boiler-type generator cannot acquire a source contract.
 local unknown=Doctrine.inspect_machine(pair,foreign,true)
 assert(unknown==nil,"unknown dry generator received fabricated steam authority")
+local spare={valid=true,unit_number=25,name="offshore-pump",type="offshore-pump",
+ position={x=0,y=3},surface=surface,force=force,
+ fluidbox=fluidbox({{direction="output",filter="water",x=2,y=3}})}
+all[#all+1]=spare
+surface.can_place_entity=function(spec)return not(spec.position.x==6 and spec.position.y==0)end
+Doctrine.scan_pair(pair,true)
+local replacement
+for _,proposal in ipairs(pair.fluid_connection_proposals_0689 or{})do
+ if proposal.machine==boiler and proposal.fluid=="water"then replacement=proposal end
+end
+assert(replacement and replacement.source.entity==spare,
+ "blocked nearest pump hid a usable paid replacement intake")
+table.remove(all);surface.can_place_entity=function()return false end
+Doctrine.scan_pair(pair,true)
+for _,proposal in ipairs(pair.fluid_connection_proposals_0689 or{})do
+ assert(proposal.machine~=boiler,"obstructed pump outlet still published a futile water route")
+end
+surface.can_place_entity=function()return true end
+print("PASS native source selection skips obstructed outlets and uses a real accessible replacement")
 -- Once the actual port switches to a foreign filtered fluid, the original
 -- proposal must fail closed; no pipe may be planned from stale identity.
 game.tick=found_water.expires_tick+1

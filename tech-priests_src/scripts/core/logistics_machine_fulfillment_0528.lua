@@ -676,6 +676,15 @@ end
 local function factory_job_buffer(job)
   return math.max(5,math.ceil((tonumber(job.required_per_minute)or 0)*2))
 end
+local function factory_transport_buffer(pair,job,recipe)
+  local periods=pair.factory_recipe_service_periods_0528
+  local observed=periods and tonumber(periods[recipe.name])or 0
+  -- Use the completed native service round, rather than assuming every
+  -- recipe can be revisited within two minutes. Native input capacity and
+  -- the existing fifty-item cargo cap still bound every physical transfer.
+  local minutes=math.max(2,math.min(10,(observed or 0)/3600))
+  return math.max(5,math.ceil((tonumber(job.required_per_minute)or 0)*minutes))
+end
 local function science_job(job)
   return type(job.output_item)=="string"and job.output_item:find("science%-pack")
 end
@@ -712,9 +721,11 @@ local function ingredient_candidate(pair, machine)
       -- Carry a two-minute demand buffer rather than repeatedly walking
       -- the same route for five low-output crafts. Native insertion and
       -- the existing per-trip cap still enforce the exact paid quantity.
-      cycles=math.max(cycles,math.ceil(factory_job_buffer(job)/math.max(1,yield)))
+      cycles=math.max(cycles,math.ceil(factory_transport_buffer(pair,job,recipe)/math.max(1,yield)))
     end
     local missing = ingredient.amount*cycles - count_inventory(input, ingredient.name)
+    local read,capacity=pcall(function()return input.get_insertable_count(ingredient.name)end)
+    if read and type(capacity)=="number"then missing=math.min(missing,math.max(0,capacity))end
     local available = generic_count(pair, ingredient.name)
     if missing > 0 and available > 0 then
       return {
@@ -1421,13 +1432,41 @@ local function begin_state(pair, candidate)
   record(pair, "task-began", candidate.action .. ":" .. candidate.item)
   return true, "task-began"
 end
+local function recipe_service_ready(machine,recipe)
+  local running=false
+  pcall(function()running=machine.crafting_progress>0 end)
+  if running then return true end
+  local input=machine_input(machine)
+  if not input then return false end
+  for _,ingredient in pairs(recipe.ingredients or{})do
+    if ingredient.type=="fluid"then return false end
+    if count_inventory(input,ingredient.name)<(tonumber(ingredient.amount)or 0)then return false end
+  end
+  return true
+end
 local function clear_state(pair, phase, why)
   local state = pair.machine_logistics_0528
   local machine = state and state.machine
-  if phase=="complete"and valid(machine)and planned_factory_job(pair,machine)then
+  local job=valid(machine)and planned_factory_job(pair,machine)
+  if phase=="complete"and job then
     local recipe=get_recipe(machine)
-    pair.factory_recipe_service_ticks_0528=pair.factory_recipe_service_ticks_0528 or{}
-    pair.factory_recipe_service_ticks_0528[recipe.name]=now()
+    local output=state.action=="clear-output"and state.item==job.output_item
+    local supplied=(tonumber(state.delivered_units_0528)or 0)>0
+      and recipe_service_ready(machine,recipe)
+    -- A partial ingredient delivery (or a refunded failed insert) has not
+    -- serviced this recipe yet. Keep its waiting credit until native work
+    -- can actually start, instead of waiting a full factory round per input.
+    if output or supplied then
+      pair.factory_recipe_service_ticks_0528=pair.factory_recipe_service_ticks_0528 or{}
+      local previous=tonumber(pair.factory_recipe_service_ticks_0528[recipe.name])
+      if previous and now()>previous then
+        local periods=pair.factory_recipe_service_periods_0528 or{}
+        periods[recipe.name]=math.max((tonumber(periods[recipe.name])or 0)*.75,
+          math.min(36000,now()-previous))
+        pair.factory_recipe_service_periods_0528=periods
+      end
+      pair.factory_recipe_service_ticks_0528[recipe.name]=now()
+    end
   end
   release_machine(pair, machine)
   -- Terminal machine logistics must surrender only its own movement route.
@@ -1678,6 +1717,7 @@ local function deliver_supply(pair, state)
   local inserted = insert_inventory(destination, custody.item, custody.count)
   local destination_after = count_inventory(destination, custody.item)
   if inserted > 0 then
+    state.delivered_units_0528=(tonumber(state.delivered_units_0528)or 0)+inserted
     -- A receipt is evidence of an exact physical 0528 station debit and
     -- machine fuel-inventory credit, never permission to mint fuel.
     -- Partial/uncertain transfers remain real custody, but cannot authorize

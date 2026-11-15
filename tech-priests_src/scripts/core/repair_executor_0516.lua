@@ -106,6 +106,16 @@ function M.discover_pair(p,why)
  if pack_count(p)<=0 then return false,"no-repair-pack"end
  return M.submit_or_assign_repair_task(p,nil,why or "maintenance-discovery-0516")
 end
+function M.yield_to_machine_route(p)
+ local machine=p and p.machine_logistics_0528
+ local phase=machine and machine.phase
+ local repair=p and p.repair_0516
+ if not valid_pair(p)or not phase or phase=="complete"or phase=="failed"
+     or phase=="idle"or phase=="none"or repair_order(current_order(p))
+     or p.repair_pack_custody_0516
+     or(repair and tonumber(repair.due_tick)and repair.due_tick>=now())then return false end
+ return release_repair_movement(p,"repair-yield-to-selected-machine-route-0516")
+end
 function M.service_pair(p,why,forced)
  local root=M.root();if root.enabled==false then return result{processed=0,detail="disabled"}end;if not valid_pair(p)then return result{failed=1,detail="invalid-pair"}end;local s=p.repair_0516 or{phase="none"};p.repair_0516=s;s.version=M.version;s.last_service_tick=now();s.last_reason=safe(why or"service")
  if p.repair_pack_custody_0516 then local ok,w=apply_custody(p);if not ok then return result{blocked=1,detail=w}end;if s.abort_after_refund then s.abort_after_refund=nil;clear_state(p,"failed",s.last_blocker or"repair-aborted-after-refund");p.mode=valid(p.combat_target)and"combat"or"idle";return result{acted=1,detail="repair-aborted-after-refund"}end end
@@ -119,7 +129,7 @@ function M.service_pair(p,why,forced)
      and machine_phase and machine_phase~="complete"and machine_phase~="failed"
      and machine_phase~="idle"and machine_phase~="none"
      and not repair_order(current_order(p))and not valid(forced)then
-  release_repair_movement(p,"repair-yield-to-selected-machine-route-0516")
+  M.yield_to_machine_route(p)
   return result{waiting=1,detail="physical-route-owner-retained"}
  end
  if p.machine_logistics_custody_0528 or(machine and machine.custody)

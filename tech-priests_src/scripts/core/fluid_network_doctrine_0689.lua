@@ -88,13 +88,19 @@ local function native_dry_steam_source_1255(e,record,fluid)
  end
  return false
 end
+local function buildable_pipe_target(pair,target)
+ local ok,clear=pcall(function()return pair.station.surface.can_place_entity{
+  name="pipe",position=target,force=pair.station.force,
+  build_check_type=defines and defines.build_check_type and defines.build_check_type.manual}end)
+ return ok and clear==true
+end
 local function source_or_sink(pair,machine,fluid,direction)
  local radius=service_radius(pair);local p=pair.station.position;local entities=routed_find(machine.surface,{area={{p.x-radius,p.y-radius},{p.x+radius,p.y+radius}},force=machine.force,type=FLUID_TYPES,limit=M.max_sources},"standard-fluid-"..direction,"standard-fluid:"..direction..":"..safe(machine.surface.index)..":"..safe(machine.force.index)..":"..fluid,300);local best
  for _,e in pairs(entities)do if valid(e)and e~=machine then local records=port_records(e,{},{});for _,candidate in ipairs(records)do local identities=known_identity(candidate);local wrong=false;for name in pairs(identities)do if name~=fluid then wrong=true break end end;local amount=tonumber(candidate.contents and candidate.contents[fluid])or 0;local total=0;for _,n in pairs(candidate.contents or{})do total=total+(tonumber(n)or 0)end;local free=math.max(0,(tonumber(candidate.capacity)or 0)-total);local eligible=direction=="input"and
       (amount>.001 or native_dry_steam_source_1255(e,candidate,fluid))
       or direction=="output"and not wrong
       and(free>.001 or next(identities)==nil)
-   if eligible and not wrong then for _,target in ipairs(candidate.free_targets or{})do local ok=M.validate_endpoint(e,candidate.index,target,fluid,records,direction=="output");if ok then local score=dist_sq(e.position,machine.position)-(direction=="input"and math.min(amount,100000)*.001 or math.min(free,100000)*.001);if not best or score<best.score then best={entity=e,entity_name=e.name,entity_unit=e.unit_number,fluidbox_index=candidate.index,segment_id=candidate.segment_id,interfaces={target},amount=amount,free_capacity=free,score=score}end end end end
+   if eligible and not wrong then for _,target in ipairs(candidate.free_targets or{})do local ok=M.validate_endpoint(e,candidate.index,target,fluid,records,direction=="output");if ok and buildable_pipe_target(pair,target)then local score=dist_sq(e.position,machine.position)-(direction=="input"and math.min(amount,100000)*.001 or math.min(free,100000)*.001);if not best or score<best.score then best={entity=e,entity_name=e.name,entity_unit=e.unit_number,fluidbox_index=candidate.index,segment_id=candidate.segment_id,interfaces={target},amount=amount,free_capacity=free,score=score}end end end end
   end end end;return best
 end
 local function report_state(records)local missing,blocked={},{};for _,rec in ipairs(records)do if rec.requirement and rec.requirement.name then local amount=tonumber(rec.contents and rec.contents[rec.requirement.name])or 0;if rec.direction=="input"and not rec.connected and amount<=.001 then missing[#missing+1]=rec elseif rec.direction=="output"and not rec.connected and amount>.001 then blocked[#blocked+1]=rec end end end;return missing,blocked end
