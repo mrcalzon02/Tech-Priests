@@ -77,7 +77,7 @@ local function request_move_position(pair,pos,reason,radius)
  if not(valid_pair(pair)and pos)then return false end;local f=rawget(_G,"tech_priests_request_movement_0418");if type(f)~="function"then return false end
  local ok,accepted=pcall(f,pair,pos,reason,{owner="construction-planner-0338",priority=M.move_priority,ttl=M.move_ttl,radius=radius or 1.5,distraction=defines and defines.distraction and defines.distraction.none or nil});return ok and accepted==true
 end
-local function source_approach_position(pair,entity,margin,avoid_station)
+local function source_approach_position(pair,entity,margin,avoid_station,excluded)
  if not(valid_pair(pair)and valid(entity))then return nil end
  entity=physical_source(pair,entity)
  local ok,box=pcall(function()return entity.selection_box end)
@@ -102,8 +102,8 @@ local function source_approach_position(pair,entity,margin,avoid_station)
   {x=x0-gap,y=y0-gap},{x=x0-gap,y=y1+gap},
   {x=x1+gap,y=y0-gap},{x=x1+gap,y=y1+gap},
  }
- local best,score=nil,math.huge
- for _,point in ipairs(points)do
+ local best,score,best_index=nil,math.huge,nil
+ for index,point in ipairs(points)do
   -- Ghost retry standoffs must be on the exterior side of the building,
   -- away from the Cogitator footprint. Choosing the closest point to the
   -- priest can lead straight into the station's impassable collision box.
@@ -116,9 +116,43 @@ local function source_approach_position(pair,entity,margin,avoid_station)
     name=pair.priest.name,position=point,force=pair.station.force}end)
    clear=checked and allowed==true
   end
-  if clear and d<score then best=point;score=d end
+  if clear and not(excluded and excluded[index])and d<score then best=point;score=d;best_index=index end
  end
- return best
+ return best,best_index
+end
+local function construction_source_contact(pair,task)
+ local source=physical_source(pair,task.source_entity)
+ local contact=task.source_contact_1285
+ if task.source_contact_entity_1285~=source
+   or task.source_contact_origin_1285 and dist_sq(task.source_contact_origin_1285,source.position)>.0625 then
+  contact=nil;task.source_contact_tried_1285={}
+ end
+ local remaining=contact and math.sqrt(dist_sq(pair.priest.position,contact))
+ local best=tonumber(task.source_contact_best_1285)
+ local clear=true
+ if contact and pair.station.surface.can_place_entity then
+  local ok,allowed=pcall(function()return pair.station.surface.can_place_entity{
+   name=pair.priest.name,position=contact,force=pair.station.force}end)
+  clear=ok and allowed==true
+ end
+ if contact and clear and(not best or remaining<=best-.2)then
+  task.source_contact_best_1285=remaining;task.source_contact_progress_tick_1285=now()
+ elseif contact and(not clear or now()-(tonumber(task.source_contact_progress_tick_1285)or now())>=180)then
+  local tried=task.source_contact_tried_1285 or{}
+  if task.source_contact_side_1285 then tried[task.source_contact_side_1285]=true end
+  task.source_contact_tried_1285=tried;contact=nil
+ end
+ if not contact then
+  local side
+  contact,side=source_approach_position(pair,source,nil,nil,task.source_contact_tried_1285)
+  if not contact then return nil end
+  task.source_contact_1285=contact;task.source_contact_side_1285=side
+  task.source_contact_entity_1285=source
+  task.source_contact_origin_1285={x=source.position.x,y=source.position.y}
+  task.source_contact_best_1285=math.sqrt(dist_sq(pair.priest.position,contact))
+  task.source_contact_progress_tick_1285=now()
+ end
+ return contact
 end
 local function request_move(pair,target,reason)
  if not valid(target)then return false end
@@ -2440,8 +2474,102 @@ local function construction_active_timeout(pair,task)
  end
  return now()-task.active_started_tick_0338>
    M.request_timeout+(tonumber(task.travel_allowance_ticks_0338)or 0)
+    +math.max(0,math.min(3600,tonumber(task.source_clearance_allowance_ticks_1285)or 0))
     +math.min(M.max_ground_detour_extra_ticks,
       math.max(0,tonumber(task.ground_detour_allowance_ticks_0338)or 0))
+end
+function M.source_clearance_active_1285(pair,child)
+ local context=pair and pair.construction_source_clearance_1285
+ local parent=pair and pair.construction_task_0338
+ child=child or(pair and pair.direct_acquisition_task_0336)
+ local op=pair and pair.independent_emergency_operation_0184
+ if not(valid_pair(pair)and op and op.enabled==true and type(context)=="table"
+   and pair.priest.force==pair.station.force and pair.priest.surface==pair.station.surface
+   and type(parent)=="table"and type(child)=="table"
+   and parent==context.parent and parent.phase=="move-source"
+   and not parent.carried and not pair.construction_custody_0338
+   and child==context.child and child==pair.direct_acquisition_task_0336
+   and child.construction_source_clearance_1285==true
+   and parent.source_entity==context.source and valid(context.source)
+   and context.source.force==pair.station.force and context.source.surface==pair.station.surface
+   and item_count(parent.source_inv,parent.item_name)>0)then return false end
+ local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+ if not(order and order.status=="active"and order.task==child
+   and order.source=="construction-source-clearance-0338")or valid(pair.combat_target)then return false end
+ local tree=context.tree
+ if valid(tree)then
+  return tree.type=="tree"and tree.surface==pair.station.surface
+   and tree.force and tree.force.name=="neutral"
+   and child.current and child.current.entity==tree
+ end
+ local cargo=pair.direct_acquisition_custody_0513
+ return cargo and cargo.item=="wood"and cargo.native_inventory and cargo.native_inventory.valid
+   and(tonumber(cargo.count)or 0)>0 or false
+end
+local function request_source_tree_clearance(pair,task)
+ local op=pair.independent_emergency_operation_0184
+ if not(op and op.enabled==true and task==pair.construction_task_0338
+   and task.phase=="move-source"and task.reserved_0338==true and not task.carried
+   and valid(task.source_entity)and item_count(task.source_inv,task.item_name)>0
+   and task.source_entity.force==pair.station.force and task.source_entity.surface==pair.station.surface
+   and pair.priest.force==pair.station.force and pair.priest.surface==pair.station.surface
+   and(tonumber(task.source_clearance_count_1285)or 0)<8)then return false end
+ if now()<(tonumber(task.source_clearance_probe_tick_1285)or 0)then return false end
+ task.source_clearance_probe_tick_1285=now()+120
+ local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+ if order and order.status=="active"or valid(pair.combat_target)then return false end
+ for _,field in ipairs{"emergency_craft","direct_acquisition_task_0336","direct_acquisition_custody_0513",
+   "construction_custody_0338","machine_logistics_custody_0528","item_family_custody_0702",
+   "energy_family_custody_0707","inventory_transfer_custody_0687","emergency_facility_feed_custody_0357",
+   "emergency_production_custody_0514","station_cargo_custody_0824","repair_pack_custody_0516",
+   "rocket_silo_custody_0710","artillery_custody_0713","roboport_repair_custody_0715",
+   "consecration_refund_custody_0515","defense_task_0259"}do if pair[field]then return false end end
+ if pair.machine_logistics_0528 and pair.machine_logistics_0528.custody then return false end
+ local direct=rawget(_G,"TechPriestsDirectAcquisitionExecutor0513")
+ local queue=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+ if not(direct and type(direct.target_within_bounds)=="function"
+   and queue and type(queue.submit)=="function")then return false end
+ local origin=pair.priest.position;local goal=task.source_entity.position
+ local dx,dy=goal.x-origin.x,goal.y-origin.y;local length=dx*dx+dy*dy
+ if length<.01 then return false end
+ local ok,trees=pcall(function()return pair.station.surface.find_entities_filtered{
+   position=origin,radius=3,type="tree",force="neutral",limit=24}end)
+ if not(ok and type(trees)=="table")then return false end
+ local best,score
+ for _,tree in pairs(trees)do
+  if valid(tree)and tree.type=="tree"and tree.surface==pair.station.surface
+   and tree.force and tree.force.name=="neutral"then
+   local tx,ty=tree.position.x-origin.x,tree.position.y-origin.y
+   local projection=(tx*dx+ty*dy)/length
+   local side=(tx-projection*dx)^2+(ty-projection*dy)^2
+   local checked,eligible=pcall(function()
+    if tree.minable==false or projection<=0 or projection>1 or side>1 then return false end
+    if direct.target_within_bounds(pair,tree.position)~=true then return false end
+    for _,product in pairs(tree.prototype.mineable_properties.products or{})do
+     if product.name=="wood"and product.type~="fluid"then return true end
+    end
+    return false
+   end)
+   local distance=tx*tx+ty*ty
+   if checked and eligible and(not score or distance<score)then best,score=tree,distance end
+  end
+ end
+ if not best then return false end
+ local child={kind="direct-mine-0336",output_item="wood",item_name="wood",count=1,
+   required_count=1,gathered_units=0,construction_source_clearance_1285=true,
+   current={kind="direct-mine-0336",entity=best,output_item="wood"}}
+ local submitted,accepted=pcall(queue.submit,pair,{kind="acquisition",item="wood",task=child,
+   source="construction-source-clearance-0338",purpose="physical-source-access",priority=570})
+ local active=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+ if not(submitted and accepted==true and active and active.task==child)then return false end
+ release_terminal_movement(pair)
+ pair.direct_acquisition_task_0336=child
+ pair.construction_source_clearance_1285={parent=task,child=child,tree=best,source=task.source_entity}
+ task.source_clearance_count_1285=(tonumber(task.source_clearance_count_1285)or 0)+1
+ task.source_clearance_allowance_ticks_1285=math.min(3600,
+   (tonumber(task.source_clearance_allowance_ticks_1285)or 0)+900)
+ record(pair,"source-access-tree-clearance-requested",safe(best.name))
+ return true
 end
 function M.service_pair(pair,reason)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
@@ -2470,6 +2598,15 @@ function M.service_pair(pair,reason)
  restore_orphan_custody(pair)
  defer_unfunded_for_remote(pair)
  local task=pair.construction_task_0338
+ local access=pair.construction_source_clearance_1285
+ if access and not pair.direct_acquisition_custody_0513
+   and pair.direct_acquisition_task_0336~=access.child then
+  pair.construction_source_clearance_1285=nil
+  if task==access.parent then
+   task.source_contact_1285=nil;task.source_contact_tried_1285={}
+   task.source_contact_best_1285=nil
+  end
+ end
  if valid(pair.combat_target)then
   if task and ground_cargo_count(task)>0 then
    return M.abort_pair(pair,"combat-interrupted-ground-cargo")
@@ -2605,7 +2742,7 @@ function M.service_pair(pair,reason)
   task.source_label=source.label
   task.phase="move-source"
  end
- if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if not within_entity_reach(pair.priest.position,task.source_entity,M.pickup_reach_sq,pair) then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
+ if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if not within_entity_reach(pair.priest.position,task.source_entity,M.pickup_reach_sq,pair) then local contact=construction_source_contact(pair,task);if not contact then if request_source_tree_clearance(pair,task)then return{processed=1,waiting=1,detail="source-access-clearance-requested"}end;return{processed=1,blocked=1,detail="source-contacts-unavailable"}end;if not request_move_position(pair,contact,"construction-source-0338",.5)then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
  if task.phase=="pickup"then
   -- A durable original 0836 rail receipt must originate with a measured
   -- native 0338 source debit, not a counter, source-unit guess or ghost.

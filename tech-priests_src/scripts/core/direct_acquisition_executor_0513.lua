@@ -157,7 +157,7 @@ end
 local function required(task)local n=task and task.recipe and tonumber(task.recipe.units)or tonumber(task and task.required_count)or tonumber(task and task.count)or 1;return math.max(1,math.min(50,math.floor(n)))end
 local function clear_due(t)if not t then return end;for _,k in ipairs{"direct_due_tick_0273","direct_due_tick_0312","direct_due_tick_0315","direct_due_tick_0336","direct_started_tick_0336","next_direct_laser_tick_0315","direct_last_visual_tick_0306","direct_last_visual_tick_0336","direct_due_tick_0513","direct_started_tick_0513","direct_remaining_ticks_0513","direct_last_visual_tick_0513","scan_due_tick"}do t[k]=nil end end
 local function clear_parent(p,key,t)clear_due(t);if t then t.current=nil;if t.pump_clearance_1252==p.power_setup_tree_clearance_1252 then p.power_setup_tree_clearance_1252=nil end end;if key then p[key]=nil end;p.target=nil end
-local function queue_terminal(p,status,why,item)local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");if not q then return false end;local order=p.order_queue_0469 and p.order_queue_0469.current or p.active_order_0469;if ProductionOrder.matches(p,order,p.emergency_craft)then return false end;local f=status=="complete"and q.complete_current or q.fail_current;if type(f)~="function"then return false end;local ok,d=pcall(f,p,why,item);return ok and d==true end
+local function queue_terminal(p,status,why,item,task)local q=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469");if not q then return false end;local order=p.order_queue_0469 and p.order_queue_0469.current or p.active_order_0469;if task and task.construction_source_clearance_1285 and not(order and order.task==task and order.source=="construction-source-clearance-0338")then return false end;if ProductionOrder.matches(p,order,p.emergency_craft)then return false end;local f=status=="complete"and q.complete_current or q.fail_current;if type(f)~="function"then return false end;local ok,d=pcall(f,p,why,item);return ok and d==true end
 
 local function release_clamp(p,why)
  p.movement_controller_clamp_0418=nil;if p.movement_controller_state_0418=="work-clamped"then p.movement_controller_state_0418="idle"end
@@ -281,7 +281,7 @@ local function reset_target_state(state,t)
  clear_due(t);state.return_contact=nil;state.target_id=nil;state.target_label=nil;state.last_distance=nil;state.last_progress_tick=nil;state.last_move_tick=nil;state.work_started_tick=nil
 end
 local function fail_unsafe(p,t,key,state,why)
- release_clamp(p,why);clear_parent(p,key,t);p.direct_acquisition_custody_0513=nil;phase(p,"failed",why);p.mode="direct-acquisition-failed";queue_terminal(p,"failed",why);record("unsafe-failure-0513",p,why);return false,why
+ release_clamp(p,why);clear_parent(p,key,t);p.direct_acquisition_custody_0513=nil;phase(p,"failed",why);p.mode="direct-acquisition-failed";queue_terminal(p,"failed",why,nil,t);record("unsafe-failure-0513",p,why);return false,why
 end
 local function replan(p,t,state,why)
  release_clamp(p,why);clear_due(t);if t then t.current=nil end;state.target_id=nil;state.target_label=nil;p.target=nil;p.mode="direct-acquisition-replan";phase(p,"need-target",why);record("replan-0513",p,why);return false,why
@@ -307,7 +307,7 @@ local function finish_deposit(p,t,cur,key,state,c)
   if not transitioned then return fail_unsafe(p,t,key,state,"station-craft-order-transition-failed")end
   clear_due(t);t.current=nil;if key~="emergency_craft"then p.emergency_craft=t;p[key]=nil end;t.station_craft_pending_0337=true;t.station_craft_pending_0513=true;p.target=nil;p.mode="emergency-production-station-craft";phase(p,"station-craft-handoff",t.output_item);record("station-craft-handoff-0513",p,t.output_item);return true,"ready-to-craft"
  end
- clear_parent(p,key,t);p.mode="idle";phase(p,"complete",c.item);queue_terminal(p,"complete","direct-acquisition-complete-0513",c.item);record("complete-0513",p,c.item);return true,"complete"
+ clear_parent(p,key,t);p.mode="idle";phase(p,"complete",c.item);queue_terminal(p,"complete","direct-acquisition-complete-0513",c.item,t);record("complete-0513",p,c.item);return true,"complete"
 end
 -- A Cogitator is a solid station, not a traversable point. An engine
 -- go_to_location aimed at the center of its collision box may loop forever.
@@ -428,6 +428,13 @@ function M.service_pair(p,reason)
  if M.root().enabled==false then return false,"disabled"end;if not valid_pair(p)then return false,"invalid-pair"end
  local t,cur,key=current_task(p);local state=p.dispatcher_direct_0513 or{};p.dispatcher_direct_0513=state;state.version=M.version;state.reason=safe(reason);state.last_seen_tick=now()
  if p.direct_acquisition_custody_0513 then return service_custody(p,t,cur,key,state)end
+ if t and t.construction_source_clearance_1285 then
+  local builder=rawget(_G,"TechPriestsConstructionPlanner0338")or package.loaded["scripts.core.construction_planner"]
+  if not(builder and type(builder.source_clearance_active_1285)=="function"
+    and builder.source_clearance_active_1285(p,t)==true)then
+   return fail_unsafe(p,t,key,state,"construction-source-clearance-context-changed")
+  end
+ end
  if not(t and cur)then phase(p,"none","no-direct-task");return false,"no-direct-task"end
  if t.pump_clearance_1252 and not PumpClearance.authorized_task(p)then
   return fail_unsafe(p,t,key,state,"native-pump-clearance-context-changed")

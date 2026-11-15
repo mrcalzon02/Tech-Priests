@@ -50,6 +50,29 @@ check(blocked_side.detail=="moving-source" and moves[#moves].pos.x< -1.25,
  "construction approached the obstructed nearest side instead of a clear source contact")
 check(stock==1 and not pair.construction_custody_0338,
  "source approach removed the item before physical arrival")
+-- A collision-clear face may still be unreachable through native terrain.
+-- Keep a stable source goal while making directed progress, then try another
+-- clear side after a real stall. Source inventory is untouched until arrival.
+surface.can_place_entity=function()return true end
+priest.position={x=10,y=0};moves={};game.tick=1000
+local source_retry=task("move-source");pair.construction_task_0338=source_retry
+Construction.service_pair(pair,"source-first-contact")
+local first_source=moves[#moves].pos
+priest.position={x=9,y=.5};game.tick=1010
+Construction.service_pair(pair,"source-progress")
+check(moves[#moves].pos==first_source and stock==1,
+ "source contact changed while its original worker made real approach progress")
+priest.position={x=9,y=-.5};game.tick=1200
+Construction.service_pair(pair,"source-lateral-stall")
+local next_source=moves[#moves].pos
+check(next_source~=first_source and(next_source.x~=first_source.x or next_source.y~=first_source.y)
+ and source_retry.source_contact_tried_1285 and stock==1
+ and not pair.construction_custody_0338,
+ "stalled source route neither rotated a clear contact nor preserved unpaid stock")
+check((math.max(0,math.abs(next_source.x)-1.25))^2
+ +(math.max(0,math.abs(next_source.y)-1.25))^2<=2.56,
+ "source retry enlarged original inventory pickup reach")
+game.tick=1000
 pair.priest.position={x=1.8,y=0};surface.can_place_entity=function()return true end;moves={}
 pair.construction_task_0338=task("move-source")
 local pickup=Construction.service_pair(pair,"station-footprint-pickup")
@@ -1028,4 +1051,4 @@ check(done_native.acted==1 and done_native.detail=="entity-created"
  and pair.construction_last_task_0338==native
  and native.phase=="complete" and constructed==before_native+1,
  "native build completed without counted physical ground ore return")
-print("[construction-footprint-regression] PASS scenarios=40")
+print("[construction-footprint-regression] PASS scenarios=41")

@@ -560,6 +560,9 @@ function M.action(p)
   if not valid_pair(p)then return{kind="invalid",family="invalid"}end
   local o=current_order(p);local target,position=current_target(p,o);local order_kind=normalize_kind(o and(o.kind or o.type or o.source));local mode_kind=normalize_kind(p.mode)
   local combat_rec=combat_repair_recommendation(p,order_kind,mode_kind);local construction_rec,queued_frontier_rec=construction_recommendation(p,order_kind,mode_kind);local machine_rec,strict_machine_output=machine_logistics_recommendation(p,order_kind,mode_kind)
+  local builder=rawget(_G,"TechPriestsConstructionPlanner0338")or package.loaded["scripts.core.construction_planner"]
+  local source_clearance=builder and type(builder.source_clearance_active_1285)=="function"
+    and builder.source_clearance_active_1285(p)==true
   local item_rec=item_family_recommendation(p,order_kind);local energy_rec=energy_family_recommendation(p,order_kind);local silo_rec=rocket_silo_recommendation(p,order_kind);local artillery_rec=artillery_recommendation(p,order_kind);local roboport_rec=roboport_recommendation(p,order_kind)
   local active_construction=construction_rec and construction_rec.active==true and construction_rec or nil
   local build_task=p.construction_task_0338
@@ -590,6 +593,10 @@ function M.action(p)
     kind,reason="construction","active-construction-custody"
     target=active_construction.target
     position=valid(target)and target.position or active_construction.position
+  elseif source_clearance then
+    kind,reason="acquisition","construction-source-access-clearance-1285"
+    local access=p.construction_source_clearance_1285
+    target=valid(access.tree)and access.tree or p.station;position=target.position
   elseif machine_rec and(order_kind=="crafting"or strict_machine_output
       or(p.machine_logistics_0528 and p.machine_logistics_0528.custody))then
     -- Only 0528's exact real-output/strict-ingredient probe can authorize

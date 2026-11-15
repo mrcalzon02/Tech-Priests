@@ -1,3 +1,9 @@
+## 2026-11-15 - Construction selects physical supply-access clearance
+
+An unreachable source contact now receives a finite alternative-face retry only after measured approach progress stalls. When all clear contacts are exhausted, an independent, unladen original-0338 builder can request one nearby neutral wood tree on its actual supply corridor through the existing order queue and canonical acquisition owner. Original 0513 performs native mining, inventory custody and real return/deposit; construction retains its original paid request and cannot debit the kit remotely. Clearance is bounded, refuses foreign orders/cargo/combat, and revalidates its exact parent, source, tree and own order before new extraction. Lost parent authority cannot erase already mined cargo or terminate a foreign order.
+
+The integrated regression exercises the original queue, classifier, dispatcher, builder and native-inventory-shaped acquisition executor: admission refusals, no premature stock debit, real wood yield, refused deposit, parent revocation with retained cargo, exact return, resumed construction pickup, and foreign-order protection. All 62 selected Lua groups and seven Python tests pass; isolated native four-rank maintenance also passes. The native arena recovery is diagnostic and still running: faction 3 genuinely collected its assembler but subsequently timed out while approaching the build site and is returning the same kit. No native tree-clearance success or science recovery is claimed. This exposes a separate carried-kit route/access blocker for the next iteration. Full autonomous rocket/space-science campaign acceptance remains OPEN.
+
 ## 0.1.530 — Conversation Voice Bark Audio
 
 ## 0.1.531 — Operational/mechanical sound pass
