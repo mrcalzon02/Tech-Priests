@@ -1,0 +1,17 @@
+{
+  "status": "retimed_and_audible_review_candidate",
+  "cycle_seconds": 8,
+  "source_sha256": "29e62716acc5fa52bb4cedc8f3b4f713ac3fb857cb42b46714749910da4013ad",
+  "glb_sha256": "dae73009b2aa5abeaab5bd777d5bf102da5d436b41b700aa8a6aa0ce8380b371",
+  "equivalent_pose_error": 0,
+  "capture_frames": 36,
+  "atlas_count": 6,
+  "native_fluid_tests_passed": true,
+  "owner_animation_observation": "All appeared to be animating correctly",
+  "graphical_seating_verified": false,
+  "native_animation_clock_verified": false,
+  "owner_approved": false,
+  "ordinary_mod_installed": false,
+  "audio_bank": "../../../shared-audio/hydrogen-machinery/v01",
+  "top_port": "Owner reported hard clipping; separate rear-collar overlay rejected in private study. Native seam remains open."
+}

@@ -3,6 +3,7 @@ import bpy
 
 
 def prepare_state_tracks(scene):
+    working_end=scene.frame_end
     objects=[o for o in scene.objects if o.animation_data and o.animation_data.action]
     scene.frame_set(0);bpy.context.view_layer.update()
     idle={o:(o.location.copy(),o.scale.copy(),o.rotation_mode,
@@ -19,7 +20,7 @@ def prepare_state_tracks(scene):
             ob.keyframe_insert(data_path=rotation_channel,frame=frame)
         standby=ob.animation_data.action;standby.name='TP Electrolyzer standby | '+ob.name
         ob.animation_data.action=None
-        for name,action,start,end in (('working',work,1,97),('idle',standby,0,1)):
+        for name,action,start,end in (('working',work,1,working_end),('idle',standby,0,1)):
             track=ob.animation_data.nla_tracks.new();track.name=name
             strip=track.strips.new(name,start,action)
             strip.action_frame_start=start;strip.action_frame_end=end

@@ -93,7 +93,7 @@ def main():
     changes = []
     if cfg.get('adapter') == 'campfire-matte-stones':
         changes = matte_stones(model)
-    elif cfg.get('adapter') and cfg.get('adapter')!='mh7-electrolyzer-native-fittings-v1':
+    elif cfg.get('adapter') and cfg.get('adapter') not in ('mh7-electrolyzer-native-fittings-v1','mh7-compressor-native-fittings-v1'):
         raise ValueError('Unknown adapter')
     model.name = 'MODEL'
     model.use_fake_user = True
@@ -138,6 +138,10 @@ def main():
         from production_smoke.electrolyzer_native_fittings import NativeFittings
         bpy.context.view_layer.update()
         native_fittings=NativeFittings(scene)
+    elif cfg.get('adapter')=='mh7-compressor-native-fittings-v1':
+        from production_smoke.compressor_native_fittings import CompressorNativeFittings
+        bpy.context.view_layer.update()
+        native_fittings=CompressorNativeFittings(scene)
     # A named export profile can override the source camera without modifying its
     # authoring file. Camera and daylight remain stationary across all directions.
     override = cfg.get('camera_override')

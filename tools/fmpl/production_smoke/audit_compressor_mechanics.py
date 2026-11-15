@@ -43,7 +43,8 @@ def main():
     moving=[o for o in meshes if 'connecting rod shaft' in o.name or 'crosshead retained wrist pin' in o.name]
     flywheel=[o for o in meshes if any(t in o.name for t in ('flywheel machined rim','flywheel radial spoke'))]
     guards=[o for o in meshes if any(t in o.name for t in ('fixed flywheel outer guard','flywheel guard footing','shaft bearing tower','shaft bearing cap seat'))]
-    for frame in range(1,98,6):
+    working_end=s.frame_end
+    for frame in range(1,working_end+1,(working_end-1)//16):
         s.frame_set(frame);bpy.context.view_layer.update();cache={o:tree(o) for o in set(fixed+moving+flywheel+guards)}
         for a,targets in [(a,fixed) for a in moving]+[(a,guards) for a in flywheel]:
             for b in targets:
@@ -62,11 +63,11 @@ def main():
             valid=abs(radius-.12)<1e-5 and abs(length-.67)<1e-5 and endpoint_error<1e-5 and abs(wrist.z-.78)<1e-5 and -.70001<=wrist.y<=-.45999
             row.append(dict(x=x,actual_pin=list(pin),actual_wrist=list(wrist),radius=radius,rod_length=length,endpoint_error=endpoint_error,passed=valid))
         motion.append(dict(frame=frame,units=row))
-        if frame in (1,97):matrices[frame]={o.name:[float(c) for r in o.matrix_world for c in r] for o in meshes}
+        if frame in (1,working_end):matrices[frame]={o.name:[float(c) for r in o.matrix_world for c in r] for o in meshes}
     if collisions:errors.append('moving part surface intersection')
     if any(not unit['passed'] for row in motion for unit in row['units']):errors.append('actual slider-crank geometry')
-    loop=max(abs(a-b) for name,values in matrices[1].items() for a,b in zip(values,matrices[97][name]))
-    if loop>1e-4:errors.append('four-second loop closure')
+    loop=max(abs(a-b) for name,values in matrices[1].items() for a,b in zip(values,matrices[working_end][name]))
+    if loop>1e-4:errors.append('working loop closure')
     # The fixed bearing seat must not fill its own shaft bore.
     bearing_hits=[]
     for x in (-1.18,1.18):
@@ -77,7 +78,7 @@ def main():
     s.frame_set(25);bpy.context.view_layer.update()
     result=dict(passed=not errors,errors=errors,source_sha256=sha(source),native_stats=stats,bounds=bounds(meshes),
         external_bores=bores,contacts=contacts,motion=motion,loop_world_matrix_error=loop,
-        disjoint_surface_pair_checks=checks,collisions=collisions,bearing_core_blockers=bearing_hits,
+        disjoint_surface_pair_checks=checks,collisions=collisions,bearing_core_blockers=bearing_hits,cycle_seconds=(working_end-1)/s.render.fps,
         scope='17 actual poses, named disjoint moving/static surface pairs, actual crank endpoints and support contacts; no structural/pressure certification or native integration claimed')
     (out/'mechanical-readback.json').write_text(json.dumps(result,indent=2)+'\n')
     print('COMPRESSOR_MECHANICS',result['passed'],errors,'collision_count',len(collisions),'failed_contacts',sum(not r['passed'] for r in contacts),flush=True)

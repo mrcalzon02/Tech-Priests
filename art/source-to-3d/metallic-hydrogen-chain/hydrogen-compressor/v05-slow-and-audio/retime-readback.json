@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "old_seconds": 4.0,
+  "new_seconds": 8,
+  "factor": 2.0,
+  "source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+  "native_sha256": "29e62716acc5fa52bb4cedc8f3b4f713ac3fb857cb42b46714749910da4013ad",
+  "equivalent_pose_error": 0.0,
+  "geometry_before": "bc229b7cb363d482aa191f89e700c45c49f528c58416e893624225cc3115945c",
+  "geometry_after": "bc229b7cb363d482aa191f89e700c45c49f528c58416e893624225cc3115945c",
+  "actual_actions_retimed": 27,
+  "equivalent_frames": {
+    "0": 0,
+    "1": 1,
+    "13": 25,
+    "25": 49,
+    "37": 73,
+    "49": 97,
+    "61": 121,
+    "73": 145,
+    "85": 169,
+    "97": 193
+  },
+  "owner_request": "Slow the animation down"
+}

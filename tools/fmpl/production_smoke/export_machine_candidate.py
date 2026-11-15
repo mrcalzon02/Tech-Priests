@@ -28,7 +28,8 @@ def main():
     ports=json.loads((native.parent/'port_manifest.json').read_text())['ports']
     native_stats=mesh_stats(s);native_bounds=bounds([o for o in s.objects if o.type=='MESH' and not o.hide_render])
     native_bores=port_probe(s,ports);images=[dict(name=i.name,size=list(i.size),packed=bool(i.packed_file)) for i in bpy.data.images if i.source=='FILE']
-    frames=(0,1,13,25,37,49,61,73,85,97);native_poses=poses(s,frames)
+    source_fps=s.render.fps;expected_duration=(s.frame_end-1)/source_fps
+    frames=(0,)+tuple(1+i*(s.frame_end-1)//8 for i in range(9));native_poses=poses(s,frames)
     prepare_state_tracks(s);bpy.ops.object.select_all(action='DESELECT')
     for o in s.objects:
         if o.type in ('MESH','EMPTY') and not o.hide_render:o.select_set(True)
@@ -36,7 +37,7 @@ def main():
         export_animations=True,export_animation_mode='NLA_TRACKS',export_force_sampling=True,
         export_frame_range=False,export_anim_slide_to_zero=True,export_optimize_animation_size=False,
         export_optimize_animation_keep_anim_object=True,export_materials='EXPORT',export_image_format='AUTO',export_texcoords=True,export_normals=True)
-    bpy.ops.wm.read_factory_settings(use_empty=True);bpy.ops.import_scene.gltf(filepath=str(glb));s=bpy.context.scene
+    bpy.ops.wm.read_factory_settings(use_empty=True);bpy.ops.import_scene.gltf(filepath=str(glb));s=bpy.context.scene;s.render.fps=source_fps
     runtime_poses=poses(s,frames,imported=True);activate_imported_clip(s,'working');s.frame_set(24);bpy.context.view_layer.update()
     runtime_stats=mesh_stats(s);runtime_bounds=bounds([o for o in s.objects if o.type=='MESH']);runtime_bores=port_probe(s,ports)
     errors=[];pose_error=0;missing=set()
@@ -56,11 +57,11 @@ def main():
         accessors=[doc['accessors'][r['input']] for r in animation['samplers']]
         clips.append(dict(name=animation.get('name'),duration=max(a['max'][0] for a in accessors)-min(a['min'][0] for a in accessors),channels=len(animation['channels'])))
     if {c['name'] for c in clips}!={'idle','working'}:errors.append('missing coherent state clips')
-    if any(abs(c['duration']-4)>1e-5 for c in clips if c['name']=='working'):errors.append('working clock differs')
+    if any(abs(c['duration']-expected_duration)>1e-5 for c in clips if c['name']=='working'):errors.append('working clock differs')
     result=dict(passed=not errors,errors=errors,native_sha256=sha(native),glb_sha256=sha(glb),native_stats=native_stats,runtime_stats=runtime_stats,
         native_bounds=native_bounds,runtime_bounds=runtime_bounds,bounds_error=bound_error,native_bores=native_bores,runtime_bores=runtime_bores,
         source_images=images,maximum_sampled_world_pose_error=pose_error,missing_objects=sorted(missing),clips=clips,
-        inspected_frames=list(frames),scope='Actual GLB reimport and ten selected state poses for every exported object; visual and native engine acceptance remain separate')
+        inspected_frames=list(frames),expected_cycle_seconds=expected_duration,scope='Actual GLB reimport and ten selected state poses for every exported object; visual and native engine acceptance remain separate')
     report.write_text(json.dumps(result,indent=2)+'\n')
     print('MACHINE_EXPORT_READBACK',result['passed'],errors,'world_pose_error',pose_error,flush=True)
     if errors:raise RuntimeError('Export readback failed; preserve study')

@@ -1,0 +1,758 @@
+{
+  "passed": true,
+  "base_version": "2.1.24",
+  "results": {
+    "physical-ports": {
+      "passed": true,
+      "sites": [
+        {
+          "mask": 0,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 0.5
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": false,
+              "target": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": false,
+              "target": {
+                "x": 2.5,
+                "y": -0.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 1,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 10.5
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": true,
+              "target": {
+                "x": 8.5,
+                "y": -0.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": false,
+              "target": {
+                "x": 12.5,
+                "y": -0.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 2,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 20.5
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": false,
+              "target": {
+                "x": 18.5,
+                "y": -0.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": true,
+              "target": {
+                "x": 22.5,
+                "y": -0.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 3,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 30.5
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": true,
+              "target": {
+                "x": 28.5,
+                "y": -0.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": true,
+              "target": {
+                "x": 32.5,
+                "y": -0.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 0,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 0
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": false,
+              "target": {
+                "x": 0.5,
+                "y": 12.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": false,
+              "target": {
+                "x": 0.5,
+                "y": 16.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 1,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 10
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": true,
+              "target": {
+                "x": 10.5,
+                "y": 12.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": false,
+              "target": {
+                "x": 10.5,
+                "y": 16.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 2,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 20
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": false,
+              "target": {
+                "x": 20.5,
+                "y": 12.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": true,
+              "target": {
+                "x": 20.5,
+                "y": 16.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 3,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 30
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": true,
+              "target": {
+                "x": 30.5,
+                "y": 12.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": true,
+              "target": {
+                "x": 30.5,
+                "y": 16.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 0,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 0.5
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": false,
+              "target": {
+                "x": 2.5,
+                "y": 28.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": false,
+              "target": {
+                "x": -1.5,
+                "y": 28.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 1,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 10.5
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": true,
+              "target": {
+                "x": 12.5,
+                "y": 28.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": false,
+              "target": {
+                "x": 8.5,
+                "y": 28.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 2,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 20.5
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": false,
+              "target": {
+                "x": 22.5,
+                "y": 28.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": true,
+              "target": {
+                "x": 18.5,
+                "y": 28.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 3,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 30.5
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": true,
+              "target": {
+                "x": 32.5,
+                "y": 28.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": true,
+              "target": {
+                "x": 28.5,
+                "y": 28.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 0,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 0
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": false,
+              "target": {
+                "x": -0.5,
+                "y": 44.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": false,
+              "target": {
+                "x": -0.5,
+                "y": 40.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 1,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 10
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": true,
+              "target": {
+                "x": 9.5,
+                "y": 44.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": false,
+              "target": {
+                "x": 9.5,
+                "y": 40.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 2,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 20
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": false,
+              "target": {
+                "x": 19.5,
+                "y": 44.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": true,
+              "target": {
+                "x": 19.5,
+                "y": 40.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 3,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 30
+          },
+          "ports": [
+            {
+              "id": "hydrogen_suction",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "connected": true,
+              "target": {
+                "x": 29.5,
+                "y": 44.5
+              },
+              "native_fluidbox_index": 1,
+              "flow_direction": "input",
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_discharge",
+              "fluid": "tp-mh7-review-compressed-hydrogen",
+              "connected": true,
+              "target": {
+                "x": 29.5,
+                "y": 40.5
+              },
+              "native_fluidbox_index": 2,
+              "flow_direction": "output",
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "graphical_seating_verified": false
+            }
+          ]
+        }
+      ],
+      "orientations": 4,
+      "connection_masks": 4,
+      "entity": "tp-mh7-review-compressor",
+      "scope": "Actual isolated prototype connection cases; no graphical or ordinary economy acceptance inferred"
+    },
+    "flow": {
+      "passed": true,
+      "orientations": [
+        {
+          "direction": "north",
+          "products_finished": 2,
+          "actual_output_seen": {
+            "2": 40
+          }
+        },
+        {
+          "direction": "east",
+          "products_finished": 2,
+          "actual_output_seen": {
+            "2": 40
+          }
+        },
+        {
+          "direction": "south",
+          "products_finished": 2,
+          "actual_output_seen": {
+            "2": 40
+          }
+        },
+        {
+          "direction": "west",
+          "products_finished": 2,
+          "actual_output_seen": {
+            "2": 40
+          }
+        }
+      ],
+      "tick": 600,
+      "source_cycle_seconds": 8,
+      "animation_speed": 0.016666666666666666,
+      "production_balancing": false
+    }
+  },
+  "commands": [
+    {
+      "stage": "create",
+      "returncode": 0
+    },
+    {
+      "stage": "flow",
+      "returncode": 0
+    }
+  ],
+  "model_source_sha256": "29e62716acc5fa52bb4cedc8f3b4f713ac3fb857cb42b46714749910da4013ad",
+  "source_capture_sha256": "1eb821f56bac5ca7bf309d2f466dac0b67b1fc77b2c24dfe64e65d662caaef01",
+  "native_profile": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-native-v07-audio-clean",
+  "fixture_hashes": {
+    "data.lua": "58b46ede874bf5d339296840868dbc43b9a602028487eebdfadb654081c6b3e0",
+    "control.lua": "f37975e242bd16635bc46a27b5c64b07260e49cf21c970e223e4836c25b3fec6",
+    "spec.lua": "b5168060d087b71c87d83a1212b3e503df0238930c0b56c2530afc485054c0d7"
+  },
+  "source_graphic_hashes": {
+    "idle-east.png": "7caa9b9c579af790a0fbba07afe25d7e8f5f47d93a03891838f30bdc429cbcb9",
+    "idle-north.png": "274329eb4b45da2507cd41036996f8a321ceb05ee42f97f7d59a0f63ca83d2a9",
+    "idle-south.png": "b2c4003bf5844c612b9fe2e910162190e1938461fce75e4abbf2570a30caf212",
+    "idle-west.png": "78f024f9f5c3d18c9482c8f5b0822b926262b3501cb81fa53caecaca741c7125",
+    "working-east.png": "8d30512fd80bf5756c9a051a08ca8dd55146fe3aa598ba361b0f605954ef13cd",
+    "working-north.png": "9bf08f3558ac9fe76c6f370f1f0a1bb28846c896b2d78257d614c11866d4ae03",
+    "working-south.png": "4c68119f5e1293d4e5db02f273849680b8712941c37073d34c37f6487067fd99",
+    "working-west.png": "6443ac218cb8b38136f5ca651ff929a8ad43d60c3e41708cb9f09b9883748d12"
+  },
+  "audio_addon_enabled": true,
+  "diagnostic_frame_counters": false,
+  "graphical_seating_verified": false,
+  "native_animation_clock_verified": false,
+  "ordinary_mod_installed": false,
+  "production_economy_assigned": false
+}

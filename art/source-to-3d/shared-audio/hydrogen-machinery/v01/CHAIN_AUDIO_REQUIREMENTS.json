@@ -1,0 +1,17 @@
+{
+  "owner_request": "Every machinery model needs sound; compressor should be the loudest nearby",
+  "implemented_profiles": {
+    "hydrogen-compressor": "eight-second motor/clatter/chuff loop plus start/idle/stop, native review extension",
+    "water-purifier": "four-second pump/water bed, native review extension",
+    "electrolyzer": "four-second rectifier/process bed, native review extension"
+  },
+  "remaining": {
+    "metallization-crucible": "pressure containment/thermal machinery",
+    "pelletization-forge": "press/feeder/solid discharge",
+    "pressure-vessel-fabricator": "rollers/drive/welding",
+    "canister-assembler": "index/fill/seal",
+    "plasma-reactors": "tiered containment/cooling/power beds after native sources recovered"
+  },
+  "ordinary_chain_integrated": false,
+  "owner_audio_approved": false
+}

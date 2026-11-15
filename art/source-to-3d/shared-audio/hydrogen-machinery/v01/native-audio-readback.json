@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "native_data_stage_exit": 0,
+  "bindings": [
+    {
+      "entity": "tp-mh7-review-purifier",
+      "working_sound": {
+        "sound": {
+          "filename": "__tp-mh7-machinery-audio__/sound/purifier-working.ogg",
+          "volume": 0.4600000000000001,
+          "audible_distance_modifier": 1.25,
+          "priority": 96,
+          "preload": true
+        },
+        "match_volume_to_activity": true,
+        "match_speed_to_activity": false,
+        "fade_in_ticks": 18,
+        "fade_out_ticks": 24,
+        "max_sounds_per_prototype": 3
+      }
+    },
+    {
+      "entity": "tp-mh7-review-electrolyzer",
+      "working_sound": {
+        "sound": {
+          "filename": "__tp-mh7-machinery-audio__/sound/electrolyzer-working.ogg",
+          "volume": 0.4,
+          "audible_distance_modifier": 1.15,
+          "priority": 104,
+          "preload": true
+        },
+        "match_volume_to_activity": true,
+        "match_speed_to_activity": false,
+        "fade_in_ticks": 18,
+        "fade_out_ticks": 24,
+        "max_sounds_per_prototype": 3
+      }
+    },
+    {
+      "entity": "tp-mh7-review-compressor",
+      "working_sound": {
+        "sound": {
+          "filename": "__tp-mh7-machinery-audio__/sound/compressor-working.ogg",
+          "volume": 1.15,
+          "audible_distance_modifier": 3.5,
+          "priority": 16,
+          "preload": true
+        },
+        "match_volume_to_activity": true,
+        "match_speed_to_activity": false,
+        "fade_in_ticks": 18,
+        "fade_out_ticks": 24,
+        "max_sounds_per_prototype": 3,
+        "idle_sound": {
+          "filename": "__tp-mh7-machinery-audio__/sound/compressor-idle.ogg",
+          "volume": 0.14,
+          "audible_distance_modifier": 0.85,
+          "priority": 160
+        },
+        "activate_sound": {
+          "filename": "__tp-mh7-machinery-audio__/sound/compressor-start.ogg",
+          "volume": 0.9,
+          "audible_distance_modifier": 3,
+          "priority": 24
+        },
+        "deactivate_sound": {
+          "filename": "__tp-mh7-machinery-audio__/sound/compressor-stop.ogg",
+          "volume": 0.82,
+          "audible_distance_modifier": 2.5,
+          "priority": 32
+        }
+      }
+    }
+  ],
+  "native_dump_sha256": "7c3fd443620057ba136c1e9589bead8329b1e55e44a033174086afb70269e63c",
+  "log_sha256": "4e15dd4109f6b900bc735a4a7c2e74293dac42226530d89f396bc472dd07ece7",
+  "scope": "Actual Factorio data-stage sound prototypes with all three real machine review mods. Codec/sample checks are in authored audio receipt; owner audition and ordinary chain installation remain separate."
+}
