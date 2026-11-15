@@ -422,6 +422,40 @@
           "model_source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
           "runtime_export_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
           "status": "Actual unchanged library assembly retained in source and independently imported GLB; final surfaces and native integration pending"
+        },
+        {
+          "machine": "pressure-vessel-fabricator",
+          "machine_revision": "V02 measured open-frame mechanism and bored circuit",
+          "instance": "front right cogitator",
+          "transform": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              1.350000023841858
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -1.350000023841858
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.800000011920929
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "f51833329c74bc1482e9378513729429d616a9734eabdc12ebc401a26311c806",
+          "runtime_export_sha256": "c65459f5bdf90a28d141f34fbfe8581d025d80820aa9f5cf15cf76a5ebe991b5",
+          "status": "Unchanged appended shared master; source/runtime bores and sampled motion pass; dedicated finish/native pending"
         }
       ],
       "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
@@ -1166,6 +1200,40 @@
           "model_source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
           "runtime_export_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
           "status": "Actual unchanged library assembly retained in source and independently imported GLB; final surfaces and native integration pending"
+        },
+        {
+          "machine": "pressure-vessel-fabricator",
+          "machine_revision": "V02 measured open-frame mechanism and bored circuit",
+          "instance": "forming-fluid intake",
+          "transform": [
+            [
+              -1.0,
+              -8.742277657347586e-08,
+              0.0,
+              -2.0
+            ],
+            [
+              8.742277657347586e-08,
+              -1.0,
+              0.0,
+              0.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.36000001430511475
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "f51833329c74bc1482e9378513729429d616a9734eabdc12ebc401a26311c806",
+          "runtime_export_sha256": "c65459f5bdf90a28d141f34fbfe8581d025d80820aa9f5cf15cf76a5ebe991b5",
+          "status": "Unchanged appended shared master; source/runtime bores and sampled motion pass; dedicated finish/native pending"
         }
       ],
       "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
@@ -1755,7 +1823,7 @@
         "part_id": "tp.mh7.factorio-fluid-mouth",
         "revision": "v1",
         "machine": "pressure-vessel-fabricator",
-        "machine_revision": "V01 open-frame hydroforming construction pilot",
+        "machine_revision": "V02 measured open-frame mechanism and bored circuit",
         "instance": "forming-fluid intake",
         "transform": [
           [
@@ -1783,15 +1851,15 @@
             1.0
           ]
         ],
-        "model_source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
-        "runtime_export_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
-        "status": "Actual unchanged library assembly retained in source and independently imported GLB; final surfaces and native integration pending"
+        "model_source_sha256": "f51833329c74bc1482e9378513729429d616a9734eabdc12ebc401a26311c806",
+        "runtime_export_sha256": "c65459f5bdf90a28d141f34fbfe8581d025d80820aa9f5cf15cf76a5ebe991b5",
+        "status": "Unchanged appended shared master; source/runtime bores and sampled motion pass; dedicated finish/native pending"
       },
       {
         "part_id": "tp.mh7.cogitator-console",
         "revision": "v1",
         "machine": "pressure-vessel-fabricator",
-        "machine_revision": "V01 open-frame hydroforming construction pilot",
+        "machine_revision": "V02 measured open-frame mechanism and bored circuit",
         "instance": "front right cogitator",
         "transform": [
           [
@@ -1819,14 +1887,14 @@
             1.0
           ]
         ],
-        "model_source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
-        "runtime_export_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
-        "status": "Actual unchanged library assembly retained in source and independently imported GLB; final surfaces and native integration pending"
+        "model_source_sha256": "f51833329c74bc1482e9378513729429d616a9734eabdc12ebc401a26311c806",
+        "runtime_export_sha256": "c65459f5bdf90a28d141f34fbfe8581d025d80820aa9f5cf15cf76a5ebe991b5",
+        "status": "Unchanged appended shared master; source/runtime bores and sampled motion pass; dedicated finish/native pending"
       }
     ]
   },
   "last_checkpoint_sha256": null,
   "inventory_source": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
   "material_index": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
-  "previous_registry_sha256": "2087260ed3b9df3a07f0e768c4d0a6d72ee79a0f8e4c160e9e5d6876b7bb8b16"
+  "previous_registry_sha256": "9a635c6beabb8478f62c8b7fad56657e1e40dcb5d67e61a85a3b112638134adc"
 }

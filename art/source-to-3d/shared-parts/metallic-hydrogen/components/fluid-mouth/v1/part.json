@@ -556,6 +556,40 @@
       "model_source_sha256": "5559f918999d8a141ae19f64d6e54f92c929b980343f4390fd78cfb52f44084a",
       "runtime_export_sha256": "d1780fb7561b6741754bcbcbeca53ba1b4e6cf5464afe614c3b7cb36c12ba71e",
       "status": "Actual unchanged library assembly retained in source and independently imported GLB; final surfaces and native integration pending"
+    },
+    {
+      "machine": "pressure-vessel-fabricator",
+      "machine_revision": "V02 measured open-frame mechanism and bored circuit",
+      "instance": "forming-fluid intake",
+      "transform": [
+        [
+          -1.0,
+          -8.742277657347586e-08,
+          0.0,
+          -2.0
+        ],
+        [
+          8.742277657347586e-08,
+          -1.0,
+          0.0,
+          0.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.36000001430511475
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "f51833329c74bc1482e9378513729429d616a9734eabdc12ebc401a26311c806",
+      "runtime_export_sha256": "c65459f5bdf90a28d141f34fbfe8581d025d80820aa9f5cf15cf76a5ebe991b5",
+      "status": "Unchanged appended shared master; source/runtime bores and sampled motion pass; dedicated finish/native pending"
     }
   ],
   "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
