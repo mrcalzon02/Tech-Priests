@@ -54,12 +54,61 @@ end
 local function segment_state(e,index,fluid)
  local box=fluidbox(e);if not box then return nil,"no-fluidbox"end;local contents=segment_contents(box,index);local same=tonumber(contents[fluid])or 0;local wrong;for name,amount in pairs(contents)do if name~=fluid and(tonumber(amount)or 0)>.001 then wrong=name break end end;return{box=box,same=same,wrong=wrong,filter=filter_name(box,index),segment_id=segment_id(box,index)},"ok"
 end
-local function inside_territory(pair,p)local c=constraints();if c and type(c.interior_position_allowed)=="function"then local ok,allowed=pcall(c.interior_position_allowed,pair,p,2.5);return ok and allowed==true end;local radius=tonumber(pair.radius)or 28;return dist_sq(pair.station.position,p)<=math.max(8,radius-2.5)^2 end
+local function inside_territory(pair,p,plan)
+ local c=constraints()
+ local function allowed(margin)
+  if c and type(c.interior_position_allowed)=="function"then
+   local ok,v=pcall(c.interior_position_allowed,pair,p,margin);return ok and v==true
+  end
+  return dist_sq(pair.station.position,p)<=math.max(8,(tonumber(pair.radius)or 28)-margin)^2
+ end
+ if allowed(2.5)then return true end
+ -- A legally installed shoreline pump can expose its actual output just
+ -- outside the ordinary pipe inset. Admit only that observed native port,
+ -- still inside station territory; route interiors retain the normal inset.
+ local remote=plan and plan.remote;local e=remote and remote.entity
+ if not(plan and plan.direction=="input"and plan.fluid=="water"
+   and valid(e)and e.name=="offshore-pump"and e.type=="offshore-pump"
+   and e.force==pair.station.force and e.surface==pair.station.surface
+   and valid(plan.machine)and plan.machine.name=="boiler"
+   and plan.machine.force==pair.station.force and plan.machine.surface==pair.station.surface
+   and allowed(0.5))then return false end
+ local box=fluidbox(e);local connections={}
+ if box then pcall(function()connections=box.get_pipe_connections(remote.fluidbox_index)or{}end)end
+ for _,connection in pairs(connections)do
+  local target=connection.target_position or connection.position
+  if target and dist_sq(target,p)<0.0225 then
+   for _,port in ipairs(remote.interfaces or{})do if dist_sq(port,p)<0.0225 then return true end end
+  end
+ end
+ return false
+end
 local function entities_at(surface,p,radius,types)local entities={};pcall(function()entities=surface.find_entities_filtered({area={{p.x-radius,p.y-radius},{p.x+radius,p.y+radius}},type=types,limit=64})or{}end);return entities end
 local function existing_compatible_pipe(pair,p,plan)
  for _,e in pairs(entities_at(pair.station.surface,p,.35,{"pipe","pipe-to-ground"}))do if valid(e)and e.force==pair.station.force then local box=fluidbox(e);if box then for index=1,#box do local state=segment_state(e,index,plan.fluid);if state and not state.wrong then local known=state.same>.001 or state.filter==plan.fluid or(state.segment_id and(state.segment_id==plan.remote_segment_id or state.segment_id==plan.machine_segment_id));if known then return e end end end end end end;return nil
 end
+local function preserves_native_boiler_ports(p,plan)
+ for _,e in pairs({plan.machine,plan.remote and plan.remote.entity})do
+  if valid(e)and e.name=="boiler"and e.type=="boiler"then
+   local box=fluidbox(e)
+   if box then for index=1,#box do
+    local fluid=filter_name(box,index)
+    if fluid and fluid~=plan.fluid then
+     local connections={};pcall(function()connections=box.get_pipe_connections(index)or{}end)
+     for _,connection in pairs(connections)do
+      local port=connection.target_position or connection.position
+      -- Preserve both the other fluid's actual port and its adjacent pipe
+      -- contacts. A steam pipe beside an unbuilt water inlet seals it off.
+      if port and not connection.target and dist_sq(port,p)<=1.0225 then return false end
+     end
+    end
+   end end
+  end
+ end
+ return true
+end
 local function adjacent_safe(pair,p,plan)
+ if not preserves_native_boiler_ports(p,plan)then return false,"reserved-native-boiler-other-fluid-port"end
  for _,e in pairs(entities_at(pair.station.surface,p,M.adjacency_radius,FLUID_TYPES))do
   if valid(e)and e.force==pair.station.force then
    local box=fluidbox(e)
@@ -76,6 +125,7 @@ local function adjacent_safe(pair,p,plan)
      local state=segment_state(e,index,plan.fluid)
      if state then
       if state.wrong then return false,"adjacent-wrong-fluid:"..state.wrong end
+      if state.filter and state.filter~=plan.fluid then return false,"adjacent-wrong-fluid-filter:"..state.filter end
       local endpoint=e==plan.machine or e==plan.remote.entity
       local known=state.same>.001 or state.filter==plan.fluid or
        (state.segment_id and(state.segment_id==plan.remote_segment_id or state.segment_id==plan.machine_segment_id))
@@ -88,7 +138,7 @@ local function adjacent_safe(pair,p,plan)
  return true,"safe"
 end
 local function tile_available(pair,p,plan)
- if not inside_territory(pair,p)then return false,"outside-station-interior"end;if existing_compatible_pipe(pair,p,plan)then return true,"existing"end;local ok_adj,why=adjacent_safe(pair,p,plan);if not ok_adj then return false,why end;local ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force,build_check_type=defines and defines.build_check_type and defines.build_check_type.manual or nil})end);if not ok then ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force})end)end;return ok and allowed==true,ok and(allowed and"placeable"or"blocked")or"can-place-error"
+ if not inside_territory(pair,p,plan)then return false,"outside-station-interior"end;if existing_compatible_pipe(pair,p,plan)then return true,"existing"end;local ok_adj,why=adjacent_safe(pair,p,plan);if not ok_adj then return false,why end;local ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force,build_check_type=defines and defines.build_check_type and defines.build_check_type.manual or nil})end);if not ok then ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force})end)end;return ok and allowed==true,ok and(allowed and"placeable"or"blocked")or"can-place-error"
 end
 local function reconstruct(came,current,positions)local reverse={};while current do reverse[#reverse+1]=positions[current];current=came[current]end;local route={};for i=#reverse,1,-1 do route[#route+1]=reverse[i]end;return route end
 local function route_between(pair,start_position,goal_position,plan)

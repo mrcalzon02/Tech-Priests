@@ -67,7 +67,17 @@ local function atomic_return(p,n,why)local f=rawget(_G,"tech_priests_safe_deposi
 local function claim(p,e)local R=Reservations();if not(R and type(R.claim)=="function")then return false,"reservation-authority-unavailable"end;local ok,v=pcall(R.claim,"repair",e,p,M.reservation_ttl_ticks,{surface_index=e.surface and e.surface.index,force_index=e.force and e.force.index});return ok and v==true,ok and"claimed"or safe(v)end
 local function release(p,e)local R=Reservations();if valid(e)and R and type(R.release)=="function"then pcall(R.release,"repair",e,p)end end
 local function move(p,e)local f=rawget(_G,"tech_priests_request_movement_0418");if type(f)~="function"then return false,"movement-authority-unavailable"end;local ok,v=pcall(f,p,e.position,"repair-executor-0516-walk-to-target",{radius=math.max(.5,math.sqrt(M.repair_range_sq)-.5),owner="repair_executor_0516",priority=820,ttl=900,distraction=defines and defines.distraction and defines.distraction.none});return ok and v==true,ok and safe(v)or"movement-error:"..safe(v)end
-local function clear_state(p,phase,why)local s=p.repair_0516 or{};local e=valid(s.target)and s.target or nil;if e then release(p,e)end;s.phase=phase or"none";s.last_blocker=why;s.target=nil;s.target_name=nil;s.target_unit=nil;s.target_source=nil;s.started_tick=nil;s.due_tick=nil;s.distance=nil;s.missing=nil;p.repair_0516=s;if p.target==e then p.target=nil end end
+local function release_repair_movement(p,why)
+ local movement=p.movement_request_0418
+ local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+ if movement and movement.owner=="repair_executor_0516"and controller
+     and type(controller.stop)=="function"then
+  local ok,stopped=pcall(controller.stop,p,why)
+  return ok and stopped==true
+ end
+ return false
+end
+local function clear_state(p,phase,why)local s=p.repair_0516 or{};local e=valid(s.target)and s.target or nil;if e then release(p,e)end;release_repair_movement(p,"repair-terminal-owner-handoff-0516");s.phase=phase or"none";s.last_blocker=why;s.target=nil;s.target_name=nil;s.target_unit=nil;s.target_source=nil;s.started_tick=nil;s.due_tick=nil;s.distance=nil;s.missing=nil;p.repair_0516=s;if p.target==e then p.target=nil end end
 local function queue_terminal(p,kind,why)
  local o=current_order(p);if not repair_order(o)then return true,"no-repair-order"end;local Q=Queue();local fn=Q and Q[kind];if type(fn)~="function"then return false,"order-queue-unavailable"end;local ok,v,w=pcall(fn,p,why);return ok and v==true,ok and w or v
 end
@@ -103,6 +113,15 @@ function M.service_pair(p,why,forced)
  -- They must not seize travel from a courier already holding real inventory.
  -- Retain the repair task and its order for the next cargo-free service.
  local machine=p.machine_logistics_0528
+ local selected=p.canonical_action_0744
+ local machine_phase=machine and machine.phase
+ if selected and selected.owner=="single_dispatcher_0510"and selected.family=="machine-logistics"
+     and machine_phase and machine_phase~="complete"and machine_phase~="failed"
+     and machine_phase~="idle"and machine_phase~="none"
+     and not repair_order(current_order(p))and not valid(forced)then
+  release_repair_movement(p,"repair-yield-to-selected-machine-route-0516")
+  return result{waiting=1,detail="physical-route-owner-retained"}
+ end
  if p.machine_logistics_custody_0528 or(machine and machine.custody)
      or p.direct_acquisition_custody_0513 or p.construction_custody_0338
      or p.energy_family_custody_0707 or p.item_family_custody_0702 then

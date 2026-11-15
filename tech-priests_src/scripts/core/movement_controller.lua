@@ -621,6 +621,16 @@ local function machine_phase_handoff(pair, current, owner, reason)
   return true
 end
 
+local function construction_pickup_handoff(pair,current,owner,reason)
+  local task=pair.construction_task_0338
+  return current and current.owner=="construction-planner-0338"
+    and owner==current.owner and current.reason=="construction-source-0338"
+    and(reason=="construction-site-standoff-0338"or reason=="construction-site-0338")
+    and type(task)=="table"and task.phase=="move-site"
+    and task.carried and task.carried.item_name==task.item_name
+    and(tonumber(task.carried.count)or 0)>0
+end
+
 function M.request(pair, destination, reason, opts)
   opts = opts or {}
   if not (pair and pair.priest and pair.priest.valid and destination) then return false end
@@ -861,7 +871,8 @@ function M.request(pair, destination, reason, opts)
     -- a still-fresh path with another similar-priority path until the current
     -- intent has had time to resolve.
     if age < M.retarget_hold_ticks and priority <= current_priority + 10
-      and not real_machine_phase_handoff then
+      and not real_machine_phase_handoff
+      and not construction_pickup_handoff(pair,current,owner,reason)then
       current.suppressed_retarget_count = (current.suppressed_retarget_count or 0) + 1
       current.last_suppressed_target = { x = pos.x, y = pos.y, reason = tostring(reason or "movement"), tick = now(), priority = priority }
       root.stats.retargets_held = (root.stats.retargets_held or 0) + 1; metric("path_retargets_held",1)

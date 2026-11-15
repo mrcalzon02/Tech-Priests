@@ -145,6 +145,53 @@ local function relinquish_unladen_direct_movement(pair,family)
  end
  return false
 end
+local function observe_local_hostile(pair)
+ if pair.local_hostile_admission_0510
+     and not(valid(pair.combat_target)and CombatSafety.is_valid_hostile_target(pair.priest,pair.combat_target))then
+  local old=pair.dispatcher_combat_target_0510
+  if pair.combat_target==old or not valid(pair.combat_target)then pair.combat_target=nil end
+  if pair.target==old then pair.target=nil end
+  pair.dispatcher_combat_target_0510=nil;pair.local_hostile_admission_0510=nil
+  if pair.mode=="combat"or pair.mode=="defending"or pair.mode=="moving-to-combat"
+      or pair.mode=="defending-laser-fallback"then pair.mode="idle"end
+  if pair.task_kind=="combat"then pair.task_kind=nil end
+ end
+ local op=pair.independent_emergency_operation_0184
+ if not(op and op.enabled==true)or valid(pair.combat_target)
+     or now()<(pair.next_local_hostile_observation_0510 or 0)then return nil end
+ for _,field in ipairs{"direct_acquisition_custody_0513","machine_logistics_custody_0528",
+   "construction_custody_0338","energy_family_custody_0707","item_family_custody_0702",
+   "inventory_transfer_custody_0687","repair_pack_custody_0516","emergency_production_custody_0514",
+   "emergency_facility_feed_custody_0357","station_cargo_custody_0824",
+   "consecration_refund_custody_0515","rocket_silo_custody_0710","artillery_custody_0713",
+   "roboport_repair_custody_0715"}do if pair[field]then return nil end end
+ if pair.machine_logistics_0528 and pair.machine_logistics_0528.custody
+     or pair.construction_task_0338 and pair.construction_task_0338.carried
+     or pair.station_expansion_0256 and pair.station_expansion_0256.status=="active"then return nil end
+ local selector=rawget(_G,"find_enemy_target")
+ local queue=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+ if type(selector)~="function"or not(queue and type(queue.submit)=="function")then return nil end
+ local current=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+ if current and(tonumber(current.priority)or 0)>=900 and current.kind~="combat"then return nil end
+ pair.next_local_hostile_observation_0510=now()+120
+ local radius=tonumber(pair.radius)or 20
+ local ok,target=pcall(selector,pair.station,radius,pair.priest)
+ if not(ok and valid(target)and target.surface==pair.station.surface and target.position
+     and CombatSafety.is_valid_hostile_target(pair.priest,target))then return nil end
+ local dx=target.position.x-pair.station.position.x
+ local dy=target.position.y-pair.station.position.y
+ if dx*dx+dy*dy>radius*radius then return nil end
+ -- Observation submits through the existing lossless queue. Do not call
+ -- the legacy combat assignment, which clears unfinished factory recipes.
+ local submitted,accepted,why,order=pcall(queue.submit,pair,{kind="combat",priority=900,
+   target=target,source="single-dispatcher-local-hostile",purpose="local-factory-defense",
+   reason="observed-hostile-inside-operating-radius",expires_tick=now()+600})
+ local active=pair.order_queue_0469 and pair.order_queue_0469.current
+ if not(submitted and active==order and active and active.kind=="combat"and active.target==target)then return nil end
+ pair.dispatcher_combat_target_0510=target;pair.combat_target=target;pair.mode="combat"
+ pair.local_hostile_admission_0510={tick=now(),target_unit=target.unit_number,target_name=target.name}
+ return target
+end
 function M.service_pair(pair,reason)
  local r=root();if r.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
  -- The 0836 planner also runs in its broker cadence. Distinguish that
@@ -295,6 +342,22 @@ function M.service_pair(pair,reason)
    stat("actions",response.acted or 0)
    record("dispatch-defense",pair,safe(response.detail))
    return response
+  end
+ end
+ -- Canonical factory work suppresses the legacy heartbeat. Observe local
+ -- threats here so an industrial priest does not require an already-active
+ -- combat task before it can discover the first hostile. Held cargo above
+ -- and the original queue/combat executor retain all physical authority.
+ if family_owned(r,"combat")then
+  local threat=observe_local_hostile(pair)
+  if threat then
+   local result=normalize_execution(execute(pair,"combat","dispatcher-0510:observed-local-hostile"))
+   local status=result.failed>0 and"failed"or result.acted>0 and"acted"
+     or result.blocked>0 and"blocked"or"waiting"
+   publish_action(pair,{kind="combat",target=threat,reason="local-factory-defense"},
+     "combat",status,result.detail)
+   stat("pairs_processed");stat("actions",result.acted);stat("failures",result.failed)
+   return result
   end
  end
  -- 1035: Resume an already-started physical 0528 machine transaction before

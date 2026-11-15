@@ -75,6 +75,28 @@ check(#moves==0,"station-center route blocked physically reachable item return")
 
 -- A remote priest must still travel to the station; using the footprint
 -- cannot make machine inventories accessible from arbitrary distances.
+local cache={valid=true,name="tech-priests-cogitator-return-cache",
+ position={x=0,y=0},force=force,surface=surface,
+ selection_box={left_top={x=0,y=0},right_bottom={x=0,y=0}}}
+priest.position={x=10,y=0}
+surface.can_place_entity=function(args)
+ return math.abs(args.position.x)>1.25 or math.abs(args.position.y)>1.25
+end
+pair.construction_task_0338=task("move-source")
+pair.construction_task_0338.source_entity=cache
+moves={}
+local cache_route=Construction.service_pair(pair,"backing-cache-host-contact")
+check(cache_route.detail=="moving-source" and #moves==1
+ and moves[1].pos.x>1.25 and stock==1,
+ "hidden backing inventory routed into the solid host station")
+priest.position={x=1.8,y=0}
+pair.construction_task_0338.phase="return-custody"
+pair.construction_task_0338.carried={item_name="tech-priests-emergency-miner",count=1}
+stock=0;moves={}
+local cache_return=Construction.service_pair(pair,"backing-cache-host-return")
+check(cache_return.detail=="custody-returned-source" and stock==1 and #moves==0,
+ "host-edge return did not restore the original backing inventory")
+surface.can_place_entity=function()return true end
 priest.position={x=10,y=0}
 pair.construction_task_0338=task("move-source")
 moves={}

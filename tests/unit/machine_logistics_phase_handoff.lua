@@ -98,3 +98,27 @@ check((stats.lower_priority_retargets_denied or 0)==1,
  "real foreign priority denial disappeared from telemetry")
 
 print("[machine-logistics-phase-handoff] PASS scenarios=6")
+Movement.stop(pair,"test-finished-machine-return")
+local function build_move(x,reason)
+ return Movement.request(pair,{x=x,y=0},reason,
+  {owner="construction-planner-0338",priority=968,ttl=720,radius=.3})
+end
+game.tick=3000
+check(build_move(2,"construction-source-0338"),"construction source route refused")
+local source_route=pair.movement_request_0418
+pair.construction_task_0338={phase="move-site",item_name="boiler"}
+game.tick=3001
+check(not build_move(12,"construction-site-standoff-0338")
+ and pair.movement_request_0418==source_route,
+ "construction bypassed its source route without actual item custody")
+pair.construction_task_0338.carried={item_name="boiler",count=1}
+game.tick=3002
+check(build_move(12,"construction-site-standoff-0338")
+ and pair.movement_request_0418~=source_route,
+ "picked-up construction item remained pinned to its old stock waypoint")
+local site_route=pair.movement_request_0418
+game.tick=3003
+check(not build_move(15,"construction-site-standoff-0338")
+ and pair.movement_request_0418==site_route,
+ "construction custody bypassed debounce for an arbitrary same-phase retarget")
+print("PASS construction pickup handoff requires real carried item and exact source-to-site phase")

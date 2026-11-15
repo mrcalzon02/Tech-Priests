@@ -1,5 +1,18 @@
 # Tech Priests Development History
 
+## 2026-11-14 - Physical construction handoffs and actual faction combat
+
+Native continuation identified a third faction pinned to a hidden zero-size Cogitator backing inventory. Construction now approaches and measures reach against that exact same-force, same-surface host station while debiting/returning the original inventory. The faction advanced from two builds into a real boiler, engine and steam-route installation; paid workforce expansion also created a real subordinate station. A carried construction item may now advance its own source movement lease directly to its site after the canonical task changes phase. Same-phase churn, unpaid tasks and foreign routes retain normal arbitration.
+
+Working autonomous factories now periodically observe actual local hostiles, submit through the existing lossless order queue and invoke the original combat owner. Physical cargo and active station construction retain their owners. Exact adopted recipe assignments survive preemption and resume without a destructive legacy combat assignment. Repair terminal routes release only their own lease, and stale repair walks yield to an already selected physical machine trip. Missing native workshops can admit their exact funded bootstrap construction after a recent original production refusal.
+
+The 64-tile diagnostic recorded actual participant damage at native tick 81474: tp-arena-1 hit tp-arena-2 for five damage. No scripted attacks, teleports or free output were introduced. Subsequent native observation exposed invulnerable proxy targets; the canonical safety predicate now rejects native destructible=false targets, including persisted targets. This contact continuation is evidence of real combat, not acceptance of the unchanged fresh default-spacing arena.
+
+Water routing also exposed incompatible placement margins: a legal pump's observed pipe outlet lay outside the ordinary pipe inset. Only the exact same-domain native water outlet may use a half-tile inset; route interiors retain their original margin. Native geometry then showed that a previously built steam pipe had sealed the boiler's unbuilt water inlet. New routes preserve the distinct boiler port and its adjacent connection cells and reject differently filtered ports even while empty. Fresh reruns must verify this prevention; already sealed legacy routes are not claimed repaired.
+
+Verification: 54 Lua groups plus seven Python tests pass. Native all-rank maintenance passes using real stocked items. A completed fresh science run reached 230 red, 24 green and eight military packs at tick 216071; a later recovery reached 410/102/30. Sustained simultaneous 5-SPM throughput and full fresh four-faction factory/combat acceptance remain open. Fresh native-port science and 64-tile arena runs are underway; preserve their real deadlines and failures.
+
+
 ## 2026-11-14 - Retire terminal orders and unblock real power prerequisites
 
 The 0512 lease wrapper resurrected queue-expired repair requests while unrelated factory work existed, keeping requests created near tick 6000 active past tick 110000. Terminal queue decisions now remain terminal; genuinely nonterminal active-work leases remain protected. Exact adopted recipe-fanout assignments route to their canonical native production owner, complete only against actual output, and clear only the matching old assignment aliases. Unladen source-approach construction planning no longer vetoes an incumbent native furnace's exact raw child. Canonical raw tasks whose blocked targets were cleared now retarget the same task to reachable real resources, preserving counts, timers, explicit orders and actual custody.

@@ -110,6 +110,10 @@ end
 
 function M.is_valid_hostile_target(owner_or_force, target)
   if not (target and target.valid) then return false end
+  -- Hidden weapon/inventory proxies and protected priest embodiments cannot
+  -- take native damage. Selecting them traps productive defenders forever.
+  -- Read the engine property; ordinary hostile factories remain eligible.
+  if safe_field(target,"destructible")==false then return false end
   if is_asteroid(target) then return true end
 
   local owner_force = get_force(owner_or_force) or owner_or_force

@@ -24,7 +24,16 @@ local function valid_pair(p)return type(p)=="table"and valid(p.station)and valid
 local function station_unit(p)return p and(p.station_unit or(valid(p.station)and p.station.unit_number))or nil end
 local function pair_map()return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or{}end
 local function dist_sq(a,b)if not(a and b)then return math.huge end;local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
-local function within_entity_reach(position,entity,limit_sq)
+local function physical_source(pair,entity)
+ if pair and valid(entity)and valid(pair.station)
+  and(entity.name=="tech-priests-cogitator-return-cache"
+   or entity.name=="tech-priests-cogitator-requester-cache")
+  and entity.force==pair.station.force and entity.surface==pair.station.surface
+  and dist_sq(entity.position,pair.station.position)<0.01 then return pair.station end
+ return entity
+end
+local function within_entity_reach(position,entity,limit_sq,pair)
+ entity=physical_source(pair,entity)
  if not(position and valid(entity))then return false end
  -- Factorio reports the entity box in world coordinates. A priest beside a
  -- large station can legitimately reach its inventory while remaining more
@@ -70,6 +79,7 @@ local function request_move_position(pair,pos,reason,radius)
 end
 local function source_approach_position(pair,entity,margin,avoid_station)
  if not(valid_pair(pair)and valid(entity))then return nil end
+ entity=physical_source(pair,entity)
  local ok,box=pcall(function()return entity.selection_box end)
  if not(ok and box)then
   ok,box=pcall(function()return entity.bounding_box end)
@@ -498,7 +508,7 @@ local function stage_original_wagon_drill_0836(pair,task)
    and task.source_inv and task.source_inv.valid
    and valid(task.source_entity) and task.source_entity.unit_number
    and within_entity_reach(pair.priest.position,task.source_entity,
-      M.pickup_reach_sq))then return false end
+      M.pickup_reach_sq,pair))then return false end
  local held=pair.rail_remote_drill_supply_0836
  if held then
   return type(held)=="table" and not held.quarantine
@@ -1643,10 +1653,10 @@ local function return_custody(pair,task)
  local failure=task.failure_reason_0338
  local carried=task.carried;if not(carried and carried.item_name and(tonumber(carried.count)or 0)>0)then return finish(pair,task,false,failure and (failure..";empty-custody") or "empty-custody")end
  if valid(task.source_entity)and task.source_inv and task.source_inv.valid then
-  if not within_entity_reach(pair.priest.position,task.source_entity,M.return_reach_sq) then task.phase="return-custody";sync_custody(pair,task,"returning-source");if not request_move(pair,task.source_entity,"construction-custody-source-return-0338")then return{processed=1,blocked=1,detail="source-return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-source-custody"}end
+  if not within_entity_reach(pair.priest.position,task.source_entity,M.return_reach_sq,pair) then task.phase="return-custody";sync_custody(pair,task,"returning-source");if not request_move(pair,task.source_entity,"construction-custody-source-return-0338")then return{processed=1,blocked=1,detail="source-return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-source-custody"}end
   local inserted=insert_item(task.source_inv,carried.item_name,carried.count);carried.count=carried.count-inserted;if carried.count<=0 then return finish(pair,task,false,failure and (failure..";custody-returned-source") or "custody-returned-source")end;task.source_entity=nil;task.source_inv=nil;sync_custody(pair,task,"source-return-partial")
  end
- if not within_entity_reach(pair.priest.position,pair.station,M.return_reach_sq) then task.phase="return-custody";sync_custody(pair,task,"returning-station");if not request_move(pair,pair.station,"construction-custody-station-return-0338")then return{processed=1,blocked=1,detail="station-return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-station-custody"}end
+ if not within_entity_reach(pair.priest.position,pair.station,M.return_reach_sq,pair) then task.phase="return-custody";sync_custody(pair,task,"returning-station");if not request_move(pair,pair.station,"construction-custody-station-return-0338")then return{processed=1,blocked=1,detail="station-return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-station-custody"}end
  local accepted,why,inserted=deposit_exact(pair,carried.item_name,carried.count,"construction-custody-return-0338");inserted=tonumber(inserted)or 0;carried.count=carried.count-inserted;if accepted==true and carried.count<=0 then return finish(pair,task,false,failure and (failure..";custody-stored") or "custody-stored")end;sync_custody(pair,task,"storage-blocked");return{processed=1,blocked=1,detail="storage-blocked:"..safe(why)}
 end
 -- Explicit admin-only test setting; never inferred from frustration.
@@ -2115,7 +2125,7 @@ local function clear_ground_site(pair,task)
     or dist_sq(e.position,task.position)>0.61 then
    return{processed=1,blocked=1,detail="ground-site-identity-changed"}
   end
-  if not within_entity_reach(pair.priest.position,e,M.pickup_reach_sq)then
+  if not within_entity_reach(pair.priest.position,e,M.pickup_reach_sq,pair)then
    if not request_move_position(pair,e.position,"construction-ground-pickup-0338",1.0)then
     return{processed=1,blocked=1,waiting=1,detail="ground-pickup-route-denied"}
    end
@@ -2199,7 +2209,7 @@ local function clear_ground_site(pair,task)
     and task.source_inv.valid)then
    return{processed=1,blocked=1,waiting=1,detail="ground-return-source-unavailable"}
   end
-  if not within_entity_reach(pair.priest.position,task.source_entity,M.return_reach_sq)then
+  if not within_entity_reach(pair.priest.position,task.source_entity,M.return_reach_sq,pair)then
    if not request_move(pair,task.source_entity,"construction-ground-return-0338")then
     return{processed=1,blocked=1,waiting=1,detail="ground-return-route-denied"}
    end
@@ -2491,7 +2501,7 @@ function M.service_pair(pair,reason)
   task.source_label=source.label
   task.phase="move-source"
  end
- if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if not within_entity_reach(pair.priest.position,task.source_entity,M.pickup_reach_sq) then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
+ if task.phase=="move-source"then if not valid(task.source_entity)then return M.abort_pair(pair,"source-invalid")end;if not within_entity_reach(pair.priest.position,task.source_entity,M.pickup_reach_sq,pair) then if not request_move(pair,task.source_entity,"construction-source-0338")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-source"}end;task.phase="pickup"end
  if task.phase=="pickup"then
   -- A durable original 0836 rail receipt must originate with a measured
   -- native 0338 source debit, not a counter, source-unit guess or ghost.

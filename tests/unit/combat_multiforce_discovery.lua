@@ -21,10 +21,22 @@ local station={valid=true,force=own,surface=surface,position={x=0,y=0}}
 tech_priests_0248_pair_for_station_and_priest=function()end
 find_space_asteroid_targets=function()return{}end
 get_entity_health_or_nil=function(e)return e.health end
-tech_priests_0248_is_enemy_of_station=function(s,e)return s.force.is_enemy(e.force)end
+package.path="tech-priests_src/?.lua;tech-priests_src/?/init.lua;"..package.path
+local Safety=require("scripts.core.combat_safety")
+tech_priests_0248_is_enemy_of_station=function(s,e)
+ return s.force.is_enemy(e.force)and Safety.is_valid_hostile_target(s,e)
+end
 is_asteroid_threat_entity=function()return false end
 score_threat_to_station_and_priest=function(e)return e.position.x^2,e.position.x^2 end
 assert(find_enemy_target(station,10)==target,"hostile non-biter priest force remained invisible")
+target.destructible=false
+assert(find_enemy_target(station,10)==nil,"invulnerable hostile proxy monopolized canonical threat selection")
+local defending={station=station,combat_target=target,target=target,mode="combat"}
+assert(Safety.clear_invalid_combat_state(defending,"native-invulnerable-proxy")
+ and not defending.combat_target and not defending.target,
+ "persisted invulnerable proxy target could not be retired")
+target.destructible=true
+assert(find_enemy_target(station,10)==target,"damageable rival supply-chain target became ineligible")
 diplomacy[rival]=false
 assert(find_enemy_target(station,10)==nil,"changed diplomacy retained a hostile priest target")
 diplomacy[bugs]=false

@@ -1,5 +1,14 @@
 # Current Testing Goals
 
+## 2026-11-14 - Verify real factory growth after construction and defense handoffs
+
+Native 64-tile contact continuation now proves actual participant damage (tick 81474, faction 1 to faction 2, five damage), real paid workforce expansion and recovery of the third faction's previously blocked constructor. Exact adopted production survives defense preemption. Default maintenance still passes all four ranks. The expanded regression run passes 54 Lua groups and seven Python tests.
+
+Fresh science produced all three requested types (230 red, 24 green, eight military at 216071), but this does not establish simultaneous sustained 5-SPM throughput. Later recovery totals are 410/102/30. Keep the 216000-tick science goal and unchanged default-spacing 108000-tick factory/combat arena gate open.
+
+Current fresh runs must validate native boiler port preservation, exact shoreline-outlet routing, hidden backing-inventory host access, paid source-to-build movement handoff and refusal of invulnerable combat targets. Previously sealed steam routes need a separately authorized physical recovery mechanism; do not claim the new preventive route policy repairs them. The compact 64-tile contact diagnostic remains explicitly separate from default spacing. Continue force-wide production, real research, capacity and supply-chain-defense validation without synthetic output or scripted combat.
+
+
 ## 2026-11-14 - Validate terminal-order, maintenance-stock and power handoffs together
 
 Retain the existing fresh 216000-tick science and default 108000-tick four-way factory/combat gates. Recovery now proves all three science families (394/92/30 packs), all four arena forces' native Steam Power/Electronics, and actual first-lab completion plus red production after paid steam-pipe construction. None of this passes an earlier failed deadline. The fresh run still needs sustained red/green/military throughput and later research.

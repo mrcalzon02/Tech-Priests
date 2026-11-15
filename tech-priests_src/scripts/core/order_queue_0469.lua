@@ -3,6 +3,7 @@
 -- Truthful per-pair intent queue: target-aware keys, complete duplicate refresh,
 -- lossless preemption, explicit terminal states, immediate promotion, fair budget.
 
+local ProductionOrder=require("scripts.core.production_order_ownership_0514")
 local M={version="0.1.674-dev",storage_key="order_queue_0469",queue_limit=8,
   default_timeout_ticks=7200,lease_ticks=360,tick_interval=17,max_history=200,missing_priest_pause_integrated=true}
 local original_assign,original_cancel,original_acquire,original_supply,original_scan
@@ -507,6 +508,10 @@ local function call_original(p,o)
   -- Consecration is always dispatcher-executed; legacy task adoption must not
   -- invoke a second assignment callback, including when a paused order resumes.
   if o.kind=="consecration" then return true end
+  if o.source=="adopt-active"then
+    return o.task~=nil and(p.active_task or p.active_task_0285)==o.task
+      and(not p.active_task_0285 or p.active_task_0285==o.task)
+  end
   if o.source=="assign_task"and original_assign then local ok,x=pcall(original_assign,p,o.task,"order-queue-0469");return ok and x==true
   elseif o.source=="emergency_acquire"and original_acquire then local ok,x=pcall(original_acquire,p,o.item,o.op,o.count,o.depth);return ok and x==true
   elseif o.source=="maybe_supply_scavenge"and original_supply then local ok,x=pcall(original_supply,p,o.supply_kind or o.item,o.supply_target);return ok and x==true
@@ -555,6 +560,7 @@ end
 
 local function target_invalid(o)local t=o and o.target;local k=type(t);return t and (k=="table"or k=="userdata")and t.valid==false end
 local function surface_active(p,o)
+  if ProductionOrder.matches(p,o,p.emergency_craft)then return true end
   local m=lower(p.mode);if o.kind=="combat"then return valid(p.combat_target)and(m:find("combat",1,true)or m:find("defend",1,true))elseif o.kind=="repair"then return m:find("repair",1,true)~=nil elseif o.kind=="consecration"then return m:find("consecr",1,true)~=nil or m:find("sanct",1,true)~=nil elseif o.kind=="logistics"or o.kind=="scavenge"then return p.logistic_requested_item~=nil or p.scavenge~=nil elseif o.kind=="acquisition"or o.kind=="emergency_craft"then return p.emergency_craft~=nil or p.direct_acquisition_task_0336~=nil or m:find("mine",1,true)~=nil or m:find("craft",1,true)~=nil end;return false
 end
 local function should_finish(p,o)if o and o.status=="paused"and o.pause_reason=="missing-priest"then return false end;if o and o.status=="paused"and o.pause_reason=="physical-ore-relay-0974"then return false end;if o.expires_tick and now()>o.expires_tick then return true,"expired","failed"end;if target_invalid(o)then return true,"target-invalid","failed"end;if not valid_pair(p)then return true,"invalid-pair","failed"end;if o.kind=="consecration"then return false end;if surface_active(p,o)then return false end;if o.status=="paused"and now()<(o.paused_tick or 0)+M.lease_ticks then return false end;local m=lower(p.mode);if m==""or m=="idle"or m=="returning"or m=="returning-to-station"or m=="scheduler-0277"then return true,"surface-cleared","complete"end;return false end

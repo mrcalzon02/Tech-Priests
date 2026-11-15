@@ -478,7 +478,7 @@ local function rocket_silo_recommendation(p,k)if k~="idle"and k~="rocket-silo-lo
 local function artillery_recommendation(p,k)if k~="idle"and k~="artillery-logistics"then return nil end;return recommendation("TechPriestsArtilleryLogistics0713","scripts.core.artillery_logistics_0713",p,"artillery-logistics")end
 local function roboport_recommendation(p,k)if k~="idle"and k~="roboport-repair-pack-logistics"then return nil end;return recommendation("TechPriestsRoboportRepairPackLogistics0715","scripts.core.roboport_repair_pack_logistics_0715",p,"roboport-repair-pack-logistics")end
 
-local function native_recipe_power_prerequisite(p,construction,order)
+local function native_recipe_infrastructure_prerequisite(p,construction,order)
   local production=p.emergency_craft
   if not(construction and type(production)=="table"and production.facility_only_0647==true
       and production.infrastructure_first_0640==true)then return false end
@@ -504,11 +504,26 @@ local function native_recipe_power_prerequisite(p,construction,order)
     and(machine.type=="boiler"or machine.type=="generator")
     and machine.force==p.station.force and machine.surface==p.station.surface
     and(fluid.fluid=="water"or fluid.fluid=="steam")
-  if not(power or pipe)then return false end
+  local progress=p.dispatcher_emergency_production_0514
+  local missing_machine=progress and progress.phase=="need-machine"
+    and now()-(tonumber(progress.tick)or -1000000)<=60
+  local ghost=build.ghost or req.ghost
+  local workshop=missing_machine and build.request_field=="construction_bootstrap_ghost_0645"
+    and req==p.construction_bootstrap_ghost_0645 and req.item==build.item_name
+    and req.entity_name==build.entity_name
+    and(build.entity_name=="assembling-machine-1"or build.entity_name=="assembling-machine-2"
+      or build.entity_name=="assembling-machine-3")
+    and valid(ghost)and ghost.name=="entity-ghost"and ghost.ghost_name==build.entity_name
+    and ghost.force==p.station.force and ghost.surface==p.station.surface
+  if not(power or pipe or workshop)then return false end
   local stock=rawget(_G,"TechPriestsStorageRoleAuthority0686")
   if not(stock and type(stock.generic_item_count)=="function")then return false end
   local read,count=pcall(stock.generic_item_count,p,build.item_name)
   if not(read and tonumber(count)and count>=1)then return false end
+  -- A fresh refusal from the original production owner proves this recipe
+  -- cannot progress until its already-requested real infrastructure exists.
+  -- Construction still owns travel, native placement and the sole item debit.
+  if missing_machine then return true end
   local ledger=storage and storage.tech_priests and storage.tech_priests.emergency_facility_doctrine_0343
   local owned=ledger and ledger.by_station and ledger.by_station[p.station.unit_number]
   local item=production.output_item or production.item_name
@@ -582,8 +597,8 @@ function M.action(p)
     kind,reason="energy-family-logistics","strict-engine-energy-prerequisite"
     target=energy_rec.target;position=valid(target)and target.position or energy_rec.position
     selected=energy_rec
-  elseif native_recipe_power_prerequisite(p,construction_rec,o)then
-    kind,reason="construction","funded-native-recipe-power-prerequisite"
+  elseif native_recipe_infrastructure_prerequisite(p,construction_rec,o)then
+    kind,reason="construction","funded-native-recipe-infrastructure-prerequisite"
     target=construction_rec.target;position=construction_rec.position;selected=construction_rec
   elseif actual_crafting(p,o)then kind,reason="crafting","crafting-surface"
   elseif order_kind=="combat-repair"then kind,reason="combat-repair","order"

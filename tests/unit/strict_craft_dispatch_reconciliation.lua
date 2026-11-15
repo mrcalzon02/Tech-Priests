@@ -467,4 +467,28 @@ test("unpowered native recipe admits its exact funded steam pipe prerequisite",f
   check(Arbiter.action(p).kind=="crafting","foreign steam machinery gained production priority")
   TechPriestsStorageRoleAuthority0686=old
 end)
+test("missing native workshop admits its exact paid bootstrap machine",function()
+  local p=make_pair();p.mode="idle";p.radius=40
+  local recipe={output_item="lab",facility_only_0647=true,strict_recipe_0647=true,infrastructure_first_0640=true}
+  p.emergency_craft=recipe;p.dispatcher_emergency_production_0514={phase="need-machine",tick=game.tick}
+  local ghost={valid=true,name="entity-ghost",ghost_name="assembling-machine-1",
+    force=p.station.force,surface=p.station.surface}
+  local req={item="assembling-machine-1",entity_name="assembling-machine-1",ghost=ghost}
+  p.construction_bootstrap_ghost_0645=req
+  p.construction_task_0338={phase="move-source",item_name="assembling-machine-1",entity_name="assembling-machine-1",
+    request_field="construction_bootstrap_ghost_0645",request_value=req,ghost=ghost,
+    source_inv={valid=true,get_item_count=function()return 1 end},position={x=3,y=0}}
+  local old=TechPriestsStorageRoleAuthority0686
+  TechPriestsStorageRoleAuthority0686={generic_item_count=function()return 1 end}
+  check(Arbiter.action(p).kind=="construction","missing native workshop never received its stocked constructor")
+  Dispatcher.service_pair(p,"build-original-workshop")
+  check(counts.construction==1 and p.emergency_craft==recipe,"workshop bootstrap lost the original recipe")
+  p.dispatcher_emergency_production_0514.tick=game.tick-1000
+  check(Arbiter.action(p).kind=="crafting","stale machine refusal authorized new construction priority")
+  p.dispatcher_emergency_production_0514.tick=game.tick;ghost.force={}
+  check(Arbiter.action(p).kind=="crafting","foreign workshop ghost gained the production owner's priority")
+  ghost.force=p.station.force;p.emergency_facility_feed_custody_0357={count=2}
+  check(Arbiter.action(p).kind=="crafting","held native input custody was displaced by workshop planning")
+  TechPriestsStorageRoleAuthority0686=old
+end)
 print("[strict-craft-dispatch] PASS scenarios="..total)
