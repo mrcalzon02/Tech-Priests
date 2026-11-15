@@ -17,6 +17,7 @@ def main():
     parser.add_argument("--factorio", type=Path, default=Path(
         r"C:\Program Files (x86)\Steam\steamapps\common\Factorio\bin\x64\factorio.exe"))
     parser.add_argument("--output-dir",type=Path)
+    parser.add_argument("--research-intercepts",action="store_true")
     args = parser.parse_args()
     source = ROOT / "tech-priests_src"
     output = (args.output_dir or ROOT / "build/enemy-planets-probe").resolve()
@@ -35,7 +36,8 @@ def main():
             subprocess.run(["powershell", "-NoProfile", "-Command",
                 "New-Item -ItemType Junction -Path " + quote(target)
                 + " -Target " + quote(source / folder)], check=True)
-    shutil.copy2(ROOT / "tests/scenarios/enemy-planets/fixture.lua", mod / "enemy_probe.lua")
+    fixture="enemy-research" if args.research_intercepts else "enemy-planets"
+    shutil.copy2(ROOT / ("tests/scenarios/"+fixture+"/fixture.lua"), mod / "enemy_probe.lua")
     with (mod / "control.lua").open("a", encoding="utf-8") as stream:
         stream.write('\nrequire("enemy_probe")\n')
     config = output / "config.ini"
@@ -53,21 +55,25 @@ def main():
         save = output / (label + ".zip")
         for phase, command in (
             ("create", ["--create", str(save), "--map-gen-settings", str(mapgen)]),
-            ("reload", ["--test-save", str(save), "--test-ticks", "1201"])):
+            ("reload", ["--test-save", str(save), "--test-ticks", "601" if args.research_intercepts else "1201"])):
             result = subprocess.run(common + command, capture_output=True, text=True,
                                     timeout=180)
             text = result.stdout + result.stderr
             (output / (label + "-" + phase + ".log")).write_text(text)
             assert result.returncode == 0, text[-5000:]
             assert "isolated handler failure" not in text, text[-5000:]
-            if phase == "create":
+            if args.research_intercepts:
+                marker=("PASS settings, grants, milestone and recipient filters" if phase=="create"
+                        else "PASS loaded native player session and exactly one completion")
+                assert marker in text,text[-5000:]
+            elif phase == "create":
                 for planet in ("fulgora", "vulcanus", "nauvis", "gleba"):
                     assert "PASS bound cluster " + planet in text, text[-5000:]
             else:
                 assert text.count("PASS native production research and original pairs ")==4, text[-5000:]
             print(label, phase, "PASS", flush=True)
             for line in text.splitlines():
-                if "[TP-ENEMY-COLONIES]" in line:
+                if "[TP-ENEMY-COLONIES]" in line or "[TP-ENEMY-RESEARCH]" in line:
                     print(line, flush=True)
 
 

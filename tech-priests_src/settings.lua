@@ -31,6 +31,9 @@ enemy_option("double","starter-stock-multiplier",1,0.1,3)
 enemy_option("int","ore-per-tile",1500,100,100000)
 enemy_option("bool","respect-peaceful",true)
 data:extend(enemy_options)
+data:extend({{type="string-setting",name="tech-priests-enemy-research-announcements",
+ setting_type="runtime-global",default_value="all",
+ allowed_values={"off","all","milestones"},order="e[enemy-planets]-15"}})
 -- 0.1.479 retired legacy status-symbol settings from the player-facing settings list;
 -- the canonical overhead governor now owns visible priest task text. Legacy runtime
 -- reads keep safe defaults inside the script, but the old configurable glyph spam is gone.

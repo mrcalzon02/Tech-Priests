@@ -496,3 +496,7 @@ One hostile force per planet owns colony entities and research. The initial worl
 ## Colony modifiers and population admission
 
 The existing seeder reads enemy_colony_options before placement. The canonical create_pair owner reads the same admission rules before creating a new renegade priest, covering ordinary expansion. Neither module installs a population tick service. Slot counts derive from existing bound valid stations; colony counts derive from surviving original station records. Existing-pair recovery keeps its reserved slot. Friendly forces bypass enemy-only admission checks.
+
+## Enemy research intercept authority
+
+Shared on_research_finished event -> enemy_research_announcements -> mode / colony-force / by-script filters -> localized transmission -> hostile connected players' chat. The observer has no gameplay write path, periodic service, research ownership or persistent notification queue. Variant selection hashes technology name and force identity without consuming gameplay RNG.

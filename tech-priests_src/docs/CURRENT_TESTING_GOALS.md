@@ -733,3 +733,7 @@ Accepted current focused result: all four colonies retained ordinary station/pri
 ## Enemy colony modifier controls
 
 Check Settings > Mod settings > Map for the colony options. Focused native coverage includes blank planet-list rejection, priest/colony limits globally and per planet, canonical pair creation at capacity, zero/unlimited limits, ordinary pair persistence and paid research/production. Existing factories and priests must survive reductions. Remaining broad playtest coverage includes changed spacing on existing maps, non-default supply/richness values and additional allowed planets' terrain/environment suitability.
+
+## Enemy research chat intercepts
+
+The default Map setting announces all enemy colony technologies; Off and Major discoveries only are available. Focused native validation passed settings filters, starter-grant silence, hostile recipient selection and one native powered-lab completion in a separate real-player session. Run python tools/run_enemy_planetary_probe.py --research-intercepts. The test accelerates the initial research fraction; long-form factory research-chain proof remains separate. Confirm notification wording in ordinary multiplayer play and repeated infinite-level announcements during broader playtesting.

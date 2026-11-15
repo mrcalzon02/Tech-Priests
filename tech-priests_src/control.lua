@@ -1233,3 +1233,4 @@ do
 end
 -- Colony placement uses the shared event registry; ordinary bound priests own work.
 assert(require("scripts.core.enemy_planetary_seeding").install())
+assert(require("scripts.core.enemy_research_announcements").install())
