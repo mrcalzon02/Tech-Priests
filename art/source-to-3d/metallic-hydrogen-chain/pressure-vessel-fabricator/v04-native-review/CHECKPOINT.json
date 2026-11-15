@@ -1,0 +1,35 @@
+{
+  "status": "native_production_quality_reload_pipe_review_clock_and_sound_binding_pass; ordinary_chain_pending",
+  "engineering_delivery": "../v03-finish-and-states",
+  "source_sha256": "c206d1a2ffd384d90341650355ff23239ffe332242641e9e9c23eed2b27e96eb",
+  "native_sites": 20,
+  "orientations": 4,
+  "footprint": [
+    4,
+    4
+  ],
+  "fluid_boxes": 1,
+  "water_as_review_forming_medium": true,
+  "fluid_identity_and_economy_final": false,
+  "real_plate_inserter_input": true,
+  "real_shell_inserter_output": true,
+  "normal_and_rare_quality_verified": true,
+  "missing_input_cases_verified": true,
+  "mid_cycle_reload_identical": true,
+  "native_cycle_ticks": 720,
+  "native_source_cell_period_ticks": 60,
+  "all_twelve_cells_verified_each_direction": true,
+  "actual_two_loop_wraps_each_direction": true,
+  "native_audio_binding_verified": true,
+  "native_audio_phase_synchronization_verified": false,
+  "agent_graphical_pipe_seating_review": true,
+  "owner_approved": false,
+  "ordinary_chain_integrated": false,
+  "fitting_method": "Rigid original ten-mesh mouth and unchanged 64-section reducer; straight axial receiving neck or intact laterally shifted reducer with constant-radius small feed. Original camera/body proportions remain fixed.",
+  "next": [
+    "Build canister assembler with state-preserving pellet/shell sealing",
+    "Refine three reactors and remaining sprite-only buildings",
+    "Integrate ordinary chain recipes/UI/economy and final fluid identity without exposing review internals"
+  ],
+  "safe_prototype_normal_load_verified": true
+}

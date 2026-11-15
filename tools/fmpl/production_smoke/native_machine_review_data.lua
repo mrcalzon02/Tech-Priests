@@ -1,5 +1,18 @@
 -- Spec-driven isolated native art fixture. No ordinary mod/economy edits.
 local spec=require('spec')
+local frame_count=spec.frame_count or 8
+-- A binary-exact quarter-step avoids the engine's slow 1/60 quantization.
+-- Fifteen sequence entries per source cell * four ticks = exactly one second.
+-- The 180-entry sequence stays below the engine's 255-frame limit.
+local animation_speed=spec.exact_tick_clock and .25 or frame_count/(60*spec.cycle_seconds)
+local state_duration=spec.exact_tick_clock and spec.cycle_seconds*60/4 or frame_count
+local frame_sequence=nil
+if spec.exact_tick_clock then
+ frame_sequence={}
+ local steps_per_cell=spec.cycle_seconds*60/frame_count/4
+ assert(steps_per_cell==math.floor(steps_per_cell),'Exact clock needs integral four-tick steps per cell')
+ for cell=1,frame_count do for _=1,steps_per_cell do frame_sequence[#frame_sequence+1]=cell end end
+end
 local machine=table.deepcopy(data.raw['assembling-machine']['chemical-plant'])
 machine.name=spec.entity;machine.localised_name=spec.title
 machine.flags={'placeable-neutral','player-creation'};machine.minable={mining_time=.1,result=spec.entity};machine.next_upgrade=nil
@@ -17,20 +30,20 @@ local function visual(state)
   secondary_draw_order=state=='working' and 1 or 0,constant_speed=state=='working'}
  for _,direction in ipairs{'north','east','south','west'} do
   result[direction..'_animation']={filename='__'..spec.mod_id..'__/graphics/'..state..'-'..direction..'.png',
-   width=256,height=256,frame_count=8,line_length=4,animation_speed=8/(60*spec.cycle_seconds),scale=spec.sprite_scale,
+   width=256,height=256,frame_count=frame_count,frame_sequence=frame_sequence,line_length=4,animation_speed=animation_speed,scale=spec.sprite_scale,
    shift={0,spec.sprite_shift_y},allow_reducing_frames=false}
  end
  return result
 end
-machine.graphics_set={animation_progress=8/(60*spec.cycle_seconds),states={{name='idle',duration=1,next_active='working',next_inactive='idle'},
- {name='working',duration=8,next_active='working',next_inactive='idle'}},working_visualisations={visual('idle'),visual('working')}}
+machine.graphics_set={animation_progress=animation_speed,states={{name='idle',duration=1,next_active='working',next_inactive='idle'},
+ {name='working',duration=state_duration,next_active='working',next_inactive='idle'}},working_visualisations={visual('idle'),visual('working')}}
 if spec.primary_animation_clock then
  -- State-filtered secondary layers need a primary animated clock. The clock
  -- pixels are transparent; all visible geometry remains the real source art.
  machine.graphics_set.animation={}
  for _,direction in ipairs{'north','east','south','west'} do
   machine.graphics_set.animation[direction]={filename='__'..spec.mod_id..'__/graphics/animation-clock.png',width=1,height=1,
-   frame_count=8,line_length=1,animation_speed=8/(60*spec.cycle_seconds),allow_reducing_frames=false}
+   frame_count=frame_count,frame_sequence=frame_sequence,line_length=1,animation_speed=animation_speed,allow_reducing_frames=false}
  end
 end
 if spec.rear_collar_layer then
@@ -45,7 +58,7 @@ end
 machine.graphics_set_flipped=nil;machine.working_visualisations=nil;machine.working_sound=nil;machine.water_reflection=nil
 local item=table.deepcopy(data.raw.item['chemical-plant']);item.name=spec.entity;item.place_result=spec.entity
 local fluids={};local known={}
-for _,port in ipairs(spec.ports) do if not known[port.fluid] then
+for _,port in ipairs(spec.ports) do if not known[port.fluid] and not data.raw.fluid[port.fluid] then
  local fluid=table.deepcopy(data.raw.fluid.water);fluid.name=port.fluid;fluid.localised_name=port.fluid..' / fixture only'
  fluid.base_color=port.color;fluid.flow_color=port.color;fluids[#fluids+1]=fluid;known[port.fluid]=true
 end end

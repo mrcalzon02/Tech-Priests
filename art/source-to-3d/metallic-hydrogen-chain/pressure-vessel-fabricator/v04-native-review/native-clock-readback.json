@@ -1,0 +1,2615 @@
+{
+  "passed": true,
+  "sample_interval_ticks": 30,
+  "source_cell_period_ticks": 60,
+  "native_cycle_ticks": 720,
+  "full_loop_boundary_observed": true,
+  "point": [
+    169,
+    109
+  ],
+  "rows": [
+    {
+      "direction": "north",
+      "passed": true,
+      "cells": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        8,
+        8,
+        9,
+        9,
+        10,
+        10,
+        11,
+        11,
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        8,
+        8,
+        9,
+        9,
+        10,
+        10,
+        11,
+        11,
+        0,
+        0,
+        1
+      ],
+      "actual_wraps": 2,
+      "samples": [
+        {
+          "index": 0,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "790c7606adf85f2abe445dc11fc81788302015540fb9efc41947d1d74f33c51f"
+        },
+        {
+          "index": 1,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "bf9ad4f923d2eaf02e635d4e949eee247f3308d59cdc3dbc04974de5c5f3bad2"
+        },
+        {
+          "index": 2,
+          "source_cell": 2,
+          "rgb": [
+            56,
+            205,
+            66
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "be59489d34b736592b9aff862ed720cdca7a6fa6b509d5ba48691c72b9c20257"
+        },
+        {
+          "index": 3,
+          "source_cell": 2,
+          "rgb": [
+            55,
+            200,
+            64
+          ],
+          "brightness_gain": 0.975503362481572,
+          "distance_squared": 0.2855786901468161,
+          "sha256": "93760dcfdf5608b5973c67a0d85eb270296f514769bf55dcf801f74897b3bba6"
+        },
+        {
+          "index": 4,
+          "source_cell": 3,
+          "rgb": [
+            64,
+            165,
+            68
+          ],
+          "brightness_gain": 0.8670138235355627,
+          "distance_squared": 0.3409038626429955,
+          "sha256": "68ea16a76e813bf34cd531f50d9d498cc147c2fd4c8050cd1e049e66abb85e48"
+        },
+        {
+          "index": 5,
+          "source_cell": 3,
+          "rgb": [
+            58,
+            152,
+            62
+          ],
+          "brightness_gain": 0.7961603613777527,
+          "distance_squared": 2.1750423489553974,
+          "sha256": "d1dc4cc4b946cd813ec18d91125ac957fba767ca2715bc1992cd4da68dee5afe"
+        },
+        {
+          "index": 6,
+          "source_cell": 4,
+          "rgb": [
+            72,
+            134,
+            69
+          ],
+          "brightness_gain": 0.765924337055496,
+          "distance_squared": 4.503795764725674,
+          "sha256": "d3b7b36c232a95518ef29375505de7dec458ef1ef24fadeaf1bae551e135d40a"
+        },
+        {
+          "index": 7,
+          "source_cell": 4,
+          "rgb": [
+            71,
+            133,
+            68
+          ],
+          "brightness_gain": 0.7583748659390575,
+          "distance_squared": 4.727209639770362,
+          "sha256": "e7b22e7cf6f4a76f0d5c0a6d498aafd2e20da3038d084226521bbaec19e19136"
+        },
+        {
+          "index": 8,
+          "source_cell": 5,
+          "rgb": [
+            82,
+            119,
+            77
+          ],
+          "brightness_gain": 0.7418163160595177,
+          "distance_squared": 1.0492560287326789,
+          "sha256": "c730f93ef52f02031495f8912ef6710cde0cac7ee2616069fb2433b3d27e7726"
+        },
+        {
+          "index": 9,
+          "source_cell": 5,
+          "rgb": [
+            82,
+            119,
+            77
+          ],
+          "brightness_gain": 0.7418163160595177,
+          "distance_squared": 1.0492560287326789,
+          "sha256": "f3858a2ced28ca323dd05f65cdeb6100adf0bbecde411e3c5e3338fe70b67ce9"
+        },
+        {
+          "index": 10,
+          "source_cell": 6,
+          "rgb": [
+            96,
+            109,
+            88
+          ],
+          "brightness_gain": 0.7495568153039954,
+          "distance_squared": 0.30241754816589494,
+          "sha256": "f3afff59fbf8e92e97d73cca611f3e049fe2e2332c74aaa72bfe8fcc0cf04e2b"
+        },
+        {
+          "index": 11,
+          "source_cell": 6,
+          "rgb": [
+            96,
+            109,
+            88
+          ],
+          "brightness_gain": 0.7495568153039954,
+          "distance_squared": 0.30241754816589494,
+          "sha256": "6f8c2c13adc4b498e25d80e290ce6e90f18c7d94b92f689e8d1a406c75877dff"
+        },
+        {
+          "index": 12,
+          "source_cell": 7,
+          "rgb": [
+            109,
+            97,
+            98
+          ],
+          "brightness_gain": 0.7469165899200029,
+          "distance_squared": 0.03600772884049177,
+          "sha256": "442a825bf4a0d64a79894d707012d95514d55ccb7d670f26489671cc8c8b156b"
+        },
+        {
+          "index": 13,
+          "source_cell": 7,
+          "rgb": [
+            109,
+            97,
+            98
+          ],
+          "brightness_gain": 0.7469165899200029,
+          "distance_squared": 0.03600772884049177,
+          "sha256": "11041e56ed707e01f086d160e278811bb29d1d88a704b1e80b8e33c5771feec7"
+        },
+        {
+          "index": 14,
+          "source_cell": 8,
+          "rgb": [
+            122,
+            85,
+            109
+          ],
+          "brightness_gain": 0.7473092659841925,
+          "distance_squared": 3.1218923049115004,
+          "sha256": "b163fd8cc44b1a1246f3bfd76b8b60f24233b86d4ae71561117708fb80dadc8e"
+        },
+        {
+          "index": 15,
+          "source_cell": 8,
+          "rgb": [
+            126,
+            88,
+            112
+          ],
+          "brightness_gain": 0.7708562696156563,
+          "distance_squared": 1.590679790328139,
+          "sha256": "a84828539976378358b4bc3e1566e6eeb1792456b4b63c478f83a5a7ef4fefc8"
+        },
+        {
+          "index": 16,
+          "source_cell": 9,
+          "rgb": [
+            143,
+            78,
+            121
+          ],
+          "brightness_gain": 0.7794106797692296,
+          "distance_squared": 3.1896625499829936,
+          "sha256": "8e1e1ca1018c6b5361eac373bcc748d8a5389f45a4eb96beec608c0676b59d8c"
+        },
+        {
+          "index": 17,
+          "source_cell": 9,
+          "rgb": [
+            146,
+            80,
+            124
+          ],
+          "brightness_gain": 0.7973676832957077,
+          "distance_squared": 2.2503946999542745,
+          "sha256": "c6e89c7ea1a80137c5c0f9a7c4ee4d47f05619b757be839fda0bf9c7d6858b6c"
+        },
+        {
+          "index": 18,
+          "source_cell": 10,
+          "rgb": [
+            157,
+            67,
+            135
+          ],
+          "brightness_gain": 0.788768472906404,
+          "distance_squared": 1.3970443349753896,
+          "sha256": "6bcf5b5206f886ff4835f6194e229499af632fe6d51f9719b171c6fc8413e3cd"
+        },
+        {
+          "index": 19,
+          "source_cell": 10,
+          "rgb": [
+            160,
+            68,
+            137
+          ],
+          "brightness_gain": 0.8022331691297209,
+          "distance_squared": 0.620361247947434,
+          "sha256": "de1dd3abaadd31986d867e8121216aeecd29703093bf11078206b0c3d091b012"
+        },
+        {
+          "index": 20,
+          "source_cell": 11,
+          "rgb": [
+            175,
+            56,
+            143
+          ],
+          "brightness_gain": 0.7942802602632896,
+          "distance_squared": 9.109319893380462,
+          "sha256": "2c48c420eb95b71cc95caa9a6a629f43da7183006d2c64c4d29f08b8917d39ff"
+        },
+        {
+          "index": 21,
+          "source_cell": 11,
+          "rgb": [
+            187,
+            60,
+            153
+          ],
+          "brightness_gain": 0.8492893974136626,
+          "distance_squared": 9.59911771210407,
+          "sha256": "aef78c2e875cc531e6e76435444c24772fde8e5407add255bdad60e34c780eb0"
+        },
+        {
+          "index": 22,
+          "source_cell": 0,
+          "rgb": [
+            15,
+            215,
+            38
+          ],
+          "brightness_gain": 0.9147225862822194,
+          "distance_squared": 12.84622105723023,
+          "sha256": "bf79d4e29e3126138c21ad24eac83f24dbe110908a7a980bfc87b797a4cd7a35"
+        },
+        {
+          "index": 23,
+          "source_cell": 0,
+          "rgb": [
+            15,
+            223,
+            40
+          ],
+          "brightness_gain": 0.9489733508082132,
+          "distance_squared": 20.002184359982525,
+          "sha256": "96db6514a21a376eb00e2edd1cbf9f190ad57d6c599fd52df381ed9001b9b8fe"
+        },
+        {
+          "index": 24,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "bf6cd44846e31dd1232a319f55f9ac761862da6a6f49c6e9451dd2d8fe2d981c"
+        },
+        {
+          "index": 25,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "0295b57f148ead50c5420b88c883b145e0ac0181252cab43a46ed91207322efd"
+        },
+        {
+          "index": 26,
+          "source_cell": 2,
+          "rgb": [
+            56,
+            205,
+            66
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "ecc4646f5c126f3759645b9f4a945ef22b72e1c6f1ef4a2799e8994d50591cff"
+        },
+        {
+          "index": 27,
+          "source_cell": 2,
+          "rgb": [
+            56,
+            205,
+            66
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "798092a5b524b48a0b3831c9ff77cd658461a84fe1f12250f4bd3bace085dbd2"
+        },
+        {
+          "index": 28,
+          "source_cell": 3,
+          "rgb": [
+            73,
+            190,
+            78
+          ],
+          "brightness_gain": 0.9968003011481272,
+          "distance_squared": 1.510446075663467,
+          "sha256": "778a24147ce5d65500804decb515c9113c808bd9f1a3b906059041d681ed7fb1"
+        },
+        {
+          "index": 29,
+          "source_cell": 3,
+          "rgb": [
+            73,
+            190,
+            78
+          ],
+          "brightness_gain": 0.9968003011481272,
+          "distance_squared": 1.510446075663467,
+          "sha256": "7b546710b70f460c44cff04ff45fd1afef1f1497f1aadcbe882947c099e2ad47"
+        },
+        {
+          "index": 30,
+          "source_cell": 4,
+          "rgb": [
+            93,
+            174,
+            89
+          ],
+          "brightness_gain": 0.9924505288835614,
+          "distance_squared": 8.289739869198579,
+          "sha256": "9ea10f8a7ba692e7516e9addd05660110c728839c31a2b9a036c0d96271d1b9f"
+        },
+        {
+          "index": 31,
+          "source_cell": 4,
+          "rgb": [
+            93,
+            174,
+            89
+          ],
+          "brightness_gain": 0.9924505288835614,
+          "distance_squared": 8.289739869198579,
+          "sha256": "d28d0afbfcb37559fdc7526add9d30fceed0f6b694844dbccf81da543d42b388"
+        },
+        {
+          "index": 32,
+          "source_cell": 5,
+          "rgb": [
+            109,
+            159,
+            103
+          ],
+          "brightness_gain": 0.9901487942534634,
+          "distance_squared": 1.2714212416624007,
+          "sha256": "ca72bdaa561c5dfbec3c111874d37b88bab3ee1419f57a58f33e075d4fad0826"
+        },
+        {
+          "index": 33,
+          "source_cell": 5,
+          "rgb": [
+            109,
+            159,
+            103
+          ],
+          "brightness_gain": 0.9901487942534634,
+          "distance_squared": 1.2714212416624007,
+          "sha256": "872c70bed54473e06c97acf9c484c444b25247ea8b8d71a91578231c4be69504"
+        },
+        {
+          "index": 34,
+          "source_cell": 6,
+          "rgb": [
+            128,
+            145,
+            118
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "f670eb153bdf31cc9b0365adc7c21492ec08cef2fde3af4d2724865410c353e8"
+        },
+        {
+          "index": 35,
+          "source_cell": 6,
+          "rgb": [
+            128,
+            145,
+            118
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "ad874f635c88b5712766bad70d107a4152ac2d72223c65576bf9575c12c43af3"
+        },
+        {
+          "index": 36,
+          "source_cell": 7,
+          "rgb": [
+            145,
+            130,
+            131
+          ],
+          "brightness_gain": 0.9973635263737652,
+          "distance_squared": 0.6150748505697488,
+          "sha256": "be7ee76c585b7ef35397a85d15fd9424c9b5c2c99c608f17386ad1cd33e676fc"
+        },
+        {
+          "index": 37,
+          "source_cell": 7,
+          "rgb": [
+            145,
+            130,
+            131
+          ],
+          "brightness_gain": 0.9973635263737652,
+          "distance_squared": 0.6150748505697488,
+          "sha256": "474110f2fc4297ebe51091a2be081670d2fc0431f0b2673b607dd4dc88cef592"
+        },
+        {
+          "index": 38,
+          "source_cell": 8,
+          "rgb": [
+            163,
+            114,
+            145
+          ],
+          "brightness_gain": 0.9977816849335327,
+          "distance_squared": 2.7005274660269105,
+          "sha256": "ae0bfa81675bc57f6a07800c9d54b7ba7fbf4da67c6eb46a9bd198d9ca4792f4"
+        },
+        {
+          "index": 39,
+          "source_cell": 8,
+          "rgb": [
+            163,
+            114,
+            145
+          ],
+          "brightness_gain": 0.9977816849335327,
+          "distance_squared": 2.7005274660269105,
+          "sha256": "c6f00d8e8fccb1f0b0dfe9780a5f4466ab5a92b5ffc2b142cdbc404273776e36"
+        },
+        {
+          "index": 40,
+          "source_cell": 9,
+          "rgb": [
+            182,
+            99,
+            154
+          ],
+          "brightness_gain": 0.9915748159296475,
+          "distance_squared": 5.189219895828668,
+          "sha256": "3a414bd077b7872480976c18719e0099ce43b4683c43020a2c0f109ecdc5c654"
+        },
+        {
+          "index": 41,
+          "source_cell": 9,
+          "rgb": [
+            182,
+            99,
+            154
+          ],
+          "brightness_gain": 0.9915748159296475,
+          "distance_squared": 5.189219895828668,
+          "sha256": "37773625bd2a005681b17bd77e42e03b04216fb0452c871032f23a9a46eac1f1"
+        },
+        {
+          "index": 42,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "d375fbac9f44b12061209a8cd4f381fec2be3b216fc8fa3c4ab79e537cfde6a5"
+        },
+        {
+          "index": 43,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "5d1022243ce5e42ca2a009705b961ee0a666b6905a6a2df834e59828d90d34db"
+        },
+        {
+          "index": 44,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "5a602646bd6ee0d71d5f742a0c99d98f3e766cbf7621096207bbf4275ca1ec20"
+        },
+        {
+          "index": 45,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "f84b4a1afba11a07699462250b0a9ac3ec4489f8d6961836e3a27f392d41efc4"
+        },
+        {
+          "index": 46,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "0935235c12abd254dfd16e307b4f915d94726fc1ce5a0d066804e0c827b858c8"
+        },
+        {
+          "index": 47,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "72c577fa38edf51f43330971626264e019e50fee1f6c5cb23d5b2b78e697ba96"
+        },
+        {
+          "index": 48,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "90dc7a65a135491abedd4aa1e622746db69fc77ea1aaec9fb35050abad96bf55"
+        }
+      ]
+    },
+    {
+      "direction": "east",
+      "passed": true,
+      "cells": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        8,
+        8,
+        9,
+        9,
+        10,
+        10,
+        11,
+        11,
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        8,
+        8,
+        9,
+        9,
+        10,
+        10,
+        11,
+        11,
+        0,
+        0,
+        1
+      ],
+      "actual_wraps": 2,
+      "samples": [
+        {
+          "index": 0,
+          "source_cell": 1,
+          "rgb": [
+            32,
+            175,
+            40
+          ],
+          "brightness_gain": 0.7945606138301711,
+          "distance_squared": 7.762159800960997,
+          "sha256": "b0986dbfc205724b7486a5ea824eb0743051d94c7f30a4c4b1dac97290f98f91"
+        },
+        {
+          "index": 1,
+          "source_cell": 1,
+          "rgb": [
+            34,
+            185,
+            42
+          ],
+          "brightness_gain": 0.8398002013180635,
+          "distance_squared": 10.714698117866027,
+          "sha256": "f3b3c2311df0c3174c2df2688ca596e0d30accaa77364a50a813652d114f885b"
+        },
+        {
+          "index": 2,
+          "source_cell": 2,
+          "rgb": [
+            50,
+            182,
+            58
+          ],
+          "brightness_gain": 0.8873316234828442,
+          "distance_squared": 0.4231274107882132,
+          "sha256": "27ce1c6206c97a4198220c2f51707a61213645b1ffae2523ceecf1e881a5aee4"
+        },
+        {
+          "index": 3,
+          "source_cell": 2,
+          "rgb": [
+            51,
+            186,
+            60
+          ],
+          "brightness_gain": 0.9076882686754044,
+          "distance_squared": 0.04307611527354212,
+          "sha256": "3b5e20a351feb592f46ab8208529a92a19101753a88cec7e67fba36ce749d933"
+        },
+        {
+          "index": 4,
+          "source_cell": 3,
+          "rgb": [
+            64,
+            167,
+            69
+          ],
+          "brightness_gain": 0.876612920091181,
+          "distance_squared": 1.0162285379676663,
+          "sha256": "2c1d0ae3a6ea965dedba9536fd5e3fb99b201e49e4376ef20b5a64f0f7ca484e"
+        },
+        {
+          "index": 5,
+          "source_cell": 3,
+          "rgb": [
+            63,
+            163,
+            67
+          ],
+          "brightness_gain": 0.8558671602149863,
+          "distance_squared": 0.6364682016855998,
+          "sha256": "035de92aad9c0b9eeb2237c6b139041a9037bf12e30056f2e9ede829e44770d6"
+        },
+        {
+          "index": 6,
+          "source_cell": 4,
+          "rgb": [
+            80,
+            149,
+            76
+          ],
+          "brightness_gain": 0.8501461527138141,
+          "distance_squared": 8.141484238638988,
+          "sha256": "7bffd30b784838566a4d307cbb61ff974a8522c0de01ceda326b919ca7e21d38"
+        },
+        {
+          "index": 7,
+          "source_cell": 4,
+          "rgb": [
+            78,
+            146,
+            75
+          ],
+          "brightness_gain": 0.8333017895821504,
+          "distance_squared": 4.583286017706552,
+          "sha256": "912c20f5d64db8f7a547c2443cda7c6772425514a51302a1ceab12b2735a6a64"
+        },
+        {
+          "index": 8,
+          "source_cell": 5,
+          "rgb": [
+            88,
+            129,
+            84
+          ],
+          "brightness_gain": 0.8032837352488456,
+          "distance_squared": 0.474602360184717,
+          "sha256": "06069967d1b58e50d89b391670d1acf2f0118f5b69a0eee69f4c586f1e509922"
+        },
+        {
+          "index": 9,
+          "source_cell": 5,
+          "rgb": [
+            87,
+            127,
+            82
+          ],
+          "brightness_gain": 0.7901487942534633,
+          "distance_squared": 1.2714212416624007,
+          "sha256": "d36469954c2fb84e1c1e406faadad93a6f6d9c4e32c842444eb4c44346b12c44"
+        },
+        {
+          "index": 10,
+          "source_cell": 6,
+          "rgb": [
+            106,
+            121,
+            98
+          ],
+          "brightness_gain": 0.8313755284125222,
+          "distance_squared": 0.38657393879181035,
+          "sha256": "702b4f564c7d1d943bbb410568ba88d6a6af5a23f035bd86163e31d5f6a718f4"
+        },
+        {
+          "index": 11,
+          "source_cell": 6,
+          "rgb": [
+            112,
+            127,
+            103
+          ],
+          "brightness_gain": 0.8747784076519978,
+          "distance_squared": 0.07560438704147429,
+          "sha256": "20eb6ac69b14099a422df85011a516e77ed07d5150b4e8302952f4fc4ab469b1"
+        },
+        {
+          "index": 12,
+          "source_cell": 7,
+          "rgb": [
+            125,
+            112,
+            113
+          ],
+          "brightness_gain": 0.8597973888076277,
+          "distance_squared": 0.46692670242158196,
+          "sha256": "ccee395867cd150ae07f2f1100ae4dfe6f7199ef82a4a8909827989c967923ab"
+        },
+        {
+          "index": 13,
+          "source_cell": 7,
+          "rgb": [
+            125,
+            112,
+            113
+          ],
+          "brightness_gain": 0.8597973888076277,
+          "distance_squared": 0.46692670242158196,
+          "sha256": "5239500309cf8929ea05f435227d17f83781fa90023318863e87d1e9a8def3c0"
+        },
+        {
+          "index": 14,
+          "source_cell": 8,
+          "rgb": [
+            136,
+            95,
+            121
+          ],
+          "brightness_gain": 0.8323282449019833,
+          "distance_squared": 2.0774109798379574,
+          "sha256": "d711beace5aae9832b513a5c739b571f786c890b0af928b49e4c57a9fa8b5b93"
+        },
+        {
+          "index": 15,
+          "source_cell": 8,
+          "rgb": [
+            134,
+            93,
+            119
+          ],
+          "brightness_gain": 0.8184268038187883,
+          "distance_squared": 2.6161821976107875,
+          "sha256": "a8997612d52ece8429ecf88ead7e651b0d415d0b96545451b8257eb88ec77973"
+        },
+        {
+          "index": 16,
+          "source_cell": 9,
+          "rgb": [
+            148,
+            81,
+            126
+          ],
+          "brightness_gain": 0.808847181030794,
+          "distance_squared": 1.6152302539359258,
+          "sha256": "70d02ea1d7e348c15f4dded2ee1f35e194ee0f9b6eb069c20b25e88a47cb78f2"
+        },
+        {
+          "index": 17,
+          "source_cell": 9,
+          "rgb": [
+            151,
+            82,
+            127
+          ],
+          "brightness_gain": 0.8206955572278046,
+          "distance_squared": 6.0924114322812795,
+          "sha256": "e1d1dcbbcf44a674e919a68ef5fa9aaaa623d41b3d5b5203504578c6c3a62987"
+        },
+        {
+          "index": 18,
+          "source_cell": 10,
+          "rgb": [
+            167,
+            71,
+            144
+          ],
+          "brightness_gain": 0.8396059113300492,
+          "distance_squared": 2.5881773399014656,
+          "sha256": "87709faa04038ddd3ba90a052678f8dfd9451ef4b48b25e52fdfffa03d2ece6c"
+        },
+        {
+          "index": 19,
+          "source_cell": 10,
+          "rgb": [
+            172,
+            74,
+            148
+          ],
+          "brightness_gain": 0.865024630541872,
+          "distance_squared": 2.1280788177339565,
+          "sha256": "1731db63dc7c024697cdd07498367a6d0fabdeaea7b2b3ab54786111b1e02bf0"
+        },
+        {
+          "index": 20,
+          "source_cell": 11,
+          "rgb": [
+            194,
+            62,
+            159
+          ],
+          "brightness_gain": 0.8814614784724082,
+          "distance_squared": 8.803696763004384,
+          "sha256": "9b7c9d0c3044569f6e843f77461105dfce7a4eb5009471f4bb5f2b6ecc693117"
+        },
+        {
+          "index": 21,
+          "source_cell": 11,
+          "rgb": [
+            199,
+            63,
+            163
+          ],
+          "brightness_gain": 0.9034837568237636,
+          "distance_squared": 9.687311582647522,
+          "sha256": "9d03e601b37bbbdfea94d0a980cf636c17e2dd1e60c86ce3503e7cac691215bd"
+        },
+        {
+          "index": 22,
+          "source_cell": 0,
+          "rgb": [
+            15,
+            218,
+            39
+          ],
+          "brightness_gain": 0.927741371778069,
+          "distance_squared": 16.21057230231542,
+          "sha256": "2c988a87084ec0090b8e5033de27f50f687ab71b031e46788818450228da5bd7"
+        },
+        {
+          "index": 23,
+          "source_cell": 0,
+          "rgb": [
+            15,
+            219,
+            39
+          ],
+          "brightness_gain": 0.9318479685452162,
+          "distance_squared": 16.20707732634338,
+          "sha256": "c0fe13cd72e8dceef6acefcd12c2fcc69eed7b18c7b9a621373b994a8e4f609c"
+        },
+        {
+          "index": 24,
+          "source_cell": 1,
+          "rgb": [
+            39,
+            213,
+            49
+          ],
+          "brightness_gain": 0.9674472489696694,
+          "distance_squared": 10.204584734013283,
+          "sha256": "c5e3c94128c1fc5f8101508949eeb52b3b5938d8334c436106766c47135aad27"
+        },
+        {
+          "index": 25,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "85b7ef6d5fe14cb2cb9eb7ab8fda5e8e8708d91bfdb6777a638db555513e0bb3"
+        },
+        {
+          "index": 26,
+          "source_cell": 2,
+          "rgb": [
+            56,
+            205,
+            66
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "5a90063f946cad903d13ffda06b846e3f506aef1ce648be038c72dc936f4d155"
+        },
+        {
+          "index": 27,
+          "source_cell": 2,
+          "rgb": [
+            56,
+            205,
+            66
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "c16b3bdd4887472be386c520e8c8dbbf858b9ada974ad1e77c2df6783f67fdff"
+        },
+        {
+          "index": 28,
+          "source_cell": 3,
+          "rgb": [
+            73,
+            190,
+            78
+          ],
+          "brightness_gain": 0.9968003011481272,
+          "distance_squared": 1.510446075663467,
+          "sha256": "960b153baefc6bfef881a83c407f124289e4ca6829a3c0359cbae1251963897f"
+        },
+        {
+          "index": 29,
+          "source_cell": 3,
+          "rgb": [
+            73,
+            190,
+            78
+          ],
+          "brightness_gain": 0.9968003011481272,
+          "distance_squared": 1.510446075663467,
+          "sha256": "f671d73592eb108c71403b1e26bea5335cac7de45d0a7ae8fd4f02286add40a7"
+        },
+        {
+          "index": 30,
+          "source_cell": 4,
+          "rgb": [
+            93,
+            174,
+            89
+          ],
+          "brightness_gain": 0.9924505288835614,
+          "distance_squared": 8.289739869198579,
+          "sha256": "790b03829405745f368b1a7ce2287915041d60b702d741a38e04d3f916579329"
+        },
+        {
+          "index": 31,
+          "source_cell": 4,
+          "rgb": [
+            93,
+            174,
+            89
+          ],
+          "brightness_gain": 0.9924505288835614,
+          "distance_squared": 8.289739869198579,
+          "sha256": "0e7245bd8e4ae0b1dc9b2ba1a42e41d94d67da763b07fa0201992a59fade0a87"
+        },
+        {
+          "index": 32,
+          "source_cell": 5,
+          "rgb": [
+            109,
+            159,
+            103
+          ],
+          "brightness_gain": 0.9901487942534634,
+          "distance_squared": 1.2714212416624007,
+          "sha256": "37b4d51f7ca15e29be375e8b82c269bbc2389aaba8ea2c62145cf98c7bdf57d8"
+        },
+        {
+          "index": 33,
+          "source_cell": 5,
+          "rgb": [
+            108,
+            157,
+            102
+          ],
+          "brightness_gain": 0.979168804515136,
+          "distance_squared": 0.8563365828630034,
+          "sha256": "fc9cc83fb878fcd2a0db65920be9d8bca0cb08128439352a8b83f18fbf909a30"
+        },
+        {
+          "index": 34,
+          "source_cell": 6,
+          "rgb": [
+            125,
+            142,
+            115
+          ],
+          "brightness_gain": 0.9771492022675472,
+          "distance_squared": 0.1960142598328479,
+          "sha256": "304b578f5fa0f5e752b4bbd82689d7b7c15f339249140267d84c4a670902eb8d"
+        },
+        {
+          "index": 35,
+          "source_cell": 6,
+          "rgb": [
+            125,
+            142,
+            115
+          ],
+          "brightness_gain": 0.9771492022675472,
+          "distance_squared": 0.1960142598328479,
+          "sha256": "e4be79b022128b5be5d9bc0e18a40841a3445d48083fc53ceb180736c6aac5f9"
+        },
+        {
+          "index": 36,
+          "source_cell": 7,
+          "rgb": [
+            142,
+            127,
+            128
+          ],
+          "brightness_gain": 0.9753146613214873,
+          "distance_squared": 0.2551420264730848,
+          "sha256": "4906a1e7dacea59f8f52168b65cb2e6450bde21102e5a53b2389305bcd7c743e"
+        },
+        {
+          "index": 37,
+          "source_cell": 7,
+          "rgb": [
+            138,
+            123,
+            124
+          ],
+          "brightness_gain": 0.9459161745851166,
+          "distance_squared": 0.01894288242411322,
+          "sha256": "a2b138c42cb36baa5f6ad93dd0a59d3090a129d79bfc5f66b65a4f92ea350777"
+        },
+        {
+          "index": 38,
+          "source_cell": 8,
+          "rgb": [
+            155,
+            108,
+            138
+          ],
+          "brightness_gain": 0.9483214749330398,
+          "distance_squared": 3.471038664409968,
+          "sha256": "cc450ffed0b392b715d595a8bff7c69e764131ae7cfd0aa4b80ae7d0e2b627c7"
+        },
+        {
+          "index": 39,
+          "source_cell": 8,
+          "rgb": [
+            155,
+            109,
+            138
+          ],
+          "brightness_gain": 0.9502111507304007,
+          "distance_squared": 2.1397867131143578,
+          "sha256": "6d5c8ac6b5636ca87f6ccc86f2a625e94f9ca02224eefcd75928ad5b5df1ce7d"
+        },
+        {
+          "index": 40,
+          "source_cell": 9,
+          "rgb": [
+            176,
+            96,
+            149
+          ],
+          "brightness_gain": 0.9594528794652738,
+          "distance_squared": 4.576512770572334,
+          "sha256": "237db4e14cab867af211cb29475b8a34cf2e6845f41a003b740be4220a4b6848"
+        },
+        {
+          "index": 41,
+          "source_cell": 9,
+          "rgb": [
+            181,
+            98,
+            153
+          ],
+          "brightness_gain": 0.9850973101382556,
+          "distance_squared": 5.948283239638203,
+          "sha256": "7949373aa9f3dcc079efc976d903e302d66a5206543640e2f4b6a2543cfbbc2d"
+        },
+        {
+          "index": 42,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "f94e6d54dc1ee3473be51cc81f9fed5e1f39dc6788625274f5154d889d8f1e97"
+        },
+        {
+          "index": 43,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "0821768af2c104f1b43012dcfaf11ae99995dc0fd99c3719f32f3ff0a39d106b"
+        },
+        {
+          "index": 44,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "ee4f03a9f5f28bf2c0d85aba999494df9d6d064136e03133af26c5ddcdef9009"
+        },
+        {
+          "index": 45,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "d625392041598f63841b92c936a09c453fe48c25e9fb11e83e1cf4d9ff37da99"
+        },
+        {
+          "index": 46,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "b1738643e8f402793b63e42c2811151c0c6b6bf191b7d6df3bcc55905e7e92bc"
+        },
+        {
+          "index": 47,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "8f6fc8b495137cea4c144d54bf69444383e2b39613e8b58b8ca5527c6e78b572"
+        },
+        {
+          "index": 48,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "fedbea60fc5823abf738bfe39781e2011ea7ad8eba1cbcfd53e5193ac27edc28"
+        }
+      ]
+    },
+    {
+      "direction": "south",
+      "passed": true,
+      "cells": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        8,
+        8,
+        9,
+        9,
+        10,
+        10,
+        11,
+        11,
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        8,
+        8,
+        9,
+        9,
+        10,
+        10,
+        11,
+        11,
+        0,
+        0,
+        1
+      ],
+      "actual_wraps": 2,
+      "samples": [
+        {
+          "index": 0,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "d64ee9cc432564471e8176e30d22c8951094ef9b66d9461eca725cc0bb1d38df"
+        },
+        {
+          "index": 1,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "e2c2538dd71b8f8fdbb4abe70d9907747efb113650cd3b3656d239586269eca9"
+        },
+        {
+          "index": 2,
+          "source_cell": 2,
+          "rgb": [
+            56,
+            205,
+            66
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "04954f6afe6e9045379c74e76075ab1f9ca0893c12336499827009a5a31f732d"
+        },
+        {
+          "index": 3,
+          "source_cell": 2,
+          "rgb": [
+            56,
+            205,
+            66
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "fe11c8ca1cd69aae57e1e242b23414e241f5bbbcd4614406d59a08a9808f7f12"
+        },
+        {
+          "index": 4,
+          "source_cell": 3,
+          "rgb": [
+            73,
+            190,
+            78
+          ],
+          "brightness_gain": 0.9968003011481272,
+          "distance_squared": 1.510446075663467,
+          "sha256": "bb86c7476092ddead118e477a9c51e9d68ef2b61a436aef8fb3ea8dc719c2ce6"
+        },
+        {
+          "index": 5,
+          "source_cell": 3,
+          "rgb": [
+            73,
+            190,
+            78
+          ],
+          "brightness_gain": 0.9968003011481272,
+          "distance_squared": 1.510446075663467,
+          "sha256": "07d028f15accd83f518a1035a1bcd72143754c949c24c1b52e8d5497554574bf"
+        },
+        {
+          "index": 6,
+          "source_cell": 4,
+          "rgb": [
+            93,
+            174,
+            89
+          ],
+          "brightness_gain": 0.9924505288835614,
+          "distance_squared": 8.289739869198579,
+          "sha256": "284c578d049f47e892d6d9f38c942dfc5d9acc1183dd332dfe7cddc5ff27a29e"
+        },
+        {
+          "index": 7,
+          "source_cell": 4,
+          "rgb": [
+            93,
+            174,
+            89
+          ],
+          "brightness_gain": 0.9924505288835614,
+          "distance_squared": 8.289739869198579,
+          "sha256": "81ca6f37b8420b6d368a4efdd5359e18ce7e43379a7b9e108bf66c8bcf683a85"
+        },
+        {
+          "index": 8,
+          "source_cell": 5,
+          "rgb": [
+            109,
+            159,
+            103
+          ],
+          "brightness_gain": 0.9901487942534634,
+          "distance_squared": 1.2714212416624007,
+          "sha256": "c86605d730cf43a3aeca99c7099182622fcb23a59ee7f85f054b0d9b8a8eb4c0"
+        },
+        {
+          "index": 9,
+          "source_cell": 5,
+          "rgb": [
+            109,
+            159,
+            103
+          ],
+          "brightness_gain": 0.9901487942534634,
+          "distance_squared": 1.2714212416624007,
+          "sha256": "6b9400cb1ecbe02d0892dcea98743a887a5b8cb25156b8296591b202d22e29a2"
+        },
+        {
+          "index": 10,
+          "source_cell": 6,
+          "rgb": [
+            128,
+            145,
+            118
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "227302edeca332a912f0ef2ebea8d5a04c4fd6765d13b6ee74f6a53028caf211"
+        },
+        {
+          "index": 11,
+          "source_cell": 6,
+          "rgb": [
+            128,
+            145,
+            118
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "3e61f659fea2e3f030b99bf3e95bb118d491c0af364a6e167cd05a59c7fcc3e6"
+        },
+        {
+          "index": 12,
+          "source_cell": 7,
+          "rgb": [
+            145,
+            130,
+            131
+          ],
+          "brightness_gain": 0.9973635263737652,
+          "distance_squared": 0.6150748505697488,
+          "sha256": "5ad77a8089b6e5aa478048f30e3efe2be312a19882c8a5de22e831b914acf590"
+        },
+        {
+          "index": 13,
+          "source_cell": 7,
+          "rgb": [
+            145,
+            130,
+            131
+          ],
+          "brightness_gain": 0.9973635263737652,
+          "distance_squared": 0.6150748505697488,
+          "sha256": "0e5b431cfa559a1dfd47f004e6baee4546e1eecf73a35ef8f1e68ffc0d536047"
+        },
+        {
+          "index": 14,
+          "source_cell": 8,
+          "rgb": [
+            163,
+            114,
+            145
+          ],
+          "brightness_gain": 0.9977816849335327,
+          "distance_squared": 2.7005274660269105,
+          "sha256": "1fb4cb7c215f5566f25053a1e6f8a1b9c05ff7ba8ec9e6d163efa5c564e4e59a"
+        },
+        {
+          "index": 15,
+          "source_cell": 8,
+          "rgb": [
+            163,
+            114,
+            145
+          ],
+          "brightness_gain": 0.9977816849335327,
+          "distance_squared": 2.7005274660269105,
+          "sha256": "a57fe49693ba0a698a9baf542428fdd04aa9a5f7b1cc6cb77f1213601e3dbdd4"
+        },
+        {
+          "index": 16,
+          "source_cell": 9,
+          "rgb": [
+            182,
+            99,
+            154
+          ],
+          "brightness_gain": 0.9915748159296475,
+          "distance_squared": 5.189219895828668,
+          "sha256": "7405ab411b7dfc82733d6d4c33412f95cf26943f7872698aadfff3fae75cda9d"
+        },
+        {
+          "index": 17,
+          "source_cell": 9,
+          "rgb": [
+            182,
+            99,
+            154
+          ],
+          "brightness_gain": 0.9915748159296475,
+          "distance_squared": 5.189219895828668,
+          "sha256": "59804572c8dcc1a7a81c7e6f1a0f71348525430f0b9711d7eb131501b772b5fe"
+        },
+        {
+          "index": 18,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "566a8f461b7ccf4dc9e3d4cac5e03f4e0ebbc1af9ffabbf9056035e00ac0d78e"
+        },
+        {
+          "index": 19,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "ae761457c75d1b9c5e970aa73bab6010ab3ea2b84c65440cc17bf283ad48def5"
+        },
+        {
+          "index": 20,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "f81dea1f40f6a4147c3fab16a0b964ac02f4eb8d92dd2277ae3462b66d0e33d1"
+        },
+        {
+          "index": 21,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "5ea6de1840af256c8c00dba5863866aac42bfe483681160dba4597a82fc497ed"
+        },
+        {
+          "index": 22,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "3e9e96a9f33838bce27f0e1b285720312f75391fcc80bd76693a55d9f9f74541"
+        },
+        {
+          "index": 23,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "06a888a163b6eff861cee3473f25a9ab336147e96db0e42eedf2e533de5a9120"
+        },
+        {
+          "index": 24,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "5c557beef53455290dcd2d6ec29e0991294e205edbf64a12b5c3982b3fae7d4d"
+        },
+        {
+          "index": 25,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "d45bf5fbb3f710a12414e5ed6b768fb32fb1b4a44ce9b1f4b7e5b2826b2d259b"
+        },
+        {
+          "index": 26,
+          "source_cell": 2,
+          "rgb": [
+            56,
+            205,
+            66
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "e9c4fbafddfd06b11bd4f20b8d26630c58029401efd73b4234e61f774907ae08"
+        },
+        {
+          "index": 27,
+          "source_cell": 2,
+          "rgb": [
+            56,
+            205,
+            66
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "c8ce3a56014db49cf62c29fe7bdc6f169a824d207cd32041c85f9da97aae2105"
+        },
+        {
+          "index": 28,
+          "source_cell": 3,
+          "rgb": [
+            73,
+            190,
+            78
+          ],
+          "brightness_gain": 0.9968003011481272,
+          "distance_squared": 1.510446075663467,
+          "sha256": "51f66b086cb50f0b321113ba0f97831e7ac15cac6fa23eaeda43aeefddfc7409"
+        },
+        {
+          "index": 29,
+          "source_cell": 3,
+          "rgb": [
+            73,
+            190,
+            78
+          ],
+          "brightness_gain": 0.9968003011481272,
+          "distance_squared": 1.510446075663467,
+          "sha256": "1e7eacce76495b0c5e8c8176e7d03e3fa403e657df3c3f7a5e513f888c9ffd28"
+        },
+        {
+          "index": 30,
+          "source_cell": 4,
+          "rgb": [
+            93,
+            174,
+            89
+          ],
+          "brightness_gain": 0.9924505288835614,
+          "distance_squared": 8.289739869198579,
+          "sha256": "7163b41ad02d88d580b05c43dc153517843a90b4b6215195bc7cc8a4b0e60fd9"
+        },
+        {
+          "index": 31,
+          "source_cell": 4,
+          "rgb": [
+            93,
+            174,
+            89
+          ],
+          "brightness_gain": 0.9924505288835614,
+          "distance_squared": 8.289739869198579,
+          "sha256": "5deaa1f5dc864e9f61dfbc45aac07bfe6504337efac727146a652e6ed9485f46"
+        },
+        {
+          "index": 32,
+          "source_cell": 5,
+          "rgb": [
+            109,
+            159,
+            103
+          ],
+          "brightness_gain": 0.9901487942534634,
+          "distance_squared": 1.2714212416624007,
+          "sha256": "a316396801fc2e24799d5fb4dfee6c22a9758c5e2401377c0b9171629f16b3b7"
+        },
+        {
+          "index": 33,
+          "source_cell": 5,
+          "rgb": [
+            109,
+            159,
+            103
+          ],
+          "brightness_gain": 0.9901487942534634,
+          "distance_squared": 1.2714212416624007,
+          "sha256": "0715d479be9596a1dc276b7a3fb3b82cc34350653df9cce92c47ca96e612950d"
+        },
+        {
+          "index": 34,
+          "source_cell": 6,
+          "rgb": [
+            128,
+            145,
+            118
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "85f4512b660a693527c128d127a8ab7caba1814b9b655fd8be2726dff48b23ca"
+        },
+        {
+          "index": 35,
+          "source_cell": 6,
+          "rgb": [
+            128,
+            145,
+            118
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "ea2c920ff6cf62f4afe4dc751861b6f4ae5eceecf44c3d21808fb9ec22b1c813"
+        },
+        {
+          "index": 36,
+          "source_cell": 7,
+          "rgb": [
+            145,
+            130,
+            131
+          ],
+          "brightness_gain": 0.9973635263737652,
+          "distance_squared": 0.6150748505697488,
+          "sha256": "8935f4698fde5dee4803b15f3bed64533c480d7b48456f6a09ee759f360d304e"
+        },
+        {
+          "index": 37,
+          "source_cell": 7,
+          "rgb": [
+            145,
+            130,
+            131
+          ],
+          "brightness_gain": 0.9973635263737652,
+          "distance_squared": 0.6150748505697488,
+          "sha256": "b3a8f98364c8ce4fcd06f0b236d6c71914720596fe93c8a860100617825a43f5"
+        },
+        {
+          "index": 38,
+          "source_cell": 8,
+          "rgb": [
+            163,
+            114,
+            145
+          ],
+          "brightness_gain": 0.9977816849335327,
+          "distance_squared": 2.7005274660269105,
+          "sha256": "e40978e6740bc0e07706de58ec93f9e28988cba349b6fda98f31741e602f001a"
+        },
+        {
+          "index": 39,
+          "source_cell": 8,
+          "rgb": [
+            163,
+            114,
+            145
+          ],
+          "brightness_gain": 0.9977816849335327,
+          "distance_squared": 2.7005274660269105,
+          "sha256": "c974a89d1e67b569b8bc7daf1322e87b272050cf7e5a577fd83114cd7c505b1c"
+        },
+        {
+          "index": 40,
+          "source_cell": 9,
+          "rgb": [
+            182,
+            99,
+            154
+          ],
+          "brightness_gain": 0.9915748159296475,
+          "distance_squared": 5.189219895828668,
+          "sha256": "1d94bf9ea2d72a893368df8e1883c6e478ce03e2cb93d04fd0be407ac49576b5"
+        },
+        {
+          "index": 41,
+          "source_cell": 9,
+          "rgb": [
+            182,
+            99,
+            154
+          ],
+          "brightness_gain": 0.9915748159296475,
+          "distance_squared": 5.189219895828668,
+          "sha256": "7e404df448bd745c29e325bd6ce0377242fabae0793abf70ba8c2bd048005d31"
+        },
+        {
+          "index": 42,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "89084c012aa54ef4b150c419f31df6efe9ab06494ccf406dae51ba384af482a9"
+        },
+        {
+          "index": 43,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "041a624869a3f9debd6ab6c4a7b2c54903717c080212f691e98128652b8f28f8"
+        },
+        {
+          "index": 44,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "e57ce339caa9013f308c6cd9e63bf9c0a7549227f865543e764ca185dda6fe5d"
+        },
+        {
+          "index": 45,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "007f8e8b8b2203f35655e5da852c2dff081e926b252f4e82df671f37e98e5068"
+        },
+        {
+          "index": 46,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "94c10714c5e95da546be2b3c5f353a169233a2e2a1545d2c353df03dc283ccaf"
+        },
+        {
+          "index": 47,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "3d7f00376fa1aa3300f2b56d76d87977d85acaec6a64f3b9cdc3a416eb7a41c0"
+        },
+        {
+          "index": 48,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "344478285944ed7ce1230c1f82bf3a58ca83ea199a8dee8234189494ecbaaa50"
+        }
+      ]
+    },
+    {
+      "direction": "west",
+      "passed": true,
+      "cells": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        8,
+        8,
+        9,
+        9,
+        10,
+        10,
+        11,
+        11,
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        4,
+        5,
+        5,
+        6,
+        6,
+        7,
+        7,
+        8,
+        8,
+        9,
+        9,
+        10,
+        10,
+        11,
+        11,
+        0,
+        0,
+        1
+      ],
+      "actual_wraps": 2,
+      "samples": [
+        {
+          "index": 0,
+          "source_cell": 1,
+          "rgb": [
+            32,
+            178,
+            41
+          ],
+          "brightness_gain": 0.8081021024443051,
+          "distance_squared": 5.063643097259414,
+          "sha256": "500417996e8e4fa4dc12bed24b26c2345c9981bcb587db10efc4130f9d2e0b22"
+        },
+        {
+          "index": 1,
+          "source_cell": 1,
+          "rgb": [
+            32,
+            178,
+            41
+          ],
+          "brightness_gain": 0.8081021024443051,
+          "distance_squared": 5.063643097259414,
+          "sha256": "2759f336086350df448cdf2a4823e03fa49da404d1cdba0956cb175768e0d507"
+        },
+        {
+          "index": 2,
+          "source_cell": 2,
+          "rgb": [
+            48,
+            174,
+            56
+          ],
+          "brightness_gain": 0.8492840842538926,
+          "distance_squared": 0.20712078680049348,
+          "sha256": "a325960ff5b0c91058bd850271c22bd9a3496a85d542eccd18e1395e015ec5f3"
+        },
+        {
+          "index": 3,
+          "source_cell": 2,
+          "rgb": [
+            47,
+            174,
+            56
+          ],
+          "brightness_gain": 0.8481531595209726,
+          "distance_squared": 0.2636064381929491,
+          "sha256": "1eeadebb497e1e1829ee9fc2128cfb798705cd26d030a5e4305f82d3bda10408"
+        },
+        {
+          "index": 4,
+          "source_cell": 3,
+          "rgb": [
+            60,
+            155,
+            64
+          ],
+          "brightness_gain": 0.8144802057845536,
+          "distance_squared": 0.25390551477508416,
+          "sha256": "fa38d3725907e8ed7d034722ed03108b4c99c57347ee8ea1879148a764e9dff7"
+        },
+        {
+          "index": 5,
+          "source_cell": 3,
+          "rgb": [
+            59,
+            153,
+            63
+          ],
+          "brightness_gain": 0.8033335424639773,
+          "distance_squared": 0.5486333312420191,
+          "sha256": "9c9439140b0f1568df08991794cb066e82556d9a461d807a1ed3e49f2fc5f034"
+        },
+        {
+          "index": 6,
+          "source_cell": 4,
+          "rgb": [
+            75,
+            140,
+            72
+          ],
+          "brightness_gain": 0.7996130633188232,
+          "distance_squared": 4.512880365066346,
+          "sha256": "fd103ee9851446947e247d057725f1df5cae8a09bab79693515e509f72242d7a"
+        },
+        {
+          "index": 7,
+          "source_cell": 4,
+          "rgb": [
+            76,
+            142,
+            73
+          ],
+          "brightness_gain": 0.8108426387399322,
+          "distance_squared": 4.529535465690911,
+          "sha256": "31619a4b05ef4bf49dd376f0ecb35f39d88e86b8ee959de442565354211acf52"
+        },
+        {
+          "index": 8,
+          "source_cell": 5,
+          "rgb": [
+            91,
+            133,
+            86
+          ],
+          "brightness_gain": 0.8275012827090816,
+          "distance_squared": 1.1482811698306987,
+          "sha256": "6a4fb278c0295689f6803cde56070fa41ef8ca2e9da8b5bee7d9c740e9081c0d"
+        },
+        {
+          "index": 9,
+          "source_cell": 5,
+          "rgb": [
+            92,
+            135,
+            87
+          ],
+          "brightness_gain": 0.8384812724474089,
+          "distance_squared": 1.8476141611082821,
+          "sha256": "441f5dc5f494d078a0fadee2bd37f7648e699b4526be47a760a999ad20c03cc3"
+        },
+        {
+          "index": 10,
+          "source_cell": 6,
+          "rgb": [
+            112,
+            127,
+            103
+          ],
+          "brightness_gain": 0.8747784076519978,
+          "distance_squared": 0.07560438704147429,
+          "sha256": "73a398fee20a94a3ff8e5d689dea529d0bf6e928355480336345c50b2b3f5232"
+        },
+        {
+          "index": 11,
+          "source_cell": 6,
+          "rgb": [
+            115,
+            130,
+            106
+          ],
+          "brightness_gain": 0.8976292053844506,
+          "distance_squared": 0.041474295287632565,
+          "sha256": "4288d27c16d645011812a8ec8fa57554969d9c18f417ba360578ca79ca4c88f2"
+        },
+        {
+          "index": 12,
+          "source_cell": 7,
+          "rgb": [
+            142,
+            127,
+            128
+          ],
+          "brightness_gain": 0.9753146613214873,
+          "distance_squared": 0.2551420264730848,
+          "sha256": "54cd853094ea0b4910b194797db2ccafbf166336d2210fdbd9d81058d172767c"
+        },
+        {
+          "index": 13,
+          "source_cell": 7,
+          "rgb": [
+            145,
+            130,
+            131
+          ],
+          "brightness_gain": 0.9973635263737652,
+          "distance_squared": 0.6150748505697488,
+          "sha256": "5669817fbcfc45821b76682d24c123170e2e190b1ed31262b840f7c958033646"
+        },
+        {
+          "index": 14,
+          "source_cell": 8,
+          "rgb": [
+            163,
+            114,
+            145
+          ],
+          "brightness_gain": 0.9977816849335327,
+          "distance_squared": 2.7005274660269105,
+          "sha256": "377aa2fce4f7a0ae9340c394a160eaaed9f742b2663b1cab1db0b9949569b79b"
+        },
+        {
+          "index": 15,
+          "source_cell": 8,
+          "rgb": [
+            163,
+            114,
+            145
+          ],
+          "brightness_gain": 0.9977816849335327,
+          "distance_squared": 2.7005274660269105,
+          "sha256": "c1782afb2c2de63ba2624db6b111903ec5e6a3fb09fbef66a7013ec62d9cad0a"
+        },
+        {
+          "index": 16,
+          "source_cell": 9,
+          "rgb": [
+            182,
+            99,
+            154
+          ],
+          "brightness_gain": 0.9915748159296475,
+          "distance_squared": 5.189219895828668,
+          "sha256": "cc9097800d076822eb77e8fcfaef672cc62d3aaf93c37043933a58aa11682e45"
+        },
+        {
+          "index": 17,
+          "source_cell": 9,
+          "rgb": [
+            182,
+            99,
+            154
+          ],
+          "brightness_gain": 0.9915748159296475,
+          "distance_squared": 5.189219895828668,
+          "sha256": "5788176740f7e459706c2da67f215c1c2348f62b56667643dddbd0c615a1d6c6"
+        },
+        {
+          "index": 18,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "da93011de5e0e870aef5657a3e1f16b38550feecedf75a226522d9176a68a627"
+        },
+        {
+          "index": 19,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "fc582dda66f16f8dc1f98ec155e1bbff847ef667e1cfa4cb08b3681919f79fe3"
+        },
+        {
+          "index": 20,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "063c9981453d234064b4ac9fceab4a64ef5c74eddf145f3f0fedbf3b6e8c9ba8"
+        },
+        {
+          "index": 21,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "6e340cb650a2c000a80ec2e744b350f6acf49ab3212701321b0eea4e251ab803"
+        },
+        {
+          "index": 22,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "efd80e85707403129aaa86ffa79515c0a81d69017da47ed6c6849764519f728f"
+        },
+        {
+          "index": 23,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "14b6c029bb2e5f8f74dd68498648c3a6b307cf9896e7f5f96638d685cdbdbb29"
+        },
+        {
+          "index": 24,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "21ce088fe94a1d755d675d0507579d81951a8c7869921115570d5e3b0f56e74e"
+        },
+        {
+          "index": 25,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "f5f76afa0b4fd2ca7c36581bebcf8e9b97da41a171711bb6bd0bec9f00fcc897"
+        },
+        {
+          "index": 26,
+          "source_cell": 2,
+          "rgb": [
+            56,
+            205,
+            66
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "89e11b000a7a227ef2c0f54316b212eff755e77b4c5fc7668189e5922d1edf10"
+        },
+        {
+          "index": 27,
+          "source_cell": 2,
+          "rgb": [
+            56,
+            205,
+            66
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "51fb49e7163e16ac36c373c42d878114c53f1b4b24cb95c27c36f6c37c1b2803"
+        },
+        {
+          "index": 28,
+          "source_cell": 3,
+          "rgb": [
+            73,
+            190,
+            78
+          ],
+          "brightness_gain": 0.9968003011481272,
+          "distance_squared": 1.510446075663467,
+          "sha256": "127bfa5a4a6c9f05f784579534a070bd22036c85d3ab1e8f186437b044880d5f"
+        },
+        {
+          "index": 29,
+          "source_cell": 3,
+          "rgb": [
+            73,
+            190,
+            78
+          ],
+          "brightness_gain": 0.9968003011481272,
+          "distance_squared": 1.510446075663467,
+          "sha256": "127bfa5a4a6c9f05f784579534a070bd22036c85d3ab1e8f186437b044880d5f"
+        },
+        {
+          "index": 30,
+          "source_cell": 4,
+          "rgb": [
+            93,
+            174,
+            89
+          ],
+          "brightness_gain": 0.9924505288835614,
+          "distance_squared": 8.289739869198579,
+          "sha256": "71d40ad1b6a2acd45ff49d5de6e5f25d38f0a937018682d9303434d58bf27b04"
+        },
+        {
+          "index": 31,
+          "source_cell": 4,
+          "rgb": [
+            93,
+            174,
+            89
+          ],
+          "brightness_gain": 0.9924505288835614,
+          "distance_squared": 8.289739869198579,
+          "sha256": "71d40ad1b6a2acd45ff49d5de6e5f25d38f0a937018682d9303434d58bf27b04"
+        },
+        {
+          "index": 32,
+          "source_cell": 5,
+          "rgb": [
+            109,
+            159,
+            103
+          ],
+          "brightness_gain": 0.9901487942534634,
+          "distance_squared": 1.2714212416624007,
+          "sha256": "4f9714cb07e1dbc16ed16699c675558ceb6e23ae7fc9171c42e49f194a82548d"
+        },
+        {
+          "index": 33,
+          "source_cell": 5,
+          "rgb": [
+            109,
+            159,
+            103
+          ],
+          "brightness_gain": 0.9901487942534634,
+          "distance_squared": 1.2714212416624007,
+          "sha256": "4b09aa185a8967662acc41a69129c9f02ad114c4ebda0677bb5e5bfe3681b8a0"
+        },
+        {
+          "index": 34,
+          "source_cell": 6,
+          "rgb": [
+            128,
+            145,
+            118
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "ec3c4f11ecf3bcbbc50d62acf7ca43aa46d2f38decb6c6b9530d261de40e0a51"
+        },
+        {
+          "index": 35,
+          "source_cell": 6,
+          "rgb": [
+            128,
+            145,
+            118
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 0.0,
+          "sha256": "e96113c887f60b7e1c8c900182af275286ff8443392e43a3ccc2ca99ca9b2d7d"
+        },
+        {
+          "index": 36,
+          "source_cell": 7,
+          "rgb": [
+            145,
+            130,
+            131
+          ],
+          "brightness_gain": 0.9973635263737652,
+          "distance_squared": 0.6150748505697488,
+          "sha256": "88e7efcef9e63873422afbd26693c1a590b14368a7c28a8c865171de371e55d6"
+        },
+        {
+          "index": 37,
+          "source_cell": 7,
+          "rgb": [
+            145,
+            130,
+            131
+          ],
+          "brightness_gain": 0.9973635263737652,
+          "distance_squared": 0.6150748505697488,
+          "sha256": "b050453e90ab7efe0ca67e0f48bd6f963bda26506d83a199831e510c4b16e448"
+        },
+        {
+          "index": 38,
+          "source_cell": 8,
+          "rgb": [
+            163,
+            114,
+            145
+          ],
+          "brightness_gain": 0.9977816849335327,
+          "distance_squared": 2.7005274660269105,
+          "sha256": "885739d4f6bf74498d4f3edd512ac7930db5f06bd8c99261cc81bd3614bc4769"
+        },
+        {
+          "index": 39,
+          "source_cell": 8,
+          "rgb": [
+            163,
+            114,
+            145
+          ],
+          "brightness_gain": 0.9977816849335327,
+          "distance_squared": 2.7005274660269105,
+          "sha256": "6b33993c91134bc5163ccf83ef791ad4041a60822daf529e47cb5838d3821d87"
+        },
+        {
+          "index": 40,
+          "source_cell": 9,
+          "rgb": [
+            182,
+            99,
+            154
+          ],
+          "brightness_gain": 0.9915748159296475,
+          "distance_squared": 5.189219895828668,
+          "sha256": "336b7f53908aa7747d6dbe1a9812254608e96bed4dbae157f94693ee8149e06a"
+        },
+        {
+          "index": 41,
+          "source_cell": 9,
+          "rgb": [
+            182,
+            99,
+            154
+          ],
+          "brightness_gain": 0.9915748159296475,
+          "distance_squared": 5.189219895828668,
+          "sha256": "336b7f53908aa7747d6dbe1a9812254608e96bed4dbae157f94693ee8149e06a"
+        },
+        {
+          "index": 42,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "bf756d02f06c40c2f43ac0adddc00cae316d844fe880f7c6daaba37f2820a853"
+        },
+        {
+          "index": 43,
+          "source_cell": 10,
+          "rgb": [
+            199,
+            85,
+            171
+          ],
+          "brightness_gain": 0.9996059113300493,
+          "distance_squared": 1.9881773399014901,
+          "sha256": "bf756d02f06c40c2f43ac0adddc00cae316d844fe880f7c6daaba37f2820a853"
+        },
+        {
+          "index": 44,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "6e340cb650a2c000a80ec2e744b350f6acf49ab3212701321b0eea4e251ab803"
+        },
+        {
+          "index": 45,
+          "source_cell": 11,
+          "rgb": [
+            220,
+            70,
+            180
+          ],
+          "brightness_gain": 0.9986847159335607,
+          "distance_squared": 12.851372900492356,
+          "sha256": "6e340cb650a2c000a80ec2e744b350f6acf49ab3212701321b0eea4e251ab803"
+        },
+        {
+          "index": 46,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "abed1368763007bb9d9652806427dea07c7a92132a8df40e3ddc8b407bd1409e"
+        },
+        {
+          "index": 47,
+          "source_cell": 0,
+          "rgb": [
+            16,
+            235,
+            42
+          ],
+          "brightness_gain": 1.0,
+          "distance_squared": 20.0,
+          "sha256": "d7ebcb7bece8ba9d8c5cf04a70ce88d26a94ef87d070ffa124c937ec683fba63"
+        },
+        {
+          "index": 48,
+          "source_cell": 1,
+          "rgb": [
+            40,
+            219,
+            50
+          ],
+          "brightness_gain": 0.9942453421457467,
+          "distance_squared": 12.256338670161249,
+          "sha256": "e836aae74c5da7c2c1977654155d7912a4bf55f83c389847d4051b76f2e7f97f"
+        }
+      ]
+    }
+  ],
+  "fixture_hashes": {
+    "data.lua": "343ae058896478866d7f948ca5ee2e4ba15f480a821c494c4ef84acff846acc5",
+    "native-data.lua": "5799cdee6f195dac682dbf7a3d8da644af454191b922318154ac4076c62fdfd9",
+    "control.lua": "c1d38cffce3bd2a2132ceec919ae5f760c0fb589686366f0744bb5433beb5f75",
+    "spec.lua": "611fad7ac2688fbb1e370c5ddcb25c640ab64be42fac30a34c7390cc63428221"
+  },
+  "source_graphic_hashes": {
+    "animation-clock.png": "589658e546ddbed8d221d2679f2c04f4f3af450ef4adce152e25e19d81358d04",
+    "idle-east.png": "db72c2eb2852d6e411500a5f684e802c1277c7b682ff2540e875d6d18f69c3b6",
+    "idle-north.png": "5b5230745bf9c8ac25b969d758b9d33a575b4466148120f0c7b650677908608b",
+    "idle-south.png": "1eca8c370eddd73d3c1dc17a4b2be439de0ee73afab7164607f06049ca63aab0",
+    "idle-west.png": "df71ea1181973d96e06e225223de7c3055dc36d622f21697a7616caba98f5223",
+    "working-east.png": "aa27c296942f0c19cb0bf5ae2ec543d22809c449c6aa1f31716c9e5c21428b93",
+    "working-north.png": "9ba1f0b8152cbf27e78da219ee4c2d4fce602cf65119fde7729675c9129f23e5",
+    "working-south.png": "10484f97ccf822bfb465e42489a3ed0b959ee09d2718c7818cbedcfc59efe87a",
+    "working-west.png": "d750ab2c5145cbfde2b60d913b5f91507c7afda2631a38103533831e6eeeb3f7"
+  },
+  "scope": "Actual native screenshots at half-second intervals show all twelve working source cells at one cell per second and two wraps in each direction. Private counters are excluded from final art. Sound phase synchronization is not asserted."
+}
