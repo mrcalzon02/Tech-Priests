@@ -1,0 +1,26 @@
+{
+  "status": "candidate_native; first review pending",
+  "provenance": "new_reconstruction_from_reference",
+  "source_packet": "docs/art/metallic-hydrogen-chain/AGENT_BUILD_ORDER.md",
+  "material_donor_sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+  "native_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
+  "reused_instances": 4,
+  "camera": {
+    "policy": "fmpl.factorio45.v1",
+    "removed_camera_objects": [],
+    "persistent_camera_count": 1,
+    "name": "FMPL_CAPTURE_CAMERA"
+  },
+  "source_visible_process": [
+    "common water feed",
+    "two separately supported electrolyte cell chambers",
+    "independent H2 and O2 upper headers",
+    "rear rectifier and ceramic-supported flat busbars"
+  ],
+  "pending": [
+    "first actual image review",
+    "independent source/GLB audit and port clearance",
+    "model-specific finishing",
+    "full animation and native prototypes"
+  ]
+}

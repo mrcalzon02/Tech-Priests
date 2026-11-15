@@ -1,6 +1,6 @@
 {
   "schema": "tech-priests.mh7.production-continuation.v1",
-  "status": "active",
+  "status": "historical_superseded",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production",
   "base_commit": "e6a5022",
   "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\art\\source-to-3d\\metallic-hydrogen-chain\\water-purifier\\v14-local-candidate",
@@ -103,5 +103,6 @@
     "workflows_dispatched": false
   },
   "remote_published": false,
-  "owner_approved": false
+  "owner_approved": false,
+  "superseded_by": "PRODUCTION_CONTINUATION.json"
 }

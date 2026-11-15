@@ -1,0 +1,359 @@
+{
+  "part_id": "tp.mh7.cogitator-console",
+  "revision": "v1",
+  "family": "cogitator-console",
+  "status": "verified",
+  "source_blend": "part.blend",
+  "source_sha256": "dce4f658c500c0b85ed97187aa121eb5644ee0f2566c907eba1e01994f0f0740",
+  "collection": "TP LIB | cogitator-console | v1",
+  "mesh_count": 20,
+  "donor": {
+    "path": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\water-purifier\\v16-owner-accepted\\water-purifier-v16.blend",
+    "sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+    "machine": "water-purifier",
+    "revision": "V16 owner shape accepted"
+  },
+  "license": "user-authored Tech-Priests geometry and FMPL material provenance; no third-party mesh donor",
+  "axes": "+X right, +Y back, +Z up; fluid mouth outward +X",
+  "units": "Factorio tile",
+  "anchors": {
+    "mount_base": {
+      "position": [
+        0,
+        0,
+        -0.285
+      ],
+      "normal": [
+        0,
+        0,
+        -1
+      ],
+      "connector_class": "mechanical case mount"
+    },
+    "front_panel": {
+      "position": [
+        0,
+        -0.167,
+        0
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ],
+      "connector_class": "service control face"
+    },
+    "rear_gland": {
+      "position": [
+        -0.005,
+        0.135,
+        0.2
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "connector_class": "electrical; no gameplay wire socket"
+    }
+  },
+  "native_port_cells": null,
+  "source_instance_frame": [
+    [
+      0.9781476259231567,
+      -0.20791170001029968,
+      0.0,
+      0.9318834543228149
+    ],
+    [
+      0.20791170001029968,
+      0.9781476259231567,
+      0.0,
+      -1.2454921007156372
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      1.6749999523162842
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "objects": [
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console / service interface casting",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console / service inset CRT",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button.001",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button.002",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console / control push button.003",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console cast side extension",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | CRT lower retaining edge",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | CRT upper retaining edge",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | CRT left retaining edge",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | CRT right retaining edge",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 0",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 1",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 2",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console seated button boss 3",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 6",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 7",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 8",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 9",
+    "tp.mh7.cogitator-console | TP_MH7_V14 | console live green bar 10"
+  ],
+  "surface_plan": "retained source-authored placement and packed FMPL PBR; copy materials per consumer",
+  "consumers": [
+    {
+      "machine": "water-purifier",
+      "source_sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+      "transform": [
+        [
+          0.9781476259231567,
+          -0.20791170001029968,
+          0.0,
+          0.9318834543228149
+        ],
+        [
+          0.20791170001029968,
+          0.9781476259231567,
+          0.0,
+          -1.2454921007156372
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          1.6749999523162842
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "machine": "electrolyzer",
+      "machine_revision": "V01 pilot",
+      "instance": "front service cogitator",
+      "transform": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.800000011920929
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -1.6100000143051147
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.8700000047683716
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "model_source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
+      "runtime_export_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
+      "status": "actual saved/rendered/reimported candidate; final machine review open"
+    }
+  ],
+  "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
+  "verification_scope": "clean append, actual render, bounds/packed maps; model-space geometry only",
+  "thumbnail": "thumbnail.png",
+  "verification": "verification.json",
+  "dimensions_tiles": [
+    0.8299999237060547,
+    0.319500133395195,
+    0.5699999928474426
+  ],
+  "pivot": [
+    0,
+    0,
+    0
+  ],
+  "materials": [
+    {
+      "id": "FMPL | live green CRT level bars V13",
+      "packed_maps": []
+    },
+    {
+      "id": "MH7 amber",
+      "packed_maps": []
+    },
+    {
+      "id": "MH7 green",
+      "packed_maps": []
+    },
+    {
+      "id": "TP Library | dark_recess",
+      "packed_maps": [
+        {
+          "name": "dark_recess_albedo.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "f693afb6909d4004bd587c4217782f7b28d3d30ff123790a6b25770a54ed2986"
+        },
+        {
+          "name": "dark_recess_normal.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "d53ed45790b0785e20367a001cb2cee60840bd81ef0ab7b26c0581a59b3d3aca"
+        },
+        {
+          "name": "dark_recess_orm.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "075e6de0ac5cd008ba3ddccceaee889a3e2b3ce379be5b0627964e1fe8e23b14"
+        }
+      ]
+    },
+    {
+      "id": "TP Library | iron",
+      "packed_maps": [
+        {
+          "name": "iron_albedo.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "cbd2e4fd0e9368d69a4b6d255e7440443414155f4cd8c8434c149063fd65cbb7"
+        },
+        {
+          "name": "iron_normal.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "f26a49e578f648a434e460e5d0484bec4f0440cf4170895aeda380975e282997"
+        },
+        {
+          "name": "iron_orm.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "1c9011a45f77e6f0d5f35cbfbb3e4e0d8f8ed5f8d62a6afd33a04d8477c3a617"
+        }
+      ]
+    },
+    {
+      "id": "TP Library | martian_red",
+      "packed_maps": [
+        {
+          "name": "martian_red_albedo.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "2f2df118e10d2d56bf8f895e1d2ce112319e77b9328f29e7b41333a9d74d5262"
+        },
+        {
+          "name": "martian_red_normal.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "dd85cc702e0242f62186dd3217699485e4d77fbb411e2975d6a91187f52404a2"
+        },
+        {
+          "name": "martian_red_orm.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "5487550eb57282b8a5c8aaa404ff0d8fa5ffc4bfea6e2433e8dd419e3b867fa6"
+        }
+      ]
+    },
+    {
+      "id": "TP Water Purifier V14 | brass",
+      "packed_maps": [
+        {
+          "name": "brass_albedo.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "57034a31f8c7859a6b3661f57c67e60139bb8dbfc7273cd45be7b98904e35038"
+        },
+        {
+          "name": "brass_normal.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "8b48a33b75fd08e7cfa0e405c921b48a43682dafd33f49b582482e188f5eb674"
+        },
+        {
+          "name": "brass_orm.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "acc155e0e7406452e674e70673dcb149cd3d42fa9b0a0e0a069f61b6d91dc1e0"
+        }
+      ]
+    },
+    {
+      "id": "TP Water Purifier V14 | iron",
+      "packed_maps": [
+        {
+          "name": "iron_albedo.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "cbd2e4fd0e9368d69a4b6d255e7440443414155f4cd8c8434c149063fd65cbb7"
+        },
+        {
+          "name": "iron_normal.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "f26a49e578f648a434e460e5d0484bec4f0440cf4170895aeda380975e282997"
+        },
+        {
+          "name": "iron_orm.png",
+          "size": [
+            512,
+            512
+          ],
+          "sha256": "1c9011a45f77e6f0d5f35cbfbb3e4e0d8f8ed5f8d62a6afd33a04d8477c3a617"
+        }
+      ]
+    }
+  ],
+  "parameters": {
+    "uniform_scale": {
+      "default": 1.0,
+      "safe_range": [
+        1.0,
+        1.0
+      ]
+    },
+    "placement": "rigid transform only"
+  }
+}

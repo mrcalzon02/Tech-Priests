@@ -1,3 +1,9 @@
+## 2026-11-14 purifier accepted, four-angle capture delivered; electrolyzer built
+
+The owner accepted purifier V16 and requested four idle/animated angles, then the next machine. All 36 actual Blender frames, the independently reopened master, six size atlases and four-second previews are saved. Preserve this accepted source and move on. The isolated native 2.1.24 review prototype passes four pipe-connection cases and genuine output-fluid flow; ordinary graphical/runtime installation remains a later integration gate.
+
+Electrolyzer V01 is now a distinct editable 3x4 model and GLB with viewed front/rear/clay exports, 59,300 triangles and 111 clear mouth rays in both native and reimported geometry. Two actual purifier components were clean-appended and registered, with four real instances in the electrolyzer. Its finishing/contact/state/native gates remain open. [Current authoritative production checkpoint](metallic-hydrogen-chain/CURRENT_PRODUCTION.md).
+
 ## 2026-11-14 metallicized-hydrogen purifier V14 local checkpoint
 
 Recovered the actual V13 native artifact and built a source-preserving V14 candidate: full enclosed CRT/buttons, supported I-section upper drive, ten fitted main-process unions and source-safe UV derivatives. Independent native/GLB geometry passes: 74 clear bore rays per artifact, twelve drive contact edges, ten process fitting contacts, 637 imported meshes / 128,868 triangles, no degenerate triangles or missing UV layers. Native central/witness visibility passes; one fixed-angle idle/eight-working capture and six size sheets are saved and inspected. Thirteen focused camera tests pass after explicitly supporting fixed entities.

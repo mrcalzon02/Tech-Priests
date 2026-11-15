@@ -1,0 +1,821 @@
+{
+  "status": "candidate_native; named service fixtures need independent contact and collision QA",
+  "source_sha256": "a176e91871ba9cb720ff8cda5a76225feeb73c05c204a5942f885b18b6fdfc21",
+  "output_sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+  "source_geometry_digest": "997a3238157abb473b750b9240125d76f75c010469c1125a67c6779e7269ce1c",
+  "source_meshes_preserved": true,
+  "hidden_superseded_routes": [
+    "FMPL_PROCESS | instrument rack front face",
+    "FMPL_PROCESS | working pressure dial 1",
+    "FMPL_PROCESS | working dial lens 1",
+    "FMPL_PROCESS | working gauge needle 1",
+    "FMPL_PROCESS | working pressure dial 2",
+    "FMPL_PROCESS | working dial lens 2",
+    "FMPL_PROCESS | working gauge needle 2",
+    "FMPL_PROCESS | filter 1 pressure impulse tube / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | filter 1 pressure impulse tube / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | filter 1 pressure impulse tube / section 2",
+    "FMPL_PROCESS | pressure gauge 1 hardline / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure gauge 1 hardline / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure gauge 1 hardline / section 2",
+    "FMPL_PROCESS | filter 2 pressure impulse tube / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | filter 2 pressure impulse tube / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | filter 2 pressure impulse tube / section 2",
+    "FMPL_PROCESS | pressure gauge 2 hardline / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure gauge 2 hardline / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure gauge 2 hardline / section 2",
+    "FMPL_PROCESS | pressure relief to exhaust elbow / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure relief to exhaust elbow / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pressure relief to exhaust elbow / section 2",
+    "FMPL_PROCESS | return condensate pipe from working relief / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | return condensate pipe from working relief / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | return condensate pipe from working relief / section 2",
+    "FMPL_PROCESS | pump metal pressure bleeder / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pump metal pressure bleeder / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pump metal pressure bleeder / section 2",
+    "FMPL_PROCESS | process sump gravity return / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | process sump gravity return / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | process sump gravity return / section 2",
+    "FMPL_PROCESS | control panel motor power armored conduit / cast elbow 1",
+    "FMPL_PROCESS | control panel motor power armored conduit / cast elbow 2",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | control panel motor power armored conduit / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | control panel motor power armored conduit / section 2",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | control panel motor power armored conduit / section 3",
+    "FMPL_PROCESS | control junction terminal box",
+    "FMPL_PROCESS | raw-canister inlet / moving liquid channel",
+    "FMPL_PROCESS | raw-canister inlet / flow tracer 00",
+    "FMPL_PROCESS | raw-canister inlet / flow tracer 01",
+    "FMPL_PROCESS | raw-canister inlet / seated vessel connector gland",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-canister inlet / transparent tube",
+    "FMPL_PROCESS | raw witness feed from pump / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw witness feed from pump / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw witness feed from pump / section 2",
+    "FMPL_PROCESS | raw witness return to first filter / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw witness return to first filter / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw witness return to first filter / section 2",
+    "FMPL_PROCESS | clean witness feed from treatment outlet / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean witness feed from treatment outlet / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean witness feed from treatment outlet / section 2",
+    "FMPL_PROCESS | clean witness return to discharge casting / cast elbow 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean witness return to discharge casting / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean witness return to discharge casting / section 2",
+    "FMPL_PROCESS | raw-canister inlet / seated vessel connector gland",
+    "FMPL_PROCESS | raw-canister outlet / seated vessel connector gland",
+    "FMPL_PROCESS | clean-canister inlet / seated vessel connector gland",
+    "FMPL_PROCESS | clean-canister outlet / seated vessel connector gland",
+    "MH7_chassis width rail"
+  ],
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071068286895752,
+        -0.7071067094802856,
+        -6.0
+      ],
+      [
+        0.0,
+        0.7071067094802856,
+        0.7071068286895752,
+        7.650000095367432
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 5.800000190734863,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      512,
+      512
+    ]
+  },
+  "bores": {
+    "passed": true,
+    "schema": "fmpl.water-purifier.side-bores.v11",
+    "side_count": 2,
+    "probed_rays": 74,
+    "bore_nominal_diameter": 0.49,
+    "inner_test_radius": 0.205,
+    "hits": [],
+    "tested_actual_rendered_meshes": 707,
+    "native_factorio_fluidbox_verified": false
+  },
+  "new_hollow_routes": [
+    "TP_MH7_V16 | filter 1 dedicated pressure gauge line",
+    "TP_MH7_V16 | filter 2 dedicated pressure gauge line",
+    "TP_MH7_V16 | hollow vessel relief to open vent",
+    "TP_MH7_V16 | vent condensate into actual trap",
+    "TP_MH7_V16 | trap return to treatment shell",
+    "TP_MH7_V16 | pump bleeder to fitted valve",
+    "TP_MH7_V16 | sump into supported drain air gap",
+    "TP_MH7_V16 | junction to raised console rear gland",
+    "TP_MH7_V16 | junction to intake motor armored conduit",
+    "TP_MH7_V16 | raw witness feed from pump",
+    "TP_MH7_V16 | raw witness return to first filter",
+    "TP_MH7_V16 | clean witness feed from treatment outlet",
+    "TP_MH7_V16 | clean witness return to discharge casting"
+  ],
+  "endpoint_ledger": [
+    {
+      "route": "TP_MH7_V16 | filter 1 dedicated pressure gauge line",
+      "end": 0,
+      "point": [
+        -0.92,
+        -1.0,
+        1.57
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "receiver": "FMPL_PROCESS | filter 1 vertical cartridge pressure crown",
+      "fittings": [
+        "TP_MH7_V16 | filter 1 dedicated pressure gauge line endpoint 0 receiving socket",
+        "TP_MH7_V16 | filter 1 dedicated pressure gauge line endpoint 0 hex compression nut",
+        "TP_MH7_V16 | filter 1 dedicated pressure gauge line endpoint 0 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | filter 1 dedicated pressure gauge line",
+      "end": 1,
+      "point": [
+        0.94,
+        -1.3,
+        1.04
+      ],
+      "axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "receiver": "TP_MH7_V16 | visible gauge panel / instrument rack front face",
+      "fittings": [
+        "TP_MH7_V16 | filter 1 dedicated pressure gauge line endpoint 1 receiving socket",
+        "TP_MH7_V16 | filter 1 dedicated pressure gauge line endpoint 1 hex compression nut",
+        "TP_MH7_V16 | filter 1 dedicated pressure gauge line endpoint 1 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | filter 2 dedicated pressure gauge line",
+      "end": 0,
+      "point": [
+        -0.5,
+        -1.03,
+        1.57
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "receiver": "FMPL_PROCESS | filter 2 vertical cartridge pressure crown",
+      "fittings": [
+        "TP_MH7_V16 | filter 2 dedicated pressure gauge line endpoint 0 receiving socket",
+        "TP_MH7_V16 | filter 2 dedicated pressure gauge line endpoint 0 hex compression nut",
+        "TP_MH7_V16 | filter 2 dedicated pressure gauge line endpoint 0 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | filter 2 dedicated pressure gauge line",
+      "end": 1,
+      "point": [
+        1.3,
+        -1.3,
+        1.04
+      ],
+      "axis": [
+        0.9999999403953552,
+        0.0,
+        0.0
+      ],
+      "receiver": "TP_MH7_V16 | visible gauge panel / instrument rack front face",
+      "fittings": [
+        "TP_MH7_V16 | filter 2 dedicated pressure gauge line endpoint 1 receiving socket",
+        "TP_MH7_V16 | filter 2 dedicated pressure gauge line endpoint 1 hex compression nut",
+        "TP_MH7_V16 | filter 2 dedicated pressure gauge line endpoint 1 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | hollow vessel relief to open vent",
+      "end": 0,
+      "point": [
+        0.645,
+        0.5,
+        2.35
+      ],
+      "axis": [
+        0.7969335317611694,
+        0.2701469957828522,
+        0.5402939915657043
+      ],
+      "receiver": "FMPL_PROCESS | open double-wall steel treatment vessel",
+      "fittings": [
+        "TP_MH7_V16 | hollow vessel relief to open vent endpoint 0 receiving socket",
+        "TP_MH7_V16 | hollow vessel relief to open vent endpoint 0 hex compression nut",
+        "TP_MH7_V16 | hollow vessel relief to open vent endpoint 0 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | hollow vessel relief to open vent",
+      "end": 1,
+      "point": [
+        0.94,
+        0.6,
+        2.775
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "receiver": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | relief vent emitter / open steel throat",
+      "fittings": [
+        "TP_MH7_V16 | hollow vessel relief to open vent endpoint 1 receiving socket",
+        "TP_MH7_V16 | hollow vessel relief to open vent endpoint 1 hex compression nut",
+        "TP_MH7_V16 | hollow vessel relief to open vent endpoint 1 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | vent condensate into actual trap",
+      "end": 0,
+      "point": [
+        0.94,
+        0.689,
+        2.65
+      ],
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "receiver": "TP_MH7_V16 | hollow vessel relief to open vent",
+      "fittings": [
+        "TP_MH7_V16 | vent condensate into actual trap endpoint 0 receiving socket",
+        "TP_MH7_V16 | vent condensate into actual trap endpoint 0 hex compression nut",
+        "TP_MH7_V16 | vent condensate into actual trap endpoint 0 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | vent condensate into actual trap",
+      "end": 1,
+      "point": [
+        1.04,
+        0.53,
+        1.68
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "receiver": "FMPL_PROCESS | relief condensate trap gasket",
+      "fittings": [
+        "TP_MH7_V16 | vent condensate into actual trap endpoint 1 receiving socket",
+        "TP_MH7_V16 | vent condensate into actual trap endpoint 1 hex compression nut",
+        "TP_MH7_V16 | vent condensate into actual trap endpoint 1 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | trap return to treatment shell",
+      "end": 0,
+      "point": [
+        1.04,
+        0.53,
+        1.48
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        -0.9999999403953552
+      ],
+      "receiver": "FMPL_PROCESS | relief condensate trap",
+      "fittings": [
+        "TP_MH7_V16 | trap return to treatment shell endpoint 0 receiving socket",
+        "TP_MH7_V16 | trap return to treatment shell endpoint 0 hex compression nut",
+        "TP_MH7_V16 | trap return to treatment shell endpoint 0 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | trap return to treatment shell",
+      "end": 1,
+      "point": [
+        0.7,
+        0.38,
+        0.75
+      ],
+      "axis": [
+        0.9138116240501404,
+        0.40613827109336853,
+        0.0
+      ],
+      "receiver": "FMPL_PROCESS | open double-wall steel treatment vessel",
+      "fittings": [
+        "TP_MH7_V16 | trap return to treatment shell endpoint 1 receiving socket",
+        "TP_MH7_V16 | trap return to treatment shell endpoint 1 hex compression nut",
+        "TP_MH7_V16 | trap return to treatment shell endpoint 1 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | pump bleeder to fitted valve",
+      "end": 0,
+      "point": [
+        -1.12,
+        -0.84,
+        0.845
+      ],
+      "axis": [
+        -0.4070718586444855,
+        -0.4749179780483246,
+        0.7802214622497559
+      ],
+      "receiver": "FMPL_PROCESS | low mounted intake centrifugal pump",
+      "fittings": [
+        "TP_MH7_V16 | pump bleeder to fitted valve endpoint 0 receiving socket",
+        "TP_MH7_V16 | pump bleeder to fitted valve endpoint 0 hex compression nut",
+        "TP_MH7_V16 | pump bleeder to fitted valve endpoint 0 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | pump bleeder to fitted valve",
+      "end": 1,
+      "point": [
+        -1.18,
+        -0.99,
+        1.035
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "receiver": "FMPL_PROCESS | pump bleed-valve bonnet",
+      "fittings": [
+        "TP_MH7_V16 | pump bleeder to fitted valve endpoint 1 receiving socket",
+        "TP_MH7_V16 | pump bleeder to fitted valve endpoint 1 hex compression nut",
+        "TP_MH7_V16 | pump bleeder to fitted valve endpoint 1 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | sump into supported drain air gap",
+      "end": 0,
+      "point": [
+        0.59,
+        -0.375,
+        0.68
+      ],
+      "axis": [
+        0.7856365442276001,
+        -0.6186884045600891,
+        0.0
+      ],
+      "receiver": "FMPL_PROCESS | open double-wall steel treatment vessel",
+      "fittings": [
+        "TP_MH7_V16 | sump into supported drain air gap endpoint 0 receiving socket",
+        "TP_MH7_V16 | sump into supported drain air gap endpoint 0 hex compression nut",
+        "TP_MH7_V16 | sump into supported drain air gap endpoint 0 seated ferrule"
+      ],
+      "classification": "pressure compression union",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | sump into supported drain air gap",
+      "end": 1,
+      "point": [
+        0.84,
+        -1.275,
+        0.41
+      ],
+      "receiver": null,
+      "classification": "intentional gravity air-gap outlet above drain grate",
+      "status": "requires rendered support/air-gap review"
+    },
+    {
+      "route": "TP_MH7_V16 | junction to raised console rear gland",
+      "end": 0,
+      "point": [
+        1.015,
+        -1.32,
+        0.63
+      ],
+      "axis": [
+        -0.9999999403953552,
+        0.0,
+        0.0
+      ],
+      "receiver": "TP_MH7_V16 | supported visible electrical junction",
+      "fittings": [
+        "TP_MH7_V16 | junction to raised console rear gland endpoint 0 receiving socket",
+        "TP_MH7_V16 | junction to raised console rear gland endpoint 0 hex compression nut",
+        "TP_MH7_V16 | junction to raised console rear gland endpoint 0 seated ferrule"
+      ],
+      "classification": "electrical gland",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | junction to raised console rear gland",
+      "end": 1,
+      "point": [
+        0.8989246487617493,
+        -1.114481806755066,
+        1.875
+      ],
+      "axis": [
+        -0.20791161060333252,
+        0.9781476259231567,
+        0.0
+      ],
+      "receiver": "TP_MH7_V14 | console / service interface casting",
+      "fittings": [
+        "TP_MH7_V16 | junction to raised console rear gland endpoint 1 receiving socket",
+        "TP_MH7_V16 | junction to raised console rear gland endpoint 1 hex compression nut",
+        "TP_MH7_V16 | junction to raised console rear gland endpoint 1 seated ferrule"
+      ],
+      "classification": "electrical gland",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | junction to intake motor armored conduit",
+      "end": 0,
+      "point": [
+        1.11,
+        -1.415,
+        0.57
+      ],
+      "axis": [
+        -0.9988313317298889,
+        -0.048330504447221756,
+        0.0
+      ],
+      "receiver": "TP_MH7_V16 | supported visible electrical junction",
+      "fittings": [
+        "TP_MH7_V16 | junction to intake motor armored conduit endpoint 0 receiving socket",
+        "TP_MH7_V16 | junction to intake motor armored conduit endpoint 0 hex compression nut",
+        "TP_MH7_V16 | junction to intake motor armored conduit endpoint 0 seated ferrule"
+      ],
+      "classification": "electrical gland",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "TP_MH7_V16 | junction to intake motor armored conduit",
+      "end": 1,
+      "point": [
+        -1.27,
+        -1.225,
+        0.65
+      ],
+      "axis": [
+        0.0,
+        -0.9999999403953552,
+        0.0
+      ],
+      "receiver": "FMPL_PROCESS | pump drive fitted cast housing",
+      "fittings": [
+        "TP_MH7_V16 | junction to intake motor armored conduit endpoint 1 receiving socket",
+        "TP_MH7_V16 | junction to intake motor armored conduit endpoint 1 hex compression nut",
+        "TP_MH7_V16 | junction to intake motor armored conduit endpoint 1 seated ferrule"
+      ],
+      "classification": "electrical gland",
+      "source_or_guess": "explicit source process endpoints; new route geometry",
+      "status": "constructed; independent contact/clearance pending"
+    },
+    {
+      "route": "FMPL_PROCESS | TP_MH7_V16 | raw-canister inlet / transparent tube",
+      "end": 0,
+      "point": [
+        -0.6199999451637268,
+        -1.3300000429153442,
+        1.1900001764297485
+      ],
+      "axis": [
+        0.9374618530273438,
+        0.34808793663978577,
+        0.0
+      ],
+      "receiver": [
+        "TP_MH7_V16 | raw witness feed from pump"
+      ],
+      "fittings": [
+        "TP_MH7_V16 | raw-canister inlet sight gland 0 receiving socket",
+        "TP_MH7_V16 | raw-canister inlet sight gland 0 hex compression nut",
+        "TP_MH7_V16 | raw-canister inlet sight gland 0 seated ferrule"
+      ],
+      "classification": "glass/metal compression union",
+      "status": "constructed; independent branch/contact audit pending"
+    },
+    {
+      "route": "FMPL_PROCESS | TP_MH7_V16 | raw-canister inlet / transparent tube",
+      "end": 1,
+      "point": [
+        -0.38300004601478577,
+        -1.241999864578247,
+        1.1900001764297485
+      ],
+      "axis": [
+        -0.9374618530273438,
+        -0.34808793663978577,
+        0.0
+      ],
+      "receiver": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 1 enlarged transparent vessel",
+      "fittings": [
+        "TP_MH7_V16 | raw-canister inlet sight gland 1 receiving socket",
+        "TP_MH7_V16 | raw-canister inlet sight gland 1 hex compression nut",
+        "TP_MH7_V16 | raw-canister inlet sight gland 1 seated ferrule"
+      ],
+      "classification": "sample-vessel gland",
+      "status": "constructed; independent branch/contact audit pending"
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-canister outlet / transparent tube",
+      "end": 0,
+      "point": [
+        -0.382999986410141,
+        -1.241999864578247,
+        0.7900000214576721
+      ],
+      "axis": [
+        -0.9238940477371216,
+        0.38264837861061096,
+        0.0
+      ],
+      "receiver": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 1 enlarged transparent vessel",
+      "fittings": [
+        "TP_MH7_V16 | raw-canister outlet sight gland 0 receiving socket",
+        "TP_MH7_V16 | raw-canister outlet sight gland 0 hex compression nut",
+        "TP_MH7_V16 | raw-canister outlet sight gland 0 seated ferrule"
+      ],
+      "classification": "sample-vessel gland",
+      "status": "constructed; independent branch/contact audit pending"
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-canister outlet / transparent tube",
+      "end": 1,
+      "point": [
+        -0.75,
+        -1.089999794960022,
+        0.7900000214576721
+      ],
+      "axis": [
+        0.9238940477371216,
+        -0.38264837861061096,
+        0.0
+      ],
+      "receiver": [
+        "TP_MH7_V16 | raw witness return to first filter"
+      ],
+      "fittings": [
+        "TP_MH7_V16 | raw-canister outlet sight gland 1 receiving socket",
+        "TP_MH7_V16 | raw-canister outlet sight gland 1 hex compression nut",
+        "TP_MH7_V16 | raw-canister outlet sight gland 1 seated ferrule"
+      ],
+      "classification": "glass/metal compression union",
+      "status": "constructed; independent branch/contact audit pending"
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean-canister inlet / transparent tube",
+      "end": 0,
+      "point": [
+        0.8399998545646667,
+        -1.0800000429153442,
+        1.1900001764297485
+      ],
+      "axis": [
+        -0.5137165188789368,
+        -0.8579598665237427,
+        0.0
+      ],
+      "receiver": [
+        "TP_MH7_V16 | clean witness feed from treatment outlet"
+      ],
+      "fittings": [
+        "TP_MH7_V16 | clean-canister inlet sight gland 0 receiving socket",
+        "TP_MH7_V16 | clean-canister inlet sight gland 0 hex compression nut",
+        "TP_MH7_V16 | clean-canister inlet sight gland 0 seated ferrule"
+      ],
+      "classification": "glass/metal compression union",
+      "status": "constructed; independent branch/contact audit pending"
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean-canister inlet / transparent tube",
+      "end": 1,
+      "point": [
+        0.7429998517036438,
+        -1.2420001029968262,
+        1.1900001764297485
+      ],
+      "axis": [
+        0.5137165188789368,
+        0.8579598665237427,
+        0.0
+      ],
+      "receiver": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 2 enlarged transparent vessel",
+      "fittings": [
+        "TP_MH7_V16 | clean-canister inlet sight gland 1 receiving socket",
+        "TP_MH7_V16 | clean-canister inlet sight gland 1 hex compression nut",
+        "TP_MH7_V16 | clean-canister inlet sight gland 1 seated ferrule"
+      ],
+      "classification": "sample-vessel gland",
+      "status": "constructed; independent branch/contact audit pending"
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean-canister outlet / transparent tube",
+      "end": 0,
+      "point": [
+        0.7430000305175781,
+        -1.2420001029968262,
+        0.7900000214576721
+      ],
+      "axis": [
+        0.4509277641773224,
+        0.8925604224205017,
+        0.0
+      ],
+      "receiver": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 2 enlarged transparent vessel",
+      "fittings": [
+        "TP_MH7_V16 | clean-canister outlet sight gland 0 receiving socket",
+        "TP_MH7_V16 | clean-canister outlet sight gland 0 hex compression nut",
+        "TP_MH7_V16 | clean-canister outlet sight gland 0 seated ferrule"
+      ],
+      "classification": "sample-vessel gland",
+      "status": "constructed; independent branch/contact audit pending"
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean-canister outlet / transparent tube",
+      "end": 1,
+      "point": [
+        0.8399999141693115,
+        -1.0499998331069946,
+        0.7900000214576721
+      ],
+      "axis": [
+        -0.4509277641773224,
+        -0.8925604224205017,
+        0.0
+      ],
+      "receiver": [
+        "TP_MH7_V16 | clean witness return to discharge casting"
+      ],
+      "fittings": [
+        "TP_MH7_V16 | clean-canister outlet sight gland 1 receiving socket",
+        "TP_MH7_V16 | clean-canister outlet sight gland 1 hex compression nut",
+        "TP_MH7_V16 | clean-canister outlet sight gland 1 seated ferrule"
+      ],
+      "classification": "glass/metal compression union",
+      "status": "constructed; independent branch/contact audit pending"
+    },
+    {
+      "route": "TP_MH7_V16 | raw witness feed from pump",
+      "end": 0,
+      "point": [
+        -1.3049999475479126,
+        -0.699999988079071,
+        0.6700000166893005
+      ],
+      "axis": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "receiver": "FMPL_PROCESS | low mounted intake centrifugal pump",
+      "fittings": [
+        "TP_MH7_V16 | raw witness feed from pump process tap receiving socket",
+        "TP_MH7_V16 | raw witness feed from pump process tap hex compression nut",
+        "TP_MH7_V16 | raw witness feed from pump process tap seated ferrule"
+      ],
+      "classification": "witness branch compression tap",
+      "status": "constructed; independent contact pending"
+    },
+    {
+      "route": "TP_MH7_V16 | raw witness return to first filter",
+      "end": 1,
+      "point": [
+        -0.9200000166893005,
+        -1.0,
+        0.6700000166893005
+      ],
+      "axis": [
+        0.41960710287094116,
+        -0.31310799717903137,
+        0.8519936800003052
+      ],
+      "receiver": "FMPL_PROCESS | filter 1 cartridge body",
+      "fittings": [
+        "TP_MH7_V16 | raw witness return to first filter process tap receiving socket",
+        "TP_MH7_V16 | raw witness return to first filter process tap hex compression nut",
+        "TP_MH7_V16 | raw witness return to first filter process tap seated ferrule"
+      ],
+      "classification": "witness branch compression tap",
+      "status": "constructed; independent contact pending"
+    },
+    {
+      "route": "TP_MH7_V16 | clean witness feed from treatment outlet",
+      "end": 0,
+      "point": [
+        0.6899999976158142,
+        -0.18000000715255737,
+        0.7900000214576721
+      ],
+      "axis": [
+        0.4294005334377289,
+        -0.7841227054595947,
+        0.4480699896812439
+      ],
+      "receiver": "FMPL_PROCESS | open double-wall steel treatment vessel",
+      "fittings": [
+        "TP_MH7_V16 | clean witness feed from treatment outlet process tap receiving socket",
+        "TP_MH7_V16 | clean witness feed from treatment outlet process tap hex compression nut",
+        "TP_MH7_V16 | clean witness feed from treatment outlet process tap seated ferrule"
+      ],
+      "classification": "witness branch compression tap",
+      "status": "constructed; independent contact pending"
+    },
+    {
+      "route": "TP_MH7_V16 | clean witness return to discharge casting",
+      "end": 1,
+      "point": [
+        0.9420999884605408,
+        -0.29409998655319214,
+        0.6600000262260437
+      ],
+      "axis": [
+        -0.03261589631438255,
+        -0.9862955808639526,
+        0.16173197329044342
+      ],
+      "receiver": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clarified water outlet casting",
+      "fittings": [
+        "TP_MH7_V16 | clean witness return to discharge casting process tap receiving socket",
+        "TP_MH7_V16 | clean witness return to discharge casting process tap hex compression nut",
+        "TP_MH7_V16 | clean witness return to discharge casting process tap seated ferrule"
+      ],
+      "classification": "witness branch compression tap",
+      "status": "constructed; independent contact pending"
+    }
+  ],
+  "steam_envelope_scale": 1.12,
+  "steam_anchor": [
+    0.9399999976158142,
+    0.6000000238418579,
+    2.9130001068115234
+  ],
+  "actual_native_ports_verified": false,
+  "prototype_installed": false,
+  "next": [
+    "independent all-endpoint census and contact/clearance",
+    "source-camera render inspection",
+    "repair demonstrated defects"
+  ]
+}

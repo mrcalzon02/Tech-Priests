@@ -1,0 +1,33 @@
+   0.002 2026-11-14 14:48:32; Factorio 2.1.24 (build 87808, win64, steam, space-age)
+   0.002 Operating system: Windows 11 (build 26200) 
+   0.002 Program arguments: "C:\Program Files (x86)\Steam\steamapps\common\Factorio\bin\x64\factorio.exe" "--config" "C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\model-completion\metallic-hydrogen-chain\native-jig-04\config.ini" "--mod-directory" "C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\model-completion\metallic-hydrogen-chain\native-jig-04\mods" "--create" "C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\model-completion\metallic-hydrogen-chain\native-jig-04\purifier-native-jig.zip" "--map-gen-settings" "C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\model-completion\metallic-hydrogen-chain\native-jig-04\map-gen-settings.json" 
+   0.002 Config path: C:/Users/Admin/Documents/ChatGPT/Tech priests/model-production/build/model-completion/metallic-hydrogen-chain/native-jig-04/config.ini
+   0.002 Read data path: C:/Program Files (x86)/Steam/steamapps/common/Factorio/data
+   0.002 Write data path: C:/Users/Admin/Documents/ChatGPT/Tech priests/model-production/build/model-completion/metallic-hydrogen-chain/native-jig-04/user-data [495341/1906722MB]
+   0.002 Binaries path: C:/Program Files (x86)/Steam/steamapps/common/Factorio/bin
+   0.009 System info: [CPU: Intel(R) Core(TM) i7-14700K, 28 cores, RAM: 16767/32526 MB, page: 23737/43790 MB, virtual: 4300/134217727 MB, extended virtual: 0 MB]
+   0.038 Running in headless mode
+   0.038 Audio is disabled
+   0.040 Info ModManager.cpp:455: FeatureFlag: 
+   0.044 Loading mod core 0.0.0 (data.lua)
+   0.058 Loading mod base 2.1.24 (data.lua)
+   0.318 Loading mod tp-mh7-purifier-review 0.0.1 (data.lua)
+   0.325 Loading mod base 2.1.24 (data-updates.lua)
+   0.353 Checksum for core: 3668028660
+   0.353 Checksum of base: 3864816957
+   0.353 Checksum of tp-mh7-purifier-review: 1981942088
+   0.460 Prototype list checksum: 176445672
+   0.479 Info PlayerData.cpp:566: Cloud player-data.json unavailable
+   0.479 Info PlayerData.cpp:582: Local player-data.json unavailable
+   0.481 Info GlobalContext.cpp:1347: Resetting config.
+   0.481 Factorio initialised
+   0.482 Info Create.cpp:32: Creating new map C:\Users\Admin\Documents\ChatGPT\Tech priests\model-production\build\model-completion\metallic-hydrogen-chain\native-jig-04\purifier-native-jig.zip
+   0.489 Blueprint storage "blueprint-storage-2.dat" was not found, trying to load previous version storage "blueprint-storage.dat"
+   1.207 Loading level.dat: 913303 bytes.
+   1.207 Info Scenario.cpp:152: Map version 2.1.24-1
+   1.219 Blueprint storage "blueprint-storage-2.dat" was not found, trying to load previous version storage "blueprint-storage.dat"
+   1.227 Checksum for script __level__/control.lua: 3368906707
+   1.235 Checksum for script __tp-mh7-purifier-review__/control.lua: 3249170711
+   1.245 Script @__tp-mh7-purifier-review__/control.lua:54: TP_MH7_NATIVE_JIG PHYSICAL_PORTS_PASS sites=4
+Done.
+   1.397 Goodbye

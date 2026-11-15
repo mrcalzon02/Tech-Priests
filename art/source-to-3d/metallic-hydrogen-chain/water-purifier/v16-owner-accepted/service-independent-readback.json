@@ -1,0 +1,351 @@
+{
+  "status": "PASS_TARGETED_SERVICES",
+  "errors": [],
+  "source_sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+  "source_integrity": true,
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071068286895752,
+        -0.7071067094802856,
+        -6.0
+      ],
+      [
+        0.0,
+        0.7071067094802856,
+        0.7071068286895752,
+        7.650000095367432
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 5.800000190734863,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      512,
+      512
+    ]
+  },
+  "external_bores": {
+    "passed": true,
+    "schema": "fmpl.water-purifier.side-bores.v11",
+    "side_count": 2,
+    "probed_rays": 74,
+    "bore_nominal_diameter": 0.49,
+    "inner_test_radius": 0.205,
+    "hits": [],
+    "tested_actual_rendered_meshes": 707,
+    "native_factorio_fluidbox_verified": false
+  },
+  "bounds": [
+    [
+      -1.5000001192092896,
+      -1.4881175756454468,
+      0.0
+    ],
+    [
+      1.5000001192092896,
+      1.4300000667572021,
+      3.3899998664855957
+    ]
+  ],
+  "service_contacts": [
+    {
+      "route": "TP_MH7_V16 | filter 1 dedicated pressure gauge line",
+      "end": 0,
+      "receivers": [
+        "FMPL_PROCESS | filter 1 vertical cartridge pressure crown"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | filter 1 dedicated pressure gauge line",
+      "end": 1,
+      "receivers": [
+        "TP_MH7_V16 | visible gauge panel / instrument rack front face"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | filter 2 dedicated pressure gauge line",
+      "end": 0,
+      "receivers": [
+        "FMPL_PROCESS | filter 2 vertical cartridge pressure crown"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | filter 2 dedicated pressure gauge line",
+      "end": 1,
+      "receivers": [
+        "TP_MH7_V16 | visible gauge panel / instrument rack front face"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | hollow vessel relief to open vent",
+      "end": 0,
+      "receivers": [
+        "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | open double-wall steel treatment vessel"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | hollow vessel relief to open vent",
+      "end": 1,
+      "receivers": [
+        "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | relief vent emitter / open steel throat"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | vent condensate into actual trap",
+      "end": 0,
+      "receivers": [
+        "TP_MH7_V16 | hollow vessel relief to open vent"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | vent condensate into actual trap",
+      "end": 1,
+      "receivers": [
+        "FMPL_PROCESS | relief condensate trap gasket"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | trap return to treatment shell",
+      "end": 0,
+      "receivers": [
+        "FMPL_PROCESS | relief condensate trap"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | trap return to treatment shell",
+      "end": 1,
+      "receivers": [
+        "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | open double-wall steel treatment vessel"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | pump bleeder to fitted valve",
+      "end": 0,
+      "receivers": [
+        "FMPL_PROCESS | low mounted intake centrifugal pump"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | pump bleeder to fitted valve",
+      "end": 1,
+      "receivers": [
+        "FMPL_PROCESS | pump bleed-valve bonnet"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | sump into supported drain air gap",
+      "end": 0,
+      "receivers": [
+        "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | open double-wall steel treatment vessel"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | sump into supported drain air gap",
+      "end": 1,
+      "status": "intentional open gravity outlet",
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | junction to raised console rear gland",
+      "end": 0,
+      "receivers": [
+        "TP_MH7_V16 | supported visible electrical junction"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | junction to raised console rear gland",
+      "end": 1,
+      "receivers": [
+        "TP_MH7_V14 | console / service interface casting"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | junction to intake motor armored conduit",
+      "end": 0,
+      "receivers": [
+        "TP_MH7_V16 | supported visible electrical junction"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | junction to intake motor armored conduit",
+      "end": 1,
+      "receivers": [
+        "FMPL_PROCESS | pump drive fitted cast housing"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "FMPL_PROCESS | TP_MH7_V16 | raw-canister inlet / transparent tube",
+      "end": 0,
+      "receivers": [
+        "TP_MH7_V16 | raw witness feed from pump"
+      ],
+      "gap_tiles": 0.002525096293538809,
+      "passed": true
+    },
+    {
+      "route": "FMPL_PROCESS | TP_MH7_V16 | raw-canister inlet / transparent tube",
+      "end": 1,
+      "receivers": [
+        "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 1 enlarged transparent vessel"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-canister outlet / transparent tube",
+      "end": 0,
+      "receivers": [
+        "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 1 enlarged transparent vessel"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | raw-canister outlet / transparent tube",
+      "end": 1,
+      "receivers": [
+        "TP_MH7_V16 | raw witness return to first filter"
+      ],
+      "gap_tiles": 0.002577428473159671,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean-canister inlet / transparent tube",
+      "end": 0,
+      "receivers": [
+        "TP_MH7_V16 | clean witness feed from treatment outlet"
+      ],
+      "gap_tiles": 0.0023064063861966133,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean-canister inlet / transparent tube",
+      "end": 1,
+      "receivers": [
+        "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 2 enlarged transparent vessel"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean-canister outlet / transparent tube",
+      "end": 0,
+      "receivers": [
+        "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | sample station 2 enlarged transparent vessel"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clean-canister outlet / transparent tube",
+      "end": 1,
+      "receivers": [
+        "TP_MH7_V16 | clean witness return to discharge casting"
+      ],
+      "gap_tiles": 0.0025775693356990814,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | raw witness feed from pump",
+      "end": 0,
+      "receivers": [
+        "FMPL_PROCESS | low mounted intake centrifugal pump"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | raw witness return to first filter",
+      "end": 1,
+      "receivers": [
+        "FMPL_PROCESS | filter 1 cartridge body"
+      ],
+      "gap_tiles": 0.012374699115753174,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | clean witness feed from treatment outlet",
+      "end": 0,
+      "receivers": [
+        "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | open double-wall steel treatment vessel"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    },
+    {
+      "route": "TP_MH7_V16 | clean witness return to discharge casting",
+      "end": 1,
+      "receivers": [
+        "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | clarified water outlet casting"
+      ],
+      "gap_tiles": 0.0,
+      "passed": true
+    }
+  ],
+  "centerline_probes": 373,
+  "flow_blockers": [],
+  "visible_legacy_primary_lines": [
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | manifold to mounted intake pump / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | pump to first vertical filter / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | first filter to second filter / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | second filter to central treatment inlet / section 1",
+    "TP_MH7_V14 | UV surfaced / FMPL_PROCESS | treatment outlet to clean discharge reducer / section 1"
+  ],
+  "unclassified_legacy_lines": [],
+  "pending": [
+    "full inner-core clearance and support contact audit",
+    "remaining actual socket/fixture classification",
+    "native prototype and graphical pipe jig",
+    "owner finish review"
+  ]
+}

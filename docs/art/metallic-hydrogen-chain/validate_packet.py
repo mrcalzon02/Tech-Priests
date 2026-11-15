@@ -53,7 +53,7 @@ def main():
     assert j['operating_constraints']['workflow_dispatch_authorized_by_this_packet'] is False
     assert j['operating_constraints']['prototype_modifications_authorized'] is False
     assert j['operating_constraints']['render_process_concurrency'] == 1
-    print('PACKET_VALID: seven planning footprints; cumulative parts library defined with empty validated registry; no fabricated native ports; reference SHA256=' + actual)
+    print('PACKET_VALID: seven original planning footprints and empty registry TEMPLATE validated; current production progress is separate in PRODUCTION_CONTINUATION.json; reference SHA256=' + actual)
     return 0
 
 if __name__ == '__main__':

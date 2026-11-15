@@ -1,0 +1,24 @@
+{
+  "status": "candidate_exported",
+  "machine": "electrolyzer",
+  "planned_footprint": [
+    3,
+    4
+  ],
+  "provenance": "new reconstruction from approved style/process packet; not edited unseen v0.2 geometry",
+  "actual_reused_master_parts": 2,
+  "actual_reused_instances": 4,
+  "source_sha256": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
+  "glb_sha256": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
+  "registry_sha256": "7c7c5ccff25fdb361c516df67ef641862176aaca9effc8c3ddfc0dce835cd8fc",
+  "native_bore_rays": 111,
+  "export_bore_rays": 111,
+  "native_ports_verified": false,
+  "no_new_verified_parts": "construction pilot only; do not delay next work with speculative harvesting",
+  "next": [
+    "support/contact and process route audit",
+    "model-specific finishing and closeup inspection",
+    "animation states and direction captures",
+    "actual prototype and pipe fitting jig"
+  ]
+}

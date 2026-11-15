@@ -1,0 +1,36 @@
+{
+  "status": "OWNER_ACCEPTED_MODEL; FOUR_ANGLE_CAPTURE_DELIVERED",
+  "source_sha256": "7d41e3a768286b5033a3853500ebb8a597542d35d96b0458ec2c7db645cb404f",
+  "owner_instruction": "Good I'd call that done let's finish the animation Capture the four angles idol and animated and let's move on.",
+  "scope": "Current purifier shape/finish accepted; deliver four actual idle views and animated views; proceed to electrolyzer.",
+  "source_camera": "one fixed 45-degree orthographic camera; model rotated for four actual captures",
+  "source_yaw_degrees": [
+    0,
+    90,
+    180,
+    270
+  ],
+  "view_map": {
+    "North": 0,
+    "East": 3,
+    "South": 2,
+    "West": 1
+  },
+  "idle_views": 4,
+  "working_views": 4,
+  "working_frames_per_view": 8,
+  "total_native_frames": 36,
+  "cycle_seconds": 4,
+  "preview_frame_duration_ms": 500,
+  "atlas_resolutions": [
+    64,
+    128,
+    256
+  ],
+  "atlas_count": 6,
+  "capture_qa_passed": true,
+  "master_reopen_passed": true,
+  "native_prototype": "isolated physical pipe/flow jig passed separately; ordinary mod not promoted",
+  "future_purifier_shape_work": "Move on; no further speculative model refinement.",
+  "next_machine": "electrolyzer"
+}

@@ -1,0 +1,236 @@
+{
+  "passed": true,
+  "base_version": "2.1.24",
+  "isolated_profile": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\model-production\\build\\model-completion\\metallic-hydrogen-chain\\native-jig-04",
+  "commands": [
+    {
+      "stage": "create",
+      "returncode": 0
+    },
+    {
+      "stage": "flow",
+      "returncode": 0
+    }
+  ],
+  "results": {
+    "physical-ports": {
+      "passed": true,
+      "sites": [
+        {
+          "label": "disconnected",
+          "center": {
+            "x": 0.5,
+            "y": 0.5
+          },
+          "ports": [
+            {
+              "role": "raw-water-input",
+              "target": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "connected": false,
+              "flow_direction": "input",
+              "model_mouth_relative": {
+                "x": -1.5,
+                "y": 0,
+                "z": 0.36
+              },
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0
+              },
+              "graphical_cap_seating_verified": false
+            },
+            {
+              "role": "purified-water-output",
+              "target": {
+                "x": 2.5,
+                "y": 0.5
+              },
+              "connected": false,
+              "flow_direction": "output",
+              "model_mouth_relative": {
+                "x": 1.5,
+                "y": 0,
+                "z": 0.36
+              },
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0
+              },
+              "graphical_cap_seating_verified": false
+            }
+          ]
+        },
+        {
+          "label": "both-connected",
+          "center": {
+            "x": 12.5,
+            "y": 0.5
+          },
+          "ports": [
+            {
+              "role": "raw-water-input",
+              "target": {
+                "x": 10.5,
+                "y": 0.5
+              },
+              "connected": true,
+              "flow_direction": "input",
+              "model_mouth_relative": {
+                "x": -1.5,
+                "y": 0,
+                "z": 0.36
+              },
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0
+              },
+              "graphical_cap_seating_verified": false
+            },
+            {
+              "role": "purified-water-output",
+              "target": {
+                "x": 14.5,
+                "y": 0.5
+              },
+              "connected": true,
+              "flow_direction": "output",
+              "model_mouth_relative": {
+                "x": 1.5,
+                "y": 0,
+                "z": 0.36
+              },
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0
+              },
+              "graphical_cap_seating_verified": false
+            }
+          ]
+        },
+        {
+          "label": "input-only",
+          "center": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "ports": [
+            {
+              "role": "raw-water-input",
+              "target": {
+                "x": 22.5,
+                "y": 0.5
+              },
+              "connected": true,
+              "flow_direction": "input",
+              "model_mouth_relative": {
+                "x": -1.5,
+                "y": 0,
+                "z": 0.36
+              },
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0
+              },
+              "graphical_cap_seating_verified": false
+            },
+            {
+              "role": "purified-water-output",
+              "target": {
+                "x": 26.5,
+                "y": 0.5
+              },
+              "connected": false,
+              "flow_direction": "output",
+              "model_mouth_relative": {
+                "x": 1.5,
+                "y": 0,
+                "z": 0.36
+              },
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0
+              },
+              "graphical_cap_seating_verified": false
+            }
+          ]
+        },
+        {
+          "label": "output-only",
+          "center": {
+            "x": 36.5,
+            "y": 0.5
+          },
+          "ports": [
+            {
+              "role": "raw-water-input",
+              "target": {
+                "x": 34.5,
+                "y": 0.5
+              },
+              "connected": false,
+              "flow_direction": "input",
+              "model_mouth_relative": {
+                "x": -1.5,
+                "y": 0,
+                "z": 0.36
+              },
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0
+              },
+              "graphical_cap_seating_verified": false
+            },
+            {
+              "role": "purified-water-output",
+              "target": {
+                "x": 38.5,
+                "y": 0.5
+              },
+              "connected": true,
+              "flow_direction": "output",
+              "model_mouth_relative": {
+                "x": 1.5,
+                "y": 0,
+                "z": 0.36
+              },
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0
+              },
+              "graphical_cap_seating_verified": false
+            }
+          ]
+        }
+      ],
+      "entity": "tp-mh7-review-purifier",
+      "scope": "isolated review prototype; physical connection proof only; graphical fitting still requires native screenshots",
+      "ordinary_mod_changed": false,
+      "source_graphics": "V14 geometry jig; later finishing atlases not yet substituted"
+    },
+    "flow": {
+      "passed": true,
+      "tick": 600,
+      "products_finished": 2,
+      "actual_output_seen_in_pipe": 20,
+      "recipe": "tp-mh7-review-purify",
+      "source_cycle_seconds": 4,
+      "declared_animation_speed": 0.03333333333333333,
+      "native_graphical_frame_clock_verified": false,
+      "ordinary_recipe_or_economy_changed": false
+    }
+  },
+  "source_graphic_hashes": {
+    "idle-256.png": "2a9a3504dec4a43330311d49b9477256fe6e4b62e38836c6b4502879a2655e8f",
+    "working-256.png": "88c5c5329b623f5f765405d570f9ecc5280270a8fa647d4c77f868c7c3f51c57"
+  },
+  "fixture_hashes": {
+    "data.lua": "e2c5bcd5417fc8e6b8946431d8ded85d3b861d18ab4f653b36008d0560a073ea",
+    "control.lua": "5d9015a17f43bd9a8d381aaf13b9adda5bfb7fe36bcf1c37cd55ade7dc9012e2"
+  },
+  "graphical_pipe_seating_verified": false,
+  "ordinary_mod_installed": false,
+  "gameplay_acceptance": false
+}

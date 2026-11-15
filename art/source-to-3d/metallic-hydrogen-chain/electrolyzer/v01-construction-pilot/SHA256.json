@@ -1,0 +1,17 @@
+{
+  ".gitattributes": "308a40fa1d89ae5ea4390b4c9b46a0108b09f171f07898f25d451fa0c69c4e9f",
+  "CHECKPOINT.json": "8f7f828509566212584bf64d59da469bb2cd06d4920cb449a03960af39832ab6",
+  "construction-receipt.json": "68d3412b9675a25e88c221f061b184d8bf81a11e37f5a89b2c77979286ef15fe",
+  "electrolyzer-v01.blend": "d88386da1133411bd01589b4fbc419831b3579ad4961cee34e1cfb6d185fae31",
+  "electrolyzer-v01.glb": "ed533bbdc9eb4c165ba3fa8defd7ec77ff6b000cc8e9819483c273b0f9fec21c",
+  "export-inspection/clay.png": "6b6f2be817e6c1fc82b6f9f1f331d765c74774282c2a20424dac5cb3c36f105b",
+  "export-inspection/export-inspection.json": "04ab4d22b9d6fa5336b050325c1a77e37a796e66eee2de1883eab8581d3e406a",
+  "export-inspection/front.png": "d99db845574debf9178129862b79df892db4d724c7a00f49f6e69dae697103e0",
+  "export-inspection/rear-inspection.png": "d114f0c12ee8dcf6775405602623e5d06bf74bae0ca06161df8b60122e15d43a",
+  "independent-readback.json": "83d7c634848150639b4bf8968005970278573bd0f8ed42ec09f90568deb064ae",
+  "part_provenance.json": "f3e95e648458cab7e878f780c54f8261880d7f9e08e7786c0e185f73058b7f76",
+  "port_manifest.json": "3c50cb158688c2de4364d2091fc794400a611d8fe1f29e1b5752fe07b888a42b",
+  "README.md": "8f567246e16deef53074355bc0d01c158044757cf6817e2dde702848bf51a5d2",
+  "VISUAL_REVIEW.json": "a6efceb961a8ff38bb0648dfe7f559cddc3df9419014fda5b8e06bd737b6a73c",
+  "working-front.png": "c74c598e349fb44605a498e75c78c2504f0801e259a3db5619fe80b1965ede6e"
+}
