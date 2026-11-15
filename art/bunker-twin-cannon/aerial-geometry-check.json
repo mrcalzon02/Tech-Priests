@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "native_sha256": "a68804fab71799c255d97d9cbe389b98d71a8a6cc30e887186943df0dd4d7545",
+  "evaluated_frames": 481,
+  "fixed_radio_sockets": true,
+  "tip_attachment_max_error": 1.7881393432617188e-07,
+  "max_tip_deflection": [
+    0.07421761093473342,
+    0.050206778335572376
+  ]
+}

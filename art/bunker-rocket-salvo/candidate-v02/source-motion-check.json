@@ -1,0 +1,53 @@
+{
+  "status": "PASS_SOURCE_STUDY",
+  "native_sha256": "3054dd0caa90d2c9db2449d8b0ee21b0a989ccb02af61099946347984a2c01c4",
+  "source_samples": [
+    {
+      "frame": 1,
+      "loaded_rockets": 6
+    },
+    {
+      "frame": 2,
+      "loaded_rockets": 5
+    },
+    {
+      "frame": 12,
+      "loaded_rockets": 4
+    },
+    {
+      "frame": 22,
+      "loaded_rockets": 3
+    },
+    {
+      "frame": 32,
+      "loaded_rockets": 2
+    },
+    {
+      "frame": 42,
+      "loaded_rockets": 1
+    },
+    {
+      "frame": 52,
+      "loaded_rockets": 0
+    },
+    {
+      "frame": 179,
+      "loaded_rockets": 0
+    },
+    {
+      "frame": 180,
+      "loaded_rockets": 6
+    },
+    {
+      "frame": 241,
+      "loaded_rockets": 6
+    }
+  ],
+  "frames_checked": 241,
+  "packed_images": 12,
+  "base_included": false,
+  "muzzle_sockets": 6,
+  "minimum_geometry_height": 1.7000000476837158,
+  "native_runtime_tested": false,
+  "scope": "Source departure/reload timing and parent ownership only; not mesh collision or native ammo proof"
+}
