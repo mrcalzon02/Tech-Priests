@@ -1252,6 +1252,128 @@ def run_robot_parent_storage_1382(factorio: pathlib.Path, mods: pathlib.Path,
     return 0 if result["accepted"] else 1
 
 
+def verify_rail_blocked_reload_0836_log(first: str, second: str) -> dict[str, object]:
+    """Require unchanged original train, Magos, cargo and mined rail across processes."""
+    tag = "[TP-REMOTE-RAIL-TEST] "
+    a = [line for line in first.splitlines()
+         if tag + "BLOCKED_RETURN_NATIVE_SAVE_REQUEST_0836 " in line]
+    b = [line for line in second.splitlines()
+         if tag + "PASS INDEPENDENT_BLOCKED_RAIL_RELOAD " in line]
+    pattern = (r"original_train_id=([1-9]\d*) original_priest=([1-9]\d*) "
+               r"original_locomotive=([1-9]\d*) original_wagon=([1-9]\d*) "
+               r"original_rail=([1-9]\d*) wagon_ore=(\d+) "
+               r"station_ore=(\d+) rail_hold=(\d+)")
+    if len(a) != 1 or len(b) != 1:
+        raise ValueError("one genuine save request and one independent loaded receipt required")
+    left, right = re.search(pattern, a[0]), re.search(pattern, b[0])
+    if not (left and right and left.groups() == right.groups()
+            and tuple(map(int, left.groups()[-3:])) == (1, 0, 1)):
+        raise ValueError("original Magos/train/wagon/rail or physical inventories differ")
+    if (tag + "BLOCKED_RETURN_NATIVE_0836 phase=paid-middle-rail-mined" not in first
+            or tag + "BLOCKED_RETURN_NATIVE_0836 phase=physical-rail-gap" not in second
+            or "stationary=true" not in second
+            or "original_driver=true rail_hold=1 at_home=false" not in second
+            or "native_driver=true restored_track=false" not in b[0]
+            or tag + "FAIL " in first or tag + "FAIL " in second):
+        raise ValueError("native stationary ore-loaded train, broken rail or custody not proven")
+    return {"accepted": True, "original_train_id": int(left.group(1)),
+            "original_priest": int(left.group(2)),
+            "original_locomotive": int(left.group(3)),
+            "original_wagon": int(left.group(4)),
+            "original_mined_rail": int(left.group(5)),
+            "original_wagon_ore": 1, "origin_station_ore": 0,
+            "original_rail_in_held_inventory": 1,
+            "track_restoration_accepted": False, "home_delivery_accepted": False}
+
+
+def run_rail_blocked_reload_0836(
+        factorio: pathlib.Path, mods: pathlib.Path, initial: pathlib.Path,
+        output: pathlib.Path, timeout: int, engine_version: str,
+        create_minutes: float) -> int:
+    """Require real CRC-verified Factorio save; never accept same-process flags."""
+    name = "_autosave-tech-priests-ci-0836-stranded.zip"
+    checkpoint = output / "original-stranded-rail-checkpoint.zip"
+    first_log, second_log = (output / "rail-stranded-original-process.log",
+                             output / "benchmark.log")
+    result_path = output / "native-original-rail-reload-result.json"
+    result = {"schema": "tech-priests-0836-physical-rail-independent-reload-v1",
+              "accepted": False, "engine": engine_version, "first_minutes": None,
+              "reload_minutes": None, "native_factorio_process_wall_minutes": None}
+    roots = [output / "saves", *factorio_1381_save_roots(factorio)]
+    first, second = "", ""
+    try:
+        checkpoint.unlink(missing_ok=True)
+        for folder in roots:
+            prior = folder / name
+            if prior.is_file():
+                prior.unlink()  # Test-specific basename only; never unrelated saves.
+        started = time.monotonic()
+        first_exit = run(rail_native_player_test_command(
+            factorio, mods, initial, 36060), first_log, timeout)
+        result["first_minutes"] = round((time.monotonic()-started)/60, 6)
+        result["first_exit"] = first_exit
+        first = first_log.read_text(encoding="utf-8", errors="replace")
+        if (first_exit != 0 or "[TP-REMOTE-RAIL-TEST] FAIL " in first
+                or "[TP-REMOTE-RAIL-TEST] BLOCKED_RETURN_NATIVE_SAVE_REQUEST_0836 " not in first):
+            raise RuntimeError("native first process did not reach original stranded ore save request")
+        valid = []
+        for folder in roots:
+            source = folder / name
+            if not source.is_file() or source.stat().st_size <= 2048:
+                continue
+            try:
+                with zipfile.ZipFile(source) as archive:
+                    if archive.testzip() is None:
+                        valid.append(source)
+            except (OSError, zipfile.BadZipFile, EOFError):
+                continue
+        if len(valid) != 1:
+            raise RuntimeError("requested but no unique CRC-valid native Factorio checkpoint "
+                               "(--test-save may disable saving); reload not accepted")
+        shutil.copy2(valid[0], checkpoint)
+        with zipfile.ZipFile(checkpoint) as archive:
+            if archive.testzip() is not None:
+                raise RuntimeError("copied native checkpoint CRC mismatch")
+        result["native_save_crc_verified"] = True
+        result["native_save_bytes"] = checkpoint.stat().st_size
+        control = mods / "tech-priests" / "control.lua"
+        source = control.read_text(encoding="utf-8")
+        flag = "_G.TP_CI_0836_BLOCKED_RELOAD_PROBE=false"
+        if source.count(flag) != 1:
+            raise RuntimeError("unambiguous second-process-only probe flag missing")
+        control.write_text(source.replace(
+            flag, "_G.TP_CI_0836_BLOCKED_RELOAD_PROBE=true"),encoding="utf-8")
+        started = time.monotonic()
+        reload_exit = run(rail_native_player_test_command(
+            factorio, mods, checkpoint, 2400), second_log, timeout)
+        result["reload_minutes"] = round((time.monotonic()-started)/60, 6)
+        result["reload_exit"] = reload_exit
+        second = second_log.read_text(encoding="utf-8", errors="replace")
+        if reload_exit != 0:
+            raise RuntimeError("independent native reload process failed exit="+str(reload_exit))
+        result.update(verify_rail_blocked_reload_0836_log(first, second))
+    except (OSError, RuntimeError, ValueError) as error:
+        result["blocker"] = str(error)
+    finally:
+        result["native_factorio_process_wall_minutes"] = round(
+            create_minutes + (result["first_minutes"] or 0) +
+            (result["reload_minutes"] or 0), 6)
+        for label, log in (("FIRST", first), ("RELOAD", second)):
+            lines = [line for line in log.splitlines()
+                     if "[TP-REMOTE-RAIL-TEST]" in line and
+                     any(mark in line for mark in (
+                         "BLOCKED_RETURN_NATIVE_", "PASS INDEPENDENT_", "FAIL "))]
+            for line in lines[-16:]:
+                print("NATIVE_RAIL_RELOAD_"+label+" "+line[-1200:], flush=True)
+        result_path.write_text(json.dumps(result, indent=2, sort_keys=True)+"\n",
+                               encoding="utf-8")
+        print("NATIVE_RAIL_FULL_PROCESS_MINUTES "+
+              str(result["native_factorio_process_wall_minutes"]), flush=True)
+        print("NATIVE_RAIL_RELOAD_0836_RESULT "+
+              json.dumps(result, sort_keys=True), flush=True)
+    return 0 if result["accepted"] else 1
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--scenario", choices=tuple(CASES), required=True)
