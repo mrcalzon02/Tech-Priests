@@ -1487,6 +1487,9 @@ end
 -- distinct future native gates.
 local function inspect_blocked_return_0836(s,elapsed)
   if rawget(_G,"TP_CI_0836_BLOCKED_RETURN")~=true then return end
+  -- The independent S4 reload is never equivalent to an in-process marker.
+  -- Its second Factorio process must reload the original engine save, not a
+  -- recreated fixture, and re-read this same original paid cargo/rail state.
   -- The isolated new-world engine tick starts before first Magos birth.
   -- Only after the original 1,800-tick native chart/pair acceptance can
   -- loss of that established original pair be a functional failure.
@@ -1606,6 +1609,39 @@ local function inspect_blocked_return_0836(s,elapsed)
   end
   if game.tick-claim.cut_tick>=900 then
     if not stopped then fail("BLOCKED_RETURN_TRAIN_DID_NOT_STOP")end
+    if rawget(_G,"TP_CI_0836_BLOCKED_RELOAD_MODE")==true then
+      if rawget(_G,"TP_CI_0836_BLOCKED_RELOAD_PROBE")==true then
+        if not s.blocked_return_save_requested_0836 then
+          fail("BLOCKED_RETURN_RELOAD_WITHOUT_ORIGINAL_SAVE_REQUEST")
+        end
+        emit("PASS INDEPENDENT_BLOCKED_RAIL_RELOAD original_train_id="..train.id..
+          " original_priest="..pair.priest.unit_number..
+          " original_locomotive="..locomotive.unit_number..
+          " original_wagon="..cargo.unit_number..
+          " original_rail="..claim.rail_unit..
+          " wagon_ore="..ore_now.." station_ore="..station_now..
+          " rail_hold="..held.get_item_count("rail")..
+          " native_driver=true restored_track=false")
+        s.finished=true
+        return
+      end
+      if not s.blocked_return_save_requested_0836 then
+        s.blocked_return_save_requested_0836=true
+        -- This is a genuine Factorio save request, never proof of a ZIP.
+        -- The external runner must find and CRC-check the independently
+        -- created native save before launching the second engine process.
+        game.auto_save("tech-priests-ci-0836-stranded",true)
+        emit("BLOCKED_RETURN_NATIVE_SAVE_REQUEST_0836 tick="..game.tick..
+          " original_train_id="..train.id..
+          " original_priest="..pair.priest.unit_number..
+          " original_locomotive="..locomotive.unit_number..
+          " original_wagon="..cargo.unit_number..
+          " original_rail="..claim.rail_unit..
+          " wagon_ore="..ore_now.." station_ore="..station_now..
+          " rail_hold="..held.get_item_count("rail"))
+      end
+      return
+    end
     emit("PASS blocked original ore-loaded return retains native driver and cargo")
     s.finished=true
   end
