@@ -14,15 +14,15 @@ script.on_init(function()
  local tiles={};for x=-5,20 do for y=-5,10 do tiles[#tiles+1]={name='concrete',position={x,y}} end end;surface.set_tiles(tiles,true)
  local p={histories={},initial_timers={},checks={},chests={}};storage.decay_fixture=p
  for i=1,8 do
-  local inv=get_chest(i*2,0);inv[1].set_stack{name=c.stages[1].name,count=1,quality=i==8 and 'normal' or 'legendary'};M.touch_stack(inv[1]);p.chests[i]=inv;p.initial_timers[i]=inv[1].spoil_tick
+  local inv=get_chest(i*2,0);inv[1].set_stack{name=c.stages[1].name,count=1,quality=i==8 and 'normal' or 'legendary',health=i==7 and .20 or 1};M.touch_stack(inv[1]);p.chests[i]=inv;p.initial_timers[i]=inv[1].spoil_tick
  end
  p.move_target=get_chest(2,3)
- p.ground=surface.create_entity{name='item-on-ground',position={4,3},stack={name=c.stages[1].name,count=1,quality='legendary'}};M.touch_stack(p.ground.stack)
+ p.ground=surface.create_entity{name='item-on-ground',position={4,3},stack={name=c.stages[1].name,count=1,quality='legendary',health=.20}};M.touch_stack(p.ground.stack)
  p.belts={surface.create_entity{name='transport-belt',position={6,3},direction=defines.direction.east,force='player'},surface.create_entity{name='transport-belt',position={7,3},direction=defines.direction.east,force='player'}}
- p.belts[1].get_transport_line(1).insert_at_back{name=c.stages[1].name,count=1,quality='legendary'};M.touch_entity(p.belts[1])
- p.inserter=surface.create_entity{name='inserter',position={10,3},force='player'};p.inserter.held_stack.set_stack{name=c.stages[1].name,count=1,quality='legendary'};M.touch_entity(p.inserter)
- p.script_inv=game.create_inventory(1);p.script_inv[1].set_stack{name=c.stages[1].name,count=1,quality='legendary'};M.register_inventory(p.script_inv)
- p.character=surface.create_entity{name='character',position={14,3},force='player'};p.character.get_inventory(defines.inventory.character_main)[1].set_stack{name=c.stages[1].name,count=1,quality='legendary'};M.touch_entity(p.character)
+ p.belts[1].get_transport_line(1).insert_at_back{name=c.stages[1].name,count=1,quality='legendary',health=.20};M.touch_entity(p.belts[1])
+ p.inserter=surface.create_entity{name='inserter',position={10,3},force='player'};p.inserter.held_stack.set_stack{name=c.stages[1].name,count=1,quality='legendary',health=.20};M.touch_entity(p.inserter)
+ p.script_inv=game.create_inventory(1);p.script_inv[1].set_stack{name=c.stages[1].name,count=1,quality='legendary',health=.20};M.register_inventory(p.script_inv)
+ p.character=surface.create_entity{name='character',position={14,3},force='player'};p.character.get_inventory(defines.inventory.character_main)[1].set_stack{name=c.stages[1].name,count=1,quality='legendary',health=.20};M.touch_entity(p.character)
  p.seal_inv=get_chest(12,3);p.seal_inv[1].set_stack{name=c.stages[2].name,count=1,quality='rare',health=.65};M.touch_stack(p.seal_inv[1]);p.seal_inv[2].set_stack{name=c.shell,count=1,quality='uncommon',health=.9}
 end)
 script.on_event(defines.events.on_script_trigger_effect,M.on_script_trigger_effect)
@@ -47,19 +47,20 @@ script.on_event(defines.events.on_tick,function(event)
  end
  if event.tick%15==0 then
   local belt={empty=true};for _,e in ipairs(p.belts) do for i=1,e.get_max_transport_line_index() do local line=e.get_transport_line(i);if #line>0 then belt=snap(line[1]) end end end
-  local row={tick=event.tick,chest=snap(event.tick<30 and p.chests[1][1] or p.move_target[1]),normal=snap(p.chests[8][1]),ground=snap(p.ground.stack),belt=belt,inserter=snap(p.inserter.held_stack),script_inventory=snap(p.script_inv[1]),character_inventory=snap(p.character.get_inventory(defines.inventory.character_main)[1]),contained=snap(p.seal_inv[event.tick<400 and 3 or 4])}
+  local row={tick=event.tick,chest=snap(event.tick<30 and p.chests[1][1] or p.move_target[1]),normal=snap(p.chests[8][1]),low_health=snap(p.chests[7][1]),ground=snap(p.ground.stack),belt=belt,inserter=snap(p.inserter.held_stack),script_inventory=snap(p.script_inv[1]),character_inventory=snap(p.character.get_inventory(defines.inventory.character_main)[1]),contained=snap(p.seal_inv[event.tick<400 and 3 or 4])}
   p.histories[#p.histories+1]=row
  end
  if event.tick==1000 then
   local unique={};for _,t in ipairs(p.initial_timers) do check(t>=c.interval_min_ticks and t<=c.interval_max_ticks,'random timer out of range');unique[t]=true end
   check(table_size(unique)>1,'all timers identical');p.checks.random_timers_differ=true
   local last=p.histories[#p.histories]
-  for _,name in ipairs{'chest','normal','ground','belt','inserter','script_inventory','character_inventory','contained'} do
+  for _,name in ipairs{'chest','normal','low_health','ground','belt','inserter','script_inventory','character_inventory','contained'} do
    local row=last[name];check(row.name==c.inert and row.quality=='normal' and row.health==0,'terminal inert state differs '..name)
+   local previous=1;for _,sample in ipairs(p.histories) do local r=sample[name];if r.health then check(r.health<=previous+1e-6,'decay healed damaged stock '..name);previous=r.health end end
    local damaged=false;for _,sample in ipairs(p.histories) do local r=sample[name];if r.name and r.name~=c.inert and r.health>0 and r.health<1 and r.quality~='legendary' then damaged=true end end
    if name~='normal' then check(damaged,'missing actual HP+quality degradation '..name) end
   end
-  p.checks.all_physical_carriers_inert=true;p.checks.health_and_quality_decreased=true
+  p.checks.damaged_stock_never_heals=true;p.checks.all_physical_carriers_inert=true;p.checks.health_and_quality_decreased=true
   check(not M.seal(p.move_target[1],p.seal_inv[5],p.seal_inv[6]),'inert material was revived')
   p.checks.inert_cannot_be_revived=true
   helpers.write_file('pellet-decay/readback.json',helpers.table_to_json{passed=true,checks=p.checks,initial_timers=p.initial_timers,histories=p.histories,config={min_ticks=c.interval_min_ticks,max_ticks=c.interval_max_ticks},tick=game.tick},false)

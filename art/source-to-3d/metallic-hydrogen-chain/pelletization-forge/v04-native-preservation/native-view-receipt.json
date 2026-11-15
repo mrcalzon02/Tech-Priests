@@ -1,0 +1,585 @@
+{
+  "screenshots": {
+    "east-idle-end.png": "8181ef8a842a6d8d684893406952c42a6e40761e48f6680e2e0ffe889b08b9f8",
+    "east-idle.png": "458206c8cbfc92cc736384ee941cc988116083b5e813b8751f043a8e54778f87",
+    "east-working-0.png": "7f60983635d7923c6570c7cb705e92821a5f6326b7e8017cd117f5be978b2929",
+    "east-working-1.png": "d9942d02ebb2d5e698742156918e9d50f55eed215fd4047dfbe35fe397c5cda8",
+    "east-working-10.png": "2bcb96638d79159db57a10b48f47901723a80d17b3a5117851c78b5dd02abe45",
+    "east-working-11.png": "29eca37d4b38a7b9aa15702be1494e7b23b109fbb52647d94be31bbad9c5eb95",
+    "east-working-12.png": "a626a3aea854229e4158dc2570140db4225bb28d75cd3d9d4859602dcdf0ab2b",
+    "east-working-13.png": "7d555b460b9efe45f9f907d5d608bdeebe8f5d540b4b09de297b6038456e7fa8",
+    "east-working-14.png": "3ff152b3e05b53623c7772cc580fa19ca82ed324d22db2703fc7ee03423948d9",
+    "east-working-15.png": "c50d0c732ecce831aa63b3ff4e21d33dc63e69d6e7a3f93eebe41fe97e85423b",
+    "east-working-2.png": "c26c46dae07b5430823e0697eea8457d729b46062718830ae1346766f1f2091f",
+    "east-working-3.png": "848c5a8cfe06e22aa709519e69c29f256fd7739399d563aabcdbb0f534f481f3",
+    "east-working-4.png": "b826ddb831dc638dd65a5c6a237e6f42a9c637a559a195647a12044b76f27b67",
+    "east-working-5.png": "0eb1aa6e0b4113ef473d56063d531aa6e41fae5e1be1f84c6b46f2802b502205",
+    "east-working-6.png": "01023929165b8c36de1928c1b378569f9efe57572046927d2552bc755f1912d6",
+    "east-working-7.png": "a1e081461d57ac24cb08156b7590e4d3e2dc70164752f9ff399a668718d26919",
+    "east-working-8.png": "ad292a04576d9e658d5078f4cc5a15c684fb096f2fc184a30b5bb18985524cdf",
+    "east-working-9.png": "d7c45c3c79938d7b0261f9e3ec02cd78a1515d5dc03c8b4d327e813886d5496b",
+    "north-idle-end.png": "ab0c690d6b973d13cb445e0fdc38f464ce30221c467505ff5cf31a9e282d9b6e",
+    "north-idle.png": "f501ab39edfa7a00e98da52f2cfdc7abae4d29e8b91f2b5b9860f5d2c88ebb7d",
+    "north-working-0.png": "e0618f890e69c6219e5c2b5e3471a5ca576b9d47362c15e93d72eb7f4d9155cd",
+    "north-working-1.png": "84f1e2e7308ccccca2e32eff0cffc6766485942c18bb3bcf2092e4d643603c17",
+    "north-working-10.png": "aed786a15c528490cf34520cef6580ac4a9199a8e0a28c43c1f5a9c8f6909cef",
+    "north-working-11.png": "6440fa611a9a88d15fc96b4173cbc2583774ec11f7cbe09cb045808a533ce026",
+    "north-working-12.png": "144e21ba9749700fc7f60e5ba41757c56e5f6c525141867faccb2a9946849426",
+    "north-working-13.png": "e634da33f113d13574e544d2a8a52f975ccefe18d08dff17183fe01836aa91ef",
+    "north-working-14.png": "5b8914405a72ef5ee077608e7f9442deb3bd7c5201178662e5becd63e20c7178",
+    "north-working-15.png": "c8e0f2206a12ec338263eb5dd137bafa3846ecef23af0c3288d8acb218113d11",
+    "north-working-2.png": "7da148c70237625f56eb2aa2a58c27029ca4caa4b997e0d792ab5158e68ccf64",
+    "north-working-3.png": "a717a01b4d0d93d66952bc7366864ab6bc1ecb8c33612c32b5ad27eb172dabbd",
+    "north-working-4.png": "175f3b8085f53617ad952ac4c5c793c42852dda086e53600f8d4c514649c6020",
+    "north-working-5.png": "19668932e003b95ba33cde02d86cd84223138f7d8d69a7f12ab41e92bec67005",
+    "north-working-6.png": "c49d8df81ac7a27e7bd7e46b3f9e4fa1bdbae9186ea5735c717a34452e0c1553",
+    "north-working-7.png": "e7a7520ea78b635a770974689e076b1ddca683fd2fe7261a6b120862193bdf38",
+    "north-working-8.png": "d6ee0ab30b2f68b22f587d334038f62a91e07866653da4450fef4e03aa024c01",
+    "north-working-9.png": "2328709d30458a3843c7a604d00e02deb38c7a63fc9deaefdddea3fd4c3167ad",
+    "south-idle-end.png": "bdba3e72794c299339683dda5f38e35eec6e11623c54694f319d53b3c665f0dc",
+    "south-idle.png": "b99720adf2e5a2bcfa2e24cbff0c62bcc8e4a1cf7f5e0e378ce0ee8511f6e012",
+    "south-working-0.png": "279fbec68bbfb8e8102a1d5013674a6fe37af296b49bd8b494263016cfa57e5d",
+    "south-working-1.png": "d3f33ff171563bf15ecc5992ca81eafa77aa0d6b11cf0a51541ff613e15351b3",
+    "south-working-10.png": "9cb85c109c42e0f30d60a5e3978c89decf1059e7525fa4d2332805a2b53425cd",
+    "south-working-11.png": "9cb85c109c42e0f30d60a5e3978c89decf1059e7525fa4d2332805a2b53425cd",
+    "south-working-12.png": "e5de5590cdb46161b66f90809c9df7f1d046f63803b5eb066df43c5366c41ec8",
+    "south-working-13.png": "e5de5590cdb46161b66f90809c9df7f1d046f63803b5eb066df43c5366c41ec8",
+    "south-working-14.png": "4d6e3a5fec7951cae777a14d7cbc7adce2c804c3fae62aaa6d0f18956daa139f",
+    "south-working-15.png": "4d6e3a5fec7951cae777a14d7cbc7adce2c804c3fae62aaa6d0f18956daa139f",
+    "south-working-2.png": "7818de40f86404fcad1ac65b3e508bdfe5cbc2877a563fb09067618b7fe244ef",
+    "south-working-3.png": "9abb22db8325fb71a7a5d019b25d189fda31820c8389cd7dd8c3f91a2936957b",
+    "south-working-4.png": "09c5ed49cc74536b197bfe807d6e7025fdaad1295d437fdf7a03cb97be4cbf5a",
+    "south-working-5.png": "09c5ed49cc74536b197bfe807d6e7025fdaad1295d437fdf7a03cb97be4cbf5a",
+    "south-working-6.png": "d1818f7449342c59a02e0c7c132418da6e7caf6ab3f5b29ea6e62ca138ff4afb",
+    "south-working-7.png": "d1818f7449342c59a02e0c7c132418da6e7caf6ab3f5b29ea6e62ca138ff4afb",
+    "south-working-8.png": "95b7683b5305331d4f241d230c79c549b68d24009a74c66fd25fae359d28d21a",
+    "south-working-9.png": "95b7683b5305331d4f241d230c79c549b68d24009a74c66fd25fae359d28d21a",
+    "west-idle-end.png": "0204c5772fef8086bb8c33551a8898784c7481aaa6e8bdad67bf177011155769",
+    "west-idle.png": "3e3751b2511c53d09ee84991d2497455dc2a693b44ca740d262485ee67083524",
+    "west-working-0.png": "2252d445387e22648b4bca7387b3e209ab5aedb8997d2a907d9c75b536e61473",
+    "west-working-1.png": "5613f794c663a33808119950310221ea9c52c3d538c614ce4c7552755d730937",
+    "west-working-10.png": "ee7490a4492737fe3143e3f4a9d296f48148a89024ec0baffa99605a2914ac56",
+    "west-working-11.png": "919ad636a6a6b02e1961c4b75a36d6d5e555bff61d6c5a781963ce39383844cc",
+    "west-working-12.png": "c8586155d6b49b6bf28fcc62781067e0a99e6d2da6187eeae2400d6737181abe",
+    "west-working-13.png": "b942aa22706867fcfcebc10f5750cec41b50bac6ef124972360ceb37df7ab8fa",
+    "west-working-14.png": "9975d5b940165ffc913e35749fbc3e816c2592478e446869ec42503898f4df1a",
+    "west-working-15.png": "9640a827b661fa1e7c0b8cd0a20ee76201993b112f93dfa385a5f9f9be8887b8",
+    "west-working-2.png": "6c220f9ed2a4aab79eb7facc7c7269378c72a86a4a7b910026a56c0c32baa075",
+    "west-working-3.png": "42508045d36684ad0c40ba213cfb8e2018b8b5e30338ac033706ecca89cb5cc8",
+    "west-working-4.png": "d081f5b79c6b9d8abddfc41a541d356f472ba3445dca6c355316c658b971fbfd",
+    "west-working-5.png": "cba5bc1338fb936cbebf03081dfc85bf32305acf797ebdb8bf66ffcc32e3c40f",
+    "west-working-6.png": "82f66b453defc8c3b7899c88e6f2bad42bca3f726001583405a2870a0961eddb",
+    "west-working-7.png": "410dfb8e4bd9d222d9d499b4fe2c6597a1591cafbf8474e61e7c495c97c47a1a",
+    "west-working-8.png": "4b9ef3b2e6e6c01f796098c86af8b27506bc7e2b17c45297b4c3f091ef6d0192",
+    "west-working-9.png": "0c22a9f9de63d4cf0679d3130a6563be996077ad72da85f59670b6c50718cb1a"
+  },
+  "requested": [
+    {
+      "path": "tp-mh7-forge-review/north-idle.png",
+      "tick": 1,
+      "direction": "north",
+      "crafting": false,
+      "progress": 0
+    },
+    {
+      "path": "tp-mh7-forge-review/east-idle.png",
+      "tick": 1,
+      "direction": "east",
+      "crafting": false,
+      "progress": 0
+    },
+    {
+      "path": "tp-mh7-forge-review/south-idle.png",
+      "tick": 1,
+      "direction": "south",
+      "crafting": false,
+      "progress": 0
+    },
+    {
+      "path": "tp-mh7-forge-review/west-idle.png",
+      "tick": 1,
+      "direction": "west",
+      "crafting": false,
+      "progress": 0
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-0.png",
+      "tick": 73,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.06249999999999999
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-0.png",
+      "tick": 73,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.06249999999999999
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-0.png",
+      "tick": 73,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.06249999999999999
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-0.png",
+      "tick": 73,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.06249999999999999
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-1.png",
+      "tick": 103,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.12500000000000017
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-1.png",
+      "tick": 103,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.12500000000000017
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-1.png",
+      "tick": 103,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.12500000000000017
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-1.png",
+      "tick": 103,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.12500000000000017
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-2.png",
+      "tick": 133,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.18749999999999997
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-2.png",
+      "tick": 133,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.18749999999999997
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-2.png",
+      "tick": 133,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.18749999999999997
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-2.png",
+      "tick": 133,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.18749999999999997
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-3.png",
+      "tick": 163,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.24999999999999972
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-3.png",
+      "tick": 163,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.24999999999999972
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-3.png",
+      "tick": 163,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.24999999999999972
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-3.png",
+      "tick": 163,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.24999999999999972
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-4.png",
+      "tick": 193,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.3124999999999995
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-4.png",
+      "tick": 193,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.3124999999999995
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-4.png",
+      "tick": 193,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.3124999999999995
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-4.png",
+      "tick": 193,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.3124999999999995
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-5.png",
+      "tick": 223,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.3749999999999993
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-5.png",
+      "tick": 223,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.3749999999999993
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-5.png",
+      "tick": 223,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.3749999999999993
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-5.png",
+      "tick": 223,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.3749999999999993
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-6.png",
+      "tick": 253,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.437499999999999
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-6.png",
+      "tick": 253,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.437499999999999
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-6.png",
+      "tick": 253,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.437499999999999
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-6.png",
+      "tick": 253,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.437499999999999
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-7.png",
+      "tick": 283,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.49999999999999883
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-7.png",
+      "tick": 283,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.49999999999999883
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-7.png",
+      "tick": 283,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.49999999999999883
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-7.png",
+      "tick": 283,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.49999999999999883
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-8.png",
+      "tick": 313,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.5624999999999987
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-8.png",
+      "tick": 313,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.5624999999999987
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-8.png",
+      "tick": 313,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.5624999999999987
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-8.png",
+      "tick": 313,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.5624999999999987
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-9.png",
+      "tick": 343,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.6249999999999984
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-9.png",
+      "tick": 343,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.6249999999999984
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-9.png",
+      "tick": 343,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.6249999999999984
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-9.png",
+      "tick": 343,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.6249999999999984
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-10.png",
+      "tick": 373,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.6874999999999982
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-10.png",
+      "tick": 373,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.6874999999999982
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-10.png",
+      "tick": 373,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.6874999999999982
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-10.png",
+      "tick": 373,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.6874999999999982
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-11.png",
+      "tick": 403,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.749999999999998
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-11.png",
+      "tick": 403,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.749999999999998
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-11.png",
+      "tick": 403,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.749999999999998
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-11.png",
+      "tick": 403,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.749999999999998
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-12.png",
+      "tick": 433,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.8124999999999979
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-12.png",
+      "tick": 433,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.8124999999999979
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-12.png",
+      "tick": 433,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.8124999999999979
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-12.png",
+      "tick": 433,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.8124999999999979
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-13.png",
+      "tick": 463,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.8749999999999976
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-13.png",
+      "tick": 463,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.8749999999999976
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-13.png",
+      "tick": 463,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.8749999999999976
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-13.png",
+      "tick": 463,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.8749999999999976
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-14.png",
+      "tick": 493,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.9374999999999973
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-14.png",
+      "tick": 493,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.9374999999999973
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-14.png",
+      "tick": 493,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.9374999999999973
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-14.png",
+      "tick": 493,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.9374999999999973
+    },
+    {
+      "path": "tp-mh7-forge-review/north-working-15.png",
+      "tick": 523,
+      "direction": "north",
+      "crafting": true,
+      "progress": 0.9999999999999971
+    },
+    {
+      "path": "tp-mh7-forge-review/east-working-15.png",
+      "tick": 523,
+      "direction": "east",
+      "crafting": true,
+      "progress": 0.9999999999999971
+    },
+    {
+      "path": "tp-mh7-forge-review/south-working-15.png",
+      "tick": 523,
+      "direction": "south",
+      "crafting": true,
+      "progress": 0.9999999999999971
+    },
+    {
+      "path": "tp-mh7-forge-review/west-working-15.png",
+      "tick": 523,
+      "direction": "west",
+      "crafting": true,
+      "progress": 0.9999999999999971
+    },
+    {
+      "path": "tp-mh7-forge-review/north-idle-end.png",
+      "tick": 700,
+      "direction": "north",
+      "crafting": false,
+      "progress": 0
+    },
+    {
+      "path": "tp-mh7-forge-review/east-idle-end.png",
+      "tick": 700,
+      "direction": "east",
+      "crafting": false,
+      "progress": 0
+    },
+    {
+      "path": "tp-mh7-forge-review/south-idle-end.png",
+      "tick": 700,
+      "direction": "south",
+      "crafting": false,
+      "progress": 0
+    },
+    {
+      "path": "tp-mh7-forge-review/west-idle-end.png",
+      "tick": 700,
+      "direction": "west",
+      "crafting": false,
+      "progress": 0
+    }
+  ],
+  "graphics_log_sha256": "269bd0610ce4fe9dad2efdf77fb88af4c2cb32448450330adaf1a748eb25e9b9",
+  "inspection": "Actual clean idle/working screenshots exist in four genuinely retained native entity orientations. Source proportions and sprite scale are unchanged. High hopper versus ground-level native inserter handoff still needs graphical interface refinement; this is not owner acceptance.",
+  "publication": "Native images contain base-game pixels and remain private; only hashes are published."
+}

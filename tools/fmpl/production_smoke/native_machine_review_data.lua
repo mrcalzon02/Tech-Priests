@@ -49,7 +49,7 @@ for _,port in ipairs(spec.ports) do if not known[port.fluid] then
  local fluid=table.deepcopy(data.raw.fluid.water);fluid.name=port.fluid;fluid.localised_name=port.fluid..' / fixture only'
  fluid.base_color=port.color;fluid.flow_color=port.color;fluids[#fluids+1]=fluid;known[port.fluid]=true
 end end
-data:extend(fluids)
+if #fluids>0 then data:extend(fluids) end
 local recipe={type='recipe',name=spec.recipe,categories={spec.category},enabled=true,energy_required=spec.recipe_seconds or 4,ingredients={},results={}}
 for _,port in ipairs(spec.ports) do
  local product={type='fluid',name=port.fluid,amount=20}
@@ -58,10 +58,11 @@ for _,port in ipairs(spec.ports) do
 end
 if spec.item_product then
  recipe.results[#recipe.results+1]={type='item',name=spec.item_product,amount=1,
-  quality_min=spec.fixture_product_quality,quality_max=spec.fixture_product_quality}
+  quality_min=spec.fixture_product_quality,quality_max=spec.fixture_product_quality,independent_probability=spec.product_probability}
  recipe.main_product=spec.item_product
  recipe.preserve_products_in_machine_output=false
 end
+for _,ingredient in ipairs(spec.item_ingredients or {}) do recipe.ingredients[#recipe.ingredients+1]=ingredient end
 data:extend{machine,item,{type='recipe-category',name=spec.category},recipe}
 if spec.item_product then
  local picker=table.deepcopy(data.raw.inserter.inserter)

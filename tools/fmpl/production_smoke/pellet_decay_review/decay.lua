@@ -1,25 +1,38 @@
 -- Native spoil/quality transitions, bounded carrier updates and reversible seal.
 local c=require('config')
-local M={};local stages={};for i,row in ipairs(c.stages) do stages[row.name]={index=i,health=row.health} end
+local M={};local stages={};local raw_stages={}
+for i,row in ipairs(c.stages) do stages[row.name]={index=i,health=row.health};raw_stages[row.name]=i end
+for i,row in ipairs(c.formed_stages) do stages[row.name]={index=i,health=row.health} end
 local function state()
  storage.mh7_pellet_decay=storage.mh7_pellet_decay or {pending={},dedup={},producers={},inventories={}}
  storage.mh7_pellet_decay.producer_counts=storage.mh7_pellet_decay.producer_counts or {}
+ storage.mh7_pellet_decay.due=storage.mh7_pellet_decay.due or {}
+ storage.mh7_pellet_decay.tracked=storage.mh7_pellet_decay.tracked or {}
  return storage.mh7_pellet_decay
+end
+local function schedule(stack)
+ local item=stack.item;if not item then return end
+ local s=state();local id=item.item_number;local tick=stack.spoil_tick
+ local existing=s.tracked[id]
+ if existing and existing.due==tick then return end
+ s.tracked[id]={item=item,due=tick}
+ s.due[tick]=s.due[tick] or {};s.due[tick][#s.due[tick]+1]=id
 end
 function M.touch_stack(stack)
  if not stack or not stack.valid_for_read then return end
  if stack.name==c.inert then stack.health=0;return end
  local stage=stages[stack.name];if not stage then return end
  local tags=stack.tags or {}
- stack.health=math.min(stack.health,stage.health)
+ stack.health=math.min(stack.health,stage.health,tags.mh7_integrity_ceiling or 1)
+ tags.mh7_integrity_ceiling=stack.health
  if tags.mh7_decay_phase~=stack.name then
   local interval=math.random(c.interval_min_ticks,c.interval_max_ticks)
   local elapsed=math.max(0,math.floor(stack.spoil_percent*c.interval_max_ticks+.5))
   stack.spoil_tick=game.tick+math.max(1,interval-elapsed)
   tags.mh7_decay_phase=stack.name;tags.mh7_rolled_interval=interval;tags.mh7_initialized_tick=game.tick
   tags.mh7_birth_tick=game.tick-elapsed
-  stack.tags=tags
  end
+ stack.tags=tags;schedule(stack)
  stack.custom_description={'','Uncontained — integrity ',math.floor(stack.health*100+.5),'%. Quality falls as decay progresses. Containment preserves; it does not repair.'}
 end
 function M.touch_inventory(inv)
@@ -46,6 +59,21 @@ end
 function M.register_inventory(inv)
  if inv and inv.valid then state().inventories[#state().inventories+1]=inv;M.touch_inventory(inv) end
 end
+function M.is_raw(stack)
+ return stack and stack.valid_for_read and raw_stages[stack.name]~=nil
+end
+function M.form(raw,destination)
+ if not M.is_raw(raw) then return false,'raw-pellet-required' end
+ M.touch_stack(raw)
+ if raw.health<=0 or raw.spoil_tick<=game.tick then return false,'pellet-expired' end
+ if not destination or destination.valid_for_read then return false,'empty-output-required' end
+ local name=c.formed_stages[raw_stages[raw.name]].name
+ local deadline=raw.spoil_tick;local tags=raw.tags or {}
+ tags.mh7_decay_phase=name;tags.mh7_forged=true
+ if not destination.set_stack{name=name,count=1,quality=raw.quality.name,health=raw.health,tags=tags} then return false,'output-rejected' end
+ destination.spoil_tick=deadline
+ raw.clear();M.touch_stack(destination);return true
+end
 function M.on_script_trigger_effect(event)
  if not string.find(event.effect_id,'^tp%-mh7%-pellet%-decay%-') then return end
  local s=state();local entity=event.source_entity;local pos=event.source_position or event.target_position
@@ -63,6 +91,35 @@ function M.on_player_inventory_changed(event)
 end
 function M.on_tick(event)
  local s=state();local keep={}
+ -- LuaItem follows an individual tagged item through real logistics, unlike a
+ -- cached inventory slot. Only due units are visited; no per-tick/world scan.
+ -- Invoke native spoilage at its exact deadline, then carry forward damage
+ -- and metadata that the engine's newly constructed result would discard.
+ local due=s.due[event.tick];s.due[event.tick]=nil
+ for _,id in ipairs(due or {}) do
+  local job=s.tracked[id]
+  if job and job.due==event.tick then
+   s.tracked[id]=nil
+   if job.item.valid then
+    local stack=job.item.item_stack
+    if stack and stack.valid_for_read and stages[stack.name] then
+     if stack.spoil_tick>event.tick then schedule(stack)
+     else
+      local health=stack.health;local tags=stack.tags or {}
+      stack.spoil()
+      if stack.valid and stack.valid_for_read then
+       if stages[stack.name] then
+        local next_tags=stack.tags or {}
+        for key,value in pairs(tags) do if key~='mh7_decay_phase' and key~='mh7_rolled_interval' and key~='mh7_initialized_tick' then next_tags[key]=value end end
+        stack.health=math.min(health,stack.health,stages[stack.name].health)
+        next_tags.mh7_integrity_ceiling=stack.health;stack.tags=next_tags;M.touch_stack(stack)
+       elseif stack.name==c.inert then stack.health=0 end
+      end
+     end
+    end
+   end
+  end
+ end
  for _,job in ipairs(s.pending) do
   if job.due<=event.tick then
    M.touch_entity(job.entity)
@@ -116,6 +173,6 @@ function M.unseal(contained,destination,shell_return)
  if not destination.set_stack{name=tags.mh7_raw_name,count=1,quality=contained.quality.name,health=math.min(contained.health,tags.mh7_integrity),tags={mh7_decay_phase=tags.mh7_raw_name}} then return false,'output-rejected' end
  destination.spoil_tick=game.tick+math.max(1,tags.mh7_remaining_ticks)
  if not shell_return.set_stack{name=c.shell,count=1,quality=tags.mh7_shell_quality,health=tags.mh7_shell_health} then destination.clear();return false,'shell-output-rejected' end
- contained.clear();return true
+ contained.clear();M.touch_stack(destination);return true
 end
 return M

@@ -1,16 +1,18 @@
 local c=require('config')
 local rows={}
-for i,stage in ipairs(c.stages) do
+for _,group in ipairs{c.stages,c.formed_stages} do
+for i,stage in ipairs(group) do
  local item=table.deepcopy(data.raw.item['iron-ore'])
  item.type='item-with-tags';item.name=stage.name;item.localised_name=stage.label
  item.localised_description='Uncontained material loses integrity and quality, then becomes inert. Seal in a pressure shell promptly.'
  -- Individual metadata prevents merging or splitting from refreshing a timer.
  item.stack_size=1;item.flags={'not-stackable'}
  item.spoil_ticks=c.interval_max_ticks;item.quality_affects_spoil_ticks=false
- item.spoil_result=c.stages[i+1] and c.stages[i+1].name or c.inert
- item.spoil_quality_change=c.stages[i+1] and -1 or -128
+ item.spoil_result=group[i+1] and group[i+1].name or c.inert
+ item.spoil_quality_change=group[i+1] and -1 or -128
  item.spoil_to_trigger_result={items_per_trigger=1,trigger={type='direct',action_delivery={type='instant',target_effects={{type='script',effect_id='tp-mh7-pellet-decay-'..i}}}}}
  rows[#rows+1]=item
+end
 end
 local inert=table.deepcopy(data.raw.item.stone);inert.name=c.inert;inert.localised_name='Inert pellet';inert.stack_size=100
 inert.localised_description='Spent, non-fuel material. Cannot be restored by containment.'

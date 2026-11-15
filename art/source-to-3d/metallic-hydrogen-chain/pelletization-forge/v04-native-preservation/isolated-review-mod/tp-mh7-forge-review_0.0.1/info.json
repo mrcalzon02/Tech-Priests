@@ -1,0 +1,1 @@
+{"name": "tp-mh7-forge-review", "version": "0.0.1", "title": "Forge isolated native state-preserving production review", "author": "Tech Priests", "factorio_version": "2.1", "dependencies": ["base >= 2.1.24", "tp-mh7-pellet-decay >= 0.0.3"]}

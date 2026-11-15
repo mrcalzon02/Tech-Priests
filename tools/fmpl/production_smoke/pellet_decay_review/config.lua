@@ -8,6 +8,12 @@ return {
     {name='tp-mh7-raw-metallicized-pellet-degraded',health=.50,label='Degraded raw metallicized pellet'},
     {name='tp-mh7-raw-metallicized-pellet-critical',health=.25,label='Critical raw metallicized pellet'},
   },
+  formed_stages={
+    {name='tp-mh7-forged-metallicized-pellet',health=1,label='Forged metallicized pellet'},
+    {name='tp-mh7-forged-metallicized-pellet-waning',health=.75,label='Waning forged metallicized pellet'},
+    {name='tp-mh7-forged-metallicized-pellet-degraded',health=.50,label='Degraded forged metallicized pellet'},
+    {name='tp-mh7-forged-metallicized-pellet-critical',health=.25,label='Critical forged metallicized pellet'},
+  },
   inert='tp-mh7-inert-pellet',
   shell='tp-mh7-empty-pressure-shell',
   contained='tp-mh7-contained-metallicized-pellet',

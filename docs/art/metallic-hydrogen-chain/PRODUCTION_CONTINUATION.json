@@ -3,7 +3,7 @@
   "status": "active",
   "workspace": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production",
   "current_machine": "pelletization-forge",
-  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pelletization-forge\\v03-finish-and-states",
+  "current_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pelletization-forge\\v04-native-preservation",
   "queue": [
     {
       "id": "water-purifier",
@@ -43,7 +43,7 @@
         3,
         3
       ],
-      "status": "24-map/source-export material-path and four-angle state candidate with own sound; native state-preserving processing next"
+      "status": "source/art/native state preservation and sound verified; graphical item handoff plus ordinary integration open"
     },
     {
       "id": "pressure-vessel-fabricator",
@@ -110,10 +110,10 @@
     "source_manifest": "docs/art/external-model-sources.json"
   },
   "next_steps": [
-    "Native 3x3 forge with actual inserter feed/pickup and zero gameplay fluid boxes",
-    "Preserve incoming raw pellet HP, quality, stage and remaining instability throughout processing, blockage and save/reload",
-    "Verify native animation/audio binding and four orientations",
-    "Build vessel fabricator and canister assembler; integrate full chain; recover/refine three reactor sources"
+    "Refine native item handoff: tall hopper receiving point versus standard inserter hand position; preserve source proportions and real process path",
+    "Complete player-facing chain/UI/economy integration without exposing clock/filter recipes",
+    "Build vessel fabricator and canister assembler; recover/refine three reactors",
+    "After the chain and reactors, reconcile and finish the remaining sprite-only building variants with practical hardware mounts and actual fluid interfaces."
   ],
   "original_goal_complete": false,
   "concurrent_work_preserved": "model-production bunker/data.lua work untouched",
@@ -217,7 +217,7 @@
   },
   "machinery_audio": {
     "path": "art/source-to-3d/shared-audio/hydrogen-machinery/v01",
-    "native_bindings_verified": 4,
+    "native_bindings_verified": 5,
     "owner_audition_approved": false,
     "required_on_all_remaining_machinery": true,
     "ordinary_chain_integrated": false
@@ -274,17 +274,20 @@
     "native_delivery": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\metallization-crucible\\v04-native-production"
   },
   "pellet_instability": {
-    "path": "art/source-to-3d/metallic-hydrogen-chain/pellet-instability/v02-production-pickup",
+    "path": "art/source-to-3d/metallic-hydrogen-chain/pellet-instability/v03-forge-and-integrity",
     "native_continuous_and_reload_verified": true,
     "ordinary_chain_integrated": false,
     "normal_addon_verified": true,
     "raw_item_output": true,
     "balance_owner_approved": false,
     "native_crucible_production_verified": true,
-    "production_pickup_race_fixed": true
+    "production_pickup_race_fixed": true,
+    "forge_native_processing_verified": true,
+    "damaged_stock_never_heals": true,
+    "native_quality_decay_preserved": true
   },
   "forge": {
-    "status": "surfaced_material_path_and_state_candidate; native_item_processing_pending",
+    "status": "native_processing_decay_clock_audio_verified; graphical_item_handoff_and_ordinary_chain_pending",
     "source_sha256": "c09119b75462c3e1b5aea79f02f107e2bc4621cfef318740dcdf654b965a9ee8",
     "glb_sha256": "2f0da21dafac79f9fb348f5318fd5ec19b6ddbdc7ab74e1b8f187b681b757a4b",
     "registry_sha256": "2087260ed3b9df3a07f0e768c4d0a6d72ee79a0f8e4c160e9e5d6876b7bb8b16",
@@ -305,18 +308,51 @@
     "atlas_count": 6,
     "cycle_seconds": 8,
     "audio_implemented": true,
-    "native_audio_binding_verified": false,
+    "native_audio_binding_verified": true,
     "native_item_interfaces_verified": false,
     "ordinary_chain_integrated": false,
     "owner_approved": false,
     "material_path_scope": "Quarter-frame sampled stock/auger checks in source and actual GLB, not a physical force/volume simulation or continuous mathematical clearance proof.",
     "no_new_verified_parts": "Machine-local press/auger/hydraulic assemblies are not automatically library-approved.",
     "next": [
-      "Native 3x3 forge with actual inserter feed/pickup and zero gameplay fluid boxes",
-      "Preserve incoming raw pellet HP, quality, stage and remaining instability throughout processing, blockage and save/reload",
-      "Verify native animation/audio binding and four orientations",
-      "Build vessel fabricator and canister assembler; integrate full chain; recover/refine three reactor sources"
+      "Refine native item handoff: tall hopper receiving point versus standard inserter hand position; preserve source proportions and real process path",
+      "Complete player-facing chain/UI/economy integration without exposing clock/filter recipes",
+      "Build vessel fabricator and canister assembler; recover/refine three reactors"
     ],
-    "audio_delivery": "art/source-to-3d/shared-audio/hydrogen-machinery/forge-v01"
+    "audio_delivery": "art/source-to-3d/shared-audio/hydrogen-machinery/forge-v01",
+    "engineering_delivery": "../v03-finish-and-states",
+    "native_sites": 24,
+    "orientations": 4,
+    "gameplay_fluid_boxes": 0,
+    "processing_cases": [
+      "state-conserving fresh formation",
+      "real decay during processing",
+      "inert during processing",
+      "blocked decaying output",
+      "formed containment/unseal",
+      "four sequential mixed-quality inputs per direction"
+    ],
+    "native_cycle_ticks": 480,
+    "dispatch_overhead_ticks": 1,
+    "save_reload_identical": true,
+    "damaged_stock_never_heals": true,
+    "normal_build_event_registration_verified": true,
+    "live_stock_released_on_destroy": true,
+    "native_eight_cells_all_directions": true,
+    "native_source_frame_period_ticks": 60,
+    "native_full_loop_boundary_observed": false,
+    "graphical_item_handoff_verified": false,
+    "native_delivery": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\art\\source-to-3d\\metallic-hydrogen-chain\\pelletization-forge\\v04-native-preservation",
+    "safe_prototype_addon_loaded": true
+  },
+  "active_goal_scope": "Complete the metallicized hydrogen production-chain models and plasma reactor refinement to the emergency-machine visual standard, including geometry detail, texturing and finish, relevant animation states and capture orientations, prototype implementation, and pipe-fitting adjustment; then finish the other sprite-only buildings, allowing practical mounting of necessary hardware and fluid interfaces.",
+  "follow_on_buildings": {
+    "order": "after hydrogen chain and three plasma reactor refinements",
+    "status": "authorized; current inventory/source reconciliation required before each asset",
+    "authority": "Latest owner-expanded active goal",
+    "starting_register": "docs/art/MODEL_COMPLETION_LEDGER.md#prioritized-asset-work",
+    "inventory": "docs/art/model-inventory.json",
+    "mounting_policy": "Practical mounts for necessary hardware and actual fluid interfaces are allowed; use the real prototype schema and preserve accepted work unless a demonstrated necessary correction is required.",
+    "completion_policy": "Each distinct building and variant requires editable source, finish, actual export inspection, relevant states/directions, prototype integration and visual interface review; shared sprites/meshes do not close a family."
   }
 }

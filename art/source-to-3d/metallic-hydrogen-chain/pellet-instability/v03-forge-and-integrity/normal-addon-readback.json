@@ -1,0 +1,82 @@
+{
+  "passed": true,
+  "normal_adapter_sha256": "8345f413bf33373491b94ae64bb86b46dc2b4c64ab96d2b4405c0088c3e514aa",
+  "stages": [
+    {
+      "name": "tp-mh7-raw-metallicized-pellet",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-raw-metallicized-pellet-waning",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-raw-metallicized-pellet-waning",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-raw-metallicized-pellet-degraded",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-raw-metallicized-pellet-degraded",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-raw-metallicized-pellet-critical",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-raw-metallicized-pellet-critical",
+      "spoil_ticks": 1800,
+      "quality_change": -128,
+      "result": "tp-mh7-inert-pellet",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-forged-metallicized-pellet",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-forged-metallicized-pellet-waning",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-forged-metallicized-pellet-waning",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-forged-metallicized-pellet-degraded",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-forged-metallicized-pellet-degraded",
+      "spoil_ticks": 1800,
+      "quality_change": -1,
+      "result": "tp-mh7-forged-metallicized-pellet-critical",
+      "stack_size": 1
+    },
+    {
+      "name": "tp-mh7-forged-metallicized-pellet-critical",
+      "spoil_ticks": 1800,
+      "quality_change": -128,
+      "result": "tp-mh7-inert-pellet",
+      "stack_size": 1
+    }
+  ],
+  "contained_spoils": false,
+  "inert_is_fuel": false,
+  "commands": [
+    {
+      "stage": "create",
+      "exit_code": 0,
+      "log_sha256": "c0437e966218f28d8b2ff11de66e23589a9dd2800c9521bc907ead5d40962be6"
+    },
+    {
+      "stage": "runtime",
+      "exit_code": 0,
+      "log_sha256": "3ad3a7f050c934ab454b1af868c5e52ab225018a78febfb17abee29e084c4551"
+    },
+    {
+      "stage": "data",
+      "exit_code": 0,
+      "log_sha256": "554f64637b47e6ba785da89b1fa168de124042e062f6a45c42b345fd7f5290e0"
+    }
+  ],
+  "scope": "Actual normal-timing add-on data load, safe runtime initialization and default prototypes. The separate accelerated native fixture proves the decay and containment behavior; ordinary chain integration remains open."
+}
