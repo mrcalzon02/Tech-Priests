@@ -247,6 +247,24 @@ assert(portfolio.science_packs["automation-science-pack"]==1
  and portfolio.science_packs["military-science-pack"]==nil
  and portfolio.recipes["iron-gear-wheel"].rate==10/60,
  "independent factory omitted unlocked science capacity or bypassed locked military recipe")
+-- The campaign continues beyond starter science even while a cheap red-only
+-- technology is selected. Retain each real unlocked later science chain.
+local later={"chemical-science-pack","production-science-pack","utility-science-pack"}
+for _,name in ipairs(later)do
+ items[name]=item(name)
+ recipes[name]=recipe(name,10,{{name="iron-gear-wheel",amount=1}})
+ recipes[name].enabled=true;force.recipes[name]=recipes[name]
+end
+local advanced=tech_priests_0257_build_ratio_plan(pair,op)
+for _,name in ipairs(later)do
+ assert(advanced.science_packs[name]==1 and advanced.recipes[name]
+   and advanced.recipes[name].rate==5/60,
+   "unlocked later science disappeared during red-only research: "..name)
+end
+force.recipes["utility-science-pack"].enabled=false
+assert(tech_priests_0257_build_ratio_plan(pair,op).science_packs["utility-science-pack"]==nil,
+ "campaign science planning bypassed a locked native recipe")
+for _,name in ipairs(later)do recipes[name]=nil;items[name]=nil;force.recipes[name]=nil end
 op.factory_science_portfolio_1172=nil;force.recipes=nil;observed_map=nil
 entities.lab.get_researching_speed=function(quality)assert(quality=="normal");return 1 end
 force.current_research={research_unit_energy=3600,research_unit_ingredients={{name="automation-science-pack",amount=1}}}

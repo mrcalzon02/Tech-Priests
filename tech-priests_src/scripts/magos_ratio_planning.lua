@@ -598,10 +598,13 @@ function tech_priests_0257_build_ratio_plan(pair, op)
       tech_priests_1136_required_science_basket(pair,objective)
     if op.factory_science_portfolio_1172==true then
       -- Independent factory capacity must outlive a single cheap red-only
-      -- research choice. Include each actually unlocked starter science family
+      -- research choice. Include each actually unlocked terrestrial science family
       -- while retaining every native ingredient of the current research basket.
+      -- Space science has a separate launch/orbital production route; do not
+      -- pretend it is an ordinary ground-assembler recipe in this portfolio.
       local force=pair.station and pair.station.force
-      for _,name in ipairs({"automation-science-pack","logistic-science-pack","military-science-pack"})do
+      for _,name in ipairs({"automation-science-pack","logistic-science-pack","military-science-pack",
+          "chemical-science-pack","production-science-pack","utility-science-pack"})do
         local recipe=force and force.recipes and force.recipes[name]
         if recipe and recipe.enabled==true and not plan.science_packs[name]then
           plan.science_packs[name]=1

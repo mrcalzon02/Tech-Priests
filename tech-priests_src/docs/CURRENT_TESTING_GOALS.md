@@ -1,5 +1,18 @@
 # Current Testing Goals
 
+## 2026-11-15 - Campaign goal is autonomous rocket launch and space-science research
+
+The user clarified the final goal: autonomous operation all the way through actual rocket launching and space science. Early red/green/military throughput and four-way arena results are prerequisite tests. They cannot establish campaign completion. Standard player mode remains autonomous maintenance and assistance; independent player mode and non-player factions must plan, construct, supply, research and defend their own force-wide industry through the endpoint.
+
+Acceptance requires native progression through the science actually required by the enabled profile, paid silo construction, genuine rocket parts and valid payloads, a successful native launch, actual space-science production, delivery to laboratories and completed research consuming that science. Continued supply and recovery must work after the first launch. Launches should follow real demand, rather than wasting rockets to satisfy an artificial count. The profile's native research order is authoritative.
+
+The current isolated profile enables Space Age. The installed 2.1.24 recipe for space-science-pack requires gravity zero and real iron plates, carbon and ice. Its acceptance therefore includes paid orbital construction, asteroid/material processing and return science delivery. Base-game launch products are a separate profile. Do not add production/utility science as synthetic prerequisites to Space Age's earlier rocket unlock.
+
+Inspection found another actual planning ceiling: the autonomous portfolio maintained only red, green and military capacity outside the current research basket. It now retains each actually unlocked chemical, production and utility science chain too. Locked recipes remain excluded and native current-research ingredients remain authoritative. Tests cover later unlocked production during red-only research and refusal of locked utility science. Space science is not treated as an ordinary ground-assembler portfolio recipe.
+
+The exact endpoint and evidence rules are recorded in tests/fixtures/autonomous_campaign_goal.json, explicitly unvalidated. Midgame objective reports now identify their prerequisite scope and always state campaign_accepted=false, including when the early factory gate passes. All 58 Lua groups and seven Python tests pass, and the native-checkpoint audit self-test passes. This does not prove advanced science production, launches or orbital operation. Silo logistics currently stops at rocket-ready-monitor; there is no autonomous launch call in the runtime scripts. Launch ownership, orbital planning and end-to-end space-science validation remain required work. The queued 2317972 science run failed its three-family throughput goal; its contact diagnostic timed out. Preserve these failures while working toward the full campaign goal.
+
+
 ## 2026-11-14 - Collect real parent output and unblock previous furnace products
 
 The native factory exposed a definite material-flow deadlock: its owned furnace held iron ore and coal but remained in full_output because two old stone bricks occupied its result slots. A facility-only iron parent had no strict_recipe flag, ordinary output collection could not preempt it, and collecting only ingredients or the requested product could never clear the old bricks. The native before state had zero stored iron; no missing-resource assumption was needed.

@@ -176,6 +176,9 @@ def factory_objective(summary: dict) -> dict:
     if _finite_count(summary.get("last_research_finishes", 0)) < 1:
         blockers.append("no-native-research-completion")
     return {"accepted": not blockers, "target_spm": 5,
+            "objective_scope": "midgame-factory-prerequisite",
+            "campaign_goal": "autonomous-rocket-launch-and-space-science",
+            "campaign_accepted": False,
             "observed_spm": flows, "blockers": blockers,
             "last_elapsed": summary.get("last_elapsed")}
 
@@ -228,6 +231,8 @@ def self_test() -> None:
                     last_paired_priests=3, last_research_finishes=1,
                     last_science_spm={name: 5 for name in PACKS})
         assert factory_objective(full)["accepted"]
+        assert factory_objective(full)["objective_scope"] == "midgame-factory-prerequisite"
+        assert factory_objective(full)["campaign_accepted"] is False
         for key, value in (("last_elapsed", 180000),
                            ("last_paired_priests", 2),
                            ("last_research_finishes", 0)):

@@ -1,0 +1,31 @@
+{
+  "schema": "tech-priests.autonomous-campaign-goal.v1",
+  "goal": "autonomous-rocket-launch-and-space-science",
+  "evidence_status": "unvalidated",
+  "modes": {
+    "standard_player": "Autonomously maintain, repair and service the player's existing factory.",
+    "independent_player": "Plan, build, supply and defend the factory through the campaign endpoint.",
+    "non_player_force": "Coordinate production, construction, research and supply-chain defense across the force."
+  },
+  "required_milestones": [
+    "Sustain the actual science chains required by native progression to the endpoint, retaining unlocked terrestrial science capacity.",
+    "Research rocket prerequisites with real produced science and native research progress.",
+    "Construct, power and supply an owned rocket silo through paid construction and actual material transfers.",
+    "Produce rocket parts and appropriate payloads from actual supply chains.",
+    "Execute successful native rocket launches with real valid payloads, completing at least one entire launch cycle and responding to subsequent real demand.",
+    "Produce space science through the enabled profile's genuine game mechanics.",
+    "Deliver space science to real laboratories and complete research that consumes it.",
+    "Demonstrate continued production and supply after the first launch, including recovery from a supply interruption."
+  ],
+  "profile_requirements": {
+    "base": "Observe real launch-product production, payload consumption and subsequent laboratory research.",
+    "space_age": "Observe an owned platform, paid orbital construction, asteroid/material processing, zero-gravity science production and return delivery to research. Follow its native earlier rocket unlock rather than inventing production/utility science prerequisites."
+  },
+  "evidence_rules": [
+    "Recipes, costs, launch readiness and surface conditions come from the running engine.",
+    "A planned build, a ready silo or a launch request is not a successful launch.",
+    "A completed early-science or arena test is only prerequisite evidence.",
+    "Fixture-supplied packs, forced research, spawned rockets and injected space science cannot satisfy campaign acceptance.",
+    "Preserve actual item custody, force ownership and player-controlled automation."
+  ]
+}
