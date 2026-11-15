@@ -1,0 +1,701 @@
+{
+  "status": "candidate_native; independent mechanical/visual audit pending",
+  "revision": "V01 distinct reciprocating construction",
+  "native_sha256": "b6a8c59905d3a1b6c3c2d598686d0cfa411dd3e3ae8cf687398fb8750378b19c",
+  "provenance": "new reconstruction from MH7 process packet; historical v0.2 not recovered",
+  "contacts": [
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (-0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.05)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (-0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (-0.72, 0.8)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | front pressure closure and piston passage -0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder -0.72",
+      "label": "front head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | rear pressure head -0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder -0.72",
+      "label": "rear head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | piston rod compression gland -0.72",
+      "b": "TP Hydrogen Compressor V01 | front pressure closure and piston passage -0.72",
+      "label": "rod gland seated on head"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (-0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.79)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (-0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (-0.72, -0.36)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0, 0.05)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0, 0.8)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0",
+      "label": "front head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | rear pressure head 0",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0",
+      "label": "rear head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | piston rod compression gland 0",
+      "b": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0",
+      "label": "rod gland seated on head"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.79)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0, -0.36)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0.72, 0.05)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.05)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "saddle sole on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | machined concave saddle (0.72, 0.8)",
+      "b": "TP Hydrogen Compressor V01 | saddle sole (0.72, 0.8)",
+      "label": "saddle seated on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0.72",
+      "label": "front head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | rear pressure head 0.72",
+      "b": "TP Hydrogen Compressor V01 | closed horizontal compressor cylinder 0.72",
+      "label": "rear head seated on shell"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | piston rod compression gland 0.72",
+      "b": "TP Hydrogen Compressor V01 | front pressure closure and piston passage 0.72",
+      "label": "rod gland seated on head"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0.72, -0.79)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.79)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "guide support on footing"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | guide bearing tie (0.72, -0.36)",
+      "b": "TP Hydrogen Compressor V01 | guide bearing pedestal (0.72, -0.36)",
+      "label": "crosshead guide supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing sole -1.18",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "shaft tower grounded"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing tower -1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing sole -1.18",
+      "label": "shaft tower on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing cap seat -1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing tower -1.18",
+      "label": "bearing cap supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing housing -1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing cap seat -1.18",
+      "label": "bearing casing seated"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing sole 1.18",
+      "b": "TP Hydrogen Compressor V01 | equipment footing",
+      "label": "shaft tower grounded"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing tower 1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing sole 1.18",
+      "label": "shaft tower on sole"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing cap seat 1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing tower 1.18",
+      "label": "bearing cap supported"
+    },
+    {
+      "a": "TP Hydrogen Compressor V01 | shaft bearing housing 1.18",
+      "b": "TP Hydrogen Compressor V01 | shaft bearing cap seat 1.18",
+      "label": "bearing casing seated"
+    }
+  ],
+  "kinematics": [
+    {
+      "frame": 0,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.1299999952316284,
+            0.7799999713897705
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.46000000834465027,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999660876251
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.309999942779541,
+            0.8839230537414551
+          ],
+          "crosshead": [
+            0.0,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999459321353
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.309999942779541,
+            0.6760769486427307
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999368969155
+        }
+      ]
+    },
+    {
+      "frame": 1,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.1299999952316284,
+            0.7799999713897705
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.46000000834465027,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999660876251
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.309999942779541,
+            0.8839230537414551
+          ],
+          "crosshead": [
+            0.0,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999459321353
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.309999942779541,
+            0.6760769486427307
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999368969155
+        }
+      ]
+    },
+    {
+      "frame": 13,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.1651471853256226,
+            0.864852786064148
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.5005420446395874,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999865906229
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.3659111261367798,
+            0.8110582828521729
+          ],
+          "crosshead": [
+            0.0,
+            -0.6966313719749451,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000157378918
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.2189416885375977,
+            0.6640889048576355
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.5590443015098572,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999521872874
+        }
+      ]
+    },
+    {
+      "frame": 25,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.25,
+            0.8999999761581421
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.590833842754364,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.67000000709362
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.3539230823516846,
+            0.7200000286102295
+          ],
+          "crosshead": [
+            0.0,
+            -0.6866150498390198,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000044873068
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.1460769176483154,
+            0.7200000286102295
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.478768914937973,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999377656866
+        }
+      ]
+    },
+    {
+      "frame": 37,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.3348528146743774,
+            0.864852786064148
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.6702476739883423,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999865906229
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.2810583114624023,
+            0.6640889048576355
+          ],
+          "crosshead": [
+            0.0,
+            -0.6211608648300171,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.670000018908906
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.1340888738632202,
+            0.8110582828521729
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.4648091495037079,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999490162728
+        }
+      ]
+    },
+    {
+      "frame": 49,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.3700000047683716,
+            0.7799999713897705
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.699999988079071,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000105687041
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.190000057220459,
+            0.6760769486427307
+          ],
+          "crosshead": [
+            0.0,
+            -0.5281087756156921,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000480996122
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.190000057220459,
+            0.8839230537414551
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.5281087756156921,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000571348305
+        }
+      ]
+    },
+    {
+      "frame": 61,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.3348528146743774,
+            0.6951471567153931
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.6702476739883423,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999865906229
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.1340888738632202,
+            0.7489417195320129
+          ],
+          "crosshead": [
+            0.0,
+            -0.4648091495037079,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999462796437
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.2810583114624023,
+            0.8959110975265503
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6211608648300171,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6700000293341584
+        }
+      ]
+    },
+    {
+      "frame": 73,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.25,
+            0.6600000262260437
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.590833842754364,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999966683672
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.1460769176483154,
+            0.8399999737739563
+          ],
+          "crosshead": [
+            0.0,
+            -0.478768914937973,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999429783134
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.3539230823516846,
+            0.8399999737739563
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6866150498390198,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.670000009699933
+        }
+      ]
+    },
+    {
+      "frame": 85,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.1651471853256226,
+            0.6951471567153931
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.5005420446395874,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999865906229
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.2189416885375977,
+            0.8959110975265503
+          ],
+          "crosshead": [
+            0.0,
+            -0.5590443015098572,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999626125407
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.3659111261367798,
+            0.7489417195320129
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6966313719749451,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.670000013001263
+        }
+      ]
+    },
+    {
+      "frame": 97,
+      "units": [
+        {
+          "x": -0.72,
+          "crank_pin": [
+            -0.7200000286102295,
+            -1.1299999952316284,
+            0.7799999713897705
+          ],
+          "crosshead": [
+            -0.7200000286102295,
+            -0.46000000834465027,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999660876251
+        },
+        {
+          "x": 0,
+          "crank_pin": [
+            0.0,
+            -1.309999942779541,
+            0.8839230537414551
+          ],
+          "crosshead": [
+            0.0,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999459321353
+        },
+        {
+          "x": 0.72,
+          "crank_pin": [
+            0.7200000286102295,
+            -1.309999942779541,
+            0.6760769486427307
+          ],
+          "crosshead": [
+            0.7200000286102295,
+            -0.6481087803840637,
+            0.7799999713897705
+          ],
+          "connecting_rod_length": 0.6699999368969155
+        }
+      ]
+    }
+  ],
+  "dimensions": {
+    "crank_radius": 0.12,
+    "connecting_rod_length": 0.67,
+    "phase_degrees": [
+      0,
+      120,
+      240
+    ]
+  },
+  "pending": [
+    "actual source/export mechanical contact and moving clearance audit",
+    "source/export front/rear/clay review",
+    "model-specific finishing",
+    "state capture",
+    "native prototype/pipe fitting"
+  ]
+}

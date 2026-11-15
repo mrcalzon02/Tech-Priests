@@ -1,3 +1,15 @@
+## 2026-11-14 compressor V04 finish/state candidate
+
+The distinct 3x4 compressor now has supported/guarded phased reciprocating drives, a real manifold pressure gauge and normally closed relief, nine cylinder-specific PBR maps, editable source and actual GLB reimport. The final source passes 86 contacts and 4,454 sampled moving/static surface checks over 17 actual poses. Source/export pass 74 mouth rays and 234 sampled route-core rays each, with eight opposite-pressure-wall checks each. Actual detail review caught through-drilled header holes after an earlier route test had passed; V04 preserves the opposite walls. The exported 67,932 triangles contain no degenerates/nonfinite geometry, and sampled state transforms match within 5.4e-7.
+
+Actual exported front/rear/clay and oblique views were reviewed. Four idle and four animated directions are saved as 36 frames, six review sheets and four-second previews; master reopen and capture QA pass. This remains a **candidate**, with native prototype/graphical fitting and owner review open. Preserve the accepted purifier/electrolyzer. [Current compressor source and evidence](../../art/source-to-3d/metallic-hydrogen-chain/hydrogen-compressor/v04-finish-and-states/README.md).
+
+## 2026-11-14 electrolyzer native fit owner-accepted; compressor source saved
+
+After rejecting overlapping native pipe imagery and directing the small downward shift, the owner accepted the current electrolyzer: **“Good enough, done.”** Freeze the +4-native-pixel whole-sprite shift, lower-object body depth, editable fitting master and current model. All 32 native connection/rotation cases and four real split-flow orientations pass; actual graphical screenshots and their hashes are preserved locally. Do not mistake the earlier physical/projection proof for visual acceptance of rejected images. The [accepted native delivery](../../art/source-to-3d/metallic-hydrogen-chain/electrolyzer/v06-owner-accepted-native/README.md) contains the tested runnable prototype and four-direction captures. Ordinary chain/economy integration remains open.
+
+The distinct three-cylinder compressor is now saved and rendered as a construction pilot, with actual phased slider-crank geometry, twin cheeks/interrupted journals, guarded supported flywheel, suction/discharge branches and registered-master instances. Its independent mechanical/export QA and finishing are next. [Authoritative continuation](metallic-hydrogen-chain/PRODUCTION_CONTINUATION.json).
+
 ## 2026-11-14 electrolyzer V05 finish, state clips and four-angle captures
 
 The distinct 3x4 electrolyzer now has repaired water tee/inlet bores and gas returns, insulated electrical connections, supported handwheels/conduit and grounded cell plinths. Nine packed model-specific maps finish the cell wraps and retained rectifier cover. Independent checks pass 59 contacts, 1,179 sampled process-core rays per source/export, 111 mouth rays per source/export, zero sampled source/GLB state-pose error and a closed four-second working clip. Native, exported front/rear/clay and oblique closeup renders were viewed.

@@ -1,0 +1,570 @@
+{
+  "schema": 1,
+  "source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+  "source_file": "compressor-v01.blend",
+  "camera_policy": "fmpl.factorio45.v1",
+  "persistent_camera_count": 1,
+  "camera_cleanup": {
+    "policy": "fmpl.factorio45.v1",
+    "removed_camera_objects": [
+      "FMPL_CAPTURE_CAMERA"
+    ],
+    "persistent_camera_count": 1,
+    "name": "FMPL_CAPTURE_CAMERA"
+  },
+  "blender": "5.0.0",
+  "config": {
+    "schema": 1,
+    "asset": "tp-hydrogen-compressor-v04-review",
+    "source": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\compressor-v04-sealed-finish\\compressor-v01.blend",
+    "adapter": null,
+    "source_size": 256,
+    "sizes": [
+      64,
+      128,
+      256
+    ],
+    "samples": 24,
+    "seed": 4362,
+    "columns": 4,
+    "fps": 2,
+    "directions": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "pivot": [
+      0,
+      0,
+      0
+    ],
+    "exclude_rotation": [],
+    "hide_render": [],
+    "animated_lights": [],
+    "states": {
+      "idle": [
+        0
+      ],
+      "working": [
+        4,
+        16,
+        28,
+        40,
+        52,
+        64,
+        76,
+        88
+      ]
+    },
+    "camera_policy": "fmpl.factorio45.v1",
+    "capture_kind": "entity",
+    "camera_override": {
+      "type": "ORTHO",
+      "elevation_deg": 45,
+      "azimuth_deg": 0,
+      "distance": 8.48528137423857,
+      "target": [
+        0,
+        0,
+        0.82
+      ],
+      "ortho_scale": 6.1,
+      "shift_x": 0,
+      "shift_y": 0
+    },
+    "orientation_policy": "rotatable",
+    "source_timeline_fps": 24,
+    "cycle_seconds": 4,
+    "threads": 6,
+    "workers": 1,
+    "sampling_note": "Uniform 12-frame spacing, phase offset 3 source frames to avoid 64px temporal aliasing; source loop stays four seconds."
+  },
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        -0.7071067690849304,
+        -5.999999523162842
+      ],
+      [
+        0.0,
+        0.7071067690849304,
+        0.7071067690849304,
+        6.819999694824219
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 6.099999904632568,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      256,
+      256
+    ]
+  },
+  "daylight": [
+    {
+      "name": "Fill",
+      "type": "AREA",
+      "energy": 700.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          0.4472135603427887,
+          -0.596284806728363,
+          0.6666666865348816,
+          4.0
+        ],
+        [
+          0.8944272398948669,
+          0.29814231395721436,
+          -0.3333333432674408,
+          -2.0
+        ],
+        [
+          7.548435121407238e-08,
+          0.745356023311615,
+          0.6666666269302368,
+          5.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Key",
+      "type": "AREA",
+      "energy": 1150.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          0.800000011920929,
+          0.46093273162841797,
+          -0.384110689163208,
+          -3.0
+        ],
+        [
+          -0.6000000238418579,
+          0.6145769953727722,
+          -0.5121475458145142,
+          -4.0
+        ],
+        [
+          4.873782089021006e-08,
+          0.6401844620704651,
+          0.7682212591171265,
+          7.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Rim",
+      "type": "AREA",
+      "energy": 1000.0,
+      "color": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          -1.0,
+          -1.504815259067982e-07,
+          6.305878486045913e-08,
+          0.0
+        ],
+        [
+          1.5099580252808664e-07,
+          -0.7071067690849304,
+          0.7071067690849304,
+          5.0
+        ],
+        [
+          -6.181721801112872e-08,
+          0.7071067690849304,
+          0.7071067690849304,
+          6.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "world": {
+    "name": "Neutral industrial world",
+    "color_management": {
+      "view_transform": "AgX",
+      "look": "None",
+      "exposure": 0.0,
+      "gamma": 1.0
+    }
+  },
+  "material_changes": [],
+  "mesh_count": 284,
+  "master_sha256": "25a97662dc0b7b7938751bd56b19cce057a2526800c5cc23e6fff7fdda833672",
+  "frames": [
+    {
+      "state": "idle",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d00/f000.png",
+      "sha256": "125dec0d7b6cee6e0cf94b268dd5e4511ef0161097e9b956277fb2e1bedf2463"
+    },
+    {
+      "state": "idle",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d01/f000.png",
+      "sha256": "6f8a632122e2a269878bf4773f6356631321b3dd577d70cbe488616e092f78f8"
+    },
+    {
+      "state": "idle",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d02/f000.png",
+      "sha256": "a785e041cd6582b322150f7ff40f596bd373fd28480b306ba23cb474a1e11fc5"
+    },
+    {
+      "state": "idle",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 0,
+      "path": "frames/idle/d03/f000.png",
+      "sha256": "ab0b961980e0ff1b3d454f1c7423cfeae684dea6c31e813b013173453696fbfd"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 0,
+      "timeline_frame": 4,
+      "path": "frames/working/d00/f000.png",
+      "sha256": "a7eec20a30fe3152a049cbebc2ebb7b27eef4b24df6f385c26f9188e4602d27b"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 1,
+      "timeline_frame": 16,
+      "path": "frames/working/d00/f001.png",
+      "sha256": "ba598d80f7c0aed9899f0756a4b81e12c9a7956c3ea070cb9514b7b1e27d1c7c"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 2,
+      "timeline_frame": 28,
+      "path": "frames/working/d00/f002.png",
+      "sha256": "c086151de492b7e5e7f137a51534f17d01b2a4565d0ebb0b011528ee2c0ebb57"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 3,
+      "timeline_frame": 40,
+      "path": "frames/working/d00/f003.png",
+      "sha256": "dc5267c3472933f6b3a675bd96313f1cb678a3e86e61581d66554cda3219c9cc"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 4,
+      "timeline_frame": 52,
+      "path": "frames/working/d00/f004.png",
+      "sha256": "2676fa6748990cbb2359116e5b3bc2502cabdc2255ba3dcd8e91d8ba9e58a50a"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 5,
+      "timeline_frame": 64,
+      "path": "frames/working/d00/f005.png",
+      "sha256": "91cbd840882a87f21850152cdadeb78abb1fdc2430a6d71b2d8ad65ec6abb491"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 6,
+      "timeline_frame": 76,
+      "path": "frames/working/d00/f006.png",
+      "sha256": "caada9b77268e2423d3321bc862ac4e0b06da071467a37b099ab6fb5155e34c6"
+    },
+    {
+      "state": "working",
+      "direction": 0,
+      "angle": 0,
+      "index": 7,
+      "timeline_frame": 88,
+      "path": "frames/working/d00/f007.png",
+      "sha256": "542c4a626ab239771843bdaebe0b60ccef7d8b7b8c1ccf91f2c10a79cebbcc64"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 0,
+      "timeline_frame": 4,
+      "path": "frames/working/d01/f000.png",
+      "sha256": "d4836ef9d56efe7fcd6a0d77647e3f0daf19179f6ed2b1208a4b06ea92a43378"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 1,
+      "timeline_frame": 16,
+      "path": "frames/working/d01/f001.png",
+      "sha256": "491414f685a2cafe2b4071c8d1dbabd461cf4a407b1620c18321efccf08556e6"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 2,
+      "timeline_frame": 28,
+      "path": "frames/working/d01/f002.png",
+      "sha256": "19bacba9476e1f7707620411473579c2e577e2958512c37ea0c7cb20b3df36b2"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 3,
+      "timeline_frame": 40,
+      "path": "frames/working/d01/f003.png",
+      "sha256": "de7f22e730c4b4837394ad55fed08ddad1cdce8000ca094514ae9c7a64880c07"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 4,
+      "timeline_frame": 52,
+      "path": "frames/working/d01/f004.png",
+      "sha256": "e82fe6da31f73237d8cd25aeb97685422dac06c271cfc012622669c5b6458c60"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 5,
+      "timeline_frame": 64,
+      "path": "frames/working/d01/f005.png",
+      "sha256": "84837069e4b072b1e0f6878b7d3fe15c4ad188fbae54a30cc71eb2d715253e6e"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 6,
+      "timeline_frame": 76,
+      "path": "frames/working/d01/f006.png",
+      "sha256": "02be8dad39f046d161caf64e06e21c5d4a6e0ed4e966d1dbee552a83150c615f"
+    },
+    {
+      "state": "working",
+      "direction": 1,
+      "angle": 90,
+      "index": 7,
+      "timeline_frame": 88,
+      "path": "frames/working/d01/f007.png",
+      "sha256": "1496ba43bc42c9645ad6a4bf9b0eb4ce8c3e09dbbad7a3fab9c16c225a47f40b"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 0,
+      "timeline_frame": 4,
+      "path": "frames/working/d02/f000.png",
+      "sha256": "bf9d9072b214ed644395cf82478b958e43e44a8a9e4c13323d805c08b1a957cc"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 1,
+      "timeline_frame": 16,
+      "path": "frames/working/d02/f001.png",
+      "sha256": "42d07c8bee50423500317fbc2005f43bdcc37561fd8caa1a7ee9d451befed247"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 2,
+      "timeline_frame": 28,
+      "path": "frames/working/d02/f002.png",
+      "sha256": "839311ef7c9fe2a866d1daae5ce412a0505b013be2d815fb7e9428a082794e7e"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 3,
+      "timeline_frame": 40,
+      "path": "frames/working/d02/f003.png",
+      "sha256": "52e2dfc8a3cd0ae5a08bea0dcb95e609fcda01dff1321bc3283031d4d41db85d"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 4,
+      "timeline_frame": 52,
+      "path": "frames/working/d02/f004.png",
+      "sha256": "3fb4235193f4e52d678b2b09476614338b6b7d2bc1e1fca2ca1088509bac493b"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 5,
+      "timeline_frame": 64,
+      "path": "frames/working/d02/f005.png",
+      "sha256": "a96bd6b130fc933444e7ef76f12e893848a7a0debeb834d193168172aab52094"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 6,
+      "timeline_frame": 76,
+      "path": "frames/working/d02/f006.png",
+      "sha256": "8c01bb71eee53db455850e3e3d2df2837acb22c95f2a4273df2281d02874c751"
+    },
+    {
+      "state": "working",
+      "direction": 2,
+      "angle": 180,
+      "index": 7,
+      "timeline_frame": 88,
+      "path": "frames/working/d02/f007.png",
+      "sha256": "666af737affd04bc9facef83a98087d6fc612abcd4daa87a7adf68e8cf5f330a"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 0,
+      "timeline_frame": 4,
+      "path": "frames/working/d03/f000.png",
+      "sha256": "b7fe04b15ce8655c2b5a070fbb57263d58816972ee463af65f370a0ad10dc1c7"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 1,
+      "timeline_frame": 16,
+      "path": "frames/working/d03/f001.png",
+      "sha256": "31f84318b96c758c7c2fdf66dfcce7213fdc88e97f8200e5868b2f874a921d6f"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 2,
+      "timeline_frame": 28,
+      "path": "frames/working/d03/f002.png",
+      "sha256": "c222c1e4c576591983ed9eefb98b171bd412e24099bf4d437aaf1401c3935be0"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 3,
+      "timeline_frame": 40,
+      "path": "frames/working/d03/f003.png",
+      "sha256": "9cfd0fbb3ea14c45f633551e57b78ac9ad061af7d01e6e76610ad5307e9980f7"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 4,
+      "timeline_frame": 52,
+      "path": "frames/working/d03/f004.png",
+      "sha256": "c398e1621b75bd4bdec3528c0f9203defe2f599f3ad527dba710f809ed10780f"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 5,
+      "timeline_frame": 64,
+      "path": "frames/working/d03/f005.png",
+      "sha256": "d23b5e927d45312e16d7c2a0da4ec7cc7189b2eb5e9ab0a8bdde24dc680da816"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 6,
+      "timeline_frame": 76,
+      "path": "frames/working/d03/f006.png",
+      "sha256": "b4e7a1e7b8639b8d957cdfe89a7338bb3ea8ea90a1ad5e7215972035ec262859"
+    },
+    {
+      "state": "working",
+      "direction": 3,
+      "angle": 270,
+      "index": 7,
+      "timeline_frame": 88,
+      "path": "frames/working/d03/f007.png",
+      "sha256": "e313ed4d56b4e3dca36ea66de7a3af13d8b552b1fb51fc56470a6367dedea9e6"
+    }
+  ],
+  "art_accepted": false,
+  "engine_integration": "outside Blender-only scope"
+}

@@ -1,0 +1,41 @@
+{
+  "status": "VISUALLY_REVIEWED_FINISH_CANDIDATE; OWNER_AND_NATIVE_REVIEW_OPEN",
+  "source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+  "export_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
+  "reference": {
+    "path": "art/source-to-3d/metallic-hydrogen-chain/water-purifier/v16-owner-accepted/purifier-four-angle-idle.png",
+    "sha256": "651e7a893aba714e3d66ae352afe87d614b70424671b22c2996a67c1d189db2a"
+  },
+  "actual_images": {
+    "export-inspection/clay.png": "41ec6e5f8ef260aa38634020b3f61b397752dcf9a38dc75cddb44ab6c27c0451",
+    "export-inspection/front.png": "c1b8773cb52046f93bf7a9f2e50898172e41358df85b235bbf1b38b9c6a9cfe7",
+    "export-inspection/rear-inspection.png": "7d8a381897338e510ef31c87bbc3030adce45840254b465cfb6a13bf52651c26",
+    "export-details/drive-and-guard.png": "219222b1e2897c3119c2898cb9e7684d23c98e088649c5e4d88acf8567ef7adf",
+    "export-details/flywheel-and-bearings.png": "a5179811122a051464a48c83335d7298bda0228c273e3a90dc7ae80263f5c317",
+    "export-details/pressure-and-instrumentation.png": "59b00774ea1c51420a5a8daabe72a29fc4fa5cc2c495641f49892b68fb3fa6e4"
+  },
+  "scale": "0 to 5; final threshold 4 per criterion",
+  "scores": {
+    "silhouette": {
+      "score": 4,
+      "reason": "Three parallel horizontal cylinders, common phased drive, side motor/flywheel, separate pressure headers and compact emergency-family controls."
+    },
+    "construction": {
+      "score": 4,
+      "reason": "Supported saddles, guides and shaft seats; clear interrupted journals/twin crank cheeks, grounded drive guard, real manifold gauge and normally closed relief. Pressure tee cuts open only into their branches. Targeted checks do not certify pressure containment."
+    },
+    "surfaces": {
+      "score": 4,
+      "reason": "Actual GLB front/rear/clay and three oblique renders viewed. Nine packed steel maps follow cylinder axes, real band/head contacts and rear discharge heat region; polished piston rods and retained enamel/glass gauge."
+    },
+    "motion_states": {
+      "score": 4,
+      "reason": "Actual slider-crank endpoints remain attached with .12 radius/.67 links and 120-degree phases over 17 poses. Coherent exported idle/working clips match all sampled source object poses; four-second loop closes. Actual four-angle review capture included."
+    },
+    "native_integration": {
+      "score": 0,
+      "reason": "No actual compressor native prototype/pipe-placement test yet. Engineering mouths are provisional and must not be called visually aligned from model-space checks."
+    }
+  },
+  "owner_approved": false
+}

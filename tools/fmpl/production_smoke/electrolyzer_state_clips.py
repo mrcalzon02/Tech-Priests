@@ -5,14 +5,18 @@ import bpy
 def prepare_state_tracks(scene):
     objects=[o for o in scene.objects if o.animation_data and o.animation_data.action]
     scene.frame_set(0);bpy.context.view_layer.update()
-    idle={o:(o.location.copy(),o.scale.copy()) for o in objects}
+    idle={o:(o.location.copy(),o.scale.copy(),o.rotation_mode,
+        o.rotation_quaternion.copy() if o.rotation_mode=='QUATERNION' else o.rotation_euler.copy()) for o in objects}
     for ob in objects:
         work=ob.animation_data.action;work.use_fake_user=True
         ob.animation_data_clear()
-        ob.location,ob.scale=idle[ob]
+        ob.location,ob.scale,ob.rotation_mode,rotation=idle[ob]
+        rotation_channel='rotation_quaternion' if ob.rotation_mode=='QUATERNION' else 'rotation_euler'
+        setattr(ob,rotation_channel,rotation)
         for frame in (0,1):
             ob.keyframe_insert(data_path='location',frame=frame)
             ob.keyframe_insert(data_path='scale',frame=frame)
+            ob.keyframe_insert(data_path=rotation_channel,frame=frame)
         standby=ob.animation_data.action;standby.name='TP Electrolyzer standby | '+ob.name
         ob.animation_data.action=None
         for name,action,start,end in (('working',work,1,97),('idle',standby,0,1)):

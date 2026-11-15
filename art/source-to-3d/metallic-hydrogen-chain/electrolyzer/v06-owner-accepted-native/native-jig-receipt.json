@@ -1,0 +1,1926 @@
+{
+  "passed": true,
+  "base_version": "2.1.24",
+  "commands": [
+    {
+      "stage": "create",
+      "returncode": 0
+    },
+    {
+      "stage": "flow",
+      "returncode": 0
+    }
+  ],
+  "results": {
+    "physical-ports": {
+      "passed": true,
+      "entity": "tp-mh7-review-electrolyzer",
+      "sites": [
+        {
+          "mask": 0,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 0.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 0.5,
+                "y": 2.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": 2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 2.5,
+                "y": -0.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 1,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 10.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 10.5,
+                "y": 2.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": 2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 8.5,
+                "y": -0.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 12.5,
+                "y": -0.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 2,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 20.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 20.5,
+                "y": 2.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": 2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 18.5,
+                "y": -0.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 22.5,
+                "y": -0.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 3,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 30.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 30.5,
+                "y": 2.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": 2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 28.5,
+                "y": -0.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 32.5,
+                "y": -0.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 4,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 40.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 40.5,
+                "y": 2.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": 2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 38.5,
+                "y": -0.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 42.5,
+                "y": -0.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 5,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 50.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 50.5,
+                "y": 2.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": 2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 48.5,
+                "y": -0.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 52.5,
+                "y": -0.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 6,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 60.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 60.5,
+                "y": 2.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": 2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 58.5,
+                "y": -0.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 62.5,
+                "y": -0.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 7,
+          "direction": "north",
+          "center": {
+            "y": 0,
+            "x": 70.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 70.5,
+                "y": 2.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": 2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 68.5,
+                "y": -0.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 72.5,
+                "y": -0.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": -0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 0,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 0
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": -2.5,
+                "y": 14.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 0.5,
+                "y": 12.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 0.5,
+                "y": 16.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 1,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 10
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 7.5,
+                "y": 14.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 10.5,
+                "y": 12.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 10.5,
+                "y": 16.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 2,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 20
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 17.5,
+                "y": 14.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 20.5,
+                "y": 12.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 20.5,
+                "y": 16.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 3,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 30
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 27.5,
+                "y": 14.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 30.5,
+                "y": 12.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 30.5,
+                "y": 16.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 4,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 40
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 37.5,
+                "y": 14.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 40.5,
+                "y": 12.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 40.5,
+                "y": 16.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 5,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 50
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 47.5,
+                "y": 14.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 50.5,
+                "y": 12.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 50.5,
+                "y": 16.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 6,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 60
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 57.5,
+                "y": 14.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 60.5,
+                "y": 12.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 60.5,
+                "y": 16.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 7,
+          "direction": "east",
+          "center": {
+            "y": 14.5,
+            "x": 70
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 67.5,
+                "y": 14.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 70.5,
+                "y": 12.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 70.5,
+                "y": 16.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 0,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 0.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 0.5,
+                "y": 25.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": -2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 2.5,
+                "y": 28.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": -1.5,
+                "y": 28.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 1,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 10.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 10.5,
+                "y": 25.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": -2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 12.5,
+                "y": 28.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 8.5,
+                "y": 28.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 2,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 20.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 20.5,
+                "y": 25.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": -2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 22.5,
+                "y": 28.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 18.5,
+                "y": 28.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 3,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 30.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 30.5,
+                "y": 25.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": -2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 32.5,
+                "y": 28.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 28.5,
+                "y": 28.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 4,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 40.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 40.5,
+                "y": 25.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": -2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 42.5,
+                "y": 28.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 38.5,
+                "y": 28.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 5,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 50.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 50.5,
+                "y": 25.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": -2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 52.5,
+                "y": 28.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 48.5,
+                "y": 28.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 6,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 60.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 60.5,
+                "y": 25.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": -2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 62.5,
+                "y": 28.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 58.5,
+                "y": 28.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 7,
+          "direction": "south",
+          "center": {
+            "y": 28,
+            "x": 70.5
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 70.5,
+                "y": 25.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 0,
+                "y": -2
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 72.5,
+                "y": 28.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 68.5,
+                "y": 28.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -1.5,
+                "y": 0.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 0,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 0
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 2.5,
+                "y": 42.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": -0.5,
+                "y": 44.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": -0.5,
+                "y": 40.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 1,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 10
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 12.5,
+                "y": 42.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 9.5,
+                "y": 44.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 9.5,
+                "y": 40.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 2,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 20
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 22.5,
+                "y": 42.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 19.5,
+                "y": 44.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 19.5,
+                "y": 40.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 3,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 30
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 32.5,
+                "y": 42.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 29.5,
+                "y": 44.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 29.5,
+                "y": 40.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 4,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 40
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 42.5,
+                "y": 42.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 39.5,
+                "y": 44.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 39.5,
+                "y": 40.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 5,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 50
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 52.5,
+                "y": 42.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 49.5,
+                "y": 44.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 49.5,
+                "y": 40.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 6,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 60
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 62.5,
+                "y": 42.5
+              },
+              "connected": false,
+              "effective_plane_relative": {
+                "x": 2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 59.5,
+                "y": 44.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 59.5,
+                "y": 40.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        },
+        {
+          "mask": 7,
+          "direction": "west",
+          "center": {
+            "y": 42.5,
+            "x": 70
+          },
+          "ports": [
+            {
+              "id": "water_input",
+              "fluid": "tp-mh7-review-purified-water",
+              "target": {
+                "x": 72.5,
+                "y": 42.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": 2,
+                "y": 0
+              },
+              "flow_direction": "input",
+              "native_fluidbox_index": 1,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "hydrogen_output",
+              "fluid": "tp-mh7-review-hydrogen-gas",
+              "target": {
+                "x": 69.5,
+                "y": 44.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": 1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 2,
+              "graphical_seating_verified": false
+            },
+            {
+              "id": "oxygen_output",
+              "fluid": "tp-mh7-review-oxygen-gas",
+              "target": {
+                "x": 69.5,
+                "y": 40.5
+              },
+              "connected": true,
+              "effective_plane_relative": {
+                "x": -0.5,
+                "y": -1.5
+              },
+              "flow_direction": "output",
+              "native_fluidbox_index": 3,
+              "graphical_seating_verified": false
+            }
+          ]
+        }
+      ],
+      "orientation_count": 4,
+      "connection_masks": 8,
+      "scope": "Actual isolated 3x4 prototype, all three ports, all bitmasks and native directions; not graphical seating or normal economy",
+      "native_fluids_are_review_only": true,
+      "ordinary_mod_changed": false
+    },
+    "flow": {
+      "passed": true,
+      "tick": 600,
+      "orientations": [
+        {
+          "direction": "north",
+          "products_finished": 2,
+          "hydrogen_seen": 40,
+          "oxygen_seen": 20
+        },
+        {
+          "direction": "east",
+          "products_finished": 2,
+          "hydrogen_seen": 40,
+          "oxygen_seen": 20
+        },
+        {
+          "direction": "south",
+          "products_finished": 2,
+          "hydrogen_seen": 40,
+          "oxygen_seen": 20
+        },
+        {
+          "direction": "west",
+          "products_finished": 2,
+          "hydrogen_seen": 40,
+          "oxygen_seen": 20
+        }
+      ],
+      "source_cycle_seconds": 4,
+      "animation_speed": 0.03333333333333333,
+      "scope": "genuine split output delivered to each assigned native pipe; fixture quantities only, not production balancing"
+    }
+  },
+  "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
+  "source_capture_sha256": "c641513626ee65f5e4589fc5f63850ddc3be2dec3fa246a0a5f2fd47f6ff499c",
+  "fixture_hashes": {
+    "data.lua": "fddda039a9ee38b8e822f670a400f3ea43e7a56efb76cb9f0dd99fb87a2f5f99",
+    "control.lua": "1016a51b9b35e8ecdc0879faa9d471445c091dd1622df9d0ff392059342694fb"
+  },
+  "native_profile": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\electrolyzer-native-v09-depth",
+  "graphical_seating_verified": false,
+  "ordinary_mod_installed": false,
+  "production_economy_assigned": false
+}

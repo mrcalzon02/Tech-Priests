@@ -13,15 +13,16 @@ from refine_purifier_v14 import bounds
 
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
-def port_probe(scene,ports):
+def port_probe(scene,ports,offsets=None,max_radius=.205):
     meshes=[o for o in scene.objects if o.type=='MESH' and not o.hide_render]
     hits=[];count=0
     for port in ports:
         center=Vector(port['model_mouth_center']);normal=Vector(port['outward_normal']).normalized()
         u=normal.cross(Vector((0,0,1))).normalized();v=normal.cross(u).normalized()
-        for a in (-.18,-.12,-.06,0,.06,.12,.18):
-            for b in (-.18,-.12,-.06,0,.06,.12,.18):
-                if a*a+b*b>.205**2:continue
+        values=offsets if offsets is not None else (-.18,-.12,-.06,0,.06,.12,.18)
+        for a in values:
+            for b in values:
+                if a*a+b*b>max_radius**2+1e-10:continue
                 origin=center+normal*.015+u*a+v*b;count+=1
                 for ob in meshes:
                     inv=ob.matrix_world.inverted_safe()
@@ -30,18 +31,19 @@ def port_probe(scene,ports):
     return dict(passed=not hits,rays=count,hits=hits)
 
 def mesh_stats(scene):
-    triangles=0;degenerate=0;finite=True;uv=[]
+    triangles=0;degenerate=0;finite=True;uv=[];degenerate_objects=[]
     dg=bpy.context.evaluated_depsgraph_get()
     for ob in scene.objects:
         if ob.type!='MESH' or ob.hide_render:continue
         evaluated=ob.evaluated_get(dg);mesh=evaluated.to_mesh()
         try:
             mesh.calc_loop_triangles();triangles+=len(mesh.loop_triangles)
-            degenerate+=sum(t.area<1e-12 for t in mesh.loop_triangles)
+            count=sum(t.area<1e-12 for t in mesh.loop_triangles);degenerate+=count
+            if count:degenerate_objects.append(dict(object=ob.name,triangles=count))
             finite=finite and all(math.isfinite(c) for v in mesh.vertices for c in v.co)
             if not mesh.uv_layers:uv.append(ob.name)
         finally:evaluated.to_mesh_clear()
-    return dict(triangles=triangles,degenerate_triangles=degenerate,finite=finite,missing_uv=uv)
+    return dict(triangles=triangles,degenerate_triangles=degenerate,degenerate_objects=degenerate_objects,finite=finite,missing_uv=uv)
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--dir',required=True)

@@ -218,6 +218,40 @@
           "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
           "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
           "status": "actual saved/rendered/reimported candidate; native integration open"
+        },
+        {
+          "machine": "hydrogen-compressor",
+          "machine_revision": "V04 finish/state candidate",
+          "instance": "service cogitator",
+          "transform": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -0.8199999928474426
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -1.659999966621399
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.7200000286102295
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+          "runtime_export_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
+          "status": "actual appended, saved/rendered/exported/reimported candidate; native review open"
         }
       ],
       "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
@@ -724,6 +758,74 @@
           "model_source_sha256": "65e0da1db12114279c5f2d29d7d02c25657b84484cc9c634a454fc76839e39ae",
           "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
           "status": "actual saved/rendered/reimported candidate; native integration open"
+        },
+        {
+          "machine": "hydrogen-compressor",
+          "machine_revision": "V04 finish/state candidate",
+          "instance": "hydrogen_suction",
+          "transform": [
+            [
+              -1.0,
+              -8.742277657347586e-08,
+              0.0,
+              -1.5
+            ],
+            [
+              8.742277657347586e-08,
+              -1.0,
+              0.0,
+              0.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.36000001430511475
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+          "runtime_export_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
+          "status": "actual appended, saved/rendered/exported/reimported candidate; native review open"
+        },
+        {
+          "machine": "hydrogen-compressor",
+          "machine_revision": "V04 finish/state candidate",
+          "instance": "hydrogen_discharge",
+          "transform": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              1.5
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.5
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.36000001430511475
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+          "runtime_export_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
+          "status": "actual appended, saved/rendered/exported/reimported candidate; native review open"
         }
       ],
       "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
@@ -1049,10 +1151,120 @@
         "runtime_export_sha256": "e5ac663aef9d0eec2e3649d5eb1c94d3a6d483de05b02e949700cf0afbfab689",
         "status": "actual saved/rendered/reimported candidate; native integration open"
       }
+    ],
+    "hydrogen-compressor": [
+      {
+        "part_id": "tp.mh7.factorio-fluid-mouth",
+        "revision": "v1",
+        "machine": "hydrogen-compressor",
+        "machine_revision": "V04 finish/state candidate",
+        "instance": "hydrogen_suction",
+        "transform": [
+          [
+            -1.0,
+            -8.742277657347586e-08,
+            0.0,
+            -1.5
+          ],
+          [
+            8.742277657347586e-08,
+            -1.0,
+            0.0,
+            0.5
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.36000001430511475
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "model_source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+        "runtime_export_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
+        "status": "actual appended, saved/rendered/exported/reimported candidate; native review open"
+      },
+      {
+        "part_id": "tp.mh7.factorio-fluid-mouth",
+        "revision": "v1",
+        "machine": "hydrogen-compressor",
+        "machine_revision": "V04 finish/state candidate",
+        "instance": "hydrogen_discharge",
+        "transform": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            1.5
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.5
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.36000001430511475
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "model_source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+        "runtime_export_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
+        "status": "actual appended, saved/rendered/exported/reimported candidate; native review open"
+      },
+      {
+        "part_id": "tp.mh7.cogitator-console",
+        "revision": "v1",
+        "machine": "hydrogen-compressor",
+        "machine_revision": "V04 finish/state candidate",
+        "instance": "service cogitator",
+        "transform": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            -0.8199999928474426
+          ],
+          [
+            0.0,
+            1.0,
+            0.0,
+            -1.659999966621399
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.7200000286102295
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "model_source_sha256": "6411862c34101223ec1f9ac1fc0bf3b9ef5c39986ac974c693de5716d6b8d5b0",
+        "runtime_export_sha256": "8b9dc80a4c94f5f50375c323134e7990fd468ad4f2af5395cdb5b42079f48ab9",
+        "status": "actual appended, saved/rendered/exported/reimported candidate; native review open"
+      }
     ]
   },
   "last_checkpoint_sha256": null,
   "inventory_source": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
   "material_index": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
-  "previous_registry_sha256": "7c7c5ccff25fdb361c516df67ef641862176aaca9effc8c3ddfc0dce835cd8fc"
+  "previous_registry_sha256": "d39eff16a7130e703fa00cf0425e86c166aab3049875af6d0e892861a44a12bb"
 }

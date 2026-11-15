@@ -1,0 +1,18 @@
+{
+  "status": "OWNER_ACCEPTED_ELECTROLYZER_MODEL_AND_CURRENT_NATIVE_PLACEMENT",
+  "owner_instruction": "Good enough, done",
+  "shape_locked": true,
+  "placement_locked": true,
+  "native_capture_master_sha256": "3b62bb78387a7a40777b08a0ec08ad5d05e4f599cf514b611232a052e270c6d8",
+  "native_source_capture_sha256": "c641513626ee65f5e4589fc5f63850ddc3be2dec3fa246a0a5f2fd47f6ff499c",
+  "original_editable_source": "art/source-to-3d/metallic-hydrogen-chain/electrolyzer/v05-finish-and-states/electrolyzer-v05.blend",
+  "current_editable_native_source": "captures/master.blend",
+  "final_profile": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\electrolyzer-native-v09-depth",
+  "whole_sprite_shift_native_pixels": 4,
+  "body_render_layer": "lower-object",
+  "native_connection_sites": 32,
+  "orientations_with_real_split_flow": 4,
+  "ordinary_mod_installed": false,
+  "full_chain_economy_integrated": false,
+  "next_shape_action": "none; owner called current version done; move on to compressor"
+}

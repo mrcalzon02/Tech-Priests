@@ -1,0 +1,68 @@
+{
+  "status": "OWNER_ACCEPTED_CURRENT_NATIVE_PLACEMENT",
+  "profile": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\electrolyzer-native-v09-depth",
+  "screenshots": {
+    "east-disconnected.png": {
+      "sha256": "85206c0863734766c6e7baa31b337199186679d9356abce6dc2d29b73ebc54e3",
+      "size": [
+        800,
+        800
+      ]
+    },
+    "east-working.png": {
+      "sha256": "0d24266deea09db8b4cc62b9cb6bf8ab00bcbd85f262b46615b14e6d2c5eacc2",
+      "size": [
+        800,
+        800
+      ]
+    },
+    "north-disconnected.png": {
+      "sha256": "f39d86bb73646a2e21feaf606e02db8b4776db810b66f134ed55ac726580a3ce",
+      "size": [
+        800,
+        800
+      ]
+    },
+    "north-working.png": {
+      "sha256": "469e0bad89639deddcce4025bd0e5f8d251b3856be95fda8bf5081eecd2a6bdf",
+      "size": [
+        800,
+        800
+      ]
+    },
+    "south-disconnected.png": {
+      "sha256": "dfe7111ab412252c0e0c591c8cb78e7dcf24e3521b70ff5c8d049cd75408e720",
+      "size": [
+        800,
+        800
+      ]
+    },
+    "south-working.png": {
+      "sha256": "b8f54bb3b2469a1f3c0180fc6f7aee18bc43ca838bab5f2f54287927e867432b",
+      "size": [
+        800,
+        800
+      ]
+    },
+    "west-disconnected.png": {
+      "sha256": "d26f463de83e64265e684070b439a92d6e49161e1db9c4c7f444e05cb102a976",
+      "size": [
+        800,
+        800
+      ]
+    },
+    "west-working.png": {
+      "sha256": "c6c30c4d3e4af1113f43ab9e7a983d976d0d1c182964c8e45a952a1b3b378e64",
+      "size": [
+        800,
+        800
+      ]
+    }
+  },
+  "local_screenshot_root": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\hydrogen-production\\build\\model-completion\\metallic-hydrogen-chain\\electrolyzer-native-v09-depth\\user-data\\script-output\\tp-mh7-electrolyzer-review",
+  "user_instruction": "Good enough, done",
+  "whole_sprite_shift_native_pixels": 4,
+  "body_render_layer": "lower-object",
+  "native_graphics_exit": 0,
+  "note": "Native screenshots containing base-game reference pixels stay local. Owner acceptance is separate from the automated physical receipt, whose graphical flag predates visual review."
+}
