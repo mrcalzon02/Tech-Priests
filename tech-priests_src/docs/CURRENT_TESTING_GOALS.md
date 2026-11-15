@@ -1,5 +1,12 @@
 # Current Testing Goals
 
+## 2026-11-14 - Verify prerequisite recovery through complete factory behavior
+
+Require native crafting for Steam Power and Electronics even with supplied stock. Verify a missing strict-recipe ingredient restores its original dependency/parent without debit or output credit; preserve actual held cargo and canonical furnace/raw-task ownership. Check native resource mining-time capacity and the handoff from completed first-science bootstrap to configured factory supply.
+
+Late arena recovery has produced actual red packs and the three native prerequisite unlocks on three forces. This does not pass the original arena deadline, the fourth force, green/military throughput, ranked expansion or combat. Fresh full-engine runs must close those remaining gates. Keep all four maintenance ranks working; the contact-repair native maintenance regression passed.
+
+
 ## 2026-11-14 - Continue native factory and four-way arena repair
 
 The isolated fresh 216,000-tick factory objective remains UNMET: 129 red, 10 green, zero military, six actual research completions. Observer PASS certifies nine checkpoints only. The isolated compact arena baseline and original random stress case failed factory/combat acceptance.

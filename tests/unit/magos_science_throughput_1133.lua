@@ -169,6 +169,17 @@ assert(large.target_spm==60 and large.observed_spm==2
   and large.groups.smelters==11
   and large.groups.miners==15,
   "higher SPM request did not expand physical factory demand")
+for _,name in ipairs{"iron-ore","copper-ore"}do
+ entities[name]={type="resource",mineable_properties={mining_time=1,
+  products={{type="item",name=name,amount=1,independent_probability=1}}}}
+end
+local native_mining=tech_priests_0257_build_ratio_plan(pair,op)
+assert(native_mining.groups.miners==3,
+ "native one-second ore still used the five-second estimate and overbuilt miners")
+entities["iron-ore"].mineable_properties.mining_time=2
+assert(tech_priests_0257_build_ratio_plan(pair,op).groups.miners==5,
+ "resource-specific native mining duration was ignored")
+entities["iron-ore"]=nil;entities["copper-ore"]=nil
 pair.science_spm_target_1133=600
 assert(tech_priests_0257_build_ratio_plan(pair,op).target_spm==60,
   "unbounded rate target bypassed factory planning limit")

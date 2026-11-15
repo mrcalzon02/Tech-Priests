@@ -2695,4 +2695,98 @@ scenario("strict station craft approaches a walkable point within original reach
  check(f.source.get_item_count("iron-plate")==2 and not f.pair.emergency_production_custody_0514,
   "craft consumed ingredients before physical arrival")
 end)
+scenario("supplied copper cannot replace the native Electronics craft trigger",function()
+ local f=fixture();prototypes.item["copper-plate"]={};prototypes.item["copper-ore"]={}
+ f.force.technologies={electronics={enabled=true,researched=false}}
+ f.source.insert{name="copper-plate",count=300};f.source.insert{name="iron-plate",count=6}
+ local miner={valid=true,name="burner-mining-drill",type="mining-drill",position={x=5,y=0},force=f.force,surface=f.surface}
+ local old_find=f.surface.find_entities_filtered
+ f.surface.find_entities_filtered=function(args)
+  if args.type=="resource"then return old_find(args)end
+  return{f.furnace,miner}
+ end
+ local acted,why=Infra.service_pair(f.pair,"stock-is-not-crafted")
+ local t=f.pair.emergency_craft
+ check(acted and t and t.output_item=="copper-plate" and t.count==10
+  and t.target_stock_0647==310 and t.facility_only_0647,
+  "300 supplied plates suppressed actual trigger smelting: "..tostring(why))
+ check(f.source.get_item_count("copper-plate")==300 and not f.force.technologies.electronics.researched,
+  "trigger planning fabricated output or research")
+end)
+scenario("supplied power and plates still require actual Steam Power production",function()
+ local f=fixture();prototypes.item["copper-plate"]={};prototypes.item["copper-ore"]={}
+ f.force.technologies={["steam-power"]={enabled=true,researched=false},electronics={enabled=true,researched=false}}
+ f.source.insert{name="iron-plate",count=400};f.source.insert{name="copper-plate",count=300}
+ local miner={valid=true,name="burner-mining-drill",type="mining-drill",position={x=5,y=0},force=f.force,surface=f.surface}
+ local old_find=f.surface.find_entities_filtered
+ f.surface.find_entities_filtered=function(args)
+  if args.type=="resource"then return old_find(args)end
+  return{f.furnace,miner}
+ end
+ local acted,why=Infra.service_pair(f.pair,"stock-is-not-steam-research")
+ local t=f.pair.emergency_craft
+ check(acted and t and t.output_item=="iron-plate"and t.count==50 and t.target_stock_0647==450
+  and t.facility_only_0647 and t.native_plate_trigger_0647,
+  "supplied plates bypassed actual Steam Power production: "..tostring(why))
+ game.tick=game.tick+Infra.tick_interval
+ Infra.service_pair(f.pair,"unresearched-steam-stays-owned")
+ check(f.pair.emergency_craft==t and t.count==50,
+  "one available plate prematurely shortened the native research-trigger batch")
+ f.force.technologies["steam-power"].researched=true
+ game.tick=game.tick+Infra.tick_interval
+ Infra.service_pair(f.pair,"native-steam-completed")
+ check(f.pair.emergency_craft~=t and f.source.get_item_count("iron-plate")==400,
+  "actual force research failed to release the plate batch without consuming existing stock")
+end)
+scenario("unfunded strict craft reopens its missing manufactured dependency",function()
+ local f=fixture();prototypes.item["electronic-circuit"]={};prototypes.item["copper-cable"]={}
+ f.source.insert{name="copper-cable",count=3};f.source.insert{name="iron-plate",count=1}
+ local parent={item="lab",missing="electronic-circuit"}
+ local t={output_item="electronic-circuit",count=1,strict_recipe_0647=true,
+  infrastructure_first_0640=true,target_stock_0647=10,
+  strict_recipe_ingredients_0647={{name="copper-cable",count=3},{name="iron-plate",count=1}},
+  resume_parent_recipe_request_0647=parent}
+ f.pair.emergency_craft=t
+ local old_prefer=Production.root().prefer_emergency_facilities
+ Production.root().prefer_emergency_facilities=false
+ Production.service_pair(f.pair,"funded-start")
+ f.source.remove{name="copper-cable",count=1};game.tick=t.craft_due_tick_0514
+ local _,why=Production.service_pair(f.pair,"ingredient-spent-before-commit")
+ Production.root().prefer_emergency_facilities=old_prefer
+ local request=f.pair.infrastructure_recipe_request_0647
+ check(why=="missing-copper-cable"and not f.pair.emergency_craft and request
+  and request.item=="electronic-circuit"and request.missing=="copper-cable"
+  and request.parent_request_0647==parent and request.target_stock_0647==10,
+  "unfunded recipe kept restarting instead of restoring its exact dependency")
+ check(f.source.get_item_count("copper-cable")==2 and f.source.get_item_count("iron-plate")==1
+  and f.source.get_item_count("electronic-circuit")==0 and not f.pair.emergency_production_custody_0514,
+  "unfunded recipe lost ingredients or invented output")
+end)
+scenario("established science yields bootstrap priority to missing military materials",function()
+ local f=fixture();local p=f.pair
+ prototypes.item["automation-science-pack"]={};prototypes.item["stone-brick"]={}
+ f.source.insert{name="iron-plate",count=20};f.source.insert{name="copper-plate",count=20}
+ f.source.insert{name="electronic-circuit",count=20}
+ f.force.recipes["automation-science-pack"]={enabled=true}
+ f.force.recipes["stone-wall"]={enabled=true,ingredients={{name="stone-brick",type="item",amount=5}}}
+ f.force.get_item_production_statistics=function()return{get_input_count=function()return 100 end}end
+ local assembler={valid=true,name="assembling-machine-1",type="assembling-machine",position={x=2,y=2},force=f.force,surface=f.surface}
+ local lab={valid=true,name="lab",type="lab",position={x=3,y=2},force=f.force,surface=f.surface}
+ local miner={valid=true,name="burner-mining-drill",type="mining-drill",position={x=4,y=2},force=f.force,surface=f.surface}
+ local find=f.surface.find_entities_filtered
+ f.surface.find_entities_filtered=function(args)if args.type=="resource"then return find(args)end;return{f.furnace,assembler,lab,miner}end
+ local jobs={
+  ["automation-science-pack"]={configured=1,researched=true},
+  ["stone-wall"]={configured=1,researched=true,output_deficient=true,required_per_minute=5}}
+ p.independent_emergency_operation_0184={enabled=true,magos_ratio_plan_0257={factory_component_jobs_1150=jobs}}
+ local old_plan=TechPriestsMasterInfrastructurePlan0644.build_plan
+ TechPriestsMasterInfrastructurePlan0644.build_plan=function()return{target={preferred_item="iron-plate"}}end
+ local status=Infra.status_for_pair(p)
+ check(status:find("needed=stone-brick",1,true),
+  "consumed red packs restarted first-science bootstrap ahead of military brick supply: "..status)
+ jobs["automation-science-pack"].configured=0
+ check(Infra.status_for_pair(p):find("needed=automation-science-pack",1,true),
+  "science bootstrap was disabled without a configured physical science producer")
+ TechPriestsMasterInfrastructurePlan0644.build_plan=old_plan
+end)
 print("[bootstrap-production-regression] PASS scenarios="..total)

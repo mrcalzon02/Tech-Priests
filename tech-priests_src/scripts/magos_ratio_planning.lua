@@ -227,6 +227,22 @@ local function tech_priests_0257_is_raw_item(item_name)
   return false
 end
 
+local function tech_priests_native_mining_yield_per_second(item_name)
+  local proto=tech_priests_get_entity_prototype_0440
+    and tech_priests_get_entity_prototype_0440(item_name)
+  local ok,mineable=pcall(function()
+    return proto and proto.type=="resource"and proto.mineable_properties
+  end)
+  if ok and mineable then
+    local duration=tonumber(mineable.mining_time)
+    local yield=tech_priests_0257_product_amount(
+      {products=mineable.products},item_name,"item")
+    if duration and duration>0 and yield>0 then return yield/duration end
+  end
+  -- Preserve the conservative compatibility estimate for unmapped resources.
+  return .20
+end
+
 local function tech_priests_0257_add_need(plan, key, count)
   if not key then return end
   plan[key] = math.max(plan[key] or 0, math.min(TECH_PRIESTS_MAGOS_RATIO_MAX_PER_GROUP_0257, math.ceil(count or 1)))
@@ -353,11 +369,12 @@ local function tech_priests_1191_decompose_product(
 
   if kind=="item" and tech_priests_0257_is_raw_item(name) then
     local speed=tech_priests_0257_machine_speed_for_group("miners")
+    local capacity=math.max(.005,speed*tech_priests_native_mining_yield_per_second(name))
     local old=plan.raw_items[name] or 0
     local total=old+rate
     local prior=old>0
-      and math.ceil(old/math.max(0.005,speed*0.20)) or 0
-    local need=math.ceil(total/math.max(0.005,speed*0.20))
+      and math.ceil(old/capacity) or 0
+    local need=math.ceil(total/capacity)
     tech_priests_1133_add_machine_demand(plan,"miners",need-prior)
     plan.raw_items[name]=total
     seen[key]=nil

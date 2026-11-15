@@ -394,6 +394,20 @@ local function stocked_installable(pair,item)
   return ok and placed~=nil and station_count(pair,item)>=1
 end
 
+local function configured_science_has_produced(pair,item)
+  local op=pair.independent_emergency_operation_0184
+  local plan=op and op.enabled==true and op.magos_ratio_plan_0257
+  local job=plan and plan.factory_component_jobs_1150
+    and plan.factory_component_jobs_1150[item]
+  if not(job and job.researched==true and(tonumber(job.configured)or 0)>0)then return false end
+  local force=pair.station.force
+  if not(force and force.get_item_production_statistics)then return false end
+  local ok,count=pcall(function()
+    return force.get_item_production_statistics(pair.station.surface).get_input_count(item)
+  end)
+  return ok and(tonumber(count)or 0)>0
+end
+
 function M.factory_component_material_need(pair)
   local op=pair and pair.independent_emergency_operation_0184
   local plan=op and op.enabled==true and op.magos_ratio_plan_0257
@@ -432,6 +446,16 @@ local function need_local_step(pair)
   local copper_ore = station_count(pair, "copper-ore")
   local iron_plate = station_count(pair, "iron-plate")
   local copper_plate = station_count(pair, "copper-plate")
+
+  -- A supplied power plant is not fifty force-crafted iron plates. Steam
+  -- Power is a prerequisite of the first science unlock even when every
+  -- physical generator, lab and intermediate was supplied in a crate.
+  local steam=pair.station.force and pair.station.force.technologies
+    and pair.station.force.technologies["steam-power"]
+  if roles.smelter and roles.miner and steam and steam.enabled~=false
+      and steam.researched~=true then
+    return "iron-plate","unlock-steam-power-iron-trigger"
+  end
 
   -- Once the first real workshop exists, smelt a physically mined copper
   -- batch before resuming the more expensive burner-drill gear chain.
@@ -494,13 +518,9 @@ local function need_local_step(pair)
   -- alone decides when the technology is researched.
   local electronics = pair.station.force and pair.station.force.technologies
     and pair.station.force.technologies["electronics"]
-  local copper_in_flight=type(pair.emergency_craft)=="table"
-    and pair.emergency_craft.infrastructure_first_0640==true
-    and (pair.emergency_craft.output_item or pair.emergency_craft.item_name)
-      =="copper-plate"
   if roles.smelter and roles.miner and electronics
       and electronics.enabled~=false and electronics.researched~=true
-      and copper_plate<10 and (copper_ore>0 or copper_in_flight) then
+      then
     -- The ore may already reside in the real furnace input, not in general
     -- storage. An active smelting transaction must keep its stage until the
     -- copper-plate output or actual electronics unlock is observed.
@@ -608,6 +628,7 @@ local function need_local_step(pair)
   if not science_pending and roles.lab and roles.assembler
       and green_recipe and green_recipe.enabled==true
       and item_exists("logistic-science-pack")
+      and not configured_science_has_produced(pair,"logistic-science-pack")
       and station_count(pair,"logistic-science-pack")
         +laboratory_science_count(pair,"logistic-science-pack")<1
       and station_count(pair,"automation-science-pack")
@@ -630,6 +651,7 @@ local function need_local_step(pair)
     if roles.lab and roles.assembler and science_recipe
         and science_recipe.enabled==true
         and item_exists("automation-science-pack")
+        and not configured_science_has_produced(pair,"automation-science-pack")
         and station_count(pair,"automation-science-pack")<1
         and not (type(pair.emergency_craft)=="table"
           and pair.emergency_craft.strict_recipe_0647==true)
@@ -1220,7 +1242,8 @@ local function assign_local_step(pair, item, why, high_item, high_source,stock_t
   if not (valid_pair(pair) and item and item_exists(item)) then return false, "invalid-local-step" end
   if already_working_local(pair, item) then return true, "already-working-local-step" end
   local count = (item == "iron-plate" and
-    ((why == "prerequisite-for-emergency-miner"
+    (why=="unlock-steam-power-iron-trigger" and 50 or
+     (why == "prerequisite-for-emergency-miner"
        or why == "first-electronics-physical-iron-smelting")
        and 1 or M.min_iron_plate))
     or (item == "copper-plate" and
@@ -1406,6 +1429,14 @@ local function assign_local_step(pair, item, why, high_item, high_source,stock_t
     required_count = count,
     infrastructure_first_0640 = true,
     facility_only_0647 = (item == "iron-plate" or item == "copper-plate") or nil,
+    -- Supplied plates do not satisfy Factorio's craft-item research trigger.
+    -- Keep the ordinary ten-recipe batch, but require new native production
+    -- above the genuinely existing stock until the engine unlocks Electronics.
+    target_stock_0647 = (why=="unlock-electronics-copper-trigger"
+      or why=="unlock-steam-power-iron-trigger")
+      and station_count(pair,item)+count or nil,
+    native_plate_trigger_0647 = (why=="unlock-electronics-copper-trigger"
+      or why=="unlock-steam-power-iron-trigger") or nil,
     reason = "infrastructure-first-governor-0647",
     started_tick = now(),
   }
@@ -1436,6 +1467,7 @@ end
 local function complete_first_circuit_plate_reserve(pair)
   local task = pair.emergency_craft
   if not (type(task) == "table" and task.infrastructure_first_0640==true
+      and not task.native_plate_trigger_0647
       and task.facility_only_0647==true
       and (task.output_item or task.item_name)=="iron-plate"
       and (tonumber(task.count) or 0)>1
@@ -1493,17 +1525,20 @@ end
 -- The authoritative production executor retires a task only after verifying
 -- a real copper plate still exists in managed general stock; no item, research
 -- state or active movement/cargo is manufactured or overwritten here.
-local function close_researched_copper_trigger(pair)
+local function close_researched_plate_trigger(pair)
   local task=pair.emergency_craft
   local gate=pair.local_infrastructure_gate_0640
+  local item=type(task)=="table"and(task.output_item or task.item_name)
+  local steam_trigger=item=="iron-plate"and type(gate)=="table"
+    and gate.why=="unlock-steam-power-iron-trigger"
   local electronics=pair.station.force and pair.station.force.technologies
-    and pair.station.force.technologies["electronics"]
+    and pair.station.force.technologies[steam_trigger and"steam-power"or"electronics"]
   if not (type(task)=="table" and task.infrastructure_first_0640==true
       and task.facility_only_0647==true
-      and (task.output_item or task.item_name)=="copper-plate"
+      and (item=="copper-plate"or steam_trigger)
       and (tonumber(task.count) or 0)>1
-      and type(gate)=="table" and gate.item=="copper-plate"
-      and (gate.why=="unlock-electronics-copper-trigger"
+      and type(gate)=="table" and gate.item==item
+      and (steam_trigger or gate.why=="unlock-electronics-copper-trigger"
         or gate.why=="first-electronics-physical-copper-smelting")
       -- Both the force-wide ten-plate trigger and a later copper reserve
       -- must yield once Electronics has genuinely unlocked and one real
@@ -1516,7 +1551,7 @@ local function close_researched_copper_trigger(pair)
       and not pair.construction_custody_0338) then return false end
   local order=pair.order_queue_0469 and pair.order_queue_0469.current
   if order and order.status=="active"
-      and (order.item=="copper-plate"
+      and (order.item==item
         or task.order_key_0514 and order.key==task.order_key_0514) then
     return false
   end
@@ -1524,13 +1559,13 @@ local function close_researched_copper_trigger(pair)
   local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
     or (package.loaded and package.loaded["scripts.core.storage_role_authority_0686"])
   if authority and type(authority.generic_item_count)=="function" then
-    local ok,n=pcall(authority.generic_item_count,pair,"copper-plate")
+    local ok,n=pcall(authority.generic_item_count,pair,item)
     if ok then real_plate=math.max(0,tonumber(n) or 0) end
   else
     local chest=defines and defines.inventory
       and safe_inventory(pair.station,defines.inventory.chest)
     if chest then
-      local ok,n=pcall(function()return chest.get_item_count("copper-plate")end)
+      local ok,n=pcall(function()return chest.get_item_count(item)end)
       if ok then real_plate=math.max(0,tonumber(n) or 0) end
     end
   end
@@ -1546,10 +1581,11 @@ local function close_researched_copper_trigger(pair)
   task.required_count=1
   task.target_stock_0647=1
   local ok,done,detail=pcall(production.service_pair,pair,
-    "research-complete-copper-trigger-handoff")
+    "research-complete-plate-trigger-handoff")
   if ok and done==true and detail=="complete" then
-    record("electronics-trigger-copper-batch-completed-0640",pair,
-      "force researched; physical copper plate held",true)
+    record(steam_trigger and"steam-trigger-iron-batch-completed-0640"
+      or"electronics-trigger-copper-batch-completed-0640",pair,
+      "force researched; physical "..item.." held",true)
     return true
   end
   -- Retain the original batch if the authoritative owner could not complete
@@ -2008,7 +2044,7 @@ function M.service_pair(pair, reason)
   local power_requested,power_reason=M.request_installed_lab_power_pole_1251(pair)
   if power_requested then return false,power_reason end
   complete_first_circuit_plate_reserve(pair)
-  close_researched_copper_trigger(pair)
+  close_researched_plate_trigger(pair)
   local needed, why,stock_target = need_local_step(pair)
   -- Protect an existing vanilla-lab/science dependency ancestry from
   -- opportunistic cooperative assignments. The parent physically requires

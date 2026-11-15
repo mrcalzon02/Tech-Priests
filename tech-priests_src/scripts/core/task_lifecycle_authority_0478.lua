@@ -257,7 +257,8 @@ function M.service_pair(pair)
   local strict=pair.emergency_craft
   local production_owned=production and type(production.service_pair)=="function"
       and not(production_state and production_state.enabled==false)
-      and type(strict)=="table"and strict.strict_recipe_0647==true
+      and type(strict)=="table"and(strict.strict_recipe_0647==true
+        or strict.facility_only_0647==true)
   local direct_owned=direct and type(direct.current_direct_task)=="function"
       and not(state and state.enabled==false)
       and(direct.current_direct_task(pair)or pair.direct_acquisition_custody_0513)

@@ -99,7 +99,7 @@ local function phase(p,k,d)p.dispatcher_action="direct-acquisition";p.dispatcher
 
 local function current_task(p)
  if not p then return nil end
- for _,key in ipairs{"emergency_craft","direct_acquisition_task_0336","active_acquisition_0333"}do local t=p[key];local cur=t and(t.current or t);if cur and not(key=="emergency_craft"and t.strict_recipe_0647==true)and DIRECT_KINDS[tostring(cur.kind or"")]then return t,cur,key end end
+ for _,key in ipairs{"emergency_craft","direct_acquisition_task_0336","active_acquisition_0333"}do local t=p[key];local cur=t and(t.current or t);if cur and not(key=="emergency_craft"and(t.strict_recipe_0647==true or t.facility_only_0647==true))and DIRECT_KINDS[tostring(cur.kind or"")]then return t,cur,key end end
 end
 M.current_direct_task=current_task
 
@@ -460,7 +460,7 @@ function M.report_lines()
  local r=M.root();local active,custody=0,0;for _,p in pairs(pairs_map())do if valid_pair(p)and current_task(p)then active=active+1 end;if p and p.direct_acquisition_custody_0513 then custody=custody+1 end end
  return{"[tp-runtime-report] direct-acquisition-0513 version="..M.version.." enabled="..safe(r.enabled).." active="..active.." custody="..custody.." acquired="..safe(r.stats["physical-custody-acquired-0513"]or 0).." deposited="..safe(r.stats["custody-deposited-0513"]or 0).." failed="..safe(r.stats["unsafe-failure-0513"]or 0).." return_failed="..safe(r.stats["return-movement-failed-0513"]or 0)}
 end
-local function should_block(p)local r=M.root();if r.enabled==false or r.block_legacy_direct_controllers==false or not valid_pair(p)then return false end;return current_task(p)~=nil or p.direct_acquisition_custody_0513~=nil end
+local function should_block(p)local r=M.root();if r.enabled==false or r.block_legacy_direct_controllers==false or not valid_pair(p)then return false end;return current_task(p)~=nil or p.direct_acquisition_custody_0513~=nil or(type(p.emergency_craft)=="table"and(p.emergency_craft.strict_recipe_0647==true or p.emergency_craft.facility_only_0647==true))end
 local function wrap_legacy()
  local ok,E=pcall(require,"scripts.core.acquisition_executor");if ok and E and type(E.service_pair)=="function"and not E.direct_executor_0513_wrapped then E.direct_executor_0513_wrapped=true;E.TECH_PRIESTS_0513_PRE_SERVICE_PAIR=E.service_pair;E.service_pair=function(p,r,...)if M.root().enabled~=false then return M.service_pair(p,r or"acquisition-wrapper-0513")end;return E.TECH_PRIESTS_0513_PRE_SERVICE_PAIR(p,r,...)end end
  for _,name in ipairs{"tech_priests_0273_service_direct_current","tech_priests_0312_service_direct_current","tech_priests_0315_service_direct_current"}do local f=_G[name];local marker="TECH_PRIESTS_0513_PRE_"..string.upper(name);if type(f)=="function"and not rawget(_G,marker)then _G[marker]=f;_G[name]=function(p,t,...)if should_block(p)then record("legacy-direct-blocked-0513",p,name);return true end;return f(p,t,...)end end end

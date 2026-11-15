@@ -1,5 +1,16 @@
 # Tech Priests Development History
 
+## 2026-11-14 - Real technology prerequisites, recipe recovery and mining capacity
+
+The repaired arena exposed a second genuine boundary: supplied copper, iron, labs and generators do not satisfy native craft-item technology triggers. The bootstrap owner now demands real ten-copper and fifty-iron production above existing stock until Factorio completes Electronics and Steam Power. Its existing completion handoff releases only an actually researched plate batch with physical plate stock present. A native diagnostic continuation at tick 163642 measured Steam Power, Electronics and red-science unlocks on three factions, with actual red output 3/2/2; the fourth remained at eight copper plates. This is late recovery evidence, not a passing original deadline or four-way combat gate.
+
+Three factions also retained an impossible circuit craft for tens of thousands of ticks: native inspection measured two usable cable against a three-cable ingredient requirement. A strict transaction refused before any debit now restores that missing dependency and its original parent to infrastructure planning. It does not cancel committed ingredient/output custody or credit completion. Legacy mining callbacks and lifecycle aliases now yield both strict recipes and furnace-only production to their canonical owners; explicit raw-material tasks remain separate.
+
+Native prototype reads measured one-second iron/copper/coal/stone mining, burner speed 0.25 and electric speed 0.5. Ratio planning previously hardcoded a five-second ore estimate, overstating drill demand and consuming construction time. It now uses resource mining time and expected item yield, retaining the compatibility estimate only when no mapped native resource exists. Established, physically configured science with measured prior production also relinquishes FIRST-science bootstrap priority; consuming a red pack must not indefinitely suppress a wall assembler's real brick shortage.
+
+All 46 focused Lua groups and seven Python arena tests pass, including 73 bootstrap cases. The full native maintenance regression passed all four ranks after the physical-contact changes, with real operating machines, natural decay, rites and eight repairs per rank. Fresh science and four-way tests continue. Full sustained science, all-faction research, rank-linked expansion and actual participant combat remain unaccepted.
+
+
 ## 2026-11-14 - Native material waits and inaccessible factory contacts
 
 The isolated aac3fc8 fresh science run reached nine checkpoints and six actual research completions, but its factory objective failed: 129 red packs, 10 green, zero military, and zero final science rates. Fixture-observer PASS is not factory acceptance. The isolated compact four-way baseline also failed factory progress and participant combat.

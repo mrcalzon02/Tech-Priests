@@ -205,13 +205,40 @@ local function move_station(p)
   if not(ok and a==true)then phase(p,"movement-request-failed",a);return false end;p.target=p.station;p.mode="returning-to-station-for-production";return true
 end
 local function fallback_ticks(t) return math.max(M.default_station_craft_ticks,(tonumber(_G.EMERGENCY_CRAFT_WORK_TICKS)or M.default_station_craft_ticks)*math.max(1,tonumber(t and t.required_count)or 1)) end
+local function reopen_missing_ingredient(p,t,s,n,why)
+  local missing=type(why)=="string"and why:match("^missing%-(.+)$")
+  if not(missing and t.infrastructure_first_0640 and t.strict_recipe_0647
+      and s=="emergency_craft"and p.emergency_craft==t
+      and not p.emergency_production_custody_0514)then return false end
+  local prior=p.infrastructure_recipe_request_0647
+  if prior and prior.item~=n then return false end
+  local gate=p.local_infrastructure_gate_0640
+  local reason=gate and gate.item==n and gate.why or("recipe-ingredient-shortfall:"..n)
+  -- No ingredient has been debited: plan_remove refused the transaction.
+  -- Return the unmet dependency to its existing planner rather than retrying
+  -- an impossible timed craft forever. Preserve its original parent recipe.
+  p.infrastructure_recipe_request_0647={tick=now(),item=n,missing=missing,
+    ingredients=ingredients(t),reason=reason,target_stock_0647=t.target_stock_0647,
+    parent_request_0647=t.resume_parent_recipe_request_0647}
+  p.local_infrastructure_gate_0640={tick=now(),item=n,why=reason,
+    state="waiting-recipe-material",missing=missing,next_retry_tick=now()}
+  clear_task(p,s);p.mode="infrastructure-material-acquisition-0647"
+  local movement=p.movement_request_0418
+  local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
+  if movement and movement.owner=="emergency-production-0514"
+      and controller and type(controller.stop)=="function"then
+    pcall(controller.stop,p,"unfunded-strict-recipe-dependency-0514")
+  end
+  record("unfunded-strict-recipe-dependency-0514",p,n..":"..missing)
+  return true
+end
 local function timed_fallback(p,t,s,n)
   local r=M.root();if r.allow_timed_station_fallback==false then return false,"fallback-disabled" end
   if r.require_strict_fallback_recipe and not ingredients(t)then phase(p,"check-scavenge","strict-recipe-required");return false,"strict-recipe-required" end
   if not at_station(p)then phase(p,"return-to-station",n);return move_station(p),"returning" end
   t.station_craft_pending_0514=true;t.craft_started_tick_0514=t.craft_started_tick_0514 or now();t.craft_due_tick_0514=t.craft_due_tick_0514 or(now()+fallback_ticks(t));p.mode="emergency-production-station-craft"
   if now()<t.craft_due_tick_0514 then phase(p,"fallback-station-craft",n);return true,"crafting" end
-  local ok,why=consume_transaction(p,t,n,math.max(1,math.floor(tonumber(t.count or t.required_count)or 1)));if not ok then t.craft_due_tick_0514=nil;t.craft_started_tick_0514=nil;t.station_craft_pending_0514=nil;phase(p,"check-scavenge",why);return false,why end
+  local ok,why=consume_transaction(p,t,n,math.max(1,math.floor(tonumber(t.count or t.required_count)or 1)));if not ok then t.craft_due_tick_0514=nil;t.craft_started_tick_0514=nil;t.station_craft_pending_0514=nil;reopen_missing_ingredient(p,t,s,n,why);phase(p,"check-scavenge",why);return false,why end
   return service_custody(p,t,s)
 end
 

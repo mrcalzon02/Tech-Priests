@@ -197,7 +197,8 @@ local function current_direct_task(pair)
     local task = pair[key]
     local cur = type(task)=="table" and (task.current or task) or nil
     local kind = cur and tostring(cur.kind or "") or ""
-    if kind == "direct-mine-0273" or kind == "direct-dirt-0273" or kind == "dirt" or kind == "direct-mine-0336" then return task, cur, key end
+    if task and not(key=="emergency_craft"and(task.strict_recipe_0647 or task.facility_only_0647))
+        and(kind == "direct-mine-0273" or kind == "direct-dirt-0273" or kind == "dirt" or kind == "direct-mine-0336")then return task, cur, key end
   end
   return nil,nil,nil
 end
