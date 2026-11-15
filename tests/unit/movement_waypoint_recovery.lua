@@ -56,6 +56,12 @@ local function step(pair, tick, x, y)
   Movement.service(nil, 24)
 end
 local starting = teleports
+local craft=pair_at(108,0,0)
+local craft_route=begin(craft,{x=1.4,y=1.4},"emergency-production-0514","emergency-production-0514")
+craft.priest.position={x=1.5,y=1.965}
+check(Movement.request_status(craft).status=="active",
+ "generic loiter padding declared arrival outside the station crafting reach")
+storage.tech_priests.pairs_by_station[108]=nil
 local drift=pair_at(109,0,0)
 local drift_route=begin(drift,{x=12,y=0})
 local issued=#drift.priest.commandable.issued

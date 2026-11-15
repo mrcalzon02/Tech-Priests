@@ -42,6 +42,15 @@ local function task(phase)
     entity_name="tech-priests-emergency-miner",position={x=6,y=0}}
 end
 
+pair.priest.name="test-priest";pair.priest.position={x=10,y=0}
+surface.can_place_entity=function(args)return args.position.x< -1.25 and args.position.y==0 end
+pair.construction_task_0338=task("move-source")
+local blocked_side=Construction.service_pair(pair,"blocked-source-side")
+check(blocked_side.detail=="moving-source" and moves[#moves].pos.x< -1.25,
+ "construction approached the obstructed nearest side instead of a clear source contact")
+check(stock==1 and not pair.construction_custody_0338,
+ "source approach removed the item before physical arrival")
+pair.priest.position={x=1.8,y=0};surface.can_place_entity=function()return true end;moves={}
 pair.construction_task_0338=task("move-source")
 local pickup=Construction.service_pair(pair,"station-footprint-pickup")
 check(pickup.waiting==1 and pickup.detail=="moving-site",

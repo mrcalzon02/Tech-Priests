@@ -1,5 +1,16 @@
 # Tech Priests Development History
 
+## 2026-11-14 - Native material waits and inaccessible factory contacts
+
+The isolated aac3fc8 fresh science run reached nine checkpoints and six actual research completions, but its factory objective failed: 129 red packs, 10 green, zero military, and zero final science rates. Fixture-observer PASS is not factory acceptance. The isolated compact four-way baseline also failed factory progress and participant combat.
+
+Native inspection proved each arena faction had 40 usable wood in a canonical supply crate. Raw-material readiness nevertheless counted only station buffers. Readiness now includes genuine general-container inventories, retains legacy bootstrap buffer accounting, and deduplicates native inventory wrappers by equality. The new regression fails on the preceding source. The native rerun passed the former three-build stall, exposing further access failures.
+
+Passive native path observation exposed failed station returns and boiler approaches. Station crafting now chooses a collision-clear point inside its original reach. Energy logistics selects and retains a clear external service contact, avoiding plumbing-blocked corners. Construction verifies source contact clearance. Production and construction arrival no longer add loiter padding outside physical work reach. Actual cargo, ingredients, fuel and build-item debits remain with their original owners. Native fuel delivery and construction have resumed; throughput, ranked expansion and combat gates remain open.
+
+Validation: 46 focused Lua groups and seven Python arena tests passed. New tests cover crate wood, walkable station crafting, a blocked boiler corner, blocked construction-source access, and arrival/reach agreement. Exact source manifests, observations and CRC-checked saves remain in workspace arena-evidence. Work is isolated on behavior/arena-capacity-20261114 from concurrent enemy-planet changes in the older checkout.
+
+
 **Status:** Canonical narrative development history  
 **Authoritative branch:** `main`  
 **Packaged baseline:** `0.1.672`  

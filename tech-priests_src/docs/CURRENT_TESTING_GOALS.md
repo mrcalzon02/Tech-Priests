@@ -1,5 +1,12 @@
 # Current Testing Goals
 
+## 2026-11-14 - Continue native factory and four-way arena repair
+
+The isolated fresh 216,000-tick factory objective remains UNMET: 129 red, 10 green, zero military, six actual research completions. Observer PASS certifies nine checkpoints only. The isolated compact arena baseline and original random stress case failed factory/combat acceptance.
+
+Revalidate raw-material wait readiness and collision-clear production, energy and construction contacts. Preserve exact stock debits, original priests, real travel, enabled recipes, physical outputs and ordinary research completion. Require a fresh full run after diagnostic save continuations; late recovery cannot pass an earlier deadline. Continue to force-wide productive supply chains, research, ranked expansion and participant combat. Preserve the separate default-player maintenance regression gate.
+
+
 ## 2026-11-02 — Goal #6 functional closure, measurable efficiency, and new-method execution plan
 
 **Authority:** [Issue #6](https://github.com/mrcalzon02/Tech-Priests/issues/6) remains the live goal/acceptance ledger. This section is a work plan, not a claim of release readiness. No new workflow, controller, or independent narrative ledger is authorized. Preserve the recovery authority, physical custody and original 123,000-tick science/combat gates. Keep existing checks; run focused tests before expensive full-engine repeats. Only objective functional failures may block builds; visual/style/balance and performance measurements are diagnostic.

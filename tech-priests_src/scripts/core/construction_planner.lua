@@ -89,6 +89,8 @@ local function source_approach_position(pair,entity,margin,avoid_station)
   {x=x1+gap,y=clamp(p.y,y0,y1)},
   {x=clamp(p.x,x0,x1),y=y0-gap},
   {x=clamp(p.x,x0,x1),y=y1+gap},
+  {x=x0-gap,y=y0-gap},{x=x0-gap,y=y1+gap},
+  {x=x1+gap,y=y0-gap},{x=x1+gap,y=y1+gap},
  }
  local best,score=nil,math.huge
  for _,point in ipairs(points)do
@@ -97,14 +99,22 @@ local function source_approach_position(pair,entity,margin,avoid_station)
   -- priest can lead straight into the station's impassable collision box.
   local d=avoid_station and -dist_sq(pair.station.position,point)
     or dist_sq(p,point)
-  if d<score then best=point;score=d end
+  local clear=true
+  local surface=pair.station.surface
+  if surface and surface.can_place_entity then
+   local checked,allowed=pcall(function()return surface.can_place_entity{
+    name=pair.priest.name,position=point,force=pair.station.force}end)
+   clear=checked and allowed==true
+  end
+  if clear and d<score then best=point;score=d end
  end
  return best
 end
 local function request_move(pair,target,reason)
  if not valid(target)then return false end
  local dest=source_approach_position(pair,target)
- return request_move_position(pair,dest or target.position,reason,dest and 0.5 or 1.5)
+ if not dest then return false end
+ return request_move_position(pair,dest,reason,0.5)
 end
 local function item_count(inv,item)if not(inv and inv.valid and item)then return 0 end;local ok,n=pcall(function()return inv.get_item_count(item)end);return ok and(tonumber(n)or 0)or 0 end
 local function remove_item(inv,item,count)if not(inv and inv.valid and item and(tonumber(count)or 0)>0)then return 0 end;local ok,n=pcall(function()return inv.remove({name=item,count=count})end);return ok and(tonumber(n)or 0)or 0 end

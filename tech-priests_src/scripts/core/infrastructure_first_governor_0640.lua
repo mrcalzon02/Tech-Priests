@@ -173,10 +173,23 @@ local function station_inventories(pair)
   local ids = { defines.inventory.chest, defines.inventory.assembling_machine_input,
     defines.inventory.assembling_machine_output, defines.inventory.furnace_result,
     defines.inventory.furnace_source }
-  local seen = {}
+  local function add(inv)
+    if not (inv and inv.valid) then return end
+    -- Native LuaInventory wrappers compare equal even when their Lua table
+    -- identities differ. Count each physical inventory exactly once.
+    for _, existing in ipairs(out) do if existing == inv then return end end
+    out[#out + 1] = inv
+  end
   for _, id in ipairs(ids) do
-    local inv = safe_inventory(pair.station, id)
-    if inv and not seen[tostring(inv)] then out[#out + 1] = inv; seen[tostring(inv)] = true end
+    add(safe_inventory(pair.station, id))
+  end
+  -- Raw recipe ingredients in nearby general containers are just as usable
+  -- as staged station stock. Omitting them leaves a material wait permanent
+  -- when the station's small inventory is occupied by expansion kits.
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  if authority and type(authority.generic_storage_sources)=="function" then
+    local ok,sources=pcall(authority.generic_storage_sources,pair)
+    if ok then for _,source in ipairs(sources or {}) do add(source.inv) end end
   end
   return out
 end

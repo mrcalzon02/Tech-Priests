@@ -59,3 +59,19 @@ assert(Fetch.pickup_position(pair,backing).x==.7,"hidden station inventory still
 backing.force={index=2}
 assert(Fetch.pickup_position(pair,backing).x==0,"foreign backing inventory inherited station access geometry")
 print("PASS same-force co-located backing inventory uses actual host footprint")
+-- The closest boiler corner can be enclosed by real plumbing. Navigation
+-- must choose a clear exterior side while delivery still measures the real box.
+pair.priest.name="test-priest";pair.priest.position={x=5,y=0}
+surface.can_place_entity=function(spec)
+ return spec.position.x>11.5 and spec.position.y==0
+end
+local contact=Fetch.approach_position(pair,boiler)
+assert(contact and contact.x==12.05 and contact.y==0,
+ "blocked boiler corner did not select the clear opposite service point")
+local reach=Fetch.pickup_position({station=station,priest={position=contact}},boiler)
+assert((contact.x-reach.x)^2+(contact.y-reach.y)^2<2.56,
+ "walkable boiler contact enlarged physical delivery reach")
+surface.can_place_entity=function()return false end
+assert(Fetch.approach_position(pair,boiler)==nil,
+ "completely blocked boiler fabricated a walkable destination")
+print("PASS blocked boiler corner chooses a real clear side within original transfer reach")

@@ -150,9 +150,21 @@ local function candidate_from_reports(pair)
     if report.state=="fuel-service-eligible"and report.fuel_inventory and report.fuel_inventory.valid then local source,item=select_fuel(pair,report);if item then local score=dist_sq(pair.priest.position,report.entity.position);if not fuel or score<fuel.score then fuel={family="energy-fuel",target=report.entity,target_name=report.entity_name,target_unit=report.entity_unit,item=item,count=math.min(math.max(1,((report.entity.type=="boiler"and item=="coal")and M.boiler_coal_batch or M.target_fuel_count)-(tonumber(report.fuel_count)or 0)),M.max_fuel_transfer),source=source,report=report,score=score}end end end
   end end;return burnt or fuel
 end
+local release_owned_movement
 local function request_move(pair,target,reason)
   if not(valid_pair(pair)and valid(target))then return false end;local request=rawget(_G,"tech_priests_request_movement_0418");if type(request)~="function"then return false end
-  local ok,accepted=pcall(request,pair,FetchGeometry.pickup_position(pair,target),reason or"energy-family-logistics-0707",{owner="energy-family-logistics-0707",priority=M.move_priority,ttl=M.move_ttl,radius=1.2,distraction=defines and defines.distraction and defines.distraction.none or nil});return ok and accepted==true
+  local task=pair.energy_family_logistics_0707
+  local contact=task and task.move_contact_0707
+  local position=contact and contact.target==target and contact.reason==reason and contact.position
+  if not position then
+    position=FetchGeometry.approach_position(pair,target)
+    if not position then return false end
+    -- A restored pre-contact route may end inside the boiler or its pipes.
+    -- Retire only this executor's old lease before submitting the new point.
+    release_owned_movement(pair)
+    if task then task.move_contact_0707={target=target,reason=reason,position=position}end
+  end
+  local ok,accepted=pcall(request,pair,position,reason or"energy-family-logistics-0707",{owner="energy-family-logistics-0707",priority=M.move_priority,ttl=M.move_ttl,radius=.25,distraction=defines and defines.distraction and defines.distraction.none or nil});return ok and accepted==true
 end
 local function matching_request(request,task)return type(request)=="table"and request.source=="energy-family-logistics-0707"and request.item==task.item and(not request.target_unit or tostring(request.target_unit)==tostring(task.target_unit))end
 local function clear_requests(pair,task)for _,field in ipairs({"active_supply_request","logistic_requested_item"})do if matching_request(pair[field],task)then pair[field]=nil end end end
@@ -164,7 +176,7 @@ end
 local function sync_custody(pair,task,reason)
   local carried=task and task.carried;if carried and carried.item and(tonumber(carried.count)or 0)>0 then pair.energy_family_custody_0707={version=M.version,tick=now(),family=task.family,item=carried.item,count=carried.count,target=task.target,target_unit=task.target_unit,target_name=task.target_name,source_entity=task.source_entity,source_inv=task.source_inv,source_label=task.source_label,reason=reason or task.phase};return true end;pair.energy_family_custody_0707=nil;return false
 end
-local function release_owned_movement(pair)
+release_owned_movement=function(pair)
   local controller=rawget(_G,"TECH_PRIESTS_MOVEMENT_CONTROLLER_0418")
   if not(controller and type(controller.request_status)=="function"
       and type(controller.stop)=="function")then return false end

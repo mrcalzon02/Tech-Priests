@@ -2646,4 +2646,53 @@ scenario("equal native inventory wrappers cannot triple physical production stoc
  check(f.pair.emergency_craft==task and f.source.get_item_count("stone-brick")==17,
   "17 real bricks were counted as 51 and falsely completed a 50-brick task")
 end)
+scenario("nearby raw wood releases the infrastructure recipe wait",function()
+ local f=fixture();prototypes.item.wood={};prototypes.item["wooden-chest"]={place_result={}}
+ f.source.insert{name="iron-plate",count=6}
+ local cache=inventory({wood=40})
+ local old_auth=TechPriestsStorageRoleAuthority0686
+ local old_plan=TechPriestsMasterInfrastructurePlan0644.build_plan
+ local old_recipe=tech_priests_get_recipe_ingredients_for_item_0185
+ TechPriestsStorageRoleAuthority0686={generic_storage_sources=function()
+  return{{entity=f.pair.station,inv=f.source},{entity={valid=true},inv=cache}}
+ end,generic_item_count=function(_,name)return f.source.get_item_count(name)+cache.get_item_count(name)end}
+ TechPriestsMasterInfrastructurePlan0644.build_plan=function()
+  return{target={preferred_item="wooden-chest",stage="mining-output-buffer"}}
+ end
+ tech_priests_get_recipe_ingredients_for_item_0185=function(name)
+  if name=="wooden-chest"then return{{name="wood",count=2}}end
+  return old_recipe(name)
+ end
+ f.force.recipes["wooden-chest"]={enabled=true,products={{name="wooden-chest",type="item"}}}
+ f.pair.infrastructure_recipe_request_0647={item="wooden-chest",missing="wood",reason="central-plan:mining-output-buffer",ingredients={{name="wood",count=2}}}
+ f.pair.local_infrastructure_gate_0640={item="wooden-chest",why="central-plan:mining-output-buffer",state="waiting-recipe-material",tick=game.tick}
+ local acted,why=Infra.service_pair(f.pair,"nearby-wood")
+ local gate=f.pair.local_infrastructure_gate_0640
+ TechPriestsStorageRoleAuthority0686=old_auth
+ TechPriestsMasterInfrastructurePlan0644.build_plan=old_plan
+ tech_priests_get_recipe_ingredients_for_item_0185=old_recipe
+ check(not gate or gate.state~="waiting-recipe-material",
+  "40 physical wood in a usable crate did not release the recipe wait: "..tostring(why))
+ check(cache.get_item_count("wood")==40,"read-only readiness check removed wood")
+end)
+scenario("strict station craft approaches a walkable point within original reach",function()
+ local f=fixture();f.pair.priest.position={x=10,y=0}
+ defines.distraction=defines.distraction or{none=0}
+ f.source.insert{name="iron-plate",count=2}
+ f.surface.can_place_entity=function(args)return args.position.x==1.75 and args.position.y==0 end
+ local previous_move=tech_priests_request_movement_0418
+ local goal,options
+ tech_priests_request_movement_0418=function(_,position,_,opts)goal=position;options=opts;return true end
+ local old_prefer=Production.root().prefer_emergency_facilities
+ Production.root().prefer_emergency_facilities=false
+ f.pair.emergency_craft={output_item="iron-gear-wheel",count=1,strict_recipe_0647=true,
+  strict_recipe_ingredients_0647={{name="iron-plate",count=2}}}
+ Production.service_pair(f.pair,"walkable-station-contact")
+ Production.root().prefer_emergency_facilities=old_prefer
+ tech_priests_request_movement_0418=previous_move
+ check(goal and goal.x==1.75 and goal.y==0 and options.radius==0.25,
+  "station craft requested the occupied station center instead of the clear service point")
+ check(f.source.get_item_count("iron-plate")==2 and not f.pair.emergency_production_custody_0514,
+  "craft consumed ingredients before physical arrival")
+end)
 print("[bootstrap-production-regression] PASS scenarios="..total)

@@ -183,7 +183,25 @@ end
 local function move_station(p)
   if at_station(p)then return true end
   if type(_G.tech_priests_request_movement_0418)~="function"then phase(p,"movement-request-failed","movement authority unavailable");return false end
-  local ok,a=pcall(_G.tech_priests_request_movement_0418,p,p.station.position,"emergency-production-0514",{radius=1.15,owner="emergency-production-0514",priority=620,ttl=600,distraction=defines.distraction.none})
+  -- A container's occupied center is not a walkable crafting destination.
+  -- Choose a real collision-clear service point inside the existing 2.4-tile
+  -- crafting reach; a path failure must not send the priest circling forever.
+  local surface=p.station.surface;local home=p.station.position
+  local destination,best=nil,math.huge
+  for _,offset in ipairs{{1.75,0},{-1.75,0},{0,1.75},{0,-1.75},
+      {1.4,1.4},{-1.4,1.4},{1.4,-1.4},{-1.4,-1.4}}do
+    local point={x=home.x+offset[1],y=home.y+offset[2]}
+    local clear=true
+    if surface and surface.can_place_entity then
+      local ok,result=pcall(function()return surface.can_place_entity{
+        name=p.priest.name,position=point,force=p.station.force}end)
+      clear=ok and result==true
+    end
+    local distance=dist2(p.priest.position,point)
+    if clear and distance<best then destination,best=point,distance end
+  end
+  if not destination then phase(p,"movement-request-failed","station-service-points-blocked");return false end
+  local ok,a=pcall(_G.tech_priests_request_movement_0418,p,destination,"emergency-production-0514",{radius=0.25,owner="emergency-production-0514",priority=620,ttl=600,distraction=defines.distraction.none})
   if not(ok and a==true)then phase(p,"movement-request-failed",a);return false end;p.target=p.station;p.mode="returning-to-station-for-production";return true
 end
 local function fallback_ticks(t) return math.max(M.default_station_craft_ticks,(tonumber(_G.EMERGENCY_CRAFT_WORK_TICKS)or M.default_station_craft_ticks)*math.max(1,tonumber(t and t.required_count)or 1)) end

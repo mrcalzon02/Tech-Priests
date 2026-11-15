@@ -391,7 +391,7 @@ end
 -- Inventory entities can be larger than the pickup radius. Approach their
 -- actual world-space footprint, then measure reach to that same point; a
 -- center goal can otherwise remain permanently inside solid cargo storage.
-function M.pickup_position(pair,source)
+local function physical_source(pair,source)
   local pos=source.position
   local physical=source
   -- Cogitator backing inventories are hidden zero-size entities at the
@@ -402,13 +402,39 @@ function M.pickup_position(pair,source)
       and valid(pair.station)and source.force==pair.station.force
       and source.surface==pair.station.surface
       and dist_sq(pos,pair.station.position)<0.01 then physical=pair.station end
+  return physical
+end
+function M.pickup_position(pair,source)
+  local physical=physical_source(pair,source)
   local ok,box=pcall(function() return physical.bounding_box end)
   if ok and box and box.left_top and box.right_bottom then
     local p=pair.priest.position
     return {x=math.max(box.left_top.x,math.min(box.right_bottom.x,p.x)),
       y=math.max(box.left_top.y,math.min(box.right_bottom.y,p.y))}
   end
-  return pos
+  return source.position
+end
+-- Keep transfer reach tied to pickup_position. Navigation instead needs a
+-- walkable point beside the footprint, including when pipes block one side.
+function M.approach_position(pair,source)
+  local physical=physical_source(pair,source)
+  local surface=physical.surface
+  if not(surface and surface.can_place_entity)then return M.pickup_position(pair,source)end
+  local ok,box=pcall(function()return physical.bounding_box end)
+  if not(ok and box and box.left_top and box.right_bottom)then return nil end
+  local a,b=box.left_top,box.right_bottom;local p=pair.priest.position
+  local x=math.max(a.x,math.min(b.x,p.x));local y=math.max(a.y,math.min(b.y,p.y))
+  local gap=.55;local best,score
+  for _,point in ipairs{{x=a.x-gap,y=y},{x=b.x+gap,y=y},
+      {x=x,y=a.y-gap},{x=x,y=b.y+gap},
+      {x=a.x-gap,y=a.y-gap},{x=a.x-gap,y=b.y+gap},
+      {x=b.x+gap,y=a.y-gap},{x=b.x+gap,y=b.y+gap}}do
+    local checked,clear=pcall(function()return surface.can_place_entity{
+      name=pair.priest.name,position=point,force=physical.force}end)
+    local distance=dist_sq(p,point)
+    if checked and clear and(not score or distance<score)then best,score=point,distance end
+  end
+  return best
 end
 local function request_move(pair,src,item)
   if not (valid_pair(pair) and src and valid(src.source)) then return false end

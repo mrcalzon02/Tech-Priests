@@ -918,7 +918,9 @@ function M.request(pair, destination, reason, opts)
 end
 
 local function arrival_padding(pair, req)
-  if (pair.direct_acquisition_custody_0513
+  if req.owner == "emergency-production-0514"
+    or req.owner == "construction-planner-0338"
+    or (pair.direct_acquisition_custody_0513
       and req.owner == "direct-acquisition-0513"
       and return_or_recovery_reason(req.reason, { owner = req.owner }))
     or (req.owner == "logistics_machine_fulfillment_0528"
