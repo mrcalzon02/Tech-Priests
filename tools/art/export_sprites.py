@@ -208,7 +208,7 @@ def main():
         if type(workers) is not int or not 1 <= workers <= 8:
             raise ValueError('workers must be an integer from 1 to 8')
         def render_partition(partition):
-            command = [args.blender, '-b', '-t', str(max(1,cfg.get('threads',4)//workers)), str(source), '--python-exit-code', '1',
+            command = [args.blender, '-b', '--factory-startup', '-t', str(max(1,cfg.get('threads',4)//workers)), str(source), '--python-exit-code', '1',
                        '--python', str(worker), '--', '--config', str(config), '--out', str(out),
                        '--partition', str(partition), '--partition-count', str(workers)]
             name = 'blender.log' if workers == 1 else f'blender-{partition}.log'
@@ -229,7 +229,7 @@ def main():
             (out/'capture.json').write_text(json.dumps(primary,indent=2)+'\n')
         verifier = Path(__file__).with_name('verify_sprite_master.py').resolve()
         with (out / 'reopen.log').open('w') as log:
-            subprocess.run([args.blender, '-b', '-t', str(cfg.get('threads', 4)), str(out / 'master.blend'),
+            subprocess.run([args.blender, '-b', '--factory-startup', '-t', str(cfg.get('threads', 4)), str(out / 'master.blend'),
                             '--python-exit-code', '1', '--python', str(verifier), '--', str(out)],
                            stdout=log, stderr=subprocess.STDOUT, check=True)
     report = pack(out)

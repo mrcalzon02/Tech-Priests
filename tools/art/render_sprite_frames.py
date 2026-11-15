@@ -93,7 +93,7 @@ def main():
     changes = []
     if cfg.get('adapter') == 'campfire-matte-stones':
         changes = matte_stones(model)
-    elif cfg.get('adapter') and cfg.get('adapter') not in ('mh7-electrolyzer-native-fittings-v1','mh7-compressor-native-fittings-v1','mh7-crucible-native-fittings-v1','mh7-fabricator-native-fittings-v1'):
+    elif cfg.get('adapter') and cfg.get('adapter') not in ('mh7-purifier-native-fittings-v1','mh7-electrolyzer-native-fittings-v1','mh7-compressor-native-fittings-v1','mh7-crucible-native-fittings-v1','mh7-fabricator-native-fittings-v1'):
         raise ValueError('Unknown adapter')
     model.name = 'MODEL'
     model.use_fake_user = True
@@ -134,7 +134,11 @@ def main():
         root.parent = pivot
         root.matrix_parent_inverse = Matrix.Translation(cfg['pivot']).inverted()
     native_fittings=None
-    if cfg.get('adapter')=='mh7-electrolyzer-native-fittings-v1':
+    if cfg.get('adapter')=='mh7-purifier-native-fittings-v1':
+        from production_smoke.purifier_native_fittings import PurifierNativeFittings
+        bpy.context.view_layer.update()
+        native_fittings=PurifierNativeFittings(scene)
+    elif cfg.get('adapter')=='mh7-electrolyzer-native-fittings-v1':
         from production_smoke.electrolyzer_native_fittings import NativeFittings
         bpy.context.view_layer.update()
         native_fittings=NativeFittings(scene)
