@@ -1445,10 +1445,28 @@ def run_rail_blocked_reload_0836(
         result.update(verify_rail_blocked_reload_0836_log(first, second))
     except (OSError, RuntimeError, ValueError) as error:
         result["blocker"] = str(error)
+        # The native saveable server may fail before the first-process
+        # success assignment. Preserve its genuine failure/partial charting
+        # receipts in the job log even when Actions artifact quota is full.
+        if not first and first_log.is_file():
+            first = first_log.read_text(encoding="utf-8", errors="replace")
+        client_log = output / "rail-stranded-real-client.log"
+        if client_log.is_file():
+            client_lines = client_log.read_text(
+                encoding="utf-8", errors="replace").splitlines()
+            result["real_client_log_tail"] = [line[-350:] for line in client_lines[-8:]]
     finally:
         result["native_factorio_process_wall_minutes"] = round(
             create_minutes + (result["first_minutes"] or 0) +
             (result["reload_minutes"] or 0), 6)
+        first_diags = [line for line in first.splitlines() if
+                       any(key in line for key in (
+                           "[TP-REMOTE-RAIL-TEST] FAIL ",
+                           "CHART_NATIVE_DIAG", "CHART_LIVE_REQUEST",
+                           "CHART_RADAR_NATIVE_DIAG", "Error while",
+                           "Hosting game at IP ADDR:"))]
+        for line in first_diags[-18:]:
+            print("NATIVE_RAIL_SERVER_DIAG "+line[-1200:], flush=True)
         for label, log in (("FIRST", first), ("RELOAD", second)):
             lines = [line for line in log.splitlines()
                      if "[TP-REMOTE-RAIL-TEST]" in line and
