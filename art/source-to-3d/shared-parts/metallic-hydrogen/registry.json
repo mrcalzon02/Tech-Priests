@@ -524,6 +524,40 @@
           "model_source_sha256": "5813b40a94cea798408382393058dfa97d4ecf3cf4a093a30bcd832a1ec6080c",
           "runtime_export_sha256": "51aeb589afde90d958e3bc49e3a73dfe7cb1c5969c2a007a32b73573b92c11dc",
           "status": "Actual unchanged appended assembly retained in source and independently imported GLB; full motion, finish and native pending"
+        },
+        {
+          "machine": "canister-assembler",
+          "machine_revision": "V02 measured clearances and sixteen-second cadence",
+          "instance": "front right cogitator",
+          "transform": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              1.2899999618530273
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -1.2899999618530273
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.800000011920929
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "model_source_sha256": "61b39408ebabf4061834a5ce68b213beb1a52348765fe8bb9899f036a3761545",
+          "runtime_export_sha256": "606916a9e15173269ada45d940afe1a451ec1c7ce634a7e98853e53ab121b13a",
+          "status": "Unchanged appended console; source/export sampled mechanics pass. Dedicated finish and native remain open."
         }
       ],
       "validation": "fresh append and actual thumbnail passed; fluid mouth inner-core rays clear where applicable",
@@ -1999,7 +2033,7 @@
         "part_id": "tp.mh7.cogitator-console",
         "revision": "v1",
         "machine": "canister-assembler",
-        "machine_revision": "V01 three-indexed-nest construction pilot",
+        "machine_revision": "V02 measured clearances and sixteen-second cadence",
         "instance": "front right cogitator",
         "transform": [
           [
@@ -2027,14 +2061,14 @@
             1.0
           ]
         ],
-        "model_source_sha256": "5813b40a94cea798408382393058dfa97d4ecf3cf4a093a30bcd832a1ec6080c",
-        "runtime_export_sha256": "51aeb589afde90d958e3bc49e3a73dfe7cb1c5969c2a007a32b73573b92c11dc",
-        "status": "Actual unchanged appended assembly retained in source and independently imported GLB; full motion, finish and native pending"
+        "model_source_sha256": "61b39408ebabf4061834a5ce68b213beb1a52348765fe8bb9899f036a3761545",
+        "runtime_export_sha256": "606916a9e15173269ada45d940afe1a451ec1c7ce634a7e98853e53ab121b13a",
+        "status": "Unchanged appended console; source/export sampled mechanics pass. Dedicated finish and native remain open."
       }
     ]
   },
   "last_checkpoint_sha256": null,
   "inventory_source": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
   "material_index": "art/source-to-3d/shared-parts/industrial-asset-library/catalog.json",
-  "previous_registry_sha256": "5fc1245f9876b2590c8b09b5bfcfe7b1215f2797c177afe67dbc893b43a30245"
+  "previous_registry_sha256": "120c0dd1d51d657a623ff3844c42487c13244f450d0b95081a7e965fc95ed4f9"
 }

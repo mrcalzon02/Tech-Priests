@@ -132,6 +132,12 @@ This is explicitly a **new reconstruction from the approved style/process packet
 
 The original V01 pilot passed 111 rays through its three mouths in both native source and actual GLB reimport, with 59,300 triangles, no nonfinite vertices, no degenerate triangles and no missing UV layers. It remains immutable for comparison. Its later-discovered internal tee, nozzle and support defects are repaired in V05, with independent evidence above.
 
+## Assembler V02 measured mechanics and cadence
+
+The [V02 checkpoint](../../../art/source-to-3d/metallic-hydrogen-chain/canister-assembler/v02-clearance-and-cadence/README.md) retains the three fixed hollow vessels and indexed head. Its sixteen-second cycle allows a full second between stations; maximum sampled head speed is 1.499 tiles/second versus 6.078 in V01. Real channels clear lid carriers, lift jaws and the pellet gate. Separate linkage planes, outboard bearing supports, a raised true-radius feed and an actual slotted bored valve body repair the demonstrated clashes and throat gap. The sealing punch lands on the closed cap.
+
+Source and actual GLB each pass 1,538 quarter-frame motion samples with no undeclared intersection pairs. All 201 recorded static attachments, the closed object-matrix loop, 1,512 combined complete-path rays, closed gate/lids/bottoms and landed-punch checks pass. Three actual exported phase renders were viewed. These are sampled geometry checks, not continuous collision proof, granular simulation or pressure certification. Dedicated finish, sound, full four-direction captures and state-preserving native assembly remain required. V01 and rejected private studies are preserved.
+
 ## Resume here
 
 Use `PRODUCTION_CONTINUATION.json`, not the superseded V14 continuation. Authoring now lives in the dedicated `hydrogen-production` checkout, keeping the concurrent bunker work in `model-production` untouched. The accepted purifier captures, registered component sources and electrolyzer pilot are self-contained tracked artifacts. Model generators, independent verifiers and isolated native fixtures are under `tools/fmpl/production_smoke/`.

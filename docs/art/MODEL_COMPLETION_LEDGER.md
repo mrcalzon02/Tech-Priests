@@ -339,6 +339,12 @@ Latest upstream reconciliation: condenser V23 adds eight actual inlet recesses i
 This is a construction checkpoint. Dedicated surfaces, relevant audio, final four-direction capture, closeup/rear/clay review and native fluid/item/pipe integration remain open. Sampled intersections are not continuous collision proof; bore geometry is not hydraulic simulation. Accepted prior machines are preserved; ordinary Factorio pickup needs no precision hand-to-socket work.
 
 
+## Hydrogen assembler V02 mechanics and cadence — 2026-11-15
+
+[V02 source and export](../../art/source-to-3d/metallic-hydrogen-chain/canister-assembler/v02-clearance-and-cadence/README.md) pass 1,538 quarter-frame motion samples each, all 201 recorded attachments, the closed matrix loop and 1,512 combined core-path rays over all three filling stations. Actual channels, separate linkage planes, outboard bearings, raised feed and slotted bored valve repair the demonstrated defects. The punch lands on the cap; lids, gate and vessel bottoms close. The sixteen-second cycle gives each inter-station move one second and reduces maximum sampled speed from 6.078 to 1.499 tiles/second.
+
+Three actual GLB phases were inspected. Dedicated surfaces, sound, four-direction states and live pellet/shell sealing remain open. Bounded samples do not certify continuous motion or granular dynamics; no owner approval or full-goal completion is inferred.
+
 ## Hydrogen fabricator V03 finish, states and original sound — 2026-11-15
 
 [Current candidate](../../art/source-to-3d/metallic-hydrogen-chain/pressure-vessel-fabricator/v03-finish-and-states/README.md) adds 24 model-specific PBR maps and 34 supported hardware details while preserving the V02 moving geometry/morph. Source and actual GLB pass 170 recorded contacts, 1,154 quarter-frame motion samples each, 1,710 combined core rays and twelve exact deformed-vertex comparisons. Exported front/rear/clay and joint/surface closeups were inspected against the surfaced forge family. The first fastener-clearance failure remains private; current placement passes.
