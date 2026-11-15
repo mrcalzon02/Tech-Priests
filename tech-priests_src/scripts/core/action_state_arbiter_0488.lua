@@ -637,6 +637,9 @@ function M.action(p)
     kind,reason="energy-family-logistics","strict-engine-energy-prerequisite"
     target=energy_rec.target;position=valid(target)and target.position or energy_rec.position
     selected=energy_rec
+  elseif construction_rec and construction_rec.steam_reorientation_1288 then
+    kind,reason="construction","native-steam-outlet-reorientation-prerequisite"
+    target=construction_rec.target;position=construction_rec.position;selected=construction_rec
   elseif native_recipe_infrastructure_prerequisite(p,construction_rec,o)then
     kind,reason="construction","funded-native-recipe-infrastructure-prerequisite"
     target=construction_rec.target;position=construction_rec.position;selected=construction_rec

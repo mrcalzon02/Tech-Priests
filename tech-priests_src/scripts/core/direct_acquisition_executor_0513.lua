@@ -43,8 +43,20 @@ local function expedition(p)
  return task
 end
 function M.direct_radius(p)if expedition(p) then return math.huge end;if PumpClearance.authorized_task(p)then return math.max(8,math.min(96,runtime_radius(p)or 28))end;local cap=M.direct_radius_by_tier[tier_key(p)]or M.default_direct_radius;return math.max(8,math.min(runtime_radius(p)or cap,cap))end
-function M.hard_leash(p)if expedition(p) then return math.huge end;local cap=M.hard_leash_by_tier[tier_key(p)]or M.default_hard_leash;local direct=M.direct_radius(p);local runtime=runtime_radius(p)or cap;return math.max(direct+6,math.min(math.max(runtime,direct+6),cap))end
+function M.hard_leash(p)
+ if expedition(p)then return math.huge end
+ local cap=M.hard_leash_by_tier[tier_key(p)]or M.default_hard_leash
+ local direct=M.direct_radius(p);local runtime=runtime_radius(p)or cap
+ local limit=math.max(direct+6,math.min(math.max(runtime,direct+6),cap))
+ local builder=rawget(_G,"TechPriestsConstructionPlanner0338")or package.loaded["scripts.core.construction_planner"]
+ local radius=builder and builder.steam_clearance_radius_1288 and builder.steam_clearance_radius_1288(p)
+ return radius and math.max(limit,radius)or limit
+end
 function M.target_within_bounds(p,pos)
+ local builder=rawget(_G,"TechPriestsConstructionPlanner0338")or package.loaded["scripts.core.construction_planner"]
+ if builder and builder.steam_clearance_target_1288 and builder.steam_clearance_target_1288(p,pos)then
+  return true,math.sqrt(dist2(p.station.position,pos)),builder.steam_clearance_radius_1288(p)
+ end
  if not(valid(p and p.station)and pos)then return true,nil,nil end
  local corridor=rawget(_G,"tech_priests_0574_position_allowed");if type(corridor)=="function"then local ok,allowed=pcall(corridor,p,pos,"direct-acquisition-bounds-0513",{owner="direct-acquisition-0513"});if ok and allowed then return true,nil,nil end end
  local distance=math.sqrt(dist2(p.station.position,pos));local maximum=M.direct_radius(p);return distance<=maximum,distance,maximum

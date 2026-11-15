@@ -7,6 +7,7 @@
 -- leaf may not receive a NEW 0338 construction duty during evacuation.
 -- Already-active physical cargo/tasks continue under their original owner.
 local Recycling0822=require("scripts.core.station_recycling_0822")
+local SteamReorientation=require("scripts.core.steam_outlet_reorientation_1288")
 local M={version="0.1.674-dev",storage_key="construction_planner",discovery_interval=233,max_pairs_per_discovery=6,move_priority=968,move_ttl=60*12,reservation_ttl=60*20,request_timeout=60*20,travel_ticks_per_tile=20,max_travel_extra_ticks=60*120,max_ground_detour_extra_ticks=60*60,pickup_reach_sq=2.56,build_reach_sq=4,return_reach_sq=2.56,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true}
 -- Original 0836 rail requests must not hold 0338 indefinitely without
 -- a real source item. The 0338 physical builder, not the observer, owns
@@ -1325,6 +1326,12 @@ function M.recommend_action(pair)
   local ok,reserved=pcall(Recycling0822.reservation_for,pair)
   if not ok or reserved then return nil end
  end
+ if SteamReorientation.valid_request(pair,pair.steam_outlet_reorientation_1288)then
+  local r=pair.steam_outlet_reorientation_1288
+  return{kind="construction",family="construction",target=r.boiler,position=r.boiler.position,
+   active=false,steam_reorientation_1288=true,source="construction-planner-0338",
+   reason="native-cold-steam-outlet-reorientation"}
+ end
  if not pair.construction_task_0338 and not pair.construction_custody_0338
    and (pair.robot_network_task_0338 or pair.robot_network_request_0338) then
   if now()<(tonumber(pair.robot_network_retry_tick_0338)or 0) then return nil end
@@ -1363,6 +1370,68 @@ local function release_terminal_movement(pair)
  end
  stat("terminal_movement_release_failed")
  return false
+end
+local function service_steam_reorientation_1288(pair)
+ local r=pair.steam_outlet_reorientation_1288
+ if not SteamReorientation.valid_request(pair,r)then return nil end
+ if valid(r.clear_tree)then
+  local queue=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+  if not(queue and queue.submit)or(order and order.status=="active"and(tonumber(order.priority)or 0)>=570)then
+   return{processed=1,blocked=1,detail="steam-clearance-order-owned"}
+  end
+  local child={kind="direct-mine-0336",output_item="wood",item_name="wood",count=1,
+   required_count=1,gathered_units=0,construction_source_clearance_1285=true,
+   current={kind="direct-mine-0336",entity=r.clear_tree,output_item="wood"}}
+  local accepted=queue.submit(pair,{kind="acquisition",item="wood",task=child,priority=570,
+   source="construction-source-clearance-0338",purpose="physical-steam-outlet-access"})
+  local active=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+  if accepted and active and active.task==child then
+   release_terminal_movement(pair)
+   pair.direct_acquisition_task_0336=child
+   pair.construction_source_clearance_1285={kind="steam-outlet-reorientation-1288",
+    parent=r,child=child,tree=r.clear_tree,source=r.boiler}
+   return{processed=1,waiting=1,detail="native-steam-outlet-tree-clearance-requested"}
+  end
+  return{processed=1,blocked=1,detail="steam-clearance-not-admitted"}
+ end
+ r.contact=r.contact or source_approach_position(pair,r.boiler,1.1)
+ if not r.contact then return{processed=1,blocked=1,detail="boiler-rotation-no-clear-contact"}end
+ if dist_sq(pair.priest.position,r.contact)>.25 then
+  if not request_move_position(pair,r.contact,"native-boiler-rotation-contact-1288",.1)then
+   return{processed=1,blocked=1,detail="boiler-rotation-contact-blocked"}
+  end
+  return{processed=1,waiting=1,detail="approaching-native-boiler-rotation"}
+ end
+ local planner=rawget(_G,"TechPriestsFluidConnectionPlanner0691")
+   or package.loaded["scripts.core.fluid_connection_planner_0691"]
+ if not(planner and planner.reorientation_request_valid
+   and planner.reorientation_request_valid(pair,r,true))then
+  pair.steam_outlet_reorientation_1288=nil
+  return{processed=1,blocked=1,detail="boiler-rotation-route-proof-changed"}
+ end
+ release_terminal_movement(pair)
+ local steps=0
+ for _=1,2 do
+  local ok,rotated=pcall(function()return r.boiler.rotate()end)
+  if not(ok and rotated==true)then break end
+  steps=steps+1
+  if r.boiler.direction==r.direction then break end
+ end
+ local success=r.boiler.direction==r.direction and dist_sq(r.boiler.position,r.position)<.01
+ if not success then
+  for _=1,steps do
+   if r.boiler.direction==r.from_direction then break end
+   pcall(function()return r.boiler.rotate{reverse=true}end)
+  end
+ end
+ r.completed_tick=now();r.success=success;r.native_rotations=steps;r.retry_tick=now()+3600
+ pair.steam_outlet_reorientation_last_1288=r;pair.steam_outlet_reorientation_1288=nil
+ pair.fluid_network_scan_due_0689=nil;pair.standard_fluid_route_reject_until_0691=nil
+ record(pair,success and"native-boiler-reoriented-1288"or"native-boiler-rotation-refused-1288",
+  safe(r.from_direction).."->"..safe(r.boiler.direction))
+ return{processed=1,acted=success and 1 or 0,blocked=success and 0 or 1,
+  detail=success and"native-boiler-reoriented"or"native-boiler-rotation-refused"}
 end
 -- 1150: Only the 0338 executor may configure a recipe on the brand-new
 -- physical assembler it has just placed with an actually debited item.
@@ -2498,6 +2567,15 @@ function M.source_clearance_active_1285(pair,child)
  local context=pair and pair.construction_source_clearance_1285
  local parent=pair and pair.construction_task_0338
  child=child or(pair and pair.direct_acquisition_task_0336)
+ if context and context.kind=="steam-outlet-reorientation-1288"then
+  local r=context.parent;local tree=context.tree
+  local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+  return type(child)=="table"and child==context.child and child==pair.direct_acquisition_task_0336
+   and child.construction_source_clearance_1285==true and SteamReorientation.valid_request(pair,r,child)
+   and valid(tree)and tree==r.clear_tree and tree.force.name=="neutral"and tree.surface==pair.station.surface
+   and child.current and child.current.entity==tree and order and order.status=="active"
+   and order.task==child and order.source=="construction-source-clearance-0338"or false
+ end
  local op=pair and pair.independent_emergency_operation_0184
  if not(valid_pair(pair)and op and op.enabled==true and type(context)=="table"
    and pair.priest.force==pair.station.force and pair.priest.surface==pair.station.surface
@@ -2520,6 +2598,18 @@ function M.source_clearance_active_1285(pair,child)
  local cargo=pair.direct_acquisition_custody_0513
  return cargo and cargo.item=="wood"and cargo.native_inventory and cargo.native_inventory.valid
    and(tonumber(cargo.count)or 0)>0 or false
+end
+function M.steam_clearance_radius_1288(pair)
+ local c=pair and pair.construction_source_clearance_1285
+ if c and c.kind=="steam-outlet-reorientation-1288"and M.source_clearance_active_1285(pair)then
+  return math.max(8,(tonumber(pair.radius)or 28)-2.5)
+ end
+end
+function M.steam_clearance_target_1288(pair,pos)
+ local radius=M.steam_clearance_radius_1288(pair)
+ local c=pair and pair.construction_source_clearance_1285
+ return radius and pos and dist_sq(pos,c.tree.position)<.01
+  and dist_sq(pair.station.position,pos)<=radius*radius or false
 end
 local function request_source_tree_clearance(pair,task)
  local op=pair.independent_emergency_operation_0184
@@ -2651,6 +2741,8 @@ function M.service_pair(pair,reason)
  if stalled_construction_tree_clearance_1285(pair,task)then
   return{processed=1,waiting=1,detail="source-access-clearance-requested"}
  end
+ local reoriented=service_steam_reorientation_1288(pair)
+ if reoriented then return reoriented end
  if not task then
   local priority=pair.remote_drill_request_1011
   refresh_unfunded_frontier_candidate(pair)

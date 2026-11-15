@@ -144,6 +144,7 @@ local function plant_ports(item,position,direction)
      or(#inputs>0 and(item~="boiler"or #outputs>0))))then return nil end
  return center,inputs,outputs
 end
+M.native_port_geometry_1288=plant_ports
 local function source_output_ports(entity)
  local box=NativeFluidbox.observe(entity);local out={}
  if box then
@@ -157,8 +158,8 @@ local function source_output_ports(entity)
  end
  return out
 end
-local function clear_plant_port(pair,p,r)
- if d2(p,pair.station.position)>(r-.5)^2 then return false end
+local function clear_plant_port(pair,p,r,margin)
+ if d2(p,pair.station.position)>(r-(margin or .5))^2 then return false end
  local ok,clear=pcall(function()return pair.station.surface.can_place_entity{
   name="pipe",position=p,force=pair.station.force,
   build_check_type=defines and defines.build_check_type and defines.build_check_type.manual}end)
@@ -208,8 +209,10 @@ local function near(pair,entity,item,r)
    if item=="boiler"then
     local clear=false
     for _,output in ipairs(outputs)do
-     if clear_plant_port(pair,output,r)and clear_plant_port(pair,
-       {x=output.x+output.dx,y=output.y+output.dy},r)then clear=true end
+     -- Boiler steam needs an escape inside the pipe planner's same interior;
+     -- a valid footprint beside shore is not a usable steam connection.
+     if clear_plant_port(pair,output,r,2.5)and clear_plant_port(pair,
+       {x=output.x+output.dx,y=output.y+output.dy},r,2.5)then clear=true end
     end
     if not clear then return end
    end

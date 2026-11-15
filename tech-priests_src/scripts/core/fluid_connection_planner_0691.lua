@@ -28,6 +28,7 @@ local function ensure_reservation_category()
  local r=reservations_module();if not r then return nil end;local category="standard-fluid-pipe-route";local found=false;for _,v in ipairs(r.categories or{})do if v==category then found=true break end end;if not found then r.categories=r.categories or{};r.categories[#r.categories+1]=category end;local state=type(r.root)=="function"and r.root()or nil;if state then state.reservations=state.reservations or{};state.reservations[category]=state.reservations[category]or{}end;return r
 end
 local NATIVE_FLUIDBOX_1279=require("scripts.core.native_fluidbox_1279")
+local SteamReorientation=require("scripts.core.steam_outlet_reorientation_1288")
 local function fluidbox(e)return NATIVE_FLUIDBOX_1279.observe(e)end
 local function segment_contents(box,index)local out={};if box and box.valid then pcall(function()out=box.get_fluid_segment_contents(index)or{}end)end;return type(out)=="table"and out or{}end
 local function segment_id(box,index)
@@ -88,6 +89,11 @@ local function existing_compatible_pipe(pair,p,plan)
  for _,e in pairs(entities_at(pair.station.surface,p,.35,{"pipe","pipe-to-ground"}))do if valid(e)and e.force==pair.station.force then local box=fluidbox(e);if box then for index=1,#box do local state=segment_state(e,index,plan.fluid);if state and not state.wrong then local known=state.same>.001 or state.filter==plan.fluid or(state.segment_id and(state.segment_id==plan.remote_segment_id or state.segment_id==plan.machine_segment_id));if known then return e end end end end end end;return nil
 end
 local function preserves_native_boiler_ports(p,plan)
+ if plan.boiler_geometry_1288 then
+  for _,port in ipairs(plan.boiler_geometry_1288.inputs)do
+   if dist_sq(port,p)<=1.0225 then return false end
+  end
+ end
  for _,e in pairs({plan.machine,plan.remote and plan.remote.entity})do
   if valid(e)and e.name=="boiler"and e.type=="boiler"then
    local box=fluidbox(e)
@@ -138,15 +144,61 @@ local function adjacent_safe(pair,p,plan)
  return true,"safe"
 end
 local function tile_available(pair,p,plan)
- if not inside_territory(pair,p,plan)then return false,"outside-station-interior"end;if existing_compatible_pipe(pair,p,plan)then return true,"existing"end;local ok_adj,why=adjacent_safe(pair,p,plan);if not ok_adj then return false,why end;local ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force,build_check_type=defines and defines.build_check_type and defines.build_check_type.manual or nil})end);if not ok then ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force})end)end;return ok and allowed==true,ok and(allowed and"placeable"or"blocked")or"can-place-error"
+ if not inside_territory(pair,p,plan)then return false,"outside-station-interior"end;if existing_compatible_pipe(pair,p,plan)then return true,"existing"end;local ok_adj,why=adjacent_safe(pair,p,plan);if not ok_adj then return false,why end;local ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force,build_check_type=defines and defines.build_check_type and defines.build_check_type.manual or nil})end);if not ok then ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force})end)end;if ok and not allowed and plan.boiler_geometry_1288 and SteamReorientation.ignorable_tree_tile(pair,p,plan.boiler_geometry_1288.ignore_tree_1288)then return true,"conditional-native-tree-clearance"end;return ok and allowed==true,ok and(allowed and"placeable"or"blocked")or"can-place-error"
 end
 local function reconstruct(came,current,positions)local reverse={};while current do reverse[#reverse+1]=positions[current];current=came[current]end;local route={};for i=#reverse,1,-1 do route[#route+1]=reverse[i]end;return route end
 local function route_between(pair,start_position,goal_position,plan)
- local start=normalized_position(start_position);local goal=normalized_position(goal_position);if not(start and goal)then return nil,"invalid-endpoint"end;local queue={start};local head=1;local sk,gk=position_key(start),position_key(goal);local visited={[sk]=true};local came,positions={}, {[sk]=start};local nodes=0;local dirs={{1,0},{-1,0},{0,1},{0,-1}}
- while head<=#queue and nodes<M.max_search_nodes do local current=queue[head];head=head+1;nodes=nodes+1;local ck=position_key(current);if ck==gk then local route=reconstruct(came,ck,positions);if#route>M.max_route_tiles then return nil,"route-too-long"end;return route,"found"end;for _,d in ipairs(dirs)do local np={x=current.x+d[1],y=current.y+d[2]};local key=position_key(np);if not visited[key]then local allowed=tile_available(pair,np,plan);if allowed then visited[key]=true;came[key]=ck;positions[key]=np;queue[#queue+1]=np end end end end;return nil,nodes>=M.max_search_nodes and"search-budget-exhausted"or"no-route"
+ local start=normalized_position(start_position);local goal=normalized_position(goal_position)
+ if not(start and goal)then return nil,"invalid-endpoint"end
+ local dirs={{1,0},{-1,0},{0,1},{0,-1}};local reversed=false
+ local function degree(point)
+  local n=0;for _,d in ipairs(dirs)do
+   if tile_available(pair,{x=point.x+d[1],y=point.y+d[2]},plan)then n=n+1 end
+  end;return n
+ end
+ -- Start at the more constrained real endpoint. A two-tile shoreline pocket
+ -- should exhaust two nodes, not scan the whole factory from its generator.
+ -- Only swap placeable endpoints; never bypass a native collision refusal.
+ if tile_available(pair,goal,plan)and tile_available(pair,start,plan)
+   and degree(goal)<degree(start)then start,goal=goal,start;reversed=true end
+ local queue={start};local head=1;local sk,gk=position_key(start),position_key(goal)
+ local visited={[sk]=true};local came,positions={}, {[sk]=start};local nodes=0
+ while head<=#queue and nodes<M.max_search_nodes do
+  local current=queue[head];head=head+1;nodes=nodes+1;local ck=position_key(current)
+  if ck==gk then
+   local route=reconstruct(came,ck,positions)
+   if#route>M.max_route_tiles then return nil,"route-too-long"end
+   if reversed then local ordered={};for i=#route,1,-1 do ordered[#ordered+1]=route[i]end;route=ordered end
+   return route,"found"
+  end
+  for _,d in ipairs(dirs)do
+   local np={x=current.x+d[1],y=current.y+d[2]};local key=position_key(np)
+   if not visited[key]then
+    local allowed=tile_available(pair,np,plan)
+    if allowed then visited[key]=true;came[key]=ck;positions[key]=np;queue[#queue+1]=np end
+   end
+  end
+ end
+ return nil,nodes>=M.max_search_nodes and"search-budget-exhausted"or"no-route"
 end
 local function shortest_route(pair,p,plan)
  local best;local remote=p.direction=="input"and p.source or p.sink;for _,machine_target in ipairs(p.connection_targets or{})do for _,remote_target in ipairs(remote.interfaces or{})do local route=route_between(pair,machine_target,remote_target,plan);if route and(not best or#route<#best)then best=route end end end;return best,best and"found"or"no-route"
+end
+local function preview_reorientation(pair,proposal,geometry)
+ local source={};for k,v in pairs(proposal.source)do source[k]=v end
+ source.interfaces=geometry.outputs
+ local p={};for k,v in pairs(proposal)do p[k]=v end;p.source=source
+ local plan={direction="input",fluid="steam",machine=p.machine,machine_fluidbox_index=p.fluidbox_index,
+  machine_segment_id=segment_id(fluidbox(p.machine),p.fluidbox_index),remote=source,
+  remote_segment_id=source.segment_id,boiler_geometry_1288=geometry}
+ return shortest_route(pair,p,plan)
+end
+function M.reorientation_request_valid(pair,request,full)
+ if not SteamReorientation.valid_request(pair,request)then return false end
+ if not full then return true end
+ if valid(request.clear_tree)then return false end
+ local route=preview_reorientation(pair,request.proposal,request.geometry)
+ return route~=nil
 end
 local function new_tiles(pair,route,plan)local tiles={};for _,p in ipairs(route or{})do if not existing_compatible_pipe(pair,p,plan)then tiles[#tiles+1]={x=p.x,y=p.y}end end;local remote_first={};for i=#tiles,1,-1 do remote_first[#remote_first+1]=tiles[i]end;return remote_first end
 local function claim_route(pair,plan)
@@ -161,7 +213,11 @@ local function abort_plan(pair,plan,reason)clear_owned_request(pair,plan);releas
 local function proposal_lists(pair)local all={};for _,p in ipairs(pair.fluid_connection_proposals_0689 or{})do all[#all+1]=p end;for _,p in ipairs(pair.fluid_output_sink_proposals_0694 or{})do all[#all+1]=p end;table.sort(all,function(a,b)if a.direction~=b.direction then return a.direction=="input"end;return dist_sq(a.machine.position,(a.direction=="input"and a.source or a.sink).entity.position)<dist_sq(b.machine.position,(b.direction=="input"and b.source or b.sink).entity.position)end);return all end
 local function create_plan(pair,p)
  if pair.fluid_turret_pipe_plan_0719 then return nil,"fluid-turret-route-busy"end;local d=doctrine();if not(d and type(d.validate_proposal)=="function")then return nil,"doctrine-unavailable"end;local ok,why,report=d.validate_proposal(pair,p);if not ok then return nil,why end;local remote=p.direction=="input"and p.source or p.sink;local plan={version=M.version,id=safe(station_unit(pair))..":"..p.direction..":"..safe(p.machine_unit)..":"..now(),state="planning",direction=p.direction,fluid=p.fluid,machine=p.machine,machine_name=p.machine_name,machine_unit=p.machine_unit,machine_fluidbox_index=p.fluidbox_index,machine_segment_id=segment_id(fluidbox(p.machine),p.fluidbox_index),remote=remote,remote_segment_id=remote.segment_id,proposal=p,proposal_tick=p.tick,report_tick=report and report.tick,current_index=1,retries={},last_task_tick=-1}
- local route,rwhy=shortest_route(pair,p,plan);if not route then return nil,rwhy end;plan.route=route;plan.tiles=new_tiles(pair,route,plan);if#plan.tiles==0 then return nil,"already-connected"end;plan.state="planned";local claimed,cwhy=claim_route(pair,plan);if not claimed then return nil,cwhy end;M.root().plans[plan.id]=plan;set_plan_fields(pair,plan);record(pair,"plan-created",plan.direction..":"..plan.fluid.." tiles="..#plan.tiles);return plan,"created"
+ local route,rwhy=shortest_route(pair,p,plan);if not route then
+  if rwhy=="no-route"then SteamReorientation.propose(pair,p,function(proposal,geometry)
+   return preview_reorientation(pair,proposal,geometry)end)end
+  return nil,rwhy
+ end;plan.route=route;plan.tiles=new_tiles(pair,route,plan);if#plan.tiles==0 then return nil,"already-connected"end;plan.state="planned";local claimed,cwhy=claim_route(pair,plan);if not claimed then return nil,cwhy end;M.root().plans[plan.id]=plan;set_plan_fields(pair,plan);record(pair,"plan-created",plan.direction..":"..plan.fluid.." tiles="..#plan.tiles);return plan,"created"
 end
 local function current_tile(plan)return plan and plan.tiles and plan.tiles[tonumber(plan.current_index)or 1]or nil end
 local function connection_complete(pair,plan)
