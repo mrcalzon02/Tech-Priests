@@ -256,3 +256,32 @@ check(replacement and pair.structure_construction_requested_item.item_name=="off
  and pump.valid and stock["offshore-pump"]==2,
  "blocked installed intake could not request a separately paid usable pump")
 print("PASS only engine-observed blocked pump outlets permit a new funded native intake")
+pair.structure_construction_requested_item=nil;pair.power_engine_site_probe_1282=nil
+station.position={x=0,y=0};lab.position={x=8,y=0}
+pump.position={x=-5,y=-5}
+local boiler={valid=true,name="boiler",type="boiler",unit_number=91,
+ position={x=0,y=0},force=force,surface=surface,
+ fluidbox={valid=true,true,true,get_pipe_connections=function(index)
+  assert(index==2);return{{target_position={x=0,y=1}}}end}}
+pump.fluidbox={valid=true,true,get_pipe_connections=function()return{{target=boiler}}end}
+made={lab,pump,boiler}
+placeable=function(spec)
+ if spec.name=="steam-engine"then return spec.position.x==2.5 and spec.position.y==-13.5 end
+ return true
+end
+local recovered=Planner.service_pair(pair)
+local engine=pair.structure_construction_requested_item
+check(recovered and engine and engine.item_name=="steam-engine"
+ and engine.position.x==2.5 and engine.position.y==-13.5 and stock["steam-engine"]==2,
+ "sparse steam-engine axes concealed a real funded native grid site")
+pair.structure_construction_requested_item=nil;pair.power_engine_site_probe_1282=nil
+local checks=0
+placeable=function(spec)
+ if spec.name=="steam-engine"then checks=checks+1;return false end
+ return true
+end
+Planner.service_pair(pair);local first_checks=checks
+Planner.service_pair(pair)
+check(first_checks>64 and checks-first_checks<=64,
+ "failed local engine grid was repeated every power-planning pulse")
+print("PASS engine-verified generator grid fallback and bounded failed-site retry without spending kits")

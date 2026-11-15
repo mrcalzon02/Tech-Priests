@@ -430,6 +430,11 @@ local function machine_contact(pair, state)
   end
   local remembered = same_machine and state.machine_contact_0528 or nil
   if remembered and is_clear(remembered) then
+    local previous=state.machine_contact_motion_position_1282
+    if previous and dist_sq(previous,priest.position)>=.04 then
+      state.machine_contact_motion_tick_1282=now()
+      state.machine_contact_motion_position_1282={x=priest.position.x,y=priest.position.y}
+    end
     local remaining = math.sqrt(dist_sq(priest.position, remembered))
     local best = tonumber(state.machine_contact_best_remaining_0528)
     if not best or best - remaining >= 0.2 then
@@ -438,6 +443,16 @@ local function machine_contact(pair, state)
     end
     if now() - (tonumber(state.machine_contact_last_progress_tick_0528)
         or now()) < 120 then
+      return remembered
+    end
+    -- A real path around trees may initially move away from its destination.
+    -- Keep a moving incumbent's contact for a bounded travel allowance;
+    -- stationary contacts still replan after 120 ticks, and circular motion
+    -- cannot extend this fixed deadline indefinitely.
+    local route=pair.movement_request_0418
+    if route and route.owner=="logistics_machine_fulfillment_0528"
+      and now()<(tonumber(state.machine_contact_detour_until_1282)or 0)
+      and now()-(tonumber(state.machine_contact_motion_tick_1282)or 0)<120 then
       return remembered
     end
     state.machine_contact_attempt_0528 =
@@ -487,6 +502,12 @@ local function machine_contact(pair, state)
   state.machine_contact_best_remaining_0528 =
     math.sqrt(dist_sq(priest.position, selected))
   state.machine_contact_last_progress_tick_0528 = now()
+  state.machine_contact_motion_position_1282={x=priest.position.x,y=priest.position.y}
+  state.machine_contact_motion_tick_1282=now()
+  local speed=.016
+  pcall(function()speed=math.max(.001,tonumber(priest.prototype.running_speed)or speed)end)
+  state.machine_contact_detour_until_1282=now()+math.min(3600,
+    math.max(240,math.ceil(state.machine_contact_best_remaining_0528/speed)*3+120))
   return selected
 end
 local function reservations()

@@ -64,3 +64,21 @@ assert(pair.factory_recipe_service_ticks_0528[recipe.name]==2010
  and amounts["iron-plate"]==5 and amounts.coal==2,
  "funded native ingredient set failed to complete service without changing paid stock")
 print("PASS multi-input recipe retains waiting credit until its real ingredients permit crafting")
+game.tick=3000;pair.priest.position={x=0,y=0}
+local held={item="iron-plate",count=5,kind="supply"}
+pair.machine_logistics_0528={phase="move-to-machine",action="supply-ingredient",
+ machine=machine,item="iron-plate",custody=held}
+pair.machine_logistics_custody_0528=held
+M.service_pair(pair,"native-tree-detour-start")
+local first={x=goal.x,y=goal.y}
+game.tick=3125;pair.priest.position={x=-1,y=1}
+M.service_pair(pair,"moving-away-around-obstacle")
+assert(goal.x==first.x and goal.y==first.y and held.count==5,
+ "moving native detour was cancelled after only 120 ticks of increasing straight-line distance")
+local state=pair.machine_logistics_0528
+game.tick=state.machine_contact_detour_until_1282+1
+pair.priest.position={x=-2,y=1}
+M.service_pair(pair,"bounded-detour-expired")
+assert(state.machine_contact_attempt_0528==1 and held.count==5,
+ "circling motion extended the native contact forever or consumed cargo")
+print("PASS moving obstacle detours keep a bounded contact; expired paths replan without spending cargo")

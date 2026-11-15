@@ -257,6 +257,23 @@ local function near(pair,entity,item,r)
             y=math.floor(entity.position.y+v[2])+.5}
    for _,direction in ipairs(dirs())do consider(p,direction)end
   end
+  -- Sparse axes are not proof that a large native generator has no site.
+  -- A real shoreline/forest case missed every one of those sixteen points.
+  -- Search the bounded local grid only after sparse failure; cache refusal
+  -- for ten seconds so a blocked plant cannot become an every-pulse UPS scan.
+  if not best and item=="steam-engine"then
+   local tick=game and game.tick or 0
+   local probe=pair.power_engine_site_probe_1282
+   if not(probe and probe.source==entity.unit_number and probe.radius==r
+      and tick<(tonumber(probe.retry_tick)or 0))then
+    pair.power_engine_site_probe_1282={source=entity.unit_number,radius=r,retry_tick=tick+600}
+    for x=-16,16 do for y=-16,16 do
+     local p={x=math.floor(entity.position.x)+x+.5,
+       y=math.floor(entity.position.y)+y+.5}
+     for _,direction in ipairs(dirs())do consider(p,direction)end
+    end end
+   end
+  end
  end
  return best
 end

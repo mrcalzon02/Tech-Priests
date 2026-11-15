@@ -59,6 +59,24 @@ kits=0
 local issued,why=Expansion.request_factory_workforce(pair)
 assert(not issued and why=="workforce-no-counted-kit"and ghosts==0 and kits==0)
 kits=2
+load=8
+local total,rate,power=0,1,100
+defines={flow_precision_index={ten_minutes=2}}
+tech_priests_1133_observe_science_spm=function(p,item)
+ assert(p==pair and item=="automation-science-pack");return 8 end -- short production burst
+force.get_item_production_statistics=function(s)
+ assert(s==surface);return{get_input_count=function(item)
+ assert(item=="automation-science-pack");return total end,get_flow_count=function(spec)
+ assert(spec.precision_index==2 and spec.category=="input");return rate end}end
+surface.find_entities_filtered=function(args)
+ if args.type=="lab"then return{{valid=true,energy=power}}end
+ return{}end
+denied("workforce-current-coverage-sufficient") -- stored packs cannot substitute for native output
+total=10;power=0;denied("workforce-current-coverage-sufficient")
+power=100;rate=5;denied("workforce-current-coverage-sufficient")
+rate=1;denied("workforce-current-coverage-sufficient")
+game.tick=3699;denied("workforce-current-coverage-sufficient")
+game.tick=3700
 assert(Expansion.request_factory_workforce(pair))
 local rec=pair.station_expansion_0256
 assert(rec and rec.workforce_bootstrap_1172 and rec.commander_bootstrap
@@ -67,6 +85,8 @@ assert(rec and rec.workforce_bootstrap_1172 and rec.commander_bootstrap
 assert(rec.ghost_position.x^2+rec.ghost_position.y^2<=400,
  "support station must share its parent's physical supply area")
 assert(kits==2 and ghosts==1,"planning must not debit or fabricate station kits")
+assert(pair.factory_workforce_plan_1172.desired==1,
+ "measured commissioned factory shortfall did not request its first paid assistant")
 assert(not Expansion.request_factory_workforce(pair)and ghosts==1 and kits==2,
  "repeated planning duplicated a reserved workforce writ")
 print("[factory-workforce-ranked-bootstrap] PASS mode, custody, hierarchy, counted kits and one physical writ")

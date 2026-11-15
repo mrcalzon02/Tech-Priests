@@ -891,6 +891,8 @@ function M.service_pair(pair,reason)
      and now()>=(pair.next_factory_workforce_plan_1172 or 0)then
   pair.next_factory_workforce_plan_1172=now()+600
   local ok,issued,why=pcall(expansion.request_factory_workforce,pair)
+  pair.factory_workforce_admission_1282={tick=now(),issued=ok and issued==true,
+    reason=ok and tostring(why)or tostring(issued)}
   if not ok then
    record("factory-workforce-admission-error",pair,safe(issued))
    stat("failures")

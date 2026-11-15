@@ -130,6 +130,10 @@ function M.service(p,plan)
    return false,"foreign-construction-request"
   end
   if not(scope(p,link.chest)and request(p,link,"inserter",link.inserter_position,link.direction,"inserter"))then
+   if scope(p,link.chest)and now()-(tonumber(link.site_blocked_since)or now())<3600 then
+    link.site_blocked_since=link.site_blocked_since or now()
+    return false,"paid-chest-awaiting-clear-funded-inserter-site"
+   end
    return fail(p,link,"funded-inserter-site-unavailable")
   end
   return true,"paid-output-inserter-requested"

@@ -300,7 +300,15 @@ local function deposit_to_station(pair,item,count)
   return 0
 end
 
-local function catalog_storage_source(pair,item)
+local function source_already_counted(counted,entity,inv)
+  if not counted then return false end
+  if entity and entity.unit_number and counted.units[entity.unit_number]then return true end
+  -- Native LuaInventory wrappers compare equal but have different raw table
+  -- keys. Use actual equality for the fallback, never userdata hash identity.
+  for _,owned in ipairs(counted.inventories)do if owned==inv then return true end end
+  return false
+end
+local function catalog_storage_source(pair,item,counted)
   if not (valid_pair(pair) and item) then return nil end
   local okCat,Catalog=pcall(require,"scripts.core.station_catalog")
   if okCat and Catalog and type(Catalog.find_known_source)=="function" then
@@ -308,7 +316,7 @@ local function catalog_storage_source(pair,item)
     if ok and src and src.kind=="known-storage-0327" and eligible_source(pair,src.source) then
       local inv=source_inventory(src.source,src.inventory_id)
       local n=inventory_count(inv,item)
-      if n>0 then src.count=n; return src end
+      if n>0 and not source_already_counted(counted,src.source,inv)then src.count=n; return src end
     end
   end
   local cat=nil
@@ -321,14 +329,14 @@ local function catalog_storage_source(pair,item)
       if inst and eligible_source(pair,inst.entity) then
         local inv=source_inventory(inst.entity,inst.inventory_id)
         local n=inventory_count(inv,item)
-        if n>0 and ((not best) or ((inst.distance_sq or 999999999)<(best.distance_sq or 999999999))) then best={entity=inst.entity,inventory_id=inst.inventory_id,count=n,distance_sq=inst.distance_sq or 0} end
+        if n>0 and not source_already_counted(counted,inst.entity,inv)and ((not best) or ((inst.distance_sq or 999999999)<(best.distance_sq or 999999999))) then best={entity=inst.entity,inventory_id=inst.inventory_id,count=n,distance_sq=inst.distance_sq or 0} end
       end
     end
     if best then return {kind="known-storage-0327",source=best.entity,inventory_id=best.inventory_id,item_name=item,count=best.count or 1,station_distance_sq=best.distance_sq or 0} end
     if eligible_source(pair,rec.entity) then
       local inv=source_inventory(rec.entity,rec.inventory_id)
       local n=inventory_count(inv,item)
-      if n>0 then return {kind="known-storage-0327",source=rec.entity,inventory_id=rec.inventory_id,item_name=item,count=n,station_distance_sq=rec.distance_sq or 0} end
+      if n>0 and not source_already_counted(counted,rec.entity,inv)then return {kind="known-storage-0327",source=rec.entity,inventory_id=rec.inventory_id,item_name=item,count=n,station_distance_sq=rec.distance_sq or 0} end
     end
   end
   return nil
@@ -345,7 +353,7 @@ local function loose_ground_source(pair,item)
   if best then return {kind="loose-ground-item-0527",source=best,item_name=item,count=best.stack and best.stack.count or 1,station_distance_sq=bd or 0} end
   return nil
 end
-local function nearby_storage_source(pair,item)
+local function nearby_storage_source(pair,item,counted)
   if not (valid_pair(pair) and item) then return nil end
   local r=tonumber(pair.radius) or M.search_radius_default
   if type(_G.get_station_operating_radius)=="function" then local ok,rr=pcall(_G.get_station_operating_radius,pair.station); if ok and tonumber(rr) then r=tonumber(rr) end end
@@ -366,7 +374,7 @@ local function nearby_storage_source(pair,item)
           for _,inv_id in ipairs(ids) do
             local inv=source_inventory_by_id_unchecked(e,inv_id)
             local n=inventory_count(inv,item)
-            if n>0 then
+            if n>0 and not source_already_counted(counted,e,inv)then
               local score=dist_sq(e.position,pair.priest.position)+(d_station*0.10)
               if not best_score or score<best_score then best,best_inv,best_inv_id,best_count,best_score,best_d=e,inv,inv_id,n,score,d_station end
             end
@@ -378,7 +386,26 @@ local function nearby_storage_source(pair,item)
   if best then stat("nearby-storage-fallback-hit"); return {kind="nearby-storage-0659",source=best,inventory_id=best_inv_id,item_name=item,count=best_count or 1,station_distance_sq=best_d or 0} end
   stat("nearby-storage-fallback-miss"); return nil
 end
-local function known_fetch_source(pair,item) return catalog_storage_source(pair,item) or nearby_storage_source(pair,item) or loose_ground_source(pair,item) end
+local function known_fetch_source(pair,item)
+  -- station_count already includes these inventories. Rearranging their
+  -- partial stock cannot fill a total-stock deficit and used to preempt
+  -- production forever (two real packs endlessly fetched toward three).
+  local authority=rawget(_G,"TechPriestsStorageRoleAuthority0686")
+  local counted
+  if authority and type(authority.generic_item_count)=="function"
+      and type(authority.generic_storage_sources)=="function"then
+    local ok,sources=pcall(authority.generic_storage_sources,pair)
+    if ok and type(sources)=="table"then
+      counted={units={},inventories={}}
+      for _,source in pairs(sources)do
+        if source.entity and source.entity.unit_number then counted.units[source.entity.unit_number]=true end
+        if source.inv then counted.inventories[#counted.inventories+1]=source.inv end
+      end
+    end
+  end
+  return catalog_storage_source(pair,item,counted)
+    or nearby_storage_source(pair,item,counted)or loose_ground_source(pair,item)
+end
 
 local function publish_leaf(pair,src,item,phase)
   local label

@@ -79,4 +79,12 @@ p.factory_output_link_plan_1282=nil;p.construction_requested_item=nil
 p.factory_component_receipts_1282={[3]=p.factory_component_last_receipt_1150}
 p.factory_component_last_receipt_1150=nil
 assert(M.service(p,plan),"earlier preserved paid recipe receipt was ignored")
+chest=receipt()
+local place=surface.can_place_entity
+surface.can_place_entity=function(spec)return spec.name~="inserter"end
+assert(not M.service(p,plan)and p.factory_output_link_plan_1282.chest==chest
+ and not p.construction_requested_item,"temporary occupied arm site orphaned a paid chest")
+surface.can_place_entity=place
+assert(M.service(p,plan)and p.construction_requested_item.item_name=="inserter",
+ "clear native arm site did not resume the existing paid chest")
 print("PASS paid original-builder output links, native targets, custody, recipe and maintenance isolation")

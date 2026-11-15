@@ -644,6 +644,37 @@ function M.request_factory_workforce(pair)
   -- first furnace split bootstrap stock into duplicate survival/plate jobs
   -- before a functioning factory existed. Add paid staff for excess load.
   local desired=math.max(0,math.ceil(load/8)-1)
+  -- A commissioned but persistently slow factory can need its first paid
+  -- assistant before crossing nine machines. Require real science history,
+  -- a powered local lab and a full minute below the measured rate target.
+  -- This never recruits at the first furnace or treats stocked packs as output.
+  local measured=rawget(_G,"tech_priests_1133_observe_science_spm")
+  local target=math.max(5,tonumber(op.science_spm_target_1133)or 5)
+  local deficit=false
+  if load>=4 and type(measured)=="function"and surface.find_entities_filtered then
+    local read,rate=pcall(measured,pair,"automation-science-pack")
+    local stats_ok,stats=pcall(function()return pair.station.force.get_item_production_statistics(surface)end)
+    local total_ok,total=pcall(function()return stats.get_input_count("automation-science-pack")end)
+    local precision=defines and defines.flow_precision_index and defines.flow_precision_index.ten_minutes
+    if stats_ok and precision~=nil then
+      local long_ok,long=pcall(function()return stats.get_flow_count{
+        name="automation-science-pack",category="input",precision_index=precision}end)
+      if long_ok and type(long)=="number"and long>=0 and long<math.huge then rate=long end
+    end
+    if read and type(rate)=="number"and rate>=0 and rate<target
+        and stats_ok and total_ok and type(total)=="number"and total>0 then
+      local labs_ok,labs=pcall(surface.find_entities_filtered,{position=pair.station.position,
+        radius=radius,force=pair.station.force,type="lab",limit=16})
+      if labs_ok then for _,lab in pairs(labs or{})do
+        local powered,yes=pcall(function()return lab.valid and lab.energy>0 end)
+        if powered and yes then deficit=true;break end
+      end end
+    end
+  end
+  if deficit then
+    pair.factory_workforce_deficit_since_1282=pair.factory_workforce_deficit_since_1282 or game.tick
+    if game.tick-pair.factory_workforce_deficit_since_1282>=3600 then desired=math.max(desired,1)end
+  else pair.factory_workforce_deficit_since_1282=nil end
   if count>=desired then return false,"workforce-current-coverage-sufficient"end
   local angle=count*2.3999632297
   if type(hierarchy.superior)=="function"then

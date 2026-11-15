@@ -63,3 +63,35 @@ source.bounding_box=nil
 local point=Fetch.pickup_position(pair,source)
 assert(point==source.position)
 print("PASS large storage reach, recipe count, partial stock, foreign force and combat priority")
+pair.combat_target=nil;source_count=2;station_count=0
+pair.logistic_requested_count=3
+pair.infrastructure_recipe_request_0647.ingredients={{name="stone",count=3}}
+TechPriestsStorageRoleAuthority0686={generic_item_count=function()return source_count+station_count end,
+ generic_storage_sources=function()return{{entity=source,inv=source_inv},{entity=pair.station,inv=station_inv}}end}
+pair.priest.position={x=10,y=0};game.tick=2000
+acted,why=Fetch.service_pair(pair)
+assert(not acted and why=="no-known-fetch-source"and source_count==2 and station_count==0,
+ "counted partial stock was repeatedly rearranged to fill an impossible total-stock deficit")
+local extra=1
+local outside={valid=true,name="outside-storage",type="container",unit_number=4,
+ position={x=10,y=0},surface=surface,force=force,
+ get_inventory=function()return{valid=true,get_item_count=function()return extra end,
+ remove=function(stack)local n=math.min(extra,stack.count);extra=extra-n;return n end}end}
+surface.find_entities_filtered=function()return{source,outside}end
+game.tick=2010;acted,why=Fetch.service_pair(pair)
+assert(acted and why=="fetched-known-source"and extra==0 and source_count==2 and station_count==1,
+ "excluding counted stock concealed a genuine uncounted source or changed its paid quantity")
+print("PASS counted partial sources yield to production; genuinely new stock still fills the exact deficit")
+station_count=0;source_count=2;extra=0
+local wrapper={__eq=function(a,b)return a.native_id==b.native_id end}
+source.get_inventory=function()return setmetatable({valid=true,native_id=7,
+ get_item_count=function()return source_count end,
+ remove=function(stack)source_count=source_count-stack.count;return stack.count end},wrapper)end
+local stored,current=source.get_inventory(),source.get_inventory()
+assert(stored==current and ({[stored]=true})[current]==nil,
+ "fixture must reproduce native equality without raw table-key identity")
+TechPriestsStorageRoleAuthority0686.generic_storage_sources=function()return{{inv=stored}}end
+game.tick=2020;acted,why=Fetch.service_pair(pair)
+assert(not acted and why=="no-known-fetch-source"and source_count==2,
+ "equal native inventory wrappers were mistaken for uncounted physical stock")
+print("PASS native inventory equality is distinct from raw Lua table-key identity")

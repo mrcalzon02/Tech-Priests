@@ -9,6 +9,7 @@
 
 TECH_PRIESTS_MAGOS_RATIO_PLANNER_VERSION_0257 = "0.1.257"
 local FactoryOutputLinks1282=require("scripts.core.factory_output_links_1282")
+local FactoryCapacityRequests1282=require("scripts.core.factory_capacity_requests_1282")
 -- 1133: The old constant yielded 0.5 packs/minute and silently kept every
 -- factory at a token-size pilot rate. This is the conservative *starting*
 -- science throughput objective, not proof of production or research.
@@ -1394,6 +1395,7 @@ function tech_priests_1172_service_autonomous_science_component(pair)
   op.magos_ratio_component_job_1150=science.magos_ratio_component_job_1150
   op.magos_ratio_component_machine_1150=
     science.magos_ratio_component_machine_1150
+  FactoryCapacityRequests1282.yield_blocked(pair)
   local linked,link_reason=FactoryOutputLinks1282.service(pair,plan)
   op.factory_output_link_reason_1282=link_reason
   if linked then
@@ -1427,6 +1429,7 @@ function tech_priests_1172_service_autonomous_science_component(pair)
   if not(item and plan and science.magos_ratio_component_job_1150) then
     local group=type(reason)=="string"and reason:match("^ratio%-(%w+)")
     if plan and(group=="power"or group=="miners"or group=="smelters")
+        and FactoryCapacityRequests1282.retry_allowed(pair,group)
         and tech_priests_1206_has_physical_starter_spine(pair)
         and not(pair.machine_logistics_custody_0528 or pair.energy_family_custody_0707
           or pair.item_family_custody_0702 or pair.construction_requested_item
