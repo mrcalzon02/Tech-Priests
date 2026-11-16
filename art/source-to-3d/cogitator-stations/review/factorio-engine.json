@@ -1,0 +1,37 @@
+{
+  "engine": "Factorio 2.1.24 linux64 headless",
+  "package": "tech-priests_0.1.681.zip",
+  "sha256": "1037352a929cf57715add06c0aebaae84fd211705aeaf14a1c2775698b9d0ba5",
+  "size_bytes": 934623654,
+  "profiles": {
+    "hr": {
+      "expansion": "Space Age",
+      "rank_direction_placements": 20,
+      "cardinal_rotation_steps": 80,
+      "circuit_connection_tests": 20,
+      "save_reopened": true,
+      "directional_layer_references_verified": 40
+    },
+    "sd": {
+      "expansion": "Base game",
+      "rank_direction_placements": 20,
+      "cardinal_rotation_steps": 80,
+      "circuit_connection_tests": 20,
+      "save_reopened": true,
+      "directional_layer_references_verified": 40
+    }
+  },
+  "old_save": {
+    "stations": 5,
+    "verified": [
+      "unit numbers",
+      "positions",
+      "health",
+      "facing",
+      "inventory contents",
+      "red circuit connections",
+      "native rotation after upgrade"
+    ]
+  },
+  "review_image": "Composited from verified game atlas rows at their runtime registration. Headless validation has no framebuffer."
+}

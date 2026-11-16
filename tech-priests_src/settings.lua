@@ -533,6 +533,13 @@ data:extend({
     setting_type = "startup",
     default_value = false,
     order = "z-performance-a[lean-gui-sprites]"
+  },
+  {
+    type = "bool-setting",
+    name = "tech-priests-standard-station-sprites",
+    setting_type = "startup",
+    default_value = false,
+    order = "z-performance-b[station-sprites]"
   }
 })
 

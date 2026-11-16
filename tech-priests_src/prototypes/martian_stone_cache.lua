@@ -334,12 +334,14 @@ local cache_specs = {
 
 local prototypes = {}
 for _, spec in pairs(cache_specs) do
-  local item = make_item(spec)
-  local chest = make_container(spec)
-  local recipe = make_recipe(spec)
-  if item then prototypes[#prototypes + 1] = item end
-  if chest then prototypes[#prototypes + 1] = chest end
-  if recipe then prototypes[#prototypes + 1] = recipe end
+  if not spec.space_platform_only or feature_flags.space_travel then
+    local item = make_item(spec)
+    local chest = make_container(spec)
+    local recipe = make_recipe(spec)
+    if item then prototypes[#prototypes + 1] = item end
+    if chest then prototypes[#prototypes + 1] = chest end
+    if recipe then prototypes[#prototypes + 1] = recipe end
+  end
 end
 
 local function make_battery_bank()
@@ -467,5 +469,7 @@ end
 
 unlock_recipe("electric-energy-accumulators", battery_name)
 unlock_recipe("fluid-handling", fluid_name)
-unlock_recipe("void-cogitator-stations", "tech-priests-basic-space-cargo-inventory")
-unlock_recipe("void-cogitator-stations", "tech-priests-advanced-space-cargo-inventory")
+if feature_flags.space_travel then
+  unlock_recipe("void-cogitator-stations", "tech-priests-basic-space-cargo-inventory")
+  unlock_recipe("void-cogitator-stations", "tech-priests-advanced-space-cargo-inventory")
+end

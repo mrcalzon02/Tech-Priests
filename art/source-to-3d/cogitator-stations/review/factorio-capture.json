@@ -1,0 +1,299 @@
+{
+  "source": "approved native Blender scenes",
+  "engine": "Blender 5.0.1 Cycles, 48 samples, OpenImageDenoise",
+  "projection": "fmpl.factorio45.v1",
+  "rotation_degrees": {
+    "north": 180,
+    "east": 90,
+    "south": 0,
+    "west": 270
+  },
+  "camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "matrix_world": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.7071068286895752,
+        -0.7071067094802856,
+        -5.656854152679443
+      ],
+      [
+        0.0,
+        0.7071067094802856,
+        0.7071068286895752,
+        7.071067810058594
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "type": "ORTHO",
+    "ortho_scale": 5.0,
+    "shift_x": 0.0,
+    "shift_y": 0.0,
+    "resolution": [
+      512,
+      512
+    ]
+  },
+  "fixed_lights": [
+    {
+      "name": "Broad warm window",
+      "type": "AREA",
+      "energy": 460.0,
+      "color": [
+        1.0,
+        0.8600000143051147,
+        0.6800000071525574
+      ],
+      "matrix_world": [
+        [
+          0.7772448062896729,
+          0.4236000180244446,
+          -0.46524569392204285,
+          -3.4000000953674316
+        ],
+        [
+          -0.6291983127593994,
+          0.5232704281806946,
+          -0.5747151374816895,
+          -4.199999809265137
+        ],
+        [
+          -4.0926238398242276e-08,
+          0.7394261956214905,
+          0.6732376217842102,
+          6.400000095367432
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Narrow front softbox",
+      "type": "AREA",
+      "energy": 220.0,
+      "color": [
+        0.7900000214576721,
+        0.8799999952316284,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          0.8137335181236267,
+          -0.20105715095996857,
+          0.5453566312789917,
+          3.5
+        ],
+        [
+          0.5812381505966187,
+          0.28148001432418823,
+          -0.7634993195533752,
+          -4.900000095367432
+        ],
+        [
+          4.239520734472535e-09,
+          0.9382670521736145,
+          0.34591180086135864,
+          3.700000047683716
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Rear shop bounce",
+      "type": "AREA",
+      "energy": 155.0,
+      "color": [
+        0.7300000190734863,
+        0.8500000238418579,
+        1.0
+      ],
+      "matrix_world": [
+        [
+          -0.5254929065704346,
+          0.302466481924057,
+          -0.795217752456665,
+          -3.4000000953674316
+        ],
+        [
+          -0.8507980108261108,
+          -0.18681764602661133,
+          0.49116387963294983,
+          2.0999999046325684
+        ],
+        [
+          -8.63096047964973e-08,
+          0.9346727728843689,
+          0.3555092215538025,
+          3.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "Upper edge strip",
+      "type": "AREA",
+      "energy": 480.0,
+      "color": [
+        1.0,
+        0.8799999952316284,
+        0.6399999856948853
+      ],
+      "matrix_world": [
+        [
+          -0.9010016918182373,
+          -0.33783555030822754,
+          0.27214524149894714,
+          1.2999999523162842
+        ],
+        [
+          0.43381550908088684,
+          -0.7016587853431702,
+          0.5652247667312622,
+          2.700000047683716
+        ],
+        [
+          1.0214700552069189e-07,
+          0.6273292899131775,
+          0.7787541151046753,
+          5.199999809265137
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "color_management": {
+    "view_transform": "AgX",
+    "look": "AgX - Medium High Contrast",
+    "exposure": 0.0,
+    "gamma": 1.0
+  },
+  "shadow_projection_xy_per_z": [
+    0.6910571380231681,
+    0.8536586769446766
+  ],
+  "registered_shift_pixels": {
+    "body": [
+      0,
+      -32
+    ],
+    "shadow": [
+      32,
+      -8
+    ]
+  },
+  "hr": {
+    "cell": 320,
+    "scale": 0.5
+  },
+  "standard": {
+    "cell": 160,
+    "scale": 1
+  },
+  "stations": {
+    "junior": {
+      "source_sha256": "2b4f602e1976957ae46715a2db2960181dbde5c3dc8377cf19ee2468d953e28c",
+      "renders": {
+        "north": "5ebc654c5e2a0221892049234395ed5522e5db13bda02ce5f72e4cce3661432a",
+        "east": "ae72d89820f42ae7da94b25d1a43e999b3439a8f2b548ac8417f816548baec4b",
+        "south": "07a1274b1c29a9d5c75d614e340722473197632ab5c4e55cdc72db5690739eb1",
+        "west": "77028fc74e5c099ebb0ec364e6ea1725c7d4d13d5d3192a75f085ef05257c9bc"
+      },
+      "outputs": {
+        "junior-hr.png": "624905761c9f59a64526b93cc434331eff7a7402e5b2c05ce9abe9524d183c05",
+        "junior-shadow-hr.png": "83e36678eac1e84acb3efa05377ac795147f2fac18629cfea244e509dbaacf34",
+        "junior-sd.png": "73bc025b836ddd180e7a888c71c68985039cda54029d3ebe7d1ec8bbca8b1f7e",
+        "junior-shadow-sd.png": "fbbe0cc1cbd1286ef9db4cdeebb5eaa0f791bb1983aae3a70497e5680d147ea9"
+      }
+    },
+    "intermediate": {
+      "source_sha256": "b94c4697986b1f0719b2180d719062ed87487db76e3d98da74cb260b796b60da",
+      "renders": {
+        "north": "2f755bace66d1a0c9727a4e14b9e14339904f1369d7be16d28de882a0f93c56c",
+        "east": "ef1917b39a5d40e0583cff819b6193ad20a9389ee4220a19652d490fb9082495",
+        "south": "a4d7edf22835a912bd2a0e4c0ad6c34a823f7d3fce92e7220ac1d3b7d86edcc7",
+        "west": "f447a9ec6e897386afb7c7de996bd26249d9ba0245e5720c4f3b8540ef9538c6"
+      },
+      "outputs": {
+        "intermediate-hr.png": "dbe84d2491887765ed2ca75487dc3b7ddd657977fd2c9cb86a1ce3aaa76d13f1",
+        "intermediate-shadow-hr.png": "a99f4c0b83c2291a57580ae1b518e7576880c1621b0090ea5f8b24535845a39c",
+        "intermediate-sd.png": "64abc94ccc6a2942bdf040d725729b3ee7407d4a398d1ff792a04bcedd318adb",
+        "intermediate-shadow-sd.png": "0bfa29008e382d8c64e7a2272f87bd2f86596a1be513f76f374d5be68cfdc956"
+      }
+    },
+    "senior": {
+      "source_sha256": "fdb31aa6dc69df60cc2d0d1d2f02bfaec2837eb75a1bf5eae962819c21ee7030",
+      "renders": {
+        "north": "a84fb7531848a8f500131ecfad27901015bf4e3fe56e48d8902da1626bc60156",
+        "east": "89d5378eec35648da139e6e1eedd92cf4522985779f8e4a4894228fe8ec41dfa",
+        "south": "8347f8ab6d6fb495ec48c1b3d887394d6756e30da6a38a658daccfd82ae85b5a",
+        "west": "105a8dd40e56822e77a95f69883b0e917ff75fdcffd93e99133093af089971d4"
+      },
+      "outputs": {
+        "senior-hr.png": "c620d7ccfb66a010d1ba7ad8c0c8b47c409d1e5121e4d8a24b17ea7bd3642da5",
+        "senior-shadow-hr.png": "e024fc480d4cdead9312b6928a86e68b5b3d8e0af84016235ab66dd772af4980",
+        "senior-sd.png": "164f993fa2f74c7662b7f089f4c55c59fcd2d3c8b67d79dd96c840ae46b8fd7b",
+        "senior-shadow-sd.png": "a6ba9ec85c30b63dad32330ea08a9e016402c6ca94925ca5e49a2af9ef422c3d"
+      }
+    },
+    "planetary-magos": {
+      "source_sha256": "fe0546ce9c68e0e4e474b883e231bf526468965fe3bd9d19db42e2af478d67e5",
+      "renders": {
+        "north": "7de86ab02074a5588a6d42ac918bdc327758183c6f93f6efb08f27455a1dd25a",
+        "east": "896add223b4f8d832ebf359ac39edecad9afd63513eca3e4eb636d1c57e4e46b",
+        "south": "2927cf809c7ea0079a8c8b8e1d105fedc24e59a7e570f192526618b04d535177",
+        "west": "e7e1a28ed998bd6948bb12611364368c1a927d0878546868d9b03f1fa4d1d089"
+      },
+      "outputs": {
+        "planetary-magos-hr.png": "3f833bddd1295816c4a604e5a8c4e90a0cd63103efce4e8b271ae5a1e1643c16",
+        "planetary-magos-shadow-hr.png": "bc095720b8b21d1085d6e42af244b528277f3d20303dd246805853dcd999aa00",
+        "planetary-magos-sd.png": "7b64eef66d28bddfab6fa75065276cb4a1b541b90a8851a610ab71604485178e",
+        "planetary-magos-shadow-sd.png": "6116e1c6e3458a0fd7cd2af0b21f12ac7727b13ae81a9bff91740db39af1c534"
+      }
+    },
+    "void": {
+      "source_sha256": "915743f14441d56b1053a0144f0f08d69742c1e06ed9ffd33a697a4daea91406",
+      "renders": {
+        "north": "ddf4108dd88caf5338eb0b5cd3b71b4e1f04335cdc6b151265ff443426702840",
+        "east": "5050b00b3f36bb3910703c14f30e46fb1d435dd43d737e964cb9fbdd46889e5b",
+        "south": "ef18b74d8b38ba7eae56bb7c0ae5021149905ab0c1f112b8869b8591f21ea23f",
+        "west": "b63019d9b1d34724b349b32f3f0e443f74f36e8fe80080730a928d008d361cf7"
+      },
+      "outputs": {
+        "void-hr.png": "2eb11dd7203c81a02040c4617d52e8870c7bc5f0027e7982380a3ca4d0b8d3e4",
+        "void-shadow-hr.png": "e4d94c32930bced8c6c755a1f6488f5038f85c7a80e52d2ad92f6f5e1869c7fc",
+        "void-sd.png": "07cd96eff5b9488b60cef17201c0fba6b806f708c2373bc91405877d15f8c539",
+        "void-shadow-sd.png": "c0b5d8f5d9522493929b8a020a62c87dd751237dcd5fa0f445c4905171c85103"
+      }
+    }
+  }
+}

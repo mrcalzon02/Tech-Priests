@@ -30,43 +30,29 @@ local MARTIAN_MICRO_SPRITE_DIMS = {
   ["tech-priests-emergency-boiler"] = {1024, 1024}
 }
 
-local COGITATOR_STATION_ART_0534 = {
-  ["junior-cogitator-station"] = {
-    filename = "__tech-priests__/graphics/entity/cogitator-station/junior-cogitator-station.png",
-    icon = "__tech-priests__/graphics/icons/junior-cogitator-station.png",
-    width = 1027,
-    height = 1532,
-    scale = 0.090,
-    shift = util.by_pixel(0, -22)
-  },
-  ["senior-cogitator-station"] = {
-    filename = "__tech-priests__/graphics/entity/cogitator-station/senior-cogitator-station.png",
-    icon = "__tech-priests__/graphics/icons/senior-cogitator-station.png",
-    width = 1024,
-    height = 1536,
-    scale = 0.090,
-    shift = util.by_pixel(0, -30)
-  },
-  ["planetary-magos-cogitator-station"] = {
-    filename = "__tech-priests__/graphics/entity/cogitator-station/planetary-magos-cogitator-station.png",
-    icon = "__tech-priests__/graphics/icons/planetary-magos-cogitator-station.png",
-    width = 1024,
-    height = 1536,
-    scale = 0.092,
-    -- 0.1.546: live testing showed the 0.1.544/0.1.545 downward correction overshot and made
-    -- the platform sit below its selection frame.  Raise it back toward the frame midpoint while
-    -- keeping it lower than the old hovering placement.
-    shift = util.by_pixel(0, -18)
-  },
-  ["void-cogitator-station"] = {
-    filename = "__tech-priests__/graphics/entity/cogitator-station/void-cogitator-station.png",
-    icon = "__tech-priests__/graphics/icons/void-cogitator-station.png",
-    width = 1024,
-    height = 1536,
-    scale = 0.092,
-    shift = util.by_pixel(0, -20)
-  }
-}
+local function cogitator_picture(rank)
+  local file = "__tech-priests__/graphics/entity/cogitator-station/fmpl/" .. rank
+  local standard = settings.startup["tech-priests-standard-station-sprites"].value
+  local cell = standard and 160 or 320
+  local resolution = standard and "-sd.png" or "-hr.png"
+  local directions = {}
+  for row, direction in ipairs({"north", "east", "south", "west"}) do
+    local function layer(suffix, shift, shadow)
+      return {
+        filename = file .. suffix .. resolution,
+        priority = "high",
+        width = cell, height = cell, y = (row - 1) * cell,
+        scale = 160 / cell, shift = shift,
+        draw_as_shadow = shadow
+      }
+    end
+    directions[direction] = {layers = {
+      layer("", util.by_pixel(0, -32), false),
+      layer("-shadow", util.by_pixel(32, -8), true)
+    }}
+  end
+  return directions
+end
 
 local function tech_priests_micro_sprite_dims(name)
   return MARTIAN_MICRO_SPRITE_DIMS[name] or { MARTIAN_MICRO_ICON_SIZE, MARTIAN_MICRO_ICON_SIZE }
@@ -284,10 +270,11 @@ local function make_station(def)
   station.localised_description = { "entity-description." .. def.station_name }
   station.icon = nil
   station.icon_size = nil
-  local station_art_0534 = COGITATOR_STATION_ART_0534[def.station_name]
+  -- Intermediate retains the generic icon used by its station item.
+  local icon_name = def.key == "intermediate" and "cogitator-station" or def.station_name
   station.icons = {
     {
-      icon = (station_art_0534 and station_art_0534.icon) or "__tech-priests__/graphics/icons/cogitator-station.png",
+      icon = "__tech-priests__/graphics/icons/" .. icon_name .. ".png",
       icon_size = 64,
       tint = soften_station_tint_0311(def.tint)
     }
@@ -315,48 +302,19 @@ local function make_station(def)
     station.circuit_wire_max_distance = substation_source.maximum_wire_distance or station.circuit_wire_max_distance
     station.draw_circuit_wires = true
     station.draw_copper_wires = false
-    -- Factorio 2.1 accepts an array of circuit connectors. The vanilla
-    -- steel-chest connector copied above already has a valid native schema;
-    -- writing .points directly onto its top level corrupts that array.
-    -- Preserve the older 2.0 custom attachment point unchanged.
-    local factorio_21 = (mods["base"] or ""):match("^2%.1%.") ~= nil
-    if not factorio_21 and station.circuit_connector and
-        substation_source.connection_points and substation_source.connection_points[1] then
-      station.circuit_connector = table.deepcopy(station.circuit_connector)
-      station.circuit_connector.points = table.deepcopy(substation_source.connection_points[1])
-    end
   end
 
-  local cogitator_layers = {}
-
-  -- Restore the vanilla substation shadow as a separate shadow layer. The station
-  -- remains a container; this only gives the custom Cogitator artwork its ground
-  -- contact back instead of making it behave as an electric pole.
-  if substation_source and substation_source.pictures and substation_source.pictures.layers then
-    for _, layer in pairs(substation_source.pictures.layers) do
-      if layer.draw_as_shadow then
-        table.insert(cogitator_layers, table.deepcopy(layer))
-        break
-      end
+  -- Native container rotation keeps the same entity and inventory. The existing
+  -- rotation handler reads this direction to update priest deployment.
+  station.direction_count = 4
+  station.picture = cogitator_picture(def.key)
+  if station.circuit_connector then
+    local original = station.circuit_connector
+    station.circuit_connector = {}
+    for direction = 1, station.direction_count do
+      station.circuit_connector[direction] = table.deepcopy(original[direction] or original[1])
     end
   end
-
-  table.insert(cogitator_layers, {
-    filename = (station_art_0534 and station_art_0534.filename) or "__tech-priests__/graphics/entity/cogitator-station/cogitator-station.png",
-    priority = "high",
-    width = (station_art_0534 and station_art_0534.width) or 184,
-    height = (station_art_0534 and station_art_0534.height) or 270,
-    x = 0,
-    y = 0,
-    -- 0.1.534: station-specific alpha art where supplied; Intermediate keeps the old default Cogitator sprite.
-    shift = (station_art_0534 and station_art_0534.shift) or util.by_pixel(0, -28),
-    scale = (station_art_0534 and station_art_0534.scale) or 0.50,
-    tint = soften_station_tint_0311(def.tint)
-  })
-
-  station.picture = {
-    layers = cogitator_layers
-  }
 
   -- Prototype-side radius hint. The runtime script draws the real current radius,
   -- including force research bonuses, when the station is selected.
@@ -1143,7 +1101,7 @@ local TECH_PRIESTS_PLANETSIDE_SURFACE_CONDITIONS = {
 }
 
 local function tech_priests_apply_planetside_conditions(entity)
-  if entity then
+  if entity and feature_flags.space_travel then
     entity.surface_conditions = table.deepcopy(TECH_PRIESTS_PLANETSIDE_SURFACE_CONDITIONS)
   end
   return entity
