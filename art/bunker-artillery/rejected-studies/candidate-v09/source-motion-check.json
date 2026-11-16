@@ -1,0 +1,102 @@
+{
+  "status": "PASS_SOURCE_INTERFACES",
+  "source_sha256": "4d51dc9e1be34a692097e7e3d3489de905f4bac474cefd6dbc4d9f7eca01c736",
+  "frames_checked": 601,
+  "tested_rotating_meshes": 9,
+  "tested_guard_meshes": 24,
+  "failures": [],
+  "collision_examples": [],
+  "slide_collision_examples": [],
+  "gate_collision_examples": [],
+  "mount_collision_examples": [],
+  "minimum_height": 1.7000000476837158,
+  "maximum_recoil": 0.7599999904632568,
+  "trunnion_xy": [
+    0.0,
+    0.0
+  ],
+  "foot_contacts": [
+    {
+      "name": "Bolted full-contact yoke foot",
+      "maximum_corner_radius": 1.4326548723648342,
+      "bottom_height": 2.3500001430511475
+    },
+    {
+      "name": "Bolted full-contact yoke foot.001",
+      "maximum_corner_radius": 1.4326548723648342,
+      "bottom_height": 2.3500001430511475
+    }
+  ],
+  "tested_moving_cap_meshes": 96,
+  "tested_mount_meshes": 31,
+  "bore_alignment": [
+    {
+      "tick": 0,
+      "active_shell": 0,
+      "x_error": 3.6739405577555036e-17,
+      "height_error": 1.043081283569336e-07,
+      "recoil_error": 0.0,
+      "firing_angle_degrees": 34.99999983559887
+    },
+    {
+      "tick": 90,
+      "active_shell": 1,
+      "x_error": 5.960464477539063e-08,
+      "height_error": 1.7881393432617188e-07,
+      "recoil_error": 0.0,
+      "firing_angle_degrees": 34.99999983559887
+    },
+    {
+      "tick": 180,
+      "active_shell": 2,
+      "x_error": 2.9802322387695312e-08,
+      "height_error": 1.7881393432617188e-07,
+      "recoil_error": 0.0,
+      "firing_angle_degrees": 34.99999983559887
+    }
+  ],
+  "visible_round_samples": [
+    {
+      "tick": 0,
+      "loaded": 3
+    },
+    {
+      "tick": 1,
+      "loaded": 2
+    },
+    {
+      "tick": 90,
+      "loaded": 2
+    },
+    {
+      "tick": 91,
+      "loaded": 1
+    },
+    {
+      "tick": 180,
+      "loaded": 1
+    },
+    {
+      "tick": 181,
+      "loaded": 0
+    },
+    {
+      "tick": 499,
+      "loaded": 0
+    },
+    {
+      "tick": 500,
+      "loaded": 3
+    },
+    {
+      "tick": 600,
+      "loaded": 3
+    }
+  ],
+  "reload_angles_degrees": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scope": "Full-frame chamber/guard, reload-gate, sliding-bushing/support and recoiling-assembly/mount intersections; centered trunnion, full-foot contact, elevated bore alignment, level reload, floor and recoil. Not continuous collision proof, exported-model validity or native gameplay acceptance"
+}

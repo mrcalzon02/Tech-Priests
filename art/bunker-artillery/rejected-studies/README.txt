@@ -1,0 +1,1 @@
+Superseded or failed study reports only. Earlier editable Blend/GLB files remain locally in the original candidate-v01 through candidate-v11 folders; those old binaries are not part of this checkpoint. Current source is candidate-v12. No failed study is activated in the mod.

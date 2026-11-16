@@ -1,0 +1,8 @@
+{
+  "status": "PACKED_SOURCE_PREVIEW",
+  "source_sha256": "52100d1aa5d99aee0b286b79f0c5d07d3a73d9873d30b05e9385dbaa1f59dfa1",
+  "gif_sha256": "3acd217381f8e3601cfe1f3a8f5c903d7098f8ec2932b995f16f903422a8e984",
+  "frames": 104,
+  "source_fps": 60,
+  "scope": "Source geometry/animation only; no native-gameplay or owner visual acceptance claim."
+}

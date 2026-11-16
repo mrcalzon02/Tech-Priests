@@ -1,0 +1,227 @@
+{
+  "status": "FAIL",
+  "source_sha256": "97ab60c2f1455ea6e4b37503ae8f91f3fabba6815cba21ac70c44cc6a9bc18de",
+  "frames_checked": 601,
+  "tested_rotating_meshes": 9,
+  "tested_guard_meshes": 24,
+  "failures": [
+    "Sliding carriage intersects stationary support"
+  ],
+  "collision_examples": [],
+  "slide_collision_examples": [
+    {
+      "tick": 0,
+      "moving": "Sliding carriage guide bushing",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 0,
+      "moving": "Sliding carriage guide bushing",
+      "support": "Longitudinal recoil-bed casting"
+    },
+    {
+      "tick": 0,
+      "moving": "Sliding carriage guide bushing",
+      "support": "Bearing pedestal on recoil bed"
+    },
+    {
+      "tick": 0,
+      "moving": "Sliding carriage guide bushing.001",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 0,
+      "moving": "Sliding carriage guide bushing.001",
+      "support": "Longitudinal recoil-bed casting"
+    },
+    {
+      "tick": 0,
+      "moving": "Sliding carriage guide bushing.003",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 0,
+      "moving": "Sliding carriage guide bushing.003",
+      "support": "Longitudinal recoil-bed casting.001"
+    },
+    {
+      "tick": 0,
+      "moving": "Sliding carriage guide bushing.003",
+      "support": "Bearing pedestal on recoil bed.003"
+    },
+    {
+      "tick": 0,
+      "moving": "Sliding carriage guide bushing.004",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 0,
+      "moving": "Sliding carriage guide bushing.004",
+      "support": "Longitudinal recoil-bed casting.001"
+    },
+    {
+      "tick": 0,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 0,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Longitudinal recoil-bed casting"
+    },
+    {
+      "tick": 0,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 0,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Longitudinal recoil-bed casting.001"
+    },
+    {
+      "tick": 0,
+      "moving": "Ring to recoil-bed structural strut.002",
+      "support": "Longitudinal recoil-bed casting"
+    },
+    {
+      "tick": 0,
+      "moving": "Ring to recoil-bed structural strut.003",
+      "support": "Longitudinal recoil-bed casting.001"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing",
+      "support": "Inset sloped cheek armour"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing",
+      "support": "Trunnion bearing retaining ring"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing",
+      "support": "Longitudinal recoil-bed casting"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing.001",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing.001",
+      "support": "Longitudinal recoil-bed casting"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing.002",
+      "support": "Bearing pedestal on recoil bed.002"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing.003",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing.003",
+      "support": "Inset sloped cheek armour.001"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing.003",
+      "support": "Trunnion bearing retaining ring.001"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing.003",
+      "support": "Longitudinal recoil-bed casting.001"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing.004",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing.004",
+      "support": "Longitudinal recoil-bed casting.001"
+    },
+    {
+      "tick": 1,
+      "moving": "Sliding carriage guide bushing.005",
+      "support": "Bearing pedestal on recoil bed.005"
+    }
+  ],
+  "minimum_height": 1.7000000476837158,
+  "maximum_recoil": 0.7599999904632568,
+  "bore_alignment": [
+    {
+      "tick": 0,
+      "active_shell": 0,
+      "x_error": 3.6739405577555036e-17,
+      "height_error": 9.536743172944284e-08,
+      "recoil_error": 0.0
+    },
+    {
+      "tick": 90,
+      "active_shell": 1,
+      "x_error": 5.960464477539063e-08,
+      "height_error": 9.536743172944284e-08,
+      "recoil_error": 0.0
+    },
+    {
+      "tick": 180,
+      "active_shell": 2,
+      "x_error": 2.9802322387695312e-08,
+      "height_error": 1.4305114737211966e-07,
+      "recoil_error": 0.0
+    }
+  ],
+  "visible_round_samples": [
+    {
+      "tick": 0,
+      "loaded": 3
+    },
+    {
+      "tick": 1,
+      "loaded": 2
+    },
+    {
+      "tick": 90,
+      "loaded": 2
+    },
+    {
+      "tick": 91,
+      "loaded": 1
+    },
+    {
+      "tick": 180,
+      "loaded": 1
+    },
+    {
+      "tick": 181,
+      "loaded": 0
+    },
+    {
+      "tick": 499,
+      "loaded": 0
+    },
+    {
+      "tick": 500,
+      "loaded": 3
+    },
+    {
+      "tick": 600,
+      "loaded": 3
+    }
+  ],
+  "scope": "Full-frame chamber/guard and sliding-bushing/support intersections, bore alignment, floor and recoil; not continuous collision proof, exported-model validity or native gameplay acceptance"
+}

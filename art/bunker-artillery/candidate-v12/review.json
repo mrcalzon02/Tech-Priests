@@ -1,0 +1,52 @@
+{
+  "status": "SOURCE_TECHNICAL_REVIEW_NATIVE_PENDING",
+  "source_sha256": "52100d1aa5d99aee0b286b79f0c5d07d3a73d9873d30b05e9385dbaa1f59dfa1",
+  "glb_sha256": "d89b7feb8c3804039333de4c9899962d80172283b00390e80896a4fd80b39ba4",
+  "owner_decisions": [
+    "Three-shell rolling barrage followed by long reload",
+    "Keep revolving breech",
+    "Elevated firing and level reload",
+    "Center over the mount plate with substantial attachment",
+    "Remove redundant cage crossbars",
+    "Repair floating brackets and bolt hardware"
+  ],
+  "visual_approval": false,
+  "native_runtime_implemented": false,
+  "checked": {
+    "frames": 601,
+    "moving_cap_meshes": 117,
+    "mount_meshes": 63,
+    "hardware_material_connections": 62,
+    "barrel_elevation_degrees": 34.99999808865245,
+    "triangles": 52412,
+    "uv_meshes": 241,
+    "degenerate_triangles": 0
+  },
+  "source_review_scores_out_of_5": {
+    "silhouette": {
+      "score": 4,
+      "reason": "Single elevated siege barrel and three-chamber breech distinguish the silhouette from the twin cannon."
+    },
+    "construction": {
+      "score": 4,
+      "reason": "Centered trunnion, full-contact feet, pedestal/gussets, bored clevis hinges and bands provide visible attachment paths; targeted full-frame mesh checks pass."
+    },
+    "surfaces": {
+      "score": 3.5,
+      "reason": "Packed family red armour/steel/brass surfaces with part-specific UV direction. Final native sprite readability remains unreviewed."
+    }
+  },
+  "scope": "Editable source and static exported-model verification; native targeting, artillery ammunition, balance, previews and final directional animation remain open.",
+  "reference_sha256": {
+    "art/bunker-twin-cannon/twin-cannon.blend": "a68804fab71799c255d97d9cbe389b98d71a8a6cc30e887186943df0dd4d7545",
+    "art/bunker-rocket-salvo/candidate-v02/rocket-salvo.blend": "3054dd0caa90d2c9db2449d8b0ee21b0a989ccb02af61099946347984a2c01c4"
+  },
+  "renders_reviewed": [
+    "side.png",
+    "rear.png",
+    "import-quarter.png",
+    "import-clay.png",
+    "mount-detail.png"
+  ],
+  "motion_preview": "motion-preview.gif"
+}

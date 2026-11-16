@@ -1,0 +1,227 @@
+{
+  "status": "FAIL",
+  "source_sha256": "1f615939e8c5e3ed9e4b16960fc193fbe9a1d5a7d5aa3c481ac34f4e68be9db7",
+  "frames_checked": 601,
+  "tested_rotating_meshes": 9,
+  "tested_guard_meshes": 24,
+  "failures": [
+    "Rotating chamber intersects protective structure",
+    "Next shell does not align with the bore in battery"
+  ],
+  "collision_examples": [
+    {
+      "tick": 0,
+      "moving": "Chamber locking ring 0",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 0,
+      "moving": "Chamber locking ring 0",
+      "guard": "Curved rear breech crown"
+    },
+    {
+      "tick": 0,
+      "moving": "Chamber locking ring 0.001",
+      "guard": "Curved rear breech crown"
+    },
+    {
+      "tick": 0,
+      "moving": "Chamber locking ring 1",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 0,
+      "moving": "Chamber locking ring 1",
+      "guard": "Revolver support saddle"
+    },
+    {
+      "tick": 0,
+      "moving": "Chamber locking ring 2",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 0,
+      "moving": "Chamber locking ring 2",
+      "guard": "Revolver support saddle"
+    },
+    {
+      "tick": 1,
+      "moving": "Chamber locking ring 0",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 1,
+      "moving": "Chamber locking ring 0",
+      "guard": "Curved rear breech crown"
+    },
+    {
+      "tick": 1,
+      "moving": "Chamber locking ring 0.001",
+      "guard": "Curved rear breech crown"
+    },
+    {
+      "tick": 1,
+      "moving": "Chamber locking ring 1",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 1,
+      "moving": "Chamber locking ring 1",
+      "guard": "Revolver support saddle"
+    },
+    {
+      "tick": 1,
+      "moving": "Chamber locking ring 2",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 1,
+      "moving": "Chamber locking ring 2",
+      "guard": "Revolver support saddle"
+    },
+    {
+      "tick": 2,
+      "moving": "Chamber locking ring 0",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 2,
+      "moving": "Chamber locking ring 0",
+      "guard": "Curved rear breech crown"
+    },
+    {
+      "tick": 2,
+      "moving": "Chamber locking ring 0.001",
+      "guard": "Curved rear breech crown"
+    },
+    {
+      "tick": 2,
+      "moving": "Chamber locking ring 1",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 2,
+      "moving": "Chamber locking ring 1",
+      "guard": "Revolver support saddle"
+    },
+    {
+      "tick": 2,
+      "moving": "Chamber locking ring 2",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 2,
+      "moving": "Chamber locking ring 2",
+      "guard": "Revolver support saddle"
+    },
+    {
+      "tick": 3,
+      "moving": "Chamber locking ring 0",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 3,
+      "moving": "Chamber locking ring 0",
+      "guard": "Curved rear breech crown"
+    },
+    {
+      "tick": 3,
+      "moving": "Chamber locking ring 0.001",
+      "guard": "Curved rear breech crown"
+    },
+    {
+      "tick": 3,
+      "moving": "Chamber locking ring 1",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 3,
+      "moving": "Chamber locking ring 1",
+      "guard": "Revolver support saddle"
+    },
+    {
+      "tick": 3,
+      "moving": "Chamber locking ring 2",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 3,
+      "moving": "Chamber locking ring 2",
+      "guard": "Revolver support saddle"
+    },
+    {
+      "tick": 4,
+      "moving": "Chamber locking ring 0",
+      "guard": "Revolver outer support ring"
+    },
+    {
+      "tick": 4,
+      "moving": "Chamber locking ring 0",
+      "guard": "Curved rear breech crown"
+    }
+  ],
+  "minimum_height": 1.7000000476837158,
+  "maximum_recoil": 0.7599999904632568,
+  "bore_alignment": [
+    {
+      "tick": 0,
+      "active_shell": 0,
+      "x_error": 3.6739405577555036e-17,
+      "height_error": 9.536743172944284e-08,
+      "recoil_error": 0.0
+    },
+    {
+      "tick": 90,
+      "active_shell": 1,
+      "x_error": 0.5196152329444885,
+      "height_error": 0.8999999999999999,
+      "recoil_error": 0.0
+    },
+    {
+      "tick": 180,
+      "active_shell": 2,
+      "x_error": 0.5196151733398438,
+      "height_error": 0.900000238418579,
+      "recoil_error": 0.0
+    }
+  ],
+  "visible_round_samples": [
+    {
+      "tick": 0,
+      "loaded": 3
+    },
+    {
+      "tick": 1,
+      "loaded": 2
+    },
+    {
+      "tick": 90,
+      "loaded": 2
+    },
+    {
+      "tick": 91,
+      "loaded": 1
+    },
+    {
+      "tick": 180,
+      "loaded": 1
+    },
+    {
+      "tick": 181,
+      "loaded": 0
+    },
+    {
+      "tick": 499,
+      "loaded": 0
+    },
+    {
+      "tick": 500,
+      "loaded": 3
+    },
+    {
+      "tick": 600,
+      "loaded": 3
+    }
+  ],
+  "scope": "Full-frame source chamber/guard intersections, bore alignment, floor and recoil; not continuous collision proof, exported-model validity or native gameplay acceptance"
+}

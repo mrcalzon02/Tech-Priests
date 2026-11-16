@@ -1,0 +1,31 @@
+{
+  "status": "SUPERSEDED_REDUNDANT_CAGE_CROSSBAR_REMOVAL",
+  "base_included": false,
+  "socket": [
+    0,
+    0,
+    1.7
+  ],
+  "mechanism": "Single siege barrel with three-chamber revolving breech and entire breech/barrel recoil carriage",
+  "owner_agreed": "Three-shell rolling barrage, then long reload",
+  "provisional_shot_ticks": [
+    0,
+    90,
+    180
+  ],
+  "cycle_ticks": 600,
+  "last_shot_to_next": 420,
+  "vanilla_artillery_cooldown": 200,
+  "balance_plan": "Native shell damage, range and one shell consumed per shot; same 3 shells / 600 ticks sustained output as vanilla. Research scales the full cycle.",
+  "firing_elevation_degrees": 35,
+  "reload_elevation_degrees": 0,
+  "mechanical_direction_owner_accepted": true,
+  "mount_load_path": "Yoke feet -> full distribution plate -> radial gussets -> central pedestal -> 16-bolt traverse flange",
+  "centered_trunnion_over_plate": true,
+  "runtime_implemented": false,
+  "visual_approval": false,
+  "collision_acceptance": false,
+  "native_sha256": "09685193de1f7b5bf92e04a4267f77ab004caa9b5cec71f339c3ff98e204f697",
+  "superseded_by": "../candidate-v11",
+  "reason": "Owner identified broad saddle bar attached only to the cage; remove redundant saddle bars and retain ring-to-recoil-bed load brackets"
+}

@@ -1,0 +1,23 @@
+{
+  "status": "SOURCE_MODEL_CHECKPOINT",
+  "files": {
+    "contract.json": "8a1377fea18c28f5e1ef2f05b7a788faeb5ae232ac3180fc88fa0b90502c48c4",
+    "front.png": "56d109ab97478408387669c2794a14257818589eba6773fe634d8a2edeeeec3c",
+    "import-clay.png": "7f608e386cdf7899996e90bb41c8cbf2324e7211ceed0395c3a88d87f3cde930",
+    "import-front.png": "aa3291e2b0b8c14309bc9c2bfa0f350ef0ad33d4bc860f0f419b7d39d0cd2cb1",
+    "import-quarter.png": "7ccb73da8fb38d7f266bbbbd6dcac227539804eaac1dfa8be22878deadcc6a51",
+    "import-rear.png": "17ac13d94675cb6e0ca8a63c114a8fe19317a7124cd1fb95441aa2aaa7a1708b",
+    "independent-export-inspection.json": "cb5f9b07a29ed525609615453e2e657144b400bd62ae112447698d2c92265a03",
+    "motion-preview.gif": "3acd217381f8e3601cfe1f3a8f5c903d7098f8ec2932b995f16f903422a8e984",
+    "motion-preview.json": "60b0cf39c5f3d68016319ccbe19bf08d09158e96f8c13bc52de78719c36a0f24",
+    "mount-detail.png": "acf0332e79e5b3d6ee0ccdcc1c8bea73c54d12f05ae73f49d62baa9e90455ca3",
+    "quarter.png": "9260509048e0e12ad16c1a3a2b2dede392bfede8d035622ec86b1919fbacdb92",
+    "rear.png": "fdc767373b9556aab241bee03f080ddbd155ce1ac48f2ffc152f45450e1044ca",
+    "reload.png": "e60994e0e3998f7b90405a446e005ff64c219de123bb74d73635e6828bb135d9",
+    "review.json": "0ef3d633e4fc6cc3087502e35576dca6fcd797d45ba56e33d41d1235b8cb8e1e",
+    "rolling-artillery.blend": "52100d1aa5d99aee0b286b79f0c5d07d3a73d9873d30b05e9385dbaa1f59dfa1",
+    "rolling-artillery.glb": "d89b7feb8c3804039333de4c9899962d80172283b00390e80896a4fd80b39ba4",
+    "side.png": "cee7c9b73a1f83c709ca96b81549f4fcfefa7ae838c3fe9f01b20fd6076d7714",
+    "source-motion-check.json": "515c88595ae55616b523b6090ecbb76a6f3d18fa35b73a2858e1c556c55b402e"
+  }
+}

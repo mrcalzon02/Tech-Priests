@@ -1,0 +1,26 @@
+{
+  "status": "REJECTED_SOURCE_INTERFACES",
+  "base_included": false,
+  "socket": [
+    0,
+    0,
+    1.7
+  ],
+  "mechanism": "Single siege barrel with three-chamber revolving breech and entire breech/barrel recoil carriage",
+  "owner_agreed": "Three-shell rolling barrage, then long reload",
+  "provisional_shot_ticks": [
+    0,
+    90,
+    180
+  ],
+  "cycle_ticks": 600,
+  "last_shot_to_next": 420,
+  "vanilla_artillery_cooldown": 200,
+  "balance_plan": "Native shell damage, range and one shell consumed per shot; same 3 shells / 600 ticks sustained output as vanilla. Research scales the full cycle.",
+  "runtime_implemented": false,
+  "visual_approval": false,
+  "collision_acceptance": false,
+  "native_sha256": "1f615939e8c5e3ed9e4b16960fc193fbe9a1d5a7d5aa3c481ac34f4e68be9db7",
+  "rejection_evidence": "source-motion-check.json",
+  "superseded_by": "../candidate-v02"
+}

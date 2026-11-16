@@ -1,0 +1,31 @@
+{
+  "status": "SUPERSEDED_VISIBLE_ANCHOR_NUT_REFINEMENT",
+  "base_included": false,
+  "socket": [
+    0,
+    0,
+    1.7
+  ],
+  "mechanism": "Single siege barrel with three-chamber revolving breech and entire breech/barrel recoil carriage",
+  "owner_agreed": "Three-shell rolling barrage, then long reload",
+  "provisional_shot_ticks": [
+    0,
+    90,
+    180
+  ],
+  "cycle_ticks": 600,
+  "last_shot_to_next": 420,
+  "vanilla_artillery_cooldown": 200,
+  "balance_plan": "Native shell damage, range and one shell consumed per shot; same 3 shells / 600 ticks sustained output as vanilla. Research scales the full cycle.",
+  "firing_elevation_degrees": 35,
+  "reload_elevation_degrees": 0,
+  "mechanical_direction_owner_accepted": true,
+  "mount_load_path": "Yoke feet -> full distribution plate -> radial gussets -> central pedestal -> 16-bolt traverse flange",
+  "centered_trunnion_over_plate": true,
+  "runtime_implemented": false,
+  "visual_approval": false,
+  "collision_acceptance": false,
+  "native_sha256": "522a7e0f3db3ca2e4f07fb7cb3cec104fae370acaf637380a8063941e2589e90",
+  "superseded_by": "../candidate-v09",
+  "reason": "Retain the checked centered mount; move foot fasteners clear of the casting so they are visible and accessible"
+}

@@ -10,3 +10,5 @@ tech-priests_src/scripts/rocket_salvo_controller.lua text eol=lf
 # Generated socket tables retain their checked writer bytes on every platform.
 tech-priests_src/scripts/rocket_salvo_geometry.lua -text whitespace=cr-at-eol
 tech-priests_src/scripts/rocket_salvo_geometry.json -text whitespace=cr-at-eol
+tools/art/*artillery*.py text eol=lf
+tools/make_artillery*.py text eol=lf

@@ -1,0 +1,83 @@
+{
+  "status": "PASS_SOURCE_INTERFACES",
+  "source_sha256": "9bb1c8eb7aa3003460a0c02b00a2bc243fa5c7f21737e58f183351fac8e82f42",
+  "frames_checked": 601,
+  "tested_rotating_meshes": 9,
+  "tested_guard_meshes": 24,
+  "failures": [],
+  "collision_examples": [],
+  "slide_collision_examples": [],
+  "gate_collision_examples": [],
+  "minimum_height": 1.7000000476837158,
+  "maximum_recoil": 0.7599999904632568,
+  "bore_alignment": [
+    {
+      "tick": 0,
+      "active_shell": 0,
+      "x_error": 3.6739405577555036e-17,
+      "height_error": 5.960464477539063e-08,
+      "recoil_error": 0.0,
+      "firing_angle_degrees": 34.99999983559887
+    },
+    {
+      "tick": 90,
+      "active_shell": 1,
+      "x_error": 5.960464477539063e-08,
+      "height_error": 0.0,
+      "recoil_error": 0.0,
+      "firing_angle_degrees": 34.99999983559887
+    },
+    {
+      "tick": 180,
+      "active_shell": 2,
+      "x_error": 2.9802322387695312e-08,
+      "height_error": 0.0,
+      "recoil_error": 0.0,
+      "firing_angle_degrees": 34.99999983559887
+    }
+  ],
+  "visible_round_samples": [
+    {
+      "tick": 0,
+      "loaded": 3
+    },
+    {
+      "tick": 1,
+      "loaded": 2
+    },
+    {
+      "tick": 90,
+      "loaded": 2
+    },
+    {
+      "tick": 91,
+      "loaded": 1
+    },
+    {
+      "tick": 180,
+      "loaded": 1
+    },
+    {
+      "tick": 181,
+      "loaded": 0
+    },
+    {
+      "tick": 499,
+      "loaded": 0
+    },
+    {
+      "tick": 500,
+      "loaded": 3
+    },
+    {
+      "tick": 600,
+      "loaded": 3
+    }
+  ],
+  "reload_angles_degrees": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "scope": "Full-frame chamber/guard, reload-gate and sliding-bushing/support intersections, elevated bore alignment, level reload, floor and recoil; not continuous collision proof, exported-model validity or native gameplay acceptance"
+}

@@ -1,7 +1,8 @@
 """Independently import both GLBs, inspect their actual geometry and render it."""
 import bpy,sys,json,math,hashlib
 from pathlib import Path
-from mathutils import Vector
+from mathutils import Vector,Matrix
+from bpy_extras.object_utils import world_to_camera_view
 args=sys.argv[sys.argv.index('--')+1:]
 root=Path(args[0]);reports=[]
 for name in (args[1:] or ('chicago-piano','twin-minigun')):
@@ -32,9 +33,18 @@ for name in (args[1:] or ('chicago-piano','twin-minigun')):
     assert images and all(min(im['size'])>=128 for im in images)
     S.render.resolution_x=S.render.resolution_y=512;S.render.resolution_percentage=100;S.cycles.samples=8
     turn=next(o for o in S.objects if o.type=='EMPTY' and o.name.startswith('TURRET_TRAVERSE'))
-    turn.rotation_mode='XYZ'
+    base_transform=turn.matrix_world.copy()
+    review_scale=S.camera.data.ortho_scale
     for view,yaw in [('import-front',0),('import-rear',math.pi),('import-quarter',math.pi/4)]:
-        turn.rotation_euler.z=yaw;S.render.filepath=str(O/(view+'.png'));bpy.ops.render.render(write_still=True)
+        turn.matrix_world=Matrix.Rotation(yaw,4,'Z')@base_transform
+        S.camera.data.ortho_scale=review_scale
+        for attempt in range(12):
+            bpy.context.view_layer.update()
+            projected=[world_to_camera_view(S,S.camera,o.matrix_world@Vector(corner)) for o in imported for corner in o.bound_box]
+            if all(.025<p.x<.975 and .025<p.y<.975 for p in projected):break
+            S.camera.data.ortho_scale*=1.12
+        else:raise AssertionError('Runtime-model review does not fit camera')
+        S.render.filepath=str(O/(view+'.png'));bpy.ops.render.render(write_still=True)
     clay=bpy.data.materials.new('Independent clay');clay.use_nodes=True
     shader=clay.node_tree.nodes.get('Principled BSDF')
     shader.inputs['Base Color'].default_value=(.22,.22,.22,1)

@@ -1,0 +1,227 @@
+{
+  "status": "FAIL",
+  "source_sha256": "24879ef25076f7de2ebf4c8aae48ce2b0d65a8bfc3e012070212b23ec17b2d98",
+  "frames_checked": 601,
+  "tested_rotating_meshes": 9,
+  "tested_guard_meshes": 24,
+  "failures": [
+    "Sliding carriage intersects stationary support"
+  ],
+  "collision_examples": [],
+  "slide_collision_examples": [
+    {
+      "tick": 0,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 0,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 59,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 59,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 60,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 60,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 61,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 61,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 62,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 62,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 63,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 63,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 64,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 64,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 65,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 65,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 66,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 66,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 67,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 67,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 68,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 68,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 69,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 69,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 70,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 70,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 71,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 71,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    },
+    {
+      "tick": 72,
+      "moving": "Ring to recoil-bed structural strut",
+      "support": "Load-bearing fork cheek"
+    },
+    {
+      "tick": 72,
+      "moving": "Ring to recoil-bed structural strut.001",
+      "support": "Load-bearing fork cheek.001"
+    }
+  ],
+  "minimum_height": 1.7000000476837158,
+  "maximum_recoil": 0.7599999904632568,
+  "bore_alignment": [
+    {
+      "tick": 0,
+      "active_shell": 0,
+      "x_error": 3.6739405577555036e-17,
+      "height_error": 9.536743172944284e-08,
+      "recoil_error": 0.0
+    },
+    {
+      "tick": 90,
+      "active_shell": 1,
+      "x_error": 5.960464477539063e-08,
+      "height_error": 9.536743172944284e-08,
+      "recoil_error": 0.0
+    },
+    {
+      "tick": 180,
+      "active_shell": 2,
+      "x_error": 2.9802322387695312e-08,
+      "height_error": 1.4305114737211966e-07,
+      "recoil_error": 0.0
+    }
+  ],
+  "visible_round_samples": [
+    {
+      "tick": 0,
+      "loaded": 3
+    },
+    {
+      "tick": 1,
+      "loaded": 2
+    },
+    {
+      "tick": 90,
+      "loaded": 2
+    },
+    {
+      "tick": 91,
+      "loaded": 1
+    },
+    {
+      "tick": 180,
+      "loaded": 1
+    },
+    {
+      "tick": 181,
+      "loaded": 0
+    },
+    {
+      "tick": 499,
+      "loaded": 0
+    },
+    {
+      "tick": 500,
+      "loaded": 3
+    },
+    {
+      "tick": 600,
+      "loaded": 3
+    }
+  ],
+  "scope": "Full-frame chamber/guard and sliding-bushing/support intersections, bore alignment, floor and recoil; not continuous collision proof, exported-model validity or native gameplay acceptance"
+}
