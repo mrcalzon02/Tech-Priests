@@ -2843,3 +2843,55 @@ scenario("later science cannot become timed station output without a native reci
  end
 end)
 print("[bootstrap-production-regression] PASS scenarios="..total)
+
+scenario("missing native power kit conserves ingredients and resumes exact lab task",function()
+  local f=fixture()
+  local Power=package.loaded["scripts.core.power_setup_1252"]
+  local prior_power=Power.service_pair
+  local prior_recipe=tech_priests_get_recipe_ingredients_for_item_0185
+  local previous_item=prototypes.item["steam-engine"]
+  prototypes.item["steam-engine"]={place_result={name="steam-engine"}}
+  f.force.recipes["steam-engine"]={enabled=true,products={{name="steam-engine",type="item"}}}
+  tech_priests_get_recipe_ingredients_for_item_0185=function(item)
+    if item=="steam-engine"then return{{name="iron-gear-wheel",count=10},{name="iron-plate",count=10},{name="pipe",count=5}}end
+    return prior_recipe(item)
+  end
+  local previous_pipe=prototypes.item.pipe;prototypes.item.pipe={place_result={name="pipe"}}
+  f.source.insert{name="iron-gear-wheel",count=10};f.source.insert{name="iron-plate",count=10};f.source.insert{name="pipe",count=5}
+  local installed=false
+  Power.service_pair=function(p)
+    local reason=installed and"shared-native-electric-network-await-fuel-or-generation"or"equipment-shortage:steam-engine"
+    p.power_setup_observation_1252={tick=game.tick,reason=reason,load_unit=333}
+    return false,reason
+  end
+  local old_find=f.surface.find_entities_filtered
+  f.surface.find_entities_filtered=function(q)
+    if q.name=="steam-engine"then return installed and{{valid=true,name="steam-engine",force=f.force,surface=f.surface}}or{}end
+    return old_find(q)
+  end
+  local parent={output_item="lab",item_name="lab",count=1,required_count=1,target_stock_0647=3,
+    strict_recipe_0647=true,facility_only_0647=true,infrastructure_first_0640=true,facility_started_tick_0514=123}
+  local original_gate={item="lab",tick=123}
+  f.pair.emergency_craft=parent;f.pair.local_infrastructure_gate_0640=original_gate
+  f.pair.independent_emergency_operation_0184={enabled=true}
+  f.pair.mode="emergency-gathering"
+  Infra.service_pair(f.pair,"native-power-kit-dependency")
+  check(f.pair.native_power_recipe_prerequisite_1297.parent_task==parent
+    and f.pair.emergency_craft.output_item=="steam-engine"and f.pair.emergency_craft.strict_recipe_0647,
+    "native power shortage did not retain lab identity and select a funded strict engine recipe")
+  game.tick=game.tick+10000
+  Production.service_pair(f.pair,"finish-paid-power-kit")
+  check(f.source.get_item_count("steam-engine")==1 and f.source.get_item_count("iron-gear-wheel")==0
+    and f.source.get_item_count("iron-plate")==0 and f.source.get_item_count("pipe")==0,
+    "power kit was not paid by the exact ordinary recipe transaction")
+  -- Emulate only the existing constructor's completed paid placement.
+  check(f.source.remove{name="steam-engine",count=1}==1,"test installed an unfunded engine")
+  installed=true
+  local resumed,why=Infra.service_pair(f.pair,"physical-power-kit-installed")
+  check(resumed and why=="native-power-parent-resumed-1297"and f.pair.emergency_craft==parent
+    and f.pair.local_infrastructure_gate_0640==original_gate and parent.target_stock_0647==3
+    and parent.facility_started_tick_0514==123 and not f.pair.native_power_recipe_prerequisite_1297,
+    "native installation failed to resume the exact original lab transaction")
+  Power.service_pair=prior_power;tech_priests_get_recipe_ingredients_for_item_0185=prior_recipe
+  prototypes.item["steam-engine"]=previous_item;prototypes.item.pipe=previous_pipe
+end)

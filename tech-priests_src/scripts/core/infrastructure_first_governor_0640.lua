@@ -19,6 +19,7 @@ local CooperativeLabor=require("scripts.core.cooperative_labor_allocator_0690")
 -- Preloaded during mod initialization; Factorio 2.0 forbids runtime require.
 local PowerSetup1252=require("scripts.core.power_setup_1252")
 local NativeElectric1251=require("scripts.core.native_electric_authority_1263")
+local PowerRecipe1297=require("scripts.core.native_power_recipe_prerequisite_1297")
 
 local M = {}
 M.version = "0.1.643"
@@ -66,6 +67,7 @@ local HIGH_TIER_ITEMS = {
 }
 
 local LOCAL_PRODUCTS = {
+  ["offshore-pump"]=true,boiler=true,["steam-engine"]=true,["small-electric-pole"]=true,pipe=true,
   ["iron-plate"] = true,
   ["copper-plate"] = true,
   ["stone-brick"] = true,
@@ -438,8 +440,54 @@ function M.factory_component_material_need(pair)
   end
 end
 
+local function pending_recipe_need(pair,pending)
+  local pending_need=1
+  if type(pending)=="table" and pending.missing then
+    for _,ingredient in ipairs(pending.ingredients or {}) do
+      if ingredient.name==pending.missing then
+        pending_need=math.max(1,tonumber(ingredient.count) or 1)
+        break
+      end
+    end
+  end
+  if type(pending)=="table" and local_product(pending.missing)
+      and pending.missing~=pending.item
+      and station_count(pair,pending.missing)<pending_need then
+    local next_item=pending.missing
+    local seen={}
+    for _=1,4 do
+      if seen[next_item] then break end
+      seen[next_item]=true
+      local recipe=type(_G.tech_priests_get_recipe_ingredients_for_item_0185)=="function"
+        and _G.tech_priests_get_recipe_ingredients_for_item_0185(next_item) or nil
+      local child=nil
+      for _,ingredient in ipairs(type(recipe)=="table" and recipe or {}) do
+        local n=ingredient.name
+        if n and n~=next_item and local_product(n) and item_exists(n)
+            and station_count(pair,n)<math.max(1,tonumber(ingredient.count) or 1)
+            and not seen[n] then child=n;break end
+      end
+      if not child then break end
+      next_item=child
+    end
+    return next_item,"recipe-prerequisite-for:"..tostring(pending.item)
+  end
+  -- Preserve a child recipe while its missing ingredient is raw. Otherwise
+  -- the central plan reselects the parent drill every pulse, overwrites the
+  -- stone/ore request, and never converts accumulated raw stock into the child.
+  if type(pending)=="table" and pending.missing and item_exists(pending.item) then
+    return pending.item,pending.reason or ("pending-recipe-material:"..tostring(pending.item))
+  end
+
+end
+
 local function need_local_step(pair)
   if not valid_pair(pair) then return nil, "invalid" end
+  if PowerRecipe1297.request_owned(pair)then
+    local pending=pair.infrastructure_recipe_request_0647
+    local item,why=pending_recipe_need(pair,pending)
+    return item or pending.item,why or "native-power-kit-prerequisite-1297"
+  end
   local roles = known_facility_roles(pair)
   local resources_in_range = has_resource_patches(pair)
   local normal_miner_item = best_normal_miner_item(pair)
@@ -691,43 +739,8 @@ local function need_local_step(pair)
       return "electronic-circuit","bootstrap-first-electronics"
     end
   end
-  local pending_need=1
-  if type(pending)=="table" and pending.missing then
-    for _,ingredient in ipairs(pending.ingredients or {}) do
-      if ingredient.name==pending.missing then
-        pending_need=math.max(1,tonumber(ingredient.count) or 1)
-        break
-      end
-    end
-  end
-  if type(pending)=="table" and local_product(pending.missing)
-      and pending.missing~=pending.item
-      and station_count(pair,pending.missing)<pending_need then
-    local next_item=pending.missing
-    local seen={}
-    for _=1,4 do
-      if seen[next_item] then break end
-      seen[next_item]=true
-      local recipe=type(_G.tech_priests_get_recipe_ingredients_for_item_0185)=="function"
-        and _G.tech_priests_get_recipe_ingredients_for_item_0185(next_item) or nil
-      local child=nil
-      for _,ingredient in ipairs(type(recipe)=="table" and recipe or {}) do
-        local n=ingredient.name
-        if n and n~=next_item and local_product(n) and item_exists(n)
-            and station_count(pair,n)<math.max(1,tonumber(ingredient.count) or 1)
-            and not seen[n] then child=n;break end
-      end
-      if not child then break end
-      next_item=child
-    end
-    return next_item,"recipe-prerequisite-for:"..tostring(pending.item)
-  end
-  -- Preserve a child recipe while its missing ingredient is raw. Otherwise
-  -- the central plan reselects the parent drill every pulse, overwrites the
-  -- stone/ore request, and never converts accumulated raw stock into the child.
-  if type(pending)=="table" and pending.missing and item_exists(pending.item) then
-    return pending.item,pending.reason or ("pending-recipe-material:"..tostring(pending.item))
-  end
+  local child,child_reason=pending_recipe_need(pair,pending)
+  if child then return child,child_reason end
 
   -- Make the first real workshop exercise its physical electronics recipe
   -- before the costlier standard drill. Every copper-cable subrecipe still
@@ -2042,6 +2055,10 @@ function M.service_pair(pair, reason)
   local generation_requested,generation_reason=
     PowerSetup1252.service_pair(pair,{audit_only=r.audit_only})
   if generation_requested then return false,generation_reason end
+  if r.audit_only~=true then
+    if PowerRecipe1297.restore(pair)then return true,"native-power-parent-resumed-1297"end
+    PowerRecipe1297.begin(pair,generation_reason)
+  end
   local power_requested,power_reason=M.request_installed_lab_power_pole_1251(pair)
   if power_requested then return false,power_reason end
   complete_first_circuit_plate_reserve(pair)
@@ -2053,7 +2070,7 @@ function M.service_pair(pair, reason)
   -- cheaper cable job each pulse permanently starves the first science
   -- unlock despite abundant real circuits. Preserve the existing parent
   -- request without assigning fictitious items or stealing active custody.
-  local committed_science_prerequisite=false
+  local committed_science_prerequisite=PowerRecipe1297.request_owned(pair)
   local science_parent=pair.infrastructure_recipe_request_0647
   for _=1,6 do
     if type(science_parent)~="table" then break end
