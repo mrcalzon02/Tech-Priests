@@ -20,3 +20,6 @@ if mods["space-age"] then
 end
 
 require("prototypes.gui_inner_styles_0635")
+
+-- Register after the legacy standalone preview's data.lua when a player has both enabled.
+require("prototypes.plasma_reactor_family")

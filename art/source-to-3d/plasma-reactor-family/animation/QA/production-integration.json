@@ -1,0 +1,594 @@
+{
+  "engine": "Factorio 2.1.24 build 87808 Linux headless",
+  "file": "tech-priests_0.1.681.zip",
+  "archive_bytes": 987188182,
+  "archive_sha256": "e4b4b7e61dc9904683d7e29b156b2b24e8cdc3f877df4b7de65ea668a8ebbd40",
+  "runs": {
+    "hr": {
+      "loaded_mods": [
+        "base",
+        "elevated-rails",
+        "quality",
+        "recycler",
+        "space-age",
+        "reactor-family-acceptance",
+        "tech-priests"
+      ],
+      "startup_resolution": "hr",
+      "production_layer_uses": 60,
+      "png_sheets_equal_to_approved_export": 48,
+      "icons_equal_to_approved_export": 3,
+      "registered_cells_compared_to_capture": 408,
+      "power_cycles": [
+        {
+          "tier": "minoris",
+          "direction": 0,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 4,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 8,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 12,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 0,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 4,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 8,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 12,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 0,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 4,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 8,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 12,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        }
+      ],
+      "crafting_unlocks": [
+        {
+          "recipe": "mars-plasma-reactor-minoris",
+          "technology": "cogitator-station-deployment",
+          "ingredients": {
+            "steel-plate": 20,
+            "copper-cable": 40,
+            "pipe": 10,
+            "steam-engine": 1
+          }
+        },
+        {
+          "recipe": "mars-plasma-reactor-majoris",
+          "technology": "intermediate-cogitator-stations",
+          "ingredients": {
+            "steel-plate": 30,
+            "advanced-circuit": 10,
+            "pipe": 20,
+            "mars-plasma-reactor-minoris": 1
+          }
+        },
+        {
+          "recipe": "mars-plasma-reactor-maximus",
+          "technology": "senior-cogitator-stations",
+          "ingredients": {
+            "steel-plate": 60,
+            "advanced-circuit": 20,
+            "pipe": 40,
+            "mars-plasma-reactor-majoris": 1
+          }
+        }
+      ],
+      "native_assemblers_crafted_all_three": true,
+      "mined_items_recovered": 12
+    },
+    "sd": {
+      "loaded_mods": [
+        "base",
+        "reactor-family-acceptance",
+        "tech-priests"
+      ],
+      "startup_resolution": "sd",
+      "production_layer_uses": 60,
+      "png_sheets_equal_to_approved_export": 48,
+      "icons_equal_to_approved_export": 3,
+      "registered_cells_compared_to_capture": 408,
+      "power_cycles": [
+        {
+          "tier": "minoris",
+          "direction": 0,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 4,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 8,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 12,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 0,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 4,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 8,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 12,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 0,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 4,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 8,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 12,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        }
+      ],
+      "crafting_unlocks": [
+        {
+          "recipe": "mars-plasma-reactor-minoris",
+          "technology": "cogitator-station-deployment",
+          "ingredients": {
+            "steel-plate": 20,
+            "copper-cable": 40,
+            "pipe": 10,
+            "steam-engine": 1
+          }
+        },
+        {
+          "recipe": "mars-plasma-reactor-majoris",
+          "technology": "intermediate-cogitator-stations",
+          "ingredients": {
+            "steel-plate": 30,
+            "advanced-circuit": 10,
+            "pipe": 20,
+            "mars-plasma-reactor-minoris": 1
+          }
+        },
+        {
+          "recipe": "mars-plasma-reactor-maximus",
+          "technology": "senior-cogitator-stations",
+          "ingredients": {
+            "steel-plate": 60,
+            "advanced-circuit": 20,
+            "pipe": 40,
+            "mars-plasma-reactor-majoris": 1
+          }
+        }
+      ],
+      "native_assemblers_crafted_all_three": true,
+      "mined_items_recovered": 12
+    },
+    "coexist": {
+      "loaded_mods": [
+        "base",
+        "elevated-rails",
+        "quality",
+        "recycler",
+        "space-age",
+        "mars-reactor-visuals",
+        "reactor-family-acceptance",
+        "tech-priests"
+      ],
+      "startup_resolution": "hr",
+      "production_layer_uses": 60,
+      "png_sheets_equal_to_approved_export": 48,
+      "icons_equal_to_approved_export": 3,
+      "registered_cells_compared_to_capture": 0,
+      "power_cycles": [
+        {
+          "tier": "minoris",
+          "direction": 0,
+          "generator_joules": 1999999.921875,
+          "load_joules": 74000000.15625,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 4,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 8,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 12,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 0,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 4,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 8,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 12,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 0,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 4,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 8,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 12,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        }
+      ],
+      "crafting_unlocks": [
+        {
+          "recipe": "mars-plasma-reactor-minoris",
+          "technology": "cogitator-station-deployment",
+          "ingredients": {
+            "steel-plate": 20,
+            "copper-cable": 40,
+            "pipe": 10,
+            "steam-engine": 1
+          }
+        },
+        {
+          "recipe": "mars-plasma-reactor-majoris",
+          "technology": "intermediate-cogitator-stations",
+          "ingredients": {
+            "steel-plate": 30,
+            "advanced-circuit": 10,
+            "pipe": 20,
+            "mars-plasma-reactor-minoris": 1
+          }
+        },
+        {
+          "recipe": "mars-plasma-reactor-maximus",
+          "technology": "senior-cogitator-stations",
+          "ingredients": {
+            "steel-plate": 60,
+            "advanced-circuit": 20,
+            "pipe": 40,
+            "mars-plasma-reactor-majoris": 1
+          }
+        }
+      ],
+      "native_assemblers_crafted_all_three": true,
+      "mined_items_recovered": 12
+    }
+  },
+  "save_upgrades": {
+    "station": {
+      "old_version": "0.1.681",
+      "new_version": "0.1.681",
+      "native_configuration_event": true,
+      "existing_forces_checked": 2,
+      "endgame_recipe_entitlements": [
+        true,
+        true,
+        true
+      ],
+      "midgame_recipe_entitlements": [
+        true,
+        false,
+        false
+      ],
+      "legacy_preview_placements_retained": 0,
+      "save_sha256": "bb20317dd2ed22d517a05cebd5c2e50e598dfe93ad02b50258dff9cc810a6ceb"
+    },
+    "release-only": {
+      "old_version": "0.1.681",
+      "new_version": "0.1.681",
+      "native_configuration_event": true,
+      "existing_forces_checked": 2,
+      "endgame_recipe_entitlements": [
+        true,
+        true,
+        true
+      ],
+      "midgame_recipe_entitlements": [
+        true,
+        false,
+        false
+      ],
+      "legacy_preview_placements_retained": 0,
+      "save_sha256": "b46bc1c1f7556a7baa54591819ae5d81a0071afd9660218eddf0fafa425c8dee"
+    },
+    "release-preview": {
+      "old_version": "0.1.681",
+      "new_version": "0.1.681",
+      "native_configuration_event": true,
+      "existing_forces_checked": 2,
+      "endgame_recipe_entitlements": [
+        true,
+        true,
+        true
+      ],
+      "midgame_recipe_entitlements": [
+        true,
+        false,
+        false
+      ],
+      "legacy_preview_placements_retained": 12,
+      "save_sha256": "bb78b8db0fe9d718b382271a325b0e50a1f25704571d309d2b351d79f3e6da31"
+    }
+  },
+  "machine_spirit": {
+    "minoris": {
+      "live_registered": true,
+      "trait_category": "reactor_machine",
+      "unit_number": 20
+    },
+    "majoris": {
+      "live_registered": true,
+      "trait_category": "reactor_machine",
+      "unit_number": 21
+    },
+    "maximus": {
+      "live_registered": true,
+      "trait_category": "reactor_machine",
+      "unit_number": 22
+    }
+  }
+}

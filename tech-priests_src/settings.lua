@@ -575,6 +575,14 @@ data:extend({
     allowed_values = {"auto", "high", "standard"},
     order = "z-performance-b[condenser-sprites]",
   },
+  {
+    type = "string-setting",
+    name = "tech-priests-reactor-sprite-resolution",
+    setting_type = "startup",
+    default_value = "hr",
+    allowed_values = {"hr", "sd"},
+    order = "z-performance-c[plasma-reactor-sprites]",
+  },
 })
 
 -- Method III experimental native original-body option. OFF by default:

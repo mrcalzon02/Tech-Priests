@@ -12,6 +12,14 @@ All three have an upright containment drum, a cut-through annular flange, a heli
 
 ![The three reactors in a common-scale Blender render](Previews/Mars_Reactor_Family.jpg)
 
+## In Tech Priests
+
+Minoris, Majoris and Maximus are craftable generators in the main mod. Cogitator Station Deployment unlocks Minoris (1 MW), Intermediate Cogitator Stations unlocks Majoris (2 MW), and Senior Cogitator Stations unlocks Maximus (4 MW). Each larger recipe uses the preceding reactor. Supply chemical fuel and connect an electrical load to run one. All three support four orientations and the reactor machine-spirit traits.
+
+![Production sprites under electrical load](animation/Previews/Tech_Priests_Reactor_Rotations.gif)
+
+The [packaged-mod test results](animation/QA/production-integration.json) cover recipe unlocks and assembly, fuel and electrical output, rotation, shutdown, mining, save upgrades, and machine-spirit registration.
+
 ## Open or edit
 
 Open `Blender/Mars_Reactor_Family.blend` to see the three reactors together. Each reactor has its own collection. Select a named assembly to edit it. Vertex groups identify components within the assembly, including individual types of fittings, plates, and bolts. Each reactor's ground pivot controls the whole model.
