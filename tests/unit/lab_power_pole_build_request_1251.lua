@@ -37,6 +37,9 @@ prototypes={
  entity={["small-electric-pole"]={supply_area_distance=2.5}},
 }
 local Governor=require("scripts.core.infrastructure_first_governor_0640")
+-- Factorio forbids require during every runtime callback, even for cached modules.
+local parsing_require=require
+require=function()error("native runtime require forbidden")end
 local function check(v,why)
  assert(v,"lab-pole-1251 "..why)
 end
@@ -147,3 +150,5 @@ check(not audit and audit_why=="lab-power-audit-only"
  and pair.structure_construction_requested_item==nil,
  "audit-only inspection scheduled physical work")
 print("[lab-power-pole-build-request-1251] PASS stocked exact pole request, native site, no item credit, incumbent custody, foreign pole, real distribution, generator not spoofed")
+
+require=parsing_require

@@ -1,5 +1,14 @@
 # Current Testing Goals
 
+## 2026-11-15 - Preload laboratory electricity authority for native planning
+
+Native service-result telemetry exposed a swallowed exception on every force-2 governor pass: request_installed_lab_power_pole_1251 called require after control.lua parsing. The electricity authority is now preloaded beside the other canonical dependencies. service_all persists each pair's last real result or caught error so a protected replay can distinguish an active wait from a failed planner. The laboratory pole regression now disables runtime require after loading the module; it fails on the previous source and passes the fix.
+
+Exact-source contact-arena-governor-preload-1296-final resumed the protected final contact-arena save and verified a new tick-112000 native save, leaving the input unchanged. Force 2 autonomously reopened its real lab recipe at tick 110070 under the existing science-priority rules; passive tick-111281 telemetry shows a canonical strict facility-only lab task and no require exception. The unchanged 2e9090aa baseline remained stopped and at zero science through tick 128046. No agent task, build, movement, research or item commands were used. This verifies restored planning, not completion of the still-unpowered lab or all-force science production.
+
+Selected regressions pass 70 Lua groups and 7 Python tests. Exact-source maintenance-governor-preload-1296-final passes all four ranks. Runtime governor bytes match both copied profiles. Native boiler/engine/pipe recovery remains a separate paid-construction proof; force-2 missing steam-engine supply and full science throughput remain open. Full fresh campaign, four-force factory acceptance and orbital science production/delivery/consumption are not accepted.
+
+
 ## 2026-11-15 - Search bounded native boiler sites after sparse failure
 
 The completed contact arena left force 3 at zero science with site-not-verified:boiler. A passive native audit at tick 113506 found 719 legal boiler positions within the same territory and with clear native fluid connections, despite the original sixteen-offset search failing. The existing bounded plus/minus-sixteen-tile generator fallback now also searches boilers, with a separate ten-second refusal cache. It retains native footprint, inlet, steam escape and territory checks. Only original 0338 spends the real machine kit and constructs it.

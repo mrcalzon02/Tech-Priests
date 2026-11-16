@@ -18,6 +18,7 @@
 local CooperativeLabor=require("scripts.core.cooperative_labor_allocator_0690")
 -- Preloaded during mod initialization; Factorio 2.0 forbids runtime require.
 local PowerSetup1252=require("scripts.core.power_setup_1252")
+local NativeElectric1251=require("scripts.core.native_electric_authority_1263")
 
 local M = {}
 M.version = "0.1.643"
@@ -1878,7 +1879,7 @@ function M.request_installed_lab_power_pole_1251(pair)
   -- 1263: physical geometry is only a build-site candidate. An actual
   -- installed lab pole is confirmed by Factorio's electric network identity;
   -- a nearby unconnected pole cannot prevent necessary infrastructure.
-  local electric=require("scripts.core.native_electric_authority_1263")
+  local electric=NativeElectric1251
   local ok_p,poles=pcall(function()
     return surface.find_entities_filtered{
       position=target.position,radius=10,force=force,type="electric-pole"}
@@ -2158,7 +2159,9 @@ function M.service_all(reason)
   for _, pair in pairs(pair_map()) do
     if serviced >= M.max_pairs_per_pulse then break end
     if valid_pair(pair) then
-      local ok, acted = pcall(M.service_pair, pair, reason or "pulse")
+      local ok, acted, detail = pcall(M.service_pair, pair, reason or "pulse")
+      pair.infrastructure_service_last_1296={tick=now(),acted=ok and acted==true,
+        reason=ok and tostring(detail)or "service-error",error=not ok and tostring(acted)or nil}
       if ok and acted then serviced = serviced + 1 end
     end
   end
