@@ -6,7 +6,7 @@
   "canonical_repo": "mrcalzon02/Tech-Priests",
   "source_commit": "b16f98c6e62d0a82697fd01eaa3fc6953c35ccde",
   "external_refs": {
-    "Tanks-for-bob-Fork": "eac7b729742959c48b9b2f7d86347ad1732ba80a",
+    "Tanks-for-bob-Fork": "648470b4448b4db9e619d48d4a64d2c2034d236e",
     "HB-TTRPG-tools": "5942590d944cd5aef03a973fdd941e03fd10d833"
   },
   "asset_units": {
@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 10,
+    "model_records": 11,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -333,6 +333,49 @@
         2
       ],
       "purpose": "Owner-approved Tanks native two-port burner pipe pump; fixed full-bore mouths, rigid slider-crank, restrained valve/gauge motion, packed PBR, 68 true frames and native transfer/reload/graphical placement proof."
+    },
+    {
+      "id": "tanks-fish-pond-v2",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "648470b4448b4db9e619d48d4a64d2c2034d236e",
+        "path": "models/island-survival/fish-pond/candidates/v2-production01/fish-pond-v2.blend",
+        "sha256": "a3e28a08e21a3c8325e3f8a27719432a83d5befdb7fc7acbac247cf88dce4eaa"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "648470b4448b4db9e619d48d4a64d2c2034d236e",
+        "path": "models/island-survival/fish-pond/candidates/v2-production01/fish-pond-v2.glb",
+        "sha256": "c806f92bc6e43727e13a3d168302a54981e3df0c0a8c8d05d0d4a088dfa2cef9"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "648470b4448b4db9e619d48d4a64d2c2034d236e",
+          "path": "models/island-survival/fish-pond/v2/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "648470b4448b4db9e619d48d4a64d2c2034d236e",
+          "path": "docs/art/fish-pond-v2/engine-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "648470b4448b4db9e619d48d4a64d2c2034d236e",
+          "path": "docs/art/fish-pond-v2/capture-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "648470b4448b4db9e619d48d4a64d2c2034d236e",
+          "path": "docs/art/fish-pond-v2/owner-disposition.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "Owner-accepted clay-basin fish pond; four swimming fish with editable tail strokes, packed PBR, one combined GLB working loop, 68 true frames, tested native idle/working states and four-way socket alignment. Gameplay preserved; current recipes use no fluids."
     }
   ],
   "programs": [

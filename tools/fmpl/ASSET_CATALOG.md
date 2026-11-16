@@ -1,4 +1,4 @@
-# FMPL v0.4.1 — Asset Catalog
+# FMPL v0.4.2 — Asset Catalog
 
 Source-indexed asset tabulation. **Not every model is game-ready; not every component is an approved interchangeable part.**
 
@@ -6,7 +6,7 @@ Source-indexed asset tabulation. **Not every model is game-ready; not every comp
 
 | PBR presets | Texture maps | Bunker part candidates | Verified shared parts | Models | Programs | Pipelines |
 |---:|---:|---:|---:|---:|---:|---:|
-| 23 | 69 | 21 | 0 | 10 | 22 | 6 |
+| 23 | 69 | 21 | 0 | 11 | 22 | 6 |
 
 ## Complete machine records and source state
 
@@ -21,8 +21,9 @@ Source-indexed asset tabulation. **Not every model is game-ready; not every comp
 | `tanks-campfire-v11` | four-direction-sprite-export-candidate | [models/island-survival/blender/build_campfire_scene.py](https://github.com/mrcalzon02/Tanks-for-bob-Fork/blob/3f38f801631a88460bca5599616edb0173f4a970/models/island-survival/blender/build_campfire_scene.py) |
 | `tanks-fluid-connector-jig` | committed-editable-reference | [models/reference/factorio-fluid-interface/factorio-fluid-interface-reference.blend](https://github.com/mrcalzon02/Tanks-for-bob-Fork/blob/3f38f801631a88460bca5599616edb0173f4a970/models/reference/factorio-fluid-interface/factorio-fluid-interface-reference.blend) |
 | `water-purifier-mh7` | process-pbr-technically-verified-unapproved | [tools/refinery-agent/goal_water_purifier.py](https://github.com/mrcalzon02/HB-TTRPG-tools/blob/5942590d944cd5aef03a973fdd941e03fd10d833/tools/refinery-agent/goal_water_purifier.py) |
-
 | `tanks-primitive-steam-powered-pump-v3` | game-sprites-installed-with-specific-native-checks | [editable pipe-pump-v3.blend](https://github.com/mrcalzon02/Tanks-for-bob-Fork/blob/eac7b729742959c48b9b2f7d86347ad1732ba80a/models/island-survival/primitive-steam-powered-pump/candidates/v3-production02/pipe-pump-v3.blend) · [native proof](https://github.com/mrcalzon02/Tanks-for-bob-Fork/tree/eac7b729742959c48b9b2f7d86347ad1732ba80a/docs/art/primitive-pipe-pump-v3) |
+
+| `tanks-fish-pond-v2` | game-sprites-installed-with-specific-native-checks | [editable fish-pond-v2.blend](https://github.com/mrcalzon02/Tanks-for-bob-Fork/blob/648470b4448b4db9e619d48d4a64d2c2034d236e/models/island-survival/fish-pond/candidates/v2-production01/fish-pond-v2.blend) · [native proof](https://github.com/mrcalzon02/Tanks-for-bob-Fork/tree/648470b4448b4db9e619d48d4a64d2c2034d236e/docs/art/fish-pond-v2) |
 
 ## Existing PBR materials
 

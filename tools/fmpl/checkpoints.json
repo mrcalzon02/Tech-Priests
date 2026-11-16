@@ -265,6 +265,41 @@
         "actual_graphical_screenshots": 8,
         "gameplay_fields_changed": false
       }
+    },
+    {
+      "event_id": "tanks-fish-pond-v2-installed-2026-11-15",
+      "asset_id": "tanks-fish-pond-v2",
+      "asset_kind": "model",
+      "revision": "v2-owner-accepted-native-integrated",
+      "state": "installed",
+      "source_sha256": "a3e28a08e21a3c8325e3f8a27719432a83d5befdb7fc7acbac247cf88dce4eaa",
+      "evidence": {
+        "source_artifact_sha256": "a3e28a08e21a3c8325e3f8a27719432a83d5befdb7fc7acbac247cf88dce4eaa",
+        "glb_sha256": "c806f92bc6e43727e13a3d168302a54981e3df0c0a8c8d05d0d4a088dfa2cef9",
+        "native_reopen_verified": true,
+        "owner_visual_approval": true,
+        "factorio_runtime_verified": true,
+        "native_port_alignment_verified": true,
+        "source_repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "source_commit": "648470b4448b4db9e619d48d4a64d2c2034d236e",
+        "source_path": "models/island-survival/fish-pond/candidates/v2-production01/fish-pond-v2.blend",
+        "runtime_path": "models/island-survival/fish-pond/candidates/v2-production01/fish-pond-v2.glb",
+        "manifest_path": "models/island-survival/fish-pond/v2/FMPL_MODEL.json",
+        "native_engine": "2.1.24",
+        "production_frame_count": 68,
+        "pose_checks": 97,
+        "embedded_pbr_images": 3,
+        "native_test_ponds": 20,
+        "native_facings": 4,
+        "stop_restart_blocked_output_no_fuel": true,
+        "harvest_and_catch_fish": true,
+        "test_only_fluid_contract": true,
+        "production_recipes_use_fluids": false,
+        "save_reload": true,
+        "actual_graphical_screenshots": 24,
+        "proof_addon_overrides_production_art": false,
+        "gameplay_fields_changed": false
+      }
     }
   ]
 }
