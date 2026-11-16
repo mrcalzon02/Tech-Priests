@@ -47,6 +47,25 @@ tech_priests_request_movement_0418=function(p,pos,reason,opts)
 end
 local Builder=require("scripts.core.construction_planner");TechPriestsConstructionPlanner0338=Builder
 local Void=require("scripts.core.void_orbital_construction_1292")
+-- The shared constructor must reject terrestrial and unbound actors even
+-- when a generic robot-network request bypasses the local bootstrap planner.
+pair.robot_network_request_0338={position={x=0,y=0}}
+pair.priest.name="senior-tech-priest"
+assert(not Builder.recommend_action(pair),"terrestrial priest received generic orbital construction")
+assert(Builder.service_pair(pair).detail=="orbital-void-manager-required")
+pair.priest.name="void-tech-priest"
+local own_surface=pair.priest.surface;pair.priest.surface={index=99}
+assert(not Builder.recommend_action(pair),"absent Void received generic orbital construction")
+assert(Builder.service_pair(pair).detail=="orbital-void-manager-required")
+pair.priest.surface=own_surface
+pair.priest.force={index=99};assert(not Builder.recommend_action(pair),"foreign Void received orbital construction")
+pair.priest.force=force
+-- An existing task is dispatched only for termination and physical restitution.
+pair.priest.name="senior-tech-priest";pair.construction_task_0338={phase="waiting-source",item_name="solar-panel"}
+assert(Builder.recommend_action(pair).reason=="orbital-void-manager-required")
+assert(Builder.service_pair(pair).detail=="orbital-void-manager-required")
+assert(not pair.construction_task_0338 and not pair.construction_custody_0338)
+pair.priest.name="void-tech-priest";pair.robot_network_request_0338=nil
 assert(Void.offer(pair)and not pair.construction_task_0338 and paid_tiles==0 and items["space-platform-foundation"]==10)
 assert(not Void.material_request(platform),"remote inspection invented a local Void plan")
 pair.station.name="senior-cogitator-station";assert(not Void.offer(pair));pair.station.name="void-cogitator-station"

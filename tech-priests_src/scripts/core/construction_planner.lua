@@ -24,6 +24,16 @@ local function now()return game and game.tick or 0 end
 local function valid(e)return e and e.valid end
 local function safe(v)if v==nil then return"nil"end;local ok,s=pcall(tostring,v);return ok and s or"?"end
 local function valid_pair(p)return type(p)=="table"and valid(p.station)and valid(p.priest)end
+-- Every orbital construction path, including generic/robot requests, needs
+-- the physically present bound Void manager. Ground construction is unchanged.
+local function orbital_manager_allows(pair)
+ local station_surface=pair and pair.station and pair.station.surface
+ local priest_surface=pair and pair.priest and pair.priest.surface
+ if(station_surface and station_surface.platform)or(priest_surface and priest_surface.platform)then
+  return VoidOrbital1292.context(pair)~=nil
+ end
+ return true
+end
 local function station_unit(p)return p and(p.station_unit or(valid(p.station)and p.station.unit_number))or nil end
 local function pair_map()return storage and storage.tech_priests and storage.tech_priests.pairs_by_station or{}end
 local function dist_sq(a,b)if not(a and b)then return math.huge end;local x=(a.x or 0)-(b.x or 0);local y=(a.y or 0)-(b.y or 0);return x*x+y*y end
@@ -1321,6 +1331,13 @@ function M.service_robot_network_pair_0338(pair)
 end
 function M.recommend_action(pair)
  if not pair then return nil end
+ if not orbital_manager_allows(pair)then
+  if pair.construction_task_0338 or pair.construction_custody_0338 then
+   return{kind="construction",family="construction",active=true,source="construction-planner-0338",
+    reason="orbital-void-manager-required"}
+  end
+  return nil
+ end
  if not pair.construction_task_0338 and not pair.construction_custody_0338 then
   -- A cached construction candidate must not monopolize the dispatcher
   -- while 0256 is physically evacuating this station. Preserve any
@@ -2716,6 +2733,11 @@ end
 function M.service_pair(pair,reason)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
  if VoidOrbital1292.owns(pair)then return VoidOrbital1292.service(pair,request_move_position,release_terminal_movement)end
+ if not orbital_manager_allows(pair)then
+  restore_orphan_custody(pair)
+  if pair.construction_task_0338 then return M.abort_pair(pair,"orbital-void-manager-required")end
+  return{processed=1,blocked=1,detail="orbital-void-manager-required"}
+ end
  if not pair.construction_task_0338 and not pair.construction_custody_0338 then
   local ok,rec=pcall(Recycling0822.reservation_for,pair)
   if not ok then
