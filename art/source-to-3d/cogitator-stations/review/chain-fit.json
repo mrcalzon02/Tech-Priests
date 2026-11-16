@@ -1,0 +1,297 @@
+{
+  "junior": {
+    "native_sha256": "2b4f602e1976957ae46715a2db2960181dbde5c3dc8377cf19ee2468d953e28c",
+    "passed": true,
+    "link_mesh_intersections": [],
+    "chains": {
+      "Port": {
+        "link_count": 11,
+        "interlocked_neighbour_pairs": 10,
+        "stock_diameter_bu": 0.0164,
+        "inside_width_bu": 0.0326,
+        "outside_length_bu": 0.116086,
+        "minimum_neighbour_clearance_bu": 0.0008377,
+        "pins": [
+          {
+            "mount": "upper knee",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0009683,
+            "plate_seated_on": "tapered engine casting",
+            "plate_hardware_intersections": []
+          },
+          {
+            "mount": "anchor shoe",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0012181,
+            "plate_seated_on": "split foundation shoes",
+            "plate_hardware_intersections": []
+          }
+        ]
+      },
+      "Starboard": {
+        "link_count": 11,
+        "interlocked_neighbour_pairs": 10,
+        "stock_diameter_bu": 0.0164,
+        "inside_width_bu": 0.0326,
+        "outside_length_bu": 0.116086,
+        "minimum_neighbour_clearance_bu": 0.0008377,
+        "pins": [
+          {
+            "mount": "upper knee",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0009683,
+            "plate_seated_on": "tapered engine casting",
+            "plate_hardware_intersections": []
+          },
+          {
+            "mount": "anchor shoe",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0012181,
+            "plate_seated_on": "split foundation shoes",
+            "plate_hardware_intersections": []
+          }
+        ]
+      }
+    }
+  },
+  "intermediate": {
+    "native_sha256": "b94c4697986b1f0719b2180d719062ed87487db76e3d98da74cb260b796b60da",
+    "passed": true,
+    "link_mesh_intersections": [],
+    "chains": {
+      "Port": {
+        "link_count": 11,
+        "interlocked_neighbour_pairs": 10,
+        "stock_diameter_bu": 0.0164,
+        "inside_width_bu": 0.0326,
+        "outside_length_bu": 0.113922,
+        "minimum_neighbour_clearance_bu": 0.0008356,
+        "pins": [
+          {
+            "mount": "upper knee",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0009285,
+            "plate_seated_on": "tapered engine casting",
+            "plate_hardware_intersections": []
+          },
+          {
+            "mount": "anchor shoe",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0011953,
+            "plate_seated_on": "split foundation shoes",
+            "plate_hardware_intersections": []
+          }
+        ]
+      },
+      "Starboard": {
+        "link_count": 11,
+        "interlocked_neighbour_pairs": 10,
+        "stock_diameter_bu": 0.0164,
+        "inside_width_bu": 0.0326,
+        "outside_length_bu": 0.113922,
+        "minimum_neighbour_clearance_bu": 0.0008356,
+        "pins": [
+          {
+            "mount": "upper knee",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0009285,
+            "plate_seated_on": "tapered engine casting",
+            "plate_hardware_intersections": []
+          },
+          {
+            "mount": "anchor shoe",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0011953,
+            "plate_seated_on": "split foundation shoes",
+            "plate_hardware_intersections": []
+          }
+        ]
+      }
+    }
+  },
+  "senior": {
+    "native_sha256": "fdb31aa6dc69df60cc2d0d1d2f02bfaec2837eb75a1bf5eae962819c21ee7030",
+    "passed": true,
+    "link_mesh_intersections": [],
+    "chains": {
+      "Port": {
+        "link_count": 11,
+        "interlocked_neighbour_pairs": 10,
+        "stock_diameter_bu": 0.0164,
+        "inside_width_bu": 0.0326,
+        "outside_length_bu": 0.100991,
+        "minimum_neighbour_clearance_bu": 0.0008221,
+        "pins": [
+          {
+            "mount": "upper knee",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0007284,
+            "plate_seated_on": "tapered engine casting",
+            "plate_hardware_intersections": []
+          },
+          {
+            "mount": "anchor shoe",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0010937,
+            "plate_seated_on": "split foundation shoes",
+            "plate_hardware_intersections": []
+          }
+        ]
+      },
+      "Starboard": {
+        "link_count": 11,
+        "interlocked_neighbour_pairs": 10,
+        "stock_diameter_bu": 0.0164,
+        "inside_width_bu": 0.0326,
+        "outside_length_bu": 0.100991,
+        "minimum_neighbour_clearance_bu": 0.0008221,
+        "pins": [
+          {
+            "mount": "upper knee",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0007284,
+            "plate_seated_on": "tapered engine casting",
+            "plate_hardware_intersections": []
+          },
+          {
+            "mount": "anchor shoe",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0010937,
+            "plate_seated_on": "split foundation shoes",
+            "plate_hardware_intersections": []
+          }
+        ]
+      }
+    }
+  },
+  "planetary-magos": {
+    "native_sha256": "fe0546ce9c68e0e4e474b883e231bf526468965fe3bd9d19db42e2af478d67e5",
+    "passed": true,
+    "link_mesh_intersections": [],
+    "chains": {
+      "Port": {
+        "link_count": 11,
+        "interlocked_neighbour_pairs": 10,
+        "stock_diameter_bu": 0.0164,
+        "inside_width_bu": 0.0326,
+        "outside_length_bu": 0.095769,
+        "minimum_neighbour_clearance_bu": 0.0008145,
+        "pins": [
+          {
+            "mount": "upper knee",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0006382,
+            "plate_seated_on": "tapered engine casting",
+            "plate_hardware_intersections": []
+          },
+          {
+            "mount": "anchor shoe",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0010508,
+            "plate_seated_on": "split foundation shoes",
+            "plate_hardware_intersections": []
+          }
+        ]
+      },
+      "Starboard": {
+        "link_count": 11,
+        "interlocked_neighbour_pairs": 10,
+        "stock_diameter_bu": 0.0164,
+        "inside_width_bu": 0.0326,
+        "outside_length_bu": 0.095769,
+        "minimum_neighbour_clearance_bu": 0.0008145,
+        "pins": [
+          {
+            "mount": "upper knee",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0006382,
+            "plate_seated_on": "tapered engine casting",
+            "plate_hardware_intersections": []
+          },
+          {
+            "mount": "anchor shoe",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0010508,
+            "plate_seated_on": "split foundation shoes",
+            "plate_hardware_intersections": []
+          }
+        ]
+      }
+    }
+  },
+  "void": {
+    "native_sha256": "915743f14441d56b1053a0144f0f08d69742c1e06ed9ffd33a697a4daea91406",
+    "passed": true,
+    "link_mesh_intersections": [],
+    "chains": {
+      "Port": {
+        "link_count": 11,
+        "interlocked_neighbour_pairs": 10,
+        "stock_diameter_bu": 0.0176,
+        "inside_width_bu": 0.0314,
+        "outside_length_bu": 0.097445,
+        "minimum_neighbour_clearance_bu": 0.0007878,
+        "pins": [
+          {
+            "mount": "upper knee",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0005299,
+            "plate_seated_on": "tapered engine casting",
+            "plate_hardware_intersections": []
+          },
+          {
+            "mount": "anchor shoe",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0009771,
+            "plate_seated_on": "split foundation shoes",
+            "plate_hardware_intersections": []
+          }
+        ]
+      },
+      "Starboard": {
+        "link_count": 11,
+        "interlocked_neighbour_pairs": 10,
+        "stock_diameter_bu": 0.0176,
+        "inside_width_bu": 0.0314,
+        "outside_length_bu": 0.097445,
+        "minimum_neighbour_clearance_bu": 0.0007878,
+        "pins": [
+          {
+            "mount": "upper knee",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0005299,
+            "plate_seated_on": "tapered engine casting",
+            "plate_hardware_intersections": []
+          },
+          {
+            "mount": "anchor shoe",
+            "passes_through_link": true,
+            "pin_diameter_bu": 0.024,
+            "stock_clearance_bu": 0.0009771,
+            "plate_seated_on": "split foundation shoes",
+            "plate_hardware_intersections": []
+          }
+        ]
+      }
+    }
+  }
+}

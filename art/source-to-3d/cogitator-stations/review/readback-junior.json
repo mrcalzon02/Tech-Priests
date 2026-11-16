@@ -1,0 +1,319 @@
+{
+  "edition": "junior",
+  "native_sha256": "2b4f602e1976957ae46715a2db2960181dbde5c3dc8377cf19ee2468d953e28c",
+  "glb_sha256": "6e64211197d63617fa541c6a4b4c07f08afa7fe944458d54469953fd228ce2ca",
+  "glb_structure": {
+    "node_count": 354,
+    "material_count": 15,
+    "image_count": 32,
+    "embedded_image_count": 32,
+    "external_buffers": [],
+    "camera_count": 0,
+    "light_count": 0
+  },
+  "native_camera": {
+    "name": "FMPL_CAPTURE_CAMERA",
+    "projection": "ORTHO",
+    "elevation_degrees": 44.99999418975172,
+    "role": "production",
+    "policy": "fmpl.factorio45.v1",
+    "orthographic_scale": 4.25
+  },
+  "native": {
+    "mesh_objects": 354,
+    "evaluated_vertices": 92905,
+    "evaluated_faces": 90799,
+    "bounds": [
+      [
+        -1.0576914548873901,
+        -1.0152902603149414,
+        0.009263158775866032
+      ],
+      [
+        1.0576914548873901,
+        0.8217474818229675,
+        3.416999340057373
+      ]
+    ],
+    "chain_link_count": 22,
+    "chain_mesh_datablocks": 22,
+    "chain_links_with_dimensions": 22,
+    "hydraulic_routes": {
+      "LH | instrument hardline": {
+        "architecture": "tube_brass_instrument",
+        "typed_endpoints": true,
+        "start": [
+          -0.83376,
+          -0.63,
+          0.5972096774193547
+        ],
+        "end": [
+          -0.39082500000000003,
+          -0.28,
+          1.9750000000000003
+        ],
+        "joint": "compression",
+        "bore": 0.048190000000000004
+      },
+      "LH | rear exchanger return": {
+        "architecture": "hose_metal_annular",
+        "typed_endpoints": true,
+        "start": [
+          -0.745945,
+          0.706,
+          0.4108064516129032
+        ],
+        "end": [
+          -0.442935,
+          0.529,
+          1.819
+        ],
+        "joint": "hose_crimp",
+        "bore": 0.06794
+      },
+      "LH | separator-to-bearing pressure line": {
+        "architecture": "tube_copper_capillary",
+        "typed_endpoints": true,
+        "start": [
+          -0.8299,
+          -0.185,
+          1.4511463414634147
+        ],
+        "end": [
+          -0.6880449999999999,
+          -0.064,
+          1.6380000000000001
+        ],
+        "joint": "compression",
+        "bore": 0.03318
+      },
+      "LH | shoulder supply casting": {
+        "architecture": "pipe_cast_iron_flanged",
+        "typed_endpoints": true,
+        "start": [
+          -0.9244699999999999,
+          -0.546,
+          0.43869354838709673
+        ],
+        "end": [
+          -0.5423300000000001,
+          -0.206,
+          1.915
+        ],
+        "joint": "flange",
+        "bore": 0.11455
+      },
+      "RH | rear exchanger return": {
+        "architecture": "hose_metal_annular",
+        "typed_endpoints": true,
+        "start": [
+          0.745945,
+          0.706,
+          0.4108064516129032
+        ],
+        "end": [
+          0.442935,
+          0.529,
+          1.819
+        ],
+        "joint": "hose_crimp",
+        "bore": 0.06794
+      },
+      "RH | shoulder supply casting": {
+        "architecture": "pipe_cast_iron_flanged",
+        "typed_endpoints": true,
+        "start": [
+          0.9244699999999999,
+          -0.546,
+          0.43869354838709673
+        ],
+        "end": [
+          0.5423300000000001,
+          -0.206,
+          1.915
+        ],
+        "joint": "flange",
+        "bore": 0.11455
+      }
+    },
+    "electrical_routes": 6,
+    "used_file_images": 32,
+    "packed_images": 32,
+    "unpacked_images": [],
+    "empty_meshes": [],
+    "missing_or_nonfinite_uvs": [],
+    "camera_count": 1,
+    "light_count": 4
+  },
+  "badge_alignment": [
+    {
+      "skull": "Junior \u00b7 consecration seal \u00b7 cast skull",
+      "seat": "Junior \u00b7 consecration seal \u00b7 cut wheel",
+      "bounds_center_xz_offset": [
+        -4.805624342907322e-09,
+        0.0037238861962798353
+      ],
+      "vertex_centroid_xz_offset": [
+        -0.0017419824417132805,
+        -0.01520640295487663
+      ],
+      "seat_xz_diameter": [
+        0.4932321012020111,
+        0.49323219060897827
+      ],
+      "relative_center_offset": 0.0075499658521518435,
+      "skull_forward_of_seat": true
+    }
+  ],
+  "roundtrip": {
+    "mesh_objects": 354,
+    "evaluated_vertices": 204466,
+    "evaluated_faces": 182778,
+    "bounds": [
+      [
+        -1.0576914548873901,
+        -1.0152902603149414,
+        0.009263158775866032
+      ],
+      [
+        1.0576914548873901,
+        0.8217474818229675,
+        3.416999340057373
+      ]
+    ],
+    "chain_link_count": 22,
+    "chain_mesh_datablocks": 22,
+    "chain_links_with_dimensions": 22,
+    "hydraulic_routes": {
+      "LH | instrument hardline": {
+        "architecture": "tube_brass_instrument",
+        "typed_endpoints": true,
+        "start": [
+          -0.83376,
+          -0.63,
+          0.5972096774193547
+        ],
+        "end": [
+          -0.39082500000000003,
+          -0.28,
+          1.9750000000000003
+        ],
+        "joint": "compression",
+        "bore": 0.048190000000000004
+      },
+      "LH | rear exchanger return": {
+        "architecture": "hose_metal_annular",
+        "typed_endpoints": true,
+        "start": [
+          -0.745945,
+          0.706,
+          0.4108064516129032
+        ],
+        "end": [
+          -0.442935,
+          0.529,
+          1.819
+        ],
+        "joint": "hose_crimp",
+        "bore": 0.06794
+      },
+      "LH | separator-to-bearing pressure line": {
+        "architecture": "tube_copper_capillary",
+        "typed_endpoints": true,
+        "start": [
+          -0.8299,
+          -0.185,
+          1.4511463414634147
+        ],
+        "end": [
+          -0.6880449999999999,
+          -0.064,
+          1.6380000000000001
+        ],
+        "joint": "compression",
+        "bore": 0.03318
+      },
+      "LH | shoulder supply casting": {
+        "architecture": "pipe_cast_iron_flanged",
+        "typed_endpoints": true,
+        "start": [
+          -0.9244699999999999,
+          -0.546,
+          0.43869354838709673
+        ],
+        "end": [
+          -0.5423300000000001,
+          -0.206,
+          1.915
+        ],
+        "joint": "flange",
+        "bore": 0.11455
+      },
+      "RH | rear exchanger return": {
+        "architecture": "hose_metal_annular",
+        "typed_endpoints": true,
+        "start": [
+          0.745945,
+          0.706,
+          0.4108064516129032
+        ],
+        "end": [
+          0.442935,
+          0.529,
+          1.819
+        ],
+        "joint": "hose_crimp",
+        "bore": 0.06794
+      },
+      "RH | shoulder supply casting": {
+        "architecture": "pipe_cast_iron_flanged",
+        "typed_endpoints": true,
+        "start": [
+          0.9244699999999999,
+          -0.546,
+          0.43869354838709673
+        ],
+        "end": [
+          0.5423300000000001,
+          -0.206,
+          1.915
+        ],
+        "joint": "flange",
+        "bore": 0.11455
+      }
+    },
+    "electrical_routes": 6,
+    "used_file_images": 32,
+    "packed_images": 32,
+    "unpacked_images": [],
+    "empty_meshes": [],
+    "missing_or_nonfinite_uvs": [],
+    "camera_count": 0,
+    "light_count": 0
+  },
+  "missing_object_names": [],
+  "additional_object_names": [],
+  "max_scene_bound_error_bu": 0.0,
+  "max_object_bound_error_bu": 1.1150779299917701e-08,
+  "largest_object_deltas": {
+    "Junior \u00b7 consecration seal \u00b7 inset seat": 1.1150779299917701e-08,
+    "Junior \u00b7 optical well": 8.214183333521419e-09,
+    "Hatch dog housing": 5.0389211136980805e-09,
+    "Starboard | tie chain | upper knee | mount stud": 3.79084852397682e-09
+  },
+  "checks": {
+    "scene_geometry_bounds": true,
+    "per_mesh_geometry_bounds": true,
+    "mesh_node_names": true,
+    "all_meshes_nonempty": true,
+    "all_meshes_have_finite_uvs": true,
+    "native_camera": true,
+    "meshes_only_glb": true,
+    "standalone_native_materials": true,
+    "standalone_glb_materials": true,
+    "independent_chain_links": true,
+    "fluid_lines_and_fittings": true,
+    "wire_linework": true,
+    "cast_skull_alignment": true
+  }
+}
