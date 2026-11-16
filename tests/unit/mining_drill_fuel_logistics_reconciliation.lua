@@ -489,6 +489,23 @@ check(capacity.blocked==1
   and escrow_hold.get_item_count("iron-ore")==3
   and delivered["iron-ore"]==7 and #receipts==1,
   "failed canonical deposit lost, fabricated or duplicated real cargo")
+-- Exact station-only ranked returns must refund the same real hold on a
+-- verified capacity refusal, rather than classify unchanged stock as loss.
+local old_chain=_G.TechPriestsResourceStationChain0820
+local old_station_count=_G.TechPriestsStorageRoleAuthority0686.station_item_count
+local ranked_root={station={valid=true,unit_number=10},priest={valid=true},
+ resource_expansion_0259={chain_0820={need="iron-ore",root_station_unit=10,current_station_unit=1,status="reached-resource"}}}
+storage.tech_priests.pairs_by_station[10]=ranked_root
+pair.remote_resource_assignment_0820={root_station_unit=10,parent_station_unit=10,segment=1}
+_G.TechPriestsResourceStationChain0820={return_route=function(p)check(p==ranked_root);return{1,10}end}
+_G.TechPriestsStorageRoleAuthority0686.station_item_count=function(_,item)return delivered[item]or 0 end
+local ranked_refused=M.service_pair(pair,"1293-ranked-capacity-refusal")
+check(ranked_refused.blocked==1 and pair.machine_logistics_0528.phase=="return-custody-to-station"
+ and escrow_hold.valid and escrow_hold.get_item_count("iron-ore")==3
+ and delivered["iron-ore"]==7 and #receipts==1,"ranked capacity refusal failed to refund actual native cargo")
+pair.remote_resource_assignment_0820=nil;storage.tech_priests.pairs_by_station[10]=nil
+_G.TechPriestsResourceStationChain0820=old_chain
+_G.TechPriestsStorageRoleAuthority0686.station_item_count=old_station_count
 _G.TechPriestsStorageRoleAuthority0686.deposit_exact=accepted_deposit
 local retried=M.service_pair(pair,"0984-capacity-retry")
 check(retried.acted==1 and delivered["iron-ore"]==10

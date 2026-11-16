@@ -2001,7 +2001,9 @@ local function deposit_output(pair, state)
     local after=station_count()
     local station_after=station_only and authority.station_item_count
       and authority.station_item_count(pair,custody.item) or nil
-    if station_only and station_after~=station_before+custody.count then
+    local unchanged_refusal=not accepted and after==before
+      and(not station_only or station_after==station_before)
+    if station_only and station_after~=station_before+custody.count and not unchanged_refusal then
       state.phase="custody-uncertain-0983"
       state.last_blocker="ranked-station-physical-deposit-ambiguous-0995"
       return false,state.last_blocker
@@ -2017,7 +2019,7 @@ local function deposit_output(pair, state)
       proof.station_before_0984=before
       proof.station_after_0984=after
       pcall(function() hold.destroy() end)
-    elseif after==before and not accepted then
+    elseif unchanged_refusal then
       -- A confirmed refusal has not credited storage. Return the exact
       -- debited stack to the original real hold and retry only if verified.
       insert_inventory(hold,custody.item,custody.count)

@@ -181,6 +181,17 @@ local function inv_remove(inv, item, count)
 end
 local function insertable_count(inv, item, maximum)
   if not (inv and inv.valid and item and (tonumber(maximum) or 0) > 0) then return 0 end
+  -- Native can_insert answers whether ANY portion fits, not whether the
+  -- requested count fits. Binary-searching it overcommits partial stacks and
+  -- causes the same exact deposit to roll back forever.
+  local ok,capacity=pcall(function()return inv.get_insertable_count(item)end)
+  if ok and type(capacity)=="number"then
+    return math.max(0,math.min(math.floor(maximum),math.floor(capacity)))
+  end
+  -- Fail closed for a native inventory whose capacity cannot be observed.
+  -- Legacy plain-Lua adapters expose a whole-stack can_insert predicate.
+  local identified,name=pcall(function()return inv.object_name end)
+  if identified and name=="LuaInventory"then return 0 end
   local low, high = 0, math.max(0, math.floor(tonumber(maximum) or 0))
   while low < high do
     local middle = math.floor((low + high + 1) / 2)

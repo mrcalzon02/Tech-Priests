@@ -2052,7 +2052,9 @@ local function recover_bad_route(pair, req, reason)
       >= (dist_sq(priest.position, req) or 0)
   then return false, "recovery-waypoint-not-clear-or-forward" end
   local from = { x = priest.position.x, y = priest.position.y }
-  local ok, moved = pcall(function() return priest.teleport(chosen, surface) end)
+  -- This is already an authorized, clear, forward same-surface recovery.
+  -- Omit the optional surface and grid snapping, as for native Void units.
+  local ok, moved = pcall(function() return priest.teleport(chosen, nil, false, false) end)
   if not (ok and moved == true) then return false, "recovery-teleport-rejected" end
   local arrived = { x = priest.position.x, y = priest.position.y }
   req.recovery_route_origin = arrived

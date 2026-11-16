@@ -29,7 +29,9 @@ local function pair_at(id, x, y, blocked)
   local priest = { valid = true, name = "tech-priests-test-priest",
     unit_number = id + 500, position = { x = x, y = y },
     surface = surface, force = force, commandable = commandable }
-  priest.teleport = function(position)
+  priest.teleport = function(position,surface_argument,raise,snap)
+    check(surface_argument==nil and raise==false and snap==false,
+      "same-surface native recovery used surface/grid defaults")
     teleports = teleports + 1
     priest.position = { x = position.x, y = position.y }
     return true

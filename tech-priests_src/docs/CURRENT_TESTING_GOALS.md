@@ -1,5 +1,14 @@
 # Current Testing Goals
 
+## 2026-11-15 - Native capacity and bounded recovery unblock autonomous science
+
+Native inventory can_insert accepts a partial stack. Storage authority now uses native get_insertable_count for exact capacity, splits paid deposits across available containers and fails closed when native capacity cannot be observed. Atomic rollback remains in force. Ranked mining-output returns now restore the same physical hold after a verified unchanged capacity refusal; ambiguous or partial mutations remain quarantined. Existing bounded same-surface movement recovery omits the optional surface and grid snapping, preserving cargo and character exclusions and the clear forward destination checks.
+
+Exact-source native recovery native-capacity-recovery-1293-final resumed the protected tick-145048 save and produced a verified tick-149048 native save without changing its input. Force 1 resumed from 160 to 165 red science and added a building. Force 3 resumed from 2 to 5 red science, built its second station and added two buildings. The unchanged 5b79acf baseline science-return-contact-diagnosis-1292 remained at 160 and 2 through tick 151083. Passive observations verified the blocked 50-ore hold cleared and the pole constructor moved. No actor task, movement, build or research commands were injected. The longer native-capacity-movement-recovery-1293 run omits the final ranked-return guard and is a separately qualified variant.
+
+Selected regressions pass 70 Lua groups and 7 Python tests, including native partial-capacity, rollback-race, unavailable-capacity and ranked physical-refund cases. Exact-source native maintenance-capacity-recovery-1293-final passes all four ranks. All 384 runtime Lua modules match both copied profiles; control.lua differs only by the verified isolated CI observer suffix. These are protected brownfield recovery and maintenance proofs, not fresh campaign, all-force arena, rocket-to-space-science or research-consumption acceptance. Default platforms already commission one canonical Void Priest and local orbital paid construction remains owned by that resident priest.
+
+
 ## 2026-11-15 - Local Void construction and real ground-to-ship material flight
 
 Original 0338 now offers a ship bootstrap only to a physically present, bound Void Priest on its own platform, in independent mode. It plans a connected nine-tile foundation pad and one solar panel. The priest approaches the real hub, debits an actual item into a persistent native inventory, travels to the site and places only that paid tile/entity. Native world readback verifies construction. Changed ownership, orders, sites, missing sources and orphaned custody retain or physically return actual items. Ground priests cannot publish or execute this orbital construction. The local priest's committed plan and actual remaining stock create material demand for the ground silo owner.
