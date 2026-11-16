@@ -1,5 +1,10 @@
 # Current Testing Goals
 
+## 2026-11-15 - User-requested AI behavior checkpoint and stop
+
+Paused at the user's explicit request. Published native-validated behavior is retained through 27296701. The final water-tree-clearance equality correction is checkpointed with regression evidence but remains unvalidated in Factorio. Its prior native attempt was intentionally saved and stopped at tick 140376; no successful force-3 water connection is credited. The exact published power-kit continuation completed its tick-144000 save and force 2 reached 15 native red science, while force 3 remained at zero. Full campaign and orbital science acceptance remain open. See docs/AI_BEHAVIOR_CHECKPOINT_2026-11-15.md for code scope, evidence identities and remaining work. Do not resume automatically.
+
+
 ## 2026-11-15 - Manufacture missing power kits without losing native science work
 
 Independent terrestrial priests now treat an observed missing pump, boiler, steam engine or pole as an actual dependency of an engine-only lab/science task. The existing governor retains the exact parent task and gate, including its target, original start time and native machine state. Its existing recipe ancestry selects the real enabled power-kit recipe and missing ingredients; original 0514 owns the counted ingredient transaction and original 0338 owns paid pickup, carrying and native placement. Machine buffers remain untouched. After physical installation and release of active duties, the same parent task resumes. The urgent dependency is protected from unrelated cooperative jobs. Active orders, other tasks, physical cargo, movement, maintenance mode, platforms, locked recipes and stale observations refuse a new suspension. Context, ancestry and actual installation gate resumption.

@@ -4,6 +4,7 @@
 -- identified construction request at a time. construction_planner alone moves,
 -- carries pipe items, and places entities.
 
+local TreeClearance1298=require("scripts.core.native_fluid_tree_clearance_1298")
 local M={version="0.1.674-dev",storage_key="fluid_connection_planner_0691",pipe_item="pipe",pipe_entity="pipe",max_route_tiles=48,max_search_nodes=4096,reservation_ttl=60*30,proposal_max_age=60*20,rejection_cooldown=60*10,max_retries_per_tile=3,connection_settle_ticks=120,adjacency_radius=1.15,wrapper_free=true,input_output_integrated=true,construction_handoff=true,structured_scan_truth=true}
 local FLUID_TYPES={"pipe","pipe-to-ground","pump","storage-tank","offshore-pump","assembling-machine","furnace","mining-drill","boiler","generator","reactor","rocket-silo","fluid-turret"}
 local function now()return game and game.tick or 0 end
@@ -144,7 +145,7 @@ local function adjacent_safe(pair,p,plan)
  return true,"safe"
 end
 local function tile_available(pair,p,plan)
- if not inside_territory(pair,p,plan)then return false,"outside-station-interior"end;if existing_compatible_pipe(pair,p,plan)then return true,"existing"end;local ok_adj,why=adjacent_safe(pair,p,plan);if not ok_adj then return false,why end;local ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force,build_check_type=defines and defines.build_check_type and defines.build_check_type.manual or nil})end);if not ok then ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force})end)end;if ok and not allowed and plan.boiler_geometry_1288 and SteamReorientation.ignorable_tree_tile(pair,p,plan.boiler_geometry_1288.ignore_tree_1288)then return true,"conditional-native-tree-clearance"end;return ok and allowed==true,ok and(allowed and"placeable"or"blocked")or"can-place-error"
+ if not inside_territory(pair,p,plan)then return false,"outside-station-interior"end;if existing_compatible_pipe(pair,p,plan)then return true,"existing"end;local ok_adj,why=adjacent_safe(pair,p,plan);if not ok_adj then return false,why end;local ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force,build_check_type=defines and defines.build_check_type and defines.build_check_type.manual or nil})end);if not ok then ok,allowed=pcall(function()return pair.station.surface.can_place_entity({name=M.pipe_entity,position=p,force=pair.station.force})end)end;if ok and not allowed and plan.boiler_geometry_1288 and SteamReorientation.ignorable_tree_tile(pair,p,plan.boiler_geometry_1288.ignore_tree_1288)then return true,"conditional-native-tree-clearance"end;if ok and not allowed and plan.clearance_scan_1298 then local tree=TreeClearance1298.tree_at(pair,p);if tree then return true,"conditional-native-tree-clearance",tree end end;return ok and allowed==true,ok and(allowed and"placeable"or"blocked")or"can-place-error"
 end
 local function reconstruct(came,current,positions)local reverse={};while current do reverse[#reverse+1]=positions[current];current=came[current]end;local route={};for i=#reverse,1,-1 do route[#route+1]=reverse[i]end;return route end
 local function route_between(pair,start_position,goal_position,plan)
@@ -163,6 +164,15 @@ local function route_between(pair,start_position,goal_position,plan)
    and degree(goal)<degree(start)then start,goal=goal,start;reversed=true end
  local queue={start};local head=1;local sk,gk=position_key(start),position_key(goal)
  local visited={[sk]=true};local came,positions={}, {[sk]=start};local nodes=0
+ local probe={start=start,goal=goal,rejected={},frontier={},nodes=0}
+ local refused={}
+ local function reject(point,reason)
+  reason=reason or "unknown";probe.rejected[reason]=(probe.rejected[reason]or 0)+1
+  local k=position_key(point)
+  if not refused[k]and #probe.frontier<32 then
+   refused[k]=true;probe.frontier[#probe.frontier+1]={position=point,reason=reason}
+  end
+ end
  while head<=#queue and nodes<M.max_search_nodes do
   local current=queue[head];head=head+1;nodes=nodes+1;local ck=position_key(current)
   if ck==gk then
@@ -174,15 +184,24 @@ local function route_between(pair,start_position,goal_position,plan)
   for _,d in ipairs(dirs)do
    local np={x=current.x+d[1],y=current.y+d[2]};local key=position_key(np)
    if not visited[key]then
-    local allowed=tile_available(pair,np,plan)
-    if allowed then visited[key]=true;came[key]=ck;positions[key]=np;queue[#queue+1]=np end
+    local allowed,reason=tile_available(pair,np,plan)
+    if allowed then visited[key]=true;came[key]=ck;positions[key]=np;queue[#queue+1]=np
+    else reject(np,reason)end
    end
   end
  end
- return nil,nodes>=M.max_search_nodes and"search-budget-exhausted"or"no-route"
+ probe.nodes=nodes
+ return nil,nodes>=M.max_search_nodes and"search-budget-exhausted"or"no-route",probe
 end
 local function shortest_route(pair,p,plan)
- local best;local remote=p.direction=="input"and p.source or p.sink;for _,machine_target in ipairs(p.connection_targets or{})do for _,remote_target in ipairs(remote.interfaces or{})do local route=route_between(pair,machine_target,remote_target,plan);if route and(not best or#route<#best)then best=route end end end;return best,best and"found"or"no-route"
+ local best;local remote=p.direction=="input"and p.source or p.sink
+ plan.route_diagnostics_1298={}
+ for _,machine_target in ipairs(p.connection_targets or{})do for _,remote_target in ipairs(remote.interfaces or{})do
+  local route,reason,probe=route_between(pair,machine_target,remote_target,plan)
+  if route and(not best or#route<#best)then best=route end
+  if not route and probe and #plan.route_diagnostics_1298<8 then probe.reason=reason;plan.route_diagnostics_1298[#plan.route_diagnostics_1298+1]=probe end
+ end end
+ return best,best and"found"or"no-route"
 end
 local function preview_reorientation(pair,proposal,geometry)
  local source={};for k,v in pairs(proposal.source)do source[k]=v end
@@ -193,6 +212,22 @@ local function preview_reorientation(pair,proposal,geometry)
   remote_segment_id=source.segment_id,boiler_geometry_1288=geometry}
  return shortest_route(pair,p,plan)
 end
+function M.clearance_request_valid_1298(pair,r,full)
+ if not TreeClearance1298.valid_request(pair,r)then return false,"clearance-owner-or-tree-unavailable"end
+ if not full then return true end
+ local d=doctrine()
+ if not(d and d.validate_proposal and d.validate_proposal(pair,r.proposal))then return false,"clearance-proposal-stale"end
+ for _,point in ipairs(r.route)do
+  local allowed,why,tree=tile_available(pair,point,r.plan)
+  if not allowed then return false,"clearance-route-changed:"..tostring(why)end
+  if tree then
+   -- Native LuaEntity wrappers compare equal but are not stable table keys.
+   local known=false;for _,entry in ipairs(r.trees)do if entry.tree==tree then known=true;break end end
+   if not known then return false,"clearance-tree-identity-changed"end
+  end
+ end
+ return true
+end
 function M.reorientation_request_valid(pair,request,full)
  if not SteamReorientation.valid_request(pair,request)then return false end
  if not full then return true end
@@ -201,6 +236,16 @@ function M.reorientation_request_valid(pair,request,full)
  return route~=nil
 end
 local function new_tiles(pair,route,plan)local tiles={};for _,p in ipairs(route or{})do if not existing_compatible_pipe(pair,p,plan)then tiles[#tiles+1]={x=p.x,y=p.y}end end;local remote_first={};for i=#tiles,1,-1 do remote_first[#remote_first+1]=tiles[i]end;return remote_first end
+local function propose_tree_clearance_1298(pair,p,plan)
+ if not TreeClearance1298.admitted(pair,p)then return nil end
+ local best,best_trees,best_score
+ plan.clearance_scan_1298=true
+ for _,a in ipairs(p.connection_targets or{})do for _,b in ipairs(p.source.interfaces or{})do
+  local route,trees,score=TreeClearance1298.search(a,b,function(q)return tile_available(pair,q,plan)end)
+  if route and(not best or score<best_score)then best,best_trees,best_score=route,trees,score end
+ end end
+ if best then return TreeClearance1298.propose(pair,p,plan,best,best_trees,#new_tiles(pair,best,plan))end
+end
 local function claim_route(pair,plan)
  local r=ensure_reservation_category();if not(r and type(r.claim)=="function")then return false,"reservation-unavailable"end;local claimed={};for _,p in ipairs(plan.tiles or{})do local target={surface_index=pair.station.surface.index,position={x=p.x,y=p.y}};local ok,why=r.claim("standard-fluid-pipe-route",target,pair,M.reservation_ttl,{surface_index=pair.station.surface.index,force_index=pair.station.force.index,fluid=plan.fluid,direction=plan.direction,plan_id=plan.id,source="standard-fluid-route-0691"});if not ok then for _,old in ipairs(claimed)do pcall(r.release,"standard-fluid-pipe-route",old,pair)end;return false,why or"reservation-denied"end;claimed[#claimed+1]=target end;plan.reservation_targets=claimed;return true,"reserved"
 end
@@ -214,8 +259,12 @@ local function proposal_lists(pair)local all={};for _,p in ipairs(pair.fluid_con
 local function create_plan(pair,p)
  if pair.fluid_turret_pipe_plan_0719 then return nil,"fluid-turret-route-busy"end;local d=doctrine();if not(d and type(d.validate_proposal)=="function")then return nil,"doctrine-unavailable"end;local ok,why,report=d.validate_proposal(pair,p);if not ok then return nil,why end;local remote=p.direction=="input"and p.source or p.sink;local plan={version=M.version,id=safe(station_unit(pair))..":"..p.direction..":"..safe(p.machine_unit)..":"..now(),state="planning",direction=p.direction,fluid=p.fluid,machine=p.machine,machine_name=p.machine_name,machine_unit=p.machine_unit,machine_fluidbox_index=p.fluidbox_index,machine_segment_id=segment_id(fluidbox(p.machine),p.fluidbox_index),remote=remote,remote_segment_id=remote.segment_id,proposal=p,proposal_tick=p.tick,report_tick=report and report.tick,current_index=1,retries={},last_task_tick=-1}
  local route,rwhy=shortest_route(pair,p,plan);if not route then
+  pair.standard_fluid_route_probe_1298={tick=now(),fluid=plan.fluid,machine=plan.machine_unit,
+   source=remote.entity.unit_number,attempts=plan.route_diagnostics_1298}
   if rwhy=="no-route"then SteamReorientation.propose(pair,p,function(proposal,geometry)
-   return preview_reorientation(pair,proposal,geometry)end)end
+   return preview_reorientation(pair,proposal,geometry)end)
+   propose_tree_clearance_1298(pair,p,plan)
+  end
   return nil,rwhy
  end;plan.route=route;plan.tiles=new_tiles(pair,route,plan);if#plan.tiles==0 then return nil,"already-connected"end;plan.state="planned";local claimed,cwhy=claim_route(pair,plan);if not claimed then return nil,cwhy end;M.root().plans[plan.id]=plan;set_plan_fields(pair,plan);record(pair,"plan-created",plan.direction..":"..plan.fluid.." tiles="..#plan.tiles);return plan,"created"
 end

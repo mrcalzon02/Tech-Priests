@@ -10,6 +10,7 @@ local Recycling0822=require("scripts.core.station_recycling_0822")
 local SteamReorientation=require("scripts.core.steam_outlet_reorientation_1288")
 local ProductionOrder1291=require("scripts.core.production_order_ownership_0514")
 local VoidOrbital1292=require("scripts.core.void_orbital_construction_1292")
+local FluidTree1298=require("scripts.core.native_fluid_tree_clearance_1298")
 local M={version="0.1.674-dev",storage_key="construction_planner",discovery_interval=233,max_pairs_per_discovery=6,move_priority=968,move_ttl=60*12,reservation_ttl=60*20,request_timeout=60*20,travel_ticks_per_tile=20,max_travel_extra_ticks=60*120,max_ground_detour_extra_ticks=60*60,pickup_reach_sq=2.56,build_reach_sq=4,return_reach_sq=2.56,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true}
 -- Original 0836 rail requests must not hold 0338 indefinitely without
 -- a real source item. The 0338 physical builder, not the observer, owns
@@ -1347,6 +1348,14 @@ function M.recommend_action(pair)
  end
  local orbital=VoidOrbital1292.recommend(pair)
  if orbital then return orbital end
+ local clear=pair.native_fluid_tree_clearance_1298
+ local fluid_planner=rawget(_G,"TechPriestsFluidConnectionPlanner0691")
+ if fluid_planner and fluid_planner.clearance_request_valid_1298
+   and fluid_planner.clearance_request_valid_1298(pair,clear,false)then
+  return{kind="construction",family="construction",target=clear.tree,position=clear.tree.position,
+   active=false,fluid_route_clearance_1298=true,source="construction-planner-0338",
+   reason="native-water-route-tree-prerequisite"}
+ end
  if SteamReorientation.valid_request(pair,pair.steam_outlet_reorientation_1288)then
   local r=pair.steam_outlet_reorientation_1288
   return{kind="construction",family="construction",target=r.boiler,position=r.boiler.position,
@@ -1391,6 +1400,32 @@ local function release_terminal_movement(pair)
  end
  stat("terminal_movement_release_failed")
  return false
+end
+local function service_fluid_tree_clearance_1298(pair)
+ local r=pair.native_fluid_tree_clearance_1298
+ local planner=rawget(_G,"TechPriestsFluidConnectionPlanner0691")
+ if not(planner and planner.clearance_request_valid_1298
+   and planner.clearance_request_valid_1298(pair,r,false))then return nil end
+ local verified,why=planner.clearance_request_valid_1298(pair,r,true)
+ if not verified then return{processed=1,blocked=1,detail=why or "fluid-clearance-revalidation-failed"}end
+ local queue=rawget(_G,"TECH_PRIESTS_ORDER_QUEUE_0469")
+ local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+ if not(queue and queue.submit)or(order and order.status=="active"and(tonumber(order.priority)or 0)>=570)then
+  return{processed=1,blocked=1,detail="fluid-clearance-order-owned"}
+ end
+ local child={kind="direct-mine-0336",output_item="wood",item_name="wood",count=1,
+  required_count=1,gathered_units=0,construction_source_clearance_1285=true,
+  current={kind="direct-mine-0336",entity=r.tree,output_item="wood"}}
+ local accepted=queue.submit(pair,{kind="acquisition",item="wood",task=child,priority=570,
+  source="construction-source-clearance-0338",purpose="physical-native-water-route-access"})
+ local active=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
+ if accepted and active and active.task==child then
+  release_terminal_movement(pair);pair.direct_acquisition_task_0336=child
+  pair.construction_source_clearance_1285={kind="fluid-route-clearance-1298",parent=r,child=child,
+   tree=r.tree,source=r.proposal.machine}
+  return{processed=1,waiting=1,detail="native-water-route-tree-clearance-requested"}
+ end
+ return{processed=1,blocked=1,detail="fluid-clearance-not-admitted"}
 end
 local function service_steam_reorientation_1288(pair)
  local r=pair.steam_outlet_reorientation_1288
@@ -2601,6 +2636,9 @@ function M.source_clearance_active_1285(pair,child)
  local context=pair and pair.construction_source_clearance_1285
  local parent=pair and pair.construction_task_0338
  child=child or(pair and pair.direct_acquisition_task_0336)
+ if context and context.kind=="fluid-route-clearance-1298"then
+  return FluidTree1298.authorized_child(pair,context.parent,child)
+ end
  if context and context.kind=="steam-outlet-reorientation-1288"then
   local r=context.parent;local tree=context.tree
   local order=pair.order_queue_0469 and pair.order_queue_0469.current or pair.active_order_0469
@@ -2790,6 +2828,8 @@ function M.service_pair(pair,reason)
  if stalled_construction_tree_clearance_1285(pair,task)then
   return{processed=1,waiting=1,detail="source-access-clearance-requested"}
  end
+ local cleared=service_fluid_tree_clearance_1298(pair)
+ if cleared then return cleared end
  local reoriented=service_steam_reorientation_1288(pair)
  if reoriented then return reoriented end
  if not task then

@@ -640,6 +640,9 @@ function M.action(p)
   elseif construction_rec and construction_rec.void_orbital_1292 then
     kind,reason="construction","local-void-paid-orbital-construction"
     target=construction_rec.target;position=construction_rec.position;selected=construction_rec
+  elseif construction_rec and construction_rec.fluid_route_clearance_1298 then
+    kind,reason="construction","native-water-route-tree-prerequisite"
+    target=construction_rec.target;position=construction_rec.position;selected=construction_rec
   elseif construction_rec and construction_rec.steam_reorientation_1288 then
     kind,reason="construction","native-steam-outlet-reorientation-prerequisite"
     target=construction_rec.target;position=construction_rec.position;selected=construction_rec
