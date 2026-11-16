@@ -1,3 +1,11 @@
+## 2026-11-15 - Search bounded native boiler sites after sparse failure
+
+The completed contact arena left force 3 at zero science with site-not-verified:boiler. A passive native audit at tick 113506 found 719 legal boiler positions within the same territory and with clear native fluid connections, despite the original sixteen-offset search failing. The existing bounded plus/minus-sixteen-tile generator fallback now also searches boilers, with a separate ten-second refusal cache. It retains native footprint, inlet, steam escape and territory checks. Only original 0338 spends the real machine kit and constructs it.
+
+The same protected final arena save, copied into contact-arena-boiler-search-1295, autonomously built native boiler 312 at (-59,39.5), direction east, by tick 111956. By tick 114406 it had progressed through the steam-engine request to physical steam-pipe construction. The unchanged 2e9090aa baseline still had no boiler and remained on the strict lab recipe at tick 118780. No agent actor commands or resource grants were used. This proves repair of the missed placement and subsequent work, not completed power commissioning, science throughput or fresh arena acceptance.
+
+Selected regressions pass 70 Lua groups and 7 Python tests. The new boiler cases verify a usable site beyond sparse offsets, native refusal backoff, later retry and unchanged kit stock during planning. Exact-source native maintenance-boiler-search-1295 passes all four ranks. The ongoing recovery retains its protected source and input manifest; full campaign and orbital science acceptance remain open.
+
 ## 2026-11-15 - Require a local Void manager across orbital construction paths
 
 The shared 0338 constructor now gates generic and robot-network work on platforms as well as the local bootstrap. A physically present same-force Void Priest bound to its own Void Cogitator and platform hub is required. Terrestrial, absent and foreign actors cannot receive new orbital construction. Existing tasks are dispatched only to abort and preserve or physically restitute their actual custody. Ground construction and local Void bootstrap custody retain their established owners.

@@ -221,6 +221,7 @@ check(placed and oriented and oriented.item_name=="boiler"
 check(stock.boiler==2 and not pair.construction_task_0338,
  "fluid-aware planning consumed a boiler or bypassed its original constructor")
 pair.structure_construction_requested_item=nil
+local boiler_ports_1295=prototypes.entity.boiler.fluidbox_prototypes
 prototypes.entity.boiler.fluidbox_prototypes=nil
 local unreadable,unreadable_reason=Planner.service_pair(pair)
 check(not unreadable and unreadable_reason=="site-not-verified:boiler",
@@ -285,3 +286,38 @@ Planner.service_pair(pair)
 check(first_checks>64 and checks-first_checks<=64,
  "failed local engine grid was repeated every power-planning pulse")
 print("PASS engine-verified generator grid fallback and bounded failed-site retry without spending kits")
+
+-- 1295: the native contact-arena pump has usable boiler sites outside all
+-- sixteen sparse offsets. Apply the same bounded fallback to the boiler.
+prototypes.entity.boiler.fluidbox_prototypes=boiler_ports_1295
+pair.structure_construction_requested_item=nil;pair.power_boiler_site_probe_1295=nil
+pump.fluidbox={valid=true,true,get_pipe_connections=function()return{{target_position={x=-5,y=-4}}}end}
+made={lab,pump}
+placeable=function(spec)
+ if spec.name=="boiler"then return spec.position.x==2.5 and spec.position.y==-13 end
+ return true
+end
+local recovered_boiler=Planner.service_pair(pair)
+local heat=pair.structure_construction_requested_item
+check(recovered_boiler and heat and heat.item_name=="boiler"
+ and heat.position.x==2.5 and heat.position.y==-13 and stock.boiler==2
+ and not pair.construction_task_0338 and not pair.construction_custody_0338,
+ "sparse boiler axes concealed a real funded native grid site")
+pair.structure_construction_requested_item=nil;pair.power_boiler_site_probe_1295=nil
+checks=0
+placeable=function(spec)
+ if spec.name=="boiler"then checks=checks+1;return false end
+ return true
+end
+Planner.service_pair(pair);local first_boiler_checks=checks
+Planner.service_pair(pair)
+check(first_boiler_checks>64 and checks-first_boiler_checks<=64,
+ "failed local boiler grid was repeated every power-planning pulse")
+game.tick=game.tick+601
+placeable=function(spec)
+ if spec.name=="boiler"then return spec.position.x==2.5 and spec.position.y==-13 end
+ return true
+end
+check(Planner.service_pair(pair)and pair.structure_construction_requested_item.item_name=="boiler",
+ "expired boiler refusal prevented discovery of a newly clear native site")
+print("PASS native boiler grid fallback, refusal backoff and later retry without spending kits")
