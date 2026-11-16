@@ -54,6 +54,27 @@ platform.hub={valid=true,force=force,surface=platform.surface};game.tick=1300
 assert(Campaign.observe(pair)and storage.tech_priests.orbital_campaign_1287.by_force[1].phase=="starter-pack-delivered")
 payload=1;report.rocket_parts=50
 assert(not Campaign.requirement(pair,report)and created==1,"built platform caused duplicate starter launch")
+local Void=require("scripts.core.void_orbital_construction_1292");local original_request=Void.material_request
+Void.material_request=function()return{item="solar-panel",count=1,manager_station=8}end
+local solar=0;local foreign_cargo=false
+local cargo={valid=true,get_item_count=function(n)return n=="solar-panel"and solar or 0 end,can_insert=function()return true end,
+ get_contents=function()return foreign_cargo and{{name="processing-unit",count=1}}or(solar>0 and{{name="solar-panel",count=solar}}or{})end}
+report.rocket_inventory=cargo;report.attached_cargo_inventory=nil;defines.cargo_destination.station=2
+assert(Campaign.requirement(pair,report).item=="solar-panel"and not Campaign.requirement(pair,report).loaded)
+solar=1;local pod={valid=true}
+silo.rocket={valid=true,attached_cargo_pod=pod}
+silo.launch_rocket=function(destination)
+ assert(destination.type==2 and destination.station==platform.hub and not destination.space_platform,
+  "cargo used the starter-pack-only destination")
+ solar=0;return true
+end
+assert(Campaign.request_launch(pair,report)and created==1)
+Campaign.observe(pair)
+assert(not Campaign.requirement(pair,report),"one local request duplicated an in-flight cargo launch")
+pod.valid=false;Campaign.observe(pair)
+assert(not Campaign.requirement(pair,report).loaded,"lost native flight falsely supplied the local Void demand")
+foreign_cargo=true;assert(not Campaign.requirement(pair,report),"unrelated player cargo was launched")
+Void.material_request=original_request
 platform.force={index=2};assert(not Campaign.request_launch(pair,report)and created==1)
 silo.position={x=20,y=0};silo.name="rocket-silo";silo.unit_number=4
 silo.prototype={rocket_parts_required=50};silo.rocket_parts=0;silo.rocket_silo_status=7

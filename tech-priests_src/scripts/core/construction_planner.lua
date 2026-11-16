@@ -9,6 +9,7 @@
 local Recycling0822=require("scripts.core.station_recycling_0822")
 local SteamReorientation=require("scripts.core.steam_outlet_reorientation_1288")
 local ProductionOrder1291=require("scripts.core.production_order_ownership_0514")
+local VoidOrbital1292=require("scripts.core.void_orbital_construction_1292")
 local M={version="0.1.674-dev",storage_key="construction_planner",discovery_interval=233,max_pairs_per_discovery=6,move_priority=968,move_ttl=60*12,reservation_ttl=60*20,request_timeout=60*20,travel_ticks_per_tile=20,max_travel_extra_ticks=60*120,max_ground_detour_extra_ticks=60*60,pickup_reach_sq=2.56,build_reach_sq=4,return_reach_sq=2.56,dispatcher_owned=true,discovery_only_broker=true,positional_reservation=true,exact_item_custody=true}
 -- Original 0836 rail requests must not hold 0338 indefinitely without
 -- a real source item. The 0338 physical builder, not the observer, owns
@@ -1327,6 +1328,8 @@ function M.recommend_action(pair)
   local ok,reserved=pcall(Recycling0822.reservation_for,pair)
   if not ok or reserved then return nil end
  end
+ local orbital=VoidOrbital1292.recommend(pair)
+ if orbital then return orbital end
  if SteamReorientation.valid_request(pair,pair.steam_outlet_reorientation_1288)then
   local r=pair.steam_outlet_reorientation_1288
   return{kind="construction",family="construction",target=r.boiler,position=r.boiler.position,
@@ -2520,7 +2523,9 @@ local function create_entity(pair,task)
  return nil,ok and"create-refused"or"create-error:"..safe(e)
 end
 
-function M.abort_pair(pair,reason)local task=pair and pair.construction_task_0338;if not task then return{processed=0,detail="no-task"}end;if ground_cargo_count(task)>0 then task.ground_abort_reason_0338=reason or"aborted";task.phase="clear-ground-return";sync_custody(pair,task,"ground-cargo-must-return-first");return{processed=1,blocked=1,waiting=1,detail="ground-cargo-return-required"}end;if sync_custody(pair,task,reason)then task.phase="return-custody";return return_custody(pair,task)end;return finish(pair,task,false,reason or"aborted")end
+function M.abort_pair(pair,reason)
+ if VoidOrbital1292.owns(pair)then return VoidOrbital1292.service(pair,request_move_position,release_terminal_movement,reason or "aborted")end
+ local task=pair and pair.construction_task_0338;if not task then return{processed=0,detail="no-task"}end;if ground_cargo_count(task)>0 then task.ground_abort_reason_0338=reason or"aborted";task.phase="clear-ground-return";sync_custody(pair,task,"ground-cargo-must-return-first");return{processed=1,blocked=1,waiting=1,detail="ground-cargo-return-required"}end;if sync_custody(pair,task,reason)then task.phase="return-custody";return return_custody(pair,task)end;return finish(pair,task,false,reason or"aborted")end
 local function construction_active_timeout(pair,task)
  if not task or task.phase=="waiting-source" then return false end
  if not task.active_started_tick_0338 then
@@ -2710,6 +2715,7 @@ local function stalled_construction_tree_clearance_1285(pair,task)
 end
 function M.service_pair(pair,reason)
  local state=M.root();if state.enabled==false or not valid_pair(pair)then return{processed=0,failed=not valid_pair(pair)and 1 or 0,detail="disabled-or-invalid"}end
+ if VoidOrbital1292.owns(pair)then return VoidOrbital1292.service(pair,request_move_position,release_terminal_movement)end
  if not pair.construction_task_0338 and not pair.construction_custody_0338 then
   local ok,rec=pcall(Recycling0822.reservation_for,pair)
   if not ok then
@@ -2722,6 +2728,8 @@ function M.service_pair(pair,reason)
    return{processed=1,blocked=1,detail="station-recovery-reserved-0822"}
   end
  end
+ local orbital=VoidOrbital1292.service(pair,request_move_position,release_terminal_movement)
+ if orbital then return orbital end
  if not pair.construction_task_0338 and not pair.construction_custody_0338
    and (pair.robot_network_task_0338 or pair.robot_network_request_0338) then
   local result=M.service_robot_network_pair_0338(pair)

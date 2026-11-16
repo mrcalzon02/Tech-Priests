@@ -334,7 +334,7 @@ local function source_current(pair,task)
     and item_count(task.source_inv,task.item)>0 then return{inv=task.source_inv,entity=task.source_entity,count=item_count(task.source_inv,task.item),label=task.source_label}end
   if(task.family~="rocket-silo-input"and task.family~="rocket-silo-payload")or not task.report then return nil end
   return source_for_item(pair,task.item,task.family=="rocket-silo-payload"
-    and Campaign.payload_inventory(task.report)or task.report.input_inventory)
+    and Campaign.payload_inventory(task.report,task.item)or task.report.input_inventory)
 end
 local function candidate_from_reports(pair)
   local reports=pair.rocket_silo_reports_0709;if type(reports)~="table"then reports=refresh_reports(pair)end
@@ -347,7 +347,7 @@ local function candidate_from_reports(pair)
         if not orbital or score<orbital.score then
           orbital={family=need.loaded and"rocket-silo-launch"or"rocket-silo-payload",
             target=report.silo,target_name=report.silo_name,target_unit=report.silo_unit,
-            item=need.item,count=1,source=not need.loaded and source_for_item(pair,need.item,need.inventory)or nil,
+            item=need.item,count=math.min(need.count or 1,M.max_input_transfer),source=not need.loaded and source_for_item(pair,need.item,need.inventory)or nil,
             report=report,score=score}
         end
       end
@@ -541,7 +541,7 @@ local function continue_task(pair,task)
     local fresh,why=revalidate_target(pair,task)
     if not fresh or why~="ready"then task.phase="return-custody";sync_custody(pair,task,why);record(pair,"silo-target-became-ineligible",safe(why));return return_custody(pair,task)end
     local carried=task.carried;if not(carried and carried.item and(tonumber(carried.count)or 0)>0)then return abort_without_custody(pair,task,"custody-missing")end
-    local destination=task.family=="rocket-silo-payload"and Campaign.payload_inventory(fresh)or fresh.input_inventory
+    local destination=task.family=="rocket-silo-payload"and Campaign.payload_inventory(fresh,task.item)or fresh.input_inventory
     local inserted=inv_insert(destination,carried.item,carried.count)
     if inserted>0 then carried.count=carried.count-inserted;stat("input-items-delivered",inserted);record(pair,"silo-input-delivered",carried.item.." x"..safe(inserted).." -> "..safe(task.target_name))end
     if carried.count<=0 then return finish_task(pair,task,"input-delivered")end

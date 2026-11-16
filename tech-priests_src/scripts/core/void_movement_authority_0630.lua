@@ -84,8 +84,13 @@ local function relocate(entity, position)
   if not (valid(entity) and position) then return false end
   local fn = entity["tele" .. "port"]
   if type(fn) ~= "function" then return false end
-  local ok, result = pcall(fn, position, entity.surface)
-  return ok and result ~= false
+  -- Omit the optional surface for same-surface platform unit movement and
+  -- preserve the exact fractional maneuvering-pack step instead of snapping.
+  local ok, result = pcall(fn, position, nil, false, false)
+  if not ok then return false,tostring(result)end
+  if result~=true then return false,"native-relocation-refused"end
+  if dist_sq(entity.position,position)>.0004 then return false,"native-position-mismatch"end
+  return true
 end
 local function clear_pair_fields(pair, request, status)
   if type(pair) ~= "table" then return end
@@ -222,10 +227,13 @@ local function step_pair(pair, request)
   local step = math.min(remaining, math.max(0.02, tonumber(request.step) or M.default_step))
   local ratio = step / math.max(remaining, 0.0001)
   local position = { x = pair.priest.position.x + (request.x - pair.priest.position.x) * ratio, y = pair.priest.position.y + (request.y - pair.priest.position.y) * ratio }
-  if relocate(pair.priest, position) then
+  local moved,refusal=relocate(pair.priest, position)
+  if moved then
+    request.native_failure=nil
     request.failure_count = 0; request.last_step_tick = now(); pair.void_movement_status_0630 = "active"; pair.movement_controller_state_0418 = "void-jetpack-transit"; pair.movement_controller_status_0418 = "void-active"; stat("void-jetpack-steps"); return true, "step"
   end
   request.failure_count = (tonumber(request.failure_count) or 0) + 1
+  request.native_failure=refusal
   request.last_failure_tick = now(); pair.void_movement_status_0630 = "relocation-failed"; pair.movement_controller_state_0418 = "void-relocation-retry"; pair.movement_controller_status_0418 = "void-relocation-failed"; stat("void-relocation-failed")
   return false, "relocation-failed"
 end

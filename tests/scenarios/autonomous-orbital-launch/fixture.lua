@@ -3,6 +3,8 @@
 -- This validates native launch and paid starter delivery; not campaign research/build or science.
 local M={};local PREFIX="[TP-ORBITAL-LAUNCH] "
 local Campaign=require("scripts.core.orbital_campaign_1287")
+local VoidConstruction=require("scripts.core.void_orbital_construction_1292")
+local VOID_CONSTRUCTION=rawget(_G,"TP_CI_VOID_CONSTRUCTION_1292")==true
 local function emit(s)log(PREFIX..s)end
 local function fail(s)error(PREFIX.."FAIL "..s)end
 local function root()
@@ -35,7 +37,7 @@ local function setup()
  s.supplies={};s.required_deliveries=1 -- the real starter pack
  for _,ingredient in pairs(recipe.ingredients)do
   if ingredient.type=="item"then
-   local count=math.ceil(ingredient.amount*(silo.prototype.rocket_parts_required+2))
+   local count=math.ceil(ingredient.amount*(silo.prototype.rocket_parts_required+2)*(VOID_CONSTRUCTION and 2 or 1))
    if stock.insert{name=ingredient.name,count=count}~=count then fail("declared ingredient stock refused")end
    s.supplies[ingredient.name]=count
    s.required_deliveries=s.required_deliveries+ingredient.amount*silo.prototype.rocket_parts_required
@@ -45,6 +47,7 @@ local function setup()
   if prototypes.item[name]then stock.insert{name=name,count=8}end
  end
  assert(stock.insert{name="space-platform-starter-pack",count=1}==1)
+ if VOID_CONSTRUCTION then assert(stock.insert{name="solar-panel",count=1}==1)end
  s.station=station;s.supply=supply;s.silo=silo;s.started=game.tick;s.initial_parts=silo.rocket_parts
  emit("SETUP late-stage diagnostic silo="..silo.unit_number.." parts="..s.initial_parts..
   " planet="..tostring(surface.planet and surface.planet.name).." stock="..helpers.table_to_json(s.supplies))
@@ -88,6 +91,37 @@ local function pulse()
     "native starter produced duplicate Void Priests")
    assert(void.independent_emergency_operation_0184 and void.independent_emergency_operation_0184.enabled,
     "independent ship did not inherit its local Void Priest autonomy")
+   if VOID_CONSTRUCTION then
+    local tiles=VoidConstruction.layout(r.platform);local built=0
+    for _,pos in ipairs(tiles)do if r.platform.surface.get_tile(pos).name=="space-platform-foundation"then built=built+1 end end
+    local inv=r.platform.hub.get_inventory(defines.inventory.hub_main)
+    local _,solar=VoidConstruction.layout(r.platform)
+    local panels=r.platform.surface.count_entities_filtered{name="solar-panel",position=solar,radius=.1,force=s.station.force}
+    if built==9 and panels==1 then
+     assert(inv.get_item_count("space-platform-foundation")==1,"Void tiles were not paid from native starter inventory")
+     assert(void.void_orbital_construction_last_1292 and void.void_orbital_construction_last_1292.result=="void-paid-solar-built",
+      "foundation was not placed by the local Void constructor")
+     assert(stock.get_item_count("solar-panel")==0 and inv.get_item_count("solar-panel")==0 and(r.void_supply_launches_1292 or 0)==1,
+      "orbital solar did not use one actual ground cargo flight")
+     emit("PASS local Void Priest built paid orbital foundation tiles="..built.." panels="..panels.." hub_remaining="..inv.get_item_count("space-platform-foundation")..
+      " void_station="..stations[1].unit_number.." void_priest="..void.priest.unit_number)
+     s.finished=true;return
+    end
+    if game.tick>=(s.next_void_log or 0)then
+     s.next_void_log=game.tick+1800
+     local report=p.rocket_silo_reports_0709 and p.rocket_silo_reports_0709[1]
+     local need,why=Campaign.requirement(p,report)
+     emit("VOID_CONSTRUCTION tick="..game.tick.." tiles="..built.." panels="..panels.." flights="..tostring(r.void_supply_launches_1292)..
+      " need="..tostring(need and need.item).." why="..tostring(why).." stock="..inv.get_item_count("space-platform-foundation")..
+      " mode="..tostring(void.mode).." phase="..tostring(void.construction_task_0338 and void.construction_task_0338.phase)..
+      " position="..helpers.table_to_json(void.priest.position)..
+      " movement_status="..tostring(void.void_movement_status_0630)..
+      " movement="..helpers.table_to_json((function()local m=void.movement_request_0418;return m and{x=m.x,y=m.y,owner=m.owner,reason=m.reason}or{}end)())..
+      " dispatcher="..helpers.table_to_json(void.dispatcher_0510 or{}))
+    end
+    if game.tick-s.started>=89400 then fail("local Void construction did not complete")end
+    return
+   end
    emit("PASS autonomous native rocket launch and paid platform starter delivery parts_peak="..s.max_parts..
      " delivered_items="..tostring(doctrine.stats["input-items-delivered"]).." hub="..r.platform.hub.unit_number..
      " void_station="..stations[1].unit_number.." void_priest="..void.priest.unit_number)

@@ -2,6 +2,7 @@
 -- a real starter pack arrives through the engine's ordinary rocket/pod cycle.
 -- Only original 0710's dispatched physical silo owner calls request_launch.
 local ProductionOrder=require("scripts.core.production_order_ownership_0514")
+local VoidConstruction=require("scripts.core.void_orbital_construction_1292")
 local M={starter_pack="space-platform-starter-pack"}
 local function valid(e)return e and e.valid end
 local function independent(p)
@@ -26,17 +27,18 @@ local function own_platform(p,r)
  if not(planet and location and location.name==planet.name)then return nil,"platform-orbit-changed"end
  return r.platform
 end
-function M.payload_inventory(report)
+function M.payload_inventory(report,item)
+ item=item or M.starter_pack
  local candidates={report and report.rocket_inventory or false,report and report.attached_cargo_inventory or false}
  for _,inv in ipairs(candidates)do
   if inv and inv.valid then
-   local ok,n=pcall(inv.get_item_count,M.starter_pack)
+   local ok,n=pcall(inv.get_item_count,item)
    if ok and(tonumber(n)or 0)>0 then return inv end
   end
  end
  for _,inv in ipairs(candidates)do
   if inv and inv.valid then
-   local ok,yes=pcall(inv.can_insert,{name=M.starter_pack,count=1})
+   local ok,yes=pcall(inv.can_insert,{name=item,count=1})
    if ok and yes==true then return inv end
   end
  end
@@ -65,7 +67,21 @@ function M.requirement(p,report)
  local existing=record_for(p)
  if existing and valid(existing.platform)then
   local platform,why=own_platform(p,existing);if not platform then return nil,why end
-  if valid(platform.hub)then return nil,"owned-platform-built"end
+  if valid(platform.hub)then
+   if valid(existing.silo)and existing.silo~=report.silo then return nil,"force-orbital-supply-silo-owned"end
+   local flight=existing.void_supply_flight_1292
+   if flight and not flight.ended_tick then return nil,"native-void-supply-flight-pending"end
+   local request=VoidConstruction.material_request(platform)
+   if not request then return nil,"local-void-no-material-request"end
+   local inv=M.payload_inventory(report,request.item)
+   if not inv then return nil,"native-void-cargo-inventory-unavailable"end
+   for _,stack in pairs(inv.get_contents())do
+    if stack.name~=request.item then return nil,"foreign-native-rocket-cargo"end
+   end
+   local held=inv.get_item_count(request.item)
+   return{kind="local-void-supply",item=request.item,count=math.max(0,request.count-held),
+    inventory=inv,loaded=held>=request.count,manager_station=request.manager_station}
+  end
   if existing.launch_requested_tick then return nil,"owned-starter-launch-in-flight"end
  end
  local inv=M.payload_inventory(report)
@@ -95,14 +111,22 @@ function M.request_launch(p,report)
   root.by_force[p.station.force.index]=rec
  end
  local platform,reason=own_platform(p,rec);if not platform then return false,reason end
- if valid(platform.hub)then return false,"owned-platform-built"end
+ if valid(platform.hub)and need.kind~="local-void-supply"then return false,"owned-platform-built"end
  -- This call consumes no scripted inventory and creates no free foundation.
  -- The engine alone decides launch readiness and transports the real payload.
- local ok,launched=pcall(function()return report.silo.launch_rocket{
-  type=defines.cargo_destination.space_platform,space_platform=platform}end)
+ local destination={type=defines.cargo_destination.space_platform,space_platform=platform}
+ if need.kind=="local-void-supply"then
+  if not defines.cargo_destination.station then return false,"native-hub-destination-unavailable"end
+  destination={type=defines.cargo_destination.station,station=platform.hub}
+ end
+ local ok,launched=pcall(function()return report.silo.launch_rocket(destination)end)
  rec.last_attempt_tick=game.tick;rec.silo=report.silo;rec.station_unit=p.station.unit_number
  if not(ok and launched==true)then rec.phase="awaiting-native-launch";return false,"native-launch-not-ready"end
- rec.phase="launch-requested";rec.launch_requested_tick=game.tick
+ if need.kind=="local-void-supply"then
+  rec.void_supply_flight_1292={silo=report.silo,requested_tick=game.tick}
+  rec.void_supply_launches_1292=(rec.void_supply_launches_1292 or 0)+1
+  rec.phase="void-supply-launch-requested"
+ else rec.phase="launch-requested";rec.launch_requested_tick=game.tick end
  return true,"native-launch-requested"
 end
 function M.observe(p)
@@ -110,9 +134,19 @@ function M.observe(p)
  local rec=record_for(p);if not rec then return nil end
  local platform,why=own_platform(p,rec)
  if not platform then return nil,why end
+ local flight=rec.void_supply_flight_1292
+ if flight and not flight.ended_tick then
+  if flight.pod then
+   if not flight.pod.valid then flight.ended_tick=game.tick end
+  elseif valid(flight.silo)then
+   local ok,pod=pcall(function()local rocket=flight.silo.rocket;return valid(rocket)and rocket.attached_cargo_pod end)
+   if ok and valid(pod)then flight.pod=pod end
+  end
+ end
  if rec.launch_requested_tick and valid(platform.hub)and platform.hub.force==p.station.force
    and platform.hub.surface==platform.surface then
-  rec.phase="starter-pack-delivered";rec.delivered_tick=rec.delivered_tick or game.tick
+  if not flight or flight.ended_tick then rec.phase="starter-pack-delivered"end
+  rec.delivered_tick=rec.delivered_tick or game.tick
   return true,"native-platform-starter-delivered"
  end
  return false,rec.phase

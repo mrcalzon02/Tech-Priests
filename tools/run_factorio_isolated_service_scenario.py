@@ -20,6 +20,21 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CASES = {
+    "void-orbital-component": {
+        "fixture": "tests/scenarios/void-orbital-component/fixture.lua",
+        "module": "ci_void_component_1292",
+        "prefix": "[TP-VOID-CONSTRUCTION]",
+        "pass": "PASS local Void consumed real hub stock and built nine foundation plus one solar",
+        "ticks": 12000,
+    },
+    "autonomous-void-construction": {
+        "fixture": "tests/scenarios/autonomous-orbital-launch/fixture.lua",
+        "module": "ci_orbital_launch_1287",
+        "prefix": "[TP-ORBITAL-LAUNCH]",
+        "pass": "PASS local Void Priest built paid orbital foundation",
+        "ticks": 90000,
+        "void_construction": True,
+    },
     "autonomous-orbital-launch": {
         "fixture": "tests/scenarios/autonomous-orbital-launch/fixture.lua",
         "module": "ci_orbital_launch_1287",
@@ -1605,6 +1620,8 @@ def main() -> int:
             isolated_control.read_text(encoding="utf-8"),
             encoding="utf-8")
     content = (ROOT / scenario["fixture"]).read_text(encoding="utf-8")
+    if scenario.get("void_construction"):
+        content = "_G.TP_CI_VOID_CONSTRUCTION_1292=true\n" + content
     if "function M.install()" not in content:
         ap.error("Fixture missing explicit install contract")
     dest = mods / "tech-priests" / "scripts" / "core"
