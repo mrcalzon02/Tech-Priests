@@ -1,0 +1,29 @@
+{
+  "minoris": {
+    "native_frames": [
+      1,
+      97
+    ],
+    "max_8bit_channel_delta": 0,
+    "rms_8bit_channel_delta": 0.0,
+    "fraction_pixels_different_over_2": 0.0
+  },
+  "majoris": {
+    "native_frames": [
+      1,
+      97
+    ],
+    "max_8bit_channel_delta": 0,
+    "rms_8bit_channel_delta": 0.0,
+    "fraction_pixels_different_over_2": 0.0
+  },
+  "maximus": {
+    "native_frames": [
+      1,
+      97
+    ],
+    "max_8bit_channel_delta": 0,
+    "rms_8bit_channel_delta": 0.0,
+    "fraction_pixels_different_over_2": 0.0
+  }
+}

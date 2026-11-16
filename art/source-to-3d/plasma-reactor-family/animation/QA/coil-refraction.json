@@ -1,0 +1,69 @@
+{
+  "schema": "fmpl.native-refractive-motion-witness.v1",
+  "thermal_rig_sha256": "786b3bb2417f7939a0e74abd665ede6eecf531298a31965cedfcd05905ff73af",
+  "class": "Minoris",
+  "heading": "south",
+  "reactor_feature": "Thermic column 1",
+  "method": "Native Blender 4.3.2 Cycles orthographic renders. Identical illuminated geometry, camera, lights, exposure, 96 samples and seed 417. Steam removed; core and extraction geometry stationary. Only each hot-air shell shader switched or advanced. No sprite warp or denoising applied.",
+  "camera": {
+    "elevation_deg": 45,
+    "azimuth_deg": 0,
+    "target_bu": [
+      0.66,
+      0,
+      2.2275
+    ],
+    "ortho_scale_bu": 7.92,
+    "full_size_px": [
+      384,
+      384
+    ],
+    "crop_xyxy_px": [
+      233,
+      128,
+      291,
+      246
+    ]
+  },
+  "measure": "Absolute Gaussian-smoothed luminance change divided by local gradient magnitude estimates apparent normal motion at strong native-resolution edges. Reported separately: dark cage-ridge intensity centroid shift along 40 scanlines. All distances use HR sprite pixels.",
+  "off_to_active_at_frame_1": {
+    "screen_normal_edge_estimate_hr_px": {
+      "p50": 0.206156,
+      "p95": 1.043099,
+      "max": 1.760424
+    },
+    "strong_edge_pixel_count": 536,
+    "stanchion_dark_ridge_centroid_shift_hr_px": {
+      "p50": 0.04112,
+      "p95": 0.189888,
+      "max": 0.514563
+    },
+    "ridge_scanlines": 40
+  },
+  "active_frame_1_to_frame_25": {
+    "screen_normal_edge_estimate_hr_px": {
+      "p50": 0.060631,
+      "p95": 0.651175,
+      "max": 2.369272
+    },
+    "strong_edge_pixel_count": 547,
+    "stanchion_dark_ridge_centroid_shift_hr_px": {
+      "p50": 0.079643,
+      "p95": 0.246006,
+      "max": 0.256887
+    },
+    "ridge_scanlines": 40
+  },
+  "closed_active_frame_1_to_frame_97": {
+    "max_abs_luminance_change_8bit": 0.0,
+    "rgba_identical": true
+  },
+  "source_render_sha256": {
+    "01-0": "e17bc61c1c3160d6c99bff0108b417e5efb5708ffe53a8408775b7271709da49",
+    "01-1": "2edbefbc994a92d1c506b11223ef6acb1a26b0a91b7ccaad6bc1f9a481a5d0b9",
+    "25-1": "7c1c3d892cc55b98005b2eeb82f8ba06c2307f26888b79f8cd51c842e1a1c41c",
+    "49-1": "703baed0d53a666aac5bded072f1257d954e55092c2bfcb2f7f54ca143b77422",
+    "73-1": "deb8eae334be22f11f22fafcf059605b603da89758cb7592dfd6c9a1f1078090",
+    "97-1": "66e2174ee017669285869ccb228dfee948f568525a119c9da319fa08809e1ff2"
+  }
+}

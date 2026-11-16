@@ -1,0 +1,34 @@
+{
+  "capture": "FMPL south, 16 authored frames, standard resolution (32 pixels per ground tile)",
+  "measurement": "For each projected physical port center, take a 5 x 5 standard-resolution patch, average the red intensity of the top 30% temporally varying pixels, and calculate Pearson correlation to its expected clockwise pulse. A port with less than 10 display-code levels of peak-to-peak red change is treated as occluded.",
+  "index_convention": "Zero-based from the positive local X axis: wedge 0 is just above right horizontal, indices increase counterclockwise viewed from the inspection face. The light travels in decreasing index order.",
+  "tiers": {
+    "Minoris": {
+      "physical_port_count": 10,
+      "observable_port_count": 10,
+      "ports_matching_clockwise_envelope": 10,
+      "minimum_observable_correlation": 0.95,
+      "median_observable_correlation": 0.978,
+      "occluded_zero_based_indices": []
+    },
+    "Majoris": {
+      "physical_port_count": 12,
+      "observable_port_count": 12,
+      "ports_matching_clockwise_envelope": 12,
+      "minimum_observable_correlation": 0.96,
+      "median_observable_correlation": 0.976,
+      "occluded_zero_based_indices": []
+    },
+    "Maximus": {
+      "physical_port_count": 16,
+      "observable_port_count": 15,
+      "ports_matching_clockwise_envelope": 15,
+      "minimum_observable_correlation": 0.973,
+      "median_observable_correlation": 0.98,
+      "occluded_zero_based_indices": [
+        11
+      ],
+      "occlusion": "Foreground fuel-charging station at the lower arc. The material behind that port remains driven."
+    }
+  }
+}

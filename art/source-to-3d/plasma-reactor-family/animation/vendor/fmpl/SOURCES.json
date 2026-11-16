@@ -1,0 +1,19 @@
+{
+  "repository": "mrcalzon02/Tech-Priests",
+  "commit": "707363a27a870839b962fa58a75a4002afe78900",
+  "fmpl_version": "0.4.2",
+  "files": {
+    "capture_policy.py": {
+      "path": "tools/fmpl/capture_policy.py",
+      "git_blob_sha1": "0e102b55b8accd1943f77fcda3558b2be99d66fc"
+    },
+    "blender_camera_guard.py": {
+      "path": "tools/fmpl/blender_camera_guard.py",
+      "git_blob_sha1": "457b0a2517e70093658c8e5e1d561619858f59e0"
+    },
+    "fluid_steam_fx.py": {
+      "path": "tools/fmpl/effects/fluid_steam_fx.py",
+      "git_blob_sha1": "3206a5c3d0366452c4fab13b565b6cc841d4e8d3"
+    }
+  }
+}

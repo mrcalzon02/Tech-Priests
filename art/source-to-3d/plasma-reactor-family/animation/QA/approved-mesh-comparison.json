@@ -1,0 +1,26 @@
+{
+  "method": "For each saved scene at frame 1, compare the multiset of hardware polygon corner coordinates relative to the ground pivot against the approved static Blender scene. Added steam and heat optics are excluded. Positions within 2e-6 Blender units form one corner. Material changes are outside this geometry check.",
+  "tiers": {
+    "Minoris": {
+      "source_polygons": 66871,
+      "rigged_hardware_polygons": 66871,
+      "source_faces_missing": 0,
+      "unexpected_hardware_faces": 0,
+      "maximum_vertex_deviation_blender_units": 0.0
+    },
+    "Majoris": {
+      "source_polygons": 91969,
+      "rigged_hardware_polygons": 91969,
+      "source_faces_missing": 0,
+      "unexpected_hardware_faces": 0,
+      "maximum_vertex_deviation_blender_units": 0.0
+    },
+    "Maximus": {
+      "source_polygons": 122171,
+      "rigged_hardware_polygons": 122171,
+      "source_faces_missing": 0,
+      "unexpected_hardware_faces": 0,
+      "maximum_vertex_deviation_blender_units": 0.0
+    }
+  }
+}

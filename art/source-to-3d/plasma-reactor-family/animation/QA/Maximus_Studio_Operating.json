@@ -1,0 +1,35 @@
+{
+  "movie": "Maximus_Studio_Operating.mp4",
+  "frame_stats": {
+    "width": 704,
+    "height": 560,
+    "avg_frame_rate": "24/1",
+    "duration": "2.000000",
+    "nb_frames": "48"
+  },
+  "source": "Maximus_FMPL.blend",
+  "closed_sentinel_frame": 97,
+  "closure_pixels_changed": 0,
+  "loop_transition_mean_absolute_rgb_change": 1.5113704004329005,
+  "median_transition_mean_absolute_rgb_change": 1.5842938311688313,
+  "source_sha256": "3e9ab39596431e173458b042aae6b1f54c485a1c7d889a7ca8531be01f749b7a",
+  "view_vector_from_approved_static_build": [
+    0.53,
+    -1,
+    0.415
+  ],
+  "native_frames": {
+    "first": 1,
+    "last_encoded": 95,
+    "step": 2,
+    "loop_closure_reference": 97
+  },
+  "mean_adjacent_frame_absolute_rgb_delta_8bit_by_area": {
+    "static_ground": 0.0277,
+    "exhaust_plume": 7.7783,
+    "containment_ring_and_impeller": 3.3921,
+    "thermic_column": 4.2152,
+    "extraction_turbine": 45.3727
+  },
+  "file_sha256": "4d49036d32b2705537f59f6b538e7281f6814cf7a0dbf1fca9b5311224a1fef2"
+}

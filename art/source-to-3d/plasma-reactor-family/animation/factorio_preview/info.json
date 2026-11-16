@@ -1,0 +1,9 @@
+{
+  "name": "mars-reactor-visuals",
+  "version": "1.0.0",
+  "title": "Mars Plasma Reactors — Animation Preview",
+  "author": "Tech Priests project",
+  "factorio_version": "2.1",
+  "dependencies": ["base >= 2.1.0"],
+  "description": "Minoris, Majoris and Maximus reactor models with four-direction FMPL animation. Connect a preview reactor to an electric load and supply chemical fuel to operate it."
+}

@@ -1,0 +1,280 @@
+{
+  "engine": "Factorio 2.1.24 build 87808 Linux headless",
+  "pass": true,
+  "native_cases": 24,
+  "resolutions": {
+    "hr": {
+      "evidence": {
+        "cases": 12,
+        "tick": 420,
+        "sprite_resolution": "hr"
+      },
+      "rows": [
+        {
+          "tier": "minoris",
+          "direction": 0,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 4,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 8,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 12,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 0,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 4,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 8,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 12,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 0,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 4,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 8,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 12,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        }
+      ],
+      "graphics": {
+        "engine_layer_uses": 60,
+        "canonical_cell_alpha_comparisons": 408,
+        "atlas_pixels": 50600444,
+        "uncropped_atlas_pixels": 123109376
+      }
+    },
+    "sd": {
+      "evidence": {
+        "cases": 12,
+        "tick": 420,
+        "sprite_resolution": "sd"
+      },
+      "rows": [
+        {
+          "tier": "minoris",
+          "direction": 0,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 4,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 8,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "minoris",
+          "direction": 12,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 119,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 0,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 4,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 8,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "majoris",
+          "direction": 12,
+          "generator_joules": 1999999.9218750016,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 60,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 0,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 4,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 8,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        },
+        {
+          "tier": "maximus",
+          "direction": 12,
+          "generator_joules": 1999999.921875,
+          "load_joules": 1999999.921875,
+          "fuel_items": 1,
+          "working_ticks": 29,
+          "rotation_steps": 4,
+          "idle_active_idle": true
+        }
+      ],
+      "graphics": {
+        "engine_layer_uses": 60,
+        "canonical_cell_alpha_comparisons": 408,
+        "atlas_pixels": 12650111,
+        "uncropped_atlas_pixels": 30777344
+      }
+    }
+  },
+  "archive_sha256": "049be81309779db2f96e2d5b4e07f99124208f475a00c5d60c88471d77a131b0",
+  "archive_bytes": 52563041,
+  "visual_evidence": "Engine verified prototype loading, directions, fuel and delivered load. Pixel appearance is independently inspected in the exported sprite sheets."
+}

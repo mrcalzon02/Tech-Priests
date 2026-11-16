@@ -16,6 +16,8 @@ All three have an upright containment drum, a cut-through annular flange, a heli
 
 Open `Blender/Mars_Reactor_Family.blend` to see the three reactors together. Each reactor has its own collection. Select a named assembly to edit it. Vertex groups identify components within the assembly, including individual types of fittings, plates, and bolts. Each reactor's ground pivot controls the whole model.
 
+The [FMPL animation guide](animation/README.md) covers the operating rigs for all three reactors. To install the preview from this checkout, copy the entire [mars-reactor-visuals_1.0.0 folder](animation/Factorio/mars-reactor-visuals_1.0.0/) into Factorio’s `mods` directory.
+
 The download bundle contains all three independent exports in `GLB/`. Running the generator also writes these files to the output directory. Their origins share the containment shaft's lateral centerline at ground level.
 
 ## Rebuild

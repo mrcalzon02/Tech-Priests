@@ -1,0 +1,612 @@
+{
+  "reactors": 3,
+  "headings_per_reactor": 4,
+  "active_frames_per_heading": 16,
+  "logical_fps": 8,
+  "loop_seconds": 2,
+  "high_resolution_active_frames": 192,
+  "standard_active_frames": 192,
+  "terminal_frame_in_atlas": false,
+  "results": [
+    {
+      "tier": "Minoris",
+      "heading": "north",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 384,
+          "visible_bounds_xyxy": [
+            22,
+            119,
+            281,
+            316
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.5,
+              -1.193242693252299
+            ],
+            "origin_px": [
+              160.0,
+              268.3675323681472
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.647
+        },
+        "sd": {
+          "cell_pixels": 192,
+          "visible_bounds_xyxy": [
+            11,
+            59,
+            140,
+            157
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.5,
+              -1.193242693252299
+            ],
+            "origin_px": [
+              80.0,
+              134.1837661840736
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    },
+    {
+      "tier": "Minoris",
+      "heading": "east",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 384,
+          "visible_bounds_xyxy": [
+            89,
+            64,
+            244,
+            347
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.5,
+              -1.193242693252299
+            ],
+            "origin_px": [
+              160.0,
+              268.3675323681472
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.588
+        },
+        "sd": {
+          "cell_pixels": 192,
+          "visible_bounds_xyxy": [
+            45,
+            32,
+            121,
+            173
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.5,
+              -1.193242693252299
+            ],
+            "origin_px": [
+              80.0,
+              134.1837661840736
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    },
+    {
+      "tier": "Minoris",
+      "heading": "south",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 384,
+          "visible_bounds_xyxy": [
+            36,
+            106,
+            297,
+            323
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.5,
+              -1.193242693252299
+            ],
+            "origin_px": [
+              160.0,
+              268.3675323681472
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.647
+        },
+        "sd": {
+          "cell_pixels": 192,
+          "visible_bounds_xyxy": [
+            18,
+            53,
+            148,
+            161
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.5,
+              -1.193242693252299
+            ],
+            "origin_px": [
+              80.0,
+              134.1837661840736
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    },
+    {
+      "tier": "Minoris",
+      "heading": "west",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 384,
+          "visible_bounds_xyxy": [
+            76,
+            69,
+            230,
+            363
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.5,
+              -1.193242693252299
+            ],
+            "origin_px": [
+              160.0,
+              268.3675323681472
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.635
+        },
+        "sd": {
+          "cell_pixels": 192,
+          "visible_bounds_xyxy": [
+            38,
+            34,
+            114,
+            181
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.5,
+              -1.193242693252299
+            ],
+            "origin_px": [
+              80.0,
+              134.1837661840736
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    },
+    {
+      "tier": "Majoris",
+      "heading": "north",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 512,
+          "visible_bounds_xyxy": [
+            20,
+            48,
+            372,
+            453
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.6969696969696969,
+              -1.6633079966547197
+            ],
+            "origin_px": [
+              211.3939393939394,
+              362.45171178590203
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.624
+        },
+        "sd": {
+          "cell_pixels": 256,
+          "visible_bounds_xyxy": [
+            10,
+            25,
+            186,
+            226
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.6969696969696969,
+              -1.6633079966547197
+            ],
+            "origin_px": [
+              105.6969696969697,
+              181.22585589295102
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    },
+    {
+      "tier": "Majoris",
+      "heading": "east",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 512,
+          "visible_bounds_xyxy": [
+            79,
+            58,
+            323,
+            473
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.6969696969696969,
+              -1.6633079966547197
+            ],
+            "origin_px": [
+              211.3939393939394,
+              362.45171178590203
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.753
+        },
+        "sd": {
+          "cell_pixels": 256,
+          "visible_bounds_xyxy": [
+            39,
+            29,
+            161,
+            236
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.6969696969696969,
+              -1.6633079966547197
+            ],
+            "origin_px": [
+              105.6969696969697,
+              181.22585589295102
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    },
+    {
+      "tier": "Majoris",
+      "heading": "south",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 512,
+          "visible_bounds_xyxy": [
+            50,
+            80,
+            402,
+            439
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.6969696969696969,
+              -1.6633079966547197
+            ],
+            "origin_px": [
+              211.3939393939394,
+              362.45171178590203
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.682
+        },
+        "sd": {
+          "cell_pixels": 256,
+          "visible_bounds_xyxy": [
+            25,
+            40,
+            201,
+            219
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.6969696969696969,
+              -1.6633079966547197
+            ],
+            "origin_px": [
+              105.6969696969697,
+              181.22585589295102
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    },
+    {
+      "tier": "Majoris",
+      "heading": "west",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 512,
+          "visible_bounds_xyxy": [
+            98,
+            59,
+            343,
+            494
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.6969696969696969,
+              -1.6633079966547197
+            ],
+            "origin_px": [
+              211.3939393939394,
+              362.45171178590203
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.753
+        },
+        "sd": {
+          "cell_pixels": 256,
+          "visible_bounds_xyxy": [
+            49,
+            31,
+            171,
+            246
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.6969696969696969,
+              -1.6633079966547197
+            ],
+            "origin_px": [
+              105.6969696969697,
+              181.22585589295102
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    },
+    {
+      "tier": "Maximus",
+      "heading": "north",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 704,
+          "visible_bounds_xyxy": [
+            38,
+            72,
+            528,
+            646
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.9242424242424242,
+              -2.205691039042128
+            ],
+            "origin_px": [
+              292.8484848484848,
+              493.16422649869617
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.682
+        },
+        "sd": {
+          "cell_pixels": 352,
+          "visible_bounds_xyxy": [
+            19,
+            37,
+            263,
+            323
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.9242424242424242,
+              -2.205691039042128
+            ],
+            "origin_px": [
+              146.4242424242424,
+              246.58211324934808
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    },
+    {
+      "tier": "Maximus",
+      "heading": "east",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 704,
+          "visible_bounds_xyxy": [
+            62,
+            57,
+            441,
+            639
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.9242424242424242,
+              -2.205691039042128
+            ],
+            "origin_px": [
+              292.8484848484848,
+              493.16422649869617
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.753
+        },
+        "sd": {
+          "cell_pixels": 352,
+          "visible_bounds_xyxy": [
+            31,
+            29,
+            220,
+            319
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.9242424242424242,
+              -2.205691039042128
+            ],
+            "origin_px": [
+              146.4242424242424,
+              246.58211324934808
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    },
+    {
+      "tier": "Maximus",
+      "heading": "south",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 704,
+          "visible_bounds_xyxy": [
+            57,
+            36,
+            546,
+            594
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.9242424242424242,
+              -2.205691039042128
+            ],
+            "origin_px": [
+              292.8484848484848,
+              493.16422649869617
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.753
+        },
+        "sd": {
+          "cell_pixels": 352,
+          "visible_bounds_xyxy": [
+            28,
+            18,
+            273,
+            297
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.9242424242424242,
+              -2.205691039042128
+            ],
+            "origin_px": [
+              146.4242424242424,
+              246.58211324934808
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    },
+    {
+      "tier": "Maximus",
+      "heading": "west",
+      "resolutions": {
+        "hr": {
+          "cell_pixels": 704,
+          "visible_bounds_xyxy": [
+            143,
+            65,
+            523,
+            667
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 0.5,
+            "shift": [
+              0.9242424242424242,
+              -2.205691039042128
+            ],
+            "origin_px": [
+              292.8484848484848,
+              493.16422649869617
+            ]
+          },
+          "max_daylight_reconstruction_error_255": 1.725
+        },
+        "sd": {
+          "cell_pixels": 352,
+          "visible_bounds_xyxy": [
+            72,
+            33,
+            261,
+            333
+          ],
+          "distinct_frames": 16,
+          "registration": {
+            "scale": 1.0,
+            "shift": [
+              0.9242424242424242,
+              -2.205691039042128
+            ],
+            "origin_px": [
+              146.4242424242424,
+              246.58211324934808
+            ]
+          },
+          "max_daylight_reconstruction_error_255": null
+        }
+      }
+    }
+  ]
+}
