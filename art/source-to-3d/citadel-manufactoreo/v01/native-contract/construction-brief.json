@@ -1,0 +1,29 @@
+{
+  "machine": "citadel-manufactoreo",
+  "owner_direction": "Large enclosed space manufacturing cathedral. Do not expose interior processing machinery; preserve the current cathedral identity going forward with this machinery.",
+  "reference": "Current native citadel-manufactoreo-idle.png,384x384",
+  "design": "Heavy supported closed shell, cathedral towers and buttresses, armored doors and opaque green glazing, exterior service systems and restrained externally visible working animation. Internal manufacturing shapes inform structural load paths and service arrangements; no speculative hidden interior modeling.",
+  "fmpl_textures_required": true,
+  "true_proportion_inspection_required": true,
+  "asset_complete": false,
+  "full_source_sprite_native_reload_delivery_pending": true,
+  "native_footprint": [
+    5,
+    5
+  ],
+  "native_directions": [
+    0
+  ],
+  "native_rotatable": false,
+  "external_fluid_ports": 0,
+  "oil_ingredient": "Item sacred-machine-oil, not a fluid",
+  "electric_crafting_usage_watts": 2000000,
+  "electric_idle_drain_joules_per_tick": 1111.111111111111,
+  "real_processing_recipes": [
+    "blackstone-fragment-from-asteroid-chunk",
+    "blackstone-slab-compression",
+    "entropic-extractor"
+  ],
+  "native_initial_recipe_cases_pass": 12,
+  "scope": "Four requested directions all normalize north;12 real batches do not mean four supported facings. Full new art/stop/block/reload verification remains pending."
+}

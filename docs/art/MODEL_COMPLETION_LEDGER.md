@@ -1,3 +1,21 @@
+## 2026-11-17 - Citadel Manufactureo contract and enclosed cathedral direction
+
+Next unclaimed machine: actual platform-only5x5 fixed-north electric Citadel
+Manufactureo,2MW, two modules and no fluid ports.12 genuine native batches
+verify all three actual cutting/compression/extractor-construction recipes.
+Sacred machine oil is an item. Four placement direction requests all normalize
+north; no four-facing gameplay, burner or external fluid system is invented.
+Recipe/unlock, power, platform conditions and original source are preserved.
+
+The owner explicitly requires the large space-manufacturing cathedral to stay
+enclosed: do not reveal the machinery within. Keep its heavy supported shell,
+doors, towers, buttresses, opaque green glazing and mechanical exterior, with
+restrained exterior working animation. Use correct FMPL materials and true
+proportion inspection. Native contract/source-recovery evidence and this brief
+are in art/source-to-3d/citadel-manufactoreo/v01/native-contract. Modeling,
+sprites, complete operational/reload verification and FMPL delivery remain
+pending. Advanced Space Cargo and all completed/concurrent assets are held.
+
 ## 2026-11-17 - Void Steam Engine COMPLETE: FMPL/native delivery verified
 
 Void Steam Engine is operationally complete. Source/code/sprites/native evidence

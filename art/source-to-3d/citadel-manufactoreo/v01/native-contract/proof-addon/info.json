@@ -1,0 +1,1 @@
+{"name": "citadel-contract", "version": "0.0.1", "title": "Actual current Citadel contract probe", "author": "local", "factorio_version": "2.1", "dependencies": ["base", "space-age", "tech-priests"]}
