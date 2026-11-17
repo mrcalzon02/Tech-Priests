@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 13,
+    "model_records": 14,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -462,6 +462,54 @@
         3
       ],
       "purpose": "Tanks passive 25000-unit Wood Basin; refined tracked cistern floor/corner posts, supported timber staves and lid, stone piers, sealed sight panels and four full-bore corner sockets. No processing recipe or fuel/power. Packed editable source and reimported animated GLB inspected. Four static body views plus 64 true fill-preview frames archived; actual native window uses stored fluid ratio, scrolling liquid and animated gas with transparent body holdouts. Twelve tanks tested with real external-pump fill, full saturation, stop, drain and restart for water/oil/steam; 48 player-grid connections. Filled save reload preserves fluids, amounts, temperatures and ports. Two native art orientations retained; delegated operational close-enough review, not individual owner visual approval."
+    },
+    {
+      "id": "tanks-quarry-v5",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "64d8b25950c2c3d5d2d1808a1072fc7d013b4be6",
+        "path": "models/island-survival/quarry/candidates/v5-rooted04/quarry-v5.blend",
+        "sha256": "b169bda724b6d5ca39fe5a7d3c03e576c266b1c7a33b618a6563a4a8490a1439"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "64d8b25950c2c3d5d2d1808a1072fc7d013b4be6",
+        "path": "models/island-survival/quarry/candidates/v5-rooted04/quarry-v5.glb",
+        "sha256": "44121a15d5d9df6fc9cb19f992487f1b3910a9c68cdea56349504984ee0a41f5"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "64d8b25950c2c3d5d2d1808a1072fc7d013b4be6",
+          "path": "models/island-survival/quarry/v5/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "64d8b25950c2c3d5d2d1808a1072fc7d013b4be6",
+          "path": "docs/art/quarry-v5/native-runtime.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "64d8b25950c2c3d5d2d1808a1072fc7d013b4be6",
+          "path": "docs/art/quarry-v5/capture-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "64d8b25950c2c3d5d2d1808a1072fc7d013b4be6",
+          "path": "docs/art/quarry-v5/operated-reload-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "64d8b25950c2c3d5d2d1808a1072fc7d013b4be6",
+          "path": "docs/art/quarry-v5/visual-review.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "Tanks chemical-burner quarry with six actual quarrying recipes and no fluid ports. Reused tracked starter, detailed timber hoist, bored bearings/windlass, taut paid-out cable and upright lifting bucket, rigid piston/rod crank, moving hemp belt, contained brick firebox/copper pressure jacket, tools/material handling and continuous excavated terrain roots. Packed editable source reopened; GLB independently reimported, including ground fade in COLOR_0. Six export pose comparisons and 193 mechanism-frame checks pass. Seventeen genuine fixed-north source frames; native idle cells explicitly repeat one capture. Thirty-six machines tested for normal placement, six real recipes, tools returned in output, chemical fuel, no fuel, no-recipe idle, full output, stop/restart and unblocking. Twelve genuine client screenshots on grass; legacy smoke emitter aligned to measured flue outlet. Completed operated-save reload preserves 36 frozen inventory snapshots. Current native orientation is fixed north; no gameplay change. Delegated operational close-enough review, not individual owner approval."
     }
   ],
   "programs": [
