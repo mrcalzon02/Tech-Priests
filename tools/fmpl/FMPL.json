@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 20,
+    "model_records": 21,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -888,6 +888,79 @@
         3
       ],
       "purpose": "Actual Tanks tank-ammo-assembling-machine: electric 175 kW, speed 1, one module slot, no burner. All 46 real tank-ammo-component recipes completed in all four directions (184 actual recipe cases); ten generic engine parameter placeholders excluded from function brief. Real encabulated-device-integration unlock and building recipe crafted in an unmodified base assembler-3. Preserves all eight saved OBJ groups as timber/stone works with open wound motor, exact-ratio line belts, guided case-forming press, bored rigid link/mandrel, sealed charging/mixing retort, supported electric bands, packing trays and guard outside the swept motion. Actual Rubberized-timber crude-oil intake and wood/explosive-to-coal/waste/crude-oil output define the closed fixed pipe/coil/collector circuit; no other machine gameplay substituted. Packed/reopened source and independently reimported GLB: 272 meshes, 215926 triangles, 33 source/export PBR images, full UVs, no nonfinite/zero-area geometry. Six geometry poses and 385 mechanism/clearance samples per artifact; matching raw pair inventories, 161 enumerated rigid-assembly/belt running-surface contacts, no unwanted moving crossings. Connecting rod remains 0.52 tile; half-key pin centre deviation about 0.000018 tile fits inside 0.002 radial bore clearance. Motor 2:1 and transfer 1:1 phase checked. Four directions x one genuine idle + 32 working timestamps =132 actual captures, six verified atlases. Idle poses explicitly repeated to satisfy matching native 32-frame counts; no fabricated idle timestamps. Full-size fixed bores 0.49, collar OD0.68, axis0.36; actual collar projection matches ordinary pipe face anchors to below 0.000001 tile, with eight real input/output placed-pipe closeups viewed. Native final fixture:208 target machines plus one real bootstrap builder,20 ordinary grid joints; no target speed/power/module overrides, including full3160-second WMD recipe durations. Power/fluid starvation-resupply, item/fluid output blocking/release and stop/restart pass. Fluid blocker explicitly holds powered progress1,full_output,zero finished products,1000 machine oil+100 pipe oil after160 seconds for the150-second recipe; output release verified. Both fluid mass balances verified in all four directions. Sixty actual client PNGs plus genuine32-frame8fps GIF/MP4; working geometry moves, disabled/post-cycle blocked sampled views stationary. Operated-save reload preserves all input/output inventories, actual fluids/temperatures/joints, recipe/progress/products-finished, electrical buffers,directions/disabled flags and crafted building output. Binary index bytes exact; Lua content verified after Git newline normalization. Gameplay unchanged. Earlier failed geometry/layout/timing studies held; delegated close-enough operational review, no individual owner approval or full-user-pack installation."
+    },
+    {
+      "id": "tanks-tank-assembler-v1",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+        "path": "models/island-survival/tank-assembling-machine/candidates/v1-production10/tank-assembler-v1.blend",
+        "sha256": "784954f4bb522563fe64b9e9308d04e4a505521cd5e3e3c6b10d96b66bedb587"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+        "path": "models/island-survival/tank-assembling-machine/candidates/v1-production10/tank-assembler-v1.glb",
+        "sha256": "d68f6b35bbb7bc94708ef7861605a62e6535aefff23f12a8d5954bb93dec8e43"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+          "path": "models/island-survival/tank-assembling-machine/v1/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+          "path": "models/island-survival/tank-assembling-machine/v1/contract.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+          "path": "models/island-survival/tank-assembling-machine/candidates/v1-production10/runtime-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+          "path": "models/island-survival/tank-assembling-machine/candidates/v1-production10/clearance-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+          "path": "docs/art/tank-assembler-v1/installed-source-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+          "path": "docs/art/tank-assembler-v1/native-runtime.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+          "path": "docs/art/tank-assembler-v1/operated-reload-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+          "path": "docs/art/tank-assembler-v1/native-animation-observation.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+          "path": "docs/art/tank-assembler-v1/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "58d9687ef68cc7cda63d8d22ea6dadecc0986397",
+          "path": "docs/art/tank-assembler-v1/capture-receipt.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "Actual Tanks tank-assembling-machine: electric 250 kW, normal speed one, four empty module slots, no fuel/fluid storage or ports. All13 real vehicle upgrade/light-chassis recipes operated at full native times, including3040-second WMD conversion. Four requested placement directions normalize north; only one actual sprite orientation. Actual encabulated-device-integration unlock, building crafted in delivered ammunition assembler, item/place_result verified and actual crafted item consumed for ordinary scripted placement. All nine saved OBJ groups retained: founded timber/stone gantry, rails, open existing-vehicle hull/tracks with through axles and bored plate openings, upright slung replacement engine, supported exposed electric motor/winch, guided joining head with electrode-rooted effect, rigid hinged electrical arms with separate parallel leaves, supported ceramic supply terminals. Reopened packed source and independently reimported GLB:282 meshes,54704 triangles,33 embedded PBR maps, physical UVs and six pose comparisons.385 source plus385 runtime mechanism/clearance samples verify upright load, rope endpoints, rigid0.37-tile arms, pin fits and winding ratio;347 matching raw contact pairs,58 moving fitted contacts explicitly adjudicated; no unknown/unwanted crossings. This is sampled clearance, not continuous collision simulation.33 genuine source captures:one idle plus32 working north phases. Idle repeats explicitly into32 cells for native matching frame counts. Six atlases; animation_progress explicitly1 gives actual8fps. Final fixture17 machines plus actual ammunition-assembler builder; power starvation/resupply, full_output blocking/release, stop/restart, all13 actual recipes and current-art completed-save reload pass without gameplay/speed/power/module overrides.46 native client PNGs include32 distinct working phases; paused and blocked geometry remains stationary. Full operated save retains inventories, recipe/progress/count, electrical buffers, disabled/north flags, builder output and crafted building placement. Native32-frame GIF/MP4; viewed source/export front/rear/side/clay/close and representative native states. Task binary bytes exact and normalized Lua content verified against tested profile. Delegated operational close-enough review; no individual owner approval, manual-click placement, full user-pack install or Portal publication."
     }
   ],
   "programs": [
