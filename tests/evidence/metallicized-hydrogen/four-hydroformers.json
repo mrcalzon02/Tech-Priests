@@ -1,0 +1,403 @@
+{
+  "mod": "tech-priests",
+  "mod_version": "0.1.685",
+  "factorio_version": "2.1.24",
+  "mode": "Base game, normal quality, full power, speed 1, no modules, no beacons, no preload or pacing.",
+  "setup": "Eight purifiers, eight electrolyzers, one compressor, crucible, forge and sealer. Each hydroformer uses dedicated steel and water. Identical ordinary inserters and an ordinary shared shell belt moved real materials. Fixture supplies water, steel, electricity, removes oxygen and clears the output chest.",
+  "recipes": {
+    "forge_seconds": 24,
+    "hydroformer_seconds": 96,
+    "sealer_seconds": 16
+  },
+  "measurement": "Steady measurements use the difference between snapshots at minutes 10 and 30. First output times are sampled every 15 ticks. Inert counts are pellets delivered to the same export chest as fuel. Stock counts include machine input/output, private stock, inserter hands and belts. The electric meter includes all processing machines and associated inserters. Mining, steelmaking, water and oxygen logistics are external.",
+  "profiles": [
+    {
+      "hydroformers": 1,
+      "measured_game_minutes": [
+        10,
+        30
+      ],
+      "normal_fuel_unit_MJ": 180,
+      "first_raw_seconds": 50.0,
+      "first_formed_seconds": 74.75,
+      "first_sealed_export_seconds": 121.0,
+      "first_inert_export_seconds": 158.0,
+      "crucible_output": 47,
+      "forge_native_work_cycles": 47,
+      "forge_dispatched": 47,
+      "hydroformer_shells_completed": 12,
+      "sealed_exported": 13,
+      "inert_exported": 35,
+      "sealed_per_minute": 0.65,
+      "inert_per_minute": 1.75,
+      "sealed_integrity_counts": {
+        "0.25": 8,
+        "0.50": 5,
+        "0.75": 0
+      },
+      "starting_in_transit_and_queued": {
+        "empty-pressure-shell": 0,
+        "raw-metallicized": 2,
+        "forged-metallicized": 1,
+        "contained-metallicized": 1,
+        "inert-pellet": 1
+      },
+      "ending_in_transit_and_queued": {
+        "empty-pressure-shell": 0,
+        "raw-metallicized": 2,
+        "forged-metallicized": 2,
+        "contained-metallicized": 0,
+        "inert-pellet": 0
+      },
+      "water_input_units": 48240,
+      "steel_native_consumption": 24,
+      "oxygen_removed_units": 24000.0,
+      "measured_factory_input_MJ_per_canister": 330.64133545222353,
+      "measured_factory_average_MW": 3.5819478007324217,
+      "gross_fuel_equivalent_MW": 1.95,
+      "measured_net_fuel_equivalent_MW": -1.631947800732422,
+      "steady_electricity_MJ_breakdown": {
+        "inserter": 4.208968260994,
+        "tp-hydrogen-fixture-power": 4298.337360878906,
+        "tp-mh7-canister-assembler": 29.025000523132,
+        "tp-mh7-review-compressor": 303.600007384277,
+        "tp-mh7-review-crucible": 1061.999981285156,
+        "tp-mh7-review-electrolyzer": 1983.9999375,
+        "tp-mh7-review-fabricator": 185.999994140625,
+        "tp-mh7-review-forge": 233.50332600747697,
+        "tp-mh7-review-purifier": 495.999984375
+      },
+      "fluid_inventory_changes": {
+        "compressed": 0,
+        "hydrogen": 0,
+        "oxygen": 0.0,
+        "purified": 0
+      },
+      "cold_elapsed_game_minutes": 30,
+      "cold_total_sealed_exported": 18,
+      "cold_total_inert_exported": 48,
+      "cold_total_integrity_counts": {
+        "0.50": 7,
+        "0.75": 2,
+        "0.25": 9
+      },
+      "source_version": "0.1.685"
+    },
+    {
+      "hydroformers": 2,
+      "measured_game_minutes": [
+        10,
+        30
+      ],
+      "normal_fuel_unit_MJ": 180,
+      "first_raw_seconds": 50.0,
+      "first_formed_seconds": 74.75,
+      "first_sealed_export_seconds": 121.0,
+      "first_inert_export_seconds": 196.0,
+      "crucible_output": 45,
+      "forge_native_work_cycles": 45,
+      "forge_dispatched": 45,
+      "hydroformer_shells_completed": 24,
+      "sealed_exported": 26,
+      "inert_exported": 20,
+      "sealed_per_minute": 1.3,
+      "inert_per_minute": 1.0,
+      "sealed_integrity_counts": {
+        "0.25": 11,
+        "0.50": 15
+      },
+      "starting_in_transit_and_queued": {
+        "empty-pressure-shell": 1,
+        "raw-metallicized": 2,
+        "forged-metallicized": 0,
+        "contained-metallicized": 1,
+        "inert-pellet": 1
+      },
+      "ending_in_transit_and_queued": {
+        "empty-pressure-shell": 0,
+        "raw-metallicized": 2,
+        "forged-metallicized": 1,
+        "contained-metallicized": 0,
+        "inert-pellet": 0
+      },
+      "water_input_units": 48480,
+      "steel_native_consumption": 48,
+      "oxygen_removed_units": 24000.0,
+      "measured_factory_input_MJ_per_canister": 170.74135645252406,
+      "measured_factory_average_MW": 3.699396056471355,
+      "gross_fuel_equivalent_MW": 3.9,
+      "measured_net_fuel_equivalent_MW": 0.20060394352864552,
+      "steady_electricity_MJ_breakdown": {
+        "inserter": 5.486981975349,
+        "tp-hydrogen-fixture-power": 4439.275267765625,
+        "tp-mh7-canister-assembler": 59.025001328796,
+        "tp-mh7-review-compressor": 303.600007384277,
+        "tp-mh7-review-crucible": 998.083315991699,
+        "tp-mh7-review-electrolyzer": 1983.9999375,
+        "tp-mh7-review-fabricator": 371.99998828125,
+        "tp-mh7-review-forge": 221.079993091187,
+        "tp-mh7-review-purifier": 495.999984375
+      },
+      "fluid_inventory_changes": {
+        "compressed": 60,
+        "hydrogen": 0,
+        "oxygen": 0.0,
+        "purified": 0
+      },
+      "cold_elapsed_game_minutes": 30,
+      "cold_total_sealed_exported": 36,
+      "cold_total_inert_exported": 27,
+      "cold_total_integrity_counts": {
+        "0.50": 20,
+        "0.25": 16
+      },
+      "source_version": "0.1.685"
+    },
+    {
+      "hydroformers": 3,
+      "measured_game_minutes": [
+        10,
+        30
+      ],
+      "normal_fuel_unit_MJ": 180,
+      "first_raw_seconds": 50.0,
+      "first_formed_seconds": 74.75,
+      "first_sealed_export_seconds": 121.0,
+      "first_inert_export_seconds": 234.75,
+      "crucible_output": 44,
+      "forge_native_work_cycles": 43,
+      "forge_dispatched": 43,
+      "hydroformer_shells_completed": 36,
+      "sealed_exported": 39,
+      "inert_exported": 6,
+      "sealed_per_minute": 1.95,
+      "inert_per_minute": 0.3,
+      "sealed_integrity_counts": {
+        "0.25": 11,
+        "0.50": 28,
+        "0.75": 0
+      },
+      "starting_in_transit_and_queued": {
+        "empty-pressure-shell": 2,
+        "raw-metallicized": 1,
+        "forged-metallicized": 2,
+        "contained-metallicized": 1,
+        "inert-pellet": 0
+      },
+      "ending_in_transit_and_queued": {
+        "empty-pressure-shell": 0,
+        "raw-metallicized": 2,
+        "forged-metallicized": 1,
+        "contained-metallicized": 0,
+        "inert-pellet": 0
+      },
+      "water_input_units": 48720,
+      "steel_native_consumption": 72,
+      "oxygen_removed_units": 24000.0,
+      "measured_factory_input_MJ_per_canister": 118.64302174128606,
+      "measured_factory_average_MW": 3.855898206591797,
+      "gross_fuel_equivalent_MW": 5.85,
+      "measured_net_fuel_equivalent_MW": 1.994101793408203,
+      "steady_electricity_MJ_breakdown": {
+        "inserter": 6.7778733266449995,
+        "tp-hydrogen-fixture-power": 4627.077847910156,
+        "tp-mh7-canister-assembler": 85.02500202703901,
+        "tp-mh7-review-compressor": 303.600007384277,
+        "tp-mh7-review-crucible": 977.958316424072,
+        "tp-mh7-review-electrolyzer": 1983.9999375,
+        "tp-mh7-review-fabricator": 558.0,
+        "tp-mh7-review-forge": 215.716659937897,
+        "tp-mh7-review-purifier": 495.999984375
+      },
+      "fluid_inventory_changes": {
+        "compressed": 80.0,
+        "hydrogen": 0,
+        "oxygen": 0.0,
+        "purified": 0
+      },
+      "cold_elapsed_game_minutes": 30,
+      "cold_total_sealed_exported": 54,
+      "cold_total_inert_exported": 8,
+      "cold_total_integrity_counts": {
+        "0.50": 36,
+        "0.25": 15,
+        "0.75": 3
+      },
+      "source_version": "0.1.685"
+    },
+    {
+      "hydroformers": 4,
+      "measured_game_minutes": [
+        10,
+        30
+      ],
+      "normal_fuel_unit_MJ": 180,
+      "first_raw_seconds": 50.0,
+      "first_formed_seconds": 74.75,
+      "first_sealed_export_seconds": 121.0,
+      "first_inert_export_seconds": null,
+      "crucible_output": 48,
+      "forge_native_work_cycles": 49,
+      "forge_dispatched": 49,
+      "hydroformer_shells_completed": 48,
+      "sealed_exported": 49,
+      "inert_exported": 0,
+      "sealed_per_minute": 2.45,
+      "inert_per_minute": 0.0,
+      "sealed_integrity_counts": {
+        "0.50": 3,
+        "0.75": 42,
+        "1.00": 4
+      },
+      "starting_in_transit_and_queued": {
+        "empty-pressure-shell": 3,
+        "raw-metallicized": 2,
+        "forged-metallicized": 0,
+        "contained-metallicized": 1,
+        "inert-pellet": 0
+      },
+      "ending_in_transit_and_queued": {
+        "empty-pressure-shell": 3,
+        "raw-metallicized": 1,
+        "forged-metallicized": 1,
+        "contained-metallicized": 0,
+        "inert-pellet": 0
+      },
+      "water_input_units": 48960,
+      "steel_native_consumption": 96,
+      "oxygen_removed_units": 24000.0,
+      "measured_factory_input_MJ_per_canister": 100.81197969443559,
+      "measured_factory_average_MW": 4.11648917085612,
+      "gross_fuel_equivalent_MW": 7.35,
+      "measured_net_fuel_equivalent_MW": 3.2335108291438797,
+      "steady_electricity_MJ_breakdown": {
+        "inserter": 8.184049380219001,
+        "tp-hydrogen-fixture-power": 4939.787005027344,
+        "tp-mh7-canister-assembler": 101.32291913139301,
+        "tp-mh7-review-compressor": 303.600007384277,
+        "tp-mh7-review-crucible": 1061.999981285156,
+        "tp-mh7-review-electrolyzer": 1983.9999375,
+        "tp-mh7-review-fabricator": 743.9999765625,
+        "tp-mh7-review-forge": 240.679992433228,
+        "tp-mh7-review-purifier": 495.999984375
+      },
+      "fluid_inventory_changes": {
+        "compressed": 0,
+        "hydrogen": 0,
+        "oxygen": 0.0,
+        "purified": 0
+      },
+      "cold_elapsed_game_minutes": 30,
+      "cold_total_sealed_exported": 69,
+      "cold_total_inert_exported": 0,
+      "cold_total_integrity_counts": {
+        "0.50": 15,
+        "0.75": 50,
+        "1.00": 4
+      },
+      "source_version": "0.1.685"
+    }
+  ],
+  "four_station_material_matched_sample": {
+    "hydroformers": 4,
+    "measured_game_minutes": [
+      18,
+      33
+    ],
+    "normal_fuel_unit_MJ": 180,
+    "first_raw_seconds": 50.0,
+    "first_formed_seconds": 74.75,
+    "first_sealed_export_seconds": 121.0,
+    "first_inert_export_seconds": null,
+    "crucible_output": 36,
+    "forge_native_work_cycles": 36,
+    "forge_dispatched": 36,
+    "hydroformer_shells_completed": 36,
+    "sealed_exported": 36,
+    "inert_exported": 0,
+    "sealed_per_minute": 2.4,
+    "inert_per_minute": 0.0,
+    "sealed_integrity_counts": {
+      "0.50": 0,
+      "0.75": 32,
+      "1.00": 4
+    },
+    "starting_in_transit_and_queued": {
+      "empty-pressure-shell": 4,
+      "raw-metallicized": 1,
+      "forged-metallicized": 1,
+      "contained-metallicized": 0,
+      "inert-pellet": 0
+    },
+    "ending_in_transit_and_queued": {
+      "empty-pressure-shell": 3,
+      "raw-metallicized": 1,
+      "forged-metallicized": 0,
+      "contained-metallicized": 1,
+      "inert-pellet": 0
+    },
+    "water_input_units": 36720,
+    "steel_native_consumption": 72,
+    "oxygen_removed_units": 18000.0,
+    "measured_factory_input_MJ_per_canister": 102.89567796451821,
+    "measured_factory_average_MW": 4.115827118580729,
+    "gross_fuel_equivalent_MW": 7.2,
+    "measured_net_fuel_equivalent_MW": 3.0841728814192715,
+    "steady_electricity_MJ_breakdown": {
+      "inserter": 6.112312631454,
+      "tp-hydrogen-fixture-power": 3704.2444067226556,
+      "tp-mh7-canister-assembler": 76.235418521744,
+      "tp-mh7-review-compressor": 227.70000553820802,
+      "tp-mh7-review-crucible": 796.499985963867,
+      "tp-mh7-review-electrolyzer": 1487.999953125,
+      "tp-mh7-review-fabricator": 557.999982421875,
+      "tp-mh7-review-forge": 179.69666101888998,
+      "tp-mh7-review-purifier": 371.99998828125
+    },
+    "fluid_inventory_changes": {
+      "compressed": 0,
+      "hydrogen": 0,
+      "oxygen": 0.0,
+      "purified": 0
+    },
+    "cold_elapsed_game_minutes": 33,
+    "cold_total_sealed_exported": 76,
+    "cold_total_inert_exported": 0,
+    "cold_total_integrity_counts": {
+      "0.50": 15,
+      "0.75": 57,
+      "1.00": 4
+    },
+    "source_version": "0.1.685"
+  },
+  "upgrade_test": {
+    "from": "0.1.684",
+    "to": "0.1.685",
+    "setup": "Both crafts saved in flight with one raw pellet, two steel plates and 20 water available, and no additional inputs. On reload each machine finished its original job exactly once.",
+    "native_readback": {
+      "old_save": {
+        "tick": 119,
+        "forge_progress": 0.22708333333333314,
+        "shell_progress": 0.15138888888888877,
+        "forge_count": 0,
+        "shell_count": 0
+      },
+      "first_tick": {
+        "tick": 121,
+        "forge_progress": 0.07708333333333327,
+        "shell_progress": 0.019270833333333317,
+        "forge_seconds": 24,
+        "shell_seconds": 96
+      },
+      "formed": {
+        "tick": 1452,
+        "name": "tp-mh7-forged-metallicized-pellet-waning",
+        "health": 0.75,
+        "count": 1
+      },
+      "final_tick": 5771,
+      "formed_count": 1,
+      "empty_shell_count": 1
+    }
+  }
+}

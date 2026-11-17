@@ -30,6 +30,24 @@ local function create_shell_first_line(surface, force)
   return line
 end
 
+-- Compare four powered shell machines with four consecutive cycles in one forge.
+local function create_forming_line(surface, force)
+  local function place(name, x, y)
+    return assert(surface.create_entity{name = name, position = {x, y}, force = force, raise_built = true})
+  end
+  local forge = place("tp-mh7-review-forge", 100.5, -44.5)
+  local fabricators = {}
+  for _, position in ipairs({{96, -50}, {104, -50}, {96, -55}, {104, -55}}) do
+    local machine = place("tp-mh7-review-fabricator", position[1], position[2])
+    fabricators[#fabricators + 1] = machine
+  end
+  place("substation", 100, -50)
+  local supply = place("electric-energy-interface", 100, -54)
+  supply.power_production = 2e6 / 60
+  supply.power_usage = 0
+  return {forge = forge, fabricators = fabricators}
+end
+
 local function check_process(force, recipe_name, input, input_amount, output, output_amount)
   local recipe = assert(force.recipes[recipe_name])
   assert(recipe.enabled and recipe.energy == 8, recipe_name .. " unlock or crafting time")
@@ -63,6 +81,10 @@ script.on_init(function()
   local compressor = assert(surface.create_entity{name = "tp-mh7-review-compressor", position = {70, 0}, force = force})
   assert(compressor.insert_fluid{name = gas, amount = 500} == 500, "compressor cannot accept a full batch")
   compressor.destroy()
+  local forging = force.recipes["tp-mh7-review-forge-work"]
+  local hydroforming = force.recipes["tp-mh7-review-hydroform"]
+  assert(forging.energy == 24 and hydroforming.energy == 4 * forging.energy, "four hydroformers per forge")
+  storage.forming_line = create_forming_line(surface, force)
   storage.shell_first = create_shell_first_line(surface, force)
   storage.grids = {}
   for i, tier in ipairs(tiers) do
@@ -85,6 +107,26 @@ script.on_init(function()
 end)
 
 script.on_event(defines.events.on_tick, function(event)
+  local line = storage.forming_line
+  if event.tick == 60 then
+    for _, fabricator in ipairs(line.fabricators) do
+      assert(fabricator.insert_fluid{name = "water", amount = 20} == 20, "water infeed")
+      assert(fabricator.insert{name = "steel-plate", count = 2} == 2, "steel infeed")
+    end
+  end
+  if event.tick <= 4545 and event.tick % 1500 == 45 then
+    line.forge.get_output_inventory().clear()
+  elseif event.tick <= 4560 and event.tick % 1500 == 60 then
+    local count = (event.tick - 60) / 1500
+    assert(line.forge.products_finished == count, "forge cadence")
+    assert(line.forge.insert{name = "tp-mh7-raw-metallicized-pellet", count = 1} == 1)
+  elseif event.tick == 5600 or event.tick == 6200 then
+    local before = event.tick == 5600
+    assert(line.forge.products_finished == (before and 3 or 4), "forge work clock")
+    for _, fabricator in ipairs(line.fabricators) do
+      assert(fabricator.get_output_inventory().get_item_count(shell) == (before and 0 or 1), "shell craft clock")
+    end
+  end
   if event.tick == 3000 then
     local line = storage.shell_first
     local job = remote.call("tp-mh7-assembler", "inspect", line.sealer)

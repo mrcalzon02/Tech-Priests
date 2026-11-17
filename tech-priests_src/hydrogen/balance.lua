@@ -12,6 +12,16 @@ local power = {
 local machines = data.raw["assembling-machine"]
 for name, draw in pairs(power) do machines[name].energy_usage = draw end
 
+-- Existing saves may still load the retired add-on that owns these prototypes.
+-- Use the same craft times as the integrated machines in that case.
+if mods["tp-hydrogen-production"] then
+  for _, spec in ipairs(require("hydrogen.specs")) do
+    if spec.key == "forge" or spec.key == "fabricator" then
+      data.raw.recipe[spec.recipe].energy_required = spec.recipe_seconds
+    end
+  end
+end
+
 -- Keep the fluid ID used by existing pipes, tanks, barrels and blueprints.
 local gas = "tp-mh7-review-hydrogen-gas"
 local liquid = "tp-mh7-review-compressed-hydrogen"

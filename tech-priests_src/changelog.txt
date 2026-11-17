@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.685
+Date: 2026-11-16
+  Balancing:
+    - Pellet forming takes 24 seconds. Hydroforming one pressure shell takes 96 seconds. Four pressure-vessel fabricators at crafting speed 1 supply one continuously running forge.
+    - Raw and formed pellets continue to lose integrity while queued or in the press. Shells can be stockpiled before metallization to protect fresh pellets.
+
+---------------------------------------------------------------------------------------------------
 Version: 0.1.683
 Date: 2026-11-16
   Balancing:
