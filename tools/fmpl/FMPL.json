@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 2,
-    "model_records": 24,
+    "model_records": 25,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -1214,6 +1214,60 @@
         4
       ],
       "purpose": "Actual platform-only2x2 Void Steam Engine generator,165C steam30/s ->300kW; no burner, fluid output, circuit connector or manual power-wire socket. Existing12s building recipe, hydrogen-thruster-propulsion unlock and surface rules retained. Native north/east only; south/west normalize to them. Earlier sole inletY0->.5 repair enables genuine standard-grid flow. Paired cylinders, bored guided stems, fitted rods, split-journal crank, flywheel and grooved equal-pulley alternator drive, founded vessels/bearings/exhaust and terminated services. Geometry/keys preserved while replacing first custom maps with correct FMPL surfacing: eight indexed source-verified presets, nine model-specific instances, one declared copper pigment derivative,25 packed/embedded images and actual exported albedo/normal/ORM G/B pixel proof. Continuous physical cylinder/sweep UVs and planar caps/panels.294 meshes,83896 triangles; eight source/runtime pose matches,4s working-only loop,387 source/385 runtime half-frame checks,208 exact adjudicated fitted contacts and0.000181tile maximum pin closure error.132 genuine actual-GLB captures,32 working frames8fps per four standalone views, only two native facings installed with current2.1 pictures. Angled previews corrected to undistorted world proportions; native pipe scale/registration and exhaust positions inspected. Two separate real platforms prove finite-steam generation into native empty accumulators, stop/hold/restart, natural full electrical output hold, actual new-load recovery, starvation/resupply, cold-fluid rejection/manual flush recovery, real native recipe/unlock and consumed-crafted-item scripted placement.100 real client PNGs/64 motion frames, working GIF/MP4, actual operated save and300-tick reload. Stopped mechanical pose verified against unique real working references; minor native brightness changes are not claimed pixel-static. Final installed art/adapter byte-bound to tested source. No new runtime authority or economy change. Delegated operational close-enough delivery; individual owner approval, full user mod pack and Portal release not claimed."
+    },
+    {
+      "id": "tech-priests-citadel-manufactoreo-v1",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tech-Priests",
+        "ref": "0dfd13c833ec53d8820623c49205dcee9d32595e",
+        "path": "art/source-to-3d/citadel-manufactoreo/v12/citadel-v12.blend"
+      },
+      "exports": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "0dfd13c833ec53d8820623c49205dcee9d32595e",
+          "path": "art/source-to-3d/citadel-manufactoreo/v12/citadel-v12.glb"
+        }
+      ],
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "0dfd13c833ec53d8820623c49205dcee9d32595e",
+          "path": "art/source-to-3d/citadel-manufactoreo/v12/DELIVERY_COMPLETE.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "0dfd13c833ec53d8820623c49205dcee9d32595e",
+          "path": "art/source-to-3d/citadel-manufactoreo/v12/runtime-inspection.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "0dfd13c833ec53d8820623c49205dcee9d32595e",
+          "path": "art/source-to-3d/citadel-manufactoreo/v12/fmpl-channel-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "0dfd13c833ec53d8820623c49205dcee9d32595e",
+          "path": "art/source-to-3d/citadel-manufactoreo/v12/clearance-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tech-Priests",
+          "ref": "0dfd13c833ec53d8820623c49205dcee9d32595e",
+          "path": "art/source-to-3d/citadel-manufactoreo/v12/native-evidence/capture-receipt.json"
+        }
+      ],
+      "footprint": [
+        5,
+        5
+      ],
+      "native_directions": [
+        0
+      ],
+      "purpose": "Enclosed platform manufacturing cathedral; actual chunk processing, slab manufacture and Entropic Extractor construction.",
+      "owner_visual_approval": true,
+      "operational_complete": true,
+      "remaining_required_work": []
     }
   ],
   "programs": [

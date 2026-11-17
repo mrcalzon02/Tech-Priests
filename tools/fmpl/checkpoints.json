@@ -342,6 +342,40 @@
       "revision": "v02-fmpl-textured-native-operational",
       "source_sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
       "state": "verified"
+    },
+    {
+      "event_id": "tech-priests-citadel-v12-owner-complete-2026-11-17",
+      "asset_id": "tech-priests-citadel-manufactoreo-v1",
+      "asset_kind": "model",
+      "revision": "v12-owner-accepted-complete",
+      "state": "installed",
+      "source_sha256": "6be42c95040f44972f1933caf7bd288ec2d48dd959fea9814e1bfaf6bdfeb63e",
+      "evidence": {
+        "source_artifact_sha256": "6be42c95040f44972f1933caf7bd288ec2d48dd959fea9814e1bfaf6bdfeb63e",
+        "glb_sha256": "227a991cd12f731ceae48181ddd74e8b1f10aea1b2509cebed2da68ef9025579",
+        "native_reopen_verified": true,
+        "owner_visual_approval": true,
+        "factorio_runtime_verified": true,
+        "source_commit": "0dfd13c833ec53d8820623c49205dcee9d32595e",
+        "source_repository": "mrcalzon02/Tech-Priests",
+        "source_path": "art/source-to-3d/citadel-manufactoreo/v12/citadel-v12.blend",
+        "runtime_path": "art/source-to-3d/citadel-manufactoreo/v12/citadel-v12.glb",
+        "manifest_path": "art/source-to-3d/citadel-manufactoreo/v12/DELIVERY_COMPLETE.json",
+        "genuine_native_pngs": 315,
+        "actual_three_recipe_operation_pass": true,
+        "reload_basis": {
+          "actual_operated_save_300tick_reload_passed_on_v11": true,
+          "evidence_commit": "9f4970321f401c05457912e092968489d6622e8e",
+          "evidence_path": "art/source-to-3d/citadel-manufactoreo/v11/native-evidence/operated-reload-receipt.json",
+          "runtime_and_visual_adapter_lua_unchanged": true,
+          "not_repeated_for_static_v12_sprite_fitting": true,
+          "final_named_autosave_not_created_before_owner_closed_client": true,
+          "owner_accepted_function_appearance_and_directed_no_further_testing": true,
+          "not_a_deferred_task": true
+        },
+        "no_further_refinement_or_testing": true,
+        "remaining_required_work": []
+      }
     }
   ],
   "schema": "fmpl.checkpoints.v1"
