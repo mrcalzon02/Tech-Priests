@@ -1,0 +1,40 @@
+{
+  "passed": true,
+  "artifacts": [
+    {
+      "artifact": "source",
+      "sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
+      "poses": 385,
+      "includes_half_frames": true,
+      "maximum_pin_joint_error_tiles": 0.00018073804107371434,
+      "maximum_rigid_rod_length_error_tiles": 7.900206261401976e-08,
+      "maximum_piston_coaxial_error_tiles": 2.1457672083613488e-08,
+      "minimum_stem_overlap_beyond_both_guide_ends_tiles": 0.05000000476837152,
+      "maximum_stem_top_z": 1.6700000762939453,
+      "fixed_socket_matrix_variation": 0.0,
+      "piston_radial_guide_clearance_tiles": 0.005,
+      "pin_eye_radial_clearance_tiles": 0.003,
+      "rod_to_inner_crank_web_axial_clearance_tiles": 0.013,
+      "rod_to_outer_crank_web_axial_clearance_tiles": 0.018,
+      "passed": true
+    },
+    {
+      "artifact": "runtime",
+      "sha256": "62b06a131b927fc91705531ba6699952e5bd0c50f610529806eb7f72113095a9",
+      "poses": 385,
+      "includes_half_frames": true,
+      "maximum_pin_joint_error_tiles": 0.000180733873805006,
+      "maximum_rigid_rod_length_error_tiles": 9.114974608426252e-08,
+      "maximum_piston_coaxial_error_tiles": 2.1457672083613488e-08,
+      "minimum_stem_overlap_beyond_both_guide_ends_tiles": 0.05000000476837152,
+      "maximum_stem_top_z": 1.6700000762939453,
+      "fixed_socket_matrix_variation": 0.0,
+      "piston_radial_guide_clearance_tiles": 0.005,
+      "pin_eye_radial_clearance_tiles": 0.003,
+      "rod_to_inner_crank_web_axial_clearance_tiles": 0.013,
+      "rod_to_outer_crank_web_axial_clearance_tiles": 0.018,
+      "passed": true
+    }
+  ],
+  "clearance_triangle_contacts_separately_adjudicated": false
+}

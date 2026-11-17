@@ -1,0 +1,409 @@
+{
+  "genuine_client_capture": true,
+  "expected_screenshots": 100,
+  "screenshots": [
+    {
+      "file": "north-empty-a.png",
+      "sha256": "be6d9f899d4af1bc0324cf89b395d85197de58743a7ef2ca76b631e04078f460"
+    },
+    {
+      "file": "north-empty-b.png",
+      "sha256": "50565a7f997510ac3ebf4af3ec65d5ceb2440030cf6350f66551195e13bf7b3f"
+    },
+    {
+      "file": "north-working.png",
+      "sha256": "003d02455608d5aab32629ab06833da1cdc38b19b58eb2fa761143537c2440d7"
+    },
+    {
+      "file": "north-pipe.png",
+      "sha256": "c6955eabb03e590acbd9424395dbf32b12eb6723b70517f01a1dfd2b2e383bb2"
+    },
+    {
+      "file": "north-exhaust.png",
+      "sha256": "daa8a4b470e6b7a9ffa62e54d71f1030a750a387ab0a0c17bb7b742da51dbd3e"
+    },
+    {
+      "file": "north-console.png",
+      "sha256": "88847d2858a186a984fc3ec082d89cb4b64b9e25c982e079eea00203083f42a8"
+    },
+    {
+      "file": "north-stopped-a.png",
+      "sha256": "338930e39b655b41f73151e83c415a0ca4fe7c432c6fc6ba709840a1d3ed1750"
+    },
+    {
+      "file": "north-stopped-b.png",
+      "sha256": "779b1fe97ae8e4900536622bee60a18981dd44c02f0a7f15f9d9a81999086585"
+    },
+    {
+      "file": "north-restarted.png",
+      "sha256": "e34ad272b6129f24c6c334de93f8ccf8abeb8cc71a9944ac1fd4d3ba77fdd776"
+    },
+    {
+      "file": "north-full-a.png",
+      "sha256": "df5db2466de8a00c93126cce6a074afdc2fb0b751f1240044c72a7943501f13b"
+    },
+    {
+      "file": "north-full-b.png",
+      "sha256": "82361254bb280d2ad0ace3a4a68deb01eacf71c5f6859e4cc46de2010481be1c"
+    },
+    {
+      "file": "north-load-recovery.png",
+      "sha256": "4e13bf6df496a2192cebb3eee8bf9a445eb865affb6876604393c9a9a09fdf7b"
+    },
+    {
+      "file": "north-starved-a.png",
+      "sha256": "9a8d6767fe30a08eea4619bce24a0c729c1f94064848d2e046ae6563654c8bab"
+    },
+    {
+      "file": "north-starved-b.png",
+      "sha256": "8238fb78d0e0864e7cdfb478ea221f27e5cb6d212f9965bd5133cbc81865f341"
+    },
+    {
+      "file": "north-resupplied.png",
+      "sha256": "f0f7b835fdb70571c083e47b5322079152aaaffa684487e5ee22c2628368502c"
+    },
+    {
+      "file": "north-cold-steam-a.png",
+      "sha256": "183984a4dbadc9639699a20c5924d7fc4a56dc541738c64f7b5e01f8a4164a12"
+    },
+    {
+      "file": "north-cold-steam-b.png",
+      "sha256": "d9b1d4aaa52e52815a95c29be4146276a57936a13958775ccf3902e53501b41f"
+    },
+    {
+      "file": "north-hot-recovered.png",
+      "sha256": "ff8fb6144b0241a08ee8bce83b3a9e3429b558227c930e2a0c8edd13872adc75"
+    },
+    {
+      "file": "north-motion-00.png",
+      "sha256": "003d02455608d5aab32629ab06833da1cdc38b19b58eb2fa761143537c2440d7"
+    },
+    {
+      "file": "north-motion-01.png",
+      "sha256": "7fb7c2911d5550abced7650afcbacdb52de0d168f6bd5ca22eb216ef85f33eda"
+    },
+    {
+      "file": "north-motion-02.png",
+      "sha256": "ead9505fe825b2ec703c54289de098f22db3ff4ab5b76c1e7b662f17646b2c99"
+    },
+    {
+      "file": "north-motion-03.png",
+      "sha256": "8165958b482085bec9a97722af94c40fd31d4b69f0305ecacebebb413ac3abc9"
+    },
+    {
+      "file": "north-motion-04.png",
+      "sha256": "d02d960f45cdb56b53d3b2b4c1d4f733ce0bb5766c65154cae6c0fceebf77473"
+    },
+    {
+      "file": "north-motion-05.png",
+      "sha256": "d5375f80752e2537b93b8495a5193bb28cf3201ea76cbd4c7f17afaa0c066e60"
+    },
+    {
+      "file": "north-motion-06.png",
+      "sha256": "c9f9a58d40f96e24658d9d4de3fa73160eac8b6970d6cd5c2987928183d54428"
+    },
+    {
+      "file": "north-motion-07.png",
+      "sha256": "cfc88a2cc3f5fa3d6dd1ae69fb6ef08048342373ce1199a21400cf5dbe58c925"
+    },
+    {
+      "file": "north-motion-08.png",
+      "sha256": "580e9419e8c33a68ccb804f9523bbb1ec652c9d851dfacceac2921990b6702a8"
+    },
+    {
+      "file": "north-motion-09.png",
+      "sha256": "c7bf88248576120e3e215a502ed558c0ce22ceb6666ca01daa3b721419be6317"
+    },
+    {
+      "file": "north-motion-10.png",
+      "sha256": "5f3a12270b357b35d9cb183a8ec4aa2fbc7874efa1809bc02df36d90875a3c72"
+    },
+    {
+      "file": "north-motion-11.png",
+      "sha256": "35c64832bc75ac822f1eeb637d17192a54e2c677ca4b3d6dd9e89301d4420dd8"
+    },
+    {
+      "file": "north-motion-12.png",
+      "sha256": "7656a7fdc0dc6a284c485e1716d44c516a2da430020546bd90fd323ab4d9e64b"
+    },
+    {
+      "file": "north-motion-13.png",
+      "sha256": "8b2da05a03e112582bfb7925425069085224007ffc168439813ca8f4c1742fab"
+    },
+    {
+      "file": "north-motion-14.png",
+      "sha256": "7b8f117d209711c406834a0b6617eb01ca6669da90eaffa9e3a88cfd52e8bc30"
+    },
+    {
+      "file": "north-motion-15.png",
+      "sha256": "31ed7206e5836395a90778eed1e7a99372767f6f39b76c1833327d2797af4eaf"
+    },
+    {
+      "file": "north-motion-16.png",
+      "sha256": "cdf2384046994fde75dc0d716454374f13159a2d1420af97f92b2cb903c95857"
+    },
+    {
+      "file": "north-motion-17.png",
+      "sha256": "0f2064d8d9cb82d78cab6985a9b9baeaf4dad5b1eff352610c3c4acce9fed7d8"
+    },
+    {
+      "file": "north-motion-18.png",
+      "sha256": "72703376de2eb149107a94ce2ca4bf1eb472eefe2e7c4533fdf6bd08a8c0afdc"
+    },
+    {
+      "file": "north-motion-19.png",
+      "sha256": "3fd3b82e2310fba4006585e97be4f5e5dafd2376278fc0f8529e90934253e36c"
+    },
+    {
+      "file": "north-motion-20.png",
+      "sha256": "0df452d6892fe60c2ce0614a479b347f2df19aca8d1a116eae4656fc8f0635ff"
+    },
+    {
+      "file": "north-motion-21.png",
+      "sha256": "ac5116e4dcc4391e5fdfafcbd3a9f2832f64d3211ee9d4634d2722aba4ba7ff2"
+    },
+    {
+      "file": "north-motion-22.png",
+      "sha256": "83b78d4b83ce3bdeb6a699d31f1b7012b0718ed3501b464c6699f87ecd31c0c2"
+    },
+    {
+      "file": "north-motion-23.png",
+      "sha256": "acdf9b616c395fba475ee2216f39dcf4530caa25d627d31aa886397e6a7ed834"
+    },
+    {
+      "file": "north-motion-24.png",
+      "sha256": "d251811190cbe20d8b9643820d0b758217aadef8c48ec4b26a10f6b6a5d9685e"
+    },
+    {
+      "file": "north-motion-25.png",
+      "sha256": "1b4ff687572740ceaa0fddc8fcf1119c313f29ff9c0449675bd2533d4486648f"
+    },
+    {
+      "file": "north-motion-26.png",
+      "sha256": "0a7391fd5ca619cf8a02844a96fd2fbd143aa37614e373538c8bb5bb8c6c5a97"
+    },
+    {
+      "file": "north-motion-27.png",
+      "sha256": "3ae761f45d8b5160387ca611fbbc6418c194cfb6e2f6d6abdf973913d4ba2ef3"
+    },
+    {
+      "file": "north-motion-28.png",
+      "sha256": "9309b57cd8dd78f19f813ac55807e3dc1c4407c062ed7d81b30dd9d561750f06"
+    },
+    {
+      "file": "north-motion-29.png",
+      "sha256": "3bc9d42d980605742b1ad4ebfcbef74cb83e90511367bbc5cb577607a6209893"
+    },
+    {
+      "file": "north-motion-30.png",
+      "sha256": "9dbe9ee41d289f3b1c720319f474b67e8905be47c3642d342c352a856200f5a6"
+    },
+    {
+      "file": "north-motion-31.png",
+      "sha256": "afbc308e6769dcc226878c1c4b5fc0e0c5679845105b48457f341fa741d4f60e"
+    },
+    {
+      "file": "east-empty-a.png",
+      "sha256": "637667425b6026bd68611172e4cdf5670d12f517048e63d2823156a1f041f7e5"
+    },
+    {
+      "file": "east-empty-b.png",
+      "sha256": "ddab67fea2157f303aab9bbb381f779c26d36424951a3e7b32938f9a2f9c7444"
+    },
+    {
+      "file": "east-working.png",
+      "sha256": "548cafb289f352dd7cd9b213ca705689ab2a2a42492025bf243021cfcc7df7a4"
+    },
+    {
+      "file": "east-pipe.png",
+      "sha256": "ac0eb02a847e0ba2a2d25ad5befe3b1b557b680ad82f5156da5d8b91a0542817"
+    },
+    {
+      "file": "east-exhaust.png",
+      "sha256": "54389a1376fa7cce0d4a5788ddf91a576fd64ee655dca2a79fce4f8a9f10f739"
+    },
+    {
+      "file": "east-console.png",
+      "sha256": "ca8d7bf81d61df950323f59ace0796d539a7f351723ede4a999f024955fe2fee"
+    },
+    {
+      "file": "east-stopped-a.png",
+      "sha256": "75c887fc3d18f3ec6730d83c34cfd6e9fdfb8e1e44306046687b33f9f4a29225"
+    },
+    {
+      "file": "east-stopped-b.png",
+      "sha256": "6577d03bc82f2b379369872ce24f99570b9dff452d6a079d08300036dc779d38"
+    },
+    {
+      "file": "east-restarted.png",
+      "sha256": "3157f232c63d06d7d17a0d59bc5d2d4d99aa407059ad383389118be02b3e23aa"
+    },
+    {
+      "file": "east-full-a.png",
+      "sha256": "1b5970ca0dee63e9e3fc0efa4d54b9b971ee5ef3a907d2717e32bc3838126b67"
+    },
+    {
+      "file": "east-full-b.png",
+      "sha256": "9a63aa56b9dd418ff20aabdf01da1aebf481f71a380f3de6d34f2b4e1bab109e"
+    },
+    {
+      "file": "east-load-recovery.png",
+      "sha256": "b9f8c4e8837c3cd83dbff2a443e31817798d25984a1f2038df72b1b3cf82d4f5"
+    },
+    {
+      "file": "east-starved-a.png",
+      "sha256": "bffa8abdfe3b408320e5f85bd8f0f679c21dfd911c3b476da4a4d4b1fc33fc7f"
+    },
+    {
+      "file": "east-starved-b.png",
+      "sha256": "b65f4683aa348ad8a05ad0c24b27b433f6da3dd09e064ed6404206b21c5dd144"
+    },
+    {
+      "file": "east-resupplied.png",
+      "sha256": "bb99569e6dfdde1d11c98b6f9072be112b40d641836abfde5fc3b90ff2f9b341"
+    },
+    {
+      "file": "east-cold-steam-a.png",
+      "sha256": "5af4212a19d3c61d86eb2df1c7e4e7e11a44748fab7e38e8633bf0c6d686c9b3"
+    },
+    {
+      "file": "east-cold-steam-b.png",
+      "sha256": "3fcf6e781512ebf4c985370f33e7d83f29596bee887cb833e9c18208acef11c6"
+    },
+    {
+      "file": "east-hot-recovered.png",
+      "sha256": "e02e508a20fe058c09676f57c47d160130159ba59f03187d693fcea2d8f37d2c"
+    },
+    {
+      "file": "east-motion-00.png",
+      "sha256": "548cafb289f352dd7cd9b213ca705689ab2a2a42492025bf243021cfcc7df7a4"
+    },
+    {
+      "file": "east-motion-01.png",
+      "sha256": "cc22a93abb68af4445d88577d82012aafc619496196d68b12f5504d342d585ad"
+    },
+    {
+      "file": "east-motion-02.png",
+      "sha256": "446f7c4fee1c258c20d2b5273807ac08af1efc16271c38301114207232f5a92e"
+    },
+    {
+      "file": "east-motion-03.png",
+      "sha256": "0c4f59aa4ba2e2cc5791c6b6680657b52043153dd4e5f3d678e554262395bec5"
+    },
+    {
+      "file": "east-motion-04.png",
+      "sha256": "9fce4afe06d9831f5188d565f1868eb1e73c8c62ef62128ad8d565063848a527"
+    },
+    {
+      "file": "east-motion-05.png",
+      "sha256": "b4867e2c19eae2d1ce81dbeca61136c3253ed5ff5a1f890a6bafa76b8c6603cd"
+    },
+    {
+      "file": "east-motion-06.png",
+      "sha256": "bece1e5c5175fea00c83833b91b8e33b48dee10343d335fc96f1f28ea2613a80"
+    },
+    {
+      "file": "east-motion-07.png",
+      "sha256": "5467ca13ee938fc77215cc41353c01ee097b13b71b4fd5f3421ad885b684d505"
+    },
+    {
+      "file": "east-motion-08.png",
+      "sha256": "0775816f4bfe0429f0622fd1a7c3c8e8489ab453f394a3668967338d21e86df2"
+    },
+    {
+      "file": "east-motion-09.png",
+      "sha256": "a29298dc4ae917394b6c428a0db9341c924ae0ac6d2d510fa86b2f42c64ce491"
+    },
+    {
+      "file": "east-motion-10.png",
+      "sha256": "079d052db0a41e29ec0f07a5aa92de74df88f901f3256f6a69b0be5ddf5dbec7"
+    },
+    {
+      "file": "east-motion-11.png",
+      "sha256": "20a74dae5507f431ac3af89eb8a6b9aef7d4be75659de68a2c5f174d5f6f13ff"
+    },
+    {
+      "file": "east-motion-12.png",
+      "sha256": "2e84014367710a7b9f6d6d2f2ef910c1e7fe3237f8f9e3d45cc0842e55d13be4"
+    },
+    {
+      "file": "east-motion-13.png",
+      "sha256": "06548248189939b41c7635a9f30eba40a96557270fc4138c3a0b0d50279e6653"
+    },
+    {
+      "file": "east-motion-14.png",
+      "sha256": "12c2b6d0a52fd9b7f3515c409197bb1a9648f577a143caa1bd828f832a161e44"
+    },
+    {
+      "file": "east-motion-15.png",
+      "sha256": "343d90eed3df9622baf29d64d0d6e17767fe6eed1fde78d92012c90a07b561af"
+    },
+    {
+      "file": "east-motion-16.png",
+      "sha256": "e4fd6c32fcf64dd77e341d98f66d6dc5836a8d1e8104104f6aabc21c5c8b0143"
+    },
+    {
+      "file": "east-motion-17.png",
+      "sha256": "1f9ff3e87472b0530c562eefa6f6a72549dca20f773ce442816bc510b2f7af0d"
+    },
+    {
+      "file": "east-motion-18.png",
+      "sha256": "bee84e6b82b62c364f28a92c4314f311ede01c6ef1f8f8b3558305cbae0f48f7"
+    },
+    {
+      "file": "east-motion-19.png",
+      "sha256": "7a735c27b691b6f68ed9bd8460e0b3bc0e93da2adaf8a747cf380e344629857d"
+    },
+    {
+      "file": "east-motion-20.png",
+      "sha256": "a168cf11b0a9c162d87dce007fda20ed757e7fd87e4b51595051fb98f3178e7a"
+    },
+    {
+      "file": "east-motion-21.png",
+      "sha256": "916d7062d7fb9320a399b8cae4cc2462227b6103a50a8d72cf56d600f56f2433"
+    },
+    {
+      "file": "east-motion-22.png",
+      "sha256": "d74699c933098b9a9706fe966a76c627fca0151ff9059ecf77d81c1dea9083d3"
+    },
+    {
+      "file": "east-motion-23.png",
+      "sha256": "38c13d5c2142f9862bfe1a7a230051be4741362b4c1a15a23facc9f62728e4c1"
+    },
+    {
+      "file": "east-motion-24.png",
+      "sha256": "1fa66d18e166b32be0b4f31a1344378c93692f62730297290e396800b3d17ff8"
+    },
+    {
+      "file": "east-motion-25.png",
+      "sha256": "b8475d926626c9c5adee8dba566ffaa5c9516eabb2c0c841f39fe0b3443d6bef"
+    },
+    {
+      "file": "east-motion-26.png",
+      "sha256": "4f068f8d9828d5c92f253fccb6c408adb3a717a63fb4eba7baf909d2b0a2ded7"
+    },
+    {
+      "file": "east-motion-27.png",
+      "sha256": "8765493c2ebb069003c05fdb9569acc94acfbebeb912d60b39a41596d99fe454"
+    },
+    {
+      "file": "east-motion-28.png",
+      "sha256": "adbed2302975f632e877ecf0c5c1a562bb4aa16ce3ab22e33d59d2addf868e7d"
+    },
+    {
+      "file": "east-motion-29.png",
+      "sha256": "afcc9d7c718371d424c0c98feaa43915aba9e18ad31605ce6263abbe9ad9504f"
+    },
+    {
+      "file": "east-motion-30.png",
+      "sha256": "d6abf05f252401c006950d7cf71ddaa002c674ad374fed9f0cde55d2baeefa86"
+    },
+    {
+      "file": "east-motion-31.png",
+      "sha256": "30c6762db1d5485dd8c9c6e4dd82b07753e9edef9c63c3fe91aa892a461bacdc"
+    }
+  ],
+  "owner_visual_approved": false,
+  "native_visual_review_pending": true,
+  "operated_save_sha256": "d699f8e74d4a62793b16cd5c08a4fe0ccbdc9738c38c68c6a359e4863a516a8c"
+}

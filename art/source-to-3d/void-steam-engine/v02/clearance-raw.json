@@ -1,0 +1,1835 @@
+{
+  "artifact": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-void-steam-engine-main01\\authored-v02\\void-steam-v02.blend",
+  "sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
+  "sampled_poses": 387,
+  "authored_frames": 194,
+  "includes_half_frames": true,
+  "moving_meshes": [
+    "VOID | alternator armature shaft",
+    "VOID | balanced crank web",
+    "VOID | balanced crank web.001",
+    "VOID | common shaft",
+    "VOID | crank pin inward washer",
+    "VOID | crank pin inward washer.001",
+    "VOID | crank pin outer retainer",
+    "VOID | crank pin outer retainer.001",
+    "VOID | crank pin outward washer",
+    "VOID | crank pin outward washer.001",
+    "VOID | crank thrust collar",
+    "VOID | crank thrust collar.001",
+    "VOID | crosshead fork cheek",
+    "VOID | crosshead fork cheek.001",
+    "VOID | crosshead fork cheek.002",
+    "VOID | crosshead fork cheek.003",
+    "VOID | crosshead seated wrist pin",
+    "VOID | crosshead seated wrist pin.001",
+    "VOID | crosshead upper bridge",
+    "VOID | crosshead upper bridge.001",
+    "VOID | drive pulley belt groove floor",
+    "VOID | drive pulley belt groove floor.001",
+    "VOID | drive pulley hub",
+    "VOID | drive pulley hub.001",
+    "VOID | drive pulley retaining cheek",
+    "VOID | drive pulley retaining cheek.001",
+    "VOID | drive pulley retaining cheek.002",
+    "VOID | drive pulley retaining cheek.003",
+    "VOID | eccentric crank pin",
+    "VOID | eccentric crank pin.001",
+    "VOID | flywheel bored hub",
+    "VOID | flywheel cast rim",
+    "VOID | flywheel spoke",
+    "VOID | flywheel spoke.001",
+    "VOID | flywheel spoke.002",
+    "VOID | flywheel spoke.003",
+    "VOID | flywheel spoke.004",
+    "VOID | flywheel spoke.005",
+    "VOID | journal collar lock screw",
+    "VOID | journal collar lock screw.001",
+    "VOID | journal collar set screw shank",
+    "VOID | journal collar set screw shank.001",
+    "VOID | outboard crank journal",
+    "VOID | outboard crank journal.001",
+    "VOID | outboard crank web",
+    "VOID | outboard crank web.001",
+    "VOID | pulley spoke",
+    "VOID | pulley spoke.001",
+    "VOID | pulley spoke.002",
+    "VOID | pulley spoke.003",
+    "VOID | pulley spoke.004",
+    "VOID | pulley spoke.005",
+    "VOID | pulley spoke.006",
+    "VOID | pulley spoke.007",
+    "VOID | rigid rod web",
+    "VOID | rigid rod web.001",
+    "VOID | rod bored pin eye",
+    "VOID | rod bored pin eye.001",
+    "VOID | rod bored pin eye.002",
+    "VOID | rod bored pin eye.003",
+    "VOID | sliding polished piston stem",
+    "VOID | sliding polished piston stem.001",
+    "VOID | wrist pin end washer",
+    "VOID | wrist pin end washer.001",
+    "VOID | wrist pin end washer.002",
+    "VOID | wrist pin end washer.003",
+    "VOID | wrist pin outer retainer",
+    "VOID | wrist pin outer retainer.001",
+    "VOID | wrist pin outer retainer.002",
+    "VOID | wrist pin outer retainer.003"
+  ],
+  "motion_owners": {
+    "VOID | layered common bedplate": null,
+    "VOID | machinery deck": null,
+    "VOID | foundation shoe": null,
+    "VOID | foundation anchor": null,
+    "VOID | foundation shoe.001": null,
+    "VOID | foundation anchor.001": null,
+    "VOID | foundation shoe.002": null,
+    "VOID | foundation anchor.002": null,
+    "VOID | foundation shoe.003": null,
+    "VOID | foundation anchor.003": null,
+    "VOID | STEAM full-bore fixed mouth": null,
+    "VOID | STEAM bolted socket collar": null,
+    "VOID | STEAM tapered receiver": null,
+    "VOID | socket flange fastener": null,
+    "VOID | socket flange fastener.001": null,
+    "VOID | socket flange fastener.002": null,
+    "VOID | socket flange fastener.003": null,
+    "VOID | socket flange fastener.004": null,
+    "VOID | socket flange fastener.005": null,
+    "VOID | socket flange fastener.006": null,
+    "VOID | socket flange fastener.007": null,
+    "VOID | crank bearing founded plinth": null,
+    "VOID | bearing seated neck": null,
+    "VOID | bored crank bearing": null,
+    "VOID | bearing foot bolt": null,
+    "VOID | bearing foot bolt.001": null,
+    "VOID | crank bearing founded plinth.001": null,
+    "VOID | bearing seated neck.001": null,
+    "VOID | bored crank bearing.001": null,
+    "VOID | bearing foot bolt.002": null,
+    "VOID | bearing foot bolt.003": null,
+    "VOID | common shaft": "VOID | common rotating crank",
+    "VOID | outboard crank journal": "VOID | common rotating crank",
+    "VOID | outboard crank journal.001": "VOID | common rotating crank",
+    "VOID | crank thrust collar": "VOID | common rotating crank",
+    "VOID | journal collar lock screw": "VOID | common rotating crank",
+    "VOID | journal collar set screw shank": "VOID | common rotating crank",
+    "VOID | crank thrust collar.001": "VOID | common rotating crank",
+    "VOID | journal collar lock screw.001": "VOID | common rotating crank",
+    "VOID | journal collar set screw shank.001": "VOID | common rotating crank",
+    "VOID | flywheel cast rim": "VOID | common rotating crank",
+    "VOID | flywheel bored hub": "VOID | common rotating crank",
+    "VOID | flywheel spoke": "VOID | common rotating crank",
+    "VOID | flywheel spoke.001": "VOID | common rotating crank",
+    "VOID | flywheel spoke.002": "VOID | common rotating crank",
+    "VOID | flywheel spoke.003": "VOID | common rotating crank",
+    "VOID | flywheel spoke.004": "VOID | common rotating crank",
+    "VOID | flywheel spoke.005": "VOID | common rotating crank",
+    "VOID | balanced crank web": "VOID | common rotating crank",
+    "VOID | outboard crank web": "VOID | common rotating crank",
+    "VOID | eccentric crank pin": "VOID | common rotating crank",
+    "VOID | crank pin outer retainer": "VOID | common rotating crank",
+    "VOID | crank pin inward washer": "VOID | common rotating crank",
+    "VOID | crank pin outward washer": "VOID | common rotating crank",
+    "VOID | balanced crank web.001": "VOID | common rotating crank",
+    "VOID | outboard crank web.001": "VOID | common rotating crank",
+    "VOID | eccentric crank pin.001": "VOID | common rotating crank",
+    "VOID | crank pin outer retainer.001": "VOID | common rotating crank",
+    "VOID | crank pin inward washer.001": "VOID | common rotating crank",
+    "VOID | crank pin outward washer.001": "VOID | common rotating crank",
+    "VOID | rigid rod web": "VOID | left rigid connecting rod",
+    "VOID | rod bored pin eye": "VOID | left rigid connecting rod",
+    "VOID | rod bored pin eye.001": "VOID | left rigid connecting rod",
+    "VOID | crosshead fork cheek": "VOID | left guided crosshead",
+    "VOID | crosshead fork cheek.001": "VOID | left guided crosshead",
+    "VOID | crosshead upper bridge": "VOID | left guided crosshead",
+    "VOID | crosshead seated wrist pin": "VOID | left guided crosshead",
+    "VOID | wrist pin outer retainer": "VOID | left guided crosshead",
+    "VOID | wrist pin outer retainer.001": "VOID | left guided crosshead",
+    "VOID | wrist pin end washer": "VOID | left guided crosshead",
+    "VOID | wrist pin end washer.001": "VOID | left guided crosshead",
+    "VOID | sliding polished piston stem": "VOID | left guided crosshead",
+    "VOID | shaft gland lower guide": null,
+    "VOID | pressure cylinder hollow lower head": null,
+    "VOID | pressure cylinder wall": null,
+    "VOID | pressure cylinder seated cap flange": null,
+    "VOID | pressure cylinder sealed dished cap": null,
+    "VOID | cylinder cap captured bolt": null,
+    "VOID | cylinder cap captured bolt.001": null,
+    "VOID | cylinder cap captured bolt.002": null,
+    "VOID | cylinder cap captured bolt.003": null,
+    "VOID | cylinder cap captured bolt.004": null,
+    "VOID | cylinder cap captured bolt.005": null,
+    "VOID | cylinder cap captured bolt.006": null,
+    "VOID | cylinder cap captured bolt.007": null,
+    "VOID | pressure cylinder seated band": null,
+    "VOID | pressure cylinder seated band.001": null,
+    "VOID | founded cylinder rear column": null,
+    "VOID | rear cylinder bearing saddle": null,
+    "VOID | saddle column retention": null,
+    "VOID | saddle column retention.001": null,
+    "VOID | rigid rod web.001": "VOID | right rigid connecting rod",
+    "VOID | rod bored pin eye.002": "VOID | right rigid connecting rod",
+    "VOID | rod bored pin eye.003": "VOID | right rigid connecting rod",
+    "VOID | crosshead fork cheek.002": "VOID | right guided crosshead",
+    "VOID | crosshead fork cheek.003": "VOID | right guided crosshead",
+    "VOID | crosshead upper bridge.001": "VOID | right guided crosshead",
+    "VOID | crosshead seated wrist pin.001": "VOID | right guided crosshead",
+    "VOID | wrist pin outer retainer.002": "VOID | right guided crosshead",
+    "VOID | wrist pin outer retainer.003": "VOID | right guided crosshead",
+    "VOID | wrist pin end washer.002": "VOID | right guided crosshead",
+    "VOID | wrist pin end washer.003": "VOID | right guided crosshead",
+    "VOID | sliding polished piston stem.001": "VOID | right guided crosshead",
+    "VOID | shaft gland lower guide.001": null,
+    "VOID | pressure cylinder hollow lower head.001": null,
+    "VOID | pressure cylinder wall.001": null,
+    "VOID | pressure cylinder seated cap flange.001": null,
+    "VOID | pressure cylinder sealed dished cap.001": null,
+    "VOID | cylinder cap captured bolt.008": null,
+    "VOID | cylinder cap captured bolt.009": null,
+    "VOID | cylinder cap captured bolt.010": null,
+    "VOID | cylinder cap captured bolt.011": null,
+    "VOID | cylinder cap captured bolt.012": null,
+    "VOID | cylinder cap captured bolt.013": null,
+    "VOID | cylinder cap captured bolt.014": null,
+    "VOID | cylinder cap captured bolt.015": null,
+    "VOID | pressure cylinder seated band.002": null,
+    "VOID | pressure cylinder seated band.003": null,
+    "VOID | founded cylinder rear column.001": null,
+    "VOID | rear cylinder bearing saddle.001": null,
+    "VOID | saddle column retention.002": null,
+    "VOID | saddle column retention.003": null,
+    "VOID | hollow alternator stator": null,
+    "VOID | alternator endplate shaft bore": null,
+    "VOID | alternator endplate shaft bore.001": null,
+    "VOID | alternator armature shaft": "VOID | alternator rotating shaft",
+    "VOID | alternator fixed bored bearing": null,
+    "VOID | alternator rear gantry foot": null,
+    "VOID | alternator rear gantry upright": null,
+    "VOID | alternator bearing rear bracket": null,
+    "VOID | gantry deck bolt": null,
+    "VOID | gantry deck bolt.001": null,
+    "VOID | alternator fixed bored bearing.001": null,
+    "VOID | alternator rear gantry foot.001": null,
+    "VOID | alternator rear gantry upright.001": null,
+    "VOID | alternator bearing rear bracket.001": null,
+    "VOID | gantry deck bolt.002": null,
+    "VOID | gantry deck bolt.003": null,
+    "VOID | alternator load carrying rear beam": null,
+    "VOID | protective cage supported rear saddle": null,
+    "VOID | protective cage supported rear saddle.001": null,
+    "VOID | coil ceramic former": null,
+    "VOID | alternator copper winding": null,
+    "VOID | alternator copper winding.001": null,
+    "VOID | alternator copper winding.002": null,
+    "VOID | alternator copper winding.003": null,
+    "VOID | alternator copper winding.004": null,
+    "VOID | alternator copper winding.005": null,
+    "VOID | coil ceramic former.001": null,
+    "VOID | alternator copper winding.006": null,
+    "VOID | alternator copper winding.007": null,
+    "VOID | alternator copper winding.008": null,
+    "VOID | alternator copper winding.009": null,
+    "VOID | alternator copper winding.010": null,
+    "VOID | alternator copper winding.011": null,
+    "VOID | coil ceramic former.002": null,
+    "VOID | alternator copper winding.012": null,
+    "VOID | alternator copper winding.013": null,
+    "VOID | alternator copper winding.014": null,
+    "VOID | alternator copper winding.015": null,
+    "VOID | alternator copper winding.016": null,
+    "VOID | alternator copper winding.017": null,
+    "VOID | coil ceramic former.003": null,
+    "VOID | alternator copper winding.018": null,
+    "VOID | alternator copper winding.019": null,
+    "VOID | alternator copper winding.020": null,
+    "VOID | alternator copper winding.021": null,
+    "VOID | alternator copper winding.022": null,
+    "VOID | alternator copper winding.023": null,
+    "VOID | coil ceramic former.004": null,
+    "VOID | alternator copper winding.024": null,
+    "VOID | alternator copper winding.025": null,
+    "VOID | alternator copper winding.026": null,
+    "VOID | alternator copper winding.027": null,
+    "VOID | alternator copper winding.028": null,
+    "VOID | alternator copper winding.029": null,
+    "VOID | coil ceramic former.005": null,
+    "VOID | alternator copper winding.030": null,
+    "VOID | alternator copper winding.031": null,
+    "VOID | alternator copper winding.032": null,
+    "VOID | alternator copper winding.033": null,
+    "VOID | alternator copper winding.034": null,
+    "VOID | alternator copper winding.035": null,
+    "VOID | coil ceramic former.006": null,
+    "VOID | alternator copper winding.036": null,
+    "VOID | alternator copper winding.037": null,
+    "VOID | alternator copper winding.038": null,
+    "VOID | alternator copper winding.039": null,
+    "VOID | alternator copper winding.040": null,
+    "VOID | alternator copper winding.041": null,
+    "VOID | coil ceramic former.007": null,
+    "VOID | alternator copper winding.042": null,
+    "VOID | alternator copper winding.043": null,
+    "VOID | alternator copper winding.044": null,
+    "VOID | alternator copper winding.045": null,
+    "VOID | alternator copper winding.046": null,
+    "VOID | alternator copper winding.047": null,
+    "VOID | coil ceramic former.008": null,
+    "VOID | alternator copper winding.048": null,
+    "VOID | alternator copper winding.049": null,
+    "VOID | alternator copper winding.050": null,
+    "VOID | alternator copper winding.051": null,
+    "VOID | alternator copper winding.052": null,
+    "VOID | alternator copper winding.053": null,
+    "VOID | coil ceramic former.009": null,
+    "VOID | alternator copper winding.054": null,
+    "VOID | alternator copper winding.055": null,
+    "VOID | alternator copper winding.056": null,
+    "VOID | alternator copper winding.057": null,
+    "VOID | alternator copper winding.058": null,
+    "VOID | alternator copper winding.059": null,
+    "VOID | coil ceramic former.010": null,
+    "VOID | alternator copper winding.060": null,
+    "VOID | alternator copper winding.061": null,
+    "VOID | alternator copper winding.062": null,
+    "VOID | alternator copper winding.063": null,
+    "VOID | alternator copper winding.064": null,
+    "VOID | alternator copper winding.065": null,
+    "VOID | coil ceramic former.011": null,
+    "VOID | alternator copper winding.066": null,
+    "VOID | alternator copper winding.067": null,
+    "VOID | alternator copper winding.068": null,
+    "VOID | alternator copper winding.069": null,
+    "VOID | alternator copper winding.070": null,
+    "VOID | alternator copper winding.071": null,
+    "VOID | alternator protective end hoop": null,
+    "VOID | alternator protective end hoop.001": null,
+    "VOID | alternator cage longitudinal rail": null,
+    "VOID | alternator cage longitudinal rail.001": null,
+    "VOID | alternator cage longitudinal rail.002": null,
+    "VOID | alternator cage longitudinal rail.003": null,
+    "VOID | drive pulley belt groove floor": "VOID | common rotating crank",
+    "VOID | drive pulley retaining cheek": "VOID | common rotating crank",
+    "VOID | drive pulley retaining cheek.001": "VOID | common rotating crank",
+    "VOID | drive pulley hub": "VOID | common rotating crank",
+    "VOID | pulley spoke": "VOID | common rotating crank",
+    "VOID | pulley spoke.001": "VOID | common rotating crank",
+    "VOID | pulley spoke.002": "VOID | common rotating crank",
+    "VOID | pulley spoke.003": "VOID | common rotating crank",
+    "VOID | drive pulley belt groove floor.001": "VOID | alternator rotating shaft",
+    "VOID | drive pulley retaining cheek.002": "VOID | alternator rotating shaft",
+    "VOID | drive pulley retaining cheek.003": "VOID | alternator rotating shaft",
+    "VOID | drive pulley hub.001": "VOID | alternator rotating shaft",
+    "VOID | pulley spoke.004": "VOID | alternator rotating shaft",
+    "VOID | pulley spoke.005": "VOID | alternator rotating shaft",
+    "VOID | pulley spoke.006": "VOID | alternator rotating shaft",
+    "VOID | pulley spoke.007": "VOID | alternator rotating shaft",
+    "VOID | continuous closed alternator drive belt": null,
+    "VOID | steam feed from reducer": null,
+    "VOID | steam head branch": null,
+    "VOID | steam branch header union": null,
+    "VOID | cylinder exhaust branch": null,
+    "VOID | steam head branch.001": null,
+    "VOID | steam branch header union.001": null,
+    "VOID | cylinder exhaust branch.001": null,
+    "VOID | common exhaust collector": null,
+    "VOID | steam header closed end cap": null,
+    "VOID | open steam exhaust": null,
+    "VOID | exhaust open lip": null,
+    "VOID | steam riser support clamp": null,
+    "VOID | riser column standoff": null,
+    "VOID | steam riser support clamp.001": null,
+    "VOID | riser column standoff.001": null,
+    "VOID | exhaust founded rear support": null,
+    "VOID | exhaust support clamp": null,
+    "VOID | exhaust column standoff": null,
+    "VOID | exhaust support clamp.001": null,
+    "VOID | exhaust column standoff.001": null,
+    "VOID | recovered common console recessed console face": null,
+    "VOID | recovered common console recessed console control.003": null,
+    "VOID | recovered common console recessed console control.002": null,
+    "VOID | recovered common console recessed console control.001": null,
+    "VOID | recovered common console recessed console control": null,
+    "VOID | recovered common console green status display": null,
+    "VOID | recovered common console console panel screw.003": null,
+    "VOID | recovered common console console panel screw.002": null,
+    "VOID | recovered common console console panel screw.001": null,
+    "VOID | recovered common console console panel screw": null,
+    "VOID | recovered common console armored cogitator console": null,
+    "VOID | console founded support": null,
+    "VOID | console founded support.001": null,
+    "VOID | console sensing conduit": null,
+    "VOID | alternator sensor gland": null,
+    "VOID | electrical armored output box": null,
+    "VOID | alternator protected power conduit": null,
+    "VOID | output founded cable trunk": null,
+    "VOID | output box cover bolt": null,
+    "VOID | output box cover bolt.001": null,
+    "VOID | left cylinder identification cover": null,
+    "VOID | right cylinder inspection cover": null,
+    "VOID | cylinder service cover fastener": null,
+    "VOID | cylinder service cover fastener.001": null,
+    "VOID | cylinder service cover fastener.002": null,
+    "VOID | cylinder service cover fastener.003": null
+  },
+  "fixed_mesh_count": 224,
+  "pairs": {
+    "VOID | layered common bedplate <> VOID | machinery deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 145,
+      "moving": false
+    },
+    "VOID | foundation shoe <> VOID | machinery deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 67,
+      "moving": false
+    },
+    "VOID | foundation shoe.001 <> VOID | machinery deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 50,
+      "moving": false
+    },
+    "VOID | foundation shoe.002 <> VOID | machinery deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "VOID | foundation shoe.003 <> VOID | machinery deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "VOID | crank bearing founded plinth <> VOID | machinery deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 35,
+      "moving": false
+    },
+    "VOID | crank bearing founded plinth.001 <> VOID | machinery deck": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 33,
+      "moving": false
+    },
+    "VOID | STEAM bolted socket collar <> VOID | STEAM full-bore fixed mouth": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 275,
+      "moving": false
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.005": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.006": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 16,
+      "moving": false
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 14,
+      "moving": false
+    },
+    "VOID | STEAM tapered receiver <> VOID | steam feed from reducer": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 134,
+      "moving": false
+    },
+    "VOID | bearing seated neck <> VOID | crank bearing founded plinth": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "VOID | bearing foot bolt <> VOID | crank bearing founded plinth": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "VOID | bearing foot bolt.001 <> VOID | crank bearing founded plinth": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "VOID | bearing seated neck <> VOID | bored crank bearing": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 90,
+      "moving": false
+    },
+    "VOID | bearing seated neck.001 <> VOID | crank bearing founded plinth.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 34,
+      "moving": false
+    },
+    "VOID | bearing foot bolt.002 <> VOID | crank bearing founded plinth.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "VOID | bearing foot bolt.003 <> VOID | crank bearing founded plinth.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "VOID | bearing seated neck.001 <> VOID | bored crank bearing.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 90,
+      "moving": false
+    },
+    "VOID | pressure cylinder hollow lower head <> VOID | shaft gland lower guide": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 232,
+      "moving": false
+    },
+    "VOID | pressure cylinder hollow lower head <> VOID | pressure cylinder wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 320,
+      "moving": false
+    },
+    "VOID | pressure cylinder hollow lower head <> VOID | rear cylinder bearing saddle": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 95,
+      "moving": false
+    },
+    "VOID | cylinder exhaust branch <> VOID | pressure cylinder hollow lower head": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 61,
+      "moving": false
+    },
+    "VOID | pressure cylinder seated cap flange <> VOID | pressure cylinder wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 239,
+      "moving": false
+    },
+    "VOID | pressure cylinder seated band <> VOID | pressure cylinder wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 69,
+      "moving": false
+    },
+    "VOID | pressure cylinder seated band.001 <> VOID | pressure cylinder wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 69,
+      "moving": false
+    },
+    "VOID | cylinder exhaust branch <> VOID | pressure cylinder wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 92,
+      "moving": false
+    },
+    "VOID | left cylinder identification cover <> VOID | pressure cylinder wall": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "VOID | pressure cylinder sealed dished cap <> VOID | steam head branch": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 100,
+      "moving": false
+    },
+    "VOID | cylinder exhaust branch <> VOID | pressure cylinder seated band": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 84,
+      "moving": false
+    },
+    "VOID | founded cylinder rear column <> VOID | riser column standoff": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "VOID | founded cylinder rear column <> VOID | riser column standoff.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "VOID | pressure cylinder hollow lower head.001 <> VOID | shaft gland lower guide.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 237,
+      "moving": false
+    },
+    "VOID | pressure cylinder hollow lower head.001 <> VOID | pressure cylinder wall.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 319,
+      "moving": false
+    },
+    "VOID | pressure cylinder hollow lower head.001 <> VOID | rear cylinder bearing saddle.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 95,
+      "moving": false
+    },
+    "VOID | cylinder exhaust branch.001 <> VOID | pressure cylinder hollow lower head.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 61,
+      "moving": false
+    },
+    "VOID | pressure cylinder seated cap flange.001 <> VOID | pressure cylinder wall.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 247,
+      "moving": false
+    },
+    "VOID | pressure cylinder seated band.002 <> VOID | pressure cylinder wall.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 71,
+      "moving": false
+    },
+    "VOID | pressure cylinder seated band.003 <> VOID | pressure cylinder wall.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 71,
+      "moving": false
+    },
+    "VOID | cylinder exhaust branch.001 <> VOID | pressure cylinder wall.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 92,
+      "moving": false
+    },
+    "VOID | pressure cylinder wall.001 <> VOID | right cylinder inspection cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "VOID | pressure cylinder sealed dished cap.001 <> VOID | steam head branch.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 99,
+      "moving": false
+    },
+    "VOID | cylinder exhaust branch.001 <> VOID | pressure cylinder seated band.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 84,
+      "moving": false
+    },
+    "VOID | alternator protected power conduit <> VOID | hollow alternator stator": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "VOID | alternator endplate shaft bore <> VOID | alternator sensor gland": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "VOID | alternator bearing rear bracket <> VOID | alternator fixed bored bearing": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 94,
+      "moving": false
+    },
+    "VOID | alternator rear gantry upright <> VOID | gantry deck bolt": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "VOID | alternator rear gantry upright <> VOID | gantry deck bolt.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "VOID | alternator bearing rear bracket <> VOID | alternator load carrying rear beam": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "VOID | alternator bearing rear bracket.001 <> VOID | alternator fixed bored bearing.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 94,
+      "moving": false
+    },
+    "VOID | alternator rear gantry upright.001 <> VOID | gantry deck bolt.002": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 18,
+      "moving": false
+    },
+    "VOID | alternator rear gantry upright.001 <> VOID | gantry deck bolt.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "VOID | alternator bearing rear bracket.001 <> VOID | alternator load carrying rear beam": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "VOID | alternator load carrying rear beam <> VOID | protective cage supported rear saddle": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 42,
+      "moving": false
+    },
+    "VOID | alternator load carrying rear beam <> VOID | protective cage supported rear saddle.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 38,
+      "moving": false
+    },
+    "VOID | alternator protective end hoop <> VOID | protective cage supported rear saddle": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "VOID | alternator protective end hoop.001 <> VOID | protective cage supported rear saddle.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 20,
+      "moving": false
+    },
+    "VOID | alternator copper winding <> VOID | coil ceramic former": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 212,
+      "moving": false
+    },
+    "VOID | alternator copper winding.001 <> VOID | coil ceramic former": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.002 <> VOID | coil ceramic former": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.003 <> VOID | coil ceramic former": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.004 <> VOID | coil ceramic former": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.005 <> VOID | coil ceramic former": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 208,
+      "moving": false
+    },
+    "VOID | alternator copper winding.018 <> VOID | coil ceramic former.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 208,
+      "moving": false
+    },
+    "VOID | alternator copper winding.019 <> VOID | coil ceramic former.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.020 <> VOID | coil ceramic former.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.021 <> VOID | coil ceramic former.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.022 <> VOID | coil ceramic former.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.023 <> VOID | coil ceramic former.003": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 212,
+      "moving": false
+    },
+    "VOID | alternator copper winding.024 <> VOID | coil ceramic former.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 212,
+      "moving": false
+    },
+    "VOID | alternator copper winding.025 <> VOID | coil ceramic former.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.026 <> VOID | coil ceramic former.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.027 <> VOID | coil ceramic former.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.028 <> VOID | coil ceramic former.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.029 <> VOID | coil ceramic former.004": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 208,
+      "moving": false
+    },
+    "VOID | alternator copper winding.042 <> VOID | coil ceramic former.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 208,
+      "moving": false
+    },
+    "VOID | alternator copper winding.043 <> VOID | coil ceramic former.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.044 <> VOID | coil ceramic former.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.045 <> VOID | coil ceramic former.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.046 <> VOID | coil ceramic former.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.047 <> VOID | coil ceramic former.007": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 212,
+      "moving": false
+    },
+    "VOID | alternator copper winding.048 <> VOID | coil ceramic former.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 212,
+      "moving": false
+    },
+    "VOID | alternator copper winding.049 <> VOID | coil ceramic former.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.050 <> VOID | coil ceramic former.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.051 <> VOID | coil ceramic former.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.052 <> VOID | coil ceramic former.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.053 <> VOID | coil ceramic former.008": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 208,
+      "moving": false
+    },
+    "VOID | alternator copper winding.066 <> VOID | coil ceramic former.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 208,
+      "moving": false
+    },
+    "VOID | alternator copper winding.067 <> VOID | coil ceramic former.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.068 <> VOID | coil ceramic former.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.069 <> VOID | coil ceramic former.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 192,
+      "moving": false
+    },
+    "VOID | alternator copper winding.070 <> VOID | coil ceramic former.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 224,
+      "moving": false
+    },
+    "VOID | alternator copper winding.071 <> VOID | coil ceramic former.011": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 212,
+      "moving": false
+    },
+    "VOID | alternator cage longitudinal rail <> VOID | alternator protective end hoop": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "VOID | alternator cage longitudinal rail.001 <> VOID | alternator protective end hoop": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "VOID | alternator cage longitudinal rail.002 <> VOID | alternator protective end hoop": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "VOID | alternator cage longitudinal rail.003 <> VOID | alternator protective end hoop": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 46,
+      "moving": false
+    },
+    "VOID | alternator cage longitudinal rail <> VOID | alternator protective end hoop.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "VOID | alternator cage longitudinal rail.001 <> VOID | alternator protective end hoop.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 54,
+      "moving": false
+    },
+    "VOID | alternator cage longitudinal rail.002 <> VOID | alternator protective end hoop.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 52,
+      "moving": false
+    },
+    "VOID | alternator cage longitudinal rail.003 <> VOID | alternator protective end hoop.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "VOID | steam feed from reducer <> VOID | steam head branch": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 289,
+      "moving": false
+    },
+    "VOID | steam feed from reducer <> VOID | steam head branch.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 158,
+      "moving": false
+    },
+    "VOID | steam branch header union <> VOID | steam head branch": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 240,
+      "moving": false
+    },
+    "VOID | common exhaust collector <> VOID | cylinder exhaust branch": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 147,
+      "moving": false
+    },
+    "VOID | steam branch header union.001 <> VOID | steam head branch.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 240,
+      "moving": false
+    },
+    "VOID | steam head branch.001 <> VOID | steam header closed end cap": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "VOID | steam branch header union.001 <> VOID | steam header closed end cap": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 239,
+      "moving": false
+    },
+    "VOID | common exhaust collector <> VOID | cylinder exhaust branch.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 258,
+      "moving": false
+    },
+    "VOID | cylinder exhaust branch.001 <> VOID | open steam exhaust": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 59,
+      "moving": false
+    },
+    "VOID | exhaust open lip <> VOID | open steam exhaust": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 222,
+      "moving": false
+    },
+    "VOID | riser column standoff <> VOID | steam riser support clamp": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "VOID | riser column standoff.001 <> VOID | steam riser support clamp.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 45,
+      "moving": false
+    },
+    "VOID | exhaust founded rear support <> VOID | exhaust support clamp": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "VOID | exhaust column standoff <> VOID | exhaust founded rear support": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "VOID | exhaust founded rear support <> VOID | exhaust support clamp.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 32,
+      "moving": false
+    },
+    "VOID | exhaust column standoff.001 <> VOID | exhaust founded rear support": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 44,
+      "moving": false
+    },
+    "VOID | exhaust column standoff <> VOID | exhaust support clamp": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 57,
+      "moving": false
+    },
+    "VOID | exhaust column standoff.001 <> VOID | exhaust support clamp.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 58,
+      "moving": false
+    },
+    "VOID | recovered common console green status display <> VOID | recovered common console recessed console face": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "VOID | recovered common console armored cogitator console <> VOID | recovered common console recessed console face": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 30,
+      "moving": false
+    },
+    "VOID | console founded support <> VOID | recovered common console armored cogitator console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 47,
+      "moving": false
+    },
+    "VOID | console founded support.001 <> VOID | recovered common console armored cogitator console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 49,
+      "moving": false
+    },
+    "VOID | console sensing conduit <> VOID | recovered common console armored cogitator console": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 48,
+      "moving": false
+    },
+    "VOID | alternator sensor gland <> VOID | console sensing conduit": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 149,
+      "moving": false
+    },
+    "VOID | alternator protected power conduit <> VOID | electrical armored output box": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 66,
+      "moving": false
+    },
+    "VOID | electrical armored output box <> VOID | output founded cable trunk": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 53,
+      "moving": false
+    },
+    "VOID | electrical armored output box <> VOID | output box cover bolt": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "VOID | electrical armored output box <> VOID | output box cover bolt.001": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "VOID | cylinder service cover fastener <> VOID | left cylinder identification cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "VOID | cylinder service cover fastener.001 <> VOID | left cylinder identification cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "VOID | cylinder service cover fastener.002 <> VOID | right cylinder inspection cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "VOID | cylinder service cover fastener.003 <> VOID | right cylinder inspection cover": {
+      "first_frame": 1,
+      "last_frame": 1,
+      "frames": 1,
+      "maximum_triangle_intersections": 12,
+      "moving": false
+    },
+    "VOID | continuous closed alternator drive belt <> VOID | drive pulley belt groove floor": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 96,
+      "moving": true
+    },
+    "VOID | continuous closed alternator drive belt <> VOID | drive pulley belt groove floor.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 127,
+      "moving": true
+    },
+    "VOID | common shaft <> VOID | flywheel bored hub": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 204,
+      "moving": true
+    },
+    "VOID | common shaft <> VOID | drive pulley hub": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 204,
+      "moving": true
+    },
+    "VOID | crank thrust collar <> VOID | outboard crank journal": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 234,
+      "moving": true
+    },
+    "VOID | journal collar set screw shank <> VOID | outboard crank journal": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 44,
+      "moving": true
+    },
+    "VOID | outboard crank journal <> VOID | outboard crank web": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 96,
+      "moving": true
+    },
+    "VOID | crank thrust collar.001 <> VOID | outboard crank journal.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 228,
+      "moving": true
+    },
+    "VOID | journal collar set screw shank.001 <> VOID | outboard crank journal.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 44,
+      "moving": true
+    },
+    "VOID | outboard crank journal.001 <> VOID | outboard crank web.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 96,
+      "moving": true
+    },
+    "VOID | crank thrust collar <> VOID | journal collar lock screw": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 30,
+      "moving": true
+    },
+    "VOID | crank thrust collar <> VOID | journal collar set screw shank": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 46,
+      "moving": true
+    },
+    "VOID | journal collar lock screw <> VOID | journal collar set screw shank": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 36,
+      "moving": true
+    },
+    "VOID | crank thrust collar.001 <> VOID | journal collar lock screw.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 30,
+      "moving": true
+    },
+    "VOID | crank thrust collar.001 <> VOID | journal collar set screw shank.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 46,
+      "moving": true
+    },
+    "VOID | journal collar lock screw.001 <> VOID | journal collar set screw shank.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 36,
+      "moving": true
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke.002": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke.003": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke.004": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke.005": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 46,
+      "moving": true
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 46,
+      "moving": true
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke.002": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 46,
+      "moving": true
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke.003": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 46,
+      "moving": true
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke.004": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 46,
+      "moving": true
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke.005": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 46,
+      "moving": true
+    },
+    "VOID | balanced crank web <> VOID | eccentric crank pin": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 198,
+      "moving": true
+    },
+    "VOID | eccentric crank pin <> VOID | outboard crank web": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 198,
+      "moving": true
+    },
+    "VOID | crank pin outer retainer <> VOID | eccentric crank pin": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 102,
+      "moving": true
+    },
+    "VOID | balanced crank web.001 <> VOID | eccentric crank pin.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 198,
+      "moving": true
+    },
+    "VOID | eccentric crank pin.001 <> VOID | outboard crank web.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 198,
+      "moving": true
+    },
+    "VOID | crank pin outer retainer.001 <> VOID | eccentric crank pin.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 102,
+      "moving": true
+    },
+    "VOID | rigid rod web <> VOID | rod bored pin eye": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 58,
+      "moving": true
+    },
+    "VOID | rigid rod web <> VOID | rod bored pin eye.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 58,
+      "moving": true
+    },
+    "VOID | crosshead upper bridge <> VOID | sliding polished piston stem": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 98,
+      "moving": true
+    },
+    "VOID | crosshead seated wrist pin <> VOID | wrist pin outer retainer": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 102,
+      "moving": true
+    },
+    "VOID | crosshead seated wrist pin <> VOID | wrist pin outer retainer.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 102,
+      "moving": true
+    },
+    "VOID | rigid rod web.001 <> VOID | rod bored pin eye.002": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 58,
+      "moving": true
+    },
+    "VOID | rigid rod web.001 <> VOID | rod bored pin eye.003": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 58,
+      "moving": true
+    },
+    "VOID | crosshead upper bridge.001 <> VOID | sliding polished piston stem.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 98,
+      "moving": true
+    },
+    "VOID | crosshead seated wrist pin.001 <> VOID | wrist pin outer retainer.002": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 102,
+      "moving": true
+    },
+    "VOID | crosshead seated wrist pin.001 <> VOID | wrist pin outer retainer.003": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 102,
+      "moving": true
+    },
+    "VOID | alternator armature shaft <> VOID | drive pulley hub.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 204,
+      "moving": true
+    },
+    "VOID | drive pulley belt groove floor <> VOID | pulley spoke": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | drive pulley belt groove floor <> VOID | pulley spoke.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | drive pulley belt groove floor <> VOID | pulley spoke.002": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | drive pulley belt groove floor <> VOID | pulley spoke.003": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | drive pulley hub <> VOID | pulley spoke": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 42,
+      "moving": true
+    },
+    "VOID | drive pulley hub <> VOID | pulley spoke.001": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 42,
+      "moving": true
+    },
+    "VOID | drive pulley hub <> VOID | pulley spoke.002": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 42,
+      "moving": true
+    },
+    "VOID | drive pulley hub <> VOID | pulley spoke.003": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 42,
+      "moving": true
+    },
+    "VOID | drive pulley belt groove floor.001 <> VOID | pulley spoke.004": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | drive pulley belt groove floor.001 <> VOID | pulley spoke.005": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | drive pulley belt groove floor.001 <> VOID | pulley spoke.006": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | drive pulley belt groove floor.001 <> VOID | pulley spoke.007": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 38,
+      "moving": true
+    },
+    "VOID | drive pulley hub.001 <> VOID | pulley spoke.004": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 42,
+      "moving": true
+    },
+    "VOID | drive pulley hub.001 <> VOID | pulley spoke.005": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 42,
+      "moving": true
+    },
+    "VOID | drive pulley hub.001 <> VOID | pulley spoke.006": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 42,
+      "moving": true
+    },
+    "VOID | drive pulley hub.001 <> VOID | pulley spoke.007": {
+      "first_frame": 0.0,
+      "last_frame": 193.0,
+      "frames": 387,
+      "maximum_triangle_intersections": 42,
+      "moving": true
+    }
+  },
+  "note": "Raw triangle contacts include intentional fitted joints, tooth engagement and fasteners. Every pair requires adjudication; this inventory is not a clearance pass."
+}

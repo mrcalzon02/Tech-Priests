@@ -1,0 +1,609 @@
+00:01.047  blend            | Read blend: "C:\Users\Admin\Documents\ChatGPT\Tech priests\tanks-structure-production\build\tp-void-steam-engine-main01\authored-v02\studies\geometry-source.blend"
+00:02.016  blend            | Read blend: "C:\Users\Admin\Documents\ChatGPT\Tech priests\tanks-structure-production\build\tp-void-steam-engine-main01\authored-v02\void-steam-v02.blend"
+Info: No new files have been packed
+Info: Saved as "void-steam-v02.blend"
+INFO Draco mesh compression is available, use library at C:\Program Files\Blender Foundation\Blender 5.0\5.0\scripts\addons_core\io_scene_gltf2\extern_draco.dll
+09:27:12 | INFO: Starting glTF 2.0 export
+09:27:12 | INFO: Extracting primitive: Cube.077
+09:27:12 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.080
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator cage longitudinal rail
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator cage longitudinal rail.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator cage longitudinal rail.002
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator cage longitudinal rail.003
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn
+09:27:12 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.002
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.003
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.004
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.005
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.006
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.007
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.008
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.009
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.010
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.011
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.012
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.013
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.014
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.015
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.016
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.017
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.018
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.019
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.020
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.021
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.022
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.023
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.024
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.025
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.026
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.027
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.028
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.029
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.030
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.031
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.032
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.033
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.034
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.035
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.036
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.037
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.038
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.039
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.040
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.041
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.042
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.043
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.044
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.045
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.046
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.047
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.048
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.049
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.050
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.051
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.052
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.053
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.054
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.055
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.056
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.057
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.058
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.059
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.060
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.061
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.062
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.063
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.064
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.065
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.066
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.067
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.068
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.069
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.070
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void continuous copper turn.071
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator endplate shaft bore
+09:27:12 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator endplate shaft bore.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator fixed bored bearing
+09:27:12 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator fixed bored bearing.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.081
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator protected power conduit
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator protective end hoop
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator protective end hoop.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.075
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.078
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.076
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.079
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.064
+09:27:12 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | drive pulley belt groove floor.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.082
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | drive pulley retaining cheek.002
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | drive pulley retaining cheek.003
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.088
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.089
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.090
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.091
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | alternator sensor gland
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.014
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.015
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.016
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.017
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.058
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.060
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | bored crank bearing
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | bored crank bearing.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.069
+09:27:12 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.070
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.071
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.072
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.073
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.074
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.075
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.076
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.077
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.078
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.079
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.080
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | common exhaust collector
+09:27:12 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.026
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.030
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.018
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | crank pin inward washer
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | crank pin inward washer.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.029
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.033
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | crank pin outward washer
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | crank pin outward washer.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | crank thrust collar
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | crank thrust collar.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | drive pulley belt groove floor
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.081
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | drive pulley retaining cheek
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | drive pulley retaining cheek.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.028
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.032
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.025
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | flywheel cast rim
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.061
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.062
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.063
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.064
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.065
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.066
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.021
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.023
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.022
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.024
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.019
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.020
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.027
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.031
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.084
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.085
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.086
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.087
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.097
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.098
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | console sensing conduit
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Void closed drive belt
+09:27:12 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.057
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.059
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.039
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.040
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.041
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.042
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.043
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.044
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.045
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.046
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.054
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.055
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.056
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.057
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.058
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.059
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.060
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.061
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | cylinder exhaust branch
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | cylinder exhaust branch.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.086
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.087
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.088
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.089
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.099
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.095
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.096
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.094
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | exhaust open lip
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | exhaust support clamp
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | exhaust support clamp.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.002
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.003
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.004
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.005
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.053
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.054
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.055
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.056
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.069
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.073
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.065
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.066
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.067
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.068
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | hollow alternator stator
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.051
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.100
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | crosshead fork cheek
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | crosshead fork cheek.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.034
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.068
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.037
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | wrist pin end washer
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | wrist pin end washer.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.035
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.036
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.067
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | rod bored pin eye
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | rod bored pin eye.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.052
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | open steam exhaust
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.084
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.085
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | output founded cable trunk
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | pressure cylinder hollow lower head
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | pressure cylinder hollow lower head.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.038
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.053
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | pressure cylinder seated band
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | pressure cylinder seated band.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | pressure cylinder seated band.002
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | pressure cylinder seated band.003
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | pressure cylinder seated cap flange
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | pressure cylinder seated cap flange.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | pressure cylinder wall
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | pressure cylinder wall.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.082
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.083
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.070
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.074
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | recovered common console armored cogitator console
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | recovered common console console panel screw
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | recovered common console console panel screw.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | recovered common console console panel screw.002
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | recovered common console console panel screw.003
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | recovered common console green status display
+09:27:12 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | recovered common console recessed console control
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | recovered common console recessed console control.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | recovered common console recessed console control.002
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | recovered common console recessed console control.003
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | recovered common console recessed console face
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.101
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | crosshead fork cheek.002
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | crosshead fork cheek.003
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.049
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.072
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.052
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | wrist pin end washer.002
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | wrist pin end washer.003
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.050
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.051
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.071
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | rod bored pin eye.002
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | rod bored pin eye.003
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.092
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cube.093
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.047
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.048
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.062
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.063
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | shaft gland lower guide
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | shaft gland lower guide.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.006
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.007
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.008
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.009
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.010
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.011
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.012
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.013
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | STEAM bolted socket collar
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | steam branch header union
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | steam branch header union.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | steam feed from reducer
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | STEAM full-bore fixed mouth
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | steam head branch
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | steam head branch.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: Cylinder.083
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | steam riser support clamp
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | steam riser support clamp.001
+09:27:12 | INFO: Primitives created: 1
+09:27:12 | INFO: Extracting primitive: VOID | STEAM tapered receiver
+09:27:12 | INFO: Primitives created: 1
+09:27:14 | INFO: Finished glTF 2.0 export in 1.5941061973571777 s
+
+VOID_FMPL_SURFACE_PASS 294 25
+Blender 5.0.0 (hash a37564c4df7a built 2025-11-18 11:06:54)
+
+Blender quit

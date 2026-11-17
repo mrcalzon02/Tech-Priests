@@ -1,0 +1,39 @@
+{
+  "status": "delegated-operational-close-enough",
+  "source_sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
+  "runtime_sha256": "62b06a131b927fc91705531ba6699952e5bd0c50f610529806eb7f72113095a9",
+  "reviewed_renders": {
+    "actual-glb-front.png": "72d9403bfe933a1f18a36541207a751c50bc65b77c4a8a2bf3fcec2268fd31aa",
+    "actual-glb-detail.png": "6a1b12fbd3fd712449e20a039a6b1f2473d6dcba4e854fa26263de7d13da9e12",
+    "actual-glb-rear.png": "4ddf426e1fc472ea99fca0b141670d9598d82079493b9d91453e1111878cea8d",
+    "actual-glb-clay.png": "08b9a8b5f5eec40798a6bbd4103857767d9215ac5ce8897d782ea6919ce972df",
+    "actual-glb-proportions.png": "1e20733f7a56418fdf93e3f2df9f5bb303ccfd944981c221b90b74dcf581fa41"
+  },
+  "native_views_reviewed": {
+    "north-working.png": "003d02455608d5aab32629ab06833da1cdc38b19b58eb2fa761143537c2440d7",
+    "east-working.png": "548cafb289f352dd7cd9b213ca705689ab2a2a42492025bf243021cfcc7df7a4",
+    "north-pipe.png": "c6955eabb03e590acbd9424395dbf32b12eb6723b70517f01a1dfd2b2e383bb2",
+    "east-pipe.png": "ac0eb02a847e0ba2a2d25ad5befe3b1b557b680ad82f5156da5d8b91a0542817",
+    "north-exhaust.png": "daa8a4b470e6b7a9ffa62e54d71f1030a750a387ab0a0c17bb7b742da51dbd3e",
+    "east-exhaust.png": "54389a1376fa7cce0d4a5788ddf91a576fd64ee655dca2a79fce4f8a9f10f739",
+    "north-console.png": "88847d2858a186a984fc3ec082d89cb4b64b9e25c982e079eea00203083f42a8",
+    "east-console.png": "ca8d7bf81d61df950323f59ace0796d539a7f351723ede4a999f024955fe2fee"
+  },
+  "scores_out_of_10": {
+    "functional_legibility": 8,
+    "supported_construction": 8,
+    "model_specific_fmpl_surfacing": 8,
+    "moving_joint_attachment": 9,
+    "native_pipe_scale_and_registration": 9,
+    "gameplay_readability": 8
+  },
+  "review": "Paired steam cylinders, bored guided crossheads, retained split-journal crank, founded bearings, flywheel and grooved belt drive into supported winding/stator bank. Fixed full-bore mouth, real header/cap/branches, founded open exhaust and terminated control/power services. All geometry and animation preserved through FMPL retexturing. No generic colored-noise replacement materials remain in final source. Angled inspection now uses undistorted world geometry; square-ground correction applies only to canonical Factorio sprite capture. All native pipe/exhaust/console views actually inspected.",
+  "texture_scope": "Eight indexed FMPL image-backed presets, original map Git-blob hashes checked. Nine model-specific instances; one explicitly recorded copper pigment albedo derivative, original ORM and normal retained.25 packed/embedded maps; actual exported image/channel comparisons passed.",
+  "limitations": [
+    "Individual owner visual approval is not claimed.",
+    "Isolated full current mod verified, not the complete user mod pack or a Portal release.",
+    "Cold input-only buffer needs manual fluid flush before hot resupply; existing native behavior preserved.",
+    "Native idle PNGs have minor brightness variation; same mechanical pose is independently matched, not falsely claimed byte-static."
+  ],
+  "owner_visual_approved": false
+}

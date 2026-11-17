@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "base_current_main": "bec7c7ed72e77cd2e0cdacc9df0103c46b40120f",
+  "source_sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
+  "runtime_sha256": "62b06a131b927fc91705531ba6699952e5bd0c50f610529806eb7f72113095a9",
+  "production_version": "0.1.687",
+  "native_engine_version": "2.1.24",
+  "installed_graphics": {
+    "north-idle.png": "0666de58ac940b2067bee52a9928c9ebdd7430cdb15ab7c9bdc579f1964952be",
+    "north-working.png": "83f1c8fdb7e17f51891783bf7ec9f00295f4aba5dd3595c218542d77e9f4b7f9",
+    "east-idle.png": "65aa8270e2ebb9622328f8493f744cc52ac869857097be2aaccbf74a64ca5155",
+    "east-working.png": "fb0857c8146012f8637008fdfc7b247435714ca1296c616e8096f354dc940bf5",
+    "icon.png": "6bd4ed79991cec40fbf2b1b3765c5e8501b2381206da155f007b5089e6a09679"
+  },
+  "generated_lua_sha256": "e208d3a6f56166bf1dcdced1f9f2c591db689d7d543e276eecb77092236398d4",
+  "data_final_fixes_sha256": "435866c6ddb866c74989c90404c6f0968d3c198e155544140df0295337f44445",
+  "space_age_contract_source_sha256": "9eb344f5b4a8c17f84578bb514b5ec71c24e862d3b2c91f96b354b47f72641ec",
+  "all_final_installed_sprites_and_adapter_match_current_native_operated_save_profile": true,
+  "normal_pipe_mouth_offsets": {
+    "north": [
+      -1,
+      0.453125
+    ],
+    "east": [
+      -0.5,
+      -1.046875
+    ]
+  },
+  "exhaust_emitter_offsets": {
+    "north": [
+      0.82,
+      -1.8497534258493011
+    ],
+    "east": [
+      0.82,
+      -0.20975342584930112
+    ]
+  },
+  "native_pipeline": "132 actual reimported GLB captures;2 native facings/32frames8fps;current2.1 GeneratorPrototype.pictures;minimum perceived animation0;source power/fuel/recipe/interface untouched except preceding published inlet repair.",
+  "claimed_scope": "Isolated full current Tech-Priests source with test-only proof/capture add-ons. Actual two separate native platforms, real normal pipes and electrical loads. No full user-pack install, Portal release, or individual owner visual approval claimed."
+}

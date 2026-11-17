@@ -1,0 +1,2034 @@
+{
+  "status": "FMPL-textured-candidate-native-recapture-pending",
+  "prior_geometry_source_sha256": "dd90f12ae12bfef2d089ffb15f7818729aef430717e2fbd77ba06e3aca49b18c",
+  "source_sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
+  "runtime_sha256": "62b06a131b927fc91705531ba6699952e5bd0c50f610529806eb7f72113095a9",
+  "all_mesh_vertices_and_mechanism_preserved": true,
+  "canonical_catalog_source_commit": "8eaf8f95765c45af54627a2ec1894be394284898",
+  "canonical_pinned_catalog_read_commit": "bec7c7ed72e77cd2e0cdacc9df0103c46b40120f",
+  "all_original_source_maps_git_blob_verified": true,
+  "source_maps_not_duplicated_or_modified": true,
+  "canonical_material_ids": [
+    "brass",
+    "gunmetal_dark",
+    "indicator_green",
+    "insulator",
+    "machine_steel",
+    "machined_bright",
+    "martian_red",
+    "primer_black"
+  ],
+  "role_instances": [
+    {
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "model_specific_instance": "VOID FMPL | cast-chassis",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/gunmetal_dark_albedo.png",
+          "git_blob_sha": "6ff855c2fe3653400785f6d8257eef6cf8e6c5e3",
+          "sha256": "209761d9c30d3ff2e93fb7e397196e1ac2ebdeb6d2fcc9cc9b5f99207d82cf6b",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/gunmetal_dark_orm.png",
+          "git_blob_sha": "a51acc6238b2562db812d77098be599afc0398af",
+          "sha256": "b1c09130ac1eb75a586f9e7ab8192459c363529e3f9912db891907edd874cb75",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/gunmetal_dark_normal.png",
+          "git_blob_sha": "53421b2b7f74da76bfc5da46e14aaf45494cab0b",
+          "sha256": "7bcb8e13d81fccc5ee051fd0edf256e2a50114f255869bfd0ab840d2ae3e848f",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "pressure-steel",
+      "fmpl_material_id": "machine_steel",
+      "model_specific_instance": "VOID FMPL | pressure-steel",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_albedo.png",
+          "git_blob_sha": "be1d406ed9a2c3822521422a7389515342f50aea",
+          "sha256": "55e9cb3d4079baeafe2b9ac0e34924afabc93e7a128d95cd755878b7bb29354a",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_orm.png",
+          "git_blob_sha": "143533c884e893362b1557efd2deb0e98c4e5d7c",
+          "sha256": "a89ad9e908dd1e53ec461e8617bb2f6add873af9389031d98d28839e3c082684",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machine_steel_normal.png",
+          "git_blob_sha": "5c517292babc6a46b6abb22aa2295df3911da040",
+          "sha256": "518e4d4d9359646d11984692d452e1faab751bbb53d873f94f7d7df4bf514015",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "model_specific_instance": "VOID FMPL | machined-bronze",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_albedo.png",
+          "git_blob_sha": "b8f291ab3d0ff419c83e60d805a5c2728ff9753c",
+          "sha256": "57034a31f8c7859a6b3661f57c67e60139bb8dbfc7273cd45be7b98904e35038",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_orm.png",
+          "git_blob_sha": "a74e7f5ffcc591a7e895d10367282a0bd51748fe",
+          "sha256": "acc155e0e7406452e674e70673dcb149cd3d42fa9b0a0e0a069f61b6d91dc1e0",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_normal.png",
+          "git_blob_sha": "11a3babbf0a2ce80efdefff190a7873742054de9",
+          "sha256": "8b48a33b75fd08e7cfa0e405c921b48a43682dafd33f49b582482e188f5eb674",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "model_specific_instance": "VOID FMPL | copper-winding",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_albedo.png",
+          "git_blob_sha": "b8f291ab3d0ff419c83e60d805a5c2728ff9753c",
+          "sha256": "57034a31f8c7859a6b3661f57c67e60139bb8dbfc7273cd45be7b98904e35038",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_orm.png",
+          "git_blob_sha": "a74e7f5ffcc591a7e895d10367282a0bd51748fe",
+          "sha256": "acc155e0e7406452e674e70673dcb149cd3d42fa9b0a0e0a069f61b6d91dc1e0",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/brass_normal.png",
+          "git_blob_sha": "11a3babbf0a2ce80efdefff190a7873742054de9",
+          "sha256": "8b48a33b75fd08e7cfa0e405c921b48a43682dafd33f49b582482e188f5eb674",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25,
+      "declared_derivative": {
+        "operation": "Linear RGB multiply [1.0,0.56,0.30], copper winding pigment only",
+        "source_albedo_sha256": "57034a31f8c7859a6b3661f57c67e60139bb8dbfc7273cd45be7b98904e35038",
+        "derived_albedo_sha256": "5024abccb27fc78c0f2d66586e07c970cdae49d3a0e68ec9f3045253eae60b4c",
+        "derived_file": "textures\\void-copper-from-fmpl-brass-albedo.png",
+        "normal_and_orm_original": true
+      }
+    },
+    {
+      "role": "martian-enamel",
+      "fmpl_material_id": "martian_red",
+      "model_specific_instance": "VOID FMPL | martian-enamel",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_albedo.png",
+          "git_blob_sha": "c8d06b4677401a1e880872a5b01eac3ee14ba859",
+          "sha256": "2f2df118e10d2d56bf8f895e1d2ce112319e77b9328f29e7b41333a9d74d5262",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_orm.png",
+          "git_blob_sha": "14d866dbdacfed2992334f8b79c29b00378e624e",
+          "sha256": "5487550eb57282b8a5c8aaa404ff0d8fa5ffc4bfea6e2433e8dd419e3b867fa6",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/martian_red_normal.png",
+          "git_blob_sha": "b3fd5a4b6a364dd89872993ba7053017bf180867",
+          "sha256": "dd85cc702e0242f62186dd3217699485e4d77fbb411e2975d6a91187f52404a2",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "model_specific_instance": "VOID FMPL | ceramic-insulator",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_albedo.png",
+          "git_blob_sha": "e716c5a16816af1fe9b14542bf1cbab24571b10d",
+          "sha256": "3d9abd2776ef0efdb05cf7fa4a6fac1047a1ab207791f8f5bd0dd205c05054ff",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_orm.png",
+          "git_blob_sha": "b2b35e9f712ce67717023b980a80064b1852da61",
+          "sha256": "f94326f7423fd5e752850d7f9bae5033175adaf842b492a30c97baa4eae0d646",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/insulator_normal.png",
+          "git_blob_sha": "fb0c46415572105b2a5438384fd935f9eb3ead60",
+          "sha256": "7113e9eabcd5cc3d962eee3e94283bb67be980189bca474c9d24cf63d5faa49c",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "rubber-belt",
+      "fmpl_material_id": "primer_black",
+      "model_specific_instance": "VOID FMPL | rubber-belt",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/primer_black_albedo.png",
+          "git_blob_sha": "1c9fda629fde6f5159b2341d75df7488794db2d6",
+          "sha256": "4ec055a7e6d537e00460022700f1a9a436576db0ee4fad38a9d9c3f131a27be4",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/primer_black_orm.png",
+          "git_blob_sha": "e54f7cc49941b1d33714e7bc5df44e123d7e9dff",
+          "sha256": "d67df979a84902faa70d04cac80760f4cc3bfbb5587d5c38253ce772b5fe9846",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/primer_black_normal.png",
+          "git_blob_sha": "ed03fd882b5b71eaa3d85a947eafc52ab351338e",
+          "sha256": "bbb8d8e982d19727fb2737941816838f6b52fd22222a49174b4b2a7ac778c905",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "model_specific_instance": "VOID FMPL | polished-piston",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machined_bright_albedo.png",
+          "git_blob_sha": "9f15374ad94236a4786f6c220773243f4c1120d4",
+          "sha256": "7f1e53850a34c71510faee4212cf6a7c6ae36b060d44acce61848c0ee2bd48fc",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machined_bright_orm.png",
+          "git_blob_sha": "bc7f9022e2c11060745e56d1836a026ed95aee7f",
+          "sha256": "ddf363fc84514cf2c641ebabd7790bfa76f6ad569f4f6ea8f66c92176f99bfd8",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/machined_bright_normal.png",
+          "git_blob_sha": "07b159a59235ea10140b19a1e0595f9692961198",
+          "sha256": "0103f5526e933509b89098845509b4e5ef226188bc4049bb4db58370465951cd",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25
+    },
+    {
+      "role": "control-phosphor",
+      "fmpl_material_id": "indicator_green",
+      "model_specific_instance": "VOID FMPL | control-phosphor",
+      "original_maps": {
+        "albedo": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_albedo.png",
+          "git_blob_sha": "20a4092be509b142629bc88e2bb7570e3c08e8f5",
+          "sha256": "d517b33a490f58e191a56d9625aba87e1c102c51a989922cd130b9e2784ba37e",
+          "color_space": "sRGB"
+        },
+        "orm": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_orm.png",
+          "git_blob_sha": "5a30eef9b9380805bb1799cbf878ba8591461e9c",
+          "sha256": "17e6ebe26dd26a883cb0ccbaee5a6669572a4b890dcf2aef398546758d2fdab9",
+          "color_space": "Non-Color"
+        },
+        "normal": {
+          "source_path": "art/source-to-3d/martian-bunker/src/v10/textures/indicator_green_normal.png",
+          "git_blob_sha": "380761d58aa6833359c7552e64bb2cd9256b259d",
+          "sha256": "88abec52038a2f403b17b1e974b3cfe6c0bcdaa233ad9c48da8b0df36c8ae3bf",
+          "color_space": "Non-Color"
+        }
+      },
+      "texture_repeat_per_tile": 1.25,
+      "model_specific_emission": "Low green instrument phosphor; original albedo/ORM/normal retained."
+    }
+  ],
+  "uv_assignments": [
+    {
+      "object": "VOID | layered common bedplate",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | machinery deck",
+      "role": "pressure-steel",
+      "fmpl_material_id": "machine_steel",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | foundation shoe",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | foundation anchor",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | foundation shoe.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | foundation anchor.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | foundation shoe.002",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | foundation anchor.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | foundation shoe.003",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | foundation anchor.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | STEAM full-bore fixed mouth",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | STEAM bolted socket collar",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | STEAM tapered receiver",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | socket flange fastener",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | socket flange fastener.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | socket flange fastener.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | socket flange fastener.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | socket flange fastener.004",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | socket flange fastener.005",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | socket flange fastener.006",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | socket flange fastener.007",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | crank bearing founded plinth",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | bearing seated neck",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | bored crank bearing",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | bearing foot bolt",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | bearing foot bolt.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | crank bearing founded plinth.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | bearing seated neck.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | bored crank bearing.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | bearing foot bolt.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | bearing foot bolt.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | common shaft",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | outboard crank journal",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | outboard crank journal.001",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | crank thrust collar",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | journal collar lock screw",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | journal collar set screw shank",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | crank thrust collar.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | journal collar lock screw.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | journal collar set screw shank.001",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | flywheel cast rim",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | flywheel bored hub",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | flywheel spoke",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | flywheel spoke.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | flywheel spoke.002",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | flywheel spoke.003",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | flywheel spoke.004",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | flywheel spoke.005",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | balanced crank web",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | outboard crank web",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | eccentric crank pin",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | crank pin outer retainer",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | crank pin inward washer",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | crank pin outward washer",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | balanced crank web.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | outboard crank web.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | eccentric crank pin.001",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | crank pin outer retainer.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | crank pin inward washer.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | crank pin outward washer.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | rigid rod web",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | rod bored pin eye",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | rod bored pin eye.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | crosshead fork cheek",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | crosshead fork cheek.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | crosshead upper bridge",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | crosshead seated wrist pin",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | wrist pin outer retainer",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | wrist pin outer retainer.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | wrist pin end washer",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | wrist pin end washer.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | sliding polished piston stem",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | shaft gland lower guide",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | pressure cylinder hollow lower head",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | pressure cylinder wall",
+      "role": "pressure-steel",
+      "fmpl_material_id": "machine_steel",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | pressure cylinder seated cap flange",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | pressure cylinder sealed dished cap",
+      "role": "pressure-steel",
+      "fmpl_material_id": "machine_steel",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.004",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.005",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.006",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.007",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | pressure cylinder seated band",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | pressure cylinder seated band.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | founded cylinder rear column",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | rear cylinder bearing saddle",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | saddle column retention",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | saddle column retention.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | rigid rod web.001",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | rod bored pin eye.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | rod bored pin eye.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | crosshead fork cheek.002",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | crosshead fork cheek.003",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | crosshead upper bridge.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | crosshead seated wrist pin.001",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | wrist pin outer retainer.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | wrist pin outer retainer.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | wrist pin end washer.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | wrist pin end washer.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | sliding polished piston stem.001",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | shaft gland lower guide.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | pressure cylinder hollow lower head.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | pressure cylinder wall.001",
+      "role": "pressure-steel",
+      "fmpl_material_id": "machine_steel",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | pressure cylinder seated cap flange.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | pressure cylinder sealed dished cap.001",
+      "role": "pressure-steel",
+      "fmpl_material_id": "machine_steel",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.008",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.009",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.010",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.011",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.012",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.013",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.014",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder cap captured bolt.015",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | pressure cylinder seated band.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | pressure cylinder seated band.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | founded cylinder rear column.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | rear cylinder bearing saddle.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | saddle column retention.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | saddle column retention.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | hollow alternator stator",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator endplate shaft bore",
+      "role": "martian-enamel",
+      "fmpl_material_id": "martian_red",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator endplate shaft bore.001",
+      "role": "martian-enamel",
+      "fmpl_material_id": "martian_red",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator armature shaft",
+      "role": "polished-piston",
+      "fmpl_material_id": "machined_bright",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator fixed bored bearing",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator rear gantry foot",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | alternator rear gantry upright",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | alternator bearing rear bracket",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | gantry deck bolt",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | gantry deck bolt.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator fixed bored bearing.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator rear gantry foot.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | alternator rear gantry upright.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | alternator bearing rear bracket.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | gantry deck bolt.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | gantry deck bolt.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator load carrying rear beam",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | protective cage supported rear saddle",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | protective cage supported rear saddle.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | coil ceramic former",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.001",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.002",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.003",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.004",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.005",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | coil ceramic former.001",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.006",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.007",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.008",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.009",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.010",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.011",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | coil ceramic former.002",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.012",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.013",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.014",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.015",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.016",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.017",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | coil ceramic former.003",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.018",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.019",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.020",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.021",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.022",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.023",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | coil ceramic former.004",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.024",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.025",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.026",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.027",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.028",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.029",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | coil ceramic former.005",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.030",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.031",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.032",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.033",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.034",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.035",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | coil ceramic former.006",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.036",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.037",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.038",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.039",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.040",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.041",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | coil ceramic former.007",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.042",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.043",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.044",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.045",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.046",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.047",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | coil ceramic former.008",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.048",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.049",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.050",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.051",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.052",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.053",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | coil ceramic former.009",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.054",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.055",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.056",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.057",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.058",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.059",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | coil ceramic former.010",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.060",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.061",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.062",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.063",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.064",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.065",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | coil ceramic former.011",
+      "role": "ceramic-insulator",
+      "fmpl_material_id": "insulator",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.066",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.067",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.068",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.069",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.070",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator copper winding.071",
+      "role": "copper-winding",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator protective end hoop",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator protective end hoop.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator cage longitudinal rail",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator cage longitudinal rail.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator cage longitudinal rail.002",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator cage longitudinal rail.003",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | drive pulley belt groove floor",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | drive pulley retaining cheek",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | drive pulley retaining cheek.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | drive pulley hub",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | pulley spoke",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | pulley spoke.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | pulley spoke.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | pulley spoke.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | drive pulley belt groove floor.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | drive pulley retaining cheek.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | drive pulley retaining cheek.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | drive pulley hub.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | pulley spoke.004",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | pulley spoke.005",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | pulley spoke.006",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | pulley spoke.007",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | continuous closed alternator drive belt",
+      "role": "rubber-belt",
+      "fmpl_material_id": "primer_black",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | steam feed from reducer",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | steam head branch",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | steam branch header union",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | cylinder exhaust branch",
+      "role": "pressure-steel",
+      "fmpl_material_id": "machine_steel",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | steam head branch.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | steam branch header union.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | cylinder exhaust branch.001",
+      "role": "pressure-steel",
+      "fmpl_material_id": "machine_steel",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | common exhaust collector",
+      "role": "pressure-steel",
+      "fmpl_material_id": "machine_steel",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | steam header closed end cap",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | open steam exhaust",
+      "role": "pressure-steel",
+      "fmpl_material_id": "machine_steel",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | exhaust open lip",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | steam riser support clamp",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | riser column standoff",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | steam riser support clamp.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | riser column standoff.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | exhaust founded rear support",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | exhaust support clamp",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | exhaust column standoff",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | exhaust support clamp.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | exhaust column standoff.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | recovered common console recessed console face",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | recovered common console recessed console control.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | recovered common console recessed console control.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | recovered common console recessed console control.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | recovered common console recessed console control",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | recovered common console green status display",
+      "role": "control-phosphor",
+      "fmpl_material_id": "indicator_green",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | recovered common console console panel screw.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | recovered common console console panel screw.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | recovered common console console panel screw.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | recovered common console console panel screw",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | recovered common console armored cogitator console",
+      "role": "pressure-steel",
+      "fmpl_material_id": "machine_steel",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | console founded support",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | console founded support.001",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | console sensing conduit",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | alternator sensor gland",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | electrical armored output box",
+      "role": "martian-enamel",
+      "fmpl_material_id": "martian_red",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | alternator protected power conduit",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | output founded cable trunk",
+      "role": "cast-chassis",
+      "fmpl_material_id": "gunmetal_dark",
+      "uv_method": "continuous centreline arc length / physical circumference, separate planar caps"
+    },
+    {
+      "object": "VOID | output box cover bolt",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | output box cover bolt.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | left cylinder identification cover",
+      "role": "martian-enamel",
+      "fmpl_material_id": "martian_red",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | right cylinder inspection cover",
+      "role": "martian-enamel",
+      "fmpl_material_id": "martian_red",
+      "uv_method": "part-local physical panel projection"
+    },
+    {
+      "object": "VOID | cylinder service cover fastener",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder service cover fastener.001",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder service cover fastener.002",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    },
+    {
+      "object": "VOID | cylinder service cover fastener.003",
+      "role": "machined-bronze",
+      "fmpl_material_id": "brass",
+      "uv_method": "continuous cylinder wall with planar end caps"
+    }
+  ],
+  "packed_images": 25,
+  "native_evidence_from_previous_custom_maps_not_final": true,
+  "owner_visual_approved": false
+}

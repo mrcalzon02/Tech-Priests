@@ -1,0 +1,62 @@
+{
+  "schema": "fmpl.model.delivery.v1",
+  "id": "tech-priests-void-steam-engine-v2",
+  "operational_complete": true,
+  "asset_status": "game-sprites-installed-with-specific-native-checks",
+  "owner_visual_approved": false,
+  "source": {
+    "file": "void-steam-v02.blend",
+    "sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
+    "packed_images": 25
+  },
+  "runtime": {
+    "file": "void-steam-v02.glb",
+    "sha256": "62b06a131b927fc91705531ba6699952e5bd0c50f610529806eb7f72113095a9",
+    "meshes": 294,
+    "triangles": 83896,
+    "embedded_images": 25,
+    "seconds": 4,
+    "working_only": true
+  },
+  "native_entity": "generator/void-steam-engine",
+  "footprint": [
+    2,
+    2
+  ],
+  "native_directions": [
+    0,
+    4
+  ],
+  "standalone_fmpl_views": [
+    0,
+    90,
+    180,
+    270
+  ],
+  "purpose": "Actual platform-only native generator,165C steam30/s ->300kW. No burner, fluid output, circuit or manual electrical wire endpoint. Existing12s building recipe and hydrogen-thruster-propulsion unlock preserved.",
+  "source_reuse": "Current sprite recognition retained; no named editable Void model found. Only existing Sterling console geometry recovered; the new supported mechanism and all subsequent geometry were preserved during FMPL surfacing.",
+  "source_export_verification": {
+    "eight_pose_bounds_max_error_tiles": 1.1920928955078125e-07,
+    "working_loop_seam_tiles": 1.1920928955078125e-07,
+    "source_clearance_poses": 387,
+    "runtime_clearance_poses": 385,
+    "half_frames": true,
+    "exact_contacts_adjudicated": 208,
+    "pin_joint_max_error_tiles": 0.00018074,
+    "piston_guide_radial_gap_tiles": 0.005,
+    "pin_eye_radial_gap_tiles": 0.003,
+    "fixed_sockets": true
+  },
+  "fmpl_materials": "fmpl-surface-manifest.json",
+  "actual_export_channel_proof": "fmpl-channel-verification.json",
+  "genuine_runtime_captures": 132,
+  "working_frames_per_direction": 32,
+  "capture_fps": 8,
+  "native_client_pngs": 100,
+  "native_motion_frames": 64,
+  "native_operated_save_reload": true,
+  "native_test_scope": "Two independently loaded real platforms, finite steam and standard pipes, no target/load energy assignments. Empty idle,300kW charging, forced stop/restart, natural full electrical output hold, real radar demand recovery, starvation/resupply, low-temperature rejection/manual cold-buffer flush, actual native recipe/unlock and consumed-crafted-item scripted placement.",
+  "integration_binding": "native-evidence/installed-source-binding.json",
+  "canonical_registration": "Canonical FMPL source/runtime refs are pinned separately after source publication; see tools/fmpl/FMPL.json.",
+  "whole_goal_complete": false
+}

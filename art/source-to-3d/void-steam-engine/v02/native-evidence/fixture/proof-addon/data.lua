@@ -1,0 +1,1 @@
+local p=table.deepcopy(data.raw['electric-energy-interface']['electric-energy-interface']);p.name='void-proof-power';p.energy_production='10MW';p.energy_usage='0W';p.energy_source={type='electric',buffer_capacity='10MJ',usage_priority='primary-output',input_flow_limit='0W',output_flow_limit='10MW'};p.minable=nil;data:extend({p})

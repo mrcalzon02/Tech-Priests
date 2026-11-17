@@ -5,6 +5,32 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-17 - Void Steam Engine FMPL source and native operational delivery
+
+The actual2x2 platform generator now has packed editable source, independently
+inspected animated GLB,132 real GLB sprite captures and current2.1 native art
+integration. Correct source-indexed FMPL materials replace the first custom
+maps: eight presets, nine role instances,25 packed/embedded maps, original
+texture blobs and exported ORM channels verified. Swept/cylindrical UVs retain
+physical scale. The angled preview's sprite-only depth stretch is corrected.
+Geometry and keyed mechanisms were preserved through surfacing.
+
+Two independent real platforms pass normal pipe placement/flow, finite-steam
+300kW accumulator charging, stop/hold/restart, natural full electrical output,
+new native load recovery, steam starvation/resupply, temperature rejection and
+manual cold-buffer flush recovery. The exact native building recipe/unlock and
+consumed-crafted-item scripted placement pass.100 actual client PNGs and64
+motion frames show real operation, fixed full-size inlet and correctly seated
+exhaust; the actual operated save reloads successfully for300 ticks. Minor
+native idle brightness changes are not misreported as mechanical motion.
+
+Source/evidence: art/source-to-3d/void-steam-engine/v02. Native source power,
+recipe, direction and platform restrictions remain. No new runtime authority,
+economy change, complete user-pack install or Portal release. Individual owner
+visual approval is not claimed. Operational implementation is complete;
+canonical FMPL source-ref registration and remote delivery readback follow
+this source checkpoint. Preserve accepted Sterling and concurrent work.
+
 ## 2026-11-17 - Void generator ordinary-grid steam inlet repaired
 
 Real platform testing found another half-axis inlet: ordinary pipes were

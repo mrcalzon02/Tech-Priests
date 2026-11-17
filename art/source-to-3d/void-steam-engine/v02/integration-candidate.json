@@ -1,0 +1,46 @@
+{
+  "installed_isolated_current_mod": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-sterling-contract-main01\\mods\\tech-priests_0.1.687",
+  "base_commit": "bec7c7ed72e77cd2e0cdacc9df0103c46b40120f",
+  "source_sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
+  "runtime_sha256": "62b06a131b927fc91705531ba6699952e5bd0c50f610529806eb7f72113095a9",
+  "files": {
+    "north-idle.png": "0666de58ac940b2067bee52a9928c9ebdd7430cdb15ab7c9bdc579f1964952be",
+    "north-working.png": "83f1c8fdb7e17f51891783bf7ec9f00295f4aba5dd3595c218542d77e9f4b7f9",
+    "east-idle.png": "65aa8270e2ebb9622328f8493f744cc52ac869857097be2aaccbf74a64ca5155",
+    "east-working.png": "fb0857c8146012f8637008fdfc7b247435714ca1296c616e8096f354dc940bf5",
+    "icon.png": "6bd4ed79991cec40fbf2b1b3765c5e8501b2381206da155f007b5089e6a09679"
+  },
+  "generated_lua_sha256": "e208d3a6f56166bf1dcdced1f9f2c591db689d7d543e276eecb77092236398d4",
+  "sprite_shift": [
+    0,
+    -0.42871266184073564
+  ],
+  "sprite_scale": 0.5,
+  "native_orientations": [
+    0,
+    4
+  ],
+  "pipe_mouth_native_offsets": {
+    "north": [
+      -1,
+      0.453125
+    ],
+    "east": [
+      -0.5,
+      -1.046875
+    ]
+  },
+  "smoke_native_offsets": {
+    "north": [
+      0.82,
+      -1.8497534258493011
+    ],
+    "east": [
+      0.82,
+      -0.20975342584930112
+    ]
+  },
+  "gameplay_properties_changed": false,
+  "production_repository_integrated": false,
+  "native_operation_and_reload_pending": true
+}

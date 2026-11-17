@@ -1,0 +1,3764 @@
+{
+  "passed": true,
+  "source_sha256": "b9e1b442531592f629511b57e2cabf609ff3308b12ffad5c949524f89b07486d",
+  "runtime_sha256": "62b06a131b927fc91705531ba6699952e5bd0c50f610529806eb7f72113095a9",
+  "source_poses": 387,
+  "runtime_poses": 385,
+  "half_frames_included": true,
+  "exact_observed_pair_count": 208,
+  "source_runtime_pair_sets_identical": true,
+  "pairs": {
+    "VOID | layered common bedplate <> VOID | machinery deck": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 145,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 145,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Founded bedplate/deck/support seats; fixed load-path joints."
+    },
+    "VOID | foundation shoe <> VOID | machinery deck": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 67,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 67,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Founded bedplate/deck/support seats; fixed load-path joints."
+    },
+    "VOID | foundation shoe.001 <> VOID | machinery deck": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 50,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 50,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Founded bedplate/deck/support seats; fixed load-path joints."
+    },
+    "VOID | foundation shoe.002 <> VOID | machinery deck": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 53,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 53,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Founded bedplate/deck/support seats; fixed load-path joints."
+    },
+    "VOID | foundation shoe.003 <> VOID | machinery deck": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 54,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 54,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Founded bedplate/deck/support seats; fixed load-path joints."
+    },
+    "VOID | crank bearing founded plinth <> VOID | machinery deck": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 35,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 35,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Founded bedplate/deck/support seats; fixed load-path joints."
+    },
+    "VOID | crank bearing founded plinth.001 <> VOID | machinery deck": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 33,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 33,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Founded bedplate/deck/support seats; fixed load-path joints."
+    },
+    "VOID | STEAM bolted socket collar <> VOID | STEAM full-bore fixed mouth": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 275,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 275,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.002": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.003": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.004": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.005": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.006": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM full-bore fixed mouth <> VOID | socket flange fastener.007": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 16,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 16,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.002": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.003": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 18,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 18,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.004": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.005": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 16,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 16,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.006": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 16,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 16,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM bolted socket collar <> VOID | socket flange fastener.007": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 14,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Socket wall, flange and retained bolts seat outside the preserved0.49-tile bore."
+    },
+    "VOID | STEAM tapered receiver <> VOID | steam feed from reducer": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 134,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 134,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Reducer-to-feed pressure-line termination."
+    },
+    "VOID | bearing seated neck <> VOID | crank bearing founded plinth": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 34,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 34,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Bearing neck, bored shell, pedestal and anchored foot fasteners."
+    },
+    "VOID | bearing foot bolt <> VOID | crank bearing founded plinth": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Bearing neck, bored shell, pedestal and anchored foot fasteners."
+    },
+    "VOID | bearing foot bolt.001 <> VOID | crank bearing founded plinth": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Bearing neck, bored shell, pedestal and anchored foot fasteners."
+    },
+    "VOID | bearing seated neck <> VOID | bored crank bearing": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 90,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 90,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Bearing neck, bored shell, pedestal and anchored foot fasteners."
+    },
+    "VOID | bearing seated neck.001 <> VOID | crank bearing founded plinth.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 34,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 34,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Bearing neck, bored shell, pedestal and anchored foot fasteners."
+    },
+    "VOID | bearing foot bolt.002 <> VOID | crank bearing founded plinth.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Bearing neck, bored shell, pedestal and anchored foot fasteners."
+    },
+    "VOID | bearing foot bolt.003 <> VOID | crank bearing founded plinth.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Bearing neck, bored shell, pedestal and anchored foot fasteners."
+    },
+    "VOID | bearing seated neck.001 <> VOID | bored crank bearing.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 90,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 90,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Bearing neck, bored shell, pedestal and anchored foot fasteners."
+    },
+    "VOID | pressure cylinder hollow lower head <> VOID | shaft gland lower guide": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 232,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 232,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder hollow lower head <> VOID | pressure cylinder wall": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 320,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 320,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder hollow lower head <> VOID | rear cylinder bearing saddle": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 95,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 95,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | cylinder exhaust branch <> VOID | pressure cylinder hollow lower head": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 61,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 61,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder seated cap flange <> VOID | pressure cylinder wall": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 239,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 239,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder seated band <> VOID | pressure cylinder wall": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 69,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 69,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder seated band.001 <> VOID | pressure cylinder wall": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 69,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 69,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | cylinder exhaust branch <> VOID | pressure cylinder wall": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 92,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 92,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | left cylinder identification cover <> VOID | pressure cylinder wall": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 52,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 52,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder sealed dished cap <> VOID | steam head branch": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 100,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 100,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | cylinder exhaust branch <> VOID | pressure cylinder seated band": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 84,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 84,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | founded cylinder rear column <> VOID | riser column standoff": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | founded cylinder rear column <> VOID | riser column standoff.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder hollow lower head.001 <> VOID | shaft gland lower guide.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 237,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 237,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder hollow lower head.001 <> VOID | pressure cylinder wall.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 319,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 319,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder hollow lower head.001 <> VOID | rear cylinder bearing saddle.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 95,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 95,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | cylinder exhaust branch.001 <> VOID | pressure cylinder hollow lower head.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 61,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 61,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder seated cap flange.001 <> VOID | pressure cylinder wall.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 247,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 247,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder seated band.002 <> VOID | pressure cylinder wall.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 71,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 71,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder seated band.003 <> VOID | pressure cylinder wall.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 71,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 71,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | cylinder exhaust branch.001 <> VOID | pressure cylinder wall.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 92,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 92,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder wall.001 <> VOID | right cylinder inspection cover": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 52,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 52,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | pressure cylinder sealed dished cap.001 <> VOID | steam head branch.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 99,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 99,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | cylinder exhaust branch.001 <> VOID | pressure cylinder seated band.002": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 84,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 84,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Pressure-shell/head/band/saddle/gland seats and actual inlet/exhaust terminations; the guide has0.005 radial stem clearance."
+    },
+    "VOID | alternator protected power conduit <> VOID | hollow alternator stator": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Terminated power and sensor feedthroughs in the alternator casing."
+    },
+    "VOID | alternator endplate shaft bore <> VOID | alternator sensor gland": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 45,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 45,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Terminated power and sensor feedthroughs in the alternator casing."
+    },
+    "VOID | alternator bearing rear bracket <> VOID | alternator fixed bored bearing": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 94,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 94,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator rear gantry upright <> VOID | gantry deck bolt": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 18,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 18,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator rear gantry upright <> VOID | gantry deck bolt.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 20,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 20,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator bearing rear bracket <> VOID | alternator load carrying rear beam": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 53,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 53,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator bearing rear bracket.001 <> VOID | alternator fixed bored bearing.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 94,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 94,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator rear gantry upright.001 <> VOID | gantry deck bolt.002": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 18,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 18,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator rear gantry upright.001 <> VOID | gantry deck bolt.003": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 20,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 20,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator bearing rear bracket.001 <> VOID | alternator load carrying rear beam": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator load carrying rear beam <> VOID | protective cage supported rear saddle": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 42,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 42,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator load carrying rear beam <> VOID | protective cage supported rear saddle.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 38,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 38,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator protective end hoop <> VOID | protective cage supported rear saddle": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 20,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 20,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator protective end hoop.001 <> VOID | protective cage supported rear saddle.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 20,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 20,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed bearing brackets, gantry fasteners/beam and protective cage saddles; clear of rotating shafts."
+    },
+    "VOID | alternator copper winding <> VOID | coil ceramic former": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.001 <> VOID | coil ceramic former": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.002 <> VOID | coil ceramic former": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.003 <> VOID | coil ceramic former": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.004 <> VOID | coil ceramic former": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.005 <> VOID | coil ceramic former": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.018 <> VOID | coil ceramic former.003": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.019 <> VOID | coil ceramic former.003": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.020 <> VOID | coil ceramic former.003": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.021 <> VOID | coil ceramic former.003": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.022 <> VOID | coil ceramic former.003": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.023 <> VOID | coil ceramic former.003": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.024 <> VOID | coil ceramic former.004": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.025 <> VOID | coil ceramic former.004": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.026 <> VOID | coil ceramic former.004": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.027 <> VOID | coil ceramic former.004": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.028 <> VOID | coil ceramic former.004": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.029 <> VOID | coil ceramic former.004": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.042 <> VOID | coil ceramic former.007": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.043 <> VOID | coil ceramic former.007": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.044 <> VOID | coil ceramic former.007": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.045 <> VOID | coil ceramic former.007": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.046 <> VOID | coil ceramic former.007": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.047 <> VOID | coil ceramic former.007": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.048 <> VOID | coil ceramic former.008": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.049 <> VOID | coil ceramic former.008": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.050 <> VOID | coil ceramic former.008": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.051 <> VOID | coil ceramic former.008": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.052 <> VOID | coil ceramic former.008": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.053 <> VOID | coil ceramic former.008": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.066 <> VOID | coil ceramic former.011": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 208,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.067 <> VOID | coil ceramic former.011": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.068 <> VOID | coil ceramic former.011": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.069 <> VOID | coil ceramic former.011": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 192,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.070 <> VOID | coil ceramic former.011": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 224,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator copper winding.071 <> VOID | coil ceramic former.011": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 212,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Winding seated on its own ceramic former, at designed tangent surface; adjacent turns separated0.0005tile, no turn-to-turn contacts."
+    },
+    "VOID | alternator cage longitudinal rail <> VOID | alternator protective end hoop": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 48,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 48,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed longitudinal protective rails seat into their end hoops."
+    },
+    "VOID | alternator cage longitudinal rail.001 <> VOID | alternator protective end hoop": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 52,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 52,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed longitudinal protective rails seat into their end hoops."
+    },
+    "VOID | alternator cage longitudinal rail.002 <> VOID | alternator protective end hoop": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 54,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 54,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed longitudinal protective rails seat into their end hoops."
+    },
+    "VOID | alternator cage longitudinal rail.003 <> VOID | alternator protective end hoop": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 46,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 46,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed longitudinal protective rails seat into their end hoops."
+    },
+    "VOID | alternator cage longitudinal rail <> VOID | alternator protective end hoop.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 48,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 48,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed longitudinal protective rails seat into their end hoops."
+    },
+    "VOID | alternator cage longitudinal rail.001 <> VOID | alternator protective end hoop.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 54,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 54,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed longitudinal protective rails seat into their end hoops."
+    },
+    "VOID | alternator cage longitudinal rail.002 <> VOID | alternator protective end hoop.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 52,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 52,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed longitudinal protective rails seat into their end hoops."
+    },
+    "VOID | alternator cage longitudinal rail.003 <> VOID | alternator protective end hoop.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed longitudinal protective rails seat into their end hoops."
+    },
+    "VOID | steam feed from reducer <> VOID | steam head branch": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 289,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 289,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pressure/exhaust branch unions, capped header and open exhaust lip; no unsupported or fictional gameplay socket."
+    },
+    "VOID | steam feed from reducer <> VOID | steam head branch.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 158,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 158,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pressure/exhaust branch unions, capped header and open exhaust lip; no unsupported or fictional gameplay socket."
+    },
+    "VOID | steam branch header union <> VOID | steam head branch": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 240,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 240,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pressure/exhaust branch unions, capped header and open exhaust lip; no unsupported or fictional gameplay socket."
+    },
+    "VOID | common exhaust collector <> VOID | cylinder exhaust branch": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 147,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 147,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pressure/exhaust branch unions, capped header and open exhaust lip; no unsupported or fictional gameplay socket."
+    },
+    "VOID | steam branch header union.001 <> VOID | steam head branch.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 240,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 240,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pressure/exhaust branch unions, capped header and open exhaust lip; no unsupported or fictional gameplay socket."
+    },
+    "VOID | steam head branch.001 <> VOID | steam header closed end cap": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 49,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 49,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pressure/exhaust branch unions, capped header and open exhaust lip; no unsupported or fictional gameplay socket."
+    },
+    "VOID | steam branch header union.001 <> VOID | steam header closed end cap": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 239,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 237,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pressure/exhaust branch unions, capped header and open exhaust lip; no unsupported or fictional gameplay socket."
+    },
+    "VOID | common exhaust collector <> VOID | cylinder exhaust branch.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 258,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 258,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pressure/exhaust branch unions, capped header and open exhaust lip; no unsupported or fictional gameplay socket."
+    },
+    "VOID | cylinder exhaust branch.001 <> VOID | open steam exhaust": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 59,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 59,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pressure/exhaust branch unions, capped header and open exhaust lip; no unsupported or fictional gameplay socket."
+    },
+    "VOID | exhaust open lip <> VOID | open steam exhaust": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 222,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 222,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pressure/exhaust branch unions, capped header and open exhaust lip; no unsupported or fictional gameplay socket."
+    },
+    "VOID | riser column standoff <> VOID | steam riser support clamp": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 45,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 45,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pipe clamps connect through stand-offs to founded columns; bore/pipe surfaces clear the brackets."
+    },
+    "VOID | riser column standoff.001 <> VOID | steam riser support clamp.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 45,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 45,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pipe clamps connect through stand-offs to founded columns; bore/pipe surfaces clear the brackets."
+    },
+    "VOID | exhaust founded rear support <> VOID | exhaust support clamp": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 30,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 30,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pipe clamps connect through stand-offs to founded columns; bore/pipe surfaces clear the brackets."
+    },
+    "VOID | exhaust column standoff <> VOID | exhaust founded rear support": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 44,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 44,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pipe clamps connect through stand-offs to founded columns; bore/pipe surfaces clear the brackets."
+    },
+    "VOID | exhaust founded rear support <> VOID | exhaust support clamp.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 32,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 32,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pipe clamps connect through stand-offs to founded columns; bore/pipe surfaces clear the brackets."
+    },
+    "VOID | exhaust column standoff.001 <> VOID | exhaust founded rear support": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 44,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 44,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pipe clamps connect through stand-offs to founded columns; bore/pipe surfaces clear the brackets."
+    },
+    "VOID | exhaust column standoff <> VOID | exhaust support clamp": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 57,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 57,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pipe clamps connect through stand-offs to founded columns; bore/pipe surfaces clear the brackets."
+    },
+    "VOID | exhaust column standoff.001 <> VOID | exhaust support clamp.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 58,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 58,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fixed pipe clamps connect through stand-offs to founded columns; bore/pipe surfaces clear the brackets."
+    },
+    "VOID | recovered common console green status display <> VOID | recovered common console recessed console face": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 30,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 30,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Recovered console recess/display, founded legs and terminated instrument conduit/gland."
+    },
+    "VOID | recovered common console armored cogitator console <> VOID | recovered common console recessed console face": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 30,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 30,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Recovered console recess/display, founded legs and terminated instrument conduit/gland."
+    },
+    "VOID | console founded support <> VOID | recovered common console armored cogitator console": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 47,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Recovered console recess/display, founded legs and terminated instrument conduit/gland."
+    },
+    "VOID | console founded support.001 <> VOID | recovered common console armored cogitator console": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 49,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 49,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Recovered console recess/display, founded legs and terminated instrument conduit/gland."
+    },
+    "VOID | console sensing conduit <> VOID | recovered common console armored cogitator console": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 48,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 48,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Recovered console recess/display, founded legs and terminated instrument conduit/gland."
+    },
+    "VOID | alternator sensor gland <> VOID | console sensing conduit": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 149,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 149,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Recovered console recess/display, founded legs and terminated instrument conduit/gland."
+    },
+    "VOID | alternator protected power conduit <> VOID | electrical armored output box": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 66,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 66,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Armored electrical output box, protected power conduit, founded trunk and lid bolts."
+    },
+    "VOID | electrical armored output box <> VOID | output founded cable trunk": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 53,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 53,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Armored electrical output box, protected power conduit, founded trunk and lid bolts."
+    },
+    "VOID | electrical armored output box <> VOID | output box cover bolt": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Armored electrical output box, protected power conduit, founded trunk and lid bolts."
+    },
+    "VOID | electrical armored output box <> VOID | output box cover bolt.001": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Armored electrical output box, protected power conduit, founded trunk and lid bolts."
+    },
+    "VOID | cylinder service cover fastener <> VOID | left cylinder identification cover": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fasteners seated on their own cylinder service panels."
+    },
+    "VOID | cylinder service cover fastener.001 <> VOID | left cylinder identification cover": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fasteners seated on their own cylinder service panels."
+    },
+    "VOID | cylinder service cover fastener.002 <> VOID | right cylinder inspection cover": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fasteners seated on their own cylinder service panels."
+    },
+    "VOID | cylinder service cover fastener.003 <> VOID | right cylinder inspection cover": {
+      "source_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "runtime_observation": {
+        "first_frame": 1,
+        "last_frame": 1,
+        "frames": 1,
+        "maximum_triangle_intersections": 12,
+        "moving": false
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Fasteners seated on their own cylinder service panels."
+    },
+    "VOID | continuous closed alternator drive belt <> VOID | drive pulley belt groove floor": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 96,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 148,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Belt tangent on its designed groove floor: centre radius0.114 minus belt radius0.009 equals pulley floor0.105. Not a foreign support crossing."
+    },
+    "VOID | continuous closed alternator drive belt <> VOID | drive pulley belt groove floor.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 127,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 154,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Belt tangent on its designed groove floor: centre radius0.114 minus belt radius0.009 equals pulley floor0.105. Not a foreign support crossing."
+    },
+    "VOID | common shaft <> VOID | flywheel bored hub": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 204,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 204,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | common shaft <> VOID | drive pulley hub": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 204,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 204,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | crank thrust collar <> VOID | outboard crank journal": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 234,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 266,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | journal collar set screw shank <> VOID | outboard crank journal": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 44,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 44,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | outboard crank journal <> VOID | outboard crank web": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 96,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 96,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | crank thrust collar.001 <> VOID | outboard crank journal.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 228,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 256,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | journal collar set screw shank.001 <> VOID | outboard crank journal.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 44,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 44,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | outboard crank journal.001 <> VOID | outboard crank web.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 96,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 96,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | crank thrust collar <> VOID | journal collar lock screw": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 30,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 30,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | crank thrust collar <> VOID | journal collar set screw shank": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | journal collar lock screw <> VOID | journal collar set screw shank": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 36,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 36,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | crank thrust collar.001 <> VOID | journal collar lock screw.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 30,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 30,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | crank thrust collar.001 <> VOID | journal collar set screw shank.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | journal collar lock screw.001 <> VOID | journal collar set screw shank.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 36,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 36,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: press-fitted shaft/hubs, web/journal seats, collars and visible lock-screw shanks."
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke.002": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke.003": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke.004": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | flywheel cast rim <> VOID | flywheel spoke.005": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke.002": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke.003": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke.004": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | flywheel bored hub <> VOID | flywheel spoke.005": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 46,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating flywheel rig: spokes overlap their rim and hub seats."
+    },
+    "VOID | balanced crank web <> VOID | eccentric crank pin": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 198,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 198,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: eccentric pins seated in both webs and retained at their ends."
+    },
+    "VOID | eccentric crank pin <> VOID | outboard crank web": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 198,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 198,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: eccentric pins seated in both webs and retained at their ends."
+    },
+    "VOID | crank pin outer retainer <> VOID | eccentric crank pin": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: eccentric pins seated in both webs and retained at their ends."
+    },
+    "VOID | balanced crank web.001 <> VOID | eccentric crank pin.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 198,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 198,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: eccentric pins seated in both webs and retained at their ends."
+    },
+    "VOID | eccentric crank pin.001 <> VOID | outboard crank web.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 198,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 198,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: eccentric pins seated in both webs and retained at their ends."
+    },
+    "VOID | crank pin outer retainer.001 <> VOID | eccentric crank pin.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating crank rig: eccentric pins seated in both webs and retained at their ends."
+    },
+    "VOID | rigid rod web <> VOID | rod bored pin eye": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 58,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 58,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Within each rigid rod/crosshead rig: web/eye, bridge/stem and retained wrist-pin joins. Separate fork and rod clearances proved by385-pose mechanics report."
+    },
+    "VOID | rigid rod web <> VOID | rod bored pin eye.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 58,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 58,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Within each rigid rod/crosshead rig: web/eye, bridge/stem and retained wrist-pin joins. Separate fork and rod clearances proved by385-pose mechanics report."
+    },
+    "VOID | crosshead upper bridge <> VOID | sliding polished piston stem": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 98,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 98,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Within each rigid rod/crosshead rig: web/eye, bridge/stem and retained wrist-pin joins. Separate fork and rod clearances proved by385-pose mechanics report."
+    },
+    "VOID | crosshead seated wrist pin <> VOID | wrist pin outer retainer": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Within each rigid rod/crosshead rig: web/eye, bridge/stem and retained wrist-pin joins. Separate fork and rod clearances proved by385-pose mechanics report."
+    },
+    "VOID | crosshead seated wrist pin <> VOID | wrist pin outer retainer.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Within each rigid rod/crosshead rig: web/eye, bridge/stem and retained wrist-pin joins. Separate fork and rod clearances proved by385-pose mechanics report."
+    },
+    "VOID | rigid rod web.001 <> VOID | rod bored pin eye.002": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 58,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 58,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Within each rigid rod/crosshead rig: web/eye, bridge/stem and retained wrist-pin joins. Separate fork and rod clearances proved by385-pose mechanics report."
+    },
+    "VOID | rigid rod web.001 <> VOID | rod bored pin eye.003": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 58,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 58,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Within each rigid rod/crosshead rig: web/eye, bridge/stem and retained wrist-pin joins. Separate fork and rod clearances proved by385-pose mechanics report."
+    },
+    "VOID | crosshead upper bridge.001 <> VOID | sliding polished piston stem.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 98,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 98,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Within each rigid rod/crosshead rig: web/eye, bridge/stem and retained wrist-pin joins. Separate fork and rod clearances proved by385-pose mechanics report."
+    },
+    "VOID | crosshead seated wrist pin.001 <> VOID | wrist pin outer retainer.002": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Within each rigid rod/crosshead rig: web/eye, bridge/stem and retained wrist-pin joins. Separate fork and rod clearances proved by385-pose mechanics report."
+    },
+    "VOID | crosshead seated wrist pin.001 <> VOID | wrist pin outer retainer.003": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 102,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Within each rigid rod/crosshead rig: web/eye, bridge/stem and retained wrist-pin joins. Separate fork and rod clearances proved by385-pose mechanics report."
+    },
+    "VOID | alternator armature shaft <> VOID | drive pulley hub.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 204,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 204,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley belt groove floor <> VOID | pulley spoke": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley belt groove floor <> VOID | pulley spoke.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley belt groove floor <> VOID | pulley spoke.002": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley belt groove floor <> VOID | pulley spoke.003": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley hub <> VOID | pulley spoke": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley hub <> VOID | pulley spoke.001": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley hub <> VOID | pulley spoke.002": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley hub <> VOID | pulley spoke.003": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley belt groove floor.001 <> VOID | pulley spoke.004": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley belt groove floor.001 <> VOID | pulley spoke.005": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley belt groove floor.001 <> VOID | pulley spoke.006": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley belt groove floor.001 <> VOID | pulley spoke.007": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 38,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley hub.001 <> VOID | pulley spoke.004": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley hub.001 <> VOID | pulley spoke.005": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley hub.001 <> VOID | pulley spoke.006": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    },
+    "VOID | drive pulley hub.001 <> VOID | pulley spoke.007": {
+      "source_observation": {
+        "first_frame": 0.0,
+        "last_frame": 193.0,
+        "frames": 387,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "runtime_observation": {
+        "first_frame": 1.0,
+        "last_frame": 193.0,
+        "frames": 385,
+        "maximum_triangle_intersections": 42,
+        "moving": true
+      },
+      "classification": "intentional-fitted-contact",
+      "reason": "Same rotating pulley/alternator rigs: hub/shaft and spoke/rim seats; unrelated fixed bearings/struts do not intersect."
+    }
+  },
+  "distinct_motion_owner_contacts": [
+    "VOID | continuous closed alternator drive belt <> VOID | drive pulley belt groove floor",
+    "VOID | continuous closed alternator drive belt <> VOID | drive pulley belt groove floor.001"
+  ],
+  "unresolved_pairs": [],
+  "no_name_based_exclusions_in_raw_inventory": true,
+  "operator_review": "Inspected every raw pair against actual construction and full front/rear/clay renders; repaired support, shaft/rod, header, footing, turn and service-route clashes before this report.",
+  "owner_visual_approved": false
+}

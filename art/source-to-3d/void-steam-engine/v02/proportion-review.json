@@ -1,0 +1,19 @@
+{
+  "runtime_sha256": "62b06a131b927fc91705531ba6699952e5bd0c50f610529806eb7f72113095a9",
+  "view": "True world proportions, orthographic oblique inspection",
+  "sprite_y_compensation": false,
+  "geometry_altered": false,
+  "model_units_per_tile": 1,
+  "native_footprint": [
+    2,
+    2
+  ],
+  "camera_location": [
+    3.0,
+    -5.0,
+    3.4000000953674316
+  ],
+  "camera_ortho_scale": 3.200000047683716,
+  "previous_preview_issue": "The earlier oblique view retained sprite-only Y sqrt2 projection, stretching depth42percent and making width feel compressed.",
+  "owner_visual_approved": false
+}
