@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 18,
+    "model_records": 19,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -747,6 +747,74 @@
         3
       ],
       "purpose": "Tanks Pondering Hovel fixed-north 3x3 chemical-burner research upgrade: speed 0.8, 100 kW, efficiency 0.5, fourteen food/document inputs, no modules, manufacturing output, electricity or fluid connections. Real technology unlock and Seablock building recipe (Thinking Hut one + brick ten, 35 seconds) verified, including actual coal-fuelled Workbench craft and ingredient consumption. All seven saved OBJ groups preserved/refined into bonded brick walls, real windows/horn panes, stone paving, bearing rafters/tapered cedar shingles, founded brick hearth/stack and open clay flue. Retains the accepted Thinking Hut's fitted balance, supported oil lantern and braced study porch without changing that source. Animated folio on bored hinge with fixed pin/pedestals; upright attached balance pans. Saved/reopened source, independently reimported GLB with six pose comparisons, full UVs, 51 packed source maps and 45 exported embedded images; 193-key kinematic checks and matching 385-pose source/export clearance inventories with 23 intentional contact pairs. Seventeen genuine source frames, six atlases, one actual facing: four requested directions normalize north and rotate returns false. Twenty-four native labs exercise nineteen real technologies covering every nineteen supported input combinations and all fourteen accepted items; not all 75 eligible technologies completed. Actual fuel/input starvation-resupply, idle/completed-research/new-research and script stop/restart verified. Thirty-three client PNGs including day/night lamp/smoke and sixteen-frame 4fps native GIF/MP4. Actual operated-save reload preserves lab inventories/fuel/research/unlocks/fixed directions and crafted building output. Gameplay unchanged; earlier folio/roof studies held. Delegated operational review, no individual owner approval or full-user-pack installation."
+    },
+    {
+      "id": "tanks-stone-water-wheel-v3",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "4e8811e45fb3de8e866a1ef7a7a1c63bfb257252",
+        "path": "models/island-survival/stone-water-wheel/candidates/v3-production04/stone-water-wheel-v3.blend",
+        "sha256": "e9aa7f71dad7624b0e6650a77df182f102a1640515969a986be168c07bd189f4"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "4e8811e45fb3de8e866a1ef7a7a1c63bfb257252",
+        "path": "models/island-survival/stone-water-wheel/candidates/v3-production04/stone-water-wheel-v3.glb",
+        "sha256": "5f1f104afb9e76859dc1de287efa7ad3fde784a42288f92c47793d56109b5b90"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "4e8811e45fb3de8e866a1ef7a7a1c63bfb257252",
+          "path": "models/island-survival/stone-water-wheel/v3/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "4e8811e45fb3de8e866a1ef7a7a1c63bfb257252",
+          "path": "models/island-survival/stone-water-wheel/v3/contract.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "4e8811e45fb3de8e866a1ef7a7a1c63bfb257252",
+          "path": "models/island-survival/stone-water-wheel/candidates/v3-production04/clearance-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "4e8811e45fb3de8e866a1ef7a7a1c63bfb257252",
+          "path": "docs/art/stone-water-wheel-v3/installed-source-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "4e8811e45fb3de8e866a1ef7a7a1c63bfb257252",
+          "path": "docs/art/stone-water-wheel-v3/pipe-registration.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "4e8811e45fb3de8e866a1ef7a7a1c63bfb257252",
+          "path": "docs/art/stone-water-wheel-v3/operated-reload-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "4e8811e45fb3de8e866a1ef7a7a1c63bfb257252",
+          "path": "docs/art/stone-water-wheel-v3/native-animation-observation.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "4e8811e45fb3de8e866a1ef7a7a1c63bfb257252",
+          "path": "docs/art/stone-water-wheel-v3/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "4e8811e45fb3de8e866a1ef7a7a1c63bfb257252",
+          "path": "docs/art/stone-water-wheel-v3/animation-evidence.json"
+        }
+      ],
+      "footprint": [
+        1,
+        1
+      ],
+      "purpose": "Actual Tanks Stone Water Wheel offshore shoreline intake, 0.5 water/tick (30/s), void energy nominal 1W, no player fuel/electricity or processing recipes. Real gated Seablock recipe: five wood + ten brick/35s -> wheel one, 5% industrial waste one; actual technology unlock and Workbench craft tested. Four native directions. Preserves saved V2 curved fitted timber rim/spokes, axle, hollow bearing sleeves, bedded masonry/feet and exact full-size fixed collar/throat (0.49 bore, 0.68 collar OD, 0.36 height). Eight independently pivoted buckets remain upright and attached throughout lift. Fixed overhead cam lifts guided side-drain gates at the top, water jet falls into a supported joined race and bored sealed receiver; outboard river-current paddles. Raw sweeps drove rim/rod, paddle/pier/receiver and race/wheel repairs before delivery. Saved/reopened source and independently reimported GLB: 443 meshes, 130812 triangles, six geometry pose comparisons, eighteen source/export PBR images; 385 mechanism/clearance samples per artifact, exact matching raw pair inventories, 470 individually enumerated intentional rigid-joint/cam/fluid contacts. Not continuous physics simulation. Four facings x one idle + 32 working timestamps = 132 genuine combined captures and 396 complementary full/upper/submerged passes; all source working images distinct. Seventy-two verified atlases at three resolutions. Native upper and submerged frames animate together at eight fps; lower layer uses tint/alpha over water because underwater_pictures is static, approximating depth rather than per-tile water clipping. Actual native 16 machines/16 ordinary player-grid pipes, all four legal shoreline placements, exact extraction rate, full 300-unit networks/drain recovery and disabled stop/restart. Quarter-tile prototype ports unchanged; ordinary pipes connect despite fractional reported target. Four real placed-pipe closeups inspected, maximum nominal visible mouth/pipe plane difference 0.01 tile. Landfill preserves hidden water and extraction continues at native 30/s, then visible water restored; no invented dry shutdown. Operated-save reload preserves total network water, source tiles, disabled state, directions, connections and crafted building output. Forty-eight native client PNGs plus genuine 32-frame 8fps GIF/MP4. Opaque upper-geometry samples show working motion and stationary disabled/full output. Binary index hashes exact; Lua content identical after Git newline normalization. Gameplay unchanged. Earlier studies held; delegated close-enough review, no individual owner approval or full-user-pack installation."
     }
   ],
   "programs": [
