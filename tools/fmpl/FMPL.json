@@ -30,7 +30,7 @@
     "pbr_maps": 69,
     "bunker_component_candidates": 21,
     "verified_shared_components": 0,
-    "model_records": 15,
+    "model_records": 16,
     "program_records": 22,
     "pipeline_records": 6,
     "external_blender_libraries": 1,
@@ -568,6 +568,69 @@
         3
       ],
       "purpose": "Tanks chemical-burner Shaler; actual 17 steam/water processing and waste canister recipes, four facings, fixed north inlet/south acid outlet. Preserves tracked starter geometry and useful V1 engine/cam press. Owner-required refinement adds continuous chimney footing/lower brick courses/corbels, keyed drive shaft, 18:18 miter gears, 18:54 exposed reduction, second rigid connecting arm/process-pump piston and supported reinforced hose/pipe circuits. No gameplay, balance or exterior-port change. Packed editable source saved/reopened; actual GLB reimported with six pose comparisons and 193-frame attachment/cam/gear-ratio/fixed-socket/loop checks. Thirty-six embedded PBR maps and 68 genuine source captures. Eighty-eight machines verify all 17 recipes in four directions, 88 normal grid pipe joints, chemical fuel, missing fuel/steam, idle, item/fluid blocking, stop/restart and unblocking. Largest steam batch supplied by additional ordinary pipes. Thirty-six actual client PNGs include a 16-frame native working loop, also encoded GIF/MP4. Settled operated-save reload preserves inventories, machine/pipe fluid amounts/types/temperatures and connections. Smoke measured from the actual flue for each facing. Rough V1 remains held; delegated operational review, not individual owner approval."
+    },
+    {
+      "id": "tanks-calcifier-v2",
+      "status": "game-sprites-installed-with-specific-native-checks",
+      "source": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "e61d48ca5f1bec5ba4cc7c168fe1cffe0cae7f4b",
+        "path": "models/island-survival/calcifier/candidates/v2-sockets08/calcifier-v2.blend",
+        "sha256": "4e17a54ea3f6cd17048535a62919cc79baab86944d7f19afec30b1b61bccbde8"
+      },
+      "runtime": {
+        "repository": "mrcalzon02/Tanks-for-bob-Fork",
+        "ref": "e61d48ca5f1bec5ba4cc7c168fe1cffe0cae7f4b",
+        "path": "models/island-survival/calcifier/candidates/v2-sockets08/calcifier-v2.glb",
+        "sha256": "94efde73d3b39ea83a5670bb1e726e6aa535b5e13d159b17a8ebae37e2e54d52"
+      },
+      "evidence": [
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "e61d48ca5f1bec5ba4cc7c168fe1cffe0cae7f4b",
+          "path": "models/island-survival/calcifier/v2/FMPL_MODEL.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "e61d48ca5f1bec5ba4cc7c168fe1cffe0cae7f4b",
+          "path": "models/island-survival/calcifier/v2/contract.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "e61d48ca5f1bec5ba4cc7c168fe1cffe0cae7f4b",
+          "path": "models/island-survival/calcifier/candidates/v2-sockets08/clearance-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "e61d48ca5f1bec5ba4cc7c168fe1cffe0cae7f4b",
+          "path": "models/island-survival/calcifier/candidates/v2-sockets08/socket-projection-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "e61d48ca5f1bec5ba4cc7c168fe1cffe0cae7f4b",
+          "path": "docs/art/calcifier-v2/capture-verification.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "e61d48ca5f1bec5ba4cc7c168fe1cffe0cae7f4b",
+          "path": "docs/art/calcifier-v2/operated-reload-receipt.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "e61d48ca5f1bec5ba4cc7c168fe1cffe0cae7f4b",
+          "path": "docs/art/calcifier-v2/visual-review.json"
+        },
+        {
+          "repository": "mrcalzon02/Tanks-for-bob-Fork",
+          "ref": "e61d48ca5f1bec5ba4cc7c168fe1cffe0cae7f4b",
+          "path": "docs/art/calcifier-v2/animation-evidence.json"
+        }
+      ],
+      "footprint": [
+        3,
+        3
+      ],
+      "purpose": "Tanks chemical-burner Calcifier; eight actual stone/mineral/scum/sediment/crystal recipes, water/steam input, item-only products, four directions and unused capped south output. Preserves six tracked starter groups. Heated wet mineral bed, geared paddles, engine piston and belt, driven settling/sieve chest and wet bioceramic two-cavity forming die. Owner-required clearance repair replaces the straight shaker rail with a rigid offset arm from the upper pulley and relocates circuits away from swept mechanisms. All moving meshes checked against every component at 193 keys plus 192 half-frames in both saved source and actual GLB; intentional joint/belt/tooth/material contacts enumerated, with separate endpoint, stroke, guide and seating checks. Stylized gear engagement is not manufacturing-grade contact simulation. Owner-required full-size pipe mouths have 0.56-tile bores, 0.84-tile flanges and measured sprite registration at unchanged native grid endpoints; four actual placed-pipe close captures. Saved/reopened packed source, independently reimported GLB, six pose comparisons, 39 embedded PBR images, 68 genuine source captures. Native 2.1.24: 48 machines, all eight recipes in four directions, 44 ordinary grid pipe connections, fuel/fluid starvation, item blocking, stop/restart and unblocking. Settled operated-save reload preserves inventories, pipe/machine fluid amounts/types/temperatures and connections. Thirty-eight genuine client PNGs and a sixteen-frame native GIF/MP4. No gameplay changes. Earlier studies held; delegated operational review, no individual owner approval."
     }
   ],
   "programs": [
