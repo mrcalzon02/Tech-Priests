@@ -1,0 +1,131 @@
+{
+  "engine": "Factorio 2.1.24",
+  "main_mod_only": true,
+  "machine_definitions": {
+    "purifier": {
+      "label": "Water purifier",
+      "distinct_frames_per_direction": {
+        "idle": {
+          "north": 1,
+          "east": 1,
+          "south": 1,
+          "west": 1
+        },
+        "working": {
+          "north": 8,
+          "east": 8,
+          "south": 8,
+          "west": 8
+        }
+      }
+    },
+    "electrolyzer": {
+      "label": "Electrolyzer",
+      "distinct_frames_per_direction": {
+        "idle": {
+          "north": 1,
+          "east": 1,
+          "south": 1,
+          "west": 1
+        },
+        "working": {
+          "north": 8,
+          "east": 8,
+          "south": 8,
+          "west": 8
+        }
+      }
+    },
+    "compressor": {
+      "label": "Hydrogen compressor",
+      "distinct_frames_per_direction": {
+        "idle": {
+          "north": 1,
+          "east": 1,
+          "south": 1,
+          "west": 1
+        },
+        "working": {
+          "north": 8,
+          "east": 8,
+          "south": 8,
+          "west": 8
+        }
+      }
+    },
+    "crucible": {
+      "label": "Metallization crucible",
+      "distinct_frames_per_direction": {
+        "idle": {
+          "north": 1,
+          "east": 1,
+          "south": 1,
+          "west": 1
+        },
+        "working": {
+          "north": 8,
+          "east": 8,
+          "south": 8,
+          "west": 8
+        }
+      }
+    },
+    "forge": {
+      "label": "Pelletization forge",
+      "distinct_frames_per_direction": {
+        "idle": {
+          "north": 1,
+          "east": 1,
+          "south": 1,
+          "west": 1
+        },
+        "working": {
+          "north": 8,
+          "east": 8,
+          "south": 8,
+          "west": 8
+        }
+      }
+    },
+    "fabricator": {
+      "label": "Pressure-vessel fabricator",
+      "distinct_frames_per_direction": {
+        "idle": {
+          "north": 1,
+          "east": 1,
+          "south": 1,
+          "west": 1
+        },
+        "working": {
+          "north": 12,
+          "east": 12,
+          "south": 12,
+          "west": 12
+        }
+      }
+    },
+    "assembler": {
+      "label": "Canister assembler",
+      "distinct_frames_per_direction": {
+        "idle": {
+          "north": 1,
+          "east": 1,
+          "south": 1,
+          "west": 1
+        },
+        "working": {
+          "north": 16,
+          "east": 16,
+          "south": 16,
+          "west": 16
+        }
+      }
+    }
+  },
+  "resolved_assets": 104,
+  "audio_ogg": 22,
+  "image_png": 82,
+  "matches_committed_review_bytes": true,
+  "visual_and_sound_definitions_equal_after_namespace_move": true,
+  "recycling_exposes_private_tokens": false
+}

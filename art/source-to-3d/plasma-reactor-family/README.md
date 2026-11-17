@@ -14,7 +14,7 @@ All three have an upright containment drum, a cut-through annular flange, a heli
 
 ## In Tech Priests
 
-Minoris, Majoris and Maximus are craftable generators in the main mod. Cogitator Station Deployment unlocks Minoris (1 MW), Intermediate Cogitator Stations unlocks Majoris (2 MW), and Senior Cogitator Stations unlocks Maximus (4 MW). Each larger recipe uses the preceding reactor. Supply chemical fuel and connect an electrical load to run one. All three support four orientations and the reactor machine-spirit traits.
+Minoris, Majoris and Maximus are craftable generators in the main mod. Cogitator Station Deployment unlocks Minoris (1 MW), Intermediate Cogitator Stations unlocks Majoris (2 MW), and Senior Cogitator Stations unlocks Maximus (4 MW). Each larger recipe uses the preceding reactor. Feed the canister assembler’s sealed metallicized pellets to a reactor and connect an electrical load. At full output one 120 MJ pellet lasts 120, 60 or 30 seconds respectively. Burning consumes both pellet and pressure shell. Existing chemical fuels remain compatible. All three support four orientations and the reactor machine-spirit traits.
 
 ![Production sprites under electrical load](animation/Previews/Tech_Priests_Reactor_Rotations.gif)
 

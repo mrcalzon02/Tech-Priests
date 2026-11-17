@@ -3,6 +3,15 @@ local art_root = "__tech-priests__/graphics/entity/plasma-reactor-family/"
 local quality = settings.startup["tech-priests-reactor-sprite-resolution"].value
 local regions = require("prototypes.generated_graphics.plasma_reactor_regions")[quality]
 local directions = {"north", "east", "south", "west"}
+local plasma_fuel_category = "tp-metallicized-hydrogen"
+
+-- Apply the fuel contract after data.lua, including when upgrading from the standalone prototypes.
+data:extend({{type = "fuel-category", name = plasma_fuel_category}})
+local sealed_pellet = data.raw["item-with-tags"]["tp-mh7-contained-metallicized-pellet"]
+sealed_pellet.fuel_categories = {plasma_fuel_category}
+sealed_pellet.fuel_value = "120MJ"
+sealed_pellet.burnt_result = nil
+sealed_pellet.localised_description = {"item-description.tp-mh7-contained-metallicized-pellet"}
 
 local function ingredient(name, amount)
   return {type = "item", name = name, amount = amount}
@@ -84,6 +93,7 @@ for index, class in ipairs(classes) do
   generator.collision_box = {{-half + 0.15, -half + 0.15}, {half - 0.15, half - 0.15}}
   generator.selection_box = {{-half, -half}, {half, half}}
   generator.max_power_output = class.megawatts .. "MW"
+  generator.burner.fuel_categories = {"chemical", plasma_fuel_category}
   generator.burner.effectivity = 1
   generator.burner.smoke = nil
   generator.burner.emissions_per_minute = nil

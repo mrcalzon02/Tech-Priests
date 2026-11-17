@@ -179,8 +179,9 @@ local function inv_remove(inv, item, count)
   end)
   return ok and (tonumber(removed) or 0) or 0
 end
-local function insertable_count(inv, item, maximum)
+local function insertable_count(inv, item, maximum, single_stack)
   if not (inv and inv.valid and item and (tonumber(maximum) or 0) > 0) then return 0 end
+  if single_stack then return inv.can_insert(single_stack) and 1 or 0 end
   local low, high = 0, math.max(0, math.floor(tonumber(maximum) or 0))
   while low < high do
     local middle = math.floor((low + high + 1) / 2)
@@ -585,11 +586,11 @@ local function destinations(pair, item, requested_role, excluded)
   end)
   return out
 end
-local function deposit_plan(pair, item, count, role, excluded)
+local function deposit_plan(pair, item, count, role, excluded, single_stack)
   local plan, remaining = {}, count
   for _, destination in ipairs(destinations(pair, item, role, excluded)) do
     if remaining <= 0 then break end
-    local capacity = insertable_count(destination.inv, item, remaining)
+    local capacity = insertable_count(destination.inv, item, remaining, single_stack)
     if capacity > 0 then
       plan[#plan + 1] = {
         entity = destination.entity,
@@ -610,7 +611,7 @@ local function rollback(item, completed)
   end
   return restored
 end
-local function execute_plan(pair, item, count, role, plan, reason)
+local function execute_plan(pair, item, count, role, plan, reason, single_stack)
   local completed, inserted_total = {}, 0
   for _, entry in ipairs(plan) do
     if entry.claim_role and entry.entity ~= pair.station then
@@ -621,7 +622,7 @@ local function execute_plan(pair, item, count, role, plan, reason)
         return false, "role-claim-failed:" .. safe(why), 0
       end
     end
-    local inserted = inv_insert(entry.inv, item, entry.count)
+    local inserted = single_stack and entry.inv.insert(single_stack) or inv_insert(entry.inv, item, entry.count)
     if inserted ~= entry.count then
       if inserted > 0 then
         completed[#completed + 1] = { inv = entry.inv, inserted = inserted }
@@ -649,6 +650,10 @@ function M.deposit_exact(pair, item, count, reason, options)
   if not (valid_pair(pair) and item_exists(item)) then return false, "invalid", 0 end
   count = math.max(1, math.floor(tonumber(count) or 1))
   options = options or {}
+  -- A tagged single item can be committed atomically to exactly one destination.
+  if options.stack and (count ~= 1 or options.stack.count ~= 1 or options.stack.name ~= item) then
+    return false, "invalid-single-stack", 0
+  end
   local role = options.role or item_role(item, reason)
   local plan, remaining
   if options.station_only == true then
@@ -658,7 +663,7 @@ function M.deposit_exact(pair, item, count, reason, options)
     plan, remaining = {}, count
     for _, source in ipairs(M.generic_station_inventories(pair)) do
       if remaining <= 0 then break end
-      local capacity = insertable_count(source.inv, item, remaining)
+      local capacity = insertable_count(source.inv, item, remaining, options.stack)
       if capacity > 0 then
         plan[#plan + 1] = {
           entity = pair.station, inv = source.inv, count = capacity,
@@ -667,20 +672,20 @@ function M.deposit_exact(pair, item, count, reason, options)
       end
     end
   else
-    plan, remaining = deposit_plan(pair, item, count, role, options.exclude_entity)
+    plan, remaining = deposit_plan(pair, item, count, role, options.exclude_entity, options.stack)
   end
   if remaining > 0 and options.station_only ~= true
       and options.allow_create ~= false then
     local stash = safe_create_stash(pair, role)
     if stash then
-      plan, remaining = deposit_plan(pair, item, count, role, options.exclude_entity)
+      plan, remaining = deposit_plan(pair, item, count, role, options.exclude_entity, options.stack)
     end
   end
   if remaining > 0 then
     stat("exact_deposit_blocked")
     return false, "no-role-capacity", 0
   end
-  return execute_plan(pair, item, count, role, plan, reason)
+  return execute_plan(pair, item, count, role, plan, reason, options.stack)
 end
 
 local function pair_for_entity(entity)

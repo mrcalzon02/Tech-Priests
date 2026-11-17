@@ -1,5 +1,7 @@
 # Seven-machine production prototype with player controls
 
+**Archived prototype.** Tech Priests 0.1.682 includes this line in the main mod. Install Tech Priests alone for normal play. When upgrading, remove both prototype add-ons together. The following installation and test notes describe the original standalone checkpoint.
+
 Copy the two directories inside `prototype-mods` into the Factorio mods directory to use this isolated production prototype alongside Tech Priests. Research **Metallicized hydrogen production** to unlock the seven machines. This delivery is not installed automatically into the real mod. `fixtures` contains destructive fresh-world tests and is separate from production; do not enable it in a valued save.
 
 The normal prototype uses real electricity, water, steel, pipes and ordinary anywhere-on-building inserter access. It purifies, electrolyzes, compresses and metallizes hydrogen, forms the unstable pellets, hydroforms pressure shells from welded/clamped plates, and seals formed pellets into those shells. Uncontained raw and formed pellets lose integrity and quality until inert. Containment preserves the exact remaining lifetime and original shell condition.

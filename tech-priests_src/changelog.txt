@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.682
+Date: 2026-11-16
+  Features:
+    - Integrated all seven metallicized hydrogen production machines, their research, logistics, and player controls into Tech Priests.
+    - Sealed metallicized pellets now power the Minoris, Majoris, and Maximus plasma reactors. Each pellet supplies 120 MJ.
+    - Unsealed pellets lose integrity in the base game and use native spoilage in Space Age.
+
+---------------------------------------------------------------------------------------------------
 Version: 0.1.678
 Date: 2026-11-07
   Graphics:

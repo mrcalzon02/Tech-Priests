@@ -1238,3 +1238,5 @@ assert(require("scripts.core.enemy_research_announcements").install())
 -- Native bunker weapons share the canonical event registry with priest services.
 assert(require("scripts.bunker_cannon_integration").install_main(
   require("scripts.core.runtime_event_registry")))
+
+require("hydrogen.runtime")

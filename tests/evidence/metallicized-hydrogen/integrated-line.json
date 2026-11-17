@@ -1,0 +1,120 @@
+{
+  "factorio": "2.1.24",
+  "tech_priests": "0.1.682",
+  "factory_fixture": "Adapted from the committed ordinary-integration/v01-player-controls connected-factory fixture to load only Tech Priests and to use its cross-edition pellet clock.",
+  "fuel_delivery": "The factory had water, steel plate and electricity. A normal inserter moved its real sealed output from the assembler chest onto a transport belt. Each reactor was supplied by its own burner inserter. The three inserters carried coal in their private arm fuel inventories. No fuel was scripted into the reactors; each observed burning stack was the actual sealed pellet picked from that belt. Each reactor and its 8 MW test load occupied an isolated electrical grid.",
+  "power_meter": "Joules recorded when all three reactors had worked for at least 60 ticks. The reactors received their pellets at different belt distances; this common sample is not their full fuel value.",
+  "checks": [
+    "all seven construction recipes unlock on research",
+    "all seven machines produce",
+    "all four purifier rotations pass fluid into their connected pipes",
+    "all seven pause on power loss and resume",
+    "blocked factory output recovers",
+    "critical pellet expires and inert material is ejected without consuming a shell",
+    "unsealing returns original remaining lifetime, integrity, quality and shell",
+    "three physical belt-to-reactor pellet handoffs",
+    "three reactor-only electric networks serve metered test loads"
+  ],
+  "profiles": {
+    "base": {
+      "official_expansions": [],
+      "separate_hydrogen_mods": [],
+      "finish_counts_at_tick_9960": {
+        "purifier": 38,
+        "electrolyzer": 37,
+        "compressor": 18,
+        "crucible": 9,
+        "forge": 8,
+        "fabricator": 10,
+        "assembler": 6
+      },
+      "sealed_output_at_tick_10000": 6,
+      "reactors": {
+        "minoris": {
+          "inserter_pickup_tick": 11017,
+          "first_burn_tick": 11050,
+          "power_meter_sample_tick": 14147,
+          "reactor_output_joules": 51633331.316,
+          "load_received_joules": 51633331.316
+        },
+        "majoris": {
+          "inserter_pickup_tick": 12495,
+          "first_burn_tick": 12528,
+          "power_meter_sample_tick": 14147,
+          "reactor_output_joules": 53999997.891,
+          "load_received_joules": 53999997.891
+        },
+        "maximus": {
+          "inserter_pickup_tick": 14055,
+          "first_burn_tick": 14088,
+          "power_meter_sample_tick": 14147,
+          "reactor_output_joules": 3999999.844,
+          "load_received_joules": 3999999.844
+        }
+      },
+      "reloaded_tick_3500_server_save_matched_through_tick_18000": true,
+      "player_control_checks_passed": 15
+    },
+    "space": {
+      "official_expansions": [
+        "space-age",
+        "quality",
+        "elevated-rails",
+        "recycler"
+      ],
+      "separate_hydrogen_mods": [],
+      "finish_counts_at_tick_9960": {
+        "purifier": 38,
+        "electrolyzer": 37,
+        "compressor": 18,
+        "crucible": 9,
+        "forge": 8,
+        "fabricator": 10,
+        "assembler": 6
+      },
+      "sealed_output_at_tick_10000": 6,
+      "reactors": {
+        "minoris": {
+          "inserter_pickup_tick": 11017,
+          "first_burn_tick": 11050,
+          "power_meter_sample_tick": 14147,
+          "reactor_output_joules": 51633331.316,
+          "load_received_joules": 51633331.316
+        },
+        "majoris": {
+          "inserter_pickup_tick": 12495,
+          "first_burn_tick": 12528,
+          "power_meter_sample_tick": 14147,
+          "reactor_output_joules": 53999997.891,
+          "load_received_joules": 53999997.891
+        },
+        "maximus": {
+          "inserter_pickup_tick": 14055,
+          "first_burn_tick": 14088,
+          "power_meter_sample_tick": 14147,
+          "reactor_output_joules": 3999999.844,
+          "load_received_joules": 3999999.844
+        }
+      },
+      "reloaded_tick_3500_server_save_matched_through_tick_18000": true,
+      "player_control_checks_passed": 15
+    }
+  },
+  "player_control_checks": [
+    "real_native_gui_open_intercepted",
+    "manual_round_trip_preserves_exact_stack",
+    "wrong_material_rejected",
+    "window_ownership_checked",
+    "active_forge_material_locked",
+    "reach_checked",
+    "out_of_reach_window_closes",
+    "manual_formed_and_shell_loading",
+    "active_assembler_pair_locked",
+    "reopening_preserves_active_stock",
+    "full_inventory_is_lossless",
+    "repeated_output_collection_is_lossless",
+    "sealed_transfer_preserves_tags_health_quality",
+    "waiting_with_open_gui_decays_to_inert",
+    "original_lifetime_and_shell_restored"
+  ]
+}

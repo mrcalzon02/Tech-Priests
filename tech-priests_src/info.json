@@ -1,11 +1,12 @@
 {
   "name": "tech-priests",
-  "version": "0.1.681",
+  "version": "0.1.682",
   "title": "Tech Priests",
   "author": "christopher vardeman",
   "factorio_version": "2.1",
+  "migrates_from": ["tp-mh7-pellet-decay", "tp-hydrogen-production"],
   "dependencies": [
-    "base >= 2.1.0",
+    "base >= 2.1.18",
     "? mechanicist-factorio",
     "? tanks_for_bob_fork",
     "? kj_40kbaneblade",
@@ -21,5 +22,5 @@
     "? quality >= 2.1.0",
     "? Transport_Drones_Meglinge_Fork"
   ],
-  "description": "Tech-Priest logistics drones and Cogitator Stations with physical item-family and real fluid-network construction, plus 0.1.672 read-only energy readiness: boiler fluid-path proof, burner-generator electrical checks, reactor heat-network and burnt-result checks, fusion prerequisites, and observation-only fluid generators."
+  "description": "Tech-Priest logistics drones and Cogitator Stations with physical item-family and real fluid-network construction, plus 0.1.672 read-only energy readiness: boiler fluid-path proof, burner-generator electrical checks, reactor heat-network and burnt-result checks, fusion prerequisites, and observation-only fluid generators. Includes the seven-machine metallicized hydrogen production line and its Minoris, Majoris and Maximus plasma reactors."
 }

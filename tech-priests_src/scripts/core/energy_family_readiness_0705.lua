@@ -134,11 +134,15 @@ local function burner_state(entity)
   if not burner then return nil end
   local current, remaining, heat
   pcall(function() current = burner.currently_burning end)
+  if current and type(current) ~= "string" then
+    -- In 2.1 the pair's name is a LuaItemPrototype. The logistics planner indexes by prototype name.
+    local item = current.name
+    current = item and (type(item) == "string" and item or item.name)
+  end
   pcall(function() remaining = tonumber(burner.remaining_burning_fuel) or 0 end)
   pcall(function() heat = tonumber(burner.heat) or 0 end)
   return {
-    currently_burning = type(current) == "table" and current.name
-      or type(current) == "string" and current or nil,
+    currently_burning = current,
     remaining_burning_fuel = remaining or 0, heat = heat or 0,
   }
 end

@@ -145,3 +145,7 @@ data:extend({
     order = "z[tech-priests]-[command-overview]"
   }
 })
+
+-- Upgraders may still have the prototype add-ons enabled with a live factory.
+if not mods["tp-mh7-pellet-decay"] then require("hydrogen.pellets") end
+if not mods["tp-hydrogen-production"] then require("hydrogen.production") end

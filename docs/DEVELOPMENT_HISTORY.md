@@ -5,6 +5,10 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-16 - Metallicized hydrogen production
+
+Tech Priests 0.1.682 incorporates the seven-machine line, the two player interfaces, and sealed fuel for all three plasma reactors. Factorio 2.1.24 verified ordinary belt-to-reactor delivery in the base game and Space Age, plus migration of active prototype jobs. The [integration record](art/metallic-hydrogen-chain/ORDINARY_CHAIN_INTEGRATION.md) links the engine measurements.
+
 ## History Policy
 
 This file is the single canonical narrative record of significant Tech Priests development. Focused maps, ledgers, manifests, runbooks, and `RECOVERY_REPAIR_SEQUENCE.md` are supporting evidence rather than competing histories.

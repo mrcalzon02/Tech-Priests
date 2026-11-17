@@ -21,7 +21,9 @@ local M = {
   max_burnt_transfer = 50,
 }
 
+local SEALED_PELLET = "tp-mh7-contained-metallicized-pellet"
 local FUEL_PREFERENCE = {
+  SEALED_PELLET,
   "uranium-fuel-cell", "nuclear-fuel", "rocket-fuel",
   "solid-fuel", "coal", "wood",
 }
@@ -91,9 +93,41 @@ local function contents(inv)
   for key,value in pairs(values)do local name,count;if type(key)=="string"then name=key;count=type(value)=="table"and tonumber(value.count or value.amount or value[2])or tonumber(value)elseif type(value)=="table"then name=value.name or value.item or value[1];count=tonumber(value.count or value.amount or value[2])end;if type(name)=="string"and(tonumber(count)or 0)>0 then out[#out+1]={name=name,count=tonumber(count)or 1}end end
   table.sort(out,function(a,b)return a.name<b.name end);return out
 end
-local function item_count(inv,item)if not(inv and inv.valid and item)then return 0 end;local ok,count=pcall(function()return inv.get_item_count(item)end);return ok and(tonumber(count)or 0)or 0 end
+local function item_count(inv, item)
+  if not (inv and inv.valid and item) then return 0 end
+  if item == SEALED_PELLET then
+    local count = 0
+    for _, n in pairs(inv.get_item_quality_counts(item)) do count = count + n end
+    return count
+  end
+  local ok, count = pcall(function() return inv.get_item_count(item) end)
+  return ok and (tonumber(count) or 0) or 0
+end
 local function inv_remove(inv,item,count)if not(inv and inv.valid and item and(tonumber(count)or 0)>0)then return 0 end;local ok,removed=pcall(function()return inv.remove({name=item,count=count})end);return ok and(tonumber(removed)or 0)or 0 end
 local function inv_insert(inv,item,count)if not(inv and inv.valid and item and(tonumber(count)or 0)>0)then return 0 end;local ok,inserted=pcall(function()return inv.insert({name=item,count=count})end);return ok and(tonumber(inserted)or 0)or 0 end
+-- Each sealed pellet is a single tagged item. Transport its original condition,
+-- shell, quality and remaining lifetime through delivery, cancellation and saves.
+local function pick_up_cargo(inv, item, count)
+  if item ~= SEALED_PELLET then
+    return {item = item, count = inv_remove(inv, item, count)}
+  end
+  for index = 1, #inv do
+    local stack = inv[index]
+    if stack.valid_for_read and stack.name == item then
+      local original = {
+        name = item, count = 1, quality = stack.quality.name, health = stack.health,
+        tags = stack.tags, custom_description = stack.custom_description
+      }
+      stack.clear()
+      return {item = item, count = 1, stack = original}
+    end
+  end
+  return {item = item, count = 0}
+end
+local function insert_cargo(inv, carried)
+  if carried.stack then return inv.insert(carried.stack) end
+  return inv_insert(inv, carried.item, carried.count)
+end
 local function inv_can_insert(inv,item,count)if not(inv and inv.valid and item and(tonumber(count)or 1)>0)then return false end;local ok,accepted=pcall(function()return inv.can_insert({name=item,count=count or 1})end);return ok and accepted==true end
 local function readiness()return rawget(_G,"TechPriestsEnergyFamilyReadiness0705")or package.loaded["scripts.core.energy_family_readiness_0705"]end
 local function storage_authority()return rawget(_G,"TechPriestsStorageRoleAuthority0686")or package.loaded["scripts.core.storage_role_authority_0686"]end
@@ -159,7 +193,7 @@ local function create_request(pair,task)
   task.phase="waiting-source";task.request_tick=task.request_tick or now();stat("fuel-item-requests")
 end
 local function sync_custody(pair,task,reason)
-  local carried=task and task.carried;if carried and carried.item and(tonumber(carried.count)or 0)>0 then pair.energy_family_custody_0707={version=M.version,tick=now(),family=task.family,item=carried.item,count=carried.count,target=task.target,target_unit=task.target_unit,target_name=task.target_name,source_entity=task.source_entity,source_inv=task.source_inv,source_label=task.source_label,reason=reason or task.phase};return true end;pair.energy_family_custody_0707=nil;return false
+  local carried=task and task.carried;if carried and carried.item and(tonumber(carried.count)or 0)>0 then pair.energy_family_custody_0707={version=M.version,tick=now(),family=task.family,item=carried.item,count=carried.count,stack=carried.stack,target=task.target,target_unit=task.target_unit,target_name=task.target_name,source_entity=task.source_entity,source_inv=task.source_inv,source_label=task.source_label,reason=reason or task.phase};return true end;pair.energy_family_custody_0707=nil;return false
 end
 local function finish_task(pair,task,reason)
   release_target(pair,task);clear_requests(pair,task);pair.energy_family_custody_0707=nil;task.phase="complete";task.completed_tick=now();task.result=reason or"complete";pair.energy_family_logistics_last_task_0707=task;pair.energy_family_logistics_0707=nil;record(pair,"energy-task-finished",safe(task.family).." "..safe(reason));return{processed=1,acted=1,detail=reason or"complete"}
@@ -169,19 +203,23 @@ local function abort_without_custody(pair,task,reason)
 end
 local function restore_orphan_custody(pair)
   local custody=pair.energy_family_custody_0707;if pair.energy_family_logistics_0707 or type(custody)~="table"or not custody.item or(tonumber(custody.count)or 0)<=0 then return false end
-  pair.energy_family_logistics_0707={version=M.version,family=custody.family or"custody-recovery",phase="return-custody",item=custody.item,count=custody.count,carried={item=custody.item,count=custody.count},target=custody.target,target_unit=custody.target_unit,target_name=custody.target_name,source_entity=custody.source_entity,source_inv=custody.source_inv,source_label=custody.source_label,started_tick=now(),custody_recovery=true};record(pair,"energy-orphan-custody-restored",custody.item.." x"..safe(custody.count),true);return true
+  pair.energy_family_logistics_0707={version=M.version,family=custody.family or"custody-recovery",phase="return-custody",item=custody.item,count=custody.count,carried={item=custody.item,count=custody.count,stack=custody.stack},target=custody.target,target_unit=custody.target_unit,target_name=custody.target_name,source_entity=custody.source_entity,source_inv=custody.source_inv,source_label=custody.source_label,started_tick=now(),custody_recovery=true};record(pair,"energy-orphan-custody-restored",custody.item.." x"..safe(custody.count),true);return true
 end
 local function source_current(pair,task)
   if task.source_inv and task.source_inv.valid and valid(task.source_entity)and item_count(task.source_inv,task.item)>0 then return{inv=task.source_inv,entity=task.source_entity,item=task.item,count=item_count(task.source_inv,task.item),label=task.source_label}end
   if task.family~="energy-fuel"or not task.report then return nil end;return source_for_item(pair,task.report,task.item)
 end
-local function deposit_exact(pair,item,count,reason)local authority=storage_authority();if authority and type(authority.deposit_exact)=="function"then return authority.deposit_exact(pair,item,count,reason,{})end;return false,"storage-authority-unavailable",0 end
+local function deposit_cargo(pair, carried, reason)
+  local authority = storage_authority()
+  if not (authority and authority.deposit_exact) then return false, "storage-authority-unavailable", 0 end
+  return authority.deposit_exact(pair, carried.item, carried.count, reason, {stack = carried.stack})
+end
 local function return_custody(pair,task)
   local carried=task.carried;if not(carried and carried.item and(tonumber(carried.count)or 0)>0)then return finish_task(pair,task,"empty-custody")end
   local return_source=task.family=="energy-fuel"and valid(task.source_entity)and task.source_entity or nil;local target=return_source or pair.station
   if dist_sq(pair.priest.position,target.position)>M.return_reach_sq then task.phase="return-custody";sync_custody(pair,task,return_source and"returning-source"or"returning-station");if not request_move(pair,target,"energy-custody-return-0707")then return{processed=1,blocked=1,detail="return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-custody"}end
-  if return_source and task.source_inv and task.source_inv.valid then local inserted=inv_insert(task.source_inv,carried.item,carried.count);if inserted>0 then carried.count=carried.count-inserted end;if carried.count<=0 then return finish_task(pair,task,"custody-returned-source")end;task.source_entity=nil;task.source_inv=nil;task.source_label="station-storage";sync_custody(pair,task,"source-return-partial");if not request_move(pair,pair.station,"energy-custody-station-fallback-0707")then return{processed=1,blocked=1,detail="station-return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-station"}end
-  local accepted,why,inserted=deposit_exact(pair,carried.item,carried.count,task.family=="burnt-result-clear"and"energy-burnt-result-retention-0707"or"energy-fuel-return-0707");inserted=tonumber(inserted)or 0;if accepted==true and inserted==carried.count then carried.count=0;return finish_task(pair,task,"custody-stored")end;sync_custody(pair,task,"station-storage-blocked");record(pair,"energy-custody-storage-blocked",carried.item.." remaining="..safe(carried.count).." reason="..safe(why));return{processed=1,blocked=1,detail="storage-blocked:"..safe(why)}
+  if return_source and task.source_inv and task.source_inv.valid then local inserted=insert_cargo(task.source_inv,carried);if inserted>0 then carried.count=carried.count-inserted end;if carried.count<=0 then return finish_task(pair,task,"custody-returned-source")end;task.source_entity=nil;task.source_inv=nil;task.source_label="station-storage";sync_custody(pair,task,"source-return-partial");if not request_move(pair,pair.station,"energy-custody-station-fallback-0707")then return{processed=1,blocked=1,detail="station-return-movement-blocked"}end;return{processed=1,waiting=1,detail="returning-station"}end
+  local accepted,why,inserted=deposit_cargo(pair,carried,task.family=="burnt-result-clear"and"energy-burnt-result-retention-0707"or"energy-fuel-return-0707");inserted=tonumber(inserted)or 0;if accepted==true and inserted==carried.count then carried.count=0;return finish_task(pair,task,"custody-stored")end;sync_custody(pair,task,"station-storage-blocked");record(pair,"energy-custody-storage-blocked",carried.item.." remaining="..safe(carried.count).." reason="..safe(why));return{processed=1,blocked=1,detail="storage-blocked:"..safe(why)}
 end
 local function revalidate_target(pair,task)
   if not valid(task.target)then return nil,"target-invalid"end;local doctrine=readiness();if not(doctrine and type(doctrine.inspect_entity)=="function")then return nil,"readiness-unavailable"end
@@ -209,8 +247,8 @@ local function continue_task(pair,task)
   if not valid(task.target)then if task.carried and(tonumber(task.carried.count)or 0)>0 then task.phase="return-custody";return return_custody(pair,task)end;return abort_without_custody(pair,task,"target-invalid")end
   local doctrine=readiness();if doctrine and type(doctrine.connected_item_automation)=="function"then local automated=doctrine.connected_item_automation(task.target);if automated then if task.carried and(tonumber(task.carried.count)or 0)>0 then task.phase="return-custody";sync_custody(pair,task,"external-item-automation-owned");return return_custody(pair,task)end;return abort_without_custody(pair,task,"external-item-automation-owned")end end
   if task.phase=="waiting-source"then if now()-(tonumber(task.request_tick)or now())>=M.request_timeout then return abort_without_custody(pair,task,"fuel-source-timeout")end;local source=source_current(pair,task);if not source then create_request(pair,task);return{processed=1,waiting=1,detail="waiting-source"}end;task.source_inv=source.inv;task.source_entity=source.entity;task.source_label=source.label;task.phase="move-to-source";if not request_move(pair,source.entity,"energy-fuel-source-ready-0707")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="source-ready"}end
-  if task.phase=="move-to-source"then local source;if task.family=="burnt-result-clear"then source={inv=task.source_inv,entity=task.target,count=item_count(task.source_inv,task.item),label="burnt-result-inventory"}else source=source_current(pair,task)end;if not(source and source.inv and source.inv.valid and valid(source.entity)and(tonumber(source.count)or 0)>0)then if task.family=="energy-fuel"then task.phase="waiting-source";task.request_tick=now();create_request(pair,task);return{processed=1,waiting=1,detail="source-lost"}end;return abort_without_custody(pair,task,"burnt-result-source-empty")end;if dist_sq(pair.priest.position,source.entity.position)>M.pickup_reach_sq then if not request_move(pair,source.entity,"energy-item-source-0707")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-to-source"}end;local cap=task.family=="energy-fuel"and M.max_fuel_transfer or M.max_burnt_transfer;local want=math.max(1,math.min(task.count,source.count,cap));local removed=inv_remove(source.inv,task.item,want);if removed<=0 then return abort_without_custody(pair,task,"source-remove-failed")end;task.carried={item=task.item,count=removed};task.source_inv=source.inv;task.source_entity=source.entity;task.source_label=source.label;clear_requests(pair,task);sync_custody(pair,task,"picked-up");record(pair,"energy-item-picked-up",task.family.." "..task.item.." x"..safe(removed));if task.family=="burnt-result-clear"then task.phase="return-custody";if not request_move(pair,pair.station,"energy-burnt-return-0707")then return{processed=1,acted=1,blocked=1,detail="return-movement-blocked"}end;return{processed=1,acted=1,waiting=1,detail="returning-burnt-result"}end;task.phase="move-to-target";if not request_move(pair,task.target,"energy-fuel-delivery-0707")then task.phase="return-custody";sync_custody(pair,task,"target-movement-blocked");return{processed=1,acted=1,blocked=1,detail="target-movement-blocked"}end;return{processed=1,acted=1,waiting=1,detail="delivering-fuel"}end
-  if task.phase=="move-to-target"then if dist_sq(pair.priest.position,task.target.position)>M.target_reach_sq then if not request_move(pair,task.target,"energy-fuel-delivery-0707")then task.phase="return-custody";sync_custody(pair,task,"target-movement-blocked");return{processed=1,blocked=1,detail="target-movement-blocked"}end;sync_custody(pair,task,"moving-to-target");return{processed=1,waiting=1,detail="moving-to-target"}end;local report,why=revalidate_target(pair,task);if not report or why~="ready"then task.phase="return-custody";sync_custody(pair,task,why);record(pair,"fuel-target-became-ineligible",safe(why));return return_custody(pair,task)end;local carried=task.carried;if not(carried and carried.item and(tonumber(carried.count)or 0)>0)then return abort_without_custody(pair,task,"custody-missing")end;local inserted=inv_insert(report.fuel_inventory,carried.item,carried.count);if inserted>0 then carried.count=carried.count-inserted;stat("fuel-items-delivered",inserted);record(pair,"fuel-delivered",carried.item.." x"..safe(inserted).." -> "..safe(task.target_name))end;if carried.count<=0 then return finish_task(pair,task,"fuel-delivered")end;task.phase="return-custody";sync_custody(pair,task,inserted>0 and"fuel-partial"or"fuel-insert-blocked");return{processed=1,acted=inserted>0 and 1 or 0,blocked=inserted>0 and 0 or 1,detail=inserted>0 and"partial-fuel-delivery"or"fuel-insert-blocked"}end
+  if task.phase=="move-to-source"then local source;if task.family=="burnt-result-clear"then source={inv=task.source_inv,entity=task.target,count=item_count(task.source_inv,task.item),label="burnt-result-inventory"}else source=source_current(pair,task)end;if not(source and source.inv and source.inv.valid and valid(source.entity)and(tonumber(source.count)or 0)>0)then if task.family=="energy-fuel"then task.phase="waiting-source";task.request_tick=now();create_request(pair,task);return{processed=1,waiting=1,detail="source-lost"}end;return abort_without_custody(pair,task,"burnt-result-source-empty")end;if dist_sq(pair.priest.position,source.entity.position)>M.pickup_reach_sq then if not request_move(pair,source.entity,"energy-item-source-0707")then return{processed=1,blocked=1,detail="source-movement-blocked"}end;return{processed=1,waiting=1,detail="moving-to-source"}end;local cap=task.family=="energy-fuel"and M.max_fuel_transfer or M.max_burnt_transfer;local want=math.max(1,math.min(task.count,source.count,cap));local cargo=pick_up_cargo(source.inv,task.item,want);if cargo.count<=0 then return abort_without_custody(pair,task,"source-remove-failed")end;task.carried=cargo;task.source_inv=source.inv;task.source_entity=source.entity;task.source_label=source.label;clear_requests(pair,task);sync_custody(pair,task,"picked-up");record(pair,"energy-item-picked-up",task.family.." "..task.item.." x"..safe(cargo.count));if task.family=="burnt-result-clear"then task.phase="return-custody";if not request_move(pair,pair.station,"energy-burnt-return-0707")then return{processed=1,acted=1,blocked=1,detail="return-movement-blocked"}end;return{processed=1,acted=1,waiting=1,detail="returning-burnt-result"}end;task.phase="move-to-target";if not request_move(pair,task.target,"energy-fuel-delivery-0707")then task.phase="return-custody";sync_custody(pair,task,"target-movement-blocked");return{processed=1,acted=1,blocked=1,detail="target-movement-blocked"}end;return{processed=1,acted=1,waiting=1,detail="delivering-fuel"}end
+  if task.phase=="move-to-target"then if dist_sq(pair.priest.position,task.target.position)>M.target_reach_sq then if not request_move(pair,task.target,"energy-fuel-delivery-0707")then task.phase="return-custody";sync_custody(pair,task,"target-movement-blocked");return{processed=1,blocked=1,detail="target-movement-blocked"}end;sync_custody(pair,task,"moving-to-target");return{processed=1,waiting=1,detail="moving-to-target"}end;local report,why=revalidate_target(pair,task);if not report or why~="ready"then task.phase="return-custody";sync_custody(pair,task,why);record(pair,"fuel-target-became-ineligible",safe(why));return return_custody(pair,task)end;local carried=task.carried;if not(carried and carried.item and(tonumber(carried.count)or 0)>0)then return abort_without_custody(pair,task,"custody-missing")end;local inserted=insert_cargo(report.fuel_inventory,carried);if inserted>0 then carried.count=carried.count-inserted;stat("fuel-items-delivered",inserted);record(pair,"fuel-delivered",carried.item.." x"..safe(inserted).." -> "..safe(task.target_name))end;if carried.count<=0 then return finish_task(pair,task,"fuel-delivered")end;task.phase="return-custody";sync_custody(pair,task,inserted>0 and"fuel-partial"or"fuel-insert-blocked");return{processed=1,acted=inserted>0 and 1 or 0,blocked=inserted>0 and 0 or 1,detail=inserted>0 and"partial-fuel-delivery"or"fuel-insert-blocked"}end
   return{processed=1,failed=1,detail="unknown-phase:"..safe(task.phase)}
 end
 function M.abort_pair(pair,reason)

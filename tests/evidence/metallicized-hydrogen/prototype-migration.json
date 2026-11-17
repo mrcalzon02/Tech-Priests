@@ -1,0 +1,41 @@
+{
+  "engine": "2.1.24",
+  "save_tick": 3300,
+  "comparison_ticks": 6701,
+  "retired_mods": [
+    "tp-mh7-pellet-decay 0.0.5",
+    "tp-hydrogen-production 0.1.0"
+  ],
+  "baseline": "Tech Priests 0.1.681 + both former add-ons",
+  "candidate": "Tech Priests 0.1.682 alone, Space Age enabled",
+  "same_save_sha256": "f909d6215ad4d13c70bc300958406a3657e56419e25543f00a98dc8280802f26",
+  "comparisons": {
+    "active-3301.json": {
+      "equal": true,
+      "canonical_sha256": "73e60f5337acdd457a7c1520bc81e3551175d79ac7dd38d02be4e28fe05e91ef"
+    },
+    "production.json": {
+      "equal": true,
+      "canonical_sha256": "221fb4fd1fdbd83f9b31abadcfba9d5081fcd4e3a028f5ce0fc6f2f458ddc045"
+    },
+    "diagnostic.json": {
+      "equal": true,
+      "canonical_sha256": "840562b091802e3a60b09eaf25c8e4bca2d257f2839893d7b37184e37fcb3112"
+    }
+  },
+  "tick_3301": {
+    "forge": {
+      "in_flight": true,
+      "started": 3206,
+      "completed": 2,
+      "filled_slots": 1
+    },
+    "assembler": {
+      "in_flight": true,
+      "started": 3205,
+      "completed": 1,
+      "filled_slots": 3
+    }
+  },
+  "final_sealed_pellets": 6
+}

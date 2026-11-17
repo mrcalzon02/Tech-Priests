@@ -1,4 +1,14 @@
-# Ordinary hydrogen-chain integration checkpoint
+# Metallicized hydrogen production
+
+## Built into Tech Priests 0.1.682
+
+Research **Metallicized hydrogen production** after **Nuclear power** and **Production science pack**. Purify water, electrolyze it, compress the hydrogen, and feed the metallization crucible and pelletization forge. Supply the pressure-vessel fabricator with water and steel in parallel. The canister assembler takes a formed pellet and an empty shell. A sealed pellet delivers 120 MJ to Minoris, Majoris, or Maximus. Burning consumes the shell. Unsealing instead recovers the shell and the original remaining pellet lifetime.
+
+The main mod owns all seven animated machines, their sounds, research, player controls, and fuel behavior. Both former prototype add-ons can be removed together on upgrade. Factorio transfers their existing material inventories and in-progress jobs to Tech Priests. Native validation covers the base game and Space Age, all three reactors under load, and a save with both the forge and the canister assembler mid-cycle.
+
+[Connected factory and reactor measurements](../../../tests/evidence/metallicized-hydrogen/integrated-line.json) · [Active-job upgrade comparison](../../../tests/evidence/metallicized-hydrogen/prototype-migration.json)
+
+## Archived prototype checkpoints
 
 The seven accepted machine sources now have a composed addon candidate under `build/model-completion/metallic-hydrogen-chain/production-addon-v11-visible-fittings`. The later player-controls delivery below is the current tested prototype; it is not installed automatically into the real mod.
 
