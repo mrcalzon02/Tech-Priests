@@ -1,0 +1,683 @@
+{
+  "source_sha256": "6be42c95040f44972f1933caf7bd288ec2d48dd959fea9814e1bfaf6bdfeb63e",
+  "runtime_sha256": "227a991cd12f731ceae48181ddd74e8b1f10aea1b2509cebed2da68ef9025579",
+  "genuine_blender_frames": 33,
+  "rendered_artifact": "Actual independently reimported GLB",
+  "frame_size": [
+    512,
+    512
+  ],
+  "fps": 8,
+  "working_frames_per_direction": 32,
+  "idle_frames_per_direction": 1,
+  "native_directions": [
+    0
+  ],
+  "unique_working_images": 32,
+  "all_atlas_cells_read_back_with_png_quantization_tolerance": true,
+  "images": [
+    {
+      "file": "north-idle-00.png",
+      "facing": "north",
+      "state": "idle",
+      "index": 0,
+      "runtime_time_seconds": 0.0,
+      "source_equivalent_frame": 1.0,
+      "sha256": "dfe98a4431b30c5b7dfeb7e0bffd3d69681cc4f2d8c5beee6aac42d4756263dd",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-00.png",
+      "facing": "north",
+      "state": "working",
+      "index": 0,
+      "runtime_time_seconds": 0.0,
+      "source_equivalent_frame": 1.0,
+      "sha256": "dc969ad63a161f560132af45f4bb2a196dea7d360d38cb4af74620c8b8c8aac9",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-01.png",
+      "facing": "north",
+      "state": "working",
+      "index": 1,
+      "runtime_time_seconds": 0.125,
+      "source_equivalent_frame": 7.0,
+      "sha256": "85b65d812197501e327807cdbfab1535a2345eb50efdc256ebe0c18a2d64e293",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-02.png",
+      "facing": "north",
+      "state": "working",
+      "index": 2,
+      "runtime_time_seconds": 0.25,
+      "source_equivalent_frame": 13.0,
+      "sha256": "25c1044e7d7db7676944629cf6079eff4b67ae5b668a0d70ef01eb54bd6e4eb8",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-03.png",
+      "facing": "north",
+      "state": "working",
+      "index": 3,
+      "runtime_time_seconds": 0.375,
+      "source_equivalent_frame": 19.0,
+      "sha256": "02eb8beb203d3a8c9c9cfc215c7699dad40dddf4db8b9126d20939f0bb6da934",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-04.png",
+      "facing": "north",
+      "state": "working",
+      "index": 4,
+      "runtime_time_seconds": 0.5,
+      "source_equivalent_frame": 25.0,
+      "sha256": "3aacd26e485646f6370430bf62b96b6474e93d6f13f7d92a870c28ada0d17aa7",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-05.png",
+      "facing": "north",
+      "state": "working",
+      "index": 5,
+      "runtime_time_seconds": 0.625,
+      "source_equivalent_frame": 31.0,
+      "sha256": "d02f894cc1fb12d1ecb906058096b33a8b7a6867d249ee13e76cea90344f12a9",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-06.png",
+      "facing": "north",
+      "state": "working",
+      "index": 6,
+      "runtime_time_seconds": 0.75,
+      "source_equivalent_frame": 37.0,
+      "sha256": "21b39cb4f910d282ba5cde5b2dad08dd04d8d3d031325f131a50b0addff215da",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-07.png",
+      "facing": "north",
+      "state": "working",
+      "index": 7,
+      "runtime_time_seconds": 0.875,
+      "source_equivalent_frame": 43.0,
+      "sha256": "6a8061f42e40f888fc0d1453f6d752ede39f0457618370239a93fc1429ce5454",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-08.png",
+      "facing": "north",
+      "state": "working",
+      "index": 8,
+      "runtime_time_seconds": 1.0,
+      "source_equivalent_frame": 49.0,
+      "sha256": "a1e29db3ab52838b17026e3e18c8697066da51cef440aecfba8414907d448ecd",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-09.png",
+      "facing": "north",
+      "state": "working",
+      "index": 9,
+      "runtime_time_seconds": 1.125,
+      "source_equivalent_frame": 55.0,
+      "sha256": "a7290327e8864d13fb943e2f5b953cd890bd233764ad8becc0cfdbf77181808f",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-10.png",
+      "facing": "north",
+      "state": "working",
+      "index": 10,
+      "runtime_time_seconds": 1.25,
+      "source_equivalent_frame": 61.0,
+      "sha256": "673b351be9ce0d7795dcccbd8652623e9012244200ec89c8d552726d0b0e66df",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-11.png",
+      "facing": "north",
+      "state": "working",
+      "index": 11,
+      "runtime_time_seconds": 1.375,
+      "source_equivalent_frame": 67.0,
+      "sha256": "9b83a13a119645e62309c9198464675715424d34060000aea0818dd296cda7bb",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-12.png",
+      "facing": "north",
+      "state": "working",
+      "index": 12,
+      "runtime_time_seconds": 1.5,
+      "source_equivalent_frame": 73.0,
+      "sha256": "dde8519896c4a6b451dc03356686b37ad35743fe5f42ac526447b45e6de20940",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-13.png",
+      "facing": "north",
+      "state": "working",
+      "index": 13,
+      "runtime_time_seconds": 1.625,
+      "source_equivalent_frame": 79.0,
+      "sha256": "0551e598fe37621e6a3f8553cb25b7f116e29cf7a2430d1a55fad56b9f894698",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-14.png",
+      "facing": "north",
+      "state": "working",
+      "index": 14,
+      "runtime_time_seconds": 1.75,
+      "source_equivalent_frame": 85.0,
+      "sha256": "cfc816c5924f82603ca768877e770481f466d89de29aa26768c9324cf484c480",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-15.png",
+      "facing": "north",
+      "state": "working",
+      "index": 15,
+      "runtime_time_seconds": 1.875,
+      "source_equivalent_frame": 91.0,
+      "sha256": "31da49a054c2ba10a33a1108d3f197e49caba9ed99bb4d225b496e30637bd1ff",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-16.png",
+      "facing": "north",
+      "state": "working",
+      "index": 16,
+      "runtime_time_seconds": 2.0,
+      "source_equivalent_frame": 97.0,
+      "sha256": "e7da71720756bd688d9de6c46328dcee3e7b764d994421daae7272221615751c",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-17.png",
+      "facing": "north",
+      "state": "working",
+      "index": 17,
+      "runtime_time_seconds": 2.125,
+      "source_equivalent_frame": 103.0,
+      "sha256": "6dd2bf7182c1ae46af45ef5762e3946a0cf0dbe7f49a362ca865a32f8a75c535",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-18.png",
+      "facing": "north",
+      "state": "working",
+      "index": 18,
+      "runtime_time_seconds": 2.25,
+      "source_equivalent_frame": 109.0,
+      "sha256": "b77d615cfc8af74206bd6a6de202c58bf1584335f041e278e7da2615537ef829",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-19.png",
+      "facing": "north",
+      "state": "working",
+      "index": 19,
+      "runtime_time_seconds": 2.375,
+      "source_equivalent_frame": 115.0,
+      "sha256": "bf294acfb712b15b8ab614bbfeaa650fdf651a6c7062523b5026b8f70e9f6629",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-20.png",
+      "facing": "north",
+      "state": "working",
+      "index": 20,
+      "runtime_time_seconds": 2.5,
+      "source_equivalent_frame": 121.0,
+      "sha256": "18dcb0cbb6180c72689d9959915097656e48b97f94d7475f45dba3b72e280ffc",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-21.png",
+      "facing": "north",
+      "state": "working",
+      "index": 21,
+      "runtime_time_seconds": 2.625,
+      "source_equivalent_frame": 127.0,
+      "sha256": "ceec1ef17244cb9570bf3c45c6ee30ba21e1252e9c3193bb962f5ec8e1a5f0f7",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-22.png",
+      "facing": "north",
+      "state": "working",
+      "index": 22,
+      "runtime_time_seconds": 2.75,
+      "source_equivalent_frame": 133.0,
+      "sha256": "b94a8412b516dc9574f94c855b3346b267f6366c7b03920edf7a8df42a7506a6",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-23.png",
+      "facing": "north",
+      "state": "working",
+      "index": 23,
+      "runtime_time_seconds": 2.875,
+      "source_equivalent_frame": 139.0,
+      "sha256": "73d061066609da48bb06926a1311895a5f2ed99ca93bc75bd2e6cad575877481",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-24.png",
+      "facing": "north",
+      "state": "working",
+      "index": 24,
+      "runtime_time_seconds": 3.0,
+      "source_equivalent_frame": 145.0,
+      "sha256": "ebfb9035ab3c24ce74b8e2a13ae5af883e55e1f4735c0a131775717f7702c6c4",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-25.png",
+      "facing": "north",
+      "state": "working",
+      "index": 25,
+      "runtime_time_seconds": 3.125,
+      "source_equivalent_frame": 151.0,
+      "sha256": "b2ad68a89dfc9223571e627d816f6220da3896bb1c7dbb15fe07e413b919618f",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-26.png",
+      "facing": "north",
+      "state": "working",
+      "index": 26,
+      "runtime_time_seconds": 3.25,
+      "source_equivalent_frame": 157.0,
+      "sha256": "90837f4fe68525cd0bbc46cbb394efcc359f86054cecb70d3cc28af741ef1101",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-27.png",
+      "facing": "north",
+      "state": "working",
+      "index": 27,
+      "runtime_time_seconds": 3.375,
+      "source_equivalent_frame": 163.0,
+      "sha256": "333b0cca3762f195e309c072151af69b088635a14f29601c1a8d92128505217b",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-28.png",
+      "facing": "north",
+      "state": "working",
+      "index": 28,
+      "runtime_time_seconds": 3.5,
+      "source_equivalent_frame": 169.0,
+      "sha256": "ca2a94192fcd5a305e36c37dd65313232640d83509a7b4b06366669ddbc939fc",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-29.png",
+      "facing": "north",
+      "state": "working",
+      "index": 29,
+      "runtime_time_seconds": 3.625,
+      "source_equivalent_frame": 175.0,
+      "sha256": "ea91b028888438b04fcadd04e20ecb894d8e9d238d410a948d1768d00e741657",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-30.png",
+      "facing": "north",
+      "state": "working",
+      "index": 30,
+      "runtime_time_seconds": 3.75,
+      "source_equivalent_frame": 181.0,
+      "sha256": "66dcd90f62c5a322f3fbd2328e833920cc496518cd4430b6362fff55e8a7954f",
+      "native_orientation": true
+    },
+    {
+      "file": "north-working-31.png",
+      "facing": "north",
+      "state": "working",
+      "index": 31,
+      "runtime_time_seconds": 3.875,
+      "source_equivalent_frame": 187.0,
+      "sha256": "0690050cee5e499aa4bd36d60d58727e962e36e383451335197814e865e2148a",
+      "native_orientation": true
+    }
+  ],
+  "alpha_bounds": [
+    {
+      "file": "north-idle-00.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-00.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-01.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-02.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-03.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-04.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-05.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-06.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-07.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-08.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-09.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-10.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-11.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-12.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-13.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-14.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-15.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-16.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-17.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-18.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-19.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-20.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-21.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-22.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-23.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-24.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-25.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-26.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-27.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-28.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-29.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-30.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    },
+    {
+      "file": "north-working-31.png",
+      "alpha_bounds": [
+        126,
+        74,
+        386,
+        464
+      ]
+    }
+  ],
+  "files": {
+    "icon.png": {
+      "sha256": "a0eef218442be12cdede8a162efa8d08a0ed9094d849473aa1dbda09c3167613",
+      "dimensions": [
+        64,
+        64
+      ]
+    },
+    "north-idle.png": {
+      "sha256": "0d24e59e3f8abc3548fd42cde2dcaf7d3a375df7df93bdc6085294f395529d44",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    "north-working.png": {
+      "sha256": "ad5c7f7546a559ab60133bae3e464e19381871a94abe0cccf02157bc6aa2f5f7",
+      "dimensions": [
+        4096,
+        2048
+      ]
+    }
+  },
+  "projection": {
+    "square_ground_y_scale": 1.4142135623730951,
+    "saved_runtime_geometry_changed": false
+  },
+  "sprite_scale": 0.625,
+  "sprite_shift": [
+    0,
+    -1.131370849898476
+  ],
+  "native_verified": false,
+  "owner_visual_approved": false
+}

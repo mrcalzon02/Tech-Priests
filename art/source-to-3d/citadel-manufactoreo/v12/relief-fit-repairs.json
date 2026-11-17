@@ -1,0 +1,1695 @@
+{
+  "removed_optional_mounts": [
+    {
+      "mount": "CITADEL | tower crown fitted thermal cassette.002",
+      "meshes": [
+        "CITADEL | crown cassette rim fastener.008",
+        "CITADEL | crown cassette rim fastener.009",
+        "CITADEL | crown cassette rim fastener.010",
+        "CITADEL | crown cassette rim fastener.011",
+        "CITADEL | crown thermal cassette formed fin.014",
+        "CITADEL | crown thermal cassette formed fin.015",
+        "CITADEL | crown thermal cassette formed fin.016",
+        "CITADEL | crown thermal cassette formed fin.017",
+        "CITADEL | crown thermal cassette formed fin.018",
+        "CITADEL | crown thermal cassette formed fin.019",
+        "CITADEL | crown thermal cassette formed fin.020",
+        "CITADEL | crown thermal cassette seated rim.002"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown thermal cassette seated rim.002",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown thermal cassette seated rim.002",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | tower crown fitted thermal cassette.003",
+      "meshes": [
+        "CITADEL | crown cassette rim fastener.012",
+        "CITADEL | crown cassette rim fastener.013",
+        "CITADEL | crown cassette rim fastener.014",
+        "CITADEL | crown cassette rim fastener.015",
+        "CITADEL | crown thermal cassette formed fin.021",
+        "CITADEL | crown thermal cassette formed fin.022",
+        "CITADEL | crown thermal cassette formed fin.023",
+        "CITADEL | crown thermal cassette formed fin.024",
+        "CITADEL | crown thermal cassette formed fin.025",
+        "CITADEL | crown thermal cassette formed fin.026",
+        "CITADEL | crown thermal cassette formed fin.027",
+        "CITADEL | crown thermal cassette seated rim.003"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown thermal cassette seated rim.003",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | tower crown fitted thermal cassette.004",
+      "meshes": [
+        "CITADEL | crown cassette rim fastener.016",
+        "CITADEL | crown cassette rim fastener.017",
+        "CITADEL | crown cassette rim fastener.018",
+        "CITADEL | crown cassette rim fastener.019",
+        "CITADEL | crown thermal cassette formed fin.028",
+        "CITADEL | crown thermal cassette formed fin.029",
+        "CITADEL | crown thermal cassette formed fin.030",
+        "CITADEL | crown thermal cassette formed fin.031",
+        "CITADEL | crown thermal cassette formed fin.032",
+        "CITADEL | crown thermal cassette formed fin.033",
+        "CITADEL | crown thermal cassette formed fin.034",
+        "CITADEL | crown thermal cassette seated rim.004"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown thermal cassette seated rim.004",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown thermal cassette seated rim.004",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | tower crown fitted thermal cassette.005",
+      "meshes": [
+        "CITADEL | crown cassette rim fastener.020",
+        "CITADEL | crown cassette rim fastener.021",
+        "CITADEL | crown cassette rim fastener.022",
+        "CITADEL | crown cassette rim fastener.023",
+        "CITADEL | crown thermal cassette formed fin.035",
+        "CITADEL | crown thermal cassette formed fin.036",
+        "CITADEL | crown thermal cassette formed fin.037",
+        "CITADEL | crown thermal cassette formed fin.038",
+        "CITADEL | crown thermal cassette formed fin.039",
+        "CITADEL | crown thermal cassette formed fin.040",
+        "CITADEL | crown thermal cassette formed fin.041",
+        "CITADEL | crown thermal cassette seated rim.005"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown thermal cassette seated rim.005",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame",
+      "meshes": [
+        "CITADEL | crown maintenance pad",
+        "CITADEL | crown maintenance pad bolt"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad",
+          "CITADEL | crown triangular cast edge moulding"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.001",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.001",
+        "CITADEL | crown maintenance pad.001"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad bolt.001",
+          "CITADEL | crown hip fitted heat louvre.002"
+        ],
+        [
+          "CITADEL | crown maintenance pad.001",
+          "CITADEL | crown hip fitted heat louvre.002"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.002",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.002",
+        "CITADEL | crown maintenance pad.002"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad.002",
+          "CITADEL | crown triangular cast edge moulding.001"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.003",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.003",
+        "CITADEL | crown maintenance pad.003"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad bolt.003",
+          "CITADEL | crown thermal cassette seated rim"
+        ],
+        [
+          "CITADEL | crown maintenance pad bolt.003",
+          "CITADEL | crown thermal cassette formed fin.002"
+        ],
+        [
+          "CITADEL | crown maintenance pad.003",
+          "CITADEL | crown thermal cassette seated rim"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.006",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.006",
+        "CITADEL | crown maintenance pad.006"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad bolt.006",
+          "CITADEL | crown thermal cassette seated rim.001"
+        ],
+        [
+          "CITADEL | crown maintenance pad bolt.006",
+          "CITADEL | crown thermal cassette formed fin.009"
+        ],
+        [
+          "CITADEL | crown maintenance pad.006",
+          "CITADEL | crown thermal cassette seated rim.001"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.009",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.009",
+        "CITADEL | crown maintenance pad.009"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad bolt.009",
+          "CITADEL | crown triangular cast edge moulding.002"
+        ],
+        [
+          "CITADEL | crown maintenance pad.009",
+          "CITADEL | crown hip fitted heat louvre.007"
+        ],
+        [
+          "CITADEL | crown maintenance pad.009",
+          "CITADEL | crown hip fitted heat louvre.008"
+        ],
+        [
+          "CITADEL | crown maintenance pad.009",
+          "CITADEL | crown triangular cast edge moulding.002"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.010",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.010",
+        "CITADEL | crown maintenance pad.010"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad.010",
+          "CITADEL | crown hip fitted heat louvre.007"
+        ],
+        [
+          "CITADEL | crown maintenance pad.010",
+          "CITADEL | crown hip fitted heat louvre.008"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.011",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.011",
+        "CITADEL | crown maintenance pad.011"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad bolt.011",
+          "CITADEL | crown triangular cast edge moulding.003"
+        ],
+        [
+          "CITADEL | crown maintenance pad.011",
+          "CITADEL | crown hip fitted heat louvre.007"
+        ],
+        [
+          "CITADEL | crown maintenance pad.011",
+          "CITADEL | crown hip fitted heat louvre.008"
+        ],
+        [
+          "CITADEL | crown maintenance pad.011",
+          "CITADEL | crown triangular cast edge moulding.003"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.012",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.012",
+        "CITADEL | crown maintenance pad.012"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad.012",
+          "CITADEL | crown triangular cast edge moulding.004"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.013",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.013",
+        "CITADEL | crown maintenance pad.013"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad bolt.013",
+          "CITADEL | crown hip fitted heat louvre.014"
+        ],
+        [
+          "CITADEL | crown maintenance pad.013",
+          "CITADEL | crown hip fitted heat louvre.014"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.014",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.014",
+        "CITADEL | crown maintenance pad.014"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad.014",
+          "CITADEL | crown triangular cast edge moulding.005"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.017",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.017",
+        "CITADEL | crown maintenance pad.017"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad bolt.017",
+          "CITADEL | crown thermal cassette seated rim.006"
+        ],
+        [
+          "CITADEL | crown maintenance pad bolt.017",
+          "CITADEL | crown thermal cassette formed fin.046"
+        ],
+        [
+          "CITADEL | crown maintenance pad.017",
+          "CITADEL | crown thermal cassette seated rim.006"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.020",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.020",
+        "CITADEL | crown maintenance pad.020"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad bolt.020",
+          "CITADEL | crown thermal cassette seated rim.007"
+        ],
+        [
+          "CITADEL | crown maintenance pad bolt.020",
+          "CITADEL | crown thermal cassette formed fin.053"
+        ],
+        [
+          "CITADEL | crown maintenance pad.020",
+          "CITADEL | crown thermal cassette seated rim.007"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.021",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.021",
+        "CITADEL | crown maintenance pad.021"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad bolt.021",
+          "CITADEL | crown triangular cast edge moulding.006"
+        ],
+        [
+          "CITADEL | crown maintenance pad.021",
+          "CITADEL | crown hip fitted heat louvre.019"
+        ],
+        [
+          "CITADEL | crown maintenance pad.021",
+          "CITADEL | crown hip fitted heat louvre.020"
+        ],
+        [
+          "CITADEL | crown maintenance pad.021",
+          "CITADEL | crown triangular cast edge moulding.006"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.022",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.022",
+        "CITADEL | crown maintenance pad.022"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad.022",
+          "CITADEL | crown hip fitted heat louvre.019"
+        ],
+        [
+          "CITADEL | crown maintenance pad.022",
+          "CITADEL | crown hip fitted heat louvre.020"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown fitted maintenance pad frame.023",
+      "meshes": [
+        "CITADEL | crown maintenance pad bolt.023",
+        "CITADEL | crown maintenance pad.023"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown maintenance pad bolt.023",
+          "CITADEL | crown triangular cast edge moulding.007"
+        ],
+        [
+          "CITADEL | crown maintenance pad.023",
+          "CITADEL | crown hip fitted heat louvre.019"
+        ],
+        [
+          "CITADEL | crown maintenance pad.023",
+          "CITADEL | crown hip fitted heat louvre.020"
+        ],
+        [
+          "CITADEL | crown maintenance pad.023",
+          "CITADEL | crown triangular cast edge moulding.007"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cast rite seated tile.025",
+      "meshes": [
+        "CITADEL | crown cast stepped service tablet.025",
+        "CITADEL | crown tablet captive hex pin.025",
+        "CITADEL | crown tablet twin embossed trace.050",
+        "CITADEL | crown tablet twin embossed trace.051"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cast stepped service tablet.025",
+          "CITADEL | crown edge cast retaining shoe.006"
+        ],
+        [
+          "CITADEL | crown cast stepped service tablet.025",
+          "CITADEL | crown edge cast retaining shoe.013"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cast rite seated tile.051",
+      "meshes": [
+        "CITADEL | crown cast stepped service tablet.051",
+        "CITADEL | crown tablet captive hex pin.051",
+        "CITADEL | crown tablet twin embossed trace.102",
+        "CITADEL | crown tablet twin embossed trace.103"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cast stepped service tablet.051",
+          "CITADEL | crown edge cast retaining shoe.020"
+        ],
+        [
+          "CITADEL | crown cast stepped service tablet.051",
+          "CITADEL | crown edge cast retaining shoe.027"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cast rite seated tile.077",
+      "meshes": [
+        "CITADEL | crown cast stepped service tablet.077",
+        "CITADEL | crown tablet captive hex pin.077",
+        "CITADEL | crown tablet twin embossed trace.154",
+        "CITADEL | crown tablet twin embossed trace.155"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cast stepped service tablet.077",
+          "CITADEL | crown edge cast retaining shoe.034"
+        ],
+        [
+          "CITADEL | crown cast stepped service tablet.077",
+          "CITADEL | crown edge cast retaining shoe.041"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cast rite seated tile.103",
+      "meshes": [
+        "CITADEL | crown cast stepped service tablet.103",
+        "CITADEL | crown tablet captive hex pin.103",
+        "CITADEL | crown tablet twin embossed trace.206",
+        "CITADEL | crown tablet twin embossed trace.207"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cast stepped service tablet.103",
+          "CITADEL | crown edge cast retaining shoe.048"
+        ],
+        [
+          "CITADEL | crown cast stepped service tablet.103",
+          "CITADEL | crown edge cast retaining shoe.055"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar",
+        "CITADEL | crown cheek branching trace bar.001",
+        "CITADEL | crown cheek protected trace tablet",
+        "CITADEL | crown cheek raised trace rail",
+        "CITADEL | crown cheek raised trace rail.001",
+        "CITADEL | crown cheek seated keyed trace seal"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet",
+          "CITADEL | crown edge cast retaining shoe.006"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.008",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.016",
+        "CITADEL | crown cheek branching trace bar.017",
+        "CITADEL | crown cheek protected trace tablet.008",
+        "CITADEL | crown cheek raised trace rail.016",
+        "CITADEL | crown cheek raised trace rail.017",
+        "CITADEL | crown cheek seated keyed trace seal.008"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet.008",
+          "CITADEL | crown edge cast retaining shoe.020"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.030",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.060",
+        "CITADEL | crown cheek branching trace bar.061",
+        "CITADEL | crown cheek protected trace tablet.030",
+        "CITADEL | crown cheek raised trace rail.060",
+        "CITADEL | crown cheek raised trace rail.061",
+        "CITADEL | crown cheek seated keyed trace seal.030"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet.030",
+          "CITADEL | crown edge cast retaining shoe.013"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.038",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.076",
+        "CITADEL | crown cheek branching trace bar.077",
+        "CITADEL | crown cheek protected trace tablet.038",
+        "CITADEL | crown cheek raised trace rail.076",
+        "CITADEL | crown cheek raised trace rail.077",
+        "CITADEL | crown cheek seated keyed trace seal.038"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet.038",
+          "CITADEL | crown edge cast retaining shoe.027"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.047",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.094",
+        "CITADEL | crown cheek branching trace bar.095",
+        "CITADEL | crown cheek protected trace tablet.047",
+        "CITADEL | crown cheek raised trace rail.094",
+        "CITADEL | crown cheek raised trace rail.095",
+        "CITADEL | crown cheek seated keyed trace seal.047"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet.047",
+          "CITADEL | exchanger protective clamp rail"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.048",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.096",
+        "CITADEL | crown cheek branching trace bar.097",
+        "CITADEL | crown cheek protected trace tablet.048",
+        "CITADEL | crown cheek raised trace rail.096",
+        "CITADEL | crown cheek raised trace rail.097",
+        "CITADEL | crown cheek seated keyed trace seal.048"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.096",
+          "CITADEL | sealed roof heat-exchanger core"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.096",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.097",
+          "CITADEL | sealed roof heat-exchanger core"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.097",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.048",
+          "CITADEL | sealed roof heat-exchanger core"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.048",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.096",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.048",
+          "CITADEL | roof exchanger upright cooling fin"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.049",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.098",
+        "CITADEL | crown cheek branching trace bar.099",
+        "CITADEL | crown cheek protected trace tablet.049",
+        "CITADEL | crown cheek raised trace rail.098",
+        "CITADEL | crown cheek raised trace rail.099",
+        "CITADEL | crown cheek seated keyed trace seal.049"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.098",
+          "CITADEL | sealed roof heat-exchanger core"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.098",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.099",
+          "CITADEL | sealed roof heat-exchanger core"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.099",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.049",
+          "CITADEL | sealed roof heat-exchanger core"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.049",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.098",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.049",
+          "CITADEL | roof exchanger upright cooling fin"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.050",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.100",
+        "CITADEL | crown cheek branching trace bar.101",
+        "CITADEL | crown cheek protected trace tablet.050",
+        "CITADEL | crown cheek raised trace rail.100",
+        "CITADEL | crown cheek raised trace rail.101",
+        "CITADEL | crown cheek seated keyed trace seal.050"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.100",
+          "CITADEL | sealed roof heat-exchanger core"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.100",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.101",
+          "CITADEL | sealed roof heat-exchanger core"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.101",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.050",
+          "CITADEL | sealed roof heat-exchanger core"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.050",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.100",
+          "CITADEL | roof exchanger upright cooling fin"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.101",
+          "CITADEL | sealed roof heat-exchanger core"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.050",
+          "CITADEL | roof exchanger upright cooling fin"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.051",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.102",
+        "CITADEL | crown cheek branching trace bar.103",
+        "CITADEL | crown cheek protected trace tablet.051",
+        "CITADEL | crown cheek raised trace rail.102",
+        "CITADEL | crown cheek raised trace rail.103",
+        "CITADEL | crown cheek seated keyed trace seal.051"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet.051",
+          "CITADEL | exchanger protective clamp rail.001"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.052",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.104",
+        "CITADEL | crown cheek branching trace bar.105",
+        "CITADEL | crown cheek protected trace tablet.052",
+        "CITADEL | crown cheek raised trace rail.104",
+        "CITADEL | crown cheek raised trace rail.105",
+        "CITADEL | crown cheek seated keyed trace seal.052"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.105",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.105",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.052",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.052",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.052",
+          "CITADEL | exchanger protective clamp rail.002"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.104",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.105",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.052",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.053",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.106",
+        "CITADEL | crown cheek branching trace bar.107",
+        "CITADEL | crown cheek protected trace tablet.053",
+        "CITADEL | crown cheek raised trace rail.106",
+        "CITADEL | crown cheek raised trace rail.107",
+        "CITADEL | crown cheek seated keyed trace seal.053"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.106",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.106",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.107",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.107",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.053",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.053",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.106",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.053",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.054",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.108",
+        "CITADEL | crown cheek branching trace bar.109",
+        "CITADEL | crown cheek protected trace tablet.054",
+        "CITADEL | crown cheek raised trace rail.108",
+        "CITADEL | crown cheek raised trace rail.109",
+        "CITADEL | crown cheek seated keyed trace seal.054"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.108",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.108",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.109",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.109",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.054",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.054",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.108",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.054",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.055",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.110",
+        "CITADEL | crown cheek branching trace bar.111",
+        "CITADEL | crown cheek protected trace tablet.055",
+        "CITADEL | crown cheek raised trace rail.110",
+        "CITADEL | crown cheek raised trace rail.111",
+        "CITADEL | crown cheek seated keyed trace seal.055"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.110",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.110",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.055",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.055",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.055",
+          "CITADEL | exchanger protective clamp rail.003"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.110",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.111",
+          "CITADEL | sealed roof heat-exchanger core.001"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.055",
+          "CITADEL | roof exchanger upright cooling fin.011"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.057",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.114",
+        "CITADEL | crown cheek branching trace bar.115",
+        "CITADEL | crown cheek protected trace tablet.057",
+        "CITADEL | crown cheek raised trace rail.114",
+        "CITADEL | crown cheek raised trace rail.115",
+        "CITADEL | crown cheek seated keyed trace seal.057"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.115",
+          "CITADEL | sealed roof heat-exchanger core.002"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.115",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.057",
+          "CITADEL | sealed roof heat-exchanger core.002"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.057",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.057",
+          "CITADEL | exchanger protective clamp rail.004"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.114",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.115",
+          "CITADEL | sealed roof heat-exchanger core.002"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.057",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.058",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.116",
+        "CITADEL | crown cheek branching trace bar.117",
+        "CITADEL | crown cheek protected trace tablet.058",
+        "CITADEL | crown cheek raised trace rail.116",
+        "CITADEL | crown cheek raised trace rail.117",
+        "CITADEL | crown cheek seated keyed trace seal.058"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.116",
+          "CITADEL | sealed roof heat-exchanger core.002"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.116",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.117",
+          "CITADEL | sealed roof heat-exchanger core.002"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.117",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.058",
+          "CITADEL | sealed roof heat-exchanger core.002"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.058",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.116",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.058",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.059",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.118",
+        "CITADEL | crown cheek branching trace bar.119",
+        "CITADEL | crown cheek protected trace tablet.059",
+        "CITADEL | crown cheek raised trace rail.118",
+        "CITADEL | crown cheek raised trace rail.119",
+        "CITADEL | crown cheek seated keyed trace seal.059"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.118",
+          "CITADEL | sealed roof heat-exchanger core.002"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.118",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.119",
+          "CITADEL | sealed roof heat-exchanger core.002"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.119",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.059",
+          "CITADEL | sealed roof heat-exchanger core.002"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.059",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.118",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.059",
+          "CITADEL | roof exchanger upright cooling fin.022"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.060",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.120",
+        "CITADEL | crown cheek branching trace bar.121",
+        "CITADEL | crown cheek protected trace tablet.060",
+        "CITADEL | crown cheek raised trace rail.120",
+        "CITADEL | crown cheek raised trace rail.121",
+        "CITADEL | crown cheek seated keyed trace seal.060"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet.060",
+          "CITADEL | crown edge cast retaining shoe.034"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.068",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.136",
+        "CITADEL | crown cheek branching trace bar.137",
+        "CITADEL | crown cheek protected trace tablet.068",
+        "CITADEL | crown cheek raised trace rail.136",
+        "CITADEL | crown cheek raised trace rail.137",
+        "CITADEL | crown cheek seated keyed trace seal.068"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet.068",
+          "CITADEL | crown edge cast retaining shoe.048"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.077",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.154",
+        "CITADEL | crown cheek branching trace bar.155",
+        "CITADEL | crown cheek protected trace tablet.077",
+        "CITADEL | crown cheek raised trace rail.154",
+        "CITADEL | crown cheek raised trace rail.155",
+        "CITADEL | crown cheek seated keyed trace seal.077"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet.077",
+          "CITADEL | exchanger protective clamp rail.010"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.078",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.156",
+        "CITADEL | crown cheek branching trace bar.157",
+        "CITADEL | crown cheek protected trace tablet.078",
+        "CITADEL | crown cheek raised trace rail.156",
+        "CITADEL | crown cheek raised trace rail.157",
+        "CITADEL | crown cheek seated keyed trace seal.078"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.156",
+          "CITADEL | sealed roof heat-exchanger core.005"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.156",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.157",
+          "CITADEL | sealed roof heat-exchanger core.005"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.157",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.078",
+          "CITADEL | sealed roof heat-exchanger core.005"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.078",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.157",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.078",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.079",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.158",
+        "CITADEL | crown cheek branching trace bar.159",
+        "CITADEL | crown cheek protected trace tablet.079",
+        "CITADEL | crown cheek raised trace rail.158",
+        "CITADEL | crown cheek raised trace rail.159",
+        "CITADEL | crown cheek seated keyed trace seal.079"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.158",
+          "CITADEL | sealed roof heat-exchanger core.005"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.158",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.159",
+          "CITADEL | sealed roof heat-exchanger core.005"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.159",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.079",
+          "CITADEL | sealed roof heat-exchanger core.005"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.079",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.159",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.079",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.080",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.160",
+        "CITADEL | crown cheek branching trace bar.161",
+        "CITADEL | crown cheek protected trace tablet.080",
+        "CITADEL | crown cheek raised trace rail.160",
+        "CITADEL | crown cheek raised trace rail.161",
+        "CITADEL | crown cheek seated keyed trace seal.080"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.160",
+          "CITADEL | sealed roof heat-exchanger core.005"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.160",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.161",
+          "CITADEL | sealed roof heat-exchanger core.005"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.161",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.080",
+          "CITADEL | sealed roof heat-exchanger core.005"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.080",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.160",
+          "CITADEL | sealed roof heat-exchanger core.005"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.161",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.080",
+          "CITADEL | roof exchanger upright cooling fin.065"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.081",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.162",
+        "CITADEL | crown cheek branching trace bar.163",
+        "CITADEL | crown cheek protected trace tablet.081",
+        "CITADEL | crown cheek raised trace rail.162",
+        "CITADEL | crown cheek raised trace rail.163",
+        "CITADEL | crown cheek seated keyed trace seal.081"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet.081",
+          "CITADEL | exchanger protective clamp rail.011"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.082",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.164",
+        "CITADEL | crown cheek branching trace bar.165",
+        "CITADEL | crown cheek protected trace tablet.082",
+        "CITADEL | crown cheek raised trace rail.164",
+        "CITADEL | crown cheek raised trace rail.165",
+        "CITADEL | crown cheek seated keyed trace seal.082"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.165",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.165",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.082",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.082",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.082",
+          "CITADEL | exchanger protective clamp rail.012"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.164",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.165",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.082",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.083",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.166",
+        "CITADEL | crown cheek branching trace bar.167",
+        "CITADEL | crown cheek protected trace tablet.083",
+        "CITADEL | crown cheek raised trace rail.166",
+        "CITADEL | crown cheek raised trace rail.167",
+        "CITADEL | crown cheek seated keyed trace seal.083"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.166",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.166",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.167",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.167",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.083",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.083",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.167",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.083",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.084",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.168",
+        "CITADEL | crown cheek branching trace bar.169",
+        "CITADEL | crown cheek protected trace tablet.084",
+        "CITADEL | crown cheek raised trace rail.168",
+        "CITADEL | crown cheek raised trace rail.169",
+        "CITADEL | crown cheek seated keyed trace seal.084"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.168",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.168",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.169",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.169",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.084",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.084",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.169",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.084",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.085",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.170",
+        "CITADEL | crown cheek branching trace bar.171",
+        "CITADEL | crown cheek protected trace tablet.085",
+        "CITADEL | crown cheek raised trace rail.170",
+        "CITADEL | crown cheek raised trace rail.171",
+        "CITADEL | crown cheek seated keyed trace seal.085"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.170",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.170",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.085",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.085",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.085",
+          "CITADEL | exchanger protective clamp rail.013"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.170",
+          "CITADEL | sealed roof heat-exchanger core.006"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.171",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.085",
+          "CITADEL | roof exchanger upright cooling fin.076"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.087",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.174",
+        "CITADEL | crown cheek branching trace bar.175",
+        "CITADEL | crown cheek protected trace tablet.087",
+        "CITADEL | crown cheek raised trace rail.174",
+        "CITADEL | crown cheek raised trace rail.175",
+        "CITADEL | crown cheek seated keyed trace seal.087"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.175",
+          "CITADEL | sealed roof heat-exchanger core.007"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.175",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.087",
+          "CITADEL | sealed roof heat-exchanger core.007"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.087",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.087",
+          "CITADEL | exchanger protective clamp rail.014"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.174",
+          "CITADEL | sealed roof heat-exchanger core.007"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.175",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.087",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.088",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.176",
+        "CITADEL | crown cheek branching trace bar.177",
+        "CITADEL | crown cheek protected trace tablet.088",
+        "CITADEL | crown cheek raised trace rail.176",
+        "CITADEL | crown cheek raised trace rail.177",
+        "CITADEL | crown cheek seated keyed trace seal.088"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.176",
+          "CITADEL | sealed roof heat-exchanger core.007"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.176",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.177",
+          "CITADEL | sealed roof heat-exchanger core.007"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.177",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.088",
+          "CITADEL | sealed roof heat-exchanger core.007"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.088",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.177",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.088",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.089",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.178",
+        "CITADEL | crown cheek branching trace bar.179",
+        "CITADEL | crown cheek protected trace tablet.089",
+        "CITADEL | crown cheek raised trace rail.178",
+        "CITADEL | crown cheek raised trace rail.179",
+        "CITADEL | crown cheek seated keyed trace seal.089"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek branching trace bar.178",
+          "CITADEL | sealed roof heat-exchanger core.007"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.178",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.179",
+          "CITADEL | sealed roof heat-exchanger core.007"
+        ],
+        [
+          "CITADEL | crown cheek branching trace bar.179",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.089",
+          "CITADEL | sealed roof heat-exchanger core.007"
+        ],
+        [
+          "CITADEL | crown cheek protected trace tablet.089",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ],
+        [
+          "CITADEL | crown cheek raised trace rail.179",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ],
+        [
+          "CITADEL | crown cheek seated keyed trace seal.089",
+          "CITADEL | roof exchanger upright cooling fin.087"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.090",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.180",
+        "CITADEL | crown cheek branching trace bar.181",
+        "CITADEL | crown cheek protected trace tablet.090",
+        "CITADEL | crown cheek raised trace rail.180",
+        "CITADEL | crown cheek raised trace rail.181",
+        "CITADEL | crown cheek seated keyed trace seal.090"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet.090",
+          "CITADEL | crown edge cast retaining shoe.041"
+        ]
+      ]
+    },
+    {
+      "mount": "CITADEL | crown cheek seated cast trace field.098",
+      "meshes": [
+        "CITADEL | crown cheek branching trace bar.196",
+        "CITADEL | crown cheek branching trace bar.197",
+        "CITADEL | crown cheek protected trace tablet.098",
+        "CITADEL | crown cheek raised trace rail.196",
+        "CITADEL | crown cheek raised trace rail.197",
+        "CITADEL | crown cheek seated keyed trace seal.098"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | crown cheek protected trace tablet.098",
+          "CITADEL | crown edge cast retaining shoe.055"
+        ]
+      ]
+    },
+    {
+      "optional_cell": "front-9-15",
+      "meshes": [
+        "CITADEL | cast service-rite relief tablet.011",
+        "CITADEL | tablet protected signal trace.004",
+        "CITADEL | tablet protected signal trace.005",
+        "CITADEL | tablet signal trace terminal.004",
+        "CITADEL | tablet signal trace terminal.005"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | cast service-rite relief tablet.011",
+          "CITADEL | facade service transom return"
+        ]
+      ]
+    },
+    {
+      "optional_cell": "front-17-15",
+      "meshes": [
+        "CITADEL | cast service-rite relief tablet.019",
+        "CITADEL | tablet protected signal trace.006",
+        "CITADEL | tablet protected signal trace.007",
+        "CITADEL | tablet signal trace terminal.006",
+        "CITADEL | tablet signal trace terminal.007"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | cast service-rite relief tablet.019",
+          "CITADEL | facade service transom return.001"
+        ]
+      ]
+    },
+    {
+      "optional_cell": "rear-2-9",
+      "meshes": [
+        "CITADEL | rear cast service-rite tablet.029",
+        "CITADEL | rear cast octagonal tamper seal.011",
+        "CITADEL | rear seal retained center pin.011"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | rear cast service-rite tablet.029",
+          "CITADEL | rear power cabinet founded conduit"
+        ],
+        [
+          "CITADEL | rear cast octagonal tamper seal.011",
+          "CITADEL | rear power cabinet founded conduit"
+        ],
+        [
+          "CITADEL | rear seal retained center pin.011",
+          "CITADEL | rear power cabinet founded conduit"
+        ]
+      ]
+    },
+    {
+      "optional_cell": "rear-12-9",
+      "meshes": [
+        "CITADEL | rear cast service-rite tablet.054",
+        "CITADEL | rear cast octagonal tamper seal.023",
+        "CITADEL | rear seal retained center pin.023"
+      ],
+      "contacts_repaired": [
+        [
+          "CITADEL | rear cast service-rite tablet.054",
+          "CITADEL | rear power cabinet founded conduit.001"
+        ],
+        [
+          "CITADEL | rear cast octagonal tamper seal.023",
+          "CITADEL | rear power cabinet founded conduit.001"
+        ],
+        [
+          "CITADEL | rear seal retained center pin.023",
+          "CITADEL | rear power cabinet founded conduit.001"
+        ]
+      ]
+    },
+    {
+      "redundant_fastener": "CITADEL | facade cartridge retained face stud.003",
+      "reason": "Harness anchor replaces the old stud at the same fastening site.",
+      "contacts_repaired": [
+        [
+          "CITADEL | facade cartridge retained face stud.003",
+          "CITADEL | loom saddle column retained anchor.004"
+        ]
+      ]
+    },
+    {
+      "redundant_fastener": "CITADEL | facade cartridge retained face stud.008",
+      "reason": "Harness anchor replaces the old stud at the same fastening site.",
+      "contacts_repaired": [
+        [
+          "CITADEL | facade cartridge retained face stud.008",
+          "CITADEL | loom saddle column retained anchor.010"
+        ]
+      ]
+    }
+  ],
+  "removed_mount_count": 62,
+  "surviving_geometry_still_fully_audited": true,
+  "unwanted_contacts_not_whitelisted": true
+}

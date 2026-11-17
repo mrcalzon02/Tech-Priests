@@ -1,0 +1,9 @@
+{
+  "candidate_source_sha256": "6be42c95040f44972f1933caf7bd288ec2d48dd959fea9814e1bfaf6bdfeb63e",
+  "process_terminal": true,
+  "engine_log_end": "Quitting: user-quit",
+  "full_capture_complete": false,
+  "no_runtime_Lua_failure_in_log": true,
+  "partial_evidence_preserved": true,
+  "retry_authorized_goal_continues": true
+}

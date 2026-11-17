@@ -1,0 +1,10 @@
+{
+  "active": true,
+  "scope": "Factorio GUI clients for this goal",
+  "reason": "Owner is doing active work; prior test windows interrupted it.",
+  "owner_message": "Yes, you were interrupting active work.",
+  "do_not_launch_again_until_owner_ready": true,
+  "headless_final_v12_checks_already_passed": true,
+  "model_source_and_glb_clearance_passed": true,
+  "whole_goal_paused": false
+}

@@ -5,6 +5,25 @@
 **Packaged baseline:** `0.1.672`  
 **Active development lane:** `0.1.674-dev`
 
+## 2026-11-17 - Citadel V12 source/clearance complete; owner GUI hold
+
+Finished the complete fixed-interface review and fitting repairs. Final
+4022meshes/581772triangles,30 packed/embedded FMPL
+maps and33 genuine GLB sprites pass source/export/channel checks. Every source
+and runtime raw contact is explicitly adjudicated across387/385 half-frame
+poses; no foreign moving or rejected fixed contacts remain. Source/evidence:
+art/source-to-3d/citadel-manufactoreo/v12.
+
+Actual final-art headless Factorio checks pass all three recipes, four-sided
+ordinary belt/inserter logistics, native modules/circuits, all operating holds
+and recovery, real building craft/place/mine. Final GUI capture is incomplete:
+the owner closed two test clients because they interrupted active work. Keep
+Factorio GUI closed until the owner is ready. Preserve the partial native run
+honestly; do not substitute prior V11's315PNG/reload proof for final V12 proof.
+Existing V11 production is preserved. Final V12 sprites are staged with the
+reviewed source/export. Final client/operated reload and machine completion
+remain pending; the whole goal remains active. Concurrent work/index untouched.
+
 ## 2026-11-17 - Citadel native operational art integration V11
 
 Installed the enclosed FMPL cathedral's fixed-north32-frame animation and idle

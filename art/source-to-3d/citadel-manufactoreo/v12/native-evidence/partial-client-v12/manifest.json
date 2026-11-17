@@ -1,0 +1,1767 @@
+{
+  "complete_capture": false,
+  "candidate_source_sha256": "6be42c95040f44972f1933caf7bd288ec2d48dd959fea9814e1bfaf6bdfeb63e",
+  "candidate_runtime_sha256": "227a991cd12f731ceae48181ddd74e8b1f10aea1b2509cebed2da68ef9025579",
+  "one_preserved_terminal_attempt_only": true,
+  "engine_end": "Quitting: user-quit",
+  "owner_confirmed_closing_test_windows_because_they_interrupted_active_work": true,
+  "valid_partial_pngs": 219,
+  "images": [
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-circuits.png",
+      "sha256": "4af75260dd836634d2e035d0df8cb6540e842e4184d1b1d2e4f4243c6349e788",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-console.png",
+      "sha256": "788495e22e2ed71acc5c84c90725767e6a82aba54bd37924499a7dc54687202d",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-empty-a.png",
+      "sha256": "628344b3ea80db6822986c689cd0cee73a21b9def36631eb06d210bf4ba10604",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-empty-b.png",
+      "sha256": "455667f60074b9721a252ed7b61228456df763af5e6099c3926a20817ce4cec9",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-logistics.png",
+      "sha256": "e0bc833f851e76cb0224996be7916edb4512f3cb967f341fef2fdf1134b56f72",
+      "dimensions": [
+        1280,
+        1280
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-empty-a.png",
+      "sha256": "9ae96ded7477ff453b815cf2cd00df4441a2512dbd31849c0869d883dd6797e1",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-empty-b.png",
+      "sha256": "c54985252712c614a1458ed91dc22e020ad7797bcbdd8e7d4f870ccea537a8cd",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-00.png",
+      "sha256": "e2462f3de7e86328abb1b35a7cc5a463acbf9bbe6e5b5aba1a2f9151ea5326fd",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-01.png",
+      "sha256": "868bed4b3f28a17c0412fa2e27ff00495ea5d6fc8a948ec0c12790064a3ccf46",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-02.png",
+      "sha256": "42d2c911bcabe90d9fb2e9e01f93ace460a47a96f996c92050a5b3b2ee669598",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-03.png",
+      "sha256": "6901e470f4ed722d3a2cc4c9d97551028ecc222251afa669e2aba616f9febb35",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-04.png",
+      "sha256": "0831e78a226fd5eaa4275fc59372d120b0071017a9f6796a705e92a3465dcd58",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-05.png",
+      "sha256": "5d96f7b487c1dac499ee561de52ec885057e1f26f59fb84dd9e75f54ce1baabb",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-06.png",
+      "sha256": "1de628d3ecdec5744ecddc307d5c1d79789a9bd9a0a8a0c780c53ed502441e37",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-07.png",
+      "sha256": "4cc7707874324a3367dd69cb0ea08d2c3ad220250869edff22d0d01c67f8d6e5",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-08.png",
+      "sha256": "e40e62d3dcb0bbdac1a9a7e9543ed91d77625d1ab614cad4b8d0ef8d9d71106b",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-09.png",
+      "sha256": "3f29919daf45abcf85eddbd429aaa0bf16a0c57a9d8398986665db19bcd6d2d4",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-10.png",
+      "sha256": "f7d612e4285695f9ca97eb1a3ecad58adcd5709b5fa0cfdcda49ea9c87a384c9",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-11.png",
+      "sha256": "c3280134fb6006e4b6fd9eda08499ab8df51a3814da805b9d2f20890a1289a9e",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-12.png",
+      "sha256": "7a7b82ef461ce4a8136e0c642baabe3e9fc335ed5ae24b26416fceff9c24960f",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-13.png",
+      "sha256": "b91bb27a58e24d48a44063361f2700c4bdda5862b4a949713c8ed1280ffea5be",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-14.png",
+      "sha256": "07ca9e496fd620296f8b75c5e13b84b2b5c47f9bcce69c3ac53cfc93b57aa0e6",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-15.png",
+      "sha256": "faa9230bb7e4069d0161f11065092c0954c33efdb6e90eff8d04d9fdc83980b7",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-16.png",
+      "sha256": "3d616018e1eed6ff7388651661aa3802c6772d54f3516000e533ef15d8158baa",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-17.png",
+      "sha256": "3d23b895f818e0f827f514959ccc2318273fec13c9906dca8c4d984e8fa9b79e",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-18.png",
+      "sha256": "2d1546d9e20bdd9c62bc007a7f1a5e77bb8bd8d00f1bbdf45c17ff0dc8917c7d",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-19.png",
+      "sha256": "4b864f58ba7ff0bdfb0003bb7b74b1c013e65e4e65255a8d6a95e06e0ede30b4",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-20.png",
+      "sha256": "d1357133d5217daa0eb8b2a38dcccb3215b9825cb6fa949a1936eae1806b1e3d",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-21.png",
+      "sha256": "670a53d7c6ec82131f060caf99130ff2734e4e0e87cacc487b6163c02b80abad",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-22.png",
+      "sha256": "df66951050699811035b65fe3646b0c88957ce5c3a9e828918bec44501cb3709",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-23.png",
+      "sha256": "10c27b7b3dde057c01a9e9199e428f2386ca1f6d436dacf4889c8385d9a1c205",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-24.png",
+      "sha256": "d5e9f739b6e2e5b75f3a835263309f9a3c1f01aa2ca4504a2732423da8b55052",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-25.png",
+      "sha256": "31c4e0873c5a0b5440faa45f2241ff4cc18dc5c00860349e1c124f82a47eac3c",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-26.png",
+      "sha256": "8dcaa86649057be001ab358645c7c7dce22ddd1529ec293bfb79fef4acd377dd",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-27.png",
+      "sha256": "9765081612010908392fc102fc62ce445f78bc3cb3b106cfa6c398fcc835497c",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-28.png",
+      "sha256": "79f260c6c64109c08c0b5db9f5399f87ad86571b63d8a61896e5b993af97ece1",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-29.png",
+      "sha256": "4e0d92bf0cac2c48b3400adf3a7ee50544d57498334846216c8cb478a240e3cc",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-30.png",
+      "sha256": "b1e881db5a3d948fd0da716da3c6da49d05766a960c7e4168a8e7b9f8e2bdc59",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-motion-31.png",
+      "sha256": "6624b5430713ea1b1af9d716087afcbb0a8759ea701f735188bfa191ac75d84c",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-mechanism-working.png",
+      "sha256": "e2462f3de7e86328abb1b35a7cc5a463acbf9bbe6e5b5aba1a2f9151ea5326fd",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-00.png",
+      "sha256": "8572e7d403e7f2df9f6ac1c292da8dd18aae9152836637f90f06e7e7907fabf1",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-01.png",
+      "sha256": "4c47d9295904c7abfe049e19a4ae37655d767eeff0114cbdca801cdd496d82d7",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-02.png",
+      "sha256": "4e9fe5ce06823fc855f8dea8f29717454a3d1ec77a9c30e412af7b218fabd884",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-03.png",
+      "sha256": "8917ea9772502c73801b211dfb87eda83987df25ca8f877b6c61dfe1c5b8547a",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-04.png",
+      "sha256": "8340adf62b3fdbb71f5eee6a90f1f6a1c9f573ce8fce5cda31cb1592afa8f21e",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-05.png",
+      "sha256": "118c79fb712d3f05012de89152706573ca118ef9a86d08ee9e013c09b26edfa2",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-06.png",
+      "sha256": "5f79bd5f278b4831619b77f903275d3e074a9c68758133f8edb43865defa5aac",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-07.png",
+      "sha256": "529eb52a3c75ebb0a539f81d1bda43d83666419d9e75df38b148983215cb9735",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-08.png",
+      "sha256": "61ab600127b1f5b8789f94b2155827fd7696438ee89cf817c99527d20f214d99",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-09.png",
+      "sha256": "772406df93b13a4323c84d246e0e89955ff617f000138f22a8b7443591bc8b99",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-10.png",
+      "sha256": "b0a1c0282bbf1dc558674a72fb325d1d9329189daed06f956616244d576a231d",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-11.png",
+      "sha256": "4f168632d807ab306eb6ce96ebe9c829da34c2e6329502f439fcaa23d12077e4",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-12.png",
+      "sha256": "5c54ed4ec5a64fb0dd6453b4ebd4723b7c22841859e11422a915151ccd12b25b",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-13.png",
+      "sha256": "2f25196c1b22edbb967e416b0673741653816231d913136faba21d1dd9eff3f8",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-14.png",
+      "sha256": "c46be077a6c1a465f12d883312cb391999264a4b128fb282a74df399b8bac9ac",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-15.png",
+      "sha256": "02dd0b21019787bbc4413ec61f0ca617d6dc20d7fcc7ad2b323dbb6419f48a10",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-16.png",
+      "sha256": "1ce8f3ccee69c24b80cf3defe789208f28801b8eb98009cf660e342f137a92c2",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-17.png",
+      "sha256": "6515f7675a98e6ba153f1cd8dfb3c6dfdadb094ff342c6f0bfcf4baa7e26feae",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-18.png",
+      "sha256": "40701aec263158a47cfbe01b9575b755cb3bba1342ebc12e10d15ddeae851a3c",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-19.png",
+      "sha256": "5e498a8d74077e5cbebef4bc13c33a32913eceae9aaaa5e59b6e4611d09e9250",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-20.png",
+      "sha256": "f0f70c683d332c230defa4c748eed28ebfd45cdbef9989aafece05a01992b7ec",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-21.png",
+      "sha256": "76322761c1d2ba2f8348adc817b6f1704b15fc3e5b6f31078e7fe549f384c9d4",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-22.png",
+      "sha256": "2f7d6d00cda2206ce8d114abe43527cc5a758fae1c8986dce46bf459d085443a",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-23.png",
+      "sha256": "50842d7c5e2850b1fdada5904e7cfb686a03f1b2f8cd7cb443451dc5d3195121",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-24.png",
+      "sha256": "b32c91218e3a48c7bfdf38aabf2d874e3003ce3fda5acc5ab84ca0e13365fa63",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-25.png",
+      "sha256": "344813b9a7dc67998db0d5dae106a3d489da345ce9011351e385871fa363cbf6",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-26.png",
+      "sha256": "14d68d1782d0438da53d7636aee6bedba051f88d82c54f6237b37aec6bc5f123",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-27.png",
+      "sha256": "4b44ec19b226a790723d7a76e27f5763a30c64cb95b70a528944ffeb6250213e",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-28.png",
+      "sha256": "98ff74e60043631d7f2e85a9c7e25a02e59138d3a18e62ce3e7dc5075a025cf8",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-29.png",
+      "sha256": "2d4e1df88ebb8118d4555be42a38ec44f3cd9aa7f582baf60a21c537fbfd757f",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-30.png",
+      "sha256": "c23518ba74ec77b6e58921cf85e906aa0a49d6d3c3cc895cb16a0d839bae41ed",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-motion-31.png",
+      "sha256": "3705e43a1219f4b9440b1b31c93a1c789e27e112818d8f8fe59a20ce97ff38e8",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-fragment-from-asteroid-chunk-working.png",
+      "sha256": "8572e7d403e7f2df9f6ac1c292da8dd18aae9152836637f90f06e7e7907fabf1",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-circuits.png",
+      "sha256": "4bcdadc5af3eaef9b33631dfcf34bf3711a0675d09847bba73838b2cfa49c4e3",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-console.png",
+      "sha256": "1ae71e03517da1b268f41665f4fb7ff0ff18f3f4b3ab9c5d0097de223815d512",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-empty-a.png",
+      "sha256": "b064c5ece4fb877f604c7939343ea03e5229945841e3f17fa3a601185d1793eb",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-empty-b.png",
+      "sha256": "cbedaf92b41805311beb863cdd1042e0f1b542f2163fcbb93706a463c39d6c2d",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-logistics.png",
+      "sha256": "a783a54b88ae74a4907d637f8bd3f77dc63149a31c615f640a6ca706ac23ffc9",
+      "dimensions": [
+        1280,
+        1280
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-empty-a.png",
+      "sha256": "c85cc4abc8b08db883b36307bbdc667e5f420d54d814731e84d396f3393bd38f",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-empty-b.png",
+      "sha256": "760834508361b1f0138306dddc5f52c7e8c02a47893fc41e10826cce55a86a81",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-00.png",
+      "sha256": "45358686fbef565d0b6a42bbc4b0e0309420f788a33f6a4f019504b396cbcc38",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-01.png",
+      "sha256": "3f1f29c03d93f8a927f9382896fcb80cc42c7dadf91ad56eb9bd8c74274b124e",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-02.png",
+      "sha256": "8075b2e23a509b4c9795e94ef719f45c26a18533f7d277634c8788149a13420f",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-03.png",
+      "sha256": "1a6d329c1ee0899a9705f1d152cd158b8e19019bdf7ec2053c91dd4c324f6800",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-04.png",
+      "sha256": "9783a55f59d10a7fc1a9bb09a42ec34935bf34f379b6260f6019fcaa4a0ec0d5",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-05.png",
+      "sha256": "4090a6e5ccd858a23143302d65961037be3b605cdd31db5eb2e1b220d1b708ce",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-06.png",
+      "sha256": "6d970344d4e168446979d14f907266dafd4aa98f7d36417a4739a6e2b06da7f9",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-07.png",
+      "sha256": "5bb5ab7a9b8c3fb7b093d7e8fb64b764252578f5f7170c724f5e93a62d9eefdf",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-08.png",
+      "sha256": "c8fa95f090c621cbd5cc48e6b459357daa6f5fa50c9f5121f95b004b17d94e31",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-09.png",
+      "sha256": "28474c08b5a0e5c95c8f7c0bb21b8ac93ebe6ced61ecd50a659d50bde625c9a9",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-10.png",
+      "sha256": "11cbafc5c1f023842cb0c360d499767f9b157d6fbe5286f1649c0a2ce6159c16",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-11.png",
+      "sha256": "852e7c9e3cc09caaa71bd4eb3a76c5d18e1a9e4f90fa0e38cbeda97236fec4f4",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-12.png",
+      "sha256": "92d46991adea48e92119fd19386225176d03ee6bae7a608d8b484061bed09bad",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-13.png",
+      "sha256": "62c51f3fb75562d1784b5b53f5bdcfd5dcc45a8f2dea0eb5d5add6f875e67027",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-14.png",
+      "sha256": "c48e1c048707a86b03a58b0dfc86a811e382b36ceacbaccead40fd57f41a3deb",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-15.png",
+      "sha256": "cbe9680243fddea6d481f42c59905614c2b91a4c0ee98f34e119ba5be87be8f6",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-16.png",
+      "sha256": "a651edeeaa217161a2ec596896e3156490ab1aaca5a4fdcf6d05023a3b41c78b",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-17.png",
+      "sha256": "37b209e5a95970e9b10e9aab752f85b5042968364231494d1c020fe413a67c6e",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-18.png",
+      "sha256": "0d415e4ab9e1e97eb300b82843958b4a0afddf20e73b6538fcd19620d82e0027",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-19.png",
+      "sha256": "69073a0dfe370c4f99c7fcf1a5a7e2847c16ac8e19889b0d9916fe816c074555",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-20.png",
+      "sha256": "9040911db0ef506ee59fa0122a75611c331c4c04197a85b849af9852c4bf9938",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-21.png",
+      "sha256": "09bbd5247df0e5a5a0596cdd79519f4e986678250e483ee2f550343a1bcdd891",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-22.png",
+      "sha256": "10b4b4b96b5867206ce2e97b039fd62ee1b5b81ad2ae3bf33ffd649408817325",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-23.png",
+      "sha256": "700daafc4d37654d5f4836c79ff65cb1e8da3600e0ad248cd35db396da19fd46",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-24.png",
+      "sha256": "ea198cfe5eb9838644bdeba20ec45dce982ddc93b78ac19ed9b39c34dda3ff44",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-25.png",
+      "sha256": "ef62821d3a3170c70c7f6d89d241151d9d24bde64c8d19483d49a74c717792ac",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-26.png",
+      "sha256": "a20aab24cd0aea6032385d61642eb035ed107cf9b2bf8e2766ac6d298822021b",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-27.png",
+      "sha256": "37a600543c495bca296928cc8ca1152a3962800ba463cb4f56c9cb8fe21399f1",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-28.png",
+      "sha256": "8257bb6a3c65dcb76e96f30eefecaceec538c9fd028ea821c43ab2fcb036e4a0",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-29.png",
+      "sha256": "b9a91de6a68d65188f6408db554b7a63f684c04b75a4220ad0b9ac639fafea73",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-30.png",
+      "sha256": "1e35b6005a442938ec15bb3e52c88a1e14f4a5b72ec248bcae90343103a3850f",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-motion-31.png",
+      "sha256": "7151e44d07d66da666555449740bd107e0abab0f683f4db0a7fcbf0f83891d18",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-mechanism-working.png",
+      "sha256": "45358686fbef565d0b6a42bbc4b0e0309420f788a33f6a4f019504b396cbcc38",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-00.png",
+      "sha256": "b31332823e0ba7877aa4a1268b2ce5cf17a5a9caac3fa85327220a43296a78e5",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-01.png",
+      "sha256": "3770e6005b8af43a7fd9e11ae7aad55ea50f59e4c59682210208b24cf8401870",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-02.png",
+      "sha256": "71a1505484a6954f08b8c89eb67c4371797bc3dc39ab1cd4bd47190469e4788c",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-03.png",
+      "sha256": "6e272a09df60b31e04333a6717ed976dac83f22e9b55df0d049d7653ad26edfc",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-04.png",
+      "sha256": "9edf07ddee4a049c88361d15f14a062fad9082e74c922df8bd344796687ecf15",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-05.png",
+      "sha256": "97f3ce6eb1a2b3eb728dcc69a4774602767f87b7b2f5c339333f4531469cb38a",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-06.png",
+      "sha256": "e55b31fedfcdcdc31229d4f3699f72b1be9ceae439808255fda9811143b44c59",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-07.png",
+      "sha256": "68a7710022064946c422d7f121e621b70fb0c2eb82e4434c666f01d2b0e8fe44",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-08.png",
+      "sha256": "7328fec9a20e7dd5043b896e4ecceef02df80b679329ce86e4d259d3698ac3d7",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-09.png",
+      "sha256": "c651e2f4f6424adf3eb97605dee21e475800fbb9fd2c8f134be92947292834e3",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-10.png",
+      "sha256": "16e60eb91ef3b25162ca059cc37a73270380b721f4030dc82a0b81f318006bc5",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-11.png",
+      "sha256": "a4c7acbea498e3285236f36a84710b731912e8d37a28cd985a65a9c12e89de1d",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-12.png",
+      "sha256": "a374747a2ea03e0a2464baa95e47f9a6198ba9f0ae00c6e7f2790a1df5848ff0",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-13.png",
+      "sha256": "3013c88a0eaa07161b07d3680f59d13d31eb9f4867513fdfc03c22371be54a01",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-14.png",
+      "sha256": "05020c01bdaab8a0dac18c801fc6a5f0b2510d4eb67881bc1840292a455ba3ef",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-15.png",
+      "sha256": "a1e139a20606b3c7084e94f839ee800b3c0e3faee5093e0f080494ab6af40d26",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-16.png",
+      "sha256": "3d7210906ae9217f17e3cd83e8f8251b87e20f17c8d0bbb11a16b37628201139",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-17.png",
+      "sha256": "8c3316c050ab65f08da3b09717196e953cea8fa54488535b2c6728c937176e57",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-18.png",
+      "sha256": "b1d337282976f6ab10f6781f798fc8ae8c307d4c04a5ed79ddbf046fa5762e8c",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-19.png",
+      "sha256": "b30704c661dd64852bc4bc956e117b98fbf8b782315be443fc378d95d3ccd65f",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-20.png",
+      "sha256": "385c4d482557f4e3045d663a395c5ce11f6121b2bbf0e4a5bea5fea9a458fbd0",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-21.png",
+      "sha256": "66b8c2c2aa395f968d172d06b769cf23485843f6a4e74e1128733677ab3eb8e3",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-22.png",
+      "sha256": "4aaa34a32e89cc35d3701c48745ef861b87b79d40af5287b62b6d56a9bdd3bb1",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-23.png",
+      "sha256": "26ecb70cd7dfafd2bafa9dcebbf1abf0446a6b8112cbafca27434c17cc57bf38",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-24.png",
+      "sha256": "41d7b7c67776339a60ff8833a9719d2de1523be01d258c0795c45b616c79cd3a",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-25.png",
+      "sha256": "51cd896a83c81a11bd88119b2888124fe59a4cdb9e3cab85b5672d850a04fab1",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-26.png",
+      "sha256": "7fe306bcd72d3d1b113c52b918f4c5e673667f94b6a312cdcb07e34d735f5bd2",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-27.png",
+      "sha256": "d176439ffcda21a0c5cbed345be30855d41b2de94f2e2ef0c335aa99b8128cd9",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-28.png",
+      "sha256": "393a390142a41bc1b5cc4eb54137c5fcb91fb5887c305ab961e78f505360e5fa",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-29.png",
+      "sha256": "2d74b3a5948637976a32da511eb34fe4a9d31caedc959549d4a322fa562ae727",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-30.png",
+      "sha256": "ffd976c683949433cc068d02d20125f02db32b1510350f67b4f5e2c79e6eceae",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-motion-31.png",
+      "sha256": "9ae4e5857791c0d540ebcbd4656a30d6c2f5ea4619e61a18853d3c918d2fffe9",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "blackstone-slab-compression-working.png",
+      "sha256": "b31332823e0ba7877aa4a1268b2ce5cf17a5a9caac3fa85327220a43296a78e5",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-circuits.png",
+      "sha256": "28e4b92d061408bf3f0f3b865ba8394ece4c5e9fdd395dcfb0b29c298cf5fe60",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-console.png",
+      "sha256": "44a0c5910a696da3ef84ac1305b5233938cdf813606905d401292405bc92b23c",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-empty-a.png",
+      "sha256": "c137d430aab7a6001f797081443271e5c6c5dd31f1ac5e864499bed3f72b8ed5",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-empty-b.png",
+      "sha256": "40a0cff50c17c38859a5bd0c01d7c702fde4151e17e2a26064041f9f783222b5",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-logistics.png",
+      "sha256": "793a899c96b605817cf9210bf38426a064f9adde0533dcbaf0b9ea81a4a0e815",
+      "dimensions": [
+        1280,
+        1280
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-empty-a.png",
+      "sha256": "9d947f4722ff8532cdd0ba43a23505e7db6afe3dd348ef97c2fb6fed38618bff",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-empty-b.png",
+      "sha256": "17f4ee837f184ceba981a5bc38ebdd75bbbe4596e64c0271db62ac5392056bb7",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-00.png",
+      "sha256": "b24c32d9cd9b7b81fe5ea7a30e497a4c8dbdb39f8f4ba4846c3263fcea2ac964",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-01.png",
+      "sha256": "9631e582b854c8c5a065b127f9c951a3834c61c85fcd46c3dd14809bcd80e07c",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-02.png",
+      "sha256": "4e491dc6ce9924dfbd6263495f2dde0be980ca4f778abf984d7d8e1b50755183",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-03.png",
+      "sha256": "632ba59c14e6464d2a39215f7bb69c69f96e01a098400411b0fe8be0e1cfb680",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-04.png",
+      "sha256": "a9db3d081d1648af6edf47dabe64afb6daf2badd89eb0bef0942e9312b7e821f",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-05.png",
+      "sha256": "e964a1e964b7a9ac8746588432e6b411f7a3e6b03a82ef4c930dd2376b1d605c",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-06.png",
+      "sha256": "dadbc68e266f294732548d82f243e4fa0edc49b16ce8f567e2df1c0d6e9dec8a",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-07.png",
+      "sha256": "e3753935aebc142b6b1c13ab6425b0d9862ad1f83fc8030e3f121c249989a874",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-08.png",
+      "sha256": "5f35c097a59db147acfc86803541eaf2749380d9c859c2e6555da2d4933b1cc5",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-09.png",
+      "sha256": "1ac65c231d4d9e3fc78a1f30bf2e11453748dd80b10b018b5add82c8449e80ee",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-10.png",
+      "sha256": "a37c65319ed95efd5234829db5ca96415ee5a327b6fa784cc01e422224f3199d",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-11.png",
+      "sha256": "3bd9f3c63ad13a189bb1af5044f156e596735de6e109cc563f75744970b30617",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-12.png",
+      "sha256": "d20d0096610ac0684b4f9dbd943033ce60739fb5c9d24d3217b3fb1de4df5a7d",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-13.png",
+      "sha256": "1c5f84d6e749e552f371b4035fed9b7772f5deb02cd338acd37b9208e13fb093",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-14.png",
+      "sha256": "acc78c3cf2839a0505cdfca36b0e7ee0811e407bc64b12ad091034cf98c93d11",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-15.png",
+      "sha256": "ceaf9d049001b5df493dfb08b5a882b6cf9e4d8e36f0d0de64696062dc03ff4b",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-16.png",
+      "sha256": "024562d77db4c62b979eebd383fb57dffd935b637440e94afbc661a371e5b9b8",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-17.png",
+      "sha256": "604cf2be51f8acebc8250846c79d4baad8c352f1e608d5dd637a6eab68e6a77b",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-18.png",
+      "sha256": "04e73562711ef3157bdf7ffd97f0330e1447fe42cd40745dcabc2a2037b0e37f",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-19.png",
+      "sha256": "9d3d05e27216b5f009fdca8211b0e5f9dfa455e31b7694fc624623bfadf69d31",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-20.png",
+      "sha256": "dee64d8811200b4946071a458936b447809dc718f2593525a8c9222ef0a1a55c",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-21.png",
+      "sha256": "fdb9b0d3bebfdadefc1655f1f42ae89d842c8d8345c2936d290a69116ebf255e",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-22.png",
+      "sha256": "633f82753f84227ade9a10b04d6876ba70f6fc4b69ba50e1b8cf37b8b7b72e2b",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-23.png",
+      "sha256": "c1f83048cc6cfc1cc14853eb80c07e33d394e8afa07c7691c2e9333971aa5b2c",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-24.png",
+      "sha256": "b68b06f18b9f4b1e4ba8a6c952a24649cb00c61812ba37b6b031605c92ca440f",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-25.png",
+      "sha256": "b5488c0350a49c6dbeffa714df071bf2984311380db00e3cb0fb86533008938f",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-26.png",
+      "sha256": "169cd086644302157fbd0f7e9725473907f9461b8fe5a27db21f039bfb268d5e",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-27.png",
+      "sha256": "3d658f8a9f798f2bd0dbfc263931167c296d08d977d8309b884611ae586fdf49",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-28.png",
+      "sha256": "6f523686ab341490e89db79246a0f6c8211f153a0e4bcd677ed767131f01f64b",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-29.png",
+      "sha256": "6aeb0f7f93f5882af1ecb5bf11ad6e1ea85cb5985a416ca8609075d3e9c06663",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-30.png",
+      "sha256": "1e4dddf2fa70084a242e8ab6b3cc6943a34581a104b69fae45858fe4dd3cced1",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-motion-31.png",
+      "sha256": "9d15343ec6b38404c340a95d2fee41680fdb5bf5783e88b2c351df7c97568162",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-mechanism-working.png",
+      "sha256": "b24c32d9cd9b7b81fe5ea7a30e497a4c8dbdb39f8f4ba4846c3263fcea2ac964",
+      "dimensions": [
+        512,
+        512
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-00.png",
+      "sha256": "7c853f83f59b84045375ede13a2a0649d3c2301a2da4ae37fc859a267e215c20",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-01.png",
+      "sha256": "d153b7a1cde8bd57ab8794b54f5496dcd5b75eabff8d11351de0bead3e2e7881",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-02.png",
+      "sha256": "440a87b5b7bbd12756cd8c5a65d7a9e43681c85a7d69ed2f010659541a82cf13",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-03.png",
+      "sha256": "1e36ae6f0b6b3ed6b34460067d60ee055c34dc32e51b468ccccf3aa50194bb62",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-04.png",
+      "sha256": "2586edf88ae8d89538c014de078939b7f1782be0583f6267ce14b3a16c9fbc31",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-05.png",
+      "sha256": "ce57a11e87e1bfe059ab9a2b47c86525208f04fd33c41f493ace65fe2c690b0f",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-06.png",
+      "sha256": "fa4e578e1fc92813a5b3d108a7f6ca73a517ee3604eb51323977762caac5de10",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-07.png",
+      "sha256": "869d5fb53cc6957f84938b1b8d04b38b4b820afba910f587dfaf7e510272b2c8",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-08.png",
+      "sha256": "13693f80e59fcf3b1c7ed0efc12cde8d93796e861979e35406ccecdb2d6cb6c5",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-09.png",
+      "sha256": "115264c13efaa14d72b3e6df69f71a66571efaba882f01483892506b626e66f4",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-10.png",
+      "sha256": "ae3a1480bf9485cd223ddaa2051d013f17df2a7a5b7e57129e4cb502d6f763c2",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-11.png",
+      "sha256": "dd896e2820cb9190a5835828b39e570dae3e55d06422e62309181ba34420645a",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-12.png",
+      "sha256": "f91916c555d6c05a931ff3b3805f3deb86b59a66644f5c77b2bdea7b4af2ff83",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-13.png",
+      "sha256": "108468f3053ab6d1d564bfbf16241af5e50e706892384b4778a1592a8236d36f",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-14.png",
+      "sha256": "40a42c79e8e0a8dc933387f5467cbc337dd41e5bcbc1227237d170179f43c224",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-15.png",
+      "sha256": "01621897298ad7ff8097dcfce7057c5093b6eec90ddce6ac7908178ba751675b",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-16.png",
+      "sha256": "44c0335f663846556d23a4e6784486cd4f9e104a9dbad5ce0b3b845dfd0225bb",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-17.png",
+      "sha256": "f6eccc0e822cd13459a613a6001407fc2b358e3c81b6d50dab6a24388710b9cb",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-18.png",
+      "sha256": "4052acdffd0b1061318a43b0018ccf339cd76734ebf36139fa09f96913407a0f",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-19.png",
+      "sha256": "704db16096152ede7751f19a0da6d2bba89bb85cf00aa2a35df846b270c4945b",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-20.png",
+      "sha256": "a64467ead1c2aea4b776ea456b46e2c114c0ce6c01372b0ff2c22b8ca80ba742",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-21.png",
+      "sha256": "050e56b25ff17593f6739e6dd1e99326ad8ba47a533e79da76ae9e9bdb6ebf07",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-22.png",
+      "sha256": "c1ef98beaeff3543126dba6d113af8dad53ee788fe16cf7ce0feddfe57c6fa4e",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-23.png",
+      "sha256": "548fa15235bd795dae7922839e3f2e209e7e45b5139e33449b3175ccafd05299",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-24.png",
+      "sha256": "a26d2cd485aac04e3faa7fc23235a711de11577bdfb67c6e0cdc9adb0ac8226f",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-25.png",
+      "sha256": "956dc9c73ab4128ab39b224045b62d6032693b32a702764a218fa7945d21e211",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-26.png",
+      "sha256": "1a745d450036f507ff6a27a179b7917b2900d0ec112cbaafc8a5d7e64b159d27",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-27.png",
+      "sha256": "c8c2b3296abb78ff246e8016fa19d1c9bafec3a56debc94f465099da37cca10f",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-28.png",
+      "sha256": "32e812dbbe18ab9010bc49386cc460b1789872e26070fa89d97689da7f53f290",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-29.png",
+      "sha256": "4a7ad60cc6bc22b13c273fa13d9837cfa59d466e8a0a1b41bfae6b31dcb2dd72",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-30.png",
+      "sha256": "0cee43b13e778a6634ff60e33d3518bd62ac1f3d30a6f60aa039c974bda7d3ec",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-motion-31.png",
+      "sha256": "38115fbbc22ecb927305a747d7932ece631d246a0bdf65b66343e2552b3b77be",
+      "dimensions": [
+        768,
+        768
+      ]
+    },
+    {
+      "file": "entropic-extractor-working.png",
+      "sha256": "7c853f83f59b84045375ede13a2a0649d3c2301a2da4ae37fc859a267e215c20",
+      "dimensions": [
+        768,
+        768
+      ]
+    }
+  ],
+  "invalid_partial_pngs": [],
+  "expected_for_complete_capture": 315,
+  "full_final_operated_save_reload_pending": true,
+  "do_not_launch_gui_until_owner_ready": true
+}

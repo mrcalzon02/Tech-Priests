@@ -1,0 +1,30 @@
+{
+  "final_source_sha256": "6be42c95040f44972f1933caf7bd288ec2d48dd959fea9814e1bfaf6bdfeb63e",
+  "preserved_local_fit_studies": [
+    {
+      "local_preserved_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-citadel-manufactoreo-main01\\authored-v12\\superseded-fit-pass01",
+      "source_sha256": "5beb382c7cdda35369bbe2a20346965fb53e8032c0a20ca0d8246e666017eacd",
+      "runtime_sha256": "b124e5a0b7285d2a9dae45b44bc069586a783a1f6241ec644f0414abd5fcce58",
+      "superseded": true
+    },
+    {
+      "local_preserved_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-citadel-manufactoreo-main01\\authored-v12\\superseded-fit-pass02",
+      "source_sha256": "9015093863953af9468e76d00f563f482132b6b175015a3f1ca6bc260396da92",
+      "runtime_sha256": "44bbeb65b39d70d735be82fcd7c88023b96900264f69eb571199b323c9a9820a",
+      "superseded": true
+    },
+    {
+      "local_preserved_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-citadel-manufactoreo-main01\\authored-v12\\superseded-fit-pass03",
+      "source_sha256": "6f448e371d6ccf6c2f5518a2ac47d4b971062d50718c4f54df9356def90b6a2a",
+      "runtime_sha256": "738866ed7c8ae3d9d19bdf01c451321a9920923b4acbfa05f46913cc5049f0a2",
+      "superseded": true
+    },
+    {
+      "local_preserved_candidate": "C:\\Users\\Admin\\Documents\\ChatGPT\\Tech priests\\tanks-structure-production\\build\\tp-citadel-manufactoreo-main01\\authored-v12\\superseded-fit-pass04",
+      "source_sha256": "72cd3b66f023b6428728de8a95813b635a10a529a8b9b12ecb70dcb130cb878e",
+      "runtime_sha256": "3310c47f4d245e0476007dbebb5c107d7ad44801663eeae48344a9ea6e9dffd4",
+      "superseded": true
+    }
+  ],
+  "all_final_contacts_adjudicated": true
+}

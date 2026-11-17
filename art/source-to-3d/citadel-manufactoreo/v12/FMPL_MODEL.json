@@ -1,0 +1,61 @@
+{
+  "schema": "fmpl.model.delivery.v1",
+  "id": "tech-priests-citadel-manufactoreo-v1",
+  "asset_status": "editable-reference-bound-candidate",
+  "source_and_export_complete": true,
+  "operational_complete": false,
+  "owner_visual_approved": false,
+  "source": {
+    "file": "citadel-v12.blend",
+    "sha256": "6be42c95040f44972f1933caf7bd288ec2d48dd959fea9814e1bfaf6bdfeb63e",
+    "packed_images": 30
+  },
+  "runtime": {
+    "file": "citadel-v12.glb",
+    "sha256": "227a991cd12f731ceae48181ddd74e8b1f10aea1b2509cebed2da68ef9025579",
+    "meshes": 4022,
+    "triangles": 581772,
+    "embedded_images": 30,
+    "seconds": 4,
+    "working_only": true
+  },
+  "native_entity": "assembling-machine/citadel-manufactoreo",
+  "footprint": [
+    5,
+    5
+  ],
+  "native_directions": [
+    0
+  ],
+  "purpose": "Actual platform-only5x5 fixed-north2MW electric Citadel. Chunk to fragment plus25% stone;10fragments+5 sacred-machine-oil ITEMS to slab;5offworld cogitator components+4servitor parts+1slab to Entropic Extractor ITEM. No fluid ports/burner. Two module slots and9tile circuit reach. Existing building recipe/unlock retained. Factory interior remains hidden.",
+  "source_export_verification": {
+    "eight_pose_bounds_max_error_tiles": 4.76837158203125e-07,
+    "working_loop_seam_tiles": 0.0,
+    "source_clearance_poses": 387,
+    "runtime_clearance_poses": 385,
+    "source_contacts_adjudicated": 4204,
+    "runtime_contacts_adjudicated": 4286,
+    "all_fixed_and_moving_contacts_reviewed": true,
+    "foreign_moving_contacts": 0,
+    "rejected_fixed_contacts": 0
+  },
+  "fmpl_materials": "fmpl-surface-manifest.json",
+  "actual_export_channel_proof": "fmpl-channel-verification.json",
+  "genuine_runtime_captures": 33,
+  "working_frames_per_direction": 32,
+  "capture_fps": 8,
+  "headless_current_final_native_checks_passed": true,
+  "partial_final_client_pngs": 219,
+  "final_client_capture_and_actual_operated_reload_pending": true,
+  "gui_hold": "GUI_CAPTURE_HOLD.json",
+  "prior_production_v11": {
+    "commit": "9f4970321f401c05457912e092968489d6622e8e",
+    "path": "art/source-to-3d/citadel-manufactoreo/v11",
+    "native_full_pngs": 315,
+    "actual_operated_reload_passed": true,
+    "not_final_v12_capture_evidence": true
+  },
+  "production_v12_promoted": false,
+  "machine_done": false,
+  "whole_goal_complete": false
+}
